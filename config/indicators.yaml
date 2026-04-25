@@ -1,0 +1,144 @@
+sections:
+  - id: snapshot
+    title: "§1 Country Snapshot"
+    kind: snapshot
+    blurb: |
+      Country-level metadata: economic size, sovereign rating, FX regime,
+      and the central bank's mandate. Sets the frame for everything below.
+
+  - id: real_activity
+    title: "§2 Real Activity"
+    kind: charts
+    indicators:
+      - key: real_gdp_yoy
+        label: "Real GDP, YoY %"
+        mcp_query: "{country} real GDP growth year over year quarterly last 10 years"
+        chart: peer_overlay
+        peers: true
+        cycle_role: coincident
+      - key: industrial_production_yoy
+        label: "Industrial Production, YoY %"
+        mcp_query: "{country} industrial production year over year monthly last 5 years"
+        chart: line
+        cycle_role: coincident
+        derived_yoy: true
+      - key: retail_sales_yoy
+        label: "Retail Sales Volume, YoY %"
+        mcp_query: "{country} retail sales volume year over year monthly last 5 years"
+        chart: line
+        cycle_role: coincident
+        derived_yoy: true
+      - key: unemployment_rate
+        label: "Unemployment Rate, %"
+        mcp_query: "{country} unemployment rate monthly last 5 years"
+        chart: peer_overlay
+        peers: true
+        cycle_role: lagging
+
+  - id: prices_wages
+    title: "§3 Prices & Wages"
+    kind: charts
+    indicators:
+      - key: cpi_yoy
+        label: "Headline CPI, YoY %"
+        mcp_query: "{country} consumer price index inflation year over year monthly last 5 years"
+        chart: peer_overlay
+        peers: true
+        cycle_role: coincident
+        target_band: true
+      - key: core_cpi_yoy
+        label: "Core CPI, YoY %"
+        mcp_query: "{country} core consumer price index year over year monthly last 5 years"
+        chart: line
+        cycle_role: coincident
+      - key: ppi_yoy
+        label: "Producer Price Index, YoY %"
+        mcp_query: "{country} producer price index year over year monthly last 5 years"
+        chart: line
+        cycle_role: leading
+        derived_yoy: true
+      - key: avg_wage_yoy
+        label: "Average Gross Wage, YoY %"
+        mcp_query: "{country} average gross monthly wage year over year last 5 years"
+        chart: line
+        cycle_role: lagging
+
+  - id: external
+    title: "§4 External Sector"
+    kind: charts
+    indicators:
+      - key: current_account_pct_gdp
+        label: "Current Account, % of GDP"
+        mcp_query: "{country} current account balance percent of GDP annual last 12 years"
+        chart: peer_overlay
+        peers: true
+      - key: trade_balance
+        label: "Trade Balance (goods), USD bn"
+        mcp_query: "{country} trade balance goods monthly last 5 years"
+        chart: bar
+      - key: fx_reserves
+        label: "FX Reserves, USD bn"
+        mcp_query: "{country} total reserves excluding gold monthly last 10 years"
+        chart: line
+      - key: reer
+        label: "Real Effective Exchange Rate (CPI-deflated), index"
+        mcp_query: "{country} real effective exchange rate monthly last 10 years"
+        chart: peer_overlay
+        peers: true
+
+  - id: fiscal_sovereign
+    title: "§5 Fiscal & Sovereign"
+    kind: charts
+    indicators:
+      - key: fiscal_balance_pct_gdp
+        label: "General Government Balance, % of GDP"
+        mcp_query: "{country} general government net lending borrowing percent of GDP annual last 12 years"
+        chart: peer_overlay
+        peers: true
+      - key: gov_debt_pct_gdp
+        label: "General Government Debt, % of GDP"
+        mcp_query: "{country} general government gross debt percent of GDP annual last 15 years"
+        chart: peer_overlay
+        peers: true
+      - key: sov_yield_10y
+        label: "10-Year Government Bond Yield, %"
+        mcp_query: "{country} 10 year government bond yield monthly last 5 years"
+        chart: peer_overlay
+        peers: true
+
+  - id: monetary_financial
+    title: "§6 Monetary & Financial"
+    kind: charts
+    indicators:
+      - key: policy_rate
+        label: "Central Bank Policy Rate, %"
+        mcp_query: "{country} central bank policy interest rate monthly last 10 years"
+        chart: peer_overlay
+        peers: true
+      - key: m3_yoy
+        label: "Broad Money (M3), YoY %"
+        mcp_query: "{country} broad money M3 year over year monthly last 5 years"
+        chart: line
+      - key: private_credit_yoy
+        label: "Private Sector Credit, YoY %"
+        mcp_query: "{country} domestic credit to private sector year over year monthly last 5 years"
+        chart: line
+      - key: fx_vs_eur
+        label: "FX vs EUR (level)"
+        mcp_query: "EUR to {currency} exchange rate daily last 5 years"
+        chart: line
+        special: fx_eur
+
+  - id: markets_valuation
+    title: "§7 Markets & Valuation"
+    kind: charts
+    indicators:
+      - key: equity_index
+        label: "Headline Equity Index (level)"
+        mcp_query: "{equity_index} stock market index monthly last 5 years"
+        chart: line
+      - key: equity_yoy
+        label: "Headline Equity Index, YoY %"
+        mcp_query: "{equity_index} stock market index monthly last 5 years"
+        chart: line
+        derived_yoy: true

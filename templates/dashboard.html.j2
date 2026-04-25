@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ country.name }} — Macro Dashboard</title>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<style>
+  :root {
+    --bg: #fafbfc;
+    --fg: #1a1a1a;
+    --muted: #666;
+    --primary: #1f4e79;
+    --border: #e3e6ea;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 24px;
+    background: var(--bg); color: var(--fg);
+    font-family: Inter, -apple-system, system-ui, "Helvetica Neue", sans-serif;
+    font-size: 14px; line-height: 1.55;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+  header {
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 16px; margin-bottom: 24px;
+  }
+  header h1 {
+    margin: 0; font-size: 28px; font-weight: 700;
+    color: var(--primary);
+  }
+  header .meta {
+    color: var(--muted); font-size: 13px; margin-top: 4px;
+  }
+  .snapshot {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px; margin-bottom: 28px;
+  }
+  .tile {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 12px 16px;
+  }
+  .tile .k { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .tile .v { font-size: 16px; font-weight: 600; margin-top: 2px; color: var(--fg); }
+  section.panel {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 20px; margin-bottom: 20px;
+  }
+  section.panel h2 {
+    margin: 0 0 6px 0; font-size: 18px; color: var(--primary);
+    font-weight: 600;
+  }
+  section.panel .blurb { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+  .charts {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+    gap: 16px;
+  }
+  .chart-cell {
+    min-height: 420px; height: 420px;
+    border: 1px solid var(--border); border-radius: 4px;
+    background: #fff; overflow: hidden;
+  }
+  .chart-cell .plotly-graph-div { height: 100% !important; }
+  .commentary {
+    background: #f6f8fa; border-left: 3px solid var(--primary);
+    padding: 12px 14px; margin-top: 18px; font-size: 13.5px;
+    border-radius: 0 4px 4px 0;
+  }
+  .commentary strong { color: var(--primary); }
+  footer {
+    margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border);
+    color: var(--muted); font-size: 11px; text-align: center;
+  }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: 6px;
+    padding: 12px 16px; margin-bottom: 20px;
+  }
+  .toc a { color: var(--primary); text-decoration: none; margin-right: 14px; font-size: 13px; }
+  .toc a:hover { text-decoration: underline; }
+  .context-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 14px; margin-top: 18px;
+  }
+  .context-card {
+    background: var(--card-alt); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .context-card-header {
+    background: var(--primary); color: #fff; padding: 8px 14px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
+  }
+  .context-card-body {
+    padding: 12px 14px; font-size: 13px; line-height: 1.65; color: var(--fg);
+    white-space: pre-line;
+  }
+  .trade-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 16px;
+  }
+  .trade-card {
+    background: var(--card-alt); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .trade-card-header {
+    background: #2c5282; color: #fff; padding: 8px 14px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
+  }
+  .trade-card-body {
+    padding: 12px 14px; font-size: 13px; line-height: 1.65;
+  }
+  .trade-card-body table {
+    width: 100%; border-collapse: collapse; font-size: 12px;
+  }
+  .trade-card-body th {
+    text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--border);
+    color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.3px;
+  }
+  .trade-card-body td {
+    padding: 4px 6px; border-bottom: 1px solid #f0f1f3;
+  }
+  .cb-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .cb-card {
+    background: var(--card-alt); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .cb-card-header {
+    background: var(--primary); color: #fff; padding: 8px 14px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
+  }
+  .cb-card-body {
+    padding: 14px 16px; font-size: 13px; line-height: 1.65;
+    white-space: pre-line;
+  }
+  .cb-card-body ul { margin: 4px 0; padding-left: 18px; }
+  .cb-card-body li { margin-bottom: 3px; }
+  .cb-card-body p { margin: 0 0 8px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>{{ country.name }} — Macro Dashboard</h1>
+  <div class="meta">
+    Generated {{ generated_at }} · Peers: {{ peers|join(", ") }} ·
+    Framework: IMF FPP × Goldman Sachs Indicators × Buy-side PM lens
+  </div>
+</header>
+
+<div class="toc">
+  {% for s in sections %}<a href="#{{ s.id }}">{{ s.title }}</a>{% endfor %}
+</div>
+
+{# §1 Snapshot #}
+<section class="panel" id="snapshot">
+  <h2>{{ snapshot_title }}</h2>
+  <div class="blurb">{{ snapshot_blurb }}</div>
+  <div class="snapshot">
+    {% for k, v in snapshot_tiles %}
+    <div class="tile"><div class="k">{{ k }}</div><div class="v">{{ v }}</div></div>
+    {% endfor %}
+  </div>
+  {% if geo_context or political_context or societal_context %}
+  <div class="context-grid">
+    {% if geo_context %}
+    <div class="context-card">
+      <div class="context-card-header">Geography &amp; Infrastructure</div>
+      <div class="context-card-body">{{ geo_context }}</div>
+    </div>
+    {% endif %}
+    {% if political_context %}
+    <div class="context-card">
+      <div class="context-card-header">Political Economy</div>
+      <div class="context-card-body">{{ political_context }}</div>
+    </div>
+    {% endif %}
+    {% if societal_context %}
+    <div class="context-card">
+      <div class="context-card-header">Society &amp; Demographics</div>
+      <div class="context-card-body">{{ societal_context }}</div>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+</section>
+
+{# Trade section (if available) #}
+{% if trade_section %}
+<section class="panel" id="trade">
+  <h2>{{ trade_section.title }}</h2>
+  <div class="blurb">{{ trade_section.blurb }}</div>
+  {% if trade_section.charts %}
+  <div class="charts">{{ trade_section.charts|safe }}</div>
+  {% endif %}
+  {% if trade_section.summary %}
+  {{ trade_section.summary|safe }}
+  {% endif %}
+</section>
+{% endif %}
+
+{# Central Bank section #}
+{% if cb_section %}
+<section class="panel" id="central_bank">
+  <h2>Central Bank Monitor</h2>
+  <div class="blurb">Institutional structure, personnel, balance sheet, and policy framework — the lens through which rate decisions and market operations should be interpreted.</div>
+
+  <div class="cb-grid">
+    <div class="cb-card">
+      <div class="cb-card-header">Leadership &amp; Decision-Making</div>
+      <div class="cb-card-body">
+        <p><strong>Governor:</strong> {{ cb_section.governor }}</p>
+        <p><strong>Board:</strong></p>
+        <ul>
+          {% for member in cb_section.board %}
+          <li>{{ member }}</li>
+          {% endfor %}
+        </ul>
+        <p><strong>MPC:</strong> {{ cb_section.mpc }}</p>
+        <p><strong>Meetings:</strong> {{ cb_section.meeting_schedule }}</p>
+      </div>
+    </div>
+    <div class="cb-card">
+      <div class="cb-card-header">Policy Framework</div>
+      <div class="cb-card-body">{{ cb_section.policy_framework }}</div>
+    </div>
+    <div class="cb-card">
+      <div class="cb-card-header">Balance Sheet</div>
+      <div class="cb-card-body">
+        <p><strong>Total Assets:</strong> {{ cb_section.balance_sheet.total_assets }}</p>
+        <ul>
+          {% for item in cb_section.balance_sheet.key_items %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="cb-card">
+      <div class="cb-card-header">Key Risks &amp; Vulnerabilities</div>
+      <div class="cb-card-body">{{ cb_section.key_risks }}</div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{# §2-§7 chart sections #}
+{% for s in sections %}
+<section class="panel" id="{{ s.id }}">
+  <h2>{{ s.title }}</h2>
+  <div class="charts">
+    {% for fig_html in s.charts %}
+    <div class="chart-cell">{{ fig_html|safe }}</div>
+    {% endfor %}
+  </div>
+  {% if s.commentary %}
+  <div class="commentary">{{ s.commentary|safe }}</div>
+  {% endif %}
+</section>
+{% endfor %}
+
+<footer>
+  Country Primer v{{ version }} · Data via openecon-data MCP, ECB, World Bank ·
+  This is a research artefact, not investment advice.
+</footer>
+
+</div>
+</body>
+</html>

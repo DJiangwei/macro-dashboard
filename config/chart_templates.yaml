@@ -1,0 +1,24 @@
+defaults:
+  template: plotly_white
+  height: 380
+  margin: {l: 50, r: 30, t: 50, b: 70}
+  font_family: "Inter, -apple-system, system-ui, sans-serif"
+  font_size: 12
+  hovermode: x unified
+
+colors:
+  primary: "#1f4e79"        # buy-side blue
+  secondary: "#c00000"      # accent red for "vs target"
+  peer_palette:             # for peer overlays (primary highlighted in primary blue)
+    - "#9aa3ad"
+    - "#7c8794"
+    - "#5e6b78"
+    - "#404d5b"
+  positive: "#2e7d32"
+  negative: "#c62828"
+  band_fill: "rgba(31, 78, 121, 0.08)"
+
+footer:
+  template: "Source: {source} · Series: {series_id} · Updated {last_update} · Fetched {fetched}"
+  font_size: 10
+  color: "#666"
