@@ -26,6 +26,7 @@ class Indicator:
     target_band: bool = False
     derived_yoy: bool = False
     special: str = ""
+    unit: str = ""
 
 
 @dataclass
@@ -58,6 +59,7 @@ def load_sections() -> list[Section]:
                 target_band=i.get("target_band", False),
                 derived_yoy=i.get("derived_yoy", False),
                 special=i.get("special", ""),
+                unit=i.get("unit", ""),
             ))
         sections.append(Section(
             id=s["id"], title=s["title"], kind=s["kind"],

@@ -30,7 +30,7 @@ def _markdown_lite(text: str) -> str:
 def render_dashboard(
     country_meta: dict,
     peers: list[str],
-    snapshot_tiles: list[tuple[str, str]],
+    snapshot_tiles: list[dict],
     sections_payload: list[dict],
     out_path: Path,
     trade_section: dict | None = None,

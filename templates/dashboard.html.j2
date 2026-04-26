@@ -42,6 +42,13 @@
   }
   .tile .k { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
   .tile .v { font-size: 16px; font-weight: 600; margin-top: 2px; color: var(--fg); }
+  .snapshot-group { margin-bottom: 18px; }
+  .snapshot-subtitle {
+    font-size: 12px; font-weight: 600; color: var(--primary);
+    text-transform: uppercase; letter-spacing: 0.6px;
+    margin: 0 0 10px 0; padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
   section.panel {
     background: var(--card); border: 1px solid var(--border);
     border-radius: 6px; padding: 20px; margin-bottom: 20px;
@@ -158,11 +165,16 @@
 <section class="panel" id="snapshot">
   <h2>{{ snapshot_title }}</h2>
   <div class="blurb">{{ snapshot_blurb }}</div>
-  <div class="snapshot">
-    {% for k, v in snapshot_tiles %}
-    <div class="tile"><div class="k">{{ k }}</div><div class="v">{{ v }}</div></div>
-    {% endfor %}
+  {% for group in snapshot_tiles %}
+  <div class="snapshot-group">
+    <h3 class="snapshot-subtitle">{{ group.subtitle }}</h3>
+    <div class="snapshot">
+      {% for k, v in group.tiles %}
+      <div class="tile"><div class="k">{{ k }}</div><div class="v">{{ v }}</div></div>
+      {% endfor %}
+    </div>
   </div>
+  {% endfor %}
   {% if geo_context or political_context or societal_context %}
   <div class="context-grid">
     {% if geo_context %}

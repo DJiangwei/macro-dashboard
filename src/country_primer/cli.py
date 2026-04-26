@@ -171,24 +171,44 @@ PCT_GDP_COMPANIONS: dict[str, str] = {
 }
 
 
-def _snapshot_tiles(meta: dict) -> list[tuple[str, str]]:
+def _snapshot_tiles(meta: dict) -> list[dict]:
     sr = meta.get("sovereign_ratings", {}) or {}
     rating = " / ".join(filter(None, [sr.get("sp"), sr.get("moody"), sr.get("fitch")])) or "—"
     industries = meta.get("major_industries", []) or []
     return [
-        ("Country", meta.get("name", "")),
-        ("ISO", f"{meta.get('iso2', '')} ({meta.get('iso3', '')})"),
-        ("Population", meta.get("population", "—")),
-        ("GDP (nominal)", meta.get("gdp_nominal", "—")),
-        ("GDP per Capita", meta.get("gdp_per_capita", "—")),
-        ("Currency", meta.get("currency", "")),
-        ("Central Bank", meta.get("central_bank", "")),
-        ("FX Regime", meta.get("fx_regime", "")),
-        ("Inflation Target", meta.get("inflation_target", "")),
-        ("Sovereign Rating (S&P / Moody's / Fitch)", rating),
-        ("Equity Index", meta.get("equity_index", "")),
-        ("Major Industries", ", ".join(industries[:5]) if industries else "—"),
-        ("Top Trading Partners", ", ".join(meta.get("trading_partners", [])[:5])),
+        {
+            "subtitle": "Country Identity",
+            "tiles": [
+                ("Country", meta.get("name", "")),
+                ("ISO", f"{meta.get('iso2', '')} ({meta.get('iso3', '')})"),
+                ("Population", meta.get("population", "—")),
+                ("Currency", meta.get("currency", "")),
+            ],
+        },
+        {
+            "subtitle": "Economic Scale",
+            "tiles": [
+                ("GDP (nominal)", meta.get("gdp_nominal", "—")),
+                ("GDP per Capita", meta.get("gdp_per_capita", "—")),
+                ("Major Industries", ", ".join(industries[:5]) if industries else "—"),
+                ("Top Trading Partners", ", ".join(meta.get("trading_partners", [])[:5])),
+            ],
+        },
+        {
+            "subtitle": "Institutional Framework",
+            "tiles": [
+                ("Central Bank", meta.get("central_bank", "")),
+                ("FX Regime", meta.get("fx_regime", "")),
+                ("Inflation Target", meta.get("inflation_target", "")),
+                ("Sovereign Rating (S&P / Moody's / Fitch)", rating),
+            ],
+        },
+        {
+            "subtitle": "Market Access",
+            "tiles": [
+                ("Equity Index", meta.get("equity_index", "")),
+            ],
+        },
     ]
 
 
@@ -232,6 +252,93 @@ _TRADE_DATA: dict[str, dict] = {
             ("Vehicles & parts (HS87)", 10.0), ("Mineral fuels & oils (HS27)", 8.0),
             ("Plastics & articles (HS39)", 4.0), ("Pharmaceuticals (HS30)", 3.5),
             ("Optical & medical instruments (HS90)", 3.0), ("Iron & steel (HS72)", 2.5),
+        ],
+    },
+    "PL": {
+        "total_exports": 380.0,
+        "total_imports": 370.0,
+        "world_export_share": 1.50,
+        "export_partners": [
+            ("Germany", 102.6, 27.0), ("Czechia", 22.8, 6.0), ("France", 20.9, 5.5),
+            ("UK", 19.0, 5.0), ("Netherlands", 17.1, 4.5), ("Italy", 16.7, 4.4),
+            ("US", 12.5, 3.3), ("Slovakia", 11.4, 3.0), ("Sweden", 10.6, 2.8),
+            ("Hungary", 10.3, 2.7),
+        ],
+        "import_partners": [
+            ("Germany", 88.8, 24.0), ("China", 37.0, 10.0), ("Italy", 18.5, 5.0),
+            ("Netherlands", 14.8, 4.0), ("Czechia", 14.8, 4.0), ("France", 13.0, 3.5),
+            ("Russia", 11.8, 3.2), ("Belgium", 11.1, 3.0), ("US", 10.7, 2.9),
+            ("Slovakia", 10.0, 2.7),
+        ],
+        "export_products": [
+            ("Machinery & mech appliances (HS84)", 19.0), ("Electrical machinery (HS85)", 16.0),
+            ("Vehicles & parts (HS87)", 14.0), ("Furniture & bedding (HS94)", 6.0),
+            ("Plastics & articles (HS39)", 5.0), ("Iron & steel (HS72)", 3.5),
+            ("Mineral fuels & oils (HS27)", 3.0), ("Rubber & articles (HS40)", 2.5),
+        ],
+        "import_products": [
+            ("Electrical machinery (HS85)", 16.0), ("Machinery & mech appliances (HS84)", 14.0),
+            ("Vehicles & parts (HS87)", 10.0), ("Mineral fuels & oils (HS27)", 9.0),
+            ("Plastics & articles (HS39)", 5.0), ("Iron & steel (HS72)", 3.5),
+            ("Pharmaceuticals (HS30)", 3.0), ("Optical & medical instruments (HS90)", 2.5),
+        ],
+    },
+    "CZ": {
+        "total_exports": 245.0,
+        "total_imports": 230.0,
+        "world_export_share": 1.00,
+        "export_partners": [
+            ("Germany", 75.9, 31.0), ("Slovakia", 19.6, 8.0), ("Poland", 17.2, 7.0),
+            ("France", 11.0, 4.5), ("Austria", 9.8, 4.0), ("Italy", 8.6, 3.5),
+            ("UK", 7.8, 3.2), ("Netherlands", 7.6, 3.1), ("Hungary", 7.1, 2.9),
+            ("Spain", 6.1, 2.5),
+        ],
+        "import_partners": [
+            ("Germany", 57.5, 25.0), ("China", 25.3, 11.0), ("Poland", 18.4, 8.0),
+            ("Slovakia", 12.6, 5.5), ("Italy", 9.2, 4.0), ("France", 8.1, 3.5),
+            ("Netherlands", 7.8, 3.4), ("Austria", 7.6, 3.3), ("South Korea", 5.8, 2.5),
+            ("Russia", 5.3, 2.3),
+        ],
+        "export_products": [
+            ("Vehicles & parts (HS87)", 22.0), ("Electrical machinery (HS85)", 17.0),
+            ("Machinery & mech appliances (HS84)", 16.0), ("Iron & steel (HS72)", 4.5),
+            ("Plastics & articles (HS39)", 4.0), ("Furniture & bedding (HS94)", 3.5),
+            ("Rubber & articles (HS40)", 2.5), ("Optical & medical instruments (HS90)", 2.5),
+        ],
+        "import_products": [
+            ("Electrical machinery (HS85)", 17.0), ("Machinery & mech appliances (HS84)", 14.0),
+            ("Vehicles & parts (HS87)", 9.0), ("Mineral fuels & oils (HS27)", 6.0),
+            ("Plastics & articles (HS39)", 4.5), ("Iron & steel (HS72)", 4.0),
+            ("Pharmaceuticals (HS30)", 3.5), ("Optical & medical instruments (HS90)", 2.5),
+        ],
+    },
+    "RO": {
+        "total_exports": 110.0,
+        "total_imports": 135.0,
+        "world_export_share": 0.45,
+        "export_partners": [
+            ("Germany", 23.1, 21.0), ("Italy", 11.6, 10.5), ("France", 7.7, 7.0),
+            ("Hungary", 6.1, 5.5), ("Bulgaria", 4.4, 4.0), ("Poland", 4.2, 3.8),
+            ("Czechia", 3.6, 3.3), ("Netherlands", 3.3, 3.0), ("Turkey", 3.1, 2.8),
+            ("UK", 2.9, 2.6),
+        ],
+        "import_partners": [
+            ("Germany", 24.3, 18.0), ("Italy", 10.8, 8.0), ("Hungary", 8.8, 6.5),
+            ("Poland", 7.4, 5.5), ("China", 6.8, 5.0), ("Turkey", 5.4, 4.0),
+            ("France", 5.1, 3.8), ("Netherlands", 4.7, 3.5), ("Austria", 4.3, 3.2),
+            ("Bulgaria", 4.0, 3.0),
+        ],
+        "export_products": [
+            ("Vehicles & parts (HS87)", 19.0), ("Electrical machinery (HS85)", 17.0),
+            ("Machinery & mech appliances (HS84)", 11.0), ("Cereals (HS10)", 6.0),
+            ("Mineral fuels & oils (HS27)", 5.0), ("Furniture & bedding (HS94)", 4.0),
+            ("Rubber & articles (HS40)", 3.5), ("Apparel (HS61+62)", 3.0),
+        ],
+        "import_products": [
+            ("Electrical machinery (HS85)", 15.0), ("Machinery & mech appliances (HS84)", 12.0),
+            ("Vehicles & parts (HS87)", 9.0), ("Mineral fuels & oils (HS27)", 8.0),
+            ("Pharmaceuticals (HS30)", 5.0), ("Plastics & articles (HS39)", 4.5),
+            ("Iron & steel (HS72)", 3.5), ("Optical & medical instruments (HS90)", 2.5),
         ],
     },
 }
@@ -403,6 +510,7 @@ def build(country_iso: str, peers: list[str], out_path: Path) -> Path:
             div_n += 1
             div_id = f"chart-{s.id}-{ind.key}-{div_n}"
 
+            unit = ind.unit or (primary.unit if primary else "")
             if not primary or not primary.available:
                 fig = unavailable_chart(ind.label, primary.note if primary else "no data")
             elif ind.key in PCT_GDP_COMPANIONS:
@@ -414,17 +522,17 @@ def build(country_iso: str, peers: list[str], out_path: Path) -> Path:
                 elif ind.chart == "peer_overlay":
                     peer_series = [cache.get((ind.key, p)) for p in peers]
                     peer_series = [p for p in peer_series if p is not None]
-                    fig = peer_overlay(primary, peer_series, title=ind.label)
+                    fig = peer_overlay(primary, peer_series, title=ind.label, ytitle=unit)
                 else:
-                    fig = line(primary, title=ind.label)
+                    fig = line(primary, title=ind.label, ytitle=unit)
             elif ind.chart == "peer_overlay":
                 peer_series = [cache.get((ind.key, p)) for p in peers]
                 peer_series = [p for p in peer_series if p is not None]
-                fig = peer_overlay(primary, peer_series, title=ind.label)
+                fig = peer_overlay(primary, peer_series, title=ind.label, ytitle=unit)
             elif ind.chart == "bar":
-                fig = bar(primary, title=ind.label)
+                fig = bar(primary, title=ind.label, ytitle=unit)
             else:  # line (default)
-                fig = line(primary, title=ind.label)
+                fig = line(primary, title=ind.label, ytitle=unit)
 
             if ind.target_band and target_band:
                 fig = with_target_band(fig, *target_band)

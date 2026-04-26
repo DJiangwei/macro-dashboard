@@ -16,24 +16,28 @@ sections:
         chart: peer_overlay
         peers: true
         cycle_role: coincident
+        unit: "% YoY"
       - key: industrial_production_yoy
         label: "Industrial Production, YoY %"
         mcp_query: "{country} industrial production year over year monthly last 5 years"
         chart: line
         cycle_role: coincident
         derived_yoy: true
+        unit: "% YoY"
       - key: retail_sales_yoy
         label: "Retail Sales Volume, YoY %"
         mcp_query: "{country} retail sales volume year over year monthly last 5 years"
         chart: line
         cycle_role: coincident
         derived_yoy: true
+        unit: "% YoY"
       - key: unemployment_rate
         label: "Unemployment Rate, %"
         mcp_query: "{country} unemployment rate monthly last 5 years"
         chart: peer_overlay
         peers: true
         cycle_role: lagging
+        unit: "%"
 
   - id: prices_wages
     title: "§3 Prices & Wages"
@@ -46,22 +50,26 @@ sections:
         peers: true
         cycle_role: coincident
         target_band: true
+        unit: "% YoY"
       - key: core_cpi_yoy
         label: "Core CPI, YoY %"
         mcp_query: "{country} core consumer price index year over year monthly last 5 years"
         chart: line
         cycle_role: coincident
+        unit: "% YoY"
       - key: ppi_yoy
         label: "Producer Price Index, YoY %"
         mcp_query: "{country} producer price index year over year monthly last 5 years"
         chart: line
         cycle_role: leading
         derived_yoy: true
+        unit: "% YoY"
       - key: avg_wage_yoy
         label: "Average Gross Wage, YoY %"
         mcp_query: "{country} average gross monthly wage year over year last 5 years"
         chart: line
         cycle_role: lagging
+        unit: "% YoY"
 
   - id: external
     title: "§4 External Sector"
@@ -72,19 +80,23 @@ sections:
         mcp_query: "{country} current account balance percent of GDP annual last 12 years"
         chart: peer_overlay
         peers: true
+        unit: "% of GDP"
       - key: trade_balance
         label: "Trade Balance (goods), USD bn"
         mcp_query: "{country} trade balance goods monthly last 5 years"
         chart: bar
+        unit: "USD bn"
       - key: fx_reserves
         label: "FX Reserves, USD bn"
         mcp_query: "{country} total reserves excluding gold monthly last 10 years"
         chart: line
+        unit: "USD bn"
       - key: reer
         label: "Real Effective Exchange Rate (CPI-deflated), index"
         mcp_query: "{country} real effective exchange rate monthly last 10 years"
         chart: peer_overlay
         peers: true
+        unit: "Index"
 
   - id: fiscal_sovereign
     title: "§5 Fiscal & Sovereign"
@@ -95,16 +107,19 @@ sections:
         mcp_query: "{country} general government net lending borrowing percent of GDP annual last 12 years"
         chart: peer_overlay
         peers: true
+        unit: "% of GDP"
       - key: gov_debt_pct_gdp
         label: "General Government Debt, % of GDP"
         mcp_query: "{country} general government gross debt percent of GDP annual last 15 years"
         chart: peer_overlay
         peers: true
+        unit: "% of GDP"
       - key: sov_yield_10y
         label: "10-Year Government Bond Yield, %"
         mcp_query: "{country} 10 year government bond yield monthly last 5 years"
         chart: peer_overlay
         peers: true
+        unit: "%"
 
   - id: monetary_financial
     title: "§6 Monetary & Financial"
@@ -115,19 +130,23 @@ sections:
         mcp_query: "{country} central bank policy interest rate monthly last 10 years"
         chart: peer_overlay
         peers: true
+        unit: "%"
       - key: m3_yoy
         label: "Broad Money (M3), YoY %"
         mcp_query: "{country} broad money M3 year over year monthly last 5 years"
         chart: line
+        unit: "% YoY"
       - key: private_credit_yoy
         label: "Private Sector Credit, YoY %"
         mcp_query: "{country} domestic credit to private sector year over year monthly last 5 years"
         chart: line
+        unit: "% YoY"
       - key: fx_vs_eur
         label: "FX vs EUR (level)"
         mcp_query: "EUR to {currency} exchange rate daily last 5 years"
         chart: line
         special: fx_eur
+        unit: "HUF per EUR"
 
   - id: markets_valuation
     title: "§7 Markets & Valuation"
@@ -137,8 +156,10 @@ sections:
         label: "Headline Equity Index (level)"
         mcp_query: "{equity_index} stock market index monthly last 5 years"
         chart: line
+        unit: "Index"
       - key: equity_yoy
         label: "Headline Equity Index, YoY %"
         mcp_query: "{equity_index} stock market index monthly last 5 years"
         chart: line
         derived_yoy: true
+        unit: "% YoY"

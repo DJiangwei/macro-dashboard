@@ -419,22 +419,27 @@ header .meta-chip strong { color: #ffd966; }
 .snapshot-panel h2 {
   margin: 0 0 4px 0; font-size: 17px; color: var(--primary); font-weight: 600;
 }
-.snapshot-panel .blurb { color: var(--muted); font-size: 12.5px; margin-bottom: 16px; }
-.snapshot-grid {
+.snapshot-panel .blurb { color: var(--muted); font-size: 12.5px; margin-bottom: 20px; }
+.snapshot-prose {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
 }
-.snap-tile {
+.snapshot-subsection {
   background: var(--card-alt); border-radius: var(--radius-sm);
-  padding: 12px 14px; border: 1px solid var(--border);
+  padding: 18px 20px; border: 1px solid var(--border);
 }
-.snap-tile .sk {
-  font-size: 10.5px; color: var(--muted); text-transform: uppercase;
-  letter-spacing: 0.4px; margin-bottom: 3px;
+.snapshot-subsection h3 {
+  margin: 0 0 10px 0; font-size: 13px; color: var(--primary);
+  font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+  border-bottom: 1px solid var(--border); padding-bottom: 8px;
 }
-.snap-tile .sv {
-  font-size: 14px; font-weight: 600; color: var(--fg);
+.snapshot-subsection p {
+  margin: 0; font-size: 13px; line-height: 1.7; color: var(--fg);
+}
+.snapshot-subsection strong {
+  color: var(--primary); font-weight: 600;
 }
 
 /* ---- Section Panels ---- */
@@ -728,21 +733,22 @@ final_html = f"""<!doctype html>
 <div class="snapshot-panel" id="snapshot">
   <h2>§1 Country Snapshot</h2>
   <div class="blurb">Structural parameters that set the frame: economic size, sovereign rating, FX regime, the central bank's mandate, and qualitative country context. These are the slow-moving variables against which the cyclical sections below should be read.</div>
-  <div class="snapshot-grid">
-    <div class="snap-tile"><div class="sk">Country</div><div class="sv">Hungary</div></div>
-    <div class="snap-tile"><div class="sk">ISO</div><div class="sv">HU (HUN)</div></div>
-    <div class="snap-tile"><div class="sk">Population</div><div class="sv">9.6 million</div></div>
-    <div class="snap-tile"><div class="sk">GDP (nominal)</div><div class="sv">$215 bn (2024)</div></div>
-    <div class="snap-tile"><div class="sk">GDP per Capita</div><div class="sv">$22,400</div></div>
-    <div class="snap-tile"><div class="sk">Currency</div><div class="sv">HUF</div></div>
-    <div class="snap-tile"><div class="sk">Central Bank</div><div class="sv">Magyar Nemzeti Bank (MNB)</div></div>
-    <div class="snap-tile"><div class="sk">FX Regime</div><div class="sv">Free float (with FX-stabilising operations)</div></div>
-    <div class="snap-tile"><div class="sk">Inflation Target</div><div class="sv">3.0% ±1pp</div></div>
-    <div class="snap-tile"><div class="sk">Sovereign Rating</div><div class="sv">BBB− / Baa3 / BBB</div></div>
-    <div class="snap-tile"><div class="sk">Equity Index</div><div class="sv">BUX (OTP Bank ~25% wt)</div></div>
-    <div class="snap-tile"><div class="sk">Major Industries</div><div class="sv">Automotive & EV batteries, Electronics & ICT, Pharmaceuticals, Food processing, Business services</div></div>
-    <div class="snap-tile"><div class="sk">Top Trading Partners</div><div class="sv">Germany, Austria, China, Italy, Romania</div></div>
-  </div>
+  <div class="snapshot-prose">
+	    <div class="snapshot-subsection">
+	      <h3>Economy</h3>
+	      <p>Hungary is a <strong>$215 bn economy</strong> (2024 nominal GDP) with a population of <strong>9.6 million</strong> and GDP per capita of <strong>$22,400</strong>. The industrial base is concentrated in <strong>automotive &amp; EV batteries, electronics &amp; ICT, pharmaceuticals, food processing, and business services</strong>. Top trading partners are <strong>Germany, Austria, China, Italy, and Romania</strong> — reflecting deep integration into German-speaking supply chains alongside growing Asian linkages.</p>
+	    </div>
+
+	    <div class="snapshot-subsection">
+	      <h3>Institutional Framework</h3>
+	      <p>The <strong>Magyar Nemzeti Bank (MNB)</strong> operates a <strong>free float</strong> FX regime with a formal inflation target of <strong>3.0% &plusmn;1pp</strong>. Hungary is an EU and NATO member (since 2004) but <strong>not a euro-area member</strong> — the HUF floats independently and monetary policy is set domestically. The sovereign carries a <strong>BBB&minus; (S&amp;P) / Baa3 (Moody&rsquo;s) / BBB (Fitch)</strong> rating — one notch above high yield, with a negative outlook risk if fiscal consolidation stalls.</p>
+	    </div>
+
+	    <div class="snapshot-subsection">
+	      <h3>Market Access</h3>
+	      <p>The benchmark <strong>BUX equity index</strong> (OTP Bank ~25% weight, ~&euro;14bn market cap) trades at a forward P/E of ~7.2x — a <strong>30–40% discount</strong> to CEE peers (WIG20 ~10.5x, PX ~12.0x) reflecting the political risk premium. The <strong>10-year HGB yields ~7.1%</strong>, offering the highest EUR-denominated carry in the EU but with a ~250bp spread over CEE peers that signals the market&rsquo;s fiscal credibility concern. The <strong>EURHUF at ~365</strong> (April 2026) is roughly in line with REER-based fair value estimates of 360–370.</p>
+	    </div>
+	  </div>
   <div class="context-grid">
     <div class="context-card">
       <div class="context-card-header">Geography &amp; Infrastructure</div>
