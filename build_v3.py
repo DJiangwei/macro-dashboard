@@ -280,6 +280,18 @@ footer .attribution { color: var(--muted); font-size: 11px; }
   border-radius: 4px; padding: 12px 16px; }
 .tile .k { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
 .tile .v { font-size: 16px; font-weight: 600; margin-top: 2px; color: var(--fg); }
+/* ---- Language Toggle ---- */
+html[lang="en"] [data-lang="zh"] { display: none !important; }
+html[lang="zh"] [data-lang="en"] { display: none !important; }
+.lang-toggle {
+  background: rgba(255,255,255,0.12); color: #fff;
+  border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+  padding: 5px 14px; font-size: 12px; font-weight: 600;
+  cursor: pointer; letter-spacing: 0.3px;
+  transition: all 0.15s; margin-left: 16px;
+  white-space: nowrap;
+}
+.lang-toggle:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.5); }
 /* ---- Responsive ---- */
 @media (max-width: 900px) {
   .narrative-body { grid-template-columns: 1fr; }
@@ -339,6 +351,15 @@ SECTION_TITLES = {
     "markets_valuation": ("§7 Markets & Valuation", "price signal"),
 }
 
+SECTION_TITLES_ZH = {
+    "real_activity": ("§2 实际经济活动", "同步指标"),
+    "prices_wages": ("§3 物价与工资", "领先指标"),
+    "external": ("§4 外部部门", "结构性"),
+    "fiscal_sovereign": ("§5 财政与主权信用", "风险因素"),
+    "monetary_financial": ("§6 货币与金融", "政策锚"),
+    "markets_valuation": ("§7 市场与估值", "价格信号"),
+}
+
 SECTION_BLURBS = {
     "real_activity": "Growth decomposition: GDP, industrial production, retail sales, and labour market — separating cyclical momentum from structural drags and identifying the dominant growth engine.",
     "prices_wages": "Inflation dynamics: headline and core CPI trends, producer price pipeline, and the wage-growth impulse that will determine the central bank's terminal rate.",
@@ -346,6 +367,15 @@ SECTION_BLURBS = {
     "fiscal_sovereign": "Sovereign creditworthiness: fiscal balance path, debt stock dynamics, and the term premium the market demands for bearing duration risk.",
     "monetary_financial": "Policy stance: the base rate relative to Taylor-implied neutral, credit transmission channels, and the FX fair-value anchor.",
     "markets_valuation": "Equity valuation: headline index level and momentum, relative to CEE peers and to the macro fundamentals mapped in sections 2–6.",
+}
+
+SECTION_BLURBS_ZH = {
+    "real_activity": "增长拆解：GDP、工业生产、零售销售与劳动力市场——区分周期性动能与结构性拖累，识别主导增长引擎。",
+    "prices_wages": "通胀动态：整体与核心CPI趋势、生产者价格传导链，以及将决定央行终端利率的工资增长脉冲。",
+    "external": "国际收支：经常账户轨迹、贸易差额、外汇储备充足性，以及实际汇率相对公允价值的高低估。",
+    "fiscal_sovereign": "主权信用评估：财政平衡路径、债务存量动态，以及市场为承担久期风险所要求的期限溢价。",
+    "monetary_financial": "政策立场：基准利率相对泰勒规则中性水平的偏离、信贷传导渠道，以及汇率公允价值锚。",
+    "markets_valuation": "股权估值：基准指数点位与动能，相对于中东欧同侪及第2–6节所映射的宏观基本面。",
 }
 
 SECTION_ORDER = ["real_activity", "prices_wages", "external", "fiscal_sovereign", "monetary_financial", "markets_valuation"]
@@ -666,6 +696,200 @@ COUNTRY_DATA["HU"] = {
   </div>
 </div>""",
     },
+    "subtitle_zh": "综合国别概览，包含宏观叙事与前瞻性投资定位观点",
+    "kpi_html_zh": """<!-- KPI Ribbon CN -->
+<div class="kpi-ribbon">
+  <div class="kpi-card">
+    <div class="kpi-label">实际GDP（同比）</div>
+    <div class="kpi-value">+0.5%</div>
+    <div class="kpi-sub"><span class="kpi-delta-down">减速中</span> · 2025年Q4</div>
+  </div>
+  <div class="kpi-card warn">
+    <div class="kpi-label">整体CPI（同比）</div>
+    <div class="kpi-value">3.3%</div>
+    <div class="kpi-sub">高于3.0%目标中值 · 2025年12月</div>
+  </div>
+  <div class="kpi-card danger">
+    <div class="kpi-label">财政赤字</div>
+    <div class="kpi-value">−4.7%</div>
+    <div class="kpi-sub"><span class="kpi-delta-down">占GDP</span> · 2025年</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">经常账户</div>
+    <div class="kpi-value">+1.3%</div>
+    <div class="kpi-sub"><span class="kpi-delta-up">盈余</span> · 占GDP 2025年</div>
+  </div>
+  <div class="kpi-card warn">
+    <div class="kpi-label">政策利率</div>
+    <div class="kpi-value">6.25%</div>
+    <div class="kpi-sub">实际利率~300bp · MNB暂缓降息</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">10年期国债收益率</div>
+    <div class="kpi-value">7.10%</div>
+    <div class="kpi-sub">~250bp高于中东欧同侪 · 2026年4月</div>
+  </div>
+</div>""",
+    "snapshot_prose_zh": """    <div class="snapshot-subsection">
+      <h3>经济概况</h3>
+      <p>匈牙利是一个<strong>$2150亿经济体</strong>（2024年名义GDP），人口<strong>960万</strong>，人均GDP<strong>$22,400</strong>。产业基础集中于<strong>汽车及电动车电池、电子与信息通信技术、制药、食品加工及商业服务</strong>。主要贸易伙伴为<strong>德国、奥地利、中国、意大利和罗马尼亚</strong>——反映出深度嵌入德语区供应链以及日益增长的亚洲联系。</p>
+    </div>
+
+    <div class="snapshot-subsection">
+      <h3>制度框架</h3>
+      <p><strong>匈牙利国家银行（MNB）</strong>实行<strong>自由浮动</strong>汇率制度，正式通胀目标为<strong>3.0% ±1个百分点</strong>。匈牙利自2004年起为欧盟和北约成员国，但<strong>非欧元区成员</strong>——福林独立浮动，货币政策由国内自主制定。主权评级为<strong>BBB−（标普）/ Baa3（穆迪）/ BBB（惠誉）</strong>——仅高于垃圾级一个档次，若财政整顿停滞则面临负面展望风险。</p>
+    </div>
+
+    <div class="snapshot-subsection">
+      <h3>市场准入</h3>
+      <p>基准<strong>BUX股票指数</strong>（OTP银行权重约25%，市值约€140亿）远期市盈率约7.2倍——<strong>较中东欧同侪折价30–40%</strong>（WIG20约10.5倍，PX约12.0倍），反映了政治风险溢价。<strong>10年期国债收益率约7.1%</strong>，提供欧盟内最高的欧元计价利差收益，但~250bp的相对中东欧同侪利差反映了市场对财政可信度的担忧。<strong>EURHUF约365</strong>（2026年4月）大致符合基于REER的公允价值估算360–370。</p>
+    </div>""",
+    "narratives_zh": {
+        "real_activity": """<div class="narrative">
+  <div class="narrative-header">
+    <span class="narrative-label">宏观叙事</span>
+    <span class="narrative-date">2026年Q1评估</span>
+  </div>
+  <div class="narrative-body">
+    <div class="narrative-col">
+      <h4>已发生的变化</h4>
+      <p>匈牙利经济<strong>陷入低增长均衡</strong>。2025年Q4实际GDP同比仅+0.5%，较2024年初1.5%+的增速显著放缓。症结不在内需——随着通胀正常化，实际工资增长超过6%——而在于<strong>外部需求</strong>。德国吸纳了匈牙利约27%的出口，已连续六个季度停滞。工业生产同比-1.4%确认了制造业衰退，集中在汽车供应链（电池、内燃机动力系统）。失业率从3.8%的低谷上升至4.8%，但这部分反映了参与率上升而非纯粹的就业流失。</p>
+      <p>零售销售则呈现更富建设性的图景——受实际工资增长驱动，成交量保持正值。经济呈<strong>二元分化</strong>：出口制造业处于衰退之中，而国内服务业仍以趋势增速扩张。</p>
+    </div>
+    <div class="narrative-col">
+      <h4>需要关注</h4>
+      <ul>
+        <li><strong>欧盟资金释放</strong>——蒂萨政府能否解锁被冻结的€200亿+复苏基金和凝聚基金是最大催化剂。预计2026年下半年达成政治协议，但资金实际进入实体经济要到2027年。</li>
+        <li><strong>德国工业周期</strong>——关注IFO预期和德国PMI新订单。匈牙利制造业PMI在过去21个月中有18个月处于50以下；德国复苏是匈牙利制造业转向的必要条件。</li>
+        <li><strong>财政脉冲</strong>——2026年预算意味着大选周期前赤字扩大。风险在于产出缺口收窄之际实施顺周期财政扩张，迫使MNB在更长时间内维持更高利率。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="narrative-footer">
+    <strong>市场含义：</strong>增长结构有利于面向国内的股票（银行、电信）而非出口商（汽车供应商、制造商）。利率方面，疲弱的增长数据支持MNB最终降息，但服务业CPI粘性和财政风险使短端利率维持高位。福林夹在经常账户盈余支撑与欧盟资金不确定性之间——若资金落地，呈区间波动并带有鸽派倾向。
+  </div>
+</div>""",
+        "prices_wages": """<div class="narrative">
+  <div class="narrative-header">
+    <span class="narrative-label">宏观叙事</span>
+    <span class="narrative-date">2026年4月</span>
+  </div>
+  <div class="narrative-body">
+    <div class="narrative-col">
+      <h4>已发生的变化</h4>
+      <p>匈牙利的去通胀过程是<strong>中东欧地区最显著的成功案例</strong>——整体CPI从2023年Q1的25.7%骤降至2025年底的3.3%，目前仅比MNB 3.0%目标中值高出0.3个百分点，并显著落在±1个百分点容忍区间内。驱动因素具有机械性：能源基数效应、行政定价正常化，以及2022−2023年加息冲击带来的450bp需求压缩。</p>
+      <p>但构成至关重要。<strong>核心CPI为1.4%</strong>，表明真正的潜在去通胀——商品价格持平或下跌，甚至服务业通胀也在放缓。PPI已连续12个月以上处于通缩状态，预示着2026年上半年CPI将进一步走低。令人不安的数据是<strong>工资增长同比9.3%</strong>。虽然实际工资仅是在恢复2022−2023年损失的空间，但增速比生产率增长（趋势约1.5%）与通胀目标（3.0%）之和高出约4个百分点。这正是令MNB鹰派警惕的教科书式第二轮效应风险。</p>
+    </div>
+    <div class="narrative-col">
+      <h4>需要关注</h4>
+      <ul>
+        <li><strong>工资-CPI剪刀差</strong>——同比9.3%的工资增速与3.3%的CPI意味着实际工资增长约6%。如果这持续贯穿2026年工资谈判季（1-3月），服务业通胀将在下半年重新加速。这是MNB明确强调的红线。</li>
+        <li><strong>行政定价调整</strong>——蒂萨政府已暗示公用事业价格改革。如果2026年中取消电/气价格上限，预计整体CPI将出现1.5-2.0个百分点的一次性跳升。</li>
+        <li><strong>福林传导效应</strong>——EURHUF在365的水平较2024年约395的均值升值约8%。若进一步贬值5%，将通过进口渠道在两个季度内推升CPI约0.6个百分点。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="narrative-footer">
+    <strong>市场含义：</strong>去通胀趋势为MNB提供降息空间，但工资粘性将降息周期限制在~5.00-5.25%（当前6.25%）。HGB曲线短端定价未来12个月约75bp降息——大致公允。尾部风险在于工资数据迫使MNB在年底前维持6.25%不变，这将引发短端利率反弹，因降息预期被重新定价。做多2年期HGB对做空2年期Bund可干净表达这一观点。
+  </div>
+</div>""",
+        "external": """<div class="narrative">
+  <div class="narrative-header">
+    <span class="narrative-label">宏观叙事</span>
+    <span class="narrative-date">2026年4月</span>
+  </div>
+  <div class="narrative-body">
+    <div class="narrative-col">
+      <h4>已发生的变化</h4>
+      <p>匈牙利的对外部门<strong>结构性改善但被市场低估</strong>。经常账户从2022年能源价格峰值时的-8.1% GDP逆差转为2025年的+1.3%顺差——三年内调整约9个百分点。驱动因素：能源进口账单正常化（天然气价格从恐慌期下降约70%）、汽车出口增长（新增BMW/电动车电池产能），以及通胀冲击期间的国内需求压缩。</p>
+      <p>REER温和贬值（最新约114，低于2023年的约120），恢复2021-2022年通胀超调期间丧失的竞争力。但EURHUF波动剧烈——从2024年中约380，到Q4避险期间约412，再到欧盟资金乐观情绪推动下回到约365。外汇储备约€460亿覆盖4.5个月进口，充足但不算中东欧标准中的充裕（捷克持有约€1400亿储备，进口基数相近）。</p>
+    </div>
+    <div class="narrative-col">
+      <h4>需要关注</h4>
+      <ul>
+        <li><strong>欧盟转移支付</strong>——匈牙利2021-2027年复苏基金+凝聚基金总额约€360亿，迄今仅到位约€50亿。每释放€50亿批次将增加约GDP 0.8%的金融账户流入，通常推动福林升值2-3%。</li>
+        <li><strong>能源贸易条件</strong>——匈牙利天然气库存为65%（欧盟平均80%）。2026年Q4寒冬或俄乌运输中断将扩大进口账单。克罗地亚克尔克LNG终端提供部分多元化选择，但成本溢价。</li>
+        <li><strong>旅游业复苏</strong>——2025年旅游收入创纪录，贡献约GDP的2%。布达佩斯在质调基础上相对布拉格/维也纳定价偏低；进一步增长可期。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="narrative-footer">
+    <strong>市场含义：</strong>经常账户盈余提供了2021-2023年所缺失的结构性福林买盘。基于FEER/REER的EURHUF公允价值大概率在360-370——离现货不远。尾部事件：全面欧盟资金协议推动EURHUF至340-350。风险事件：无协议+能源冲击推动EURHUF回到400+。通过6个月EURHUF看跌价差（360/345）融资卖出410看涨期权表达福林走强观点——对欧盟资金催化剂具有非对称收益。
+  </div>
+</div>""",
+        "fiscal_sovereign": """<div class="narrative">
+  <div class="narrative-header">
+    <span class="narrative-label">宏观叙事</span>
+    <span class="narrative-date">2026年4月</span>
+  </div>
+  <div class="narrative-body">
+    <div class="narrative-col">
+      <h4>已发生的变化</h4>
+      <p>匈牙利财政状况是<strong>最主要的宏观脆弱性</strong>。2025年赤字为GDP的-4.7%，显著高于3.9%的目标及3%的马斯特里赫特参考值。这标志着连续第五年超过4%。超支驱动因素包括：大选前支出（家庭补贴、第13个月养老金）、能源补贴，以及HGB债务存量重新定价带来的利息成本上升。</p>
+      <p>总债务占GDP的74.6%呈上升趋势，比中东欧同侪平均水平高出约20个百分点（捷克约43%，罗马尼亚约49%）。利息支出目前约GDP的4.5%——欧盟最高——平均久期仅约4.5年，意味着财政状况对MNB利率路径高度敏感。10年期HGB收益率7.1%包含约250bp的中东欧同侪利差，反映了市场对财政可信度的折价。</p>
+    </div>
+    <div class="narrative-col">
+      <h4>需要关注</h4>
+      <ul>
+        <li><strong>蒂萨政府财政计划</strong>——这是已知的未知。新政府继承了结构性赤字，需要在整顿（IMF/WB建议）与扩张（大选后的政治诱惑）之间做出选择。2026年预算将于6月前公布；赤字目标将是市场可信度的首个考验。</li>
+        <li><strong>评级轨迹</strong>——三大评级机构均将匈牙利评为BBB-/Baa3，仅高出垃圾级一个档次。穆迪下次审查为2026年9月。任何机构的负面展望都将触发仅限投资级的被动减持（约$30-50亿HGB流出）。</li>
+        <li><strong>债务构成</strong>——HGB存量约25%为外币计价，主要是欧元。福林贬值通过重估渠道直接推升债务/GDP比率。这是使福林在避险期成为危机货币的自我强化机制。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="narrative-footer">
+    <strong>市场含义：</strong>HGB相对中东欧同侪250bp的利差补偿了真实的财政风险，但10年期7.1%的收益率提供了欧盟内最高的利差收益。交易策略：如果欧盟资金解锁且蒂萨政府提供可信的整顿计划，做多10年期HGB对做空10年期Bund（350bp利差）。但需为穆迪潜在降级做好头寸管理——尾部风险是在避险情景下收益率升至8.5-9.0%。利差扩大至400bp以上时止损。
+  </div>
+</div>""",
+        "monetary_financial": """<div class="narrative">
+  <div class="narrative-header">
+    <span class="narrative-label">宏观叙事</span>
+    <span class="narrative-date">2026年4月</span>
+  </div>
+  <div class="narrative-body">
+    <div class="narrative-col">
+      <h4>已发生的变化</h4>
+      <p>MNB实施了新兴市场历史上最激进的加息周期之一（2022年6.0%→18.0%），随后是谨慎的宽松周期，至<strong>2026年初将基准利率降至6.25%</strong>。按整体CPI平减的实际政策利率约为~300bp，属新兴市场最高之一。按任何泰勒规则估算，政策均属紧缩性。</p>
+      <p>传导机制正在发挥作用：私人信贷增长乏力，同比+1.2%（实际值为负），M3增长低迷，住房市场已降温。但MNB自2026年1月以来暂停降息，明确将工资数据和福林稳定性作为约束条件。会议纪要显示上次维持利率决定为5-4分歧，少数派支持降息25bp。EURHUF约365较2024年均值升值约8%，赋予MNB降息而不触发福林贬值的空间——但央行刻意保持谨慎，以在2021-2022年失去信誉后重建公信力。</p>
+    </div>
+    <div class="narrative-col">
+      <h4>需要关注</h4>
+      <ul>
+        <li><strong>MNB 5月会议（5月22日）</strong>——市场定价约60%的25bp降息概率。决定取决于3月工资数据（5月21日公布）。工资增速低于8.5%大概率触发降息；高于9.5%则意味着持续暂停。</li>
+        <li><strong>前瞻指引演变</strong>——MNB在2月去掉了"耐心、谨慎"的措辞。如果5月声明转向"数据依赖型宽松"，预计市场将在48小时内对下半年额外定价50bp降息。</li>
+        <li><strong>NBH vs NBP vs CNB</strong>——NBP维持5.75%不变，CNB为4.00%。MNB-NBP利差50bp按历史标准偏窄；如果NBP先降息（7月），随着利差压缩，HUF/PLN交叉汇率可能走阔3-5%。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="narrative-footer">
+    <strong>市场含义：</strong>福林套利交易（做多HUF对EUR或CHF）在当前利率下年化收益约300bp——在DM利率趋同的世界中具有吸引力。但该交易具有政治脆弱性：任何欧盟资金受挫或评级下调都会在一周内触发5-8%的福林贬值，抹去一年的套利收益。应相应控制套利头寸规模。我们倾向于通过短端表达观点：做多2年期HGB FRA（FRA 6x12）以捕捉降息周期，避免福林现货风险。
+  </div>
+</div>""",
+        "markets_valuation": """<div class="narrative">
+  <div class="narrative-header">
+    <span class="narrative-label">宏观叙事</span>
+    <span class="narrative-date">2026年4月</span>
+  </div>
+  <div class="narrative-body">
+    <div class="narrative-col">
+      <h4>已发生的变化</h4>
+      <p>BUX报41,610点（同比-2.9%），<strong>跑输中东欧同侪</strong>（WIG20 +5.4%，PX +3.1%）及更广泛的新兴市场股票（MSCI EM +6.2%）。跑输反映了一组集中的国内阻力：政治过渡不确定性、欧盟资金僵局，以及福林波动性使外国投资者保持观望。OTP银行（BUX权重约25%，市值约€140亿）是风向标——市净率约0.9倍，往绩市盈率约6.5倍，均处于5年区间低端。</p>
+      <p>估值逻辑并不隐晦：BUX远期市盈率约7.2倍，对比WIG20约10.5倍和PX约12.0倍。折价反映了约30-40%的政治风险溢价。如果欧盟资金解锁，历史上均值回归意味着BUX在12-18个月内上涨25-35%。但市场自2022年以来一直在等待这一催化剂。</p>
+    </div>
+    <div class="narrative-col">
+      <h4>需要关注</h4>
+      <ul>
+        <li><strong>OTP银行Q1业绩（5月16日）</strong>——净息差轨迹是关键指标。如果NIM压缩放缓（一致预期：环比3.85% vs 4.05%），则表明利率周期峰值正在转化为盈利稳定性。OTP还拥有大量独联体敞口（乌克兰、俄罗斯），这增加了大多数中东欧银行不具备的地缘政治叠加因素。</li>
+        <li><strong>欧盟资金催化剂</strong>——二元事件。RRF批次释放在3个季度内向投资管道增加约1.2% GDP。BUX历史上在积极欧盟资金公告后的当月上涨5-8%。</li>
+        <li><strong>外资持股</strong>——BUX自由流通股的外资持股已从约55%（2019年）降至约35%（2026年）。当催化剂到来时，对一个低配、低估指数的再平衡资金流入将是爆发性的——低流动性放大两个方向的波动。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="narrative-footer">
+    <strong>市场含义：</strong>BUX是对匈牙利政治经济正常化的高凸性押注。我们看到三种表达方式：（1）做多OTP银行股票对做空WIG20银行股——捕捉相对估值差距，同时对冲中东欧区域风险；（2）BUX 2026年12月看涨期权，行权价45,000——低波动率且催化剂窗口明确；（3）对于谨慎者——做多10年期HGB（利差收益），等待首个欧盟批次释放后的股票入市确认信号。头寸规模：这是NAV的2-3%交易，而非10%的信念押注。欧盟资金的二元风险意味着需按未来12个月什么都没有发生的情景来设臵头寸。
+  </div>
+</div>""",
+    },
 }
 
 # ═══ POLAND ═══
@@ -877,6 +1101,166 @@ COUNTRY_DATA["PL"] = {
   </div>
 </div>""",
     },
+    "subtitle_zh": "综合国别概览，包含宏观叙事与前瞻性投资定位观点",
+    "kpi_html_zh": """<div class="kpi-ribbon">
+  <div class="kpi-card">
+    <div class="kpi-label">实际GDP（同比）</div>
+    <div class="kpi-value">+2.8%</div>
+    <div class="kpi-sub"><span class="kpi-delta-up">中东欧领先</span> · 2025年Q4</div>
+  </div>
+  <div class="kpi-card warn">
+    <div class="kpi-label">整体CPI（同比）</div>
+    <div class="kpi-value">4.5%</div>
+    <div class="kpi-sub">高于2.5%目标 · 2025年12月</div>
+  </div>
+  <div class="kpi-card warn">
+    <div class="kpi-label">财政赤字</div>
+    <div class="kpi-value">−5.1%</div>
+    <div class="kpi-sub"><span class="kpi-delta-down">占GDP</span> · 2025年</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">经常账户</div>
+    <div class="kpi-value">+0.8%</div>
+    <div class="kpi-sub"><span class="kpi-delta-up">盈余</span> · 占GDP 2025年</div>
+  </div>
+  <div class="kpi-card warn">
+    <div class="kpi-label">政策利率</div>
+    <div class="kpi-value">5.75%</div>
+    <div class="kpi-sub">实际利率~1.25% · NBP暂缓降息</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">10年期PLN收益率</div>
+    <div class="kpi-value">5.90%</div>
+    <div class="kpi-sub">~130bp高于Bund · 2026年4月</div>
+  </div>
+</div>""",
+    "snapshot_prose_zh": """    <div class="snapshot-subsection">
+      <h3>经济概况</h3>
+      <p>波兰是<strong>中东欧最大经济体，GDP达$8450亿</strong>（2024年名义GDP），人口<strong>3680万</strong>，人均GDP<strong>$23,000</strong>。它是2008年全球金融危机期间唯一避免衰退的欧盟经济体，并在新冠疫情期间再次跑赢。产业基础涵盖<strong>汽车零部件及总装（欧洲最大汽车零部件出口国）、消费电子、IT服务、食品加工及煤炭/能源</strong>。主要贸易伙伴为<strong>德国、捷克、法国、英国和荷兰</strong>。波兰受益于庞大的内部市场、多元化的出口结构和结构性紧张的劳动力市场（失业率低于4%），支撑国内需求。</p>
+    </div>
+    <div class="snapshot-subsection">
+      <h3>制度框架</h3>
+      <p><strong>波兰国家银行（NBP）</strong>实行<strong>自由浮动</strong>汇率制度，正式通胀目标为<strong>2.5% ±1个百分点</strong>。波兰自2004年起为欧盟和北约成员国，但<strong>非欧元区成员</strong>——兹罗提独立浮动。主权信用评级为<strong>A−（标普）/ A2（穆迪）/ A−（惠誉）</strong>——中东欧最强，反映了波兰的多元化经济、可控债务（约50% GDP）和庞大的外汇储备（约€1700亿）。图斯克政府已部分解锁欧盟复苏基金（约€600亿）。</p>
+    </div>
+    <div class="snapshot-subsection">
+      <h3>市场准入</h3>
+      <p>基准<strong>WIG20指数</strong>远期市盈率约10.5倍——大致符合新兴欧洲同侪水平。<strong>10年期PLN国债收益率约5.9%</strong>，约130bp高于Bund——这一窄幅利差反映了波兰的评级优势及深厚的本地机构基础（养老金、保险）。<strong>EURPLN约4.30</strong>（2026年4月）接近5年均值。波兰拥有中东欧最深厚、最具流动性的资本市场——华沙证券交易所是该地区主要上市场所，所有上市公司总市值约€2000亿。</p>
+    </div>""",
+    "narratives_zh": {
+        "real_activity": """<div class="narrative">
+  <div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年Q1评估</span></div>
+  <div class="narrative-body">
+    <div class="narrative-col">
+      <h4>已发生的变化</h4>
+      <p>波兰是<strong>中东欧的增长领跑者</strong>——2025年实际GDP增长约2.8%，约为中东欧四国均值的两倍。增长模式独特而均衡：<strong>国内消费</strong>（实际工资增长4%+，失业率处于2.9%的结构性低位）、<strong>强劲投资</strong>（欧盟资金推动基础设施和国防支出占GDP 4%+），以及<strong>韧性出口</strong>，尽管德国制造业衰退。工业生产同比+2.1%——温和但为正，与匈牙利和捷克的收缩形成对比。</p>
+      <p>秘密武器是<strong>经济规模和多元化</strong>。波兰3700万人口提供了较小中东欧经济体所缺乏的内需缓冲。服务业（IT外包、共享服务、物流）以5%+的速度增长，吸收了制造业释放的劳动力。这种多引擎增长模式在中东欧罕见，是波兰获得该地区最高主权评级的结构性原因。</p>
+    </div>
+    <div class="narrative-col">
+      <h4>需要关注</h4>
+      <ul>
+        <li><strong>德国溢出效应</strong>——波兰对德国敞口低于捷克或匈牙利（对德出口约占总出口27%，对比捷克31%），但德国长期停滞最终将拖累制造业就业。关注PMI新出口订单。</li>
+        <li><strong>国防支出乘数</strong>——波兰国防支出约GDP的4.2%（北约最高），国内采购占比较大。这是持续的财政脉冲，贯穿建筑、制造和技术部门。</li>
+        <li><strong>劳动力供给约束</strong>——失业率2.9%，增长的约束不是需求而是劳动力供给。图斯克政府已放宽非欧盟移民工签（主要是乌克兰、白俄罗斯、印度），但政治敏感性上升。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="narrative-footer"><strong>市场含义：</strong>波兰相对中东欧同侪的增长溢价（约150bp GDP）证明了更紧的主权利差。基于增长分化做多PLN资产对CZK或HUF，但需注意波兰更大的财政赤字部分抵消了利率空间的增长优势。我们倾向于通过股票（WIG20银行+工业）而非利率来表达增长观点。</div>
+</div>""",
+        "prices_wages": """<div class="narrative">
+  <div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div>
+  <div class="narrative-body">
+    <div class="narrative-col">
+      <h4>已发生的变化</h4>
+      <p>波兰<strong>4.5%的CPI</strong>是中东欧四国中最高的，顽固地高于NBP 2.5%的目标，尽管从2023年18.4%的峰值已显著回落。粘性来自<strong>两个国内来源</strong>：（1）受劳动力稀缺经济中的工资传导推动，服务业通胀约6.5%；（2）行政能源价格——前政府的能源盾牌在2025年下半年部分解除，增加整体CPI约1.5个百分点。扣除能源和食品的核心CPI为3.8%，故事更富建设性但仍高于目标。</p>
+      <p><strong>工资增长同比11.2%</strong>是该地区名义值最高的。实际值约6.7%，正在推动消费但使服务业通胀维持高位。NBP自身的分析表明NAIRU约为3.5%——失业率2.9%，经济运行已超出充分就业。这是降息无法解决的结构性通胀脉冲。</p>
+    </div>
+    <div class="narrative-col">
+      <h4>需要关注</h4>
+      <ul>
+        <li><strong>能源价格自由化</strong>——图斯克政府面临选择：延长能源盾牌（财政成本约GDP的1.5%）或让其到期并接受一次性CPI跳升约1.0-1.5个百分点。该决定将决定CPI是收敛至约3.5%还是2026年全年维持在约5%。</li>
+        <li><strong>2026年Q1工资谈判季</strong>——1-3月工资结算季至关重要。如果2026年谈判结果低于9%（对比2025年11.2%），则表明放缓；如果加速，NBP可能需要加息。</li>
+        <li><strong>NBP沟通转变</strong>——行长Glapiński已从"无限期维持利率不变"转向"数据依赖"。市场定价2026年Q4降息25bp。这过于乐观；我们预计首次降息在2027年Q1。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="narrative-footer"><strong>市场含义：</strong>NBP-NBH利差（5.75%对6.25%）为50bp偏向波兰，但未补偿通胀差异。在汇率方面做空PLN对HUF——NBP将是最后一个降息的中东欧央行，支撑PLN利差收益，但粘性通胀意味着短端利率具有非对称上行风险。考虑做多2年期PLN FRA对做空2年期HUF。</div>
+</div>""",
+        "external": """<div class="narrative">
+  <div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div>
+  <div class="narrative-body">
+    <div class="narrative-col">
+      <h4>已发生的变化</h4>
+      <p>波兰的对外部门<strong>基本平衡</strong>——2025年经常账户录得GDP的+0.8%小额顺差，较2022年-2.5%逆差显著改善。驱动因素：（1）能源进口价格正常化推动贸易条件恢复；（2）强劲的服务出口（IT、运输、共享服务）录得约GDP+5%顺差；（3）欧盟转移支付流入（年均约GDP 3%）结构性支撑经常账户。</p>
+      <p>REER相对稳定，自2020年均值仅升值约3%——远低于CZK或HUF，反映NBP不愿让PLN走强侵蚀出口竞争力。<strong>外汇储备€1700亿</strong>是中东欧绝对值最大的，覆盖约7个月进口——任何指标均属充裕。NBP还建立了420吨黄金头寸（约储备的13%），为该地区最大。</p>
+    </div>
+    <div class="narrative-col">
+      <h4>需要关注</h4>
+      <ul>
+        <li><strong>欧盟资金流入</strong>——复苏基金拨付计划意味着2026年将有€120-150亿流入。每€50亿批次通常推动PLN升值1-2%。累积流入可能推动EURPLN从4.30至4.15。</li>
+        <li><strong>能源依赖</strong>——波兰仍约70%依赖煤电。能源转型（海上风电、核电、LNG进口基础设施）资本密集，需要持续的进口设备——中期内对贸易差额构成结构性拖累。</li>
+        <li><strong>地缘政治风险溢价</strong>——波兰的东翼敞口意味着PLN承载CZK和HUF所不具备的地缘政治风险溢价。该溢价在risk-on期间压缩，在risk-off期间急剧扩大。期权隐含EURPLN波动率约为EURCZK的1.5倍。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="narrative-footer"><strong>市场含义：</strong>基于FEER，PLN结构性低估（公允价值约4.10-4.20 EURPLN）。欧盟资金流入和NBP鹰派维持提供年均2-3%的稳步升值偏向。但地缘政治风险溢价意味着在risk-off中做空PLN是危险的——这是一笔需要耐心和头寸纪律的利差收益与收敛交易。12个月EURPLN远期4.25提供有吸引力的入场点。</div>
+</div>""",
+        "fiscal_sovereign": """<div class="narrative">
+  <div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div>
+  <div class="narrative-body">
+    <div class="narrative-col">
+      <h4>已发生的变化</h4>
+      <p>波兰的财政状况正在<strong>从相对强势地位恶化</strong>。2025年一般政府赤字为GDP的-5.1%，为2020年新冠疫情以来最宽。驱动因素：（1）国防支出占GDP的4.2%（约PLN 1600亿，高于2021年2.2%）；（2）能源价格盾牌（约GDP 1.5%成本）；（3）社会转移支付（扩大儿童福利、第13/14个月养老金）。这些大多是永久性的，非周期性。</p>
+      <p>然而，总债务<strong>约GDP的50%</strong>显著低于欧盟均值（约83%）和马斯特里赫特60%门槛。债务存量以PLN计价为主（约73%），拥有稳定的国内投资者基础（波兰养老基金和保险公司持有约55%的存量国债）。10年期收益率5.9%意味着仅约130bp的Bund利差——中东欧最窄——反映波兰A-评级和市场对债务可持续性的信心。</p>
+    </div>
+    <div class="narrative-col">
+      <h4>需要关注</h4>
+      <ul>
+        <li><strong>EDP时间表</strong>——波兰处于欧盟过度赤字程序之中（与大多数新冠疫情后欧盟国家一样）。布鲁塞尔要求的财政调整路径为年均约GDP 0.5%。在维持国防支出的同时实现这将需要税收措施或其他领域支出削减——在大选前夕政治困难（总统选举2025年，议会2027年）。</li>
+        <li><strong>国防支出轨迹</strong>——政府承诺至2030年维持国防支出在GDP的3%以上。如果通过债务而非收入融资，每年对赤字增加约1-1.5个百分点。评级机构正在关注——国防以外的整顿失败可能触发负面展望。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="narrative-footer"><strong>市场含义：</strong>波兰紧窄的主权利差建立在评级优势和深厚的国内PLN国债买盘之上。风险在于缓慢的财政侵蚀在2-3年内侵蚀评级缓冲。我们尚未到做空POLGB的地步——国内买盘太深——但利差压缩交易（做多POLGB对Bund）已经结束。中性久期，偏向在2年期做多，该期限NBP预期定价错误。</div>
+</div>""",
+        "monetary_financial": """<div class="narrative">
+  <div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div>
+  <div class="narrative-body">
+    <div class="narrative-col">
+      <h4>已发生的变化</h4>
+      <p>NBP激进加息（2021-22年0.1%→6.75%），但是<strong>最不情愿宽松的中东欧央行</strong>。自2023年10月以来参考利率一直维持在<strong>5.75%</strong>，仅2023年9月进行了一次25bp的象征性降息，且部分被逆转。行长Glapiński的言论一贯鹰派，强调财政扩张、工资增长和能源价格正常化带来的通胀风险。</p>
+      <p>整体CPI 4.5%，参考利率5.75%，<strong>事前实际利率仅约1.25%</strong>——中东欧四国中最低。按历史标准这不特别紧缩，因此NBP并不急于降息。私人信贷增长健康，同比+4.5%，M3增长7%，银行业资本充足（CAR约19%）。传导机制运转正常，但经济正在增长中穿过紧缩立场。</p>
+    </div>
+    <div class="narrative-col">
+      <h4>需要关注</h4>
+      <ul>
+        <li><strong>首次降息时机</strong>——市场定价2026年Q4降息25bp。我们认为2027年Q1更为现实。NBP希望在放松前看到CPI低于3.5%且工资增长低于8%。这两个条件在2026年底前均不太可能满足。</li>
+        <li><strong>NBP vs NBP（波兰对匈牙利）</strong>——波兰NBP和匈牙利MNB正走向分化路径。MNB更接近降息（实际利率约300bp，增长疲弱）。NBP-MNB利差可能从当前50bp扩大至100bp+，支撑PLN对HUF。</li>
+        <li><strong>Glapiński继任</strong>——行长任期至2028年，但图斯克政府的政治压力是背景风险。任何削弱NBP独立性的举动（不太可能但并非不可能）将触发PLN急剧抛售。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="narrative-footer"><strong>市场含义：</strong>NBP鹰派维持支撑PLN套利交易。做多PLN对EUR年化收益约200bp（5.75%对3.25% ECB存款利率），并伴有欧盟资金的升值顺风。头寸拥挤——BIS数据显示投机性PLN头寸处于70百分位——但基本面支持。设定5%止损；地缘政治风险溢价可能剧烈重定价。</div>
+</div>""",
+        "markets_valuation": """<div class="narrative">
+  <div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div>
+  <div class="narrative-body">
+    <div class="narrative-col">
+      <h4>已发生的变化</h4>
+      <p><strong>WIG20约2,450点（同比+5.4%）</strong>是表现最佳的中东欧股票基准，受银行重估（PKO BP、Pekao、Santander BP——合计约40%权重）和IT/科技板块强劲盈利（CD Projekt、Allegro）推动。WIG20远期市盈率约10.5倍符合10年中位数，但相对发达市场欧洲（约13倍）折价——折价反映地缘政治风险溢价，而非基本面。</p>
+      <p>结构性故事是波兰不断深化的资本市场。华沙证券交易所（GPW）一直是中东欧地区的主要股票市场，主板和NewConnect合计总市值约€2000亿。自由流通股的外资持股约40%（低于2017年约55%），国内养老基金和散户填补了空缺——在risk-off中起到稳定作用。银行业是盈利引擎：波兰银行市净率约1.3倍，ROE约14%。</p>
+    </div>
+    <div class="narrative-col">
+      <h4>需要关注</h4>
+      <ul>
+        <li><strong>银行盈利见顶？</strong>——随着利率周期转向，NIM压缩已经开始。2025年Q4平均NIM为3.65%，较一年前3.85%下降。如果NBP在2026年下半年降息（非我们的基准但为市场共识），银行盈利面临阻力。防御性转向保险（PZU）和公用事业（PGE）将随之而来。</li>
+        <li><strong>IPO管道</strong>——图斯克政府已暗示有意上市国有企业少数股权。成功的IPO（如PGE Renewables、PKP Cargo分拆）将加深市场并吸引被动流入。</li>
+        <li><strong>地缘政治折价</strong>——波兰股权风险溢价（ERP）约7.5%，大致比发达市场欧洲高出200bp。如果安全局势稳定（北约承诺可信，乌克兰停火持久），100bp的ERP压缩意味着指数上行约12%。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="narrative-footer"><strong>市场含义：</strong>WIG20提供中东欧股票中最佳的风险/回报。GDP增长领先、深厚资本市场、A-评级和多元化行业结构（银行、科技、能源、零售）的组合使波兰成为中东欧股票的核心配置。做多WIG20对做空BUX干净地表达增长/财政分化。2026年12月WIG20看涨期权2,600行权价提供ERP压缩叙事的廉价期权性。</div>
+</div>""",
+    },
 }
 
 # ═══ CZECHIA ═══
@@ -1086,6 +1470,59 @@ COUNTRY_DATA["CZ"] = {
     <strong>Market Implication:</strong> The PX is a defensive, income-oriented allocation — not a growth bet. Long PX vs short DAX expresses the view that Czech banks will benefit from CNB rate stability while German auto/manufacturing faces structural headwinds. The 5% dividend yield provides a cushion in a sideways market. For growth exposure, look to Poland; for deep value, look to Hungary; for income and safety, Czechia is the destination.
   </div>
 </div>""",
+    },
+    "subtitle_zh": "综合国别概览，包含宏观叙事与前瞻性投资定位观点",
+    "kpi_html_zh": """<div class="kpi-ribbon">
+  <div class="kpi-card">
+    <div class="kpi-label">实际GDP（同比）</div>
+    <div class="kpi-value">+1.1%</div>
+    <div class="kpi-sub"><span class="kpi-delta-down">低于趋势</span> · 2025年Q4</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">整体CPI（同比）</div>
+    <div class="kpi-value">2.6%</div>
+    <div class="kpi-sub">在2.0% ±1pp区间内 · 2025年12月</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">财政赤字</div>
+    <div class="kpi-value">−2.2%</div>
+    <div class="kpi-sub"><span class="kpi-delta-up">中东欧四国最佳</span> · 2025年</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">经常账户</div>
+    <div class="kpi-value">+2.8%</div>
+    <div class="kpi-sub"><span class="kpi-delta-up">强劲盈余</span> · 占GDP 2025年</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">政策利率</div>
+    <div class="kpi-value">4.00%</div>
+    <div class="kpi-sub">实际利率~1.4% · CNB降息周期中</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">10年期CZK收益率</div>
+    <div class="kpi-value">4.20%</div>
+    <div class="kpi-sub">~40bp低于PLN · 2026年4月</div>
+  </div>
+</div>""",
+    "snapshot_prose_zh": """    <div class="snapshot-subsection">
+      <h3>经济概况</h3>
+      <p>捷克是一个<strong>$3450亿经济体</strong>（2024年名义GDP），人口<strong>1090万</strong>，<strong>人均GDP$31,600为中东欧最高</strong>（按购买力平价调整后高于意大利和西班牙）。该经济体是欧盟内制造业最密集的，集中于<strong>汽车OEM及供应链（斯柯达/大众、现代、丰田）、机械与精密工程、电子产品以及啤酒与饮料</strong>。主要贸易伙伴为<strong>德国、斯洛伐克、波兰、法国和奥地利</strong>——捷克是所有中东欧经济体中融入德国供应链最深的，使其成为德国工业周期的杠杆式押注。</p>
+    </div>
+    <div class="snapshot-subsection">
+      <h3>制度框架</h3>
+      <p><strong>捷克国家银行（CNB）</strong>实行<strong>管理浮动</strong>汇率制度，正式通胀目标为<strong>2.0% ±1个百分点</strong>。捷克自2004年起为欧盟和北约成员国，但<strong>非欧元区成员</strong>。主权信用评级为<strong>AA−（标普）/ Aa3（穆迪）/ AA−（惠誉）</strong>——中东欧最高，反映了财政保守主义（债务约43% GDP）、持续的经常账户盈余以及该地区人均资本存量最高。CNB是最透明的中东欧央行，公开发布自身利率预测路径。</p>
+    </div>
+    <div class="snapshot-subsection">
+      <h3>市场准入</h3>
+      <p>基准<strong>PX指数</strong>（约1,600点）远期市盈率约12.0倍——相对中东欧同侪溢价，反映捷克AA-评级。PX由银行（Erste、Komerční banka——约45%权重）和公用事业（ČEZ——约20%权重）主导，赋予其防御性、高股息特征。<strong>10年期CZK国债收益率约4.2%</strong>——低于PLN和HGB收益率，符合评级序列。<strong>EURCZK约25.0</strong>（2026年4月）较疫情前均值约25.5贬值约8%，反映CNB激进降息和能源进口的贸易条件拖累。</p>
+    </div>""",
+    "narratives_zh": {
+        "real_activity": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年Q1评估</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克<strong>陷入浅增长均衡</strong>。2025年Q4实际GDP同比仅+1.1%，为中东欧四国中最弱。经济被自身结构性优势拖累：<strong>制造业约GDP的25%</strong>（欧盟最高），而德国制造业衰退对捷克工业的不成比例打击。工业生产-2.0%反映了汽车供应链——斯柯达/大众一家就占GDP约5%和出口约10%。订单出货比处于2020年以来最低。</p><p>但国内经济比标题数据表现得更有韧性。<strong>失业率2.6%</strong>（欧盟最低）意味着劳动力市场是结构性支撑——任何想要工作的人都有工作。随着通胀正常化，实际工资增长约4%，家庭消费在2025年每个季度均对GDP有正贡献。问题在于投资：企业在德国不确定性和CNB降息周期尚未转化为信贷复苏的背景下推迟资本支出决策。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>德国IFO周期</strong>——捷克PMI在过去27个月中有24个月处于50以下。唯一重要的变量是德国制造业订单。IFO预期持续复苏至95以上将是做多捷克资产的信号。</li><li><strong>斯柯达电动车转型</strong>——斯柯达正投资€56亿于电动化（2024-28年），2025-26年将推出三款新电动车型。这些车型的成败将决定捷克未来十年约10%出口的轨迹。</li><li><strong>CNB宽松传导</strong>——CNB已从峰值降息300bp（7.0%→4.0%），但私人信贷增长实际值仍为负。传导滞后表明宽松的增长脉冲最早在2026年下半年才会显现。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>捷克是对德国工业周期的高贝塔投资。如果德国复苏，CZK和捷克股票在6个月内跑赢中东欧同侪5-8%。如果德国持续停滞，捷克资产跑输。我们将做多CZK对EUR头寸定位于对德国复苏的看涨期权——设定紧止损在EURCZK 25.50。股市方面，做多PX银行（Erste）对做空DAX汽车代表了同一主题的相对价值表达，降低了方向性。</div></div>""",
+        "prices_wages": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克在通胀方面实现了<strong>中东欧最软着陆</strong>。整体CPI同比<strong>2.6%</strong>处于CNB 2.0% ±1pp容忍区间内，较2023年初18.0%的峰值显著下降。去通胀堪称教科书：能源基数效应贡献了约70%的降幅，其余30%来自2021-23年加息冲击带来的真实需求压缩。核心CPI 2.3%为中东欧最低。</p><p>CNB自2023年12月以来激进降息（7.0%→4.0%）正是基于这一去通胀成功。但<strong>工资增长同比7.4%</strong>在一个失业率2.6%的经济体中，提出了宽松是否过早的疑问。CNB自身预测认为CPI将在2026年中缓慢降至2.0%，但工资脉冲和封闭的产出缺口表明通胀将更接近2.5-3.0%——在区间内但高于目标中值。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>CNB终端利率争论</strong>——市场定价终端利率为3.25%（再降75bp）。CNB工作人员预测隐含3.50%。风险在于终端利率落在3.75-4.00%——服务业通胀3.8%和7%+的工资增长不支持低于3.5%的政策利率。</li><li><strong>房地产市场再加速</strong>——布拉格房价在加息周期中下跌约10%，随着按揭利率降至4.5%以下已企稳并开始回升。新一轮房地产繁荣将传导至虚拟租金（约占CPI篮子的10%），维持核心CPI高位。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>CZK利率市场定价了过多宽松——75bp降息对比我们25-50bp的预测。做多2年期CZK FRA对做空2年期EUR以表达CNB终端利率高于定价的观点。汇率方面，CNB降息周期已将CZK从24.0推弱至25.0——大量坏消息已定价。如果降息周期比预期更早结束，EURCZK可能重定价至24.50。</div></div>""",
+        "external": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克拥有<strong>持续经常账户盈余</strong>——2025年为GDP的+2.8%，中东欧四国中最大。这是结构性特征：制造业出口引擎（汽车、机械）产生约GDP+8%的商品顺差，超额抵消了初次收入逆差（外资企业的股息和利润汇回）。仅对德国的贸易顺差（年约€150亿）就约相当于捷克GDP的4%。</p><p>外汇储备<strong>€1400亿</strong>，相对GDP是欧盟最高之一（约GDP的40%），为2013-17年EURCZK下限政策的遗留。CNB一直以负利差（约200bp，融资做空CZK负债对应做多EUR资产）运行这一庞大储备头寸，产生按市值计价波动，但提供了对CZK投机攻击的不可撼动的防御。REER自2023年峰值贬值约5%，恢复了通胀超调期间丧失的竞争力。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>储备减持？</strong>——行长Michl已表示有意逐步缩减外汇储备存量。任何CNB外汇抛售（买入EURCZK）将削弱CZK。但实际操作空间有限——市场会将激进抛售视为政策错误。</li><li><strong>汽车出口周期</strong>——捷克汽车出口约GDP的8%。德国汽车注册量下降10%对捷克GDP产生约0.8%的拖累。电动车转型增加结构性不确定性——捷克供应链针对内燃机优化。</li><li><strong>能源依赖</strong>——捷克已在很大程度上摆脱俄罗斯天然气（通过荷兰/德国终端LNG、挪威管道天然气），但仍依赖能源进口。2022-23年能源冲击的贸易条件拖累已基本逆转。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>经常账户盈余是结构性CZK买盘，但被CNB鸽派立场和外汇储备头寸的负利差所抵消。CZK不是纯粹的利差交易。我们倾向于通过主权信用表达捷克外部实力（基于AA-对BBB-的~300bp利差，做多CZGB对HGB）。CZK是区间交易：25.20买入，24.50卖出。</div></div>""",
+        "fiscal_sovereign": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克是<strong>中东欧的财政冠军</strong>。2025年一般政府赤字仅GDP的-2.2%，为中东欧四国中最窄，低于3%的马斯特里赫特参考值。总理Fiala领导下的SPOLU联合政府兑现了财政整顿：通过增税（企业所得税、银行/能源暴利税）和支出约束，赤字从2021年的-5.1%减半。</p><p>总债务<strong>约GDP的43%</strong>为欧盟最低，显著低于马斯特里赫特60%门槛。债务以CZK计价为主（约90%），拥有稳定的国内投资者基础。10年期收益率4.2%意味着仅约40bp低于波兰——鉴于捷克高出两个评级的优势，这一紧窄利差引人注目。紧窄利差部分具有技术性：CZGB市场较POLGB更小、流动性更差，限制了外资参与。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>ANO财政政策</strong>——如果ANO赢得2025年议会选举（民调显示很可能），财政政策可能转向扩张。Babiš的政纲细节不足但支出承诺充沛（养老金加薪、基础设施）。市场尚未对此风险定价。</li><li><strong>国防支出提升</strong>——捷克已承诺GDP的2%国防支出（北约目标），高于2023年1.3%。增量约GDP 0.7%的成本从当前财政状况来看可控，但增加结构性赤字。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>4.2%的CZGB提供中东欧主权信用中最佳的风险调整利差收益。AA-评级、43%债务/GDP和持续经常账户盈余使其成为区域避风港。做多10年期CZGB对做空10年期HGB（约290bp利差）——评级差异（5个档次）相对利差差异尚未完全定价。主要风险是ANO驱动的财政扩张；密切关注选举民调。</div></div>""",
+        "monetary_financial": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>CNB是<strong>中东欧最激进降息者</strong>，自2023年12月以来以一系列50bp和25bp步伐将政策利率从7.0%降至<strong>4.00%</strong>。降息周期数据依赖且沟通良好——CNB公开发布预测路径（中东欧独有的透明度实践）有效引导了市场预期。实际政策利率约1.4%正接近CNB对中性的估计（名义约3.0-3.5%，或实际约1.0%）。</p><p>传导机制正在发挥作用但存在滞后。按揭利率已从约6.5%降至约4.5%，推动试探性住房市场复苏。但<strong>私人信贷增长同比+2.1%</strong>依然乏力——企业不借贷是因为不投资，而非信贷成本高昂。CNB面临经典的推绳子问题：当德国需求缺位时，降息无法强迫企业投资。M3增长5.5%健康但非扩张性。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>终端利率着陆区</strong>——CNB工作人员分析认为中性利率为3.0-3.5%。考虑到劳动力市场紧俏和工资增长，我们认为3.75%更为现实。未来2-3次会议（每次预计降息25bp）将定义终端利率争论。</li><li><strong>汇率传导风险</strong>——降息周期中CZK已从24.0走弱至25.0。进一步走至25.50+（来自企业、能源进口商或CNB储备操作的EURCZK买入）将通过进口价格增加CPI约0.3个百分点。这是降息的自我限制机制。</li><li><strong>CNB vs ECB</strong>——CNB-ECB利差已从300bp压缩至75bp。如果CNB进一步降息而ECB维持不变，CZK的利差吸引力减弱，可能进一步削弱CZK。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>CNB降息周期正接近尾声。短端CZK利率定价75bp更多降息；我们看25-50bp。做多2年期CZK对做空2年期EUR——CNB将在市场预期之前停止降息，而ECB将比市场预期降息更多。汇率方面，EURCZK 25.0基于利差接近公允价值。带有鹰派CNB偏向的区间交易。</div></div>""",
+        "markets_valuation": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p><strong>PX指数约1,600点（同比+3.1%）</strong>在中东欧表现居中——好于BUX（-2.9%）但落后WIG20（+5.4%）。PX是一个集中、防御性指数：<strong>Erste银行和Komerční banka（合计约45%权重）</strong>以及<strong>ČEZ（约20%权重）</strong>占主导，赋予该指数金融+公用事业偏向和约5%的股息率——为中东欧最高。远期市盈率约12.0倍相对WIG20（约10.5倍）和BUX（约7.2倍）溢价，由AA-主权评级和主导成分股的盈利稳定性证明合理。</p><p>PX实际上是一个<strong>带有股权增强的债券替代品</strong>。Erste和KB的市净率分别约1.2倍和1.5倍，ROE约13-15%——这些是在整合市场中运营良好、盈利可观的银行。ČEZ作为主导公用事业，从核能和燃煤发电中产生稳定现金流，但随着碳成本上升和可再生能源投资需求升级，面临结构性转型风险。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>Erste银行中东欧敞口</strong>——Erste约50%收入来自捷克境外（主要是奥地利、罗马尼亚、斯洛伐克、匈牙利）。它是多元化中东欧金融投资标的，而非纯粹的捷克押注。关注罗马尼亚和匈牙利的NIM轨迹。</li><li><strong>ČEZ核电招标</strong>——政府新建核反应堆（Dukovany II，约€70亿）是捷克历史上最大的基础设施项目。ČEZ是指定开发商，但融资结构（政府担保、购电协议）尚未解决。有利的解决方案将是重要积极催化剂。</li><li><strong>股息可持续性</strong>——PX约5%的股息率是其主要吸引力。Erste和KB的派息比率约50-60%，可以盈利支撑。ČEZ的股息波动更大（与电力价格挂钩）。关注电价进一步下跌时的削减风险。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>PX是防御性、收入导向型配置——而非增长押注。做多PX对做空DAX表达了捷克银行将受益于CNB利率稳定，而德国汽车/制造业面临结构性阻力的观点。5%股息率在横盘市场提供缓冲。寻求增长敞口看波兰；深度价值看匈牙利；收入与安全，捷克是目的地。</div></div>""",
     },
 }
 
@@ -1299,6 +1736,59 @@ COUNTRY_DATA["RO"] = {
   </div>
 </div>""",
     },
+    "subtitle_zh": "综合国别概览，包含宏观叙事与前瞻性投资定位观点",
+    "kpi_html_zh": """<div class="kpi-ribbon">
+  <div class="kpi-card">
+    <div class="kpi-label">实际GDP（同比）</div>
+    <div class="kpi-value">+2.2%</div>
+    <div class="kpi-sub"><span class="kpi-delta-up">高于中东欧均值</span> · 2025年Q4</div>
+  </div>
+  <div class="kpi-card warn">
+    <div class="kpi-label">整体CPI（同比）</div>
+    <div class="kpi-value">5.1%</div>
+    <div class="kpi-sub">中东欧四国最高 · 2025年12月</div>
+  </div>
+  <div class="kpi-card danger">
+    <div class="kpi-label">财政赤字</div>
+    <div class="kpi-value">−6.3%</div>
+    <div class="kpi-sub"><span class="kpi-delta-down">过度赤字程序</span> · 2025年</div>
+  </div>
+  <div class="kpi-card danger">
+    <div class="kpi-label">经常账户</div>
+    <div class="kpi-value">−6.8%</div>
+    <div class="kpi-sub"><span class="kpi-delta-down">双赤字</span> · 占GDP 2025年</div>
+  </div>
+  <div class="kpi-card warn">
+    <div class="kpi-label">政策利率</div>
+    <div class="kpi-value">6.50%</div>
+    <div class="kpi-sub">实际利率~1.4% · BNR暂缓降息</div>
+  </div>
+  <div class="kpi-card danger">
+    <div class="kpi-label">10年期RON收益率</div>
+    <div class="kpi-value">7.50%</div>
+    <div class="kpi-sub">欧盟最高 · 2026年4月</div>
+  </div>
+</div>""",
+    "snapshot_prose_zh": """    <div class="snapshot-subsection">
+      <h3>经济概况</h3>
+      <p>罗马尼亚是一个<strong>$3700亿经济体</strong>（2024年名义GDP），人口<strong>1900万</strong>，人均GDP<strong>$19,500</strong>。产业基础集中于<strong>汽车零部件及线束（Dacia/Renault、Ford、Continental）、IT服务与软件外包、石油与天然气（OMV Petrom、黑海海上），以及农业食品</strong>。主要贸易伙伴为<strong>德国、意大利、法国、匈牙利和保加利亚</strong>。</p>
+    </div>
+    <div class="snapshot-subsection">
+      <h3>制度框架</h3>
+      <p><strong>罗马尼亚国家银行（BNR）</strong>实行<strong>管理浮动</strong>汇率制度，正式通胀目标为<strong>2.5% ±1个百分点</strong>。主权信用评级为<strong>BBB−（标普）/ Baa3（穆迪）/ BBB−（惠誉）</strong>。行长Mugur Isarescu（自1990年起任职）是世界上任期最长的央行行长，也是罗马尼亚宏观稳定的制度锚。</p>
+    </div>
+    <div class="snapshot-subsection">
+      <h3>市场准入</h3>
+      <p>基准<strong>BET指数</strong>远期市盈率约8.5倍——中东欧四国中最低，约6%的股息率。<strong>10年期RON国债收益率约7.5%</strong>——欧盟最高。<strong>EURRON约4.97</strong>（2026年4月）一直非常稳定，反映了BNR的管理浮动体制和行长信誉的锚定效应。</p>
+    </div>""",
+    "narratives_zh": {
+        "real_activity": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年Q1评估</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>罗马尼亚2025年<strong>增长+2.2%</strong>——高于中东欧四国均值，并由<strong>消费繁荣</strong>驱动，这既是优势也是脆弱性。实际工资增长7%+推动零售销售（+5.3%），但因消费吸纳进口而扩大贸易逆差。工业生产持平（+0.5%）——制造业并未参与消费繁荣。</p><p>增长模式<strong>不可持续地偏向消费而非投资</strong>。固定资本形成仅约GDP的22%，受制于欧盟资金吸收率低和政策不可预测性。IT服务行业（+12%，约GDP的6%）是结构性增长明星，但规模不足以抵消消费主导增长带来的双赤字拖累。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>财政整顿影响</strong>——EDP要求年均赤字削减约GDP的0.5%。如果通过增税实施，消费引擎将熄火。增值税上调1个百分点将增加CPI约1.5个百分点并削减GDP约0.5个百分点。</li><li><strong>欧盟资金吸收</strong>——罗马尼亚分配了€290亿复苏基金。吸收能力而非资金可得性是约束条件。</li><li><strong>Neptune Deep最终投资决定</strong>——OMV Petrom的黑海天然气项目（约€40亿投资）是罗马尼亚历史上最大的FDI项目。积极决定将改变能源贸易差额并在建设期间增加约0.5% GDP。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>罗马尼亚的增长是中东欧四国中最脆弱的。我们倾向于通过股票（BET银行+能源）而非利率或汇率表达增长观点。消费故事支撑零售和银行盈利；双赤字风险限制ROMGB久期偏好。</div></div>""",
+        "prices_wages": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>罗马尼亚拥有<strong>中东欧最严重的通胀问题</strong>。整体CPI<strong>5.1%</strong>是中东欧四国中最高，比BNR 2.5%目标中值高出一倍多。该通胀是<strong>本土产生且源于财政</strong>——公共部门加薪15%+、最低工资增长和养老金指数化，向接近产能运行的经济注入了巨大需求刺激。</p><p>核心CPI<strong>4.8%</strong>说明问题——服务业通胀7.2%，由劳动力成本驱动。BNR 6.50%的政策利率给出的实际利率仅约1.4%——几乎不具紧缩性。PPI同比+3.2%——传导链并非如匈牙利或捷克那样通缩。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>财政驱动型通胀</strong>——罗马尼亚的通胀是财政现象而非货币现象。只要政府运行6%+赤字，CPI将维持高位。财政整顿是实现去通胀的必要条件。</li><li><strong>汇率传导</strong>——约40%的外汇传导率为中东欧最高。BNR的管理浮动（EURRON约4.97）是通胀锚。每贬值5%增加CPI 2个百分点。</li><li><strong>2026年工资谈判</strong>——政府已暗示较小涨幅。如果兑现，是首次需求侧去通胀信号。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>罗马尼亚通胀是做空ROMGB交易。实际收益率仅勉强为正。做多2年期RON IRS对做多2年期PLN表达通胀分化。EURRON波动率被压制，做多跨式期权是廉价保险。</div></div>""",
+        "external": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>罗马尼亚的对外部门是<strong>中东欧最脆弱的</strong>。经常账户赤字2025年为GDP的-6.8%，为欧盟最宽。赤字是结构性的：商品贸易逆差约-8% GDP，因消费繁荣吸纳进口而制造业出口停滞。净FDI从约3% GDP下降至约1.5% GDP。外汇储备€630亿覆盖约4.5个月进口。</p><p>经常账户赤字的融资越来越依赖欧盟转移支付和证券投资流入而非稳定FDI。BNR的管理浮动使EURRON在约4.97保持稳定，但这种稳定以消耗储备为代价。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>外部融资缺口</strong>——罗马尼亚每年需融资约€250亿经常账户赤字。融资缺口施压RON。</li><li><strong>Neptune Deep影响</strong>——积极最终投资决定将减少天然气进口账单约€20亿/年（约GDP 0.5%）。</li><li><strong>评级机构日历</strong>——穆迪下次审查为2026年10月。投资级底线脆弱。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>罗马尼亚的外部脆弱性是中东欧定价最不充分的风险。通过6个月跨式期权做多EURRON波动率是廉价保险。经常账户赤字意味着ROMGB应享有更高风险溢价。</div></div>""",
+        "fiscal_sovereign": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>罗马尼亚的财政状况是<strong>除危机案例外欧盟最差的</strong>。2025年赤字为GDP的-6.3%，为中东欧四国中最差。罗马尼亚自2020年以来一直处于EDP中，且错失了每个财政目标。驱动因素是结构性的：顺周期公共工资政策、养老金成本、税收征管薄弱（税收对GDP比率约27%，欧盟最低）。</p><p>总债务约GDP的53%相对温和但上升迅速——从2019年35%升至2025年53%。债务存量约50%为EUR计价——高外汇占比使债务动态对RON贬值敏感。10年期收益率7.5%的约320bp Bund利差为欧盟最宽。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>EDP合规</strong>——负面评估可能触发暂停欧盟凝聚基金（约€30-50亿/年）。</li><li><strong>养老金改革</strong>——养老金体系是结构性财政问题。世行和IMF建议转向积分式指数化。</li><li><strong>选举周期风险</strong>——极右翼强劲表现引入新的政治风险溢价。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>罗马尼亚是中东欧主权信用中最高风险、最高利差收益的交易。7.5%的10年期ROMGB提供欧盟最高名义收益率，但320bp Bund利差补偿了危机风险。如果你相信BNR锚定能维持，做多ROMGB对做空HGB。我们中性——财政-金融螺旋的风险不可忽视。</div></div>""",
+        "monetary_financial": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>BNR是<strong>中东欧最保守的央行</strong>——将利率从1.25%加至7.0%，并仅降息50bp至<strong>6.50%</strong>，为中东欧四国最高。行长Mugur Isarescu的制度基因塑造了BNR的鹰派偏向。CPI为5.1%，实际政策利率仅约1.4%——几乎不具紧缩性。</p><p>传导机制被管理浮动部分削弱，加上高金融欧元化（约35%银行存款以EUR计价）和国有银行影响。私人信贷增长同比+6.1%为中东欧最高——消费繁荣正在被融资。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>BNR降息周期</strong>——市场定价2026年Q3首次降息。我们认为2027年Q1更现实。</li><li><strong>Isarescu继任</strong>——他最终离任是罗马尼亚宏观稳定的最大制度风险。</li><li><strong>欧元化风险</strong>——RON贬值直接增加未对冲EUR借款人的偿债负担。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>BNR鹰派维持支撑RON套利交易（年化约325bp）。我们倾向于通过短端表达观点：做多2年期RON FRA以捕捉延迟的降息周期。EURRON波动率过于便宜——做多6个月跨式期权是正利差对冲。</div></div>""",
+        "markets_valuation": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p><strong>BET指数约18,000点（同比+8.2%）</strong>是表现最佳的中东欧股票基准，驱动因素：银行盈利受益于消费繁荣和高名义利率（ROE为18-22%），能源板块重估（Neptune Deep期权性），以及约6%股息率。远期市盈率约8.5倍为中东欧最低——相对WIG20折价40%。</p><p>但折价反映双赤字宏观风险、低流动性和国有企业治理担忧。BET是高贝塔、高风险、高回报命题。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>Banca Transilvania（TLV）</strong>——罗马尼亚最大银行，ROE约22%。如果实现软着陆，是主要受益者。</li><li><strong>OMV Petrom与Neptune Deep</strong>——二元期权。如果项目推进，产量到2030年翻倍，股价重估30-40%。</li><li><strong>新兴市场指数升级</strong>——升级至二级新兴市场地位将触发约$5亿被动流入。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>如果你能承受双赤字尾部风险，BET是中东欧股票中最高确信度的做多。做多BET银行（TLV）对做空HGB银行（OTP）捕捉消费增长分化。头寸规模：NAV的1-2%。对于谨慎者，7.5%的ROMGB做多并设紧止损。</div></div>""",
+    },
 }
 
 
@@ -1331,13 +1821,16 @@ def build_v3(country_code: str) -> Path:
     trade_match = re.search(r'<section class="panel" id="trade">.*?</section>', html, re.DOTALL)
     trade_section_html = trade_match.group() if trade_match else ""
 
-    # Build section panels with narratives
+    # Build section panels with narratives (bilingual)
     sections_html = ""
     for sec_id in SECTION_ORDER:
-        title, badge = SECTION_TITLES[sec_id]
-        blurb = SECTION_BLURBS[sec_id]
+        title_en, badge_en = SECTION_TITLES[sec_id]
+        title_zh, badge_zh = SECTION_TITLES_ZH[sec_id]
+        blurb_en = SECTION_BLURBS[sec_id]
+        blurb_zh = SECTION_BLURBS_ZH[sec_id]
         chart_ids = SECTION_CHART_MAP[sec_id]
-        narrative = data["narratives"].get(sec_id, "")
+        narrative_en = data["narratives"].get(sec_id, "")
+        narrative_zh = data.get("narratives_zh", {}).get(sec_id, "")
 
         charts_html = ""
         for cid in chart_ids:
@@ -1346,10 +1839,11 @@ def build_v3(country_code: str) -> Path:
 
         sections_html += f"""
 <section class="panel" id="{sec_id}">
-  <h2>{title} <span class="section-badge">{badge}</span></h2>
-  <div class="blurb">{blurb}</div>
+  <h2><span data-lang="en">{title_en}</span><span data-lang="zh">{title_zh}</span> <span class="section-badge"><span data-lang="en">{badge_en}</span><span data-lang="zh">{badge_zh}</span></span></h2>
+  <div class="blurb"><span data-lang="en">{blurb_en}</span><span data-lang="zh">{blurb_zh}</span></div>
   <div class="charts">{charts_html}</div>
-  {narrative}
+  <div data-lang="en">{narrative_en}</div>
+  <div data-lang="zh">{narrative_zh}</div>
 </section>
 """
 
@@ -1375,7 +1869,7 @@ def build_v3(country_code: str) -> Path:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{data["name"]} — Macro Dashboard (Narrative Edition)</title>
+<title>{data["name"]} — Macro Dashboard</title>
 {plotly_tag}
 <style>{CSS}</style>
 </head>
@@ -1386,64 +1880,89 @@ def build_v3(country_code: str) -> Path:
   <div class="country-nav">
     {country_nav}
   </div>
-  <div>
+  <div style="display:flex;align-items:center;">
     <span class="meta-item">{data["name"]} · {data["iso"]} · {data["cb"]}</span>
+    <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">中文</button>
   </div>
 </div>
 
 <div class="container">
 
 <header>
-  <h1>{data["name"]} — Macro Dashboard</h1>
-  <div class="subtitle">{data["subtitle"]}</div>
+  <h1><span data-lang="en">{data["name"]} — Macro Dashboard</span><span data-lang="zh">{data["name"]} — 宏观仪表板</span></h1>
+  <div class="subtitle"><span data-lang="en">{data["subtitle"]}</span><span data-lang="zh">{data.get("subtitle_zh", data["subtitle"])}</span></div>
   <div class="meta-row">
-    <div class="meta-chip">Framework: <strong>IMF FPP × GS Indicators × Buy-side PM</strong></div>
-    <div class="meta-chip">Rating: <strong>{data["rating"]}</strong></div>
-    <div class="meta-chip">FX Regime: <strong>{data["fxregime"]}</strong></div>
-    <div class="meta-chip">Target: <strong>{data["inftarget"]}</strong></div>
+    <div class="meta-chip"><span data-lang="en">Framework:</span><span data-lang="zh">框架:</span> <strong>IMF FPP × GS Indicators × Buy-side PM</strong></div>
+    <div class="meta-chip"><span data-lang="en">Rating:</span><span data-lang="zh">评级:</span> <strong>{data["rating"]}</strong></div>
+    <div class="meta-chip"><span data-lang="en">FX Regime:</span><span data-lang="zh">汇率制度:</span> <strong>{data["fxregime"]}</strong></div>
+    <div class="meta-chip"><span data-lang="en">Target:</span><span data-lang="zh">目标:</span> <strong>{data["inftarget"]}</strong></div>
   </div>
 </header>
 
-{data["kpi_html"]}
+<div data-lang="en">{data["kpi_html"]}</div>
+<div data-lang="zh">{data.get("kpi_html_zh", data["kpi_html"])}</div>
 
 <!-- TOC -->
 <div class="toc">
-  <a href="#snapshot">§1 Snapshot</a>
-  <a href="#real_activity">§2 Real Activity</a>
-  <a href="#prices_wages">§3 Prices & Wages</a>
-  <a href="#external">§4 External</a>
-  <a href="#fiscal_sovereign">§5 Fiscal & Sovereign</a>
-  <a href="#monetary_financial">§6 Monetary & Financial</a>
-  <a href="#markets_valuation">§7 Markets & Valuation</a>
+  <a href="#snapshot"><span data-lang="en">§1 Snapshot</span><span data-lang="zh">§1 概览</span></a>
+  <a href="#real_activity"><span data-lang="en">§2 Real Activity</span><span data-lang="zh">§2 实际经济活动</span></a>
+  <a href="#prices_wages"><span data-lang="en">§3 Prices & Wages</span><span data-lang="zh">§3 物价与工资</span></a>
+  <a href="#external"><span data-lang="en">§4 External</span><span data-lang="zh">§4 外部部门</span></a>
+  <a href="#fiscal_sovereign"><span data-lang="en">§5 Fiscal & Sovereign</span><span data-lang="zh">§5 财政与主权信用</span></a>
+  <a href="#monetary_financial"><span data-lang="en">§6 Monetary & Financial</span><span data-lang="zh">§6 货币与金融</span></a>
+  <a href="#markets_valuation"><span data-lang="en">§7 Markets & Valuation</span><span data-lang="zh">§7 市场与估值</span></a>
 </div>
 
 <!-- Snapshot -->
 <div class="snapshot-panel" id="snapshot">
-  <h2>§1 Country Snapshot</h2>
-  <div class="blurb">Structural parameters that set the frame: economic size, sovereign rating, FX regime, the central bank's mandate, and qualitative country context. These are the slow-moving variables against which the cyclical sections below should be read.</div>
+  <h2><span data-lang="en">§1 Country Snapshot</span><span data-lang="zh">§1 国别概览</span></h2>
+  <div class="blurb"><span data-lang="en">Structural parameters that set the frame: economic size, sovereign rating, FX regime, the central bank's mandate, and qualitative country context. These are the slow-moving variables against which the cyclical sections below should be read.</span><span data-lang="zh">设定框架的结构性参数: 经济规模、主权评级、汇率制度、央行职责及定性国别背景。这些是慢变量，后续周期性章节应以此为背景解读。</span></div>
   <div class="snapshot-prose">
-    {data["snapshot_prose"]}
+    <div data-lang="en">{data["snapshot_prose"]}</div>
+    <div data-lang="zh">{data.get("snapshot_prose_zh", data["snapshot_prose"])}</div>
   </div>
 </div>
 
-""" + cb_section + trade_section_html + f"""
+""" + "<div data-lang=\"en\">" + cb_section + trade_section_html + "</div>" + f"""
 
 <!-- Chart Sections with Narrative Commentary -->
 {sections_html}
 
 <footer>
   <div class="attribution">
-    Country Primer v3 · Data via openecon-data MCP, ECB, Eurostat, World Bank, Yahoo Finance · Charts: Plotly
+    <span data-lang="en">Country Primer v3 · Data via openecon-data MCP, ECB, Eurostat, World Bank, Yahoo Finance · Charts: Plotly</span>
+    <span data-lang="zh">Country Primer v3 · 数据来源: openecon-data MCP, ECB, Eurostat, World Bank, Yahoo Finance · 图表: Plotly</span>
   </div>
   <div class="disclaimer">
-    <strong>Disclaimer:</strong> This is a research artefact produced for analytical purposes, not investment advice.
-    All positioning views expressed are illustrative of the analytical framework and should not be construed as
-    trade recommendations. Past performance does not guarantee future results. Macro narratives reflect the
-    author's assessment as of the generation date and may change without notice.
+    <span data-lang="en"><strong>Disclaimer:</strong> This is a research artefact produced for analytical purposes, not investment advice. All positioning views expressed are illustrative of the analytical framework and should not be construed as trade recommendations. Past performance does not guarantee future results. Macro narratives reflect the author's assessment as of the generation date and may change without notice.</span>
+    <span data-lang="zh"><strong>免责声明:</strong> 本文为用于分析目的之研究产出，不构成投资建议。所有投资定位观点均为分析框架的示例性表达，不应被解释为交易建议。过往业绩不保证未来结果。宏观叙事反映作者在生成日期的评估，可能随时变化，恕不另行通知。</span>
   </div>
 </footer>
 
 </div>
+
+<script>
+(function() {{
+  var saved = localStorage.getItem('cp-lang');
+  if (saved === 'zh') {{
+    document.documentElement.lang = 'zh';
+    document.getElementById('lang-btn').textContent = 'English';
+  }}
+}})();
+function toggleLang() {{
+  var html = document.documentElement;
+  var btn = document.getElementById('lang-btn');
+  if (html.lang === 'en') {{
+    html.lang = 'zh';
+    btn.textContent = 'English';
+    localStorage.setItem('cp-lang', 'zh');
+  }} else {{
+    html.lang = 'en';
+    btn.textContent = '中文';
+    localStorage.setItem('cp-lang', 'en');
+  }}
+}}
+</script>
 </body>
 </html>
 """
