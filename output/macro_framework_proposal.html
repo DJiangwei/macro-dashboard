@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposal: Comprehensive Macro Indicator Framework for CEE-4</title>
+<style>
+:root {
+  --bg: #f4f5f7; --fg: #1a1f36; --muted: #6b7280;
+  --primary: #0f3b5e; --border: #e2e4e9; --card: #ffffff;
+  --card-alt: #f8f9fb; --accent: #b8860b; --danger: #c62828;
+  --success: #2e7d32; --highlight: #e8f0fe;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --radius: 8px; --radius-sm: 5px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 0; background: var(--bg); color: var(--fg);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+.topbar {
+  background: var(--primary); color: #fff;
+  padding: 10px 32px; display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.topbar .brand { font-weight: 700; font-size: 15px; }
+.topbar .brand span { color: #ffd966; }
+.topbar a { color: #ffd966; text-decoration: none; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 28px 24px 60px; }
+
+header {
+  background: linear-gradient(135deg, var(--primary) 0%, #1a5680 100%);
+  border-radius: var(--radius); padding: 30px 36px; margin-bottom: 28px;
+  color: #fff; box-shadow: var(--shadow-md);
+}
+header h1 { margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.3px; }
+header .subtitle { font-size: 14px; opacity: 0.85; margin-top: 8px; line-height: 1.6; }
+header .meta-row { display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap; }
+header .meta-chip {
+  background: rgba(255,255,255,0.12); border-radius: 20px;
+  padding: 5px 16px; font-size: 12px;
+}
+header .meta-chip strong { color: #ffd966; }
+
+.section-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); margin-bottom: 22px;
+  box-shadow: var(--shadow-sm); overflow: hidden;
+}
+.section-card-header {
+  background: var(--primary); color: #fff;
+  padding: 14px 24px; display: flex; align-items: center; gap: 12px;
+}
+.section-card-header h2 { margin: 0; font-size: 16px; font-weight: 600; }
+.section-card-header .badge {
+  font-size: 10px; background: rgba(255,255,255,0.2);
+  padding: 3px 10px; border-radius: 12px; font-weight: 500; letter-spacing: 0.3px;
+}
+.section-card-body { padding: 20px 24px; }
+
+.toc {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px;
+}
+.toc a {
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--primary); text-decoration: none;
+  padding: 6px 14px; border-radius: 20px; font-size: 12px;
+  font-weight: 500; transition: all 0.15s;
+}
+.toc a:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+table {
+  width: 100%; border-collapse: collapse; font-size: 12.5px;
+}
+thead th {
+  text-align: left; padding: 8px 10px; background: var(--card-alt);
+  color: var(--muted); font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.5px; border-bottom: 2px solid var(--border);
+  position: sticky; top: 0;
+}
+tbody td { padding: 8px 10px; border-bottom: 1px solid #f0f1f3; vertical-align: top; }
+tbody tr:hover td { background: #fafbfc; }
+
+.tag { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; white-space: nowrap; }
+.tag-new { background: #e8f5e9; color: #2e7d32; }
+.tag-existing { background: #e8f0fe; color: #0f3b5e; }
+.tag-gold { background: #fef9e7; color: #b8860b; }
+
+.src-badge { font-size: 10px; padding: 2px 7px; border-radius: 3px; white-space: nowrap; font-weight: 500; }
+.src-eurostat { background: #e8f0fe; color: #1a5680; }
+.src-ecb { background: #e8f0fe; color: #1a5680; }
+.src-national { background: #fef9e7; color: #b8860b; }
+.src-bis { background: #f3e5f5; color: #6a1b9a; }
+.src-wb { background: #e8f5e9; color: #2e7d32; }
+.src-market { background: #fce4ec; color: #c62828; }
+.src-other { background: #f4f5f7; color: #6b7280; }
+
+.framework-ref {
+  background: var(--highlight); border-left: 4px solid var(--primary);
+  padding: 12px 18px; margin-bottom: 20px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 13px; color: var(--primary); line-height: 1.7;
+}
+
+/* Priority legend */
+.priority-1 { border-left: 3px solid #c62828; }
+.priority-2 { border-left: 3px solid #b8860b; }
+.priority-3 { border-left: 3px solid #6b7280; }
+
+.ind-id { font-family: "SF Mono", "Fira Code", monospace; font-size: 11px; color: var(--primary); font-weight: 600; }
+.ind-name { font-weight: 500; }
+
+.summary-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px; margin-bottom: 28px;
+}
+.summary-card {
+  background: var(--card); border-radius: var(--radius); padding: 16px 20px;
+  text-align: center; border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+}
+.summary-card .num { font-size: 28px; font-weight: 700; color: var(--primary); }
+.summary-card .label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+h3 { font-size: 15px; color: var(--primary); margin: 28px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+
+footer {
+  margin-top: 40px; padding: 24px 0; text-align: center;
+  border-top: 1px solid var(--border); color: var(--muted); font-size: 11px;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">Country Primer <span>v4 Proposal</span></div></a>
+  <div><a href="../index.html">← Dashboard</a> · <a href="macro_indicators.html">Current Dictionary</a></div>
+</div>
+
+<div class="container">
+
+<header>
+  <h1>Proposed Macro Indicator Framework for CEE-4</h1>
+  <div class="subtitle">
+    A comprehensive expansion of the Country Primer indicator set, based on IMF Financial Programming Framework (FPP),
+    IMF Financial Soundness Indicators (FSI), GS Global Leading Indicators methodology, and ING THINK CEE research practice.
+    All proposed indicators are accessible via free, reliable sources with CEE-4 coverage.
+  </div>
+  <div class="meta-row">
+    <div class="meta-chip">Framework: <strong>IMF FPP × FSI × FSAP × Buy-side</strong></div>
+    <div class="meta-chip">Jurisdictions: <strong>HU · PL · CZ · RO</strong></div>
+    <div class="meta-chip">Sources: <strong>Eurostat · ECB SDW · BIS · National CBs</strong></div>
+    <div class="meta-chip">Free Access: <strong>100%</strong></div>
+  </div>
+</header>
+
+<!-- ═══ SUMMARY ═══ -->
+<div class="summary-grid">
+  <div class="summary-card"><div class="num">21 → 48</div><div class="label">Core Indicators (existing → proposed)</div></div>
+  <div class="summary-card"><div class="num">10</div><div class="label">New Sectional Domains</div></div>
+  <div class="summary-card"><div class="num">5</div><div class="label">Reliable Free Data Sources</div></div>
+  <div class="summary-card"><div class="num">P1 · P2 · P3</div><div class="label">Priority Tiers</div></div>
+</div>
+
+<!-- ═══ TOC ═══ -->
+<div class="toc">
+  <a href="#framework">Framework Design</a>
+  <a href="#sources">Data Sources</a>
+  <a href="#sec1">§1 Real Activity</a>
+  <a href="#sec2">§2 Prices & Wages</a>
+  <a href="#sec3">§3 External Sector</a>
+  <a href="#sec4">§4 Fiscal & Sovereign</a>
+  <a href="#sec5">§5 Monetary & Financial</a>
+  <a href="#sec6">§6 Markets & Valuation</a>
+  <a href="#sec7">§7 Financial Stability</a>
+  <a href="#sec8">§8 Demographics</a>
+  <a href="#sec9">§9 Political Economy</a>
+  <a href="#implementation">Implementation</a>
+</div>
+
+<!-- ═══ FRAMEWORK ═══ -->
+<div class="section-card" id="framework">
+  <div class="section-card-header"><h2>Framework Design Principles</h2></div>
+  <div class="section-card-body">
+
+    <div class="framework-ref">
+      <strong>Guiding philosophy:</strong> The current 7-section structure (Real → Prices → External → Fiscal → Monetary → Markets) follows the classic IMF Financial Programming Framework (FPP) flow. This proposal <strong>deepens</strong> each existing section and adds sections for <strong>Financial Stability, Demographics, and Political Economy</strong> — domains that are structural drivers for CEE assets but currently absent. All proposed indicators are available from free, machine-accessible sources (Eurostat API, ECB SDW, BIS API, national central bank statistical portals). No Bloomberg/Reuters terminal required.
+    </div>
+
+    <h3>Professional Frameworks Referenced</h3>
+    <table>
+      <thead><tr><th>Framework</th><th>Institution</th><th>What We Adopt</th></tr></thead>
+      <tbody>
+        <tr><td>Financial Programming Framework (FPP)</td><td>IMF</td><td>4-sector consistency: real, fiscal, monetary, external with flow-stock reconciliation</td></tr>
+        <tr><td>Financial Soundness Indicators (FSI)</td><td>IMF</td><td>Banking sector health metrics: CAR, NPL ratio, LDR, ROA/ROE</td></tr>
+        <tr><td>Global Leading Indicators (GLI)</td><td>Goldman Sachs</td><td>Composite leading indicators: PMI, ESI, CLI, yield curve slope</td></tr>
+        <tr><td>ING THINK CEE Research</td><td>ING</td><td>Wage-CPI spiral monitoring, EU funds absorption rates, FX passthrough coefficients</td></tr>
+        <tr><td>Early Warning System (EWS)</td><td>IMF/EC</td><td>Reserve adequacy metrics (ARA), external financing gaps, REER misalignment</td></tr>
+        <tr><td>BIS International Banking Statistics</td><td>BIS</td><td>Cross-border claims, locational banking stats by counterparty country</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ DATA SOURCES ═══ -->
+<div class="section-card" id="sources">
+  <div class="section-card-header"><h2>Data Sources: Reliability & Accessibility</h2></div>
+  <div class="section-card-body">
+
+    <table>
+      <thead><tr><th>Source</th><th>Access</th><th>API?</th><th>Coverage</th><th>Best For</th><th>Reliability</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Eurostat</strong></td>
+          <td>Free · eurostat.ec.europa.eu</td>
+          <td>Yes (REST/JSON)</td>
+          <td>Full CEE-4</td>
+          <td>GDP, CPI, IP, labour, trade, fiscal, demographics</td>
+          <td><span style="color:#2e7d32;">Gold standard</span></td>
+        </tr>
+        <tr>
+          <td><strong>ECB Statistical Data Warehouse</strong></td>
+          <td>Free · sdw.ecb.europa.eu</td>
+          <td>Yes (REST/JSON)</td>
+          <td>Full CEE-4</td>
+          <td>Interest rates, monetary aggregates, FX, yields, balance of payments</td>
+          <td><span style="color:#2e7d32;">Gold standard</span></td>
+        </tr>
+        <tr>
+          <td><strong>BIS Statistics</strong></td>
+          <td>Free · stats.bis.org</td>
+          <td>Yes (REST/CSV)</td>
+          <td>Full CEE-4</td>
+          <td>REER, credit-to-GDP gaps, cross-border banking, debt securities</td>
+          <td><span style="color:#2e7d32;">Gold standard</span></td>
+        </tr>
+        <tr>
+          <td><strong>National Central Banks</strong></td>
+          <td>Free · MNB/NBP/CNB/BNR sites</td>
+          <td>Mixed</td>
+          <td>Per country</td>
+          <td>Policy rates, minutes, financial stability reports, FX reserves detail</td>
+          <td><span style="color:#b8860b;">Official but fragmented</span></td>
+        </tr>
+        <tr>
+          <td><strong>World Bank WDI</strong></td>
+          <td>Free · data.worldbank.org</td>
+          <td>Yes (REST)</td>
+          <td>Full CEE-4</td>
+          <td>Structural indicators, governance, development metrics</td>
+          <td><span style="color:#2e7d32;">Reliable, lower frequency</span></td>
+        </tr>
+        <tr>
+          <td><strong>OECD Data</strong></td>
+          <td>Free · data.oecd.org</td>
+          <td>Yes (SDMX)</td>
+          <td>HU, PL, CZ (not RO)</td>
+          <td>CLI, PMI, productivity, structural reform indicators</td>
+          <td><span style="color:#b8860b;">Good, partial CEE coverage</span></td>
+        </tr>
+        <tr>
+          <td><strong>openecon-data MCP</strong></td>
+          <td>Free (via MCP tool)</td>
+          <td>Yes</td>
+          <td>Full CEE-4</td>
+          <td>Multi-source aggregation, already integrated</td>
+          <td><span style="color:#b8860b;">Aggregator, verify vs primary</span></td>
+        </tr>
+        <tr>
+          <td><strong>Yahoo Finance</strong></td>
+          <td>Free · finance.yahoo.com</td>
+          <td>Yes (yfinance)</td>
+          <td>Full CEE-4</td>
+          <td>Equity indices, FX spot, some bond ETFs</td>
+          <td><span style="color:#c62828;">Market data, check vs primary</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══ §1 REAL ACTIVITY — EXPANDED ═══ -->
+<div class="section-card" id="sec1">
+  <div class="section-card-header">
+    <h2>§1 Real Activity & Growth</h2>
+    <span class="badge">coincident + leading · 同步+领先</span>
+  </div>
+  <div class="section-card-body">
+
+    <table>
+      <thead><tr><th style="width:40px">P</th><th style="width:30px">#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Freq</th><th>Source</th><th>Status</th></tr></thead>
+      <tbody>
+        <!-- P1 — Core GDP decomposition -->
+        <tr class="priority-1"><td>P1</td><td>1</td><td class="ind-id">real_gdp_yoy</td><td class="ind-name">Real GDP Growth (YoY %)</td><td>%</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>2</td><td class="ind-id">real_gdp_qoq</td><td class="ind-name">Real GDP Growth (QoQ % SA)</td><td>%</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>3</td><td class="ind-id">gdp_components</td><td class="ind-name">GDP by Expenditure (C+I+G+NX contribution)</td><td>pp / %</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>4</td><td class="ind-id">gdp_per_capita</td><td class="ind-name">GDP per Capita (EUR, PPS-adjusted vs EU27)</td><td>EUR / Index</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P1 — Industry & Production -->
+        <tr class="priority-1"><td>P1</td><td>5</td><td class="ind-id">industrial_production_yoy</td><td class="ind-name">Industrial Production (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>6</td><td class="ind-id">manufacturing_pmi</td><td class="ind-name">Manufacturing PMI (S&P Global)</td><td>Index</td><td>M</td><td><span class="src-badge src-other">S&P Global</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>7</td><td class="ind-id">capacity_utilization</td><td class="ind-name">Capacity Utilization Rate (Manufacturing)</td><td>%</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P1 — Consumption & Retail -->
+        <tr class="priority-1"><td>P1</td><td>8</td><td class="ind-id">retail_sales_yoy</td><td class="ind-name">Retail Sales Volume (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>9</td><td class="ind-id">consumer_confidence</td><td class="ind-name">Consumer Confidence Indicator</td><td>Balance</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>10</td><td class="ind-id">economic_sentiment</td><td class="ind-name">Economic Sentiment Indicator (ESI)</td><td>Index</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P1 — Labour Market -->
+        <tr class="priority-1"><td>P1</td><td>11</td><td class="ind-id">unemployment_rate</td><td class="ind-name">Harmonised Unemployment Rate</td><td>%</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>12</td><td class="ind-id">employment_growth</td><td class="ind-name">Employment Growth (YoY %)</td><td>%</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>13</td><td class="ind-id">participation_rate</td><td class="ind-name">Labour Force Participation Rate</td><td>%</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>14</td><td class="ind-id">vacancy_rate</td><td class="ind-name">Job Vacancy Rate</td><td>%</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P2 — Investment & Construction -->
+        <tr class="priority-2"><td>P2</td><td>15</td><td class="ind-id">gross_fixed_capital</td><td class="ind-name">Gross Fixed Capital Formation (% GDP / YoY %)</td><td>%</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>16</td><td class="ind-id">construction_production</td><td class="ind-name">Construction Production (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>17</td><td class="ind-id">fdi_inflows</td><td class="ind-name">FDI Inflows (% of GDP)</td><td>% GDP</td><td>Q / A</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P3 — Leading Indicators -->
+        <tr class="priority-3"><td>P3</td><td>18</td><td class="ind-id">oecd_cli</td><td class="ind-name">OECD Composite Leading Indicator</td><td>Index</td><td>M</td><td><span class="src-badge src-other">OECD</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-3"><td>P3</td><td>19</td><td class="ind-id">ifo_expectations</td><td class="ind-name">Germany IFO Business Expectations (CEE proxy)</td><td>Index</td><td>M</td><td><span class="src-badge src-other">Ifo Institute</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-3"><td>P3</td><td>20</td><td class="ind-id">truck_km_index</td><td class="ind-name">Road Freight Transport Index</td><td>Index</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §2 PRICES & WAGES — EXPANDED ═══ -->
+<div class="section-card" id="sec2">
+  <div class="section-card-header">
+    <h2>§2 Prices & Wages</h2>
+    <span class="badge">forward-looking · 领先指标</span>
+  </div>
+  <div class="section-card-body">
+
+    <table>
+      <thead><tr><th style="width:40px">P</th><th style="width:30px">#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Freq</th><th>Source</th><th>Status</th></tr></thead>
+      <tbody>
+        <!-- P1 — CPI decomposition -->
+        <tr class="priority-1"><td>P1</td><td>1</td><td class="ind-id">cpi_yoy</td><td class="ind-name">Headline HICP (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>2</td><td class="ind-id">core_cpi_yoy</td><td class="ind-name">Core HICP ex-Energy & Food (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>3</td><td class="ind-id">services_cpi_yoy</td><td class="ind-name">Services HICP (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>4</td><td class="ind-id">goods_cpi_yoy</td><td class="ind-name">Non-Energy Industrial Goods HICP (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>5</td><td class="ind-id">energy_cpi_yoy</td><td class="ind-name">Energy HICP (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>6</td><td class="ind-id">food_cpi_yoy</td><td class="ind-name">Food HICP (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P1 — Pipeline -->
+        <tr class="priority-1"><td>P1</td><td>7</td><td class="ind-id">ppi_yoy</td><td class="ind-name">Producer Price Index (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>8</td><td class="ind-id">import_prices_yoy</td><td class="ind-name">Import Price Index (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P1 — Wages -->
+        <tr class="priority-1"><td>P1</td><td>9</td><td class="ind-id">avg_wage_yoy</td><td class="ind-name">Average Nominal Wage Growth (YoY %)</td><td>%</td><td>Q / M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>10</td><td class="ind-id">real_wage_yoy</td><td class="ind-name">Real Wage Growth (CPI-deflated, YoY %)</td><td>%</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>11</td><td class="ind-id">unit_labour_cost</td><td class="ind-name">Unit Labour Cost (YoY %)</td><td>%</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>12</td><td class="ind-id">minimum_wage</td><td class="ind-name">Statutory Minimum Wage (EUR/month)</td><td>EUR</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P2 — Inflation Expectations -->
+        <tr class="priority-2"><td>P2</td><td>13</td><td class="ind-id">inflation_expectations</td><td class="ind-name">Consumer Inflation Expectations (1y forward)</td><td>%</td><td>M / Q</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>14</td><td class="ind-id">breakeven_5y5y</td><td class="ind-name">5y5y Inflation Swap Rate</td><td>%</td><td>D</td><td><span class="src-badge src-market">Bloomberg/Refinitiv</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P3 — Housing -->
+        <tr class="priority-3"><td>P3</td><td>15</td><td class="ind-id">house_price_index</td><td class="ind-name">House Price Index (YoY %)</td><td>%</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-3"><td>P3</td><td>16</td><td class="ind-id">administered_prices</td><td class="ind-name">Share of Administered Prices in CPI Basket</td><td>%</td><td>A</td><td><span class="src-badge src-national">National CB</span></td><td><span class="tag tag-new">new</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §3 EXTERNAL SECTOR — EXPANDED ═══ -->
+<div class="section-card" id="sec3">
+  <div class="section-card-header">
+    <h2>§3 External Sector</h2>
+    <span class="badge">structural + vulnerability · 结构性+脆弱性</span>
+  </div>
+  <div class="section-card-body">
+
+    <table>
+      <thead><tr><th style="width:40px">P</th><th style="width:30px">#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Freq</th><th>Source</th><th>Status</th></tr></thead>
+      <tbody>
+        <!-- P1 — Current Account -->
+        <tr class="priority-1"><td>P1</td><td>1</td><td class="ind-id">current_account_pct_gdp</td><td class="ind-name">Current Account Balance (% GDP)</td><td>% GDP</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>2</td><td class="ind-id">trade_balance</td><td class="ind-name">Goods Trade Balance (EUR bn)</td><td>EUR bn</td><td>M</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>3</td><td class="ind-id">services_balance</td><td class="ind-name">Services Balance (EUR bn)</td><td>EUR bn</td><td>M / Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>4</td><td class="ind-id">income_balance</td><td class="ind-name">Primary & Secondary Income Balance (% GDP)</td><td>% GDP</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P1 — FX & Reserves -->
+        <tr class="priority-1"><td>P1</td><td>5</td><td class="ind-id">fx_reserves</td><td class="ind-name">Official FX Reserves (EUR bn)</td><td>EUR bn</td><td>M</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>6</td><td class="ind-id">ara_metric</td><td class="ind-name">IMF ARA Reserve Adequacy Metric (% of composite)</td><td>%</td><td>A</td><td><span class="src-badge src-bis">BIS / IMF</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>7</td><td class="ind-id">short_term_ext_debt</td><td class="ind-name">Short-Term External Debt (% of Reserves)</td><td>%</td><td>Q</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P1 — REER & Competitiveness -->
+        <tr class="priority-1"><td>P1</td><td>8</td><td class="ind-id">reer</td><td class="ind-name">Real Effective Exchange Rate (CPI-based, 2010=100)</td><td>Index</td><td>M</td><td><span class="src-badge src-bis">BIS</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>9</td><td class="ind-id">neer</td><td class="ind-name">Nominal Effective Exchange Rate</td><td>Index</td><td>M</td><td><span class="src-badge src-bis">BIS</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>10</td><td class="ind-id">fx_vs_eur</td><td class="ind-name">Exchange Rate vs EUR (spot)</td><td>EUR/XXX</td><td>D</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>11</td><td class="ind-id">fx_implied_vol</td><td class="ind-name">3M Implied FX Volatility (ATM)</td><td>%</td><td>D</td><td><span class="src-badge src-market">Bloomberg/Refinitiv</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P2 — External Financing -->
+        <tr class="priority-2"><td>P2</td><td>12</td><td class="ind-id">iip_position</td><td class="ind-name">Net International Investment Position (% GDP)</td><td>% GDP</td><td>Q / A</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>13</td><td class="ind-id">gross_ext_debt</td><td class="ind-name">Gross External Debt (% GDP)</td><td>% GDP</td><td>Q</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>14</td><td class="ind-id">bis_cross_border</td><td class="ind-name">BIS Cross-Border Bank Claims on Country (USD bn)</td><td>USD bn</td><td>Q</td><td><span class="src-badge src-bis">BIS</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P3 — Energy -->
+        <tr class="priority-3"><td>P3</td><td>15</td><td class="ind-id">energy_import_dependency</td><td class="ind-name">Energy Import Dependency (% of gross consumption)</td><td>%</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-3"><td>P3</td><td>16</td><td class="ind-id">gas_storage_level</td><td class="ind-name">Natural Gas Storage Fill Level (%)</td><td>%</td><td>W</td><td><span class="src-badge src-other">GIE AGSI</span></td><td><span class="tag tag-new">new</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §4 FISCAL & SOVEREIGN — EXPANDED ═══ -->
+<div class="section-card" id="sec4">
+  <div class="section-card-header">
+    <h2>§4 Fiscal & Sovereign Credit</h2>
+    <span class="badge">risk factor · 风险因素</span>
+  </div>
+  <div class="section-card-body">
+
+    <table>
+      <thead><tr><th style="width:40px">P</th><th style="width:30px">#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Freq</th><th>Source</th><th>Status</th></tr></thead>
+      <tbody>
+        <!-- P1 — Core Fiscal -->
+        <tr class="priority-1"><td>P1</td><td>1</td><td class="ind-id">fiscal_balance_pct_gdp</td><td class="ind-name">General Govt Fiscal Balance (% GDP)</td><td>% GDP</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>2</td><td class="ind-id">structural_balance</td><td class="ind-name">Structural (Cyclically-Adjusted) Balance (% GDP)</td><td>% GDP</td><td>A</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>3</td><td class="ind-id">primary_balance</td><td class="ind-name">Primary Balance (% GDP)</td><td>% GDP</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>4</td><td class="ind-id">gov_debt_pct_gdp</td><td class="ind-name">General Govt Gross Debt (Maastricht, % GDP)</td><td>% GDP</td><td>A / Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+
+        <!-- P1 — Revenue & Expenditure -->
+        <tr class="priority-1"><td>P1</td><td>5</td><td class="ind-id">gov_revenue_pct_gdp</td><td class="ind-name">General Govt Revenue (% GDP)</td><td>% GDP</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>6</td><td class="ind-id">gov_expenditure_pct_gdp</td><td class="ind-name">General Govt Expenditure (% GDP)</td><td>% GDP</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>7</td><td class="ind-id">interest_bill_pct_gdp</td><td class="ind-name">Interest Expenditure (% GDP)</td><td>% GDP</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P1 — Debt Structure -->
+        <tr class="priority-1"><td>P1</td><td>8</td><td class="ind-id">debt_fx_share</td><td class="ind-name">Share of FX-Denominated Govt Debt (%)</td><td>%</td><td>Q / A</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>9</td><td class="ind-id">avg_debt_maturity</td><td class="ind-name">Average Maturity of Govt Debt (years)</td><td>Years</td><td>Q / A</td><td><span class="src-badge src-national">National CB</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P1 — Market Pricing -->
+        <tr class="priority-1"><td>P1</td><td>10</td><td class="ind-id">sov_yield_10y</td><td class="ind-name">10-Year Sovereign Bond Yield</td><td>%</td><td>D</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>11</td><td class="ind-id">sov_yield_2y</td><td class="ind-name">2-Year Sovereign Bond Yield</td><td>%</td><td>D</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>12</td><td class="ind-id">cds_5y</td><td class="ind-name">5-Year Sovereign CDS Spread (bps)</td><td>bps</td><td>D</td><td><span class="src-badge src-market">Bloomberg/Refinitiv</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>13</td><td class="ind-id">yield_curve_slope</td><td class="ind-name">10Y-2Y Yield Curve Slope (bps)</td><td>bps</td><td>D</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P2 — Rating & EU Context -->
+        <tr class="priority-2"><td>P2</td><td>14</td><td class="ind-id">sovereign_rating</td><td class="ind-name">Sovereign Credit Rating (S&P / Moody's / Fitch)</td><td>Notch</td><td>At-event</td><td><span class="src-badge src-other">Rating Agencies</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>15</td><td class="ind-id">eu_funds_absorption</td><td class="ind-name">EU RRF & Cohesion Funds Absorption Rate (%)</td><td>%</td><td>A</td><td><span class="src-badge src-ecb">EC SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>16</td><td class="ind-id">edp_status</td><td class="ind-name">Excessive Deficit Procedure Status</td><td>Binary + Target</td><td>A</td><td><span class="src-badge src-other">EU Commission</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P3 — Contingent Liabilities -->
+        <tr class="priority-3"><td>P3</td><td>17</td><td class="ind-id">contingent_liabilities</td><td class="ind-name">Govt Guarantees & PPP Obligations (% GDP)</td><td>% GDP</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td><td><span class="tag tag-new">new</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §5 MONETARY & FINANCIAL — EXPANDED ═══ -->
+<div class="section-card" id="sec5">
+  <div class="section-card-header">
+    <h2>§5 Monetary & Financial Conditions</h2>
+    <span class="badge">policy anchor · 政策锚</span>
+  </div>
+  <div class="section-card-body">
+
+    <table>
+      <thead><tr><th style="width:40px">P</th><th style="width:30px">#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Freq</th><th>Source</th><th>Status</th></tr></thead>
+      <tbody>
+        <!-- P1 — Policy Rate & Money -->
+        <tr class="priority-1"><td>P1</td><td>1</td><td class="ind-id">policy_rate</td><td class="ind-name">Central Bank Policy Rate</td><td>%</td><td>At-meeting</td><td><span class="src-badge src-national">National CB</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>2</td><td class="ind-id">real_policy_rate</td><td class="ind-name">Real Policy Rate (CPI-deflated ex-post)</td><td>%</td><td>M</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>3</td><td class="ind-id">m3_yoy</td><td class="ind-name">Broad Money M3 (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>4</td><td class="ind-id">private_credit_yoy</td><td class="ind-name">Credit to Private Sector (YoY %)</td><td>%</td><td>M</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>5</td><td class="ind-id">credit_to_gdp_gap</td><td class="ind-name">BIS Credit-to-GDP Gap (deviation from LT trend)</td><td>pp</td><td>Q</td><td><span class="src-badge src-bis">BIS</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P1 — Interest Rates -->
+        <tr class="priority-1"><td>P1</td><td>6</td><td class="ind-id">interbank_3m</td><td class="ind-name">3-Month Interbank Rate (BUBOR/WIBOR/PRIBOR/ROBOR)</td><td>%</td><td>D</td><td><span class="src-badge src-national">National CB</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>7</td><td class="ind-id">lending_rate_household</td><td class="ind-name">Average Lending Rate — Households (New Business)</td><td>%</td><td>M</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>8</td><td class="ind-id">lending_rate_corp</td><td class="ind-name">Average Lending Rate — Non-Financial Corporates</td><td>%</td><td>M</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P1 — FX -->
+        <tr class="priority-1"><td>P1</td><td>9</td><td class="ind-id">fx_vs_eur</td><td class="ind-name">Spot FX vs EUR</td><td>EUR/XXX</td><td>D</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>10</td><td class="ind-id">fx_3m_forward</td><td class="ind-name">3-Month FX Forward Points (vs EUR)</td><td>Points / %</td><td>D</td><td><span class="src-badge src-market">Bloomberg/Refinitiv</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>11</td><td class="ind-id">carry_trade_return</td><td class="ind-name">FX Carry Trade Return (Long CEE vs EUR, 3M roll)</td><td>% annualised</td><td>D</td><td><span class="src-badge src-market">Computed</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P2 — CB Balance Sheet -->
+        <tr class="priority-2"><td>P2</td><td>12</td><td class="ind-id">cb_balance_sheet_gdp</td><td class="ind-name">Central Bank Balance Sheet (% GDP)</td><td>% GDP</td><td>M</td><td><span class="src-badge src-national">National CB</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>13</td><td class="ind-id">cb_forward_guidance</td><td class="ind-name">Monetary Policy Stance Index (Hawk/Dove score)</td><td>Qual / Score</td><td>Per-meeting</td><td><span class="src-badge src-national">CB Minutes</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P3 — Credit Structure -->
+        <tr class="priority-3"><td>P3</td><td>14</td><td class="ind-id">fx_loan_share</td><td class="ind-name">FX-Denominated Loans (% of Total Private Credit)</td><td>%</td><td>Q</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-3"><td>P3</td><td>15</td><td class="ind-id">mortgage_rate_new</td><td class="ind-name">New Mortgage Lending Rate</td><td>%</td><td>M</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §6 MARKETS & VALUATION — EXPANDED ═══ -->
+<div class="section-card" id="sec6">
+  <div class="section-card-header">
+    <h2>§6 Markets & Valuation</h2>
+    <span class="badge">price signal · 价格信号</span>
+  </div>
+  <div class="section-card-body">
+
+    <table>
+      <thead><tr><th style="width:40px">P</th><th style="width:30px">#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Freq</th><th>Source</th><th>Status</th></tr></thead>
+      <tbody>
+        <!-- P1 — Equity -->
+        <tr class="priority-1"><td>P1</td><td>1</td><td class="ind-id">equity_index</td><td class="ind-name">Benchmark Equity Index Level</td><td>Index</td><td>D</td><td><span class="src-badge src-market">Yahoo Finance</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>2</td><td class="ind-id">equity_yoy</td><td class="ind-name">Equity Index (YoY % Return)</td><td>%</td><td>D</td><td><span class="src-badge src-market">Yahoo Finance</span></td><td><span class="tag tag-existing">existing</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>3</td><td class="ind-id">equity_fwd_pe</td><td class="ind-name">Forward P/E Ratio (12M Blended)</td><td>x</td><td>D / W</td><td><span class="src-badge src-market">Bloomberg/Refinitiv</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>4</td><td class="ind-id">equity_pb</td><td class="ind-name">Price-to-Book Ratio</td><td>x</td><td>D / W</td><td><span class="src-badge src-market">Bloomberg/Refinitiv</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>5</td><td class="ind-id">equity_div_yield</td><td class="ind-name">Dividend Yield</td><td>%</td><td>D / W</td><td><span class="src-badge src-market">Yahoo Finance</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>6</td><td class="ind-id">equity_vol_30d</td><td class="ind-name">30-Day Realised Equity Volatility</td><td>%</td><td>D</td><td><span class="src-badge src-market">Computed</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P2 — Fixed Income -->
+        <tr class="priority-2"><td>P2</td><td>7</td><td class="ind-id">sov_spread_vs_bund</td><td class="ind-name">10Y Sovereign Spread vs Bund (bps)</td><td>bps</td><td>D</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>8</td><td class="ind-id">embi_spread</td><td class="ind-name">EMBI+ / EMBIG Spread (if applicable)</td><td>bps</td><td>D</td><td><span class="src-badge src-market">JPMorgan</span></td><td><span class="tag tag-new">new</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>9</td><td class="ind-id">foreign_ownership_bonds</td><td class="ind-name">Foreign Ownership of Local-Currency Govt Bonds (%)</td><td>%</td><td>M / Q</td><td><span class="src-badge src-national">National CB</span></td><td><span class="tag tag-new">new</span></td></tr>
+
+        <!-- P3 — Flows & Positioning -->
+        <tr class="priority-3"><td>P3</td><td>10</td><td class="ind-id">portfolio_flows</td><td class="ind-name">Non-Resident Portfolio Flows (Equity + Debt, EUR mn)</td><td>EUR mn</td><td>M / Q</td><td><span class="src-badge src-ecb">ECB SDW</span></td><td><span class="tag tag-new">new</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §7 FINANCIAL STABILITY — NEW SECTION ═══ -->
+<div class="section-card" id="sec7">
+  <div class="section-card-header">
+    <h2>§7 Financial Stability & Banking</h2>
+    <span class="badge">NEW · 金融稳定</span>
+  </div>
+  <div class="section-card-body">
+    <div class="framework-ref">
+      <strong>Rationale:</strong> Based on the IMF Financial Soundness Indicators (FSI) framework. CEE banking sectors are dominated by foreign-owned banks (Erste, KBC, UniCredit, Intesa, OTP). Banking sector health is a first-order macro variable — NPL cycles, capital adequacy, and funding structures directly affect credit supply and sovereign-bank nexus risks.
+    </div>
+
+    <table>
+      <thead><tr><th style="width:40px">P</th><th style="width:30px">#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Freq</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr class="priority-1"><td>P1</td><td>1</td><td class="ind-id">bank_car</td><td class="ind-name">Banking Sector Capital Adequacy Ratio (CAR)</td><td>%</td><td>Q</td><td><span class="src-badge src-ecb">ECB SDW / National CB</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>2</td><td class="ind-id">bank_npl_ratio</td><td class="ind-name">Non-Performing Loan Ratio (Gross % of Total Loans)</td><td>%</td><td>Q</td><td><span class="src-badge src-ecb">ECB SDW / National CB</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>3</td><td class="ind-id">bank_roe</td><td class="ind-name">Banking Sector ROE</td><td>%</td><td>Q / A</td><td><span class="src-badge src-ecb">ECB SDW</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>4</td><td class="ind-id">bank_ld_ratio</td><td class="ind-name">Loan-to-Deposit Ratio</td><td>%</td><td>Q</td><td><span class="src-badge src-ecb">ECB SDW</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>5</td><td class="ind-id">bank_liquidity_coverage</td><td class="ind-name">Liquidity Coverage Ratio (LCR)</td><td>%</td><td>Q</td><td><span class="src-badge src-national">National CB</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>6</td><td class="ind-id">bank_nim</td><td class="ind-name">Net Interest Margin (Aggregate Banking Sector)</td><td>%</td><td>Q / A</td><td><span class="src-badge src-ecb">ECB SDW</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>7</td><td class="ind-id">household_debt_pct_gdp</td><td class="ind-name">Household Debt (% GDP)</td><td>% GDP</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>8</td><td class="ind-id">corp_debt_pct_gdp</td><td class="ind-name">Non-Financial Corporate Debt (% GDP)</td><td>% GDP</td><td>Q</td><td><span class="src-badge src-eurostat">Eurostat</span></td></tr>
+        <tr class="priority-3"><td>P3</td><td>9</td><td class="ind-id">real_estate_price_gap</td><td class="ind-name">Residential Real Estate Price Gap (% deviation from fundamentals)</td><td>%</td><td>Q / A</td><td><span class="src-badge src-ecb">ECB SDW</span></td></tr>
+        <tr class="priority-3"><td>P3</td><td>10</td><td class="ind-id">foreign_bank_share</td><td class="ind-name">Foreign-Owned Bank Share of Total Banking Assets (%)</td><td>%</td><td>A</td><td><span class="src-badge src-national">National CB</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §8 DEMOGRAPHICS — NEW SECTION ═══ -->
+<div class="section-card" id="sec8">
+  <div class="section-card-header">
+    <h2>§8 Demographics & Labour Supply</h2>
+    <span class="badge">NEW · 人口结构</span>
+  </div>
+  <div class="section-card-body">
+    <div class="framework-ref">
+      <strong>Rationale:</strong> Demographics are the slowest-moving but most powerful structural variable. CEE-4 faces acute demographic headwinds (negative natural growth, net emigration, aging). These drive potential GDP, fiscal sustainability (pension systems), and the NAIRU. For CEE, the interaction of demographics + EU labour mobility is a macro variable as important as the policy rate.
+    </div>
+
+    <table>
+      <thead><tr><th style="width:40px">P</th><th style="width:30px">#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Freq</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr class="priority-1"><td>P1</td><td>1</td><td class="ind-id">population_total</td><td class="ind-name">Total Population</td><td>Millions</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>2</td><td class="ind-id">working_age_population</td><td class="ind-name">Working-Age Population (15-64, % of Total)</td><td>%</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>3</td><td class="ind-id">old_age_dependency</td><td class="ind-name">Old-Age Dependency Ratio (65+ / 15-64)</td><td>%</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>4</td><td class="ind-id">median_age</td><td class="ind-name">Median Age</td><td>Years</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>5</td><td class="ind-id">net_migration</td><td class="ind-name">Net Migration (Incl. EU mobility)</td><td>Per 1000</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>6</td><td class="ind-id">fertility_rate</td><td class="ind-name">Total Fertility Rate</td><td>Children/woman</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td></tr>
+        <tr class="priority-3"><td>P3</td><td>7</td><td class="ind-id">pension_spending_pct_gdp</td><td class="ind-name">Pension Expenditure (% GDP, current & projected)</td><td>% GDP</td><td>A</td><td><span class="src-badge src-eurostat">Eurostat</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §9 POLITICAL ECONOMY — NEW SECTION ═══ -->
+<div class="section-card" id="sec9">
+  <div class="section-card-header">
+    <h2>§9 Political Economy & Institutional Quality</h2>
+    <span class="badge">NEW · 政治经济</span>
+  </div>
+  <div class="section-card-body">
+    <div class="framework-ref">
+      <strong>Rationale:</strong> For CEE assets, political economy is a first-order pricing factor — EU funds conditionality, rule-of-law frameworks, and election cycles directly move HUF/PLN/RON and sovereign spreads. This section uses <strong>free quantitative governance indicators</strong> (World Bank WGI, EU Rule of Law Report, V-Dem) and tracks <strong>EU funds status and election calendars</strong>.
+    </div>
+
+    <table>
+      <thead><tr><th style="width:40px">P</th><th style="width:30px">#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Freq</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr class="priority-1"><td>P1</td><td>1</td><td class="ind-id">wgi_government_effectiveness</td><td class="ind-name">WB Governance Indicator — Government Effectiveness</td><td>Percentile</td><td>A</td><td><span class="src-badge src-wb">World Bank WGI</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>2</td><td class="ind-id">wgi_rule_of_law</td><td class="ind-name">WB Governance Indicator — Rule of Law</td><td>Percentile</td><td>A</td><td><span class="src-badge src-wb">World Bank WGI</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>3</td><td class="ind-id">wgi_control_of_corruption</td><td class="ind-name">WB Governance Indicator — Control of Corruption</td><td>Percentile</td><td>A</td><td><span class="src-badge src-wb">World Bank WGI</span></td></tr>
+        <tr class="priority-1"><td>P1</td><td>4</td><td class="ind-id">eu_funds_frozen</td><td class="ind-name">EU Funds Frozen/Suspended (EUR bn, cumulative)</td><td>EUR bn</td><td>Q</td><td><span class="src-badge src-other">EU Commission</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>5</td><td class="ind-id">next_election_date</td><td class="ind-name">Next Parliamentary Election Date</td><td>Date</td><td>At-event</td><td><span class="src-badge src-other">National Electoral Commissions</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>6</td><td class="ind-id">election_polling</td><td class="ind-name">Opinion Poll Averages (Ruling vs Opposition)</td><td>%</td><td>M</td><td><span class="src-badge src-other">Politico / Europe Elects</span></td></tr>
+        <tr class="priority-2"><td>P2</td><td>7</td><td class="ind-id">doing_business_rank</td><td class="ind-name">Ease of Doing Business / Competitiveness Rank</td><td>Rank</td><td>A</td><td><span class="src-badge src-wb">World Bank / WEF</span></td></tr>
+        <tr class="priority-3"><td>P3</td><td>8</td><td class="ind-id">eu_rule_of_law_conditionality</td><td class="ind-name">EU Rule-of-Law Conditionality Mechanism Status</td><td>Stage</td><td>A</td><td><span class="src-badge src-other">EU Commission</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ IMPLEMENTATION ROADMAP ═══ -->
+<div class="section-card" id="implementation">
+  <div class="section-card-header"><h2>Implementation Roadmap</h2></div>
+  <div class="section-card-body">
+
+    <h3>Phase 1 — P1 Indicators (Quick Wins, ~2 weeks)</h3>
+    <p style="color: var(--muted); font-size: 13px;">
+      Add all Priority 1 indicators across all sections. These are available via Eurostat API, ECB SDW, and BIS — all have REST APIs and existing Python wrappers. Estimated 42 new indicators (~60 charts). Data can be pulled via the openecon-data MCP or direct API calls.
+    </p>
+
+    <h3>Phase 2 — P2 Indicators (Deepening, ~2-3 weeks)</h3>
+    <p style="color: var(--muted); font-size: 13px;">
+      Add Priority 2 indicators. Some require national central bank statistical portals (fragmented access, may need per-country scrapers). Market data (CDS, inflation swaps) may require Bloomberg/Refinitiv access or free alternatives (investing.com scrape with caution).
+    </p>
+
+    <h3>Phase 3 — P3 & New Sections (Professionalisation, ~3-4 weeks)</h3>
+    <p style="color: var(--muted); font-size: 13px;">
+      Add Financial Stability (§7), Demographics (§8), and Political Economy (§9) sections. Build narrative templates for each. Standardise chart styling and add peer comparison for all indicators.
+    </p>
+
+    <h3>Data Pipeline Architecture</h3>
+    <p style="color: var(--muted); font-size: 13px;">
+      Suggested: a <code>data_fetcher.py</code> module with per-source adapters (EurostatFetcher, ECBFetcher, BISFetcher, NationalCBFetcher) that output a canonical DataFrame with columns [country, date, indicator_id, value]. The base HTML generator consumes this DataFrame. This decouples data acquisition from chart generation and makes indicator addition a configuration change, not a code change.
+    </p>
+
+  </div>
+</div>
+
+<footer>
+  Country Primer v4 Proposal — Macro Indicator Framework · April 2026<br>
+  <a href="../index.html">← Back to Dashboard</a> · <a href="macro_indicators.html">Current Dictionary (v3)</a>
+</footer>
+
+</div>
+</body>
+</html>
