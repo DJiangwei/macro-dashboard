@@ -1864,6 +1864,18 @@ def build_v3(country_code: str) -> Path:
         nav_links.append(f'<a href="{cfile}" class="{cls}">{cc}</a>')
     country_nav = "\n    " + "\n    ".join(nav_links)
 
+    # Chart IDs for JS fix script
+    all_chart_ids = []
+    for sec_id in SECTION_ORDER:
+        for cid in SECTION_CHART_MAP[sec_id]:
+            if cid in chart_map:
+                all_chart_ids.append(cid)
+    # Also add trade chart if present
+    trade_chart_match = re.search(r'id="(trade-chart-\d+)"', trade_section_html)
+    if trade_chart_match:
+        all_chart_ids.append(trade_chart_match.group(1))
+    chart_ids_js = '["' + '","'.join(all_chart_ids) + '"]'
+
     final_html = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -1962,6 +1974,73 @@ function toggleLang() {{
     localStorage.setItem('cp-lang', 'en');
   }}
 }}
+</script>
+
+<script>
+(function() {{
+  // After all Plotly charts render, fix autorange + annotate latest values
+  var chartIds = {chart_ids_js};
+  var mainCountry = '{country_code}';
+
+  function fixCharts() {{
+    chartIds.forEach(function(cid) {{
+      var el = document.getElementById(cid);
+      if (!el) return;
+      try {{
+        // Force full-range display on both axes
+        Plotly.relayout(cid, {{'xaxis.autorange': true, 'yaxis.autorange': true}});
+      }} catch(e) {{}}
+
+      // Annotate latest value of the main-country trace
+      try {{
+        var gd = document.getElementById(cid);
+        if (!gd || !gd.data || !gd.data.length) return;
+        var traces = gd.data;
+        var bestTrace = null, bestWidth = 0;
+        for (var i = 0; i < traces.length; i++) {{
+          var t = traces[i];
+          if (t.name === mainCountry) {{ bestTrace = t; break; }}
+          var w = (t.line && t.line.width) ? t.line.width : 1;
+          if (w > bestWidth) {{ bestWidth = w; bestTrace = t; }}
+        }}
+        if (!bestTrace || !bestTrace.x || bestTrace.x.length === 0) return;
+        var lastX = bestTrace.x[bestTrace.x.length - 1];
+        var lastY = bestTrace.y[bestTrace.y.length - 1];
+        // Walk back to find non-null value
+        for (var j = bestTrace.y.length - 1; j >= 0 && (lastY === null || lastY === undefined); j--) {{
+          lastX = bestTrace.x[j]; lastY = bestTrace.y[j];
+        }}
+        if (lastY === null || lastY === undefined) return;
+        var valStr;
+        if (typeof lastY === 'number') {{
+          if (Math.abs(lastY) < 10) valStr = lastY.toFixed(2);
+          else if (Math.abs(lastY) < 100) valStr = lastY.toFixed(1);
+          else valStr = lastY.toLocaleString('en-US', {{maximumFractionDigits: 0}});
+        }} else {{ valStr = String(lastY); }}
+        var curAnn = (gd.layout && gd.layout.annotations) ? gd.layout.annotations.slice() : [];
+        curAnn.push({{
+          x: lastX, y: lastY, xref: 'x', yref: 'y',
+          text: '<b>' + valStr + '</b>',
+          showarrow: true, arrowhead: 2, arrowsize: 1,
+          arrowwidth: 1.5, arrowcolor: '#0f3b5e',
+          ax: 40, ay: -30,
+          font: {{color: '#0f3b5e', size: 12, family: 'Inter, sans-serif'}},
+          bgcolor: 'rgba(255,255,255,0.85)',
+          borderpad: 3, xanchor: 'left'
+        }});
+        Plotly.relayout(cid, {{annotations: curAnn}});
+      }} catch(e) {{}}
+    }});
+  }}
+
+  if (typeof Plotly !== 'undefined') {{
+    fixCharts();
+  }} else {{
+    var check = setInterval(function() {{
+      if (typeof Plotly !== 'undefined') {{ clearInterval(check); fixCharts(); }}
+    }}, 200);
+  }}
+}})();
 </script>
 </body>
 </html>

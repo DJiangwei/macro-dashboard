@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Macro Indicators Dictionary — Country Primer</title>
+<style>
+:root {
+  --bg: #f4f5f7;
+  --fg: #1a1f36;
+  --muted: #6b7280;
+  --primary: #0f3b5e;
+  --border: #e2e4e9;
+  --card: #ffffff;
+  --card-alt: #f8f9fb;
+  --accent: #b8860b;
+  --highlight: #e8f0fe;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --radius: 8px;
+  --radius-sm: 5px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 0;
+  background: var(--bg); color: var(--fg);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 14px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.topbar {
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; letter-spacing: 0.3px;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.topbar .brand { font-weight: 700; font-size: 15px; letter-spacing: -0.2px; }
+.topbar .brand span { color: #ffd966; }
+.topbar a { color: #ffd966; text-decoration: none; }
+.topbar a:hover { text-decoration: underline; }
+.container { max-width: 1100px; margin: 0 auto; padding: 28px 24px 48px; }
+header {
+  background: linear-gradient(135deg, var(--primary) 0%, #1a5680 100%);
+  border-radius: var(--radius);
+  padding: 28px 32px; margin-bottom: 24px;
+  color: #fff;
+  box-shadow: var(--shadow-md);
+}
+header h1 { margin: 0; font-size: 24px; font-weight: 700; }
+header .subtitle { font-size: 14px; opacity: 0.85; margin-top: 6px; }
+
+/* Section card */
+.section-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.section-card-header {
+  background: var(--primary); color: #fff;
+  padding: 14px 24px; display: flex; align-items: center; gap: 12px;
+}
+.section-card-header h2 { margin: 0; font-size: 17px; font-weight: 600; }
+.section-card-header .badge {
+  font-size: 11px; background: rgba(255,255,255,0.2);
+  padding: 3px 10px; border-radius: 12px; font-weight: 500;
+}
+.section-card-body { padding: 20px 24px; }
+.section-card-body .blurb {
+  color: var(--muted); font-size: 13px; margin-bottom: 18px;
+  line-height: 1.6; padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Indicator table */
+.indicator-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+.indicator-table th {
+  text-align: left; padding: 8px 12px;
+  background: var(--card-alt); color: var(--muted);
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--border);
+}
+.indicator-table td { padding: 9px 12px; border-bottom: 1px solid #f0f1f3; }
+.indicator-table tr:hover td { background: #fafbfc; }
+.indicator-table .ind-id {
+  font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+  font-size: 12px; color: var(--primary); font-weight: 600;
+}
+.indicator-table .ind-freq {
+  font-size: 11px; color: var(--muted); white-space: nowrap;
+}
+.indicator-table .ind-source {
+  font-size: 11px; color: var(--muted); white-space: nowrap;
+}
+.indicator-table .ind-peers {
+  font-size: 11px; color: var(--accent); font-weight: 500;
+}
+
+/* Stats bar */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px; margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--card); border-radius: var(--radius);
+  padding: 14px 18px; text-align: center;
+  border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+}
+.stat-card .stat-value { font-size: 26px; font-weight: 700; color: var(--primary); }
+.stat-card .stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+/* TOC */
+.toc {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px;
+}
+.toc a {
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--primary); text-decoration: none;
+  padding: 6px 14px; border-radius: 20px; font-size: 12.5px;
+  font-weight: 500; transition: all 0.15s;
+}
+.toc a:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+footer {
+  margin-top: 36px; padding: 32px 0 16px;
+  border-top: 1px solid var(--border); text-align: center;
+  color: var(--muted); font-size: 11px;
+}
+footer a { color: var(--primary); }
+.chart-count { color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">Country Primer <span>v3</span></div></a>
+  <div>
+    <a href="../index.html">← Dashboard Index</a>
+    &nbsp;·&nbsp;
+    Macro Indicators Dictionary
+  </div>
+</div>
+
+<div class="container">
+
+<header>
+  <h1>Macro Indicators Dictionary</h1>
+  <div class="subtitle">Complete inventory of all indicators used across the Country Primer dashboard. Use this as a reference for adding new indicators, updating data sources, or extending coverage to additional countries.</div>
+</header>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat-card">
+    <div class="stat-value">21</div>
+    <div class="stat-label">Core Indicators</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">7</div>
+    <div class="stat-label">Sections</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">4</div>
+    <div class="stat-label">Countries</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">4</div>
+    <div class="stat-label">Peer Comparison</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">6</div>
+    <div class="stat-label">Data Sources</div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <a href="#sec2">§2 Real Activity</a>
+  <a href="#sec3">§3 Prices & Wages</a>
+  <a href="#sec4">§4 External Sector</a>
+  <a href="#sec5">§5 Fiscal & Sovereign</a>
+  <a href="#sec6">§6 Monetary & Financial</a>
+  <a href="#sec7">§7 Markets & Valuation</a>
+  <a href="#sec-cb">Central Bank</a>
+  <a href="#sec-trade">Trade</a>
+</div>
+
+
+<!-- ═══ §2 REAL ACTIVITY ═══ -->
+<div class="section-card" id="sec2">
+  <div class="section-card-header">
+    <h2>§2 Real Activity</h2>
+    <span class="badge">coincident · 同步指标</span>
+  </div>
+  <div class="section-card-body">
+    <div class="blurb">Growth decomposition: GDP, industrial production, retail sales, and labour market — separating cyclical momentum from structural drags and identifying the dominant growth engine.</div>
+    <table class="indicator-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Frequency</th><th>Primary Source</th><th>Peer Comparison</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td><td class="ind-id">real_gdp_yoy</td><td>Real GDP (YoY %)</td><td>%</td><td class="ind-freq">Annual / Quarterly</td><td class="ind-source">Eurostat</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>2</td><td class="ind-id">industrial_production_yoy</td><td>Industrial Production (YoY %)</td><td>%</td><td class="ind-freq">Monthly</td><td class="ind-source">Eurostat</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>3</td><td class="ind-id">retail_sales_yoy</td><td>Retail Sales (YoY %)</td><td>%</td><td class="ind-freq">Monthly</td><td class="ind-source">Eurostat</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>4</td><td class="ind-id">unemployment_rate</td><td>Unemployment Rate</td><td>%</td><td class="ind-freq">Monthly / Quarterly</td><td class="ind-source">Eurostat</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §3 PRICES & WAGES ═══ -->
+<div class="section-card" id="sec3">
+  <div class="section-card-header">
+    <h2>§3 Prices & Wages</h2>
+    <span class="badge">forward-looking · 领先指标</span>
+  </div>
+  <div class="section-card-body">
+    <div class="blurb">Inflation dynamics: headline and core CPI trends, producer price pipeline, and the wage-growth impulse that will determine the central bank's terminal rate.</div>
+    <table class="indicator-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Frequency</th><th>Primary Source</th><th>Peer Comparison</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>5</td><td class="ind-id">cpi_yoy</td><td>Headline CPI (YoY %)</td><td>%</td><td class="ind-freq">Monthly</td><td class="ind-source">Eurostat</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>6</td><td class="ind-id">core_cpi_yoy</td><td>Core CPI (YoY %)</td><td>%</td><td class="ind-freq">Monthly</td><td class="ind-source">Eurostat / National CB</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>7</td><td class="ind-id">ppi_yoy</td><td>Producer Price Index (YoY %)</td><td>%</td><td class="ind-freq">Monthly</td><td class="ind-source">Eurostat</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>8</td><td class="ind-id">avg_wage_yoy</td><td>Average Wage Growth (YoY %)</td><td>%</td><td class="ind-freq">Monthly / Quarterly</td><td class="ind-source">Eurostat / National Stats</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §4 EXTERNAL SECTOR ═══ -->
+<div class="section-card" id="sec4">
+  <div class="section-card-header">
+    <h2>§4 External Sector</h2>
+    <span class="badge">structural · 结构性</span>
+  </div>
+  <div class="section-card-body">
+    <div class="blurb">Balance of payments: current account trajectory, trade balance, FX reserve adequacy, and real exchange rate misalignment vs fair value.</div>
+    <table class="indicator-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Frequency</th><th>Primary Source</th><th>Peer Comparison</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>9</td><td class="ind-id">current_account_pct_gdp</td><td>Current Account (% of GDP)</td><td>% of GDP</td><td class="ind-freq">Quarterly / Annual</td><td class="ind-source">Eurostat / ECB</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>10</td><td class="ind-id">trade_balance</td><td>Trade Balance</td><td>EUR bn or % GDP</td><td class="ind-freq">Monthly</td><td class="ind-source">Eurostat</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>11</td><td class="ind-id">fx_reserves</td><td>FX Reserves</td><td>EUR bn</td><td class="ind-freq">Monthly</td><td class="ind-source">ECB / National CB</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>12</td><td class="ind-id">reer</td><td>Real Effective Exchange Rate</td><td>Index (2010=100)</td><td class="ind-freq">Monthly</td><td class="ind-source">BIS / ECB</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §5 FISCAL & SOVEREIGN ═══ -->
+<div class="section-card" id="sec5">
+  <div class="section-card-header">
+    <h2>§5 Fiscal & Sovereign</h2>
+    <span class="badge">risk factor · 风险因素</span>
+  </div>
+  <div class="section-card-body">
+    <div class="blurb">Sovereign creditworthiness: fiscal balance path, debt stock dynamics, and the term premium the market demands for bearing duration risk.</div>
+    <table class="indicator-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Frequency</th><th>Primary Source</th><th>Peer Comparison</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>13</td><td class="ind-id">fiscal_balance_pct_gdp</td><td>Fiscal Balance (% of GDP)</td><td>% of GDP</td><td class="ind-freq">Annual</td><td class="ind-source">Eurostat</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>14</td><td class="ind-id">gov_debt_pct_gdp</td><td>Government Debt (% of GDP)</td><td>% of GDP</td><td class="ind-freq">Annual / Quarterly</td><td class="ind-source">Eurostat</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>15</td><td class="ind-id">sov_yield_10y</td><td>10-Year Sovereign Yield</td><td>%</td><td class="ind-freq">Daily</td><td class="ind-source">ECB / Bloomberg</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §6 MONETARY & FINANCIAL ═══ -->
+<div class="section-card" id="sec6">
+  <div class="section-card-header">
+    <h2>§6 Monetary & Financial</h2>
+    <span class="badge">policy anchor · 政策锚</span>
+  </div>
+  <div class="section-card-body">
+    <div class="blurb">Policy stance: the base rate relative to Taylor-implied neutral, credit transmission channels, and the FX fair-value anchor.</div>
+    <table class="indicator-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Frequency</th><th>Primary Source</th><th>Peer Comparison</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>16</td><td class="ind-id">policy_rate</td><td>Central Bank Policy Rate</td><td>%</td><td class="ind-freq">At-meeting (6-8/yr)</td><td class="ind-source">National CB</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>17</td><td class="ind-id">m3_yoy</td><td>Broad Money M3 (YoY %)</td><td>%</td><td class="ind-freq">Monthly</td><td class="ind-source">National CB / ECB</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>18</td><td class="ind-id">private_credit_yoy</td><td>Private Sector Credit (YoY %)</td><td>%</td><td class="ind-freq">Monthly</td><td class="ind-source">National CB / ECB</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+        <tr>
+          <td>19</td><td class="ind-id">fx_vs_eur</td><td>Exchange Rate vs EUR</td><td>EUR/XXX</td><td class="ind-freq">Daily</td><td class="ind-source">ECB</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ §7 MARKETS & VALUATION ═══ -->
+<div class="section-card" id="sec7">
+  <div class="section-card-header">
+    <h2>§7 Markets & Valuation</h2>
+    <span class="badge">price signal · 价格信号</span>
+  </div>
+  <div class="section-card-body">
+    <div class="blurb">Equity valuation: headline index level and momentum, relative to CEE peers and to the macro fundamentals mapped in sections 2–6.</div>
+    <table class="indicator-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Frequency</th><th>Primary Source</th><th>Peer Comparison</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>20</td><td class="ind-id">equity_index</td><td>Equity Benchmark Index</td><td>Index level</td><td class="ind-freq">Daily</td><td class="ind-source">Yahoo Finance / Bloomberg</td><td class="ind-peers">PL (WIG20), CZ (PX), RO (BET)</td>
+        </tr>
+        <tr>
+          <td>21</td><td class="ind-id">equity_yoy</td><td>Equity Index (YoY % Return)</td><td>%</td><td class="ind-freq">Daily</td><td class="ind-source">Yahoo Finance / Bloomberg</td><td class="ind-peers">PL (WIG20), CZ (PX), RO (BET)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ CENTRAL BANK ═══ -->
+<div class="section-card" id="sec-cb">
+  <div class="section-card-header">
+    <h2>Central Bank · 央行政策</h2>
+    <span class="badge">institutional · 制度性</span>
+  </div>
+  <div class="section-card-body">
+    <div class="blurb">Central bank policy rate trajectory with peer comparison, balance sheet dynamics, and inter-meeting forward guidance shifts.</div>
+    <table class="indicator-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Frequency</th><th>Primary Source</th><th>Peer Comparison</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>C1</td><td class="ind-id">cb_policy_rate</td><td>Policy Rate Path</td><td>%</td><td class="ind-freq">At-meeting</td><td class="ind-source">National CB</td><td class="ind-peers">PL (NBP), CZ (CNB), RO (BNR)</td>
+        </tr>
+        <tr>
+          <td>C2</td><td class="ind-id">cb_balance_sheet</td><td>Central Bank Balance Sheet</td><td>% of GDP</td><td class="ind-freq">Monthly</td><td class="ind-source">National CB</td><td class="ind-peers">NBP, CNB, BNR</td>
+        </tr>
+        <tr>
+          <td>C3</td><td class="ind-id">cb_forward_guidance</td><td>Forward Guidance Stance</td><td>Qualitative</td><td class="ind-freq">Per-meeting</td><td class="ind-source">CB Statements / Minutes</td><td class="ind-peers">NBP, CNB, BNR</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ TRADE ═══ -->
+<div class="section-card" id="sec-trade">
+  <div class="section-card-header">
+    <h2>Trade Structure · 贸易结构</h2>
+    <span class="badge">structural · 结构性</span>
+  </div>
+  <div class="section-card-body">
+    <div class="blurb">Bilateral trade flows: top export/import partners, product composition, and revealed comparative advantage.</div>
+    <table class="indicator-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Indicator ID</th><th>Display Name</th><th>Unit</th><th>Frequency</th><th>Primary Source</th><th>Peer Comparison</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>T1</td><td class="ind-id">trade_top_exports</td><td>Top Export Partners & Products</td><td>USD bn / %</td><td class="ind-freq">Annual</td><td class="ind-source">UN Comtrade / Eurostat</td><td class="ind-peers">—</td>
+        </tr>
+        <tr>
+          <td>T2</td><td class="ind-id">trade_top_imports</td><td>Top Import Partners & Products</td><td>USD bn / %</td><td class="ind-freq">Annual</td><td class="ind-source">UN Comtrade / Eurostat</td><td class="ind-peers">—</td>
+        </tr>
+        <tr>
+          <td>T3</td><td class="ind-id">trade_balance_trend</td><td>Trade Balance Trend</td><td>EUR bn</td><td class="ind-freq">Monthly / Annual</td><td class="ind-source">Eurostat</td><td class="ind-peers">PL, CZ, RO</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  <strong>Macro Indicators Dictionary</strong> · Country Primer v3<br>
+  <a href="../index.html">← Back to Dashboard Index</a><br><br>
+  <span style="color: var(--muted);">This dictionary defines the indicator schema. To add new indicators, extend the <code>SECTION_CHART_MAP</code> in <code>build_v3.py</code> and update the base HTML generation pipeline.</span>
+</footer>
+
+</div>
+</body>
+</html>

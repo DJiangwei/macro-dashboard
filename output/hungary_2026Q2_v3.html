@@ -1007,5 +1007,72 @@ function toggleLang() {
   }
 }
 </script>
+
+<script>
+(function() {
+  // After all Plotly charts render, fix autorange + annotate latest values
+  var chartIds = ["chart-real_activity-real_gdp_yoy-1","chart-real_activity-industrial_production_yoy-2","chart-real_activity-retail_sales_yoy-3","chart-real_activity-unemployment_rate-4","chart-prices_wages-cpi_yoy-5","chart-prices_wages-core_cpi_yoy-6","chart-prices_wages-ppi_yoy-7","chart-prices_wages-avg_wage_yoy-8","chart-external-current_account_pct_gdp-9","chart-external-trade_balance-10","chart-external-fx_reserves-11","chart-external-reer-12","chart-fiscal_sovereign-fiscal_balance_pct_gdp-13","chart-fiscal_sovereign-gov_debt_pct_gdp-14","chart-fiscal_sovereign-sov_yield_10y-15","chart-monetary_financial-policy_rate-16","chart-monetary_financial-m3_yoy-17","chart-monetary_financial-private_credit_yoy-18","chart-monetary_financial-fx_vs_eur-19","chart-markets_valuation-equity_index-20","chart-markets_valuation-equity_yoy-21","trade-chart-1"];
+  var mainCountry = 'HU';
+
+  function fixCharts() {
+    chartIds.forEach(function(cid) {
+      var el = document.getElementById(cid);
+      if (!el) return;
+      try {
+        // Force full-range display on both axes
+        Plotly.relayout(cid, {'xaxis.autorange': true, 'yaxis.autorange': true});
+      } catch(e) {}
+
+      // Annotate latest value of the main-country trace
+      try {
+        var gd = document.getElementById(cid);
+        if (!gd || !gd.data || !gd.data.length) return;
+        var traces = gd.data;
+        var bestTrace = null, bestWidth = 0;
+        for (var i = 0; i < traces.length; i++) {
+          var t = traces[i];
+          if (t.name === mainCountry) { bestTrace = t; break; }
+          var w = (t.line && t.line.width) ? t.line.width : 1;
+          if (w > bestWidth) { bestWidth = w; bestTrace = t; }
+        }
+        if (!bestTrace || !bestTrace.x || bestTrace.x.length === 0) return;
+        var lastX = bestTrace.x[bestTrace.x.length - 1];
+        var lastY = bestTrace.y[bestTrace.y.length - 1];
+        // Walk back to find non-null value
+        for (var j = bestTrace.y.length - 1; j >= 0 && (lastY === null || lastY === undefined); j--) {
+          lastX = bestTrace.x[j]; lastY = bestTrace.y[j];
+        }
+        if (lastY === null || lastY === undefined) return;
+        var valStr;
+        if (typeof lastY === 'number') {
+          if (Math.abs(lastY) < 10) valStr = lastY.toFixed(2);
+          else if (Math.abs(lastY) < 100) valStr = lastY.toFixed(1);
+          else valStr = lastY.toLocaleString('en-US', {maximumFractionDigits: 0});
+        } else { valStr = String(lastY); }
+        var curAnn = (gd.layout && gd.layout.annotations) ? gd.layout.annotations.slice() : [];
+        curAnn.push({
+          x: lastX, y: lastY, xref: 'x', yref: 'y',
+          text: '<b>' + valStr + '</b>',
+          showarrow: true, arrowhead: 2, arrowsize: 1,
+          arrowwidth: 1.5, arrowcolor: '#0f3b5e',
+          ax: 40, ay: -30,
+          font: {color: '#0f3b5e', size: 12, family: 'Inter, sans-serif'},
+          bgcolor: 'rgba(255,255,255,0.85)',
+          borderpad: 3, xanchor: 'left'
+        });
+        Plotly.relayout(cid, {annotations: curAnn});
+      } catch(e) {}
+    });
+  }
+
+  if (typeof Plotly !== 'undefined') {
+    fixCharts();
+  } else {
+    var check = setInterval(function() {
+      if (typeof Plotly !== 'undefined') { clearInterval(check); fixCharts(); }
+    }, 200);
+  }
+})();
+</script>
 </body>
 </html>
