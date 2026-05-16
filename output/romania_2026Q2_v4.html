@@ -335,6 +335,67 @@ p { color: var(--muted); }
 }
 .commentary strong,
 .framework-ref strong { color: var(--accent); }
+
+.quality-panel {
+  position: relative;
+  margin: 0 0 24px;
+  padding: 22px 24px;
+  background: linear-gradient(135deg, rgba(255,252,246,0.96), rgba(243,236,224,0.72));
+  border: 1px solid rgba(23,19,16,0.16);
+  border-left: 4px solid var(--accent);
+}
+.quality-panel h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.quality-panel p { margin: 0; max-width: 980px; line-height: 1.7; }
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+.quality-pill {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.38);
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.quality-pill strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--fg);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.quality-note {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(237,223,204,0.25);
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+.quality-note .marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+}
 .toc {
   display: flex;
   gap: 6px;
@@ -542,6 +603,7 @@ footer a { color: var(--accent) !important; }
 <!-- TOC -->
 <div class="toc">
   <a href="#snapshot"><span data-lang="en">§1 Snapshot</span><span data-lang="zh">§1 概览</span></a>
+  <a href="#data-quality"><span data-lang="en">Data Quality</span><span data-lang="zh">数据质量</span></a>
   <a href="#real_activity"><span data-lang="en">§2 Real Activity</span><span data-lang="zh">§2 实际经济活动</span></a>
   <a href="#prices_wages"><span data-lang="en">§3 Prices & Wages</span><span data-lang="zh">§3 物价与工资</span></a>
   <a href="#external"><span data-lang="en">§4 External</span><span data-lang="zh">§4 外部部门</span></a>
@@ -552,6 +614,14 @@ footer a { color: var(--accent) !important; }
   <a href="#demographics"><span data-lang="en">§9 Demographics</span><span data-lang="zh">§9 人口结构</span></a>
   <a href="#political_economy"><span data-lang="en">§10 Political Economy</span><span data-lang="zh">§10 政治经济</span></a>
 </div>
+
+
+<section class="quality-panel" id="data-quality">
+  <h2><span data-lang="en">Data Quality Notes</span><span data-lang="zh">数据质量说明</span></h2>
+  <p><span data-lang="en">This dashboard follows a source hierarchy: official and central-bank data first, then multilateral datasets, then market/vendor feeds or explicit proxies. Series that are derived, lagged, vendor-sensitive, or definition-dependent are marked with quiet footnotes rather than hidden.</span><span data-lang="zh">本 dashboard 采用来源优先级：官方与央行数据优先，其次为多边机构数据，再到市场/供应商数据或明确代理序列。派生、滞后、依赖供应商或口径敏感的数据会以克制脚注标出，而不是被隐藏。</span></p>
+  <div class="quality-grid"><div class="quality-pill"><strong><span data-lang="en">Primary</span><span data-lang="zh">原始来源</span></strong><span data-lang="en">Official / central-bank source preferred</span><span data-lang="zh">优先使用官方/央行来源</span></div><div class="quality-pill"><strong><span data-lang="en">Derived</span><span data-lang="zh">派生</span></strong><span data-lang="en">Computed series are marked in notes</span><span data-lang="zh">计算型序列会在脚注说明</span></div><div class="quality-pill"><strong><span data-lang="en">Watch</span><span data-lang="zh">观察</span></strong><span data-lang="en">Lagged, proxy, or vendor-sensitive data</span><span data-lang="zh">滞后、代理或依赖供应商的数据</span></div><div class="quality-pill"><strong><span data-lang="en">Revision</span><span data-lang="zh">修订</span></strong><span data-lang="en">Macro releases can revise after publication</span><span data-lang="zh">宏观数据发布后可能回溯修订</span></div></div>
+</section>
+
 
 <!-- Snapshot -->
 <div class="snapshot-panel" id="snapshot">
@@ -716,6 +786,8 @@ monetary and fiscal policy is increasingly blurred.
   </div>
 </div></div>
   <div data-lang="zh"><div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年Q1评估</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>罗马尼亚2025年<strong>增长+2.2%</strong>——高于中东欧四国均值，并由<strong>消费繁荣</strong>驱动，这既是优势也是脆弱性。实际工资增长7%+推动零售销售（+5.3%），但因消费吸纳进口而扩大贸易逆差。工业生产持平（+0.5%）——制造业并未参与消费繁荣。</p><p>增长模式<strong>不可持续地偏向消费而非投资</strong>。固定资本形成仅约GDP的22%，受制于欧盟资金吸收率低和政策不可预测性。IT服务行业（+12%，约GDP的6%）是结构性增长明星，但规模不足以抵消消费主导增长带来的双赤字拖累。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>财政整顿影响</strong>——EDP要求年均赤字削减约GDP的0.5%。如果通过增税实施，消费引擎将熄火。增值税上调1个百分点将增加CPI约1.5个百分点并削减GDP约0.5个百分点。</li><li><strong>欧盟资金吸收</strong>——罗马尼亚分配了€290亿复苏基金。吸收能力而非资金可得性是约束条件。</li><li><strong>Neptune Deep最终投资决定</strong>——OMV Petrom的黑海天然气项目（约€40亿投资）是罗马尼亚历史上最大的FDI项目。积极决定将改变能源贸易差额并在建设期间增加约0.5% GDP。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>罗马尼亚的增长是中东欧四国中最脆弱的。我们倾向于通过股票（BET银行+能源）而非利率或汇率表达增长观点。消费故事支撑零售和银行盈利；双赤字风险限制ROMGB久期偏好。</div></div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">GDP and activity indicators can be revised; survey data such as PMI/sentiment is best read as a turning-point signal rather than a level estimate.</span><span data-lang="zh">GDP 与活动数据可能回溯修订；PMI/景气调查更适合作为拐点信号，而非精确水平估计。</span></div>
 </section>
 
 <section class="panel" id="prices_wages">
@@ -752,6 +824,8 @@ monetary and fiscal policy is increasingly blurred.
   </div>
 </div></div>
   <div data-lang="zh"><div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>罗马尼亚拥有<strong>中东欧最严重的通胀问题</strong>。整体CPI<strong>5.1%</strong>是中东欧四国中最高，比BNR 2.5%目标中值高出一倍多。该通胀是<strong>本土产生且源于财政</strong>——公共部门加薪15%+、最低工资增长和养老金指数化，向接近产能运行的经济注入了巨大需求刺激。</p><p>核心CPI<strong>4.8%</strong>说明问题——服务业通胀7.2%，由劳动力成本驱动。BNR 6.50%的政策利率给出的实际利率仅约1.4%——几乎不具紧缩性。PPI同比+3.2%——传导链并非如匈牙利或捷克那样通缩。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>财政驱动型通胀</strong>——罗马尼亚的通胀是财政现象而非货币现象。只要政府运行6%+赤字，CPI将维持高位。财政整顿是实现去通胀的必要条件。</li><li><strong>汇率传导</strong>——约40%的外汇传导率为中东欧最高。BNR的管理浮动（EURRON约4.97）是通胀锚。每贬值5%增加CPI 2个百分点。</li><li><strong>2026年工资谈判</strong>——政府已暗示较小涨幅。如果兑现，是首次需求侧去通胀信号。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>罗马尼亚通胀是做空ROMGB交易。实际收益率仅勉强为正。做多2年期RON IRS对做多2年期PLN表达通胀分化。EURRON波动率被压制，做多跨式期权是廉价保险。</div></div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Inflation components and wage series differ by methodology. Real-wage and unit-labour-cost readings are derived and should be checked against source definitions.</span><span data-lang="zh">通胀分项与工资序列的方法口径不同。实际工资和单位劳动力成本为派生指标，应核对来源定义。</span></div>
 </section>
 
 <section class="panel" id="external">
@@ -788,6 +862,8 @@ monetary and fiscal policy is increasingly blurred.
   </div>
 </div></div>
   <div data-lang="zh"><div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>罗马尼亚的对外部门是<strong>中东欧最脆弱的</strong>。经常账户赤字2025年为GDP的-6.8%，为欧盟最宽。赤字是结构性的：商品贸易逆差约-8% GDP，因消费繁荣吸纳进口而制造业出口停滞。净FDI从约3% GDP下降至约1.5% GDP。外汇储备€630亿覆盖约4.5个月进口。</p><p>经常账户赤字的融资越来越依赖欧盟转移支付和证券投资流入而非稳定FDI。BNR的管理浮动使EURRON在约4.97保持稳定，但这种稳定以消耗储备为代价。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>外部融资缺口</strong>——罗马尼亚每年需融资约€250亿经常账户赤字。融资缺口施压RON。</li><li><strong>Neptune Deep影响</strong>——积极最终投资决定将减少天然气进口账单约€20亿/年（约GDP 0.5%）。</li><li><strong>评级机构日历</strong>——穆迪下次审查为2026年10月。投资级底线脆弱。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>罗马尼亚的外部脆弱性是中东欧定价最不充分的风险。通过6个月跨式期权做多EURRON波动率是廉价保险。经常账户赤字意味着ROMGB应享有更高风险溢价。</div></div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Trade composition, reserve adequacy, and external-debt ratios are revision-prone and often lagged; use them directionally for vulnerability mapping.</span><span data-lang="zh">贸易结构、储备充足性和外债比率常有滞后与修订；更适合方向性地用于脆弱性定位。</span></div>
 </section>
 
 <section class="panel" id="fiscal_sovereign">
@@ -823,6 +899,8 @@ monetary and fiscal policy is increasingly blurred.
   </div>
 </div></div>
   <div data-lang="zh"><div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>罗马尼亚的财政状况是<strong>除危机案例外欧盟最差的</strong>。2025年赤字为GDP的-6.3%，为中东欧四国中最差。罗马尼亚自2020年以来一直处于EDP中，且错失了每个财政目标。驱动因素是结构性的：顺周期公共工资政策、养老金成本、税收征管薄弱（税收对GDP比率约27%，欧盟最低）。</p><p>总债务约GDP的53%相对温和但上升迅速——从2019年35%升至2025年53%。债务存量约50%为EUR计价——高外汇占比使债务动态对RON贬值敏感。10年期收益率7.5%的约320bp Bund利差为欧盟最宽。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>EDP合规</strong>——负面评估可能触发暂停欧盟凝聚基金（约€30-50亿/年）。</li><li><strong>养老金改革</strong>——养老金体系是结构性财政问题。世行和IMF建议转向积分式指数化。</li><li><strong>选举周期风险</strong>——极右翼强劲表现引入新的政治风险溢价。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>罗马尼亚是中东欧主权信用中最高风险、最高利差收益的交易。7.5%的10年期ROMGB提供欧盟最高名义收益率，但320bp Bund利差补偿了危机风险。如果你相信BNR锚定能维持，做多ROMGB对做空HGB。我们中性——财政-金融螺旋的风险不可忽视。</div></div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Structural balances, primary balances, CDS, and yield-curve measures mix model estimates and market feeds; check vintage and liquidity before trading use.</span><span data-lang="zh">结构性财政余额、初级余额、CDS 与收益率曲线混合了模型估计和市场报价；交易前需核对版本与流动性。</span></div>
 </section>
 
 <section class="panel" id="monetary_financial">
@@ -859,6 +937,8 @@ monetary and fiscal policy is increasingly blurred.
   </div>
 </div></div>
   <div data-lang="zh"><div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>BNR是<strong>中东欧最保守的央行</strong>——将利率从1.25%加至7.0%，并仅降息50bp至<strong>6.50%</strong>，为中东欧四国最高。行长Mugur Isarescu的制度基因塑造了BNR的鹰派偏向。CPI为5.1%，实际政策利率仅约1.4%——几乎不具紧缩性。</p><p>传导机制被管理浮动部分削弱，加上高金融欧元化（约35%银行存款以EUR计价）和国有银行影响。私人信贷增长同比+6.1%为中东欧最高——消费繁荣正在被融资。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>BNR降息周期</strong>——市场定价2026年Q3首次降息。我们认为2027年Q1更现实。</li><li><strong>Isarescu继任</strong>——他最终离任是罗马尼亚宏观稳定的最大制度风险。</li><li><strong>欧元化风险</strong>——RON贬值直接增加未对冲EUR借款人的偿债负担。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>BNR鹰派维持支撑RON套利交易（年化约325bp）。我们倾向于通过短端表达观点：做多2年期RON FRA以捕捉延迟的降息周期。EURRON波动率过于便宜——做多6个月跨式期权是正利差对冲。</div></div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Real rates and credit gaps are derived indicators. Policy-rate definitions can differ in corridor systems and during temporary liquidity operations.</span><span data-lang="zh">实际利率与信贷缺口为派生指标。利率走廊体系或临时流动性操作期间，政策利率定义可能不同。</span></div>
 </section>
 
 <section class="panel" id="markets_valuation">
@@ -893,6 +973,8 @@ monetary and fiscal policy is increasingly blurred.
   </div>
 </div></div>
   <div data-lang="zh"><div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p><strong>BET指数约18,000点（同比+8.2%）</strong>是表现最佳的中东欧股票基准，驱动因素：银行盈利受益于消费繁荣和高名义利率（ROE为18-22%），能源板块重估（Neptune Deep期权性），以及约6%股息率。远期市盈率约8.5倍为中东欧最低——相对WIG20折价40%。</p><p>但折价反映双赤字宏观风险、低流动性和国有企业治理担忧。BET是高贝塔、高风险、高回报命题。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>Banca Transilvania（TLV）</strong>——罗马尼亚最大银行，ROE约22%。如果实现软着陆，是主要受益者。</li><li><strong>OMV Petrom与Neptune Deep</strong>——二元期权。如果项目推进，产量到2030年翻倍，股价重估30-40%。</li><li><strong>新兴市场指数升级</strong>——升级至二级新兴市场地位将触发约$5亿被动流入。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>如果你能承受双赤字尾部风险，BET是中东欧股票中最高确信度的做多。做多BET银行（TLV）对做空HGB银行（OTP）捕捉消费增长分化。头寸规模：NAV的1-2%。对于谨慎者，7.5%的ROMGB做多并设紧止损。</div></div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Market and valuation data may come from vendor feeds or public proxies. Treat valuation multiples as indicative unless linked to a verified estimate database.</span><span data-lang="zh">市场与估值数据可能来自供应商或公开代理序列；若未连接可靠预期数据库，估值倍数应视为指示性。</span></div>
 </section>
 
 <section class="panel" id="financial_stability">
@@ -919,6 +1001,8 @@ monetary and fiscal policy is increasingly blurred.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>罗马尼亚银行（TLV、BRD）提供中东欧最高ROE但承载最高宏观风险。如果双赤字调整有序，做多TLV是高确信度交易。6%股息率提供缓冲。按20%回撤管理头寸——双赤字使其结构性风险高于波兰或捷克银行。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Banking-sector indicators are often quarterly or annual, lagged, and affected by regulatory definitions; compare IMF FSI with national-bank releases.</span><span data-lang="zh">银行业指标通常为季度或年度、存在滞后，并受监管定义影响；建议将 IMF FSI 与本国央行发布交叉核对。</span></div>
 </section>
 
 <section class="panel" id="demographics">
@@ -944,6 +1028,8 @@ monetary and fiscal policy is increasingly blurred.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>罗马尼亚的人口红利正在见顶——未来十年是锁定收敛的关键窗口，之后老龄化成本加速。侨民汇款（约€60亿/年）是评级机构低估的结构性经常账户支撑。部分抵消ROMGB的双赤字风险。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Demographic series are slow-moving but can be rebased after census updates. They are structural context, not high-frequency signals.</span><span data-lang="zh">人口序列变化慢，但人口普查后可能重基准；它们属于结构性背景，不是高频信号。</span></div>
 </section>
 
 <section class="panel" id="political_economy">
@@ -970,6 +1056,8 @@ monetary and fiscal policy is increasingly blurred.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>罗马尼亚的制度弱点是10年期7.5%收益率（欧盟最高）的主要原因。Isarescu锚和欧盟成员身份为制度质量提供底线，但该底线不如捷克或波兰坚实。7.5%的ROMGB补偿了真正的政治风险。按政治压力情景下潜在150bp扩大管理头寸。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Governance and political-risk indicators are qualitative or composite measures. Use them to frame regime risk, not as precise numerical facts.</span><span data-lang="zh">治理与政治风险指标多为定性或综合指数；适合刻画制度风险，不宜视作精确数值事实。</span></div>
 </section>
 
 

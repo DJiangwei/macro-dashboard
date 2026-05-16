@@ -335,6 +335,67 @@ p { color: var(--muted); }
 }
 .commentary strong,
 .framework-ref strong { color: var(--accent); }
+
+.quality-panel {
+  position: relative;
+  margin: 0 0 24px;
+  padding: 22px 24px;
+  background: linear-gradient(135deg, rgba(255,252,246,0.96), rgba(243,236,224,0.72));
+  border: 1px solid rgba(23,19,16,0.16);
+  border-left: 4px solid var(--accent);
+}
+.quality-panel h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.quality-panel p { margin: 0; max-width: 980px; line-height: 1.7; }
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+.quality-pill {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.38);
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.quality-pill strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--fg);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.quality-note {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(237,223,204,0.25);
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+.quality-note .marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+}
 .toc {
   display: flex;
   gap: 6px;
@@ -542,6 +603,7 @@ footer a { color: var(--accent) !important; }
 <!-- TOC -->
 <div class="toc">
   <a href="#snapshot"><span data-lang="en">§1 Snapshot</span><span data-lang="zh">§1 概览</span></a>
+  <a href="#data-quality"><span data-lang="en">Data Quality</span><span data-lang="zh">数据质量</span></a>
   <a href="#real_activity"><span data-lang="en">§2 Real Activity</span><span data-lang="zh">§2 实际经济活动</span></a>
   <a href="#prices_wages"><span data-lang="en">§3 Prices & Wages</span><span data-lang="zh">§3 物价与工资</span></a>
   <a href="#external"><span data-lang="en">§4 External</span><span data-lang="zh">§4 外部部门</span></a>
@@ -552,6 +614,14 @@ footer a { color: var(--accent) !important; }
   <a href="#demographics"><span data-lang="en">§9 Demographics</span><span data-lang="zh">§9 人口结构</span></a>
   <a href="#political_economy"><span data-lang="en">§10 Political Economy</span><span data-lang="zh">§10 政治经济</span></a>
 </div>
+
+
+<section class="quality-panel" id="data-quality">
+  <h2><span data-lang="en">Data Quality Notes</span><span data-lang="zh">数据质量说明</span></h2>
+  <p><span data-lang="en">This dashboard follows a source hierarchy: official and central-bank data first, then multilateral datasets, then market/vendor feeds or explicit proxies. Series that are derived, lagged, vendor-sensitive, or definition-dependent are marked with quiet footnotes rather than hidden.</span><span data-lang="zh">本 dashboard 采用来源优先级：官方与央行数据优先，其次为多边机构数据，再到市场/供应商数据或明确代理序列。派生、滞后、依赖供应商或口径敏感的数据会以克制脚注标出，而不是被隐藏。</span></p>
+  <div class="quality-grid"><div class="quality-pill"><strong><span data-lang="en">Primary</span><span data-lang="zh">原始来源</span></strong><span data-lang="en">Official / central-bank source preferred</span><span data-lang="zh">优先使用官方/央行来源</span></div><div class="quality-pill"><strong><span data-lang="en">Derived</span><span data-lang="zh">派生</span></strong><span data-lang="en">Computed series are marked in notes</span><span data-lang="zh">计算型序列会在脚注说明</span></div><div class="quality-pill"><strong><span data-lang="en">Watch</span><span data-lang="zh">观察</span></strong><span data-lang="en">Lagged, proxy, or vendor-sensitive data</span><span data-lang="zh">滞后、代理或依赖供应商的数据</span></div><div class="quality-pill"><strong><span data-lang="en">Revision</span><span data-lang="zh">修订</span></strong><span data-lang="en">Macro releases can revise after publication</span><span data-lang="zh">宏观数据发布后可能回溯修订</span></div></div>
+</section>
+
 
 <!-- Snapshot -->
 <div class="snapshot-panel" id="snapshot">
@@ -725,6 +795,8 @@ policy, creating a fiscal-monetary tension reminiscent of 2021-22.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>波兰相对中东欧同侪的增长溢价（约150bp GDP）证明了更紧的主权利差。基于增长分化做多PLN资产对CZK或HUF，但需注意波兰更大的财政赤字部分抵消了利率空间的增长优势。我们倾向于通过股票（WIG20银行+工业）而非利率来表达增长观点。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">GDP and activity indicators can be revised; survey data such as PMI/sentiment is best read as a turning-point signal rather than a level estimate.</span><span data-lang="zh">GDP 与活动数据可能回溯修订；PMI/景气调查更适合作为拐点信号，而非精确水平估计。</span></div>
 </section>
 
 <section class="panel" id="prices_wages">
@@ -779,6 +851,8 @@ policy, creating a fiscal-monetary tension reminiscent of 2021-22.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>NBP-NBH利差（5.75%对6.25%）为50bp偏向波兰，但未补偿通胀差异。在汇率方面做空PLN对HUF——NBP将是最后一个降息的中东欧央行，支撑PLN利差收益，但粘性通胀意味着短端利率具有非对称上行风险。考虑做多2年期PLN FRA对做空2年期HUF。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Inflation components and wage series differ by methodology. Real-wage and unit-labour-cost readings are derived and should be checked against source definitions.</span><span data-lang="zh">通胀分项与工资序列的方法口径不同。实际工资和单位劳动力成本为派生指标，应核对来源定义。</span></div>
 </section>
 
 <section class="panel" id="external">
@@ -833,6 +907,8 @@ policy, creating a fiscal-monetary tension reminiscent of 2021-22.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>基于FEER，PLN结构性低估（公允价值约4.10-4.20 EURPLN）。欧盟资金流入和NBP鹰派维持提供年均2-3%的稳步升值偏向。但地缘政治风险溢价意味着在risk-off中做空PLN是危险的——这是一笔需要耐心和头寸纪律的利差收益与收敛交易。12个月EURPLN远期4.25提供有吸引力的入场点。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Trade composition, reserve adequacy, and external-debt ratios are revision-prone and often lagged; use them directionally for vulnerability mapping.</span><span data-lang="zh">贸易结构、储备充足性和外债比率常有滞后与修订；更适合方向性地用于脆弱性定位。</span></div>
 </section>
 
 <section class="panel" id="fiscal_sovereign">
@@ -884,6 +960,8 @@ policy, creating a fiscal-monetary tension reminiscent of 2021-22.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>波兰紧窄的主权利差建立在评级优势和深厚的国内PLN国债买盘之上。风险在于缓慢的财政侵蚀在2-3年内侵蚀评级缓冲。我们尚未到做空POLGB的地步——国内买盘太深——但利差压缩交易（做多POLGB对Bund）已经结束。中性久期，偏向在2年期做多，该期限NBP预期定价错误。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Structural balances, primary balances, CDS, and yield-curve measures mix model estimates and market feeds; check vintage and liquidity before trading use.</span><span data-lang="zh">结构性财政余额、初级余额、CDS 与收益率曲线混合了模型估计和市场报价；交易前需核对版本与流动性。</span></div>
 </section>
 
 <section class="panel" id="monetary_financial">
@@ -938,6 +1016,8 @@ policy, creating a fiscal-monetary tension reminiscent of 2021-22.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>NBP鹰派维持支撑PLN套利交易。做多PLN对EUR年化收益约200bp（5.75%对3.25% ECB存款利率），并伴有欧盟资金的升值顺风。头寸拥挤——BIS数据显示投机性PLN头寸处于70百分位——但基本面支持。设定5%止损；地缘政治风险溢价可能剧烈重定价。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Real rates and credit gaps are derived indicators. Policy-rate definitions can differ in corridor systems and during temporary liquidity operations.</span><span data-lang="zh">实际利率与信贷缺口为派生指标。利率走廊体系或临时流动性操作期间，政策利率定义可能不同。</span></div>
 </section>
 
 <section class="panel" id="markets_valuation">
@@ -990,6 +1070,8 @@ policy, creating a fiscal-monetary tension reminiscent of 2021-22.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>WIG20提供中东欧股票中最佳的风险/回报。GDP增长领先、深厚资本市场、A-评级和多元化行业结构（银行、科技、能源、零售）的组合使波兰成为中东欧股票的核心配置。做多WIG20对做空BUX干净地表达增长/财政分化。2026年12月WIG20看涨期权2,600行权价提供ERP压缩叙事的廉价期权性。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Market and valuation data may come from vendor feeds or public proxies. Treat valuation multiples as indicative unless linked to a verified estimate database.</span><span data-lang="zh">市场与估值数据可能来自供应商或公开代理序列；若未连接可靠预期数据库，估值倍数应视为指示性。</span></div>
 </section>
 
 <section class="panel" id="financial_stability">
@@ -1016,6 +1098,8 @@ policy, creating a fiscal-monetary tension reminiscent of 2021-22.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>波兰银行（WIG20银行市净率约1.3倍，ROE约14%）提供中东欧金融股最佳风险/回报。NBP鹰派维持支撑净息差稳定。做多PKO BP对做空OTP银行捕捉货币政策分化。瑞郎按揭尾部风险是审慎头寸管理的主要原因。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Banking-sector indicators are often quarterly or annual, lagged, and affected by regulatory definitions; compare IMF FSI with national-bank releases.</span><span data-lang="zh">银行业指标通常为季度或年度、存在滞后，并受监管定义影响；建议将 IMF FSI 与本国央行发布交叉核对。</span></div>
 </section>
 
 <section class="panel" id="demographics">
@@ -1041,6 +1125,8 @@ policy, creating a fiscal-monetary tension reminiscent of 2021-22.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>波兰相对中东欧同侪的人口优势支持增长溢价并证明更紧的主权利差。乌克兰劳动力供给冲击被市场低估——为趋势增长增加约0.3个百分点，不在一致预期中。这结构性支持做多PLN资产。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Demographic series are slow-moving but can be rebased after census updates. They are structural context, not high-frequency signals.</span><span data-lang="zh">人口序列变化慢，但人口普查后可能重基准；它们属于结构性背景，不是高频信号。</span></div>
 </section>
 
 <section class="panel" id="political_economy">
@@ -1067,6 +1153,8 @@ policy, creating a fiscal-monetary tension reminiscent of 2021-22.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>波兰相对中东欧同侪的制度质量溢价合理，支持紧窄的主权利差。2027年选举是主要政治风险事件——PiS回归将使PLN和POLGB重定价扩大50-100bp。通过2026年下半年6个月PLN看跌期权对冲选举风险。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Governance and political-risk indicators are qualitative or composite measures. Use them to frame regime risk, not as precise numerical facts.</span><span data-lang="zh">治理与政治风险指标多为定性或综合指数；适合刻画制度风险，不宜视作精确数值事实。</span></div>
 </section>
 
 

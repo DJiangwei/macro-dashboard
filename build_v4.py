@@ -382,6 +382,67 @@ p { color: var(--muted); }
 }
 .commentary strong,
 .framework-ref strong { color: var(--accent); }
+
+.quality-panel {
+  position: relative;
+  margin: 0 0 24px;
+  padding: 22px 24px;
+  background: linear-gradient(135deg, rgba(255,252,246,0.96), rgba(243,236,224,0.72));
+  border: 1px solid rgba(23,19,16,0.16);
+  border-left: 4px solid var(--accent);
+}
+.quality-panel h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.quality-panel p { margin: 0; max-width: 980px; line-height: 1.7; }
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+.quality-pill {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.38);
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.quality-pill strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--fg);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.quality-note {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(237,223,204,0.25);
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+.quality-note .marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+}
 .toc {
   display: flex;
   gap: 6px;
@@ -627,6 +688,49 @@ SECTION_BLURBS_ZH = {
 }
 
 SECTION_ORDER = ["real_activity", "prices_wages", "external", "fiscal_sovereign", "monetary_financial", "markets_valuation", "financial_stability", "demographics", "political_economy"]
+
+DATA_QUALITY_PILLARS = [
+    ("Primary", "Official / central-bank source preferred", "原始来源", "优先使用官方/央行来源"),
+    ("Derived", "Computed series are marked in notes", "派生", "计算型序列会在脚注说明"),
+    ("Watch", "Lagged, proxy, or vendor-sensitive data", "观察", "滞后、代理或依赖供应商的数据"),
+    ("Revision", "Macro releases can revise after publication", "修订", "宏观数据发布后可能回溯修订"),
+]
+
+SECTION_QUALITY_NOTES = {
+    "real_activity": ("GDP and activity indicators can be revised; survey data such as PMI/sentiment is best read as a turning-point signal rather than a level estimate.", "GDP 与活动数据可能回溯修订；PMI/景气调查更适合作为拐点信号，而非精确水平估计。"),
+    "prices_wages": ("Inflation components and wage series differ by methodology. Real-wage and unit-labour-cost readings are derived and should be checked against source definitions.", "通胀分项与工资序列的方法口径不同。实际工资和单位劳动力成本为派生指标，应核对来源定义。"),
+    "external": ("Trade composition, reserve adequacy, and external-debt ratios are revision-prone and often lagged; use them directionally for vulnerability mapping.", "贸易结构、储备充足性和外债比率常有滞后与修订；更适合方向性地用于脆弱性定位。"),
+    "fiscal_sovereign": ("Structural balances, primary balances, CDS, and yield-curve measures mix model estimates and market feeds; check vintage and liquidity before trading use.", "结构性财政余额、初级余额、CDS 与收益率曲线混合了模型估计和市场报价；交易前需核对版本与流动性。"),
+    "monetary_financial": ("Real rates and credit gaps are derived indicators. Policy-rate definitions can differ in corridor systems and during temporary liquidity operations.", "实际利率与信贷缺口为派生指标。利率走廊体系或临时流动性操作期间，政策利率定义可能不同。"),
+    "markets_valuation": ("Market and valuation data may come from vendor feeds or public proxies. Treat valuation multiples as indicative unless linked to a verified estimate database.", "市场与估值数据可能来自供应商或公开代理序列；若未连接可靠预期数据库，估值倍数应视为指示性。"),
+    "financial_stability": ("Banking-sector indicators are often quarterly or annual, lagged, and affected by regulatory definitions; compare IMF FSI with national-bank releases.", "银行业指标通常为季度或年度、存在滞后，并受监管定义影响；建议将 IMF FSI 与本国央行发布交叉核对。"),
+    "demographics": ("Demographic series are slow-moving but can be rebased after census updates. They are structural context, not high-frequency signals.", "人口序列变化慢，但人口普查后可能重基准；它们属于结构性背景，不是高频信号。"),
+    "political_economy": ("Governance and political-risk indicators are qualitative or composite measures. Use them to frame regime risk, not as precise numerical facts.", "治理与政治风险指标多为定性或综合指数；适合刻画制度风险，不宜视作精确数值事实。"),
+}
+
+
+def _quality_panel_html() -> str:
+    pills = "".join(
+        f"""<div class=\"quality-pill\"><strong><span data-lang=\"en\">{en_title}</span><span data-lang=\"zh\">{zh_title}</span></strong><span data-lang=\"en\">{en_body}</span><span data-lang=\"zh\">{zh_body}</span></div>"""
+        for en_title, en_body, zh_title, zh_body in DATA_QUALITY_PILLARS
+    )
+    return f"""
+<section class=\"quality-panel\" id=\"data-quality\">
+  <h2><span data-lang=\"en\">Data Quality Notes</span><span data-lang=\"zh\">数据质量说明</span></h2>
+  <p><span data-lang=\"en\">This dashboard follows a source hierarchy: official and central-bank data first, then multilateral datasets, then market/vendor feeds or explicit proxies. Series that are derived, lagged, vendor-sensitive, or definition-dependent are marked with quiet footnotes rather than hidden.</span><span data-lang=\"zh\">本 dashboard 采用来源优先级：官方与央行数据优先，其次为多边机构数据，再到市场/供应商数据或明确代理序列。派生、滞后、依赖供应商或口径敏感的数据会以克制脚注标出，而不是被隐藏。</span></p>
+  <div class=\"quality-grid\">{pills}</div>
+</section>
+"""
+
+
+def _section_quality_html(sec_id: str) -> str:
+    note = SECTION_QUALITY_NOTES.get(sec_id)
+    if not note:
+        return ""
+    en, zh = note
+    return f"""
+  <div class=\"quality-note\"><span class=\"marker\">†</span><span data-lang=\"en\">{en}</span><span data-lang=\"zh\">{zh}</span></div>
+"""
 
 # ── Country-specific data ────────────────────────────────────────────────────
 
@@ -2536,6 +2640,7 @@ def build_v4(country_code: str) -> Path:
         chart_ids = SECTION_CHART_MAP[sec_id]
         narrative_en = data["narratives"].get(sec_id, "")
         narrative_zh = data.get("narratives_zh", {}).get(sec_id, "")
+        quality_html = _section_quality_html(sec_id)
 
         charts_html = ""
         for cid in chart_ids:
@@ -2549,7 +2654,7 @@ def build_v4(country_code: str) -> Path:
   <div class="charts">{charts_html}</div>
   <div data-lang="en">{narrative_en}</div>
   <div data-lang="zh">{narrative_zh}</div>
-</section>
+{quality_html}</section>
 """
 
     # Plotly JS
@@ -2622,6 +2727,7 @@ def build_v4(country_code: str) -> Path:
 <!-- TOC -->
 <div class="toc">
   <a href="#snapshot"><span data-lang="en">§1 Snapshot</span><span data-lang="zh">§1 概览</span></a>
+  <a href="#data-quality"><span data-lang="en">Data Quality</span><span data-lang="zh">数据质量</span></a>
   <a href="#real_activity"><span data-lang="en">§2 Real Activity</span><span data-lang="zh">§2 实际经济活动</span></a>
   <a href="#prices_wages"><span data-lang="en">§3 Prices & Wages</span><span data-lang="zh">§3 物价与工资</span></a>
   <a href="#external"><span data-lang="en">§4 External</span><span data-lang="zh">§4 外部部门</span></a>
@@ -2632,6 +2738,8 @@ def build_v4(country_code: str) -> Path:
   <a href="#demographics"><span data-lang="en">§9 Demographics</span><span data-lang="zh">§9 人口结构</span></a>
   <a href="#political_economy"><span data-lang="en">§10 Political Economy</span><span data-lang="zh">§10 政治经济</span></a>
 </div>
+
+{_quality_panel_html()}
 
 <!-- Snapshot -->
 <div class="snapshot-panel" id="snapshot">

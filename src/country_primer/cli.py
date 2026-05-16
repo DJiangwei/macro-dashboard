@@ -22,10 +22,29 @@ from .fetch import (
     fetch_from_cache,
     fetch_wb,
     fetch_yahoo,
+    finalize_series,
 )
 from .render import fig_to_html, render_dashboard
 from .transform import to_dataframe, yoy
 
+
+def _apply_indicator_quality(series: "Series", quality: dict | None) -> "Series":
+    """Attach indicator-level provenance notes from config before validation."""
+    if not quality:
+        return finalize_series(series)
+    note = quality.get("note") or quality.get("validation") or ""
+    confidence = (quality.get("confidence") or "").lower()
+    if note:
+        series.note = f"{series.note}; {note}" if series.note else note
+    series = finalize_series(series)
+    if confidence in {"medium", "low"}:
+        label = "Config confidence is medium." if confidence == "medium" else "Config confidence is low."
+        if label not in series.quality_notes:
+            series.quality_notes = [*series.quality_notes, label][:3]
+        if series.quality_status == "verified":
+            series.quality_status = "watch" if confidence == "medium" else "low_confidence"
+            series.quality_score = 75 if confidence == "medium" else 55
+    return series
 
 # Direct-API fallback registry: indicator-key → callable(country_meta, key, label, iso) → Series.
 # Triggered when the MCP cache returns empty/unavailable.
@@ -436,7 +455,7 @@ def build(country_iso: str, peers: list[str], out_path: Path) -> Path:
                 # FX special case: EUR-cross via ECB XML fallback.
                 if ind.special == "fx_eur":
                     series = fetch_ecb_fx(cm["currency"], ind.key, ind.label, c)
-                    cache[(ind.key, c)] = series
+                    cache[(ind.key, c)] = _apply_indicator_quality(series, ind.quality)
                     continue
                 q = resolve_query(ind.mcp_query, cm)
                 series = fetch_from_cache(q, ind.key, ind.label, c)
@@ -462,6 +481,7 @@ def build(country_iso: str, peers: list[str], out_path: Path) -> Path:
                 # Generic FX fallback: ECB-supported currency → ECB XML.
                 if (not series.available) and ind.key.startswith("fx_"):
                     series = fetch_ecb_fx(cm["currency"], ind.key, ind.label, c)
+                series = _apply_indicator_quality(series, ind.quality)
                 cache[(ind.key, c)] = series
 
             # Fetch absolute-value companion for % GDP indicators (primary country only).
@@ -481,7 +501,7 @@ def build(country_iso: str, peers: list[str], out_path: Path) -> Path:
                          "gov_debt_pct_gdp": "GC.DOD.TOTL.CN"}.get(ind.key, ""),
                         comp_key, f"{ind.label} (absolute)", country_iso,
                     )
-                cache[(comp_key, country_iso)] = comp_series
+                cache[(comp_key, country_iso)] = finalize_series(comp_series)
 
     # Build per-section payloads.
     target_band = _parse_target_band(meta.get("inflation_target", ""))
@@ -503,7 +523,9 @@ def build(country_iso: str, peers: list[str], out_path: Path) -> Path:
                                                "observations": [(d.strftime("%Y-%m-%d"), float(v))
                                                                 for d, v in zip(df.index, df["value"])],
                                                "unit": "% YoY",
-                                               "label": ind.label})
+                                               "label": ind.label,
+                                               "note": (primary.note + "; " if primary.note else "") + "YoY derived from source level series"})
+                primary = finalize_series(primary)
 
             primary_series_by_key[ind.key] = primary
 

@@ -9,6 +9,7 @@ sections:
   - id: real_activity
     title: "§2 Real Activity"
     kind: charts
+    blurb: "Growth pulse, labour-market slack, and domestic-demand momentum."
     indicators:
       - key: real_gdp_yoy
         label: "Real GDP, YoY %"
@@ -17,6 +18,14 @@ sections:
         peers: true
         cycle_role: coincident
         unit: "% YoY"
+        quality: {confidence: high, validation: "Primary national accounts preferred; quarterly releases may be revised."}
+      - key: real_gdp_qoq
+        label: "Real GDP, QoQ % SA"
+        mcp_query: "{country} seasonally adjusted real GDP quarter over quarter last 10 years"
+        chart: line
+        cycle_role: coincident
+        unit: "% QoQ"
+        quality: {confidence: medium, note: "Seasonal adjustment differs by source; compare with national statistical office."}
       - key: industrial_production_yoy
         label: "Industrial Production, YoY %"
         mcp_query: "{country} industrial production year over year monthly last 5 years"
@@ -24,6 +33,7 @@ sections:
         cycle_role: coincident
         derived_yoy: true
         unit: "% YoY"
+        quality: {confidence: high, validation: "Eurostat/national index; base-year changes can affect YoY calculations."}
       - key: retail_sales_yoy
         label: "Retail Sales Volume, YoY %"
         mcp_query: "{country} retail sales volume year over year monthly last 5 years"
@@ -31,6 +41,7 @@ sections:
         cycle_role: coincident
         derived_yoy: true
         unit: "% YoY"
+        quality: {confidence: medium, note: "Retail volume is a proxy for household demand and may exclude services."}
       - key: unemployment_rate
         label: "Unemployment Rate, %"
         mcp_query: "{country} unemployment rate monthly last 5 years"
@@ -38,25 +49,51 @@ sections:
         peers: true
         cycle_role: lagging
         unit: "%"
+        quality: {confidence: high, validation: "ILO/LFS definition preferred; local definitions may differ."}
+      - key: manufacturing_pmi
+        label: "Manufacturing PMI"
+        mcp_query: "{country} manufacturing PMI monthly last 5 years"
+        chart: line
+        cycle_role: leading
+        unit: "Index"
+        quality: {confidence: medium, note: "Survey indicator; coverage and vendor methodology vary by country."}
+      - key: economic_sentiment
+        label: "Economic Sentiment Indicator"
+        mcp_query: "{country} economic sentiment indicator monthly last 10 years"
+        chart: peer_overlay
+        peers: true
+        cycle_role: leading
+        unit: "Index"
+        quality: {confidence: medium, note: "Useful for turning points; not a hard-activity series."}
 
   - id: prices_wages
     title: "§3 Prices & Wages"
     kind: charts
+    blurb: "Inflation breadth, upstream pressure, wage persistence, and real-income dynamics."
     indicators:
       - key: cpi_yoy
-        label: "Headline CPI, YoY %"
+        label: "Headline CPI/HICP, YoY %"
         mcp_query: "{country} consumer price index inflation year over year monthly last 5 years"
         chart: peer_overlay
         peers: true
         cycle_role: coincident
         target_band: true
         unit: "% YoY"
+        quality: {confidence: high, validation: "HICP/CPI primary; classification changes can affect components."}
       - key: core_cpi_yoy
         label: "Core CPI, YoY %"
         mcp_query: "{country} core consumer price index year over year monthly last 5 years"
         chart: line
         cycle_role: coincident
         unit: "% YoY"
+        quality: {confidence: high, validation: "Core definition should be checked against source metadata."}
+      - key: food_energy_cpi_yoy
+        label: "Food & Energy CPI, YoY %"
+        mcp_query: "{country} food energy consumer price inflation year over year monthly last 5 years"
+        chart: line
+        cycle_role: coincident
+        unit: "% YoY"
+        quality: {confidence: medium, note: "Component definitions vary; use mainly for inflation decomposition."}
       - key: ppi_yoy
         label: "Producer Price Index, YoY %"
         mcp_query: "{country} producer price index year over year monthly last 5 years"
@@ -64,16 +101,33 @@ sections:
         cycle_role: leading
         derived_yoy: true
         unit: "% YoY"
+        quality: {confidence: high, validation: "Eurostat/national PPI; energy weights can dominate."}
       - key: avg_wage_yoy
         label: "Average Gross Wage, YoY %"
         mcp_query: "{country} average gross monthly wage year over year last 5 years"
         chart: line
         cycle_role: lagging
         unit: "% YoY"
+        quality: {confidence: medium, note: "Wage coverage differs across enterprise surveys and national accounts."}
+      - key: real_wage_yoy
+        label: "Real Wage, YoY %"
+        mcp_query: "{country} real wage growth year over year last 5 years"
+        chart: line
+        cycle_role: coincident
+        unit: "% YoY"
+        quality: {confidence: medium, note: "Derived from wage and CPI sources; inflation deflator choice matters."}
+      - key: unit_labour_cost_yoy
+        label: "Unit Labour Cost, YoY %"
+        mcp_query: "{country} unit labour cost year over year quarterly last 10 years"
+        chart: line
+        cycle_role: lagging
+        unit: "% YoY"
+        quality: {confidence: medium, note: "Quarterly productivity revisions can move this series materially."}
 
   - id: external
     title: "§4 External Sector"
     kind: charts
+    blurb: "Balance-of-payments pressure, reserve buffers, trade concentration, and FX sensitivity."
     indicators:
       - key: current_account_pct_gdp
         label: "Current Account, % of GDP"
@@ -81,26 +135,49 @@ sections:
         chart: peer_overlay
         peers: true
         unit: "% of GDP"
+        quality: {confidence: high, validation: "BoP revisions are common; use latest vintage and check quarterly path."}
+      - key: goods_trade_balance
+        label: "Goods Trade Balance, USD bn"
+        mcp_query: "{country} goods trade balance monthly last 5 years"
+        chart: bar
+        unit: "USD bn"
+        quality: {confidence: medium, note: "Currency conversion and FOB/CIF methodology vary by source."}
       - key: trade_balance
-        label: "Trade Balance (goods), USD bn"
+        label: "Trade Balance, USD bn"
         mcp_query: "{country} trade balance goods monthly last 5 years"
         chart: bar
         unit: "USD bn"
+        quality: {confidence: medium, note: "May use goods-and-services proxy when goods-only data is unavailable."}
       - key: fx_reserves
         label: "FX Reserves, USD bn"
         mcp_query: "{country} total reserves excluding gold monthly last 10 years"
         chart: line
         unit: "USD bn"
+        quality: {confidence: high, validation: "Prefer central-bank reserve template; USD valuation effects matter."}
+      - key: reserve_import_cover
+        label: "Reserve Import Cover, Months"
+        mcp_query: "{country} reserves months of imports last 10 years"
+        chart: line
+        unit: "Months"
+        quality: {confidence: medium, note: "Derived ratio; import denominator can lag reserves."}
       - key: reer
-        label: "Real Effective Exchange Rate (CPI-deflated), index"
+        label: "Real Effective Exchange Rate, Index"
         mcp_query: "{country} real effective exchange rate monthly last 10 years"
         chart: peer_overlay
         peers: true
         unit: "Index"
+        quality: {confidence: high, validation: "BIS/ECB REER preferred; base-year changes should be normalized."}
+      - key: short_term_external_debt
+        label: "Short-Term External Debt, % Reserves"
+        mcp_query: "{country} short term external debt percent reserves annual last 12 years"
+        chart: line
+        unit: "% reserves"
+        quality: {confidence: medium, note: "Often annual and lagged; use as structural vulnerability, not timing signal."}
 
   - id: fiscal_sovereign
     title: "§5 Fiscal & Sovereign"
     kind: charts
+    blurb: "Fiscal impulse, debt sustainability, term-premium risk, and sovereign-credit anchors."
     indicators:
       - key: fiscal_balance_pct_gdp
         label: "General Government Balance, % of GDP"
@@ -108,22 +185,56 @@ sections:
         chart: peer_overlay
         peers: true
         unit: "% of GDP"
+        quality: {confidence: high, validation: "Eurostat/IMF WEO preferred; deficit data may be revised after EDP notifications."}
+      - key: structural_balance_pct_gdp
+        label: "Structural Balance, % of GDP"
+        mcp_query: "{country} structural fiscal balance percent of potential GDP annual last 12 years"
+        chart: line
+        unit: "% potential GDP"
+        quality: {confidence: medium, note: "Model-based estimate; output-gap assumptions drive revisions."}
+      - key: primary_balance_pct_gdp
+        label: "Primary Balance, % of GDP"
+        mcp_query: "{country} primary fiscal balance percent of GDP annual last 12 years"
+        chart: line
+        unit: "% of GDP"
+        quality: {confidence: high, validation: "Useful for debt dynamics; check interest-expenditure classification."}
       - key: gov_debt_pct_gdp
         label: "General Government Debt, % of GDP"
         mcp_query: "{country} general government gross debt percent of GDP annual last 15 years"
         chart: peer_overlay
         peers: true
         unit: "% of GDP"
+        quality: {confidence: high, validation: "EDP/Maastricht debt preferred; nominal GDP revisions affect ratio."}
+      - key: interest_bill_pct_revenue
+        label: "Interest Bill, % Revenue"
+        mcp_query: "{country} government interest payments percent of revenue annual last 12 years"
+        chart: line
+        unit: "% revenue"
+        quality: {confidence: medium, note: "Fiscal accounts are annual/lagged; use with current yield curve."}
+      - key: sov_yield_2y
+        label: "2-Year Government Bond Yield, %"
+        mcp_query: "{country} 2 year government bond yield monthly last 5 years"
+        chart: line
+        unit: "%"
+        quality: {confidence: medium, note: "Local bond liquidity varies; vendor curves can be interpolated."}
       - key: sov_yield_10y
         label: "10-Year Government Bond Yield, %"
         mcp_query: "{country} 10 year government bond yield monthly last 5 years"
         chart: peer_overlay
         peers: true
         unit: "%"
+        quality: {confidence: high, validation: "Market data should be confirmed against exchange/terminal for trading."}
+      - key: sovereign_cds_5y
+        label: "5-Year Sovereign CDS, bp"
+        mcp_query: "{country} 5 year sovereign CDS spread daily last 5 years"
+        chart: line
+        unit: "bp"
+        quality: {confidence: low, note: "CDS data often requires paid vendor feeds; public proxies may be incomplete."}
 
   - id: monetary_financial
     title: "§6 Monetary & Financial"
     kind: charts
+    blurb: "Policy stance, real rates, credit impulse, money growth, and FX transmission."
     indicators:
       - key: policy_rate
         label: "Central Bank Policy Rate, %"
@@ -131,35 +242,174 @@ sections:
         chart: peer_overlay
         peers: true
         unit: "%"
+        quality: {confidence: high, validation: "Central-bank policy rate preferred; corridor systems require rate definition check."}
+      - key: real_policy_rate
+        label: "Real Policy Rate, %"
+        mcp_query: "{country} real policy interest rate policy rate minus inflation monthly last 5 years"
+        chart: line
+        unit: "%"
+        quality: {confidence: medium, note: "Derived from policy rate and inflation; ex-ante vs ex-post definition matters."}
       - key: m3_yoy
         label: "Broad Money (M3), YoY %"
         mcp_query: "{country} broad money M3 year over year monthly last 5 years"
         chart: line
         unit: "% YoY"
+        quality: {confidence: medium, note: "May use broad-money proxy where M3 is unavailable."}
       - key: private_credit_yoy
         label: "Private Sector Credit, YoY %"
         mcp_query: "{country} domestic credit to private sector year over year monthly last 5 years"
         chart: line
         unit: "% YoY"
+        quality: {confidence: medium, note: "Credit aggregates differ by residency and sector definition."}
+      - key: credit_to_gdp_gap
+        label: "Credit-to-GDP Gap, pp"
+        mcp_query: "{country} BIS credit to GDP gap quarterly last 15 years"
+        chart: line
+        unit: "pp"
+        quality: {confidence: medium, note: "BIS gap is model-filtered and can revise with history."}
       - key: fx_vs_eur
         label: "FX vs EUR (level)"
         mcp_query: "EUR to {currency} exchange rate daily last 5 years"
         chart: line
         special: fx_eur
-        unit: "HUF per EUR"
+        unit: "LCU per EUR"
+        quality: {confidence: high, validation: "ECB reference rate; not an executable intraday price."}
 
   - id: markets_valuation
     title: "§7 Markets & Valuation"
     kind: charts
+    blurb: "Cross-asset pricing, valuation, risk premium, and investable expression."
     indicators:
       - key: equity_index
         label: "Headline Equity Index (level)"
         mcp_query: "{equity_index} stock market index monthly last 5 years"
         chart: line
         unit: "Index"
+        quality: {confidence: medium, note: "Yahoo/market-vendor feed; confirm index conventions before trading."}
       - key: equity_yoy
         label: "Headline Equity Index, YoY %"
         mcp_query: "{equity_index} stock market index monthly last 5 years"
         chart: line
         derived_yoy: true
         unit: "% YoY"
+        quality: {confidence: medium, note: "Derived from vendor index level."}
+      - key: equity_forward_pe
+        label: "Equity Market Forward P/E"
+        mcp_query: "{country} stock market forward PE ratio monthly last 5 years"
+        chart: line
+        unit: "x"
+        quality: {confidence: low, note: "Forward valuation usually requires broker/vendor estimates; public proxies are indicative."}
+      - key: equity_dividend_yield
+        label: "Equity Market Dividend Yield, %"
+        mcp_query: "{country} stock market dividend yield monthly last 5 years"
+        chart: line
+        unit: "%"
+        quality: {confidence: low, note: "Index methodology and trailing/forward definition must be checked."}
+      - key: sov_spread_vs_bund
+        label: "10Y Spread vs Bund, bp"
+        mcp_query: "{country} 10 year government bond spread versus Germany bund monthly last 5 years"
+        chart: peer_overlay
+        peers: true
+        unit: "bp"
+        quality: {confidence: medium, note: "Derived spread; ensure maturity matching and same close time."}
+
+  - id: financial_stability
+    title: "§8 Financial Stability"
+    kind: charts
+    blurb: "Bank balance-sheet resilience, asset quality, capital buffers, and household/corporate leverage."
+    indicators:
+      - key: npl_ratio
+        label: "Bank NPL Ratio, %"
+        mcp_query: "{country} bank non performing loans ratio quarterly last 10 years"
+        chart: line
+        unit: "%"
+        quality: {confidence: medium, note: "FSI/national-bank data is lagged and definitions vary."}
+      - key: tier1_capital_ratio
+        label: "Bank Tier 1 Capital Ratio, %"
+        mcp_query: "{country} bank tier 1 capital ratio quarterly last 10 years"
+        chart: line
+        unit: "%"
+        quality: {confidence: medium, note: "Regulatory definitions can change; compare with EBA/national bank releases."}
+      - key: roe_banks
+        label: "Bank ROE, %"
+        mcp_query: "{country} banking sector return on equity quarterly last 10 years"
+        chart: line
+        unit: "%"
+        quality: {confidence: medium, note: "Sector ROE can be distorted by taxes, windfall levies, and one-offs."}
+      - key: household_debt_pct_gdp
+        label: "Household Debt, % of GDP"
+        mcp_query: "{country} household debt percent of GDP quarterly last 15 years"
+        chart: peer_overlay
+        peers: true
+        unit: "% of GDP"
+        quality: {confidence: medium, note: "Debt perimeter differs across BIS/Eurostat/national accounts."}
+      - key: corporate_debt_pct_gdp
+        label: "Corporate Debt, % of GDP"
+        mcp_query: "{country} non financial corporate debt percent of GDP quarterly last 15 years"
+        chart: peer_overlay
+        peers: true
+        unit: "% of GDP"
+        quality: {confidence: medium, note: "Cross-border intra-company debt can distort comparability."}
+
+  - id: demographics
+    title: "§9 Demographics"
+    kind: charts
+    blurb: "Labour-supply trend, dependency burden, migration, and long-run growth constraints."
+    indicators:
+      - key: working_age_population_yoy
+        label: "Working-Age Population, YoY %"
+        mcp_query: "{country} working age population growth annual last 20 years"
+        chart: peer_overlay
+        peers: true
+        unit: "% YoY"
+        quality: {confidence: high, validation: "Annual official population estimates; revisions and census rebasing matter."}
+      - key: old_age_dependency
+        label: "Old-Age Dependency Ratio, %"
+        mcp_query: "{country} old age dependency ratio annual last 20 years"
+        chart: peer_overlay
+        peers: true
+        unit: "%"
+        quality: {confidence: high, validation: "Slow-moving annual series; useful for structural analysis."}
+      - key: net_migration
+        label: "Net Migration, persons"
+        mcp_query: "{country} net migration annual last 20 years"
+        chart: bar
+        unit: "Persons"
+        quality: {confidence: medium, note: "Migration data is often revised and can miss temporary flows."}
+      - key: fertility_rate
+        label: "Fertility Rate"
+        mcp_query: "{country} fertility rate births per woman annual last 20 years"
+        chart: line
+        unit: "Births per woman"
+        quality: {confidence: high, validation: "Annual demographic series; structural rather than cyclical."}
+
+  - id: political_economy
+    title: "§10 Political Economy"
+    kind: charts
+    blurb: "Institutions, EU-funds risk, policy credibility, and political constraints on macro adjustment."
+    indicators:
+      - key: wgi_governance
+        label: "World Governance Indicator Composite"
+        mcp_query: "{country} world governance indicators composite annual last 15 years"
+        chart: line
+        unit: "Score"
+        quality: {confidence: medium, note: "Survey/model composite; use for direction and peer comparison, not precision."}
+      - key: corruption_perception
+        label: "Corruption Perceptions Index"
+        mcp_query: "{country} corruption perceptions index annual last 15 years"
+        chart: peer_overlay
+        peers: true
+        unit: "Score"
+        quality: {confidence: medium, note: "Perception index; methodology changes and media salience can affect scores."}
+      - key: eu_funds_absorption
+        label: "EU Funds Absorption, % Allocation"
+        mcp_query: "{country} EU funds absorption percent allocation annual last 10 years"
+        chart: line
+        unit: "%"
+        quality: {confidence: low, note: "Public EU-funds data can be fragmented by programme cycle; verify against EC dashboards."}
+      - key: policy_uncertainty
+        label: "Policy Uncertainty / Risk Proxy"
+        mcp_query: "{country} policy uncertainty political risk index monthly last 10 years"
+        chart: line
+        unit: "Index"
+        quality: {confidence: low, note: "Often proxy-based or vendor-specific; annotate source before publishing."}

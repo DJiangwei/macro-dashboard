@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import re
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -39,6 +40,9 @@ class Series:
     observations: list[tuple[str, float]] = field(default_factory=list)
     available: bool = True
     note: str = ""
+    quality_status: str = "unchecked"
+    quality_score: int = 0
+    quality_notes: list[str] = field(default_factory=list)
 
     @property
     def latest(self) -> Optional[tuple[str, float]]:
@@ -59,8 +63,138 @@ class Series:
             "observations": self.observations,
             "available": self.available,
             "note": self.note,
+            "quality_status": self.quality_status,
+            "quality_score": self.quality_score,
+            "quality_notes": self.quality_notes,
         }
 
+
+
+def _parse_date(value: str) -> Optional[datetime]:
+    """Best-effort parser for ISO-like dates used by public macro APIs."""
+    if not value:
+        return None
+    value = value.strip()
+    candidates = (
+        (value[:10], "%Y-%m-%d"),
+        (value[:7], "%Y-%m"),
+        (value[:4], "%Y"),
+    )
+    for candidate, fmt in candidates:
+        try:
+            return datetime.strptime(candidate, fmt)
+        except ValueError:
+            continue
+    try:
+        return datetime.fromisoformat(value[:10])
+    except ValueError:
+        return None
+
+
+def _stale_threshold_days(frequency: str) -> int:
+    f = (frequency or "").lower()
+    if any(x in f for x in ("daily", "1d")):
+        return 10
+    if any(x in f for x in ("monthly", "1mo", "m")):
+        return 95
+    if any(x in f for x in ("quarterly", "q")):
+        return 190
+    if any(x in f for x in ("annual", "year", "a")):
+        return 820
+    return 190
+
+
+def _append_unique(notes: list[str], note: str) -> None:
+    if note and note not in notes:
+        notes.append(note)
+
+
+def validate_series(series: Series, *, min_observations: int = 3,
+                    max_stale_days: int | None = None) -> Series:
+    """Attach data-quality metadata without blocking rendering.
+
+    The dashboard is meant to be research infrastructure, not a canonical data
+    vendor. These checks surface obvious risks: missing data, stale endpoints,
+    proxies/substitutions, non-finite values, duplicate dates, and unusual jumps.
+    """
+    notes: list[str] = []
+    observations = list(series.observations or [])
+
+    if not series.available or not observations:
+        series.quality_status = "unavailable"
+        series.quality_score = 0
+        series.quality_notes = [series.note or "No observations available."]
+        return series
+
+    parsed_dates = [_parse_date(str(d)) for d, _ in observations]
+    if any(d is None for d in parsed_dates):
+        _append_unique(notes, "Some observation dates could not be parsed; check source format.")
+    else:
+        sortable = sorted(zip(parsed_dates, observations), key=lambda x: x[0])
+        observations = [obs for _, obs in sortable]
+        series.observations = observations
+
+    dates = [str(d) for d, _ in observations]
+    if len(set(dates)) != len(dates):
+        _append_unique(notes, "Duplicate observation dates detected; verify source aggregation.")
+
+    values: list[float] = []
+    for _, raw in observations:
+        try:
+            value = float(raw)
+        except (TypeError, ValueError):
+            _append_unique(notes, "Non-numeric observations were dropped or coerced by the source parser.")
+            continue
+        if not math.isfinite(value):
+            _append_unique(notes, "Non-finite values detected; verify source series before use.")
+            continue
+        values.append(value)
+
+    if len(values) < min_observations:
+        _append_unique(notes, "Very short history; read as directional rather than statistically robust.")
+
+    latest_dt = next((d for d in reversed(parsed_dates) if d is not None), None)
+    if latest_dt is not None:
+        threshold = max_stale_days or _stale_threshold_days(series.frequency)
+        age_days = (datetime.utcnow() - latest_dt).days
+        if age_days > threshold:
+            _append_unique(notes, f"Latest observation is {age_days} days old; source may be lagged or stale.")
+
+    if len(values) >= 8:
+        diffs = [values[i] - values[i - 1] for i in range(1, len(values))]
+        mean = sum(diffs) / len(diffs)
+        variance = sum((d - mean) ** 2 for d in diffs) / max(len(diffs) - 1, 1)
+        stdev = math.sqrt(variance)
+        if stdev > 0 and abs(diffs[-1] - mean) > 6 * stdev:
+            _append_unique(notes, "Latest move is a statistical outlier; verify revision/base effects.")
+
+    note_text = (series.note or "").lower()
+    if any(flag in note_text for flag in ("substituted", "proxy", "derived", "fallback")):
+        _append_unique(notes, "Proxy or substituted series; compare with primary source before trading.")
+
+    source = (series.source or "").lower()
+    if "yahoo" in source:
+        _append_unique(notes, "Market vendor feed; confirm against exchange/terminal for live trading.")
+    if "world bank" in source:
+        _append_unique(notes, "Annual World Bank data is lagged and revision-prone.")
+    if "oec" in source:
+        _append_unique(notes, "Trade composition data is revised and should be read directionally.")
+    if not series.series_id:
+        _append_unique(notes, "Missing source series id; provenance is weaker than preferred.")
+
+    series.quality_notes = notes[:3]
+    if notes:
+        series.quality_status = "watch" if len(notes) <= 2 else "low_confidence"
+        series.quality_score = max(35, 85 - 15 * len(notes))
+    else:
+        series.quality_status = "verified"
+        series.quality_score = 95
+    return series
+
+
+def finalize_series(series: Series, **kwargs) -> Series:
+    """Normalize and validate a Series before charts/commentary consume it."""
+    return validate_series(series, **kwargs)
 
 def cache_key(query: str) -> str:
     return hashlib.sha1(query.strip().lower().encode()).hexdigest()[:16]
@@ -84,8 +218,8 @@ def _parse_mcp_response(query: str, payload: dict, key: str, label: str, country
     fetched = payload.get("fetched", "")
     data_block = response.get("data") or []
     if not data_block:
-        return Series(key=key, label=label, country=country, available=False,
-                      note="MCP returned no data", fetched=fetched)
+        return finalize_series(Series(key=key, label=label, country=country, available=False,
+                      note="MCP returned no data", fetched=fetched))
     entry = data_block[0]
     meta = entry.get("metadata", {}) or {}
     obs = entry.get("data") or []
@@ -100,7 +234,7 @@ def _parse_mcp_response(query: str, payload: dict, key: str, label: str, country
                 cleaned.append((d_norm, float(v)))
             except (TypeError, ValueError):
                 continue
-    return Series(
+    return finalize_series(Series(
         key=key,
         label=label,
         country=country,
@@ -113,14 +247,14 @@ def _parse_mcp_response(query: str, payload: dict, key: str, label: str, country
         fetched=fetched[:10],
         observations=cleaned,
         available=bool(cleaned),
-    )
+    ))
 
 
 def fetch_from_cache(query: str, key: str, label: str, country: str) -> Series:
     p = cache_path(query)
     if not p.exists():
-        return Series(key=key, label=label, country=country, available=False,
-                      note=f"No cached data for query: {query!r}")
+        return finalize_series(Series(key=key, label=label, country=country, available=False,
+                      note=f"No cached data for query: {query!r}"))
     payload = json.loads(p.read_text())
     return _parse_mcp_response(query, payload, key, label, country)
 
@@ -145,8 +279,8 @@ def fetch_ecb_fx(currency: str, key: str, label: str, country: str) -> Series:
             body = r.text
             cp.write_text(body)
         except Exception as e:
-            return Series(key=key, label=label, country=country, available=False,
-                          note=f"ECB fetch failed: {e}")
+            return finalize_series(Series(key=key, label=label, country=country, available=False,
+                          note=f"ECB fetch failed: {e}"))
     obs: list[tuple[str, float]] = []
     try:
         root = ET.fromstring(body)
@@ -159,16 +293,16 @@ def fetch_ecb_fx(currency: str, key: str, label: str, country: str) -> Series:
                     obs.append((d, float(c.attrib["rate"])))
         obs.sort()
     except Exception as e:
-        return Series(key=key, label=label, country=country, available=False,
-                      note=f"ECB parse failed: {e}")
-    return Series(
+        return finalize_series(Series(key=key, label=label, country=country, available=False,
+                      note=f"ECB parse failed: {e}"))
+    return finalize_series(Series(
         key=key, label=label, country=country,
         source="ECB", series_id=f"EURFXREF/{currency}",
         unit=f"{currency} per EUR", frequency="daily",
         last_update=obs[-1][0] if obs else "",
         source_url="https://www.ecb.europa.eu/stats/eurofxref/",
         fetched=today, observations=obs, available=bool(obs),
-    )
+    ))
 
 
 EUROSTAT_URL = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}?{params}"
@@ -195,8 +329,8 @@ def fetch_eurostat(dataset: str, geo: str, key: str, label: str, country: str,
             data = r.json()
             cp.write_text(json.dumps(data))
         except Exception as e:
-            return Series(key=key, label=label, country=country, available=False,
-                          note=f"Eurostat fetch failed: {e}")
+            return finalize_series(Series(key=key, label=label, country=country, available=False,
+                          note=f"Eurostat fetch failed: {e}"))
     try:
         time_cat = data["dimension"]["time"]["category"]["index"]
         # time_cat: {"2024-01": 0, "2024-02": 1, ...}
@@ -225,9 +359,9 @@ def fetch_eurostat(dataset: str, geo: str, key: str, label: str, country: str,
             obs.append((d, float(val)))
         obs.sort()
     except Exception as e:
-        return Series(key=key, label=label, country=country, available=False,
-                      note=f"Eurostat parse failed: {e}")
-    return Series(
+        return finalize_series(Series(key=key, label=label, country=country, available=False,
+                      note=f"Eurostat parse failed: {e}"))
+    return finalize_series(Series(
         key=key, label=label, country=country,
         source="Eurostat",
         series_id=dataset,
@@ -236,7 +370,7 @@ def fetch_eurostat(dataset: str, geo: str, key: str, label: str, country: str,
         last_update=obs[-1][0] if obs else "",
         source_url=f"https://ec.europa.eu/eurostat/databrowser/view/{dataset}/default/table?lang=en",
         fetched=today, observations=obs, available=bool(obs),
-    )
+    ))
 
 
 YAHOO_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range={range_}&interval={interval}"
@@ -260,8 +394,8 @@ def fetch_yahoo(symbol: str, key: str, label: str, country: str,
             data = r.json()
             cp.write_text(json.dumps(data))
         except Exception as e:
-            return Series(key=key, label=label, country=country, available=False,
-                          note=f"Yahoo fetch failed: {e}")
+            return finalize_series(Series(key=key, label=label, country=country, available=False,
+                          note=f"Yahoo fetch failed: {e}"))
     try:
         result = data["chart"]["result"][0]
         ts = result["timestamp"]
@@ -275,16 +409,16 @@ def fetch_yahoo(symbol: str, key: str, label: str, country: str,
             obs.append((d, float(v)))
         obs.sort()
     except Exception as e:
-        return Series(key=key, label=label, country=country, available=False,
-                      note=f"Yahoo parse failed: {e}")
-    return Series(
+        return finalize_series(Series(key=key, label=label, country=country, available=False,
+                      note=f"Yahoo parse failed: {e}"))
+    return finalize_series(Series(
         key=key, label=label, country=country,
         source="Yahoo Finance", series_id=symbol,
         unit=currency, frequency=interval,
         last_update=obs[-1][0] if obs else "",
         source_url=f"https://finance.yahoo.com/quote/{symbol}",
         fetched=today, observations=obs, available=bool(obs),
-    )
+    ))
 
 
 OEC_API_BASE = "https://api-v2.oec.world/tesseract/data.jsonrecords"
@@ -304,8 +438,8 @@ def fetch_oec_trade(iso3: str, key: str, label: str, country: str,
         import os
         token = os.environ.get("OEC_TOKEN", OEC_TOKEN)
         if not token:
-            return Series(key=key, label=label, country=country, available=False,
-                          note="OEC API requires OEC_TOKEN env var. Get a free token at https://oec.world/en/resources/api")
+            return finalize_series(Series(key=key, label=label, country=country, available=False,
+                          note="OEC API requires OEC_TOKEN env var. Get a free token at https://oec.world/en/resources/api"))
         params = {
             "cube": "trade_i_baci_a_22",
             "drilldowns": "Partner+Country,Year",
@@ -321,8 +455,8 @@ def fetch_oec_trade(iso3: str, key: str, label: str, country: str,
             data = r.json()
             cp.write_text(json.dumps(data))
         except Exception as e:
-            return Series(key=key, label=label, country=country, available=False,
-                          note=f"OEC fetch failed: {e}")
+            return finalize_series(Series(key=key, label=label, country=country, available=False,
+                          note=f"OEC fetch failed: {e}"))
     try:
         rows = data.get("data", [])
         obs: list[tuple[str, float]] = []
@@ -336,9 +470,9 @@ def fetch_oec_trade(iso3: str, key: str, label: str, country: str,
         for partner, val in sorted(partner_totals.items(), key=lambda x: -x[1]):
             obs.append((partner, val))
     except Exception as e:
-        return Series(key=key, label=label, country=country, available=False,
-                      note=f"OEC parse failed: {e}")
-    return Series(
+        return finalize_series(Series(key=key, label=label, country=country, available=False,
+                      note=f"OEC parse failed: {e}"))
+    return finalize_series(Series(
         key=key, label=label, country=country,
         source="OEC", series_id=f"trade_i_baci_a_22/{iso3}",
         unit="USD", frequency="annual",
@@ -346,7 +480,7 @@ def fetch_oec_trade(iso3: str, key: str, label: str, country: str,
         source_url=f"https://oec.world/en/profile/country/{iso3.lower()}",
         fetched=today, observations=obs if obs else [(f"total_{year}", 0.0)],
         available=bool(obs),
-    )
+    ))
 
 
 def fetch_wb(iso2: str, code: str, key: str, label: str, country: str,
@@ -364,11 +498,11 @@ def fetch_wb(iso2: str, code: str, key: str, label: str, country: str,
             data = r.json()
             cp.write_text(json.dumps(data))
         except Exception as e:
-            return Series(key=key, label=label, country=country, available=False,
-                          note=f"World Bank fetch failed: {e}")
+            return finalize_series(Series(key=key, label=label, country=country, available=False,
+                          note=f"World Bank fetch failed: {e}"))
     if not isinstance(data, list) or len(data) < 2 or not data[1]:
-        return Series(key=key, label=label, country=country, available=False,
-                      note="World Bank returned no data")
+        return finalize_series(Series(key=key, label=label, country=country, available=False,
+                      note="World Bank returned no data"))
     rows = data[1]
     obs: list[tuple[str, float]] = []
     for row in rows:
@@ -377,11 +511,11 @@ def fetch_wb(iso2: str, code: str, key: str, label: str, country: str,
         if v is not None and d:
             obs.append((f"{d}-12-31", float(v)))
     obs.sort()
-    return Series(
+    return finalize_series(Series(
         key=key, label=label, country=country,
         source="World Bank", series_id=code, unit="",
         frequency="annual",
         last_update=obs[-1][0][:4] if obs else "",
         source_url=f"https://data.worldbank.org/indicator/{code}",
         fetched=today, observations=obs, available=bool(obs),
-    )
+    ))

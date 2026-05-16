@@ -27,6 +27,7 @@ class Indicator:
     derived_yoy: bool = False
     special: str = ""
     unit: str = ""
+    quality: dict[str, Any] | None = None
 
 
 @dataclass
@@ -60,6 +61,7 @@ def load_sections() -> list[Section]:
                 derived_yoy=i.get("derived_yoy", False),
                 special=i.get("special", ""),
                 unit=i.get("unit", ""),
+                quality=i.get("quality"),
             ))
         sections.append(Section(
             id=s["id"], title=s["title"], kind=s["kind"],

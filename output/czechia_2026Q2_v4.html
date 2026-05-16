@@ -335,6 +335,67 @@ p { color: var(--muted); }
 }
 .commentary strong,
 .framework-ref strong { color: var(--accent); }
+
+.quality-panel {
+  position: relative;
+  margin: 0 0 24px;
+  padding: 22px 24px;
+  background: linear-gradient(135deg, rgba(255,252,246,0.96), rgba(243,236,224,0.72));
+  border: 1px solid rgba(23,19,16,0.16);
+  border-left: 4px solid var(--accent);
+}
+.quality-panel h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.quality-panel p { margin: 0; max-width: 980px; line-height: 1.7; }
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+.quality-pill {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.38);
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.quality-pill strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--fg);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.quality-note {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(237,223,204,0.25);
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+.quality-note .marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+}
 .toc {
   display: flex;
   gap: 6px;
@@ -542,6 +603,7 @@ footer a { color: var(--accent) !important; }
 <!-- TOC -->
 <div class="toc">
   <a href="#snapshot"><span data-lang="en">§1 Snapshot</span><span data-lang="zh">§1 概览</span></a>
+  <a href="#data-quality"><span data-lang="en">Data Quality</span><span data-lang="zh">数据质量</span></a>
   <a href="#real_activity"><span data-lang="en">§2 Real Activity</span><span data-lang="zh">§2 实际经济活动</span></a>
   <a href="#prices_wages"><span data-lang="en">§3 Prices & Wages</span><span data-lang="zh">§3 物价与工资</span></a>
   <a href="#external"><span data-lang="en">§4 External</span><span data-lang="zh">§4 外部部门</span></a>
@@ -552,6 +614,14 @@ footer a { color: var(--accent) !important; }
   <a href="#demographics"><span data-lang="en">§9 Demographics</span><span data-lang="zh">§9 人口结构</span></a>
   <a href="#political_economy"><span data-lang="en">§10 Political Economy</span><span data-lang="zh">§10 政治经济</span></a>
 </div>
+
+
+<section class="quality-panel" id="data-quality">
+  <h2><span data-lang="en">Data Quality Notes</span><span data-lang="zh">数据质量说明</span></h2>
+  <p><span data-lang="en">This dashboard follows a source hierarchy: official and central-bank data first, then multilateral datasets, then market/vendor feeds or explicit proxies. Series that are derived, lagged, vendor-sensitive, or definition-dependent are marked with quiet footnotes rather than hidden.</span><span data-lang="zh">本 dashboard 采用来源优先级：官方与央行数据优先，其次为多边机构数据，再到市场/供应商数据或明确代理序列。派生、滞后、依赖供应商或口径敏感的数据会以克制脚注标出，而不是被隐藏。</span></p>
+  <div class="quality-grid"><div class="quality-pill"><strong><span data-lang="en">Primary</span><span data-lang="zh">原始来源</span></strong><span data-lang="en">Official / central-bank source preferred</span><span data-lang="zh">优先使用官方/央行来源</span></div><div class="quality-pill"><strong><span data-lang="en">Derived</span><span data-lang="zh">派生</span></strong><span data-lang="en">Computed series are marked in notes</span><span data-lang="zh">计算型序列会在脚注说明</span></div><div class="quality-pill"><strong><span data-lang="en">Watch</span><span data-lang="zh">观察</span></strong><span data-lang="en">Lagged, proxy, or vendor-sensitive data</span><span data-lang="zh">滞后、代理或依赖供应商的数据</span></div><div class="quality-pill"><strong><span data-lang="en">Revision</span><span data-lang="zh">修订</span></strong><span data-lang="en">Macro releases can revise after publication</span><span data-lang="zh">宏观数据发布后可能回溯修订</span></div></div>
+</section>
+
 
 <!-- Snapshot -->
 <div class="snapshot-panel" id="snapshot">
@@ -708,6 +778,8 @@ if inflation re-accelerates, the CNB may be forced into a humiliating reversal.
   </div>
 </div></div>
   <div data-lang="zh"><div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年Q1评估</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克<strong>陷入浅增长均衡</strong>。2025年Q4实际GDP同比仅+1.1%，为中东欧四国中最弱。经济被自身结构性优势拖累：<strong>制造业约GDP的25%</strong>（欧盟最高），而德国制造业衰退对捷克工业的不成比例打击。工业生产-2.0%反映了汽车供应链——斯柯达/大众一家就占GDP约5%和出口约10%。订单出货比处于2020年以来最低。</p><p>但国内经济比标题数据表现得更有韧性。<strong>失业率2.6%</strong>（欧盟最低）意味着劳动力市场是结构性支撑——任何想要工作的人都有工作。随着通胀正常化，实际工资增长约4%，家庭消费在2025年每个季度均对GDP有正贡献。问题在于投资：企业在德国不确定性和CNB降息周期尚未转化为信贷复苏的背景下推迟资本支出决策。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>德国IFO周期</strong>——捷克PMI在过去27个月中有24个月处于50以下。唯一重要的变量是德国制造业订单。IFO预期持续复苏至95以上将是做多捷克资产的信号。</li><li><strong>斯柯达电动车转型</strong>——斯柯达正投资€56亿于电动化（2024-28年），2025-26年将推出三款新电动车型。这些车型的成败将决定捷克未来十年约10%出口的轨迹。</li><li><strong>CNB宽松传导</strong>——CNB已从峰值降息300bp（7.0%→4.0%），但私人信贷增长实际值仍为负。传导滞后表明宽松的增长脉冲最早在2026年下半年才会显现。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>捷克是对德国工业周期的高贝塔投资。如果德国复苏，CZK和捷克股票在6个月内跑赢中东欧同侪5-8%。如果德国持续停滞，捷克资产跑输。我们将做多CZK对EUR头寸定位于对德国复苏的看涨期权——设定紧止损在EURCZK 25.50。股市方面，做多PX银行（Erste）对做空DAX汽车代表了同一主题的相对价值表达，降低了方向性。</div></div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">GDP and activity indicators can be revised; survey data such as PMI/sentiment is best read as a turning-point signal rather than a level estimate.</span><span data-lang="zh">GDP 与活动数据可能回溯修订；PMI/景气调查更适合作为拐点信号，而非精确水平估计。</span></div>
 </section>
 
 <section class="panel" id="prices_wages">
@@ -743,6 +815,8 @@ if inflation re-accelerates, the CNB may be forced into a humiliating reversal.
   </div>
 </div></div>
   <div data-lang="zh"><div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克在通胀方面实现了<strong>中东欧最软着陆</strong>。整体CPI同比<strong>2.6%</strong>处于CNB 2.0% ±1pp容忍区间内，较2023年初18.0%的峰值显著下降。去通胀堪称教科书：能源基数效应贡献了约70%的降幅，其余30%来自2021-23年加息冲击带来的真实需求压缩。核心CPI 2.3%为中东欧最低。</p><p>CNB自2023年12月以来激进降息（7.0%→4.0%）正是基于这一去通胀成功。但<strong>工资增长同比7.4%</strong>在一个失业率2.6%的经济体中，提出了宽松是否过早的疑问。CNB自身预测认为CPI将在2026年中缓慢降至2.0%，但工资脉冲和封闭的产出缺口表明通胀将更接近2.5-3.0%——在区间内但高于目标中值。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>CNB终端利率争论</strong>——市场定价终端利率为3.25%（再降75bp）。CNB工作人员预测隐含3.50%。风险在于终端利率落在3.75-4.00%——服务业通胀3.8%和7%+的工资增长不支持低于3.5%的政策利率。</li><li><strong>房地产市场再加速</strong>——布拉格房价在加息周期中下跌约10%，随着按揭利率降至4.5%以下已企稳并开始回升。新一轮房地产繁荣将传导至虚拟租金（约占CPI篮子的10%），维持核心CPI高位。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>CZK利率市场定价了过多宽松——75bp降息对比我们25-50bp的预测。做多2年期CZK FRA对做空2年期EUR以表达CNB终端利率高于定价的观点。汇率方面，CNB降息周期已将CZK从24.0推弱至25.0——大量坏消息已定价。如果降息周期比预期更早结束，EURCZK可能重定价至24.50。</div></div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Inflation components and wage series differ by methodology. Real-wage and unit-labour-cost readings are derived and should be checked against source definitions.</span><span data-lang="zh">通胀分项与工资序列的方法口径不同。实际工资和单位劳动力成本为派生指标，应核对来源定义。</span></div>
 </section>
 
 <section class="panel" id="external">
@@ -779,6 +853,8 @@ if inflation re-accelerates, the CNB may be forced into a humiliating reversal.
   </div>
 </div></div>
   <div data-lang="zh"><div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克拥有<strong>持续经常账户盈余</strong>——2025年为GDP的+2.8%，中东欧四国中最大。这是结构性特征：制造业出口引擎（汽车、机械）产生约GDP+8%的商品顺差，超额抵消了初次收入逆差（外资企业的股息和利润汇回）。仅对德国的贸易顺差（年约€150亿）就约相当于捷克GDP的4%。</p><p>外汇储备<strong>€1400亿</strong>，相对GDP是欧盟最高之一（约GDP的40%），为2013-17年EURCZK下限政策的遗留。CNB一直以负利差（约200bp，融资做空CZK负债对应做多EUR资产）运行这一庞大储备头寸，产生按市值计价波动，但提供了对CZK投机攻击的不可撼动的防御。REER自2023年峰值贬值约5%，恢复了通胀超调期间丧失的竞争力。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>储备减持？</strong>——行长Michl已表示有意逐步缩减外汇储备存量。任何CNB外汇抛售（买入EURCZK）将削弱CZK。但实际操作空间有限——市场会将激进抛售视为政策错误。</li><li><strong>汽车出口周期</strong>——捷克汽车出口约GDP的8%。德国汽车注册量下降10%对捷克GDP产生约0.8%的拖累。电动车转型增加结构性不确定性——捷克供应链针对内燃机优化。</li><li><strong>能源依赖</strong>——捷克已在很大程度上摆脱俄罗斯天然气（通过荷兰/德国终端LNG、挪威管道天然气），但仍依赖能源进口。2022-23年能源冲击的贸易条件拖累已基本逆转。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>经常账户盈余是结构性CZK买盘，但被CNB鸽派立场和外汇储备头寸的负利差所抵消。CZK不是纯粹的利差交易。我们倾向于通过主权信用表达捷克外部实力（基于AA-对BBB-的~300bp利差，做多CZGB对HGB）。CZK是区间交易：25.20买入，24.50卖出。</div></div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Trade composition, reserve adequacy, and external-debt ratios are revision-prone and often lagged; use them directionally for vulnerability mapping.</span><span data-lang="zh">贸易结构、储备充足性和外债比率常有滞后与修订；更适合方向性地用于脆弱性定位。</span></div>
 </section>
 
 <section class="panel" id="fiscal_sovereign">
@@ -813,6 +889,8 @@ if inflation re-accelerates, the CNB may be forced into a humiliating reversal.
   </div>
 </div></div>
   <div data-lang="zh"><div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克是<strong>中东欧的财政冠军</strong>。2025年一般政府赤字仅GDP的-2.2%，为中东欧四国中最窄，低于3%的马斯特里赫特参考值。总理Fiala领导下的SPOLU联合政府兑现了财政整顿：通过增税（企业所得税、银行/能源暴利税）和支出约束，赤字从2021年的-5.1%减半。</p><p>总债务<strong>约GDP的43%</strong>为欧盟最低，显著低于马斯特里赫特60%门槛。债务以CZK计价为主（约90%），拥有稳定的国内投资者基础。10年期收益率4.2%意味着仅约40bp低于波兰——鉴于捷克高出两个评级的优势，这一紧窄利差引人注目。紧窄利差部分具有技术性：CZGB市场较POLGB更小、流动性更差，限制了外资参与。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>ANO财政政策</strong>——如果ANO赢得2025年议会选举（民调显示很可能），财政政策可能转向扩张。Babiš的政纲细节不足但支出承诺充沛（养老金加薪、基础设施）。市场尚未对此风险定价。</li><li><strong>国防支出提升</strong>——捷克已承诺GDP的2%国防支出（北约目标），高于2023年1.3%。增量约GDP 0.7%的成本从当前财政状况来看可控，但增加结构性赤字。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>4.2%的CZGB提供中东欧主权信用中最佳的风险调整利差收益。AA-评级、43%债务/GDP和持续经常账户盈余使其成为区域避风港。做多10年期CZGB对做空10年期HGB（约290bp利差）——评级差异（5个档次）相对利差差异尚未完全定价。主要风险是ANO驱动的财政扩张；密切关注选举民调。</div></div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Structural balances, primary balances, CDS, and yield-curve measures mix model estimates and market feeds; check vintage and liquidity before trading use.</span><span data-lang="zh">结构性财政余额、初级余额、CDS 与收益率曲线混合了模型估计和市场报价；交易前需核对版本与流动性。</span></div>
 </section>
 
 <section class="panel" id="monetary_financial">
@@ -849,6 +927,8 @@ if inflation re-accelerates, the CNB may be forced into a humiliating reversal.
   </div>
 </div></div>
   <div data-lang="zh"><div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>CNB是<strong>中东欧最激进降息者</strong>，自2023年12月以来以一系列50bp和25bp步伐将政策利率从7.0%降至<strong>4.00%</strong>。降息周期数据依赖且沟通良好——CNB公开发布预测路径（中东欧独有的透明度实践）有效引导了市场预期。实际政策利率约1.4%正接近CNB对中性的估计（名义约3.0-3.5%，或实际约1.0%）。</p><p>传导机制正在发挥作用但存在滞后。按揭利率已从约6.5%降至约4.5%，推动试探性住房市场复苏。但<strong>私人信贷增长同比+2.1%</strong>依然乏力——企业不借贷是因为不投资，而非信贷成本高昂。CNB面临经典的推绳子问题：当德国需求缺位时，降息无法强迫企业投资。M3增长5.5%健康但非扩张性。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>终端利率着陆区</strong>——CNB工作人员分析认为中性利率为3.0-3.5%。考虑到劳动力市场紧俏和工资增长，我们认为3.75%更为现实。未来2-3次会议（每次预计降息25bp）将定义终端利率争论。</li><li><strong>汇率传导风险</strong>——降息周期中CZK已从24.0走弱至25.0。进一步走至25.50+（来自企业、能源进口商或CNB储备操作的EURCZK买入）将通过进口价格增加CPI约0.3个百分点。这是降息的自我限制机制。</li><li><strong>CNB vs ECB</strong>——CNB-ECB利差已从300bp压缩至75bp。如果CNB进一步降息而ECB维持不变，CZK的利差吸引力减弱，可能进一步削弱CZK。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>CNB降息周期正接近尾声。短端CZK利率定价75bp更多降息；我们看25-50bp。做多2年期CZK对做空2年期EUR——CNB将在市场预期之前停止降息，而ECB将比市场预期降息更多。汇率方面，EURCZK 25.0基于利差接近公允价值。带有鹰派CNB偏向的区间交易。</div></div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Real rates and credit gaps are derived indicators. Policy-rate definitions can differ in corridor systems and during temporary liquidity operations.</span><span data-lang="zh">实际利率与信贷缺口为派生指标。利率走廊体系或临时流动性操作期间，政策利率定义可能不同。</span></div>
 </section>
 
 <section class="panel" id="markets_valuation">
@@ -883,6 +963,8 @@ if inflation re-accelerates, the CNB may be forced into a humiliating reversal.
   </div>
 </div></div>
   <div data-lang="zh"><div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p><strong>PX指数约1,600点（同比+3.1%）</strong>在中东欧表现居中——好于BUX（-2.9%）但落后WIG20（+5.4%）。PX是一个集中、防御性指数：<strong>Erste银行和Komerční banka（合计约45%权重）</strong>以及<strong>ČEZ（约20%权重）</strong>占主导，赋予该指数金融+公用事业偏向和约5%的股息率——为中东欧最高。远期市盈率约12.0倍相对WIG20（约10.5倍）和BUX（约7.2倍）溢价，由AA-主权评级和主导成分股的盈利稳定性证明合理。</p><p>PX实际上是一个<strong>带有股权增强的债券替代品</strong>。Erste和KB的市净率分别约1.2倍和1.5倍，ROE约13-15%——这些是在整合市场中运营良好、盈利可观的银行。ČEZ作为主导公用事业，从核能和燃煤发电中产生稳定现金流，但随着碳成本上升和可再生能源投资需求升级，面临结构性转型风险。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>Erste银行中东欧敞口</strong>——Erste约50%收入来自捷克境外（主要是奥地利、罗马尼亚、斯洛伐克、匈牙利）。它是多元化中东欧金融投资标的，而非纯粹的捷克押注。关注罗马尼亚和匈牙利的NIM轨迹。</li><li><strong>ČEZ核电招标</strong>——政府新建核反应堆（Dukovany II，约€70亿）是捷克历史上最大的基础设施项目。ČEZ是指定开发商，但融资结构（政府担保、购电协议）尚未解决。有利的解决方案将是重要积极催化剂。</li><li><strong>股息可持续性</strong>——PX约5%的股息率是其主要吸引力。Erste和KB的派息比率约50-60%，可以盈利支撑。ČEZ的股息波动更大（与电力价格挂钩）。关注电价进一步下跌时的削减风险。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>PX是防御性、收入导向型配置——而非增长押注。做多PX对做空DAX表达了捷克银行将受益于CNB利率稳定，而德国汽车/制造业面临结构性阻力的观点。5%股息率在横盘市场提供缓冲。寻求增长敞口看波兰；深度价值看匈牙利；收入与安全，捷克是目的地。</div></div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Market and valuation data may come from vendor feeds or public proxies. Treat valuation multiples as indicative unless linked to a verified estimate database.</span><span data-lang="zh">市场与估值数据可能来自供应商或公开代理序列；若未连接可靠预期数据库，估值倍数应视为指示性。</span></div>
 </section>
 
 <section class="panel" id="financial_stability">
@@ -909,6 +991,8 @@ if inflation re-accelerates, the CNB may be forced into a humiliating reversal.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>捷克银行（PX金融股市净率约1.4倍）溢价交易有充分理由——最高CAR、最低不良贷款、无银行税、自筹资金。避险环境中的防御性配置。CNB降息周期是温和净息差逆风但交易量正在恢复。做多PX银行对做空DAX汽车表达相对金融稳定观点。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Banking-sector indicators are often quarterly or annual, lagged, and affected by regulatory definitions; compare IMF FSI with national-bank releases.</span><span data-lang="zh">银行业指标通常为季度或年度、存在滞后，并受监管定义影响；建议将 IMF FSI 与本国央行发布交叉核对。</span></div>
 </section>
 
 <section class="panel" id="demographics">
@@ -934,6 +1018,8 @@ if inflation re-accelerates, the CNB may be forced into a humiliating reversal.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>捷克的劳动力稀缺意味着NAIRU高于标题失业率所暗示——2.6%失业率经济中7%+的工资增长具有结构性通胀性。这支持CNB终端利率高于市场定价。做多CZK短端利率。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Demographic series are slow-moving but can be rebased after census updates. They are structural context, not high-frequency signals.</span><span data-lang="zh">人口序列变化慢，但人口普查后可能重基准；它们属于结构性背景，不是高频信号。</span></div>
 </section>
 
 <section class="panel" id="political_economy">
@@ -960,6 +1046,8 @@ if inflation re-accelerates, the CNB may be forced into a humiliating reversal.
   </div>
   <div class="narrative-footer"><strong>市场含义：</strong>捷克的制度质量溢价是结构性的而非周期性的。除非激进政策转变，AA-评级安全。2025年选举是已知风险——如果ANO以温和联盟胜选，市场影响温和（CZGB利差扩大10-15bp）。如果ANO+SPD，重定价风险为30-50bp。以前者为配置依据，对冲后者。</div>
 </div></div>
+
+  <div class="quality-note"><span class="marker">†</span><span data-lang="en">Governance and political-risk indicators are qualitative or composite measures. Use them to frame regime risk, not as precise numerical facts.</span><span data-lang="zh">治理与政治风险指标多为定性或综合指数；适合刻画制度风险，不宜视作精确数值事实。</span></div>
 </section>
 
 

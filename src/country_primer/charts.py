@@ -16,12 +16,28 @@ COLORS = _CFG["colors"]
 FOOTER = _CFG["footer"]
 
 def _footer_text(s: Series) -> str:
-    return FOOTER["template"].format(
-        source=s.source or "—",
-        series_id=s.series_id or "—",
-        last_update=s.last_update or "—",
+    footer = FOOTER["template"].format(
+        source=s.source or "-",
+        series_id=s.series_id or "-",
+        last_update=s.last_update or "-",
         fetched=s.fetched or datetime.utcnow().strftime("%Y-%m-%d"),
     )
+    status = getattr(s, "quality_status", "") or ""
+    notes = getattr(s, "quality_notes", []) or []
+    if status in {"watch", "low_confidence"} and notes:
+        note = notes[0]
+        footer += (
+            "<br><span style='color:#8a593d'>Data note: "
+            f"{note}</span>"
+        )
+    elif status == "verified":
+        footer += " · Quality checked"
+    elif status == "unavailable" and notes:
+        footer += (
+            "<br><span style='color:#9d3d2e'>Data unavailable: "
+            f"{notes[0]}</span>"
+        )
+    return footer
 
 
 def _apply_layout(fig: go.Figure, title: str, footer: str, ytitle: str = "") -> go.Figure:
