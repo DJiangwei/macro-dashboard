@@ -2603,7 +2603,7 @@ def build_v4(country_code: str) -> Path:
 <div class="container">
 
 <header>
-  <h1><span data-lang="en">{data["name"]} Dashboard</span><span data-lang="zh">{data["name"]} Dashboard</span></h1>
+  <h1>{data["name"]} Dashboard</h1>
   <div class="subtitle"><span data-lang="en">{data["subtitle"]}</span><span data-lang="zh">{data.get("subtitle_zh", data["subtitle"])}</span></div>
   <div class="meta-row">
     <div class="meta-chip"><span data-lang="en">Framework:</span><span data-lang="zh">框架:</span> <strong>IMF FPP × GS Indicators × Buy-side PM</strong></div>
