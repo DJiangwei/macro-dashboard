@@ -97,6 +97,9 @@ body::before {
   background-size: 48px 48px;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 85%);
 }
+html[lang="en"] [data-lang="zh"] { display: none !important; }
+html[lang="zh"] [data-lang="en"] { display: none !important; }
+html:not([lang="zh"]) [data-lang="zh"] { display: none !important; }
 a { color: inherit; }
 .topbar {
   position: sticky;
