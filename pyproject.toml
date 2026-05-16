@@ -1,0 +1,26 @@
+[project]
+name = "country-primer"
+version = "0.1.0"
+description = "CEE-4 macro dashboard generator for East Meridian."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "jinja2>=3.1,<4",
+  "pandas>=2.2,<3",
+  "plotly>=5.20,<6",
+  "pyyaml>=6.0,<7",
+  "requests>=2.31,<3",
+]
+
+[project.scripts]
+country-primer = "country_primer.cli:main"
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/country_primer"]
+
+[tool.uv]
+package = true

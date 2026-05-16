@@ -28,6 +28,27 @@ Each chart shows a footer line: `Source: <provider> · Series: <id> · Updated <
 
 ## Quick start
 
+This repo is pinned to Python 3.12 and uses `uv` as the preferred environment
+manager so any coding agent can reproduce the same setup without relying on a
+global Python install.
+
+```bash
+cd /Users/jiangwei/Claude/Country_Primer
+scripts/uv_project.sh sync
+make doctor
+make build-v4
+make validate
+```
+
+If an agent cannot use `uv`, fall back to:
+
+```bash
+python3.12 -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+python scripts/doctor_env.py
+```
+
 ```bash
 cd /Users/jiangwei/Claude/Country_Primer
 pip install -r requirements.txt
@@ -82,12 +103,14 @@ silently hiding it.
 To rebuild and publish the v4 site:
 
 ```bash
-python3 build_v4.py ALL
-python3 -m py_compile build_v4.py src/country_primer/data_fetcher.py
-git diff --check
+scripts/uv_project.sh sync
+make doctor
+make build-v4
+make validate
 git add build_v4.py src/country_primer/data_fetcher.py output/*_v4.html README.md
 git commit -m "Add canonical 48-indicator data pipeline"
 git push
+make publish-check
 ```
 
 ## Adding a country
@@ -131,6 +154,13 @@ Country_Primer/
 │   └── cli.py               # CLI entry point
 ├── templates/
 │   └── dashboard.html.j2
+├── pyproject.toml          # pinned Python/dependency contract
+├── .python-version         # Python 3.12 for pyenv/asdf/uv-aware agents
+├── Makefile                # standard setup/build/validate commands
+├── scripts/
+│   ├── doctor_env.py       # environment self-check
+│   └── uv_project.sh       # uv wrapper that keeps cache/python inside repo
+├── AGENTS.md               # operating guide for coding agents
 ├── cache/                   # raw MCP responses (offline-replay)
 └── output/                  # generated HTML reports
 ```
