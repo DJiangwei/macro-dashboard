@@ -95,6 +95,8 @@ build_v4.py → 48-indicator dashboard pages
 The canonical manifest currently defines 48 core indicators across real
 activity, prices/wages, external, fiscal/sovereign, monetary/financial,
 markets/valuation, financial stability, demographics, and political economy.
+The editable source of truth is `config/indicator_manifest_48.yaml`; the Python
+module loads that file and only uses its embedded manifest as a fallback.
 When a primary adapter is not yet wired, the pipeline emits a transparent proxy
 series and marks it in the UI with quality footnotes. This keeps every country
 page structurally complete while making uncertain data visible rather than
@@ -103,14 +105,7 @@ silently hiding it.
 To rebuild and publish the v4 site:
 
 ```bash
-scripts/uv_project.sh sync
-make doctor
-make build-v4
-make validate
-git add build_v4.py src/country_primer/data_fetcher.py output/*_v4.html README.md
-git commit -m "Add canonical 48-indicator data pipeline"
-git push
-make publish-check
+make publish MSG="Update dashboard"
 ```
 
 ## Adding a country
@@ -142,6 +137,7 @@ make publish-check
 Country_Primer/
 ├── config/
 │   ├── indicators.yaml      # 7-section catalog (single source of truth)
+│   ├── indicator_manifest_48.yaml # v4 canonical 48-indicator manifest
 │   ├── countries.yaml       # country metadata + peer sets
 │   └── chart_templates.yaml # Plotly defaults
 ├── src/country_primer/
@@ -159,6 +155,7 @@ Country_Primer/
 ├── Makefile                # standard setup/build/validate commands
 ├── scripts/
 │   ├── doctor_env.py       # environment self-check
+│   ├── publish_dashboard.sh # one-command build/validate/commit/push/check
 │   └── uv_project.sh       # uv wrapper that keeps cache/python inside repo
 ├── AGENTS.md               # operating guide for coding agents
 ├── cache/                   # raw MCP responses (offline-replay)

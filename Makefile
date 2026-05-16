@@ -1,6 +1,6 @@
 UV ?= scripts/uv_project.sh
 
-.PHONY: setup doctor build-v4 validate publish-check clean
+.PHONY: setup doctor build-v4 validate publish-check publish clean
 
 setup:
 	$(UV) sync
@@ -19,6 +19,10 @@ validate:
 publish-check:
 	curl -L https://djiangwei.github.io/macro-dashboard/ | rg -n "v4 Framework|Hungary|macro-dashboard"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/hungary_2026Q2_v4.html | rg -n "48/48|Source charts reused|chart-financial_stability-bank_car"
+
+publish:
+	@if [ -z "$(MSG)" ]; then echo 'Usage: make publish MSG="commit message"'; exit 2; fi
+	scripts/publish_dashboard.sh "$(MSG)"
 
 clean:
 	find . -name "__pycache__" -type d -prune -exec rm -rf {} +

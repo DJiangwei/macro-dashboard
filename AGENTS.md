@@ -27,6 +27,7 @@ These directories are intentionally ignored by git.
 make build-v4
 make validate
 make publish-check
+make publish MSG="clear commit message"
 ```
 
 `make validate` must pass before committing. It checks Python compilation,
@@ -38,13 +39,20 @@ containers remain, and runs `git diff --check`.
 After dashboard changes:
 
 ```bash
-git add <changed files>
-git commit -m "<clear message>"
-git push
-make publish-check
+make publish MSG="<clear message>"
 ```
 
 The work is not complete until the GitHub Pages URLs show the new content.
+
+## Indicator Manifest
+
+The v4 dashboard's canonical 48 indicators live in:
+
+`config/indicator_manifest_48.yaml`
+
+Change labels, source notes, quality status, chart type, section assignment, or
+peer-overlay behavior there first. `src/country_primer/data_fetcher.py` loads
+this YAML and only falls back to its embedded manifest if the file is missing.
 
 ## Scope
 

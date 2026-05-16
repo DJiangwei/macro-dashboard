@@ -1,0 +1,483 @@
+version: 1
+expected_count: 48
+indicators:
+- section_id: real_activity
+  indicator_id: real_gdp_yoy
+  label: Real GDP Growth, YoY
+  unit: '% YoY'
+  source: Eurostat / national accounts
+  frequency: quarterly
+  chart: peer_overlay
+  peers: true
+  quality_status: verified
+  quality_note: Primary national accounts where available; revisions are common.
+- section_id: real_activity
+  indicator_id: real_gdp_qoq
+  label: Real GDP Growth, QoQ SA
+  unit: '% QoQ'
+  source: Eurostat / national accounts
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Seasonal adjustment differs by source.
+- section_id: real_activity
+  indicator_id: gdp_components
+  label: GDP Demand Components
+  unit: Index
+  source: Eurostat / national accounts
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Component split is a compact proxy until contribution charts are wired.
+- section_id: real_activity
+  indicator_id: industrial_production_yoy
+  label: Industrial Production, YoY
+  unit: '% YoY'
+  source: Eurostat STS
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: verified
+  quality_note: Industrial-production series may be rebased.
+- section_id: real_activity
+  indicator_id: retail_sales_yoy
+  label: Retail Sales Volume, YoY
+  unit: '% YoY'
+  source: Eurostat STS
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Retail volume excludes some services consumption.
+- section_id: real_activity
+  indicator_id: unemployment_rate
+  label: Unemployment Rate
+  unit: '%'
+  source: Eurostat LFS
+  frequency: monthly
+  chart: peer_overlay
+  peers: true
+  quality_status: verified
+  quality_note: ILO/LFS definition preferred.
+- section_id: real_activity
+  indicator_id: economic_sentiment
+  label: Economic Sentiment Indicator
+  unit: Index
+  source: European Commission
+  frequency: monthly
+  chart: peer_overlay
+  peers: true
+  quality_status: watch
+  quality_note: Survey data is best used as a turning-point signal.
+- section_id: prices_wages
+  indicator_id: cpi_yoy
+  label: Headline CPI/HICP, YoY
+  unit: '% YoY'
+  source: Eurostat HICP / national CPI
+  frequency: monthly
+  chart: peer_overlay
+  peers: true
+  quality_status: verified
+  quality_note: Classification changes can affect component inflation.
+- section_id: prices_wages
+  indicator_id: core_cpi_yoy
+  label: Core CPI, YoY
+  unit: '% YoY'
+  source: Eurostat / national CPI
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: verified
+  quality_note: Core definition should be checked against source metadata.
+- section_id: prices_wages
+  indicator_id: services_cpi_yoy
+  label: Services CPI, YoY
+  unit: '% YoY'
+  source: Eurostat HICP
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Services basket definitions vary across releases.
+- section_id: prices_wages
+  indicator_id: ppi_yoy
+  label: Producer Prices, YoY
+  unit: '% YoY'
+  source: Eurostat STS
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: verified
+  quality_note: Energy weights can dominate PPI prints.
+- section_id: prices_wages
+  indicator_id: avg_wage_yoy
+  label: Average Gross Wage, YoY
+  unit: '% YoY'
+  source: Eurostat / national labour data
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Enterprise-survey coverage differs across countries.
+- section_id: prices_wages
+  indicator_id: real_wage_yoy
+  label: Real Wage, YoY
+  unit: '% YoY'
+  source: Derived from wages and CPI
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Derived indicator; deflator choice matters.
+- section_id: external
+  indicator_id: current_account_pct_gdp
+  label: Current Account, % GDP
+  unit: '% GDP'
+  source: IMF WEO / Eurostat BoP
+  frequency: annual
+  chart: peer_overlay
+  peers: true
+  quality_status: verified
+  quality_note: BoP revisions are common.
+- section_id: external
+  indicator_id: trade_balance
+  label: Trade Balance
+  unit: USD bn
+  source: Eurostat / World Bank proxy
+  frequency: monthly
+  chart: bar
+  peers: false
+  quality_status: watch
+  quality_note: Goods/services perimeter and currency conversion can vary.
+- section_id: external
+  indicator_id: services_balance
+  label: Services Balance
+  unit: USD bn
+  source: Eurostat BoP
+  frequency: quarterly
+  chart: bar
+  peers: false
+  quality_status: watch
+  quality_note: Adapter pending; use directionally until BoP adapter is wired.
+- section_id: external
+  indicator_id: fx_reserves
+  label: FX Reserves
+  unit: USD bn
+  source: World Bank / central bank
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: verified
+  quality_note: USD valuation effects matter.
+- section_id: external
+  indicator_id: reer
+  label: Real Effective Exchange Rate
+  unit: Index
+  source: BIS / ECB
+  frequency: monthly
+  chart: peer_overlay
+  peers: true
+  quality_status: verified
+  quality_note: Normalize base year when comparing peers.
+- section_id: external
+  indicator_id: short_term_ext_debt
+  label: Short-Term External Debt / Reserves
+  unit: '%'
+  source: World Bank / BIS
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Annual and lagged; structural vulnerability signal.
+- section_id: fiscal_sovereign
+  indicator_id: fiscal_balance_pct_gdp
+  label: General Government Balance, % GDP
+  unit: '% GDP'
+  source: Eurostat / IMF WEO
+  frequency: annual
+  chart: peer_overlay
+  peers: true
+  quality_status: verified
+  quality_note: EDP notifications can revise deficit history.
+- section_id: fiscal_sovereign
+  indicator_id: structural_balance
+  label: Structural Fiscal Balance
+  unit: '% potential GDP'
+  source: IMF / EC AMECO
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Model-based estimate; output-gap assumptions matter.
+- section_id: fiscal_sovereign
+  indicator_id: primary_balance
+  label: Primary Balance, % GDP
+  unit: '% GDP'
+  source: IMF / Eurostat
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Check interest-expenditure classification.
+- section_id: fiscal_sovereign
+  indicator_id: gov_debt_pct_gdp
+  label: General Government Debt, % GDP
+  unit: '% GDP'
+  source: Eurostat EDP
+  frequency: annual
+  chart: peer_overlay
+  peers: true
+  quality_status: verified
+  quality_note: Nominal GDP revisions affect the ratio.
+- section_id: fiscal_sovereign
+  indicator_id: interest_bill_pct_gdp
+  label: Interest Bill, % GDP
+  unit: '% GDP'
+  source: IMF / Eurostat
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Annual/lagged; combine with current curve.
+- section_id: fiscal_sovereign
+  indicator_id: sov_yield_10y
+  label: 10Y Government Bond Yield
+  unit: '%'
+  source: Eurostat / market data
+  frequency: monthly
+  chart: peer_overlay
+  peers: true
+  quality_status: verified
+  quality_note: Confirm market data against terminal for trading.
+- section_id: monetary_financial
+  indicator_id: policy_rate
+  label: Central Bank Policy Rate
+  unit: '%'
+  source: BIS / central bank
+  frequency: monthly
+  chart: peer_overlay
+  peers: true
+  quality_status: verified
+  quality_note: Corridor systems require definition check.
+- section_id: monetary_financial
+  indicator_id: real_policy_rate
+  label: Real Policy Rate
+  unit: '%'
+  source: Derived from policy rate and CPI
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Ex-post vs ex-ante definition matters.
+- section_id: monetary_financial
+  indicator_id: m3_yoy
+  label: Broad Money M3, YoY
+  unit: '% YoY'
+  source: World Bank / national central bank
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: May use broad-money proxy where M3 is unavailable.
+- section_id: monetary_financial
+  indicator_id: private_credit_yoy
+  label: Private Credit, YoY
+  unit: '% YoY'
+  source: Eurostat / BIS
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Credit aggregates differ by sector perimeter.
+- section_id: monetary_financial
+  indicator_id: credit_to_gdp_gap
+  label: Credit-to-GDP Gap
+  unit: pp
+  source: BIS
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Filter-based series can revise with history.
+- section_id: monetary_financial
+  indicator_id: fx_vs_eur
+  label: FX vs EUR
+  unit: LCU per EUR
+  source: ECB
+  frequency: daily
+  chart: line
+  peers: false
+  quality_status: verified
+  quality_note: ECB reference rate; not executable intraday price.
+- section_id: markets_valuation
+  indicator_id: equity_index
+  label: Headline Equity Index
+  unit: Index
+  source: Yahoo Finance / exchange
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Vendor feed; confirm index convention.
+- section_id: markets_valuation
+  indicator_id: equity_yoy
+  label: Headline Equity Index, YoY
+  unit: '% YoY'
+  source: Derived from equity index
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Derived from market index level.
+- section_id: markets_valuation
+  indicator_id: equity_fwd_pe
+  label: Equity Forward P/E
+  unit: x
+  source: Broker/vendor estimates
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Forward estimates usually require vendor data.
+- section_id: markets_valuation
+  indicator_id: equity_div_yield
+  label: Equity Dividend Yield
+  unit: '%'
+  source: Broker/vendor estimates
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Trailing/forward methodology must be checked.
+- section_id: markets_valuation
+  indicator_id: sov_spread_vs_bund
+  label: 10Y Spread vs Bund
+  unit: bp
+  source: Derived from sovereign yields
+  frequency: monthly
+  chart: peer_overlay
+  peers: true
+  quality_status: watch
+  quality_note: Derived spread; check maturity matching.
+- section_id: financial_stability
+  indicator_id: bank_car
+  label: Bank Capital Adequacy Ratio
+  unit: '%'
+  source: IMF FSI / national bank
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Regulatory definitions can change.
+- section_id: financial_stability
+  indicator_id: bank_npl_ratio
+  label: Bank NPL Ratio
+  unit: '%'
+  source: IMF FSI / national bank
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: FSI/national-bank data is lagged and definitions vary.
+- section_id: financial_stability
+  indicator_id: bank_roe
+  label: Bank Return on Equity
+  unit: '%'
+  source: IMF FSI / national bank
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Taxes and one-offs can distort sector ROE.
+- section_id: financial_stability
+  indicator_id: bank_ld_ratio
+  label: Bank Loan-to-Deposit Ratio
+  unit: '%'
+  source: IMF FSI / national bank
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Deposit perimeter differs by regulator.
+- section_id: demographics
+  indicator_id: population_total
+  label: Total Population
+  unit: mn people
+  source: Eurostat / World Bank
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: verified
+  quality_note: Census rebasing can revise history.
+- section_id: demographics
+  indicator_id: working_age_population
+  label: Working-Age Population
+  unit: mn people
+  source: Eurostat / World Bank
+  frequency: annual
+  chart: peer_overlay
+  peers: true
+  quality_status: verified
+  quality_note: Structural labour-supply signal.
+- section_id: demographics
+  indicator_id: old_age_dependency
+  label: Old-Age Dependency Ratio
+  unit: '%'
+  source: Eurostat / World Bank
+  frequency: annual
+  chart: peer_overlay
+  peers: true
+  quality_status: verified
+  quality_note: Slow-moving structural series.
+- section_id: demographics
+  indicator_id: median_age
+  label: Median Age
+  unit: years
+  source: Eurostat / UN WPP
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: verified
+  quality_note: Annual structural estimate.
+- section_id: political_economy
+  indicator_id: wgi_government_effectiveness
+  label: WGI Government Effectiveness
+  unit: Percentile rank
+  source: World Bank WGI
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Composite governance measure; not a precise macro print.
+- section_id: political_economy
+  indicator_id: wgi_rule_of_law
+  label: WGI Rule of Law
+  unit: Percentile rank
+  source: World Bank WGI
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Composite governance measure; use directionally.
+- section_id: political_economy
+  indicator_id: wgi_control_of_corruption
+  label: WGI Control of Corruption
+  unit: Percentile rank
+  source: World Bank WGI
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Perception/model composite; can move with methodology.
+- section_id: political_economy
+  indicator_id: eu_funds_frozen
+  label: EU Funds Frozen / At Risk
+  unit: '% allocation'
+  source: European Commission / public proxy
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Public programme-cycle data is fragmented; verify manually.

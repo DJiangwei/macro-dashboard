@@ -15,7 +15,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 import math
+from pathlib import Path
 from typing import Iterable
+
+import yaml
 
 
 CANONICAL_COLUMNS = [
@@ -98,6 +101,44 @@ INDICATOR_MANIFEST_48: tuple[IndicatorSpec, ...] = (
     IndicatorSpec("political_economy", "wgi_control_of_corruption", "WGI Control of Corruption", "Percentile rank", "World Bank WGI", "annual", "line", False, "watch", "Perception/model composite; can move with methodology."),
     IndicatorSpec("political_economy", "eu_funds_frozen", "EU Funds Frozen / At Risk", "% allocation", "European Commission / public proxy", "annual", "line", False, "low_confidence", "Public programme-cycle data is fragmented; verify manually."),
 )
+
+
+def _load_manifest_from_yaml(fallback: tuple[IndicatorSpec, ...]) -> tuple[IndicatorSpec, ...]:
+    """Load the editable 48-indicator manifest from config when available."""
+    manifest_path = Path(__file__).resolve().parents[2] / "config" / "indicator_manifest_48.yaml"
+    if not manifest_path.exists():
+        return fallback
+
+    payload = yaml.safe_load(manifest_path.read_text()) or {}
+    raw_indicators = payload.get("indicators") or []
+    specs: list[IndicatorSpec] = []
+    seen: set[str] = set()
+
+    for raw in raw_indicators:
+        spec = IndicatorSpec(
+            section_id=str(raw["section_id"]),
+            indicator_id=str(raw["indicator_id"]),
+            label=str(raw["label"]),
+            unit=str(raw.get("unit", "")),
+            source=str(raw.get("source", "")),
+            frequency=str(raw.get("frequency", "annual")),
+            chart=str(raw.get("chart", "line")),
+            peers=bool(raw.get("peers", False)),
+            quality_status=str(raw.get("quality_status", "watch")),
+            quality_note=str(raw.get("quality_note", "")),
+        )
+        if spec.indicator_id in seen:
+            raise ValueError(f"Duplicate indicator_id in manifest: {spec.indicator_id}")
+        seen.add(spec.indicator_id)
+        specs.append(spec)
+
+    expected = int(payload.get("expected_count", 48))
+    if len(specs) != expected:
+        raise ValueError(f"Expected {expected} indicators in {manifest_path}, found {len(specs)}")
+    return tuple(specs)
+
+
+INDICATOR_MANIFEST_48 = _load_manifest_from_yaml(INDICATOR_MANIFEST_48)
 
 
 SECTION_INDICATORS_48: dict[str, tuple[IndicatorSpec, ...]] = {}
