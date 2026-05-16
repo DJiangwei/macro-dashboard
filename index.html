@@ -422,6 +422,43 @@ footer {
   font-size: 11px;
 }
 footer a { color: var(--accent) !important; }
+
+.release-panel {
+  margin: 0 0 24px;
+  padding: 22px 24px;
+  background: linear-gradient(135deg, rgba(255,252,246,0.96), rgba(243,236,224,0.72));
+  border: 1px solid rgba(23,19,16,0.16);
+  border-left: 4px solid var(--accent);
+}
+.release-panel h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.release-panel p { margin: 0; max-width: 980px; color: var(--muted); line-height: 1.7; }
+.release-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+.release-item {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.38);
+  padding: 12px 14px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.release-item strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--fg);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 @media (max-width: 900px) {
   .topbar { align-items: flex-start; flex-direction: column; }
   .narrative-body,
@@ -455,10 +492,23 @@ footer a { color: var(--accent) !important; }
   <h1>CEE-4 Macro Dashboard</h1>
   <p class="subtitle">
     Comprehensive country primers for Central and Eastern Europe's four largest economies.
-    Each primer includes 21 interactive charts, institutional analysis, trade data, and
-    forward-looking macro narratives written from a buy-side perspective.
+    The v4 release expands the framework toward a fuller macro investor dashboard: ten analytical domains,
+    richer country narratives, explicit data-quality notes, and bilingual English/Chinese reading support.
   </p>
 </header>
+
+<section class="release-panel">
+  <h2>v4 Framework + Data Quality Release</h2>
+  <p>
+    The country pages now include a dedicated Data Quality section and quiet footnotes for indicators that are derived,
+    lagged, vendor-sensitive, or definition-dependent. Use the country cards below to open the latest v4 dashboards.
+  </p>
+  <div class="release-grid">
+    <div class="release-item"><strong>Expanded Framework</strong> Real activity, prices, external sector, fiscal/sovereign, monetary, markets, financial stability, demographics, and political economy.</div>
+    <div class="release-item"><strong>Quality Metadata</strong> Series can be marked as verified, watch, low confidence, or unavailable through the fetch pipeline.</div>
+    <div class="release-item"><strong>Research UI</strong> Data caveats are shown as understated notes, keeping the dashboard readable while preserving provenance.</div>
+  </div>
+</section>
 
 <div class="grid">
 
@@ -509,7 +559,7 @@ footer a { color: var(--accent) !important; }
 </div>
 
 <footer>
-  Country Primer v3 · Data via openecon-data MCP, ECB, Eurostat, World Bank, Yahoo Finance · Charts: Plotly<br>
+  Country Primer v4 · Data via openecon-data MCP, Eurostat MCP, ECB, BIS, World Bank, Yahoo Finance · Charts: Plotly<br>
   <a href="https://github.com/DJiangwei/macro-dashboard">DJiangwei/macro-dashboard</a> ·
   This is a research artefact, not investment advice.
 </footer>
