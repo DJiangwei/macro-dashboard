@@ -6,59 +6,99 @@
 <title>Proposal: Comprehensive Macro Indicator Framework for CEE-4</title>
 <style>
 :root {
-  --bg: #f4f5f7; --fg: #1a1f36; --muted: #6b7280;
-  --primary: #0f3b5e; --border: #e2e4e9; --card: #ffffff;
-  --card-alt: #f8f9fb; --accent: #b8860b; --danger: #c62828;
-  --success: #2e7d32; --highlight: #e8f0fe;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-  --radius: 8px; --radius-sm: 5px;
+  --bg: #f4efe7; --bg-deep: #ece3d6; --fg: #171310; --muted: #63574e;
+  --primary: #171310; --border: rgba(23, 19, 16, 0.14); --card: rgba(255, 252, 246, 0.76);
+  --card-alt: rgba(236, 227, 214, 0.48); --accent: #8a593d; --danger: #9d3d2e;
+  --success: #3f6f50; --highlight: rgba(138, 89, 61, 0.12);
+  --font-display: "Iowan Old Style", "Songti SC", "Noto Serif SC", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-body: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 * { box-sizing: border-box; }
 body {
-  margin: 0; padding: 0; background: var(--bg); color: var(--fg);
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  margin: 0; padding: 0;
+  background:
+    radial-gradient(circle at top left, rgba(138, 89, 61, 0.15), transparent 24%),
+    radial-gradient(circle at top right, rgba(54, 75, 97, 0.12), transparent 22%),
+    linear-gradient(180deg, #f8f4ed 0%, #f4efe7 48%, #efe7db 100%);
+  color: var(--fg);
+  font-family: var(--font-body);
   font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
 }
-.topbar {
-  background: var(--primary); color: #fff;
-  padding: 10px 32px; display: flex; align-items: center; justify-content: space-between;
-  font-size: 12px; position: sticky; top: 0; z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, rgba(23, 19, 16, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(23, 19, 16, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 85%);
 }
-.topbar .brand { font-weight: 700; font-size: 15px; }
-.topbar .brand span { color: #ffd966; }
-.topbar a { color: #ffd966; text-decoration: none; }
+.topbar {
+  background: rgba(244, 239, 231, 0.84); color: var(--fg);
+  padding: 10px 32px; display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  position: sticky; top: 0; z-index: 100;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+}
+.topbar .brand {
+  font-family: var(--font-display);
+  font-weight: 600; font-size: 15px; letter-spacing: 0.16em;
+  white-space: nowrap;
+}
+.topbar .brand span { color: var(--accent); }
+.topbar a { color: var(--accent); text-decoration: none; }
 
 .container { max-width: 1200px; margin: 0 auto; padding: 28px 24px 60px; }
 
 header {
-  background: linear-gradient(135deg, var(--primary) 0%, #1a5680 100%);
-  border-radius: var(--radius); padding: 30px 36px; margin-bottom: 28px;
-  color: #fff; box-shadow: var(--shadow-md);
+  background: transparent;
+  padding: 48px 0 34px; margin-bottom: 28px;
+  color: var(--fg);
+  border-bottom: 1px solid var(--border);
 }
-header h1 { margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.3px; }
-header .subtitle { font-size: 14px; opacity: 0.85; margin-top: 8px; line-height: 1.6; }
+header h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(38px, 6vw, 72px);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.96;
+  max-width: 920px;
+}
+header .subtitle {
+  font-size: 16px; color: var(--muted); margin-top: 14px;
+  line-height: 1.65; max-width: 900px;
+}
 header .meta-row { display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap; }
 header .meta-chip {
-  background: rgba(255,255,255,0.12); border-radius: 20px;
+  background: rgba(255,255,255,0.28); border: 1px solid var(--border); border-radius: 999px;
   padding: 5px 16px; font-size: 12px;
 }
-header .meta-chip strong { color: #ffd966; }
+header .meta-chip strong { color: var(--accent); }
 
 .section-card {
   background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--radius); margin-bottom: 22px;
-  box-shadow: var(--shadow-sm); overflow: hidden;
+  border-radius: 0; margin-bottom: 22px;
+  overflow: hidden;
 }
 .section-card-header {
-  background: var(--primary); color: #fff;
+  background: var(--fg); color: var(--bg);
   padding: 14px 24px; display: flex; align-items: center; gap: 12px;
 }
-.section-card-header h2 { margin: 0; font-size: 16px; font-weight: 600; }
+.section-card-header h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
 .section-card-header .badge {
-  font-size: 10px; background: rgba(255,255,255,0.2);
-  padding: 3px 10px; border-radius: 12px; font-weight: 500; letter-spacing: 0.3px;
+  font-size: 10px; background: rgba(244, 239, 231, 0.14);
+  padding: 3px 10px; border-radius: 999px; font-weight: 500; letter-spacing: 0.3px;
 }
 .section-card-body { padding: 20px 24px; }
 
@@ -67,11 +107,11 @@ header .meta-chip strong { color: #ffd966; }
 }
 .toc a {
   background: var(--card); border: 1px solid var(--border);
-  color: var(--primary); text-decoration: none;
-  padding: 6px 14px; border-radius: 20px; font-size: 12px;
+  color: var(--muted); text-decoration: none;
+  padding: 6px 14px; border-radius: 999px; font-size: 12px;
   font-weight: 500; transition: all 0.15s;
 }
-.toc a:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+.toc a:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 
 table {
   width: 100%; border-collapse: collapse; font-size: 12.5px;
@@ -82,35 +122,34 @@ thead th {
   letter-spacing: 0.5px; border-bottom: 2px solid var(--border);
   position: sticky; top: 0;
 }
-tbody td { padding: 8px 10px; border-bottom: 1px solid #f0f1f3; vertical-align: top; }
-tbody tr:hover td { background: #fafbfc; }
+tbody td { padding: 8px 10px; border-bottom: 1px solid rgba(23,19,16,0.08); vertical-align: top; }
+tbody tr:hover td { background: rgba(255,252,246,0.72); }
 
 .tag { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; white-space: nowrap; }
-.tag-new { background: #e8f5e9; color: #2e7d32; }
-.tag-existing { background: #e8f0fe; color: #0f3b5e; }
-.tag-gold { background: #fef9e7; color: #b8860b; }
+.tag-new { background: rgba(63,111,80,0.12); color: var(--success); }
+.tag-existing { background: rgba(54,75,97,0.12); color: #364b61; }
+.tag-gold { background: var(--highlight); color: var(--accent); }
 
 .src-badge { font-size: 10px; padding: 2px 7px; border-radius: 3px; white-space: nowrap; font-weight: 500; }
-.src-eurostat { background: #e8f0fe; color: #1a5680; }
-.src-ecb { background: #e8f0fe; color: #1a5680; }
-.src-national { background: #fef9e7; color: #b8860b; }
-.src-bis { background: #f3e5f5; color: #6a1b9a; }
-.src-wb { background: #e8f5e9; color: #2e7d32; }
-.src-market { background: #fce4ec; color: #c62828; }
-.src-other { background: #f4f5f7; color: #6b7280; }
+.src-eurostat, .src-ecb { background: rgba(54,75,97,0.12); color: #364b61; }
+.src-national { background: var(--highlight); color: var(--accent); }
+.src-bis { background: rgba(138,89,61,0.10); color: var(--accent); }
+.src-wb { background: rgba(63,111,80,0.12); color: var(--success); }
+.src-market { background: rgba(157,61,46,0.12); color: var(--danger); }
+.src-other { background: var(--card-alt); color: var(--muted); }
 
 .framework-ref {
-  background: var(--highlight); border-left: 4px solid var(--primary);
-  padding: 12px 18px; margin-bottom: 20px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  font-size: 13px; color: var(--primary); line-height: 1.7;
+  background: var(--highlight); border-left: 3px solid var(--accent);
+  padding: 12px 18px; margin-bottom: 20px;
+  font-size: 13px; color: var(--fg); line-height: 1.7;
 }
 
 /* Priority legend */
-.priority-1 { border-left: 3px solid #c62828; }
-.priority-2 { border-left: 3px solid #b8860b; }
-.priority-3 { border-left: 3px solid #6b7280; }
+.priority-1 { border-left: 3px solid var(--danger); }
+.priority-2 { border-left: 3px solid var(--accent); }
+.priority-3 { border-left: 3px solid var(--muted); }
 
-.ind-id { font-family: "SF Mono", "Fira Code", monospace; font-size: 11px; color: var(--primary); font-weight: 600; }
+.ind-id { font-family: "SF Mono", "Fira Code", monospace; font-size: 11px; color: var(--accent); font-weight: 600; }
 .ind-name { font-weight: 500; }
 
 .summary-grid {
@@ -118,24 +157,38 @@ tbody tr:hover td { background: #fafbfc; }
   gap: 12px; margin-bottom: 28px;
 }
 .summary-card {
-  background: var(--card); border-radius: var(--radius); padding: 16px 20px;
-  text-align: center; border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+  background: var(--card); border-radius: 0; padding: 16px 20px;
+  text-align: center; border: 1px solid var(--border);
 }
-.summary-card .num { font-size: 28px; font-weight: 700; color: var(--primary); }
+.summary-card .num {
+  font-family: var(--font-display);
+  font-size: 31px; font-weight: 500; color: var(--primary);
+}
 .summary-card .label { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-h3 { font-size: 15px; color: var(--primary); margin: 28px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+h3 {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 500; color: var(--primary);
+  margin: 28px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
 
 footer {
   margin-top: 40px; padding: 24px 0; text-align: center;
   border-top: 1px solid var(--border); color: var(--muted); font-size: 11px;
+}
+footer a { color: var(--accent); }
+@media (max-width: 760px) {
+  .topbar { align-items: flex-start; flex-direction: column; }
+  .container { padding: 24px 18px 46px; }
+  .section-card-body { overflow-x: auto; }
+  .section-card-header { align-items: flex-start; flex-direction: column; }
 }
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">Country Primer <span>v4 Proposal</span></div></a>
+  <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">East Meridian <span>/ Framework</span></div></a>
   <div><a href="../index.html">← Dashboard</a> · <a href="macro_indicators.html">Current Dictionary</a></div>
 </div>
 
