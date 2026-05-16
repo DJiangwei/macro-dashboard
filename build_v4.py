@@ -419,6 +419,15 @@ p { color: var(--muted); }
 .quality-chip.verified { color: var(--success); border-color: rgba(63,111,80,0.35); background: rgba(63,111,80,0.08); }
 .quality-chip.watch { color: var(--accent); border-color: rgba(138,89,61,0.38); background: rgba(138,89,61,0.08); }
 .quality-chip.low_confidence { color: var(--danger); border-color: rgba(157,61,46,0.35); background: rgba(157,61,46,0.08); }
+.chart-quality-corner {
+  position: absolute;
+  z-index: 4;
+  top: 8px;
+  right: 10px;
+  background: rgba(255,252,246,0.92);
+  box-shadow: 0 4px 16px rgba(23,19,16,0.08);
+  backdrop-filter: blur(8px);
+}
 .indicator-ledger {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -863,6 +872,15 @@ def _chart_footnote(status: str, source: str, note: str, is_proxy: bool) -> str:
     )
 
 
+def _chart_corner_badge(status: str, note: str, is_proxy: bool) -> str:
+    label = _quality_label(status, is_proxy)
+    cls = _quality_class(status, is_proxy)
+    return (
+        f'<span class="quality-chip chart-quality-corner {cls}" '
+        f'title="{escape(note or label)}">{escape(label)}</span>'
+    )
+
+
 def _indicator_ledger_html(section_id: str) -> str:
     items = []
     for spec in SECTION_INDICATORS_48.get(section_id, ()):
@@ -892,23 +910,26 @@ def _render_section_charts(section_id: str, country_code: str, chart_map: dict[s
         if legacy_id:
             inner = _strip_outer_chart_cell(chart_map[legacy_id])
             rendered_ids.append(legacy_id)
+            legacy_note = f"Existing generated chart reused where primary data is available. {spec.quality_note}"
             footnote = _chart_footnote(
                 "verified",
                 spec.source,
-                f"Existing generated chart reused where primary data is available. {spec.quality_note}",
+                legacy_note,
                 False,
             )
+            badge = _chart_corner_badge("verified", legacy_note, False)
             html_parts.append(
                 f'<div class="chart-cell chart-shell" data-indicator-id="{escape(spec.indicator_id)}">'
-                f'{inner}{footnote}</div>'
+                f'{badge}{inner}{footnote}</div>'
             )
             continue
 
         rendered_ids.append(canonical_id)
         footnote = _chart_footnote(status, source, note, is_proxy)
+        badge = _chart_corner_badge(status, note, is_proxy)
         html_parts.append(
             f'<div class="chart-cell chart-shell" data-indicator-id="{escape(spec.indicator_id)}">'
-            f'{_chart_from_canonical_frame(canonical_frame, country_code, spec, canonical_id)}'
+            f'{badge}{_chart_from_canonical_frame(canonical_frame, country_code, spec, canonical_id)}'
             f'{footnote}</div>'
         )
     return "\n".join(html_parts), rendered_ids
@@ -952,6 +973,7 @@ def _coverage_panel_html(coverage: dict) -> str:
     expected = coverage.get("expected", 48)
     proxy_count = coverage.get("proxy_count", 0)
     source_chart_count = coverage.get("source_chart_count", 0)
+    adapter_count = coverage.get("adapter_real_count", 0)
     generated_at = coverage.get("generated_at", "")
     missing = coverage.get("missing") or []
     missing_note = ", ".join(missing) if missing else "none"
@@ -963,8 +985,8 @@ def _coverage_panel_html(coverage: dict) -> str:
     <span data-lang=\"zh\"> 个标准指标已渲染</span>
   </div>
   <div>
-    <span data-lang=\"en\">Source charts reused: {source_chart_count}. Proxy / watch-list fills: {proxy_count}. Missing: {escape(missing_note)}. Generated {escape(generated_at)}.</span>
-    <span data-lang=\"zh\">已复用真实来源图表: {source_chart_count}。代理/观察序列: {proxy_count}。缺失: {escape(missing_note)}。生成日期 {escape(generated_at)}。</span>
+    <span data-lang=\"en\">Source charts reused: {source_chart_count}. Adapter-filled real series: {adapter_count}. Proxy / watch-list fills: {proxy_count}. Missing: {escape(missing_note)}. Generated {escape(generated_at)}.</span>
+    <span data-lang=\"zh\">已复用真实来源图表: {source_chart_count}。Adapter 接入真实序列: {adapter_count}。代理/观察序列: {proxy_count}。缺失: {escape(missing_note)}。生成日期 {escape(generated_at)}。</span>
   </div>
 </section>
 """
@@ -2873,13 +2895,21 @@ def build_v4(country_code: str) -> Path:
             chart_map[m.group(1)] = cb
 
     coverage = DataPipeline().validate_coverage(canonical_frame)
-    source_chart_count = sum(
-        1
+    source_chart_ids = {
+        spec.indicator_id
         for spec in INDICATOR_MANIFEST_48
         if _legacy_chart_id(spec.section_id, spec.indicator_id, chart_map)
-    )
+    }
+    adapter_real_ids = {
+        row.get("indicator_id")
+        for row in canonical_frame
+        if row.get("indicator_id") and not row.get("is_proxy")
+    }
+    source_chart_count = len(source_chart_ids)
+    real_indicator_count = len(source_chart_ids | adapter_real_ids)
     coverage["source_chart_count"] = source_chart_count
-    coverage["proxy_count"] = max(0, coverage.get("expected", 48) - source_chart_count)
+    coverage["adapter_real_count"] = len(adapter_real_ids - source_chart_ids)
+    coverage["proxy_count"] = max(0, coverage.get("expected", 48) - real_indicator_count)
 
     # Extract CB and Trade sections
     cb_match = re.search(r'<section class="panel" id="central_bank">.*?</section>', html, re.DOTALL)

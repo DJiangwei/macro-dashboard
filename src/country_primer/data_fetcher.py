@@ -14,11 +14,18 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
+import io
 import math
 from pathlib import Path
 from typing import Iterable
+from xml.etree import ElementTree as ET
+import zipfile
 
+import requests
 import yaml
+
+from .catalog import load_countries
+from .fetch import CACHE_DIR, Series, fetch_ecb_fx, fetch_eurostat, fetch_wb, finalize_series
 
 
 CANONICAL_COLUMNS = [
@@ -35,6 +42,27 @@ CANONICAL_COLUMNS = [
     "quality_note",
     "is_proxy",
 ]
+
+
+FREQUENCY_STALE_DAYS = {
+    "daily": 14,
+    "monthly": 125,
+    "quarterly": 220,
+    "annual": 900,
+}
+
+
+FREQUENCY_GAP_DAYS = {
+    "daily": 10,
+    "monthly": 70,
+    "quarterly": 130,
+    "annual": 500,
+}
+
+
+WORLD_BANK_ESG_URL = "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx"
+_ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
+_XLSX_NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 
 
 @dataclass(frozen=True)
@@ -96,9 +124,9 @@ INDICATOR_MANIFEST_48: tuple[IndicatorSpec, ...] = (
     IndicatorSpec("demographics", "working_age_population", "Working-Age Population", "mn people", "Eurostat / World Bank", "annual", "peer_overlay", True, "verified", "Structural labour-supply signal."),
     IndicatorSpec("demographics", "old_age_dependency", "Old-Age Dependency Ratio", "%", "Eurostat / World Bank", "annual", "peer_overlay", True, "verified", "Slow-moving structural series."),
     IndicatorSpec("demographics", "median_age", "Median Age", "years", "Eurostat / UN WPP", "annual", "line", False, "verified", "Annual structural estimate."),
-    IndicatorSpec("political_economy", "wgi_government_effectiveness", "WGI Government Effectiveness", "Percentile rank", "World Bank WGI", "annual", "line", False, "watch", "Composite governance measure; not a precise macro print."),
-    IndicatorSpec("political_economy", "wgi_rule_of_law", "WGI Rule of Law", "Percentile rank", "World Bank WGI", "annual", "line", False, "watch", "Composite governance measure; use directionally."),
-    IndicatorSpec("political_economy", "wgi_control_of_corruption", "WGI Control of Corruption", "Percentile rank", "World Bank WGI", "annual", "line", False, "watch", "Perception/model composite; can move with methodology."),
+    IndicatorSpec("political_economy", "wgi_government_effectiveness", "WGI Government Effectiveness", "Estimate score", "World Bank Sovereign ESG / WGI", "annual", "line", False, "watch", "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown."),
+    IndicatorSpec("political_economy", "wgi_rule_of_law", "WGI Rule of Law", "Estimate score", "World Bank Sovereign ESG / WGI", "annual", "line", False, "watch", "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown."),
+    IndicatorSpec("political_economy", "wgi_control_of_corruption", "WGI Control of Corruption", "Estimate score", "World Bank Sovereign ESG / WGI", "annual", "line", False, "watch", "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology."),
     IndicatorSpec("political_economy", "eu_funds_frozen", "EU Funds Frozen / At Risk", "% allocation", "European Commission / public proxy", "annual", "line", False, "low_confidence", "Public programme-cycle data is fragmented; verify manually."),
 )
 
@@ -240,6 +268,231 @@ def _proxy_values(country: str, spec: IndicatorSpec, n: int) -> list[float]:
     return values
 
 
+def _parse_row_date(row: dict) -> datetime | None:
+    try:
+        return datetime.fromisoformat(str(row.get("date", ""))[:10])
+    except ValueError:
+        return None
+
+
+def _xlsx_column_index(cell_ref: str) -> int:
+    letters = "".join(ch for ch in cell_ref if ch.isalpha()).upper()
+    index = 0
+    for letter in letters:
+        index = index * 26 + ord(letter) - ord("A") + 1
+    return max(index - 1, 0)
+
+
+def _xlsx_cell_value(cell: ET.Element, shared_strings: list[str]) -> str:
+    cell_type = cell.get("t")
+    value = cell.find("m:v", _XLSX_NS)
+    if cell_type == "s" and value is not None and value.text:
+        return shared_strings[int(value.text)]
+    if cell_type == "inlineStr":
+        return "".join(node.text or "" for node in cell.findall(".//m:t", _XLSX_NS))
+    return "" if value is None or value.text is None else value.text
+
+
+def _xlsx_row_values(row: ET.Element, shared_strings: list[str]) -> list[str]:
+    values: list[str] = []
+    for cell in row.findall("m:c", _XLSX_NS):
+        index = _xlsx_column_index(cell.get("r", "A1"))
+        while len(values) <= index:
+            values.append("")
+        values[index] = _xlsx_cell_value(cell, shared_strings)
+    return values
+
+
+def _load_world_bank_esg_data() -> dict[tuple[str, str], list[tuple[str, float]]]:
+    """Parse the World Bank Sovereign ESG workbook into an in-memory index.
+
+    The standard World Bank Indicators API exposes WGI metadata but does not
+    reliably return the latest country-level WGI time series. The ESG workbook
+    is the official downloadable data package and includes the WGI estimate
+    series needed for the political-economy section.
+    """
+    global _ESG_DATA_CACHE
+    if _ESG_DATA_CACHE is not None:
+        return _ESG_DATA_CACHE
+
+    workbook_path = CACHE_DIR / "worldbank_esgdata_2026-01-09.xlsx"
+    if workbook_path.exists():
+        workbook_bytes = workbook_path.read_bytes()
+    else:
+        response = requests.get(WORLD_BANK_ESG_URL, timeout=45)
+        response.raise_for_status()
+        workbook_bytes = response.content
+        workbook_path.write_bytes(workbook_bytes)
+
+    with zipfile.ZipFile(io.BytesIO(workbook_bytes)) as archive:
+        shared_root = ET.fromstring(archive.read("xl/sharedStrings.xml"))
+        shared_strings = [
+            "".join(node.text or "" for node in item.findall(".//m:t", _XLSX_NS))
+            for item in shared_root.findall("m:si", _XLSX_NS)
+        ]
+        sheet_root = ET.fromstring(archive.read("xl/worksheets/sheet4.xml"))
+        rows = sheet_root.findall(".//m:row", _XLSX_NS)
+        header = _xlsx_row_values(rows[0], shared_strings) if rows else []
+        year_columns = [
+            (idx, value)
+            for idx, value in enumerate(header)
+            if len(value) == 4 and value.isdigit()
+        ]
+
+        data: dict[tuple[str, str], list[tuple[str, float]]] = {}
+        for row in rows[1:]:
+            values = _xlsx_row_values(row, shared_strings)
+            if len(values) < 4:
+                continue
+            iso3, indicator_code = values[0], values[2]
+            if not iso3 or not indicator_code:
+                continue
+            observations: list[tuple[str, float]] = []
+            for idx, year in year_columns:
+                if idx >= len(values) or values[idx] == "":
+                    continue
+                try:
+                    observations.append((f"{year}-12-31", float(values[idx])))
+                except ValueError:
+                    continue
+            if observations:
+                data[(iso3, indicator_code)] = observations
+
+    _ESG_DATA_CACHE = data
+    return data
+
+
+def _source_validation_notes(rows: list[dict], spec: IndicatorSpec) -> list[str]:
+    notes: list[str] = []
+    if not rows:
+        return ["No observations returned by adapter."]
+
+    parsed = [_parse_row_date(row) for row in rows]
+    if any(dt is None for dt in parsed):
+        notes.append("Some dates failed ISO parsing.")
+        parsed = [dt for dt in parsed if dt is not None]
+    if not parsed:
+        return notes or ["No parseable dates returned by adapter."]
+
+    latest = max(parsed)
+    stale_limit = FREQUENCY_STALE_DAYS.get(spec.frequency, 220)
+    age = (datetime.utcnow() - latest).days
+    if age > stale_limit:
+        notes.append(f"Latest observation is {age} days old for {spec.frequency} data.")
+
+    if len(parsed) < 5:
+        notes.append("Short history returned by adapter.")
+
+    sorted_dates = sorted(parsed)
+    gap_limit = FREQUENCY_GAP_DAYS.get(spec.frequency, 180)
+    gaps = [
+        (sorted_dates[i] - sorted_dates[i - 1]).days
+        for i in range(1, len(sorted_dates))
+    ]
+    if gaps and max(gaps) > gap_limit:
+        notes.append(f"Observed date gap of {max(gaps)} days exceeds expected {spec.frequency} cadence.")
+
+    values: list[float] = []
+    for row in rows:
+        try:
+            value = float(row.get("value"))
+        except (TypeError, ValueError):
+            notes.append("Non-numeric value returned by adapter.")
+            continue
+        if not math.isfinite(value):
+            notes.append("Non-finite value returned by adapter.")
+            continue
+        values.append(value)
+
+    if len(values) >= 8:
+        diffs = [values[i] - values[i - 1] for i in range(1, len(values))]
+        mean = sum(diffs) / len(diffs)
+        variance = sum((d - mean) ** 2 for d in diffs) / max(len(diffs) - 1, 1)
+        stdev = math.sqrt(variance)
+        if stdev > 0 and abs(diffs[-1] - mean) > 6 * stdev:
+            notes.append("Latest move is a statistical outlier; verify revision/base effects.")
+
+    return notes[:4]
+
+
+def _apply_source_validation(rows: list[dict], spec: IndicatorSpec) -> list[dict]:
+    if not rows:
+        return rows
+    notes = _source_validation_notes(rows, spec)
+    if notes:
+        status = "watch" if len(notes) <= 2 else "low_confidence"
+        suffix = " Source validation: " + " ".join(notes)
+    else:
+        status = "verified" if spec.quality_status == "verified" else "watch"
+        suffix = " Source validation passed."
+
+    for row in rows:
+        row["quality_status"] = status
+        row["quality_note"] = f"{row.get('quality_note') or spec.quality_note} {suffix}".strip()
+    return rows
+
+
+def _series_to_rows(
+    series: Series,
+    spec: IndicatorSpec,
+    *,
+    scale: float = 1.0,
+    unit: str | None = None,
+    note: str = "",
+) -> list[dict]:
+    if not series.available or not series.observations:
+        return []
+
+    rows = []
+    quality_note = spec.quality_note
+    if note:
+        quality_note = f"{quality_note} {note}"
+    for date, value in series.observations:
+        rows.append({
+            "country": series.country,
+            "date": str(date)[:10],
+            "indicator_id": spec.indicator_id,
+            "value": float(value) * scale,
+            "label": spec.label,
+            "section_id": spec.section_id,
+            "unit": unit or spec.unit or series.unit,
+            "source": series.source or spec.source,
+            "series_id": series.series_id,
+            "quality_status": "verified",
+            "quality_note": quality_note,
+            "is_proxy": False,
+        })
+    return _apply_source_validation(rows, spec)
+
+
+def _derive_yoy_series(series: Series, spec: IndicatorSpec, periods: int = 12) -> Series:
+    if not series.available or len(series.observations) <= periods:
+        return series
+    obs = []
+    values = series.observations
+    for idx in range(periods, len(values)):
+        date, value = values[idx]
+        _, prior = values[idx - periods]
+        if prior == 0:
+            continue
+        obs.append((date, (float(value) / float(prior) - 1.0) * 100.0))
+    return finalize_series(Series(
+        key=spec.indicator_id,
+        label=spec.label,
+        country=series.country,
+        source=series.source,
+        series_id=f"{series.series_id} (derived YoY)",
+        unit="% YoY",
+        frequency=series.frequency,
+        last_update=obs[-1][0] if obs else "",
+        fetched=series.fetched,
+        source_url=series.source_url,
+        observations=obs,
+        available=bool(obs),
+        note=f"Derived YoY from {series.series_id}",
+    ))
+
+
 def proxy_rows(country: str, spec: IndicatorSpec) -> list[dict]:
     dates = _dates_for_frequency(spec.frequency)
     values = _proxy_values(country, spec, len(dates))
@@ -270,13 +523,103 @@ class BaseFetcher:
 
 
 class EurostatFetcher(BaseFetcher):
+    CONFIGS = {
+        "cpi_yoy": {
+            "dataset": "prc_hicp_manr",
+            "freq": "M",
+            "since": "2018",
+            "params": {"coicop": "CP00"},
+            "unit": "% YoY",
+        },
+        "core_cpi_yoy": {
+            "dataset": "prc_hicp_manr",
+            "freq": "M",
+            "since": "2018",
+            "params": {"coicop": "TOT_X_NRG_FOOD"},
+            "unit": "% YoY",
+        },
+        "services_cpi_yoy": {
+            "dataset": "prc_hicp_manr",
+            "freq": "M",
+            "since": "2018",
+            "params": {"coicop": "SERV"},
+            "unit": "% YoY",
+        },
+        "ppi_yoy": {
+            "dataset": "sts_inppd_m",
+            "freq": "M",
+            "since": "2018",
+            "params": {"nace_r2": "B-E36", "indic_bt": "PRC_PRR_DOM", "unit": "I21"},
+            "unit": "% YoY",
+            "derive_yoy": True,
+        },
+        "industrial_production_yoy": {
+            "dataset": "sts_inpr_m",
+            "freq": "M",
+            "since": "2018",
+            "params": {"nace_r2": "B-D", "indic_bt": "PRD", "s_adj": "SCA", "unit": "I21"},
+            "unit": "% YoY",
+            "derive_yoy": True,
+        },
+        "retail_sales_yoy": {
+            "dataset": "sts_trtu_m",
+            "freq": "M",
+            "since": "2018",
+            "params": {"nace_r2": "G47", "indic_bt": "VOL_SLS", "s_adj": "SCA", "unit": "I21"},
+            "unit": "% YoY",
+            "derive_yoy": True,
+        },
+        "avg_wage_yoy": {
+            "dataset": "lc_lci_r2_q",
+            "freq": "Q",
+            "since": "2018",
+            "params": {"lcstruct": "D11", "nace_r2": "B-S", "s_adj": "SCA", "unit": "PCH_SM"},
+            "unit": "% YoY",
+        },
+        "sov_yield_10y": {
+            "dataset": "irt_lt_mcby_m",
+            "freq": "M",
+            "since": "2018",
+            "params": {},
+            "unit": "%",
+        },
+    }
+
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
-        return []
+        cfg = self.CONFIGS.get(spec.indicator_id)
+        if not cfg:
+            return []
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        series = fetch_eurostat(
+            cfg["dataset"],
+            meta["iso2"],
+            spec.indicator_id,
+            spec.label,
+            country,
+            freq=cfg["freq"],
+            since=cfg["since"],
+            extra_params=cfg.get("params") or {},
+            unit_label=cfg["unit"],
+            indicator_label=spec.label,
+        )
+        if cfg.get("derive_yoy"):
+            series = _derive_yoy_series(series, spec)
+        return _series_to_rows(series, spec, unit=cfg["unit"])
 
 
 class ECBFetcher(BaseFetcher):
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
-        return []
+        if spec.indicator_id != "fx_vs_eur":
+            return []
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        series = fetch_ecb_fx(meta["currency"], spec.indicator_id, spec.label, country)
+        return _series_to_rows(series, spec, unit=f'{meta["currency"]} per EUR')
 
 
 class BISFetcher(BaseFetcher):
@@ -294,11 +637,86 @@ class ProxyFetcher(BaseFetcher):
         return proxy_rows(country, spec)
 
 
+class WorldBankESGFetcher(BaseFetcher):
+    CONFIGS = {
+        "wgi_government_effectiveness": "GE.EST",
+        "wgi_rule_of_law": "RL.EST",
+        "wgi_control_of_corruption": "CC.EST",
+    }
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        code = self.CONFIGS.get(spec.indicator_id)
+        if not code:
+            return []
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        try:
+            observations = _load_world_bank_esg_data().get((meta["iso3"], code), [])
+        except (OSError, requests.RequestException, zipfile.BadZipFile, ET.ParseError):
+            return []
+        observations = [(date, value) for date, value in observations if date >= "2010-01-01"]
+        if not observations:
+            return []
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="World Bank Sovereign ESG Data Portal / WGI",
+            series_id=code,
+            unit="Estimate score",
+            frequency="annual",
+            last_update=observations[-1][0][:4],
+            source_url=WORLD_BANK_ESG_URL,
+            observations=observations,
+            available=True,
+            note="Downloaded from the official Sovereign ESG workbook; WGI estimate score, not percentile rank.",
+        ))
+        return _series_to_rows(
+            series,
+            spec,
+            unit="Estimate score",
+            note=f"World Bank Sovereign ESG workbook indicator {code}.",
+        )
+
+
+class WorldBankFetcher(BaseFetcher):
+    CONFIGS = {
+        "population_total": ("SP.POP.TOTL", 1 / 1_000_000, "mn people"),
+        "working_age_population": ("SP.POP.1564.TO", 1 / 1_000_000, "mn people"),
+        "old_age_dependency": ("SP.POP.DPND.OL", 1.0, "%"),
+        "fx_reserves": ("FI.RES.TOTL.CD", 1 / 1_000_000_000, "USD bn"),
+        "short_term_ext_debt": ("DT.DOD.DSTC.IR.ZS", 1.0, "%"),
+        "current_account_pct_gdp": ("BN.CAB.XOKA.GD.ZS", 1.0, "% GDP"),
+    }
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        cfg = self.CONFIGS.get(spec.indicator_id)
+        if not cfg:
+            return []
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        code, scale, unit = cfg
+        series = fetch_wb(meta["iso2"], code, spec.indicator_id, spec.label, country, start=2010, end=2026)
+        return _series_to_rows(series, spec, scale=scale, unit=unit, note=f"World Bank indicator {code}.")
+
+
 class DataPipeline:
     """Fetch all canonical indicators into one normalized DataFrame."""
 
     def __init__(self, fetchers: Iterable[BaseFetcher] | None = None) -> None:
-        self.fetchers = list(fetchers or [EurostatFetcher(), ECBFetcher(), BISFetcher(), NationalCBFetcher(), ProxyFetcher()])
+        self.fetchers = list(fetchers or [
+            ECBFetcher(),
+            EurostatFetcher(),
+            WorldBankESGFetcher(),
+            WorldBankFetcher(),
+            BISFetcher(),
+            NationalCBFetcher(),
+            ProxyFetcher(),
+        ])
 
     def fetch_indicator(self, country: str, spec: IndicatorSpec) -> list[dict]:
         for fetcher in self.fetchers:

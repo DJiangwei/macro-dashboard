@@ -444,33 +444,33 @@ indicators:
 - section_id: political_economy
   indicator_id: wgi_government_effectiveness
   label: WGI Government Effectiveness
-  unit: Percentile rank
-  source: World Bank WGI
+  unit: Estimate score
+  source: World Bank Sovereign ESG / WGI
   frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Composite governance measure; not a precise macro print.
+  quality_note: WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown.
 - section_id: political_economy
   indicator_id: wgi_rule_of_law
   label: WGI Rule of Law
-  unit: Percentile rank
-  source: World Bank WGI
+  unit: Estimate score
+  source: World Bank Sovereign ESG / WGI
   frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Composite governance measure; use directionally.
+  quality_note: WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown.
 - section_id: political_economy
   indicator_id: wgi_control_of_corruption
   label: WGI Control of Corruption
-  unit: Percentile rank
-  source: World Bank WGI
+  unit: Estimate score
+  source: World Bank Sovereign ESG / WGI
   frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Perception/model composite; can move with methodology.
+  quality_note: WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology.
 - section_id: political_economy
   indicator_id: eu_funds_frozen
   label: EU Funds Frozen / At Risk
