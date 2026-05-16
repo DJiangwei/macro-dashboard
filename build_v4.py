@@ -170,7 +170,7 @@ header h1 {
   margin: 0;
   max-width: 980px;
   font-family: var(--font-display);
-  font-size: clamp(36px, 6vw, 72px);
+  font-size: clamp(28px, 4.2vw, 48px);
   font-weight: 500;
   letter-spacing: -0.05em;
   line-height: 0.96;
@@ -2583,7 +2583,7 @@ def build_v4(country_code: str) -> Path:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{data["name"]} — Macro Dashboard</title>
+<title>{data["name"]} Dashboard</title>
 {plotly_tag}
 <style>{CSS}</style>
 </head>
@@ -2603,7 +2603,7 @@ def build_v4(country_code: str) -> Path:
 <div class="container">
 
 <header>
-  <h1><span data-lang="en">{data["name"]} — Macro Dashboard</span><span data-lang="zh">{data["name"]} — 宏观仪表板</span></h1>
+  <h1><span data-lang="en">{data["name"]} Dashboard</span><span data-lang="zh">{data["name"]} Dashboard</span></h1>
   <div class="subtitle"><span data-lang="en">{data["subtitle"]}</span><span data-lang="zh">{data.get("subtitle_zh", data["subtitle"])}</span></div>
   <div class="meta-row">
     <div class="meta-chip"><span data-lang="en">Framework:</span><span data-lang="zh">框架:</span> <strong>IMF FPP × GS Indicators × Buy-side PM</strong></div>
