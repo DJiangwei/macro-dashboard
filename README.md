@@ -56,6 +56,40 @@ the MCP for every indicator in `config/indicators.yaml` and persist the
 responses. The `fx_vs_eur` indicator is the exception: it uses the ECB XML
 feed via `fetch.fetch_ecb_fx`, which works without prefetching.
 
+## v4 data-pipeline architecture
+
+The v4 dashboard also includes a dedicated canonical pipeline in
+`src/country_primer/data_fetcher.py`. It follows the proposed architecture:
+
+```
+[EurostatFetcher / ECBFetcher / BISFetcher / NationalCBFetcher]
+                         │
+                         ▼
+canonical macro table: [country, date, indicator_id, value]
+                         │
+                         ▼
+build_v4.py → 48-indicator dashboard pages
+```
+
+The canonical manifest currently defines 48 core indicators across real
+activity, prices/wages, external, fiscal/sovereign, monetary/financial,
+markets/valuation, financial stability, demographics, and political economy.
+When a primary adapter is not yet wired, the pipeline emits a transparent proxy
+series and marks it in the UI with quality footnotes. This keeps every country
+page structurally complete while making uncertain data visible rather than
+silently hiding it.
+
+To rebuild and publish the v4 site:
+
+```bash
+python3 build_v4.py ALL
+python3 -m py_compile build_v4.py src/country_primer/data_fetcher.py
+git diff --check
+git add build_v4.py src/country_primer/data_fetcher.py output/*_v4.html README.md
+git commit -m "Add canonical 48-indicator data pipeline"
+git push
+```
+
 ## Adding a country
 
 1. Add it to `config/countries.yaml` with name, ISO codes, currency, central

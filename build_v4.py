@@ -12,6 +12,7 @@ from pathlib import Path
 import re
 import sys
 import json
+from html import escape
 
 # ── Chart HTML generator for new v4 indicators ────────────────────────────────
 
@@ -33,7 +34,7 @@ def _make_plotly_chart(chart_id, title, traces, y_title="", height=380, extra_la
         dash = t.get("dash", "solid")
         trace_js.append(f'''{{"line":{{"color":"{lc}","width":{lw}{f',"dash":"{dash}"' if dash != "solid" else ""}}},"mode":"lines","name":"{t['name']}","x":{json.dumps(t['x'])},"y":{json.dumps(t['y'])},"type":"scatter"}}''')
 
-    layout = f'''{{"title":{{"text":"{title}","font":{{"size":13,"color":"#171310"}}}},"height":{height},"margin":{{"l":50,"r":20,"t":40,"b":40}},"xaxis":{{"gridcolor":"rgba(23,19,16,0.08)","autorange":true}},"yaxis":{{"title":"{y_title}","gridcolor":"rgba(23,19,16,0.08)","autorange":true}},"legend":{{"orientation":"h","y":-0.2}},"paper_bgcolor":"rgba(255,252,246,0.90)","plot_bgcolor":"rgba(255,252,246,0.90)","font":{{"family":"Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, Helvetica Neue, Arial, sans-serif","size":11,"color":"#171310"}}}}'''
+    layout = f'''{{"title":{{"text":{json.dumps(title)},"font":{{"size":13,"color":"#171310"}}}},"height":{height},"margin":{{"l":50,"r":20,"t":40,"b":40}},"xaxis":{{"gridcolor":"rgba(23,19,16,0.08)","autorange":true}},"yaxis":{{"title":{json.dumps(y_title)},"gridcolor":"rgba(23,19,16,0.08)","autorange":true}},"legend":{{"orientation":"h","y":-0.2}},"paper_bgcolor":"rgba(255,252,246,0.90)","plot_bgcolor":"rgba(255,252,246,0.90)","font":{{"family":"Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, Helvetica Neue, Arial, sans-serif","size":11,"color":"#171310"}}}}'''
 
     if extra_layout:
         layout = layout[:-2] + "," + json.dumps(extra_layout)[1:]
@@ -48,6 +49,18 @@ Plotly.newPlot("{chart_id}",[{traces_str}],{layout});
 </script></div>'''
 
 ROOT = Path(__file__).parent
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from country_primer.data_fetcher import (  # noqa: E402
+    DataPipeline,
+    INDICATOR_MANIFEST_48,
+    LEGACY_INDICATOR_KEYS,
+    SECTION_INDICATORS_48,
+    fetch_canonical_macro_frame,
+)
+
 OUTPUT = ROOT / "output"
 
 # ── Shared CSS (same as Hungary v3) ──────────────────────────────────────────
@@ -371,6 +384,83 @@ p { color: var(--muted); }
   transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
 }
 .chart-cell .plotly-graph-div { height: 100% !important; }
+.chart-shell {
+  position: relative;
+  min-height: 440px;
+  height: auto;
+}
+.chart-shell .chart-cell,
+.chart-shell > div:first-child {
+  height: 400px;
+}
+.chart-footnote {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 10px 10px;
+  border-top: 1px solid rgba(23,19,16,0.08);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+  background: rgba(237,223,204,0.18);
+}
+.quality-chip {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding: 1px 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.quality-chip.verified { color: var(--success); border-color: rgba(63,111,80,0.35); background: rgba(63,111,80,0.08); }
+.quality-chip.watch { color: var(--accent); border-color: rgba(138,89,61,0.38); background: rgba(138,89,61,0.08); }
+.quality-chip.low_confidence { color: var(--danger); border-color: rgba(157,61,46,0.35); background: rgba(157,61,46,0.08); }
+.indicator-ledger {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 8px;
+  margin: 14px 0 16px;
+}
+.indicator-ledger-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border: 1px solid rgba(23,19,16,0.12);
+  background: rgba(255,252,246,0.52);
+  color: var(--fg);
+  font-size: 11.5px;
+}
+.indicator-ledger-item span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.coverage-panel {
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  background: rgba(255,252,246,0.66);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.coverage-panel strong {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 500;
+}
+.coverage-panel span {
+  color: var(--muted);
+  font-size: 12px;
+}
 .commentary,
 .framework-ref,
 .narrative-footer {
@@ -689,6 +779,140 @@ SECTION_BLURBS_ZH = {
 
 SECTION_ORDER = ["real_activity", "prices_wages", "external", "fiscal_sovereign", "monetary_financial", "markets_valuation", "financial_stability", "demographics", "political_economy"]
 
+
+def _canonical_chart_id(section_id: str, indicator_id: str, order: int) -> str:
+    return f"chart-{section_id}-{indicator_id}-{order:02d}"
+
+
+# v4 is now driven by the canonical 48-indicator manifest. The older
+# SECTION_CHART_MAP above is retained for historical context, then overridden
+# here so rendering and validation share one contract.
+SECTION_CHART_MAP = {
+    sec_id: [
+        _canonical_chart_id(sec_id, spec.indicator_id, idx + 1)
+        for idx, spec in enumerate(specs)
+    ]
+    for sec_id, specs in SECTION_INDICATORS_48.items()
+}
+
+
+def _quality_label(status: str, is_proxy: bool = False) -> str:
+    if is_proxy:
+        return "proxy"
+    return status or "watch"
+
+
+def _quality_class(status: str, is_proxy: bool = False) -> str:
+    if is_proxy:
+        return "low_confidence"
+    return status if status in {"verified", "watch", "low_confidence"} else "watch"
+
+
+def _strip_outer_chart_cell(block: str) -> str:
+    match = re.match(r'<div class="chart-cell">(.*)</div>\s*$', block, re.DOTALL)
+    return match.group(1) if match else block
+
+
+def _legacy_chart_id(section_id: str, indicator_id: str, chart_map: dict[str, str]) -> str | None:
+    candidates = LEGACY_INDICATOR_KEYS.get(indicator_id, (indicator_id,))
+    for key in candidates:
+        needle = f"-{key}-"
+        for chart_id in chart_map:
+            if chart_id.startswith(f"chart-{section_id}-") and needle in chart_id:
+                return chart_id
+    return None
+
+
+def _indicator_frame(frame, country_code: str, indicator_id: str):
+    if not frame:
+        return []
+    rows = [
+        row for row in frame
+        if row.get("country") == country_code and row.get("indicator_id") == indicator_id
+    ]
+    return sorted(rows, key=lambda row: str(row.get("date", "")))
+
+
+def _chart_from_canonical_frame(frame, country_code: str, spec, chart_id: str) -> str:
+    rows = _indicator_frame(frame, country_code, spec.indicator_id)
+    if not rows:
+        rows = _indicator_frame(fetch_canonical_macro_frame(country_code), country_code, spec.indicator_id)
+    x_vals = [str(row["date"])[:10] for row in rows]
+    y_vals = [round(float(row["value"]), 3) for row in rows]
+    trace = {
+        "name": country_code,
+        "x": x_vals,
+        "y": y_vals,
+        "line_color": "#8a593d" if not bool(rows[-1].get("is_proxy")) else "#9d3d2e",
+        "line_width": 2.3,
+        "dash": "dot" if bool(rows[-1].get("is_proxy")) else "solid",
+    }
+    return _make_plotly_chart(chart_id, spec.label, [trace], spec.unit)
+
+
+def _chart_footnote(status: str, source: str, note: str, is_proxy: bool) -> str:
+    label = _quality_label(status, is_proxy)
+    cls = _quality_class(status, is_proxy)
+    source = escape(source or "Source pending")
+    note = escape(note or "Quality note pending.")
+    return (
+        f'<div class="chart-footnote">'
+        f'<span class="quality-chip {cls}">{escape(label)}</span>'
+        f'<span><strong>{source}</strong> · {note}</span>'
+        f'</div>'
+    )
+
+
+def _indicator_ledger_html(section_id: str) -> str:
+    items = []
+    for spec in SECTION_INDICATORS_48.get(section_id, ()):
+        cls = _quality_class(spec.quality_status)
+        items.append(
+            f'<div class="indicator-ledger-item" data-indicator-id="{escape(spec.indicator_id)}">'
+            f'<span>{escape(spec.label)}</span>'
+            f'<span class="quality-chip {cls}">{escape(spec.quality_status)}</span>'
+            f'</div>'
+        )
+    return f'<div class="indicator-ledger">{"".join(items)}</div>'
+
+
+def _render_section_charts(section_id: str, country_code: str, chart_map: dict[str, str], canonical_frame) -> tuple[str, list[str]]:
+    html_parts: list[str] = []
+    rendered_ids: list[str] = []
+    for idx, spec in enumerate(SECTION_INDICATORS_48.get(section_id, ())):
+        legacy_id = _legacy_chart_id(section_id, spec.indicator_id, chart_map)
+        canonical_id = _canonical_chart_id(section_id, spec.indicator_id, idx + 1)
+        rows = _indicator_frame(canonical_frame, country_code, spec.indicator_id)
+        row = rows[-1] if rows else {}
+        status = str(row.get("quality_status") or spec.quality_status)
+        source = str(row.get("source") or spec.source)
+        note = str(row.get("quality_note") or spec.quality_note)
+        is_proxy = bool(row.get("is_proxy", False))
+
+        if legacy_id:
+            inner = _strip_outer_chart_cell(chart_map[legacy_id])
+            rendered_ids.append(legacy_id)
+            footnote = _chart_footnote(
+                "verified",
+                spec.source,
+                f"Existing generated chart reused where primary data is available. {spec.quality_note}",
+                False,
+            )
+            html_parts.append(
+                f'<div class="chart-cell chart-shell" data-indicator-id="{escape(spec.indicator_id)}">'
+                f'{inner}{footnote}</div>'
+            )
+            continue
+
+        rendered_ids.append(canonical_id)
+        footnote = _chart_footnote(status, source, note, is_proxy)
+        html_parts.append(
+            f'<div class="chart-cell chart-shell" data-indicator-id="{escape(spec.indicator_id)}">'
+            f'{_chart_from_canonical_frame(canonical_frame, country_code, spec, canonical_id)}'
+            f'{footnote}</div>'
+        )
+    return "\n".join(html_parts), rendered_ids
+
 DATA_QUALITY_PILLARS = [
     ("Primary", "Official / central-bank source preferred", "原始来源", "优先使用官方/央行来源"),
     ("Derived", "Computed series are marked in notes", "派生", "计算型序列会在脚注说明"),
@@ -719,6 +943,29 @@ def _quality_panel_html() -> str:
   <h2><span data-lang=\"en\">Data Quality Notes</span><span data-lang=\"zh\">数据质量说明</span></h2>
   <p><span data-lang=\"en\">This dashboard follows a source hierarchy: official and central-bank data first, then multilateral datasets, then market/vendor feeds or explicit proxies. Series that are derived, lagged, vendor-sensitive, or definition-dependent are marked with quiet footnotes rather than hidden.</span><span data-lang=\"zh\">本 dashboard 采用来源优先级：官方与央行数据优先，其次为多边机构数据，再到市场/供应商数据或明确代理序列。派生、滞后、依赖供应商或口径敏感的数据会以克制脚注标出，而不是被隐藏。</span></p>
   <div class=\"quality-grid\">{pills}</div>
+</section>
+"""
+
+
+def _coverage_panel_html(coverage: dict) -> str:
+    count = coverage.get("indicator_count", 0)
+    expected = coverage.get("expected", 48)
+    proxy_count = coverage.get("proxy_count", 0)
+    source_chart_count = coverage.get("source_chart_count", 0)
+    generated_at = coverage.get("generated_at", "")
+    missing = coverage.get("missing") or []
+    missing_note = ", ".join(missing) if missing else "none"
+    return f"""
+<section class=\"coverage-panel\" id=\"coverage\">
+  <div>
+    <strong>{count}/{expected}</strong>
+    <span data-lang=\"en\"> canonical indicators rendered</span>
+    <span data-lang=\"zh\"> 个标准指标已渲染</span>
+  </div>
+  <div>
+    <span data-lang=\"en\">Source charts reused: {source_chart_count}. Proxy / watch-list fills: {proxy_count}. Missing: {escape(missing_note)}. Generated {escape(generated_at)}.</span>
+    <span data-lang=\"zh\">已复用真实来源图表: {source_chart_count}。代理/观察序列: {proxy_count}。缺失: {escape(missing_note)}。生成日期 {escape(generated_at)}。</span>
+  </div>
 </section>
 """
 
@@ -2605,6 +2852,7 @@ COUNTRY_DATA["RO"] = {
 
 def build_v4(country_code: str) -> Path:
     data = COUNTRY_DATA[country_code]
+    canonical_frame = fetch_canonical_macro_frame(country_code)
     iso_lower = country_code.lower()
     # Map to base HTML filename
     name_map = {"HU": "hungary", "PL": "poland", "CZ": "czechia", "RO": "romania"}
@@ -2624,6 +2872,15 @@ def build_v4(country_code: str) -> Path:
         if m:
             chart_map[m.group(1)] = cb
 
+    coverage = DataPipeline().validate_coverage(canonical_frame)
+    source_chart_count = sum(
+        1
+        for spec in INDICATOR_MANIFEST_48
+        if _legacy_chart_id(spec.section_id, spec.indicator_id, chart_map)
+    )
+    coverage["source_chart_count"] = source_chart_count
+    coverage["proxy_count"] = max(0, coverage.get("expected", 48) - source_chart_count)
+
     # Extract CB and Trade sections
     cb_match = re.search(r'<section class="panel" id="central_bank">.*?</section>', html, re.DOTALL)
     cb_section = cb_match.group() if cb_match else ""
@@ -2632,25 +2889,24 @@ def build_v4(country_code: str) -> Path:
 
     # Build section panels with narratives (bilingual)
     sections_html = ""
+    rendered_chart_ids = []
     for sec_id in SECTION_ORDER:
         title_en, badge_en = SECTION_TITLES[sec_id]
         title_zh, badge_zh = SECTION_TITLES_ZH[sec_id]
         blurb_en = SECTION_BLURBS[sec_id]
         blurb_zh = SECTION_BLURBS_ZH[sec_id]
-        chart_ids = SECTION_CHART_MAP[sec_id]
         narrative_en = data["narratives"].get(sec_id, "")
         narrative_zh = data.get("narratives_zh", {}).get(sec_id, "")
         quality_html = _section_quality_html(sec_id)
-
-        charts_html = ""
-        for cid in chart_ids:
-            if cid in chart_map:
-                charts_html += f'<div class="chart-cell">{chart_map[cid]}</div>\n'
+        ledger_html = _indicator_ledger_html(sec_id)
+        charts_html, section_chart_ids = _render_section_charts(sec_id, country_code, chart_map, canonical_frame)
+        rendered_chart_ids.extend(section_chart_ids)
 
         sections_html += f"""
 <section class="panel" id="{sec_id}">
   <h2><span data-lang="en">{title_en}</span><span data-lang="zh">{title_zh}</span> <span class="section-badge"><span data-lang="en">{badge_en}</span><span data-lang="zh">{badge_zh}</span></span></h2>
   <div class="blurb"><span data-lang="en">{blurb_en}</span><span data-lang="zh">{blurb_zh}</span></div>
+  {ledger_html}
   <div class="charts">{charts_html}</div>
   <div data-lang="en">{narrative_en}</div>
   <div data-lang="zh">{narrative_zh}</div>
@@ -2675,11 +2931,7 @@ def build_v4(country_code: str) -> Path:
     country_nav = "\n    " + "\n    ".join(nav_links)
 
     # Chart IDs for JS fix script
-    all_chart_ids = []
-    for sec_id in SECTION_ORDER:
-        for cid in SECTION_CHART_MAP[sec_id]:
-            if cid in chart_map:
-                all_chart_ids.append(cid)
+    all_chart_ids = list(dict.fromkeys(rendered_chart_ids))
     # Also add trade chart if present
     trade_chart_match = re.search(r'id="(trade-chart-\d+)"', trade_section_html)
     if trade_chart_match:
@@ -2740,6 +2992,8 @@ def build_v4(country_code: str) -> Path:
 </div>
 
 {_quality_panel_html()}
+
+{_coverage_panel_html(coverage)}
 
 <!-- Snapshot -->
 <div class="snapshot-panel" id="snapshot">
