@@ -6,150 +6,268 @@
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 <style>
   :root {
-    --bg: #fafbfc;
-    --fg: #1a1a1a;
-    --muted: #666;
-    --primary: #1f4e79;
-    --border: #e3e6ea;
-    --card: #ffffff;
+    --paper: #f4efe7;
+    --paper-deep: #ece3d6;
+    --ink: #171310;
+    --muted: #63574e;
+    --accent: #8a593d;
+    --accent-soft: rgba(138, 89, 61, 0.12);
+    --line: rgba(23, 19, 16, 0.14);
+    --panel: rgba(255, 255, 255, 0.36);
+    --font-display: "Iowan Old Style", "Songti SC", "Noto Serif SC", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    --font-body: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
-    margin: 0; padding: 24px;
-    background: var(--bg); color: var(--fg);
-    font-family: Inter, -apple-system, system-ui, "Helvetica Neue", sans-serif;
-    font-size: 14px; line-height: 1.55;
+    margin: 0;
+    min-width: 320px;
+    padding: 0 24px 32px;
+    background:
+      radial-gradient(circle at top left, rgba(138, 89, 61, 0.14), transparent 24%),
+      radial-gradient(circle at top right, rgba(54, 75, 97, 0.12), transparent 22%),
+      linear-gradient(180deg, #f8f4ed 0%, #f4efe7 48%, #efe7db 100%);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.55;
   }
-  .container { max-width: 1200px; margin: 0 auto; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(to right, rgba(23, 19, 16, 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(23, 19, 16, 0.02) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 85%);
+  }
+  a { color: inherit; }
+  .container {
+    position: relative;
+    width: min(1240px, 100%);
+    margin: 0 auto;
+  }
   header {
-    border-bottom: 2px solid var(--primary);
-    padding-bottom: 16px; margin-bottom: 24px;
+    min-height: 44vh;
+    display: grid;
+    align-content: end;
+    padding: clamp(56px, 9vw, 112px) 0 32px;
+    border-bottom: 1px solid var(--line);
+  }
+  header .eyebrow {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
   header h1 {
-    margin: 0; font-size: 28px; font-weight: 700;
-    color: var(--primary);
+    max-width: 900px;
+    margin: 8px 0 0;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(46px, 8vw, 92px);
+    font-weight: 500;
+    line-height: 0.94;
   }
   header .meta {
-    color: var(--muted); font-size: 13px; margin-top: 4px;
+    max-width: 720px;
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
   }
-  .snapshot {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 12px; margin-bottom: 28px;
+  .toc {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    margin: 0 0 28px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(14px);
+    background: rgba(244, 239, 231, 0.84);
   }
-  .tile {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 6px; padding: 12px 16px;
+  .toc a {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 180ms ease;
   }
-  .tile .k { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-  .tile .v { font-size: 16px; font-weight: 600; margin-top: 2px; color: var(--fg); }
-  .snapshot-group { margin-bottom: 18px; }
-  .snapshot-subtitle {
-    font-size: 12px; font-weight: 600; color: var(--primary);
-    text-transform: uppercase; letter-spacing: 0.6px;
-    margin: 0 0 10px 0; padding-bottom: 6px;
-    border-bottom: 1px solid var(--border);
-  }
+  .toc a:hover { color: var(--ink); }
   section.panel {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 6px; padding: 20px; margin-bottom: 20px;
+    padding: clamp(44px, 7vw, 72px) 0;
+    border-bottom: 1px solid var(--line);
   }
   section.panel h2 {
-    margin: 0 0 6px 0; font-size: 18px; color: var(--primary);
-    font-weight: 600;
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(30px, 5vw, 52px);
+    font-weight: 500;
+    line-height: 1;
   }
-  section.panel .blurb { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+  section.panel .blurb {
+    max-width: 760px;
+    margin-bottom: 28px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.85;
+  }
+  .snapshot {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
+    margin-bottom: 28px;
+    border-top: 1px solid var(--line);
+  }
+  .tile {
+    min-height: 96px;
+    padding: 16px 18px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .tile .k {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .tile .v {
+    margin-top: 8px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 18px;
+    line-height: 1.35;
+  }
+  .snapshot-group { margin-bottom: 26px; }
+  .snapshot-subtitle {
+    margin: 0 0 12px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
   .charts {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
-    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr));
+    gap: 18px;
   }
   .chart-cell {
-    min-height: 420px; height: 420px;
-    border: 1px solid var(--border); border-radius: 4px;
-    background: #fff; overflow: hidden;
+    min-height: 430px;
+    height: 430px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.58);
+    overflow: hidden;
   }
   .chart-cell .plotly-graph-div { height: 100% !important; }
   .commentary {
-    background: #f6f8fa; border-left: 3px solid var(--primary);
-    padding: 12px 14px; margin-top: 18px; font-size: 13.5px;
-    border-radius: 0 4px 4px 0;
+    max-width: 980px;
+    margin-top: 24px;
+    padding: 16px 0 0 20px;
+    border-top: 1px solid var(--line);
+    border-left: 2px solid var(--accent-soft);
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.85;
   }
-  .commentary strong { color: var(--primary); }
+  .commentary strong { color: var(--accent); }
   footer {
-    margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border);
-    color: var(--muted); font-size: 11px; text-align: center;
+    padding: 28px 0 48px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
   }
-  .toc {
-    background: var(--card); border: 1px solid var(--border); border-radius: 6px;
-    padding: 12px 16px; margin-bottom: 20px;
+  .context-grid,
+  .trade-grid,
+  .cb-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
+    gap: 18px;
+    margin-top: 18px;
   }
-  .toc a { color: var(--primary); text-decoration: none; margin-right: 14px; font-size: 13px; }
-  .toc a:hover { text-decoration: underline; }
-  .context-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 14px; margin-top: 18px;
+  .context-card,
+  .trade-card,
+  .cb-card {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.42);
   }
-  .context-card {
-    background: var(--card-alt); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); overflow: hidden;
+  .context-card-header,
+  .trade-card-header,
+  .cb-card-header {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
-  .context-card-header {
-    background: var(--primary); color: #fff; padding: 8px 14px;
-    font-size: 12px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
-  }
-  .context-card-body {
-    padding: 12px 14px; font-size: 13px; line-height: 1.65; color: var(--fg);
+  .context-card-body,
+  .trade-card-body,
+  .cb-card-body {
+    padding: 14px 16px;
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.7;
     white-space: pre-line;
-  }
-  .trade-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-    gap: 16px;
-  }
-  .trade-card {
-    background: var(--card-alt); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); overflow: hidden;
-  }
-  .trade-card-header {
-    background: #2c5282; color: #fff; padding: 8px 14px;
-    font-size: 12px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
-  }
-  .trade-card-body {
-    padding: 12px 14px; font-size: 13px; line-height: 1.65;
   }
   .trade-card-body table {
-    width: 100%; border-collapse: collapse; font-size: 12px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
   }
   .trade-card-body th {
-    text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--border);
-    color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.3px;
+    padding: 5px 6px;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-align: left;
+    text-transform: uppercase;
   }
   .trade-card-body td {
-    padding: 4px 6px; border-bottom: 1px solid #f0f1f3;
+    padding: 5px 6px;
+    border-bottom: 1px solid rgba(23, 19, 16, 0.08);
   }
-  .cb-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
-    gap: 14px; margin-top: 16px;
+  .cb-card-body ul {
+    margin: 6px 0;
+    padding-left: 18px;
   }
-  .cb-card {
-    background: var(--card-alt); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); overflow: hidden;
+  .cb-card-body li { margin-bottom: 4px; }
+  .cb-card-body p { margin: 0 0 9px; }
+  strong { color: var(--ink); }
+  @media (max-width: 760px) {
+    body { padding: 0 14px 24px; }
+    header { min-height: 34vh; }
+    .toc {
+      position: static;
+      padding: 12px 0;
+    }
+    .tile { border-right: 0; }
+    .chart-cell {
+      min-height: 390px;
+      height: 390px;
+    }
   }
-  .cb-card-header {
-    background: var(--primary); color: #fff; padding: 8px 14px;
-    font-size: 12px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
-  }
-  .cb-card-body {
-    padding: 14px 16px; font-size: 13px; line-height: 1.65;
-    white-space: pre-line;
-  }
-  .cb-card-body ul { margin: 4px 0; padding-left: 18px; }
-  .cb-card-body li { margin-bottom: 3px; }
-  .cb-card-body p { margin: 0 0 8px 0; }
 </style>
 </head>
 <body>
 <div class="container">
 
 <header>
+  <div class="eyebrow">Country Primer / Macro Dashboard</div>
   <h1>{{ country.name }} — Macro Dashboard</h1>
   <div class="meta">
     Generated {{ generated_at }} · Peers: {{ peers|join(", ") }} ·
