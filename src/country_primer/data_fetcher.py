@@ -15,6 +15,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 import io
+import json
 import math
 from pathlib import Path
 from typing import Iterable
@@ -25,7 +26,7 @@ import requests
 import yaml
 
 from .catalog import load_countries
-from .fetch import CACHE_DIR, Series, fetch_ecb_fx, fetch_eurostat, fetch_wb, finalize_series
+from .fetch import CACHE_DIR, Series, cache_path, fetch_ecb_fx, fetch_eurostat, fetch_wb, fetch_yahoo, finalize_series
 
 
 CANONICAL_COLUMNS = [
@@ -61,6 +62,7 @@ FREQUENCY_GAP_DAYS = {
 
 
 WORLD_BANK_ESG_URL = "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx"
+IMF_DATAMAPPER_URL = "https://www.imf.org/external/datamapper/api/v1/{indicator}/{iso3}"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _XLSX_NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 
@@ -760,6 +762,156 @@ class NationalCBFetcher(BaseFetcher):
         return []
 
 
+class IMFDataMapperFetcher(BaseFetcher):
+    """IMF DataMapper adapter for fiscal, labour-market, and reserve-risk series."""
+
+    CONFIGS = {
+        "fiscal_balance_pct_gdp": {
+            "indicator": "GGXCNL_G01_GDP_PT",
+            "unit": "% GDP",
+            "source": "IMF Fiscal Monitor",
+            "note": "General government net lending/borrowing from IMF Fiscal Monitor; latest years may include IMF forecasts.",
+        },
+        "primary_balance": {
+            "indicator": "GGXONLB_G01_GDP_PT",
+            "unit": "% GDP",
+            "source": "IMF Fiscal Monitor",
+            "note": "General government primary net lending/borrowing from IMF Fiscal Monitor; latest years may include IMF forecasts.",
+        },
+        "structural_balance": {
+            "indicator": "GGCB_G01_PGDP_PT",
+            "unit": "% potential GDP",
+            "source": "IMF Fiscal Monitor",
+            "note": "Cyclically adjusted balance used as the structural-balance estimate; output-gap assumptions matter.",
+        },
+        "gov_debt_pct_gdp": {
+            "indicator": "G_XWDG_G01_GDP_PT",
+            "unit": "% GDP",
+            "source": "IMF Fiscal Monitor",
+            "note": "General government gross debt position from IMF Fiscal Monitor; nominal GDP revisions affect the ratio.",
+        },
+        "interest_bill_pct_gdp": {
+            "indicator": "ie",
+            "unit": "% GDP",
+            "source": "IMF Public Finances in Modern History",
+            "note": "Interest paid on public debt as a share of GDP; annual history is lagged and revision-prone.",
+        },
+        "unemployment_rate": {
+            "indicator": "LUR",
+            "unit": "%",
+            "source": "IMF WEO",
+            "note": "Annual unemployment rate from IMF WEO; use Eurostat for higher-frequency labour-market timing.",
+        },
+        "short_term_ext_debt": {
+            "indicator": "Reserves_STD",
+            "unit": "%",
+            "source": "IMF Assessing Reserve Adequacy",
+            "note": "Derived as 100 divided by IMF reserves-to-short-term-debt ratio; directional external-liquidity risk gauge.",
+            "invert_ratio": True,
+        },
+    }
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        cfg = self.CONFIGS.get(spec.indicator_id)
+        if not cfg:
+            return []
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+
+        indicator = cfg["indicator"]
+        try:
+            payload = self._fetch_payload(meta["iso3"], indicator)
+        except (OSError, requests.RequestException, json.JSONDecodeError, KeyError, TypeError, ValueError):
+            return []
+
+        raw_values = (
+            payload.get("values", {})
+            .get(indicator, {})
+            .get(meta["iso3"], {})
+        )
+        observations: list[tuple[str, float]] = []
+        for year, raw_value in sorted(raw_values.items()):
+            if not str(year).isdigit():
+                continue
+            year_int = int(year)
+            if year_int < 2010 or year_int > 2026 or raw_value is None:
+                continue
+            try:
+                value = float(raw_value)
+            except (TypeError, ValueError):
+                continue
+            if cfg.get("invert_ratio"):
+                if value == 0:
+                    continue
+                value = 100.0 / value
+            observations.append((f"{year_int}-12-31", value))
+
+        if not observations:
+            return []
+
+        url = IMF_DATAMAPPER_URL.format(indicator=indicator, iso3=meta["iso3"])
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source=cfg["source"],
+            series_id=indicator,
+            unit=cfg["unit"],
+            frequency="annual",
+            last_update=observations[-1][0],
+            source_url=url,
+            observations=observations,
+            available=True,
+            note=cfg["note"],
+        ))
+        return _series_to_rows(
+            series,
+            spec,
+            unit=cfg["unit"],
+            note=f"{cfg['note']} IMF DataMapper indicator {indicator}.",
+        )
+
+    def _fetch_payload(self, iso3: str, indicator: str) -> dict:
+        query = f"imf_datamapper::{iso3}::{indicator}::2010-2026"
+        path = cache_path(query)
+        if path.exists():
+            return json.loads(path.read_text())
+
+        url = IMF_DATAMAPPER_URL.format(indicator=indicator, iso3=iso3)
+        params = {"periods": ",".join(str(year) for year in range(2010, 2027))}
+        response = requests.get(url, params=params, timeout=30)
+        response.raise_for_status()
+        payload = response.json()
+        path.write_text(json.dumps(payload, indent=2, sort_keys=True))
+        return payload
+
+
+class YahooMarketFetcher(BaseFetcher):
+    """Vendor market-data adapter for local headline equity indexes."""
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if spec.indicator_id not in {"equity_index", "equity_yoy"}:
+            return []
+        countries = load_countries()
+        meta = countries.get(country)
+        symbol = meta.get("equity_yahoo") if meta else ""
+        if not symbol:
+            return []
+
+        series = fetch_yahoo(symbol, spec.indicator_id, spec.label, country, range_="5y", interval="1mo")
+        if spec.indicator_id == "equity_yoy":
+            series = _derive_yoy_series(series, spec, periods=12)
+        unit = "% YoY" if spec.indicator_id == "equity_yoy" else "Index"
+        return _series_to_rows(
+            series,
+            spec,
+            unit=unit,
+            note="Yahoo Finance vendor feed; confirm index convention and live levels against the local exchange or terminal.",
+        )
+
+
 class ProxyFetcher(BaseFetcher):
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
         return proxy_rows(country, spec)
@@ -815,8 +967,8 @@ class WorldBankFetcher(BaseFetcher):
         "working_age_population": ("SP.POP.1564.TO", 1 / 1_000_000, "mn people"),
         "old_age_dependency": ("SP.POP.DPND.OL", 1.0, "%"),
         "fx_reserves": ("FI.RES.TOTL.CD", 1 / 1_000_000_000, "USD bn"),
-        "short_term_ext_debt": ("DT.DOD.DSTC.IR.ZS", 1.0, "%"),
         "current_account_pct_gdp": ("BN.CAB.XOKA.GD.ZS", 1.0, "% GDP"),
+        "reer": ("REER", 1.0, "Index"),
         "m3_yoy": ("FM.LBL.BMNY.ZG", 1.0, "% YoY"),
         "private_credit_yoy": ("FM.AST.PRVT.ZG.M3", 1.0, "% YoY"),
         "bank_car": ("FB.BNK.CAPA.ZS", 1.0, "%"),
@@ -828,6 +980,8 @@ class WorldBankFetcher(BaseFetcher):
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
         if spec.indicator_id == "services_balance":
             return self._services_balance(country, spec)
+        if spec.indicator_id == "trade_balance":
+            return self._trade_balance(country, spec)
         cfg = self.CONFIGS.get(spec.indicator_id)
         if not cfg:
             return []
@@ -871,6 +1025,38 @@ class WorldBankFetcher(BaseFetcher):
         ))
         return _series_to_rows(series, spec, unit="USD bn", note="Derived from World Bank service export/import indicators.")
 
+    def _trade_balance(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        exports = fetch_wb(meta["iso2"], "NE.EXP.GNFS.CD", "goods_services_exports", "Goods and services exports", country, start=2010, end=2026)
+        imports = fetch_wb(meta["iso2"], "NE.IMP.GNFS.CD", "goods_services_imports", "Goods and services imports", country, start=2010, end=2026)
+        if not exports.available or not imports.available:
+            return []
+        imports_by_date = {date: value for date, value in imports.observations}
+        observations: list[tuple[str, float]] = []
+        for date, value in exports.observations:
+            import_value = imports_by_date.get(date)
+            if import_value is None:
+                continue
+            observations.append((date, (float(value) - float(import_value)) / 1_000_000_000))
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="World Bank WDI",
+            series_id="NE.EXP.GNFS.CD minus NE.IMP.GNFS.CD",
+            unit="USD bn",
+            frequency="annual",
+            last_update=observations[-1][0] if observations else "",
+            source_url="https://data.worldbank.org/",
+            observations=observations,
+            available=bool(observations),
+            note="Annual exports of goods and services minus imports of goods and services from World Bank WDI.",
+        ))
+        return _series_to_rows(series, spec, unit="USD bn", note="Derived from World Bank national-accounts export/import indicators.")
+
 
 class DataPipeline:
     """Fetch all canonical indicators into one normalized DataFrame."""
@@ -880,8 +1066,10 @@ class DataPipeline:
             ECBFetcher(),
             EurostatFetcher(),
             DerivedMacroFetcher(),
+            IMFDataMapperFetcher(),
             WorldBankESGFetcher(),
             WorldBankFetcher(),
+            YahooMarketFetcher(),
             BISFetcher(),
             NationalCBFetcher(),
             ProxyFetcher(),

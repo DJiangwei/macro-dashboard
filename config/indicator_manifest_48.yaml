@@ -55,12 +55,12 @@ indicators:
   indicator_id: unemployment_rate
   label: Unemployment Rate
   unit: '%'
-  source: Eurostat LFS
-  frequency: monthly
+  source: Eurostat LFS / IMF WEO
+  frequency: annual
   chart: peer_overlay
   peers: true
   quality_status: verified
-  quality_note: ILO/LFS definition preferred.
+  quality_note: IMF WEO annual unemployment is used in the canonical frame; Eurostat remains preferred for higher-frequency timing.
 - section_id: real_activity
   indicator_id: economic_sentiment
   label: Economic Sentiment Indicator
@@ -145,12 +145,12 @@ indicators:
   indicator_id: trade_balance
   label: Trade Balance
   unit: USD bn
-  source: Eurostat / World Bank proxy
-  frequency: monthly
+  source: World Bank WDI
+  frequency: annual
   chart: bar
   peers: false
   quality_status: watch
-  quality_note: Goods/services perimeter and currency conversion can vary.
+  quality_note: Annual exports of goods and services minus imports of goods and services; use directionally versus monthly trade releases.
 - section_id: external
   indicator_id: services_balance
   label: Services Balance
@@ -175,72 +175,72 @@ indicators:
   indicator_id: reer
   label: Real Effective Exchange Rate
   unit: Index
-  source: BIS / ECB
-  frequency: monthly
+  source: World Bank GEM
+  frequency: annual
   chart: peer_overlay
   peers: true
   quality_status: verified
-  quality_note: Normalize base year when comparing peers.
+  quality_note: World Bank Global Economic Monitor REER index; normalize base years when comparing with BIS/ECB releases.
 - section_id: external
   indicator_id: short_term_ext_debt
   label: Short-Term External Debt / Reserves
   unit: '%'
-  source: World Bank / BIS
+  source: IMF ARA
   frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Annual and lagged; structural vulnerability signal.
+  quality_note: Derived by inverting IMF reserves-to-short-term-debt ratio; annual and best read as a structural vulnerability gauge.
 - section_id: fiscal_sovereign
   indicator_id: fiscal_balance_pct_gdp
   label: General Government Balance, % GDP
   unit: '% GDP'
-  source: Eurostat / IMF WEO
+  source: IMF Fiscal Monitor
   frequency: annual
   chart: peer_overlay
   peers: true
   quality_status: verified
-  quality_note: EDP notifications can revise deficit history.
+  quality_note: IMF Fiscal Monitor net lending/borrowing; latest years may include IMF forecasts and EDP revisions can alter history.
 - section_id: fiscal_sovereign
   indicator_id: structural_balance
   label: Structural Fiscal Balance
   unit: '% potential GDP'
-  source: IMF / EC AMECO
+  source: IMF Fiscal Monitor
   frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Model-based estimate; output-gap assumptions matter.
+  quality_note: Uses IMF cyclically adjusted balance as a structural-balance estimate; output-gap assumptions matter.
 - section_id: fiscal_sovereign
   indicator_id: primary_balance
   label: Primary Balance, % GDP
   unit: '% GDP'
-  source: IMF / Eurostat
+  source: IMF Fiscal Monitor
   frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Check interest-expenditure classification.
+  quality_note: IMF primary net lending/borrowing; check interest-expenditure classification and forecast vintages.
 - section_id: fiscal_sovereign
   indicator_id: gov_debt_pct_gdp
   label: General Government Debt, % GDP
   unit: '% GDP'
-  source: Eurostat EDP
+  source: IMF Fiscal Monitor
   frequency: annual
   chart: peer_overlay
   peers: true
   quality_status: verified
-  quality_note: Nominal GDP revisions affect the ratio.
+  quality_note: IMF gross debt position; nominal GDP revisions and forecast vintages affect the ratio.
 - section_id: fiscal_sovereign
   indicator_id: interest_bill_pct_gdp
   label: Interest Bill, % GDP
   unit: '% GDP'
-  source: IMF / Eurostat
+  source: IMF Public Finances in Modern History
   frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Annual/lagged; combine with current curve.
+  quality_note: Interest paid on public debt as a share of GDP; annual/lagged, so combine with current curve data.
 - section_id: fiscal_sovereign
   indicator_id: sov_yield_10y
   label: 10Y Government Bond Yield
@@ -315,12 +315,12 @@ indicators:
   indicator_id: equity_index
   label: Headline Equity Index
   unit: Index
-  source: Yahoo Finance / exchange
+  source: Yahoo Finance / local exchange
   frequency: monthly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Vendor feed; confirm index convention.
+  quality_note: Yahoo Finance monthly close; vendor feed should be confirmed against local exchange or terminal data.
 - section_id: markets_valuation
   indicator_id: equity_yoy
   label: Headline Equity Index, YoY
@@ -330,7 +330,7 @@ indicators:
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Derived from market index level.
+  quality_note: Derived from Yahoo Finance monthly close; vendor feed and local-index convention should be verified.
 - section_id: markets_valuation
   indicator_id: equity_fwd_pe
   label: Equity Forward P/E
