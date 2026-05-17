@@ -652,6 +652,8 @@ class EurostatFetcher(BaseFetcher):
 
 class DerivedMacroFetcher(BaseFetcher):
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if spec.indicator_id == "gdp_components":
+            return self._gdp_demand_composite(country, spec)
         if spec.indicator_id == "real_wage_yoy":
             return self._real_wage_yoy(country, spec)
         if spec.indicator_id == "real_policy_rate":
@@ -659,6 +661,63 @@ class DerivedMacroFetcher(BaseFetcher):
         if spec.indicator_id == "sov_spread_vs_bund":
             return self._sov_spread_vs_bund(country, spec)
         return []
+
+    def _gdp_demand_composite(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        consumption = fetch_eurostat(
+            "namq_10_gdp",
+            meta["iso2"],
+            "final_consumption_yoy",
+            "Final Consumption Expenditure, YoY",
+            country,
+            freq="Q",
+            since="2018",
+            extra_params={"na_item": "P3", "unit": "CLV_PCH_SM", "s_adj": "SCA"},
+            unit_label="% YoY",
+        )
+        investment = fetch_eurostat(
+            "namq_10_gdp",
+            meta["iso2"],
+            "gfcf_yoy",
+            "Gross Fixed Capital Formation, YoY",
+            country,
+            freq="Q",
+            since="2018",
+            extra_params={"na_item": "P51G", "unit": "CLV_PCH_SM", "s_adj": "SCA"},
+            unit_label="% YoY",
+        )
+        if not consumption.available or not investment.available:
+            return []
+        investment_by_date = {date: value for date, value in investment.observations}
+        observations: list[tuple[str, float]] = []
+        for date, value in consumption.observations:
+            investment_value = investment_by_date.get(date)
+            if investment_value is None:
+                continue
+            observations.append((date, (float(value) + float(investment_value)) / 2.0))
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Derived from Eurostat national accounts",
+            series_id="namq_10_gdp:P3 and P51G",
+            unit="% YoY",
+            frequency="quarterly",
+            last_update=observations[-1][0] if observations else "",
+            source_url="https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table?lang=en",
+            observations=observations,
+            available=bool(observations),
+            note="Unweighted average of final consumption and gross fixed capital formation YoY; compact domestic-demand proxy.",
+        ))
+        return _series_to_rows(
+            series,
+            spec,
+            unit="% YoY",
+            note="Derived from Eurostat final-consumption and GFCF volume-growth adapters.",
+        )
 
     def _real_wage_yoy(self, country: str, spec: IndicatorSpec) -> list[dict]:
         countries = load_countries()

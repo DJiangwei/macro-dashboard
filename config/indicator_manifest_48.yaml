@@ -23,14 +23,14 @@ indicators:
   quality_note: Seasonal adjustment differs by source.
 - section_id: real_activity
   indicator_id: gdp_components
-  label: GDP Demand Components
-  unit: Index
-  source: Eurostat / national accounts
+  label: GDP Demand Composite
+  unit: '% YoY'
+  source: Derived from Eurostat national accounts
   frequency: quarterly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Component split is a compact proxy until contribution charts are wired.
+  quality_note: Unweighted average of final consumption and gross fixed capital formation volume growth; compact domestic-demand proxy until full contribution charts are wired.
 - section_id: real_activity
   indicator_id: industrial_production_yoy
   label: Industrial Production, YoY
