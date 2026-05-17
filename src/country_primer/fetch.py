@@ -405,7 +405,8 @@ def fetch_yahoo(symbol: str, key: str, label: str, country: str,
         for t, v in zip(ts, close):
             if v is None:
                 continue
-            d = datetime.utcfromtimestamp(t).strftime("%Y-%m-01")
+            fmt = "%Y-%m-%d" if interval.endswith("d") else "%Y-%m-01"
+            d = datetime.utcfromtimestamp(t).strftime(fmt)
             obs.append((d, float(v)))
         obs.sort()
     except Exception as e:
