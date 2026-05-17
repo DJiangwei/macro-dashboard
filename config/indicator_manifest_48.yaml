@@ -65,12 +65,12 @@ indicators:
   indicator_id: economic_sentiment
   label: Economic Sentiment Indicator
   unit: Index
-  source: European Commission
+  source: Eurostat / European Commission ESI
   frequency: monthly
   chart: peer_overlay
   peers: true
-  quality_status: watch
-  quality_note: Survey data is best used as a turning-point signal.
+  quality_status: verified
+  quality_note: Eurostat European Commission ESI, seasonally adjusted; survey data is best used as a turning-point signal.
 - section_id: prices_wages
   indicator_id: cpi_yoy
   label: Headline CPI/HICP, YoY
@@ -253,24 +253,24 @@ indicators:
   quality_note: Confirm market data against terminal for trading.
 - section_id: monetary_financial
   indicator_id: policy_rate
-  label: Central Bank Policy Rate
+  label: Policy / Short-Term Rate
   unit: '%'
-  source: BIS / central bank
+  source: Eurostat short-term interest rates
   frequency: monthly
   chart: peer_overlay
   peers: true
-  quality_status: verified
-  quality_note: Corridor systems require definition check.
+  quality_status: watch
+  quality_note: Eurostat short-term interest rate used as a policy-stance proxy; corridor systems require definition checks against central-bank announcements.
 - section_id: monetary_financial
   indicator_id: real_policy_rate
-  label: Real Policy Rate
+  label: Real Policy-Stance Rate
   unit: '%'
-  source: Derived from policy rate and CPI
+  source: Derived from Eurostat short-term rate and HICP
   frequency: monthly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Ex-post vs ex-ante definition matters.
+  quality_note: Ex-post short-term rate minus headline HICP; not an ex-ante real policy rate.
 - section_id: monetary_financial
   indicator_id: m3_yoy
   label: Broad Money M3, YoY
@@ -300,7 +300,7 @@ indicators:
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Filter-based series can revise with history.
+  quality_note: BIS private non-financial credit gap, actual minus HP-filter trend; filter-based series can revise with history.
 - section_id: monetary_financial
   indicator_id: fx_vs_eur
   label: FX vs EUR
@@ -435,12 +435,12 @@ indicators:
   indicator_id: median_age
   label: Median Age
   unit: years
-  source: Eurostat / UN WPP
+  source: Eurostat
   frequency: annual
   chart: line
   peers: false
   quality_status: verified
-  quality_note: Annual structural estimate.
+  quality_note: Eurostat population structure indicator, annual median age of population.
 - section_id: political_economy
   indicator_id: wgi_government_effectiveness
   label: WGI Government Effectiveness

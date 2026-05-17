@@ -12,6 +12,7 @@ dashboard section populated while marking data quality clearly.
 """
 from __future__ import annotations
 
+import csv
 from dataclasses import dataclass
 from datetime import datetime
 import io
@@ -63,7 +64,9 @@ FREQUENCY_GAP_DAYS = {
 
 WORLD_BANK_ESG_URL = "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx"
 IMF_DATAMAPPER_URL = "https://www.imf.org/external/datamapper/api/v1/{indicator}/{iso3}"
+BIS_CREDIT_GAP_URL = "https://data.bis.org/static/bulk/WS_CREDIT_GAP_csv_flat.zip"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
+_BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _XLSX_NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 
 
@@ -585,6 +588,13 @@ class EurostatFetcher(BaseFetcher):
             "unit": "% YoY",
             "derive_yoy": True,
         },
+        "economic_sentiment": {
+            "dataset": "ei_bssi_m_r2",
+            "freq": "M",
+            "since": "2018",
+            "params": {"indic": "BS-ESI-I", "s_adj": "SA"},
+            "unit": "Index",
+        },
         "avg_wage_yoy": {
             "dataset": "lc_lci_r2_q",
             "freq": "Q",
@@ -592,12 +602,26 @@ class EurostatFetcher(BaseFetcher):
             "params": {"lcstruct": "D11", "nace_r2": "B-S", "s_adj": "SCA", "unit": "PCH_SM"},
             "unit": "% YoY",
         },
+        "policy_rate": {
+            "dataset": "irt_st_m",
+            "freq": "M",
+            "since": "2018",
+            "params": {},
+            "unit": "%",
+        },
         "sov_yield_10y": {
             "dataset": "irt_lt_mcby_m",
             "freq": "M",
             "since": "2018",
             "params": {},
             "unit": "%",
+        },
+        "median_age": {
+            "dataset": "demo_pjanind",
+            "freq": "A",
+            "since": "2010",
+            "params": {"indic_de": "MEDAGEPOP"},
+            "unit": "years",
         },
     }
 
@@ -630,6 +654,8 @@ class DerivedMacroFetcher(BaseFetcher):
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
         if spec.indicator_id == "real_wage_yoy":
             return self._real_wage_yoy(country, spec)
+        if spec.indicator_id == "real_policy_rate":
+            return self._real_policy_rate(country, spec)
         if spec.indicator_id == "sov_spread_vs_bund":
             return self._sov_spread_vs_bund(country, spec)
         return []
@@ -686,6 +712,58 @@ class DerivedMacroFetcher(BaseFetcher):
             note="Ex-post real wage growth: nominal labour-cost growth minus headline HICP inflation.",
         ))
         return _series_to_rows(series, spec, unit="% YoY", note="Derived from Eurostat wage and HICP adapters.")
+
+    def _real_policy_rate(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        nominal_rate = fetch_eurostat(
+            "irt_st_m",
+            meta["iso2"],
+            "policy_rate",
+            "Short-Term Interest Rate",
+            country,
+            freq="M",
+            since="2018",
+            extra_params={},
+            unit_label="%",
+        )
+        cpi = fetch_eurostat(
+            "prc_hicp_manr",
+            meta["iso2"],
+            "cpi_yoy",
+            "Headline CPI/HICP, YoY",
+            country,
+            freq="M",
+            since="2018",
+            extra_params={"coicop": "CP00"},
+            unit_label="% YoY",
+        )
+        if not nominal_rate.available or not cpi.available:
+            return []
+        cpi_by_month = {date[:7]: value for date, value in cpi.observations}
+        observations: list[tuple[str, float]] = []
+        for date, rate in nominal_rate.observations:
+            inflation = cpi_by_month.get(date[:7])
+            if inflation is None:
+                continue
+            observations.append((date, float(rate) - float(inflation)))
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Derived from Eurostat short-term interest rates and HICP",
+            series_id="irt_st_m minus prc_hicp_manr:CP00",
+            unit="%",
+            frequency="monthly",
+            last_update=observations[-1][0] if observations else "",
+            source_url="https://ec.europa.eu/eurostat/databrowser/",
+            observations=observations,
+            available=bool(observations),
+            note="Ex-post real policy-stance proxy: Eurostat short-term interest rate minus headline HICP inflation.",
+        ))
+        return _series_to_rows(series, spec, unit="%", note="Derived from Eurostat short-term interest-rate and HICP adapters.")
 
     def _sov_spread_vs_bund(self, country: str, spec: IndicatorSpec) -> list[dict]:
         countries = load_countries()
@@ -754,7 +832,84 @@ class ECBFetcher(BaseFetcher):
 
 class BISFetcher(BaseFetcher):
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
-        return []
+        if spec.indicator_id != "credit_to_gdp_gap":
+            return []
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        try:
+            observations = _load_bis_credit_gap_data().get(meta["iso2"], [])
+        except (OSError, requests.RequestException, zipfile.BadZipFile, UnicodeDecodeError, csv.Error):
+            return []
+        observations = [(date, value) for date, value in observations if date >= "2010-01-01"]
+        if not observations:
+            return []
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="BIS Credit-to-GDP gaps",
+            series_id="WS_CREDIT_GAP:C",
+            unit="pp",
+            frequency="quarterly",
+            last_update=observations[-1][0],
+            source_url=BIS_CREDIT_GAP_URL,
+            observations=observations,
+            available=True,
+            note="BIS credit-to-GDP gap: private non-financial sector credit ratio minus HP-filter trend.",
+        ))
+        return _series_to_rows(series, spec, unit="pp", note="BIS bulk CSV data type C: actual minus trend.")
+
+
+def _load_bis_credit_gap_data() -> dict[str, list[tuple[str, float]]]:
+    """Load BIS credit-to-GDP gaps from the public bulk-download ZIP."""
+    global _BIS_CREDIT_GAP_CACHE
+    if _BIS_CREDIT_GAP_CACHE is not None:
+        return _BIS_CREDIT_GAP_CACHE
+
+    zip_path = CACHE_DIR / "bis_ws_credit_gap_csv_flat.zip"
+    if zip_path.exists():
+        zip_bytes = zip_path.read_bytes()
+    else:
+        response = requests.get(BIS_CREDIT_GAP_URL, timeout=45)
+        response.raise_for_status()
+        zip_bytes = response.content
+        zip_path.write_bytes(zip_bytes)
+
+    def quarter_to_date(period: str) -> str | None:
+        if "-Q" not in period:
+            return None
+        year, quarter = period.split("-Q", 1)
+        month_day = {"1": "03-31", "2": "06-30", "3": "09-30", "4": "12-31"}.get(quarter)
+        if not month_day or not year.isdigit():
+            return None
+        return f"{year}-{month_day}"
+
+    data: dict[str, list[tuple[str, float]]] = {}
+    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as archive:
+        csv_name = archive.namelist()[0]
+        text = archive.read(csv_name).decode("utf-8")
+        reader = csv.DictReader(text.splitlines())
+        for row in reader:
+            country_value = row.get("BORROWERS_CTY:Borrowers' country", "")
+            country_code = country_value.split(":", 1)[0]
+            dtype = row.get("CG_DTYPE:Credit gap data type", "").split(":", 1)[0]
+            if dtype != "C":
+                continue
+            date = quarter_to_date(row.get("TIME_PERIOD:Time period or range", ""))
+            if not date:
+                continue
+            try:
+                value = float(row.get("OBS_VALUE:Observation Value", ""))
+            except ValueError:
+                continue
+            data.setdefault(country_code, []).append((date, value))
+
+    for country_code, observations in data.items():
+        observations.sort()
+    _BIS_CREDIT_GAP_CACHE = data
+    return data
 
 
 class NationalCBFetcher(BaseFetcher):
