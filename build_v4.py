@@ -793,7 +793,7 @@ def _canonical_chart_id(section_id: str, indicator_id: str, order: int) -> str:
     return f"chart-{section_id}-{indicator_id}-{order:02d}"
 
 
-# v4 is now driven by the canonical 48-indicator manifest. The older
+# v4 is now driven by the canonical indicator manifest. The older
 # SECTION_CHART_MAP above is retained for historical context, then overridden
 # here so rendering and validation share one contract.
 SECTION_CHART_MAP = {
@@ -2909,7 +2909,7 @@ def build_v4(country_code: str) -> Path:
     real_indicator_count = len(source_chart_ids | adapter_real_ids)
     coverage["source_chart_count"] = source_chart_count
     coverage["adapter_real_count"] = len(adapter_real_ids - source_chart_ids)
-    coverage["proxy_count"] = max(0, coverage.get("expected", 48) - real_indicator_count)
+    coverage["proxy_count"] = max(0, coverage.get("expected", len(INDICATOR_MANIFEST_48)) - real_indicator_count)
 
     # Extract CB and Trade sections
     cb_match = re.search(r'<section class="panel" id="central_bank">.*?</section>', html, re.DOTALL)

@@ -1,5 +1,5 @@
 version: 1
-expected_count: 48
+expected_count: 79
 indicators:
 - section_id: real_activity
   indicator_id: real_gdp_yoy
@@ -31,6 +31,16 @@ indicators:
   peers: false
   quality_status: watch
   quality_note: Unweighted average of final consumption and gross fixed capital formation volume growth; compact domestic-demand proxy until full contribution charts are wired.
+- section_id: real_activity
+  indicator_id: gdp_per_capita
+  label: GDP per Capita
+  unit: EUR per head
+  source: Eurostat / World Bank
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: PPS/EUR definitions vary by source; read as structural income-level context rather than a cyclical signal.
 - section_id: real_activity
   indicator_id: industrial_production_yoy
   label: Industrial Production, YoY
@@ -71,6 +81,66 @@ indicators:
   peers: true
   quality_status: verified
   quality_note: Eurostat European Commission ESI, seasonally adjusted; survey data is best used as a turning-point signal.
+- section_id: real_activity
+  indicator_id: manufacturing_pmi
+  label: Manufacturing PMI
+  unit: Index
+  source: S&P Global / vendor required
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: S&P Global PMI usually requires licensed/vendor access; proxy fill is only a placeholder until a permitted feed is wired.
+- section_id: real_activity
+  indicator_id: capacity_utilization
+  label: Manufacturing Capacity Utilization
+  unit: '%'
+  source: Eurostat business survey
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Survey-based capacity-utilisation measure; definitions and seasonal adjustment should be checked by country.
+- section_id: real_activity
+  indicator_id: consumer_confidence
+  label: Consumer Confidence Indicator
+  unit: Balance
+  source: Eurostat / European Commission survey
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Survey balance; best used for direction and turning points, not precise level comparisons.
+- section_id: real_activity
+  indicator_id: employment_growth
+  label: Employment Growth, YoY
+  unit: '% YoY'
+  source: Eurostat national accounts / World Bank fallback
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Employment-growth series may fall back to lower-frequency labour-market proxies where quarterly national accounts are unavailable.
+- section_id: real_activity
+  indicator_id: participation_rate
+  label: Labour Force Participation Rate
+  unit: '%'
+  source: Eurostat LFS / World Bank fallback
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Participation definitions differ across Eurostat LFS and World Bank annual series; compare levels cautiously.
+- section_id: real_activity
+  indicator_id: vacancy_rate
+  label: Job Vacancy Rate
+  unit: '%'
+  source: Eurostat job vacancy statistics
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy.
 - section_id: prices_wages
   indicator_id: cpi_yoy
   label: Headline CPI/HICP, YoY
@@ -102,6 +172,36 @@ indicators:
   quality_status: watch
   quality_note: Services basket definitions vary across releases.
 - section_id: prices_wages
+  indicator_id: goods_cpi_yoy
+  label: Goods HICP, YoY
+  unit: '% YoY'
+  source: Eurostat HICP
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Non-energy industrial goods aggregate; Eurostat COICOP mapping should be checked before precise attribution.
+- section_id: prices_wages
+  indicator_id: energy_cpi_yoy
+  label: Energy HICP, YoY
+  unit: '% YoY'
+  source: Eurostat HICP
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Energy HICP is volatile and policy-sensitive; base effects can dominate near-term moves.
+- section_id: prices_wages
+  indicator_id: food_cpi_yoy
+  label: Food HICP, YoY
+  unit: '% YoY'
+  source: Eurostat HICP
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Food aggregate can differ depending on processed/unprocessed classification; use as a broad food-price pressure gauge.
+- section_id: prices_wages
   indicator_id: ppi_yoy
   label: Producer Prices, YoY
   unit: '% YoY'
@@ -111,6 +211,16 @@ indicators:
   peers: false
   quality_status: verified
   quality_note: Energy weights can dominate PPI prints.
+- section_id: prices_wages
+  indicator_id: import_prices_yoy
+  label: Import Price Index, YoY
+  unit: '% YoY'
+  source: Eurostat / proxy pending
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Import-price coverage is source-sensitive; proxy fill is used until a robust Eurostat import-price adapter is wired.
 - section_id: prices_wages
   indicator_id: avg_wage_yoy
   label: Average Gross Wage, YoY
@@ -131,6 +241,26 @@ indicators:
   peers: false
   quality_status: watch
   quality_note: Ex-post derived indicator; nominal wage/labour-cost growth minus headline HICP, so deflator choice matters.
+- section_id: prices_wages
+  indicator_id: unit_labour_cost
+  label: Unit Labour Cost, YoY
+  unit: '% YoY'
+  source: Eurostat national accounts
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Unit labour cost is a derived national-accounts concept; productivity and compensation revisions can alter history.
+- section_id: prices_wages
+  indicator_id: minimum_wage
+  label: Statutory Minimum Wage
+  unit: EUR/month
+  source: Eurostat
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Minimum wage is statutory and may have multiple intra-year changes; annual chart is a simplified policy marker.
 - section_id: external
   indicator_id: current_account_pct_gdp
   label: Current Account, % GDP
@@ -162,6 +292,16 @@ indicators:
   quality_status: watch
   quality_note: Annual services exports minus imports; use directionally until a quarterly BoP adapter is wired.
 - section_id: external
+  indicator_id: income_balance
+  label: Primary Income Balance
+  unit: USD bn
+  source: World Bank WDI
+  frequency: annual
+  chart: bar
+  peers: false
+  quality_status: watch
+  quality_note: World Bank net primary income is annual and lagged; proposal combines primary and secondary income, so use as a partial proxy.
+- section_id: external
   indicator_id: fx_reserves
   label: FX Reserves
   unit: USD bn
@@ -171,6 +311,16 @@ indicators:
   peers: false
   quality_status: verified
   quality_note: USD valuation effects matter.
+- section_id: external
+  indicator_id: ara_metric
+  label: IMF ARA Reserve Adequacy
+  unit: '%'
+  source: IMF ARA / proxy pending
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: IMF ARA composite data is fragmented by country; proxy fill is used until a stable ARA adapter is wired.
 - section_id: external
   indicator_id: reer
   label: Real Effective Exchange Rate
@@ -182,6 +332,16 @@ indicators:
   quality_status: verified
   quality_note: World Bank Global Economic Monitor REER index; normalize base years when comparing with BIS/ECB releases.
 - section_id: external
+  indicator_id: neer
+  label: Nominal Effective Exchange Rate
+  unit: Index
+  source: BIS / ECB proxy pending
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: NEER requires a stable BIS/ECB effective-exchange-rate feed; proxy fill is used until the adapter is wired.
+- section_id: external
   indicator_id: short_term_ext_debt
   label: Short-Term External Debt / Reserves
   unit: '%'
@@ -191,6 +351,16 @@ indicators:
   peers: false
   quality_status: watch
   quality_note: Derived by inverting IMF reserves-to-short-term-debt ratio; annual and best read as a structural vulnerability gauge.
+- section_id: external
+  indicator_id: fx_implied_vol
+  label: 3M FX Implied Volatility
+  unit: '%'
+  source: Bloomberg/Refinitiv required
+  frequency: daily
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Implied volatility generally requires a market-data vendor; proxy fill is only a placeholder for the framework slot.
 - section_id: fiscal_sovereign
   indicator_id: fiscal_balance_pct_gdp
   label: General Government Balance, % GDP
@@ -232,6 +402,26 @@ indicators:
   quality_status: verified
   quality_note: IMF gross debt position; nominal GDP revisions and forecast vintages affect the ratio.
 - section_id: fiscal_sovereign
+  indicator_id: gov_revenue_pct_gdp
+  label: General Government Revenue, % GDP
+  unit: '% GDP'
+  source: World Bank / IMF fallback
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Revenue definitions can differ across IMF, Eurostat, and World Bank; use alongside expenditure and balance.
+- section_id: fiscal_sovereign
+  indicator_id: gov_expenditure_pct_gdp
+  label: General Government Expenditure, % GDP
+  unit: '% GDP'
+  source: World Bank / IMF fallback
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Expenditure series can be revised with national accounts and fiscal notifications; compare with deficit path.
+- section_id: fiscal_sovereign
   indicator_id: interest_bill_pct_gdp
   label: Interest Bill, % GDP
   unit: '% GDP'
@@ -242,6 +432,26 @@ indicators:
   quality_status: watch
   quality_note: Interest paid on public debt as a share of GDP; annual/lagged, so combine with current curve data.
 - section_id: fiscal_sovereign
+  indicator_id: debt_fx_share
+  label: FX-Denominated Government Debt Share
+  unit: '%'
+  source: National debt office / proxy pending
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: FX debt share usually requires national debt-office data; proxy fill is used until per-country debt-structure adapters are wired.
+- section_id: fiscal_sovereign
+  indicator_id: avg_debt_maturity
+  label: Average Debt Maturity
+  unit: years
+  source: National debt office / proxy pending
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Average maturity usually requires national debt-office publications; proxy fill is used until per-country adapters are wired.
+- section_id: fiscal_sovereign
   indicator_id: sov_yield_10y
   label: 10Y Government Bond Yield
   unit: '%'
@@ -251,6 +461,36 @@ indicators:
   peers: true
   quality_status: verified
   quality_note: Confirm market data against terminal for trading.
+- section_id: fiscal_sovereign
+  indicator_id: sov_yield_2y
+  label: 2Y Government Bond Yield
+  unit: '%'
+  source: Eurostat short-rate proxy
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Public short-rate proxy is used until a true 2Y sovereign yield feed is wired; not suitable for precise curve trades.
+- section_id: fiscal_sovereign
+  indicator_id: cds_5y
+  label: 5Y Sovereign CDS Spread
+  unit: bps
+  source: Bloomberg/Refinitiv required
+  frequency: daily
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Sovereign CDS generally requires a licensed market-data vendor; proxy fill is only a placeholder for the framework slot.
+- section_id: fiscal_sovereign
+  indicator_id: yield_curve_slope
+  label: 10Y-2Y Yield Curve Slope
+  unit: bp
+  source: Derived from public rate proxies
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Current public implementation uses 10Y minus short-term rate until a true 2Y yield feed is wired.
 - section_id: monetary_financial
   indicator_id: policy_rate
   label: Policy / Short-Term Rate
@@ -302,6 +542,36 @@ indicators:
   quality_status: watch
   quality_note: BIS private non-financial credit gap preferred; World Bank annual credit/GDP trailing-trend fallback used only where BIS coverage is unavailable.
 - section_id: monetary_financial
+  indicator_id: interbank_3m
+  label: 3M Interbank Rate
+  unit: '%'
+  source: Eurostat short-term interest rates
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Eurostat short-term rate is used as a public 3M interbank-rate proxy; local fixing conventions should be checked.
+- section_id: monetary_financial
+  indicator_id: lending_rate_household
+  label: Household Lending Rate
+  unit: '%'
+  source: ECB SDW / proxy pending
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: New-business household lending rates require an ECB SDW/national-bank adapter; proxy fill is used until wired.
+- section_id: monetary_financial
+  indicator_id: lending_rate_corp
+  label: Corporate Lending Rate
+  unit: '%'
+  source: ECB SDW / proxy pending
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: New-business NFC lending rates require an ECB SDW/national-bank adapter; proxy fill is used until wired.
+- section_id: monetary_financial
   indicator_id: fx_vs_eur
   label: FX vs EUR
   unit: LCU per EUR
@@ -311,6 +581,26 @@ indicators:
   peers: false
   quality_status: verified
   quality_note: ECB reference rate; not executable intraday price.
+- section_id: monetary_financial
+  indicator_id: fx_3m_forward
+  label: 3M FX Forward Points
+  unit: points / %
+  source: Bloomberg/Refinitiv required
+  frequency: daily
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: FX forward points generally require a market-data vendor or robust covered-interest-parity construction; proxy fill is a placeholder.
+- section_id: monetary_financial
+  indicator_id: carry_trade_return
+  label: FX Carry Return Proxy
+  unit: '% annualised'
+  source: Derived from public short rates
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Public implementation is carry-only using local short rate less EUR short-rate proxy; excludes spot FX movement and transaction costs.
 - section_id: markets_valuation
   indicator_id: equity_index
   label: Headline Equity Index
@@ -342,6 +632,16 @@ indicators:
   quality_status: low_confidence
   quality_note: Forward estimates usually require vendor data.
 - section_id: markets_valuation
+  indicator_id: equity_pb
+  label: Equity Price-to-Book
+  unit: x
+  source: Broker/vendor estimates
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Index-level price-to-book usually requires vendor or exchange aggregate fundamentals; proxy fill is only indicative.
+- section_id: markets_valuation
   indicator_id: equity_div_yield
   label: Equity Dividend Yield
   unit: '%'
@@ -351,6 +651,16 @@ indicators:
   peers: false
   quality_status: low_confidence
   quality_note: Trailing/forward methodology must be checked.
+- section_id: markets_valuation
+  indicator_id: equity_vol_30d
+  label: 30D Realised Equity Volatility
+  unit: '%'
+  source: Derived from Yahoo Finance
+  frequency: daily
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Annualised realised volatility from daily closes; vendor feed and holidays should be checked against exchange data.
 - section_id: markets_valuation
   indicator_id: sov_spread_vs_bund
   label: 10Y Spread vs Bund

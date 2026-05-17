@@ -138,7 +138,7 @@ INDICATOR_MANIFEST_48: tuple[IndicatorSpec, ...] = (
 
 
 def _load_manifest_from_yaml(fallback: tuple[IndicatorSpec, ...]) -> tuple[IndicatorSpec, ...]:
-    """Load the editable 48-indicator manifest from config when available."""
+    """Load the editable canonical indicator manifest from config when available."""
     manifest_path = CONFIG_DIR / "indicator_manifest_48.yaml"
     if not manifest_path.exists():
         return fallback
@@ -166,7 +166,7 @@ def _load_manifest_from_yaml(fallback: tuple[IndicatorSpec, ...]) -> tuple[Indic
         seen.add(spec.indicator_id)
         specs.append(spec)
 
-    expected = int(payload.get("expected_count", 48))
+    expected = int(payload.get("expected_count", len(raw_indicators)))
     if len(specs) != expected:
         raise ValueError(f"Expected {expected} indicators in {manifest_path}, found {len(specs)}")
     return tuple(specs)
@@ -215,17 +215,27 @@ COUNTRY_OFFSETS = {
 
 
 BASELINE = {
-    "real_gdp_yoy": 2.0, "real_gdp_qoq": 0.5, "gdp_components": 100.0,
+    "real_gdp_yoy": 2.0, "real_gdp_qoq": 0.5, "gdp_components": 100.0, "gdp_per_capita": 32000.0,
     "industrial_production_yoy": 1.0, "retail_sales_yoy": 2.5, "unemployment_rate": 4.5,
-    "economic_sentiment": 98.0, "cpi_yoy": 4.0, "core_cpi_yoy": 4.3, "services_cpi_yoy": 5.0,
-    "ppi_yoy": 2.2, "avg_wage_yoy": 8.0, "real_wage_yoy": 3.2,
-    "current_account_pct_gdp": -1.5, "trade_balance": 0.0, "services_balance": 2.0,
-    "fx_reserves": 80.0, "reer": 102.0, "short_term_ext_debt": 55.0,
+    "economic_sentiment": 98.0, "manufacturing_pmi": 50.0, "capacity_utilization": 78.0,
+    "consumer_confidence": -12.0, "employment_growth": 1.0, "participation_rate": 58.0,
+    "vacancy_rate": 2.0, "cpi_yoy": 4.0, "core_cpi_yoy": 4.3, "services_cpi_yoy": 5.0,
+    "goods_cpi_yoy": 3.0, "energy_cpi_yoy": 2.5, "food_cpi_yoy": 4.2,
+    "ppi_yoy": 2.2, "import_prices_yoy": 2.0, "avg_wage_yoy": 8.0, "real_wage_yoy": 3.2,
+    "unit_labour_cost": 5.0, "minimum_wage": 700.0, "current_account_pct_gdp": -1.5,
+    "trade_balance": 0.0, "services_balance": 2.0, "income_balance": -2.0,
+    "fx_reserves": 80.0, "ara_metric": 110.0, "reer": 102.0, "neer": 101.0,
+    "fx_implied_vol": 8.0, "short_term_ext_debt": 55.0,
     "fiscal_balance_pct_gdp": -3.5, "structural_balance": -3.0, "primary_balance": -1.0,
-    "gov_debt_pct_gdp": 55.0, "interest_bill_pct_gdp": 2.0, "sov_yield_10y": 5.0,
+    "gov_debt_pct_gdp": 55.0, "gov_revenue_pct_gdp": 42.0, "gov_expenditure_pct_gdp": 46.0,
+    "interest_bill_pct_gdp": 2.0, "debt_fx_share": 25.0, "avg_debt_maturity": 6.0,
+    "sov_yield_10y": 5.0, "sov_yield_2y": 4.5, "cds_5y": 120.0, "yield_curve_slope": 50.0,
     "policy_rate": 5.0, "real_policy_rate": 1.0, "m3_yoy": 7.0, "private_credit_yoy": 5.5,
-    "credit_to_gdp_gap": 0.0, "fx_vs_eur": 100.0, "equity_index": 100.0, "equity_yoy": 8.0,
-    "equity_fwd_pe": 9.5, "equity_div_yield": 4.0, "sov_spread_vs_bund": 220.0,
+    "credit_to_gdp_gap": 0.0, "interbank_3m": 5.0, "lending_rate_household": 7.0,
+    "lending_rate_corp": 6.0, "fx_vs_eur": 100.0, "fx_3m_forward": 0.5,
+    "carry_trade_return": 3.0, "equity_index": 100.0, "equity_yoy": 8.0,
+    "equity_fwd_pe": 9.5, "equity_pb": 1.2, "equity_div_yield": 4.0, "equity_vol_30d": 18.0,
+    "sov_spread_vs_bund": 220.0,
     "bank_car": 19.0, "bank_npl_ratio": 3.5, "bank_roe": 12.0, "bank_ld_ratio": 86.0,
     "population_total": 20.0, "working_age_population": 12.5, "old_age_dependency": 29.0,
     "median_age": 42.0, "wgi_government_effectiveness": 70.0, "wgi_rule_of_law": 72.0,
@@ -544,6 +554,13 @@ class EurostatFetcher(BaseFetcher):
             "params": {"na_item": "B1GQ", "unit": "CLV_PCH_PRE", "s_adj": "SCA"},
             "unit": "% QoQ",
         },
+        "gdp_per_capita": {
+            "dataset": "nama_10_pc",
+            "freq": "A",
+            "since": "2010",
+            "params": {"na_item": "B1GQ", "unit": "CP_EUR_HAB"},
+            "unit": "EUR per head",
+        },
         "cpi_yoy": {
             "dataset": "prc_hicp_manr",
             "freq": "M",
@@ -563,6 +580,27 @@ class EurostatFetcher(BaseFetcher):
             "freq": "M",
             "since": "2018",
             "params": {"coicop": "SERV"},
+            "unit": "% YoY",
+        },
+        "goods_cpi_yoy": {
+            "dataset": "prc_hicp_manr",
+            "freq": "M",
+            "since": "2018",
+            "params": {"coicop": "IGD_NNRG"},
+            "unit": "% YoY",
+        },
+        "energy_cpi_yoy": {
+            "dataset": "prc_hicp_manr",
+            "freq": "M",
+            "since": "2018",
+            "params": {"coicop": "NRG"},
+            "unit": "% YoY",
+        },
+        "food_cpi_yoy": {
+            "dataset": "prc_hicp_manr",
+            "freq": "M",
+            "since": "2018",
+            "params": {"coicop": "FOOD"},
             "unit": "% YoY",
         },
         "ppi_yoy": {
@@ -596,6 +634,41 @@ class EurostatFetcher(BaseFetcher):
             "params": {"indic": "BS-ESI-I", "s_adj": "SA"},
             "unit": "Index",
         },
+        "consumer_confidence": {
+            "dataset": "ei_bsco_m",
+            "freq": "M",
+            "since": "2018",
+            "params": {"indic": "BS-CSMCI", "s_adj": "SA"},
+            "unit": "Balance",
+        },
+        "capacity_utilization": {
+            "dataset": "ei_bsin_q_r2",
+            "freq": "Q",
+            "since": "2018",
+            "params": {"indic": "BS-CU-Q", "s_adj": "NSA"},
+            "unit": "%",
+        },
+        "employment_growth": {
+            "dataset": "namq_10_pe",
+            "freq": "Q",
+            "since": "2018",
+            "params": {"na_item": "EMP_DC", "unit": "PCH_SM", "s_adj": "SCA"},
+            "unit": "% YoY",
+        },
+        "participation_rate": {
+            "dataset": "lfsi_emp_q",
+            "freq": "Q",
+            "since": "2018",
+            "params": {"age": "Y15-64", "sex": "T", "indic_em": "ACT_R", "unit": "PC_POP", "s_adj": "SA"},
+            "unit": "%",
+        },
+        "vacancy_rate": {
+            "dataset": "jvs_q_nace2",
+            "freq": "Q",
+            "since": "2018",
+            "params": {"nace_r2": "B-S", "sizeclas": "TOTAL", "indic_jv": "JOBVAC_RATE", "s_adj": "NSA"},
+            "unit": "%",
+        },
         "avg_wage_yoy": {
             "dataset": "lc_lci_r2_q",
             "freq": "Q",
@@ -603,7 +676,28 @@ class EurostatFetcher(BaseFetcher):
             "params": {"lcstruct": "D11", "nace_r2": "B-S", "s_adj": "SCA", "unit": "PCH_SM"},
             "unit": "% YoY",
         },
+        "unit_labour_cost": {
+            "dataset": "namq_10_lp_ulc",
+            "freq": "Q",
+            "since": "2018",
+            "params": {"na_item": "ULC_HW", "unit": "PCH_SM", "s_adj": "SCA"},
+            "unit": "% YoY",
+        },
+        "minimum_wage": {
+            "dataset": "earn_mw_cur",
+            "freq": "A",
+            "since": "2010",
+            "params": {"currency": "EUR", "indic_se": "MW_CUR"},
+            "unit": "EUR/month",
+        },
         "policy_rate": {
+            "dataset": "irt_st_m",
+            "freq": "M",
+            "since": "2018",
+            "params": {},
+            "unit": "%",
+        },
+        "interbank_3m": {
             "dataset": "irt_st_m",
             "freq": "M",
             "since": "2018",
@@ -661,6 +755,12 @@ class DerivedMacroFetcher(BaseFetcher):
             return self._real_policy_rate(country, spec)
         if spec.indicator_id == "sov_spread_vs_bund":
             return self._sov_spread_vs_bund(country, spec)
+        if spec.indicator_id == "sov_yield_2y":
+            return self._short_rate_market_proxy(country, spec, "2Y sovereign yield proxy")
+        if spec.indicator_id == "yield_curve_slope":
+            return self._yield_curve_slope(country, spec)
+        if spec.indicator_id == "carry_trade_return":
+            return self._carry_trade_return(country, spec)
         return []
 
     def _gdp_demand_composite(self, country: str, spec: IndicatorSpec) -> list[dict]:
@@ -876,6 +976,146 @@ class DerivedMacroFetcher(BaseFetcher):
             note="Monthly 10Y local government yield minus German Bund yield, expressed in basis points.",
         ))
         return _series_to_rows(series, spec, unit="bp", note="Derived from Eurostat sovereign-yield adapters.")
+
+    def _short_rate_market_proxy(self, country: str, spec: IndicatorSpec, label: str) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        short_rate = fetch_eurostat(
+            "irt_st_m",
+            meta["iso2"],
+            spec.indicator_id,
+            label,
+            country,
+            freq="M",
+            since="2018",
+            extra_params={},
+            unit_label="%",
+        )
+        rows = _series_to_rows(
+            short_rate,
+            spec,
+            unit="%",
+            note="Uses Eurostat short-term money-market rate as a public proxy until a true 2Y sovereign-yield feed is wired.",
+        )
+        for row in rows:
+            row["quality_status"] = "low_confidence"
+            row["quality_note"] = (
+                f"{row.get('quality_note')} Proxy mismatch: short-term money-market rate is not a 2Y government bond yield."
+            ).strip()
+        return rows
+
+    def _yield_curve_slope(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        ten_year = fetch_eurostat(
+            "irt_lt_mcby_m",
+            meta["iso2"],
+            "sov_yield_10y",
+            "10Y Government Bond Yield",
+            country,
+            freq="M",
+            since="2018",
+            extra_params={},
+            unit_label="%",
+        )
+        short_rate = fetch_eurostat(
+            "irt_st_m",
+            meta["iso2"],
+            "short_rate_proxy",
+            "Short-Term Interest Rate",
+            country,
+            freq="M",
+            since="2018",
+            extra_params={},
+            unit_label="%",
+        )
+        if not ten_year.available or not short_rate.available:
+            return []
+        short_by_date = {date: value for date, value in short_rate.observations}
+        observations: list[tuple[str, float]] = []
+        for date, value in ten_year.observations:
+            short = short_by_date.get(date)
+            if short is None:
+                continue
+            observations.append((date, (float(value) - float(short)) * 100.0))
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Derived from Eurostat interest-rate series",
+            series_id=f"irt_lt_mcby_m minus irt_st_m:{meta['iso2']}",
+            unit="bp",
+            frequency="monthly",
+            last_update=observations[-1][0] if observations else "",
+            source_url="https://ec.europa.eu/eurostat/databrowser/",
+            observations=observations,
+            available=bool(observations),
+            note="Public yield-curve proxy: 10Y government yield minus Eurostat short-term rate.",
+        ))
+        rows = _series_to_rows(series, spec, unit="bp", note="Uses short-term rate as the 2Y leg until a true 2Y feed is wired.")
+        for row in rows:
+            row["quality_status"] = "low_confidence"
+            row["quality_note"] = f"{row.get('quality_note')} Proxy mismatch: slope is 10Y minus short rate, not exact 10Y-2Y.".strip()
+        return rows
+
+    def _carry_trade_return(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        local_rate = fetch_eurostat(
+            "irt_st_m",
+            meta["iso2"],
+            "local_short_rate",
+            "Local Short-Term Rate",
+            country,
+            freq="M",
+            since="2018",
+            extra_params={},
+            unit_label="%",
+        )
+        eur_rate = fetch_eurostat(
+            "irt_st_m",
+            "DE",
+            "eur_short_rate",
+            "EUR Short-Term Rate Proxy",
+            country,
+            freq="M",
+            since="2018",
+            extra_params={},
+            unit_label="%",
+        )
+        if not local_rate.available or not eur_rate.available:
+            return []
+        eur_by_date = {date: value for date, value in eur_rate.observations}
+        observations: list[tuple[str, float]] = []
+        for date, value in local_rate.observations:
+            eur = eur_by_date.get(date)
+            if eur is None:
+                continue
+            observations.append((date, float(value) - float(eur)))
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Derived from Eurostat short-term interest rates",
+            series_id=f"irt_st_m:{meta['iso2']}-DE",
+            unit="% annualised",
+            frequency="monthly",
+            last_update=observations[-1][0] if observations else "",
+            source_url="https://ec.europa.eu/eurostat/databrowser/view/irt_st_m/default/table?lang=en",
+            observations=observations,
+            available=bool(observations),
+            note="Carry-only proxy: local short-term rate less German/EUR short-term rate, excluding spot FX moves and roll-down.",
+        ))
+        rows = _series_to_rows(series, spec, unit="% annualised", note="Carry-only proxy; not a realised total-return series.")
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
 
 
 class ECBFetcher(BaseFetcher):
@@ -1223,13 +1463,16 @@ class YahooMarketFetcher(BaseFetcher):
     """Vendor market-data adapter for local headline equity indexes."""
 
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
-        if spec.indicator_id not in {"equity_index", "equity_yoy"}:
+        if spec.indicator_id not in {"equity_index", "equity_yoy", "equity_vol_30d"}:
             return []
         countries = load_countries()
         meta = countries.get(country)
         symbol = meta.get("equity_yahoo") if meta else ""
         if not symbol:
             return []
+
+        if spec.indicator_id == "equity_vol_30d":
+            return self._equity_vol_30d(symbol, country, spec)
 
         series = fetch_yahoo(symbol, spec.indicator_id, spec.label, country, range_="5y", interval="1mo")
         if spec.indicator_id == "equity_yoy":
@@ -1240,6 +1483,45 @@ class YahooMarketFetcher(BaseFetcher):
             spec,
             unit=unit,
             note="Yahoo Finance vendor feed; confirm index convention and live levels against the local exchange or terminal.",
+        )
+
+    def _equity_vol_30d(self, symbol: str, country: str, spec: IndicatorSpec) -> list[dict]:
+        series = fetch_yahoo(symbol, spec.indicator_id, spec.label, country, range_="1y", interval="1d")
+        if not series.available or len(series.observations) < 35:
+            return []
+        observations: list[tuple[str, float]] = []
+        values = series.observations
+        returns: list[tuple[str, float]] = []
+        for idx in range(1, len(values)):
+            date, value = values[idx]
+            _, prior = values[idx - 1]
+            if prior <= 0:
+                continue
+            returns.append((date, math.log(float(value) / float(prior))))
+        for idx in range(20, len(returns)):
+            window = [ret for _, ret in returns[idx - 20: idx + 1]]
+            mean = sum(window) / len(window)
+            variance = sum((ret - mean) ** 2 for ret in window) / max(len(window) - 1, 1)
+            observations.append((returns[idx][0], math.sqrt(variance) * math.sqrt(252) * 100.0))
+        vol_series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Yahoo Finance derived",
+            series_id=f"{symbol}:21d realised volatility",
+            unit="%",
+            frequency="daily",
+            last_update=observations[-1][0] if observations else "",
+            source_url=f"https://finance.yahoo.com/quote/{symbol}",
+            observations=observations,
+            available=bool(observations),
+            note="Annualised realised volatility computed from daily Yahoo Finance close-to-close returns.",
+        ))
+        return _series_to_rows(
+            vol_series,
+            spec,
+            unit="%",
+            note="Derived 21-trading-day realised volatility; vendor daily close data should be verified for trading use.",
         )
 
 
@@ -1294,14 +1576,20 @@ class WorldBankESGFetcher(BaseFetcher):
 
 class WorldBankFetcher(BaseFetcher):
     CONFIGS = {
+        "gdp_per_capita": ("NY.GDP.PCAP.PP.KD", 1.0, "constant intl $"),
+        "participation_rate": ("SL.TLF.CACT.ZS", 1.0, "%"),
+        "employment_growth": ("SL.EMP.TOTL.SP.ZS", 1.0, "% population"),
         "population_total": ("SP.POP.TOTL", 1 / 1_000_000, "mn people"),
         "working_age_population": ("SP.POP.1564.TO", 1 / 1_000_000, "mn people"),
         "old_age_dependency": ("SP.POP.DPND.OL", 1.0, "%"),
         "fx_reserves": ("FI.RES.TOTL.CD", 1 / 1_000_000_000, "USD bn"),
         "current_account_pct_gdp": ("BN.CAB.XOKA.GD.ZS", 1.0, "% GDP"),
+        "income_balance": ("BN.GSR.FCTY.CD", 1 / 1_000_000_000, "USD bn"),
         "reer": ("REER", 1.0, "Index"),
         "m3_yoy": ("FM.LBL.BMNY.ZG", 1.0, "% YoY"),
         "private_credit_yoy": ("FM.AST.PRVT.ZG.M3", 1.0, "% YoY"),
+        "gov_revenue_pct_gdp": ("GC.REV.XGRT.GD.ZS", 1.0, "% GDP"),
+        "gov_expenditure_pct_gdp": ("GC.XPN.TOTL.GD.ZS", 1.0, "% GDP"),
         "bank_car": ("FB.BNK.CAPA.ZS", 1.0, "%"),
         "bank_npl_ratio": ("FB.AST.NPER.ZS", 1.0, "%"),
         "bank_roe": ("GFDD.EI.06", 1.0, "%"),
@@ -1429,7 +1717,8 @@ class DataPipeline:
             clean_rows.append({column: row.get(column) for column in CANONICAL_COLUMNS})
         return sorted(clean_rows, key=lambda r: (r["section_id"], r["indicator_id"], str(r["date"])))
 
-    def validate_coverage(self, frame: list[dict], expected: int = 48) -> dict:
+    def validate_coverage(self, frame: list[dict], expected: int | None = None) -> dict:
+        expected = expected or len(INDICATOR_MANIFEST_48)
         indicators = sorted({row["indicator_id"] for row in frame}) if frame else []
         unique_rows = {}
         for row in frame:
