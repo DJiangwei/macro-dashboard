@@ -27,6 +27,7 @@ git add \
   uv.lock \
   build_v4.py \
   config/indicator_manifest_48.yaml \
+  config/manual_indicators.yaml \
   src/country_primer/data_fetcher.py \
   scripts/doctor_env.py \
   scripts/publish_dashboard.sh \

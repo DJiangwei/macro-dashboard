@@ -68,6 +68,7 @@ BIS_CREDIT_GAP_URL = "https://data.bis.org/static/bulk/WS_CREDIT_GAP_csv_flat.zi
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _XLSX_NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+CONFIG_DIR = Path(__file__).resolve().parents[2] / "config"
 
 
 @dataclass(frozen=True)
@@ -138,7 +139,7 @@ INDICATOR_MANIFEST_48: tuple[IndicatorSpec, ...] = (
 
 def _load_manifest_from_yaml(fallback: tuple[IndicatorSpec, ...]) -> tuple[IndicatorSpec, ...]:
     """Load the editable 48-indicator manifest from config when available."""
-    manifest_path = Path(__file__).resolve().parents[2] / "config" / "indicator_manifest_48.yaml"
+    manifest_path = CONFIG_DIR / "indicator_manifest_48.yaml"
     if not manifest_path.exists():
         return fallback
 
@@ -1036,6 +1037,62 @@ class WorldBankFallbackFetcher(BaseFetcher):
         return rows
 
 
+class ManualIndicatorFetcher(BaseFetcher):
+    """User-maintained research series for non-statistical political-risk inputs."""
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        payload = self._load_payload()
+        raw_indicator = (payload.get("manual_indicators") or {}).get(spec.indicator_id)
+        if not raw_indicator:
+            return []
+        raw_observations = (raw_indicator.get("observations") or {}).get(country) or []
+        observations: list[tuple[str, float]] = []
+        for item in raw_observations:
+            try:
+                observations.append((str(item["date"])[:10], float(item["value"])))
+            except (KeyError, TypeError, ValueError):
+                continue
+        if not observations:
+            return []
+        observations.sort()
+        references = raw_indicator.get("references") or []
+        reference_note = " References: " + "; ".join(str(url) for url in references[:3]) if references else ""
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source=str(raw_indicator.get("source") or "Manual research series"),
+            series_id=f"manual:{spec.indicator_id}",
+            unit=str(raw_indicator.get("unit") or spec.unit),
+            frequency=spec.frequency,
+            last_update=observations[-1][0],
+            source_url=str(references[0]) if references else "",
+            observations=observations,
+            available=True,
+            note=f"{raw_indicator.get('quality_note') or spec.quality_note}{reference_note}",
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit=str(raw_indicator.get("unit") or spec.unit),
+            note="Maintained in config/manual_indicators.yaml; revise manually when policy status changes.",
+        )
+        for row in rows:
+            row["quality_status"] = str(raw_indicator.get("quality_status") or "low_confidence")
+            row["is_proxy"] = False
+            row["quality_note"] = (
+                f"{row.get('quality_note')} Manual input, not a statistical API series; "
+                "treat as a policy-risk marker rather than measured macro data."
+            ).strip()
+        return rows
+
+    def _load_payload(self) -> dict:
+        path = CONFIG_DIR / "manual_indicators.yaml"
+        if not path.exists():
+            return {}
+        return yaml.safe_load(path.read_text()) or {}
+
+
 class IMFDataMapperFetcher(BaseFetcher):
     """IMF DataMapper adapter for fiscal, labour-market, and reserve-risk series."""
 
@@ -1346,6 +1403,7 @@ class DataPipeline:
             YahooMarketFetcher(),
             BISFetcher(),
             WorldBankFallbackFetcher(),
+            ManualIndicatorFetcher(),
             NationalCBFetcher(),
             ProxyFetcher(),
         ])

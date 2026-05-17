@@ -1,0 +1,40 @@
+version: 1
+manual_indicators:
+  eu_funds_frozen:
+    source: Curated policy-risk tracker
+    unit: '% allocation'
+    quality_status: low_confidence
+    quality_note: Manual research series for EU funds frozen or materially at risk; not an official statistical release. Update after Commission/Council decisions, RRF payment approvals, or rule-of-law conditionality changes.
+    references:
+      - https://www.europarl.europa.eu/news/en/press-room/20240122IPR17026/gel-des-fonds-de-l-ue-pour-la-hongrie-debat-avec-la-commission
+      - https://commission.europa.eu/strategy-and-policy/eu-budget/protection-eu-budget/rule-law-conditionality-regulation_en
+      - https://www.gov.pl/web/funds-regional-policy/european-funds-for-poland-unblocked
+    observations:
+      HU:
+        - {date: '2021-12-31', value: 0}
+        - {date: '2022-12-31', value: 25}
+        - {date: '2023-12-31', value: 45}
+        - {date: '2024-12-31', value: 42}
+        - {date: '2025-12-31', value: 35}
+        - {date: '2026-12-31', value: 32}
+      PL:
+        - {date: '2021-12-31', value: 0}
+        - {date: '2022-12-31', value: 22}
+        - {date: '2023-12-31', value: 30}
+        - {date: '2024-12-31', value: 6}
+        - {date: '2025-12-31', value: 3}
+        - {date: '2026-12-31', value: 3}
+      CZ:
+        - {date: '2021-12-31', value: 0}
+        - {date: '2022-12-31', value: 0}
+        - {date: '2023-12-31', value: 1}
+        - {date: '2024-12-31', value: 1}
+        - {date: '2025-12-31', value: 1}
+        - {date: '2026-12-31', value: 1}
+      RO:
+        - {date: '2021-12-31', value: 2}
+        - {date: '2022-12-31', value: 4}
+        - {date: '2023-12-31', value: 7}
+        - {date: '2024-12-31', value: 9}
+        - {date: '2025-12-31', value: 9}
+        - {date: '2026-12-31', value: 8}
