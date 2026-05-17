@@ -524,6 +524,20 @@ class BaseFetcher:
 
 class EurostatFetcher(BaseFetcher):
     CONFIGS = {
+        "real_gdp_yoy": {
+            "dataset": "namq_10_gdp",
+            "freq": "Q",
+            "since": "2018",
+            "params": {"na_item": "B1GQ", "unit": "CLV_PCH_SM", "s_adj": "SCA"},
+            "unit": "% YoY",
+        },
+        "real_gdp_qoq": {
+            "dataset": "namq_10_gdp",
+            "freq": "Q",
+            "since": "2018",
+            "params": {"na_item": "B1GQ", "unit": "CLV_PCH_PRE", "s_adj": "SCA"},
+            "unit": "% QoQ",
+        },
         "cpi_yoy": {
             "dataset": "prc_hicp_manr",
             "freq": "M",
@@ -610,6 +624,120 @@ class EurostatFetcher(BaseFetcher):
         return _series_to_rows(series, spec, unit=cfg["unit"])
 
 
+class DerivedMacroFetcher(BaseFetcher):
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if spec.indicator_id == "real_wage_yoy":
+            return self._real_wage_yoy(country, spec)
+        if spec.indicator_id == "sov_spread_vs_bund":
+            return self._sov_spread_vs_bund(country, spec)
+        return []
+
+    def _real_wage_yoy(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        wages = fetch_eurostat(
+            "lc_lci_r2_q",
+            meta["iso2"],
+            "avg_wage_yoy",
+            "Average Gross Wage, YoY",
+            country,
+            freq="Q",
+            since="2018",
+            extra_params={"lcstruct": "D11", "nace_r2": "B-S", "s_adj": "SCA", "unit": "PCH_SM"},
+            unit_label="% YoY",
+        )
+        cpi = fetch_eurostat(
+            "prc_hicp_manr",
+            meta["iso2"],
+            "cpi_yoy",
+            "Headline CPI/HICP, YoY",
+            country,
+            freq="M",
+            since="2018",
+            extra_params={"coicop": "CP00"},
+            unit_label="% YoY",
+        )
+        if not wages.available or not cpi.available:
+            return []
+        cpi_by_month = {date[:7]: value for date, value in cpi.observations}
+        observations: list[tuple[str, float]] = []
+        for date, wage in wages.observations:
+            month_key = date[:7]
+            inflation = cpi_by_month.get(month_key)
+            if inflation is None:
+                continue
+            observations.append((date, float(wage) - float(inflation)))
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Derived from Eurostat labour-cost and HICP series",
+            series_id="lc_lci_r2_q:D11 minus prc_hicp_manr:CP00",
+            unit="% YoY",
+            frequency="quarterly",
+            last_update=observations[-1][0] if observations else "",
+            source_url="https://ec.europa.eu/eurostat/databrowser/",
+            observations=observations,
+            available=bool(observations),
+            note="Ex-post real wage growth: nominal labour-cost growth minus headline HICP inflation.",
+        ))
+        return _series_to_rows(series, spec, unit="% YoY", note="Derived from Eurostat wage and HICP adapters.")
+
+    def _sov_spread_vs_bund(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        local_yield = fetch_eurostat(
+            "irt_lt_mcby_m",
+            meta["iso2"],
+            "sov_yield_10y",
+            "10Y Government Bond Yield",
+            country,
+            freq="M",
+            since="2018",
+            extra_params={},
+            unit_label="%",
+        )
+        bund_yield = fetch_eurostat(
+            "irt_lt_mcby_m",
+            "DE",
+            "bund_yield_10y",
+            "Germany 10Y Government Bond Yield",
+            country,
+            freq="M",
+            since="2018",
+            extra_params={},
+            unit_label="%",
+        )
+        if not local_yield.available or not bund_yield.available:
+            return []
+        bund_by_date = {date: value for date, value in bund_yield.observations}
+        observations: list[tuple[str, float]] = []
+        for date, value in local_yield.observations:
+            bund = bund_by_date.get(date)
+            if bund is None:
+                continue
+            observations.append((date, (float(value) - float(bund)) * 100.0))
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Derived from Eurostat long-term government bond yields",
+            series_id=f"irt_lt_mcby_m:{meta['iso2']}-DE",
+            unit="bp",
+            frequency="monthly",
+            last_update=observations[-1][0] if observations else "",
+            source_url="https://ec.europa.eu/eurostat/databrowser/view/irt_lt_mcby_m/default/table?lang=en",
+            observations=observations,
+            available=bool(observations),
+            note="Monthly 10Y local government yield minus German Bund yield, expressed in basis points.",
+        ))
+        return _series_to_rows(series, spec, unit="bp", note="Derived from Eurostat sovereign-yield adapters.")
+
+
 class ECBFetcher(BaseFetcher):
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
         if spec.indicator_id != "fx_vs_eur":
@@ -689,9 +817,17 @@ class WorldBankFetcher(BaseFetcher):
         "fx_reserves": ("FI.RES.TOTL.CD", 1 / 1_000_000_000, "USD bn"),
         "short_term_ext_debt": ("DT.DOD.DSTC.IR.ZS", 1.0, "%"),
         "current_account_pct_gdp": ("BN.CAB.XOKA.GD.ZS", 1.0, "% GDP"),
+        "m3_yoy": ("FM.LBL.BMNY.ZG", 1.0, "% YoY"),
+        "private_credit_yoy": ("FM.AST.PRVT.ZG.M3", 1.0, "% YoY"),
+        "bank_car": ("FB.BNK.CAPA.ZS", 1.0, "%"),
+        "bank_npl_ratio": ("FB.AST.NPER.ZS", 1.0, "%"),
+        "bank_roe": ("GFDD.EI.06", 1.0, "%"),
+        "bank_ld_ratio": ("GFDD.SI.04", 1.0, "%"),
     }
 
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if spec.indicator_id == "services_balance":
+            return self._services_balance(country, spec)
         cfg = self.CONFIGS.get(spec.indicator_id)
         if not cfg:
             return []
@@ -703,6 +839,38 @@ class WorldBankFetcher(BaseFetcher):
         series = fetch_wb(meta["iso2"], code, spec.indicator_id, spec.label, country, start=2010, end=2026)
         return _series_to_rows(series, spec, scale=scale, unit=unit, note=f"World Bank indicator {code}.")
 
+    def _services_balance(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        exports = fetch_wb(meta["iso2"], "BX.GSR.NFSV.CD", "services_exports", "Services exports", country, start=2010, end=2026)
+        imports = fetch_wb(meta["iso2"], "BM.GSR.NFSV.CD", "services_imports", "Services imports", country, start=2010, end=2026)
+        if not exports.available or not imports.available:
+            return []
+        imports_by_date = {date: value for date, value in imports.observations}
+        observations: list[tuple[str, float]] = []
+        for date, value in exports.observations:
+            import_value = imports_by_date.get(date)
+            if import_value is None:
+                continue
+            observations.append((date, (float(value) - float(import_value)) / 1_000_000_000))
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="World Bank WDI",
+            series_id="BX.GSR.NFSV.CD minus BM.GSR.NFSV.CD",
+            unit="USD bn",
+            frequency="annual",
+            last_update=observations[-1][0] if observations else "",
+            source_url="https://data.worldbank.org/",
+            observations=observations,
+            available=bool(observations),
+            note="Annual services exports minus services imports from World Bank WDI.",
+        ))
+        return _series_to_rows(series, spec, unit="USD bn", note="Derived from World Bank service export/import indicators.")
+
 
 class DataPipeline:
     """Fetch all canonical indicators into one normalized DataFrame."""
@@ -711,6 +879,7 @@ class DataPipeline:
         self.fetchers = list(fetchers or [
             ECBFetcher(),
             EurostatFetcher(),
+            DerivedMacroFetcher(),
             WorldBankESGFetcher(),
             WorldBankFetcher(),
             BISFetcher(),

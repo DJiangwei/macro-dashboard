@@ -125,12 +125,12 @@ indicators:
   indicator_id: real_wage_yoy
   label: Real Wage, YoY
   unit: '% YoY'
-  source: Derived from wages and CPI
+  source: Derived from Eurostat wages and HICP
   frequency: quarterly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Derived indicator; deflator choice matters.
+  quality_note: Ex-post derived indicator; nominal wage/labour-cost growth minus headline HICP, so deflator choice matters.
 - section_id: external
   indicator_id: current_account_pct_gdp
   label: Current Account, % GDP
@@ -155,12 +155,12 @@ indicators:
   indicator_id: services_balance
   label: Services Balance
   unit: USD bn
-  source: Eurostat BoP
-  frequency: quarterly
+  source: World Bank WDI
+  frequency: annual
   chart: bar
   peers: false
   quality_status: watch
-  quality_note: Adapter pending; use directionally until BoP adapter is wired.
+  quality_note: Annual services exports minus imports; use directionally until a quarterly BoP adapter is wired.
 - section_id: external
   indicator_id: fx_reserves
   label: FX Reserves
@@ -275,22 +275,22 @@ indicators:
   indicator_id: m3_yoy
   label: Broad Money M3, YoY
   unit: '% YoY'
-  source: World Bank / national central bank
-  frequency: monthly
+  source: World Bank WDI
+  frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: May use broad-money proxy where M3 is unavailable.
+  quality_note: Uses World Bank broad money growth; annual and lagged versus local central-bank releases.
 - section_id: monetary_financial
   indicator_id: private_credit_yoy
   label: Private Credit, YoY
   unit: '% YoY'
-  source: Eurostat / BIS
-  frequency: monthly
+  source: World Bank WDI
+  frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Credit aggregates differ by sector perimeter.
+  quality_note: Uses claims on private sector growth as a broad private-credit proxy; sector perimeter differs by source.
 - section_id: monetary_financial
   indicator_id: credit_to_gdp_gap
   label: Credit-to-GDP Gap
@@ -355,28 +355,28 @@ indicators:
   indicator_id: sov_spread_vs_bund
   label: 10Y Spread vs Bund
   unit: bp
-  source: Derived from sovereign yields
+  source: Derived from Eurostat sovereign yields
   frequency: monthly
   chart: peer_overlay
   peers: true
   quality_status: watch
-  quality_note: Derived spread; check maturity matching.
+  quality_note: Derived monthly spread versus Germany 10Y benchmark; check maturity matching and market convention.
 - section_id: financial_stability
   indicator_id: bank_car
-  label: Bank Capital Adequacy Ratio
+  label: Bank Capital Ratio
   unit: '%'
-  source: IMF FSI / national bank
-  frequency: quarterly
+  source: World Bank WDI / IMF FSI
+  frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Regulatory definitions can change.
+  quality_note: Uses bank capital to assets ratio; fresher but not identical to regulatory capital adequacy.
 - section_id: financial_stability
   indicator_id: bank_npl_ratio
   label: Bank NPL Ratio
   unit: '%'
-  source: IMF FSI / national bank
-  frequency: quarterly
+  source: World Bank WDI / IMF FSI
+  frequency: annual
   chart: line
   peers: false
   quality_status: watch
@@ -385,22 +385,22 @@ indicators:
   indicator_id: bank_roe
   label: Bank Return on Equity
   unit: '%'
-  source: IMF FSI / national bank
-  frequency: quarterly
+  source: World Bank GFDD
+  frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Taxes and one-offs can distort sector ROE.
+  quality_note: After-tax bank ROE from GFDD; annual and can be distorted by taxes and one-offs.
 - section_id: financial_stability
   indicator_id: bank_ld_ratio
   label: Bank Loan-to-Deposit Ratio
   unit: '%'
-  source: IMF FSI / national bank
-  frequency: quarterly
+  source: World Bank GFDD
+  frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Deposit perimeter differs by regulator.
+  quality_note: Uses bank credit to bank deposits as a loan/deposit proxy; deposit perimeter differs by regulator.
 - section_id: demographics
   indicator_id: population_total
   label: Total Population
