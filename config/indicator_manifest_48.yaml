@@ -295,12 +295,12 @@ indicators:
   indicator_id: credit_to_gdp_gap
   label: Credit-to-GDP Gap
   unit: pp
-  source: BIS
+  source: BIS / World Bank fallback
   frequency: quarterly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: BIS private non-financial credit gap, actual minus HP-filter trend; filter-based series can revise with history.
+  quality_note: BIS private non-financial credit gap preferred; World Bank annual credit/GDP trailing-trend fallback used only where BIS coverage is unavailable.
 - section_id: monetary_financial
   indicator_id: fx_vs_eur
   label: FX vs EUR

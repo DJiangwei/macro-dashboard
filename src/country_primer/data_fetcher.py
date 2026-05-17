@@ -976,6 +976,66 @@ class NationalCBFetcher(BaseFetcher):
         return []
 
 
+class WorldBankFallbackFetcher(BaseFetcher):
+    """Fallback adapters for indicators with partial official-source coverage."""
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if spec.indicator_id == "credit_to_gdp_gap":
+            return self._credit_to_gdp_gap(country, spec)
+        return []
+
+    def _credit_to_gdp_gap(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        credit = fetch_wb(
+            meta["iso2"],
+            "FS.AST.PRVT.GD.ZS",
+            "private_credit_to_gdp",
+            "Domestic Credit to Private Sector by Banks, % GDP",
+            country,
+            start=1995,
+            end=2026,
+        )
+        if not credit.available or len(credit.observations) < 12:
+            return []
+        observations: list[tuple[str, float]] = []
+        for idx, (date, value) in enumerate(credit.observations):
+            if idx < 9:
+                continue
+            window = [float(v) for _, v in credit.observations[idx - 9: idx + 1]]
+            trend = sum(window) / len(window)
+            observations.append((date, float(value) - trend))
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="World Bank WDI fallback",
+            series_id="FS.AST.PRVT.GD.ZS minus 10Y trailing average",
+            unit="pp",
+            frequency="annual",
+            last_update=observations[-1][0] if observations else "",
+            source_url="https://data.worldbank.org/indicator/FS.AST.PRVT.GD.ZS",
+            observations=observations,
+            available=bool(observations),
+            note="Fallback credit-gap proxy using domestic credit to private sector by banks, % GDP, minus a 10-year trailing average.",
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="pp",
+            note="Used only when BIS credit-gap data is unavailable; annual and not methodologically identical to BIS HP-filter gap.",
+        )
+        for row in rows:
+            row["quality_status"] = "low_confidence"
+            row["quality_note"] = (
+                f"{row.get('quality_note')} Methodology fallback: World Bank annual credit/GDP "
+                "minus trailing average, not BIS HP-filter credit gap."
+            ).strip()
+        return rows
+
+
 class IMFDataMapperFetcher(BaseFetcher):
     """IMF DataMapper adapter for fiscal, labour-market, and reserve-risk series."""
 
@@ -1285,6 +1345,7 @@ class DataPipeline:
             WorldBankFetcher(),
             YahooMarketFetcher(),
             BISFetcher(),
+            WorldBankFallbackFetcher(),
             NationalCBFetcher(),
             ProxyFetcher(),
         ])
