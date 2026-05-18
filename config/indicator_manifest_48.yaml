@@ -1,5 +1,5 @@
 version: 1
-expected_count: 100
+expected_count: 114
 indicators:
 - section_id: real_activity
   indicator_id: real_gdp_yoy
@@ -171,6 +171,36 @@ indicators:
   peers: false
   quality_status: watch
   quality_note: Annual FDI inflows can be volatile and revised; use as structural financing context rather than high-frequency flow timing.
+- section_id: real_activity
+  indicator_id: oecd_cli
+  label: OECD Composite Leading Indicator
+  unit: Index
+  source: OECD / proxy pending
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: OECD CLI needs a dedicated OECD SDMX adapter; proxy fill is a framework placeholder until wired.
+- section_id: real_activity
+  indicator_id: ifo_expectations
+  label: Germany IFO Expectations
+  unit: Index
+  source: Ifo Institute / proxy pending
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Germany Ifo expectations are used as a CEE external-demand proxy; proxy fill is used until a licensed/public feed is wired.
+- section_id: real_activity
+  indicator_id: truck_km_index
+  label: Road Freight Transport Index
+  unit: Index
+  source: Eurostat transport / proxy pending
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Road freight data needs a dedicated Eurostat transport adapter; proxy fill is a framework placeholder.
 - section_id: prices_wages
   indicator_id: cpi_yoy
   label: Headline CPI/HICP, YoY
@@ -311,6 +341,26 @@ indicators:
   peers: false
   quality_status: low_confidence
   quality_note: 5y5y inflation swaps are vendor market data; proxy fill is only a framework placeholder.
+- section_id: prices_wages
+  indicator_id: house_price_index
+  label: House Price Index, YoY
+  unit: '% YoY'
+  source: Eurostat HPI / proxy pending
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: House-price data should use Eurostat HPI once adapter dimensions are fixed; proxy fill is a placeholder.
+- section_id: prices_wages
+  indicator_id: administered_prices
+  label: Administered Prices Share
+  unit: '% CPI basket'
+  source: National CB / proxy pending
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Administered-price basket shares are country-specific and usually from national central banks; proxy fill is a placeholder.
 - section_id: external
   indicator_id: current_account_pct_gdp
   label: Current Account, % GDP
@@ -441,6 +491,26 @@ indicators:
   peers: false
   quality_status: low_confidence
   quality_note: BIS cross-border claims require a dedicated BIS LBS adapter; proxy fill is used until the adapter is wired.
+- section_id: external
+  indicator_id: energy_import_dependency
+  label: Energy Import Dependency
+  unit: '%'
+  source: Eurostat energy balances / proxy pending
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Energy import dependency requires a Eurostat energy-balance adapter; proxy fill is used until the source dimensions are wired.
+- section_id: external
+  indicator_id: gas_storage_level
+  label: Natural Gas Storage Fill Level
+  unit: '%'
+  source: GIE AGSI / proxy pending
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: GIE AGSI weekly storage data requires a dedicated adapter and country storage mapping; proxy fill is a placeholder.
 - section_id: fiscal_sovereign
   indicator_id: fiscal_balance_pct_gdp
   label: General Government Balance, % GDP
@@ -601,6 +671,16 @@ indicators:
   peers: false
   quality_status: low_confidence
   quality_note: EDP status is qualitative and event-driven; numeric proxy is a policy-risk marker, not a statistical series.
+- section_id: fiscal_sovereign
+  indicator_id: contingent_liabilities
+  label: Contingent Liabilities
+  unit: '% GDP'
+  source: Eurostat / proxy pending
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Government guarantees and PPP obligations need a dedicated Eurostat government-finance adapter; proxy fill is a placeholder.
 - section_id: monetary_financial
   indicator_id: policy_rate
   label: Policy / Short-Term Rate
@@ -731,6 +811,26 @@ indicators:
   peers: false
   quality_status: low_confidence
   quality_note: Forward guidance is qualitative text data; numeric proxy is a placeholder until a curated NLP/minutes workflow is wired.
+- section_id: monetary_financial
+  indicator_id: fx_loan_share
+  label: FX Loan Share
+  unit: '% private credit'
+  source: ECB SDW / national CB proxy pending
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: FX loan-share data is country-specific and requires ECB/national-bank balance-sheet adapters; proxy fill is a placeholder.
+- section_id: monetary_financial
+  indicator_id: mortgage_rate_new
+  label: New Mortgage Lending Rate
+  unit: '%'
+  source: ECB SDW / national CB proxy pending
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: New mortgage rate data requires an ECB/national-bank interest-rate adapter; proxy fill is a placeholder.
 - section_id: markets_valuation
   indicator_id: equity_index
   label: Headline Equity Index
@@ -821,6 +921,16 @@ indicators:
   peers: false
   quality_status: low_confidence
   quality_note: Foreign ownership data is country-specific and often from national debt offices; proxy fill is used until adapters are wired.
+- section_id: markets_valuation
+  indicator_id: portfolio_flows
+  label: Non-Resident Portfolio Flows
+  unit: EUR mn
+  source: ECB BoP / proxy pending
+  frequency: quarterly
+  chart: bar
+  peers: false
+  quality_status: low_confidence
+  quality_note: Non-resident portfolio-flow data requires an ECB BoP financial-account adapter; proxy fill is a placeholder.
 - section_id: financial_stability
   indicator_id: bank_car
   label: Bank Capital Ratio
@@ -901,6 +1011,26 @@ indicators:
   peers: false
   quality_status: watch
   quality_note: Corporate debt proxy uses available credit aggregates where sector-specific NFC debt is unavailable; compare with BIS credit tables.
+- section_id: financial_stability
+  indicator_id: real_estate_price_gap
+  label: Real Estate Price Gap
+  unit: '% deviation'
+  source: ECB / BIS proxy pending
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Residential real-estate valuation gaps require model-based ECB/BIS inputs; proxy fill is a placeholder.
+- section_id: financial_stability
+  indicator_id: foreign_bank_share
+  label: Foreign-Owned Bank Share
+  unit: '% assets'
+  source: World Bank GFDD / national CB proxy pending
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Foreign bank ownership is structural and often sourced from national supervisors; proxy fill is used until a reliable series is wired.
 - section_id: demographics
   indicator_id: population_total
   label: Total Population
@@ -961,6 +1091,16 @@ indicators:
   peers: false
   quality_status: verified
   quality_note: Fertility is slow-moving but may be revised after demographic updates.
+- section_id: demographics
+  indicator_id: pension_spending_pct_gdp
+  label: Pension Expenditure, % GDP
+  unit: '% GDP'
+  source: Eurostat / OECD proxy pending
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Pension-spending data requires a social-protection/public-finance adapter and projection vintage tracking; proxy fill is a placeholder.
 - section_id: political_economy
   indicator_id: wgi_government_effectiveness
   label: WGI Government Effectiveness

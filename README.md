@@ -89,10 +89,10 @@ The v4 dashboard also includes a dedicated canonical pipeline in
 canonical macro table: [country, date, indicator_id, value]
                          │
                          ▼
-build_v4.py → 100-indicator dashboard pages
+build_v4.py → 114-indicator dashboard pages
 ```
 
-The canonical manifest currently defines 100 core indicators across real
+The canonical manifest currently defines 114 core indicators across real
 activity, prices/wages, external, fiscal/sovereign, monetary/financial,
 markets/valuation, financial stability, demographics, and political economy.
 The editable source of truth is `config/indicator_manifest_48.yaml`; the Python
@@ -137,7 +137,7 @@ make publish MSG="Update dashboard"
 Country_Primer/
 ├── config/
 │   ├── indicators.yaml      # 7-section catalog (single source of truth)
-│   ├── indicator_manifest_48.yaml # v4 canonical manifest, now 100 indicators
+│   ├── indicator_manifest_48.yaml # v4 canonical manifest, now 114 indicators
 │   ├── countries.yaml       # country metadata + peer sets
 │   └── chart_templates.yaml # Plotly defaults
 ├── src/country_primer/
