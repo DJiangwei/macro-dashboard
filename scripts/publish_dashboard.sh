@@ -29,6 +29,7 @@ git add \
   config/indicator_manifest_48.yaml \
   config/manual_indicators.yaml \
   src/country_primer/data_fetcher.py \
+  src/country_primer/fetch.py \
   scripts/doctor_env.py \
   scripts/publish_dashboard.sh \
   scripts/uv_project.sh \

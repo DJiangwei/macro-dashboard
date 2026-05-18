@@ -352,6 +352,10 @@ def fetch_eurostat(dataset: str, geo: str, key: str, label: str, country: str,
                 yr, q = t.split("-Q")
                 month = (int(q) - 1) * 3 + 1
                 d = f"{yr}-{month:02d}-01"
+            elif "-S" in t:                     # semi-annual: "2025-S2" → "2025-07-01"
+                yr, s = t.split("-S")
+                month = 1 if s == "1" else 7
+                d = f"{yr}-{month:02d}-01"
             elif len(t) == 7:                   # monthly: "2025-12"
                 d = f"{t}-01"
             else:
@@ -366,7 +370,7 @@ def fetch_eurostat(dataset: str, geo: str, key: str, label: str, country: str,
         source="Eurostat",
         series_id=dataset,
         unit=unit if isinstance(unit, str) else "",
-        frequency={"M": "monthly", "Q": "quarterly", "A": "annual"}.get(freq, freq),
+        frequency={"M": "monthly", "Q": "quarterly", "S": "semiannual", "A": "annual"}.get(freq, freq),
         last_update=obs[-1][0] if obs else "",
         source_url=f"https://ec.europa.eu/eurostat/databrowser/view/{dataset}/default/table?lang=en",
         fetched=today, observations=obs, available=bool(obs),
