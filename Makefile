@@ -18,7 +18,7 @@ validate:
 
 publish-check:
 	curl -L https://djiangwei.github.io/macro-dashboard/ | rg -n "v4 Framework|Hungary|macro-dashboard"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/hungary_2026Q2_v4.html | rg -n "79/79|Source charts reused|chart-financial_stability-bank_car"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/hungary_2026Q2_v4.html | rg -n "100/100|Source charts reused|chart-financial_stability-bank_car"
 
 publish:
 	@if [ -z "$(MSG)" ]; then echo 'Usage: make publish MSG="commit message"'; exit 2; fi

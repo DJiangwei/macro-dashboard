@@ -1,5 +1,5 @@
 version: 1
-expected_count: 79
+expected_count: 100
 indicators:
 - section_id: real_activity
   indicator_id: real_gdp_yoy
@@ -141,6 +141,36 @@ indicators:
   peers: false
   quality_status: watch
   quality_note: Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy.
+- section_id: real_activity
+  indicator_id: gross_fixed_capital
+  label: Gross Fixed Capital Formation
+  unit: '% GDP'
+  source: World Bank WDI / Eurostat
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Investment share of GDP is annual in the current public adapter; pair with quarterly GFCF growth when timing matters.
+- section_id: real_activity
+  indicator_id: construction_production
+  label: Construction Production, YoY
+  unit: '% YoY'
+  source: Eurostat STS / proxy pending
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Construction-production coverage is being wired through Eurostat STS; proxy fill is used when country series are unavailable.
+- section_id: real_activity
+  indicator_id: fdi_inflows
+  label: FDI Inflows, % GDP
+  unit: '% GDP'
+  source: World Bank WDI / ECB BoP
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Annual FDI inflows can be volatile and revised; use as structural financing context rather than high-frequency flow timing.
 - section_id: prices_wages
   indicator_id: cpi_yoy
   label: Headline CPI/HICP, YoY
@@ -261,6 +291,26 @@ indicators:
   peers: false
   quality_status: watch
   quality_note: Minimum wage is statutory and may have multiple intra-year changes; annual chart is a simplified policy marker.
+- section_id: prices_wages
+  indicator_id: inflation_expectations
+  label: Consumer Inflation Expectations
+  unit: Balance / %
+  source: ECB consumer survey / proxy pending
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Consumer inflation expectations require a stable survey feed; proxy fill is used until ECB/national survey adapters are wired.
+- section_id: prices_wages
+  indicator_id: breakeven_5y5y
+  label: 5y5y Inflation Swap Rate
+  unit: '%'
+  source: Bloomberg/Refinitiv required
+  frequency: daily
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: 5y5y inflation swaps are vendor market data; proxy fill is only a framework placeholder.
 - section_id: external
   indicator_id: current_account_pct_gdp
   label: Current Account, % GDP
@@ -361,6 +411,36 @@ indicators:
   peers: false
   quality_status: low_confidence
   quality_note: Implied volatility generally requires a market-data vendor; proxy fill is only a placeholder for the framework slot.
+- section_id: external
+  indicator_id: iip_position
+  label: Net International Investment Position
+  unit: '% GDP'
+  source: IMF / World Bank proxy pending
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: NIIP requires a robust BoP/IIP feed; proxy fill is used until Eurostat/IMF IIP adapter is wired.
+- section_id: external
+  indicator_id: gross_ext_debt
+  label: Gross External Debt
+  unit: '% GNI'
+  source: World Bank IDS
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: World Bank external debt is annual and often reported versus GNI; compare cautiously against proposal's % GDP framing.
+- section_id: external
+  indicator_id: bis_cross_border
+  label: BIS Cross-Border Bank Claims
+  unit: USD bn
+  source: BIS locational banking statistics / proxy pending
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: BIS cross-border claims require a dedicated BIS LBS adapter; proxy fill is used until the adapter is wired.
 - section_id: fiscal_sovereign
   indicator_id: fiscal_balance_pct_gdp
   label: General Government Balance, % GDP
@@ -491,6 +571,36 @@ indicators:
   peers: false
   quality_status: low_confidence
   quality_note: Current public implementation uses 10Y minus short-term rate until a true 2Y yield feed is wired.
+- section_id: fiscal_sovereign
+  indicator_id: sovereign_rating
+  label: Sovereign Credit Rating
+  unit: notch score
+  source: Rating agencies / curated proxy
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Ratings are event-driven and agency-specific; numeric notch proxy is a placeholder until curated rating history is maintained.
+- section_id: fiscal_sovereign
+  indicator_id: eu_funds_absorption
+  label: EU Funds Absorption Rate
+  unit: '% allocation'
+  source: EU Commission / curated proxy
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: EU funds absorption is programme-cycle specific; proxy fill is used until a curated Commission tracker is wired.
+- section_id: fiscal_sovereign
+  indicator_id: edp_status
+  label: Excessive Deficit Procedure Status
+  unit: score
+  source: EU Commission / curated proxy
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: EDP status is qualitative and event-driven; numeric proxy is a policy-risk marker, not a statistical series.
 - section_id: monetary_financial
   indicator_id: policy_rate
   label: Policy / Short-Term Rate
@@ -601,6 +711,26 @@ indicators:
   peers: false
   quality_status: watch
   quality_note: Public implementation is carry-only using local short rate less EUR short-rate proxy; excludes spot FX movement and transaction costs.
+- section_id: monetary_financial
+  indicator_id: cb_balance_sheet_gdp
+  label: Central Bank Balance Sheet, % GDP
+  unit: '% GDP'
+  source: National CB / proxy pending
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Central-bank balance-sheet series require country-specific adapters; proxy fill is used until local balance-sheet data is wired.
+- section_id: monetary_financial
+  indicator_id: cb_forward_guidance
+  label: Central Bank Guidance Score
+  unit: hawk/dove score
+  source: CB minutes / curated proxy
+  frequency: monthly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Forward guidance is qualitative text data; numeric proxy is a placeholder until a curated NLP/minutes workflow is wired.
 - section_id: markets_valuation
   indicator_id: equity_index
   label: Headline Equity Index
@@ -671,6 +801,26 @@ indicators:
   peers: true
   quality_status: watch
   quality_note: Derived monthly spread versus Germany 10Y benchmark; check maturity matching and market convention.
+- section_id: markets_valuation
+  indicator_id: embi_spread
+  label: EMBI / External Sovereign Spread
+  unit: bps
+  source: JPMorgan required
+  frequency: daily
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: EMBI/EMBIG spreads require licensed JPMorgan/vendor data; proxy fill is a framework placeholder.
+- section_id: markets_valuation
+  indicator_id: foreign_ownership_bonds
+  label: Foreign Ownership of Local Bonds
+  unit: '%'
+  source: National CB / debt office proxy pending
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: Foreign ownership data is country-specific and often from national debt offices; proxy fill is used until adapters are wired.
 - section_id: financial_stability
   indicator_id: bank_car
   label: Bank Capital Ratio
@@ -711,6 +861,46 @@ indicators:
   peers: false
   quality_status: watch
   quality_note: Uses bank credit to bank deposits as a loan/deposit proxy; deposit perimeter differs by regulator.
+- section_id: financial_stability
+  indicator_id: bank_liquidity_coverage
+  label: Bank Liquidity Coverage Ratio
+  unit: '%'
+  source: National CB / proxy pending
+  frequency: quarterly
+  chart: line
+  peers: false
+  quality_status: low_confidence
+  quality_note: LCR is usually available from national supervisory releases; proxy fill is used until per-country adapters are wired.
+- section_id: financial_stability
+  indicator_id: bank_nim
+  label: Bank Net Interest Margin
+  unit: '%'
+  source: World Bank GFDD / national CB
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: World Bank GFDD net interest margin is annual and lagged; compare with local supervisory releases.
+- section_id: financial_stability
+  indicator_id: household_debt_pct_gdp
+  label: Household Debt, % GDP
+  unit: '% GDP'
+  source: World Bank / Eurostat proxy
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Household debt proxy may use household final consumption expenditure or credit aggregates depending on data availability; verify perimeter.
+- section_id: financial_stability
+  indicator_id: corp_debt_pct_gdp
+  label: Corporate Debt, % GDP
+  unit: '% GDP'
+  source: World Bank / BIS proxy
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Corporate debt proxy uses available credit aggregates where sector-specific NFC debt is unavailable; compare with BIS credit tables.
 - section_id: demographics
   indicator_id: population_total
   label: Total Population
@@ -751,6 +941,26 @@ indicators:
   peers: false
   quality_status: verified
   quality_note: Eurostat population structure indicator, annual median age of population.
+- section_id: demographics
+  indicator_id: net_migration
+  label: Net Migration
+  unit: people
+  source: World Bank / Eurostat
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: watch
+  quality_note: Net migration is annual and revision-prone; diaspora and EU mobility effects can be undercounted.
+- section_id: demographics
+  indicator_id: fertility_rate
+  label: Total Fertility Rate
+  unit: children per woman
+  source: World Bank / Eurostat
+  frequency: annual
+  chart: line
+  peers: false
+  quality_status: verified
+  quality_note: Fertility is slow-moving but may be revised after demographic updates.
 - section_id: political_economy
   indicator_id: wgi_government_effectiveness
   label: WGI Government Effectiveness
