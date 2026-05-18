@@ -155,12 +155,12 @@ indicators:
   indicator_id: construction_production
   label: Construction Production, YoY
   unit: '% YoY'
-  source: Eurostat STS / proxy pending
+  source: Eurostat STS
   frequency: monthly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Construction-production coverage is being wired through Eurostat STS; proxy fill is used when country series are unavailable.
+  quality_status: watch
+  quality_note: Eurostat construction production, calendar and seasonally adjusted; country coverage and rebasing should be checked.
 - section_id: real_activity
   indicator_id: fdi_inflows
   label: FDI Inflows, % GDP
@@ -324,13 +324,13 @@ indicators:
 - section_id: prices_wages
   indicator_id: inflation_expectations
   label: Consumer Inflation Expectations
-  unit: Balance / %
-  source: ECB consumer survey / proxy pending
+  unit: Balance
+  source: Eurostat / European Commission consumer survey
   frequency: monthly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Consumer inflation expectations require a stable survey feed; proxy fill is used until ECB/national survey adapters are wired.
+  quality_status: watch
+  quality_note: Consumer price-trend expectations balance for the next 12 months; survey measure, not a market-implied inflation forecast.
 - section_id: prices_wages
   indicator_id: breakeven_5y5y
   label: 5y5y Inflation Swap Rate
@@ -345,12 +345,12 @@ indicators:
   indicator_id: house_price_index
   label: House Price Index, YoY
   unit: '% YoY'
-  source: Eurostat HPI / proxy pending
+  source: Eurostat HPI
   frequency: quarterly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: House-price data should use Eurostat HPI once adapter dimensions are fixed; proxy fill is a placeholder.
+  quality_status: watch
+  quality_note: Eurostat all-dwellings house-price index, annual rate of change; quarterly and revision-prone.
 - section_id: prices_wages
   indicator_id: administered_prices
   label: Administered Prices Share
@@ -435,12 +435,12 @@ indicators:
   indicator_id: neer
   label: Nominal Effective Exchange Rate
   unit: Index
-  source: BIS / ECB proxy pending
-  frequency: monthly
+  source: World Bank GEM
+  frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: NEER requires a stable BIS/ECB effective-exchange-rate feed; proxy fill is used until the adapter is wired.
+  quality_status: watch
+  quality_note: World Bank Global Economic Monitor NEER index; annual and not a high-frequency trading series.
 - section_id: external
   indicator_id: short_term_ext_debt
   label: Short-Term External Debt / Reserves
@@ -495,12 +495,12 @@ indicators:
   indicator_id: energy_import_dependency
   label: Energy Import Dependency
   unit: '%'
-  source: Eurostat energy balances / proxy pending
+  source: Eurostat energy balances
   frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Energy import dependency requires a Eurostat energy-balance adapter; proxy fill is used until the source dimensions are wired.
+  quality_status: watch
+  quality_note: Eurostat total energy import dependency; annual and affected by stock changes, domestic production, and methodology revisions.
 - section_id: external
   indicator_id: gas_storage_level
   label: Natural Gas Storage Fill Level
@@ -1095,12 +1095,12 @@ indicators:
   indicator_id: pension_spending_pct_gdp
   label: Pension Expenditure, % GDP
   unit: '% GDP'
-  source: Eurostat / OECD proxy pending
+  source: Eurostat social protection
   frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Pension-spending data requires a social-protection/public-finance adapter and projection vintage tracking; proxy fill is a placeholder.
+  quality_status: watch
+  quality_note: Eurostat old-age pension expenditure, % GDP; historical social-protection series, not a forward projection.
 - section_id: political_economy
   indicator_id: wgi_government_effectiveness
   label: WGI Government Effectiveness

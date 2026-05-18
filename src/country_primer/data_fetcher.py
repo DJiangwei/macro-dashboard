@@ -50,6 +50,7 @@ FREQUENCY_STALE_DAYS = {
     "daily": 14,
     "monthly": 125,
     "quarterly": 220,
+    "semiannual": 420,
     "annual": 900,
 }
 
@@ -58,6 +59,7 @@ FREQUENCY_GAP_DAYS = {
     "daily": 10,
     "monthly": 70,
     "quarterly": 130,
+    "semiannual": 250,
     "annual": 500,
 }
 
@@ -659,7 +661,7 @@ class EurostatFetcher(BaseFetcher):
             "dataset": "ei_bsin_q_r2",
             "freq": "Q",
             "since": "2018",
-            "params": {"indic": "BS-CU-Q", "s_adj": "NSA"},
+            "params": {"indic": "BS-ICU-PC", "s_adj": "SA"},
             "unit": "%",
         },
         "employment_growth": {
@@ -680,16 +682,43 @@ class EurostatFetcher(BaseFetcher):
             "dataset": "jvs_q_nace2",
             "freq": "Q",
             "since": "2018",
-            "params": {"nace_r2": "B-S", "sizeclas": "TOTAL", "indic_jv": "JOBVAC_RATE", "s_adj": "NSA"},
+            "params": {"nace_r2": "B-S", "sizeclas": "TOTAL", "indic_em": "JVR", "s_adj": "SA"},
             "unit": "%",
         },
         "construction_production": {
             "dataset": "sts_copr_m",
             "freq": "M",
             "since": "2018",
-            "params": {"nace_r2": "F", "indic_bt": "PRD", "s_adj": "SCA", "unit": "I21"},
+            "params": {"nace_r2": "F", "indic_bt": "PRD", "s_adj": "CA", "unit": "PCH_SM"},
             "unit": "% YoY",
-            "derive_yoy": True,
+        },
+        "inflation_expectations": {
+            "dataset": "ei_bsco_m",
+            "freq": "M",
+            "since": "2018",
+            "params": {"indic": "BS-MP-NY", "s_adj": "SA", "unit": "BAL"},
+            "unit": "Balance",
+        },
+        "house_price_index": {
+            "dataset": "prc_hpi_q",
+            "freq": "Q",
+            "since": "2018",
+            "params": {"purchase": "TOTAL", "unit": "RCH_A"},
+            "unit": "% YoY",
+        },
+        "energy_import_dependency": {
+            "dataset": "nrg_ind_id",
+            "freq": "A",
+            "since": "2010",
+            "params": {"siec": "TOTAL", "unit": "PC"},
+            "unit": "%",
+        },
+        "pension_spending_pct_gdp": {
+            "dataset": "spr_exp_pens",
+            "freq": "A",
+            "since": "2010",
+            "params": {"spdepb": "OLD", "spdepm": "TOTAL", "unit": "PC_GDP"},
+            "unit": "% GDP",
         },
         "avg_wage_yoy": {
             "dataset": "lc_lci_r2_q",
@@ -707,9 +736,9 @@ class EurostatFetcher(BaseFetcher):
         },
         "minimum_wage": {
             "dataset": "earn_mw_cur",
-            "freq": "A",
+            "freq": "S",
             "since": "2010",
-            "params": {"currency": "EUR", "indic_se": "MW_CUR"},
+            "params": {"currency": "EUR"},
             "unit": "EUR/month",
         },
         "policy_rate": {
@@ -1611,6 +1640,7 @@ class WorldBankFetcher(BaseFetcher):
         "income_balance": ("BN.GSR.FCTY.CD", 1 / 1_000_000_000, "USD bn"),
         "gross_ext_debt": ("DT.DOD.DECT.GN.ZS", 1.0, "% GNI"),
         "reer": ("REER", 1.0, "Index"),
+        "neer": ("NEER", 1.0, "Index"),
         "m3_yoy": ("FM.LBL.BMNY.ZG", 1.0, "% YoY"),
         "private_credit_yoy": ("FM.AST.PRVT.ZG.M3", 1.0, "% YoY"),
         "gov_revenue_pct_gdp": ("GC.REV.XGRT.GD.ZS", 1.0, "% GDP"),
