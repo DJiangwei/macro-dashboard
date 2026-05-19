@@ -733,7 +733,7 @@ class EurostatFetcher(BaseFetcher):
             "dataset": "namq_10_lp_ulc",
             "freq": "Q",
             "since": "2018",
-            "params": {"na_item": "ULC_HW", "unit": "PCH_SM", "s_adj": "SCA"},
+            "params": {"na_item": "NULC_HW", "unit": "PCH_SM", "s_adj": "NSA"},
             "unit": "% YoY",
         },
         "minimum_wage": {
