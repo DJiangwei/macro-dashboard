@@ -465,12 +465,12 @@ indicators:
   indicator_id: iip_position
   label: Net International Investment Position
   unit: '% GDP'
-  source: IMF / World Bank proxy pending
-  frequency: annual
+  source: Eurostat NIIP
+  frequency: quarterly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: NIIP requires a robust BoP/IIP feed; proxy fill is used until Eurostat/IMF IIP adapter is wired.
+  quality_status: watch
+  quality_note: Eurostat quarterly net international investment position versus rest of world, expressed as % of GDP; BoP/IIP positions are revision-prone.
 - section_id: external
   indicator_id: gross_ext_debt
   label: Gross External Debt
@@ -745,22 +745,22 @@ indicators:
   indicator_id: lending_rate_household
   label: Household Lending Rate
   unit: '%'
-  source: ECB SDW / proxy pending
+  source: ECB MIR via DB.nomics
   frequency: monthly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: New-business household lending rates require an ECB SDW/national-bank adapter; proxy fill is used until wired.
+  quality_status: watch
+  quality_note: ECB MIR local-currency new-business household consumption loan rate; excludes revolving loans and overdrafts, so compare carefully with broader household lending concepts.
 - section_id: monetary_financial
   indicator_id: lending_rate_corp
   label: Corporate Lending Rate
   unit: '%'
-  source: ECB SDW / proxy pending
+  source: ECB MIR via DB.nomics
   frequency: monthly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: New-business NFC lending rates require an ECB SDW/national-bank adapter; proxy fill is used until wired.
+  quality_status: watch
+  quality_note: ECB MIR local-currency new-business non-financial corporate loan rate; excludes revolving loans and overdrafts.
 - section_id: monetary_financial
   indicator_id: fx_vs_eur
   label: FX vs EUR
@@ -825,12 +825,12 @@ indicators:
   indicator_id: mortgage_rate_new
   label: New Mortgage Lending Rate
   unit: '%'
-  source: ECB SDW / national CB proxy pending
+  source: ECB MIR via DB.nomics
   frequency: monthly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: New mortgage rate data requires an ECB/national-bank interest-rate adapter; proxy fill is a placeholder.
+  quality_status: watch
+  quality_note: ECB MIR local-currency new-business lending for house purchase; annualised agreed rate / narrowly defined effective rate.
 - section_id: markets_valuation
   indicator_id: equity_index
   label: Headline Equity Index
@@ -975,12 +975,12 @@ indicators:
   indicator_id: bank_liquidity_coverage
   label: Bank Liquidity Coverage Ratio
   unit: '%'
-  source: National CB / proxy pending
+  source: IMF FSI via DB.nomics
   frequency: quarterly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: LCR is usually available from national supervisory releases; proxy fill is used until per-country adapters are wired.
+  quality_status: watch
+  quality_note: IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries.
 - section_id: financial_stability
   indicator_id: bank_nim
   label: Bank Net Interest Margin

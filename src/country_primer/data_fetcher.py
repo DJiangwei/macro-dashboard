@@ -69,6 +69,8 @@ IMF_DATAMAPPER_URL = "https://www.imf.org/external/datamapper/api/v1/{indicator}
 BIS_CREDIT_GAP_URL = "https://data.bis.org/static/bulk/WS_CREDIT_GAP_csv_flat.zip"
 BIS_CBTA_URL = "https://data.bis.org/static/bulk/WS_CBTA_csv_flat.zip"
 DBNOMICS_BIS_LBS_SERIES_URL = "https://api.db.nomics.world/v22/series/BIS/WS_LBS_D_PUB/{series_code}?observations=1"
+DBNOMICS_IMF_FSI_SERIES_URL = "https://api.db.nomics.world/v22/series/IMF/FSI/{series_code}?observations=1"
+DBNOMICS_ECB_MIR_SERIES_URL = "https://api.db.nomics.world/v22/series/ECB/MIR/{series_code}?observations=1"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
@@ -715,6 +717,13 @@ class EurostatFetcher(BaseFetcher):
             "since": "2010",
             "params": {"siec": "TOTAL", "unit": "PC"},
             "unit": "%",
+        },
+        "iip_position": {
+            "dataset": "tipsii40",
+            "freq": "Q",
+            "since": "2018",
+            "params": {"unit": "PC_GDP", "s_adj": "NSA", "bop_item": "FA", "stk_flow": "N_LE", "partner": "WRL_REST"},
+            "unit": "% GDP",
         },
         "pension_spending_pct_gdp": {
             "dataset": "spr_exp_pens",
@@ -1455,6 +1464,28 @@ def _fetch_dbnomics_bis_series(series_code: str) -> dict:
     return payload
 
 
+def _fetch_dbnomics_imf_fsi_series(series_code: str) -> dict:
+    cache_file = CACHE_DIR / f"dbnomics_imf_fsi_{series_code.replace('.', '_')}.json"
+    if cache_file.exists():
+        return json.loads(cache_file.read_text())
+    response = requests.get(DBNOMICS_IMF_FSI_SERIES_URL.format(series_code=series_code), timeout=30)
+    response.raise_for_status()
+    payload = response.json()
+    cache_file.write_text(json.dumps(payload))
+    return payload
+
+
+def _fetch_dbnomics_ecb_mir_series(series_code: str) -> dict:
+    cache_file = CACHE_DIR / f"dbnomics_ecb_mir_{series_code.replace('.', '_')}.json"
+    if cache_file.exists():
+        return json.loads(cache_file.read_text())
+    response = requests.get(DBNOMICS_ECB_MIR_SERIES_URL.format(series_code=series_code), timeout=30)
+    response.raise_for_status()
+    payload = response.json()
+    cache_file.write_text(json.dumps(payload))
+    return payload
+
+
 def _load_bis_cbta_data() -> dict[str, list[tuple[str, float]]]:
     """Load central-bank total assets from the BIS CBTA public bulk ZIP."""
     global _BIS_CBTA_CACHE
@@ -1588,6 +1619,136 @@ class WorldBankFallbackFetcher(BaseFetcher):
                 f"{row.get('quality_note')} Methodology fallback: World Bank annual credit/GDP "
                 "minus trailing average, not BIS HP-filter credit gap."
             ).strip()
+        return rows
+
+
+class IMFFinancialSoundnessFetcher(BaseFetcher):
+    """IMF FSI adapter through DB.nomics narrow series API."""
+
+    CONFIGS = {
+        "bank_liquidity_coverage": {
+            "indicator": "FSLCR_PT",
+            "unit": "%",
+            "note": "IMF Financial Soundness Indicator: deposit-taker liquidity coverage ratio, percent.",
+        },
+    }
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        cfg = self.CONFIGS.get(spec.indicator_id)
+        if not cfg:
+            return []
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        series_code = f"Q.{meta['iso2']}.{cfg['indicator']}"
+        try:
+            payload = _fetch_dbnomics_imf_fsi_series(series_code)
+        except (OSError, requests.RequestException, json.JSONDecodeError, KeyError, IndexError):
+            return []
+        doc = payload.get("series", {}).get("docs", [{}])[0]
+        observations: list[tuple[str, float]] = []
+        for period, value in zip(doc.get("period") or [], doc.get("value") or []):
+            date = _bis_quarter_to_date(str(period))
+            if not date or date < "2010-01-01":
+                continue
+            try:
+                numeric = float(value)
+            except (TypeError, ValueError):
+                continue
+            if math.isfinite(numeric):
+                observations.append((date, numeric))
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="IMF FSI via DB.nomics",
+            series_id=series_code,
+            unit=cfg["unit"],
+            frequency="quarterly",
+            last_update=observations[-1][0],
+            source_url="https://data.imf.org/en/Datasets/FSIC",
+            observations=observations,
+            available=True,
+            note=cfg["note"],
+        ))
+        rows = _series_to_rows(series, spec, unit=cfg["unit"], note="DB.nomics mirror is used for narrow API access.")
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+
+class ECBMIRFetcher(BaseFetcher):
+    """ECB MFI interest-rate statistics adapter through DB.nomics."""
+
+    CONFIGS = {
+        "mortgage_rate_new": {
+            "bs_item": "A2C",
+            "sector": "2250",
+            "note": "New-business household loans for house purchase, excluding revolving loans and overdrafts.",
+        },
+        "lending_rate_household": {
+            "bs_item": "A2B",
+            "sector": "2250",
+            "note": "New-business household consumption loans, excluding revolving loans and overdrafts.",
+        },
+        "lending_rate_corp": {
+            "bs_item": "A2A",
+            "sector": "2240",
+            "note": "New-business loans to non-financial corporations, excluding revolving loans and overdrafts.",
+        },
+    }
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        cfg = self.CONFIGS.get(spec.indicator_id)
+        if not cfg:
+            return []
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        series_code = f"M.{meta['iso2']}.B.{cfg['bs_item']}.A.R.A.{cfg['sector']}.{meta['currency']}.N"
+        try:
+            payload = _fetch_dbnomics_ecb_mir_series(series_code)
+        except (OSError, requests.RequestException, json.JSONDecodeError, KeyError, IndexError):
+            return []
+        doc = payload.get("series", {}).get("docs", [{}])[0]
+        observations: list[tuple[str, float]] = []
+        for period, value in zip(doc.get("period") or [], doc.get("value") or []):
+            if len(str(period)) != 7:
+                continue
+            date = f"{period}-01"
+            if date < "2018-01-01":
+                continue
+            try:
+                numeric = float(value)
+            except (TypeError, ValueError):
+                continue
+            if math.isfinite(numeric):
+                observations.append((date, numeric))
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="ECB MIR via DB.nomics",
+            series_id=series_code,
+            unit="%",
+            frequency="monthly",
+            last_update=observations[-1][0],
+            source_url="https://data.ecb.europa.eu/data/datasets/MIR",
+            observations=observations,
+            available=True,
+            note=f"ECB MFI interest-rate statistics: {cfg['note']} Annualised agreed rate / narrowly defined effective rate in local currency.",
+        ))
+        rows = _series_to_rows(series, spec, unit="%", note="DB.nomics mirror is used for narrow API access.")
+        for row in rows:
+            row["quality_status"] = "watch"
         return rows
 
 
@@ -2014,6 +2175,8 @@ class DataPipeline:
             YahooMarketFetcher(),
             BISFetcher(),
             WorldBankFallbackFetcher(),
+            IMFFinancialSoundnessFetcher(),
+            ECBMIRFetcher(),
             ManualIndicatorFetcher(),
             NationalCBFetcher(),
             ProxyFetcher(),
