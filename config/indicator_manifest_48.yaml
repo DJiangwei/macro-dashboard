@@ -1014,13 +1014,13 @@ indicators:
 - section_id: financial_stability
   indicator_id: real_estate_price_gap
   label: Real Estate Price Gap
-  unit: '% deviation'
-  source: ECB / BIS proxy pending
+  unit: pp deviation
+  source: Derived from Eurostat House Price Index
   frequency: quarterly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Residential real-estate valuation gaps require model-based ECB/BIS inputs; proxy fill is a placeholder.
+  quality_status: watch
+  quality_note: Official-data pressure proxy using Eurostat residential house-price growth minus a trailing trend; not a formal ECB/BIS valuation-gap model.
 - section_id: financial_stability
   indicator_id: foreign_bank_share
   label: Foreign-Owned Bank Share

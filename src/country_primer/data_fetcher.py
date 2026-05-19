@@ -814,6 +814,8 @@ class DerivedMacroFetcher(BaseFetcher):
             return self._yield_curve_slope(country, spec)
         if spec.indicator_id == "carry_trade_return":
             return self._carry_trade_return(country, spec)
+        if spec.indicator_id == "real_estate_price_gap":
+            return self._real_estate_price_gap(country, spec)
         return []
 
     def _gdp_demand_composite(self, country: str, spec: IndicatorSpec) -> list[dict]:
@@ -977,6 +979,57 @@ class DerivedMacroFetcher(BaseFetcher):
             note="Ex-post real policy-stance proxy: Eurostat short-term interest rate minus headline HICP inflation.",
         ))
         return _series_to_rows(series, spec, unit="%", note="Derived from Eurostat short-term interest-rate and HICP adapters.")
+
+    def _real_estate_price_gap(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        hpi_yoy = fetch_eurostat(
+            "prc_hpi_q",
+            meta["iso2"],
+            "house_price_index",
+            "House Price Index, YoY",
+            country,
+            freq="Q",
+            since="2015",
+            extra_params={"purchase": "TOTAL", "unit": "RCH_A"},
+            unit_label="% YoY",
+        )
+        if not hpi_yoy.available or len(hpi_yoy.observations) < 12:
+            return []
+
+        observations: list[tuple[str, float]] = []
+        for idx, (date, value) in enumerate(hpi_yoy.observations):
+            if idx < 11:
+                continue
+            window = [float(v) for _, v in hpi_yoy.observations[max(0, idx - 19): idx + 1]]
+            trend = sum(window) / len(window)
+            observations.append((date, float(value) - trend))
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Derived from Eurostat House Price Index",
+            series_id="prc_hpi_q:TOTAL:RCH_A minus trailing trend",
+            unit="pp deviation",
+            frequency="quarterly",
+            last_update=observations[-1][0] if observations else "",
+            source_url="https://ec.europa.eu/eurostat/databrowser/view/prc_hpi_q/default/table?lang=en",
+            observations=observations,
+            available=bool(observations),
+            note="Residential HPI YoY growth minus trailing average; official-data valuation-pressure proxy, not an ECB/BIS model gap.",
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="pp deviation",
+            note="Derived from Eurostat HPI growth; use as directional real-estate pressure, not a formal valuation-gap estimate.",
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
 
     def _sov_spread_vs_bund(self, country: str, spec: IndicatorSpec) -> list[dict]:
         countries = load_countries()
