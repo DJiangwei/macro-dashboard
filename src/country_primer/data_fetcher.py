@@ -67,8 +67,10 @@ FREQUENCY_GAP_DAYS = {
 WORLD_BANK_ESG_URL = "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx"
 IMF_DATAMAPPER_URL = "https://www.imf.org/external/datamapper/api/v1/{indicator}/{iso3}"
 BIS_CREDIT_GAP_URL = "https://data.bis.org/static/bulk/WS_CREDIT_GAP_csv_flat.zip"
+BIS_CBTA_URL = "https://data.bis.org/static/bulk/WS_CBTA_csv_flat.zip"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
+_BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _XLSX_NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 CONFIG_DIR = Path(__file__).resolve().parents[2] / "config"
 
@@ -537,7 +539,7 @@ def proxy_rows(country: str, spec: IndicatorSpec) -> list[dict]:
             "label": spec.label,
             "section_id": spec.section_id,
             "unit": spec.unit,
-            "source": spec.source,
+            "source": f"Transparent proxy fill; target source: {spec.source}",
             "series_id": f"proxy:{spec.indicator_id}",
             "quality_status": "low_confidence" if spec.quality_status == "low_confidence" else "watch",
             "quality_note": f"Transparent proxy fill. {spec.quality_note}",
@@ -1183,8 +1185,13 @@ class ECBFetcher(BaseFetcher):
 
 class BISFetcher(BaseFetcher):
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
-        if spec.indicator_id != "credit_to_gdp_gap":
-            return []
+        if spec.indicator_id == "credit_to_gdp_gap":
+            return self._credit_to_gdp_gap(country, spec)
+        if spec.indicator_id == "cb_balance_sheet_gdp":
+            return self._central_bank_balance_sheet_gdp(country, spec)
+        return []
+
+    def _credit_to_gdp_gap(self, country: str, spec: IndicatorSpec) -> list[dict]:
         countries = load_countries()
         meta = countries.get(country)
         if not meta:
@@ -1211,6 +1218,62 @@ class BISFetcher(BaseFetcher):
             note="BIS credit-to-GDP gap: private non-financial sector credit ratio minus HP-filter trend.",
         ))
         return _series_to_rows(series, spec, unit="pp", note="BIS bulk CSV data type C: actual minus trend.")
+
+    def _central_bank_balance_sheet_gdp(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        try:
+            assets = _load_bis_cbta_data().get(meta["iso2"], [])
+        except (OSError, requests.RequestException, zipfile.BadZipFile, UnicodeDecodeError, csv.Error):
+            return []
+        assets = [(date, value) for date, value in assets if date >= "2010-01-01"]
+        if not assets:
+            return []
+
+        gdp = fetch_wb(meta["iso2"], "NY.GDP.MKTP.CD", "nominal_gdp_usd", "GDP, current US$", country, start=2010, end=2026)
+        if not gdp.available:
+            gdp = fetch_wb(meta["iso3"], "NY.GDP.MKTP.CD", "nominal_gdp_usd", "GDP, current US$", country, start=2010, end=2026)
+        if not gdp.available:
+            return []
+
+        gdp_by_year = {date[:4]: float(value) / 1_000_000_000 for date, value in gdp.observations if value}
+        observations: list[tuple[str, float]] = []
+        for date, assets_usd_bn in assets:
+            eligible_years = [year for year in gdp_by_year if year <= date[:4]]
+            if not eligible_years:
+                continue
+            gdp_usd_bn = gdp_by_year[max(eligible_years)]
+            if gdp_usd_bn <= 0:
+                continue
+            observations.append((date, float(assets_usd_bn) / gdp_usd_bn * 100.0))
+
+        if not observations:
+            return []
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="BIS CBTA / World Bank WDI",
+            series_id="WS_CBTA:USD / NY.GDP.MKTP.CD",
+            unit="% GDP",
+            frequency="monthly",
+            last_update=observations[-1][0],
+            source_url=BIS_CBTA_URL,
+            observations=observations,
+            available=True,
+            note="BIS central bank total assets in USD billions divided by World Bank nominal GDP in current USD.",
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="% GDP",
+            note="Derived ratio: BIS CBTA numerator over annual World Bank GDP denominator.",
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
 
 
 def _load_bis_credit_gap_data() -> dict[str, list[tuple[str, float]]]:
@@ -1260,6 +1323,77 @@ def _load_bis_credit_gap_data() -> dict[str, list[tuple[str, float]]]:
     for country_code, observations in data.items():
         observations.sort()
     _BIS_CREDIT_GAP_CACHE = data
+    return data
+
+
+def _load_bis_cbta_data() -> dict[str, list[tuple[str, float]]]:
+    """Load central-bank total assets from the BIS CBTA public bulk ZIP."""
+    global _BIS_CBTA_CACHE
+    if _BIS_CBTA_CACHE is not None:
+        return _BIS_CBTA_CACHE
+
+    zip_path = CACHE_DIR / "bis_ws_cbta_csv_flat.zip"
+    if zip_path.exists():
+        zip_bytes = zip_path.read_bytes()
+    else:
+        response = requests.get(BIS_CBTA_URL, timeout=45)
+        response.raise_for_status()
+        zip_bytes = response.content
+        zip_path.write_bytes(zip_bytes)
+
+    def period_to_date(period: str) -> str | None:
+        if "-Q" in period:
+            year, quarter = period.split("-Q", 1)
+            month_day = {"1": "03-31", "2": "06-30", "3": "09-30", "4": "12-31"}.get(quarter)
+            if month_day and year.isdigit():
+                return f"{year}-{month_day}"
+        if len(period) == 7 and period[4] == "-" and period[:4].isdigit() and period[5:7].isdigit():
+            return f"{period}-01"
+        if len(period) == 4 and period.isdigit():
+            return f"{period}-12-31"
+        return None
+
+    rows_by_country_date: dict[tuple[str, str], tuple[int, float]] = {}
+    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as archive:
+        csv_name = archive.namelist()[0]
+        text = archive.read(csv_name).decode("utf-8")
+        reader = csv.DictReader(text.splitlines())
+        for row in reader:
+            country_code = row.get("REF_AREA:Reference area", "").split(":", 1)[0]
+            unit_code = row.get("UNIT_MEASURE:Unit of measure", "").split(":", 1)[0]
+            if not country_code or unit_code != "USD":
+                continue
+            date = period_to_date(row.get("TIME_PERIOD:Time period or range", ""))
+            if not date:
+                continue
+            try:
+                value = float(row.get("OBS_VALUE:Observation Value", ""))
+            except ValueError:
+                continue
+
+            method_code = row.get("COMP_METHOD:Compilation methodology", "").split(":", 1)[0]
+            transformation_code = row.get("TRANSFORMATION:Transformation", "").split(":", 1)[0]
+            frequency_code = row.get("FREQ:Frequency", "").split(":", 1)[0]
+            score = 0
+            if method_code == "B":
+                score += 4
+            if transformation_code == "B":
+                score += 2
+            if frequency_code == "M":
+                score += 2
+            elif frequency_code == "Q":
+                score += 1
+
+            key = (country_code, date)
+            if key not in rows_by_country_date or score > rows_by_country_date[key][0]:
+                rows_by_country_date[key] = (score, value)
+
+    data: dict[str, list[tuple[str, float]]] = {}
+    for (country_code, date), (_, value) in rows_by_country_date.items():
+        data.setdefault(country_code, []).append((date, value))
+    for observations in data.values():
+        observations.sort()
+    _BIS_CBTA_CACHE = data
     return data
 
 

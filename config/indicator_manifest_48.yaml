@@ -16,7 +16,7 @@ indicators:
   label: Real GDP Growth, QoQ SA
   unit: '% QoQ'
   source: Eurostat / national accounts
-  frequency: quarterly
+  frequency: monthly
   chart: line
   peers: false
   quality_status: watch
@@ -795,12 +795,12 @@ indicators:
   indicator_id: cb_balance_sheet_gdp
   label: Central Bank Balance Sheet, % GDP
   unit: '% GDP'
-  source: National CB / proxy pending
+  source: BIS CBTA / World Bank WDI
   frequency: monthly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Central-bank balance-sheet series require country-specific adapters; proxy fill is used until local balance-sheet data is wired.
+  quality_status: watch
+  quality_note: Derived from BIS central-bank total assets in USD divided by World Bank current-USD GDP; monthly numerator is paired with annual GDP, so use as a balance-sheet scale proxy rather than exact national-account ratio.
 - section_id: monetary_financial
   indicator_id: cb_forward_guidance
   label: Central Bank Guidance Score
