@@ -68,6 +68,7 @@ WORLD_BANK_ESG_URL = "https://esgdata.worldbank.org/dist/content/data/download/e
 IMF_DATAMAPPER_URL = "https://www.imf.org/external/datamapper/api/v1/{indicator}/{iso3}"
 BIS_CREDIT_GAP_URL = "https://data.bis.org/static/bulk/WS_CREDIT_GAP_csv_flat.zip"
 BIS_CBTA_URL = "https://data.bis.org/static/bulk/WS_CBTA_csv_flat.zip"
+DBNOMICS_BIS_LBS_SERIES_URL = "https://api.db.nomics.world/v22/series/BIS/WS_LBS_D_PUB/{series_code}?observations=1"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
@@ -1242,6 +1243,8 @@ class BISFetcher(BaseFetcher):
             return self._credit_to_gdp_gap(country, spec)
         if spec.indicator_id == "cb_balance_sheet_gdp":
             return self._central_bank_balance_sheet_gdp(country, spec)
+        if spec.indicator_id == "bis_cross_border":
+            return self._cross_border_bank_claims(country, spec)
         return []
 
     def _credit_to_gdp_gap(self, country: str, spec: IndicatorSpec) -> list[dict]:
@@ -1328,6 +1331,58 @@ class BISFetcher(BaseFetcher):
             row["quality_status"] = "watch"
         return rows
 
+    def _cross_border_bank_claims(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        series_code = f"Q.S.C.A.TO1.A.5J.A.5A.A.{meta['iso2']}.N"
+        try:
+            payload = _fetch_dbnomics_bis_series(series_code)
+        except (OSError, requests.RequestException, json.JSONDecodeError, KeyError, IndexError):
+            return []
+        doc = payload.get("series", {}).get("docs", [{}])[0]
+        periods = doc.get("period") or []
+        values = doc.get("value") or []
+        observations: list[tuple[str, float]] = []
+        for period, value in zip(periods, values):
+            date = _bis_quarter_to_date(str(period))
+            if not date or date < "2010-01-01":
+                continue
+            try:
+                numeric = float(value)
+            except (TypeError, ValueError):
+                continue
+            if not math.isfinite(numeric):
+                continue
+            observations.append((date, numeric / 1_000))
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="BIS LBS via DB.nomics",
+            series_id=series_code,
+            unit="USD bn",
+            frequency="quarterly",
+            last_update=observations[-1][0],
+            source_url="https://data.bis.org/topics/LBS",
+            observations=observations,
+            available=True,
+            note="BIS locational banking statistics: cross-border total claims on residents, all currencies, all reporting countries and sectors. DB.nomics mirror is used for narrow API access.",
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="USD bn",
+            note="Amounts outstanding are converted from USD millions to USD billions.",
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
 
 def _load_bis_credit_gap_data() -> dict[str, list[tuple[str, float]]]:
     """Load BIS credit-to-GDP gaps from the public bulk-download ZIP."""
@@ -1377,6 +1432,27 @@ def _load_bis_credit_gap_data() -> dict[str, list[tuple[str, float]]]:
         observations.sort()
     _BIS_CREDIT_GAP_CACHE = data
     return data
+
+
+def _bis_quarter_to_date(period: str) -> str | None:
+    if "-Q" not in period:
+        return None
+    year, quarter = period.split("-Q", 1)
+    month_day = {"1": "03-31", "2": "06-30", "3": "09-30", "4": "12-31"}.get(quarter)
+    if not month_day or not year.isdigit():
+        return None
+    return f"{year}-{month_day}"
+
+
+def _fetch_dbnomics_bis_series(series_code: str) -> dict:
+    cache_file = CACHE_DIR / f"dbnomics_bis_lbs_{series_code.replace('.', '_')}.json"
+    if cache_file.exists():
+        return json.loads(cache_file.read_text())
+    response = requests.get(DBNOMICS_BIS_LBS_SERIES_URL.format(series_code=series_code), timeout=30)
+    response.raise_for_status()
+    payload = response.json()
+    cache_file.write_text(json.dumps(payload))
+    return payload
 
 
 def _load_bis_cbta_data() -> dict[str, list[tuple[str, float]]]:

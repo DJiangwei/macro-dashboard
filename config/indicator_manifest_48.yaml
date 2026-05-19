@@ -485,12 +485,12 @@ indicators:
   indicator_id: bis_cross_border
   label: BIS Cross-Border Bank Claims
   unit: USD bn
-  source: BIS locational banking statistics / proxy pending
+  source: BIS locational banking statistics via DB.nomics
   frequency: quarterly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: BIS cross-border claims require a dedicated BIS LBS adapter; proxy fill is used until the adapter is wired.
+  quality_status: watch
+  quality_note: BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file.
 - section_id: external
   indicator_id: energy_import_dependency
   label: Energy Import Dependency
