@@ -1025,12 +1025,12 @@ indicators:
   indicator_id: foreign_bank_share
   label: Foreign-Owned Bank Share
   unit: '% assets'
-  source: World Bank GFDD / national CB proxy pending
+  source: World Bank GFDD
   frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Foreign bank ownership is structural and often sourced from national supervisors; proxy fill is used until a reliable series is wired.
+  quality_status: watch
+  quality_note: World Bank Global Financial Development Database foreign bank assets share; structural and stale for some countries, so use mainly as ownership-history context.
 - section_id: demographics
   indicator_id: population_total
   label: Total Population

@@ -2076,6 +2076,7 @@ class WorldBankFetcher(BaseFetcher):
         "bank_nim": ("GFDD.EI.01", 1.0, "%"),
         "household_debt_pct_gdp": ("FS.AST.PRVT.GD.ZS", 0.45, "% GDP"),
         "corp_debt_pct_gdp": ("FS.AST.PRVT.GD.ZS", 0.55, "% GDP"),
+        "foreign_bank_share": ("GFDD.OI.16", 1.0, "%"),
         "net_migration": ("SM.POP.NETM", 1.0, "people"),
         "fertility_rate": ("SP.DYN.TFRT.IN", 1.0, "children per woman"),
     }
