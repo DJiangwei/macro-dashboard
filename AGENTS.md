@@ -28,11 +28,15 @@ make build-v4
 make validate
 make publish-check
 make publish MSG="clear commit message"
+make proxy-report
 ```
 
 `make validate` must pass before committing. It checks Python compilation,
-confirms each v4 country page has 48 chart shells, confirms no empty chart
+prints each generated v4 country page's chart-shell count, confirms no empty chart
 containers remain, and runs `git diff --check`.
+
+`make proxy-report` prints the transparent proxy count and proxy indicator list
+for each CEE-4 country.
 
 ## Publishing Discipline
 
@@ -42,7 +46,9 @@ After dashboard changes:
 make publish MSG="<clear message>"
 ```
 
-The work is not complete until the GitHub Pages URLs show the new content.
+The publish script rebuilds, validates, commits, pushes, polls the GitHub Pages
+build when `gh` is available, and runs cache-busted online smoke tests. The work
+is not complete until the GitHub Pages URLs show the new content.
 
 ## Indicator Manifest
 

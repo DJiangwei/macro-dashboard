@@ -739,6 +739,13 @@ class EurostatFetcher(BaseFetcher):
             "params": {"sector": "S13", "maturity": "TOTAL", "na_item": "GD", "unit": "YR"},
             "unit": "years",
         },
+        "contingent_liabilities": {
+            "dataset": "gov_cl_guar",
+            "freq": "A",
+            "since": "2018",
+            "params": {"sector": "S13", "na_item": "FGT", "unit": "PC_GDP"},
+            "unit": "% GDP",
+        },
         "avg_wage_yoy": {
             "dataset": "lc_lci_r2_q",
             "freq": "Q",

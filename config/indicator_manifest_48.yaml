@@ -675,12 +675,12 @@ indicators:
   indicator_id: contingent_liabilities
   label: Contingent Liabilities
   unit: '% GDP'
-  source: Eurostat / proxy pending
+  source: Eurostat government guarantees
   frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Government guarantees and PPP obligations need a dedicated Eurostat government-finance adapter; proxy fill is a placeholder.
+  quality_status: watch
+  quality_note: Eurostat total stock of general-government guarantees as a share of GDP; narrower than a full public-sector contingent-liability inventory.
 - section_id: monetary_financial
   indicator_id: policy_rate
   label: Policy / Short-Term Rate
