@@ -415,12 +415,12 @@ indicators:
   indicator_id: ara_metric
   label: IMF ARA Reserve Adequacy
   unit: '%'
-  source: IMF ARA / proxy pending
+  source: IMF Assessing Reserve Adequacy
   frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: IMF ARA composite data is fragmented by country; proxy fill is used until a stable ARA adapter is wired.
+  quality_status: watch
+  quality_note: IMF reserves-to-ARA metric ratio, converted to percent; 100-150% is a common adequacy range but country judgment still matters.
 - section_id: external
   indicator_id: reer
   label: Real Effective Exchange Rate
@@ -585,22 +585,22 @@ indicators:
   indicator_id: debt_fx_share
   label: FX-Denominated Government Debt Share
   unit: '%'
-  source: National debt office / proxy pending
+  source: Eurostat government debt currency structure
   frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: FX debt share usually requires national debt-office data; proxy fill is used until per-country debt-structure adapters are wired.
+  quality_status: watch
+  quality_note: Derived as foreign-currency Maastricht debt divided by foreign- plus national-currency debt; compare with national debt-office publications before trading.
 - section_id: fiscal_sovereign
   indicator_id: avg_debt_maturity
   label: Average Debt Maturity
   unit: years
-  source: National debt office / proxy pending
+  source: Eurostat government debt remaining maturity
   frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Average maturity usually requires national debt-office publications; proxy fill is used until per-country adapters are wired.
+  quality_status: watch
+  quality_note: Eurostat remaining-maturity survey where available; some countries may still require national debt-office data and remain transparently proxied.
 - section_id: fiscal_sovereign
   indicator_id: sov_yield_10y
   label: 10Y Government Bond Yield
@@ -995,22 +995,22 @@ indicators:
   indicator_id: household_debt_pct_gdp
   label: Household Debt, % GDP
   unit: '% GDP'
-  source: World Bank / Eurostat proxy
+  source: IMF Global Debt Database
   frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Household debt proxy may use household final consumption expenditure or credit aggregates depending on data availability; verify perimeter.
+  quality_note: IMF GDD household debt, all instruments, as a share of GDP; annual and lagged but sector perimeter is cleaner than broad-credit proxies.
 - section_id: financial_stability
   indicator_id: corp_debt_pct_gdp
   label: Corporate Debt, % GDP
   unit: '% GDP'
-  source: World Bank / BIS proxy
+  source: IMF Global Debt Database
   frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Corporate debt proxy uses available credit aggregates where sector-specific NFC debt is unavailable; compare with BIS credit tables.
+  quality_note: IMF GDD nonfinancial corporate debt, all instruments, as a share of GDP; annual and lagged but avoids broad-credit split proxies.
 - section_id: financial_stability
   indicator_id: real_estate_price_gap
   label: Real Estate Price Gap

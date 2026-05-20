@@ -732,6 +732,13 @@ class EurostatFetcher(BaseFetcher):
             "params": {"spdepb": "OLD", "spdepm": "TOTAL", "unit": "PC_GDP"},
             "unit": "% GDP",
         },
+        "avg_debt_maturity": {
+            "dataset": "gov_10dd_rmd",
+            "freq": "A",
+            "since": "2015",
+            "params": {"sector": "S13", "maturity": "TOTAL", "na_item": "GD", "unit": "YR"},
+            "unit": "years",
+        },
         "avg_wage_yoy": {
             "dataset": "lc_lci_r2_q",
             "freq": "Q",
@@ -816,6 +823,8 @@ class DerivedMacroFetcher(BaseFetcher):
             return self._real_wage_yoy(country, spec)
         if spec.indicator_id == "real_policy_rate":
             return self._real_policy_rate(country, spec)
+        if spec.indicator_id == "debt_fx_share":
+            return self._debt_fx_share(country, spec)
         if spec.indicator_id == "sov_spread_vs_bund":
             return self._sov_spread_vs_bund(country, spec)
         if spec.indicator_id == "sov_yield_2y":
@@ -1040,6 +1049,68 @@ class DerivedMacroFetcher(BaseFetcher):
         for row in rows:
             row["quality_status"] = "watch"
         return rows
+
+    def _debt_fx_share(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        common_params = {"sector": "S13", "na_item": "GD", "unit": "MIO_NAC"}
+        foreign_currency = fetch_eurostat(
+            "gov_10dd_dcur",
+            meta["iso2"],
+            "debt_fx_amount",
+            "FX-Denominated General Government Debt",
+            country,
+            freq="A",
+            since="2015",
+            extra_params={**common_params, "currency": "FOR"},
+            unit_label="million national currency",
+        )
+        national_currency = fetch_eurostat(
+            "gov_10dd_dcur",
+            meta["iso2"],
+            "debt_national_currency_amount",
+            "National-Currency General Government Debt",
+            country,
+            freq="A",
+            since="2015",
+            extra_params={**common_params, "currency": "NAC"},
+            unit_label="million national currency",
+        )
+        if not foreign_currency.available or not national_currency.available:
+            return []
+        national_by_date = {date: value for date, value in national_currency.observations}
+        observations: list[tuple[str, float]] = []
+        for date, foreign_value in foreign_currency.observations:
+            national_value = national_by_date.get(date)
+            if national_value is None:
+                continue
+            total = float(foreign_value) + float(national_value)
+            if total <= 0:
+                continue
+            observations.append((date, float(foreign_value) / total * 100.0))
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Derived from Eurostat government debt by currency",
+            series_id="gov_10dd_dcur:S13:GD:FOR/(FOR+NAC)",
+            unit="%",
+            frequency="annual",
+            last_update=observations[-1][0] if observations else "",
+            source_url="https://ec.europa.eu/eurostat/databrowser/view/gov_10dd_dcur/default/table?lang=en",
+            observations=observations,
+            available=bool(observations),
+            note="FX-denominated Maastricht debt share derived from foreign- and national-currency debt amounts.",
+        ))
+        return _series_to_rows(
+            series,
+            spec,
+            unit="%",
+            note="Derived from Eurostat government-debt currency structure, not a national debt-office trading feed.",
+        )
 
     def _sov_spread_vs_bund(self, country: str, spec: IndicatorSpec) -> list[dict]:
         countries = load_countries()
@@ -1855,6 +1926,25 @@ class IMFDataMapperFetcher(BaseFetcher):
             "note": "Derived as 100 divided by IMF reserves-to-short-term-debt ratio; directional external-liquidity risk gauge.",
             "invert_ratio": True,
         },
+        "ara_metric": {
+            "indicator": "Reserves_ARA",
+            "unit": "%",
+            "source": "IMF Assessing Reserve Adequacy",
+            "note": "Reserve holdings divided by the IMF ARA metric; 100-150% is typically read as an adequate range, subject to country judgment.",
+            "scale": 100.0,
+        },
+        "household_debt_pct_gdp": {
+            "indicator": "HH_ALL",
+            "unit": "% GDP",
+            "source": "IMF Global Debt Database",
+            "note": "Household debt, all instruments, as a share of GDP from the IMF Global Debt Database.",
+        },
+        "corp_debt_pct_gdp": {
+            "indicator": "NFC_ALL",
+            "unit": "% GDP",
+            "source": "IMF Global Debt Database",
+            "note": "Nonfinancial corporate debt, all instruments, as a share of GDP from the IMF Global Debt Database.",
+        },
     }
 
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
@@ -1892,6 +1982,7 @@ class IMFDataMapperFetcher(BaseFetcher):
                 if value == 0:
                     continue
                 value = 100.0 / value
+            value *= float(cfg.get("scale", 1.0))
             observations.append((f"{year_int}-12-31", value))
 
         if not observations:
