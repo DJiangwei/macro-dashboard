@@ -60,8 +60,63 @@ from country_primer.data_fetcher import (  # noqa: E402
     SECTION_INDICATORS_48,
     fetch_canonical_macro_frame,
 )
+from country_primer.catalog import load_countries  # noqa: E402
 
 OUTPUT = ROOT / "output"
+
+
+def _html_text(value):
+    """Render config text safely while preserving readable line breaks."""
+    return escape(str(value or "")).replace("\n", "<br>")
+
+
+def _render_central_bank_section(country_code):
+    """Render the central-bank section from live YAML config, not stale base HTML."""
+    meta = load_countries().get(country_code, {})
+    cb_section = meta.get("central_bank_section") or {}
+    if not cb_section:
+        return ""
+
+    board_items = "\n".join(f"<li>{_html_text(member)}</li>" for member in cb_section.get("board", []))
+    balance_sheet = cb_section.get("balance_sheet") or {}
+    bs_items = "\n".join(f"<li>{_html_text(item)}</li>" for item in balance_sheet.get("key_items", []))
+
+    return f"""
+<section class="panel" id="central_bank">
+  <h2>Central Bank Deep-Dive</h2>
+  <div class="cb-grid">
+    <div class="cb-card">
+      <div class="cb-card-header">Leadership &amp; Decision-Making</div>
+      <div class="cb-card-body">
+        <p><strong>Governor:</strong> {_html_text(cb_section.get("governor", ""))}</p>
+        <p><strong>Board:</strong></p>
+        <ul>
+          {board_items}
+        </ul>
+        <p><strong>MPC:</strong> {_html_text(cb_section.get("mpc", ""))}</p>
+        <p><strong>Meetings:</strong> {_html_text(cb_section.get("meeting_schedule", ""))}</p>
+      </div>
+    </div>
+    <div class="cb-card">
+      <div class="cb-card-header">Policy Framework</div>
+      <div class="cb-card-body">{_html_text(cb_section.get("policy_framework", ""))}</div>
+    </div>
+    <div class="cb-card">
+      <div class="cb-card-header">Balance Sheet</div>
+      <div class="cb-card-body">
+        <p><strong>Total Assets:</strong> {_html_text(balance_sheet.get("total_assets", ""))}</p>
+        <ul>
+          {bs_items}
+        </ul>
+      </div>
+    </div>
+    <div class="cb-card">
+      <div class="cb-card-header">Key Risks &amp; Vulnerabilities</div>
+      <div class="cb-card-body">{_html_text(cb_section.get("key_risks", ""))}</div>
+    </div>
+  </div>
+</section>
+"""
 
 # ── Shared CSS (same as Hungary v3) ──────────────────────────────────────────
 
@@ -897,8 +952,11 @@ def _indicator_ledger_html(section_id: str) -> str:
 def _render_section_charts(section_id: str, country_code: str, chart_map: dict[str, str], canonical_frame) -> tuple[str, list[str]]:
     html_parts: list[str] = []
     rendered_ids: list[str] = []
+    prefer_canonical_ids = {"policy_rate", "real_policy_rate"}
     for idx, spec in enumerate(SECTION_INDICATORS_48.get(section_id, ())):
         legacy_id = _legacy_chart_id(section_id, spec.indicator_id, chart_map)
+        if spec.indicator_id in prefer_canonical_ids:
+            legacy_id = None
         canonical_id = _canonical_chart_id(section_id, spec.indicator_id, idx + 1)
         rows = _indicator_frame(canonical_frame, country_code, spec.indicator_id)
         row = rows[-1] if rows else {}
@@ -1258,9 +1316,7 @@ COUNTRY_DATA["HU"] = {
         <li><strong>Forward guidance evolution</strong> — MNB dropped the "patient, cautious" language in
         February. If the May statement shifts to "data-dependent easing," expect the market to price an
         additional 50bp of cuts into the H2 strip within 48 hours.</li>
-        <li><strong>NBH vs NBP vs CNB</strong> — NBP is on hold at 5.75%, CNB at 4.00%. The MNB-NBP spread
-        at 50bp is tight by historical standards; if NBP cuts first (July), the HUF/PLN cross could widen 3−5%
-        as carry compression bites.</li>
+        <li><strong>NBH vs NBP vs CNB</strong> — the current official policy-rate stack is MNB 6.25%, NBP 3.75%, and CNB 3.50%. Hungary now offers a large carry premium over Poland and Czechia; the risk is that MNB cuts faster if wages soften or HUF remains firm.</li>
       </ul>
     </div>
   </div>
@@ -1535,7 +1591,7 @@ COUNTRY_DATA["HU"] = {
       <ul>
         <li><strong>MNB 5月会议（5月22日）</strong>——市场定价约60%的25bp降息概率。决定取决于3月工资数据（5月21日公布）。工资增速低于8.5%大概率触发降息；高于9.5%则意味着持续暂停。</li>
         <li><strong>前瞻指引演变</strong>——MNB在2月去掉了"耐心、谨慎"的措辞。如果5月声明转向"数据依赖型宽松"，预计市场将在48小时内对下半年额外定价50bp降息。</li>
-        <li><strong>NBH vs NBP vs CNB</strong>——NBP维持5.75%不变，CNB为4.00%。MNB-NBP利差50bp按历史标准偏窄；如果NBP先降息（7月），随着利差压缩，HUF/PLN交叉汇率可能走阔3-5%。</li>
+        <li><strong>NBH vs NBP vs CNB</strong>——当前官方政策利率为MNB 6.25%、NBP 3.75%、CNB 3.50%。匈牙利相对波兰和捷克提供显著利差，但如果工资放缓或福林保持强势，MNB也可能更快降息。</li>
       </ul>
     </div>
   </div>
@@ -1663,8 +1719,8 @@ COUNTRY_DATA["PL"] = {
     </div>
     <div class="kpi-card warn">
       <div class="kpi-label">Policy Rate</div>
-      <div class="kpi-value">5.75%</div>
-      <div class="kpi-sub">Real rate ~1.25% · NBP on hold</div>
+      <div class="kpi-value">3.75%</div>
+      <div class="kpi-sub">Reference rate · NBP on hold</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">10Y PLN Yield</div>
@@ -1733,7 +1789,7 @@ COUNTRY_DATA["PL"] = {
     </div>
   </div>
   <div class="narrative-footer">
-    <strong>Market Implication:</strong> The NBP-NBH rate spread (5.75% vs 6.25%) is 50bp in Poland's favour but doesn't compensate for the inflation differential. Short PLN vs HUF in FX space — the NBP will be the last CEE central bank to cut, supporting PLN carry, but the sticky inflation means front-end rates have asymmetric upside risk. Consider receiving 2y PLN FRA vs paying 2y HUF.
+    <strong>Market Implication:</strong> With the NBP reference rate now at 3.75% versus MNB 6.25%, PLN no longer has the same carry cushion against HUF. The bullish PLN case depends more on EU-fund inflows, growth resilience, and lower risk premia than on outright policy-rate carry.
   </div>
 </div>""",
         "external": """
@@ -1794,20 +1850,20 @@ COUNTRY_DATA["PL"] = {
   <div class="narrative-body">
     <div class="narrative-col">
       <h4>What's Happened</h4>
-      <p>The NBP hiked aggressively (0.1% → 6.75% in 2021-22) but has been <strong>the most reluctant CEE central bank to ease</strong>. The reference rate has been held at <strong>5.75%</strong> since October 2023, with only a token 25bp cut in September 2023 that was partially reversed. Governor Glapiński's rhetoric has been consistently hawkish, emphasising the inflation risks from fiscal expansion, wage growth, and energy price normalisation.</p>
-      <p>With headline CPI at 4.5% and the reference rate at 5.75%, the <strong>ex-ante real rate is only ~1.25%</strong> — the lowest in CEE-4. This is not particularly restrictive by historical standards, which is why the NBP feels no urgency to cut. Private credit growth is healthy at +4.5% YoY, M3 growth is running at 7%, and the banking sector is well-capitalised (CAR ~19%). The transmission mechanism is functioning, but the economy is growing through the restrictive stance.</p>
+      <p>The NBP hiked aggressively (0.1% → 6.75% in 2021-22), then moved through a delayed easing cycle. The official <strong>NBP reference rate is 3.75%</strong> after the spring 2026 cuts, and the May 2026 MPC decision kept rates unchanged. Governor Glapiński's rhetoric remains data dependent, emphasising inflation risks from fiscal expansion, wage growth, and energy-price normalisation.</p>
+      <p>With headline CPI still above target, the <strong>real policy stance is only moderately restrictive</strong>. Private credit growth is healthy, M3 growth is running near 7%, and the banking sector is well-capitalised. The transmission mechanism is functioning, but the economy is still growing through the restrictive stance.</p>
     </div>
     <div class="narrative-col">
       <h4>What to Watch</h4>
       <ul>
         <li><strong>First cut timing</strong> — the market prices a 25bp cut by Q4 2026. We see Q1 2027 as more realistic. The NBP wants to see CPI below 3.5% and wage growth below 8% before easing. Neither condition is likely met before end-2026.</li>
-        <li><strong>NBP vs NBP (Poland vs Hungary)</strong> — Poland's NBP and Hungary's MNB are on diverging paths. MNB is closer to cutting (real rate ~300bp, growth weak). The NBP-MNB spread could widen from the current 50bp to 100bp+, supporting PLN vs HUF.</li>
+        <li><strong>NBP vs MNB</strong> — Poland's NBP and Hungary's MNB are on diverging paths. MNB still offers a much higher nominal carry, while Poland's support comes more from growth, EU funds, and institutional risk compression.</li>
         <li><strong>Glapiński succession</strong> — the Governor's term runs to 2028, but political pressure from the Tusk government is a background risk. Any move to curtail NBP independence (unlikely but not impossible) would trigger a sharp PLN sell-off.</li>
       </ul>
     </div>
   </div>
   <div class="narrative-footer">
-    <strong>Market Implication:</strong> The NBP's hawkish hold supports PLN carry trades. Long PLN vs EUR earns ~200bp annualised (5.75% vs 3.25% ECB depo) with an appreciation tailwind from EU funds. The position is crowded — BIS data shows speculative PLN positioning at the 70th percentile — but the fundamentals support it. Size for a 5% stop; the geopolitical risk premium can re-price violently.
+    <strong>Market Implication:</strong> The NBP's hold still supports PLN relative to lower-yielding EUR funding, but the carry cushion is thinner than the prior narrative implied. PLN longs now need EU-fund inflows and growth outperformance to do more of the work; size for geopolitical risk because the premium can re-price violently.
   </div>
 </div>""",
         "markets_valuation": """
@@ -1843,7 +1899,7 @@ COUNTRY_DATA["PL"] = {
     <div class="narrative-col">
       <h4>What's Happened</h4>
       <p>Poland's banking sector is <strong>the strongest in CEE-4</strong>. The aggregate CAR is ~19%, NPL ratio at ~3.8% (steady), and ROE of ~14% is the regional leader. The <strong>loan-to-deposit ratio at ~85%</strong> reflects a deeper deposit base than Hungary but lower self-funding than Czechia. PKO BP, Pekao, and Santander BP together control ~35% of system assets — the sector is more competitive and less concentrated than Hungary (OTP-dominant) or Czechia (Erste/KB duopoly).</p>
-      <p>The <strong>NIM compression story</strong> is less acute than Hungary because NBP has held rates at 5.75% and is the most reluctant cutter in CEE. Aggregate NIM at ~3.65% is down only modestly from the 3.85% peak. <strong>Household debt at ~25% of GDP</strong> is low but rising — the mortgage market is growing at 6%+ annually, driven by the government's 2% mortgage subsidy programme. Corporate debt at ~38% of GDP is the lowest in CEE-4.</p>
+      <p>The <strong>NIM compression story</strong> is now more relevant because the NBP reference rate has moved down to 3.75% after the spring 2026 cuts. Aggregate NIM at ~3.65% is down only modestly from the 3.85% peak, but the direction of travel is lower. <strong>Household debt at ~25% of GDP</strong> is low but rising — the mortgage market is growing at 6%+ annually, driven by the government's 2% mortgage subsidy programme. Corporate debt at ~38% of GDP is the lowest in CEE-4.</p>
     </div>
     <div class="narrative-col">
       <h4>What to Watch</h4>
@@ -1918,8 +1974,8 @@ COUNTRY_DATA["PL"] = {
   </div>
   <div class="kpi-card warn">
     <div class="kpi-label">政策利率</div>
-    <div class="kpi-value">5.75%</div>
-    <div class="kpi-sub">实际利率~1.25% · NBP暂缓降息</div>
+    <div class="kpi-value">3.75%</div>
+    <div class="kpi-sub">参考利率 · NBP暂缓降息</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">10年期PLN收益率</div>
@@ -1976,7 +2032,7 @@ COUNTRY_DATA["PL"] = {
       </ul>
     </div>
   </div>
-  <div class="narrative-footer"><strong>市场含义：</strong>NBP-NBH利差（5.75%对6.25%）为50bp偏向波兰，但未补偿通胀差异。在汇率方面做空PLN对HUF——NBP将是最后一个降息的中东欧央行，支撑PLN利差收益，但粘性通胀意味着短端利率具有非对称上行风险。考虑做多2年期PLN FRA对做空2年期HUF。</div>
+  <div class="narrative-footer"><strong>市场含义：</strong>NBP参考利率为3.75%，低于MNB 6.25%。PLN相对HUF不再拥有旧叙事中的利差缓冲；看多PLN更多依赖欧盟资金流入、增长韧性和风险溢价压缩，而不是单纯利差。</div>
 </div>""",
         "external": """<div class="narrative">
   <div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div>
@@ -2020,19 +2076,19 @@ COUNTRY_DATA["PL"] = {
   <div class="narrative-body">
     <div class="narrative-col">
       <h4>已发生的变化</h4>
-      <p>NBP激进加息（2021-22年0.1%→6.75%），但是<strong>最不情愿宽松的中东欧央行</strong>。自2023年10月以来参考利率一直维持在<strong>5.75%</strong>，仅2023年9月进行了一次25bp的象征性降息，且部分被逆转。行长Glapiński的言论一贯鹰派，强调财政扩张、工资增长和能源价格正常化带来的通胀风险。</p>
-      <p>整体CPI 4.5%，参考利率5.75%，<strong>事前实际利率仅约1.25%</strong>——中东欧四国中最低。按历史标准这不特别紧缩，因此NBP并不急于降息。私人信贷增长健康，同比+4.5%，M3增长7%，银行业资本充足（CAR约19%）。传导机制运转正常，但经济正在增长中穿过紧缩立场。</p>
+      <p>NBP激进加息（2021-22年0.1%→6.75%），随后进入延迟宽松周期。官方<strong>NBP参考利率目前为3.75%</strong>，2026年5月货币政策委员会决定维持不变。行长Glapiński的沟通仍强调数据依赖，重点关注财政扩张、工资增长和能源价格正常化带来的通胀风险。</p>
+      <p>在整体CPI仍高于目标的背景下，<strong>实际政策立场只是中度紧缩</strong>。私人信贷增长健康，M3增长约7%，银行业资本充足。传导机制运转正常，但经济仍在较高利率环境中保持增长。</p>
     </div>
     <div class="narrative-col">
       <h4>需要关注</h4>
       <ul>
         <li><strong>首次降息时机</strong>——市场定价2026年Q4降息25bp。我们认为2027年Q1更为现实。NBP希望在放松前看到CPI低于3.5%且工资增长低于8%。这两个条件在2026年底前均不太可能满足。</li>
-        <li><strong>NBP vs NBP（波兰对匈牙利）</strong>——波兰NBP和匈牙利MNB正走向分化路径。MNB更接近降息（实际利率约300bp，增长疲弱）。NBP-MNB利差可能从当前50bp扩大至100bp+，支撑PLN对HUF。</li>
+        <li><strong>NBP vs MNB</strong>——波兰NBP和匈牙利MNB正走向分化路径。MNB仍提供更高名义利差，而波兰的支撑更多来自增长、欧盟资金和制度风险溢价压缩。</li>
         <li><strong>Glapiński继任</strong>——行长任期至2028年，但图斯克政府的政治压力是背景风险。任何削弱NBP独立性的举动（不太可能但并非不可能）将触发PLN急剧抛售。</li>
       </ul>
     </div>
   </div>
-  <div class="narrative-footer"><strong>市场含义：</strong>NBP鹰派维持支撑PLN套利交易。做多PLN对EUR年化收益约200bp（5.75%对3.25% ECB存款利率），并伴有欧盟资金的升值顺风。头寸拥挤——BIS数据显示投机性PLN头寸处于70百分位——但基本面支持。设定5%止损；地缘政治风险溢价可能剧烈重定价。</div>
+  <div class="narrative-footer"><strong>市场含义：</strong>NBP维持利率仍支持PLN相对低收益EUR融资货币，但利差缓冲低于旧叙事。PLN多头现在更依赖欧盟资金和增长跑赢；需为地缘政治风险溢价重定价控制仓位。</div>
 </div>""",
         "markets_valuation": """<div class="narrative">
   <div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div>
@@ -2060,7 +2116,7 @@ COUNTRY_DATA["PL"] = {
     <div class="narrative-col">
       <h4>已发生的变化</h4>
       <p>波兰银行业是<strong>中东欧四国中最强健的</strong>。整体CAR约19%，不良贷款率约3.8%（稳定），ROE约14%为区域领先。<strong>存贷比约85%</strong>反映比匈牙利更深的存款基础。PKO BP、Pekao和Santander BP合计控制系统资产约35%——该行业比匈牙利（OTP主导）或捷克（Erste/KB双头垄断）更具竞争性、更不集中。</p>
-      <p><strong>净息差压缩</strong>不如匈牙利严重，因NBP维持5.75%不变且是最不情愿降息者。整体NIM约3.65%仅从峰值3.85%小幅下降。<strong>居民债务约GDP的25%</strong>较低但正在上升——按揭市场受政府2%按揭补贴计划推动以6%+年增速增长。企业债务约GDP的38%为中东欧四国最低。</p>
+      <p><strong>净息差压缩</strong>现在更值得关注，因为NBP参考利率已降至3.75%。整体NIM约3.65%仅从峰值3.85%小幅下降，但方向是下行。<strong>居民债务约GDP的25%</strong>较低但正在上升——按揭市场受政府2%按揭补贴计划推动以6%+年增速增长。企业债务约GDP的38%为中东欧四国最低。</p>
     </div>
     <div class="narrative-col">
       <h4>需要关注</h4>
@@ -2149,7 +2205,7 @@ COUNTRY_DATA["CZ"] = {
     </div>
     <div class="kpi-card">
       <div class="kpi-label">Policy Rate</div>
-      <div class="kpi-value">4.00%</div>
+      <div class="kpi-value">3.50%</div>
       <div class="kpi-sub">Real rate ~1.4% · CNB cutting cycle</div>
     </div>
     <div class="kpi-card">
@@ -2189,7 +2245,7 @@ COUNTRY_DATA["CZ"] = {
       <ul>
         <li><strong>German IFO cycle</strong> — Czechia's PMI has been sub-50 for 24 of the last 27 months. The single variable that matters is German manufacturing orders. A sustained IFO expectations recovery above 95 would be the signal to go long Czech assets.</li>
         <li><strong>&Scaron;koda EV transition</strong> — &Scaron;koda is investing €5.6bn in electrification (2024-28), with three new EV models launching in 2025-26. Success or failure of these launches will determine the trajectory of 10% of Czech exports over the next decade.</li>
-        <li><strong>CNB easing transmission</strong> — the CNB has cut 300bp from the peak (7.0% → 4.0%) but private credit growth remains negative in real terms. The transmission lag suggests the growth impulse from easing hits in H2 2026 at the earliest.</li>
+        <li><strong>CNB easing transmission</strong> — the CNB has cut 350bp from the peak (7.0% → 3.5%) but private credit growth remains negative in real terms. The transmission lag suggests the growth impulse from easing hits in H2 2026 at the earliest.</li>
       </ul>
     </div>
   </div>
@@ -2207,18 +2263,18 @@ COUNTRY_DATA["CZ"] = {
     <div class="narrative-col">
       <h4>What's Happened</h4>
       <p>Czechia has achieved <strong>the softest landing in CEE</strong> on the inflation front. Headline CPI at <strong>2.6% YoY</strong> is within the CNB's 2.0% ±1pp tolerance band, down from a peak of 18.0% in early 2023. The disinflation was textbook: energy base effects accounted for ~70% of the decline, with the remaining 30% from genuine demand compression via the 2021-23 rate shock. Core CPI at 2.3% is the lowest in CEE.</p>
-      <p>The CNB's early and aggressive cutting cycle (7.0% → 4.0% since December 2023) was predicated on this disinflation success. But wage growth at <strong>7.4% YoY</strong> in a 2.6% unemployment economy raises the question of whether the easing was premature. The CNB's own forecast sees CPI grinding to 2.0% by mid-2026, but the wage impulse and the closed output gap argue for inflation settling closer to 2.5-3.0% — within band but above target midpoint.</p>
+      <p>The CNB's early and aggressive cutting cycle (7.0% → 3.50% by May 2025, then held through May 2026) was predicated on this disinflation success. But wage growth at <strong>7.4% YoY</strong> in a 2.6% unemployment economy raises the question of whether the easing was premature. The CNB's own forecast sees CPI grinding to 2.0% by mid-2026, but the wage impulse and the closed output gap argue for inflation settling closer to 2.5-3.0% — within band but above target midpoint.</p>
     </div>
     <div class="narrative-col">
       <h4>What to Watch</h4>
       <ul>
-        <li><strong>CNB terminal rate debate</strong> — the market prices the terminal rate at 3.25% (75bp more cuts). The CNB staff forecast implies 3.50%. The risk is that the terminal rate lands at 3.75-4.00% — services inflation at 3.8% and 7%+ wages don't justify a sub-3.5% policy rate.</li>
+        <li><strong>CNB terminal rate debate</strong> — with the 2W repo rate at 3.50%, the question is whether the easing cycle is effectively done. The risk is that the terminal rate lands at or above the current level — services inflation at 3.8% and 7%+ wages don't justify a materially lower policy rate.</li>
         <li><strong>Housing market re-acceleration</strong> — Prague property prices, which fell ~10% during the rate-hiking cycle, have stabilised and are beginning to rise again as mortgage rates fall below 4.5%. A renewed housing boom would flow through to imputed rents (~10% of CPI basket) and keep core CPI elevated.</li>
       </ul>
     </div>
   </div>
   <div class="narrative-footer">
-    <strong>Market Implication:</strong> The CZK rates market is pricing too much easing — 75bp of cuts vs our forecast of 25-50bp. Receive 2y CZK FRAs vs pay 2y EUR to express the view that the CNB terminal rate is higher than priced. In FX, the CNB cutting cycle has weakened CZK from 24.0 to 25.0 — a lot of bad news is priced. If the cutting cycle ends sooner than expected, EURCZK could reprice to 24.50.
+    <strong>Market Implication:</strong> The CZK rates market should be treated as close to terminal. Receive/payer structures need to reflect that the easy part of the CNB cutting cycle is over. In FX, the CNB cutting cycle has weakened CZK from 24.0 to 25.0 — a lot of bad news is priced. If the cycle is done, EURCZK could reprice to 24.50.
   </div>
 </div>""",
         "external": """
@@ -2279,7 +2335,7 @@ COUNTRY_DATA["CZ"] = {
   <div class="narrative-body">
     <div class="narrative-col">
       <h4>What's Happened</h4>
-      <p>The CNB has been <strong>the most aggressive cutter in CEE</strong>, bringing the policy rate from 7.0% to <strong>4.00%</strong> in a series of 50bp and 25bp steps since December 2023. The cutting cycle was data-dependent and well-communicated — the CNB's published forecast path (a transparency practice unique in CEE) guided market expectations effectively. The real policy rate at ~1.4% is approaching the CNB's estimate of neutral (roughly 3.0-3.5% nominal, or ~1.0% real).</p>
+      <p>The CNB has been <strong>the most aggressive cutter in CEE</strong>, bringing the 2W repo rate from 7.0% to <strong>3.50%</strong> by May 2025 and then holding it unchanged through May 2026. The cutting cycle was data-dependent and well-communicated — the CNB's published forecast path (a transparency practice unique in CEE) guided market expectations effectively.</p>
       <p>The transmission mechanism is working but with lags. Mortgage rates have fallen from ~6.5% to ~4.5%, driving a tentative housing market recovery. But <strong>private credit growth at +2.1% YoY</strong> remains anaemic — corporations are not borrowing because they're not investing, not because credit is expensive. The CNB faces the classic pushing-on-a-string problem: rate cuts can't force firms to invest when German demand is absent. M3 growth at 5.5% is healthy but not expansionary.</p>
     </div>
     <div class="narrative-col">
@@ -2328,7 +2384,7 @@ COUNTRY_DATA["CZ"] = {
     <div class="narrative-col">
       <h4>What's Happened</h4>
       <p>Czechia's banking sector is <strong>the most conservative and well-funded in CEE</strong>. The aggregate CAR is ~21%, the highest in the region. The <strong>loan-to-deposit ratio at ~68%</strong> means the sector is over-funded — Czech banks are net placers in the interbank market, not net borrowers. The NPL ratio at ~1.8% is the lowest in the EU. Erste Bank (via Ceska sporitelna) and Komercni banka (Societe Generale) form a stable duopoly controlling ~55% of system assets.</p>
-      <p>The CNB's aggressive cutting cycle (7.0% → 4.0%) has created <strong>moderate NIM compression</strong> — aggregate NIM has fallen from ~2.8% to ~2.3%. However, the loan book is growing at a modest 3-4% and asset quality is impeccable. <strong>Household debt at ~31% of GDP</strong> is above the CEE average but largely mortgage debt with low LTVs (~55% average). Corporate debt at ~52% of GDP is moderate and concentrated in the export-manufacturing sector.</p>
+      <p>The CNB's aggressive cutting cycle (7.0% → 3.50%) has created <strong>moderate NIM compression</strong> — aggregate NIM has fallen from ~2.8% to ~2.3%. However, the loan book is growing at a modest 3-4% and asset quality is impeccable. <strong>Household debt at ~31% of GDP</strong> is above the CEE average but largely mortgage debt with low LTVs (~55% average). Corporate debt at ~52% of GDP is moderate and concentrated in the export-manufacturing sector.</p>
     </div>
     <div class="narrative-col">
       <h4>What to Watch</h4>
@@ -2402,7 +2458,7 @@ COUNTRY_DATA["CZ"] = {
   </div>
   <div class="kpi-card">
     <div class="kpi-label">政策利率</div>
-    <div class="kpi-value">4.00%</div>
+    <div class="kpi-value">3.50%</div>
     <div class="kpi-sub">实际利率~1.4% · CNB降息周期中</div>
   </div>
   <div class="kpi-card">
@@ -2424,11 +2480,11 @@ COUNTRY_DATA["CZ"] = {
       <p>基准<strong>PX指数</strong>（约1,600点）远期市盈率约12.0倍——相对中东欧同侪溢价，反映捷克AA-评级。PX由银行（Erste、Komerční banka——约45%权重）和公用事业（ČEZ——约20%权重）主导，赋予其防御性、高股息特征。<strong>10年期CZK国债收益率约4.2%</strong>——低于PLN和HGB收益率，符合评级序列。<strong>EURCZK约25.0</strong>（2026年4月）较疫情前均值约25.5贬值约8%，反映CNB激进降息和能源进口的贸易条件拖累。</p>
     </div>""",
     "narratives_zh": {
-        "real_activity": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年Q1评估</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克<strong>陷入浅增长均衡</strong>。2025年Q4实际GDP同比仅+1.1%，为中东欧四国中最弱。经济被自身结构性优势拖累：<strong>制造业约GDP的25%</strong>（欧盟最高），而德国制造业衰退对捷克工业的不成比例打击。工业生产-2.0%反映了汽车供应链——斯柯达/大众一家就占GDP约5%和出口约10%。订单出货比处于2020年以来最低。</p><p>但国内经济比标题数据表现得更有韧性。<strong>失业率2.6%</strong>（欧盟最低）意味着劳动力市场是结构性支撑——任何想要工作的人都有工作。随着通胀正常化，实际工资增长约4%，家庭消费在2025年每个季度均对GDP有正贡献。问题在于投资：企业在德国不确定性和CNB降息周期尚未转化为信贷复苏的背景下推迟资本支出决策。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>德国IFO周期</strong>——捷克PMI在过去27个月中有24个月处于50以下。唯一重要的变量是德国制造业订单。IFO预期持续复苏至95以上将是做多捷克资产的信号。</li><li><strong>斯柯达电动车转型</strong>——斯柯达正投资€56亿于电动化（2024-28年），2025-26年将推出三款新电动车型。这些车型的成败将决定捷克未来十年约10%出口的轨迹。</li><li><strong>CNB宽松传导</strong>——CNB已从峰值降息300bp（7.0%→4.0%），但私人信贷增长实际值仍为负。传导滞后表明宽松的增长脉冲最早在2026年下半年才会显现。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>捷克是对德国工业周期的高贝塔投资。如果德国复苏，CZK和捷克股票在6个月内跑赢中东欧同侪5-8%。如果德国持续停滞，捷克资产跑输。我们将做多CZK对EUR头寸定位于对德国复苏的看涨期权——设定紧止损在EURCZK 25.50。股市方面，做多PX银行（Erste）对做空DAX汽车代表了同一主题的相对价值表达，降低了方向性。</div></div>""",
-        "prices_wages": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克在通胀方面实现了<strong>中东欧最软着陆</strong>。整体CPI同比<strong>2.6%</strong>处于CNB 2.0% ±1pp容忍区间内，较2023年初18.0%的峰值显著下降。去通胀堪称教科书：能源基数效应贡献了约70%的降幅，其余30%来自2021-23年加息冲击带来的真实需求压缩。核心CPI 2.3%为中东欧最低。</p><p>CNB自2023年12月以来激进降息（7.0%→4.0%）正是基于这一去通胀成功。但<strong>工资增长同比7.4%</strong>在一个失业率2.6%的经济体中，提出了宽松是否过早的疑问。CNB自身预测认为CPI将在2026年中缓慢降至2.0%，但工资脉冲和封闭的产出缺口表明通胀将更接近2.5-3.0%——在区间内但高于目标中值。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>CNB终端利率争论</strong>——市场定价终端利率为3.25%（再降75bp）。CNB工作人员预测隐含3.50%。风险在于终端利率落在3.75-4.00%——服务业通胀3.8%和7%+的工资增长不支持低于3.5%的政策利率。</li><li><strong>房地产市场再加速</strong>——布拉格房价在加息周期中下跌约10%，随着按揭利率降至4.5%以下已企稳并开始回升。新一轮房地产繁荣将传导至虚拟租金（约占CPI篮子的10%），维持核心CPI高位。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>CZK利率市场定价了过多宽松——75bp降息对比我们25-50bp的预测。做多2年期CZK FRA对做空2年期EUR以表达CNB终端利率高于定价的观点。汇率方面，CNB降息周期已将CZK从24.0推弱至25.0——大量坏消息已定价。如果降息周期比预期更早结束，EURCZK可能重定价至24.50。</div></div>""",
+        "real_activity": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年Q1评估</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克<strong>陷入浅增长均衡</strong>。2025年Q4实际GDP同比仅+1.1%，为中东欧四国中最弱。经济被自身结构性优势拖累：<strong>制造业约GDP的25%</strong>（欧盟最高），而德国制造业衰退对捷克工业的不成比例打击。工业生产-2.0%反映了汽车供应链——斯柯达/大众一家就占GDP约5%和出口约10%。订单出货比处于2020年以来最低。</p><p>但国内经济比标题数据表现得更有韧性。<strong>失业率2.6%</strong>（欧盟最低）意味着劳动力市场是结构性支撑——任何想要工作的人都有工作。随着通胀正常化，实际工资增长约4%，家庭消费在2025年每个季度均对GDP有正贡献。问题在于投资：企业在德国不确定性和CNB降息周期尚未转化为信贷复苏的背景下推迟资本支出决策。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>德国IFO周期</strong>——捷克PMI在过去27个月中有24个月处于50以下。唯一重要的变量是德国制造业订单。IFO预期持续复苏至95以上将是做多捷克资产的信号。</li><li><strong>斯柯达电动车转型</strong>——斯柯达正投资€56亿于电动化（2024-28年），2025-26年将推出三款新电动车型。这些车型的成败将决定捷克未来十年约10%出口的轨迹。</li><li><strong>CNB宽松传导</strong>——CNB已从峰值降息350bp（7.0%→3.5%），但私人信贷增长实际值仍为负。传导滞后表明宽松的增长脉冲最早在2026年下半年才会显现。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>捷克是对德国工业周期的高贝塔投资。如果德国复苏，CZK和捷克股票在6个月内跑赢中东欧同侪5-8%。如果德国持续停滞，捷克资产跑输。我们将做多CZK对EUR头寸定位于对德国复苏的看涨期权——设定紧止损在EURCZK 25.50。股市方面，做多PX银行（Erste）对做空DAX汽车代表了同一主题的相对价值表达，降低了方向性。</div></div>""",
+        "prices_wages": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克在通胀方面实现了<strong>中东欧最软着陆</strong>。整体CPI同比<strong>2.6%</strong>处于CNB 2.0% ±1pp容忍区间内，较2023年初18.0%的峰值显著下降。去通胀堪称教科书：能源基数效应贡献了约70%的降幅，其余30%来自2021-23年加息冲击带来的真实需求压缩。核心CPI 2.3%为中东欧最低。</p><p>CNB自2023年12月以来激进降息，并在2025年5月将2W repo rate降至<strong>3.50%</strong>后维持到2026年5月。但<strong>工资增长同比7.4%</strong>在一个失业率2.6%的经济体中，提出了宽松是否过早的疑问。CNB自身预测认为CPI将在2026年中缓慢降至2.0%，但工资脉冲和封闭的产出缺口表明通胀将更接近2.5-3.0%——在区间内但高于目标中值。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>CNB终端利率争论</strong>——当前2W repo rate为3.50%，核心问题是宽松周期是否已经基本结束。服务业通胀3.8%和7%+的工资增长不支持政策利率显著低于当前水平。</li><li><strong>房地产市场再加速</strong>——布拉格房价在加息周期中下跌约10%，随着按揭利率降至4.5%以下已企稳并开始回升。新一轮房地产繁荣将传导至虚拟租金（约占CPI篮子的10%），维持核心CPI高位。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>CZK利率应被视为接近终端区间。汇率方面，CNB降息周期已将CZK从24.0推弱至25.0——大量坏消息已定价。如果降息周期已经结束，EURCZK可能重定价至24.50。</div></div>""",
         "external": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克拥有<strong>持续经常账户盈余</strong>——2025年为GDP的+2.8%，中东欧四国中最大。这是结构性特征：制造业出口引擎（汽车、机械）产生约GDP+8%的商品顺差，超额抵消了初次收入逆差（外资企业的股息和利润汇回）。仅对德国的贸易顺差（年约€150亿）就约相当于捷克GDP的4%。</p><p>外汇储备<strong>€1400亿</strong>，相对GDP是欧盟最高之一（约GDP的40%），为2013-17年EURCZK下限政策的遗留。CNB一直以负利差（约200bp，融资做空CZK负债对应做多EUR资产）运行这一庞大储备头寸，产生按市值计价波动，但提供了对CZK投机攻击的不可撼动的防御。REER自2023年峰值贬值约5%，恢复了通胀超调期间丧失的竞争力。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>储备减持？</strong>——行长Michl已表示有意逐步缩减外汇储备存量。任何CNB外汇抛售（买入EURCZK）将削弱CZK。但实际操作空间有限——市场会将激进抛售视为政策错误。</li><li><strong>汽车出口周期</strong>——捷克汽车出口约GDP的8%。德国汽车注册量下降10%对捷克GDP产生约0.8%的拖累。电动车转型增加结构性不确定性——捷克供应链针对内燃机优化。</li><li><strong>能源依赖</strong>——捷克已在很大程度上摆脱俄罗斯天然气（通过荷兰/德国终端LNG、挪威管道天然气），但仍依赖能源进口。2022-23年能源冲击的贸易条件拖累已基本逆转。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>经常账户盈余是结构性CZK买盘，但被CNB鸽派立场和外汇储备头寸的负利差所抵消。CZK不是纯粹的利差交易。我们倾向于通过主权信用表达捷克外部实力（基于AA-对BBB-的~300bp利差，做多CZGB对HGB）。CZK是区间交易：25.20买入，24.50卖出。</div></div>""",
         "fiscal_sovereign": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>捷克是<strong>中东欧的财政冠军</strong>。2025年一般政府赤字仅GDP的-2.2%，为中东欧四国中最窄，低于3%的马斯特里赫特参考值。总理Fiala领导下的SPOLU联合政府兑现了财政整顿：通过增税（企业所得税、银行/能源暴利税）和支出约束，赤字从2021年的-5.1%减半。</p><p>总债务<strong>约GDP的43%</strong>为欧盟最低，显著低于马斯特里赫特60%门槛。债务以CZK计价为主（约90%），拥有稳定的国内投资者基础。10年期收益率4.2%意味着仅约40bp低于波兰——鉴于捷克高出两个评级的优势，这一紧窄利差引人注目。紧窄利差部分具有技术性：CZGB市场较POLGB更小、流动性更差，限制了外资参与。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>ANO财政政策</strong>——如果ANO赢得2025年议会选举（民调显示很可能），财政政策可能转向扩张。Babiš的政纲细节不足但支出承诺充沛（养老金加薪、基础设施）。市场尚未对此风险定价。</li><li><strong>国防支出提升</strong>——捷克已承诺GDP的2%国防支出（北约目标），高于2023年1.3%。增量约GDP 0.7%的成本从当前财政状况来看可控，但增加结构性赤字。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>4.2%的CZGB提供中东欧主权信用中最佳的风险调整利差收益。AA-评级、43%债务/GDP和持续经常账户盈余使其成为区域避风港。做多10年期CZGB对做空10年期HGB（约290bp利差）——评级差异（5个档次）相对利差差异尚未完全定价。主要风险是ANO驱动的财政扩张；密切关注选举民调。</div></div>""",
-        "monetary_financial": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>CNB是<strong>中东欧最激进降息者</strong>，自2023年12月以来以一系列50bp和25bp步伐将政策利率从7.0%降至<strong>4.00%</strong>。降息周期数据依赖且沟通良好——CNB公开发布预测路径（中东欧独有的透明度实践）有效引导了市场预期。实际政策利率约1.4%正接近CNB对中性的估计（名义约3.0-3.5%，或实际约1.0%）。</p><p>传导机制正在发挥作用但存在滞后。按揭利率已从约6.5%降至约4.5%，推动试探性住房市场复苏。但<strong>私人信贷增长同比+2.1%</strong>依然乏力——企业不借贷是因为不投资，而非信贷成本高昂。CNB面临经典的推绳子问题：当德国需求缺位时，降息无法强迫企业投资。M3增长5.5%健康但非扩张性。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>终端利率着陆区</strong>——CNB工作人员分析认为中性利率为3.0-3.5%。考虑到劳动力市场紧俏和工资增长，我们认为3.75%更为现实。未来2-3次会议（每次预计降息25bp）将定义终端利率争论。</li><li><strong>汇率传导风险</strong>——降息周期中CZK已从24.0走弱至25.0。进一步走至25.50+（来自企业、能源进口商或CNB储备操作的EURCZK买入）将通过进口价格增加CPI约0.3个百分点。这是降息的自我限制机制。</li><li><strong>CNB vs ECB</strong>——CNB-ECB利差已从300bp压缩至75bp。如果CNB进一步降息而ECB维持不变，CZK的利差吸引力减弱，可能进一步削弱CZK。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>CNB降息周期正接近尾声。短端CZK利率定价75bp更多降息；我们看25-50bp。做多2年期CZK对做空2年期EUR——CNB将在市场预期之前停止降息，而ECB将比市场预期降息更多。汇率方面，EURCZK 25.0基于利差接近公允价值。带有鹰派CNB偏向的区间交易。</div></div>""",
+        "monetary_financial": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p>CNB是<strong>中东欧最激进降息者</strong>，自2023年12月以来将2W repo rate从7.0%降至<strong>3.50%</strong>，并自2025年5月以来维持不变。降息周期数据依赖且沟通良好——CNB公开发布预测路径（中东欧独有的透明度实践）有效引导了市场预期。</p><p>传导机制正在发挥作用但存在滞后。按揭利率已从约6.5%降至约4.5%，推动试探性住房市场复苏。但<strong>私人信贷增长同比+2.1%</strong>依然乏力——企业不借贷是因为不投资，而非信贷成本高昂。CNB面临经典的推绳子问题：当德国需求缺位时，降息无法强迫企业投资。M3增长5.5%健康但非扩张性。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>终端利率着陆区</strong>——当前2W repo rate为3.50%。考虑到劳动力市场紧俏和工资增长，继续显著降息的空间有限。</li><li><strong>汇率传导风险</strong>——降息周期中CZK已从24.0走弱至25.0。进一步走至25.50+（来自企业、能源进口商或CNB储备操作的EURCZK买入）将通过进口价格增加CPI约0.3个百分点。这是降息的自我限制机制。</li><li><strong>CNB vs ECB</strong>——如果CNB进一步降息而ECB维持不变，CZK的利差吸引力减弱，可能进一步削弱CZK。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>CNB降息周期大概率接近尾声。短端CZK利率需要反映“易降息阶段已经结束”。汇率方面，EURCZK 25.0基于利差接近公允价值。带有鹰派CNB偏向的区间交易。</div></div>""",
         "markets_valuation": """<div class="narrative"><div class="narrative-header"><span class="narrative-label">宏观叙事</span><span class="narrative-date">2026年4月</span></div><div class="narrative-body"><div class="narrative-col"><h4>已发生的变化</h4><p><strong>PX指数约1,600点（同比+3.1%）</strong>在中东欧表现居中——好于BUX（-2.9%）但落后WIG20（+5.4%）。PX是一个集中、防御性指数：<strong>Erste银行和Komerční banka（合计约45%权重）</strong>以及<strong>ČEZ（约20%权重）</strong>占主导，赋予该指数金融+公用事业偏向和约5%的股息率——为中东欧最高。远期市盈率约12.0倍相对WIG20（约10.5倍）和BUX（约7.2倍）溢价，由AA-主权评级和主导成分股的盈利稳定性证明合理。</p><p>PX实际上是一个<strong>带有股权增强的债券替代品</strong>。Erste和KB的市净率分别约1.2倍和1.5倍，ROE约13-15%——这些是在整合市场中运营良好、盈利可观的银行。ČEZ作为主导公用事业，从核能和燃煤发电中产生稳定现金流，但随着碳成本上升和可再生能源投资需求升级，面临结构性转型风险。</p></div><div class="narrative-col"><h4>需要关注</h4><ul><li><strong>Erste银行中东欧敞口</strong>——Erste约50%收入来自捷克境外（主要是奥地利、罗马尼亚、斯洛伐克、匈牙利）。它是多元化中东欧金融投资标的，而非纯粹的捷克押注。关注罗马尼亚和匈牙利的NIM轨迹。</li><li><strong>ČEZ核电招标</strong>——政府新建核反应堆（Dukovany II，约€70亿）是捷克历史上最大的基础设施项目。ČEZ是指定开发商，但融资结构（政府担保、购电协议）尚未解决。有利的解决方案将是重要积极催化剂。</li><li><strong>股息可持续性</strong>——PX约5%的股息率是其主要吸引力。Erste和KB的派息比率约50-60%，可以盈利支撑。ČEZ的股息波动更大（与电力价格挂钩）。关注电价进一步下跌时的削减风险。</li></ul></div></div><div class="narrative-footer"><strong>市场含义：</strong>PX是防御性、收入导向型配置——而非增长押注。做多PX对做空DAX表达了捷克银行将受益于CNB利率稳定，而德国汽车/制造业面临结构性阻力的观点。5%股息率在横盘市场提供缓冲。寻求增长敞口看波兰；深度价值看匈牙利；收入与安全，捷克是目的地。</div></div>""",
     
         "financial_stability": """<div class="narrative">
@@ -2437,7 +2493,7 @@ COUNTRY_DATA["CZ"] = {
     <div class="narrative-col">
       <h4>已发生的变化</h4>
       <p>捷克银行业是<strong>中东欧最保守、资金最充裕的</strong>。整体CAR约21%，为区域最高。<strong>存贷比约68%</strong>意味着该行业资金过剩——捷克银行是银行间市场的净出借方而非净借款方。不良贷款率约1.8%为欧盟最低。Erste银行（通过Ceska sporitelna）和Komercni banka（法国兴业银行）形成稳定双头垄断，控制系统资产约55%。</p>
-      <p>CNB激进降息周期（7.0%→4.0%）造成<strong>温和净息差压缩</strong>——整体NIM从约2.8%降至约2.3%。但贷款账面增长温和（3-4%），资产质量无可挑剔。<strong>居民债务约GDP的31%</strong>高于中东欧均值但主要为按揭贷款，贷款价值比低（约55%）。企业债务约GDP的52%中等，集中于出口制造业。</p>
+      <p>CNB激进降息周期（7.0%→3.50%）造成<strong>温和净息差压缩</strong>——整体NIM从约2.8%降至约2.3%。但贷款账面增长温和（3-4%），资产质量无可挑剔。<strong>居民债务约GDP的31%</strong>高于中东欧均值但主要为按揭贷款，贷款价值比低（约55%）。企业债务约GDP的52%中等，集中于出口制造业。</p>
     </div>
     <div class="narrative-col">
       <h4>需要关注</h4>
@@ -2911,9 +2967,8 @@ def build_v4(country_code: str) -> Path:
     coverage["adapter_real_count"] = len(adapter_real_ids - source_chart_ids)
     coverage["proxy_count"] = max(0, coverage.get("expected", len(INDICATOR_MANIFEST_48)) - real_indicator_count)
 
-    # Extract CB and Trade sections
-    cb_match = re.search(r'<section class="panel" id="central_bank">.*?</section>', html, re.DOTALL)
-    cb_section = cb_match.group() if cb_match else ""
+    # Render CB from config so policy updates do not inherit stale base HTML.
+    cb_section = _render_central_bank_section(country_code)
     trade_match = re.search(r'<section class="panel" id="trade">.*?</section>', html, re.DOTALL)
     trade_section_html = trade_match.group() if trade_match else ""
 

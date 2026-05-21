@@ -683,24 +683,24 @@ indicators:
   quality_note: Eurostat total stock of general-government guarantees as a share of GDP; narrower than a full public-sector contingent-liability inventory.
 - section_id: monetary_financial
   indicator_id: policy_rate
-  label: Policy / Short-Term Rate
+  label: Central Bank Policy Rate
   unit: '%'
-  source: Eurostat short-term interest rates
-  frequency: monthly
+  source: Central bank policy-rate tracker
+  frequency: event
   chart: peer_overlay
   peers: true
-  quality_status: watch
-  quality_note: Eurostat short-term interest rate used as a policy-stance proxy; corridor systems require definition checks against central-bank announcements.
+  quality_status: verified
+  quality_note: Official central-bank policy-rate definition for each country; verify manually after policy meetings.
 - section_id: monetary_financial
   indicator_id: real_policy_rate
   label: Real Policy-Stance Rate
   unit: '%'
-  source: Derived from Eurostat short-term rate and HICP
-  frequency: monthly
+  source: Derived from official policy rate and HICP
+  frequency: event
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Ex-post short-term rate minus headline HICP; not an ex-ante real policy rate.
+  quality_note: Ex-post official policy rate minus headline HICP; not an ex-ante real policy rate.
 - section_id: monetary_financial
   indicator_id: m3_yoy
   label: Broad Money M3, YoY

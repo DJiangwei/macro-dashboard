@@ -52,6 +52,7 @@ FREQUENCY_STALE_DAYS = {
     "quarterly": 220,
     "semiannual": 420,
     "annual": 900,
+    "event": 420,
 }
 
 
@@ -61,6 +62,7 @@ FREQUENCY_GAP_DAYS = {
     "quarterly": 130,
     "semiannual": 250,
     "annual": 500,
+    "event": 900,
 }
 
 
@@ -76,6 +78,7 @@ _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _XLSX_NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 CONFIG_DIR = Path(__file__).resolve().parents[2] / "config"
+_POLICY_RATE_CACHE: dict | None = None
 
 
 @dataclass(frozen=True)
@@ -417,7 +420,7 @@ def _source_validation_notes(rows: list[dict], spec: IndicatorSpec) -> list[str]
     if age > stale_limit:
         notes.append(f"Latest observation is {age} days old for {spec.frequency} data.")
 
-    if len(parsed) < 5:
+    if spec.frequency != "event" and len(parsed) < 5:
         notes.append("Short history returned by adapter.")
 
     sorted_dates = sorted(parsed)
@@ -767,13 +770,6 @@ class EurostatFetcher(BaseFetcher):
             "params": {"currency": "EUR"},
             "unit": "EUR/month",
         },
-        "policy_rate": {
-            "dataset": "irt_st_m",
-            "freq": "M",
-            "since": "2018",
-            "params": {},
-            "unit": "%",
-        },
         "interbank_3m": {
             "dataset": "irt_st_m",
             "freq": "M",
@@ -820,6 +816,74 @@ class EurostatFetcher(BaseFetcher):
         if cfg.get("derive_yoy"):
             series = _derive_yoy_series(series, spec)
         return _series_to_rows(series, spec, unit=cfg["unit"])
+
+
+def _load_policy_rate_payload() -> dict:
+    global _POLICY_RATE_CACHE
+    if _POLICY_RATE_CACHE is not None:
+        return _POLICY_RATE_CACHE
+    path = CONFIG_DIR / "policy_rates.yaml"
+    if not path.exists():
+        _POLICY_RATE_CACHE = {}
+        return _POLICY_RATE_CACHE
+    _POLICY_RATE_CACHE = yaml.safe_load(path.read_text()) or {}
+    return _POLICY_RATE_CACHE
+
+
+def _policy_rate_series(country: str, spec: IndicatorSpec) -> Series | None:
+    payload = _load_policy_rate_payload()
+    raw = (payload.get("policy_rates") or {}).get(country)
+    if not raw:
+        return None
+
+    observations: list[tuple[str, float]] = []
+    for item in raw.get("observations") or []:
+        try:
+            observations.append((str(item["date"])[:10], float(item["value"])))
+        except (KeyError, TypeError, ValueError):
+            continue
+    observations.sort()
+    if not observations:
+        return None
+
+    return finalize_series(Series(
+        key=spec.indicator_id,
+        label=spec.label,
+        country=country,
+        source=str(raw.get("source") or spec.source),
+        series_id=str(raw.get("series_id") or f"policy_rate:{country}"),
+        unit="%",
+        frequency="event",
+        last_update=observations[-1][0],
+        source_url=str(raw.get("source_url") or ""),
+        observations=observations,
+        available=True,
+        note=str(raw.get("quality_note") or spec.quality_note),
+    ))
+
+
+class PolicyRateFetcher(BaseFetcher):
+    """Official policy-rate definitions maintained in config/policy_rates.yaml."""
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if spec.indicator_id != "policy_rate":
+            return []
+        series = _policy_rate_series(country, spec)
+        if not series:
+            return []
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="%",
+            note="Official central-bank policy-rate definition; event-dated series is maintained in config/policy_rates.yaml.",
+        )
+        raw = (_load_policy_rate_payload().get("policy_rates") or {}).get(country) or {}
+        for row in rows:
+            row["quality_status"] = str(raw.get("quality_status") or "verified")
+            row["quality_note"] = (
+                f"{row.get('quality_note')} Target policy-rate label: {raw.get('rate_name', 'policy rate')}."
+            ).strip()
+        return rows
 
 
 class DerivedMacroFetcher(BaseFetcher):
@@ -959,17 +1023,18 @@ class DerivedMacroFetcher(BaseFetcher):
         meta = countries.get(country)
         if not meta:
             return []
-        nominal_rate = fetch_eurostat(
-            "irt_st_m",
-            meta["iso2"],
+        nominal_rate = _policy_rate_series(country, IndicatorSpec(
+            spec.section_id,
             "policy_rate",
-            "Short-Term Interest Rate",
-            country,
-            freq="M",
-            since="2018",
-            extra_params={},
-            unit_label="%",
-        )
+            "Central Bank Policy Rate",
+            "%",
+            "Central bank",
+            "event",
+            "line",
+            False,
+            "verified",
+            "Official policy-rate definition.",
+        ))
         cpi = fetch_eurostat(
             "prc_hicp_manr",
             meta["iso2"],
@@ -981,7 +1046,7 @@ class DerivedMacroFetcher(BaseFetcher):
             extra_params={"coicop": "CP00"},
             unit_label="% YoY",
         )
-        if not nominal_rate.available or not cpi.available:
+        if not nominal_rate or not nominal_rate.available or not cpi.available:
             return []
         cpi_by_month = {date[:7]: value for date, value in cpi.observations}
         observations: list[tuple[str, float]] = []
@@ -994,17 +1059,17 @@ class DerivedMacroFetcher(BaseFetcher):
             key=spec.indicator_id,
             label=spec.label,
             country=country,
-            source="Derived from Eurostat short-term interest rates and HICP",
-            series_id="irt_st_m minus prc_hicp_manr:CP00",
+            source="Derived from official policy-rate configuration and Eurostat HICP",
+            series_id=f"{nominal_rate.series_id} minus prc_hicp_manr:CP00",
             unit="%",
             frequency="monthly",
             last_update=observations[-1][0] if observations else "",
-            source_url="https://ec.europa.eu/eurostat/databrowser/",
+            source_url=nominal_rate.source_url or "https://ec.europa.eu/eurostat/databrowser/",
             observations=observations,
             available=bool(observations),
-            note="Ex-post real policy-stance proxy: Eurostat short-term interest rate minus headline HICP inflation.",
+            note="Ex-post real policy rate: official policy rate minus headline HICP inflation.",
         ))
-        return _series_to_rows(series, spec, unit="%", note="Derived from Eurostat short-term interest-rate and HICP adapters.")
+        return _series_to_rows(series, spec, unit="%", note="Derived from official policy-rate configuration and Eurostat HICP.")
 
     def _real_estate_price_gap(self, country: str, spec: IndicatorSpec) -> list[dict]:
         countries = load_countries()
@@ -2266,6 +2331,7 @@ class DataPipeline:
     def __init__(self, fetchers: Iterable[BaseFetcher] | None = None) -> None:
         self.fetchers = list(fetchers or [
             ECBFetcher(),
+            PolicyRateFetcher(),
             EurostatFetcher(),
             DerivedMacroFetcher(),
             IMFDataMapperFetcher(),

@@ -1,0 +1,52 @@
+version: 1
+policy_rates:
+  HU:
+    rate_name: MNB central bank base rate
+    source: Magyar Nemzeti Bank
+    series_id: MNB:BASE_RATE
+    source_url: https://www.mnb.hu/en/monetary-policy/the-monetary-council/press-releases/2026/press-release-on-the-monetary-council-meeting-of-28-april-2026
+    quality_status: verified
+    quality_note: Official MNB policy-rate definition. The base rate was cut to 6.25% effective 25 February 2026 and kept unchanged in the 24 March and 28 April 2026 Monetary Council releases.
+    observations:
+      - {date: '2024-09-25', value: 6.50}
+      - {date: '2026-02-25', value: 6.25}
+      - {date: '2026-04-29', value: 6.25}
+  PL:
+    rate_name: NBP reference rate
+    source: Narodowy Bank Polski
+    series_id: NBP:REFERENCE_RATE
+    source_url: https://nbp.pl/en/monetary-policy/mpc-decisions/
+    quality_status: verified
+    quality_note: Official NBP policy-rate definition is the reference rate. NBP's public page blocks automated access in this environment, so latest level is cross-checked against public reporting of the 5-6 May 2026 MPC decision and should be rechecked manually after each MPC meeting.
+    observations:
+      - {date: '2023-10-05', value: 5.75}
+      - {date: '2025-05-08', value: 5.25}
+      - {date: '2025-07-03', value: 5.00}
+      - {date: '2025-09-04', value: 4.75}
+      - {date: '2025-10-09', value: 4.50}
+      - {date: '2025-11-06', value: 4.25}
+      - {date: '2026-03-04', value: 3.75}
+      - {date: '2026-05-06', value: 3.75}
+  CZ:
+    rate_name: CNB two-week repo rate
+    source: Czech National Bank
+    series_id: CNB:2W_REPO_RATE
+    source_url: https://www.cnb.cz/en/monetary-policy/instruments/index.html
+    quality_status: verified
+    quality_note: Official CNB key rate. Latest level cross-checked against CNB monetary-policy instruments and the 7 May 2026 unchanged-rate release.
+    observations:
+      - {date: '2024-12-20', value: 4.00}
+      - {date: '2025-02-07', value: 3.75}
+      - {date: '2025-05-09', value: 3.50}
+      - {date: '2026-05-07', value: 3.50}
+  RO:
+    rate_name: BNR monetary policy rate
+    source: National Bank of Romania
+    series_id: BNR:MONETARY_POLICY_RATE
+    source_url: https://www.bnr.ro/1970-rata-dobanzii-de-politica-monetara
+    quality_status: verified
+    quality_note: Official BNR policy-rate definition. Latest level cross-checked against BNR policy-rate page and reporting of the 15 May 2026 Board decision.
+    observations:
+      - {date: '2024-08-08', value: 6.50}
+      - {date: '2026-04-07', value: 6.50}
+      - {date: '2026-05-15', value: 6.50}
