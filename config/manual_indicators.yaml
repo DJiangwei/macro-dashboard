@@ -1,5 +1,62 @@
 version: 1
 manual_indicators:
+  sovereign_rating:
+    source: Curated rating-agency tracker
+    unit: notch score
+    quality_status: watch
+    quality_note: Manual average of major-agency long-term foreign-currency sovereign ratings, mapped to a 21-notch scale where AAA/Aaa=21 and BBB-/Baa3=12. Update after S&P, Moody's, Fitch, or Scope sovereign actions.
+    references:
+      - https://www.spglobal.com/ratings/en/regulatory/article/sovereign-ratings-list-s101674535
+      - https://www.cnb.cz/en/about_cnb/international-relations/rating-agencies/
+      - https://www.gov.pl/web/finance/fitch-rating-agency-affirmed-polands-credit-rating11
+    observations:
+      HU:
+        - {date: '2024-12-31', value: 12.33}
+        - {date: '2025-12-31', value: 12.33}
+        - {date: '2026-05-21', value: 12.33}
+      PL:
+        - {date: '2024-12-31', value: 15.33}
+        - {date: '2025-12-31', value: 15.33}
+        - {date: '2026-05-21', value: 15.33}
+      CZ:
+        - {date: '2024-12-31', value: 18.00}
+        - {date: '2025-12-31', value: 18.00}
+        - {date: '2026-05-21', value: 18.00}
+      RO:
+        - {date: '2024-12-31', value: 12.00}
+        - {date: '2025-12-31', value: 12.00}
+        - {date: '2026-05-21', value: 12.00}
+  edp_status:
+    source: European Commission / Council EDP tracker
+    unit: policy-risk score
+    quality_status: watch
+    quality_note: Manual Excessive Deficit Procedure status score. 0 = no open EDP; 1 = EDP open with regular correction path; 2 = EDP open with non-effective-action or revised heightened-risk path.
+    references:
+      - https://www.consilium.europa.eu/en/policies/excessive-deficit-procedure/timeline-excessive-deficit-procedure/
+      - https://economy-finance.ec.europa.eu/economic-and-fiscal-governance/stability-and-growth-pact/corrective-arm-excessive-deficit-procedure/excessive-deficit-procedures-overview/hungary_en
+      - https://economy-finance.ec.europa.eu/economic-and-fiscal-governance/stability-and-growth-pact/corrective-arm-excessive-deficit-procedure/excessive-deficit-procedures-overview/poland_en
+      - https://economy-finance.ec.europa.eu/economic-and-fiscal-governance/stability-and-growth-pact/corrective-arm-excessive-deficit-procedure/excessive-deficit-procedures-overview/romania_en
+    observations:
+      HU:
+        - {date: '2023-12-31', value: 0}
+        - {date: '2024-07-26', value: 1}
+        - {date: '2025-02-18', value: 1}
+        - {date: '2026-05-21', value: 1}
+      PL:
+        - {date: '2023-12-31', value: 0}
+        - {date: '2024-07-26', value: 1}
+        - {date: '2025-01-21', value: 1}
+        - {date: '2026-05-21', value: 1}
+      CZ:
+        - {date: '2023-12-31', value: 0}
+        - {date: '2024-07-26', value: 0}
+        - {date: '2025-12-31', value: 0}
+        - {date: '2026-05-21', value: 0}
+      RO:
+        - {date: '2020-04-03', value: 1}
+        - {date: '2024-07-26', value: 2}
+        - {date: '2025-07-08', value: 2}
+        - {date: '2026-05-21', value: 2}
   eu_funds_frozen:
     source: Curated policy-risk tracker
     unit: '% allocation'

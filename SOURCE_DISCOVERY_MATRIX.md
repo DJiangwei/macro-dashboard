@@ -1,6 +1,6 @@
 # Source Discovery Matrix
 
-Date: 2026-05-20
+Date: 2026-05-21
 
 Purpose: track remaining transparent proxies and decide which indicators should become official adapters, curated manual series, public-market derived series, or intentionally retained low-confidence proxies.
 
@@ -12,20 +12,20 @@ make proxy-report
 
 ## Current Baseline
 
-Latest baseline after commit `611e590`:
+Latest baseline after the 2026-05-21 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
-| Hungary | 26 |
-| Poland | 26 |
-| Czechia | 29 |
-| Romania | 30 |
+| Hungary | 22 |
+| Poland | 22 |
+| Czechia | 25 |
+| Romania | 26 |
 
 ## Priority Matrix
 
 | Indicator | Countries still proxied | Target source | Source class | Current status | Next action |
 |---|---|---|---|---|---|
-| `gross_ext_debt` | HU, PL, CZ, RO | ECB BPS, World Bank QEDS/WDI, IMF IFS/DataMapper | Official statistical | World Bank WDI/QEDS candidates did not cover CEE-4 in first test | Revisit ECB BPS series-code construction; if still brittle, search IMF IFS mirrors. |
+| `gross_ext_debt` | None | ECB BPS plus Eurostat GDP | Official statistical / derived ratio | Wired | Uses ECB balance-of-payments liability components scaled by Eurostat rolling four-quarter GDP; footnote flags direct-investment intercompany-debt caveat. |
 | `gas_storage_level` | HU, PL, CZ, RO | GIE AGSI, ENTSOG, national energy operators | Official/industry API | GIE AGSI identified; API likely requires registration/API key | Test AGSI only if an API key is available; otherwise use national operator data or curated manual series. |
 | `foreign_ownership_bonds` | HU, PL, CZ, RO | National debt offices, ministries of finance, central banks | National official | Open | Implement national-source adapter if stable CSV/PDF/table endpoints exist. |
 | `fx_loan_share` | HU, PL, CZ, RO | National central banks, ECB BSI/CBD | National official | Open | Start with central bank financial stability/statistics pages. |
@@ -37,8 +37,8 @@ Latest baseline after commit `611e590`:
 | `equity_index` | CZ, RO | Local exchanges, Yahoo alternatives, exchange CSVs | Public market | Open | Test Prague Stock Exchange and Bucharest Stock Exchange data pages before more Yahoo symbol guessing. |
 | `equity_yoy` | CZ, RO | Derived from `equity_index` | Derived market | Dependent | Implement after index-level feed is stable. |
 | `equity_vol_30d` | PL, CZ, RO | Derived from daily index close | Derived market | Partially dependent | Fix symbol/feed coverage first; keep vendor warning. |
-| `sovereign_rating` | HU, PL, CZ, RO | Rating agency releases, Trading Economics-style pages if acceptable | Curated manual | Recommended manual | Add to `config/manual_indicators.yaml` with notch scale and references. |
-| `edp_status` | HU, PL, CZ, RO | European Commission/Council EDP pages | Curated manual | Recommended manual | Add numeric policy-state series with references and review dates. |
+| `sovereign_rating` | None | Rating agency releases | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a 21-notch average; update after S&P, Moody's, Fitch, or Scope actions. |
+| `edp_status` | None | European Commission/Council EDP pages | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a qualitative policy-risk score with event dates. |
 | `eu_funds_absorption` | HU, PL, CZ, RO | EC cohesion/RRF programme dashboards | Curated manual | Recommended manual | Track programme-cycle absorption as manual or semi-manual. |
 | `contingent_liabilities` | None after current adapter | Eurostat `gov_cl_guar` | Official statistical | Wired in current worktree | Uses total stock of general-government guarantees, % GDP; narrower than full contingent liabilities. |
 | `cb_forward_guidance` | HU, PL, CZ, RO | Central bank statements/minutes | Curated manual | Recommended manual | Better as qualitative score with event references. |
@@ -62,9 +62,9 @@ Latest baseline after commit `611e590`:
 
 The next implementation sprint should target:
 
-1. `gross_ext_debt`
-2. `gas_storage_level`
-3. `foreign_ownership_bonds`
+1. `gas_storage_level`
+2. `foreign_ownership_bonds`
+3. `fx_loan_share`
 
 Reason:
 
@@ -91,3 +91,5 @@ Before wiring any source:
 | 2026-05-20 | Tested World Bank external-debt candidates | `DT.DOD.DECT.GN.ZS`, `DT.DOD.DECT.CD`, and `DT.DOD.DSTC.IR.ZS` did not provide usable CEE-4 coverage through current World Bank adapter. |
 | 2026-05-20 | Investigated GIE AGSI | AGSI is the right source family for storage fullness, but public wrappers/documentation indicate API-key registration is likely required. |
 | 2026-05-20 | Wired Eurostat `gov_cl_guar` | `contingent_liabilities` now uses total stock of general-government guarantees, % GDP, for HU/PL/CZ/RO. |
+| 2026-05-21 | Wired curated `sovereign_rating` and `edp_status` | Removed both indicators from proxy inventory for HU/PL/CZ/RO; manual policy/rating series carry `watch` quality badges. |
+| 2026-05-21 | Wired ECB BPS component adapter for `gross_ext_debt` | Removed `gross_ext_debt` from proxy inventory for HU/PL/CZ/RO; output is a component-based % GDP estimate with explicit caveat. |

@@ -474,13 +474,13 @@ indicators:
 - section_id: external
   indicator_id: gross_ext_debt
   label: Gross External Debt
-  unit: '% GNI'
-  source: World Bank IDS
-  frequency: annual
+  unit: '% GDP'
+  source: ECB BPS / Eurostat GDP
+  frequency: quarterly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: World Bank external debt is annual and often reported versus GNI; compare cautiously against proposal's % GDP framing.
+  quality_note: Component-based external-debt liability estimate from ECB balance-of-payments positions, scaled by Eurostat rolling four-quarter nominal GDP; direct-investment intercompany debt may need national-release cross-checks.
 - section_id: external
   indicator_id: bis_cross_border
   label: BIS Cross-Border Bank Claims
@@ -645,12 +645,12 @@ indicators:
   indicator_id: sovereign_rating
   label: Sovereign Credit Rating
   unit: notch score
-  source: Rating agencies / curated proxy
+  source: Curated rating-agency tracker
   frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Ratings are event-driven and agency-specific; numeric notch proxy is a placeholder until curated rating history is maintained.
+  quality_status: watch
+  quality_note: Manual average of major-agency long-term foreign-currency sovereign ratings on a 21-notch scale; update after rating actions.
 - section_id: fiscal_sovereign
   indicator_id: eu_funds_absorption
   label: EU Funds Absorption Rate
@@ -664,13 +664,13 @@ indicators:
 - section_id: fiscal_sovereign
   indicator_id: edp_status
   label: Excessive Deficit Procedure Status
-  unit: score
-  source: EU Commission / curated proxy
+  unit: policy-risk score
+  source: European Commission / Council EDP tracker
   frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: EDP status is qualitative and event-driven; numeric proxy is a policy-risk marker, not a statistical series.
+  quality_status: watch
+  quality_note: "Manual EDP status score: 0 no open EDP, 1 open EDP, 2 open EDP with non-effective-action or revised heightened-risk path."
 - section_id: fiscal_sovereign
   indicator_id: contingent_liabilities
   label: Contingent Liabilities

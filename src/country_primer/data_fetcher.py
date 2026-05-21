@@ -73,6 +73,7 @@ BIS_CBTA_URL = "https://data.bis.org/static/bulk/WS_CBTA_csv_flat.zip"
 DBNOMICS_BIS_LBS_SERIES_URL = "https://api.db.nomics.world/v22/series/BIS/WS_LBS_D_PUB/{series_code}?observations=1"
 DBNOMICS_IMF_FSI_SERIES_URL = "https://api.db.nomics.world/v22/series/IMF/FSI/{series_code}?observations=1"
 DBNOMICS_ECB_MIR_SERIES_URL = "https://api.db.nomics.world/v22/series/ECB/MIR/{series_code}?observations=1"
+ECB_BPS_SERIES_URL = "https://data-api.ecb.europa.eu/service/data/BPS/{series_code}"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
@@ -531,6 +532,43 @@ def _derive_yoy_series(series: Series, spec: IndicatorSpec, periods: int = 12) -
         available=bool(obs),
         note=f"Derived YoY from {series.series_id}",
     ))
+
+
+def _parse_jsonstat_observations(payload: dict) -> list[tuple[str, float]]:
+    """Parse ECB JSON-data payloads that carry one series plus observations."""
+    datasets = payload.get("dataSets") or []
+    structure = payload.get("structure") or {}
+    if not datasets:
+        return []
+    series_map = (datasets[0].get("series") or {})
+    if not series_map:
+        return []
+    observation_dims = (structure.get("dimensions") or {}).get("observation") or []
+    if not observation_dims:
+        return []
+    time_values = observation_dims[0].get("values") or []
+    times_by_idx = {idx: item.get("id") for idx, item in enumerate(time_values)}
+    first_series = next(iter(series_map.values()))
+    observations: list[tuple[str, float]] = []
+    for idx_str, raw in (first_series.get("observations") or {}).items():
+        try:
+            value = float(raw[0])
+        except (TypeError, ValueError, IndexError):
+            continue
+        period = times_by_idx.get(int(idx_str))
+        if not period:
+            continue
+        if "-Q" in period:
+            year, quarter = period.split("-Q")
+            month = (int(quarter) - 1) * 3 + 1
+            date = f"{year}-{month:02d}-01"
+        elif len(period) == 4:
+            date = f"{period}-12-31"
+        else:
+            date = str(period)[:10]
+        observations.append((date, value))
+    observations.sort()
+    return observations
 
 
 def proxy_rows(country: str, spec: IndicatorSpec) -> list[dict]:
@@ -1895,6 +1933,127 @@ class ECBMIRFetcher(BaseFetcher):
         return rows
 
 
+class ECBExternalDebtFetcher(BaseFetcher):
+    """ECB BPS external-debt component adapter with Eurostat GDP denominator."""
+
+    COMPONENT_KEYS = (
+        ("portfolio_debt", "P", "F3", "M"),
+        ("other_investment_currency_deposits", "O", "F2", "N"),
+        ("other_investment_loans", "O", "F4", "N"),
+        ("other_investment_trade_credits", "O", "F81", "_X"),
+        ("other_investment_other_debt", "O", "FY", "_X"),
+    )
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if spec.indicator_id != "gross_ext_debt":
+            return []
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+
+        component_observations: list[dict[str, float]] = []
+        component_names: list[str] = []
+        for name, functional_category, instrument, valuation in self.COMPONENT_KEYS:
+            series_code = (
+                f"Q.N.{meta['iso2']}.W1.S1.S1.LE.L.FA."
+                f"{functional_category}.{instrument}.T.EUR._T.{valuation}.N.ALL"
+            )
+            observations = self._fetch_bps_component(series_code)
+            if not observations:
+                continue
+            component_names.append(name)
+            component_observations.append({date: value for date, value in observations})
+
+        if len(component_observations) < 3:
+            return []
+
+        gdp_series = fetch_eurostat(
+            "namq_10_gdp",
+            meta["iso2"],
+            "nominal_gdp_quarterly",
+            "Nominal GDP",
+            country,
+            freq="Q",
+            since="2018",
+            extra_params={"na_item": "B1GQ", "unit": "CP_MEUR", "s_adj": "NSA"},
+            unit_label="EUR mn",
+            indicator_label="Nominal GDP",
+        )
+        if not gdp_series.available or len(gdp_series.observations) < 4:
+            return []
+        gdp_by_date = {date: value for date, value in gdp_series.observations}
+        gdp_dates = [date for date, _ in gdp_series.observations]
+
+        observations: list[tuple[str, float]] = []
+        common_dates = sorted(set.intersection(*(set(item) for item in component_observations)))
+        for date in common_dates:
+            if date not in gdp_by_date:
+                continue
+            try:
+                idx = gdp_dates.index(date)
+            except ValueError:
+                continue
+            if idx < 3:
+                continue
+            trailing_gdp = sum(float(gdp_by_date[gdp_dates[i]]) for i in range(idx - 3, idx + 1))
+            if trailing_gdp <= 0:
+                continue
+            external_debt = sum(float(component[date]) for component in component_observations)
+            observations.append((date, external_debt / trailing_gdp * 100.0))
+
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="ECB BPS / Eurostat GDP",
+            series_id="BPS external-debt liability components / rolling 4Q GDP",
+            unit="% GDP",
+            frequency="quarterly",
+            last_update=observations[-1][0],
+            source_url="https://data.ecb.europa.eu/main-figures/external-sector/external-debt",
+            observations=observations,
+            available=True,
+            note=(
+                "Component-based gross external debt estimate from ECB BPS liabilities: "
+                f"{', '.join(component_names)}; scaled by Eurostat rolling four-quarter nominal GDP."
+            ),
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="% GDP",
+            note=(
+                "Official ECB BPS component stack; direct-investment intercompany debt is not included "
+                "unless reported through the selected debt-instrument components, so compare with national external-debt releases."
+            ),
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+    def _fetch_bps_component(self, series_code: str) -> list[tuple[str, float]]:
+        query = f"ecb_bps::{series_code}::2018-2026"
+        path = cache_path(query)
+        if path.exists():
+            payload = json.loads(path.read_text())
+        else:
+            response = requests.get(
+                ECB_BPS_SERIES_URL.format(series_code=series_code),
+                params={"startPeriod": "2018-Q1", "format": "jsondata"},
+                timeout=30,
+            )
+            if response.status_code == 404:
+                return []
+            response.raise_for_status()
+            payload = response.json()
+            path.write_text(json.dumps(payload, indent=2, sort_keys=True))
+        return _parse_jsonstat_observations(payload)
+
+
 class ManualIndicatorFetcher(BaseFetcher):
     """User-maintained research series for non-statistical political-risk inputs."""
 
@@ -2336,6 +2495,7 @@ class DataPipeline:
             DerivedMacroFetcher(),
             IMFDataMapperFetcher(),
             WorldBankESGFetcher(),
+            ECBExternalDebtFetcher(),
             WorldBankFetcher(),
             YahooMarketFetcher(),
             BISFetcher(),

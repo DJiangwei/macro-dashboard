@@ -74,6 +74,8 @@ Recently added or improved data adapters:
 - Eurostat government debt remaining maturity for `avg_debt_maturity` where available.
 - IMF DataMapper ARA for `ara_metric`.
 - IMF Global Debt Database for `household_debt_pct_gdp` and `corp_debt_pct_gdp`.
+- Curated manual rating/event trackers for `sovereign_rating` and `edp_status`.
+- ECB BPS component stack plus Eurostat rolling four-quarter GDP for `gross_ext_debt`.
 
 Important current caveat:
 
@@ -84,10 +86,10 @@ Important current caveat:
 The latest pipeline run produced these proxy counts:
 
 ```text
-Hungary: 26
-Poland: 26
-Czechia: 29
-Romania: 30
+Hungary: 22
+Poland: 22
+Czechia: 25
+Romania: 26
 ```
 
 Hungary remaining proxies:
@@ -99,8 +101,6 @@ breakeven_5y5y
 carry_trade_return
 cb_forward_guidance
 cds_5y
-contingent_liabilities
-edp_status
 embi_spread
 equity_div_yield
 equity_fwd_pe
@@ -111,13 +111,11 @@ fx_3m_forward
 fx_implied_vol
 fx_loan_share
 gas_storage_level
-gross_ext_debt
 ifo_expectations
 import_prices_yoy
 manufacturing_pmi
 oecd_cli
 portfolio_flows
-sovereign_rating
 truck_km_index
 ```
 
@@ -129,8 +127,6 @@ breakeven_5y5y
 carry_trade_return
 cb_forward_guidance
 cds_5y
-contingent_liabilities
-edp_status
 embi_spread
 equity_div_yield
 equity_fwd_pe
@@ -142,13 +138,11 @@ fx_3m_forward
 fx_implied_vol
 fx_loan_share
 gas_storage_level
-gross_ext_debt
 ifo_expectations
 import_prices_yoy
 manufacturing_pmi
 oecd_cli
 portfolio_flows
-sovereign_rating
 truck_km_index
 ```
 
@@ -160,8 +154,6 @@ breakeven_5y5y
 carry_trade_return
 cb_forward_guidance
 cds_5y
-contingent_liabilities
-edp_status
 embi_spread
 equity_div_yield
 equity_fwd_pe
@@ -175,14 +167,12 @@ fx_3m_forward
 fx_implied_vol
 fx_loan_share
 gas_storage_level
-gross_ext_debt
 ifo_expectations
 import_prices_yoy
 manufacturing_pmi
 oecd_cli
 portfolio_flows
 short_term_ext_debt
-sovereign_rating
 truck_km_index
 ```
 
@@ -195,8 +185,6 @@ carry_trade_return
 cb_balance_sheet_gdp
 cb_forward_guidance
 cds_5y
-contingent_liabilities
-edp_status
 embi_spread
 equity_div_yield
 equity_fwd_pe
@@ -211,13 +199,11 @@ fx_3m_forward
 fx_implied_vol
 fx_loan_share
 gas_storage_level
-gross_ext_debt
 ifo_expectations
 import_prices_yoy
 manufacturing_pmi
 oecd_cli
 portfolio_flows
-sovereign_rating
 truck_km_index
 ```
 
@@ -231,7 +217,6 @@ These should be the next highest-priority targets because they can probably be r
 
 Targets:
 
-- `gross_ext_debt`
 - `gas_storage_level`
 - `foreign_ownership_bonds`
 - `fx_loan_share`
@@ -292,11 +277,8 @@ These are not naturally time-series API problems. They are event/state trackers.
 
 Targets:
 
-- `sovereign_rating`
-- `edp_status`
 - `eu_funds_absorption`
 - `eu_funds_frozen`
-- `contingent_liabilities`
 - `cb_forward_guidance`
 
 Likely source families:
@@ -366,12 +348,11 @@ Reduce the remaining proxy count by replacing the most plausible official-data g
 Concrete tasks:
 
 1. Add a `SOURCE_DISCOVERY_MATRIX.md` or YAML equivalent that maps every remaining proxy to candidate sources, status, and next action.
-2. Investigate ECB BPS deeply for `gross_ext_debt`.
-3. Investigate national debt-office data for Hungary `avg_debt_maturity`.
-4. Investigate national central bank or ECB data for `fx_loan_share`.
-5. Investigate national debt management sources for `foreign_ownership_bonds`.
-6. Investigate GIE AGSI or national energy storage pages for `gas_storage_level`.
-7. Re-test `import_prices_yoy` across Eurostat and national-stat sources.
+2. Investigate national debt-office data for Hungary `avg_debt_maturity`.
+3. Investigate national central bank or ECB data for `fx_loan_share`.
+4. Investigate national debt management sources for `foreign_ownership_bonds`.
+5. Investigate GIE AGSI or national energy storage pages for `gas_storage_level`.
+6. Re-test `import_prices_yoy` across Eurostat and national-stat sources.
 8. Validate each candidate with four checks: country coverage, latest date, unit/frequency, and whether it matches the indicator label.
 
 Definition of done:
@@ -678,4 +659,3 @@ Recommended first implementation slice:
 5. Start source discovery for `gross_ext_debt`, `gas_storage_level`, and `foreign_ownership_bonds`.
 6. Implement only sources that pass the four checks: coverage, latest date, unit/frequency, definition match.
 7. Build, validate, commit, push, and smoke test.
-
