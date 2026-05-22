@@ -86,6 +86,7 @@ CNB_RESERVES_USD_TXT_URL = (
     "https://www.cnb.cz/export/sites/cnb/en/statistics/bop_stat/"
     "international_reserves/download/drs_rada_en.txt"
 )
+CZSO_IMPORT_PRICE_CSV_URL = "https://data.csu.gov.cz/opendata/sady/CEN0301/distribuce/csv"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
@@ -1970,6 +1971,71 @@ class NationalCBFetcher(BaseFetcher):
         return observations
 
 
+class CZSOFetcher(BaseFetcher):
+    """Czech Statistical Office open-data adapters."""
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if country == "CZ" and spec.indicator_id == "import_prices_yoy":
+            return self._import_prices_yoy(country, spec)
+        return []
+
+    def _import_prices_yoy(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        try:
+            response = requests.get(CZSO_IMPORT_PRICE_CSV_URL, timeout=45)
+            response.raise_for_status()
+            observations = self._parse_import_price_csv(response.text)
+        except (OSError, requests.RequestException, csv.Error, TypeError, ValueError):
+            return []
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Czech Statistical Office open data",
+            series_id="CEN0301:614703:ABCDEJ:IR",
+            unit="% YoY",
+            frequency="monthly",
+            last_update=observations[-1][0],
+            source_url=CZSO_IMPORT_PRICE_CSV_URL,
+            observations=observations,
+            available=True,
+            note=(
+                "CZSO import price index for total CPA aggregate, monthly year-on-year "
+                "index converted from index form to percent change."
+            ),
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="% YoY",
+            note="Czechia national-statistics override where Eurostat import-price coverage is incomplete.",
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+    def _parse_import_price_csv(self, text: str) -> list[tuple[str, float]]:
+        observations: list[tuple[str, float]] = []
+        for row in csv.DictReader(text.splitlines()):
+            period = str(row.get("CASMKMQRM12") or "")
+            if (
+                row.get("IndicatorType") != "614703"
+                or row.get("CZCPAVAD.CZCPA1") != "ABCDEJ"
+                or row.get("TYPUDAJE5B") != "IR"
+                or len(period) != 7
+                or period[4] != "-"
+                or not period[:4].isdigit()
+                or not period[5:7].isdigit()
+                or not 1 <= int(period[5:7]) <= 12
+            ):
+                continue
+            value = float(str(row.get("Hodnota") or "").replace(",", "."))
+            observations.append((f"{period}-01", value - 100.0))
+        return sorted(observations)
+
+
 class WorldBankFallbackFetcher(BaseFetcher):
     """Fallback adapters for indicators with partial official-source coverage."""
 
@@ -2886,6 +2952,7 @@ class DataPipeline:
             ECBMIRFetcher(),
             ManualIndicatorFetcher(),
             NationalCBFetcher(),
+            CZSOFetcher(),
             ProxyFetcher(),
         ])
 

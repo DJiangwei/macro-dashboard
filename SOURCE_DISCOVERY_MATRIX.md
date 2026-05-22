@@ -18,7 +18,7 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 |---|---:|
 | Hungary | 16 |
 | Poland | 16 |
-| Czechia | 19 |
+| Czechia | 18 |
 | Romania | 20 |
 
 ## Priority Matrix
@@ -33,8 +33,8 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 | `cb_balance_sheet_gdp` | RO only | NBR, IMF IFS, central bank balance-sheet statements | National official | Open | Search NBR balance sheet statistics or IMF IFS mirror. |
 | `foreign_bank_share` | RO only | NBR, EBRD, ECB consolidated banking statistics | Official/manual | Open | World Bank GFDD lacks Romania coverage; search NBR/EBRD. |
 | `short_term_ext_debt` | None | IMF ARA, CNB external debt and reserves | Official statistical / national official | Wired | Czechia uses CNB USD quarterly short-term external debt divided by matching CNB quarter-end international reserves because IMF ARA coverage is missing. |
-| `import_prices_yoy` | HU, PL, CZ, RO | Eurostat STS, national statistical offices | Official statistical | Rechecked | Eurostat `sts_inpi_m` has poor CEE coverage and broad Poland CPA YoY aggregates tested on 2026-05-22 returned no target observations; continue with national stats. |
-| `equity_index` | CZ, RO | Local exchanges, Yahoo alternatives, exchange CSVs | Public market | Open | Test Prague Stock Exchange and Bucharest Stock Exchange data pages before more Yahoo symbol guessing. |
+| `import_prices_yoy` | HU, PL, RO | Eurostat STS, national statistical offices | Official statistical | Partially wired | Czechia uses CZSO open-data monthly total import-price YoY; Eurostat `sts_inpi_m` has poor non-euro CEE coverage and broad Poland CPA YoY aggregates tested on 2026-05-22 returned no target observations. |
+| `equity_index` | CZ, RO | Local exchanges, Yahoo alternatives, exchange CSVs | Public market | PSE API discovered | Prague `/api/indexes` historical PX data works through direct API probing, but Python `requests` connection timed out on 2026-05-22; avoid adding a build-path dependency until access is robust. Continue with BVB and alternate exchange downloads. |
 | `equity_yoy` | CZ, RO | Derived from `equity_index` | Derived market | Dependent | Implement after index-level feed is stable. |
 | `equity_vol_30d` | PL, CZ, RO | Derived from daily index close | Derived market | Partially dependent | Fix symbol/feed coverage first; keep vendor warning. |
 | `sovereign_rating` | None | Rating agency releases | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a 21-notch average; update after S&P, Moody's, Fitch, or Scope actions. |
