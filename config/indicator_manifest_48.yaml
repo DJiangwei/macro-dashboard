@@ -445,12 +445,12 @@ indicators:
   indicator_id: short_term_ext_debt
   label: Short-Term External Debt / Reserves
   unit: '%'
-  source: IMF ARA
+  source: IMF ARA / CNB override
   frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Derived by inverting IMF reserves-to-short-term-debt ratio; annual and best read as a structural vulnerability gauge.
+  quality_note: Uses IMF ARA ratio where available; Czechia uses a quarterly CNB short-term external debt position over matched CNB quarter-end international reserves. Read as a structural external-liquidity gauge.
 - section_id: external
   indicator_id: fx_implied_vol
   label: 3M FX Implied Volatility

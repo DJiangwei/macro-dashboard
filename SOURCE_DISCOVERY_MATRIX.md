@@ -18,7 +18,7 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 |---|---:|
 | Hungary | 16 |
 | Poland | 16 |
-| Czechia | 20 |
+| Czechia | 19 |
 | Romania | 20 |
 
 ## Priority Matrix
@@ -32,7 +32,7 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 | `avg_debt_maturity` | None | Hungary debt office / AKK | National official snapshot | Wired | Hungary uses official AKK Average Time to Maturity snapshots in `config/manual_indicators.yaml`; other covered countries continue to use Eurostat remaining-maturity data. |
 | `cb_balance_sheet_gdp` | RO only | NBR, IMF IFS, central bank balance-sheet statements | National official | Open | Search NBR balance sheet statistics or IMF IFS mirror. |
 | `foreign_bank_share` | RO only | NBR, EBRD, ECB consolidated banking statistics | Official/manual | Open | World Bank GFDD lacks Romania coverage; search NBR/EBRD. |
-| `short_term_ext_debt` | CZ only | IMF ARA, World Bank QEDS/WDI, national external debt stats | Official statistical | Open | Current IMF ARA adapter did not replace CZ; test alternate series or national external debt table. |
+| `short_term_ext_debt` | None | IMF ARA, CNB external debt and reserves | Official statistical / national official | Wired | Czechia uses CNB USD quarterly short-term external debt divided by matching CNB quarter-end international reserves because IMF ARA coverage is missing. |
 | `import_prices_yoy` | HU, PL, CZ, RO | Eurostat STS, national statistical offices | Official statistical | Rechecked | Eurostat `sts_inpi_m` has poor CEE coverage and broad Poland CPA YoY aggregates tested on 2026-05-22 returned no target observations; continue with national stats. |
 | `equity_index` | CZ, RO | Local exchanges, Yahoo alternatives, exchange CSVs | Public market | Open | Test Prague Stock Exchange and Bucharest Stock Exchange data pages before more Yahoo symbol guessing. |
 | `equity_yoy` | CZ, RO | Derived from `equity_index` | Derived market | Dependent | Implement after index-level feed is stable. |
@@ -64,7 +64,7 @@ The next implementation sprint should target:
 
 1. `gas_storage_level`
 2. `fx_loan_share`
-3. `short_term_ext_debt`
+3. `cb_balance_sheet_gdp`
 
 Reason:
 
@@ -101,3 +101,4 @@ Before wiring any source:
 | 2026-05-22 | Wired Eurostat government-debt holder ratio for `foreign_ownership_bonds` | Removed the holder indicator from proxy inventory for HU/PL/CZ/RO and tightened the label from local bonds to total government debt to preserve the harmonized Eurostat definition. |
 | 2026-05-22 | Wired IMF FSI `FSFC_PT` for recent `fx_loan_share` coverage | Removed `fx_loan_share` proxies for Poland and Romania; rejected missing Hungary and stale Czechia coverage so those two remain explicit source-discovery tasks. |
 | 2026-05-22 | Wired ECB BPS portfolio-liability transactions for `portfolio_flows` | Removed `portfolio_flows` from proxy inventory for HU/PL/CZ/RO with monthly rest-of-world portfolio liability-flow series and explicit sign convention. |
+| 2026-05-22 | Wired Czech CNB short-term external-debt ratio | Removed Czechia `short_term_ext_debt` proxy with quarterly CNB USD short-term external debt over matched CNB USD international reserves. |

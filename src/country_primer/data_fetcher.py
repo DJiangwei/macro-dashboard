@@ -19,6 +19,7 @@ import io
 import json
 import math
 from pathlib import Path
+from html.parser import HTMLParser
 from typing import Iterable
 from xml.etree import ElementTree as ET
 import zipfile
@@ -75,6 +76,16 @@ DBNOMICS_IMF_FSI_SERIES_URL = "https://api.db.nomics.world/v22/series/IMF/FSI/{s
 DBNOMICS_ECB_MIR_SERIES_URL = "https://api.db.nomics.world/v22/series/ECB/MIR/{series_code}?observations=1"
 ECB_BPS_SERIES_URL = "https://data-api.ecb.europa.eu/service/data/BPS/{series_code}"
 COHESION_EU_PAYMENTS_URL = "https://cohesiondata.ec.europa.eu/resource/pbbz-hmfu.json"
+CNB_EXTERNAL_DEBT_USD_URLS = (
+    "https://www.cnb.cz/en/statistics/bop_stat/external_debt/zz_usd_en.htm",
+    "https://www.cnb.cz/en/statistics/bop_stat/external_debt/external-debt-in-usd-quarterly-2024/",
+    "https://www.cnb.cz/en/statistics/bop_stat/external_debt/external-debt-in-usd-quarterly-2023/",
+    "https://www.cnb.cz/en/statistics/bop_stat/external_debt/external-debt-in-usd-quarterly-2022/",
+)
+CNB_RESERVES_USD_TXT_URL = (
+    "https://www.cnb.cz/export/sites/cnb/en/statistics/bop_stat/"
+    "international_reserves/download/drs_rada_en.txt"
+)
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
@@ -572,6 +583,58 @@ def _parse_jsonstat_observations(payload: dict) -> list[tuple[str, float]]:
         observations.append((date, value))
     observations.sort()
     return observations
+
+
+class _HTMLTableParser(HTMLParser):
+    """Collect simple HTML tables from official statistics pages."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.tables: list[list[list[str]]] = []
+        self._table: list[list[str]] | None = None
+        self._row: list[str] | None = None
+        self._cell: list[str] | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag == "table":
+            self._table = []
+        elif tag == "tr" and self._table is not None:
+            self._row = []
+        elif tag in {"td", "th"} and self._row is not None:
+            self._cell = []
+
+    def handle_data(self, data: str) -> None:
+        if self._cell is not None:
+            self._cell.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in {"td", "th"} and self._row is not None and self._cell is not None:
+            self._row.append(" ".join(" ".join(self._cell).split()))
+            self._cell = None
+        elif tag == "tr" and self._table is not None and self._row is not None:
+            if self._row:
+                self._table.append(self._row)
+            self._row = None
+        elif tag == "table" and self._table is not None:
+            if self._table:
+                self.tables.append(self._table)
+            self._table = None
+
+
+def _parse_cnb_number(raw: str) -> float:
+    """Parse CNB Czech-formatted numbers such as `178.314,9`."""
+    value = str(raw).replace("\xa0", "").replace(" ", "").replace(".", "").replace(",", ".")
+    return float(value)
+
+
+def _cnb_day_month_year_to_iso(raw: str) -> str | None:
+    parts = str(raw).strip().strip(".").split(".")
+    if len(parts) != 3:
+        return None
+    day, month, year = parts
+    if not (day.isdigit() and month.isdigit() and year.isdigit()):
+        return None
+    return f"{int(year):04d}-{int(month):02d}-{int(day):02d}"
 
 
 def proxy_rows(country: str, spec: IndicatorSpec) -> list[dict]:
@@ -1818,7 +1881,93 @@ def _load_bis_cbta_data() -> dict[str, list[tuple[str, float]]]:
 
 class NationalCBFetcher(BaseFetcher):
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if country == "CZ" and spec.indicator_id == "short_term_ext_debt":
+            return self._czech_short_term_external_debt_reserves(country, spec)
         return []
+
+    def _czech_short_term_external_debt_reserves(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        try:
+            debt = self._cnb_short_term_external_debt_usd()
+            reserves = self._cnb_reserves_usd()
+        except (OSError, requests.RequestException, ValueError):
+            return []
+        observations = []
+        for date, debt_usd_mn in debt:
+            reserves_usd_mn = reserves.get(date)
+            if not reserves_usd_mn or reserves_usd_mn <= 0:
+                continue
+            observations.append((date, debt_usd_mn / reserves_usd_mn * 100.0))
+        observations.sort()
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="CNB external debt / CNB international reserves",
+            series_id="CNB USD short-term external debt / CNB USD reserves",
+            unit="%",
+            frequency="quarterly",
+            last_update=observations[-1][0],
+            source_url=CNB_EXTERNAL_DEBT_USD_URLS[0],
+            observations=observations,
+            available=True,
+            note=(
+                "Czech National Bank USD short-term external debt position divided by "
+                "CNB end-period international reserves in USD."
+            ),
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="%",
+            note=(
+                "National-CB override for Czechia where IMF ARA ratio coverage is missing; "
+                "external debt is quarterly while reserve denominator is matched to quarter-end."
+            ),
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+    def _cnb_short_term_external_debt_usd(self) -> list[tuple[str, float]]:
+        observations: dict[str, float] = {}
+        for url in CNB_EXTERNAL_DEBT_USD_URLS:
+            response = requests.get(url, timeout=30)
+            response.raise_for_status()
+            parser = _HTMLTableParser()
+            parser.feed(response.text)
+            for table in parser.tables:
+                if len(table) < 2:
+                    continue
+                header = table[0]
+                short_term = next(
+                    (row for row in table[1:] if row and row[0].strip().lower() == "short-term"),
+                    None,
+                )
+                if not short_term:
+                    continue
+                for raw_date, raw_value in zip(header[1:], short_term[1:]):
+                    date = _cnb_day_month_year_to_iso(raw_date)
+                    if not date or date < "2022-01-01":
+                        continue
+                    observations[date] = _parse_cnb_number(raw_value)
+        return sorted(observations.items())
+
+    def _cnb_reserves_usd(self) -> dict[str, float]:
+        response = requests.get(CNB_RESERVES_USD_TXT_URL, timeout=30)
+        response.raise_for_status()
+        observations: dict[str, float] = {}
+        for line in response.text.splitlines()[1:]:
+            cells = line.split("|")
+            if len(cells) < 2:
+                continue
+            date = _cnb_day_month_year_to_iso(cells[0])
+            if not date or date < "2022-01-01":
+                continue
+            observations[date] = _parse_cnb_number(cells[1])
+        return observations
 
 
 class WorldBankFallbackFetcher(BaseFetcher):
