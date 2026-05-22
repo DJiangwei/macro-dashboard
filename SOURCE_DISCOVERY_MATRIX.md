@@ -12,14 +12,14 @@ make proxy-report
 
 ## Current Baseline
 
-Latest baseline after the 2026-05-21 source-wiring pass:
+Latest baseline after the 2026-05-22 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
-| Hungary | 21 |
-| Poland | 21 |
-| Czechia | 24 |
-| Romania | 25 |
+| Hungary | 19 |
+| Poland | 19 |
+| Czechia | 22 |
+| Romania | 23 |
 
 ## Priority Matrix
 
@@ -56,7 +56,7 @@ Latest baseline after the 2026-05-21 source-wiring pass:
 | `equity_div_yield` | HU, PL, CZ, RO | Exchange factsheets/vendor | Vendor valuation | Hard | Keep proxy or curate annual factsheets. |
 | `portfolio_flows` | HU, PL, CZ, RO | IMF BOP/IIP, IMF Capital Flows, ECB BOP | Official/lagged | Partially blocked | IMF capital-flow series tested but stops around 2014; try ECB BOP financial account. |
 | `administered_prices` | None | Eurostat HICP item weights | Official statistical / derived | Wired | Uses the HICP `AP` special aggregate item weight from current ECOICOP v2 weights and converts per-mille weight to percent of basket; do not substitute AP inflation. |
-| `carry_trade_return` | HU, PL, CZ, RO | Derived FX spot plus rate differential | Derived market | Open | Existing adapter needs EUR short-rate source; consider ECB ESTER or Euribor series. |
+| `carry_trade_return` | None | Eurostat 3M short-term rates | Derived market | Wired | Carry-only spread uses local 3M short rate less euro-area 3M short rate; it excludes spot FX movement, roll-down, and costs. |
 
 ## Candidate First Sprint
 
@@ -96,3 +96,4 @@ Before wiring any source:
 | 2026-05-22 | Wired Cohesion Open Data payment adapter for `eu_funds_absorption` | Removed `eu_funds_absorption` from proxy inventory for HU/PL/CZ/RO; ratio uses official cumulative payments over latest adopted EU plan. |
 | 2026-05-22 | Rechecked Eurostat HICP administered prices | AP inflation is directly available, but the dashboard slot is a basket share; derive it from administered composition and HICP weights instead of relabeling the metric. |
 | 2026-05-22 | Wired Eurostat HICP item-weight adapter for `administered_prices` | Removed `administered_prices` from proxy inventory for HU/PL/CZ/RO via the official `AP` special aggregate weight in `prc_hicp_iw`. |
+| 2026-05-22 | Corrected Eurostat carry short-rate legs | Removed `carry_trade_return` from proxy inventory for HU/PL/CZ/RO by using explicit local and euro-area 3M short-rate series. |

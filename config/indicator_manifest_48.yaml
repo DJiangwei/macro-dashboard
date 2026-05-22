@@ -790,7 +790,7 @@ indicators:
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Public implementation is carry-only using local short rate less EUR short-rate proxy; excludes spot FX movement and transaction costs.
+  quality_note: Carry-only public implementation uses Eurostat local 3M short rate less euro-area 3M short rate; excludes spot FX movement and transaction costs.
 - section_id: monetary_financial
   indicator_id: cb_balance_sheet_gdp
   label: Central Bank Balance Sheet, % GDP

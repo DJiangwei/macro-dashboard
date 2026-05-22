@@ -1381,18 +1381,18 @@ class DerivedMacroFetcher(BaseFetcher):
             country,
             freq="M",
             since="2018",
-            extra_params={},
+            extra_params={"int_rt": "IRT_M3"},
             unit_label="%",
         )
         eur_rate = fetch_eurostat(
             "irt_st_m",
-            "DE",
+            "EA",
             "eur_short_rate",
-            "EUR Short-Term Rate Proxy",
+            "Euro Area 3M Short-Term Rate",
             country,
             freq="M",
             since="2018",
-            extra_params={},
+            extra_params={"int_rt": "IRT_M3"},
             unit_label="%",
         )
         if not local_rate.available or not eur_rate.available:
@@ -1409,14 +1409,14 @@ class DerivedMacroFetcher(BaseFetcher):
             label=spec.label,
             country=country,
             source="Derived from Eurostat short-term interest rates",
-            series_id=f"irt_st_m:{meta['iso2']}-DE",
+            series_id=f"irt_st_m:IRT_M3:{meta['iso2']}-EA",
             unit="% annualised",
             frequency="monthly",
             last_update=observations[-1][0] if observations else "",
             source_url="https://ec.europa.eu/eurostat/databrowser/view/irt_st_m/default/table?lang=en",
             observations=observations,
             available=bool(observations),
-            note="Carry-only proxy: local short-term rate less German/EUR short-term rate, excluding spot FX moves and roll-down.",
+            note="Carry-only proxy: local 3M short-term rate less euro-area 3M short-term rate, excluding spot FX moves and roll-down.",
         ))
         rows = _series_to_rows(series, spec, unit="% annualised", note="Carry-only proxy; not a realised total-return series.")
         for row in rows:
