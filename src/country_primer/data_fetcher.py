@@ -20,6 +20,7 @@ import json
 import math
 from pathlib import Path
 from html.parser import HTMLParser
+import time
 from typing import Iterable
 from xml.etree import ElementTree as ET
 import zipfile
@@ -87,6 +88,8 @@ CNB_RESERVES_USD_TXT_URL = (
     "international_reserves/download/drs_rada_en.txt"
 )
 CZSO_IMPORT_PRICE_CSV_URL = "https://data.csu.gov.cz/opendata/sady/CEN0301/distribuce/csv"
+KSH_IMPORT_PRICE_CSV_URL = "https://www.ksh.hu/stadat_files/ara/en/ara0046.csv"
+GUS_DBW_VARIABLE_DATA_URL = "https://api-dbw.stat.gov.pl/api/variable/variable-data-section"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
@@ -2036,6 +2039,189 @@ class CZSOFetcher(BaseFetcher):
         return sorted(observations)
 
 
+class KSHFetcher(BaseFetcher):
+    """Hungarian Central Statistical Office STADAT adapters."""
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if country == "HU" and spec.indicator_id == "import_prices_yoy":
+            return self._import_prices_yoy(country, spec)
+        return []
+
+    def _import_prices_yoy(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        try:
+            response = requests.get(KSH_IMPORT_PRICE_CSV_URL, timeout=45)
+            response.raise_for_status()
+            observations = self._parse_import_price_csv(response.text)
+        except (OSError, requests.RequestException, csv.Error, TypeError, ValueError):
+            return []
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Hungarian Central Statistical Office STADAT",
+            series_id="STADAT:ara0046:import-monthly-total",
+            unit="% YoY",
+            frequency="monthly",
+            last_update=observations[-1][0],
+            source_url=KSH_IMPORT_PRICE_CSV_URL,
+            observations=observations,
+            available=True,
+            note=(
+                "KSH external-trade import price index, total monthly series with "
+                "corresponding period of previous year = 100 converted to percent."
+            ),
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="% YoY",
+            note=(
+                "Hungary national-statistics override; latest KSH methodology column "
+                "is preferred and older-method values fill only missing early history."
+            ),
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+    def _parse_import_price_csv(self, text: str) -> list[tuple[str, float]]:
+        observations: list[tuple[str, float]] = []
+        current_year = ""
+        in_import_monthly = False
+        for row in csv.reader(io.StringIO(text), delimiter=";"):
+            if not row:
+                continue
+            section = str(row[0]).strip()
+            if section == "Import, monthly":
+                in_import_monthly = True
+                continue
+            if in_import_monthly and section.startswith(("Import,", "Export,")):
+                break
+            if not in_import_monthly or len(row) < 8:
+                continue
+            year = section or current_year
+            period = str(row[1]).strip()
+            if section.isdigit():
+                current_year = section
+                year = section
+            if not year.isdigit():
+                continue
+            try:
+                month = datetime.strptime(period, "%B").month
+            except ValueError:
+                continue
+
+            value = _parse_ksh_number(row[7])
+            if value is None:
+                value = _parse_ksh_number(row[6])
+            if value is None:
+                continue
+            observations.append((f"{year}-{month:02d}-01", value - 100.0))
+        return sorted(observations)
+
+
+def _parse_ksh_number(raw: str) -> float | None:
+    value = str(raw).strip()
+    if not value or value == "..":
+        return None
+    try:
+        return float(value.replace(",", "."))
+    except ValueError:
+        return None
+
+
+class GUSDBWFetcher(BaseFetcher):
+    """Statistics Poland DBW API adapters."""
+
+    IMPORT_PRICE_VARIABLE_ID = 329
+    IMPORT_PRICE_SECTION_ID = 772
+    IMPORT_POSITION_ID = 4768413
+    INDUSTRIAL_PRODUCTS_TOTAL_POSITION_ID = 7124459
+    YOY_PRESENTATION_ID = 5
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if country == "PL" and spec.indicator_id == "import_prices_yoy":
+            return self._import_prices_yoy(country, spec)
+        return []
+
+    def _import_prices_yoy(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        observations: list[tuple[str, float]] = []
+        session = requests.Session()
+        for year in range(2022, datetime.utcnow().year + 1):
+            for month in range(1, 13):
+                try:
+                    response = session.get(
+                        GUS_DBW_VARIABLE_DATA_URL,
+                        params={
+                            "id-zmienna": self.IMPORT_PRICE_VARIABLE_ID,
+                            "id-przekroj": self.IMPORT_PRICE_SECTION_ID,
+                            "id-rok": year,
+                            "id-okres": 246 + month,
+                            "ile-na-stronie": 5000,
+                            "numer-strony": 0,
+                            "lang": "en",
+                        },
+                        timeout=30,
+                    )
+                    response.raise_for_status()
+                    value = self._find_import_total_yoy(response.json())
+                except (OSError, requests.RequestException, TypeError, ValueError, json.JSONDecodeError):
+                    # DBW returns 404 for future months within the current year.
+                    continue
+                finally:
+                    # Anonymous DBW clients are capped at five requests per second.
+                    time.sleep(0.22)
+                if value is None:
+                    continue
+                observations.append((f"{year}-{month:02d}-01", value - 100.0))
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Statistics Poland DBW API",
+            series_id="DBW:variable-329:section-772:import:industrial-products-total:yoy",
+            unit="% YoY",
+            frequency="monthly",
+            last_update=observations[-1][0],
+            source_url=GUS_DBW_VARIABLE_DATA_URL,
+            observations=sorted(observations),
+            available=True,
+            note=(
+                "Statistics Poland import price index for industrial products total, "
+                "monthly corresponding period of previous year = 100 converted to percent."
+            ),
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="% YoY",
+            note=(
+                "Poland DBW national-statistics override uses variable 329 and the "
+                "industrial-products-total CPA B-D position."
+            ),
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+    def _find_import_total_yoy(self, payload: dict) -> float | None:
+        for row in payload.get("data") or []:
+            if (
+                row.get("id-pozycja-2") == self.IMPORT_POSITION_ID
+                and row.get("id-pozycja-3") == self.INDUSTRIAL_PRODUCTS_TOTAL_POSITION_ID
+                and row.get("id-sposob-prezentacji-miara") == self.YOY_PRESENTATION_ID
+                and row.get("id-brak-wartosci") == 253
+            ):
+                return float(row["wartosc"])
+        return None
+
+
 class WorldBankFallbackFetcher(BaseFetcher):
     """Fallback adapters for indicators with partial official-source coverage."""
 
@@ -2953,6 +3139,8 @@ class DataPipeline:
             ManualIndicatorFetcher(),
             NationalCBFetcher(),
             CZSOFetcher(),
+            KSHFetcher(),
+            GUSDBWFetcher(),
             ProxyFetcher(),
         ])
 

@@ -275,12 +275,12 @@ indicators:
   indicator_id: import_prices_yoy
   label: Import Price Index, YoY
   unit: '% YoY'
-  source: Eurostat / CZSO override
+  source: Eurostat / CZSO / KSH / GUS DBW overrides
   frequency: monthly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Import-price coverage is source-sensitive; Czechia uses CZSO open-data import-price YoY while other non-euro CEE gaps stay explicit until national sources are wired.
+  quality_note: Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired.
 - section_id: prices_wages
   indicator_id: avg_wage_yoy
   label: Average Gross Wage, YoY
