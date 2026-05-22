@@ -86,10 +86,10 @@ Important current caveat:
 The latest pipeline run produced these proxy counts:
 
 ```text
-Hungary: 22
-Poland: 22
-Czechia: 25
-Romania: 26
+Hungary: 21
+Poland: 21
+Czechia: 24
+Romania: 25
 ```
 
 Hungary remaining proxies:
@@ -105,7 +105,6 @@ embi_spread
 equity_div_yield
 equity_fwd_pe
 equity_pb
-eu_funds_absorption
 foreign_ownership_bonds
 fx_3m_forward
 fx_implied_vol
@@ -132,7 +131,6 @@ equity_div_yield
 equity_fwd_pe
 equity_pb
 equity_vol_30d
-eu_funds_absorption
 foreign_ownership_bonds
 fx_3m_forward
 fx_implied_vol
@@ -161,7 +159,6 @@ equity_index
 equity_pb
 equity_vol_30d
 equity_yoy
-eu_funds_absorption
 foreign_ownership_bonds
 fx_3m_forward
 fx_implied_vol
@@ -192,7 +189,6 @@ equity_index
 equity_pb
 equity_vol_30d
 equity_yoy
-eu_funds_absorption
 foreign_bank_share
 foreign_ownership_bonds
 fx_3m_forward
@@ -277,7 +273,6 @@ These are not naturally time-series API problems. They are event/state trackers.
 
 Targets:
 
-- `eu_funds_absorption`
 - `eu_funds_frozen`
 - `cb_forward_guidance`
 
@@ -371,7 +366,7 @@ Move qualitative and event-driven indicators out of generic proxy generation int
 Concrete tasks:
 
 1. Extend `config/manual_indicators.yaml` beyond `eu_funds_frozen`.
-2. Add manual entries for `sovereign_rating`, `edp_status`, `eu_funds_absorption`, `contingent_liabilities`, and `cb_forward_guidance`.
+2. Add a manual entry for `cb_forward_guidance`; keep already-wired official or curated series out of generic proxy generation.
 3. Add fields:
 
 ```yaml
@@ -537,11 +532,7 @@ Highest priority because they are likely official-data solvable:
 
 Medium priority because they are better as curated manual series:
 
-1. `sovereign_rating`
-2. `edp_status`
-3. `eu_funds_absorption`
-4. `contingent_liabilities`
-5. `cb_forward_guidance`
+1. `cb_forward_guidance`
 
 Lower priority because they are vendor-like or weakly covered in open data:
 

@@ -655,12 +655,12 @@ indicators:
   indicator_id: eu_funds_absorption
   label: EU Funds Absorption Rate
   unit: '% allocation'
-  source: EU Commission / curated proxy
+  source: European Commission Cohesion Open Data
   frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: EU funds absorption is programme-cycle specific; proxy fill is used until a curated Commission tracker is wired.
+  quality_status: watch
+  quality_note: Cumulative 2021-2027 EU payments divided by latest adopted EU planned amount for selected shared-management funds; this payment ratio is narrower than contracting or claims-submission measures of absorption.
 - section_id: fiscal_sovereign
   indicator_id: edp_status
   label: Excessive Deficit Procedure Status

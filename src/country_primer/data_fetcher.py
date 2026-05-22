@@ -74,6 +74,7 @@ DBNOMICS_BIS_LBS_SERIES_URL = "https://api.db.nomics.world/v22/series/BIS/WS_LBS
 DBNOMICS_IMF_FSI_SERIES_URL = "https://api.db.nomics.world/v22/series/IMF/FSI/{series_code}?observations=1"
 DBNOMICS_ECB_MIR_SERIES_URL = "https://api.db.nomics.world/v22/series/ECB/MIR/{series_code}?observations=1"
 ECB_BPS_SERIES_URL = "https://data-api.ecb.europa.eu/service/data/BPS/{series_code}"
+COHESION_EU_PAYMENTS_URL = "https://cohesiondata.ec.europa.eu/resource/pbbz-hmfu.json"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
@@ -2371,6 +2372,85 @@ class WorldBankESGFetcher(BaseFetcher):
         )
 
 
+class EUFundsAbsorptionFetcher(BaseFetcher):
+    """European Commission Cohesion Open Data payment-absorption adapter."""
+
+    FUNDS = ("CF", "EMFAF", "ERDF", "ESF+", "JTF")
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if spec.indicator_id != "eu_funds_absorption":
+            return []
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        try:
+            observations = self._fetch_country_absorption(meta["iso2"])
+        except (OSError, requests.RequestException, json.JSONDecodeError, KeyError, TypeError, ValueError):
+            return []
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="European Commission Cohesion Open Data",
+            series_id="pbbz-hmfu total_net_payments / actual_plan_eu_amt_latest_adop",
+            unit="% allocation",
+            frequency="annual",
+            last_update=observations[-1][0],
+            source_url="https://cohesiondata.ec.europa.eu/d/pbbz-hmfu",
+            observations=observations,
+            available=True,
+            note="Cumulative 2021-2027 EU payments as a share of latest adopted EU planned amount.",
+        ))
+        return _series_to_rows(
+            series,
+            spec,
+            unit="% allocation",
+            note=(
+                "Official payment ratio across CF, EMFAF, ERDF, ESF+, and JTF; "
+                "payment absorption is narrower than contracting or claims submitted by national authorities."
+            ),
+        )
+
+    def _fetch_country_absorption(self, iso2: str) -> list[tuple[str, float]]:
+        query = f"cohesion_absorption::{iso2}::2021_2027"
+        path = cache_path(query)
+        if path.exists():
+            payload = json.loads(path.read_text())
+        else:
+            fund_filter = ",".join(f"'{fund}'" for fund in self.FUNDS)
+            response = requests.get(
+                COHESION_EU_PAYMENTS_URL,
+                params={
+                    "$select": (
+                        "year, sum(actual_plan_eu_amt_latest_adop) as planned, "
+                        "sum(total_net_payments) as paid"
+                    ),
+                    "$where": f"ms='{iso2}' AND fund in ({fund_filter})",
+                    "$group": "year",
+                    "$order": "year",
+                    "$limit": "20",
+                },
+                timeout=30,
+            )
+            response.raise_for_status()
+            payload = response.json()
+            path.write_text(json.dumps(payload, indent=2, sort_keys=True))
+
+        observations: list[tuple[str, float]] = []
+        for item in payload:
+            year = int(item["year"])
+            planned = float(item["planned"])
+            paid = float(item["paid"])
+            if planned > 0:
+                observations.append((f"{year}-12-31", paid / planned * 100.0))
+        observations.sort()
+        return observations
+
+
 class WorldBankFetcher(BaseFetcher):
     CONFIGS = {
         "gdp_per_capita": ("NY.GDP.PCAP.PP.KD", 1.0, "constant intl $"),
@@ -2495,6 +2575,7 @@ class DataPipeline:
             DerivedMacroFetcher(),
             IMFDataMapperFetcher(),
             WorldBankESGFetcher(),
+            EUFundsAbsorptionFetcher(),
             ECBExternalDebtFetcher(),
             WorldBankFetcher(),
             YahooMarketFetcher(),

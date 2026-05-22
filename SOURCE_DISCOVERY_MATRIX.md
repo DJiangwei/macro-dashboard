@@ -16,10 +16,10 @@ Latest baseline after the 2026-05-21 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
-| Hungary | 22 |
-| Poland | 22 |
-| Czechia | 25 |
-| Romania | 26 |
+| Hungary | 21 |
+| Poland | 21 |
+| Czechia | 24 |
+| Romania | 25 |
 
 ## Priority Matrix
 
@@ -39,7 +39,7 @@ Latest baseline after the 2026-05-21 source-wiring pass:
 | `equity_vol_30d` | PL, CZ, RO | Derived from daily index close | Derived market | Partially dependent | Fix symbol/feed coverage first; keep vendor warning. |
 | `sovereign_rating` | None | Rating agency releases | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a 21-notch average; update after S&P, Moody's, Fitch, or Scope actions. |
 | `edp_status` | None | European Commission/Council EDP pages | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a qualitative policy-risk score with event dates. |
-| `eu_funds_absorption` | HU, PL, CZ, RO | EC cohesion/RRF programme dashboards | Curated manual | Recommended manual | Track programme-cycle absorption as manual or semi-manual. |
+| `eu_funds_absorption` | None | European Commission Cohesion Open Data | Official statistical / derived ratio | Wired | Uses 2021-2027 cumulative total net payments divided by latest adopted EU plan for CF, EMFAF, ERDF, ESF+, and JTF. |
 | `contingent_liabilities` | None after current adapter | Eurostat `gov_cl_guar` | Official statistical | Wired in current worktree | Uses total stock of general-government guarantees, % GDP; narrower than full contingent liabilities. |
 | `cb_forward_guidance` | HU, PL, CZ, RO | Central bank statements/minutes | Curated manual | Recommended manual | Better as qualitative score with event references. |
 | `manufacturing_pmi` | HU, PL, CZ, RO | S&P/HCOB, local PMI releases | Vendor/survey | Hard | Keep proxy unless stable public historical data exists. |
@@ -55,7 +55,7 @@ Latest baseline after the 2026-05-21 source-wiring pass:
 | `equity_pb` | HU, PL, CZ, RO | Exchange factsheets/vendor | Vendor valuation | Hard | Keep proxy or curate annual factsheets. |
 | `equity_div_yield` | HU, PL, CZ, RO | Exchange factsheets/vendor | Vendor valuation | Hard | Keep proxy or curate annual factsheets. |
 | `portfolio_flows` | HU, PL, CZ, RO | IMF BOP/IIP, IMF Capital Flows, ECB BOP | Official/lagged | Partially blocked | IMF capital-flow series tested but stops around 2014; try ECB BOP financial account. |
-| `administered_prices` | HU, PL, CZ, RO | Eurostat HICP administered prices if accessible | Official statistical | Open | Dataset name `prc_hicp_ap` returned no useful dimensions in first test; search Eurostat metadata. |
+| `administered_prices` | HU, PL, CZ, RO | Eurostat HICP administered-price composition plus HICP weights | Official statistical / derived | Composition identified | Keep the current share definition: `prc_hicp_admp` gives administered `0/1` status by ECOICOP item; derive basket share only after joining official HICP weights rather than substituting AP inflation. |
 | `carry_trade_return` | HU, PL, CZ, RO | Derived FX spot plus rate differential | Derived market | Open | Existing adapter needs EUR short-rate source; consider ECB ESTER or Euribor series. |
 
 ## Candidate First Sprint
@@ -93,3 +93,5 @@ Before wiring any source:
 | 2026-05-20 | Wired Eurostat `gov_cl_guar` | `contingent_liabilities` now uses total stock of general-government guarantees, % GDP, for HU/PL/CZ/RO. |
 | 2026-05-21 | Wired curated `sovereign_rating` and `edp_status` | Removed both indicators from proxy inventory for HU/PL/CZ/RO; manual policy/rating series carry `watch` quality badges. |
 | 2026-05-21 | Wired ECB BPS component adapter for `gross_ext_debt` | Removed `gross_ext_debt` from proxy inventory for HU/PL/CZ/RO; output is a component-based % GDP estimate with explicit caveat. |
+| 2026-05-22 | Wired Cohesion Open Data payment adapter for `eu_funds_absorption` | Removed `eu_funds_absorption` from proxy inventory for HU/PL/CZ/RO; ratio uses official cumulative payments over latest adopted EU plan. |
+| 2026-05-22 | Rechecked Eurostat HICP administered prices | AP inflation is directly available, but the dashboard slot is a basket share; derive it from administered composition and HICP weights instead of relabeling the metric. |
