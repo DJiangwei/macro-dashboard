@@ -943,6 +943,8 @@ class DerivedMacroFetcher(BaseFetcher):
             return self._real_policy_rate(country, spec)
         if spec.indicator_id == "debt_fx_share":
             return self._debt_fx_share(country, spec)
+        if spec.indicator_id == "foreign_ownership_bonds":
+            return self._foreign_ownership_bonds(country, spec)
         if spec.indicator_id == "sov_spread_vs_bund":
             return self._sov_spread_vs_bund(country, spec)
         if spec.indicator_id == "sov_yield_2y":
@@ -1229,6 +1231,71 @@ class DerivedMacroFetcher(BaseFetcher):
             spec,
             unit="%",
             note="Derived from Eurostat government-debt currency structure, not a national debt-office trading feed.",
+        )
+
+    def _foreign_ownership_bonds(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        common_params = {
+            "sector": "S13",
+            "na_item": "GD",
+            "maturity": "TOTAL",
+            "unit": "MIO_NAC",
+        }
+        non_resident_debt = fetch_eurostat(
+            "gov_10dd_ggd",
+            meta["iso2"],
+            "non_resident_government_debt",
+            "Non-Resident General Government Debt",
+            country,
+            freq="A",
+            since="2015",
+            extra_params={**common_params, "sector2": "S2"},
+            unit_label="million national currency",
+        )
+        total_debt = fetch_eurostat(
+            "gov_10dd_ggd",
+            meta["iso2"],
+            "total_government_debt_by_holder",
+            "General Government Debt by Holder",
+            country,
+            freq="A",
+            since="2015",
+            extra_params={**common_params, "sector2": "S1_S2"},
+            unit_label="million national currency",
+        )
+        if not non_resident_debt.available or not total_debt.available:
+            return []
+
+        total_by_date = {date: value for date, value in total_debt.observations}
+        observations: list[tuple[str, float]] = []
+        for date, non_resident_value in non_resident_debt.observations:
+            total_value = total_by_date.get(date)
+            if total_value is None or float(total_value) <= 0:
+                continue
+            observations.append((date, float(non_resident_value) / float(total_value) * 100.0))
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Derived from Eurostat government debt by holder sector",
+            series_id="gov_10dd_ggd:S13:GD:S2/S1_S2",
+            unit="%",
+            frequency="annual",
+            last_update=observations[-1][0] if observations else "",
+            source_url="https://ec.europa.eu/eurostat/databrowser/view/gov_10dd_ggd/default/table?lang=en",
+            observations=observations,
+            available=bool(observations),
+            note="Rest-of-world-held Maastricht debt divided by total holder-sector Maastricht debt.",
+        ))
+        return _series_to_rows(
+            series,
+            spec,
+            unit="%",
+            note="Derived from Eurostat holder-sector government debt; harmonized total-debt share, not a local-bond-only ownership feed.",
         )
 
     def _sov_spread_vs_bund(self, country: str, spec: IndicatorSpec) -> list[dict]:
@@ -1821,6 +1888,12 @@ class IMFFinancialSoundnessFetcher(BaseFetcher):
             "unit": "%",
             "note": "IMF Financial Soundness Indicator: deposit-taker liquidity coverage ratio, percent.",
         },
+        "fx_loan_share": {
+            "indicator": "FSFC_PT",
+            "unit": "%",
+            "min_latest": "2020-01-01",
+            "note": "IMF Financial Soundness Indicator: deposit-taker foreign-currency-denominated loans to total loans, percent.",
+        },
     }
 
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
@@ -1849,6 +1922,8 @@ class IMFFinancialSoundnessFetcher(BaseFetcher):
             if math.isfinite(numeric):
                 observations.append((date, numeric))
         if not observations:
+            return []
+        if observations[-1][0] < str(cfg.get("min_latest") or ""):
             return []
 
         series = finalize_series(Series(

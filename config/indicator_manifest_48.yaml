@@ -814,13 +814,13 @@ indicators:
 - section_id: monetary_financial
   indicator_id: fx_loan_share
   label: FX Loan Share
-  unit: '% private credit'
-  source: ECB SDW / national CB proxy pending
+  unit: '%'
+  source: IMF FSI / national CB proxy pending
   frequency: quarterly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: FX loan-share data is country-specific and requires ECB/national-bank balance-sheet adapters; proxy fill is a placeholder.
+  quality_status: watch
+  quality_note: IMF FSI deposit-taker FX-loan ratio is used where recent FSFC_PT coverage exists; countries without current coverage still need national central-bank adapters.
 - section_id: monetary_financial
   indicator_id: mortgage_rate_new
   label: New Mortgage Lending Rate
@@ -913,14 +913,14 @@ indicators:
   quality_note: EMBI/EMBIG spreads require licensed JPMorgan/vendor data; proxy fill is a framework placeholder.
 - section_id: markets_valuation
   indicator_id: foreign_ownership_bonds
-  label: Foreign Ownership of Local Bonds
+  label: Non-Resident Government Debt Share
   unit: '%'
-  source: National CB / debt office proxy pending
-  frequency: quarterly
+  source: Eurostat government debt by holder sector
+  frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Foreign ownership data is country-specific and often from national debt offices; proxy fill is used until adapters are wired.
+  quality_status: watch
+  quality_note: Eurostat holder-sector data measures the rest-of-world share of total Maastricht government debt; it is harmonized across CEE-4 but is not a local-bond-only foreign-ownership series.
 - section_id: markets_valuation
   indicator_id: portfolio_flows
   label: Non-Resident Portfolio Flows
