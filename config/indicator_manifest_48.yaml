@@ -925,12 +925,12 @@ indicators:
   indicator_id: portfolio_flows
   label: Non-Resident Portfolio Flows
   unit: EUR mn
-  source: ECB BoP / proxy pending
-  frequency: quarterly
+  source: ECB BPS
+  frequency: monthly
   chart: bar
   peers: false
-  quality_status: low_confidence
-  quality_note: Non-resident portfolio-flow data requires an ECB BoP financial-account adapter; proxy fill is a placeholder.
+  quality_status: watch
+  quality_note: ECB BPS portfolio-investment liability transactions vis-a-vis rest of world; positive values are net liability incurrence by non-residents, not a full cross-border flow decomposition.
 - section_id: financial_stability
   indicator_id: bank_car
   label: Bank Capital Ratio

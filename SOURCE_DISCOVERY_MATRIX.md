@@ -16,19 +16,19 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
-| Hungary | 18 |
-| Poland | 19 |
-| Czechia | 22 |
-| Romania | 23 |
+| Hungary | 16 |
+| Poland | 16 |
+| Czechia | 20 |
+| Romania | 20 |
 
 ## Priority Matrix
 
 | Indicator | Countries still proxied | Target source | Source class | Current status | Next action |
 |---|---|---|---|---|---|
 | `gross_ext_debt` | None | ECB BPS plus Eurostat GDP | Official statistical / derived ratio | Wired | Uses ECB balance-of-payments liability components scaled by Eurostat rolling four-quarter GDP; footnote flags direct-investment intercompany-debt caveat. |
-| `gas_storage_level` | HU, PL, CZ, RO | GIE AGSI, ENTSOG, national energy operators | Official/industry API | GIE AGSI identified; API likely requires registration/API key | Test AGSI only if an API key is available; otherwise use national operator data or curated manual series. |
+| `gas_storage_level` | HU, PL, CZ, RO | GIE AGSI, ENTSOG, national energy operators | Official/industry API | GIE AGSI official API tested; direct country query rejects missing API key | Use AGSI after API-key setup; otherwise test national operator data or curated manual series. |
 | `foreign_ownership_bonds` | None | Eurostat government debt by holder sector | Official statistical / derived ratio | Wired | Uses rest-of-world-held Maastricht debt divided by total holder-sector Maastricht debt; relabeled as total government debt share because the common CEE-4 Eurostat denominator is not local-bond-only. |
-| `fx_loan_share` | HU, CZ | IMF FSI, national central banks | Official statistical / national official | Partially wired | IMF FSI `FSFC_PT` replaces proxies where recent quarterly coverage exists for PL and RO; HU is absent and CZ stops in 2014, so continue with central-bank statistics for those countries. |
+| `fx_loan_share` | HU, CZ | IMF FSI, national central banks | Official statistical / national official | Partially wired | IMF FSI `FSFC_PT` replaces proxies where recent quarterly coverage exists for PL and RO; HU is absent and CZ stops in 2014. CNB ARAD has relevant currency-split loan tables but its REST API requires a user API key. |
 | `avg_debt_maturity` | None | Hungary debt office / AKK | National official snapshot | Wired | Hungary uses official AKK Average Time to Maturity snapshots in `config/manual_indicators.yaml`; other covered countries continue to use Eurostat remaining-maturity data. |
 | `cb_balance_sheet_gdp` | RO only | NBR, IMF IFS, central bank balance-sheet statements | National official | Open | Search NBR balance sheet statistics or IMF IFS mirror. |
 | `foreign_bank_share` | RO only | NBR, EBRD, ECB consolidated banking statistics | Official/manual | Open | World Bank GFDD lacks Romania coverage; search NBR/EBRD. |
@@ -54,7 +54,7 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 | `equity_fwd_pe` | HU, PL, CZ, RO | FactSet/Bloomberg/MSCI/vendor | Vendor valuation | Hard | Keep proxy or remove from core if no vendor access. |
 | `equity_pb` | HU, PL, CZ, RO | Exchange factsheets/vendor | Vendor valuation | Hard | Keep proxy or curate annual factsheets. |
 | `equity_div_yield` | HU, PL, CZ, RO | Exchange factsheets/vendor | Vendor valuation | Hard | Keep proxy or curate annual factsheets. |
-| `portfolio_flows` | HU, PL, CZ, RO | IMF BOP/IIP, IMF Capital Flows, ECB BOP | Official/lagged | Partially blocked | IMF capital-flow series tested but stops around 2014; try ECB BOP financial account. |
+| `portfolio_flows` | None | ECB BPS | Official statistical | Wired | Uses monthly portfolio-investment liabilities transactions vis-a-vis rest of world; positive readings are non-resident net liability incurrence. |
 | `administered_prices` | None | Eurostat HICP item weights | Official statistical / derived | Wired | Uses the HICP `AP` special aggregate item weight from current ECOICOP v2 weights and converts per-mille weight to percent of basket; do not substitute AP inflation. |
 | `carry_trade_return` | None | Eurostat 3M short-term rates | Derived market | Wired | Carry-only spread uses local 3M short rate less euro-area 3M short rate; it excludes spot FX movement, roll-down, and costs. |
 
@@ -63,8 +63,8 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 The next implementation sprint should target:
 
 1. `gas_storage_level`
-2. `foreign_ownership_bonds`
-3. `fx_loan_share`
+2. `fx_loan_share`
+3. `short_term_ext_debt`
 
 Reason:
 
@@ -100,3 +100,4 @@ Before wiring any source:
 | 2026-05-22 | Wired AKK Hungary maturity snapshots | Removed `avg_debt_maturity` from Hungary proxy inventory with manually maintained official end-2024 and preliminary end-2025 Average Time to Maturity values. |
 | 2026-05-22 | Wired Eurostat government-debt holder ratio for `foreign_ownership_bonds` | Removed the holder indicator from proxy inventory for HU/PL/CZ/RO and tightened the label from local bonds to total government debt to preserve the harmonized Eurostat definition. |
 | 2026-05-22 | Wired IMF FSI `FSFC_PT` for recent `fx_loan_share` coverage | Removed `fx_loan_share` proxies for Poland and Romania; rejected missing Hungary and stale Czechia coverage so those two remain explicit source-discovery tasks. |
+| 2026-05-22 | Wired ECB BPS portfolio-liability transactions for `portfolio_flows` | Removed `portfolio_flows` from proxy inventory for HU/PL/CZ/RO with monthly rest-of-world portfolio liability-flow series and explicit sign convention. |

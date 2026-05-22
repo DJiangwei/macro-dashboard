@@ -563,6 +563,8 @@ def _parse_jsonstat_observations(payload: dict) -> list[tuple[str, float]]:
             year, quarter = period.split("-Q")
             month = (int(quarter) - 1) * 3 + 1
             date = f"{year}-{month:02d}-01"
+        elif len(period) == 7 and period[4] == "-":
+            date = f"{period}-01"
         elif len(period) == 4:
             date = f"{period}-12-31"
         else:
@@ -2138,6 +2140,71 @@ class ECBExternalDebtFetcher(BaseFetcher):
         return _parse_jsonstat_observations(payload)
 
 
+class ECBPortfolioFlowsFetcher(BaseFetcher):
+    """ECB BPS adapter for non-resident portfolio-liability transactions."""
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if spec.indicator_id != "portfolio_flows":
+            return []
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+
+        series_code = f"M.N.{meta['iso2']}.W1.S1.S1.T.L.FA.P.F._Z.EUR._T.M.N.ALL"
+        observations = self._fetch_bps_series(series_code)
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="ECB BPS",
+            series_id=series_code,
+            unit="EUR mn",
+            frequency="monthly",
+            last_update=observations[-1][0],
+            source_url="https://data.ecb.europa.eu/data/datasets/BPS",
+            observations=observations,
+            available=True,
+            note=(
+                "ECB BPS portfolio-investment liabilities, transactions, total financial "
+                "assets/liabilities, vis-a-vis rest of world."
+            ),
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="EUR mn",
+            note=(
+                "Positive values are net incurrence of portfolio-investment liabilities "
+                "to non-residents; negative values are net liability reductions."
+            ),
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+    def _fetch_bps_series(self, series_code: str) -> list[tuple[str, float]]:
+        query = f"ecb_bps::{series_code}::2018-2026"
+        path = cache_path(query)
+        if path.exists():
+            payload = json.loads(path.read_text())
+        else:
+            response = requests.get(
+                ECB_BPS_SERIES_URL.format(series_code=series_code),
+                params={"startPeriod": "2018-01", "format": "jsondata"},
+                timeout=30,
+            )
+            if response.status_code == 404:
+                return []
+            response.raise_for_status()
+            payload = response.json()
+            path.write_text(json.dumps(payload, indent=2, sort_keys=True))
+        return _parse_jsonstat_observations(payload)
+
+
 class ManualIndicatorFetcher(BaseFetcher):
     """User-maintained research series for non-statistical political-risk inputs."""
 
@@ -2661,6 +2728,7 @@ class DataPipeline:
             WorldBankESGFetcher(),
             EUFundsAbsorptionFetcher(),
             ECBExternalDebtFetcher(),
+            ECBPortfolioFlowsFetcher(),
             WorldBankFetcher(),
             YahooMarketFetcher(),
             BISFetcher(),
