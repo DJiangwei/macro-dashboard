@@ -55,7 +55,7 @@ Latest baseline after the 2026-05-21 source-wiring pass:
 | `equity_pb` | HU, PL, CZ, RO | Exchange factsheets/vendor | Vendor valuation | Hard | Keep proxy or curate annual factsheets. |
 | `equity_div_yield` | HU, PL, CZ, RO | Exchange factsheets/vendor | Vendor valuation | Hard | Keep proxy or curate annual factsheets. |
 | `portfolio_flows` | HU, PL, CZ, RO | IMF BOP/IIP, IMF Capital Flows, ECB BOP | Official/lagged | Partially blocked | IMF capital-flow series tested but stops around 2014; try ECB BOP financial account. |
-| `administered_prices` | HU, PL, CZ, RO | Eurostat HICP administered-price composition plus HICP weights | Official statistical / derived | Composition identified | Keep the current share definition: `prc_hicp_admp` gives administered `0/1` status by ECOICOP item; derive basket share only after joining official HICP weights rather than substituting AP inflation. |
+| `administered_prices` | None | Eurostat HICP item weights | Official statistical / derived | Wired | Uses the HICP `AP` special aggregate item weight from current ECOICOP v2 weights and converts per-mille weight to percent of basket; do not substitute AP inflation. |
 | `carry_trade_return` | HU, PL, CZ, RO | Derived FX spot plus rate differential | Derived market | Open | Existing adapter needs EUR short-rate source; consider ECB ESTER or Euribor series. |
 
 ## Candidate First Sprint
@@ -95,3 +95,4 @@ Before wiring any source:
 | 2026-05-21 | Wired ECB BPS component adapter for `gross_ext_debt` | Removed `gross_ext_debt` from proxy inventory for HU/PL/CZ/RO; output is a component-based % GDP estimate with explicit caveat. |
 | 2026-05-22 | Wired Cohesion Open Data payment adapter for `eu_funds_absorption` | Removed `eu_funds_absorption` from proxy inventory for HU/PL/CZ/RO; ratio uses official cumulative payments over latest adopted EU plan. |
 | 2026-05-22 | Rechecked Eurostat HICP administered prices | AP inflation is directly available, but the dashboard slot is a basket share; derive it from administered composition and HICP weights instead of relabeling the metric. |
+| 2026-05-22 | Wired Eurostat HICP item-weight adapter for `administered_prices` | Removed `administered_prices` from proxy inventory for HU/PL/CZ/RO via the official `AP` special aggregate weight in `prc_hicp_iw`. |

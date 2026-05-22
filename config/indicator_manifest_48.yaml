@@ -355,12 +355,12 @@ indicators:
   indicator_id: administered_prices
   label: Administered Prices Share
   unit: '% CPI basket'
-  source: National CB / proxy pending
+  source: Eurostat HICP item weights
   frequency: annual
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Administered-price basket shares are country-specific and usually from national central banks; proxy fill is a placeholder.
+  quality_status: watch
+  quality_note: Eurostat HICP item weight for the administered-prices aggregate, converted from per-mille HICP weight to share of the CPI basket; HICP-AP composition and weights can change annually.
 - section_id: external
   indicator_id: current_account_pct_gdp
   label: Current Account, % GDP

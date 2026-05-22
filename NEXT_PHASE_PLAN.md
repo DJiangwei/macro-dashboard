@@ -86,16 +86,15 @@ Important current caveat:
 The latest pipeline run produced these proxy counts:
 
 ```text
-Hungary: 21
-Poland: 21
-Czechia: 24
-Romania: 25
+Hungary: 20
+Poland: 20
+Czechia: 23
+Romania: 24
 ```
 
 Hungary remaining proxies:
 
 ```text
-administered_prices
 avg_debt_maturity
 breakeven_5y5y
 carry_trade_return
@@ -121,7 +120,6 @@ truck_km_index
 Poland remaining proxies:
 
 ```text
-administered_prices
 breakeven_5y5y
 carry_trade_return
 cb_forward_guidance
@@ -147,7 +145,6 @@ truck_km_index
 Czechia remaining proxies:
 
 ```text
-administered_prices
 breakeven_5y5y
 carry_trade_return
 cb_forward_guidance
@@ -176,7 +173,6 @@ truck_km_index
 Romania remaining proxies:
 
 ```text
-administered_prices
 breakeven_5y5y
 carry_trade_return
 cb_balance_sheet_gdp

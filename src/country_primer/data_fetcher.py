@@ -746,6 +746,14 @@ class EurostatFetcher(BaseFetcher):
             "params": {"indic": "BS-MP-NY", "s_adj": "SA", "unit": "BAL"},
             "unit": "Balance",
         },
+        "administered_prices": {
+            "dataset": "prc_hicp_iw",
+            "freq": "A",
+            "since": "2018",
+            "params": {"coicop18": "AP"},
+            "unit": "% CPI basket",
+            "scale": 0.1,
+        },
         "house_price_index": {
             "dataset": "prc_hpi_q",
             "freq": "Q",
@@ -854,7 +862,7 @@ class EurostatFetcher(BaseFetcher):
         )
         if cfg.get("derive_yoy"):
             series = _derive_yoy_series(series, spec)
-        return _series_to_rows(series, spec, unit=cfg["unit"])
+        return _series_to_rows(series, spec, scale=float(cfg.get("scale", 1.0)), unit=cfg["unit"])
 
 
 def _load_policy_rate_payload() -> dict:
