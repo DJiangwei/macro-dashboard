@@ -16,7 +16,7 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
-| Hungary | 19 |
+| Hungary | 18 |
 | Poland | 19 |
 | Czechia | 22 |
 | Romania | 23 |
@@ -29,11 +29,11 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 | `gas_storage_level` | HU, PL, CZ, RO | GIE AGSI, ENTSOG, national energy operators | Official/industry API | GIE AGSI identified; API likely requires registration/API key | Test AGSI only if an API key is available; otherwise use national operator data or curated manual series. |
 | `foreign_ownership_bonds` | HU, PL, CZ, RO | National debt offices, ministries of finance, central banks | National official | Open | Implement national-source adapter if stable CSV/PDF/table endpoints exist. |
 | `fx_loan_share` | HU, PL, CZ, RO | National central banks, ECB BSI/CBD | National official | Open | Start with central bank financial stability/statistics pages. |
-| `avg_debt_maturity` | HU only | Hungary debt office / AKK | National official | Open | Eurostat has no HU observations in current query; find AKK time series or use curated manual annual series. |
+| `avg_debt_maturity` | None | Hungary debt office / AKK | National official snapshot | Wired | Hungary uses official AKK Average Time to Maturity snapshots in `config/manual_indicators.yaml`; other covered countries continue to use Eurostat remaining-maturity data. |
 | `cb_balance_sheet_gdp` | RO only | NBR, IMF IFS, central bank balance-sheet statements | National official | Open | Search NBR balance sheet statistics or IMF IFS mirror. |
 | `foreign_bank_share` | RO only | NBR, EBRD, ECB consolidated banking statistics | Official/manual | Open | World Bank GFDD lacks Romania coverage; search NBR/EBRD. |
 | `short_term_ext_debt` | CZ only | IMF ARA, World Bank QEDS/WDI, national external debt stats | Official statistical | Open | Current IMF ARA adapter did not replace CZ; test alternate series or national external debt table. |
-| `import_prices_yoy` | HU, PL, CZ, RO | Eurostat STS, national statistical offices | Official statistical | Blocked once | Prior Eurostat query returned poor CEE coverage; re-test dimensions and national stats. |
+| `import_prices_yoy` | HU, PL, CZ, RO | Eurostat STS, national statistical offices | Official statistical | Rechecked | Eurostat `sts_inpi_m` has poor CEE coverage and broad Poland CPA YoY aggregates tested on 2026-05-22 returned no target observations; continue with national stats. |
 | `equity_index` | CZ, RO | Local exchanges, Yahoo alternatives, exchange CSVs | Public market | Open | Test Prague Stock Exchange and Bucharest Stock Exchange data pages before more Yahoo symbol guessing. |
 | `equity_yoy` | CZ, RO | Derived from `equity_index` | Derived market | Dependent | Implement after index-level feed is stable. |
 | `equity_vol_30d` | PL, CZ, RO | Derived from daily index close | Derived market | Partially dependent | Fix symbol/feed coverage first; keep vendor warning. |
@@ -97,3 +97,4 @@ Before wiring any source:
 | 2026-05-22 | Rechecked Eurostat HICP administered prices | AP inflation is directly available, but the dashboard slot is a basket share; derive it from administered composition and HICP weights instead of relabeling the metric. |
 | 2026-05-22 | Wired Eurostat HICP item-weight adapter for `administered_prices` | Removed `administered_prices` from proxy inventory for HU/PL/CZ/RO via the official `AP` special aggregate weight in `prc_hicp_iw`. |
 | 2026-05-22 | Corrected Eurostat carry short-rate legs | Removed `carry_trade_return` from proxy inventory for HU/PL/CZ/RO by using explicit local and euro-area 3M short-rate series. |
+| 2026-05-22 | Wired AKK Hungary maturity snapshots | Removed `avg_debt_maturity` from Hungary proxy inventory with manually maintained official end-2024 and preliminary end-2025 Average Time to Maturity values. |

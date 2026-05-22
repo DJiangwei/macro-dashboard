@@ -1,5 +1,17 @@
 version: 1
 manual_indicators:
+  avg_debt_maturity:
+    source: Government Debt Management Agency of Hungary snapshot
+    unit: years
+    quality_status: watch
+    quality_note: Official AKK Average Time to Maturity snapshots for central government debt. End-2025 is preliminary and the slide uses 90-day average values.
+    postscript: Official AKK snapshot maintained manually because the current Eurostat remaining-maturity query does not cover Hungary; confirm against the latest AKK debt-management material before trading.
+    references:
+      - https://akk.hu/download?path=68127569-a0fc-4493-98f0-a71cb073c15b.pdf
+    observations:
+      HU:
+        - {date: '2024-12-31', value: 5.8}
+        - {date: '2025-12-31', value: 5.5}
   sovereign_rating:
     source: Curated rating-agency tracker
     unit: notch score

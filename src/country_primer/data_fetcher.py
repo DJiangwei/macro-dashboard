@@ -2101,15 +2101,16 @@ class ManualIndicatorFetcher(BaseFetcher):
             series,
             spec,
             unit=str(raw_indicator.get("unit") or spec.unit),
-            note="Maintained in config/manual_indicators.yaml; revise manually when policy status changes.",
+            note="Maintained in config/manual_indicators.yaml; revise manually when source values change.",
         )
         for row in rows:
             row["quality_status"] = str(raw_indicator.get("quality_status") or "low_confidence")
             row["is_proxy"] = False
-            row["quality_note"] = (
-                f"{row.get('quality_note')} Manual input, not a statistical API series; "
+            postscript = str(raw_indicator.get("postscript") or (
+                "Manual input, not a statistical API series; "
                 "treat as a policy-risk marker rather than measured macro data."
-            ).strip()
+            ))
+            row["quality_note"] = f"{row.get('quality_note')} {postscript}".strip()
         return rows
 
     def _load_payload(self) -> dict:
