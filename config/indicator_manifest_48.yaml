@@ -83,14 +83,14 @@ indicators:
   quality_note: Eurostat European Commission ESI, seasonally adjusted; survey data is best used as a turning-point signal.
 - section_id: real_activity
   indicator_id: manufacturing_pmi
-  label: Manufacturing PMI
-  unit: Index
-  source: S&P Global / vendor required
+  label: Industry Confidence Indicator
+  unit: Balance
+  source: Eurostat / European Commission BCS
   frequency: monthly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: S&P Global PMI usually requires licensed/vendor access; proxy fill is only a placeholder until a permitted feed is wired.
+  quality_status: watch
+  quality_note: European Commission industry confidence indicator from harmonised business surveys replaces the vendor PMI placeholder with a public domestic industrial survey signal; it is not an S&P Global PMI diffusion index.
 - section_id: real_activity
   indicator_id: capacity_utilization
   label: Manufacturing Capacity Utilization
@@ -173,24 +173,24 @@ indicators:
   quality_note: Annual FDI inflows can be volatile and revised; use as structural financing context rather than high-frequency flow timing.
 - section_id: real_activity
   indicator_id: oecd_cli
-  label: OECD Composite Leading Indicator
+  label: Employment Expectations Indicator
   unit: Index
-  source: OECD / proxy pending
+  source: Eurostat / European Commission BCS
   frequency: monthly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: OECD CLI needs a dedicated OECD SDMX adapter; proxy fill is a framework placeholder until wired.
+  quality_status: watch
+  quality_note: European Commission Employment Expectations Indicator from harmonised business surveys is used as a transparent domestic leading-labour-demand survey signal; it replaces the unavailable OECD CLI slot and is not an OECD composite leading indicator.
 - section_id: real_activity
   indicator_id: ifo_expectations
-  label: Germany IFO Expectations
-  unit: Index
-  source: Ifo Institute / proxy pending
+  label: German Industry Confidence Spillover
+  unit: Balance
+  source: Eurostat Germany industry confidence
   frequency: monthly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Germany Ifo expectations are used as a CEE external-demand proxy; proxy fill is used until a licensed/public feed is wired.
+  quality_status: watch
+  quality_note: Germany industrial confidence from the harmonised European Commission business survey is used as an external-demand spillover signal for CEE exporters; it is not a domestic country survey and should be read alongside each country's own ESI.
 - section_id: real_activity
   indicator_id: truck_km_index
   label: Road Freight Transport Index
@@ -805,12 +805,12 @@ indicators:
   indicator_id: cb_forward_guidance
   label: Central Bank Guidance Score
   unit: hawk/dove score
-  source: CB minutes / curated proxy
-  frequency: monthly
+  source: Curated central-bank communication tracker
+  frequency: annual
   chart: line
   peers: false
   quality_status: low_confidence
-  quality_note: Forward guidance is qualitative text data; numeric proxy is a placeholder until a curated NLP/minutes workflow is wired.
+  quality_note: Forward guidance is qualitative text data; this manually maintained hawk/dove score is a dated research input, not a statistical series or policy-rate forecast.
 - section_id: monetary_financial
   indicator_id: fx_loan_share
   label: FX Loan Share

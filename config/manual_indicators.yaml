@@ -69,6 +69,34 @@ manual_indicators:
         - {date: '2024-07-26', value: 2}
         - {date: '2025-07-08', value: 2}
         - {date: '2026-05-21', value: 2}
+  cb_forward_guidance:
+    source: Curated central-bank communication tracker
+    unit: hawk/dove score
+    quality_status: low_confidence
+    quality_note: Manual policy-communication score from central-bank decisions, minutes, press conferences, and inflation reports. Scale is -2 clearly dovish, -1 dovish, 0 balanced/data-dependent, +1 hawkish, +2 clearly hawkish.
+    postscript: Manual communication score, not a statistical API series or rate forecast. Revise after policy meetings, minutes, inflation reports, or explicit forward-guidance changes.
+    references:
+      - https://www.mnb.hu/en/monetary-policy/the-monetary-council/press-releases
+      - https://nbp.pl/en/monetary-policy/monetary-policy-council/press-releases/
+      - https://www.cnb.cz/en/monetary-policy/bank-board-decisions/
+      - https://www.bnr.ro/Monetary-Policy--3318.aspx
+    observations:
+      HU:
+        - {date: '2024-12-31', value: 0.5}
+        - {date: '2025-12-31', value: -0.5}
+        - {date: '2026-05-23', value: 0.0}
+      PL:
+        - {date: '2024-12-31', value: 0.5}
+        - {date: '2025-12-31', value: 0.5}
+        - {date: '2026-05-23', value: 0.0}
+      CZ:
+        - {date: '2024-12-31', value: -0.5}
+        - {date: '2025-12-31', value: -0.5}
+        - {date: '2026-05-23', value: 0.0}
+      RO:
+        - {date: '2024-12-31', value: 1.0}
+        - {date: '2025-12-31', value: 0.5}
+        - {date: '2026-05-23', value: 0.5}
   eu_funds_frozen:
     source: Curated policy-risk tracker
     unit: '% allocation'

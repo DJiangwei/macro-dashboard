@@ -771,6 +771,31 @@ class EurostatFetcher(BaseFetcher):
             "params": {"indic": "BS-ESI-I", "s_adj": "SA"},
             "unit": "Index",
         },
+        "manufacturing_pmi": {
+            "dataset": "ei_bsin_m_r2",
+            "freq": "M",
+            "since": "2018",
+            "params": {"indic": "BS-ICI", "s_adj": "SA", "unit": "BAL"},
+            "unit": "Balance",
+            "note": "European Commission industry confidence indicator from harmonised business surveys; replaces the vendor PMI placeholder with a public domestic industrial survey signal.",
+        },
+        "ifo_expectations": {
+            "dataset": "ei_bsin_m_r2",
+            "geo": "DE",
+            "freq": "M",
+            "since": "2018",
+            "params": {"indic": "BS-ICI", "s_adj": "SA", "unit": "BAL"},
+            "unit": "Balance",
+            "note": "Germany industrial confidence from the harmonised European Commission business survey; used as a transparent external-demand spillover signal for CEE, not as a domestic country survey.",
+        },
+        "oecd_cli": {
+            "dataset": "ei_bsee_m_r2",
+            "freq": "M",
+            "since": "2018",
+            "params": {"indic": "BS-EEI-I", "s_adj": "SA", "unit": "INX"},
+            "unit": "Index",
+            "note": "European Commission Employment Expectations Indicator from harmonised business surveys; replaces the unavailable OECD CLI slot with a transparent domestic leading-labour-demand survey signal.",
+        },
         "consumer_confidence": {
             "dataset": "ei_bsco_m",
             "freq": "M",
@@ -924,7 +949,7 @@ class EurostatFetcher(BaseFetcher):
             return []
         series = fetch_eurostat(
             cfg["dataset"],
-            meta["iso2"],
+            str(cfg.get("geo") or meta["iso2"]),
             spec.indicator_id,
             spec.label,
             country,
@@ -936,7 +961,17 @@ class EurostatFetcher(BaseFetcher):
         )
         if cfg.get("derive_yoy"):
             series = _derive_yoy_series(series, spec)
-        return _series_to_rows(series, spec, scale=float(cfg.get("scale", 1.0)), unit=cfg["unit"])
+        rows = _series_to_rows(
+            series,
+            spec,
+            scale=float(cfg.get("scale", 1.0)),
+            unit=cfg["unit"],
+            note=str(cfg.get("note") or ""),
+        )
+        if cfg.get("geo"):
+            for row in rows:
+                row["quality_status"] = "watch"
+        return rows
 
 
 def _load_policy_rate_payload() -> dict:

@@ -19,10 +19,10 @@ Latest baseline after the 2026-05-23 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
-| Hungary | 14 |
-| Poland | 14 |
-| Czechia | 14 |
-| Romania | 18 |
+| Hungary | 10 |
+| Poland | 10 |
+| Czechia | 10 |
+| Romania | 14 |
 
 ## Priority Matrix
 
@@ -44,10 +44,10 @@ Latest baseline after the 2026-05-23 source-wiring pass:
 | `edp_status` | None | European Commission/Council EDP pages | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a qualitative policy-risk score with event dates. |
 | `eu_funds_absorption` | None | European Commission Cohesion Open Data | Official statistical / derived ratio | Wired | Uses 2021-2027 cumulative total net payments divided by latest adopted EU plan for CF, EMFAF, ERDF, ESF+, and JTF. |
 | `contingent_liabilities` | None after current adapter | Eurostat `gov_cl_guar` | Official statistical | Wired in current worktree | Uses total stock of general-government guarantees, % GDP; narrower than full contingent liabilities. |
-| `cb_forward_guidance` | HU, PL, CZ, RO | Central bank statements/minutes | Curated manual | Recommended manual | Better as qualitative score with event references. |
-| `manufacturing_pmi` | HU, PL, CZ, RO | S&P/HCOB, local PMI releases | Vendor/survey | Hard | Keep proxy unless stable public historical data exists. |
-| `oecd_cli` | HU, PL, CZ, RO | OECD SDMX | Blocked | Low priority | Prior OECD CLI query did not cover CEE-4; consider replacing with EC ESI or Germany Ifo spillover. |
-| `ifo_expectations` | HU, PL, CZ, RO | Ifo Germany/Eurozone | Spillover survey | Reframe | If retained, label as Germany/Eurozone demand-spillover proxy, not domestic indicator. |
+| `cb_forward_guidance` | None | Central bank statements/minutes | Curated manual | Wired | Converted to a manually maintained hawk/dove communication tracker with source links; keep `low_confidence` because it is qualitative research input, not statistical data. |
+| `manufacturing_pmi` | None | European Commission business surveys | Official survey substitute | Wired / reframed | Reframed from vendor PMI to Eurostat/EC Industry Confidence Indicator; footnote states it is not an S&P PMI diffusion index. |
+| `oecd_cli` | None | European Commission business surveys | Official survey substitute | Wired / reframed | Reframed from unavailable OECD CLI to Eurostat/EC Employment Expectations Indicator as a domestic leading-labour-demand survey signal. |
+| `ifo_expectations` | None | European Commission business surveys | Official spillover survey substitute | Wired / reframed | Reframed from Ifo placeholder to Eurostat Germany Industry Confidence as a Germany external-demand spillover signal for CEE exporters. |
 | `truck_km_index` | HU, PL, CZ, RO | Toll-road operators, logistics platforms | Alternative data | Hard | Low priority; keep proxy or remove from core. |
 | `cds_5y` | HU, PL, CZ, RO | Paid market vendors | Vendor market | Hard | Keep proxy or replace with sovereign spread when vendor unavailable. |
 | `embi_spread` | HU, PL, CZ, RO | JP Morgan/vendor | Vendor market | Hard | Keep proxy; open substitute is sovereign spread vs Bund. |
@@ -108,3 +108,5 @@ Before wiring any source:
 | 2026-05-23 | Wired public-data CIP estimate for `fx_3m_forward` | Removed `fx_3m_forward` proxies for HU/PL/CZ/RO using Eurostat month-end FX and Eurostat 3M short rates; retained `watch` quality because executable forward points require market vendors and basis/bid-ask data. |
 | 2026-05-23 | Hardened Poland GUS DBW import-price adapter | Added cache-first monthly payload and aggregate-observation caching to avoid anonymous DBW rate-limit regressions during repeated build/proxy-report runs; latest successful observation is March 2026. |
 | 2026-05-23 | Wired INSSE TEMPO `EXP105A` Romania import unit-value adapter | Removed Romania `import_prices_yoy` proxy with an official annual import unit-value series; UI footnotes flag the definition/frequency mismatch versus monthly import-price data. |
+| 2026-05-23 | Converted central-bank guidance to manual tracker | Removed `cb_forward_guidance` proxies for HU/PL/CZ/RO using a dated manual hawk/dove communication score with central-bank source links. |
+| 2026-05-23 | Reframed survey placeholders with Eurostat BCS data | Removed `ifo_expectations`, `oecd_cli`, and `manufacturing_pmi` proxies for HU/PL/CZ/RO by replacing them with Germany industry-confidence spillover, domestic employment expectations, and domestic industry confidence respectively. |
