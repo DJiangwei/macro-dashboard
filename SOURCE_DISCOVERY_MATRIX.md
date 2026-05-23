@@ -16,10 +16,10 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
-| Hungary | 15 |
-| Poland | 15 |
-| Czechia | 15 |
-| Romania | 20 |
+| Hungary | 14 |
+| Poland | 14 |
+| Czechia | 14 |
+| Romania | 19 |
 
 ## Priority Matrix
 
@@ -50,7 +50,7 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 | `embi_spread` | HU, PL, CZ, RO | JP Morgan/vendor | Vendor market | Hard | Keep proxy; open substitute is sovereign spread vs Bund. |
 | `breakeven_5y5y` | HU, PL, CZ, RO | Inflation-linked bond curves/vendor | Vendor market | Hard | Keep proxy unless national linker curves are publicly available. |
 | `fx_implied_vol` | HU, PL, CZ, RO | FX options vendors | Vendor market | Hard | Keep proxy; public source unlikely. |
-| `fx_3m_forward` | HU, PL, CZ, RO | FX forwards/vendor; derived covered-interest proxy | Vendor/derived | Medium | Could derive synthetic forward points from spot and interest differentials, but label clearly. |
+| `fx_3m_forward` | None | Eurostat month-end FX plus Eurostat 3M short rates | Official statistical / derived CIP estimate | Wired | Uses month-end EUR/LCU spot and local/euro 3M short-rate differential to compute public-data 3M forward points; footnotes state this is not executable dealer pricing and excludes cross-currency basis and bid/ask. |
 | `equity_fwd_pe` | HU, PL, CZ, RO | FactSet/Bloomberg/MSCI/vendor | Vendor valuation | Hard | Keep proxy or remove from core if no vendor access. |
 | `equity_pb` | HU, PL, CZ, RO | Exchange factsheets/vendor | Vendor valuation | Hard | Keep proxy or curate annual factsheets. |
 | `equity_div_yield` | HU, PL, CZ, RO | Exchange factsheets/vendor | Vendor valuation | Hard | Keep proxy or curate annual factsheets. |
@@ -102,3 +102,4 @@ Before wiring any source:
 | 2026-05-22 | Wired IMF FSI `FSFC_PT` for recent `fx_loan_share` coverage | Removed `fx_loan_share` proxies for Poland and Romania; rejected missing Hungary and stale Czechia coverage so those two remain explicit source-discovery tasks. |
 | 2026-05-22 | Wired ECB BPS portfolio-liability transactions for `portfolio_flows` | Removed `portfolio_flows` from proxy inventory for HU/PL/CZ/RO with monthly rest-of-world portfolio liability-flow series and explicit sign convention. |
 | 2026-05-22 | Wired Czech CNB short-term external-debt ratio | Removed Czechia `short_term_ext_debt` proxy with quarterly CNB USD short-term external debt over matched CNB USD international reserves. |
+| 2026-05-23 | Wired public-data CIP estimate for `fx_3m_forward` | Removed `fx_3m_forward` proxies for HU/PL/CZ/RO using Eurostat month-end FX and Eurostat 3M short rates; retained `watch` quality because executable forward points require market vendors and basis/bid-ask data. |

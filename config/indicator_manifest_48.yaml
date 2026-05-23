@@ -774,13 +774,13 @@ indicators:
 - section_id: monetary_financial
   indicator_id: fx_3m_forward
   label: 3M FX Forward Points
-  unit: points / %
-  source: Bloomberg/Refinitiv required
-  frequency: daily
+  unit: LCU per EUR points
+  source: Derived from Eurostat FX and short-term rates
+  frequency: monthly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: FX forward points generally require a market-data vendor or robust covered-interest-parity construction; proxy fill is a placeholder.
+  quality_status: watch
+  quality_note: Public-data covered-interest-parity estimate using Eurostat month-end FX and 3M short rates; excludes cross-currency basis, bid/ask, and executable forward quotes.
 - section_id: monetary_financial
   indicator_id: carry_trade_return
   label: FX Carry Return Proxy

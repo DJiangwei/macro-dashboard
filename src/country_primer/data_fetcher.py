@@ -23,6 +23,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 import time
 from typing import Iterable
+from urllib.parse import urlencode
 from xml.etree import ElementTree as ET
 import zipfile
 
@@ -92,6 +93,7 @@ CZSO_IMPORT_PRICE_CSV_URL = "https://data.csu.gov.cz/opendata/sady/CEN0301/distr
 KSH_IMPORT_PRICE_CSV_URL = "https://www.ksh.hu/stadat_files/ara/en/ara0046.csv"
 GUS_DBW_VARIABLE_DATA_URL = "https://api-dbw.stat.gov.pl/api/variable/variable-data-section"
 PSE_INDEXES_URL = "https://www.pse.cz/api/indexes"
+EUROSTAT_DATA_URL = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}?{params}"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
@@ -980,6 +982,37 @@ def _policy_rate_series(country: str, spec: IndicatorSpec) -> Series | None:
     ))
 
 
+def _fetch_eurostat_monthly_fx_end(currency: str, since: str) -> list[tuple[str, float]]:
+    """Fetch Eurostat month-end EUR/LCU exchange rates without a geo dimension."""
+    params = {
+        "freq": "M",
+        "statinfo": "END",
+        "unit": "NAC",
+        "currency": currency,
+        "sinceTimePeriod": since,
+    }
+    query = urlencode(params)
+    cache_file = cache_path(f"eurostat::ert_bil_eur_m::{currency}::END::{since}::{query}")
+    if cache_file.exists():
+        payload = json.loads(cache_file.read_text())
+    else:
+        response = requests.get(EUROSTAT_DATA_URL.format(dataset="ert_bil_eur_m", params=query), timeout=30)
+        response.raise_for_status()
+        payload = response.json()
+        cache_file.write_text(json.dumps(payload))
+
+    time_index = payload["dimension"]["time"]["category"]["index"]
+    times_by_idx = {int(idx): period for period, idx in time_index.items()}
+    observations: list[tuple[str, float]] = []
+    for idx_str, raw_value in (payload.get("value") or {}).items():
+        period = times_by_idx.get(int(idx_str))
+        if not period or raw_value is None:
+            continue
+        observations.append((f"{period}-01", float(raw_value)))
+    observations.sort()
+    return observations
+
+
 class PolicyRateFetcher(BaseFetcher):
     """Official policy-rate definitions maintained in config/policy_rates.yaml."""
 
@@ -1022,6 +1055,8 @@ class DerivedMacroFetcher(BaseFetcher):
             return self._short_rate_market_proxy(country, spec, "2Y sovereign yield proxy")
         if spec.indicator_id == "yield_curve_slope":
             return self._yield_curve_slope(country, spec)
+        if spec.indicator_id == "fx_3m_forward":
+            return self._fx_3m_forward_points(country, spec)
         if spec.indicator_id == "carry_trade_return":
             return self._carry_trade_return(country, spec)
         if spec.indicator_id == "real_estate_price_gap":
@@ -1557,6 +1592,87 @@ class DerivedMacroFetcher(BaseFetcher):
             note="Carry-only proxy: local 3M short-term rate less euro-area 3M short-term rate, excluding spot FX moves and roll-down.",
         ))
         rows = _series_to_rows(series, spec, unit="% annualised", note="Carry-only proxy; not a realised total-return series.")
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+    def _fx_3m_forward_points(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+
+        try:
+            spot = _fetch_eurostat_monthly_fx_end(meta["currency"], "2018")
+        except (OSError, requests.RequestException, KeyError, TypeError, ValueError, json.JSONDecodeError):
+            return []
+        local_rate = fetch_eurostat(
+            "irt_st_m",
+            meta["iso2"],
+            "local_short_rate",
+            "Local Short-Term Rate",
+            country,
+            freq="M",
+            since="2018",
+            extra_params={"int_rt": "IRT_M3"},
+            unit_label="%",
+        )
+        eur_rate = fetch_eurostat(
+            "irt_st_m",
+            "EA",
+            "eur_short_rate",
+            "Euro Area 3M Short-Term Rate",
+            country,
+            freq="M",
+            since="2018",
+            extra_params={"int_rt": "IRT_M3"},
+            unit_label="%",
+        )
+        if not spot or not local_rate.available or not eur_rate.available:
+            return []
+
+        local_by_month = {date[:7]: value for date, value in local_rate.observations}
+        eur_by_month = {date[:7]: value for date, value in eur_rate.observations}
+        observations: list[tuple[str, float]] = []
+        for date, spot_value in spot:
+            month = date[:7]
+            local_value = local_by_month.get(month)
+            eur_value = eur_by_month.get(month)
+            if local_value is None or eur_value is None:
+                continue
+            local_factor = 1.0 + float(local_value) / 100.0 * 0.25
+            eur_factor = 1.0 + float(eur_value) / 100.0 * 0.25
+            if eur_factor <= 0:
+                continue
+            forward_points = float(spot_value) * (local_factor / eur_factor - 1.0)
+            observations.append((date, forward_points))
+
+        if not observations:
+            return []
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Derived from Eurostat FX and short-term interest rates",
+            series_id=f"ert_bil_eur_m:{meta['currency']}:END + irt_st_m:IRT_M3:{meta['iso2']}-EA",
+            unit=f"{meta['currency']} per EUR points",
+            frequency="monthly",
+            last_update=observations[-1][0],
+            source_url="https://ec.europa.eu/eurostat/databrowser/view/ert_bil_eur_m/default/table?lang=en",
+            observations=observations,
+            available=True,
+            note=(
+                "Covered-interest-parity implied 3M forward points: month-end EUR/LCU spot "
+                "times local/euro 3M short-rate differential. This is a public-data estimate, "
+                "not executable dealer forward points."
+            ),
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit=f"{meta['currency']} per EUR points",
+            note="CIP-implied 3M forward points from Eurostat month-end FX and 3M short rates; excludes cross-currency basis and bid/ask.",
+        )
         for row in rows:
             row["quality_status"] = "watch"
         return rows
