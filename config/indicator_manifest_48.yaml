@@ -453,14 +453,14 @@ indicators:
   quality_note: Uses IMF ARA ratio where available; Czechia uses a quarterly CNB short-term external debt position over matched CNB quarter-end international reserves. Read as a structural external-liquidity gauge.
 - section_id: external
   indicator_id: fx_implied_vol
-  label: 3M FX Implied Volatility
+  label: 30D Realised FX Volatility
   unit: '%'
-  source: Bloomberg/Refinitiv required
+  source: Derived from ECB FX reference rates
   frequency: daily
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Implied volatility generally requires a market-data vendor; proxy fill is only a placeholder for the framework slot.
+  quality_status: watch
+  quality_note: Public realised-volatility substitute computed from ECB daily EUR/local-currency reference-rate returns; this is not an options-implied volatility quote and should not be read as 3M market-implied vol.
 - section_id: external
   indicator_id: iip_position
   label: Net International Investment Position

@@ -1107,6 +1107,8 @@ class DerivedMacroFetcher(BaseFetcher):
             return self._fx_3m_forward_points(country, spec)
         if spec.indicator_id == "carry_trade_return":
             return self._carry_trade_return(country, spec)
+        if spec.indicator_id == "fx_implied_vol":
+            return self._fx_realised_volatility(country, spec)
         if spec.indicator_id == "real_estate_price_gap":
             return self._real_estate_price_gap(country, spec)
         return []
@@ -1656,6 +1658,58 @@ class DerivedMacroFetcher(BaseFetcher):
         rows = _series_to_rows(series, spec, unit="% annualised", note="Carry-only proxy; not a realised total-return series.")
         for row in rows:
             row["quality_status"] = "watch"
+        return rows
+
+    def _fx_realised_volatility(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        countries = load_countries()
+        meta = countries.get(country)
+        if not meta:
+            return []
+        fx_series = fetch_ecb_fx(meta["currency"], spec.indicator_id, spec.label, country)
+        if not fx_series.available or len(fx_series.observations) < 30:
+            return []
+
+        returns: list[tuple[str, float]] = []
+        values = fx_series.observations
+        for idx in range(1, len(values)):
+            date, value = values[idx]
+            _, prior = values[idx - 1]
+            if prior <= 0:
+                continue
+            returns.append((date, math.log(float(value) / float(prior))))
+
+        observations: list[tuple[str, float]] = []
+        for idx in range(20, len(returns)):
+            window = [ret for _, ret in returns[idx - 20: idx + 1]]
+            mean = sum(window) / len(window)
+            variance = sum((ret - mean) ** 2 for ret in window) / max(len(window) - 1, 1)
+            observations.append((returns[idx][0], math.sqrt(variance) * math.sqrt(252) * 100.0))
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Derived from ECB FX reference rates",
+            series_id=f"EURFXREF/{meta['currency']}:21d-realised-volatility",
+            unit="%",
+            frequency="daily",
+            last_update=observations[-1][0],
+            source_url="https://www.ecb.europa.eu/stats/eurofxref/",
+            observations=observations,
+            available=True,
+            note="Annualised realised volatility computed from ECB daily EUR/local-currency reference-rate returns.",
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="%",
+            note="Annualised 21-trading-day realised volatility from daily ECB EUR/local-currency returns.",
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+            row["is_proxy"] = False
         return rows
 
     def _fx_3m_forward_points(self, country: str, spec: IndicatorSpec) -> list[dict]:

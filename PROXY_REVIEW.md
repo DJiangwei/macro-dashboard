@@ -8,12 +8,12 @@ Current proxy baseline:
 
 | Country | Proxy count | Total indicators | Share |
 |---|---:|---:|---:|
-| Hungary | 7 | 114 | 6.1% |
-| Poland | 7 | 114 | 6.1% |
-| Czechia | 7 | 114 | 6.1% |
-| Romania | 11 | 114 | 9.6% |
+| Hungary | 6 | 114 | 5.3% |
+| Poland | 6 | 114 | 5.3% |
+| Czechia | 6 | 114 | 5.3% |
+| Romania | 10 | 114 | 8.8% |
 
-Proxy union: 12 indicators.
+Proxy union: 11 indicators.
 
 ## Decision Categories
 
@@ -37,7 +37,6 @@ Proxy union: 12 indicators.
 | `equity_yoy` | RO | Replace after `equity_index` | Pure derived indicator; should disappear once Romania headline index is wired. | Derive automatically from `equity_index`. |
 | `equity_vol_30d` | PL, RO | Replace | Derived from daily index data; more sourceable than valuation metrics. | Find stable WIG/WIG20 and BET daily close feeds. |
 | `breakeven_5y5y` | HU, PL, CZ, RO | Keep or Remove | Inflation-swap/linker curve data is typically vendor-controlled. | Keep only as conceptual placeholder; otherwise remove from public dashboard. |
-| `fx_implied_vol` | HU, PL, CZ, RO | Keep or Remove | FX options data is vendor-controlled and hard to replicate with public sources. | Keep as low-confidence proxy only if useful for trading lens. |
 | `equity_fwd_pe` | HU, PL, CZ, RO | Manual or Remove | Forward earnings valuation is vendor/analyst-consensus based. | Use manual factsheet snapshots if available; otherwise remove. |
 | `equity_pb` | HU, PL, CZ, RO | Manual or Remove | P/B may appear in exchange/index factsheets, but API coverage is unlikely. | Search exchange factsheets; otherwise curate annual/quarterly snapshots. |
 | `equity_div_yield` | HU, PL, CZ, RO | Manual or Remove | Dividend yield can be factsheet-based but is not reliably API-driven. | Search exchange factsheets; otherwise curate snapshots. |
@@ -53,6 +52,7 @@ Proxy union: 12 indicators.
 | `truck_km_index` | Reframed and wired | Replaced toll-road truck-km placeholder with Eurostat quarterly road freight activity in million tonne-kilometres. |
 | `cds_5y` | Reframed and wired | Replaced vendor CDS placeholder with a public 10Y sovereign spread-vs-Bund substitute from Eurostat yields. |
 | `embi_spread` | Reframed and wired | Replaced JPMorgan EMBI placeholder with a public 10Y sovereign spread-vs-Bund substitute from Eurostat yields. |
+| `fx_implied_vol` | Reframed and wired | Replaced vendor FX options implied-vol placeholder with ECB-derived 21-trading-day realised FX volatility; footnote states it is not implied vol. |
 
 ## Proposed Implementation Order
 
