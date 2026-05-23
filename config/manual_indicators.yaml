@@ -147,3 +147,16 @@ manual_indicators:
       RO:
         - {date: '2022-12-31', value: 68.1}
         - {date: '2023-12-31', value: 65.6}
+  cb_balance_sheet_gdp:
+    source: National Bank of Romania Monthly Bulletin / Romania Ministry of Finance GDP snapshot
+    unit: '% GDP'
+    quality_status: watch
+    quality_note: Manual official-data ratio using NBR monthly-bulletin monetary balance sheet total assets of the National Bank of Romania over Romania 2024 current-price nominal GDP.
+    postscript: Manual snapshot maintained because BIS CBTA does not currently return Romania coverage in this pipeline and BNR's direct statistical-data endpoints reject automated access in this environment. Update when the latest BNR monthly bulletin and current-price GDP snapshot are refreshed.
+    references:
+      - https://muzeu.bnr.ro/uploads/2025-03-07monthlybulletinno.012025_documentpdf_545_1743160358.pdf
+      - https://www.mfinante.gov.ro/static/10/Mfp/buget/sitebuget/InvestorPresentationJanuary2025.pdf
+    observations:
+      RO:
+        - {date: '2024-12-31', value: 21.0}
+        - {date: '2025-01-31', value: 20.8}

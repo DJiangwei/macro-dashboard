@@ -19,6 +19,7 @@ from datetime import datetime
 import io
 import json
 import math
+import os
 from pathlib import Path
 from html.parser import HTMLParser
 import time
@@ -95,6 +96,7 @@ GUS_DBW_VARIABLE_DATA_URL = "https://api-dbw.stat.gov.pl/api/variable/variable-d
 PSE_INDEXES_URL = "https://www.pse.cz/api/indexes"
 EUROSTAT_DATA_URL = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}?{params}"
 INSSE_TEMPO_PIVOT_URL = "http://statistici.insse.ro:8077/tempo-ins/pivot"
+GIE_AGSI_BASE_URL = "https://agsi.gie.eu/api"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
@@ -592,6 +594,28 @@ def _parse_jsonstat_observations(payload: dict) -> list[tuple[str, float]]:
         observations.append((date, value))
     observations.sort()
     return observations
+
+
+def _secret_env(name: str) -> str:
+    """Read optional source credentials without hard-coding secrets in config."""
+    return os.environ.get(name, "").strip()
+
+
+def _parse_ohlc_csv(text: str) -> list[tuple[str, float]]:
+    reader = csv.DictReader(io.StringIO(text))
+    observations: list[tuple[str, float]] = []
+    for row in reader:
+        date = str(row.get("Date") or row.get("date") or "").strip()
+        close_raw = row.get("Close") or row.get("close")
+        if not date or close_raw in {None, ""}:
+            continue
+        try:
+            close = float(str(close_raw).replace(",", ""))
+        except ValueError:
+            continue
+        if math.isfinite(close) and close > 0:
+            observations.append((date[:10], close))
+    return sorted(observations)
 
 
 class _HTMLTableParser(HTMLParser):
@@ -3390,6 +3414,144 @@ class PragueExchangeFetcher(BaseFetcher):
         )
 
 
+class CredentialedStooqFetcher(BaseFetcher):
+    """Optional Stooq CSV adapter for market indexes that need user credentials.
+
+    Stooq's unattended CSV endpoint currently requires an API key/captcha flow.
+    The safest reusable path is to let the user paste the exact CSV URL from
+    Stooq into an environment variable, or provide a key if the default URL
+    template works for their account.
+    """
+
+    CONFIGS = {
+        "PL": {
+            "symbol": "wig20",
+            "env_url": "STOOQ_WIG20_CSV_URL",
+            "label": "WIG20",
+        },
+        "RO": {
+            "symbol": "bet",
+            "env_url": "STOOQ_BET_CSV_URL",
+            "label": "BET",
+        },
+    }
+
+    def __init__(self) -> None:
+        self._daily_cache: dict[str, list[tuple[str, float]]] = {}
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if spec.indicator_id not in {"equity_index", "equity_yoy", "equity_vol_30d"}:
+            return []
+        cfg = self.CONFIGS.get(country)
+        if not cfg:
+            return []
+        observations = self._daily_observations(country, cfg)
+        if not observations:
+            return []
+        if spec.indicator_id == "equity_vol_30d":
+            return self._equity_vol_30d(country, cfg, spec, observations)
+
+        monthly: dict[str, tuple[str, float]] = {}
+        for date, value in observations:
+            monthly[date[:7]] = (date, value)
+        monthly_observations = sorted(monthly.values())
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Stooq CSV user-configured feed",
+            series_id=f"stooq:{cfg['symbol']}:daily-close",
+            unit="Index",
+            frequency="daily",
+            last_update=monthly_observations[-1][0],
+            source_url=f"https://stooq.com/q/?s={cfg['symbol']}",
+            observations=monthly_observations,
+            available=True,
+            note=f"{cfg['label']} close sampled from the last available Stooq trading day in each month.",
+        ))
+        if spec.indicator_id == "equity_yoy":
+            series = _derive_yoy_series(series, spec, periods=12)
+        return _series_to_rows(
+            series,
+            spec,
+            unit="% YoY" if spec.indicator_id == "equity_yoy" else "Index",
+            note="Requires STOOQ_*_CSV_URL or STOOQ_API_KEY; verify index convention against the local exchange before trading.",
+        )
+
+    def _daily_observations(self, country: str, cfg: dict) -> list[tuple[str, float]]:
+        if country in self._daily_cache:
+            return self._daily_cache[country]
+        url = _secret_env(str(cfg["env_url"]))
+        api_key = _secret_env("STOOQ_API_KEY")
+        if not url and api_key:
+            url = f"https://stooq.com/q/d/l/?s={cfg['symbol']}&i=d&apikey={api_key}"
+        if not url:
+            self._daily_cache[country] = []
+            return []
+        cache_key = f"stooq::{country}::{cfg['symbol']}::{url.split('apikey=')[0]}"
+        path = cache_path(cache_key)
+        try:
+            if path.exists():
+                text = path.read_text()
+            else:
+                response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=30)
+                response.raise_for_status()
+                text = response.text
+                if "Get your apikey" in text or "captcha" in text.lower():
+                    self._daily_cache[country] = []
+                    return []
+                path.write_text(text)
+        except (OSError, requests.RequestException):
+            self._daily_cache[country] = []
+            return []
+        observations = _parse_ohlc_csv(text)
+        self._daily_cache[country] = observations
+        return observations
+
+    def _equity_vol_30d(
+        self,
+        country: str,
+        cfg: dict,
+        spec: IndicatorSpec,
+        values: list[tuple[str, float]],
+    ) -> list[dict]:
+        if len(values) < 35:
+            return []
+        returns: list[tuple[str, float]] = []
+        for idx in range(1, len(values)):
+            date, value = values[idx]
+            _, prior = values[idx - 1]
+            if prior <= 0:
+                continue
+            returns.append((date, math.log(value / prior)))
+        observations: list[tuple[str, float]] = []
+        for idx in range(20, len(returns)):
+            window = [ret for _, ret in returns[idx - 20: idx + 1]]
+            mean = sum(window) / len(window)
+            variance = sum((ret - mean) ** 2 for ret in window) / max(len(window) - 1, 1)
+            observations.append((returns[idx][0], math.sqrt(variance) * math.sqrt(252) * 100.0))
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Stooq CSV user-configured feed, derived",
+            series_id=f"stooq:{cfg['symbol']}:21d-realised-volatility",
+            unit="%",
+            frequency="daily",
+            last_update=observations[-1][0] if observations else "",
+            source_url=f"https://stooq.com/q/?s={cfg['symbol']}",
+            observations=observations,
+            available=bool(observations),
+            note=f"Annualised realised volatility computed from daily {cfg['label']} closes.",
+        ))
+        return _series_to_rows(
+            series,
+            spec,
+            unit="%",
+            note="Requires STOOQ_*_CSV_URL or STOOQ_API_KEY; derived from 21 trading days of daily closes.",
+        )
+
+
 class YahooMarketFetcher(BaseFetcher):
     """Vendor market-data adapter for local headline equity indexes."""
 
@@ -3454,6 +3616,111 @@ class YahooMarketFetcher(BaseFetcher):
             unit="%",
             note="Derived 21-trading-day realised volatility; vendor daily close data should be verified for trading use.",
         )
+
+
+class GIEAGSIFetcher(BaseFetcher):
+    """Optional GIE AGSI+ gas-storage adapter.
+
+    GIE requires API access, so this fetcher is intentionally inert until
+    GIE_AGSI_API_KEY is present. Without credentials the transparent proxy
+    remains, rather than silently substituting a fragile scraped value.
+    """
+
+    COUNTRIES = {"HU", "PL", "CZ", "RO"}
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if spec.indicator_id != "gas_storage_level" or country not in self.COUNTRIES:
+            return []
+        api_key = _secret_env("GIE_AGSI_API_KEY")
+        if not api_key:
+            return []
+        observations = self._fetch_country(country, api_key)
+        if not observations:
+            return []
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="GIE AGSI+",
+            series_id=f"AGSI:{country}:gasFull",
+            unit="%",
+            frequency="daily",
+            last_update=observations[-1][0],
+            source_url="https://agsi.gie.eu/",
+            observations=observations,
+            available=True,
+            note="GIE AGSI+ country-level storage filling percentage, daily end-of-gas-day data.",
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="%",
+            note="Requires GIE_AGSI_API_KEY; country-level AGSI+ gasFull/fill percentage.",
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+    def _fetch_country(self, country: str, api_key: str) -> list[tuple[str, float]]:
+        base = _secret_env("GIE_AGSI_BASE_URL") or GIE_AGSI_BASE_URL
+        candidates = [
+            f"{base.rstrip('/')}/data/{country}/",
+            f"{base.rstrip('/')}/data/{country}",
+            f"{base.rstrip('/')}?country={country}",
+        ]
+        headers = {
+            "User-Agent": "Mozilla/5.0",
+            "x-key": api_key,
+            "X-KEY": api_key,
+            "Authorization": f"Bearer {api_key}",
+        }
+        for url in candidates:
+            cache_key = f"gie_agsi::{country}::{url.split('?')[0]}"
+            path = cache_path(cache_key)
+            try:
+                if path.exists():
+                    payload = json.loads(path.read_text())
+                else:
+                    response = requests.get(url, headers=headers, timeout=30)
+                    if response.status_code in {401, 403, 404}:
+                        continue
+                    response.raise_for_status()
+                    payload = response.json()
+                    path.write_text(json.dumps(payload, indent=2, sort_keys=True))
+            except (OSError, requests.RequestException, json.JSONDecodeError):
+                continue
+            observations = self._parse_payload(payload)
+            if observations:
+                return observations
+        return []
+
+    def _parse_payload(self, payload: dict | list) -> list[tuple[str, float]]:
+        raw_rows = payload
+        if isinstance(payload, dict):
+            raw_rows = payload.get("data") or payload.get("rows") or payload.get("result") or []
+        if not isinstance(raw_rows, list):
+            return []
+        observations: list[tuple[str, float]] = []
+        for item in raw_rows:
+            if not isinstance(item, dict):
+                continue
+            date = str(item.get("gasDayStart") or item.get("gasDay") or item.get("date") or item.get("period") or "")[:10]
+            value = (
+                item.get("gasFull")
+                or item.get("full")
+                or item.get("fillingLevel")
+                or item.get("fill")
+                or item.get("percentageFull")
+            )
+            if not date or value in {None, ""}:
+                continue
+            try:
+                numeric = float(str(value).replace("%", "").replace(",", "."))
+            except ValueError:
+                continue
+            if math.isfinite(numeric):
+                observations.append((date, numeric))
+        return sorted({date: value for date, value in observations}.items())
 
 
 class ProxyFetcher(BaseFetcher):
@@ -3713,6 +3980,7 @@ class DataPipeline:
             ECBPortfolioFlowsFetcher(),
             WorldBankFetcher(),
             PragueExchangeFetcher(),
+            CredentialedStooqFetcher(),
             YahooMarketFetcher(),
             BISFetcher(),
             WorldBankFallbackFetcher(),
@@ -3724,6 +3992,7 @@ class DataPipeline:
             KSHFetcher(),
             GUSDBWFetcher(),
             INSSETempoFetcher(),
+            GIEAGSIFetcher(),
             ProxyFetcher(),
         ])
 

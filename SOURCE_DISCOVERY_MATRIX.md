@@ -22,24 +22,24 @@ Latest baseline after the 2026-05-23 source-wiring pass:
 | Hungary | 6 |
 | Poland | 6 |
 | Czechia | 6 |
-| Romania | 9 |
+| Romania | 8 |
 
 ## Priority Matrix
 
 | Indicator | Countries still proxied | Target source | Source class | Current status | Next action |
 |---|---|---|---|---|---|
 | `gross_ext_debt` | None | ECB BPS plus Eurostat GDP | Official statistical / derived ratio | Wired | Uses ECB balance-of-payments liability components scaled by Eurostat rolling four-quarter GDP; footnote flags direct-investment intercompany-debt caveat. |
-| `gas_storage_level` | HU, PL, CZ, RO | GIE AGSI, ENTSOG, national energy operators | Official/industry API | GIE AGSI official API tested; direct country query rejects missing API key | Use AGSI after API-key setup; otherwise test national operator data or curated manual series. |
+| `gas_storage_level` | HU, PL, CZ, RO | GIE AGSI+ | Official/industry API | Adapter-ready with `GIE_AGSI_API_KEY` | `GIEAGSIFetcher` is wired but intentionally inert without a user-provided AGSI+ key; proxy remains transparent until credentials are configured. |
 | `foreign_ownership_bonds` | None | Eurostat government debt by holder sector | Official statistical / derived ratio | Wired | Uses rest-of-world-held Maastricht debt divided by total holder-sector Maastricht debt; relabeled as total government debt share because the common CEE-4 Eurostat denominator is not local-bond-only. |
 | `fx_loan_share` | HU, CZ | IMF FSI, national central banks | Official statistical / national official | Partially wired | IMF FSI `FSFC_PT` replaces proxies where recent quarterly coverage exists for PL and RO; HU is absent and CZ stops in 2014. CNB ARAD has relevant currency-split loan tables but its REST API requires a user API key. |
 | `avg_debt_maturity` | None | Hungary debt office / AKK | National official snapshot | Wired | Hungary uses official AKK Average Time to Maturity snapshots in `config/manual_indicators.yaml`; other covered countries continue to use Eurostat remaining-maturity data. |
-| `cb_balance_sheet_gdp` | RO only | NBR, IMF IFS, central bank balance-sheet statements | National official | Open | Search NBR balance sheet statistics or IMF IFS mirror. |
+| `cb_balance_sheet_gdp` | None | NBR Monthly Bulletin / Romania Ministry of Finance GDP snapshot | Official manual snapshot | Wired / manual | Romania uses NBR monthly-bulletin central-bank total assets scaled by Romania 2024 current-price GDP. Retains `watch` because BNR automated endpoints reject access and the manual snapshot must be refreshed from monthly bulletins. |
 | `foreign_bank_share` | None | NBR Annual Report | Official manual snapshot | Wired / manual | Romania uses the NBR Annual Report market share of credit institutions with majority foreign capital, including branches of foreign credit institutions, in banking-sector net assets. ECB SSI was checked but exposes foreign branch/subsidiary assets without a matching Romania banking-sector total-assets denominator. |
 | `short_term_ext_debt` | None | IMF ARA, CNB external debt and reserves | Official statistical / national official | Wired | Czechia uses CNB USD quarterly short-term external debt divided by matching CNB quarter-end international reserves because IMF ARA coverage is missing. |
 | `import_prices_yoy` | None | Eurostat STS, national statistical offices | Official statistical / official substitute | Wired | Czechia uses CZSO open-data monthly total import-price YoY, Hungary uses KSH STADAT monthly external-trade total import-price YoY, Poland uses cache-backed GUS DBW variable 329 industrial-products-total import YoY, and Romania uses INSSE TEMPO `EXP105A` official annual import unit-value indices converted from previous-year=100 to % YoY. Romania remains `watch` because the official substitute is annual and unit-value based, not a monthly transaction import-price index. |
-| `equity_index` | RO | Local exchanges, Yahoo alternatives, exchange CSVs | Public market | Partially wired | Czechia uses the official Prague Stock Exchange PX API for monthly headline-index close with cache-backed requests; continue with BVB and alternate exchange downloads for Romania. |
-| `equity_yoy` | RO | Derived from `equity_index` | Derived market | Partially wired | Czechia is derived from official monthly PX closes; Romania still depends on a stable headline-index level feed. |
-| `equity_vol_30d` | PL, RO | Derived from daily index close | Derived market | Partially wired | Czechia is derived from official daily PX closes; fix Poland and Romania symbol/feed coverage before removing their warnings. |
+| `equity_index` | RO | BVB, Stooq user CSV, exchange CSVs | Public market / credentialed adapter | Partially wired | Czechia uses the official Prague Stock Exchange PX API. Romania can now use `STOOQ_BET_CSV_URL` or `STOOQ_API_KEY` if the user's Stooq account URL works; BVB direct pages still need a stable machine-readable endpoint. |
+| `equity_yoy` | RO | Derived from `equity_index` | Derived market / credentialed adapter | Partially wired | Romania will derive automatically once `equity_index` is populated by the Stooq/BVB path. |
+| `equity_vol_30d` | PL, RO | Derived from daily index close | Derived market / credentialed adapter | Partially wired | Poland/Romania can now use `STOOQ_WIG20_CSV_URL`, `STOOQ_BET_CSV_URL`, or `STOOQ_API_KEY`; without credentials the transparent proxy remains. |
 | `sovereign_rating` | None | Rating agency releases | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a 21-notch average; update after S&P, Moody's, Fitch, or Scope actions. |
 | `edp_status` | None | European Commission/Council EDP pages | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a qualitative policy-risk score with event dates. |
 | `eu_funds_absorption` | None | European Commission Cohesion Open Data | Official statistical / derived ratio | Wired | Uses 2021-2027 cumulative total net payments divided by latest adopted EU plan for CF, EMFAF, ERDF, ESF+, and JTF. |
@@ -115,3 +115,6 @@ Before wiring any source:
 | 2026-05-23 | Reframed FX implied-vol placeholder with ECB realised volatility | Removed `fx_implied_vol` proxies for HU/PL/CZ/RO using 21-trading-day realised volatility from ECB EUR/local-currency reference rates. |
 | 2026-05-23 | Wired Romania foreign-owned bank share as NBR manual snapshot | Removed Romania `foreign_bank_share` proxy using official NBR Annual Report 2022-2023 net-asset market shares; noted that ECB SSI lacks a directly matching Romania banking-sector total-assets denominator. |
 | 2026-05-23 | Tested Stooq CSV for WIG20/BET | Direct Stooq CSV now requests an API key/captcha flow, so it is not suitable as an unattended public adapter without user-provided credentials. |
+| 2026-05-23 | Added optional GIE AGSI+ adapter | `gas_storage_level` is now adapter-ready via `GIE_AGSI_API_KEY`, but remains proxy in no-key builds. |
+| 2026-05-23 | Added optional Stooq market-data adapter | Poland WIG20 volatility and Romania BET level/YoY/vol can be replaced by `STOOQ_*_CSV_URL` or `STOOQ_API_KEY`; no-key builds keep transparent proxies. |
+| 2026-05-23 | Wired Romania central-bank balance-sheet snapshot | Removed Romania `cb_balance_sheet_gdp` proxy with NBR monthly-bulletin total assets over 2024 current-price GDP; retained `watch` for stale/manual refresh risk. |

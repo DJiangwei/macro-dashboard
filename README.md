@@ -108,6 +108,33 @@ To rebuild and publish the v4 site:
 make publish MSG="Update dashboard"
 ```
 
+### Optional Data Credentials
+
+Some public-interest sources require user credentials or an account-specific
+download URL before they can be refreshed unattended. Copy `.env.example` to
+`.env` locally and export the variables before running `make build-v4`.
+
+```bash
+set -a
+. ./.env
+set +a
+make build-v4
+```
+
+Supported optional sources:
+
+| Variable | Purpose |
+|---|---|
+| `GIE_AGSI_API_KEY` | Enables GIE AGSI+ country-level gas-storage fill data for `gas_storage_level`. |
+| `GIE_AGSI_BASE_URL` | Optional override for the AGSI+ API base URL. Defaults to `https://agsi.gie.eu/api`. |
+| `STOOQ_API_KEY` | Enables the default Stooq CSV URL template if it works for the user's Stooq account. |
+| `STOOQ_WIG20_CSV_URL` | Exact Stooq CSV download URL for Poland WIG20 daily closes. |
+| `STOOQ_BET_CSV_URL` | Exact Stooq CSV download URL for Romania BET daily closes. |
+
+If these variables are missing or a source rejects automated access, the
+dashboard keeps the existing transparent proxy and marks it in the UI. This is
+intentional: a failed credentialed source should not silently become fake data.
+
 To review the remaining transparent proxies and decide whether to keep, replace,
 reframe, manually maintain, or remove them:
 

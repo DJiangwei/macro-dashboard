@@ -11,9 +11,9 @@ Current proxy baseline:
 | Hungary | 6 | 114 | 5.3% |
 | Poland | 6 | 114 | 5.3% |
 | Czechia | 6 | 114 | 5.3% |
-| Romania | 9 | 114 | 7.9% |
+| Romania | 8 | 114 | 7.0% |
 
-Proxy union: 10 indicators.
+Proxy union: 9 indicators.
 
 ## Decision Categories
 
@@ -31,7 +31,6 @@ Proxy union: 10 indicators.
 |---|---|---|---|---|
 | `gas_storage_level` | HU, PL, CZ, RO | Replace | Important external/energy buffer; official or industry API likely exists, but GIE AGSI needs API-key access. | Try AGSI with API key; otherwise test ENTSOG and national gas operators. |
 | `fx_loan_share` | HU, CZ | Replace | Important balance-sheet vulnerability measure; PL and RO already use IMF FSI. | Search MNB and CNB public tables; CNB ARAD may require an API key. |
-| `cb_balance_sheet_gdp` | RO | Replace | Useful monetary-policy/liquidity indicator; Romania gap is source-specific. | Search BNR statistical balance-sheet tables or IMF IFS mirror. |
 | `equity_index` | RO | Replace | Needed to derive Romania equity YoY and volatility. | Find stable BVB BET daily/monthly feed; avoid Yahoo if rate-limited/unreliable. |
 | `equity_yoy` | RO | Replace after `equity_index` | Pure derived indicator; should disappear once Romania headline index is wired. | Derive automatically from `equity_index`. |
 | `equity_vol_30d` | PL, RO | Replace | Derived from daily index data; more sourceable than valuation metrics. | Find stable WIG/WIG20 and BET daily close feeds. |
@@ -53,6 +52,7 @@ Proxy union: 10 indicators.
 | `embi_spread` | Reframed and wired | Replaced JPMorgan EMBI placeholder with a public 10Y sovereign spread-vs-Bund substitute from Eurostat yields. |
 | `fx_implied_vol` | Reframed and wired | Replaced vendor FX options implied-vol placeholder with ECB-derived 21-trading-day realised FX volatility; footnote states it is not implied vol. |
 | `foreign_bank_share` | Converted to manual official snapshot | Replaced Romania proxy with NBR Annual Report market share of credit institutions with majority foreign capital, including branches of foreign credit institutions, in net banking-sector assets. |
+| `cb_balance_sheet_gdp` | Converted to manual official-data snapshot | Replaced Romania proxy with NBR monthly-bulletin central-bank total assets scaled by Romania 2024 current-price GDP; retained `watch` because the snapshot is stale and should be refreshed from BNR monthly bulletins. |
 
 ## Proposed Implementation Order
 

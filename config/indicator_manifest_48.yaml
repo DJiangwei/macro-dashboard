@@ -505,12 +505,12 @@ indicators:
   indicator_id: gas_storage_level
   label: Natural Gas Storage Fill Level
   unit: '%'
-  source: GIE AGSI / proxy pending
+  source: GIE AGSI+ / credentialed adapter
   frequency: monthly
   chart: line
   peers: false
   quality_status: low_confidence
-  quality_note: GIE AGSI weekly storage data requires a dedicated adapter and country storage mapping; proxy fill is a placeholder.
+  quality_note: GIE AGSI+ country-level storage fill data is used when GIE_AGSI_API_KEY is configured; no-key builds retain a transparent proxy placeholder.
 - section_id: fiscal_sovereign
   indicator_id: fiscal_balance_pct_gdp
   label: General Government Balance, % GDP
@@ -796,12 +796,12 @@ indicators:
   indicator_id: cb_balance_sheet_gdp
   label: Central Bank Balance Sheet, % GDP
   unit: '% GDP'
-  source: BIS CBTA / World Bank WDI
+  source: BIS CBTA / World Bank WDI / official manual snapshots
   frequency: monthly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Derived from BIS central-bank total assets in USD divided by World Bank current-USD GDP; monthly numerator is paired with annual GDP, so use as a balance-sheet scale proxy rather than exact national-account ratio.
+  quality_note: Central-bank total assets scaled by nominal GDP from BIS/World Bank where available, or official national-bank and GDP snapshots where automated coverage is missing; monthly numerator is paired with annual GDP, so use as a balance-sheet scale proxy rather than exact national-account ratio.
 - section_id: monetary_financial
   indicator_id: cb_forward_guidance
   label: Central Bank Guidance Score
