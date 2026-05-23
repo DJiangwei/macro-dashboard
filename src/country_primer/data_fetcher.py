@@ -2266,37 +2266,42 @@ class GUSDBWFetcher(BaseFetcher):
         return []
 
     def _import_prices_yoy(self, country: str, spec: IndicatorSpec) -> list[dict]:
-        observations: list[tuple[str, float]] = []
+        cached = self._load_cached_observations()
+        observations: list[tuple[str, float]] = list(cached)
         session = requests.Session()
-        for year in range(2022, datetime.utcnow().year + 1):
+        current_year = datetime.utcnow().year
+        current_month = datetime.utcnow().month
+        latest_cached = max((date for date, _ in observations), default="")
+        failed_requests = 0
+
+        for year in range(2022, current_year + 1):
             for month in range(1, 13):
+                if year == current_year and month > current_month:
+                    break
+                date = f"{year}-{month:02d}-01"
+                if date <= latest_cached:
+                    continue
                 try:
-                    response = session.get(
-                        GUS_DBW_VARIABLE_DATA_URL,
-                        params={
-                            "id-zmienna": self.IMPORT_PRICE_VARIABLE_ID,
-                            "id-przekroj": self.IMPORT_PRICE_SECTION_ID,
-                            "id-rok": year,
-                            "id-okres": 246 + month,
-                            "ile-na-stronie": 5000,
-                            "numer-strony": 0,
-                            "lang": "en",
-                        },
-                        timeout=30,
-                    )
-                    response.raise_for_status()
-                    value = self._find_import_total_yoy(response.json())
+                    payload = self._fetch_month_payload(session, year, month)
+                    value = self._find_import_total_yoy(payload)
                 except (OSError, requests.RequestException, TypeError, ValueError, json.JSONDecodeError):
-                    # DBW returns 404 for future months within the current year.
+                    # DBW returns 404 for unavailable months and can rate-limit anonymous clients.
+                    failed_requests += 1
+                    if failed_requests >= 6 and observations:
+                        break
                     continue
                 finally:
-                    # Anonymous DBW clients are capped at five requests per second.
+                    # Anonymous DBW clients are capped; keep live refresh gentle.
                     time.sleep(0.22)
                 if value is None:
                     continue
-                observations.append((f"{year}-{month:02d}-01", value - 100.0))
+                observations.append((date, value - 100.0))
+            if failed_requests >= 6 and observations:
+                break
         if not observations:
             return []
+        observations = sorted(dict(observations).items())
+        self._write_cached_observations(observations)
 
         series = finalize_series(Series(
             key=spec.indicator_id,
@@ -2327,6 +2332,66 @@ class GUSDBWFetcher(BaseFetcher):
         for row in rows:
             row["quality_status"] = "watch"
         return rows
+
+    def _cache_file(self) -> Path:
+        return cache_path("gus_dbw::import_prices_yoy::pl::variable_329_section_772")
+
+    def _load_cached_observations(self) -> list[tuple[str, float]]:
+        path = self._cache_file()
+        if not path.exists():
+            return []
+        try:
+            payload = json.loads(path.read_text())
+        except (OSError, json.JSONDecodeError):
+            return []
+        observations = []
+        for item in payload.get("observations") or []:
+            try:
+                observations.append((str(item["date"])[:10], float(item["value"])))
+            except (KeyError, TypeError, ValueError):
+                continue
+        return sorted(observations)
+
+    def _write_cached_observations(self, observations: list[tuple[str, float]]) -> None:
+        payload = {
+            "source": "Statistics Poland DBW API",
+            "series_id": "DBW:variable-329:section-772:import:industrial-products-total:yoy",
+            "fetched": datetime.utcnow().isoformat() + "Z",
+            "observations": [
+                {"date": date, "value": value}
+                for date, value in observations
+            ],
+        }
+        try:
+            self._cache_file().write_text(json.dumps(payload, indent=2, sort_keys=True))
+        except OSError:
+            return
+
+    def _fetch_month_payload(self, session: requests.Session, year: int, month: int) -> dict:
+        query = (
+            f"gus_dbw::variable_data_section::{self.IMPORT_PRICE_VARIABLE_ID}::"
+            f"{self.IMPORT_PRICE_SECTION_ID}::{year}::{month}"
+        )
+        path = cache_path(query)
+        if path.exists():
+            return json.loads(path.read_text())
+        response = session.get(
+            GUS_DBW_VARIABLE_DATA_URL,
+            params={
+                "id-zmienna": self.IMPORT_PRICE_VARIABLE_ID,
+                "id-przekroj": self.IMPORT_PRICE_SECTION_ID,
+                "id-rok": year,
+                "id-okres": 246 + month,
+                "ile-na-stronie": 5000,
+                "numer-strony": 0,
+                "lang": "en",
+            },
+            timeout=30,
+        )
+        response.raise_for_status()
+        payload = response.json()
+        path.write_text(json.dumps(payload))
+        return payload
 
     def _find_import_total_yoy(self, payload: dict) -> float | None:
         for row in payload.get("data") or []:
