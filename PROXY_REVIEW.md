@@ -8,12 +8,12 @@ Current proxy baseline:
 
 | Country | Proxy count | Total indicators | Share |
 |---|---:|---:|---:|
-| Hungary | 10 | 114 | 8.8% |
-| Poland | 10 | 114 | 8.8% |
-| Czechia | 10 | 114 | 8.8% |
-| Romania | 14 | 114 | 12.3% |
+| Hungary | 9 | 114 | 7.9% |
+| Poland | 9 | 114 | 7.9% |
+| Czechia | 9 | 114 | 7.9% |
+| Romania | 13 | 114 | 11.4% |
 
-Proxy union: 15 indicators.
+Proxy union: 14 indicators.
 
 ## Decision Categories
 
@@ -36,7 +36,6 @@ Proxy union: 15 indicators.
 | `equity_index` | RO | Replace | Needed to derive Romania equity YoY and volatility. | Find stable BVB BET daily/monthly feed; avoid Yahoo if rate-limited/unreliable. |
 | `equity_yoy` | RO | Replace after `equity_index` | Pure derived indicator; should disappear once Romania headline index is wired. | Derive automatically from `equity_index`. |
 | `equity_vol_30d` | PL, RO | Replace | Derived from daily index data; more sourceable than valuation metrics. | Find stable WIG/WIG20 and BET daily close feeds. |
-| `truck_km_index` | HU, PL, CZ, RO | Remove or Manual | Alternative-data concept is interesting but hard to maintain across countries. | Remove from core unless a reusable toll-road/logistics source is found. |
 | `cds_5y` | HU, PL, CZ, RO | Keep or Replace with spread | CDS is vendor market data; open substitutes are imperfect. | Prefer sovereign spread vs Bund as public replacement, or keep clearly marked proxy. |
 | `embi_spread` | HU, PL, CZ, RO | Remove or Replace with spread | EMBI is vendor/J.P. Morgan data and overlaps with sovereign spread indicators. | Remove unless a public sovereign-risk spread definition is chosen. |
 | `breakeven_5y5y` | HU, PL, CZ, RO | Keep or Remove | Inflation-swap/linker curve data is typically vendor-controlled. | Keep only as conceptual placeholder; otherwise remove from public dashboard. |
@@ -53,18 +52,18 @@ Proxy union: 15 indicators.
 | `ifo_expectations` | Reframed and wired | Replaced Ifo placeholder with Eurostat Germany Industry Confidence as an external-demand spillover signal. |
 | `oecd_cli` | Reframed and wired | Replaced unavailable OECD CLI slot with Eurostat Employment Expectations Indicator. |
 | `manufacturing_pmi` | Reframed and wired | Replaced vendor PMI placeholder with Eurostat Industry Confidence Indicator; footnotes state it is not an S&P PMI. |
+| `truck_km_index` | Reframed and wired | Replaced toll-road truck-km placeholder with Eurostat quarterly road freight activity in million tonne-kilometres. |
 
 ## Proposed Implementation Order
 
 1. Replace Romania/Poland equity data first because `equity_index` unlocks `equity_yoy` and `equity_vol_30d`.
 2. Replace energy and balance-sheet vulnerabilities: `gas_storage_level`, `fx_loan_share`, `cb_balance_sheet_gdp`, and `foreign_bank_share`.
 3. Decide whether vendor-market indicators should remain as placeholders: `cds_5y`, `embi_spread`, `breakeven_5y5y`, `fx_implied_vol`, and equity valuation metrics.
-4. Remove or manually curate `truck_km_index`, which remains the weakest alternative-data slot.
+4. Decide whether vendor-only valuation and market-risk placeholders should remain visible or be removed from the public dashboard.
 
 ## User Decisions Needed
 
 Before deleting any chart, confirm these choices:
 
 1. Should vendor-only market indicators remain as explicit low-confidence placeholders, or should the public dashboard remove them?
-2. Should `truck_km_index` remain as an alternative-data idea, or be removed from the core framework?
-3. Should equity valuation metrics be manually curated from exchange/factsheet snapshots, or removed until a paid data source exists?
+2. Should equity valuation metrics be manually curated from exchange/factsheet snapshots, or removed until a paid data source exists?

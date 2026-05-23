@@ -193,14 +193,14 @@ indicators:
   quality_note: Germany industrial confidence from the harmonised European Commission business survey is used as an external-demand spillover signal for CEE exporters; it is not a domestic country survey and should be read alongside each country's own ESI.
 - section_id: real_activity
   indicator_id: truck_km_index
-  label: Road Freight Transport Index
-  unit: Index
-  source: Eurostat transport / proxy pending
+  label: Road Freight Activity
+  unit: million tonne-km
+  source: Eurostat road freight transport
   frequency: quarterly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Road freight data needs a dedicated Eurostat transport adapter; proxy fill is a framework placeholder.
+  quality_status: watch
+  quality_note: Eurostat quarterly road freight transport performance by reporting country, total transport and operation, measured in million tonne-kilometres. This replaces the toll-road truck-km alternative-data placeholder and is not a high-frequency traffic-count series.
 - section_id: prices_wages
   indicator_id: cpi_yoy
   label: Headline CPI/HICP, YoY

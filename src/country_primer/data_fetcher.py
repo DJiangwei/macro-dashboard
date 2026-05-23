@@ -796,6 +796,14 @@ class EurostatFetcher(BaseFetcher):
             "unit": "Index",
             "note": "European Commission Employment Expectations Indicator from harmonised business surveys; replaces the unavailable OECD CLI slot with a transparent domestic leading-labour-demand survey signal.",
         },
+        "truck_km_index": {
+            "dataset": "road_go_tq_tott",
+            "freq": "Q",
+            "since": "2018",
+            "params": {"tra_type": "TOTAL", "tra_oper": "TOTAL", "unit": "MIO_TKM"},
+            "unit": "million tonne-km",
+            "note": "Eurostat quarterly road freight transport performance by reporting country, total transport and operation, measured in million tonne-kilometres; replaces the unavailable toll-road truck-km alternative-data placeholder.",
+        },
         "consumer_confidence": {
             "dataset": "ei_bsco_m",
             "freq": "M",

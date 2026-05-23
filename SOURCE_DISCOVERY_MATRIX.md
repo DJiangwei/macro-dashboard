@@ -19,10 +19,10 @@ Latest baseline after the 2026-05-23 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
-| Hungary | 10 |
-| Poland | 10 |
-| Czechia | 10 |
-| Romania | 14 |
+| Hungary | 9 |
+| Poland | 9 |
+| Czechia | 9 |
+| Romania | 13 |
 
 ## Priority Matrix
 
@@ -48,7 +48,7 @@ Latest baseline after the 2026-05-23 source-wiring pass:
 | `manufacturing_pmi` | None | European Commission business surveys | Official survey substitute | Wired / reframed | Reframed from vendor PMI to Eurostat/EC Industry Confidence Indicator; footnote states it is not an S&P PMI diffusion index. |
 | `oecd_cli` | None | European Commission business surveys | Official survey substitute | Wired / reframed | Reframed from unavailable OECD CLI to Eurostat/EC Employment Expectations Indicator as a domestic leading-labour-demand survey signal. |
 | `ifo_expectations` | None | European Commission business surveys | Official spillover survey substitute | Wired / reframed | Reframed from Ifo placeholder to Eurostat Germany Industry Confidence as a Germany external-demand spillover signal for CEE exporters. |
-| `truck_km_index` | HU, PL, CZ, RO | Toll-road operators, logistics platforms | Alternative data | Hard | Low priority; keep proxy or remove from core. |
+| `truck_km_index` | None | Eurostat road freight transport | Official statistical / reframed substitute | Wired / reframed | Replaced toll-road truck-km placeholder with Eurostat quarterly road freight activity, total transport and operation, in million tonne-kilometres. This is not a high-frequency traffic-count series. |
 | `cds_5y` | HU, PL, CZ, RO | Paid market vendors | Vendor market | Hard | Keep proxy or replace with sovereign spread when vendor unavailable. |
 | `embi_spread` | HU, PL, CZ, RO | JP Morgan/vendor | Vendor market | Hard | Keep proxy; open substitute is sovereign spread vs Bund. |
 | `breakeven_5y5y` | HU, PL, CZ, RO | Inflation-linked bond curves/vendor | Vendor market | Hard | Keep proxy unless national linker curves are publicly available. |
@@ -110,3 +110,4 @@ Before wiring any source:
 | 2026-05-23 | Wired INSSE TEMPO `EXP105A` Romania import unit-value adapter | Removed Romania `import_prices_yoy` proxy with an official annual import unit-value series; UI footnotes flag the definition/frequency mismatch versus monthly import-price data. |
 | 2026-05-23 | Converted central-bank guidance to manual tracker | Removed `cb_forward_guidance` proxies for HU/PL/CZ/RO using a dated manual hawk/dove communication score with central-bank source links. |
 | 2026-05-23 | Reframed survey placeholders with Eurostat BCS data | Removed `ifo_expectations`, `oecd_cli`, and `manufacturing_pmi` proxies for HU/PL/CZ/RO by replacing them with Germany industry-confidence spillover, domestic employment expectations, and domestic industry confidence respectively. |
+| 2026-05-23 | Reframed road-freight placeholder with Eurostat transport data | Removed `truck_km_index` proxies for HU/PL/CZ/RO using quarterly Eurostat `road_go_tq_tott` total road freight activity in million tonne-kilometres. |
