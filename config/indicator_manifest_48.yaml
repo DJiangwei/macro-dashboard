@@ -840,7 +840,7 @@ indicators:
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Yahoo Finance monthly close; vendor feed should be confirmed against local exchange or terminal data.
+  quality_note: Headline-index monthly close from the available exchange or vendor feed; confirm local index convention for trading use.
 - section_id: markets_valuation
   indicator_id: equity_yoy
   label: Headline Equity Index, YoY
@@ -850,7 +850,7 @@ indicators:
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Derived from Yahoo Finance monthly close; vendor feed and local-index convention should be verified.
+  quality_note: Derived from the headline-index monthly close; verify vendor feeds against local-exchange index convention.
 - section_id: markets_valuation
   indicator_id: equity_fwd_pe
   label: Equity Forward P/E
@@ -885,12 +885,12 @@ indicators:
   indicator_id: equity_vol_30d
   label: 30D Realised Equity Volatility
   unit: '%'
-  source: Derived from Yahoo Finance
+  source: Derived from equity close feed
   frequency: daily
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Annualised realised volatility from daily closes; vendor feed and holidays should be checked against exchange data.
+  quality_note: Annualised realised volatility from daily closes; vendor closes and holidays should be checked against exchange data.
 - section_id: markets_valuation
   indicator_id: sov_spread_vs_bund
   label: 10Y Spread vs Bund

@@ -952,7 +952,7 @@ def _indicator_ledger_html(section_id: str) -> str:
 def _render_section_charts(section_id: str, country_code: str, chart_map: dict[str, str], canonical_frame) -> tuple[str, list[str]]:
     html_parts: list[str] = []
     rendered_ids: list[str] = []
-    prefer_canonical_ids = {"policy_rate", "real_policy_rate"}
+    prefer_canonical_ids = {"policy_rate", "real_policy_rate", "equity_index", "equity_yoy", "equity_vol_30d"}
     for idx, spec in enumerate(SECTION_INDICATORS_48.get(section_id, ())):
         legacy_id = _legacy_chart_id(section_id, spec.indicator_id, chart_map)
         if spec.indicator_id in prefer_canonical_ids:

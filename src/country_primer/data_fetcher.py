@@ -12,6 +12,7 @@ dashboard section populated while marking data quality clearly.
 """
 from __future__ import annotations
 
+import calendar
 import csv
 from dataclasses import dataclass
 from datetime import datetime
@@ -90,6 +91,7 @@ CNB_RESERVES_USD_TXT_URL = (
 CZSO_IMPORT_PRICE_CSV_URL = "https://data.csu.gov.cz/opendata/sady/CEN0301/distribuce/csv"
 KSH_IMPORT_PRICE_CSV_URL = "https://www.ksh.hu/stadat_files/ara/en/ara0046.csv"
 GUS_DBW_VARIABLE_DATA_URL = "https://api-dbw.stat.gov.pl/api/variable/variable-data-section"
+PSE_INDEXES_URL = "https://www.pse.cz/api/indexes"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
@@ -2809,6 +2811,166 @@ class IMFDataMapperFetcher(BaseFetcher):
         return payload
 
 
+class PragueExchangeFetcher(BaseFetcher):
+    """Official Prague Stock Exchange PX adapters."""
+
+    def __init__(self) -> None:
+        self._monthly_px: list[tuple[str, float]] | None = None
+        self._daily_px: list[tuple[str, float]] | None = None
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if country != "CZ" or spec.indicator_id not in {"equity_index", "equity_yoy", "equity_vol_30d"}:
+            return []
+        if spec.indicator_id == "equity_vol_30d":
+            return self._equity_vol_30d(country, spec)
+
+        observations = self._monthly_observations()
+        if not observations:
+            return []
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Prague Stock Exchange",
+            series_id="PSE:PX:monthly-close",
+            unit="Index",
+            frequency="monthly",
+            last_update=observations[-1][0],
+            source_url=PSE_INDEXES_URL,
+            observations=observations,
+            available=True,
+            note="Official PX close sampled from the last Prague Stock Exchange day returned for each month.",
+        ))
+        if spec.indicator_id == "equity_yoy":
+            series = _derive_yoy_series(series, spec, periods=12)
+        unit = "% YoY" if spec.indicator_id == "equity_yoy" else "Index"
+        return _series_to_rows(
+            series,
+            spec,
+            unit=unit,
+            note="Official Czech exchange PX feed; monthly samples use the final available exchange-day close.",
+        )
+
+    def _monthly_observations(self) -> list[tuple[str, float]]:
+        if self._monthly_px is not None:
+            return self._monthly_px
+        now = datetime.utcnow()
+        observations: list[tuple[str, float]] = []
+        for year in range(now.year - 5, now.year + 1):
+            start_month = 1
+            end_month = now.month if year == now.year else 12
+            for month in range(start_month, end_month + 1):
+                last_day = calendar.monthrange(year, month)[1]
+                values = self._fetch_index_page(
+                    1,
+                    f"{year}-{month:02d}-01",
+                    f"{year}-{month:02d}-{last_day:02d}",
+                )
+                if not values:
+                    continue
+                latest = values[0]
+                try:
+                    observations.append((str(latest["stockExchangeDay"])[:10], float(latest["closingValue"])))
+                except (KeyError, TypeError, ValueError):
+                    continue
+        self._monthly_px = sorted(observations)
+        return self._monthly_px
+
+    def _daily_observations(self) -> list[tuple[str, float]]:
+        if self._daily_px is not None:
+            return self._daily_px
+        now = datetime.utcnow()
+        first_page = self._fetch_index_page(
+            1,
+            f"{now.year - 1}-01-01",
+            now.strftime("%Y-%m-%d"),
+            include_meta=True,
+        )
+        if not first_page:
+            self._daily_px = []
+            return self._daily_px
+        values, total = first_page
+        pages = max(1, math.ceil(total / 10))
+        for page in range(2, pages + 1):
+            values.extend(self._fetch_index_page(page, f"{now.year - 1}-01-01", now.strftime("%Y-%m-%d")))
+        observations: list[tuple[str, float]] = []
+        for item in values:
+            try:
+                observations.append((str(item["stockExchangeDay"])[:10], float(item["closingValue"])))
+            except (KeyError, TypeError, ValueError):
+                continue
+        self._daily_px = sorted(observations)
+        return self._daily_px
+
+    def _fetch_index_page(
+        self,
+        page: int,
+        date_from: str,
+        date_to: str,
+        *,
+        include_meta: bool = False,
+    ):
+        query = f"pse_px::{page}::{date_from}::{date_to}"
+        path = cache_path(query)
+        try:
+            if path.exists():
+                payload = json.loads(path.read_text())
+            else:
+                response = requests.get(
+                    PSE_INDEXES_URL,
+                    params={"page": page, "indexName": "PX", "dateFrom": date_from, "dateTo": date_to},
+                    headers={"X-API-Key": "PSE"},
+                    timeout=30,
+                )
+                response.raise_for_status()
+                payload = response.json()
+                path.write_text(json.dumps(payload, indent=2, sort_keys=True))
+        except (OSError, requests.RequestException, TypeError, ValueError, json.JSONDecodeError):
+            return ([], 0) if include_meta else []
+        values = list(((payload.get("data") or {}).get("values") or []))
+        if include_meta:
+            return values, int((payload.get("meta") or {}).get("total") or 0)
+        return values
+
+    def _equity_vol_30d(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        values = self._daily_observations()
+        if len(values) < 35:
+            return []
+        returns: list[tuple[str, float]] = []
+        for idx in range(1, len(values)):
+            date, value = values[idx]
+            _, prior = values[idx - 1]
+            if prior <= 0:
+                continue
+            returns.append((date, math.log(value / prior)))
+        observations: list[tuple[str, float]] = []
+        for idx in range(20, len(returns)):
+            window = [ret for _, ret in returns[idx - 20: idx + 1]]
+            mean = sum(window) / len(window)
+            variance = sum((ret - mean) ** 2 for ret in window) / max(len(window) - 1, 1)
+            observations.append((returns[idx][0], math.sqrt(variance) * math.sqrt(252) * 100.0))
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Prague Stock Exchange derived",
+            series_id="PSE:PX:21d-realised-volatility",
+            unit="%",
+            frequency="daily",
+            last_update=observations[-1][0] if observations else "",
+            source_url=PSE_INDEXES_URL,
+            observations=observations,
+            available=bool(observations),
+            note="Annualised realised volatility computed from official daily PX exchange closes.",
+        ))
+        return _series_to_rows(
+            series,
+            spec,
+            unit="%",
+            note="Derived 21-trading-day realised volatility from the official Czech PX close.",
+        )
+
+
 class YahooMarketFetcher(BaseFetcher):
     """Vendor market-data adapter for local headline equity indexes."""
 
@@ -3131,6 +3293,7 @@ class DataPipeline:
             ECBExternalDebtFetcher(),
             ECBPortfolioFlowsFetcher(),
             WorldBankFetcher(),
+            PragueExchangeFetcher(),
             YahooMarketFetcher(),
             BISFetcher(),
             WorldBankFallbackFetcher(),

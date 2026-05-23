@@ -18,7 +18,7 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 |---|---:|
 | Hungary | 15 |
 | Poland | 15 |
-| Czechia | 18 |
+| Czechia | 15 |
 | Romania | 20 |
 
 ## Priority Matrix
@@ -34,9 +34,9 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 | `foreign_bank_share` | RO only | NBR, EBRD, ECB consolidated banking statistics | Official/manual | Open | World Bank GFDD lacks Romania coverage; search NBR/EBRD. |
 | `short_term_ext_debt` | None | IMF ARA, CNB external debt and reserves | Official statistical / national official | Wired | Czechia uses CNB USD quarterly short-term external debt divided by matching CNB quarter-end international reserves because IMF ARA coverage is missing. |
 | `import_prices_yoy` | RO | Eurostat STS, national statistical offices | Official statistical | Partially wired | Czechia uses CZSO open-data monthly total import-price YoY, Hungary uses KSH STADAT monthly external-trade total import-price YoY, and Poland uses GUS DBW variable 329 industrial-products-total import YoY. Eurostat `sts_inpi_m` has poor non-euro CEE coverage. |
-| `equity_index` | CZ, RO | Local exchanges, Yahoo alternatives, exchange CSVs | Public market | PSE API discovered | Prague `/api/indexes` historical PX data works through direct API probing, but Python `requests` connection timed out on 2026-05-22; avoid adding a build-path dependency until access is robust. Continue with BVB and alternate exchange downloads. |
-| `equity_yoy` | CZ, RO | Derived from `equity_index` | Derived market | Dependent | Implement after index-level feed is stable. |
-| `equity_vol_30d` | PL, CZ, RO | Derived from daily index close | Derived market | Partially dependent | Fix symbol/feed coverage first; keep vendor warning. |
+| `equity_index` | RO | Local exchanges, Yahoo alternatives, exchange CSVs | Public market | Partially wired | Czechia uses the official Prague Stock Exchange PX API for monthly headline-index close with cache-backed requests; continue with BVB and alternate exchange downloads for Romania. |
+| `equity_yoy` | RO | Derived from `equity_index` | Derived market | Partially wired | Czechia is derived from official monthly PX closes; Romania still depends on a stable headline-index level feed. |
+| `equity_vol_30d` | PL, RO | Derived from daily index close | Derived market | Partially wired | Czechia is derived from official daily PX closes; fix Poland and Romania symbol/feed coverage before removing their warnings. |
 | `sovereign_rating` | None | Rating agency releases | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a 21-notch average; update after S&P, Moody's, Fitch, or Scope actions. |
 | `edp_status` | None | European Commission/Council EDP pages | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a qualitative policy-risk score with event dates. |
 | `eu_funds_absorption` | None | European Commission Cohesion Open Data | Official statistical / derived ratio | Wired | Uses 2021-2027 cumulative total net payments divided by latest adopted EU plan for CF, EMFAF, ERDF, ESF+, and JTF. |
