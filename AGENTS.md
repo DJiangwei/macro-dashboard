@@ -38,6 +38,10 @@ containers remain, and runs `git diff --check`.
 `make proxy-report` prints the transparent proxy count and proxy indicator list
 for each CEE-4 country.
 
+Before replacing or deleting proxy indicators, read `PROXY_REVIEW.md`. It
+records the current keep/replace/reframe/manual/remove recommendations so agents
+do not re-triage the same dashboard gaps from scratch.
+
 ## Publishing Discipline
 
 After dashboard changes:

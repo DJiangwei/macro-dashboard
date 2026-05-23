@@ -10,6 +10,9 @@ Use this file together with:
 make proxy-report
 ```
 
+For keep/replace/reframe/manual/remove decisions on the remaining proxies, see
+`PROXY_REVIEW.md`.
+
 ## Current Baseline
 
 Latest baseline after the 2026-05-23 source-wiring pass:

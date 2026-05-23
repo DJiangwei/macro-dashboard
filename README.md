@@ -108,6 +108,14 @@ To rebuild and publish the v4 site:
 make publish MSG="Update dashboard"
 ```
 
+To review the remaining transparent proxies and decide whether to keep, replace,
+reframe, manually maintain, or remove them:
+
+```bash
+make proxy-report
+open PROXY_REVIEW.md
+```
+
 ## Adding a country
 
 1. Add it to `config/countries.yaml` with name, ISO codes, currency, central
