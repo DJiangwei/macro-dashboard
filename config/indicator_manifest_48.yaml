@@ -623,14 +623,15 @@ indicators:
   quality_note: Public short-rate proxy is used until a true 2Y sovereign yield feed is wired; not suitable for precise curve trades.
 - section_id: fiscal_sovereign
   indicator_id: cds_5y
-  label: 5Y Sovereign CDS Spread
-  unit: bps
-  source: Bloomberg/Refinitiv required
-  frequency: daily
+  label: Sovereign Credit Spread Substitute
+  unit: bp
+  source: Derived from Eurostat sovereign yields
+  frequency: monthly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: Sovereign CDS generally requires a licensed market-data vendor; proxy fill is only a placeholder for the framework slot.
+  quality_status: watch
+  quality_note: |
+    Public substitute for vendor 5Y sovereign CDS: 10Y local government bond yield minus Germany 10Y Bund yield from Eurostat, in basis points. This is not a CDS quote and should not be used as executable credit protection pricing.
 - section_id: fiscal_sovereign
   indicator_id: yield_curve_slope
   label: 10Y-2Y Yield Curve Slope
@@ -903,14 +904,15 @@ indicators:
   quality_note: Derived monthly spread versus Germany 10Y benchmark; check maturity matching and market convention.
 - section_id: markets_valuation
   indicator_id: embi_spread
-  label: EMBI / External Sovereign Spread
-  unit: bps
-  source: JPMorgan required
-  frequency: daily
+  label: External Sovereign Spread Substitute
+  unit: bp
+  source: Derived from Eurostat sovereign yields
+  frequency: monthly
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: EMBI/EMBIG spreads require licensed JPMorgan/vendor data; proxy fill is a framework placeholder.
+  quality_status: watch
+  quality_note: |
+    Public substitute for JPMorgan EMBI/EMBIG: 10Y local government bond yield minus Germany 10Y Bund yield from Eurostat, in basis points. This is not a hard-currency EMBI spread and overlaps conceptually with the 10Y spread-vs-Bund chart.
 - section_id: markets_valuation
   indicator_id: foreign_ownership_bonds
   label: Non-Resident Government Debt Share

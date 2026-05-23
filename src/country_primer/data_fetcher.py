@@ -1095,6 +1095,10 @@ class DerivedMacroFetcher(BaseFetcher):
             return self._foreign_ownership_bonds(country, spec)
         if spec.indicator_id == "sov_spread_vs_bund":
             return self._sov_spread_vs_bund(country, spec)
+        if spec.indicator_id == "cds_5y":
+            return self._public_sovereign_risk_spread(country, spec, "CDS substitute")
+        if spec.indicator_id == "embi_spread":
+            return self._public_sovereign_risk_spread(country, spec, "EMBI substitute")
         if spec.indicator_id == "sov_yield_2y":
             return self._short_rate_market_proxy(country, spec, "2Y sovereign yield proxy")
         if spec.indicator_id == "yield_curve_slope":
@@ -1499,6 +1503,20 @@ class DerivedMacroFetcher(BaseFetcher):
             note="Monthly 10Y local government yield minus German Bund yield, expressed in basis points.",
         ))
         return _series_to_rows(series, spec, unit="bp", note="Derived from Eurostat sovereign-yield adapters.")
+
+    def _public_sovereign_risk_spread(self, country: str, spec: IndicatorSpec, substitute_label: str) -> list[dict]:
+        rows = self._sov_spread_vs_bund(country, spec)
+        if not rows:
+            return []
+        for row in rows:
+            row["quality_status"] = "watch"
+            row["quality_note"] = (
+                f"{row.get('quality_note')} Public {substitute_label}: this is the 10Y local "
+                "government yield spread versus Germany from Eurostat, not a licensed CDS, EMBI, "
+                "or executable credit-risk quote."
+            ).strip()
+            row["is_proxy"] = False
+        return rows
 
     def _short_rate_market_proxy(self, country: str, spec: IndicatorSpec, label: str) -> list[dict]:
         countries = load_countries()

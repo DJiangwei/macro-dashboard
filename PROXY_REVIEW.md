@@ -8,12 +8,12 @@ Current proxy baseline:
 
 | Country | Proxy count | Total indicators | Share |
 |---|---:|---:|---:|
-| Hungary | 9 | 114 | 7.9% |
-| Poland | 9 | 114 | 7.9% |
-| Czechia | 9 | 114 | 7.9% |
-| Romania | 13 | 114 | 11.4% |
+| Hungary | 7 | 114 | 6.1% |
+| Poland | 7 | 114 | 6.1% |
+| Czechia | 7 | 114 | 6.1% |
+| Romania | 11 | 114 | 9.6% |
 
-Proxy union: 14 indicators.
+Proxy union: 12 indicators.
 
 ## Decision Categories
 
@@ -36,8 +36,6 @@ Proxy union: 14 indicators.
 | `equity_index` | RO | Replace | Needed to derive Romania equity YoY and volatility. | Find stable BVB BET daily/monthly feed; avoid Yahoo if rate-limited/unreliable. |
 | `equity_yoy` | RO | Replace after `equity_index` | Pure derived indicator; should disappear once Romania headline index is wired. | Derive automatically from `equity_index`. |
 | `equity_vol_30d` | PL, RO | Replace | Derived from daily index data; more sourceable than valuation metrics. | Find stable WIG/WIG20 and BET daily close feeds. |
-| `cds_5y` | HU, PL, CZ, RO | Keep or Replace with spread | CDS is vendor market data; open substitutes are imperfect. | Prefer sovereign spread vs Bund as public replacement, or keep clearly marked proxy. |
-| `embi_spread` | HU, PL, CZ, RO | Remove or Replace with spread | EMBI is vendor/J.P. Morgan data and overlaps with sovereign spread indicators. | Remove unless a public sovereign-risk spread definition is chosen. |
 | `breakeven_5y5y` | HU, PL, CZ, RO | Keep or Remove | Inflation-swap/linker curve data is typically vendor-controlled. | Keep only as conceptual placeholder; otherwise remove from public dashboard. |
 | `fx_implied_vol` | HU, PL, CZ, RO | Keep or Remove | FX options data is vendor-controlled and hard to replicate with public sources. | Keep as low-confidence proxy only if useful for trading lens. |
 | `equity_fwd_pe` | HU, PL, CZ, RO | Manual or Remove | Forward earnings valuation is vendor/analyst-consensus based. | Use manual factsheet snapshots if available; otherwise remove. |
@@ -53,6 +51,8 @@ Proxy union: 14 indicators.
 | `oecd_cli` | Reframed and wired | Replaced unavailable OECD CLI slot with Eurostat Employment Expectations Indicator. |
 | `manufacturing_pmi` | Reframed and wired | Replaced vendor PMI placeholder with Eurostat Industry Confidence Indicator; footnotes state it is not an S&P PMI. |
 | `truck_km_index` | Reframed and wired | Replaced toll-road truck-km placeholder with Eurostat quarterly road freight activity in million tonne-kilometres. |
+| `cds_5y` | Reframed and wired | Replaced vendor CDS placeholder with a public 10Y sovereign spread-vs-Bund substitute from Eurostat yields. |
+| `embi_spread` | Reframed and wired | Replaced JPMorgan EMBI placeholder with a public 10Y sovereign spread-vs-Bund substitute from Eurostat yields. |
 
 ## Proposed Implementation Order
 

@@ -19,10 +19,10 @@ Latest baseline after the 2026-05-23 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
-| Hungary | 9 |
-| Poland | 9 |
-| Czechia | 9 |
-| Romania | 13 |
+| Hungary | 7 |
+| Poland | 7 |
+| Czechia | 7 |
+| Romania | 11 |
 
 ## Priority Matrix
 
@@ -49,8 +49,8 @@ Latest baseline after the 2026-05-23 source-wiring pass:
 | `oecd_cli` | None | European Commission business surveys | Official survey substitute | Wired / reframed | Reframed from unavailable OECD CLI to Eurostat/EC Employment Expectations Indicator as a domestic leading-labour-demand survey signal. |
 | `ifo_expectations` | None | European Commission business surveys | Official spillover survey substitute | Wired / reframed | Reframed from Ifo placeholder to Eurostat Germany Industry Confidence as a Germany external-demand spillover signal for CEE exporters. |
 | `truck_km_index` | None | Eurostat road freight transport | Official statistical / reframed substitute | Wired / reframed | Replaced toll-road truck-km placeholder with Eurostat quarterly road freight activity, total transport and operation, in million tonne-kilometres. This is not a high-frequency traffic-count series. |
-| `cds_5y` | HU, PL, CZ, RO | Paid market vendors | Vendor market | Hard | Keep proxy or replace with sovereign spread when vendor unavailable. |
-| `embi_spread` | HU, PL, CZ, RO | JP Morgan/vendor | Vendor market | Hard | Keep proxy; open substitute is sovereign spread vs Bund. |
+| `cds_5y` | None | Eurostat sovereign yields | Public market substitute | Wired / reframed | Replaced vendor CDS placeholder with 10Y local government bond spread versus Germany from Eurostat; footnotes state this is not a licensed CDS quote. |
+| `embi_spread` | None | Eurostat sovereign yields | Public market substitute | Wired / reframed | Replaced JPMorgan EMBI placeholder with 10Y local government bond spread versus Germany from Eurostat; footnotes state this is not a hard-currency EMBI spread. |
 | `breakeven_5y5y` | HU, PL, CZ, RO | Inflation-linked bond curves/vendor | Vendor market | Hard | Keep proxy unless national linker curves are publicly available. |
 | `fx_implied_vol` | HU, PL, CZ, RO | FX options vendors | Vendor market | Hard | Keep proxy; public source unlikely. |
 | `fx_3m_forward` | None | Eurostat month-end FX plus Eurostat 3M short rates | Official statistical / derived CIP estimate | Wired | Uses month-end EUR/LCU spot and local/euro 3M short-rate differential to compute public-data 3M forward points; footnotes state this is not executable dealer pricing and excludes cross-currency basis and bid/ask. |
@@ -111,3 +111,4 @@ Before wiring any source:
 | 2026-05-23 | Converted central-bank guidance to manual tracker | Removed `cb_forward_guidance` proxies for HU/PL/CZ/RO using a dated manual hawk/dove communication score with central-bank source links. |
 | 2026-05-23 | Reframed survey placeholders with Eurostat BCS data | Removed `ifo_expectations`, `oecd_cli`, and `manufacturing_pmi` proxies for HU/PL/CZ/RO by replacing them with Germany industry-confidence spillover, domestic employment expectations, and domestic industry confidence respectively. |
 | 2026-05-23 | Reframed road-freight placeholder with Eurostat transport data | Removed `truck_km_index` proxies for HU/PL/CZ/RO using quarterly Eurostat `road_go_tq_tott` total road freight activity in million tonne-kilometres. |
+| 2026-05-23 | Reframed vendor credit-risk placeholders with Eurostat spreads | Removed `cds_5y` and `embi_spread` proxies for HU/PL/CZ/RO using public 10Y sovereign spread-vs-Bund substitutes derived from Eurostat yields. |
