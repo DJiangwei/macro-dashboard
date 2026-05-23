@@ -12,14 +12,14 @@ make proxy-report
 
 ## Current Baseline
 
-Latest baseline after the 2026-05-22 source-wiring pass:
+Latest baseline after the 2026-05-23 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
 | Hungary | 14 |
 | Poland | 14 |
 | Czechia | 14 |
-| Romania | 19 |
+| Romania | 18 |
 
 ## Priority Matrix
 
@@ -33,7 +33,7 @@ Latest baseline after the 2026-05-22 source-wiring pass:
 | `cb_balance_sheet_gdp` | RO only | NBR, IMF IFS, central bank balance-sheet statements | National official | Open | Search NBR balance sheet statistics or IMF IFS mirror. |
 | `foreign_bank_share` | RO only | NBR, EBRD, ECB consolidated banking statistics | Official/manual | Open | World Bank GFDD lacks Romania coverage; search NBR/EBRD. |
 | `short_term_ext_debt` | None | IMF ARA, CNB external debt and reserves | Official statistical / national official | Wired | Czechia uses CNB USD quarterly short-term external debt divided by matching CNB quarter-end international reserves because IMF ARA coverage is missing. |
-| `import_prices_yoy` | RO | Eurostat STS, national statistical offices | Official statistical | Partially wired | Czechia uses CZSO open-data monthly total import-price YoY, Hungary uses KSH STADAT monthly external-trade total import-price YoY, and Poland uses cache-backed GUS DBW variable 329 industrial-products-total import YoY. Eurostat `sts_inpi_m` has poor non-euro CEE aggregate coverage. |
+| `import_prices_yoy` | None | Eurostat STS, national statistical offices | Official statistical / official substitute | Wired | Czechia uses CZSO open-data monthly total import-price YoY, Hungary uses KSH STADAT monthly external-trade total import-price YoY, Poland uses cache-backed GUS DBW variable 329 industrial-products-total import YoY, and Romania uses INSSE TEMPO `EXP105A` official annual import unit-value indices converted from previous-year=100 to % YoY. Romania remains `watch` because the official substitute is annual and unit-value based, not a monthly transaction import-price index. |
 | `equity_index` | RO | Local exchanges, Yahoo alternatives, exchange CSVs | Public market | Partially wired | Czechia uses the official Prague Stock Exchange PX API for monthly headline-index close with cache-backed requests; continue with BVB and alternate exchange downloads for Romania. |
 | `equity_yoy` | RO | Derived from `equity_index` | Derived market | Partially wired | Czechia is derived from official monthly PX closes; Romania still depends on a stable headline-index level feed. |
 | `equity_vol_30d` | PL, RO | Derived from daily index close | Derived market | Partially wired | Czechia is derived from official daily PX closes; fix Poland and Romania symbol/feed coverage before removing their warnings. |
@@ -104,3 +104,4 @@ Before wiring any source:
 | 2026-05-22 | Wired Czech CNB short-term external-debt ratio | Removed Czechia `short_term_ext_debt` proxy with quarterly CNB USD short-term external debt over matched CNB USD international reserves. |
 | 2026-05-23 | Wired public-data CIP estimate for `fx_3m_forward` | Removed `fx_3m_forward` proxies for HU/PL/CZ/RO using Eurostat month-end FX and Eurostat 3M short rates; retained `watch` quality because executable forward points require market vendors and basis/bid-ask data. |
 | 2026-05-23 | Hardened Poland GUS DBW import-price adapter | Added cache-first monthly payload and aggregate-observation caching to avoid anonymous DBW rate-limit regressions during repeated build/proxy-report runs; latest successful observation is March 2026. |
+| 2026-05-23 | Wired INSSE TEMPO `EXP105A` Romania import unit-value adapter | Removed Romania `import_prices_yoy` proxy with an official annual import unit-value series; UI footnotes flag the definition/frequency mismatch versus monthly import-price data. |

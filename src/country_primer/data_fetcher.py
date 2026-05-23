@@ -94,6 +94,7 @@ KSH_IMPORT_PRICE_CSV_URL = "https://www.ksh.hu/stadat_files/ara/en/ara0046.csv"
 GUS_DBW_VARIABLE_DATA_URL = "https://api-dbw.stat.gov.pl/api/variable/variable-data-section"
 PSE_INDEXES_URL = "https://www.pse.cz/api/indexes"
 EUROSTAT_DATA_URL = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}?{params}"
+INSSE_TEMPO_PIVOT_URL = "http://statistici.insse.ro:8077/tempo-ins/pivot"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
@@ -2405,6 +2406,128 @@ class GUSDBWFetcher(BaseFetcher):
         return None
 
 
+class INSSETempoFetcher(BaseFetcher):
+    """Romanian National Institute of Statistics TEMPO adapters."""
+
+    IMPORT_UNIT_VALUE_MATRIX = "EXP105A"
+    IMPORT_NOM_ITEM_ID = 7100
+    PERCENTAGE_UNIT_ID = 10225
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if country == "RO" and spec.indicator_id == "import_prices_yoy":
+            return self._import_unit_value_yoy(country, spec)
+        return []
+
+    def _import_unit_value_yoy(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        try:
+            observations = self._fetch_import_unit_value_observations()
+        except (OSError, requests.RequestException, TypeError, ValueError, json.JSONDecodeError):
+            return []
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="INSSE TEMPO",
+            series_id="EXP105A:import-unit-value-index",
+            unit="% YoY",
+            frequency="annual",
+            last_update=observations[-1][0],
+            source_url="http://statistici.insse.ro:8077/tempo-ins/matrix/EXP105A/",
+            observations=observations,
+            available=True,
+            note=(
+                "Official annual import unit-value index from Romania's TEMPO database, "
+                "converted from previous-year=100 index to percent change."
+            ),
+        ))
+        annual_spec = IndicatorSpec(
+            spec.section_id,
+            spec.indicator_id,
+            spec.label,
+            spec.unit,
+            spec.source,
+            "annual",
+            spec.chart,
+            spec.peers,
+            spec.quality_status,
+            spec.quality_note,
+        )
+        rows = _series_to_rows(
+            series,
+            annual_spec,
+            unit="% YoY",
+            note=(
+                "Romania substitute uses annual import unit-value indices, not a monthly "
+                "transaction import-price index; use as a broad external-price signal."
+            ),
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+    def _fetch_import_unit_value_observations(self) -> list[tuple[str, float]]:
+        start_year = 2018
+        current_year = datetime.utcnow().year
+        year_ids = [
+            str(4437 + 19 * (year - 2000))
+            for year in range(start_year, current_year + 1)
+        ]
+        body = {
+            "language": "en",
+            "encQuery": (
+                f"{self.IMPORT_NOM_ITEM_ID}:"
+                f"{','.join(year_ids)}:"
+                f"{self.PERCENTAGE_UNIT_ID}"
+            ),
+            "matCode": self.IMPORT_UNIT_VALUE_MATRIX,
+            "nomJud": 0,
+            "nomLoc": 0,
+            "matMaxDim": 3,
+            "matUMSpec": 0,
+            "matSiruta": 0,
+            "matCaen1": 0,
+            "matCaen2": 0,
+            "matRegJ": 0,
+            "matCharge": 0,
+            "matViews": 0,
+            "matDownloads": 0,
+            "matActive": 1,
+            "matTime": 2,
+        }
+        path = cache_path(
+            f"insse_tempo::{self.IMPORT_UNIT_VALUE_MATRIX}::import::{start_year}-{current_year}"
+        )
+        if path.exists():
+            text = path.read_text()
+        else:
+            response = requests.post(
+                INSSE_TEMPO_PIVOT_URL,
+                params={"lang": "en"},
+                json=body,
+                timeout=30,
+            )
+            response.raise_for_status()
+            text = response.text
+            path.write_text(text)
+
+        observations: list[tuple[str, float]] = []
+        for idx, line in enumerate(text.splitlines()):
+            if idx == 0:
+                continue
+            cells = [cell.strip() for cell in line.split(", ")]
+            if len(cells) < 4 or cells[0] != "Import":
+                continue
+            year_text = cells[1].replace("Year", "").strip()
+            if not year_text.isdigit():
+                continue
+            value = float(cells[-1]) - 100.0
+            observations.append((f"{year_text}-12-31", value))
+        return sorted(observations)
+
+
 class WorldBankFallbackFetcher(BaseFetcher):
     """Fallback adapters for indicators with partial official-source coverage."""
 
@@ -3485,6 +3608,7 @@ class DataPipeline:
             CZSOFetcher(),
             KSHFetcher(),
             GUSDBWFetcher(),
+            INSSETempoFetcher(),
             ProxyFetcher(),
         ])
 
