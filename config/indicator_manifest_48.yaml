@@ -816,12 +816,12 @@ indicators:
   indicator_id: fx_loan_share
   label: FX Loan Share
   unit: '%'
-  source: IMF FSI / national CB proxy pending
+  source: IMF FSI / national central banks / OeNB
   frequency: quarterly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: IMF FSI deposit-taker FX-loan ratio is used where recent FSFC_PT coverage exists; countries without current coverage still need national central-bank adapters.
+  quality_note: IMF FSI deposit-taker FX-loan ratio is used where recent FSFC_PT coverage exists; otherwise the dashboard uses national-central-bank or OeNB CESEE snapshots with explicit definition notes.
 - section_id: monetary_financial
   indicator_id: mortgage_rate_new
   label: New Mortgage Lending Rate

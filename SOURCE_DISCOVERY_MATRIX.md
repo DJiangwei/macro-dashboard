@@ -19,9 +19,9 @@ Latest baseline after the 2026-05-23 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
-| Hungary | 6 |
+| Hungary | 5 |
 | Poland | 6 |
-| Czechia | 6 |
+| Czechia | 5 |
 | Romania | 8 |
 
 ## Priority Matrix
@@ -31,7 +31,7 @@ Latest baseline after the 2026-05-23 source-wiring pass:
 | `gross_ext_debt` | None | ECB BPS plus Eurostat GDP | Official statistical / derived ratio | Wired | Uses ECB balance-of-payments liability components scaled by Eurostat rolling four-quarter GDP; footnote flags direct-investment intercompany-debt caveat. |
 | `gas_storage_level` | HU, PL, CZ, RO | GIE AGSI+ | Official/industry API | Adapter-ready with `GIE_AGSI_API_KEY` | `GIEAGSIFetcher` is wired but intentionally inert without a user-provided AGSI+ key; proxy remains transparent until credentials are configured. |
 | `foreign_ownership_bonds` | None | Eurostat government debt by holder sector | Official statistical / derived ratio | Wired | Uses rest-of-world-held Maastricht debt divided by total holder-sector Maastricht debt; relabeled as total government debt share because the common CEE-4 Eurostat denominator is not local-bond-only. |
-| `fx_loan_share` | HU, CZ | IMF FSI, national central banks | Official statistical / national official | Partially wired | IMF FSI `FSFC_PT` replaces proxies where recent quarterly coverage exists for PL and RO; HU is absent and CZ stops in 2014. CNB ARAD has relevant currency-split loan tables but its REST API requires a user API key. |
+| `fx_loan_share` | None | IMF FSI, national central banks, OeNB CESEE report | Official statistical / official secondary-source snapshot | Wired / partial-definition caveat | IMF FSI `FSFC_PT` is used where recent quarterly coverage exists for PL and RO; HU and CZ use OeNB CESEE report snapshots sourced from national central banks, wiiw, and OeNB because IMF coverage is missing or stale. |
 | `avg_debt_maturity` | None | Hungary debt office / AKK | National official snapshot | Wired | Hungary uses official AKK Average Time to Maturity snapshots in `config/manual_indicators.yaml`; other covered countries continue to use Eurostat remaining-maturity data. |
 | `cb_balance_sheet_gdp` | None | NBR Monthly Bulletin / Romania Ministry of Finance GDP snapshot | Official manual snapshot | Wired / manual | Romania uses NBR monthly-bulletin central-bank total assets scaled by Romania 2024 current-price GDP. Retains `watch` because BNR automated endpoints reject access and the manual snapshot must be refreshed from monthly bulletins. |
 | `foreign_bank_share` | None | NBR Annual Report | Official manual snapshot | Wired / manual | Romania uses the NBR Annual Report market share of credit institutions with majority foreign capital, including branches of foreign credit institutions, in banking-sector net assets. ECB SSI was checked but exposes foreign branch/subsidiary assets without a matching Romania banking-sector total-assets denominator. |
@@ -66,8 +66,8 @@ Latest baseline after the 2026-05-23 source-wiring pass:
 The next implementation sprint should target:
 
 1. `gas_storage_level`
-2. `fx_loan_share`
-3. `cb_balance_sheet_gdp`
+2. Romania/Poland equity market data
+3. Equity valuation factsheets
 
 Reason:
 
@@ -118,3 +118,4 @@ Before wiring any source:
 | 2026-05-23 | Added optional GIE AGSI+ adapter | `gas_storage_level` is now adapter-ready via `GIE_AGSI_API_KEY`, but remains proxy in no-key builds. |
 | 2026-05-23 | Added optional Stooq market-data adapter | Poland WIG20 volatility and Romania BET level/YoY/vol can be replaced by `STOOQ_*_CSV_URL` or `STOOQ_API_KEY`; no-key builds keep transparent proxies. |
 | 2026-05-23 | Wired Romania central-bank balance-sheet snapshot | Removed Romania `cb_balance_sheet_gdp` proxy with NBR monthly-bulletin total assets over 2024 current-price GDP; retained `watch` for stale/manual refresh risk. |
+| 2026-05-23 | Wired Hungary and Czechia FX loan share snapshots | Removed HU/CZ `fx_loan_share` proxies using OeNB CESEE report snapshots sourced from national central banks, wiiw, and OeNB; retained `watch` because the definition differs from the IMF FSI deposit-taker ratio. |

@@ -160,3 +160,26 @@ manual_indicators:
       RO:
         - {date: '2024-12-31', value: 21.0}
         - {date: '2025-01-31', value: 20.8}
+  fx_loan_share:
+    source: OeNB CESEE report / national central banks
+    unit: '% loans'
+    quality_status: watch
+    quality_note: OeNB-reported share of foreign-currency loans in total loans to the domestic nonbank private sector, sourced from national central banks, wiiw and OeNB. Foreign-currency component is shown at constant exchange rates.
+    postscript: Manual official secondary-source snapshot used where IMF FSI coverage is missing or stale. This is not the exact IMF deposit-taker foreign-currency-loans-to-total-loans FSI definition used for countries with recent IMF FSI coverage.
+    references:
+      - https://www.oenb.at/en/Publications/Economics/reports/2025/report-2025-18-economic-trends-in-cesee/html-version.html
+    observations:
+      HU:
+        - {date: '2022-12-31', value: 23.3}
+        - {date: '2023-12-31', value: 25.9}
+        - {date: '2024-12-31', value: 28.6}
+        - {date: '2024-09-30', value: 27.9}
+        - {date: '2025-03-31', value: 27.6}
+        - {date: '2025-06-30', value: 27.6}
+      CZ:
+        - {date: '2022-12-31', value: 19.4}
+        - {date: '2023-12-31', value: 22.2}
+        - {date: '2024-12-31', value: 22.5}
+        - {date: '2024-09-30', value: 22.6}
+        - {date: '2025-03-31', value: 22.1}
+        - {date: '2025-06-30', value: 21.7}
