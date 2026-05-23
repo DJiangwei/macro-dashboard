@@ -135,3 +135,15 @@ manual_indicators:
         - {date: '2024-12-31', value: 9}
         - {date: '2025-12-31', value: 9}
         - {date: '2026-12-31', value: 8}
+  foreign_bank_share:
+    source: National Bank of Romania Annual Report snapshot
+    unit: '% assets'
+    quality_status: watch
+    quality_note: Official NBR annual-report market share of credit institutions with majority foreign capital, including branches of foreign credit institutions, in Romanian banking-sector net assets.
+    postscript: Manual official snapshot maintained because the harmonised World Bank GFDD series lacks recent Romania coverage and the ECB SSI feed exposes foreign branch/subsidiary assets without a matching Romania banking-sector total-assets denominator.
+    references:
+      - https://muzeu.bnr.ro/uploads/2023-6annualreport_documentpdf_545_1733477750.pdf
+    observations:
+      RO:
+        - {date: '2022-12-31', value: 68.1}
+        - {date: '2023-12-31', value: 65.6}
