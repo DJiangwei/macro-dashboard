@@ -99,6 +99,7 @@ KSH_IMPORT_PRICE_CSV_URL = "https://www.ksh.hu/stadat_files/ara/en/ara0046.csv"
 GUS_DBW_VARIABLE_DATA_URL = "https://api-dbw.stat.gov.pl/api/variable/variable-data-section"
 PSE_INDEXES_URL = "https://www.pse.cz/api/indexes"
 GPW_BENCHMARK_WIG20_URL = "https://gpwbenchmark.pl/ajaxindex.php?action=GPWIndexes&start=ajaxIndicators&format=html&lang=EN&isin=PL9999999987&cmng_id=1011"
+BVB_BET_PROFILE_URL = "https://m.bvb.ro/FinancialInstruments/Indices/IndicesProfiles?r=1"
 EUROSTAT_DATA_URL = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}?{params}"
 INSSE_TEMPO_PIVOT_URL = "http://statistici.insse.ro:8077/tempo-ins/pivot"
 GIE_AGSI_BASE_URL = "https://agsi.gie.eu/api"
@@ -3547,6 +3548,82 @@ class GPWBenchmarkFetcher(BaseFetcher):
         return completed.stdout
 
 
+class BVBIndexProfileFetcher(BaseFetcher):
+    """Official Bucharest Stock Exchange BET profile snapshot."""
+
+    def __init__(self) -> None:
+        self._snapshot: dict[str, float | str] | None = None
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if country != "RO" or spec.indicator_id != "equity_index":
+            return []
+        snapshot = self._fetch_snapshot()
+        if not snapshot:
+            return []
+        value = snapshot.get("value")
+        date = str(snapshot.get("date") or "")
+        if value is None or not date:
+            return []
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Bucharest Stock Exchange",
+            series_id="BVB:BET:profile-current-value",
+            unit="Index",
+            frequency="event",
+            last_update=date,
+            source_url=BVB_BET_PROFILE_URL,
+            observations=[(date, float(value))],
+            available=True,
+            note="Official BVB mobile index profile snapshot for the BET price-return index.",
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="Index",
+            note="Official BVB BET profile snapshot; current-value observation, not a full historical close feed.",
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+    def _fetch_snapshot(self) -> dict[str, float | str]:
+        if self._snapshot is not None:
+            return self._snapshot
+        path = cache_path("bvb::bet::index_profile")
+        try:
+            if path.exists():
+                html = path.read_text()
+            else:
+                response = requests.get(
+                    BVB_BET_PROFILE_URL,
+                    headers={"User-Agent": "Mozilla/5.0"},
+                    timeout=30,
+                )
+                response.raise_for_status()
+                html = response.text
+                path.write_text(html)
+        except (OSError, requests.RequestException):
+            self._snapshot = {}
+            return self._snapshot
+
+        value_match = re.search(r'<div class="value pBot10">\s*<b>([\d.,]+)</b>', html)
+        date_match = re.search(r'<div class="date small">(\d{2}\.\d{2}\.\d{4})\s+\d{2}:\d{2}:\d{2}</div>', html)
+        if not value_match or not date_match:
+            self._snapshot = {}
+            return self._snapshot
+        try:
+            value = float(value_match.group(1).replace(".", "").replace(",", "."))
+            date = datetime.strptime(date_match.group(1), "%d.%m.%Y").strftime("%Y-%m-%d")
+        except ValueError:
+            self._snapshot = {}
+            return self._snapshot
+
+        self._snapshot = {"date": date, "value": value}
+        return self._snapshot
+
+
 class CredentialedStooqFetcher(BaseFetcher):
     """Optional Stooq CSV adapter for market indexes that need user credentials.
 
@@ -4114,6 +4191,7 @@ class DataPipeline:
             WorldBankFetcher(),
             PragueExchangeFetcher(),
             GPWBenchmarkFetcher(),
+            BVBIndexProfileFetcher(),
             CredentialedStooqFetcher(),
             YahooMarketFetcher(),
             BISFetcher(),
