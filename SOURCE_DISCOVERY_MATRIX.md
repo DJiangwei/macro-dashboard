@@ -1,6 +1,6 @@
 # Source Discovery Matrix
 
-Date: 2026-05-21
+Date: 2026-05-25
 
 Purpose: track remaining transparent proxies and decide which indicators should become official adapters, curated manual series, public-market derived series, or intentionally retained low-confidence proxies.
 
@@ -15,21 +15,21 @@ For keep/replace/reframe/manual/remove decisions on the remaining proxies, see
 
 ## Current Baseline
 
-Latest baseline after the 2026-05-23 source-wiring pass:
+Latest baseline after the 2026-05-25 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
-| Hungary | 5 |
-| Poland | 6 |
-| Czechia | 5 |
-| Romania | 8 |
+| Hungary | 4 |
+| Poland | 5 |
+| Czechia | 4 |
+| Romania | 7 |
 
 ## Priority Matrix
 
 | Indicator | Countries still proxied | Target source | Source class | Current status | Next action |
 |---|---|---|---|---|---|
 | `gross_ext_debt` | None | ECB BPS plus Eurostat GDP | Official statistical / derived ratio | Wired | Uses ECB balance-of-payments liability components scaled by Eurostat rolling four-quarter GDP; footnote flags direct-investment intercompany-debt caveat. |
-| `gas_storage_level` | HU, PL, CZ, RO | GIE AGSI+ | Official/industry API | Adapter-ready with `GIE_AGSI_API_KEY` | `GIEAGSIFetcher` is wired but intentionally inert without a user-provided AGSI+ key; proxy remains transparent until credentials are configured. |
+| `gas_storage_level` | None | GIE AGSI+ / ENTSOG Supply Outlooks | Official/industry API plus official seasonal snapshots | Wired / seasonal fallback | `GIEAGSIFetcher` remains first priority when `GIE_AGSI_API_KEY` is configured; no-key builds use ENTSOG Summer/Winter Supply Outlook snapshots based on AGSI+ country storage data. |
 | `foreign_ownership_bonds` | None | Eurostat government debt by holder sector | Official statistical / derived ratio | Wired | Uses rest-of-world-held Maastricht debt divided by total holder-sector Maastricht debt; relabeled as total government debt share because the common CEE-4 Eurostat denominator is not local-bond-only. |
 | `fx_loan_share` | None | IMF FSI, national central banks, OeNB CESEE report | Official statistical / official secondary-source snapshot | Wired / partial-definition caveat | IMF FSI `FSFC_PT` is used where recent quarterly coverage exists for PL and RO; HU and CZ use OeNB CESEE report snapshots sourced from national central banks, wiiw, and OeNB because IMF coverage is missing or stale. |
 | `avg_debt_maturity` | None | Hungary debt office / AKK | National official snapshot | Wired | Hungary uses official AKK Average Time to Maturity snapshots in `config/manual_indicators.yaml`; other covered countries continue to use Eurostat remaining-maturity data. |
@@ -65,9 +65,9 @@ Latest baseline after the 2026-05-23 source-wiring pass:
 
 The next implementation sprint should target:
 
-1. `gas_storage_level`
-2. Romania/Poland equity market data
-3. Equity valuation factsheets
+1. Romania/Poland equity market data
+2. Equity valuation factsheets
+3. Breakeven / inflation-expectations market data
 
 Reason:
 
@@ -119,3 +119,4 @@ Before wiring any source:
 | 2026-05-23 | Added optional Stooq market-data adapter | Poland WIG20 volatility and Romania BET level/YoY/vol can be replaced by `STOOQ_*_CSV_URL` or `STOOQ_API_KEY`; no-key builds keep transparent proxies. |
 | 2026-05-23 | Wired Romania central-bank balance-sheet snapshot | Removed Romania `cb_balance_sheet_gdp` proxy with NBR monthly-bulletin total assets over 2024 current-price GDP; retained `watch` for stale/manual refresh risk. |
 | 2026-05-23 | Wired Hungary and Czechia FX loan share snapshots | Removed HU/CZ `fx_loan_share` proxies using OeNB CESEE report snapshots sourced from national central banks, wiiw, and OeNB; retained `watch` because the definition differs from the IMF FSI deposit-taker ratio. |
+| 2026-05-25 | Wired ENTSOG gas-storage seasonal snapshots | Removed `gas_storage_level` proxies for HU/PL/CZ/RO using ENTSOG Summer/Winter Supply Outlook storage-fullness snapshots based on AGSI+ data; retained `watch` because no-key builds are seasonal rather than daily. |

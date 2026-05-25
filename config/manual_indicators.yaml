@@ -183,3 +183,30 @@ manual_indicators:
         - {date: '2024-09-30', value: 22.6}
         - {date: '2025-03-31', value: 22.1}
         - {date: '2025-06-30', value: 21.7}
+  gas_storage_level:
+    source: ENTSOG Summer Supply Outlook / AGSI+
+    unit: '% WGV'
+    quality_status: watch
+    quality_note: Official ENTSOG seasonal supply-outlook snapshots of country-level underground gas storage fullness, using AGSI+ working-gas-volume and gas-in-storage data.
+    postscript: Manual official snapshot maintained as the no-key fallback because daily AGSI+ access requires GIE_AGSI_API_KEY. Use the credentialed GIE AGSI+ adapter for unattended daily refreshes when credentials are available.
+    references:
+      - https://www.entsog.eu/sites/default/files/2025-04/SO0067-25_Report_Summer%20Supply%20Outlook%202025.pdf
+      - https://www.entsog.eu/sites/default/files/2025-10/ENTSOG%20Winter%20Supply%20Outlook%202025_26%20-%20With%20Summer%202026%20overview_0.pdf
+      - https://www.entsog.eu/sites/default/files/2026-04/SO0069-26_Summer%20Supply%20Outlook%202026.pdf
+    observations:
+      HU:
+        - {date: '2025-04-01', value: 36.6}
+        - {date: '2025-10-01', value: 73.0}
+        - {date: '2026-04-01', value: 32.5}
+      PL:
+        - {date: '2025-04-01', value: 42.7}
+        - {date: '2025-10-01', value: 100.0}
+        - {date: '2026-04-01', value: 44.7}
+      CZ:
+        - {date: '2025-04-01', value: 34.2}
+        - {date: '2025-10-01', value: 93.0}
+        - {date: '2026-04-01', value: 28.2}
+      RO:
+        - {date: '2025-04-01', value: 25.4}
+        - {date: '2025-10-01', value: 95.0}
+        - {date: '2026-04-01', value: 23.9}

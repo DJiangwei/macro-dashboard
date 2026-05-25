@@ -56,6 +56,7 @@ FREQUENCY_STALE_DAYS = {
     "monthly": 125,
     "quarterly": 220,
     "semiannual": 420,
+    "seasonal": 250,
     "annual": 900,
     "event": 420,
 }
@@ -66,6 +67,7 @@ FREQUENCY_GAP_DAYS = {
     "monthly": 70,
     "quarterly": 130,
     "semiannual": 250,
+    "seasonal": 220,
     "annual": 500,
     "event": 900,
 }
@@ -313,6 +315,14 @@ def _dates_for_frequency(frequency: str) -> list[str]:
                 "2023-03-31", "2023-06-30", "2023-09-30", "2023-12-31",
                 "2024-03-31", "2024-06-30", "2024-09-30", "2024-12-31",
                 "2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31"]
+    if frequency == "seasonal":
+        return [
+            "2022-04-01", "2022-10-01",
+            "2023-04-01", "2023-10-01",
+            "2024-04-01", "2024-10-01",
+            "2025-04-01", "2025-10-01",
+            "2026-04-01",
+        ]
     return [f"{year}-12-31" for year in range(2017, 2026)]
 
 
@@ -3986,13 +3996,13 @@ class DataPipeline:
             WorldBankFallbackFetcher(),
             IMFFinancialSoundnessFetcher(),
             ECBMIRFetcher(),
+            GIEAGSIFetcher(),
             ManualIndicatorFetcher(),
             NationalCBFetcher(),
             CZSOFetcher(),
             KSHFetcher(),
             GUSDBWFetcher(),
             INSSETempoFetcher(),
-            GIEAGSIFetcher(),
             ProxyFetcher(),
         ])
 

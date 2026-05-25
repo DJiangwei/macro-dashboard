@@ -505,12 +505,12 @@ indicators:
   indicator_id: gas_storage_level
   label: Natural Gas Storage Fill Level
   unit: '%'
-  source: GIE AGSI+ / credentialed adapter
-  frequency: monthly
+  source: GIE AGSI+ / ENTSOG Outlook snapshots
+  frequency: seasonal
   chart: line
   peers: false
-  quality_status: low_confidence
-  quality_note: GIE AGSI+ country-level storage fill data is used when GIE_AGSI_API_KEY is configured; no-key builds retain a transparent proxy placeholder.
+  quality_status: watch
+  quality_note: GIE AGSI+ country-level daily fill data is used when GIE_AGSI_API_KEY is configured; no-key builds use official ENTSOG seasonal supply-outlook snapshots based on AGSI+ storage data.
 - section_id: fiscal_sovereign
   indicator_id: fiscal_balance_pct_gdp
   label: General Government Balance, % GDP
