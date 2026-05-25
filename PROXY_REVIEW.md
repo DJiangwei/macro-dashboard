@@ -4,16 +4,16 @@ Date: 2026-05-25
 
 Purpose: decide which remaining proxy indicators should be kept, replaced, reframed, converted to manual maintenance, or removed from the dashboard. This file is the working decision layer above `SOURCE_DISCOVERY_MATRIX.md`.
 
-Current proxy baseline:
+Current public-dashboard proxy baseline after dropping the remaining proxy-only slots:
 
 | Country | Proxy count | Total indicators | Share |
 |---|---:|---:|---:|
-| Hungary | 4 | 114 | 3.5% |
-| Poland | 1 | 114 | 0.9% |
-| Czechia | 4 | 114 | 3.5% |
-| Romania | 5 | 114 | 4.4% |
+| Hungary | 0 | 110 | 0.0% |
+| Poland | 0 | 113 | 0.0% |
+| Czechia | 0 | 110 | 0.0% |
+| Romania | 0 | 109 | 0.0% |
 
-Proxy union: 5 indicators.
+Proxy union: 0 rendered indicators.
 
 ## Decision Categories
 
@@ -25,15 +25,15 @@ Proxy union: 5 indicators.
 | Keep | Public source is unlikely; retain as a clearly marked placeholder/proxy only if analytically useful. | Keep `low_confidence` and explicit footnotes. |
 | Remove | Low signal or weak sourceability; better to reduce dashboard clutter. | Remove from chart sections after user approval. |
 
-## Recommended Decisions
+## Dropped From Public Dashboard
 
-| Indicator | Countries proxied | Recommendation | Rationale | Next action |
-|---|---|---|---|---|
-| `equity_vol_30d` | RO | Replace | Derived from daily index data; more sourceable than valuation metrics. | Find stable BVB BET daily close feed. |
-| `breakeven_5y5y` | HU, PL, CZ, RO | Keep or Remove | Inflation-swap/linker curve data is typically vendor-controlled. | Keep only as conceptual placeholder; otherwise remove from public dashboard. |
-| `equity_fwd_pe` | HU, CZ, RO | Manual or Remove | Forward earnings valuation is vendor/analyst-consensus based; the dashboard label has been softened to P/E where exchange factsheets are available. | Use exchange/factsheet snapshots if available; otherwise remove. |
-| `equity_pb` | HU, CZ, RO | Manual or Remove | P/B may appear in exchange/index factsheets, but API coverage is uneven. | Search exchange factsheets; otherwise curate annual/quarterly snapshots. |
-| `equity_div_yield` | HU, CZ, RO | Manual or Remove | Dividend yield can be factsheet-based but is not reliably API-driven. | Search exchange factsheets; otherwise curate snapshots. |
+| Indicator | Countries dropped | Rationale | Future restore condition |
+|---|---|---|---|
+| `breakeven_5y5y` | HU, PL, CZ, RO | Inflation-swap/linker curve data is typically vendor-controlled; the public adapter fell back to proxy data. | Restore only with a reusable linker/swap curve source or a licensed vendor feed. |
+| `equity_fwd_pe` | HU, CZ, RO | Forward earnings valuation is vendor/analyst-consensus based; public exchange coverage is uneven. | Restore with exchange factsheets, index provider aggregate P/E snapshots, or a licensed consensus feed. |
+| `equity_pb` | HU, CZ, RO | P/B may appear in exchange/index factsheets, but no robust public adapter is wired for these countries. | Restore with exchange/index-provider aggregate P/B snapshots. |
+| `equity_div_yield` | HU, CZ, RO | Dividend yield can be factsheet-based but is not reliably API-driven for all remaining countries. | Restore with exchange/index-provider aggregate dividend-yield snapshots. |
+| `equity_vol_30d` | RO | Requires BVB BET daily close history or an official volatility snapshot; current adapter only has level and 1Y performance snapshots. | Restore with a stable BVB daily-close feed, factsheet volatility field, or configured market-data credential. |
 
 ## Resolved In Current Sprint
 
@@ -57,13 +57,10 @@ Proxy union: 5 indicators.
 
 ## Proposed Implementation Order
 
-1. Replace Romania `equity_vol_30d` next because it still needs a BET daily-close feed or a directly comparable official volatility snapshot.
-2. Decide whether vendor-market indicators should remain as placeholders: `breakeven_5y5y` and equity valuation metrics.
-3. Decide whether vendor-only valuation and market-risk placeholders should remain visible or be removed from the public dashboard.
+1. Keep the public dashboard proxy-free by default.
+2. Restore dropped slots only when the adapter can return non-proxy source data.
+3. Use `DATA_SOURCE_CATALOG.md` as the first stop for future model/developer handoff.
 
 ## User Decisions Needed
 
-Before deleting any chart, confirm these choices:
-
-1. Should vendor-only market indicators remain as explicit low-confidence placeholders, or should the public dashboard remove them?
-2. Should equity valuation metrics be manually curated from exchange/factsheet snapshots, or removed until a paid data source exists?
+No immediate decision needed. The remaining proxy-only slots have been dropped from rendered pages.

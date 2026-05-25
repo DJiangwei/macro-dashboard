@@ -59,6 +59,7 @@ from country_primer.data_fetcher import (  # noqa: E402
     LEGACY_INDICATOR_KEYS,
     SECTION_INDICATORS_48,
     fetch_canonical_macro_frame,
+    is_dropped_proxy_indicator,
 )
 from country_primer.catalog import load_countries  # noqa: E402
 
@@ -936,9 +937,11 @@ def _chart_corner_badge(status: str, note: str, is_proxy: bool) -> str:
     )
 
 
-def _indicator_ledger_html(section_id: str) -> str:
+def _indicator_ledger_html(section_id: str, country_code: str) -> str:
     items = []
     for spec in SECTION_INDICATORS_48.get(section_id, ()):
+        if is_dropped_proxy_indicator(country_code, spec.indicator_id):
+            continue
         cls = _quality_class(spec.quality_status)
         items.append(
             f'<div class="indicator-ledger-item" data-indicator-id="{escape(spec.indicator_id)}">'
@@ -954,6 +957,8 @@ def _render_section_charts(section_id: str, country_code: str, chart_map: dict[s
     rendered_ids: list[str] = []
     prefer_canonical_ids = {"policy_rate", "real_policy_rate", "equity_index", "equity_yoy", "equity_vol_30d"}
     for idx, spec in enumerate(SECTION_INDICATORS_48.get(section_id, ())):
+        if is_dropped_proxy_indicator(country_code, spec.indicator_id):
+            continue
         legacy_id = _legacy_chart_id(section_id, spec.indicator_id, chart_map)
         if spec.indicator_id in prefer_canonical_ids:
             legacy_id = None
@@ -2954,6 +2959,7 @@ def build_v4(country_code: str) -> Path:
     source_chart_ids = {
         spec.indicator_id
         for spec in INDICATOR_MANIFEST_48
+        if not is_dropped_proxy_indicator(country_code, spec.indicator_id)
         if _legacy_chart_id(spec.section_id, spec.indicator_id, chart_map)
     }
     adapter_real_ids = {
@@ -2983,9 +2989,9 @@ def build_v4(country_code: str) -> Path:
         narrative_en = data["narratives"].get(sec_id, "")
         narrative_zh = data.get("narratives_zh", {}).get(sec_id, "")
         quality_html = _section_quality_html(sec_id)
-        ledger_html = _indicator_ledger_html(sec_id)
         charts_html, section_chart_ids = _render_section_charts(sec_id, country_code, chart_map, canonical_frame)
         rendered_chart_ids.extend(section_chart_ids)
+        ledger_html = _indicator_ledger_html(sec_id, country_code)
 
         sections_html += f"""
 <section class="panel" id="{sec_id}">

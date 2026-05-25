@@ -19,10 +19,10 @@ Latest baseline after the 2026-05-25 source-wiring pass:
 
 | Country | Proxy count |
 |---|---:|
-| Hungary | 4 |
-| Poland | 1 |
-| Czechia | 4 |
-| Romania | 5 |
+| Hungary | 0 |
+| Poland | 0 |
+| Czechia | 0 |
+| Romania | 0 |
 
 ## Priority Matrix
 
@@ -39,7 +39,7 @@ Latest baseline after the 2026-05-25 source-wiring pass:
 | `import_prices_yoy` | None | Eurostat STS, national statistical offices | Official statistical / official substitute | Wired | Czechia uses CZSO open-data monthly total import-price YoY, Hungary uses KSH STADAT monthly external-trade total import-price YoY, Poland uses cache-backed GUS DBW variable 329 industrial-products-total import YoY, and Romania uses INSSE TEMPO `EXP105A` official annual import unit-value indices converted from previous-year=100 to % YoY. Romania remains `watch` because the official substitute is annual and unit-value based, not a monthly transaction import-price index. |
 | `equity_index` | None | BVB, Stooq user CSV, exchange CSVs | Public market / official snapshot / credentialed adapter | Wired / partial-history caveat | Poland uses a GPW Benchmark WIG20 snapshot, Czechia uses the official Prague Stock Exchange PX API, and Romania uses the official BVB BET profile snapshot. Romania still needs historical BET closes for daily-volatility derivation. |
 | `equity_yoy` | None | BVB index-performance table / historical close derivation | Official exchange snapshot | Wired / snapshot caveat | Romania uses the official BVB BET `1 an (%)` performance table value. Retains `watch` because it is an exchange snapshot rather than a locally recomputed full-history series. |
-| `equity_vol_30d` | RO | Exchange factsheet or derived from daily index close | Official snapshot / derived market / credentialed adapter | Partially wired | Poland now uses official GPW Benchmark WIG20 index volatility. Romania still needs BVB BET daily close history or an official volatility snapshot. |
+| `equity_vol_30d` | None rendered; RO dropped | Exchange factsheet or derived from daily index close | Official snapshot / derived market / credentialed adapter | Dropped for RO until sourced | Poland uses official GPW Benchmark WIG20 index volatility and Czechia derives realised volatility from official PSE PX closes. Romania is hidden until a BVB BET daily close history or official volatility snapshot is wired. |
 | `sovereign_rating` | None | Rating agency releases | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a 21-notch average; update after S&P, Moody's, Fitch, or Scope actions. |
 | `edp_status` | None | European Commission/Council EDP pages | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a qualitative policy-risk score with event dates. |
 | `eu_funds_absorption` | None | European Commission Cohesion Open Data | Official statistical / derived ratio | Wired | Uses 2021-2027 cumulative total net payments divided by latest adopted EU plan for CF, EMFAF, ERDF, ESF+, and JTF. |
@@ -51,23 +51,23 @@ Latest baseline after the 2026-05-25 source-wiring pass:
 | `truck_km_index` | None | Eurostat road freight transport | Official statistical / reframed substitute | Wired / reframed | Replaced toll-road truck-km placeholder with Eurostat quarterly road freight activity, total transport and operation, in million tonne-kilometres. This is not a high-frequency traffic-count series. |
 | `cds_5y` | None | Eurostat sovereign yields | Public market substitute | Wired / reframed | Replaced vendor CDS placeholder with 10Y local government bond spread versus Germany from Eurostat; footnotes state this is not a licensed CDS quote. |
 | `embi_spread` | None | Eurostat sovereign yields | Public market substitute | Wired / reframed | Replaced JPMorgan EMBI placeholder with 10Y local government bond spread versus Germany from Eurostat; footnotes state this is not a hard-currency EMBI spread. |
-| `breakeven_5y5y` | HU, PL, CZ, RO | Inflation-linked bond curves/vendor | Vendor market | Hard | Keep proxy unless national linker curves are publicly available. |
+| `breakeven_5y5y` | None rendered; HU/PL/CZ/RO dropped | Inflation-linked bond curves/vendor | Vendor market | Dropped until sourced | Restore only with reusable linker/swap-curve data or a licensed vendor feed; public dashboard should not render proxy inflation-expectations curves. |
 | `fx_implied_vol` | None | ECB FX reference rates | Public market substitute | Wired / reframed | Replaced vendor FX options implied-volatility placeholder with 21-trading-day realised volatility derived from ECB daily EUR/local-currency reference rates; footnotes state this is not an options-implied quote. |
 | `fx_3m_forward` | None | Eurostat month-end FX plus Eurostat 3M short rates | Official statistical / derived CIP estimate | Wired | Uses month-end EUR/LCU spot and local/euro 3M short-rate differential to compute public-data 3M forward points; footnotes state this is not executable dealer pricing and excludes cross-currency basis and bid/ask. |
-| `equity_fwd_pe` | HU, CZ, RO | Exchange factsheets/vendor | Exchange snapshot / vendor valuation | Partially wired | Poland uses GPW Benchmark WIG20 P/E and the dashboard label is softened to P/E rather than forward P/E; search PSE/BVB/BUX factsheets for the remaining countries. |
-| `equity_pb` | HU, CZ, RO | Exchange factsheets/vendor | Exchange snapshot / vendor valuation | Partially wired | Poland uses GPW Benchmark WIG20 P/BV; search PSE/BVB/BUX factsheets for the remaining countries. |
-| `equity_div_yield` | HU, CZ, RO | Exchange factsheets/vendor | Exchange snapshot / vendor valuation | Partially wired | Poland uses GPW Benchmark WIG20 dividend yield; search PSE/BVB/BUX factsheets for the remaining countries. |
+| `equity_fwd_pe` | None rendered for proxy countries; HU/CZ/RO dropped | Exchange factsheets/vendor | Exchange snapshot / vendor valuation | Partially wired / dropped where unavailable | Poland uses GPW Benchmark WIG20 P/E. HU/CZ/RO are hidden until exchange/index-provider aggregate P/E snapshots or a licensed consensus feed are wired. |
+| `equity_pb` | None rendered for proxy countries; HU/CZ/RO dropped | Exchange factsheets/vendor | Exchange snapshot / vendor valuation | Partially wired / dropped where unavailable | Poland uses GPW Benchmark WIG20 P/BV. HU/CZ/RO are hidden until exchange/index-provider aggregate P/B snapshots are wired. |
+| `equity_div_yield` | None rendered for proxy countries; HU/CZ/RO dropped | Exchange factsheets/vendor | Exchange snapshot / vendor valuation | Partially wired / dropped where unavailable | Poland uses GPW Benchmark WIG20 dividend yield. HU/CZ/RO are hidden until exchange/index-provider dividend-yield snapshots are wired. |
 | `portfolio_flows` | None | ECB BPS | Official statistical | Wired | Uses monthly portfolio-investment liabilities transactions vis-a-vis rest of world; positive readings are non-resident net liability incurrence. |
 | `administered_prices` | None | Eurostat HICP item weights | Official statistical / derived | Wired | Uses the HICP `AP` special aggregate item weight from current ECOICOP v2 weights and converts per-mille weight to percent of basket; do not substitute AP inflation. |
 | `carry_trade_return` | None | Eurostat 3M short-term rates | Derived market | Wired | Carry-only spread uses local 3M short rate less euro-area 3M short rate; it excludes spot FX movement, roll-down, and costs. |
 
 ## Candidate First Sprint
 
-The next implementation sprint should target:
+The next implementation sprint should target restoration candidates, not proxy maintenance:
 
 1. Romania equity volatility / daily-close feed
-2. Equity valuation factsheets
-3. Breakeven / inflation-expectations market data
+2. HU/CZ/RO equity valuation factsheets
+3. Inflation-linked bond or inflation-swap data for `breakeven_5y5y`
 
 Reason:
 
@@ -123,3 +123,4 @@ Before wiring any source:
 | 2026-05-25 | Wired GPW Benchmark WIG20 snapshots | Removed Poland `equity_vol_30d`, `equity_fwd_pe`, `equity_pb`, and `equity_div_yield` proxies using official GPW Benchmark WIG20 index volatility, P/E, P/BV, and dividend-yield snapshots; retained `watch` because these are current factsheet-style observations rather than full history. |
 | 2026-05-25 | Wired BVB BET profile snapshot | Removed Romania `equity_index` proxy using the official Bucharest Stock Exchange BET profile current-value snapshot; retained `watch` because it is a point-in-time profile observation rather than a full historical close feed. |
 | 2026-05-25 | Wired BVB BET performance snapshot | Removed Romania `equity_yoy` proxy using the official BVB index-performance table `1 an (%)` value; retained `watch` because it is a snapshot rather than a locally recomputed history-derived series. |
+| 2026-05-25 | Dropped remaining proxy-only public slots | Public pages no longer render any transparent proxy indicators. Dropped country-specific slots are tracked in `DROPPED_PROXY_INDICATORS_BY_COUNTRY` and documented in `DATA_SOURCE_CATALOG.md`. |

@@ -222,6 +222,43 @@ for _spec in INDICATOR_MANIFEST_48:
     SECTION_INDICATORS_48[_spec.section_id] = (*SECTION_INDICATORS_48[_spec.section_id], _spec)
 
 
+DROPPED_PROXY_INDICATORS_BY_COUNTRY: dict[str, frozenset[str]] = {
+    "HU": frozenset({
+        "breakeven_5y5y",
+        "equity_fwd_pe",
+        "equity_pb",
+        "equity_div_yield",
+    }),
+    "PL": frozenset({
+        "breakeven_5y5y",
+    }),
+    "CZ": frozenset({
+        "breakeven_5y5y",
+        "equity_fwd_pe",
+        "equity_pb",
+        "equity_div_yield",
+    }),
+    "RO": frozenset({
+        "breakeven_5y5y",
+        "equity_fwd_pe",
+        "equity_pb",
+        "equity_div_yield",
+        "equity_vol_30d",
+    }),
+}
+
+
+def is_dropped_proxy_indicator(country: str, indicator_id: str) -> bool:
+    """Return true when a country/indicator slot is intentionally hidden.
+
+    These are analytically interesting indicators whose public-source adapter
+    still falls back to transparent proxy data. The dashboard now drops those
+    country-specific slots instead of publishing low-confidence placeholder
+    charts.
+    """
+    return indicator_id in DROPPED_PROXY_INDICATORS_BY_COUNTRY.get(country.upper(), frozenset())
+
+
 LEGACY_INDICATOR_KEYS: dict[str, tuple[str, ...]] = {
     "real_gdp_yoy": ("real_gdp_yoy",),
     "industrial_production_yoy": ("industrial_production_yoy",),
@@ -4305,6 +4342,8 @@ class DataPipeline:
     def fetch_country(self, country: str, specs: Iterable[IndicatorSpec] = INDICATOR_MANIFEST_48) -> list[dict]:
         rows: list[dict] = []
         for spec in specs:
+            if is_dropped_proxy_indicator(country, spec.indicator_id):
+                continue
             rows.extend(self.fetch_indicator(country, spec))
         clean_rows: list[dict] = []
         for row in rows:
@@ -4317,7 +4356,12 @@ class DataPipeline:
         return sorted(clean_rows, key=lambda r: (r["section_id"], r["indicator_id"], str(r["date"])))
 
     def validate_coverage(self, frame: list[dict], expected: int | None = None) -> dict:
-        expected = expected or len(INDICATOR_MANIFEST_48)
+        country = str(frame[0].get("country", "")).upper() if frame else ""
+        expected_specs = [
+            spec for spec in INDICATOR_MANIFEST_48
+            if not is_dropped_proxy_indicator(country, spec.indicator_id)
+        ]
+        expected = expected or len(expected_specs)
         indicators = sorted({row["indicator_id"] for row in frame}) if frame else []
         unique_rows = {}
         for row in frame:
@@ -4325,7 +4369,7 @@ class DataPipeline:
         return {
             "indicator_count": len(indicators),
             "expected": expected,
-            "missing": sorted({s.indicator_id for s in INDICATOR_MANIFEST_48} - set(indicators)),
+            "missing": sorted({s.indicator_id for s in expected_specs} - set(indicators)),
             "proxy_count": sum(1 for row in unique_rows.values() if row.get("is_proxy")),
             "generated_at": datetime.utcnow().strftime("%Y-%m-%d"),
         }
