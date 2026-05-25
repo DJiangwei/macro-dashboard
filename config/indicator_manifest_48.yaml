@@ -854,19 +854,19 @@ indicators:
   quality_note: Derived from the headline-index monthly close; verify vendor feeds against local-exchange index convention.
 - section_id: markets_valuation
   indicator_id: equity_fwd_pe
-  label: Equity Forward P/E
+  label: Equity P/E
   unit: x
-  source: Broker/vendor estimates
+  source: Exchange factsheets / vendor estimates
   frequency: monthly
   chart: line
   peers: false
   quality_status: low_confidence
-  quality_note: Forward estimates usually require vendor data.
+  quality_note: Index-level P/E is sourced from exchange factsheets where available; forward-consensus estimates usually require vendor data.
 - section_id: markets_valuation
   indicator_id: equity_pb
   label: Equity Price-to-Book
   unit: x
-  source: Broker/vendor estimates
+  source: Exchange factsheets / vendor estimates
   frequency: monthly
   chart: line
   peers: false
@@ -876,7 +876,7 @@ indicators:
   indicator_id: equity_div_yield
   label: Equity Dividend Yield
   unit: '%'
-  source: Broker/vendor estimates
+  source: Exchange factsheets / vendor estimates
   frequency: monthly
   chart: line
   peers: false

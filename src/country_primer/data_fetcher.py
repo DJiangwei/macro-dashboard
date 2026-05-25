@@ -21,6 +21,8 @@ import json
 import math
 import os
 from pathlib import Path
+import re
+import subprocess
 from html.parser import HTMLParser
 import time
 from typing import Iterable
@@ -96,6 +98,7 @@ CZSO_IMPORT_PRICE_CSV_URL = "https://data.csu.gov.cz/opendata/sady/CEN0301/distr
 KSH_IMPORT_PRICE_CSV_URL = "https://www.ksh.hu/stadat_files/ara/en/ara0046.csv"
 GUS_DBW_VARIABLE_DATA_URL = "https://api-dbw.stat.gov.pl/api/variable/variable-data-section"
 PSE_INDEXES_URL = "https://www.pse.cz/api/indexes"
+GPW_BENCHMARK_WIG20_URL = "https://gpwbenchmark.pl/ajaxindex.php?action=GPWIndexes&start=ajaxIndicators&format=html&lang=EN&isin=PL9999999987&cmng_id=1011"
 EUROSTAT_DATA_URL = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}?{params}"
 INSSE_TEMPO_PIVOT_URL = "http://statistici.insse.ro:8077/tempo-ins/pivot"
 GIE_AGSI_BASE_URL = "https://agsi.gie.eu/api"
@@ -155,8 +158,8 @@ INDICATOR_MANIFEST_48: tuple[IndicatorSpec, ...] = (
     IndicatorSpec("monetary_financial", "fx_vs_eur", "FX vs EUR", "LCU per EUR", "ECB", "daily", "line", False, "verified", "ECB reference rate; not executable intraday price."),
     IndicatorSpec("markets_valuation", "equity_index", "Headline Equity Index", "Index", "Yahoo Finance / exchange", "monthly", "line", False, "watch", "Vendor feed; confirm index convention."),
     IndicatorSpec("markets_valuation", "equity_yoy", "Headline Equity Index, YoY", "% YoY", "Derived from equity index", "monthly", "line", False, "watch", "Derived from market index level."),
-    IndicatorSpec("markets_valuation", "equity_fwd_pe", "Equity Forward P/E", "x", "Broker/vendor estimates", "monthly", "line", False, "low_confidence", "Forward estimates usually require vendor data."),
-    IndicatorSpec("markets_valuation", "equity_div_yield", "Equity Dividend Yield", "%", "Broker/vendor estimates", "monthly", "line", False, "low_confidence", "Trailing/forward methodology must be checked."),
+    IndicatorSpec("markets_valuation", "equity_fwd_pe", "Equity P/E", "x", "Exchange factsheets / vendor estimates", "monthly", "line", False, "low_confidence", "Index-level P/E is sourced from exchange factsheets where available; forward-consensus estimates usually require vendor data."),
+    IndicatorSpec("markets_valuation", "equity_div_yield", "Equity Dividend Yield", "%", "Exchange factsheets / vendor estimates", "monthly", "line", False, "low_confidence", "Trailing/forward methodology must be checked."),
     IndicatorSpec("markets_valuation", "sov_spread_vs_bund", "10Y Spread vs Bund", "bp", "Derived from sovereign yields", "monthly", "peer_overlay", True, "watch", "Derived spread; check maturity matching."),
     IndicatorSpec("financial_stability", "bank_car", "Bank Capital Adequacy Ratio", "%", "IMF FSI / national bank", "quarterly", "line", False, "watch", "Regulatory definitions can change."),
     IndicatorSpec("financial_stability", "bank_npl_ratio", "Bank NPL Ratio", "%", "IMF FSI / national bank", "quarterly", "line", False, "watch", "FSI/national-bank data is lagged and definitions vary."),
@@ -3424,6 +3427,126 @@ class PragueExchangeFetcher(BaseFetcher):
         )
 
 
+class GPWBenchmarkFetcher(BaseFetcher):
+    """Official GPW Benchmark WIG20 snapshot adapters."""
+
+    METRIC_MAP = {
+        "equity_index": ("closing", "Index", "Official WIG20 closing level from GPW Benchmark."),
+        "equity_vol_30d": (
+            "index volatility",
+            "%",
+            "Official GPW Benchmark index volatility snapshot based on the last 20 sessions; this is a close substitute for the dashboard's 30D realised-volatility slot.",
+        ),
+        "equity_fwd_pe": (
+            "P/E",
+            "x",
+            "Official GPW Benchmark index P/E snapshot; this is not a forward-consensus multiple.",
+        ),
+        "equity_pb": ("P/BV", "x", "Official GPW Benchmark index price-to-book-value snapshot."),
+        "equity_div_yield": ("Dividend yield (%)", "%", "Official GPW Benchmark index dividend-yield snapshot."),
+    }
+
+    def __init__(self) -> None:
+        self._snapshot: dict[str, float | str] | None = None
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if country != "PL" or spec.indicator_id not in self.METRIC_MAP:
+            return []
+        snapshot = self._fetch_snapshot()
+        if not snapshot:
+            return []
+        metric, unit, note = self.METRIC_MAP[spec.indicator_id]
+        value = snapshot.get(metric)
+        date = str(snapshot.get("date") or "")
+        if value is None or not date:
+            return []
+        observations = [(date, float(value))]
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="GPW Benchmark",
+            series_id=f"WIG20:{metric}",
+            unit=unit,
+            frequency="event",
+            last_update=date,
+            source_url="https://gpwbenchmark.pl/en-karta-indeksu?isin=PL9999999987",
+            observations=observations,
+            available=True,
+            note=note,
+        ))
+        rows = _series_to_rows(series, spec, unit=unit, note=note)
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+    def _fetch_snapshot(self) -> dict[str, float | str]:
+        if self._snapshot is not None:
+            return self._snapshot
+        path = cache_path("gpw_benchmark::wig20::indicators")
+        try:
+            if path.exists():
+                html = path.read_text()
+            else:
+                html = self._fetch_html()
+                path.write_text(html)
+        except (OSError, requests.RequestException, subprocess.SubprocessError):
+            self._snapshot = {}
+            return self._snapshot
+
+        date_match = re.search(r"As of\s+(\d{1,2}\s+[A-Za-z]+\s+\d{4})", html)
+        if not date_match:
+            self._snapshot = {}
+            return self._snapshot
+        try:
+            date = datetime.strptime(date_match.group(1), "%d %B %Y").strftime("%Y-%m-%d")
+        except ValueError:
+            self._snapshot = {}
+            return self._snapshot
+
+        snapshot: dict[str, float | str] = {"date": date}
+        for label in ["closing", "index volatility", "P/E", "P/BV", "Dividend yield (%)"]:
+            pattern = rf"<th>\s*{re.escape(label)}\s*(?:<sup>.*?</sup>)?\s*</th>\s*<td[^>]*>\s*([\d,.\s-]+)\s*</td>"
+            match = re.search(pattern, html, flags=re.IGNORECASE | re.DOTALL)
+            if not match:
+                continue
+            try:
+                snapshot[label] = float(match.group(1).replace(",", "").strip())
+            except ValueError:
+                continue
+        self._snapshot = snapshot
+        return self._snapshot
+
+    def _fetch_html(self) -> str:
+        try:
+            response = requests.post(
+                GPW_BENCHMARK_WIG20_URL,
+                headers={"User-Agent": "Mozilla/5.0"},
+                timeout=30,
+            )
+            response.raise_for_status()
+            if response.text.strip():
+                return response.text
+        except requests.RequestException:
+            pass
+
+        completed = subprocess.run(
+            [
+                "curl",
+                "--max-time",
+                "30",
+                "-Ls",
+                "-X",
+                "POST",
+                GPW_BENCHMARK_WIG20_URL,
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        return completed.stdout
+
+
 class CredentialedStooqFetcher(BaseFetcher):
     """Optional Stooq CSV adapter for market indexes that need user credentials.
 
@@ -3990,6 +4113,7 @@ class DataPipeline:
             ECBPortfolioFlowsFetcher(),
             WorldBankFetcher(),
             PragueExchangeFetcher(),
+            GPWBenchmarkFetcher(),
             CredentialedStooqFetcher(),
             YahooMarketFetcher(),
             BISFetcher(),
