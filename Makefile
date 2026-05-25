@@ -17,6 +17,7 @@ data-catalog:
 validate:
 	$(UV) run python -m py_compile build_v4.py src/country_primer/*.py scripts/*.py
 	$(UV) run python -c "from pathlib import Path; import re; files=sorted(Path('output').glob('*_v4.html')); assert files; [print(p.name, len(re.findall(r'class=\"chart-cell chart-shell\" data-indicator-id=\"([^\"]+)\"', p.read_text())), p.read_text().count('<div class=\"charts\"></div>')) for p in files]"
+	$(UV) run python -c "from pathlib import Path; text=Path('output/index.html').read_text(); assert '_v3.html' not in text; assert 'Proxy-free public pages' in text; assert '110/110' in text and '113/113' in text and '109/109' in text"
 	git diff --check
 
 proxy-report:
@@ -24,6 +25,7 @@ proxy-report:
 
 publish-check:
 	curl -L https://djiangwei.github.io/macro-dashboard/ | rg -n "v4 Framework|Hungary|macro-dashboard"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/index.html | rg -n "Proxy-free public pages|110/110|113/113|109/109"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/hungary_2026Q2_v4.html | rg -n "Proxy / watch-list fills: 0|Source charts reused|chart-financial_stability-bank_car"
 
 publish:

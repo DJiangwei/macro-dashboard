@@ -3211,6 +3211,223 @@ function toggleLang() {{
     return out_path
 
 
+def _latest_value(frame, country_code: str, indicator_id: str, *, decimals: int = 2) -> str:
+    rows = _indicator_frame(frame, country_code, indicator_id)
+    if not rows:
+        return "n/a"
+    value = float(rows[-1]["value"])
+    if abs(value) >= 100:
+        return f"{value:,.0f}"
+    return f"{value:,.{decimals}f}"
+
+
+def _source_mix(frame) -> tuple[int, int, int]:
+    latest: dict[str, dict] = {}
+    for row in frame:
+        indicator_id = str(row.get("indicator_id") or "")
+        if indicator_id and (
+            indicator_id not in latest
+            or str(row.get("date", "")) > str(latest[indicator_id].get("date", ""))
+        ):
+            latest[indicator_id] = row
+    verified = sum(1 for row in latest.values() if row.get("quality_status") == "verified")
+    watch = sum(1 for row in latest.values() if row.get("quality_status") == "watch")
+    low = sum(1 for row in latest.values() if row.get("quality_status") == "low_confidence")
+    return verified, watch, low
+
+
+def build_output_index(country_codes: list[str] | None = None) -> Path:
+    """Build the output archive index from the same data pipeline as v4 pages."""
+    country_codes = country_codes or ["HU", "PL", "CZ", "RO"]
+    names = {"HU": "Hungary", "PL": "Poland", "CZ": "Czechia", "RO": "Romania"}
+    filenames = {
+        "HU": "hungary_2026Q2_v4.html",
+        "PL": "poland_2026Q2_v4.html",
+        "CZ": "czechia_2026Q2_v4.html",
+        "RO": "romania_2026Q2_v4.html",
+    }
+    currency = {"HU": "HUF", "PL": "PLN", "CZ": "CZK", "RO": "RON"}
+    cb = {"HU": "MNB", "PL": "NBP", "CZ": "CNB", "RO": "BNR"}
+    pipeline = DataPipeline()
+    cards: list[str] = []
+    total_rendered = 0
+    total_dropped = 0
+    total_proxy = 0
+
+    for code in country_codes:
+        frame = pipeline.fetch_country(code)
+        coverage = pipeline.validate_coverage(frame)
+        verified, watch, low = _source_mix(frame)
+        dropped = len([
+            spec for spec in INDICATOR_MANIFEST_48
+            if is_dropped_proxy_indicator(code, spec.indicator_id)
+        ])
+        rendered = int(coverage.get("indicator_count", 0))
+        expected = int(coverage.get("expected", rendered))
+        proxy = int(coverage.get("proxy_count", 0))
+        total_rendered += rendered
+        total_dropped += dropped
+        total_proxy += proxy
+        card_class = "card clean" if proxy == 0 else "card warn"
+        cards.append(f"""
+  <a href="{filenames[code]}" class="{card_class}">
+    <div class="card-kicker">{currency[code]} · {cb[code]} · v4 dashboard</div>
+    <h2>{names[code]}</h2>
+    <div class="stats">
+      <div class="stat"><span>Rendered indicators</span><strong>{rendered}/{expected}</strong></div>
+      <div class="stat"><span>Proxy fills</span><strong>{proxy}</strong></div>
+      <div class="stat"><span>Dropped proxy slots</span><strong>{dropped}</strong></div>
+      <div class="stat"><span>Policy rate</span><strong>{_latest_value(frame, code, "policy_rate")}%</strong></div>
+      <div class="stat"><span>10Y yield</span><strong>{_latest_value(frame, code, "sov_yield_10y")}%</strong></div>
+      <div class="stat"><span>Source quality</span><strong>{verified} verified · {watch} watch · {low} low</strong></div>
+    </div>
+  </a>""")
+
+    html = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Country Primer — CEE-4 Macro Dashboard</title>
+<style>
+:root {{
+  --bg: #f4efe7;
+  --fg: #171310;
+  --muted: #63574e;
+  --accent: #8a593d;
+  --border: rgba(23, 19, 16, 0.14);
+  --card: rgba(255, 252, 246, 0.76);
+  --success: #3f6f50;
+  --warn: #9d3d2e;
+  --font-display: "Iowan Old Style", "Songti SC", "Noto Serif SC", Georgia, serif;
+  --font-body: "Avenir Next", "PingFang SC", "Noto Sans SC", "Segoe UI", sans-serif;
+}}
+* {{ box-sizing: border-box; }}
+body {{
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(138, 89, 61, 0.15), transparent 24%),
+    radial-gradient(circle at top right, rgba(54, 75, 97, 0.12), transparent 22%),
+    linear-gradient(180deg, #f8f4ed 0%, #f4efe7 48%, #efe7db 100%);
+  color: var(--fg);
+  font-family: var(--font-body);
+}}
+body::before {{
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, rgba(23, 19, 16, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(23, 19, 16, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+}}
+.topbar {{
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 32px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(244, 239, 231, 0.86);
+  backdrop-filter: blur(14px);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}}
+.brand {{ font-family: var(--font-display); font-size: 15px; letter-spacing: 0.16em; }}
+.brand span {{ color: var(--accent); }}
+.container {{ position: relative; max-width: 1180px; margin: 0 auto; padding: 48px 24px; }}
+header {{ border-bottom: 1px solid var(--border); padding-bottom: 32px; margin-bottom: 24px; }}
+h1 {{
+  margin: 0;
+  max-width: 980px;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 6vw, 72px);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  font-weight: 500;
+}}
+.subtitle {{ max-width: 850px; color: var(--muted); font-size: 17px; line-height: 1.7; }}
+.meta-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 24px 0; }}
+.meta-chip {{
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+}}
+.meta-chip strong {{ display: block; font-family: var(--font-display); font-size: 28px; font-weight: 500; }}
+.meta-chip span {{ color: var(--muted); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }}
+.grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }}
+.card {{
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--success);
+  padding: 24px;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}}
+.card.warn {{ border-top-color: var(--warn); }}
+.card:hover {{ transform: translateY(-2px); background: rgba(255, 252, 246, 0.95); border-color: rgba(23, 19, 16, 0.28); }}
+.card-kicker {{ color: var(--accent); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }}
+.card h2 {{ margin: 8px 0 16px; font-family: var(--font-display); font-weight: 500; font-size: 34px; }}
+.stats {{ display: grid; gap: 7px; }}
+.stat {{ display: flex; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--border); padding: 7px 0; }}
+.stat span {{ color: var(--muted); }}
+.stat strong {{ text-align: right; font-family: var(--font-display); font-weight: 500; }}
+.links {{ margin-top: 24px; display: flex; gap: 10px; flex-wrap: wrap; }}
+.links a {{
+  color: var(--accent);
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 8px 13px;
+  text-decoration: none;
+  border-radius: 999px;
+}}
+footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }}
+@media (max-width: 720px) {{ .topbar {{ align-items: flex-start; flex-direction: column; padding: 12px 20px; }} .container {{ padding: 34px 18px; }} }}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">East Meridian <span>/ Country Primer</span></div>
+  <div>CEE-4 Macro Dashboard · v4 · Proxy-free public pages</div>
+</div>
+<main class="container">
+  <header>
+    <h1>CEE-4 Macro Dashboard</h1>
+    <p class="subtitle">Generated archive entry for the four country dashboards. This page is rebuilt by <code>build_v4.py ALL</code>, so its links, indicator counts, proxy status, and quality summary stay synchronized with the individual country pages.</p>
+  </header>
+  <section class="meta-grid" aria-label="coverage summary">
+    <div class="meta-chip"><strong>{total_rendered}</strong><span>rendered country-indicator slots</span></div>
+    <div class="meta-chip"><strong>{total_proxy}</strong><span>remaining proxy fills</span></div>
+    <div class="meta-chip"><strong>{total_dropped}</strong><span>dropped proxy-only slots</span></div>
+    <div class="meta-chip"><strong>4</strong><span>country dashboards</span></div>
+  </section>
+  <section class="grid" aria-label="country dashboards">
+{''.join(cards)}
+  </section>
+  <nav class="links" aria-label="documentation links">
+    <a href="../DATA_SOURCE_CATALOG.md">Data Source Catalog</a>
+    <a href="../PROXY_REVIEW.md">Proxy Review</a>
+    <a href="../SOURCE_DISCOVERY_MATRIX.md">Source Discovery Matrix</a>
+    <a href="macro_framework_proposal.html">Framework Proposal</a>
+  </nav>
+  <footer>
+    Generated from the same canonical data pipeline as the country pages. Research artefact only, not investment advice.
+  </footer>
+</main>
+</body>
+</html>
+"""
+    out_path = OUTPUT / "index.html"
+    out_path.write_text(html)
+    return out_path
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python build_v4.py {HU|PL|CZ|RO|ALL}")
@@ -3228,3 +3445,5 @@ if __name__ == "__main__":
     for cc in targets:
         path = build_v4(cc)
         print(f"Wrote {path} ({path.stat().st_size:,} bytes)")
+    index_path = build_output_index()
+    print(f"Wrote {index_path} ({index_path.stat().st_size:,} bytes)")
