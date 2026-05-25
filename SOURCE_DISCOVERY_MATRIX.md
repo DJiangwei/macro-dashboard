@@ -22,7 +22,7 @@ Latest baseline after the 2026-05-25 source-wiring pass:
 | Hungary | 4 |
 | Poland | 1 |
 | Czechia | 4 |
-| Romania | 6 |
+| Romania | 5 |
 
 ## Priority Matrix
 
@@ -37,8 +37,8 @@ Latest baseline after the 2026-05-25 source-wiring pass:
 | `foreign_bank_share` | None | NBR Annual Report | Official manual snapshot | Wired / manual | Romania uses the NBR Annual Report market share of credit institutions with majority foreign capital, including branches of foreign credit institutions, in banking-sector net assets. ECB SSI was checked but exposes foreign branch/subsidiary assets without a matching Romania banking-sector total-assets denominator. |
 | `short_term_ext_debt` | None | IMF ARA, CNB external debt and reserves | Official statistical / national official | Wired | Czechia uses CNB USD quarterly short-term external debt divided by matching CNB quarter-end international reserves because IMF ARA coverage is missing. |
 | `import_prices_yoy` | None | Eurostat STS, national statistical offices | Official statistical / official substitute | Wired | Czechia uses CZSO open-data monthly total import-price YoY, Hungary uses KSH STADAT monthly external-trade total import-price YoY, Poland uses cache-backed GUS DBW variable 329 industrial-products-total import YoY, and Romania uses INSSE TEMPO `EXP105A` official annual import unit-value indices converted from previous-year=100 to % YoY. Romania remains `watch` because the official substitute is annual and unit-value based, not a monthly transaction import-price index. |
-| `equity_index` | None | BVB, Stooq user CSV, exchange CSVs | Public market / official snapshot / credentialed adapter | Wired / partial-history caveat | Poland uses a GPW Benchmark WIG20 snapshot, Czechia uses the official Prague Stock Exchange PX API, and Romania uses the official BVB BET profile snapshot. Romania still needs historical BET closes for derived YoY and volatility. |
-| `equity_yoy` | RO | Derived from historical `equity_index` | Derived market / credentialed adapter | Partially wired | Romania still needs a stable BET historical close feed; current BVB profile snapshot alone is insufficient for YoY. |
+| `equity_index` | None | BVB, Stooq user CSV, exchange CSVs | Public market / official snapshot / credentialed adapter | Wired / partial-history caveat | Poland uses a GPW Benchmark WIG20 snapshot, Czechia uses the official Prague Stock Exchange PX API, and Romania uses the official BVB BET profile snapshot. Romania still needs historical BET closes for daily-volatility derivation. |
+| `equity_yoy` | None | BVB index-performance table / historical close derivation | Official exchange snapshot | Wired / snapshot caveat | Romania uses the official BVB BET `1 an (%)` performance table value. Retains `watch` because it is an exchange snapshot rather than a locally recomputed full-history series. |
 | `equity_vol_30d` | RO | Exchange factsheet or derived from daily index close | Official snapshot / derived market / credentialed adapter | Partially wired | Poland now uses official GPW Benchmark WIG20 index volatility. Romania still needs BVB BET daily close history or an official volatility snapshot. |
 | `sovereign_rating` | None | Rating agency releases | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a 21-notch average; update after S&P, Moody's, Fitch, or Scope actions. |
 | `edp_status` | None | European Commission/Council EDP pages | Curated manual | Wired | Maintained in `config/manual_indicators.yaml` as a qualitative policy-risk score with event dates. |
@@ -65,7 +65,7 @@ Latest baseline after the 2026-05-25 source-wiring pass:
 
 The next implementation sprint should target:
 
-1. Romania historical equity market data
+1. Romania equity volatility / daily-close feed
 2. Equity valuation factsheets
 3. Breakeven / inflation-expectations market data
 
@@ -122,3 +122,4 @@ Before wiring any source:
 | 2026-05-25 | Wired ENTSOG gas-storage seasonal snapshots | Removed `gas_storage_level` proxies for HU/PL/CZ/RO using ENTSOG Summer/Winter Supply Outlook storage-fullness snapshots based on AGSI+ data; retained `watch` because no-key builds are seasonal rather than daily. |
 | 2026-05-25 | Wired GPW Benchmark WIG20 snapshots | Removed Poland `equity_vol_30d`, `equity_fwd_pe`, `equity_pb`, and `equity_div_yield` proxies using official GPW Benchmark WIG20 index volatility, P/E, P/BV, and dividend-yield snapshots; retained `watch` because these are current factsheet-style observations rather than full history. |
 | 2026-05-25 | Wired BVB BET profile snapshot | Removed Romania `equity_index` proxy using the official Bucharest Stock Exchange BET profile current-value snapshot; retained `watch` because it is a point-in-time profile observation rather than a full historical close feed. |
+| 2026-05-25 | Wired BVB BET performance snapshot | Removed Romania `equity_yoy` proxy using the official BVB index-performance table `1 an (%)` value; retained `watch` because it is a snapshot rather than a locally recomputed history-derived series. |

@@ -11,9 +11,9 @@ Current proxy baseline:
 | Hungary | 4 | 114 | 3.5% |
 | Poland | 1 | 114 | 0.9% |
 | Czechia | 4 | 114 | 3.5% |
-| Romania | 6 | 114 | 5.3% |
+| Romania | 5 | 114 | 4.4% |
 
-Proxy union: 6 indicators.
+Proxy union: 5 indicators.
 
 ## Decision Categories
 
@@ -29,7 +29,6 @@ Proxy union: 6 indicators.
 
 | Indicator | Countries proxied | Recommendation | Rationale | Next action |
 |---|---|---|---|---|
-| `equity_yoy` | RO | Replace after `equity_index` | Pure derived indicator; should disappear once Romania headline index is wired. | Derive automatically from `equity_index`. |
 | `equity_vol_30d` | RO | Replace | Derived from daily index data; more sourceable than valuation metrics. | Find stable BVB BET daily close feed. |
 | `breakeven_5y5y` | HU, PL, CZ, RO | Keep or Remove | Inflation-swap/linker curve data is typically vendor-controlled. | Keep only as conceptual placeholder; otherwise remove from public dashboard. |
 | `equity_fwd_pe` | HU, CZ, RO | Manual or Remove | Forward earnings valuation is vendor/analyst-consensus based; the dashboard label has been softened to P/E where exchange factsheets are available. | Use exchange/factsheet snapshots if available; otherwise remove. |
@@ -54,10 +53,11 @@ Proxy union: 6 indicators.
 | `gas_storage_level` | Converted to official seasonal snapshots | Replaced four-country proxy with ENTSOG Summer/Winter Supply Outlook storage-fullness snapshots based on AGSI+ data; retained `watch` because no-key builds are seasonal rather than daily. |
 | Poland equity market metrics | Wired official GPW Benchmark snapshots | Replaced Poland `equity_vol_30d`, `equity_fwd_pe`, `equity_pb`, and `equity_div_yield` proxies with WIG20 GPW Benchmark snapshots; retained `watch` because these are current factsheet-style observations rather than full historical series. |
 | Romania equity index | Wired official BVB snapshot | Replaced Romania `equity_index` proxy with the official Bucharest Stock Exchange BET profile snapshot; retained `watch` because it is a current profile observation rather than a full historical close feed. |
+| Romania equity YoY | Wired official BVB performance snapshot | Replaced Romania `equity_yoy` proxy with the official BVB BET `1 an (%)` index-performance table value; retained `watch` because it is a snapshot rather than a locally recomputed history-derived series. |
 
 ## Proposed Implementation Order
 
-1. Replace Romania historical equity data first because `equity_yoy` and `equity_vol_30d` still need a BET history/daily-close feed.
+1. Replace Romania `equity_vol_30d` next because it still needs a BET daily-close feed or a directly comparable official volatility snapshot.
 2. Decide whether vendor-market indicators should remain as placeholders: `breakeven_5y5y` and equity valuation metrics.
 3. Decide whether vendor-only valuation and market-risk placeholders should remain visible or be removed from the public dashboard.
 

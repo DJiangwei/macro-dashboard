@@ -100,6 +100,7 @@ GUS_DBW_VARIABLE_DATA_URL = "https://api-dbw.stat.gov.pl/api/variable/variable-d
 PSE_INDEXES_URL = "https://www.pse.cz/api/indexes"
 GPW_BENCHMARK_WIG20_URL = "https://gpwbenchmark.pl/ajaxindex.php?action=GPWIndexes&start=ajaxIndicators&format=html&lang=EN&isin=PL9999999987&cmng_id=1011"
 BVB_BET_PROFILE_URL = "https://m.bvb.ro/FinancialInstruments/Indices/IndicesProfiles?r=1"
+BVB_INDEX_PERFORMANCE_URL = "https://www.bvb.ro/FinancialInstruments/Indices/IndicesPerformance"
 EUROSTAT_DATA_URL = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}?{params}"
 INSSE_TEMPO_PIVOT_URL = "http://statistici.insse.ro:8077/tempo-ins/pivot"
 GIE_AGSI_BASE_URL = "https://agsi.gie.eu/api"
@@ -3549,40 +3550,85 @@ class GPWBenchmarkFetcher(BaseFetcher):
 
 
 class BVBIndexProfileFetcher(BaseFetcher):
-    """Official Bucharest Stock Exchange BET profile snapshot."""
+    """Official Bucharest Stock Exchange BET snapshot adapters."""
 
     def __init__(self) -> None:
         self._snapshot: dict[str, float | str] | None = None
+        self._performance: dict[str, float] | None = None
 
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
-        if country != "RO" or spec.indicator_id != "equity_index":
+        if country != "RO" or spec.indicator_id not in {"equity_index", "equity_yoy"}:
             return []
         snapshot = self._fetch_snapshot()
         if not snapshot:
             return []
-        value = snapshot.get("value")
         date = str(snapshot.get("date") or "")
-        if value is None or not date:
+        if not date:
             return []
+
+        if spec.indicator_id == "equity_yoy":
+            performance = self._fetch_performance()
+            value = performance.get("1y") if performance else None
+            if value is None:
+                return []
+            return self._snapshot_rows(
+                country,
+                spec,
+                date,
+                float(value),
+                "% YoY",
+                "BVB:BET:performance-1y",
+                BVB_INDEX_PERFORMANCE_URL,
+                "Official BVB index-performance table, `1 an (%)` column for BET.",
+                "Official BVB BET 1-year performance snapshot; not recomputed from a full historical close feed.",
+            )
+
+        value = snapshot.get("value")
+        if value is None:
+            return []
+        return self._snapshot_rows(
+            country,
+            spec,
+            date,
+            float(value),
+            "Index",
+            "BVB:BET:profile-current-value",
+            BVB_BET_PROFILE_URL,
+            "Official BVB mobile index profile snapshot for the BET price-return index.",
+            "Official BVB BET profile snapshot; current-value observation, not a full historical close feed.",
+        )
+
+    def _snapshot_rows(
+        self,
+        country: str,
+        spec: IndicatorSpec,
+        date: str,
+        value: float,
+        unit: str,
+        series_id: str,
+        source_url: str,
+        series_note: str,
+        row_note: str,
+    ) -> list[dict]:
         series = finalize_series(Series(
             key=spec.indicator_id,
             label=spec.label,
             country=country,
             source="Bucharest Stock Exchange",
-            series_id="BVB:BET:profile-current-value",
-            unit="Index",
+            series_id=series_id,
+            unit=unit,
             frequency="event",
             last_update=date,
-            source_url=BVB_BET_PROFILE_URL,
-            observations=[(date, float(value))],
+            source_url=source_url,
+            observations=[(date, value)],
             available=True,
-            note="Official BVB mobile index profile snapshot for the BET price-return index.",
+            note=series_note,
         ))
         rows = _series_to_rows(
             series,
             spec,
-            unit="Index",
-            note="Official BVB BET profile snapshot; current-value observation, not a full historical close feed.",
+            unit=unit,
+            note=row_note,
         )
         for row in rows:
             row["quality_status"] = "watch"
@@ -3622,6 +3668,47 @@ class BVBIndexProfileFetcher(BaseFetcher):
 
         self._snapshot = {"date": date, "value": value}
         return self._snapshot
+
+    def _fetch_performance(self) -> dict[str, float]:
+        if self._performance is not None:
+            return self._performance
+        path = cache_path("bvb::bet::index_performance")
+        try:
+            if path.exists():
+                html = path.read_text()
+            else:
+                response = requests.get(
+                    BVB_INDEX_PERFORMANCE_URL,
+                    headers={"User-Agent": "Mozilla/5.0"},
+                    timeout=30,
+                )
+                response.raise_for_status()
+                html = response.text
+                path.write_text(html)
+        except (OSError, requests.RequestException):
+            self._performance = {}
+            return self._performance
+
+        row_match = re.search(
+            r"<tr>\s*<td[^>]*>\s*BET\s*</td>(.*?)</tr>",
+            html,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+        if not row_match:
+            self._performance = {}
+            return self._performance
+        cells = re.findall(r'<td[^>]*class="numericspvar"[^>]*>\s*([^<]+)\s*</td>', row_match.group(1), flags=re.IGNORECASE)
+        if len(cells) < 5:
+            self._performance = {}
+            return self._performance
+        try:
+            one_year = float(cells[4].replace(".", "").replace(",", ".").strip())
+        except ValueError:
+            self._performance = {}
+            return self._performance
+
+        self._performance = {"1y": one_year}
+        return self._performance
 
 
 class CredentialedStooqFetcher(BaseFetcher):
