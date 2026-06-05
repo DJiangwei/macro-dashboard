@@ -3014,6 +3014,7 @@ def build_v4(country_code: str) -> Path:
         ("PL", "Poland", "poland_2026Q2_v4.html"),
         ("CZ", "Czechia", "czechia_2026Q2_v4.html"),
         ("RO", "Romania", "romania_2026Q2_v4.html"),
+        ("CN", "China", "china_2026Q2_v1.html"),
     ]
     nav_links = []
     for cc, cname, cfile in all_countries:

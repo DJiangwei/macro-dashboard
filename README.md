@@ -102,7 +102,11 @@ series and marks it in the UI with quality footnotes. This keeps every country
 page structurally complete while making uncertain data visible rather than
 silently hiding it.
 
-To rebuild and publish the v4 site:
+`make build-v4` also builds the China data-first page from
+`config/china_indicators.yaml` via `scripts/build_china_dashboard.py`, then
+updates `output/index.html` so the archive page stays synchronized.
+
+To rebuild and publish the site:
 
 ```bash
 make publish MSG="Update dashboard"
@@ -190,6 +194,7 @@ Country_Primer/
 ├── Makefile                # standard setup/build/validate commands
 ├── scripts/
 │   ├── doctor_env.py       # environment self-check
+│   ├── build_china_dashboard.py # China chart/data page from public APIs
 │   ├── publish_dashboard.sh # one-command build/validate/commit/push/check
 │   └── uv_project.sh       # uv wrapper that keeps cache/python inside repo
 ├── AGENTS.md               # operating guide for coding agents

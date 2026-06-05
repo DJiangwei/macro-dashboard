@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Country Primer — CEE-4 Macro Dashboard</title>
+<title>Country Primer — Macro Dashboard Archive</title>
 <style>
 :root {
   --bg: #f4efe7;
@@ -109,18 +109,18 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
 <body>
 <div class="topbar">
   <div class="brand">East Meridian <span>/ Country Primer</span></div>
-  <div>CEE-4 Macro Dashboard · v4 · Proxy-free public pages</div>
+  <div>Macro Dashboard Archive · CEE-4 v4 + China</div>
 </div>
 <main class="container">
   <header>
-    <h1>CEE-4 Macro Dashboard</h1>
-    <p class="subtitle">Generated archive entry for the four country dashboards. This page is rebuilt by <code>build_v4.py ALL</code>, so its links, indicator counts, proxy status, and quality summary stay synchronized with the individual country pages.</p>
+    <h1>Macro Dashboard Archive</h1>
+    <p class="subtitle">Generated archive entry for the proxy-free CEE-4 dashboards plus the China data-first page. This page is rebuilt by <code>make build-v4</code>, so links, indicator counts, proxy status, and quality summary stay synchronized with generated pages.</p>
   </header>
   <section class="meta-grid" aria-label="coverage summary">
-    <div class="meta-chip"><strong>442</strong><span>rendered country-indicator slots</span></div>
+    <div class="meta-chip"><strong>442</strong><span>CEE-4 rendered indicator slots</span></div>
     <div class="meta-chip"><strong>0</strong><span>remaining proxy fills</span></div>
     <div class="meta-chip"><strong>14</strong><span>dropped proxy-only slots</span></div>
-    <div class="meta-chip"><strong>4</strong><span>country dashboards</span></div>
+    <div class="meta-chip"><strong>5</strong><span>country dashboards</span></div>
   </section>
   <section class="grid" aria-label="country dashboards">
 
@@ -172,6 +172,21 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <div class="stat"><span>Source quality</span><strong>16 verified · 88 watch · 5 low</strong></div>
     </div>
   </a>
+
+  <!-- China dashboard card -->
+  <a href="china_2026Q2_v1.html" class="card clean">
+    <div class="card-kicker">CNY · PBC · China data-first page</div>
+    <h2>China</h2>
+    <div class="stats">
+      <div class="stat"><span>Rendered charts</span><strong>26</strong></div>
+      <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
+      <div class="stat"><span>Official gaps tracked</span><strong>6</strong></div>
+      <div class="stat"><span>Latest USD/CNY fixing</span><strong>6.8157 (2026-06-05)</strong></div>
+      <div class="stat"><span>Source groups</span><strong>4</strong></div>
+      <div class="stat"><span>Framework</span><strong>GS China statistics logic</strong></div>
+    </div>
+  </a>
+  <!-- /China dashboard card -->
   </section>
   <nav class="links" aria-label="documentation links">
     <a href="../DATA_SOURCE_CATALOG.md">Data Source Catalog</a>

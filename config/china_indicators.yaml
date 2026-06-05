@@ -1,0 +1,419 @@
+sections:
+  activity_production:
+    title_en: "Activity & Production"
+    title_zh: "总量活动与生产"
+    report_logic_en: "GDP, production-side value added, industrial activity, services output, electricity, freight, profits, and PMIs."
+    report_logic_zh: "GDP、生产法增加值、工业活动、服务业产出、电力、货运、工业利润与PMI。"
+  investment:
+    title_en: "Investment"
+    title_zh: "投资"
+    report_logic_en: "Fixed asset investment, construction pipeline, and investment funding conditions."
+    report_logic_zh: "固定资产投资、项目施工链条与投资资金来源。"
+  real_estate:
+    title_en: "Real Estate"
+    title_zh: "房地产"
+    report_logic_en: "Property investment, floor space starts/completions/sales, prices, land, and inventory."
+    report_logic_zh: "房地产开发投资、开工/竣工/销售面积、房价、土地与库存。"
+  consumption:
+    title_en: "Consumption"
+    title_zh: "消费"
+    report_logic_en: "Retail sales, household income and spending, autos, and consumer confidence."
+    report_logic_zh: "社会消费品零售、居民收入与支出、汽车销售与消费者信心。"
+  external:
+    title_en: "External Sector"
+    title_zh: "外部部门"
+    report_logic_en: "Goods and services trade, BOP, FDI, external debt, FX reserves, and RMB exchange-rate measures."
+    report_logic_zh: "货物和服务贸易、国际收支、FDI、外债、外汇储备与人民币汇率指标。"
+  money_credit:
+    title_en: "Money, Credit & Banking"
+    title_zh: "货币、信用与银行"
+    report_logic_en: "Money supply, bank credit, total social financing, policy tools, and interbank rates."
+    report_logic_zh: "货币供应、银行信贷、社会融资规模、政策工具与银行间利率。"
+  prices:
+    title_en: "Prices"
+    title_zh: "价格"
+    report_logic_en: "CPI, PPI, agriculture/raw-material prices, trade prices, and GDP deflator."
+    report_logic_zh: "CPI、PPI、农产品/原材料价格、进出口价格与GDP平减指数。"
+  population_labor:
+    title_en: "Population & Labor"
+    title_zh: "人口与劳动力"
+    report_logic_en: "Population structure, migration, employment, unemployment, wages, and survey breaks."
+    report_logic_zh: "人口结构、迁移、就业、失业、工资与调查口径变化。"
+  government_finance:
+    title_en: "Government Finance"
+    title_zh: "政府财政"
+    report_logic_en: "Budget revenue, expenditure, balance, local government debt, and off-budget/quasi-fiscal risks."
+    report_logic_zh: "财政收入、支出、收支差额、地方政府债务与预算外/准财政风险。"
+
+indicators:
+  - id: real_gdp_growth
+    section: activity_production
+    label_en: "Real GDP Growth"
+    label_zh: "实际GDP增速"
+    unit: "%"
+    fetcher: world_bank
+    series: "NY.GDP.MKTP.KD.ZG"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/NY.GDP.MKTP.KD.ZG"
+    frequency: "annual"
+    caveat_en: "Annual WDI series; the report's preferred short-term lens is NBS quarterly/monthly production-side data."
+    caveat_zh: "年度WDI序列；报告更偏好NBS季度/月度生产法数据来判断短期动能。"
+  - id: nominal_gdp_usd
+    section: activity_production
+    label_en: "Nominal GDP"
+    label_zh: "名义GDP"
+    unit: "USD"
+    transform: "usd_trn"
+    fetcher: world_bank
+    series: "NY.GDP.MKTP.CD"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/NY.GDP.MKTP.CD"
+    frequency: "annual"
+    caveat_en: "USD conversion adds exchange-rate effects; use RMB NBS levels for domestic accounting work."
+    caveat_zh: "美元口径包含汇率影响；国内核算应优先使用NBS人民币现价数据。"
+  - id: industry_value_added_growth
+    section: activity_production
+    label_en: "Industry Value Added Growth"
+    label_zh: "工业部门增加值增速"
+    unit: "%"
+    fetcher: world_bank
+    series: "NV.IND.TOTL.KD.ZG"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/NV.IND.TOTL.KD.ZG"
+    frequency: "annual"
+    caveat_en: "Annual industry value added is broader and slower than NBS monthly industrial production."
+    caveat_zh: "年度工业部门增加值比NBS月度工业增加值更宽、更慢。"
+  - id: services_value_added_growth
+    section: activity_production
+    label_en: "Services Value Added Growth"
+    label_zh: "服务业增加值增速"
+    unit: "%"
+    fetcher: world_bank
+    series: "NV.SRV.TOTL.KD.ZG"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/NV.SRV.TOTL.KD.ZG"
+    frequency: "annual"
+    caveat_en: "Services are harder to measure at high frequency; annual data can miss turning points."
+    caveat_zh: "服务业高频测量难度更高；年度数据可能错过拐点。"
+  - id: gfcf_share_gdp
+    section: investment
+    label_en: "Gross Fixed Capital Formation"
+    label_zh: "固定资本形成总额"
+    unit: "% of GDP"
+    fetcher: world_bank
+    series: "NE.GDI.FTOT.ZS"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/NE.GDI.FTOT.ZS"
+    frequency: "annual"
+    caveat_en: "National-accounts investment share; not the same as NBS fixed asset investment growth."
+    caveat_zh: "国民账户投资占比；不同于NBS固定资产投资增速。"
+  - id: household_consumption_growth
+    section: consumption
+    label_en: "Household Consumption Growth"
+    label_zh: "居民消费增长"
+    unit: "%"
+    fetcher: world_bank
+    series: "NE.CON.PRVT.KD.ZG"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/NE.CON.PRVT.KD.ZG"
+    frequency: "annual"
+    caveat_en: "National-accounts household consumption; not directly comparable to retail sales."
+    caveat_zh: "国民账户居民消费；与社零口径不可直接等同。"
+  - id: household_consumption_share
+    section: consumption
+    label_en: "Household Consumption Share"
+    label_zh: "居民消费占GDP比重"
+    unit: "% of GDP"
+    fetcher: world_bank
+    series: "NE.CON.PRVT.ZS"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/NE.CON.PRVT.ZS"
+    frequency: "annual"
+    caveat_en: "Useful for rebalancing, but too low-frequency for near-term consumption momentum."
+    caveat_zh: "适合观察再平衡，但频率太低，不适合捕捉短期消费动能。"
+  - id: current_account_gdp
+    section: external
+    label_en: "Current Account Balance"
+    label_zh: "经常账户差额"
+    unit: "% of GDP"
+    fetcher: world_bank
+    series: "BN.CAB.XOKA.GD.ZS"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/BN.CAB.XOKA.GD.ZS"
+    frequency: "annual"
+    caveat_en: "Annual BOP ratio; SAFE quarterly BOP is the preferred higher-frequency source."
+    caveat_zh: "年度国际收支占比；更高频应优先使用SAFE季度国际收支。"
+  - id: exports_goods_services
+    section: external
+    label_en: "Exports of Goods & Services"
+    label_zh: "货物与服务出口"
+    unit: "USD"
+    transform: "usd_trn"
+    fetcher: world_bank
+    series: "BX.GSR.GNFS.CD"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/BX.GSR.GNFS.CD"
+    frequency: "annual"
+    caveat_en: "Annual national-accounts goods and services exports; customs monthly goods trade is the preferred high-frequency source."
+    caveat_zh: "年度国民账户货物与服务出口；更高频应优先使用海关月度货物贸易。"
+  - id: imports_goods_services
+    section: external
+    label_en: "Imports of Goods & Services"
+    label_zh: "货物与服务进口"
+    unit: "USD"
+    transform: "usd_trn"
+    fetcher: world_bank
+    series: "BM.GSR.GNFS.CD"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/BM.GSR.GNFS.CD"
+    frequency: "annual"
+    caveat_en: "Annual national-accounts goods and services imports; customs monthly goods trade is the preferred high-frequency source."
+    caveat_zh: "年度国民账户货物与服务进口；更高频应优先使用海关月度货物贸易。"
+  - id: trade_openness
+    section: external
+    label_en: "Trade Openness"
+    label_zh: "贸易开放度"
+    unit: "% of GDP"
+    fetcher: world_bank
+    series: "NE.TRD.GNFS.ZS"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/NE.TRD.GNFS.ZS"
+    frequency: "annual"
+    caveat_en: "Goods and services trade share of GDP; does not reveal partner/product composition."
+    caveat_zh: "货物与服务贸易占GDP比重；不能揭示伙伴国或产品结构。"
+  - id: fx_reserves
+    section: external
+    label_en: "Foreign Exchange Reserves"
+    label_zh: "外汇储备"
+    unit: "USD"
+    transform: "usd_trn"
+    fetcher: world_bank
+    series: "FI.RES.TOTL.CD"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/FI.RES.TOTL.CD"
+    frequency: "annual"
+    caveat_en: "Annual reserve stock; PBOC releases monthly reserves around the 7th day of the following month."
+    caveat_zh: "年度储备存量；PBOC通常在次月7日左右发布月度外储。"
+  - id: usd_cny_midpoint
+    section: external
+    label_en: "USD/CNY Central Parity"
+    label_zh: "美元兑人民币中间价"
+    unit: "CNY per USD"
+    fetcher: safe_rmb_midpoint
+    series: "SAFE RMBQuery USD column"
+    source_name: "SAFE"
+    source_url: "https://www.safe.gov.cn/AppStructured/hlw/RMBQuery.do"
+    frequency: "daily"
+    caveat_en: "Official central parity table; page query is limited to roughly one year at a time."
+    caveat_zh: "官方人民币汇率中间价表；页面单次查询区间约一年。"
+  - id: eur_cny_midpoint
+    section: external
+    label_en: "EUR/CNY Central Parity"
+    label_zh: "欧元兑人民币中间价"
+    unit: "CNY per EUR"
+    fetcher: safe_rmb_midpoint
+    series: "SAFE RMBQuery EUR column"
+    source_name: "SAFE"
+    source_url: "https://www.safe.gov.cn/AppStructured/hlw/RMBQuery.do"
+    frequency: "daily"
+    caveat_en: "Official central parity table; page query is limited to roughly one year at a time."
+    caveat_zh: "官方人民币汇率中间价表；页面单次查询区间约一年。"
+  - id: broad_money_growth
+    section: money_credit
+    label_en: "Broad Money Growth"
+    label_zh: "广义货币增速"
+    unit: "%"
+    fetcher: world_bank
+    series: "FM.LBL.BMNY.ZG"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/FM.LBL.BMNY.ZG"
+    frequency: "annual"
+    caveat_en: "Annual WDI broad-money growth; PBOC monthly M2 is the preferred China-native series."
+    caveat_zh: "年度WDI广义货币增速；中国本土口径应优先使用PBOC月度M2。"
+  - id: private_credit_gdp
+    section: money_credit
+    label_en: "Private Credit by Financial Sector"
+    label_zh: "金融部门对私人部门信贷"
+    unit: "% of GDP"
+    fetcher: world_bank
+    series: "FS.AST.PRVT.GD.ZS"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/FS.AST.PRVT.GD.ZS"
+    frequency: "annual"
+    caveat_en: "Broad financial-depth metric; not a substitute for PBOC loan and TSF flows."
+    caveat_zh: "金融深化指标；不能替代PBOC贷款与社融流量。"
+  - id: cpi_inflation
+    section: prices
+    label_en: "CPI Inflation"
+    label_zh: "CPI通胀"
+    unit: "%"
+    fetcher: world_bank
+    series: "FP.CPI.TOTL.ZG"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/FP.CPI.TOTL.ZG"
+    frequency: "annual"
+    caveat_en: "Annual CPI; NBS monthly CPI is the preferred tactical inflation series."
+    caveat_zh: "年度CPI；战术性通胀观察应优先使用NBS月度CPI。"
+  - id: gdp_deflator
+    section: prices
+    label_en: "GDP Deflator"
+    label_zh: "GDP平减指数"
+    unit: "%"
+    fetcher: world_bank
+    series: "NY.GDP.DEFL.KD.ZG"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/NY.GDP.DEFL.KD.ZG"
+    frequency: "annual"
+    caveat_en: "Useful for economy-wide nominal/real split, but not a monthly price gauge."
+    caveat_zh: "适合观察全经济名义/实际拆分，但不是月度价格指标。"
+  - id: unemployment
+    section: population_labor
+    label_en: "Unemployment Rate"
+    label_zh: "失业率"
+    unit: "%"
+    fetcher: world_bank
+    series: "SL.UEM.TOTL.ZS"
+    source_name: "World Bank WDI / ILO estimate"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/SL.UEM.TOTL.ZS"
+    frequency: "annual"
+    caveat_en: "ILO-modeled annual rate; China urban surveyed unemployment and youth unemployment have definition breaks."
+    caveat_zh: "ILO模型年度失业率；中国城镇调查失业率和青年失业率存在口径变化。"
+  - id: total_population
+    section: population_labor
+    label_en: "Total Population"
+    label_zh: "总人口"
+    unit: "people"
+    transform: "people_billion"
+    fetcher: world_bank
+    series: "SP.POP.TOTL"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/SP.POP.TOTL"
+    frequency: "annual"
+    caveat_en: "Annual population stock; revisions can follow census updates."
+    caveat_zh: "年度人口存量；人口普查后可能修订。"
+  - id: urban_population_share
+    section: population_labor
+    label_en: "Urban Population Share"
+    label_zh: "城镇人口占比"
+    unit: "%"
+    fetcher: world_bank
+    series: "SP.URB.TOTL.IN.ZS"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/SP.URB.TOTL.IN.ZS"
+    frequency: "annual"
+    caveat_en: "Structural urbanization metric; not a labor-market cycle indicator."
+    caveat_zh: "结构性城镇化指标；不是劳动力市场周期指标。"
+  - id: working_age_share
+    section: population_labor
+    label_en: "Working-age Population Share"
+    label_zh: "劳动年龄人口占比"
+    unit: "%"
+    fetcher: world_bank
+    series: "SP.POP.1564.TO.ZS"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/SP.POP.1564.TO.ZS"
+    frequency: "annual"
+    caveat_en: "Captures demographic pressure but not employment quality or migrant-worker dynamics."
+    caveat_zh: "反映人口压力，但不反映就业质量或农民工动态。"
+  - id: birth_rate
+    section: population_labor
+    label_en: "Crude Birth Rate"
+    label_zh: "出生率"
+    unit: "per 1,000 people"
+    fetcher: world_bank
+    series: "SP.DYN.CBRT.IN"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/SP.DYN.CBRT.IN"
+    frequency: "annual"
+    caveat_en: "Demographic vital-statistics series; revisions are possible."
+    caveat_zh: "人口生命统计序列；可能修订。"
+  - id: death_rate
+    section: population_labor
+    label_en: "Crude Death Rate"
+    label_zh: "死亡率"
+    unit: "per 1,000 people"
+    fetcher: world_bank
+    series: "SP.DYN.CDRT.IN"
+    source_name: "World Bank WDI"
+    source_url: "https://api.worldbank.org/v2/country/CHN/indicator/SP.DYN.CDRT.IN"
+    frequency: "annual"
+    caveat_en: "Demographic vital-statistics series; revisions are possible."
+    caveat_zh: "人口生命统计序列；可能修订。"
+  - id: general_gov_balance
+    section: government_finance
+    label_en: "General Government Balance"
+    label_zh: "广义政府财政余额"
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: "GGXCNL_NGDP"
+    source_name: "IMF WEO"
+    source_url: "https://www.imf.org/external/datamapper/GGXCNL_NGDP@WEO/CHN"
+    frequency: "annual"
+    actual_through: 2024
+    caveat_en: "IMF WEO includes estimates/projections; China fiscal analysis should also monitor land sales and off-budget local-government financing."
+    caveat_zh: "IMF WEO包含估算/预测；中国财政还需要跟踪土地出让与地方政府预算外融资。"
+  - id: general_gov_debt
+    section: government_finance
+    label_en: "General Government Gross Debt"
+    label_zh: "广义政府总债务"
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: "GGXWDG_NGDP"
+    source_name: "IMF WEO"
+    source_url: "https://www.imf.org/external/datamapper/GGXWDG_NGDP@WEO/CHN"
+    frequency: "annual"
+    actual_through: 2024
+    caveat_en: "IMF WEO measure; does not fully solve quasi-fiscal/LGFV boundary issues."
+    caveat_zh: "IMF WEO口径；不能完全解决准财政/LGFV边界问题。"
+
+latest_cards:
+  - id: pbc_m2_latest
+    label_en: "PBC M2 YoY"
+    label_zh: "PBC M2同比"
+    fetcher: pbc_indicator_card
+    url: "https://www.pbc.gov.cn/en/3688006/3689169/3753760/index.html"
+    expected_title: "M2"
+  - id: pbc_afre_latest
+    label_en: "PBC AFRE Outstanding"
+    label_zh: "PBC社融存量"
+    fetcher: pbc_indicator_card
+    url: "https://www.pbc.gov.cn/en/3688006/3689169/3753765/index.html"
+    expected_title: "AFRE (Outstanding)"
+  - id: pbc_dr007_latest
+    label_en: "PBC DR007"
+    label_zh: "PBC DR007"
+    fetcher: pbc_indicator_card
+    url: "https://www.pbc.gov.cn/en/3688006/3689169/3753752/index.html"
+    expected_title: "DR007"
+
+data_gaps:
+  - section: activity_production
+    item_en: "NBS monthly industrial production, services output index, electricity consumption, rail freight, industrial profits, and PMI series"
+    item_zh: "NBS月度工业增加值、服务业生产指数、电力消费、铁路货运、工业企业利润与PMI序列"
+    status_en: "NBS EasyQuery returned 403 from this runtime; add an official adapter only after the endpoint is reproducible."
+    status_zh: "当前运行环境访问NBS EasyQuery返回403；只有在官方接口可复跑后才应加入adapter。"
+  - section: investment
+    item_en: "NBS fixed asset investment by sector and project pipeline"
+    item_zh: "NBS固定资产投资分项与项目施工链条"
+    status_en: "Core China-native monthly indicators; not proxied in v1."
+    status_zh: "中国本土核心月度指标；v1不使用替代proxy。"
+  - section: real_estate
+    item_en: "NBS property investment, floor-space starts/completions/sales, 70-city price index, land transactions, and inventory"
+    item_zh: "NBS房地产开发投资、开工/竣工/销售面积、70城房价、土地成交与库存"
+    status_en: "High priority for the next official-source adapter."
+    status_zh: "下一阶段官方数据adapter的最高优先级之一。"
+  - section: consumption
+    item_en: "NBS retail sales, online retail sales, household survey, auto sales, and consumer confidence"
+    item_zh: "NBS社零、网上零售、居民调查、汽车销售与消费者信心"
+    status_en: "Retail sales are not equivalent to national-accounts consumption; keep separate when official data is wired."
+    status_zh: "社零不等同于国民账户消费；接入官方数据时应分开呈现。"
+  - section: money_credit
+    item_en: "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates"
+    item_zh: "PBOC月度人民币贷款、存款、社融流量/存量、LPR/MLF/RRR与银行间利率"
+    status_en: "PBC latest cards are shown; full history requires a dedicated PBOC parser."
+    status_zh: "页面已显示PBC最新卡片；完整历史需要专门的PBOC解析器。"
+  - section: prices
+    item_en: "NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices"
+    item_zh: "NBS月度CPI、核心CPI、PPI、农产品价格与进出口价格指数"
+    status_en: "Annual WDI inflation and deflator charts are shown; tactical monthly data is pending."
+    status_zh: "页面显示年度WDI通胀和平减指数；战术性月度数据待接入。"
