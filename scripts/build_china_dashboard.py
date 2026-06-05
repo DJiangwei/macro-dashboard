@@ -647,6 +647,7 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]], cards
     <a href="czechia_2026Q2_v4.html">CZ</a>
     <a href="romania_2026Q2_v4.html">RO</a>
     <a href="china_2026Q2_v1.html" class="active">CN</a>
+    <a href="uk_2026Q2_v1.html">UK</a>
   </nav>
   <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">中文</button>
 </div>

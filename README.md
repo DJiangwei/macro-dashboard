@@ -102,9 +102,10 @@ series and marks it in the UI with quality footnotes. This keeps every country
 page structurally complete while making uncertain data visible rather than
 silently hiding it.
 
-`make build-v4` also builds the China data-first page from
-`config/china_indicators.yaml` via `scripts/build_china_dashboard.py`, then
-updates `output/index.html` so the archive page stays synchronized.
+`make build-v4` also builds the China and UK data-first pages from
+`config/china_indicators.yaml` and `config/uk_indicators.yaml` via their
+dedicated scripts, then updates `output/index.html` so the archive page stays
+synchronized.
 
 To rebuild and publish the site:
 
@@ -129,6 +130,7 @@ Supported optional sources:
 
 | Variable | Purpose |
 |---|---|
+| `FRED_API_KEY` | Enables the official FRED API for the UK page. If unset, `scripts/build_uk_dashboard.py` falls back to FRED's public graph CSV endpoint. |
 | `GIE_AGSI_API_KEY` | Enables GIE AGSI+ country-level gas-storage fill data for `gas_storage_level`. |
 | `GIE_AGSI_BASE_URL` | Optional override for the AGSI+ API base URL. Defaults to `https://agsi.gie.eu/api`. |
 | `STOOQ_API_KEY` | Enables the default Stooq CSV URL template if it works for the user's Stooq account. |

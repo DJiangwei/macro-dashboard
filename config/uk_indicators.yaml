@@ -1,0 +1,450 @@
+sections:
+  national_accounts:
+    title_en: "National Accounts & GDP Tracking"
+    title_zh: "国民账户与GDP跟踪"
+    report_logic_en: "The GS UK guide stresses that early GDP releases are heavily revised. Use official GDP, demand components, and real-time trackers together rather than treating first GDP as the final word."
+    report_logic_zh: "GS英国统计指南强调，早期GDP发布会经历较大修订。应把官方GDP、需求分项与实时跟踪指标结合使用，而不是把初值视为最终答案。"
+  monthly_output:
+    title_en: "Monthly Output & Survey-Like Signals"
+    title_zh: "月度产出与类调查信号"
+    report_logic_en: "Monthly production, retail activity, confidence, and leading indicators help bridge the gap before quarterly national accounts are revised and balanced."
+    report_logic_zh: "月度生产、零售、信心与领先指标可在季度国民账户修订和平衡前提供更及时的活动线索。"
+  housing_construction:
+    title_en: "Housing & Construction"
+    title_zh: "住房与建筑"
+    report_logic_en: "The UK housing channel matters through construction activity, collateral values, household balance sheets, and mortgage-credit transmission."
+    report_logic_zh: "英国住房渠道通过建筑活动、抵押品价值、居民资产负债表与按揭信贷传导影响宏观周期。"
+  external:
+    title_en: "Trade, Sterling & External Balance"
+    title_zh: "贸易、英镑与外部平衡"
+    report_logic_en: "Trade volumes and sterling's real exchange-rate impulse matter for GDP arithmetic, inflation pass-through, and the external funding narrative."
+    report_logic_zh: "贸易量与英镑实际汇率脉冲会影响GDP核算、通胀传导与外部融资叙事。"
+  labour_market:
+    title_en: "Labour Market"
+    title_zh: "劳动力市场"
+    report_logic_en: "The labour-market release is central for UK rates because unemployment, employment, hours, vacancies, and wages shape domestic inflation pressure."
+    report_logic_zh: "劳动力市场发布对英国利率非常关键，因为失业、就业、工时、职位空缺与工资共同塑造国内通胀压力。"
+  prices:
+    title_en: "Prices & Inflation"
+    title_zh: "价格与通胀"
+    report_logic_en: "CPI is the MPC target measure, while core CPI and producer-price pressure help separate energy/import effects from domestic persistence."
+    report_logic_zh: "CPI是MPC目标指标；核心CPI与生产者价格压力有助于区分能源/进口冲击和国内通胀粘性。"
+  monetary_financial:
+    title_en: "Monetary & Financial Conditions"
+    title_zh: "货币与金融条件"
+    report_logic_en: "The GS FCI frame combines short rates, long rates, sterling, and equities; money, credit, and reserves add banking-system context."
+    report_logic_zh: "GS FCI框架结合短端利率、长端利率、英镑与股票；货币、信贷与储备则补充银行体系背景。"
+  fiscal_policy:
+    title_en: "Fiscal Policy & Sovereign Balance Sheet"
+    title_zh: "财政政策与主权资产负债表"
+    report_logic_en: "The guide prioritises public-sector borrowing and debt measures, while warning that cash/accrual concepts, sector boundaries, and interventions can distort comparisons."
+    report_logic_zh: "指南重视公共部门借款与债务指标，同时提醒现金制/权责发生制、部门边界和金融干预会影响比较。"
+
+indicators:
+  - id: real_gdp_qoq
+    section: national_accounts
+    label_en: "Real GDP Growth"
+    label_zh: "实际GDP环比增速"
+    unit: "%"
+    fetcher: fred
+    series: "NAEXKP01GBQ657S"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/NAEXKP01GBQ657S"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    caveat_en: "Quarter-on-quarter growth from OECD via FRED; early UK GDP is subject to material later revisions."
+    caveat_zh: "OECD经FRED提供的实际GDP环比；英国GDP初值后续修订可能较大。"
+  - id: nominal_gdp_gbp
+    section: national_accounts
+    label_en: "Nominal GDP"
+    label_zh: "名义GDP"
+    unit: "GBP mn"
+    fetcher: fred
+    series: "UKNGDP"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/UKNGDP"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    caveat_en: "Nominal level is useful for scale and debt ratios, but not for real activity momentum."
+    caveat_zh: "名义水平适合观察规模和债务比率，但不适合直接判断实际活动动能。"
+  - id: private_consumption_qoq
+    section: national_accounts
+    label_en: "Real Private Consumption"
+    label_zh: "实际私人消费环比"
+    unit: "%"
+    fetcher: fred
+    series: "NAEXKP02GBQ657S"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/NAEXKP02GBQ657S"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    caveat_en: "Demand-side national-accounts component; revised alongside GDP balancing."
+    caveat_zh: "需求端国民账户分项；会随GDP平衡过程修订。"
+  - id: gfcf_qoq
+    section: national_accounts
+    label_en: "Real Gross Fixed Capital Formation"
+    label_zh: "实际固定资本形成环比"
+    unit: "%"
+    fetcher: fred
+    series: "NAEXKP04GBQ657S"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/NAEXKP04GBQ657S"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    caveat_en: "Investment is volatile and revision-prone; treat quarterly swings cautiously."
+    caveat_zh: "投资波动较大且容易修订；季度波动需谨慎解读。"
+  - id: industrial_production
+    section: monthly_output
+    label_en: "Industrial Production"
+    label_zh: "工业生产指数"
+    unit: "index"
+    fetcher: fred
+    series: "GBRPROINDMISMEI"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/GBRPROINDMISMEI"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "FRED/OECD monthly IP currently lags ONS releases; use as a reproducible skeleton, not the release-day source."
+    caveat_zh: "FRED/OECD月度工业生产相对ONS发布滞后；适合作为可复跑骨架，不适合作为发布日来源。"
+  - id: retail_sales_yoy
+    section: monthly_output
+    label_en: "Retail Sales Volume Growth"
+    label_zh: "零售销售量同比"
+    unit: "%"
+    fetcher: fred
+    series: "SLRTTO01GBQ659S"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/SLRTTO01GBQ659S"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    caveat_en: "Quarterly retail-volume growth via OECD; ONS monthly retail sales is preferable for tactical nowcasting."
+    caveat_zh: "OECD季度零售量增速；战术性nowcast应优先使用ONS月度零售销售。"
+  - id: consumer_confidence
+    section: monthly_output
+    label_en: "Consumer Confidence"
+    label_zh: "消费者信心"
+    unit: "index"
+    fetcher: fred
+    series: "CSCICP02GBM460S"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/CSCICP02GBM460S"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "Survey-like signal; helpful because UK hard activity data can be revised substantially."
+    caveat_zh: "类调查信号；由于英国硬数据修订较大，该指标对实时判断有帮助。"
+  - id: composite_leading_indicator
+    section: monthly_output
+    label_en: "Composite Leading Indicator"
+    label_zh: "综合领先指标"
+    unit: "index"
+    fetcher: fred
+    series: "GBRLOLITOAASTSAM"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/GBRLOLITOAASTSAM"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "OECD CLI is not a GS CAI substitute, but it is a reproducible public leading-cycle proxy."
+    caveat_zh: "OECD CLI不能替代GS CAI，但它是可复跑的公开领先周期指标。"
+  - id: real_house_prices
+    section: housing_construction
+    label_en: "Real Residential Property Prices"
+    label_zh: "实际住宅价格"
+    unit: "index"
+    fetcher: fred
+    series: "QGBR628BIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QGBR628BIS"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    caveat_en: "BIS real residential property price index; smoother and less release-sensitive than Nationwide/Halifax monthly indices."
+    caveat_zh: "BIS实际住宅价格指数；比Nationwide/Halifax月度指数更平滑、发布敏感度更低。"
+  - id: nominal_house_prices
+    section: housing_construction
+    label_en: "Nominal Residential Property Prices"
+    label_zh: "名义住宅价格"
+    unit: "index"
+    fetcher: fred
+    series: "QGBN628BIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QGBN628BIS"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    caveat_en: "BIS nominal residential property price index; does not replicate the report's individual house-price vendor indices."
+    caveat_zh: "BIS名义住宅价格指数；并不等同于报告中逐个房价供应商指数。"
+  - id: exports_qoq
+    section: external
+    label_en: "Real Exports"
+    label_zh: "实际出口环比"
+    unit: "%"
+    fetcher: fred
+    series: "NAEXKP06GBQ657S"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/NAEXKP06GBQ657S"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    caveat_en: "National-accounts exports; monthly goods-trade detail is not yet wired."
+    caveat_zh: "国民账户出口；尚未接入月度货物贸易明细。"
+  - id: imports_qoq
+    section: external
+    label_en: "Real Imports"
+    label_zh: "实际进口环比"
+    unit: "%"
+    fetcher: fred
+    series: "NAEXKP07GBQ657S"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/NAEXKP07GBQ657S"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    caveat_en: "National-accounts imports; trade contribution can change after GDP revisions."
+    caveat_zh: "国民账户进口；贸易对GDP的贡献可能随后续修订变化。"
+  - id: gbp_reer
+    section: external
+    label_en: "Sterling Real Effective Exchange Rate"
+    label_zh: "英镑实际有效汇率"
+    unit: "index"
+    fetcher: fred
+    series: "RBGBBIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/RBGBBIS"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "BIS REER is the clean public sterling competitiveness measure used here for the FCI-style FX channel."
+    caveat_zh: "BIS REER是这里用于FCI式汇率渠道的公开英镑竞争力指标。"
+  - id: unemployment_rate
+    section: labour_market
+    label_en: "Unemployment Rate"
+    label_zh: "失业率"
+    unit: "%"
+    fetcher: fred
+    series: "LRHUTTTTGBM156S"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/LRHUTTTTGBM156S"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ILO-style unemployment via OECD/FRED; ONS LMS remains the release-day reference."
+    caveat_zh: "OECD/FRED的ILO式失业率；ONS LMS仍是发布日基准来源。"
+  - id: employment_total
+    section: labour_market
+    label_en: "Employment Total"
+    label_zh: "总就业人数"
+    unit: "persons"
+    fetcher: fred
+    series: "LFEMTTTTGBQ647S"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/LFEMTTTTGBQ647S"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    caveat_en: "Quarterly OECD employment total; not a substitute for the full ONS labour-market release."
+    caveat_zh: "OECD季度总就业人数；不能替代完整ONS劳动力市场发布。"
+  - id: employment_rate_15_64
+    section: labour_market
+    label_en: "Employment Rate, Ages 15-64"
+    label_zh: "15-64岁就业率"
+    unit: "%"
+    fetcher: fred
+    series: "LREM64TTGBQ156S"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/LREM64TTGBQ156S"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    caveat_en: "Employment-rate measure gives cleaner scale context than employment level alone."
+    caveat_zh: "就业率比就业人数水平更便于观察劳动力市场规模背景。"
+  - id: cpi_yoy
+    section: prices
+    label_en: "Headline CPI Inflation"
+    label_zh: "整体CPI通胀"
+    unit: "%"
+    fetcher: fred
+    series: "CPALTT01GBM659N"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/CPALTT01GBM659N"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "CPI is the MPC target measure; FRED/OECD can lag the ONS release calendar."
+    caveat_zh: "CPI是MPC目标指标；FRED/OECD可能滞后ONS发布时间表。"
+  - id: core_cpi_yoy
+    section: prices
+    label_en: "Core CPI Inflation"
+    label_zh: "核心CPI通胀"
+    unit: "%"
+    fetcher: fred
+    series: "CPGRLE01GBM659N"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/CPGRLE01GBM659N"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "Core CPI helps separate domestic persistence from headline energy/import noise."
+    caveat_zh: "核心CPI有助于把国内通胀粘性与能源/进口噪音区分开。"
+  - id: producer_prices
+    section: prices
+    label_en: "Manufacturing Producer Prices"
+    label_zh: "制造业生产者价格"
+    unit: "%"
+    fetcher: fred
+    series: "GBRPIEAMP01GPM"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/GBRPIEAMP01GPM"
+    frequency: "monthly"
+    start_date: "2009-01-01"
+    quality_floor: "low_confidence"
+    caveat_en: "This FRED/OECD PPI growth series is stale versus ONS PPI; kept only as a placeholder chart for the GS prices section."
+    caveat_zh: "该FRED/OECD PPI增速序列相对ONS PPI明显滞后；这里只作为GS价格部分的占位图。"
+  - id: bank_rate
+    section: monetary_financial
+    label_en: "Bank Rate"
+    label_zh: "英国央行Bank Rate"
+    unit: "%"
+    fetcher: boe_bank_rate
+    series: "IUDBEDR"
+    source_name: "Bank of England"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/Bank-Rate.asp?hl=en-GB"
+    frequency: "event"
+    start_date: "1997-01-01"
+    caveat_en: "Official BoE Bank Rate history; scraped with a browser User-Agent because the legacy database page blocks generic clients."
+    caveat_zh: "BoE官方Bank Rate历史；该旧数据库页面会阻挡普通客户端，因此使用浏览器User-Agent抓取。"
+  - id: short_rate_3m
+    section: monetary_financial
+    label_en: "3-Month Interbank Rate"
+    label_zh: "3个月银行间利率"
+    unit: "%"
+    fetcher: fred
+    series: "IR3TIB01GBM156N"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/IR3TIB01GBM156N"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "Used for the GS FCI-style short-rate channel; not the same as official Bank Rate."
+    caveat_zh: "用于GS FCI式短端利率渠道；不等同于官方Bank Rate。"
+  - id: long_rate_10y
+    section: monetary_financial
+    label_en: "Long-Term Government Bond Yield"
+    label_zh: "长期政府债收益率"
+    unit: "%"
+    fetcher: fred
+    series: "IRLTLT01GBM156N"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/IRLTLT01GBM156N"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "Public long-rate channel for financial conditions; not a fitted GS FCI."
+    caveat_zh: "金融条件中的公开长端利率渠道；不是拟合后的GS FCI。"
+  - id: equity_prices
+    section: monetary_financial
+    label_en: "UK Share Prices"
+    label_zh: "英国股票价格指数"
+    unit: "index"
+    fetcher: fred
+    series: "SPASTT01GBM661N"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/SPASTT01GBM661N"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "Equity-price channel for a public FCI dashboard; the GS UK FCI used FTSE All-Share and proprietary weights."
+    caveat_zh: "公开FCI仪表盘中的股票价格渠道；GS UK FCI使用FTSE All-Share和专有权重。"
+  - id: broad_money_m3_yoy
+    section: monetary_financial
+    label_en: "Broad Money Growth"
+    label_zh: "广义货币同比"
+    unit: "%"
+    fetcher: fred
+    series: "GBRMABMM301GYSAM"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/GBRMABMM301GYSAM"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "Broad money via OECD/FRED; BoE M4 is the UK-native monetary aggregate."
+    caveat_zh: "OECD/FRED广义货币；BoE M4才是英国本土货币口径。"
+  - id: consumer_credit
+    section: monetary_financial
+    label_en: "Consumer Credit Growth"
+    label_zh: "消费信贷增速"
+    unit: "%"
+    fetcher: fred
+    series: "CCUSMA02GBM618N"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/CCUSMA02GBM618N"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "Credit flow channel from OECD/FRED; BoE lending releases remain the preferred native source."
+    caveat_zh: "OECD/FRED信贷流量渠道；BoE信贷发布仍是首选本土来源。"
+  - id: reserves_ex_gold
+    section: monetary_financial
+    label_en: "Official Reserves ex Gold"
+    label_zh: "官方储备不含黄金"
+    unit: "USD mn"
+    fetcher: fred
+    series: "TRESEGGBM052N"
+    source_name: "FRED / IMF"
+    source_url: "https://fred.stlouisfed.org/series/TRESEGGBM052N"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "IMF reserve series via FRED; useful for external liquidity context, not a core UK rates driver."
+    caveat_zh: "IMF经FRED提供的储备序列；适合观察外部流动性背景，不是英国利率核心驱动。"
+  - id: government_balance_gdp
+    section: fiscal_policy
+    label_en: "General Government Net Lending/Borrowing"
+    label_zh: "广义政府净借出/借入"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "GGNLBAGBA188N"
+    source_name: "FRED / IMF"
+    source_url: "https://fred.stlouisfed.org/series/GGNLBAGBA188N"
+    frequency: "annual"
+    start_date: "1997-01-01"
+    caveat_en: "Annual IMF general-government concept; not the same as monthly PSNB."
+    caveat_zh: "IMF年度广义政府口径；不同于月度PSNB。"
+  - id: government_debt_gdp
+    section: fiscal_policy
+    label_en: "General Government Gross Debt"
+    label_zh: "广义政府总债务"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "GGGDTAGBA188N"
+    source_name: "FRED / IMF"
+    source_url: "https://fred.stlouisfed.org/series/GGGDTAGBA188N"
+    frequency: "annual"
+    start_date: "1997-01-01"
+    caveat_en: "Annual IMF debt ratio; the GS guide warns that UK PSND and general-government debt differ by sector boundary and liquid-asset treatment."
+    caveat_zh: "IMF年度债务率；GS指南提醒英国PSND与广义政府债务会因部门边界和流动资产处理而不同。"
+
+data_gaps:
+  - section: monthly_output
+    item_en: "GS UK CAI, GS-MAP, GS Surprise Index, and official GS FCI"
+    item_zh: "GS UK CAI、GS-MAP、GS Surprise Index与官方GS FCI"
+    status_en: "Proprietary GS products. This page charts public components only."
+    status_zh: "GS专有产品；本页只绘制公开可复跑组成项。"
+  - section: monthly_output
+    item_en: "Manufacturing, construction, services, and composite PMI"
+    item_zh: "制造业、建筑业、服务业与综合PMI"
+    status_en: "Important in the GS framework, but not yet wired because S&P Global PMI history is vendor-controlled."
+    status_zh: "在GS框架中很重要，但S&P Global PMI历史数据受供应商控制，暂未接入。"
+  - section: monthly_output
+    item_en: "CBI Distributive Trades, CBI Industrial Trends, BCC QES, BRC/KPMG Retail Sales Monitor"
+    item_zh: "CBI分销贸易、CBI工业趋势、BCC QES、BRC/KPMG零售销售监测"
+    status_en: "Survey sources need separate adapters and licensing checks."
+    status_zh: "调查源需要单独adapter并核验授权。"
+  - section: housing_construction
+    item_en: "Nationwide, Halifax, Rightmove, Hometrack, RICS, DCLG starts/completions"
+    item_zh: "Nationwide、Halifax、Rightmove、Hometrack、RICS、DCLG开工/竣工"
+    status_en: "Vendor/official endpoints not yet validated; BIS house prices are used as the public skeleton."
+    status_zh: "供应商/官方endpoint尚未验证；当前用BIS房价作为公开骨架。"
+  - section: labour_market
+    item_en: "Claimant Count, vacancies, redundancies, hours worked, Average Weekly Earnings, pay settlements"
+    item_zh: "申领失业救济人数、职位空缺、裁员、工时、平均周薪、工资协议"
+    status_en: "ONS labour-market adapter required for release-day fidelity."
+    status_zh: "需要ONS劳动力市场adapter才能达到发布日口径。"
+  - section: prices
+    item_en: "RPI/RPIX, ONS live PPI, petrol prices, inflation expectations surveys, index-linked gilt breakevens"
+    item_zh: "RPI/RPIX、ONS实时PPI、汽油价格、通胀预期调查、指数挂钩国债隐含通胀"
+    status_en: "GS-relevant, but not yet mapped to stable public API endpoints."
+    status_zh: "对GS框架重要，但尚未映射到稳定公开API。"
+  - section: monetary_financial
+    item_en: "BoE M4, M4 lending, Trends in Lending, quoted household rates, Credit Conditions Survey, HEW"
+    item_zh: "BoE M4、M4 lending、Trends in Lending、居民报价利率、信贷条件调查、住房权益提取"
+    status_en: "Requires a Bank of England/IUD adapter beyond the Bank Rate table."
+    status_zh: "需要Bank of England/IUD adapter；当前仅接入Bank Rate表。"
+  - section: fiscal_policy
+    item_en: "Monthly PSNB, PSNCR, PSND, OBR analysis"
+    item_zh: "月度PSNB、PSNCR、PSND、OBR分析"
+    status_en: "Not replaced with IMF annual proxies; needs an ONS public-finance adapter."
+    status_zh: "不使用IMF年度口径冒充；需要ONS公共财政adapter。"
