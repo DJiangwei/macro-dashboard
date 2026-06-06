@@ -102,10 +102,10 @@ series and marks it in the UI with quality footnotes. This keeps every country
 page structurally complete while making uncertain data visible rather than
 silently hiding it.
 
-`make build-v4` also builds the China and UK data-first pages from
-`config/china_indicators.yaml` and `config/uk_indicators.yaml` via their
-dedicated scripts, then updates `output/index.html` so the archive page stays
-synchronized.
+`make build-v4` also builds the China, UK, and US data-first pages from
+`config/china_indicators.yaml`, `config/uk_indicators.yaml`, and
+`config/us_indicators.yaml` via their dedicated scripts, then updates
+`output/index.html` so the archive page stays synchronized.
 
 To rebuild and publish the site:
 
@@ -130,7 +130,7 @@ Supported optional sources:
 
 | Variable | Purpose |
 |---|---|
-| `FRED_API_KEY` | Enables the official FRED API for the UK page. If unset, `scripts/build_uk_dashboard.py` falls back to FRED's public graph CSV endpoint. |
+| `FRED_API_KEY` | Enables the official FRED API for the UK and US pages. If unset, their scripts fall back to FRED's public graph CSV endpoint. For the US page, set this key for complete regular refreshes; the generator refuses to overwrite output if the fallback returns fewer than 55 charts. |
 | `GIE_AGSI_API_KEY` | Enables GIE AGSI+ country-level gas-storage fill data for `gas_storage_level`. |
 | `GIE_AGSI_BASE_URL` | Optional override for the AGSI+ API base URL. Defaults to `https://agsi.gie.eu/api`. |
 | `STOOQ_API_KEY` | Enables the default Stooq CSV URL template if it works for the user's Stooq account. |

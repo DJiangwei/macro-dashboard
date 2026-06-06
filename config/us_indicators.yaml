@@ -1,0 +1,1033 @@
+sections:
+  data_quirks:
+    title_en: "Data Quirks & Release Discipline"
+    title_zh: "数据特性与发布纪律"
+    report_logic_en: "The GS guide opens with revisions, seasonal adjustment, and sequential-versus-year-over-year reporting. The dashboard keeps this as a standing caveat for all high-frequency US releases."
+    report_logic_zh: "GS指南开篇强调修订、季调以及环比/同比口径差异。该页面把这些作为所有美国高频数据的基础提示。"
+  gs_market_indexes:
+    title_en: "Market Impact & GS Proprietary Indexes"
+    title_zh: "市场影响与GS专有指数"
+    report_logic_en: "The report highlights market-moving releases and GS proprietary gauges such as GSFCI, GSAI, and GSSI. Public component series are charted where possible; proprietary aggregates are tracked as gaps."
+    report_logic_zh: "报告强调市场敏感数据以及GSFCI、GSAI、GSSI等GS专有指标。公开组成项尽量绘图；专有综合指标列入缺口。"
+  nipa:
+    title_en: "GDP, Income & NIPA"
+    title_zh: "GDP、收入与NIPA"
+    report_logic_en: "BEA national accounts anchor the macro story: real GDP, nominal GDP, personal income, disposable income, and corporate profits."
+    report_logic_zh: "BEA国民账户构成宏观叙事基准：实际GDP、名义GDP、个人收入、可支配收入与企业利润。"
+  production_orders:
+    title_en: "Production, Orders & Inventories"
+    title_zh: "生产、订单与库存"
+    report_logic_en: "The GS report uses ISM, regional Fed surveys, durable goods, factory orders, industrial production, capacity utilization, and inventories to read cyclical momentum."
+    report_logic_zh: "GS报告使用ISM、地区联储调查、耐用品、工厂订单、工业生产、产能利用率和库存来判断周期动能。"
+  consumer:
+    title_en: "Consumer Spending & Confidence"
+    title_zh: "消费支出与信心"
+    report_logic_en: "Retail sales, PCE, autos, and confidence surveys capture the US consumer, the largest demand component in GDP."
+    report_logic_zh: "零售、PCE、汽车和信心调查刻画美国消费者，而消费是GDP中最大的需求分项。"
+  housing:
+    title_en: "Housing & Construction"
+    title_zh: "住房与建筑"
+    report_logic_en: "Housing starts, permits, home sales, construction spending, house prices, and mortgage stress define the housing transmission channel."
+    report_logic_zh: "开工、许可、新房/成屋销售、建筑支出、房价与按揭压力共同定义住房传导渠道。"
+  external:
+    title_en: "Trade & International Capital Flows"
+    title_zh: "贸易与国际资本流动"
+    report_logic_en: "The report separates goods trade, current account, and TIC capital-flow data; this v1 charts the public external-balance skeleton."
+    report_logic_zh: "报告区分货物贸易、经常账户和TIC资本流；v1先绘制公开可复跑的外部平衡骨架。"
+  employment:
+    title_en: "Employment"
+    title_zh: "就业"
+    report_logic_en: "Payrolls, unemployment, labor-force participation, hours, wages, claims, and JOLTS are core US market-moving labor indicators."
+    report_logic_zh: "非农、失业率、劳动参与率、工时、工资、失业救济申请和JOLTS是美国最核心的市场敏感劳动力指标。"
+  prices_wages:
+    title_en: "Prices, Wages & Productivity"
+    title_zh: "价格、工资与生产率"
+    report_logic_en: "CPI, PCE inflation, GDP deflator, ECI, productivity, unit labor costs, PPI, and trade prices connect inflation to Fed reaction."
+    report_logic_zh: "CPI、PCE通胀、GDP平减指数、ECI、生产率、单位劳动成本、PPI和进出口价格共同连接通胀与美联储反应。"
+  monetary_financial:
+    title_en: "Monetary & Financial Data"
+    title_zh: "货币与金融数据"
+    report_logic_en: "Money, credit, SLOOS, household debt service, and household net worth extend the report's financial-data section into a modern balance-sheet lens."
+    report_logic_zh: "货币、信贷、SLOOS、居民债务负担和居民净资产把报告中的金融数据章节扩展为现代资产负债表视角。"
+  fed_policy:
+    title_en: "Federal Reserve Policy"
+    title_zh: "美联储政策"
+    report_logic_en: "Modern US policy plumbing now requires effective fed funds, target range, IORB, SOFR, and the Fed balance sheet, not only FOMC statements and discount tools."
+    report_logic_zh: "现代美国政策框架需要观察有效联邦基金利率、目标区间、IORB、SOFR与美联储资产负债表，而不只是FOMC声明和贴现工具。"
+  fiscal:
+    title_en: "Federal Government Finances"
+    title_zh: "联邦政府财政"
+    report_logic_en: "Monthly Treasury Statement data, federal debt, debt/GDP, and fiscal-year deficits provide the public fiscal anchor."
+    report_logic_zh: "月度财政部报表、联邦债务、债务/GDP和财年赤字提供公开财政锚。"
+
+min_chart_count: 55
+
+indicators:
+  - id: real_gdp_growth
+    section: nipa
+    label_en: "Real GDP Growth"
+    label_zh: "实际GDP增速"
+    unit: "%"
+    fetcher: fred
+    series: "A191RL1Q225SBEA"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/A191RL1Q225SBEA"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "BEA annualized quarter-on-quarter real GDP growth; advance estimates are revised."
+    caveat_zh: "BEA实际GDP年化环比；初值后续会修订。"
+  - id: real_gdp_level
+    section: nipa
+    label_en: "Real GDP Level"
+    label_zh: "实际GDP水平"
+    unit: "USD bn"
+    fetcher: fred
+    series: "GDPC1"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/GDPC1"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Chained-dollar real GDP level; useful for scale and cycle depth."
+    caveat_zh: "链式美元实际GDP水平；适合观察规模与周期深度。"
+  - id: nominal_gdp_growth
+    section: nipa
+    label_en: "Nominal GDP Growth"
+    label_zh: "名义GDP同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "GDP"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/GDP"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Derived year-over-year growth from BEA nominal GDP level."
+    caveat_zh: "由BEA名义GDP水平派生的同比增速。"
+  - id: personal_income_growth
+    section: nipa
+    label_en: "Personal Income Growth"
+    label_zh: "个人收入同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "PI"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/PI"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Derived year-over-year growth from BEA personal income."
+    caveat_zh: "由BEA个人收入水平派生的同比增速。"
+  - id: real_disposable_income_growth
+    section: nipa
+    label_en: "Real Disposable Income Growth"
+    label_zh: "实际可支配收入同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "DSPIC96"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/DSPIC96"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Real disposable personal income is central to household spending capacity."
+    caveat_zh: "实际可支配个人收入是居民消费能力的核心指标。"
+  - id: corporate_profits_growth
+    section: nipa
+    label_en: "Corporate Profits Growth"
+    label_zh: "企业利润同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "CP"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/CP"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "NIPA corporate profits; not identical to S&P 500 earnings."
+    caveat_zh: "NIPA企业利润；不同于标普500盈利。"
+  - id: industrial_production_growth
+    section: production_orders
+    label_en: "Industrial Production Growth"
+    label_zh: "工业生产同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "INDPRO"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/INDPRO"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Derived year-over-year growth from Federal Reserve industrial production."
+    caveat_zh: "由美联储工业生产指数派生的同比增速。"
+  - id: capacity_utilization
+    section: production_orders
+    label_en: "Capacity Utilization"
+    label_zh: "产能利用率"
+    unit: "%"
+    fetcher: fred
+    series: "TCU"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/TCU"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Federal Reserve total industry capacity utilization."
+    caveat_zh: "美联储全部工业产能利用率。"
+  - id: durable_goods_orders_growth
+    section: production_orders
+    label_en: "Durable Goods Orders Growth"
+    label_zh: "耐用品订单同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "DGORDER"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/DGORDER"
+    frequency: "monthly"
+    start_date: "1992-02-01"
+    caveat_en: "Advance durable goods orders are volatile and revised."
+    caveat_zh: "耐用品订单初值波动较大且会修订。"
+  - id: factory_orders_growth
+    section: production_orders
+    label_en: "Manufacturers' New Orders Growth"
+    label_zh: "制造商新订单同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "AMTMNO"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/AMTMNO"
+    frequency: "monthly"
+    start_date: "1992-02-01"
+    caveat_en: "Total manufacturing new orders; often interpreted alongside ISM."
+    caveat_zh: "制造业总新订单；通常与ISM结合解读。"
+  - id: business_inventories_growth
+    section: production_orders
+    label_en: "Business Inventories Growth"
+    label_zh: "商业库存同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "BUSINV"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/BUSINV"
+    frequency: "monthly"
+    start_date: "1992-01-01"
+    caveat_en: "Inventories can amplify GDP swings through stockbuilding."
+    caveat_zh: "库存变化会通过补库/去库放大GDP波动。"
+  - id: inventory_sales_ratio
+    section: production_orders
+    label_en: "Inventory-to-Sales Ratio"
+    label_zh: "库存销售比"
+    unit: "ratio"
+    fetcher: fred
+    series: "ISRATIO"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/ISRATIO"
+    frequency: "monthly"
+    start_date: "1992-01-01"
+    caveat_en: "Inventory-sales balance helps judge whether production is running ahead of demand."
+    caveat_zh: "库存销售平衡有助于判断生产是否跑在需求前面。"
+  - id: philly_fed_outlook
+    section: production_orders
+    label_en: "Philadelphia Fed Manufacturing Outlook"
+    label_zh: "费城联储制造业展望"
+    unit: "diffusion"
+    fetcher: fred
+    series: "GACDFSA066MSFRBPHI"
+    source_name: "FRED / Philadelphia Fed"
+    source_url: "https://fred.stlouisfed.org/series/GACDFSA066MSFRBPHI"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Regional Fed survey used as a public substitute for some survey momentum in the GS framework."
+    caveat_zh: "地区联储调查可作为GS框架中部分调查动能的公开替代观察。"
+  - id: retail_sales_growth
+    section: consumer
+    label_en: "Retail Sales Growth"
+    label_zh: "零售销售同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "RSAFS"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/RSAFS"
+    frequency: "monthly"
+    start_date: "1992-01-01"
+    caveat_en: "Derived year-over-year growth from advance retail sales."
+    caveat_zh: "由零售销售初值水平派生的同比增速。"
+  - id: retail_ex_auto_growth
+    section: consumer
+    label_en: "Retail Sales ex Autos Growth"
+    label_zh: "扣除汽车零售同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "RSXFS"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/RSXFS"
+    frequency: "monthly"
+    start_date: "1992-01-01"
+    caveat_en: "Ex-auto retail sales reduce vehicle-driven volatility."
+    caveat_zh: "扣除汽车的零售销售可降低汽车项波动。"
+  - id: nominal_pce_growth
+    section: consumer
+    label_en: "Nominal PCE Growth"
+    label_zh: "名义PCE同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "PCE"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/PCE"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "PCE is broader than retail sales and covers services."
+    caveat_zh: "PCE比零售销售更广，覆盖服务消费。"
+  - id: real_pce_growth
+    section: consumer
+    label_en: "Real PCE Growth"
+    label_zh: "实际PCE同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "PCEC96"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/PCEC96"
+    frequency: "monthly"
+    start_date: "2007-01-01"
+    caveat_en: "Real PCE is the cleanest monthly read on consumption volume."
+    caveat_zh: "实际PCE是观察月度消费量的最干净口径。"
+  - id: vehicle_sales
+    section: consumer
+    label_en: "Light Vehicle Sales"
+    label_zh: "轻型车销量"
+    unit: "mn SAAR"
+    fetcher: fred
+    series: "TOTALSA"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/TOTALSA"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Auto sales are an early read on durable-consumption momentum."
+    caveat_zh: "汽车销量是耐用品消费动能的早期信号。"
+  - id: consumer_confidence_oecd
+    section: consumer
+    label_en: "Consumer Confidence"
+    label_zh: "消费者信心"
+    unit: "index"
+    fetcher: fred
+    series: "CSCICP03USM665S"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/CSCICP03USM665S"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "OECD confidence measure; Conference Board history is not wired in v1."
+    caveat_zh: "OECD信心指标；Conference Board历史序列v1暂未接入。"
+  - id: michigan_sentiment
+    section: consumer
+    label_en: "University of Michigan Sentiment"
+    label_zh: "密歇根消费者信心"
+    unit: "index"
+    fetcher: fred
+    series: "UMCSENT"
+    source_name: "FRED / University of Michigan"
+    source_url: "https://fred.stlouisfed.org/series/UMCSENT"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "University of Michigan sentiment is one of the report's consumer-confidence gauges."
+    caveat_zh: "密歇根消费者信心是报告中的消费者信心指标之一。"
+  - id: housing_starts
+    section: housing
+    label_en: "Housing Starts"
+    label_zh: "新屋开工"
+    unit: "k SAAR"
+    fetcher: fred
+    series: "HOUST"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/HOUST"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Starts are volatile and weather-sensitive, as the GS report stresses."
+    caveat_zh: "新屋开工波动大且受天气影响，GS报告对此特别强调。"
+  - id: building_permits
+    section: housing
+    label_en: "Building Permits"
+    label_zh: "建筑许可"
+    unit: "k SAAR"
+    fetcher: fred
+    series: "PERMIT"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/PERMIT"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Permits are often a cleaner forward-looking housing signal than starts."
+    caveat_zh: "建筑许可通常比开工更适合作为前瞻住房信号。"
+  - id: new_home_sales
+    section: housing
+    label_en: "New Home Sales"
+    label_zh: "新房销售"
+    unit: "k SAAR"
+    fetcher: fred
+    series: "HSN1F"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/HSN1F"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "New home sales are volatile and heavily revised."
+    caveat_zh: "新房销售波动大且修订明显。"
+  - id: construction_spending_growth
+    section: housing
+    label_en: "Construction Spending Growth"
+    label_zh: "建筑支出同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "TTLCONS"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/TTLCONS"
+    frequency: "monthly"
+    start_date: "1993-01-01"
+    caveat_en: "Derived growth from total construction spending."
+    caveat_zh: "由总建筑支出水平派生的同比增速。"
+  - id: case_shiller_20_city_growth
+    section: housing
+    label_en: "Case-Shiller 20-City Home Prices"
+    label_zh: "Case-Shiller 20城房价同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "SPCS20RSA"
+    source_name: "FRED / S&P CoreLogic Case-Shiller"
+    source_url: "https://fred.stlouisfed.org/series/SPCS20RSA"
+    frequency: "monthly"
+    start_date: "2000-01-01"
+    caveat_en: "Derived year-over-year growth; Case-Shiller is lagged but useful for price trend."
+    caveat_zh: "派生同比增速；Case-Shiller有滞后但适合观察房价趋势。"
+  - id: homeownership_rate
+    section: housing
+    label_en: "Homeownership Rate"
+    label_zh: "住房自有率"
+    unit: "%"
+    fetcher: fred
+    series: "RHORUSQ156N"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/RHORUSQ156N"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Homeownership helps contextualize household housing exposure."
+    caveat_zh: "住房自有率有助于理解居民住房风险敞口。"
+  - id: mortgage_delinquency
+    section: housing
+    label_en: "Single-Family Mortgage Delinquency"
+    label_zh: "独栋住宅按揭逾期率"
+    unit: "%"
+    fetcher: fred
+    series: "DRSFRMACBS"
+    source_name: "FRED / MBA"
+    source_url: "https://fred.stlouisfed.org/series/DRSFRMACBS"
+    frequency: "quarterly"
+    start_date: "1991-01-01"
+    caveat_en: "Mortgage stress channel added to modernize the report's housing section."
+    caveat_zh: "按揭压力渠道用于现代化报告中的住房部分。"
+  - id: goods_trade_balance
+    section: external
+    label_en: "Goods Trade Balance"
+    label_zh: "货物贸易差额"
+    unit: "USD mn"
+    fetcher: fred
+    series: "BOPGSTB"
+    source_name: "FRED / Census-BEA"
+    source_url: "https://fred.stlouisfed.org/series/BOPGSTB"
+    frequency: "monthly"
+    start_date: "1992-01-01"
+    caveat_en: "Monthly goods trade balance; negative values indicate deficit."
+    caveat_zh: "月度货物贸易差额；负值表示赤字。"
+  - id: current_account_balance
+    section: external
+    label_en: "Current Account Balance"
+    label_zh: "经常账户差额"
+    unit: "USD mn"
+    fetcher: fred
+    series: "IEABC"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/IEABC"
+    frequency: "quarterly"
+    start_date: "1999-01-01"
+    caveat_en: "Quarterly current account balance from BEA international transactions."
+    caveat_zh: "BEA国际交易账户中的季度经常账户差额。"
+  - id: net_iip
+    section: external
+    label_en: "Net International Investment Position"
+    label_zh: "净国际投资头寸"
+    unit: "USD mn"
+    fetcher: fred
+    series: "IIPUSNETIQ"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/IIPUSNETIQ"
+    frequency: "quarterly"
+    start_date: "2006-01-01"
+    caveat_en: "Modern external balance-sheet lens beyond the report's 2008 scope."
+    caveat_zh: "现代外部资产负债表视角，超出报告2008年的原始范围。"
+  - id: nonfarm_payrolls_change
+    section: employment
+    label_en: "Nonfarm Payrolls Change"
+    label_zh: "非农就业月度变化"
+    unit: "k m/m"
+    transform: "diff"
+    fetcher: fred
+    series: "PAYEMS"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/PAYEMS"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Derived monthly change from total nonfarm payroll employment."
+    caveat_zh: "由非农就业总人数派生的月度变化。"
+  - id: unemployment_rate
+    section: employment
+    label_en: "Unemployment Rate"
+    label_zh: "失业率"
+    unit: "%"
+    fetcher: fred
+    series: "UNRATE"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/UNRATE"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Household-survey unemployment rate."
+    caveat_zh: "家庭调查口径失业率。"
+  - id: labor_force_participation
+    section: employment
+    label_en: "Labor Force Participation"
+    label_zh: "劳动参与率"
+    unit: "%"
+    fetcher: fred
+    series: "CIVPART"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/CIVPART"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Participation helps separate unemployment from labor-supply shifts."
+    caveat_zh: "劳动参与率有助于区分失业变化和劳动力供给变化。"
+  - id: manufacturing_hours
+    section: employment
+    label_en: "Manufacturing Weekly Hours"
+    label_zh: "制造业周工时"
+    unit: "hours"
+    fetcher: fred
+    series: "AWHMAN"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/AWHMAN"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Hours are an early signal of labor demand before headcount changes."
+    caveat_zh: "工时是雇佣人数变化前的早期劳动力需求信号。"
+  - id: hourly_earnings_growth
+    section: employment
+    label_en: "Average Hourly Earnings Growth"
+    label_zh: "平均时薪同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "CES0500000003"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/CES0500000003"
+    frequency: "monthly"
+    start_date: "2006-03-01"
+    caveat_en: "Derived year-over-year growth from private average hourly earnings."
+    caveat_zh: "由私营平均时薪派生的同比增速。"
+  - id: initial_jobless_claims
+    section: employment
+    label_en: "Initial Jobless Claims"
+    label_zh: "首次申领失业救济"
+    unit: "persons"
+    fetcher: fred
+    series: "ICSA"
+    source_name: "FRED / Department of Labor"
+    source_url: "https://fred.stlouisfed.org/series/ICSA"
+    frequency: "weekly"
+    start_date: "1990-01-01"
+    caveat_en: "Weekly claims are one of the fastest labor-market stress indicators."
+    caveat_zh: "周度初请是最快的劳动力市场压力指标之一。"
+  - id: continuing_claims
+    section: employment
+    label_en: "Continuing Jobless Claims"
+    label_zh: "续请失业救济"
+    unit: "persons"
+    fetcher: fred
+    series: "CCSA"
+    source_name: "FRED / Department of Labor"
+    source_url: "https://fred.stlouisfed.org/series/CCSA"
+    frequency: "weekly"
+    start_date: "1990-01-01"
+    caveat_en: "Continuing claims indicate persistence in unemployment stress."
+    caveat_zh: "续请反映失业压力的持续性。"
+  - id: jolts_openings
+    section: employment
+    label_en: "JOLTS Job Openings"
+    label_zh: "JOLTS职位空缺"
+    unit: "k"
+    fetcher: fred
+    series: "JTSJOL"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/JTSJOL"
+    frequency: "monthly"
+    start_date: "2000-12-01"
+    caveat_en: "JOLTS openings measure labor-demand tightness."
+    caveat_zh: "JOLTS职位空缺衡量劳动力需求紧张程度。"
+  - id: jolts_quits
+    section: employment
+    label_en: "JOLTS Quits Rate"
+    label_zh: "JOLTS离职率"
+    unit: "%"
+    fetcher: fred
+    series: "JTSQUR"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/JTSQUR"
+    frequency: "monthly"
+    start_date: "2000-12-01"
+    caveat_en: "Quits rate is a wage-pressure and worker-confidence gauge."
+    caveat_zh: "离职率是工资压力和劳动者信心指标。"
+  - id: jolts_layoffs
+    section: employment
+    label_en: "JOLTS Layoffs & Discharges"
+    label_zh: "JOLTS裁员与解雇"
+    unit: "k"
+    fetcher: fred
+    series: "JTSLDL"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/JTSLDL"
+    frequency: "monthly"
+    start_date: "2000-12-01"
+    caveat_en: "Layoffs/discharges track employer-side stress."
+    caveat_zh: "裁员与解雇追踪雇主端压力。"
+  - id: cpi_inflation
+    section: prices_wages
+    label_en: "Headline CPI Inflation"
+    label_zh: "整体CPI通胀"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "CPIAUCSL"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/CPIAUCSL"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Derived year-over-year growth from CPI index."
+    caveat_zh: "由CPI指数派生的同比增速。"
+  - id: core_cpi_inflation
+    section: prices_wages
+    label_en: "Core CPI Inflation"
+    label_zh: "核心CPI通胀"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "CPILFESL"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/CPILFESL"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Core CPI excludes food and energy."
+    caveat_zh: "核心CPI剔除食品和能源。"
+  - id: pce_inflation
+    section: prices_wages
+    label_en: "Headline PCE Inflation"
+    label_zh: "整体PCE通胀"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "PCEPI"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/PCEPI"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Derived year-over-year growth from PCE price index."
+    caveat_zh: "由PCE价格指数派生的同比增速。"
+  - id: core_pce_inflation
+    section: prices_wages
+    label_en: "Core PCE Inflation"
+    label_zh: "核心PCE通胀"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "PCEPILFE"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/PCEPILFE"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Core PCE is the Fed's preferred inflation gauge."
+    caveat_zh: "核心PCE是美联储偏好的通胀指标。"
+  - id: gdp_deflator_inflation
+    section: prices_wages
+    label_en: "GDP Deflator Inflation"
+    label_zh: "GDP平减指数同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "GDPDEF"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/GDPDEF"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Broad domestic price measure from national accounts."
+    caveat_zh: "国民账户中的广义国内价格指标。"
+  - id: eci_wages_growth
+    section: prices_wages
+    label_en: "Employment Cost Index Wages"
+    label_zh: "ECI工资同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "ECIWAG"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/ECIWAG"
+    frequency: "quarterly"
+    start_date: "2001-01-01"
+    caveat_en: "ECI is a comprehensive and composition-resistant wage gauge."
+    caveat_zh: "ECI是更全面、受就业结构变化影响较小的工资指标。"
+  - id: productivity_growth
+    section: prices_wages
+    label_en: "Nonfarm Productivity Growth"
+    label_zh: "非农生产率同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "OPHNFB"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/OPHNFB"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Productivity helps interpret wage growth and unit labor costs."
+    caveat_zh: "生产率有助于解读工资增长和单位劳动成本。"
+  - id: unit_labor_cost_growth
+    section: prices_wages
+    label_en: "Unit Labor Cost Growth"
+    label_zh: "单位劳动成本同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "ULCNFB"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/ULCNFB"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Unit labor costs connect wages, productivity, and inflation pressure."
+    caveat_zh: "单位劳动成本连接工资、生产率和通胀压力。"
+  - id: ppi_inflation
+    section: prices_wages
+    label_en: "PPI All Commodities Inflation"
+    label_zh: "PPI全部商品同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "PPIACO"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/PPIACO"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Derived year-over-year growth from all-commodities PPI."
+    caveat_zh: "由全部商品PPI派生的同比增速。"
+  - id: final_demand_ppi_inflation
+    section: prices_wages
+    label_en: "Final Demand PPI Inflation"
+    label_zh: "最终需求PPI同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "PPIFIS"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/PPIFIS"
+    frequency: "monthly"
+    start_date: "2009-11-01"
+    caveat_en: "Modern final-demand PPI series; history starts after the report's original publication."
+    caveat_zh: "现代最终需求PPI序列；历史起点晚于报告原始发布时间。"
+  - id: import_price_inflation
+    section: prices_wages
+    label_en: "Import Price Inflation"
+    label_zh: "进口价格同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "IR"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/IR"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Trade-price channel for imported inflation."
+    caveat_zh: "进口通胀的贸易价格渠道。"
+  - id: export_price_inflation
+    section: prices_wages
+    label_en: "Export Price Inflation"
+    label_zh: "出口价格同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "IQ"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/IQ"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Export prices help complete the report's trade-price block."
+    caveat_zh: "出口价格补充报告中的贸易价格部分。"
+  - id: broad_money_growth
+    section: monetary_financial
+    label_en: "M2 Money Growth"
+    label_zh: "M2货币同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "M2SL"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/M2SL"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Derived year-over-year growth from M2."
+    caveat_zh: "由M2水平派生的同比增速。"
+  - id: monetary_base_growth
+    section: monetary_financial
+    label_en: "Monetary Base Growth"
+    label_zh: "货币基础同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "BOGMBASE"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/BOGMBASE"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Monetary base captures balance-sheet-driven liquidity swings."
+    caveat_zh: "货币基础反映资产负债表驱动的流动性变化。"
+  - id: consumer_credit_growth
+    section: monetary_financial
+    label_en: "Consumer Credit Growth"
+    label_zh: "消费信贷同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "TOTALSL"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/TOTALSL"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Derived growth from total consumer credit owned and securitized."
+    caveat_zh: "由总消费信贷水平派生的同比增速。"
+  - id: sloos_large_tightening
+    section: monetary_financial
+    label_en: "SLOOS Tightening, Large Firms"
+    label_zh: "SLOOS大型企业信贷收紧"
+    unit: "%"
+    fetcher: fred
+    series: "DRTSCILM"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/DRTSCILM"
+    frequency: "quarterly"
+    start_date: "1990-04-01"
+    caveat_en: "Net percentage of banks tightening C&I loan standards for large and middle-market firms."
+    caveat_zh: "对大中型企业商业贷款标准收紧的银行净比例。"
+  - id: household_debt_service
+    section: monetary_financial
+    label_en: "Household Debt Service Ratio"
+    label_zh: "居民债务服务比率"
+    unit: "%"
+    fetcher: fred
+    series: "TDSP"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/TDSP"
+    frequency: "quarterly"
+    start_date: "2005-01-01"
+    caveat_en: "Debt-service burden modernizes the report's household balance-sheet lens."
+    caveat_zh: "债务服务负担用于现代化报告中的居民资产负债表视角。"
+  - id: household_net_worth_growth
+    section: monetary_financial
+    label_en: "Household Net Worth Growth"
+    label_zh: "居民净资产同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "TNWBSHNO"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/TNWBSHNO"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Household net worth is a modern flow-of-funds balance-sheet anchor."
+    caveat_zh: "居民净资产是现代资金流量资产负债表锚。"
+  - id: effective_fed_funds
+    section: fed_policy
+    label_en: "Effective Federal Funds Rate"
+    label_zh: "有效联邦基金利率"
+    unit: "%"
+    fetcher: fred
+    series: "FEDFUNDS"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/FEDFUNDS"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Monthly effective fed funds rate."
+    caveat_zh: "月度有效联邦基金利率。"
+  - id: daily_fed_funds
+    section: fed_policy
+    label_en: "Daily Federal Funds Rate"
+    label_zh: "日度联邦基金利率"
+    unit: "%"
+    fetcher: fred
+    series: "DFF"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/DFF"
+    frequency: "daily"
+    start_date: "2000-01-01"
+    caveat_en: "Daily effective fed funds rate for policy plumbing."
+    caveat_zh: "用于观察政策传导管道的日度有效联邦基金利率。"
+  - id: fed_target_upper
+    section: fed_policy
+    label_en: "Fed Target Range Upper Bound"
+    label_zh: "联邦基金目标区间上限"
+    unit: "%"
+    fetcher: fred
+    series: "DFEDTARU"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/DFEDTARU"
+    frequency: "daily"
+    start_date: "2008-12-16"
+    caveat_en: "Upper bound of the post-2008 target range."
+    caveat_zh: "2008年后目标区间上限。"
+  - id: fed_target_lower
+    section: fed_policy
+    label_en: "Fed Target Range Lower Bound"
+    label_zh: "联邦基金目标区间下限"
+    unit: "%"
+    fetcher: fred
+    series: "DFEDTARL"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/DFEDTARL"
+    frequency: "daily"
+    start_date: "2008-12-16"
+    caveat_en: "Lower bound of the post-2008 target range."
+    caveat_zh: "2008年后目标区间下限。"
+  - id: fed_balance_sheet_growth
+    section: fed_policy
+    label_en: "Fed Balance Sheet Growth"
+    label_zh: "美联储资产负债表同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "WALCL"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/WALCL"
+    frequency: "weekly"
+    start_date: "2002-12-18"
+    caveat_en: "Derived growth from total Fed assets; post-crisis policy channel."
+    caveat_zh: "由美联储总资产派生的同比增速；后危机时代政策渠道。"
+  - id: reserve_balance_rate
+    section: fed_policy
+    label_en: "Interest on Reserve Balances"
+    label_zh: "准备金余额利率"
+    unit: "%"
+    fetcher: fred
+    series: "IORB"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/IORB"
+    frequency: "daily"
+    start_date: "2021-07-29"
+    caveat_en: "IORB is a key administered rate in the modern floor system."
+    caveat_zh: "IORB是现代地板体系中的关键管理利率。"
+  - id: sofr
+    section: fed_policy
+    label_en: "SOFR"
+    label_zh: "SOFR"
+    unit: "%"
+    fetcher: fred
+    series: "SOFR"
+    source_name: "FRED / Federal Reserve Bank of New York"
+    source_url: "https://fred.stlouisfed.org/series/SOFR"
+    frequency: "daily"
+    start_date: "2018-04-03"
+    caveat_en: "SOFR modernizes the report's money-market plumbing beyond LIBOR-era references."
+    caveat_zh: "SOFR把报告中的货币市场框架现代化到LIBOR之后。"
+  - id: monthly_treasury_deficit
+    section: fiscal
+    label_en: "Monthly Treasury Deficit"
+    label_zh: "月度财政赤字"
+    unit: "USD mn"
+    fetcher: fred
+    series: "MTSDS133FMS"
+    source_name: "FRED / US Treasury"
+    source_url: "https://fred.stlouisfed.org/series/MTSDS133FMS"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Monthly Treasury Statement deficit/surplus series; sign conventions should be checked before event work."
+    caveat_zh: "月度财政部收支差额；做事件分析前需核对符号约定。"
+  - id: federal_debt_growth
+    section: fiscal
+    label_en: "Federal Debt Growth"
+    label_zh: "联邦债务同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "GFDEBTN"
+    source_name: "FRED / US Treasury"
+    source_url: "https://fred.stlouisfed.org/series/GFDEBTN"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Derived growth from federal debt held by the public and intragovernmental holdings."
+    caveat_zh: "由联邦总债务水平派生的同比增速。"
+  - id: federal_debt_gdp
+    section: fiscal
+    label_en: "Federal Debt to GDP"
+    label_zh: "联邦债务/GDP"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "GFDEGDQ188S"
+    source_name: "FRED / US Treasury"
+    source_url: "https://fred.stlouisfed.org/series/GFDEGDQ188S"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Federal debt ratio for sovereign balance-sheet context."
+    caveat_zh: "用于主权资产负债表背景的联邦债务率。"
+  - id: fiscal_year_deficit
+    section: fiscal
+    label_en: "Federal Fiscal-Year Deficit"
+    label_zh: "联邦财年赤字"
+    unit: "USD mn"
+    fetcher: fred
+    series: "FYFSD"
+    source_name: "FRED / US Treasury"
+    source_url: "https://fred.stlouisfed.org/series/FYFSD"
+    frequency: "annual"
+    start_date: "1990-09-30"
+    caveat_en: "Annual fiscal-year deficit; monthly Treasury data are more tactical."
+    caveat_zh: "年度财年赤字；月度财政部数据更适合战术观察。"
+
+data_gaps:
+  - section: gs_market_indexes
+    item_en: "GSFCI, GSAI, GSSI, GSRI"
+    item_zh: "GSFCI、GSAI、GSSI、GSRI"
+    status_en: "Proprietary Goldman Sachs indicators; chart public components only."
+    status_zh: "GS专有指标；本页只绘制公开组成项。"
+  - section: production_orders
+    item_en: "ISM manufacturing/non-manufacturing, Chicago PMI, and Beige Book text"
+    item_zh: "ISM制造业/非制造业、芝加哥PMI与褐皮书文本"
+    status_en: "High-value indicators, but stable public time-series adapters were not validated in v1."
+    status_zh: "高价值指标，但v1尚未验证稳定公开时间序列adapter。"
+  - section: consumer
+    item_en: "Conference Board confidence, Redbook, ICSC/UBS, ABC Consumer Comfort"
+    item_zh: "Conference Board信心、Redbook、ICSC/UBS、ABC消费者舒适度"
+    status_en: "Vendor-controlled or not yet mapped to a reproducible public endpoint."
+    status_zh: "供应商控制或尚未映射到可复跑公开endpoint。"
+  - section: housing
+    item_en: "Pending Home Sales Index, NAHB Housing Market Index, mortgage applications"
+    item_zh: "待完成房屋销售指数、NAHB住房市场指数、按揭申请"
+    status_en: "Important but not yet validated as license-safe public chart data."
+    status_zh: "重要但尚未验证为授权安全的公开图表数据。"
+  - section: external
+    item_en: "Detailed Treasury International Capital System flows"
+    item_zh: "TIC详细资本流"
+    status_en: "Needs a dedicated Treasury/TIC adapter beyond the v1 FRED skeleton."
+    status_zh: "需要专门TIC adapter，超出v1 FRED骨架。"
+  - section: employment
+    item_en: "ADP, Manpower, Challenger layoffs, Monster/help-wanted indexes, BED"
+    item_zh: "ADP、Manpower、Challenger裁员、Monster/Help-wanted指数、BED"
+    status_en: "Vendor or specialized releases; not replaced with weak proxies."
+    status_zh: "供应商或专项发布；不使用弱proxy替代。"
+  - section: fed_policy
+    item_en: "FOMC statement language, minutes, transcripts, projections, and Treasury auction schedule"
+    item_zh: "FOMC声明措辞、纪要、会议记录、预测与国债拍卖日程"
+    status_en: "Text/schedule sources require separate NLP/calendar adapters."
+    status_zh: "文本和日程数据需要单独NLP/日历adapter。"
