@@ -22,6 +22,8 @@ from email.utils import parsedate_to_datetime
 from html import escape
 from pathlib import Path
 from typing import Any
+from xml.etree import ElementTree as ET
+from zipfile import ZipFile
 
 import requests
 import yaml
@@ -108,7 +110,7 @@ def _parse_date(value: str) -> date | None:
             return datetime.strptime(value[:length], fmt).date()
         except ValueError:
             continue
-    for fmt in ("%d %b %Y", "%d %B %Y", "%d %b %y"):
+    for fmt in ("%d %b %Y", "%d %B %Y", "%d %b %y", "%d/%m/%Y"):
         try:
             return datetime.strptime(value, fmt).date()
         except ValueError:
@@ -379,6 +381,183 @@ def fetch_boe_bank_rate(session: requests.Session, spec: dict[str, Any]) -> dict
     }
 
 
+def _govuk_distribution_url(session: requests.Session, spec: dict[str, Any], extension: str) -> tuple[str, str]:
+    """Return the current GOV.UK distribution URL from page-level JSON-LD metadata."""
+    page_url = str(spec.get("source_url") or "").strip()
+    if not page_url:
+        raise ValueError("GOV.UK fetcher requires source_url.")
+    response = session.get(page_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 20))
+    response.raise_for_status()
+    wanted = str(spec.get("distribution_name_contains") or spec.get("csv_label_contains") or "").lower()
+    candidates: list[dict[str, Any]] = []
+    for match in re.findall(
+        r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
+        response.text,
+        flags=re.S | re.I,
+    ):
+        try:
+            payload = json.loads(match)
+        except json.JSONDecodeError:
+            continue
+        items = payload if isinstance(payload, list) else [payload]
+        for item in items:
+            if isinstance(item, dict):
+                distribution = item.get("distribution") or []
+                if isinstance(distribution, dict):
+                    distribution = [distribution]
+                candidates.extend(row for row in distribution if isinstance(row, dict))
+    for candidate in candidates:
+        url = str(candidate.get("contentUrl") or candidate.get("url") or "").strip()
+        name = str(candidate.get("name") or "").strip()
+        if not url or not url.lower().split("?")[0].endswith(extension):
+            continue
+        if wanted and wanted not in name.lower() and wanted not in url.lower():
+            continue
+        return url, name
+    raise RuntimeError(f"No matching GOV.UK {extension} distribution found for {page_url}.")
+
+
+def fetch_govuk_road_fuel(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    csv_url = str(spec.get("csv_url") or "").strip()
+    distribution_name = ""
+    if not csv_url:
+        csv_url, distribution_name = _govuk_distribution_url(session, spec, ".csv")
+    response = session.get(csv_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 20))
+    response.raise_for_status()
+    rows = csv.DictReader(io.StringIO(response.content.decode("utf-8-sig", errors="replace")))
+    date_column = str(spec.get("date_column") or "Date")
+    value_column = str(spec.get("value_column") or "")
+    value_contains = str(spec.get("value_column_contains") or "").lower()
+    observations: list[dict[str, Any]] = []
+    for row in rows:
+        if not value_column:
+            value_column = next((name for name in row if value_contains and value_contains in name.lower()), "")
+        if not value_column:
+            raise ValueError("Road-fuel CSV value column could not be inferred.")
+        obs_date = _normalise_date(str(row.get(date_column) or ""))
+        raw_value = row.get(value_column)
+        if not obs_date or raw_value in (None, "", "."):
+            continue
+        try:
+            value = float(str(raw_value).replace(",", ""))
+        except (TypeError, ValueError):
+            continue
+        observations.append({"date": obs_date, "value": value})
+    observations.sort(key=lambda item: item["date"])
+    observations = _apply_transform(_start_filter(observations, spec.get("start_date")), spec)
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": csv_url,
+        "distribution_name": distribution_name,
+    }
+
+
+def _xlsx_col_index(cell_ref: str) -> int:
+    letters = re.sub(r"[^A-Z]", "", cell_ref.upper())
+    value = 0
+    for letter in letters:
+        value = value * 26 + (ord(letter) - ord("A") + 1)
+    return value - 1
+
+
+def _xlsx_sheet_rows(content: bytes, sheet_name: str) -> list[list[str]]:
+    ns = {
+        "main": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+        "rel": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+        "pkg": "http://schemas.openxmlformats.org/package/2006/relationships",
+    }
+    with ZipFile(io.BytesIO(content)) as workbook:
+        shared: list[str] = []
+        if "xl/sharedStrings.xml" in workbook.namelist():
+            shared_root = ET.fromstring(workbook.read("xl/sharedStrings.xml"))
+            for item in shared_root.findall("main:si", ns):
+                shared.append("".join(node.text or "" for node in item.findall(".//main:t", ns)))
+
+        workbook_root = ET.fromstring(workbook.read("xl/workbook.xml"))
+        rel_root = ET.fromstring(workbook.read("xl/_rels/workbook.xml.rels"))
+        rel_targets = {
+            rel.attrib["Id"]: rel.attrib["Target"]
+            for rel in rel_root.findall("pkg:Relationship", ns)
+            if "Id" in rel.attrib and "Target" in rel.attrib
+        }
+        sheet_path = ""
+        for sheet in workbook_root.findall(".//main:sheet", ns):
+            if sheet.attrib.get("name") != sheet_name:
+                continue
+            rel_id = sheet.attrib.get(f"{{{ns['rel']}}}id")
+            target = rel_targets.get(str(rel_id), "")
+            sheet_path = f"xl/{target.lstrip('/')}" if not target.startswith("xl/") else target
+            break
+        if not sheet_path:
+            raise ValueError(f"Worksheet {sheet_name!r} not found in XLSX.")
+
+        sheet_root = ET.fromstring(workbook.read(sheet_path))
+        rows: list[list[str]] = []
+        for row in sheet_root.findall(".//main:sheetData/main:row", ns):
+            values: list[str] = []
+            for cell in row.findall("main:c", ns):
+                cell_ref = cell.attrib.get("r", "")
+                column_index = _xlsx_col_index(cell_ref)
+                while len(values) <= column_index:
+                    values.append("")
+                raw = cell.find("main:v", ns)
+                value = "" if raw is None else str(raw.text or "")
+                if cell.attrib.get("t") == "s" and value:
+                    value = shared[int(value)]
+                values[column_index] = value
+            rows.append(values)
+        return rows
+
+
+def fetch_govuk_xlsx_table(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    xlsx_url = str(spec.get("xlsx_url") or "").strip()
+    distribution_name = ""
+    if not xlsx_url:
+        xlsx_url, distribution_name = _govuk_distribution_url(session, spec, ".xlsx")
+    response = session.get(xlsx_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 24))
+    response.raise_for_status()
+    rows = _xlsx_sheet_rows(response.content, str(spec["sheet_name"]))
+    date_column = str(spec.get("date_column") or "Period")
+    value_column = str(spec["value_column"])
+    header_index = -1
+    date_index = -1
+    value_index = -1
+    for index, row in enumerate(rows):
+        lowered = [str(item).strip().lower() for item in row]
+        if date_column.lower() in lowered and value_column.lower() in lowered:
+            header_index = index
+            date_index = lowered.index(date_column.lower())
+            value_index = lowered.index(value_column.lower())
+            break
+    if header_index < 0:
+        raise ValueError(f"Columns {date_column!r}/{value_column!r} not found in XLSX.")
+
+    observations: list[dict[str, Any]] = []
+    for row in rows[header_index + 1 :]:
+        if len(row) <= max(date_index, value_index):
+            continue
+        obs_date = _normalise_date(str(row[date_index]))
+        raw_value = row[value_index]
+        if not obs_date or raw_value in (None, "", "."):
+            continue
+        try:
+            value = float(str(raw_value).replace(",", ""))
+        except (TypeError, ValueError):
+            continue
+        observations.append({"date": obs_date, "value": value})
+    observations.sort(key=lambda item: item["date"])
+    observations = _apply_transform(_start_filter(observations, spec.get("start_date")), spec)
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": xlsx_url,
+        "distribution_name": distribution_name,
+    }
+
+
 def validate_series(series: dict[str, Any]) -> dict[str, Any]:
     observations = series.get("observations") or []
     notes: list[str] = []
@@ -393,6 +572,8 @@ def validate_series(series: dict[str, Any]) -> dict[str, Any]:
         age_days = (date.today() - latest_date).days
         if frequency == "monthly" and age_days > 150:
             notes.append(f"Monthly series looks stale; latest observation is {observations[-1]['date']}.")
+        elif frequency == "weekly" and age_days > 45:
+            notes.append(f"Weekly series looks stale; latest observation is {observations[-1]['date']}.")
         elif frequency == "quarterly" and age_days > 330:
             notes.append(f"Quarterly series looks stale; latest observation is {observations[-1]['date']}.")
         elif frequency == "annual" and latest_date.year < date.today().year - 2:
@@ -430,6 +611,10 @@ def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
             series = fetch_boe_iadb(session, spec)
         elif fetcher == "boe_bank_rate":
             series = fetch_boe_bank_rate(session, spec)
+        elif fetcher == "govuk_road_fuel":
+            series = fetch_govuk_road_fuel(session, spec)
+        elif fetcher == "govuk_xlsx_table":
+            series = fetch_govuk_xlsx_table(session, spec)
         else:
             series = {**spec, "observations": [], "quality_status": "unavailable", "quality_notes": ["Unknown fetcher."]}
     except Exception as exc:  # noqa: BLE001 - data page should degrade instead of crashing.

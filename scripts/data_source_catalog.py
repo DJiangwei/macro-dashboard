@@ -84,7 +84,7 @@ def _append_uk_sources(lines: list[str]) -> None:
     ])
     for item in indicators:
         label = item.get("label_en") or item.get("label_zh") or item.get("id")
-        series_id = item.get("series") or item.get("metric") or ""
+        series_id = item.get("series") or item.get("metric") or item.get("value_column") or item.get("value_column_contains") or ""
         lines.append(
             "| "
             + " | ".join([

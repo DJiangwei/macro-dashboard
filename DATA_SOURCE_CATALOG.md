@@ -570,7 +570,7 @@ Remaining rendered proxy slots: 0.
 
 The UK page is generated from `config/uk_indicators.yaml`. Native ONS time-series JSON and Bank of England IADB CSV endpoints are preferred where validated; FRED/OECD/BIS/IMF mirror series remain for broader public-data coverage.
 
-Configured charts: 43. Latest rendered chart count: 43. Source groups: 5.
+Configured charts: 49. Latest rendered chart count: 49. Source groups: 7.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -585,6 +585,8 @@ Configured charts: 43. Latest rendered chart count: 43. Source groups: 5.
 | monthly_output | `composite_leading_indicator` | Composite Leading Indicator | monthly | index | fred | FRED / OECD | GBRLOLITOAASTSAM | OECD CLI is not a GS CAI substitute, but it is a reproducible public leading-cycle proxy. |
 | housing_construction | `real_house_prices` | Real Residential Property Prices | quarterly | index | fred | FRED / BIS | QGBR628BIS | BIS real residential property price index; smoother and less release-sensitive than Nationwide/Halifax monthly indices. |
 | housing_construction | `nominal_house_prices` | Nominal Residential Property Prices | quarterly | index | fred | FRED / BIS | QGBN628BIS | BIS nominal residential property price index; does not replicate the report's individual house-price vendor indices. |
+| housing_construction | `housing_starts_england_sa` | Housing Starts, England SA | quarterly | dwellings | govuk_xlsx_table | MHCLG / GOV.UK | All Starts | MHCLG Live Table 222, England quarterly seasonally adjusted building-control-reported new-build permanent dwellings; revisions and response-rate/imputation notes matter. |
+| housing_construction | `housing_completions_england_sa` | Housing Completions, England SA | quarterly | dwellings | govuk_xlsx_table | MHCLG / GOV.UK | All Completions | MHCLG Live Table 222 all completions; quarterly building-control returns can be revised materially and are less comprehensive than annual net-additions statistics. |
 | external | `exports_qoq` | Real Exports | quarterly | % | fred | FRED / OECD | NAEXKP06GBQ657S | National-accounts exports; monthly goods-trade detail is not yet wired. |
 | external | `imports_qoq` | Real Imports | quarterly | % | fred | FRED / OECD | NAEXKP07GBQ657S | National-accounts imports; trade contribution can change after GDP revisions. |
 | external | `gbp_reer` | Sterling Real Effective Exchange Rate | monthly | index | fred | FRED / BIS | RBGBBIS | BIS REER is the clean public sterling competitiveness measure used here for the FCI-style FX channel. |
@@ -599,7 +601,10 @@ Configured charts: 43. Latest rendered chart count: 43. Source groups: 5.
 | prices | `cpi_yoy` | Headline CPI Inflation | monthly | % | ons_timeseries | ONS | D7G7 | ONS CPI annual rate, all items; this is the MPC target measure and replaces the lagged FRED/OECD mirror. |
 | prices | `core_cpi_yoy` | Core CPI Inflation | monthly | % | ons_timeseries | ONS | DKO8 | Core CPI helps separate domestic persistence from headline energy/import noise. |
 | prices | `rpi_yoy` | RPI Inflation | monthly | % | ons_timeseries | ONS | CZBH | ONS RPI all-items 12-month change; not a National Statistic, but still relevant for gilts, contracts, and UK inflation history. |
+| prices | `rpix_yoy` | RPIX Inflation | monthly | % | ons_timeseries | ONS | CHMK | Derived year-on-year rate from the ONS RPIX index excluding mortgage interest payments; RPIX is no longer the MPC target but remains useful for historical UK inflation work. |
 | prices | `producer_prices` | PPI Output: Manufactured Products | monthly | index | ons_timeseries | ONS | GD6Y | ONS PPI output total manufactured products excluding duty, index level; use the release table for detailed industry decomposition. |
+| prices | `petrol_pump_price` | Petrol Pump Price | weekly | p/litre | govuk_road_fuel | DESNZ / GOV.UK | unleaded petrol) Pump price | Weekly DESNZ road-fuel pump price for ultra-low-sulphur unleaded petrol; useful for near-term energy CPI pressure but not a substitute for the full CPI fuel component. |
+| prices | `diesel_pump_price` | Diesel Pump Price | weekly | p/litre | govuk_road_fuel | DESNZ / GOV.UK | sulphur diesel) Pump price | Weekly DESNZ road-fuel pump price for ultra-low-sulphur diesel; diesel matters for transport-cost pass-through and can diverge from petrol. |
 | monetary_financial | `bank_rate` | Bank Rate | daily | % | boe_iadb | Bank of England IADB | IUDBEDR | Official BoE Bank Rate via the IADB CSV endpoint; daily rows repeat the prevailing policy setting between MPC decisions. |
 | monetary_financial | `sonia_rate` | SONIA | daily | % | boe_iadb | Bank of England IADB | IUDSOIA | Daily Sterling Overnight Index Average; a modern UK money-market benchmark for the overnight rate complex. |
 | monetary_financial | `short_rate_3m` | 3-Month Interbank Rate | monthly | % | fred | FRED / OECD | IR3TIB01GBM156N | Used for the GS FCI-style short-rate channel; not the same as official Bank Rate. |
@@ -614,6 +619,7 @@ Configured charts: 43. Latest rendered chart count: 43. Source groups: 5.
 | monetary_financial | `quoted_mortgage_rate` | Quoted Household Mortgage Rate | monthly | % | boe_iadb | Bank of England IADB | IUMBV34 | BoE quoted household-rate series from the IADB; useful for mortgage-rate transmission, but confirm the exact product definition before comparing against lender-specific quotes. |
 | monetary_financial | `reserves_ex_gold` | Official Reserves ex Gold | monthly | USD mn | fred | FRED / IMF | TRESEGGBM052N | IMF reserve series via FRED; useful for external liquidity context, not a core UK rates driver. |
 | fiscal_policy | `psnb_ex_banks` | PSNB ex Banks | monthly | GBP mn | ons_timeseries | ONS | DZLS | ONS public sector net borrowing excluding public-sector banks, monthly; volatile month to month and affected by timing of taxes and spending. |
+| fiscal_policy | `psncr_ex_banks` | PSNCR ex Banks | monthly | GBP mn | ons_timeseries | ONS | JW38 | ONS public sector net cash requirement excluding public-sector banks; cash timing can diverge from accrual-based PSNB and should be read alongside borrowing. |
 | fiscal_policy | `psnd_ex_banks_gdp` | PSND ex Banks | monthly | % of GDP | ons_timeseries | ONS | HF6X | ONS public sector net debt excluding public-sector banks as a percentage of GDP; conceptually closer to UK fiscal headlines than IMF general-government debt. |
 | fiscal_policy | `government_balance_gdp` | General Government Net Lending/Borrowing | annual | % of GDP | fred | FRED / IMF | GGNLBAGBA188N | Annual IMF general-government concept; not the same as monthly PSNB. |
 | fiscal_policy | `government_debt_gdp` | General Government Gross Debt | annual | % of GDP | fred | FRED / IMF | GGGDTAGBA188N | Annual IMF debt ratio; the GS guide warns that UK PSND and general-government debt differ by sector boundary and liquid-asset treatment. |
@@ -625,11 +631,11 @@ Configured charts: 43. Latest rendered chart count: 43. Source groups: 5.
 | monthly_output | GS UK CAI, GS-MAP, GS Surprise Index, and official GS FCI | Proprietary GS products. This page charts public components only. |
 | monthly_output | Manufacturing, construction, services, and composite PMI | Important in the GS framework, but not yet wired because S&P Global PMI history is vendor-controlled. |
 | monthly_output | CBI Distributive Trades, CBI Industrial Trends, BCC QES, BRC/KPMG Retail Sales Monitor | Survey sources need separate adapters and licensing checks. |
-| housing_construction | Nationwide, Halifax, Rightmove, Hometrack, RICS, and DCLG starts/completions | Mortgage approvals are now charted from BoE; house-price and construction vendor/official endpoints still need licensing and API validation. |
+| housing_construction | Nationwide, Halifax, Rightmove, Hometrack, and RICS | MHCLG starts/completions and BoE mortgage approvals are now charted; vendor house-price and sentiment sources still need licensing/API validation. |
 | labour_market | Redundancies and pay settlements | Core ONS labour-market indicators are now charted; these remaining items need separate release tables or survey/licensing checks. |
-| prices | RPIX, petrol prices, inflation expectations surveys, and index-linked gilt breakevens | Headline CPI, core CPI, RPI, and ONS PPI are now charted; remaining items need stable public series mapping. |
+| prices | Inflation expectations surveys and index-linked gilt breakevens | RPIX and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings. |
 | monetary_financial | Trends in Lending, Credit Conditions Survey, HEW, and fuller quoted-rate matrix | BoE IADB now covers Bank Rate, SONIA, sterling, M4, consumer credit, mortgage approvals, and one quoted-rate series; survey/PDF-style sources remain open. |
-| fiscal_policy | PSNCR, detailed debt breakdowns, and OBR analysis | Monthly PSNB and PSND are now charted from ONS; remaining fiscal detail needs additional ONS/OBR table adapters. |
+| fiscal_policy | Detailed debt breakdowns and OBR analysis | Monthly PSNB, PSNCR, and PSND are now charted from ONS; remaining fiscal detail needs additional ONS/OBR table adapters. |
 
 ## United States Data-First Dashboard Sources
 

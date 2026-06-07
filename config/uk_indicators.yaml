@@ -190,6 +190,38 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "BIS nominal residential property price index; does not replicate the report's individual house-price vendor indices."
     caveat_zh: "BIS名义住宅价格指数；并不等同于报告中逐个房价供应商指数。"
+  - id: housing_starts_england_sa
+    section: housing_construction
+    label_en: "Housing Starts, England SA"
+    label_zh: "英格兰住房开工，季调"
+    unit: "dwellings"
+    fetcher: govuk_xlsx_table
+    source_name: "MHCLG / GOV.UK"
+    source_url: "https://www.gov.uk/government/statistical-data-sets/live-tables-on-house-building"
+    distribution_name_contains: "Table 222"
+    sheet_name: "LT_222a"
+    date_column: "Period"
+    value_column: "All Starts"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "MHCLG Live Table 222, England quarterly seasonally adjusted building-control-reported new-build permanent dwellings; revisions and response-rate/imputation notes matter."
+    caveat_zh: "MHCLG Live Table 222，英格兰季度季调建筑监管报告的新建永久住房；需关注修订、回收率和估算说明。"
+  - id: housing_completions_england_sa
+    section: housing_construction
+    label_en: "Housing Completions, England SA"
+    label_zh: "英格兰住房竣工，季调"
+    unit: "dwellings"
+    fetcher: govuk_xlsx_table
+    source_name: "MHCLG / GOV.UK"
+    source_url: "https://www.gov.uk/government/statistical-data-sets/live-tables-on-house-building"
+    distribution_name_contains: "Table 222"
+    sheet_name: "LT_222a"
+    date_column: "Period"
+    value_column: "All Completions"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "MHCLG Live Table 222 all completions; quarterly building-control returns can be revised materially and are less comprehensive than annual net-additions statistics."
+    caveat_zh: "MHCLG Live Table 222全部竣工；季度建筑监管回报可能明显修订，且不如年度住房净增加统计全面。"
   - id: exports_qoq
     section: external
     label_en: "Real Exports"
@@ -392,6 +424,22 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "ONS RPI all-items 12-month change; not a National Statistic, but still relevant for gilts, contracts, and UK inflation history."
     caveat_zh: "ONS全部项目RPI同比；不是National Statistic，但仍与英国国债、合约和通胀历史相关。"
+  - id: rpix_yoy
+    section: prices
+    label_en: "RPIX Inflation"
+    label_zh: "RPIX通胀"
+    unit: "%"
+    fetcher: ons_timeseries
+    series: "CHMK"
+    dataset: "MM23"
+    ons_path: "/economy/inflationandpriceindices/timeseries/chmk/mm23/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/chmk/mm23"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    transform: "yoy"
+    caveat_en: "Derived year-on-year rate from the ONS RPIX index excluding mortgage interest payments; RPIX is no longer the MPC target but remains useful for historical UK inflation work."
+    caveat_zh: "由ONS RPIX不含按揭利息指数计算同比；RPIX已不是MPC目标，但对英国通胀历史研究仍有用。"
   - id: producer_prices
     section: prices
     label_en: "PPI Output: Manufactured Products"
@@ -407,6 +455,36 @@ indicators:
     start_date: "2010-01-01"
     caveat_en: "ONS PPI output total manufactured products excluding duty, index level; use the release table for detailed industry decomposition."
     caveat_zh: "ONS PPI产出总制成品不含税指数；行业分解需查看发布表。"
+  - id: petrol_pump_price
+    section: prices
+    label_en: "Petrol Pump Price"
+    label_zh: "汽油泵价"
+    unit: "p/litre"
+    fetcher: govuk_road_fuel
+    source_name: "DESNZ / GOV.UK"
+    source_url: "https://www.gov.uk/government/statistical-data-sets/oil-and-petroleum-products-weekly-statistics"
+    distribution_name_contains: "weekly road fuel prices"
+    date_column: "Date"
+    value_column_contains: "unleaded petrol) Pump price"
+    frequency: "weekly"
+    start_date: "2018-01-01"
+    caveat_en: "Weekly DESNZ road-fuel pump price for ultra-low-sulphur unleaded petrol; useful for near-term energy CPI pressure but not a substitute for the full CPI fuel component."
+    caveat_zh: "DESNZ周频超低硫无铅汽油泵价；适合观察短期能源CPI压力，但不能替代完整CPI燃料分项。"
+  - id: diesel_pump_price
+    section: prices
+    label_en: "Diesel Pump Price"
+    label_zh: "柴油泵价"
+    unit: "p/litre"
+    fetcher: govuk_road_fuel
+    source_name: "DESNZ / GOV.UK"
+    source_url: "https://www.gov.uk/government/statistical-data-sets/oil-and-petroleum-products-weekly-statistics"
+    distribution_name_contains: "weekly road fuel prices"
+    date_column: "Date"
+    value_column_contains: "sulphur diesel) Pump price"
+    frequency: "weekly"
+    start_date: "2018-01-01"
+    caveat_en: "Weekly DESNZ road-fuel pump price for ultra-low-sulphur diesel; diesel matters for transport-cost pass-through and can diverge from petrol."
+    caveat_zh: "DESNZ周频超低硫柴油泵价；柴油影响运输成本传导，且可能与汽油明显分化。"
   - id: bank_rate
     section: monetary_financial
     label_en: "Bank Rate"
@@ -591,6 +669,21 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "ONS public sector net borrowing excluding public-sector banks, monthly; volatile month to month and affected by timing of taxes and spending."
     caveat_zh: "ONS月度公共部门净借款，不含公共部门银行；月度波动较大，受税收和支出时点影响。"
+  - id: psncr_ex_banks
+    section: fiscal_policy
+    label_en: "PSNCR ex Banks"
+    label_zh: "公共部门净现金需求不含银行"
+    unit: "GBP mn"
+    fetcher: ons_timeseries
+    series: "JW38"
+    dataset: "PUSF"
+    ons_path: "/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/jw38/pusf/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/jw38/pusf"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS public sector net cash requirement excluding public-sector banks; cash timing can diverge from accrual-based PSNB and should be read alongside borrowing."
+    caveat_zh: "ONS公共部门净现金需求，不含公共部门银行；现金时点可与权责发生制PSNB分化，应与借款指标结合阅读。"
   - id: psnd_ex_banks_gdp
     section: fiscal_policy
     label_en: "PSND ex Banks"
@@ -650,27 +743,27 @@ data_gaps:
     status_en: "Survey sources need separate adapters and licensing checks."
     status_zh: "调查源需要单独adapter并核验授权。"
   - section: housing_construction
-    item_en: "Nationwide, Halifax, Rightmove, Hometrack, RICS, and DCLG starts/completions"
-    item_zh: "Nationwide、Halifax、Rightmove、Hometrack、RICS与DCLG开工/竣工"
-    status_en: "Mortgage approvals are now charted from BoE; house-price and construction vendor/official endpoints still need licensing and API validation."
-    status_zh: "按揭批准已接入BoE；房价和建筑供应商/官方endpoint仍需授权与API验证。"
+    item_en: "Nationwide, Halifax, Rightmove, Hometrack, and RICS"
+    item_zh: "Nationwide、Halifax、Rightmove、Hometrack与RICS"
+    status_en: "MHCLG starts/completions and BoE mortgage approvals are now charted; vendor house-price and sentiment sources still need licensing/API validation."
+    status_zh: "MHCLG开工/竣工与BoE按揭批准已接入；供应商房价和情绪数据仍需授权/API验证。"
   - section: labour_market
     item_en: "Redundancies and pay settlements"
     item_zh: "裁员与工资协议"
     status_en: "Core ONS labour-market indicators are now charted; these remaining items need separate release tables or survey/licensing checks."
     status_zh: "核心ONS劳动力市场指标已接入；剩余项目需要单独发布表或调查/授权核验。"
   - section: prices
-    item_en: "RPIX, petrol prices, inflation expectations surveys, and index-linked gilt breakevens"
-    item_zh: "RPIX、汽油价格、通胀预期调查与指数挂钩国债隐含通胀"
-    status_en: "Headline CPI, core CPI, RPI, and ONS PPI are now charted; remaining items need stable public series mapping."
-    status_zh: "整体CPI、核心CPI、RPI与ONS PPI已接入；剩余项目仍需映射稳定公开序列。"
+    item_en: "Inflation expectations surveys and index-linked gilt breakevens"
+    item_zh: "通胀预期调查与指数挂钩国债隐含通胀"
+    status_en: "RPIX and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings."
+    status_zh: "RPIX与DESNZ汽油/柴油泵价已接入；通胀预期和盈亏平衡通胀仍需稳定且授权安全的映射。"
   - section: monetary_financial
     item_en: "Trends in Lending, Credit Conditions Survey, HEW, and fuller quoted-rate matrix"
     item_zh: "Trends in Lending、信贷条件调查、住房权益提取与更完整报价利率矩阵"
     status_en: "BoE IADB now covers Bank Rate, SONIA, sterling, M4, consumer credit, mortgage approvals, and one quoted-rate series; survey/PDF-style sources remain open."
     status_zh: "BoE IADB已覆盖Bank Rate、SONIA、英镑、M4、消费信贷、按揭批准和一条报价利率；调查/PDF类来源仍未接入。"
   - section: fiscal_policy
-    item_en: "PSNCR, detailed debt breakdowns, and OBR analysis"
-    item_zh: "PSNCR、债务细分与OBR分析"
-    status_en: "Monthly PSNB and PSND are now charted from ONS; remaining fiscal detail needs additional ONS/OBR table adapters."
-    status_zh: "月度PSNB与PSND已接入ONS；剩余财政细节需要额外ONS/OBR表格adapter。"
+    item_en: "Detailed debt breakdowns and OBR analysis"
+    item_zh: "债务细分与OBR分析"
+    status_en: "Monthly PSNB, PSNCR, and PSND are now charted from ONS; remaining fiscal detail needs additional ONS/OBR table adapters."
+    status_zh: "月度PSNB、PSNCR与PSND已接入ONS；剩余财政细节需要额外ONS/OBR表格adapter。"
