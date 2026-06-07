@@ -570,7 +570,7 @@ Remaining rendered proxy slots: 0.
 
 The US page is generated from `config/us_indicators.yaml`. This table records configured sources for each rendered chart slot; latest dates are tracked in `output/us_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 148. Latest rendered chart count: 148. Source groups: 26.
+Configured charts: 152. Latest rendered chart count: 148. Source groups: 26.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -631,6 +631,10 @@ Configured charts: 148. Latest rendered chart count: 148. Source groups: 26.
 | external | `tic_japan_treasury_holdings` | TIC Japan Treasury Holdings | monthly | USD mn | fred | FRED / Treasury International Capital | FORTREASPOS42609 | Japan is a major foreign holder; use with custody-routing caveats common to TIC geography. |
 | employment | `nonfarm_payrolls_change` | Nonfarm Payrolls Change | monthly | k m/m | fred | FRED / BLS | PAYEMS | Derived monthly change from total nonfarm payroll employment. |
 | employment | `adp_private_payrolls_change` | ADP Private Payrolls Change | monthly | persons m/m | fred | FRED / ADP Research Institute | ADPMNUSNERSA | Vendor employment release mirrored by FRED; compare against BLS payrolls and avoid treating it as an official labor-statistics substitute. |
+| employment | `bed_gross_job_gains_level` | BED Gross Job Gains | quarterly | k | bls_api | BLS Business Employment Dynamics | BDS0000000000000000110001LQ5 | Quarterly total-private gross job gains from Business Employment Dynamics; BED is QCEW-based and normally arrives with a several-month lag. |
+| employment | `bed_gross_job_losses_level` | BED Gross Job Losses | quarterly | k | bls_api | BLS Business Employment Dynamics | BDS0000000000000000110004LQ5 | Quarterly total-private gross job losses; useful for seeing churn beneath net payroll changes. |
+| employment | `bed_gross_job_gains_rate` | BED Gross Job Gains Rate | quarterly | % | bls_api | BLS Business Employment Dynamics | BDS0000000000000000110001RQ5 | Gross job gains as a percent of average employment; complements the level series when comparing cycles. |
+| employment | `bed_gross_job_losses_rate` | BED Gross Job Losses Rate | quarterly | % | bls_api | BLS Business Employment Dynamics | BDS0000000000000000110004RQ5 | Gross job losses as a percent of average employment; spikes identify stress not visible in headline payroll levels alone. |
 | employment | `unemployment_rate` | Unemployment Rate | monthly | % | fred | FRED / BLS | UNRATE | Household-survey unemployment rate. |
 | employment | `labor_force_participation` | Labor Force Participation | monthly | % | fred | FRED / BLS | CIVPART | Participation helps separate unemployment from labor-supply shifts. |
 | employment | `prime_age_employment_population` | Prime-Age Employment-Population Ratio | monthly | % | fred | FRED / BLS | LNS12300060 | Prime-age employment-population ratio is less distorted by demographics than the headline participation rate. |
@@ -732,5 +736,5 @@ Configured charts: 148. Latest rendered chart count: 148. Source groups: 26.
 | consumer | Conference Board confidence, Redbook, ICSC/UBS, ABC Consumer Comfort | Vendor-controlled or not yet mapped to a reproducible public endpoint. |
 | housing | Pending Home Sales Index, NAHB Housing Market Index, mortgage applications | Still not validated as license-safe public chart data; public supply, price, and stress gauges are charted. |
 | external | Detailed Treasury International Capital System flows | Core TIC Treasury transactions and holdings are now charted via FRED; deeper country/security tables still need a Treasury TIC adapter if required. |
-| employment | Manpower, Challenger layoffs, Monster/help-wanted indexes, BED | ADP private payrolls are now charted from FRED; the remaining vendor or specialized releases are not replaced with weak proxies. |
+| employment | Manpower, Challenger layoffs, Monster/help-wanted indexes; BED API quota | ADP private payrolls are charted from FRED. The BLS BED adapter is implemented, but rendering requires available BLS API quota or BLS_API_KEY; vendor releases are not replaced with weak proxies. |
 | fed_policy | FOMC statement language, minutes, transcripts, projections, and future Treasury auction calendar | Completed Treasury auction quantities and bid-to-cover are now charted from FiscalData; text and future-calendar sources require separate NLP/calendar adapters. |

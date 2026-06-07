@@ -831,6 +831,58 @@ indicators:
     start_date: "2010-01-01"
     caveat_en: "Vendor employment release mirrored by FRED; compare against BLS payrolls and avoid treating it as an official labor-statistics substitute."
     caveat_zh: "FRED镜像的供应商就业数据；应与BLS非农交叉验证，不应视为官方劳动力统计替代。"
+  - id: bed_gross_job_gains_level
+    section: employment
+    label_en: "BED Gross Job Gains"
+    label_zh: "BED总就业创造"
+    unit: "k"
+    fetcher: bls_api
+    series: "BDS0000000000000000110001LQ5"
+    source_name: "BLS Business Employment Dynamics"
+    source_url: "https://data.bls.gov/timeseries/BDS0000000000000000110001LQ5"
+    frequency: "quarterly"
+    start_date: "1992-07-01"
+    caveat_en: "Quarterly total-private gross job gains from Business Employment Dynamics; BED is QCEW-based and normally arrives with a several-month lag."
+    caveat_zh: "Business Employment Dynamics总私营部门季度就业创造；BED基于QCEW，通常有数月发布滞后。"
+  - id: bed_gross_job_losses_level
+    section: employment
+    label_en: "BED Gross Job Losses"
+    label_zh: "BED总就业损失"
+    unit: "k"
+    fetcher: bls_api
+    series: "BDS0000000000000000110004LQ5"
+    source_name: "BLS Business Employment Dynamics"
+    source_url: "https://data.bls.gov/timeseries/BDS0000000000000000110004LQ5"
+    frequency: "quarterly"
+    start_date: "1992-07-01"
+    caveat_en: "Quarterly total-private gross job losses; useful for seeing churn beneath net payroll changes."
+    caveat_zh: "总私营部门季度就业损失；用于观察非农净变化背后的就业流动。"
+  - id: bed_gross_job_gains_rate
+    section: employment
+    label_en: "BED Gross Job Gains Rate"
+    label_zh: "BED就业创造率"
+    unit: "%"
+    fetcher: bls_api
+    series: "BDS0000000000000000110001RQ5"
+    source_name: "BLS Business Employment Dynamics"
+    source_url: "https://data.bls.gov/timeseries/BDS0000000000000000110001RQ5"
+    frequency: "quarterly"
+    start_date: "1992-07-01"
+    caveat_en: "Gross job gains as a percent of average employment; complements the level series when comparing cycles."
+    caveat_zh: "就业创造占平均就业的比例；适合跨周期比较就业流动强度。"
+  - id: bed_gross_job_losses_rate
+    section: employment
+    label_en: "BED Gross Job Losses Rate"
+    label_zh: "BED就业损失率"
+    unit: "%"
+    fetcher: bls_api
+    series: "BDS0000000000000000110004RQ5"
+    source_name: "BLS Business Employment Dynamics"
+    source_url: "https://data.bls.gov/timeseries/BDS0000000000000000110004RQ5"
+    frequency: "quarterly"
+    start_date: "1992-07-01"
+    caveat_en: "Gross job losses as a percent of average employment; spikes identify stress not visible in headline payroll levels alone."
+    caveat_zh: "就业损失占平均就业的比例；其上行可揭示标题非农水平不易显示的压力。"
   - id: unemployment_rate
     section: employment
     label_en: "Unemployment Rate"
@@ -2095,10 +2147,10 @@ data_gaps:
     status_en: "Core TIC Treasury transactions and holdings are now charted via FRED; deeper country/security tables still need a Treasury TIC adapter if required."
     status_zh: "核心TIC国债交易与持有量已通过FRED绘图；如需更深国家/证券表，仍需要财政部TIC adapter。"
   - section: employment
-    item_en: "Manpower, Challenger layoffs, Monster/help-wanted indexes, BED"
-    item_zh: "Manpower、Challenger裁员、Monster/Help-wanted指数、BED"
-    status_en: "ADP private payrolls are now charted from FRED; the remaining vendor or specialized releases are not replaced with weak proxies."
-    status_zh: "ADP私营就业已通过FRED绘图；其余供应商或专项发布不使用弱proxy替代。"
+    item_en: "Manpower, Challenger layoffs, Monster/help-wanted indexes; BED API quota"
+    item_zh: "Manpower、Challenger裁员、Monster/Help-wanted指数；BED API额度"
+    status_en: "ADP private payrolls are charted from FRED. The BLS BED adapter is implemented, but rendering requires available BLS API quota or BLS_API_KEY; vendor releases are not replaced with weak proxies."
+    status_zh: "ADP私营就业已通过FRED绘图。BLS BED adapter已实现，但渲染需要可用BLS API额度或BLS_API_KEY；供应商发布不使用弱proxy替代。"
   - section: fed_policy
     item_en: "FOMC statement language, minutes, transcripts, projections, and future Treasury auction calendar"
     item_zh: "FOMC声明措辞、纪要、会议记录、预测与未来国债拍卖日历"

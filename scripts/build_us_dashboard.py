@@ -12,6 +12,8 @@ import csv
 import io
 import os
 import re
+import threading
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import UTC, datetime
 from email.utils import parsedate_to_datetime
@@ -44,6 +46,10 @@ USER_AGENT = (
     "AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
 )
 TREASURY_AUCTIONS_URL = "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query"
+BLS_API_URL = "https://api.bls.gov/publicAPI/v2/timeseries/data/"
+BLS_LOCK = threading.Lock()
+BLS_CACHE: dict[str, list[dict[str, Any]]] = {}
+BLS_BATCH_ERROR: str | None = None
 
 
 def _load_config() -> dict[str, Any]:
@@ -166,6 +172,113 @@ def _numeric(value: Any) -> float | None:
         return None
 
 
+def _bls_period_to_date(year: str, period: str) -> str | None:
+    if not period.startswith("Q"):
+        return None
+    quarter_month = {
+        "Q01": "01",
+        "Q02": "04",
+        "Q03": "07",
+        "Q04": "10",
+    }.get(period)
+    if not quarter_month:
+        return None
+    return f"{year}-{quarter_month}-01"
+
+
+def _bls_config_specs() -> list[dict[str, Any]]:
+    config = _load_config()
+    return [item for item in config.get("indicators", []) if item.get("fetcher") == "bls_api"]
+
+
+def _fetch_bls_batch(session: requests.Session, specs: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    start_year = min(int(str(item.get("start_date", "1992-01-01"))[:4]) for item in specs)
+    end_year = datetime.now(UTC).year
+    series_ids = sorted({str(item["series"]) for item in specs})
+    registration_key = os.environ.get("BLS_API_KEY", "").strip()
+    observations_by_series: dict[str, dict[str, float]] = {series_id: {} for series_id in series_ids}
+
+    for chunk_start in range(start_year, end_year + 1, 20):
+        chunk_end = min(chunk_start + 19, end_year)
+        payload_body: dict[str, Any] = {
+            "seriesid": series_ids,
+            "startyear": str(chunk_start),
+            "endyear": str(chunk_end),
+        }
+        if registration_key:
+            payload_body["registrationkey"] = registration_key
+
+        last_error: Exception | None = None
+        for attempt in range(3):
+            try:
+                response = session.post(
+                    BLS_API_URL,
+                    json=payload_body,
+                    headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+                    timeout=(5, 30),
+                )
+                response.raise_for_status()
+                payload = response.json()
+                if payload.get("status") != "REQUEST_SUCCEEDED":
+                    raise RuntimeError("; ".join(payload.get("message") or ["BLS API request failed."]))
+                break
+            except Exception as exc:  # noqa: BLE001 - retry transient BLS throttling/transport failures.
+                last_error = exc
+                if attempt < 2:
+                    time.sleep(1.0 * (2 ** attempt))
+        else:
+            raise last_error or RuntimeError("BLS API request failed.")
+
+        for series_payload in payload.get("Results", {}).get("series") or []:
+            series_id = str(series_payload.get("seriesID", ""))
+            if series_id not in observations_by_series:
+                continue
+            bucket = observations_by_series[series_id]
+            for row in series_payload.get("data") or []:
+                obs_date = _bls_period_to_date(str(row.get("year", "")), str(row.get("period", "")))
+                value = _numeric(row.get("value"))
+                if not obs_date or value is None:
+                    continue
+                bucket[obs_date] = value
+        time.sleep(0.25)
+
+    return {
+        series_id: [
+            {"date": obs_date, "value": value}
+            for obs_date, value in sorted(values.items())
+        ]
+        for series_id, values in observations_by_series.items()
+    }
+
+
+def fetch_bls_api(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    global BLS_BATCH_ERROR
+
+    series_id = str(spec["series"])
+    with BLS_LOCK:
+        if series_id not in BLS_CACHE and not BLS_BATCH_ERROR:
+            try:
+                BLS_CACHE.update(_fetch_bls_batch(session, _bls_config_specs()))
+            except Exception as exc:  # noqa: BLE001 - preserve one failure for all BLS specs in this run.
+                BLS_BATCH_ERROR = str(exc)
+        if BLS_BATCH_ERROR:
+            raise RuntimeError(BLS_BATCH_ERROR)
+        observations = list(BLS_CACHE.get(series_id) or [])
+
+    start_date = str(spec.get("start_date", ""))
+    if start_date:
+        observations = [item for item in observations if str(item["date"]) >= start_date]
+
+    if not observations:
+        raise RuntimeError(f"BLS API returned no observations for {series_id}.")
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"],
+        "api_url": BLS_API_URL,
+    }
+
+
 def fetch_treasury_auctions(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
     fields = [
         "auction_date",
@@ -260,6 +373,8 @@ def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
     try:
         if spec.get("fetcher") == "fred":
             series = _apply_transform(fetch_fred_us(session, spec))
+        elif spec.get("fetcher") == "bls_api":
+            series = fetch_bls_api(session, spec)
         elif spec.get("fetcher") == "treasury_auctions":
             series = fetch_treasury_auctions(session, spec)
         else:
