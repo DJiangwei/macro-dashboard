@@ -333,7 +333,7 @@ def _chart_html(series: dict[str, Any]) -> str:
   </div>
   <div id="{chart_id}" class="plotly-chart"></div>
   <script>
-    Plotly.newPlot("{chart_id}", {_json(traces)}, {_json(layout)}, {{displayModeBar:false, responsive:true}});
+    Plotly.newPlot("{chart_id}", {_json(traces)}, {_json(layout)}, {{displayModeBar:"hover", displaylogo:false, responsive:true}});
   </script>
   <footer>
     <span>Source: <a href="{source_url}" target="_blank" rel="noreferrer">{escape(series.get('source_name', 'unknown'))}</a></span>
@@ -580,7 +580,7 @@ h1 {
   letter-spacing: -0.04em;
 }
 .logic { grid-column: 2; color: var(--muted); max-width: 860px; }
-.charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 14px; }
+.charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px; margin-bottom: 20px; }
 .chart-card { padding: 16px; min-width: 0; overflow: hidden; transition: transform 0.16s ease, border-color 0.16s ease; }
 .chart-card:hover { transform: translateY(-2px); border-color: rgba(23,19,16,0.26); }
 .chart-head { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 8px; }
@@ -598,7 +598,7 @@ h1 {
 .chart-quality-verified .quality-pill { color: #3f6f50; border-color: rgba(63,111,80,0.35); }
 .chart-quality-watch .quality-pill { color: var(--warn); border-color: rgba(157,106,46,0.35); }
 .chart-quality-low_confidence .quality-pill { color: var(--low); border-color: rgba(157,61,46,0.35); }
-.plotly-chart { width: 100%; min-width: 0; height: 310px; }
+.plotly-chart { width: 100%; min-width: 0; height: 400px; }
 .plot-container, .svg-container { max-width: 100% !important; }
 #js-plotly-tester { width: 1px !important; max-width: 1px !important; overflow: hidden !important; }
 .chart-card footer {
@@ -626,7 +626,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   .chart-card { padding: 13px; }
   .chart-head { flex-direction: column; gap: 8px; }
   .chart-head h3 { font-size: 19px; }
-  .plotly-chart { height: 280px; }
+  .plotly-chart { height: 320px; }
 }
 """
 
