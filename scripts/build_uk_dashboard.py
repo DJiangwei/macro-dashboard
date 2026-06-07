@@ -1,9 +1,11 @@
 """Build the UK macro dashboard from GS UK-statistics-aligned config.
 
 The UK page follows the logic of the Goldman Sachs UK statistics guide, but it
-only renders reproducible public time series. FRED is the default public data
-backbone. If FRED_API_KEY is set, the official FRED API is used; otherwise the
-script falls back to FRED's public graph CSV endpoint.
+only renders reproducible public time series. Native ONS JSON and Bank of
+England IADB CSV are preferred for release-sensitive UK data; FRED remains the
+fallback public backbone for OECD/IMF/BIS mirror series. If FRED_API_KEY is set,
+the official FRED API is used; otherwise the script falls back to FRED's public
+graph CSV endpoint.
 """
 from __future__ import annotations
 
@@ -13,6 +15,7 @@ import json
 import os
 import re
 import time
+from calendar import monthrange
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import UTC, date, datetime
 from email.utils import parsedate_to_datetime
@@ -45,10 +48,38 @@ SUMMARY_JSON = OUTPUT / "uk_dashboard_summary.json"
 FRED_GRAPH_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv"
 FRED_API_URL = "https://api.stlouisfed.org/fred/series/observations"
 BOE_BANK_RATE_URL = "https://www.bankofengland.co.uk/boeapps/database/Bank-Rate.asp?hl=en-GB"
+BOE_IADB_URL = "https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp"
+ONS_TIMESERIES_BASE = "https://www.ons.gov.uk"
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
 )
+MONTHS = {
+    "jan": 1,
+    "january": 1,
+    "feb": 2,
+    "february": 2,
+    "mar": 3,
+    "march": 3,
+    "apr": 4,
+    "april": 4,
+    "may": 5,
+    "jun": 6,
+    "june": 6,
+    "jul": 7,
+    "july": 7,
+    "aug": 8,
+    "august": 8,
+    "sep": 9,
+    "sept": 9,
+    "september": 9,
+    "oct": 10,
+    "october": 10,
+    "nov": 11,
+    "november": 11,
+    "dec": 12,
+    "december": 12,
+}
 
 
 def _load_config() -> dict[str, Any]:
@@ -60,13 +91,34 @@ def _clean_text(value: str) -> str:
 
 
 def _parse_date(value: str) -> date | None:
-    value = str(value or "")
+    value = _clean_text(str(value or ""))
+    quarter_match = re.match(r"^(\d{4})\s+Q([1-4])$", value, flags=re.I)
+    if quarter_match:
+        year = int(quarter_match.group(1))
+        month = int(quarter_match.group(2)) * 3
+        return date(year, month, monthrange(year, month)[1])
+    month_match = re.match(r"^(\d{4})\s+([A-Za-z]{3,9})$", value)
+    if month_match:
+        year = int(month_match.group(1))
+        month = MONTHS.get(month_match.group(2).lower())
+        if month:
+            return date(year, month, 1)
     for fmt, length in (("%Y-%m-%d", 10), ("%Y-%m", 7), ("%Y", 4)):
         try:
             return datetime.strptime(value[:length], fmt).date()
         except ValueError:
             continue
+    for fmt in ("%d %b %Y", "%d %B %Y", "%d %b %y"):
+        try:
+            return datetime.strptime(value, fmt).date()
+        except ValueError:
+            continue
     return None
+
+
+def _normalise_date(value: str) -> str | None:
+    parsed = _parse_date(value)
+    return parsed.isoformat() if parsed else None
 
 
 def _start_filter(observations: list[dict[str, Any]], start_date: str | None) -> list[dict[str, Any]]:
@@ -139,6 +191,27 @@ def _fred_graph_observations(session: requests.Session, spec: dict[str, Any]) ->
     return observations, updated
 
 
+def _apply_transform(observations: list[dict[str, Any]], spec: dict[str, Any]) -> list[dict[str, Any]]:
+    transform = str(spec.get("transform") or "")
+    if transform != "yoy":
+        return observations
+    frequency = str(spec.get("frequency", "")).lower()
+    periods = 12 if frequency == "monthly" else 4 if frequency == "quarterly" else 1
+    transformed: list[dict[str, Any]] = []
+    for index, item in enumerate(observations):
+        if index < periods:
+            continue
+        base = observations[index - periods]["value"]
+        if base in (0, None):
+            continue
+        try:
+            value = (float(item["value"]) / float(base) - 1.0) * 100.0
+        except (TypeError, ValueError, ZeroDivisionError):
+            continue
+        transformed.append({"date": item["date"], "value": value})
+    return transformed
+
+
 def fetch_fred(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
     observations: list[dict[str, Any]]
     provider_updated: str
@@ -148,7 +221,7 @@ def fetch_fred(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any
         observations, provider_updated = [], ""
     if not observations:
         observations, provider_updated = _fred_graph_observations(session, spec)
-    observations = _start_filter(observations, spec.get("start_date"))
+    observations = _apply_transform(_start_filter(observations, spec.get("start_date")), spec)
     if provider_updated:
         try:
             provider_updated = parsedate_to_datetime(provider_updated).date().isoformat()
@@ -159,6 +232,105 @@ def fetch_fred(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any
         "observations": observations,
         "provider_updated": provider_updated or (observations[-1]["date"] if observations else ""),
         "api_url": FRED_API_URL if os.environ.get("FRED_API_KEY") else FRED_GRAPH_URL,
+    }
+
+
+def _ons_path(spec: dict[str, Any]) -> str:
+    path = str(spec.get("ons_path") or "").strip()
+    if path:
+        return path
+    cdid = str(spec["series"]).lower()
+    dataset = str(spec.get("dataset") or spec.get("dataset_id") or "").lower()
+    return f"/timeseries/{cdid}/{dataset}/data"
+
+
+def fetch_ons_timeseries(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    path = _ons_path(spec)
+    url = f"{ONS_TIMESERIES_BASE}{path}" if path.startswith("/") else path
+    response = session.get(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"}, timeout=(4, 20))
+    response.raise_for_status()
+    payload = response.json()
+    frequency = str(spec.get("frequency", "")).lower()
+    rows_by_frequency = {
+        "monthly": payload.get("months") or [],
+        "quarterly": payload.get("quarters") or [],
+        "annual": payload.get("years") or [],
+    }
+    rows = rows_by_frequency.get(frequency) or payload.get("months") or payload.get("quarters") or payload.get("years") or []
+    observations: list[dict[str, Any]] = []
+    provider_updated = ""
+    for row in rows:
+        raw_value = row.get("value")
+        if raw_value in (None, "", "."):
+            continue
+        obs_date = _normalise_date(str(row.get("date") or row.get("label") or ""))
+        if not obs_date:
+            continue
+        try:
+            value = float(str(raw_value).replace(",", ""))
+        except (TypeError, ValueError):
+            continue
+        provider_updated = str(row.get("updateDate") or provider_updated)
+        observations.append({"date": obs_date, "value": value})
+    observations.sort(key=lambda item: item["date"])
+    observations = _apply_transform(_start_filter(observations, spec.get("start_date")), spec)
+    description = payload.get("description") or {}
+    provider_updated = str(description.get("releaseDate") or provider_updated or "")
+    if provider_updated:
+        provider_updated = provider_updated[:10]
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": provider_updated or (observations[-1]["date"] if observations else ""),
+        "api_url": url,
+        "current_value": str(description.get("number") or ""),
+    }
+
+
+def _boe_date_param(start_date: str | None) -> str:
+    parsed = _parse_date(start_date or "")
+    if not parsed:
+        parsed = date(1997, 1, 1)
+    return parsed.strftime("%d/%b/%Y")
+
+
+def fetch_boe_iadb(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    series_code = str(spec["series"]).strip()
+    params = {
+        "csv.x": "yes",
+        "Datefrom": _boe_date_param(spec.get("start_date")),
+        "Dateto": "now",
+        "SeriesCodes": series_code,
+        "CSVF": "TN",
+        "UsingCodes": "Y",
+        "VPD": "Y",
+        "VFD": "N",
+    }
+    response = session.get(BOE_IADB_URL, params=params, headers={"User-Agent": USER_AGENT}, timeout=(4, 20))
+    response.raise_for_status()
+    if "<html" in response.text[:200].lower():
+        raise RuntimeError(f"BoE IADB rejected series code {series_code}.")
+    rows = csv.DictReader(io.StringIO(response.text))
+    observations: list[dict[str, Any]] = []
+    for row in rows:
+        raw_value = row.get(series_code)
+        if raw_value in (None, "", "."):
+            continue
+        obs_date = _normalise_date(str(row.get("DATE") or ""))
+        if not obs_date:
+            continue
+        try:
+            value = float(str(raw_value).replace(",", ""))
+        except (TypeError, ValueError):
+            continue
+        observations.append({"date": obs_date, "value": value})
+    observations.sort(key=lambda item: item["date"])
+    observations = _apply_transform(_start_filter(observations, spec.get("start_date")), spec)
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": response.url,
     }
 
 
@@ -252,6 +424,10 @@ def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
         fetcher = spec.get("fetcher")
         if fetcher == "fred":
             series = fetch_fred(session, spec)
+        elif fetcher == "ons_timeseries":
+            series = fetch_ons_timeseries(session, spec)
+        elif fetcher == "boe_iadb":
+            series = fetch_boe_iadb(session, spec)
         elif fetcher == "boe_bank_rate":
             series = fetch_boe_bank_rate(session, spec)
         else:
@@ -355,7 +531,7 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> st
 <main class="container">
   <header>
     <h1><span data-lang="en">UK Dashboard</span><span data-lang="zh">英国 Dashboard</span></h1>
-    <p class="subtitle"><span data-lang="en">A chart-and-data-first UK macro page aligned to the GS <em>Understanding UK Economic Statistics</em> framework. The page prioritises reproducible public series from FRED/OECD/BIS/IMF and the Bank of England, while preserving vendor-controlled GS/PMI/CBI/RICS items as explicit data gaps.</span><span data-lang="zh">一个以图表和数据为核心的英国宏观页面，结构对齐GS <em>Understanding UK Economic Statistics</em> 框架。页面优先使用FRED/OECD/BIS/IMF与Bank of England的可复跑公开序列；GS、PMI、CBI、RICS等供应商控制指标则明确列为数据缺口。</span></p>
+    <p class="subtitle"><span data-lang="en">A chart-and-data-first UK macro page aligned to the GS <em>Understanding UK Economic Statistics</em> framework. The page prioritises reproducible public series from native ONS and Bank of England endpoints, while keeping FRED/OECD/BIS/IMF mirrors for broader public-data coverage and preserving vendor-controlled GS/PMI/CBI/RICS items as explicit data gaps.</span><span data-lang="zh">一个以图表和数据为核心的英国宏观页面，结构对齐GS <em>Understanding UK Economic Statistics</em> 框架。页面优先使用ONS与Bank of England原生可复跑公开接口，同时保留FRED/OECD/BIS/IMF镜像作为更广覆盖的公开数据骨架；GS、PMI、CBI、RICS等供应商控制指标则明确列为数据缺口。</span></p>
     <div class="meta-row">
       <span class="meta-chip">{chart_count} <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
       <span class="meta-chip">{source_count} <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
@@ -373,8 +549,8 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> st
   </nav>
 
   <div class="data-note">
-    <span data-lang="en">Data policy: no fabricated proxies. FRED is used as the durable, no-key public backbone; if <code>FRED_API_KEY</code> is available, the official FRED API is used automatically. BoE Bank Rate is fetched from the official Bank of England history table.</span>
-    <span data-lang="zh">数据原则：不制造假proxy。FRED作为无需key的稳定公开骨架；如果运行环境提供 <code>FRED_API_KEY</code>，脚本会自动使用FRED官方API。BoE Bank Rate来自Bank of England官方历史表。</span>
+    <span data-lang="en">Data policy: no fabricated proxies. FRED remains the durable public backbone, while release-sensitive UK series prefer native ONS time-series JSON and Bank of England IADB CSV endpoints when validated.</span>
+    <span data-lang="zh">数据原则：不制造假proxy。FRED继续作为稳定公开骨架；对发布时效更敏感的英国序列，在验证后优先使用ONS time-series JSON与Bank of England IADB CSV原生接口。</span>
   </div>
 
   {_sections_html(config, series_list)}

@@ -130,7 +130,7 @@ Supported optional sources:
 
 | Variable | Purpose |
 |---|---|
-| `FRED_API_KEY` | Enables the official FRED API for the UK and US pages. If unset, their scripts fall back to FRED's public graph CSV endpoint. For the US page, set this key for complete regular refreshes; the generator refuses to overwrite output if the fallback returns fewer than 55 charts. |
+| `FRED_API_KEY` | Enables the official FRED API for the US page and the remaining UK FRED/OECD/BIS/IMF mirror series. If unset, those scripts fall back to FRED's public graph CSV endpoint. UK release-sensitive series use native ONS/BoE endpoints where validated. For the US page, set this key for complete regular refreshes; the generator refuses to overwrite output if the fallback returns fewer than 55 charts. |
 | `GIE_AGSI_API_KEY` | Enables GIE AGSI+ country-level gas-storage fill data for `gas_storage_level`. |
 | `GIE_AGSI_BASE_URL` | Optional override for the AGSI+ API base URL. Defaults to `https://agsi.gie.eu/api`. |
 | `STOOQ_API_KEY` | Enables the default Stooq CSV URL template if it works for the user's Stooq account. |

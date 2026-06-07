@@ -566,6 +566,71 @@ Remaining rendered proxy slots: 0.
 | World Bank WDI fallback | 1 | RO:credit_to_gdp_gap |
 | Yahoo Finance derived | 1 | HU:equity_vol_30d |
 
+## United Kingdom Data-First Dashboard Sources
+
+The UK page is generated from `config/uk_indicators.yaml`. Native ONS time-series JSON and Bank of England IADB CSV endpoints are preferred where validated; FRED/OECD/BIS/IMF mirror series remain for broader public-data coverage.
+
+Configured charts: 43. Latest rendered chart count: 43. Source groups: 5.
+
+| Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
+|---|---|---|---|---|---|---|---|---|
+| national_accounts | `real_gdp_qoq` | Real GDP Growth | quarterly | % | fred | FRED / OECD | NAEXKP01GBQ657S | Quarter-on-quarter growth from OECD via FRED; early UK GDP is subject to material later revisions. |
+| national_accounts | `nominal_gdp_gbp` | Nominal GDP | quarterly | GBP mn | fred | FRED / OECD | UKNGDP | Nominal level is useful for scale and debt ratios, but not for real activity momentum. |
+| national_accounts | `private_consumption_qoq` | Real Private Consumption | quarterly | % | fred | FRED / OECD | NAEXKP02GBQ657S | Demand-side national-accounts component; revised alongside GDP balancing. |
+| national_accounts | `gfcf_qoq` | Real Gross Fixed Capital Formation | quarterly | % | fred | FRED / OECD | NAEXKP04GBQ657S | Investment is volatile and revision-prone; treat quarterly swings cautiously. |
+| national_accounts | `monthly_gdp_index` | Monthly GDP Index | monthly | index | ons_timeseries | ONS | YBEZ | ONS monthly GDP index gives release-day activity tracking, but still feeds into later quarterly GDP revisions. |
+| monthly_output | `industrial_production` | Industrial Production | monthly | index | ons_timeseries | ONS | K222 | ONS Index of Production, B-E production CVMSA; preferred over the lagged FRED/OECD mirror for UK release work. |
+| monthly_output | `retail_sales_yoy` | Retail Sales Volume Index | monthly | index | ons_timeseries | ONS | J5EK | ONS retail sales volume index, all retailers including fuel, seasonally adjusted; this replaces the slower quarterly OECD/FRED retail mirror. |
+| monthly_output | `consumer_confidence` | Consumer Confidence | monthly | index | fred | FRED / OECD | CSCICP02GBM460S | Survey-like signal; helpful because UK hard activity data can be revised substantially. |
+| monthly_output | `composite_leading_indicator` | Composite Leading Indicator | monthly | index | fred | FRED / OECD | GBRLOLITOAASTSAM | OECD CLI is not a GS CAI substitute, but it is a reproducible public leading-cycle proxy. |
+| housing_construction | `real_house_prices` | Real Residential Property Prices | quarterly | index | fred | FRED / BIS | QGBR628BIS | BIS real residential property price index; smoother and less release-sensitive than Nationwide/Halifax monthly indices. |
+| housing_construction | `nominal_house_prices` | Nominal Residential Property Prices | quarterly | index | fred | FRED / BIS | QGBN628BIS | BIS nominal residential property price index; does not replicate the report's individual house-price vendor indices. |
+| external | `exports_qoq` | Real Exports | quarterly | % | fred | FRED / OECD | NAEXKP06GBQ657S | National-accounts exports; monthly goods-trade detail is not yet wired. |
+| external | `imports_qoq` | Real Imports | quarterly | % | fred | FRED / OECD | NAEXKP07GBQ657S | National-accounts imports; trade contribution can change after GDP revisions. |
+| external | `gbp_reer` | Sterling Real Effective Exchange Rate | monthly | index | fred | FRED / BIS | RBGBBIS | BIS REER is the clean public sterling competitiveness measure used here for the FCI-style FX channel. |
+| labour_market | `unemployment_rate` | Unemployment Rate | monthly | % | ons_timeseries | ONS | MGSX | ONS unemployment rate, aged 16 and over, seasonally adjusted; ONS labels the latest point as a three-month average. |
+| labour_market | `employment_total` | Employment Total | quarterly | persons | fred | FRED / OECD | LFEMTTTTGBQ647S | Quarterly OECD employment total; not a substitute for the full ONS labour-market release. |
+| labour_market | `employment_rate_15_64` | Employment Rate, Ages 16-64 | monthly | % | ons_timeseries | ONS | LF24 | ONS employment rate, aged 16-64, seasonally adjusted; ONS labels the latest point as a three-month average. |
+| labour_market | `claimant_count` | Claimant Count | monthly | 000s | ons_timeseries | ONS | BCJD | ONS UK claimant count, people, seasonally adjusted; definition can be affected by benefit-system changes. |
+| labour_market | `vacancies_total` | Job Vacancies | monthly | 000s | ons_timeseries | ONS | AP2Y | ONS UK vacancies, total, in thousands; useful as a labour-demand pressure gauge. |
+| labour_market | `hours_worked_total` | Total Weekly Hours Worked | monthly | mn hours | ons_timeseries | ONS | YBUS | LFS total actual weekly hours worked, seasonally adjusted; captures labour input beyond headcount. |
+| labour_market | `awe_total_pay_growth` | AWE Total Pay Growth | monthly | % | ons_timeseries | ONS | KAC3 | AWE whole-economy year-on-year three-month-average growth, total pay excluding arrears; bonus swings can distort the series. |
+| labour_market | `awe_regular_pay_growth` | AWE Regular Pay Growth | monthly | % | ons_timeseries | ONS | KAI9 | AWE whole-economy regular-pay growth, three-month average, excluding arrears; cleaner for domestic wage persistence than total pay. |
+| prices | `cpi_yoy` | Headline CPI Inflation | monthly | % | ons_timeseries | ONS | D7G7 | ONS CPI annual rate, all items; this is the MPC target measure and replaces the lagged FRED/OECD mirror. |
+| prices | `core_cpi_yoy` | Core CPI Inflation | monthly | % | ons_timeseries | ONS | DKO8 | Core CPI helps separate domestic persistence from headline energy/import noise. |
+| prices | `rpi_yoy` | RPI Inflation | monthly | % | ons_timeseries | ONS | CZBH | ONS RPI all-items 12-month change; not a National Statistic, but still relevant for gilts, contracts, and UK inflation history. |
+| prices | `producer_prices` | PPI Output: Manufactured Products | monthly | index | ons_timeseries | ONS | GD6Y | ONS PPI output total manufactured products excluding duty, index level; use the release table for detailed industry decomposition. |
+| monetary_financial | `bank_rate` | Bank Rate | daily | % | boe_iadb | Bank of England IADB | IUDBEDR | Official BoE Bank Rate via the IADB CSV endpoint; daily rows repeat the prevailing policy setting between MPC decisions. |
+| monetary_financial | `sonia_rate` | SONIA | daily | % | boe_iadb | Bank of England IADB | IUDSOIA | Daily Sterling Overnight Index Average; a modern UK money-market benchmark for the overnight rate complex. |
+| monetary_financial | `short_rate_3m` | 3-Month Interbank Rate | monthly | % | fred | FRED / OECD | IR3TIB01GBM156N | Used for the GS FCI-style short-rate channel; not the same as official Bank Rate. |
+| monetary_financial | `long_rate_10y` | Long-Term Government Bond Yield | monthly | % | fred | FRED / OECD | IRLTLT01GBM156N | Public long-rate channel for financial conditions; not a fitted GS FCI. |
+| monetary_financial | `gbp_usd` | GBP/USD Spot | daily | USD per GBP | boe_iadb | Bank of England IADB | XUDLUSS | BoE daily spot exchange-rate series; useful for release-day sterling impulse, not a real effective exchange rate. |
+| monetary_financial | `sterling_eri_boe` | Broad Sterling ERI | monthly | index | boe_iadb | Bank of England IADB | XUMABK82 | BoE monthly average broad sterling exchange-rate index; complements the BIS real exchange-rate series. |
+| monetary_financial | `equity_prices` | UK Share Prices | monthly | index | fred | FRED / OECD | SPASTT01GBM661N | Equity-price channel for a public FCI dashboard; the GS UK FCI used FTSE All-Share and proprietary weights. |
+| monetary_financial | `broad_money_m3_yoy` | M4 ex Intermediate OFCs Growth | monthly | % | boe_iadb | Bank of England IADB | RPMB56Q | UK-native broad-money growth from BoE M4 liabilities to private sector excluding intermediate OFCs; cleaner than the OECD/FRED mirror for UK release work. |
+| monetary_financial | `m4_lending_growth` | M4 Lending Growth | monthly | % | boe_iadb | Bank of England IADB | LPMVWVP | BoE twelve-month growth of M4 lending to the private sector, seasonally adjusted; captures bank-credit transmission. |
+| monetary_financial | `consumer_credit` | Consumer Credit Growth | monthly | % | boe_iadb | Bank of England IADB | LPMB4TD | BoE total consumer-credit twelve-month growth excluding Student Loans Company, not seasonally adjusted; definition breaks should be checked around methodology changes. |
+| monetary_financial | `mortgage_approvals` | Mortgage Approvals for House Purchase | monthly | number | boe_iadb | Bank of England IADB | LPMVTVX | BoE seasonally adjusted sterling mortgage approvals for house purchase to individuals; a high-signal housing-credit leading indicator. |
+| monetary_financial | `quoted_mortgage_rate` | Quoted Household Mortgage Rate | monthly | % | boe_iadb | Bank of England IADB | IUMBV34 | BoE quoted household-rate series from the IADB; useful for mortgage-rate transmission, but confirm the exact product definition before comparing against lender-specific quotes. |
+| monetary_financial | `reserves_ex_gold` | Official Reserves ex Gold | monthly | USD mn | fred | FRED / IMF | TRESEGGBM052N | IMF reserve series via FRED; useful for external liquidity context, not a core UK rates driver. |
+| fiscal_policy | `psnb_ex_banks` | PSNB ex Banks | monthly | GBP mn | ons_timeseries | ONS | DZLS | ONS public sector net borrowing excluding public-sector banks, monthly; volatile month to month and affected by timing of taxes and spending. |
+| fiscal_policy | `psnd_ex_banks_gdp` | PSND ex Banks | monthly | % of GDP | ons_timeseries | ONS | HF6X | ONS public sector net debt excluding public-sector banks as a percentage of GDP; conceptually closer to UK fiscal headlines than IMF general-government debt. |
+| fiscal_policy | `government_balance_gdp` | General Government Net Lending/Borrowing | annual | % of GDP | fred | FRED / IMF | GGNLBAGBA188N | Annual IMF general-government concept; not the same as monthly PSNB. |
+| fiscal_policy | `government_debt_gdp` | General Government Gross Debt | annual | % of GDP | fred | FRED / IMF | GGGDTAGBA188N | Annual IMF debt ratio; the GS guide warns that UK PSND and general-government debt differ by sector boundary and liquid-asset treatment. |
+
+## United Kingdom Official / Vendor Data Gaps
+
+| Section | Indicator family | Current status |
+|---|---|---|
+| monthly_output | GS UK CAI, GS-MAP, GS Surprise Index, and official GS FCI | Proprietary GS products. This page charts public components only. |
+| monthly_output | Manufacturing, construction, services, and composite PMI | Important in the GS framework, but not yet wired because S&P Global PMI history is vendor-controlled. |
+| monthly_output | CBI Distributive Trades, CBI Industrial Trends, BCC QES, BRC/KPMG Retail Sales Monitor | Survey sources need separate adapters and licensing checks. |
+| housing_construction | Nationwide, Halifax, Rightmove, Hometrack, RICS, and DCLG starts/completions | Mortgage approvals are now charted from BoE; house-price and construction vendor/official endpoints still need licensing and API validation. |
+| labour_market | Redundancies and pay settlements | Core ONS labour-market indicators are now charted; these remaining items need separate release tables or survey/licensing checks. |
+| prices | RPIX, petrol prices, inflation expectations surveys, and index-linked gilt breakevens | Headline CPI, core CPI, RPI, and ONS PPI are now charted; remaining items need stable public series mapping. |
+| monetary_financial | Trends in Lending, Credit Conditions Survey, HEW, and fuller quoted-rate matrix | BoE IADB now covers Bank Rate, SONIA, sterling, M4, consumer credit, mortgage approvals, and one quoted-rate series; survey/PDF-style sources remain open. |
+| fiscal_policy | PSNCR, detailed debt breakdowns, and OBR analysis | Monthly PSNB and PSND are now charted from ONS; remaining fiscal detail needs additional ONS/OBR table adapters. |
+
 ## United States Data-First Dashboard Sources
 
 The US page is generated from `config/us_indicators.yaml`. This table records configured sources for each rendered chart slot; latest dates are tracked in `output/us_dashboard_summary.json` and the generated HTML rather than fetched again here.

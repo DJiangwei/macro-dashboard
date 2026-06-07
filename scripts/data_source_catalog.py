@@ -33,6 +33,8 @@ COUNTRY_NAMES = {
 }
 US_CONFIG_PATH = ROOT / "config" / "us_indicators.yaml"
 US_SUMMARY_PATH = ROOT / "output" / "us_dashboard_summary.json"
+UK_CONFIG_PATH = ROOT / "config" / "uk_indicators.yaml"
+UK_SUMMARY_PATH = ROOT / "output" / "uk_dashboard_summary.json"
 
 
 def _clean(value: object) -> str:
@@ -61,6 +63,62 @@ def _us_summary() -> dict:
     if not US_SUMMARY_PATH.exists():
         return {}
     return json.loads(US_SUMMARY_PATH.read_text())
+
+
+def _append_uk_sources(lines: list[str]) -> None:
+    if not UK_CONFIG_PATH.exists():
+        return
+    config = yaml.safe_load(UK_CONFIG_PATH.read_text()) or {}
+    indicators = config.get("indicators", [])
+    summary = json.loads(UK_SUMMARY_PATH.read_text()) if UK_SUMMARY_PATH.exists() else {}
+    lines.extend([
+        "",
+        "## United Kingdom Data-First Dashboard Sources",
+        "",
+        "The UK page is generated from `config/uk_indicators.yaml`. Native ONS time-series JSON and Bank of England IADB CSV endpoints are preferred where validated; FRED/OECD/BIS/IMF mirror series remain for broader public-data coverage.",
+        "",
+        f"Configured charts: {len(indicators)}. Latest rendered chart count: {summary.get('charts', 'unknown')}. Source groups: {summary.get('source_groups', 'unknown')}.",
+        "",
+        "| Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |",
+        "|---|---|---|---|---|---|---|---|---|",
+    ])
+    for item in indicators:
+        label = item.get("label_en") or item.get("label_zh") or item.get("id")
+        series_id = item.get("series") or item.get("metric") or ""
+        lines.append(
+            "| "
+            + " | ".join([
+                _clean(item.get("section")),
+                f"`{_clean(item.get('id'))}`",
+                _clean(label),
+                _clean(item.get("frequency")),
+                _clean(item.get("unit")),
+                _clean(item.get("fetcher")),
+                _clean(item.get("source_name")),
+                _clean(series_id),
+                _clean(item.get("caveat_en")),
+            ])
+            + " |"
+        )
+
+    gaps = config.get("data_gaps", [])
+    lines.extend([
+        "",
+        "## United Kingdom Official / Vendor Data Gaps",
+        "",
+        "| Section | Indicator family | Current status |",
+        "|---|---|---|",
+    ])
+    for item in gaps:
+        lines.append(
+            "| "
+            + " | ".join([
+                _clean(item.get("section")),
+                _clean(item.get("item_en")),
+                _clean(item.get("status_en")),
+            ])
+            + " |"
+        )
 
 
 def _append_us_sources(lines: list[str]) -> None:
@@ -232,6 +290,7 @@ def build_catalog() -> str:
         suffix = "..." if len(slots) > 12 else ""
         lines.append(f"| {_clean(source)} | {len(slots)} | {_clean(sample + suffix)} |")
 
+    _append_uk_sources(lines)
     _append_us_sources(lines)
 
     return "\n".join(lines) + "\n"

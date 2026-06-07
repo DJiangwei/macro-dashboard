@@ -93,32 +93,51 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "Investment is volatile and revision-prone; treat quarterly swings cautiously."
     caveat_zh: "投资波动较大且容易修订；季度波动需谨慎解读。"
+  - id: monthly_gdp_index
+    section: national_accounts
+    label_en: "Monthly GDP Index"
+    label_zh: "月度GDP指数"
+    unit: "index"
+    fetcher: ons_timeseries
+    series: "YBEZ"
+    dataset: "PN2"
+    ons_path: "/economy/grossdomesticproductgdp/timeseries/ybez/pn2/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ybez/pn2"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS monthly GDP index gives release-day activity tracking, but still feeds into later quarterly GDP revisions."
+    caveat_zh: "ONS月度GDP指数更适合发布日跟踪活动，但仍会进入后续季度GDP修订。"
   - id: industrial_production
     section: monthly_output
     label_en: "Industrial Production"
     label_zh: "工业生产指数"
     unit: "index"
-    fetcher: fred
-    series: "GBRPROINDMISMEI"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/GBRPROINDMISMEI"
+    fetcher: ons_timeseries
+    series: "K222"
+    dataset: "DIOP"
+    ons_path: "/economy/economicoutputandproductivity/output/timeseries/k222/diop/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/economicoutputandproductivity/output/timeseries/k222/diop"
     frequency: "monthly"
     start_date: "1997-01-01"
-    caveat_en: "FRED/OECD monthly IP currently lags ONS releases; use as a reproducible skeleton, not the release-day source."
-    caveat_zh: "FRED/OECD月度工业生产相对ONS发布滞后；适合作为可复跑骨架，不适合作为发布日来源。"
+    caveat_en: "ONS Index of Production, B-E production CVMSA; preferred over the lagged FRED/OECD mirror for UK release work."
+    caveat_zh: "ONS生产指数B-E生产CVMSA；相较滞后的FRED/OECD镜像，更适合英国发布日研究。"
   - id: retail_sales_yoy
     section: monthly_output
-    label_en: "Retail Sales Volume Growth"
-    label_zh: "零售销售量同比"
-    unit: "%"
-    fetcher: fred
-    series: "SLRTTO01GBQ659S"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/SLRTTO01GBQ659S"
-    frequency: "quarterly"
+    label_en: "Retail Sales Volume Index"
+    label_zh: "零售销售量指数"
+    unit: "index"
+    fetcher: ons_timeseries
+    series: "J5EK"
+    dataset: "DRSI"
+    ons_path: "/businessindustryandtrade/retailindustry/timeseries/j5ek/drsi/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/businessindustryandtrade/retailindustry/timeseries/j5ek/drsi"
+    frequency: "monthly"
     start_date: "1997-01-01"
-    caveat_en: "Quarterly retail-volume growth via OECD; ONS monthly retail sales is preferable for tactical nowcasting."
-    caveat_zh: "OECD季度零售量增速；战术性nowcast应优先使用ONS月度零售销售。"
+    caveat_en: "ONS retail sales volume index, all retailers including fuel, seasonally adjusted; this replaces the slower quarterly OECD/FRED retail mirror."
+    caveat_zh: "ONS零售销售量指数，含燃料、季调；替代较慢的OECD/FRED季度零售镜像。"
   - id: consumer_confidence
     section: monthly_output
     label_en: "Consumer Confidence"
@@ -215,14 +234,16 @@ indicators:
     label_en: "Unemployment Rate"
     label_zh: "失业率"
     unit: "%"
-    fetcher: fred
-    series: "LRHUTTTTGBM156S"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/LRHUTTTTGBM156S"
+    fetcher: ons_timeseries
+    series: "MGSX"
+    dataset: "LMS"
+    ons_path: "/employmentandlabourmarket/peoplenotinwork/unemployment/timeseries/mgsx/lms/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peoplenotinwork/unemployment/timeseries/mgsx/lms"
     frequency: "monthly"
     start_date: "1997-01-01"
-    caveat_en: "ILO-style unemployment via OECD/FRED; ONS LMS remains the release-day reference."
-    caveat_zh: "OECD/FRED的ILO式失业率；ONS LMS仍是发布日基准来源。"
+    caveat_en: "ONS unemployment rate, aged 16 and over, seasonally adjusted; ONS labels the latest point as a three-month average."
+    caveat_zh: "ONS 16岁及以上季调失业率；ONS将最新点标注为三个月平均。"
   - id: employment_total
     section: labour_market
     label_en: "Employment Total"
@@ -238,70 +259,180 @@ indicators:
     caveat_zh: "OECD季度总就业人数；不能替代完整ONS劳动力市场发布。"
   - id: employment_rate_15_64
     section: labour_market
-    label_en: "Employment Rate, Ages 15-64"
-    label_zh: "15-64岁就业率"
+    label_en: "Employment Rate, Ages 16-64"
+    label_zh: "16-64岁就业率"
     unit: "%"
-    fetcher: fred
-    series: "LREM64TTGBQ156S"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/LREM64TTGBQ156S"
-    frequency: "quarterly"
+    fetcher: ons_timeseries
+    series: "LF24"
+    dataset: "LMS"
+    ons_path: "/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/timeseries/lf24/lms/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/timeseries/lf24/lms"
+    frequency: "monthly"
     start_date: "1997-01-01"
-    caveat_en: "Employment-rate measure gives cleaner scale context than employment level alone."
-    caveat_zh: "就业率比就业人数水平更便于观察劳动力市场规模背景。"
+    caveat_en: "ONS employment rate, aged 16-64, seasonally adjusted; ONS labels the latest point as a three-month average."
+    caveat_zh: "ONS 16-64岁季调就业率；ONS将最新点标注为三个月平均。"
+  - id: claimant_count
+    section: labour_market
+    label_en: "Claimant Count"
+    label_zh: "申领失业救济人数"
+    unit: "000s"
+    fetcher: ons_timeseries
+    series: "BCJD"
+    dataset: "UNEM"
+    ons_path: "/employmentandlabourmarket/peoplenotinwork/outofworkbenefits/timeseries/bcjd/unem/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peoplenotinwork/outofworkbenefits/timeseries/bcjd/unem"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS UK claimant count, people, seasonally adjusted; definition can be affected by benefit-system changes."
+    caveat_zh: "ONS英国申领失业救济人数，人员、季调；口径会受福利制度变化影响。"
+  - id: vacancies_total
+    section: labour_market
+    label_en: "Job Vacancies"
+    label_zh: "职位空缺"
+    unit: "000s"
+    fetcher: ons_timeseries
+    series: "AP2Y"
+    dataset: "UNEM"
+    ons_path: "/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/timeseries/ap2y/unem/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/timeseries/ap2y/unem"
+    frequency: "monthly"
+    start_date: "2001-01-01"
+    caveat_en: "ONS UK vacancies, total, in thousands; useful as a labour-demand pressure gauge."
+    caveat_zh: "ONS英国总职位空缺，千人；适合观察劳动力需求压力。"
+  - id: hours_worked_total
+    section: labour_market
+    label_en: "Total Weekly Hours Worked"
+    label_zh: "总周工时"
+    unit: "mn hours"
+    fetcher: ons_timeseries
+    series: "YBUS"
+    dataset: "LMS"
+    ons_path: "/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/timeseries/ybus/lms/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/timeseries/ybus/lms"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "LFS total actual weekly hours worked, seasonally adjusted; captures labour input beyond headcount."
+    caveat_zh: "LFS实际总周工时，季调；可捕捉就业人数之外的劳动投入。"
+  - id: awe_total_pay_growth
+    section: labour_market
+    label_en: "AWE Total Pay Growth"
+    label_zh: "AWE总薪酬增速"
+    unit: "%"
+    fetcher: ons_timeseries
+    series: "KAC3"
+    dataset: "LMS"
+    ons_path: "/employmentandlabourmarket/peopleinwork/earningsandworkinghours/timeseries/kac3/lms/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/timeseries/kac3/lms"
+    frequency: "monthly"
+    start_date: "2001-01-01"
+    caveat_en: "AWE whole-economy year-on-year three-month-average growth, total pay excluding arrears; bonus swings can distort the series."
+    caveat_zh: "AWE全经济总薪酬同比三个月平均增速，不含欠薪；奖金波动可能扰动该序列。"
+  - id: awe_regular_pay_growth
+    section: labour_market
+    label_en: "AWE Regular Pay Growth"
+    label_zh: "AWE常规薪酬增速"
+    unit: "%"
+    fetcher: ons_timeseries
+    series: "KAI9"
+    dataset: "LMS"
+    ons_path: "/employmentandlabourmarket/peopleinwork/earningsandworkinghours/timeseries/kai9/lms/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/timeseries/kai9/lms"
+    frequency: "monthly"
+    start_date: "2001-01-01"
+    caveat_en: "AWE whole-economy regular-pay growth, three-month average, excluding arrears; cleaner for domestic wage persistence than total pay."
+    caveat_zh: "AWE全经济常规薪酬同比三个月平均增速，不含欠薪；比总薪酬更适合观察国内工资粘性。"
   - id: cpi_yoy
     section: prices
     label_en: "Headline CPI Inflation"
     label_zh: "整体CPI通胀"
     unit: "%"
-    fetcher: fred
-    series: "CPALTT01GBM659N"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/CPALTT01GBM659N"
+    fetcher: ons_timeseries
+    series: "D7G7"
+    dataset: "MM23"
+    ons_path: "/economy/inflationandpriceindices/timeseries/d7g7/mm23/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7g7/mm23"
     frequency: "monthly"
     start_date: "1997-01-01"
-    caveat_en: "CPI is the MPC target measure; FRED/OECD can lag the ONS release calendar."
-    caveat_zh: "CPI是MPC目标指标；FRED/OECD可能滞后ONS发布时间表。"
+    caveat_en: "ONS CPI annual rate, all items; this is the MPC target measure and replaces the lagged FRED/OECD mirror."
+    caveat_zh: "ONS全部项目CPI同比；这是MPC目标指标，替代滞后的FRED/OECD镜像。"
   - id: core_cpi_yoy
     section: prices
     label_en: "Core CPI Inflation"
     label_zh: "核心CPI通胀"
     unit: "%"
-    fetcher: fred
-    series: "CPGRLE01GBM659N"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/CPGRLE01GBM659N"
+    fetcher: ons_timeseries
+    series: "DKO8"
+    dataset: "MM23"
+    ons_path: "/economy/inflationandpriceindices/timeseries/dko8/mm23/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/dko8/mm23"
     frequency: "monthly"
     start_date: "1997-01-01"
     caveat_en: "Core CPI helps separate domestic persistence from headline energy/import noise."
     caveat_zh: "核心CPI有助于把国内通胀粘性与能源/进口噪音区分开。"
+  - id: rpi_yoy
+    section: prices
+    label_en: "RPI Inflation"
+    label_zh: "RPI通胀"
+    unit: "%"
+    fetcher: ons_timeseries
+    series: "CZBH"
+    dataset: "MM23"
+    ons_path: "/economy/inflationandpriceindices/timeseries/czbh/mm23/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/czbh/mm23"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS RPI all-items 12-month change; not a National Statistic, but still relevant for gilts, contracts, and UK inflation history."
+    caveat_zh: "ONS全部项目RPI同比；不是National Statistic，但仍与英国国债、合约和通胀历史相关。"
   - id: producer_prices
     section: prices
-    label_en: "Manufacturing Producer Prices"
-    label_zh: "制造业生产者价格"
-    unit: "%"
-    fetcher: fred
-    series: "GBRPIEAMP01GPM"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/GBRPIEAMP01GPM"
+    label_en: "PPI Output: Manufactured Products"
+    label_zh: "PPI产出：制成品"
+    unit: "index"
+    fetcher: ons_timeseries
+    series: "GD6Y"
+    dataset: "PPI"
+    ons_path: "/economy/inflationandpriceindices/timeseries/gd6y/ppi/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/gd6y/ppi"
     frequency: "monthly"
-    start_date: "2009-01-01"
-    quality_floor: "low_confidence"
-    caveat_en: "This FRED/OECD PPI growth series is stale versus ONS PPI; kept only as a placeholder chart for the GS prices section."
-    caveat_zh: "该FRED/OECD PPI增速序列相对ONS PPI明显滞后；这里只作为GS价格部分的占位图。"
+    start_date: "2010-01-01"
+    caveat_en: "ONS PPI output total manufactured products excluding duty, index level; use the release table for detailed industry decomposition."
+    caveat_zh: "ONS PPI产出总制成品不含税指数；行业分解需查看发布表。"
   - id: bank_rate
     section: monetary_financial
     label_en: "Bank Rate"
     label_zh: "英国央行Bank Rate"
     unit: "%"
-    fetcher: boe_bank_rate
+    fetcher: boe_iadb
     series: "IUDBEDR"
-    source_name: "Bank of England"
+    source_name: "Bank of England IADB"
     source_url: "https://www.bankofengland.co.uk/boeapps/database/Bank-Rate.asp?hl=en-GB"
-    frequency: "event"
+    frequency: "daily"
     start_date: "1997-01-01"
-    caveat_en: "Official BoE Bank Rate history; scraped with a browser User-Agent because the legacy database page blocks generic clients."
-    caveat_zh: "BoE官方Bank Rate历史；该旧数据库页面会阻挡普通客户端，因此使用浏览器User-Agent抓取。"
+    caveat_en: "Official BoE Bank Rate via the IADB CSV endpoint; daily rows repeat the prevailing policy setting between MPC decisions."
+    caveat_zh: "BoE IADB CSV官方Bank Rate；日频行在MPC决议之间重复当时政策利率。"
+  - id: sonia_rate
+    section: monetary_financial
+    label_en: "SONIA"
+    label_zh: "SONIA隔夜利率"
+    unit: "%"
+    fetcher: boe_iadb
+    series: "IUDSOIA"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
+    frequency: "daily"
+    start_date: "1997-01-01"
+    caveat_en: "Daily Sterling Overnight Index Average; a modern UK money-market benchmark for the overnight rate complex."
+    caveat_zh: "英镑隔夜指数平均利率日频序列；适合观察英国现代货币市场隔夜利率体系。"
   - id: short_rate_3m
     section: monetary_financial
     label_en: "3-Month Interbank Rate"
@@ -328,6 +459,32 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "Public long-rate channel for financial conditions; not a fitted GS FCI."
     caveat_zh: "金融条件中的公开长端利率渠道；不是拟合后的GS FCI。"
+  - id: gbp_usd
+    section: monetary_financial
+    label_en: "GBP/USD Spot"
+    label_zh: "英镑兑美元现汇"
+    unit: "USD per GBP"
+    fetcher: boe_iadb
+    series: "XUDLUSS"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
+    frequency: "daily"
+    start_date: "1997-01-01"
+    caveat_en: "BoE daily spot exchange-rate series; useful for release-day sterling impulse, not a real effective exchange rate."
+    caveat_zh: "BoE日频即期汇率；适合观察发布日英镑冲击，但不是实际有效汇率。"
+  - id: sterling_eri_boe
+    section: monetary_financial
+    label_en: "Broad Sterling ERI"
+    label_zh: "广义英镑有效汇率指数"
+    unit: "index"
+    fetcher: boe_iadb
+    series: "XUMABK82"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "BoE monthly average broad sterling exchange-rate index; complements the BIS real exchange-rate series."
+    caveat_zh: "BoE月均广义英镑有效汇率指数；与BIS实际汇率序列互补。"
   - id: equity_prices
     section: monetary_financial
     label_en: "UK Share Prices"
@@ -343,30 +500,69 @@ indicators:
     caveat_zh: "公开FCI仪表盘中的股票价格渠道；GS UK FCI使用FTSE All-Share和专有权重。"
   - id: broad_money_m3_yoy
     section: monetary_financial
-    label_en: "Broad Money Growth"
-    label_zh: "广义货币同比"
+    label_en: "M4 ex Intermediate OFCs Growth"
+    label_zh: "M4不含中间OFC同比"
     unit: "%"
-    fetcher: fred
-    series: "GBRMABMM301GYSAM"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/GBRMABMM301GYSAM"
+    fetcher: boe_iadb
+    series: "RPMB56Q"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
     frequency: "monthly"
     start_date: "1997-01-01"
-    caveat_en: "Broad money via OECD/FRED; BoE M4 is the UK-native monetary aggregate."
-    caveat_zh: "OECD/FRED广义货币；BoE M4才是英国本土货币口径。"
+    caveat_en: "UK-native broad-money growth from BoE M4 liabilities to private sector excluding intermediate OFCs; cleaner than the OECD/FRED mirror for UK release work."
+    caveat_zh: "BoE本土M4口径：对私人部门负债、不含中间OFC同比增速；比OECD/FRED镜像更适合英国发布跟踪。"
+  - id: m4_lending_growth
+    section: monetary_financial
+    label_en: "M4 Lending Growth"
+    label_zh: "M4贷款同比"
+    unit: "%"
+    fetcher: boe_iadb
+    series: "LPMVWVP"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "BoE twelve-month growth of M4 lending to the private sector, seasonally adjusted; captures bank-credit transmission."
+    caveat_zh: "BoE对私人部门M4贷款十二个月增速，季调；用于观察银行信贷传导。"
   - id: consumer_credit
     section: monetary_financial
     label_en: "Consumer Credit Growth"
     label_zh: "消费信贷增速"
     unit: "%"
-    fetcher: fred
-    series: "CCUSMA02GBM618N"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/CCUSMA02GBM618N"
+    fetcher: boe_iadb
+    series: "LPMB4TD"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
     frequency: "monthly"
     start_date: "1997-01-01"
-    caveat_en: "Credit flow channel from OECD/FRED; BoE lending releases remain the preferred native source."
-    caveat_zh: "OECD/FRED信贷流量渠道；BoE信贷发布仍是首选本土来源。"
+    caveat_en: "BoE total consumer-credit twelve-month growth excluding Student Loans Company, not seasonally adjusted; definition breaks should be checked around methodology changes."
+    caveat_zh: "BoE总消费信贷十二个月增速，不含Student Loans Company，未季调；方法变化附近需检查口径断点。"
+  - id: mortgage_approvals
+    section: monetary_financial
+    label_en: "Mortgage Approvals for House Purchase"
+    label_zh: "购房按揭批准"
+    unit: "number"
+    fetcher: boe_iadb
+    series: "LPMVTVX"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "BoE seasonally adjusted sterling mortgage approvals for house purchase to individuals; a high-signal housing-credit leading indicator."
+    caveat_zh: "BoE对个人购房的英镑按揭批准，季调；是住房信贷链条中信号较强的领先指标。"
+  - id: quoted_mortgage_rate
+    section: monetary_financial
+    label_en: "Quoted Household Mortgage Rate"
+    label_zh: "居民按揭报价利率"
+    unit: "%"
+    fetcher: boe_iadb
+    series: "IUMBV34"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
+    frequency: "monthly"
+    start_date: "2016-01-01"
+    caveat_en: "BoE quoted household-rate series from the IADB; useful for mortgage-rate transmission, but confirm the exact product definition before comparing against lender-specific quotes."
+    caveat_zh: "BoE IADB居民报价利率序列；适合观察按揭利率传导，但与具体银行产品比较前需确认精确产品定义。"
   - id: reserves_ex_gold
     section: monetary_financial
     label_en: "Official Reserves ex Gold"
@@ -380,6 +576,36 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "IMF reserve series via FRED; useful for external liquidity context, not a core UK rates driver."
     caveat_zh: "IMF经FRED提供的储备序列；适合观察外部流动性背景，不是英国利率核心驱动。"
+  - id: psnb_ex_banks
+    section: fiscal_policy
+    label_en: "PSNB ex Banks"
+    label_zh: "公共部门净借款不含银行"
+    unit: "GBP mn"
+    fetcher: ons_timeseries
+    series: "DZLS"
+    dataset: "PUSF"
+    ons_path: "/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/dzls/pusf/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/dzls/pusf"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS public sector net borrowing excluding public-sector banks, monthly; volatile month to month and affected by timing of taxes and spending."
+    caveat_zh: "ONS月度公共部门净借款，不含公共部门银行；月度波动较大，受税收和支出时点影响。"
+  - id: psnd_ex_banks_gdp
+    section: fiscal_policy
+    label_en: "PSND ex Banks"
+    label_zh: "公共部门净债务不含银行"
+    unit: "% of GDP"
+    fetcher: ons_timeseries
+    series: "HF6X"
+    dataset: "PUSF"
+    ons_path: "/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/hf6x/pusf/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/hf6x/pusf"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS public sector net debt excluding public-sector banks as a percentage of GDP; conceptually closer to UK fiscal headlines than IMF general-government debt."
+    caveat_zh: "ONS公共部门净债务不含公共部门银行，占GDP比；比IMF广义政府债务更贴近英国财政新闻口径。"
   - id: government_balance_gdp
     section: fiscal_policy
     label_en: "General Government Net Lending/Borrowing"
@@ -424,27 +650,27 @@ data_gaps:
     status_en: "Survey sources need separate adapters and licensing checks."
     status_zh: "调查源需要单独adapter并核验授权。"
   - section: housing_construction
-    item_en: "Nationwide, Halifax, Rightmove, Hometrack, RICS, DCLG starts/completions"
-    item_zh: "Nationwide、Halifax、Rightmove、Hometrack、RICS、DCLG开工/竣工"
-    status_en: "Vendor/official endpoints not yet validated; BIS house prices are used as the public skeleton."
-    status_zh: "供应商/官方endpoint尚未验证；当前用BIS房价作为公开骨架。"
+    item_en: "Nationwide, Halifax, Rightmove, Hometrack, RICS, and DCLG starts/completions"
+    item_zh: "Nationwide、Halifax、Rightmove、Hometrack、RICS与DCLG开工/竣工"
+    status_en: "Mortgage approvals are now charted from BoE; house-price and construction vendor/official endpoints still need licensing and API validation."
+    status_zh: "按揭批准已接入BoE；房价和建筑供应商/官方endpoint仍需授权与API验证。"
   - section: labour_market
-    item_en: "Claimant Count, vacancies, redundancies, hours worked, Average Weekly Earnings, pay settlements"
-    item_zh: "申领失业救济人数、职位空缺、裁员、工时、平均周薪、工资协议"
-    status_en: "ONS labour-market adapter required for release-day fidelity."
-    status_zh: "需要ONS劳动力市场adapter才能达到发布日口径。"
+    item_en: "Redundancies and pay settlements"
+    item_zh: "裁员与工资协议"
+    status_en: "Core ONS labour-market indicators are now charted; these remaining items need separate release tables or survey/licensing checks."
+    status_zh: "核心ONS劳动力市场指标已接入；剩余项目需要单独发布表或调查/授权核验。"
   - section: prices
-    item_en: "RPI/RPIX, ONS live PPI, petrol prices, inflation expectations surveys, index-linked gilt breakevens"
-    item_zh: "RPI/RPIX、ONS实时PPI、汽油价格、通胀预期调查、指数挂钩国债隐含通胀"
-    status_en: "GS-relevant, but not yet mapped to stable public API endpoints."
-    status_zh: "对GS框架重要，但尚未映射到稳定公开API。"
+    item_en: "RPIX, petrol prices, inflation expectations surveys, and index-linked gilt breakevens"
+    item_zh: "RPIX、汽油价格、通胀预期调查与指数挂钩国债隐含通胀"
+    status_en: "Headline CPI, core CPI, RPI, and ONS PPI are now charted; remaining items need stable public series mapping."
+    status_zh: "整体CPI、核心CPI、RPI与ONS PPI已接入；剩余项目仍需映射稳定公开序列。"
   - section: monetary_financial
-    item_en: "BoE M4, M4 lending, Trends in Lending, quoted household rates, Credit Conditions Survey, HEW"
-    item_zh: "BoE M4、M4 lending、Trends in Lending、居民报价利率、信贷条件调查、住房权益提取"
-    status_en: "Requires a Bank of England/IUD adapter beyond the Bank Rate table."
-    status_zh: "需要Bank of England/IUD adapter；当前仅接入Bank Rate表。"
+    item_en: "Trends in Lending, Credit Conditions Survey, HEW, and fuller quoted-rate matrix"
+    item_zh: "Trends in Lending、信贷条件调查、住房权益提取与更完整报价利率矩阵"
+    status_en: "BoE IADB now covers Bank Rate, SONIA, sterling, M4, consumer credit, mortgage approvals, and one quoted-rate series; survey/PDF-style sources remain open."
+    status_zh: "BoE IADB已覆盖Bank Rate、SONIA、英镑、M4、消费信贷、按揭批准和一条报价利率；调查/PDF类来源仍未接入。"
   - section: fiscal_policy
-    item_en: "Monthly PSNB, PSNCR, PSND, OBR analysis"
-    item_zh: "月度PSNB、PSNCR、PSND、OBR分析"
-    status_en: "Not replaced with IMF annual proxies; needs an ONS public-finance adapter."
-    status_zh: "不使用IMF年度口径冒充；需要ONS公共财政adapter。"
+    item_en: "PSNCR, detailed debt breakdowns, and OBR analysis"
+    item_zh: "PSNCR、债务细分与OBR分析"
+    status_en: "Monthly PSNB and PSND are now charted from ONS; remaining fiscal detail needs additional ONS/OBR table adapters."
+    status_zh: "月度PSNB与PSND已接入ONS；剩余财政细节需要额外ONS/OBR表格adapter。"
