@@ -176,9 +176,9 @@ def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
 def fetch_all(config: dict[str, Any]) -> list[dict[str, Any]]:
     specs = list(config.get("indicators", []))
     series_list: list[dict[str, Any] | None] = [None] * len(specs)
-    # Keep public fallback bounded: slow FRED graph requests should become
-    # explicit unavailable items, not stall the whole publishing pipeline.
-    with ThreadPoolExecutor(max_workers=8) as executor:
+    # FRED can throttle or drop bursts during full-site builds; a smaller pool
+    # keeps automated refreshes reproducible while still much faster than serial IO.
+    with ThreadPoolExecutor(max_workers=4) as executor:
         futures = {executor.submit(_fetch_one, spec): index for index, spec in enumerate(specs)}
         for future in as_completed(futures):
             index = futures[future]
@@ -192,6 +192,19 @@ def fetch_all(config: dict[str, Any]) -> list[dict[str, Any]]:
                     "quality_status": "unavailable",
                     "quality_notes": [f"Fetch failed: {exc}"],
                 })
+    unavailable_indexes = [
+        index
+        for index, item in enumerate(series_list)
+        if item is not None and item.get("quality_status") == "unavailable"
+    ]
+    for index in unavailable_indexes:
+        # Retry tail failures sequentially. This catches transient FRED/API
+        # issues without hiding genuine missing-series gaps.
+        for _ in range(2):
+            retry = _fetch_one(specs[index])
+            if retry.get("quality_status") != "unavailable":
+                series_list[index] = retry
+                break
     return [item for item in series_list if item is not None]
 
 
@@ -296,12 +309,19 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> st
 </main>
 
 <script>
+function resizeCharts() {{
+  if (!window.Plotly) return;
+  document.querySelectorAll('.plotly-chart').forEach(function(el) {{
+    Plotly.Plots.resize(el);
+  }});
+}}
 (function() {{
   var saved = localStorage.getItem('cp-lang');
   if (saved === 'zh') {{
     document.documentElement.lang = 'zh';
     document.getElementById('lang-btn').textContent = 'English';
   }}
+  requestAnimationFrame(resizeCharts);
 }})();
 function toggleLang() {{
   var html = document.documentElement;
@@ -315,7 +335,9 @@ function toggleLang() {{
     btn.textContent = '中文';
     localStorage.setItem('cp-lang', 'en');
   }}
+  requestAnimationFrame(resizeCharts);
 }}
+window.addEventListener('resize', resizeCharts);
 </script>
 </body>
 </html>

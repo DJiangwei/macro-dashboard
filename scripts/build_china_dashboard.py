@@ -312,6 +312,7 @@ def _chart_html(series: dict[str, Any]) -> str:
         "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": True},
         "yaxis": {"title": series.get("unit", ""), "gridcolor": "rgba(23,19,16,0.08)", "autorange": True},
         "legend": {"orientation": "h", "y": -0.24},
+        "autosize": True,
     }
     latest = _latest(series)
     latest_text = ""
@@ -579,10 +580,11 @@ h1 {
   letter-spacing: -0.04em;
 }
 .logic { grid-column: 2; color: var(--muted); max-width: 860px; }
-.charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 14px; }
-.chart-card { padding: 16px; transition: transform 0.16s ease, border-color 0.16s ease; }
+.charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 14px; }
+.chart-card { padding: 16px; min-width: 0; overflow: hidden; transition: transform 0.16s ease, border-color 0.16s ease; }
 .chart-card:hover { transform: translateY(-2px); border-color: rgba(23,19,16,0.26); }
 .chart-head { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 8px; }
+.chart-head > div { min-width: 0; }
 .chart-head h3 { margin: 0; font-family: var(--font-display); font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
 .chart-head p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
 .quality-pill {
@@ -596,7 +598,9 @@ h1 {
 .chart-quality-verified .quality-pill { color: #3f6f50; border-color: rgba(63,111,80,0.35); }
 .chart-quality-watch .quality-pill { color: var(--warn); border-color: rgba(157,106,46,0.35); }
 .chart-quality-low_confidence .quality-pill { color: var(--low); border-color: rgba(157,61,46,0.35); }
-.plotly-chart { width: 100%; height: 310px; }
+.plotly-chart { width: 100%; min-width: 0; height: 310px; }
+.plot-container, .svg-container { max-width: 100% !important; }
+#js-plotly-tester { width: 1px !important; max-width: 1px !important; overflow: hidden !important; }
 .chart-card footer {
   display: grid;
   gap: 3px;
@@ -619,6 +623,10 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   .section-title { grid-template-columns: 1fr; }
   .logic { grid-column: 1; }
   .charts-grid { grid-template-columns: 1fr; }
+  .chart-card { padding: 13px; }
+  .chart-head { flex-direction: column; gap: 8px; }
+  .chart-head h3 { font-size: 19px; }
+  .plotly-chart { height: 280px; }
 }
 """
 
@@ -699,12 +707,19 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]], cards
 </main>
 
 <script>
+function resizeCharts() {{
+  if (!window.Plotly) return;
+  document.querySelectorAll('.plotly-chart').forEach(function(el) {{
+    Plotly.Plots.resize(el);
+  }});
+}}
 (function() {{
   var saved = localStorage.getItem('cp-lang');
   if (saved === 'zh') {{
     document.documentElement.lang = 'zh';
     document.getElementById('lang-btn').textContent = 'English';
   }}
+  requestAnimationFrame(resizeCharts);
 }})();
 function toggleLang() {{
   var html = document.documentElement;
@@ -718,7 +733,9 @@ function toggleLang() {{
     btn.textContent = '中文';
     localStorage.setItem('cp-lang', 'en');
   }}
+  requestAnimationFrame(resizeCharts);
 }}
+window.addEventListener('resize', resizeCharts);
 </script>
 </body>
 </html>

@@ -60,7 +60,7 @@ sections:
     report_logic_en: "Monthly Treasury Statement data, federal debt, debt/GDP, and fiscal-year deficits provide the public fiscal anchor."
     report_logic_zh: "月度财政部报表、联邦债务、债务/GDP和财年赤字提供公开财政锚。"
 
-min_chart_count: 55
+min_chart_count: 85
 
 indicators:
   - id: real_gdp_growth
@@ -145,6 +145,74 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "NIPA corporate profits; not identical to S&P 500 earnings."
     caveat_zh: "NIPA企业利润；不同于标普500盈利。"
+  - id: real_pce_component_growth
+    section: nipa
+    label_en: "Real PCE Component Growth"
+    label_zh: "实际个人消费分项同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "PCECC96"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/PCECC96"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Quarterly real PCE from NIPA; useful for decomposing GDP-side demand."
+    caveat_zh: "NIPA季度实际个人消费；用于拆分GDP需求侧。"
+  - id: private_investment_growth
+    section: nipa
+    label_en: "Real Private Domestic Investment Growth"
+    label_zh: "实际私人国内投资同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "GPDIC1"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/GPDIC1"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Investment is the cyclical high-beta component of real GDP."
+    caveat_zh: "投资是实际GDP中周期弹性较高的分项。"
+  - id: government_spending_growth
+    section: nipa
+    label_en: "Real Government Spending & Investment Growth"
+    label_zh: "实际政府消费与投资同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "GCEC1"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/GCEC1"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Real government consumption and investment; separates fiscal demand from private demand."
+    caveat_zh: "实际政府消费和投资；用于区分财政需求与私人需求。"
+  - id: real_net_exports
+    section: nipa
+    label_en: "Real Net Exports"
+    label_zh: "实际净出口"
+    unit: "USD bn"
+    fetcher: fred
+    series: "NETEXC"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/NETEXC"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Real net exports level; negative values indicate an external demand drag."
+    caveat_zh: "实际净出口水平；负值代表外需项拖累。"
+  - id: inventory_share_gdp
+    section: nipa
+    label_en: "Private Inventory Change Share of GDP"
+    label_zh: "私人库存变化占GDP比重"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "A014RE1Q156NBEA"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/A014RE1Q156NBEA"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Inventory swings can dominate quarterly GDP surprises."
+    caveat_zh: "库存波动常常主导季度GDP意外。"
   - id: industrial_production_growth
     section: production_orders
     label_en: "Industrial Production Growth"
@@ -507,6 +575,32 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Participation helps separate unemployment from labor-supply shifts."
     caveat_zh: "劳动参与率有助于区分失业变化和劳动力供给变化。"
+  - id: prime_age_employment_population
+    section: employment
+    label_en: "Prime-Age Employment-Population Ratio"
+    label_zh: "核心年龄就业人口比"
+    unit: "%"
+    fetcher: fred
+    series: "LNS12300060"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/LNS12300060"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Prime-age employment-population ratio is less distorted by demographics than the headline participation rate."
+    caveat_zh: "核心年龄就业人口比受人口结构扭曲较少，比总劳动参与率更适合观察劳动力紧张度。"
+  - id: u6_underemployment
+    section: employment
+    label_en: "U-6 Underemployment Rate"
+    label_zh: "U-6广义失业率"
+    unit: "%"
+    fetcher: fred
+    series: "U6RATE"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/U6RATE"
+    frequency: "monthly"
+    start_date: "1994-01-01"
+    caveat_en: "Includes marginally attached and involuntary part-time workers; useful for labor slack."
+    caveat_zh: "包含边缘劳动力和被迫兼职劳动者；用于观察劳动力闲置。"
   - id: manufacturing_hours
     section: employment
     label_en: "Manufacturing Weekly Hours"
@@ -534,6 +628,34 @@ indicators:
     start_date: "2006-03-01"
     caveat_en: "Derived year-over-year growth from private average hourly earnings."
     caveat_zh: "由私营平均时薪派生的同比增速。"
+  - id: manufacturing_payrolls_growth
+    section: employment
+    label_en: "Manufacturing Payrolls Growth"
+    label_zh: "制造业就业同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "MANEMP"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/MANEMP"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Manufacturing jobs help separate goods-cycle weakness from broad labor weakness."
+    caveat_zh: "制造业就业有助于区分商品周期走弱与整体劳动力市场走弱。"
+  - id: construction_payrolls_growth
+    section: employment
+    label_en: "Construction Payrolls Growth"
+    label_zh: "建筑业就业同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "USCONS"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/USCONS"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Construction employment links the labor market to the housing and capex cycle."
+    caveat_zh: "建筑业就业连接劳动力市场、住房和资本开支周期。"
   - id: initial_jobless_claims
     section: employment
     label_en: "Initial Jobless Claims"
@@ -627,6 +749,48 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Core CPI excludes food and energy."
     caveat_zh: "核心CPI剔除食品和能源。"
+  - id: cpi_ex_shelter_inflation
+    section: prices_wages
+    label_en: "CPI ex Shelter Inflation"
+    label_zh: "剔除住房CPI同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "CUSR0000SA0L2"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/CUSR0000SA0L2"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Separates shelter persistence from the rest of the CPI basket."
+    caveat_zh: "将住房通胀粘性与CPI篮子其他部分区分开。"
+  - id: rent_inflation
+    section: prices_wages
+    label_en: "Rent of Primary Residence Inflation"
+    label_zh: "主要住所租金同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "CUSR0000SEHA"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/CUSR0000SEHA"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Rent is a sticky shelter component and lags spot rental-market turns."
+    caveat_zh: "租金是粘性住房分项，通常滞后现货租赁市场拐点。"
+  - id: owners_equivalent_rent_inflation
+    section: prices_wages
+    label_en: "Owners' Equivalent Rent Inflation"
+    label_zh: "业主等价租金同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "CUSR0000SEHC"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/CUSR0000SEHC"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "OER is a large and lagged CPI shelter component."
+    caveat_zh: "业主等价租金是CPI住房中权重较大且滞后的分项。"
   - id: pce_inflation
     section: prices_wages
     label_en: "Headline PCE Inflation"
@@ -655,6 +819,32 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Core PCE is the Fed's preferred inflation gauge."
     caveat_zh: "核心PCE是美联储偏好的通胀指标。"
+  - id: median_cpi
+    section: prices_wages
+    label_en: "Median CPI"
+    label_zh: "中位数CPI"
+    unit: "% ann."
+    fetcher: fred
+    series: "MEDCPIM158SFRBCLE"
+    source_name: "FRED / Cleveland Fed"
+    source_url: "https://fred.stlouisfed.org/series/MEDCPIM158SFRBCLE"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Median CPI is a robust underlying-inflation gauge reported at an annualized monthly rate."
+    caveat_zh: "中位数CPI是稳健的底层通胀指标，口径为月度年化变化率。"
+  - id: trimmed_mean_pce
+    section: prices_wages
+    label_en: "Trimmed Mean PCE Inflation"
+    label_zh: "截尾均值PCE通胀"
+    unit: "% y/y"
+    fetcher: fred
+    series: "PCETRIM12M159SFRBDAL"
+    source_name: "FRED / Dallas Fed"
+    source_url: "https://fred.stlouisfed.org/series/PCETRIM12M159SFRBDAL"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Dallas Fed trimmed-mean PCE strips out extreme price moves."
+    caveat_zh: "达拉斯联储截尾均值PCE剔除极端价格变动。"
   - id: gdp_deflator_inflation
     section: prices_wages
     label_en: "GDP Deflator Inflation"
@@ -849,6 +1039,191 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Household net worth is a modern flow-of-funds balance-sheet anchor."
     caveat_zh: "居民净资产是现代资金流量资产负债表锚。"
+  - id: treasury_10y_yield
+    section: monetary_financial
+    label_en: "10Y Treasury Yield"
+    label_zh: "10年期美国国债收益率"
+    unit: "%"
+    fetcher: fred
+    series: "DGS10"
+    source_name: "FRED / US Treasury"
+    source_url: "https://fred.stlouisfed.org/series/DGS10"
+    frequency: "daily"
+    start_date: "2018-01-01"
+    caveat_en: "Daily 10-year constant-maturity Treasury yield; short history is intentional to keep the page light."
+    caveat_zh: "日度10年期固定期限国债收益率；为控制页面大小，历史从2018年开始。"
+  - id: treasury_2y_yield
+    section: monetary_financial
+    label_en: "2Y Treasury Yield"
+    label_zh: "2年期美国国债收益率"
+    unit: "%"
+    fetcher: fred
+    series: "DGS2"
+    source_name: "FRED / US Treasury"
+    source_url: "https://fred.stlouisfed.org/series/DGS2"
+    frequency: "daily"
+    start_date: "2018-01-01"
+    caveat_en: "Daily 2-year constant-maturity Treasury yield; policy-sensitive front-end proxy."
+    caveat_zh: "日度2年期固定期限国债收益率；用于观察政策敏感的前端利率。"
+  - id: yield_curve_10y2y
+    section: monetary_financial
+    label_en: "10Y minus 2Y Treasury Curve"
+    label_zh: "10年-2年美债曲线"
+    unit: "pp"
+    fetcher: fred
+    series: "T10Y2Y"
+    source_name: "FRED / US Treasury"
+    source_url: "https://fred.stlouisfed.org/series/T10Y2Y"
+    frequency: "daily"
+    start_date: "2018-01-01"
+    caveat_en: "Curve inversion is a classic US recession-risk signal, but timing is variable."
+    caveat_zh: "曲线倒挂是经典美国衰退风险信号，但领先时点不稳定。"
+  - id: yield_curve_10y3m
+    section: monetary_financial
+    label_en: "10Y minus 3M Treasury Curve"
+    label_zh: "10年-3个月美债曲线"
+    unit: "pp"
+    fetcher: fred
+    series: "T10Y3M"
+    source_name: "FRED / US Treasury"
+    source_url: "https://fred.stlouisfed.org/series/T10Y3M"
+    frequency: "daily"
+    start_date: "2018-01-01"
+    caveat_en: "10Y-3M curve is another recession-risk term-spread used in Fed research."
+    caveat_zh: "10年-3个月期限利差是美联储研究常用的另一衰退风险曲线指标。"
+  - id: high_yield_spread
+    section: monetary_financial
+    label_en: "High-Yield Corporate Spread"
+    label_zh: "高收益债信用利差"
+    unit: "%"
+    fetcher: fred
+    series: "BAMLH0A0HYM2"
+    source_name: "FRED / ICE BofA"
+    source_url: "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+    frequency: "daily"
+    start_date: "2023-06-06"
+    caveat_en: "FRED mirror of ICE BofA high-yield OAS; history available through FRED starts in 2023."
+    caveat_zh: "FRED镜像的ICE BofA高收益债OAS；FRED可用历史自2023年开始。"
+  - id: investment_grade_spread
+    section: monetary_financial
+    label_en: "Investment-Grade Corporate Spread"
+    label_zh: "投资级信用利差"
+    unit: "%"
+    fetcher: fred
+    series: "BAMLC0A0CM"
+    source_name: "FRED / ICE BofA"
+    source_url: "https://fred.stlouisfed.org/series/BAMLC0A0CM"
+    frequency: "daily"
+    start_date: "2023-06-06"
+    caveat_en: "FRED mirror of ICE BofA corporate OAS; check ICE/BofA source for release-day work."
+    caveat_zh: "FRED镜像的ICE BofA公司债OAS；事件日研究需核对ICE/BofA源。"
+  - id: chicago_fed_nfci
+    section: monetary_financial
+    label_en: "Chicago Fed NFCI"
+    label_zh: "芝加哥联储金融条件指数"
+    unit: "index"
+    fetcher: fred
+    series: "NFCI"
+    source_name: "FRED / Chicago Fed"
+    source_url: "https://fred.stlouisfed.org/series/NFCI"
+    frequency: "weekly"
+    start_date: "1990-01-01"
+    caveat_en: "Positive values indicate tighter-than-average financial conditions."
+    caveat_zh: "正值表示金融条件较历史均值更紧。"
+  - id: vix
+    section: monetary_financial
+    label_en: "VIX"
+    label_zh: "VIX波动率指数"
+    unit: "index"
+    fetcher: fred
+    series: "VIXCLS"
+    source_name: "FRED / CBOE"
+    source_url: "https://fred.stlouisfed.org/series/VIXCLS"
+    frequency: "daily"
+    start_date: "2018-01-01"
+    caveat_en: "Equity volatility is not in the original GS statistics guide, but is central to modern financial conditions."
+    caveat_zh: "股市波动率不在原始GS统计指南核心中，但对现代金融条件至关重要。"
+  - id: mortgage_30y_rate
+    section: monetary_financial
+    label_en: "30Y Fixed Mortgage Rate"
+    label_zh: "30年固定按揭利率"
+    unit: "%"
+    fetcher: fred
+    series: "MORTGAGE30US"
+    source_name: "FRED / Freddie Mac"
+    source_url: "https://fred.stlouisfed.org/series/MORTGAGE30US"
+    frequency: "weekly"
+    start_date: "1990-01-01"
+    caveat_en: "Mortgage rates connect monetary tightening to housing affordability and demand."
+    caveat_zh: "按揭利率连接货币收紧、住房可负担性与需求。"
+  - id: ci_loans_growth
+    section: monetary_financial
+    label_en: "Commercial & Industrial Loans Growth"
+    label_zh: "商业与工业贷款同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "BUSLOANS"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/BUSLOANS"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "C&I loan growth captures bank credit impulse to firms."
+    caveat_zh: "商业与工业贷款同比反映银行对企业的信用脉冲。"
+  - id: bank_credit_growth
+    section: monetary_financial
+    label_en: "Bank Loans & Leases Growth"
+    label_zh: "银行贷款和租赁同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "TOTLL"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/TOTLL"
+    frequency: "weekly"
+    start_date: "1990-01-01"
+    caveat_en: "Weekly bank credit can be volatile; use alongside SLOOS and delinquency rates."
+    caveat_zh: "周度银行信贷可能波动较大；需与SLOOS和违约率结合观察。"
+  - id: bank_deposits_growth
+    section: monetary_financial
+    label_en: "Commercial Bank Deposits Growth"
+    label_zh: "商业银行存款同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "DPSACBW027SBOG"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/DPSACBW027SBOG"
+    frequency: "weekly"
+    start_date: "1990-01-01"
+    caveat_en: "Deposit growth helps track banking-system funding stress after the 2023 banking episode."
+    caveat_zh: "存款增长有助于观察2023年银行事件后的银行体系负债端压力。"
+  - id: all_loan_delinquency
+    section: monetary_financial
+    label_en: "All Loan Delinquency Rate"
+    label_zh: "全部贷款违约率"
+    unit: "%"
+    fetcher: fred
+    series: "DRALACBN"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/DRALACBN"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "All-bank loan delinquency rate; lagging but useful for credit-cycle stress."
+    caveat_zh: "商业银行全部贷款违约率；滞后但适合观察信用周期压力。"
+  - id: credit_card_delinquency
+    section: monetary_financial
+    label_en: "Credit Card Delinquency Rate"
+    label_zh: "信用卡贷款违约率"
+    unit: "%"
+    fetcher: fred
+    series: "DRCCLACBS"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/DRCCLACBS"
+    frequency: "quarterly"
+    start_date: "1991-01-01"
+    caveat_en: "Credit-card delinquency is a clean consumer-credit stress gauge."
+    caveat_zh: "信用卡违约率是观察消费者信用压力的清晰指标。"
   - id: effective_fed_funds
     section: fed_policy
     label_en: "Effective Federal Funds Rate"
@@ -954,6 +1329,47 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Monthly Treasury Statement deficit/surplus series; sign conventions should be checked before event work."
     caveat_zh: "月度财政部收支差额；做事件分析前需核对符号约定。"
+  - id: federal_receipts_growth
+    section: fiscal
+    label_en: "Federal Receipts Growth"
+    label_zh: "联邦财政收入同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "MTSR133FMS"
+    source_name: "FRED / US Treasury"
+    source_url: "https://fred.stlouisfed.org/series/MTSR133FMS"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Monthly Treasury receipts are noisy around tax dates; use rolling context for event work."
+    caveat_zh: "月度财政收入在纳税日期附近噪音较大；事件分析需使用滚动背景。"
+  - id: federal_outlays_growth
+    section: fiscal
+    label_en: "Federal Outlays Growth"
+    label_zh: "联邦财政支出同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "MTSO133FMS"
+    source_name: "FRED / US Treasury"
+    source_url: "https://fred.stlouisfed.org/series/MTSO133FMS"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Monthly outlays are affected by calendar timing and benefit-payment schedules."
+    caveat_zh: "月度支出受日历时点和福利支付安排影响。"
+  - id: federal_interest_payments
+    section: fiscal
+    label_en: "Federal Interest Payments"
+    label_zh: "联邦政府利息支出"
+    unit: "USD bn"
+    fetcher: fred
+    series: "A091RC1Q027SBEA"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/A091RC1Q027SBEA"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Quarterly federal interest payments help track the fiscal-rate feedback loop."
+    caveat_zh: "季度联邦利息支出用于观察财政和利率之间的反馈。"
   - id: federal_debt_growth
     section: fiscal
     label_en: "Federal Debt Growth"
@@ -981,6 +1397,19 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Federal debt ratio for sovereign balance-sheet context."
     caveat_zh: "用于主权资产负债表背景的联邦债务率。"
+  - id: public_debt_gdp
+    section: fiscal
+    label_en: "Federal Debt Held by Public to GDP"
+    label_zh: "公众持有联邦债务/GDP"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "FYGFGDQ188S"
+    source_name: "FRED / US Treasury"
+    source_url: "https://fred.stlouisfed.org/series/FYGFGDQ188S"
+    frequency: "quarterly"
+    start_date: "1990-01-01"
+    caveat_en: "Publicly held debt is the market-facing federal debt stock."
+    caveat_zh: "公众持有债务是更面向市场的联邦债务存量。"
   - id: fiscal_year_deficit
     section: fiscal
     label_en: "Federal Fiscal-Year Deficit"
