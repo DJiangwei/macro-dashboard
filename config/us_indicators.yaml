@@ -751,6 +751,58 @@ indicators:
     start_date: "1992-01-01"
     caveat_en: "Goods imports are useful for domestic demand and inventory-cycle cross-checks."
     caveat_zh: "货物进口可用于交叉验证内需和库存周期。"
+  - id: tic_foreign_treasury_net_transactions
+    section: external
+    label_en: "TIC Foreign Net Treasury Transactions"
+    label_zh: "TIC外国净买入美国国债"
+    unit: "USD mn"
+    fetcher: fred
+    series: "FORTREASNET99996"
+    source_name: "FRED / Treasury International Capital"
+    source_url: "https://fred.stlouisfed.org/series/FORTREASNET99996"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "FRED mirror of TIC foreign net transactions in U.S. long-term and short-term Treasury securities; release-day work should verify the Treasury TIC table."
+    caveat_zh: "FRED镜像的TIC外国净交易美国长短期国债；事件日研究需核对财政部TIC原表。"
+  - id: tic_foreign_treasury_holdings
+    section: external
+    label_en: "TIC Foreign Treasury Holdings"
+    label_zh: "TIC外国持有美国国债"
+    unit: "USD mn"
+    fetcher: fred
+    series: "FORTREASPOS99996"
+    source_name: "FRED / Treasury International Capital"
+    source_url: "https://fred.stlouisfed.org/series/FORTREASPOS99996"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Grand-total TIC foreign portfolio holdings of U.S. long-term and short-term Treasury securities."
+    caveat_zh: "TIC口径外国组合持有美国长短期国债总额。"
+  - id: tic_china_treasury_holdings
+    section: external
+    label_en: "TIC China Treasury Holdings"
+    label_zh: "TIC中国持有美国国债"
+    unit: "USD mn"
+    fetcher: fred
+    series: "FORTREASPOS41408"
+    source_name: "FRED / Treasury International Capital"
+    source_url: "https://fred.stlouisfed.org/series/FORTREASPOS41408"
+    frequency: "monthly"
+    start_date: "2003-02-01"
+    caveat_en: "Country attribution follows TIC reporting and custody conventions; it is not a perfect beneficial-owner measure."
+    caveat_zh: "国家归属遵循TIC报告和托管口径；不等同于完美的最终受益人持有量。"
+  - id: tic_japan_treasury_holdings
+    section: external
+    label_en: "TIC Japan Treasury Holdings"
+    label_zh: "TIC日本持有美国国债"
+    unit: "USD mn"
+    fetcher: fred
+    series: "FORTREASPOS42609"
+    source_name: "FRED / Treasury International Capital"
+    source_url: "https://fred.stlouisfed.org/series/FORTREASPOS42609"
+    frequency: "monthly"
+    start_date: "2003-02-01"
+    caveat_en: "Japan is a major foreign holder; use with custody-routing caveats common to TIC geography."
+    caveat_zh: "日本是主要外国持有人；需结合TIC地域托管归属的口径限制理解。"
   - id: nonfarm_payrolls_change
     section: employment
     label_en: "Nonfarm Payrolls Change"
@@ -765,6 +817,20 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Derived monthly change from total nonfarm payroll employment."
     caveat_zh: "由非农就业总人数派生的月度变化。"
+  - id: adp_private_payrolls_change
+    section: employment
+    label_en: "ADP Private Payrolls Change"
+    label_zh: "ADP私营就业月度变化"
+    unit: "persons m/m"
+    transform: "diff"
+    fetcher: fred
+    series: "ADPMNUSNERSA"
+    source_name: "FRED / ADP Research Institute"
+    source_url: "https://fred.stlouisfed.org/series/ADPMNUSNERSA"
+    frequency: "monthly"
+    start_date: "2010-01-01"
+    caveat_en: "Vendor employment release mirrored by FRED; compare against BLS payrolls and avoid treating it as an official labor-statistics substitute."
+    caveat_zh: "FRED镜像的供应商就业数据；应与BLS非农交叉验证，不应视为官方劳动力统计替代。"
   - id: unemployment_rate
     section: employment
     label_en: "Unemployment Rate"
@@ -2026,13 +2092,13 @@ data_gaps:
   - section: external
     item_en: "Detailed Treasury International Capital System flows"
     item_zh: "TIC详细资本流"
-    status_en: "Needs a dedicated Treasury/TIC adapter beyond the v1 FRED skeleton."
-    status_zh: "需要专门TIC adapter，超出v1 FRED骨架。"
+    status_en: "Core TIC Treasury transactions and holdings are now charted via FRED; deeper country/security tables still need a Treasury TIC adapter if required."
+    status_zh: "核心TIC国债交易与持有量已通过FRED绘图；如需更深国家/证券表，仍需要财政部TIC adapter。"
   - section: employment
-    item_en: "ADP, Manpower, Challenger layoffs, Monster/help-wanted indexes, BED"
-    item_zh: "ADP、Manpower、Challenger裁员、Monster/Help-wanted指数、BED"
-    status_en: "Vendor or specialized releases; not replaced with weak proxies."
-    status_zh: "供应商或专项发布；不使用弱proxy替代。"
+    item_en: "Manpower, Challenger layoffs, Monster/help-wanted indexes, BED"
+    item_zh: "Manpower、Challenger裁员、Monster/Help-wanted指数、BED"
+    status_en: "ADP private payrolls are now charted from FRED; the remaining vendor or specialized releases are not replaced with weak proxies."
+    status_zh: "ADP私营就业已通过FRED绘图；其余供应商或专项发布不使用弱proxy替代。"
   - section: fed_policy
     item_en: "FOMC statement language, minutes, transcripts, projections, and future Treasury auction calendar"
     item_zh: "FOMC声明措辞、纪要、会议记录、预测与未来国债拍卖日历"

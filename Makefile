@@ -38,7 +38,7 @@ publish-check:
 	curl -L https://djiangwei.github.io/macro-dashboard/output/hungary_2026Q2_v4.html | rg -n "Proxy / watch-list fills: 0|Source charts reused|chart-financial_stability-bank_car"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/china_2026Q2_v1.html | rg -n "China Dashboard|Official Data Gaps|chart-real_gdp_growth"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/uk_2026Q2_v1.html | rg -n "UK Dashboard|Official Data Gaps|chart-real_gdp_qoq"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/us_2026Q2_v1.html | rg -n "US Dashboard|Official Data Gaps|chart-real_gdp_growth|chart-real_gdp_per_capita_growth|chart-treasury_auction_total_accepted"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/us_2026Q2_v1.html | rg -n "US Dashboard|Official Data Gaps|chart-real_gdp_growth|chart-real_gdp_per_capita_growth|chart-treasury_auction_total_accepted|chart-tic_foreign_treasury_net_transactions|chart-adp_private_payrolls_change"
 
 publish:
 	@if [ -z "$(MSG)" ]; then echo 'Usage: make publish MSG="commit message"'; exit 2; fi

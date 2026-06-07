@@ -570,7 +570,7 @@ Remaining rendered proxy slots: 0.
 
 The US page is generated from `config/us_indicators.yaml`. This table records configured sources for each rendered chart slot; latest dates are tracked in `output/us_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 143. Latest rendered chart count: 143. Source groups: 24.
+Configured charts: 148. Latest rendered chart count: 148. Source groups: 26.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -625,7 +625,12 @@ Configured charts: 143. Latest rendered chart count: 143. Source groups: 24.
 | external | `nominal_broad_dollar_index` | Nominal Broad Dollar Index | daily | index | fred | FRED / Federal Reserve | DTWEXBGS | Daily broad dollar index; history is truncated to keep the page light. |
 | external | `goods_exports_growth` | Goods Exports Growth | monthly | % y/y | fred | FRED / Census | BOPGEXP | Goods exports on a balance-of-payments basis; services trade is not included here. |
 | external | `goods_imports_growth` | Goods Imports Growth | monthly | % y/y | fred | FRED / Census | BOPGIMP | Goods imports are useful for domestic demand and inventory-cycle cross-checks. |
+| external | `tic_foreign_treasury_net_transactions` | TIC Foreign Net Treasury Transactions | monthly | USD mn | fred | FRED / Treasury International Capital | FORTREASNET99996 | FRED mirror of TIC foreign net transactions in U.S. long-term and short-term Treasury securities; release-day work should verify the Treasury TIC table. |
+| external | `tic_foreign_treasury_holdings` | TIC Foreign Treasury Holdings | monthly | USD mn | fred | FRED / Treasury International Capital | FORTREASPOS99996 | Grand-total TIC foreign portfolio holdings of U.S. long-term and short-term Treasury securities. |
+| external | `tic_china_treasury_holdings` | TIC China Treasury Holdings | monthly | USD mn | fred | FRED / Treasury International Capital | FORTREASPOS41408 | Country attribution follows TIC reporting and custody conventions; it is not a perfect beneficial-owner measure. |
+| external | `tic_japan_treasury_holdings` | TIC Japan Treasury Holdings | monthly | USD mn | fred | FRED / Treasury International Capital | FORTREASPOS42609 | Japan is a major foreign holder; use with custody-routing caveats common to TIC geography. |
 | employment | `nonfarm_payrolls_change` | Nonfarm Payrolls Change | monthly | k m/m | fred | FRED / BLS | PAYEMS | Derived monthly change from total nonfarm payroll employment. |
+| employment | `adp_private_payrolls_change` | ADP Private Payrolls Change | monthly | persons m/m | fred | FRED / ADP Research Institute | ADPMNUSNERSA | Vendor employment release mirrored by FRED; compare against BLS payrolls and avoid treating it as an official labor-statistics substitute. |
 | employment | `unemployment_rate` | Unemployment Rate | monthly | % | fred | FRED / BLS | UNRATE | Household-survey unemployment rate. |
 | employment | `labor_force_participation` | Labor Force Participation | monthly | % | fred | FRED / BLS | CIVPART | Participation helps separate unemployment from labor-supply shifts. |
 | employment | `prime_age_employment_population` | Prime-Age Employment-Population Ratio | monthly | % | fred | FRED / BLS | LNS12300060 | Prime-age employment-population ratio is less distorted by demographics than the headline participation rate. |
@@ -726,6 +731,6 @@ Configured charts: 143. Latest rendered chart count: 143. Source groups: 24.
 | production_orders | ISM manufacturing/non-manufacturing, Chicago PMI, and Beige Book text | National ISM/PMI and Beige Book remain adapter gaps; public regional Fed survey gauges are charted separately. |
 | consumer | Conference Board confidence, Redbook, ICSC/UBS, ABC Consumer Comfort | Vendor-controlled or not yet mapped to a reproducible public endpoint. |
 | housing | Pending Home Sales Index, NAHB Housing Market Index, mortgage applications | Still not validated as license-safe public chart data; public supply, price, and stress gauges are charted. |
-| external | Detailed Treasury International Capital System flows | Needs a dedicated Treasury/TIC adapter beyond the v1 FRED skeleton. |
-| employment | ADP, Manpower, Challenger layoffs, Monster/help-wanted indexes, BED | Vendor or specialized releases; not replaced with weak proxies. |
+| external | Detailed Treasury International Capital System flows | Core TIC Treasury transactions and holdings are now charted via FRED; deeper country/security tables still need a Treasury TIC adapter if required. |
+| employment | Manpower, Challenger layoffs, Monster/help-wanted indexes, BED | ADP private payrolls are now charted from FRED; the remaining vendor or specialized releases are not replaced with weak proxies. |
 | fed_policy | FOMC statement language, minutes, transcripts, projections, and future Treasury auction calendar | Completed Treasury auction quantities and bid-to-cover are now charted from FiscalData; text and future-calendar sources require separate NLP/calendar adapters. |
