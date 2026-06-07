@@ -43,6 +43,7 @@ USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
 )
+TREASURY_AUCTIONS_URL = "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query"
 
 
 def _load_config() -> dict[str, Any]:
@@ -156,11 +157,111 @@ def fetch_fred_us(session: requests.Session, spec: dict[str, Any]) -> dict[str, 
     raise last_error or RuntimeError("FRED graph fetch failed.")
 
 
+def _numeric(value: Any) -> float | None:
+    if value in (None, "", "null", "."):
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def fetch_treasury_auctions(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    fields = [
+        "auction_date",
+        "security_type",
+        "total_accepted",
+        "total_tendered",
+        "bid_to_cover_ratio",
+        "high_yield",
+        "high_investment_rate",
+    ]
+    filters = [f"auction_date:gte:{spec.get('start_date', '2018-01-01')}", "total_accepted:gt:0"]
+    security_types = list(spec.get("security_types") or [])
+    if len(security_types) == 1:
+        filters.append(f"security_type:eq:{security_types[0]}")
+    elif security_types:
+        filters.append(f"security_type:in:({','.join(security_types)})")
+
+    rows: list[dict[str, Any]] = []
+    page_number = 1
+    total_pages = 1
+    while page_number <= total_pages:
+        response = session.get(
+            TREASURY_AUCTIONS_URL,
+            params={
+                "fields": ",".join(fields),
+                "filter": ",".join(filters),
+                "page[size]": int(spec.get("page_size", 5000)),
+                "page[number]": page_number,
+                "sort": "auction_date",
+            },
+            headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+            timeout=(5, 30),
+        )
+        response.raise_for_status()
+        payload = response.json()
+        rows.extend(payload.get("data") or [])
+        total_pages = int(payload.get("meta", {}).get("total-pages") or page_number)
+        page_number += 1
+
+    aggregate = str(spec.get("aggregate", "monthly_sum"))
+    metric = str(spec.get("metric", "total_accepted"))
+    scale = float(spec.get("scale", 1))
+    buckets: dict[str, dict[str, float]] = {}
+    for row in rows:
+        auction_date = str(row.get("auction_date") or "")
+        if len(auction_date) < 7:
+            continue
+        month = f"{auction_date[:7]}-01"
+        bucket = buckets.setdefault(month, {"value": 0.0, "count": 0.0, "numerator": 0.0, "denominator": 0.0})
+        if aggregate == "monthly_weighted_bid_to_cover":
+            numerator = _numeric(row.get("total_tendered"))
+            denominator = _numeric(row.get("total_accepted"))
+            if numerator is None or denominator in (None, 0):
+                continue
+            bucket["numerator"] += numerator
+            bucket["denominator"] += denominator
+        else:
+            value = _numeric(row.get(metric))
+            if value is None:
+                continue
+            bucket["value"] += value
+            bucket["count"] += 1
+
+    observations: list[dict[str, Any]] = []
+    for month, bucket in sorted(buckets.items()):
+        if aggregate == "monthly_weighted_bid_to_cover":
+            denominator = bucket["denominator"]
+            if denominator == 0:
+                continue
+            value = bucket["numerator"] / denominator
+        elif aggregate == "monthly_average":
+            count = bucket["count"]
+            if count == 0:
+                continue
+            value = bucket["value"] / count
+        else:
+            value = bucket["value"]
+        observations.append({"date": month, "value": value / scale})
+
+    if not observations:
+        raise RuntimeError("Treasury FiscalData returned no completed auction observations.")
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"],
+        "api_url": TREASURY_AUCTIONS_URL,
+    }
+
+
 def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
     session = requests.Session()
     try:
         if spec.get("fetcher") == "fred":
             series = _apply_transform(fetch_fred_us(session, spec))
+        elif spec.get("fetcher") == "treasury_auctions":
+            series = fetch_treasury_auctions(session, spec)
         else:
             series = {**spec, "observations": [], "quality_status": "unavailable", "quality_notes": ["Unknown fetcher."]}
     except Exception as exc:  # noqa: BLE001 - data page should degrade instead of crashing.

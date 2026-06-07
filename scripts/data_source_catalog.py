@@ -8,9 +8,12 @@ dashboard.
 """
 from __future__ import annotations
 
+import json
 from collections import defaultdict
 from datetime import UTC, datetime
 from pathlib import Path
+
+import yaml
 
 from country_primer.data_fetcher import (
     DROPPED_PROXY_INDICATORS_BY_COUNTRY,
@@ -20,6 +23,7 @@ from country_primer.data_fetcher import (
 )
 
 
+ROOT = Path(__file__).resolve().parents[1]
 COUNTRIES = ("HU", "PL", "CZ", "RO")
 COUNTRY_NAMES = {
     "HU": "Hungary",
@@ -27,6 +31,8 @@ COUNTRY_NAMES = {
     "CZ": "Czechia",
     "RO": "Romania",
 }
+US_CONFIG_PATH = ROOT / "config" / "us_indicators.yaml"
+US_SUMMARY_PATH = ROOT / "output" / "us_dashboard_summary.json"
 
 
 def _clean(value: object) -> str:
@@ -43,6 +49,74 @@ def _latest_rows(frame: list[dict]) -> dict[str, dict]:
         if indicator_id not in latest or str(row.get("date", "")) > str(latest[indicator_id].get("date", "")):
             latest[indicator_id] = row
     return latest
+
+
+def _us_config() -> dict:
+    if not US_CONFIG_PATH.exists():
+        return {}
+    return yaml.safe_load(US_CONFIG_PATH.read_text()) or {}
+
+
+def _us_summary() -> dict:
+    if not US_SUMMARY_PATH.exists():
+        return {}
+    return json.loads(US_SUMMARY_PATH.read_text())
+
+
+def _append_us_sources(lines: list[str]) -> None:
+    config = _us_config()
+    if not config:
+        return
+    indicators = config.get("indicators", [])
+    summary = _us_summary()
+    lines.extend([
+        "",
+        "## United States Data-First Dashboard Sources",
+        "",
+        "The US page is generated from `config/us_indicators.yaml`. This table records configured sources for each rendered chart slot; latest dates are tracked in `output/us_dashboard_summary.json` and the generated HTML rather than fetched again here.",
+        "",
+        f"Configured charts: {len(indicators)}. Latest rendered chart count: {summary.get('charts', 'unknown')}. Source groups: {summary.get('source_groups', 'unknown')}.",
+        "",
+        "| Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |",
+        "|---|---|---|---|---|---|---|---|---|",
+    ])
+    for item in indicators:
+        label = item.get("label_en") or item.get("label_zh") or item.get("id")
+        series_id = item.get("series") or item.get("metric") or ""
+        lines.append(
+            "| "
+            + " | ".join([
+                _clean(item.get("section")),
+                f"`{_clean(item.get('id'))}`",
+                _clean(label),
+                _clean(item.get("frequency")),
+                _clean(item.get("unit")),
+                _clean(item.get("fetcher")),
+                _clean(item.get("source_name")),
+                _clean(series_id),
+                _clean(item.get("caveat_en")),
+            ])
+            + " |"
+        )
+
+    gaps = config.get("data_gaps", [])
+    lines.extend([
+        "",
+        "## United States Official / Vendor Data Gaps",
+        "",
+        "| Section | Indicator family | Current status |",
+        "|---|---|---|",
+    ])
+    for item in gaps:
+        lines.append(
+            "| "
+            + " | ".join([
+                _clean(item.get("section")),
+                _clean(item.get("item_en")),
+                _clean(item.get("status_en")),
+            ])
+            + " |"
+        )
 
 
 def build_catalog() -> str:
@@ -157,6 +231,8 @@ def build_catalog() -> str:
         sample = ", ".join(sorted(slots)[:12])
         suffix = "..." if len(slots) > 12 else ""
         lines.append(f"| {_clean(source)} | {len(slots)} | {_clean(sample + suffix)} |")
+
+    _append_us_sources(lines)
 
     return "\n".join(lines) + "\n"
 

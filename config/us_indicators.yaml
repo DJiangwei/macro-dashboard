@@ -1784,6 +1784,76 @@ indicators:
     start_date: "2002-12-18"
     caveat_en: "Treasury holdings separate QT/QE composition from total balance-sheet size."
     caveat_zh: "国债持仓帮助区分QT/QE构成与总资产负债表规模。"
+  - id: treasury_auction_total_accepted
+    section: fiscal
+    label_en: "Treasury Auction Accepted Amount"
+    label_zh: "美国国债拍卖获配总额"
+    unit: "USD bn"
+    fetcher: treasury_auctions
+    series: "auctions_query.total_accepted"
+    metric: "total_accepted"
+    aggregate: "monthly_sum"
+    scale: 1000000000
+    source_name: "Treasury FiscalData / US Treasury"
+    source_url: "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query"
+    frequency: "monthly"
+    start_date: "2018-01-01"
+    caveat_en: "Official completed-auction results aggregated by auction month; this is issuance supply already auctioned, not the future auction calendar."
+    caveat_zh: "官方已完成拍卖结果，按拍卖月份聚合；这是已拍卖供给，不是未来拍卖日历。"
+  - id: treasury_bill_auction_accepted
+    section: fiscal
+    label_en: "T-Bill Auction Accepted Amount"
+    label_zh: "短期国库券拍卖获配总额"
+    unit: "USD bn"
+    fetcher: treasury_auctions
+    series: "auctions_query.total_accepted.bill"
+    metric: "total_accepted"
+    aggregate: "monthly_sum"
+    security_types:
+      - "Bill"
+    scale: 1000000000
+    source_name: "Treasury FiscalData / US Treasury"
+    source_url: "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query"
+    frequency: "monthly"
+    start_date: "2018-01-01"
+    caveat_en: "Bills dominate front-end Treasury supply and can matter for money-market liquidity and reserve-drain narratives."
+    caveat_zh: "短债主导前端国债供给，对货币市场流动性和准备金消耗叙事很重要。"
+  - id: treasury_coupon_auction_accepted
+    section: fiscal
+    label_en: "Coupon/TIPS/FRN Auction Accepted Amount"
+    label_zh: "附息债/TIPS/FRN拍卖获配总额"
+    unit: "USD bn"
+    fetcher: treasury_auctions
+    series: "auctions_query.total_accepted.coupon_tips_frn"
+    metric: "total_accepted"
+    aggregate: "monthly_sum"
+    security_types:
+      - "Note"
+      - "Bond"
+      - "TIPS"
+      - "FRN"
+    scale: 1000000000
+    source_name: "Treasury FiscalData / US Treasury"
+    source_url: "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query"
+    frequency: "monthly"
+    start_date: "2018-01-01"
+    caveat_en: "Coupon/TIPS/FRN auction supply is the cleaner duration-heavy issuance gauge; reopenings are included when Treasury reports completed auction results."
+    caveat_zh: "附息债/TIPS/FRN拍卖供给更接近久期供给观察；财政部已完成拍卖结果中的续发也会包含在内。"
+  - id: treasury_auction_bid_to_cover
+    section: fiscal
+    label_en: "Treasury Auction Bid-to-Cover"
+    label_zh: "美国国债拍卖投标覆盖倍数"
+    unit: "ratio"
+    fetcher: treasury_auctions
+    series: "auctions_query.total_tendered_to_total_accepted"
+    metric: "bid_to_cover_ratio"
+    aggregate: "monthly_weighted_bid_to_cover"
+    source_name: "Treasury FiscalData / US Treasury"
+    source_url: "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query"
+    frequency: "monthly"
+    start_date: "2018-01-01"
+    caveat_en: "Computed as monthly total tendered divided by total accepted across completed auctions, which is more stable than a simple average of individual auction ratios."
+    caveat_zh: "按月度总投标额除以总获配额计算，比简单平均单场拍卖覆盖倍数更稳定。"
   - id: monthly_treasury_deficit
     section: fiscal
     label_en: "Monthly Treasury Deficit"
@@ -1964,7 +2034,7 @@ data_gaps:
     status_en: "Vendor or specialized releases; not replaced with weak proxies."
     status_zh: "供应商或专项发布；不使用弱proxy替代。"
   - section: fed_policy
-    item_en: "FOMC statement language, minutes, transcripts, projections, and Treasury auction schedule"
-    item_zh: "FOMC声明措辞、纪要、会议记录、预测与国债拍卖日程"
-    status_en: "Text/schedule sources require separate NLP/calendar adapters; quantitative policy plumbing is charted."
-    status_zh: "文本和日程数据需要单独NLP/日历adapter；量化政策管道指标已绘图。"
+    item_en: "FOMC statement language, minutes, transcripts, projections, and future Treasury auction calendar"
+    item_zh: "FOMC声明措辞、纪要、会议记录、预测与未来国债拍卖日历"
+    status_en: "Completed Treasury auction quantities and bid-to-cover are now charted from FiscalData; text and future-calendar sources require separate NLP/calendar adapters."
+    status_zh: "已完成国债拍卖规模和覆盖倍数已从FiscalData绘图；文本和未来日历数据需要单独NLP/日历adapter。"
