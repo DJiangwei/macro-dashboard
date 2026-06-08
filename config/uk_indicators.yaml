@@ -123,6 +123,21 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "ONS Index of Production, B-E production CVMSA; preferred over the lagged FRED/OECD mirror for UK release work."
     caveat_zh: "ONS生产指数B-E生产CVMSA；相较滞后的FRED/OECD镜像，更适合英国发布日研究。"
+  - id: services_output_index
+    section: monthly_output
+    label_en: "Index of Services"
+    label_zh: "服务业产出指数"
+    unit: "index"
+    fetcher: ons_timeseries
+    series: "S2KU"
+    dataset: "IOS1"
+    ons_path: "/economy/economicoutputandproductivity/output/timeseries/s2ku/ios1/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/economicoutputandproductivity/output/timeseries/s2ku/ios1"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS Index of Services, monthly seasonally adjusted output index; it covers the largest GDP(O) sector but remains revision-prone around Blue Book and monthly GDP balancing."
+    caveat_zh: "ONS服务业产出月度季调指数；覆盖GDP(O)最大部门，但在Blue Book和月度GDP平衡时仍可能修订。"
   - id: retail_sales_yoy
     section: monthly_output
     label_en: "Retail Sales Volume Index"
@@ -190,6 +205,36 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "BIS nominal residential property price index; does not replicate the report's individual house-price vendor indices."
     caveat_zh: "BIS名义住宅价格指数；并不等同于报告中逐个房价供应商指数。"
+  - id: uk_hpi_average_price
+    section: housing_construction
+    label_en: "UK HPI Average Price"
+    label_zh: "英国HPI平均房价"
+    unit: "GBP"
+    fetcher: ons_xlsx_table
+    source_name: "ONS / HM Land Registry"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/datasets/ukhousepriceindexmonthlypricestatistics"
+    sheet_name: "2"
+    date_column: "Time period"
+    value_column: "United Kingdom"
+    frequency: "monthly"
+    start_date: "2011-01-01"
+    caveat_en: "ONS UK HPI average price from the monthly price-statistics workbook; latest months are provisional and the workbook notes warn that revisions can be larger for newer observations."
+    caveat_zh: "ONS英国HPI月度价格统计工作簿中的平均房价；最新月份为暂估，工作簿说明提示新近观测可能有较大修订。"
+  - id: uk_hpi_annual_change
+    section: housing_construction
+    label_en: "UK HPI Annual Change"
+    label_zh: "英国HPI年度涨幅"
+    unit: "%"
+    fetcher: ons_xlsx_table
+    source_name: "ONS / HM Land Registry"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/datasets/ukhousepriceindexmonthlypricestatistics"
+    sheet_name: "3"
+    date_column: "Time period"
+    value_column: "United Kingdom"
+    frequency: "monthly"
+    start_date: "2011-01-01"
+    caveat_en: "ONS UK HPI annual percentage change; provisional recent months should be cross-checked against the UK HPI release when trading housing-sensitive data."
+    caveat_zh: "ONS英国HPI年度百分比变化；交易住房敏感数据时，应对最新暂估月份交叉核对UK HPI发布说明。"
   - id: housing_starts_england_sa
     section: housing_construction
     label_en: "Housing Starts, England SA"
@@ -222,6 +267,21 @@ indicators:
     start_date: "2000-01-01"
     caveat_en: "MHCLG Live Table 222 all completions; quarterly building-control returns can be revised materially and are less comprehensive than annual net-additions statistics."
     caveat_zh: "MHCLG Live Table 222全部竣工；季度建筑监管回报可能明显修订，且不如年度住房净增加统计全面。"
+  - id: construction_output_index
+    section: housing_construction
+    label_en: "Construction Output All Work"
+    label_zh: "建筑业总产出指数"
+    unit: "index"
+    fetcher: ons_horizontal_csv_table
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/businessindustryandtrade/constructionindustry/datasets/outputintheconstructionindustryallworksummary"
+    table_title_contains: "Table 10b: Chained volume measure, seasonally adjusted index number"
+    date_column: "Time period"
+    value_column: "All Work"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS construction all-work chained-volume seasonally adjusted index from the all-work summary CSV; output is Great Britain rather than full UK and can revise with survey response updates."
+    caveat_zh: "ONS建筑业总产出全工作链式量季调指数，来自all-work summary CSV；覆盖英国大不列颠而非完整UK，且会随调查回收更新而修订。"
   - id: exports_qoq
     section: external
     label_en: "Real Exports"
@@ -233,8 +293,8 @@ indicators:
     source_url: "https://fred.stlouisfed.org/series/NAEXKP06GBQ657S"
     frequency: "quarterly"
     start_date: "1997-01-01"
-    caveat_en: "National-accounts exports; monthly goods-trade detail is not yet wired."
-    caveat_zh: "国民账户出口；尚未接入月度货物贸易明细。"
+    caveat_en: "National-accounts exports; use the separate ONS goods-trade balance chart for monthly external-pressure timing."
+    caveat_zh: "国民账户出口；月度外部压力时点可配合单独的ONS货物贸易余额图。"
   - id: imports_qoq
     section: external
     label_en: "Real Imports"
@@ -246,8 +306,38 @@ indicators:
     source_url: "https://fred.stlouisfed.org/series/NAEXKP07GBQ657S"
     frequency: "quarterly"
     start_date: "1997-01-01"
-    caveat_en: "National-accounts imports; trade contribution can change after GDP revisions."
-    caveat_zh: "国民账户进口；贸易对GDP的贡献可能随后续修订变化。"
+    caveat_en: "National-accounts imports; trade contribution can change after GDP revisions, so read with ONS monthly goods balance."
+    caveat_zh: "国民账户进口；贸易对GDP贡献会随后续修订变化，因此应结合ONS月度货物贸易余额。"
+  - id: goods_trade_balance
+    section: external
+    label_en: "Goods Trade Balance"
+    label_zh: "货物贸易余额"
+    unit: "GBP mn"
+    fetcher: ons_timeseries
+    series: "BOKI"
+    dataset: "MRET"
+    ons_path: "/economy/nationalaccounts/balanceofpayments/timeseries/boki/mret/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/timeseries/boki/mret"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS seasonally adjusted goods-trade balance, balance-of-payments basis, current prices; volatile erratics and later trade revisions matter."
+    caveat_zh: "ONS货物贸易余额，国际收支口径、现价、季调；需注意异常项目波动和后续贸易修订。"
+  - id: total_trade_balance
+    section: external
+    label_en: "Total Trade Balance"
+    label_zh: "总贸易余额"
+    unit: "GBP mn"
+    fetcher: ons_timeseries
+    series: "KTMY"
+    dataset: "UKEA"
+    ons_path: "/economy/nationalaccounts/balanceofpayments/timeseries/ktmy/ukea/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/timeseries/ktmy/ukea"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS total goods-and-services trade balance from UK Economic Accounts; quarterly and non-seasonally adjusted, so use it for BoP-level context rather than monthly trading impulse."
+    caveat_zh: "ONS英国经济账户中的货物与服务总贸易余额；季度、未季调，更适合作为国际收支层面的背景而非月度交易脉冲。"
   - id: gbp_reer
     section: external
     label_en: "Sterling Real Effective Exchange Rate"
@@ -805,8 +895,8 @@ data_gaps:
   - section: housing_construction
     item_en: "Nationwide, Halifax, Rightmove, Hometrack, and RICS"
     item_zh: "Nationwide、Halifax、Rightmove、Hometrack与RICS"
-    status_en: "MHCLG starts/completions and BoE mortgage approvals are now charted; vendor house-price and sentiment sources still need licensing/API validation."
-    status_zh: "MHCLG开工/竣工与BoE按揭批准已接入；供应商房价和情绪数据仍需授权/API验证。"
+    status_en: "ONS/HMLR UK HPI, MHCLG starts/completions, ONS construction output, and BoE mortgage approvals are now charted; vendor house-price and sentiment sources still need licensing/API validation."
+    status_zh: "ONS/HMLR英国HPI、MHCLG开工/竣工、ONS建筑产出与BoE按揭批准已接入；供应商房价和情绪数据仍需授权/API验证。"
   - section: labour_market
     item_en: "Pay settlements"
     item_zh: "工资协议"

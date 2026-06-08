@@ -94,23 +94,39 @@ def _clean_text(value: str) -> str:
 
 def _parse_date(value: str) -> date | None:
     value = _clean_text(str(value or ""))
+    value = re.sub(r"\s+\[[^\]]+\]$", "", value).strip()
     quarter_match = re.match(r"^(\d{4})\s+Q([1-4])$", value, flags=re.I)
     if quarter_match:
         year = int(quarter_match.group(1))
         month = int(quarter_match.group(2)) * 3
         return date(year, month, monthrange(year, month)[1])
+    quarter_range_match = re.match(
+        r"^([A-Za-z]{3,9})\s+to\s+([A-Za-z]{3,9})\s+(\d{4})$",
+        value,
+        flags=re.I,
+    )
+    if quarter_range_match:
+        year = int(quarter_range_match.group(3))
+        month = MONTHS.get(quarter_range_match.group(2).lower())
+        if month:
+            return date(year, month, monthrange(year, month)[1])
     month_match = re.match(r"^(\d{4})\s+([A-Za-z]{3,9})$", value)
     if month_match:
         year = int(month_match.group(1))
         month = MONTHS.get(month_match.group(2).lower())
         if month:
             return date(year, month, 1)
+    month_first_match = re.match(r"^([A-Za-z]{3,9})\s+(\d{4})$", value)
+    if month_first_match:
+        month = MONTHS.get(month_first_match.group(1).lower())
+        if month:
+            return date(int(month_first_match.group(2)), month, 1)
     for fmt, length in (("%Y-%m-%d", 10), ("%Y-%m", 7), ("%Y", 4)):
         try:
             return datetime.strptime(value[:length], fmt).date()
         except ValueError:
             continue
-    for fmt in ("%d %b %Y", "%d %B %Y", "%d %b %y", "%d/%m/%Y"):
+    for fmt in ("%d %b %Y", "%d %B %Y", "%d %b %y", "%d/%m/%Y", "%b-%y", "%B-%y"):
         try:
             return datetime.strptime(value, fmt).date()
         except ValueError:
@@ -121,6 +137,26 @@ def _parse_date(value: str) -> date | None:
 def _normalise_date(value: str) -> str | None:
     parsed = _parse_date(value)
     return parsed.isoformat() if parsed else None
+
+
+def _date_matches_frequency(value: str, frequency: str) -> bool:
+    """Avoid treating annual or quarterly rows as monthly data in mixed ONS tables."""
+    value = _clean_text(value)
+    value = re.sub(r"\s+\[[^\]]+\]$", "", value).strip()
+    frequency = frequency.lower()
+    if frequency == "monthly":
+        return bool(
+            re.match(r"^[A-Za-z]{3,9}[- ]\d{2,4}$", value)
+            or re.match(r"^\d{4}\s+[A-Za-z]{3,9}$", value)
+        )
+    if frequency == "quarterly":
+        return bool(
+            re.match(r"^\d{4}\s+Q[1-4]$", value, flags=re.I)
+            or re.match(r"^[A-Za-z]{3,9}\s+to\s+[A-Za-z]{3,9}\s+\d{4}$", value, flags=re.I)
+        )
+    if frequency == "annual":
+        return bool(re.match(r"^\d{4}$", value))
+    return True
 
 
 def _start_filter(observations: list[dict[str, Any]], start_date: str | None) -> list[dict[str, Any]]:
@@ -417,6 +453,96 @@ def _govuk_distribution_url(session: requests.Session, spec: dict[str, Any], ext
     raise RuntimeError(f"No matching GOV.UK {extension} distribution found for {page_url}.")
 
 
+def _ons_distribution_candidates(
+    session: requests.Session,
+    spec: dict[str, Any],
+    extension: str,
+) -> list[tuple[str, str]]:
+    """Return ONS dataset download candidates from JSON-LD plus visible download links."""
+    page_url = str(spec.get("source_url") or "").strip()
+    if not page_url:
+        raise ValueError("ONS dataset fetcher requires source_url.")
+    response = session.get(page_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 20))
+    response.raise_for_status()
+    wanted = str(spec.get("distribution_name_contains") or "").lower()
+    candidates: list[tuple[str, str]] = []
+
+    for match in re.findall(
+        r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
+        response.text,
+        flags=re.S | re.I,
+    ):
+        try:
+            payload = json.loads(match)
+        except json.JSONDecodeError:
+            continue
+        items = payload if isinstance(payload, list) else [payload]
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            distribution = item.get("distribution") or []
+            if isinstance(distribution, dict):
+                distribution = [distribution]
+            for row in distribution:
+                if not isinstance(row, dict):
+                    continue
+                url = str(row.get("contentUrl") or row.get("url") or "").strip()
+                name = str(row.get("name") or row.get("encodingFormat") or "").strip()
+                if url:
+                    candidates.append((url, name))
+
+    for href, label in re.findall(r'href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', response.text, flags=re.S | re.I):
+        url = href.strip()
+        if url.startswith("/"):
+            url = f"{ONS_TIMESERIES_BASE}{url}"
+        name = _clean_text(re.sub(r"<[^>]+>", " ", label))
+        candidates.append((url, name))
+
+    seen: set[str] = set()
+    filtered: list[tuple[str, str]] = []
+    for url, name in candidates:
+        normalized = url.lower().split("#")[0]
+        path_part = normalized.split("?")[0]
+        if not (path_part.endswith(extension) or extension in normalized) or url in seen:
+            continue
+        if wanted and wanted not in name.lower() and wanted not in url.lower():
+            continue
+        seen.add(url)
+        filtered.append((url, name))
+    if not filtered:
+        raise RuntimeError(f"No matching ONS {extension} distribution found for {page_url}.")
+    return filtered
+
+
+def _table_observations(
+    rows: list[list[str]],
+    spec: dict[str, Any],
+    *,
+    header_index: int,
+    date_index: int,
+    value_index: int,
+) -> list[dict[str, Any]]:
+    observations: list[dict[str, Any]] = []
+    frequency = str(spec.get("frequency", "")).lower()
+    for row in rows[header_index + 1 :]:
+        if len(row) <= max(date_index, value_index):
+            continue
+        raw_date = str(row[date_index]).strip()
+        if not _date_matches_frequency(raw_date, frequency):
+            continue
+        obs_date = _normalise_date(raw_date)
+        raw_value = row[value_index]
+        if not obs_date or raw_value in (None, "", ".", "[x]"):
+            continue
+        try:
+            value = float(str(raw_value).replace(",", ""))
+        except (TypeError, ValueError):
+            continue
+        observations.append({"date": obs_date, "value": value})
+    observations.sort(key=lambda item: item["date"])
+    return _apply_transform(_start_filter(observations, spec.get("start_date")), spec)
+
+
 def fetch_govuk_road_fuel(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
     csv_url = str(spec.get("csv_url") or "").strip()
     distribution_name = ""
@@ -558,6 +684,124 @@ def fetch_govuk_xlsx_table(session: requests.Session, spec: dict[str, Any]) -> d
     }
 
 
+def fetch_ons_xlsx_table(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch a simple ONS xlsx worksheet with a Time period column and one value column."""
+    xlsx_candidates = [(str(spec["xlsx_url"]), "configured")] if spec.get("xlsx_url") else _ons_distribution_candidates(
+        session,
+        spec,
+        ".xlsx",
+    )
+    last_error: Exception | None = None
+    for xlsx_url, distribution_name in xlsx_candidates:
+        try:
+            response = session.get(xlsx_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 24))
+            response.raise_for_status()
+            if not response.content.startswith(b"PK"):
+                raise RuntimeError("ONS xlsx candidate did not return an XLSX workbook.")
+            rows = _xlsx_sheet_rows(response.content, str(spec["sheet_name"]))
+            date_column = str(spec.get("date_column") or "Time period")
+            value_column = str(spec["value_column"])
+            header_index = -1
+            date_index = -1
+            value_index = -1
+            for index, row in enumerate(rows):
+                lowered = [str(item).strip().lower() for item in row]
+                if date_column.lower() in lowered and value_column.lower() in lowered:
+                    header_index = index
+                    date_index = lowered.index(date_column.lower())
+                    value_index = lowered.index(value_column.lower())
+                    break
+            if header_index < 0:
+                raise ValueError(f"Columns {date_column!r}/{value_column!r} not found in ONS XLSX.")
+            observations = _table_observations(
+                rows,
+                spec,
+                header_index=header_index,
+                date_index=date_index,
+                value_index=value_index,
+            )
+            return {
+                **spec,
+                "observations": observations,
+                "provider_updated": observations[-1]["date"] if observations else "",
+                "api_url": xlsx_url,
+                "distribution_name": distribution_name,
+            }
+        except Exception as exc:  # noqa: BLE001 - try visible dated ONS links if the current link is stale.
+            last_error = exc
+            continue
+    raise last_error or RuntimeError("No ONS XLSX candidate could be parsed.")
+
+
+def fetch_ons_horizontal_csv_table(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch an ONS CSV where multiple tables are laid out horizontally."""
+    csv_candidates = [(str(spec["csv_url"]), "configured")] if spec.get("csv_url") else _ons_distribution_candidates(
+        session,
+        spec,
+        ".csv",
+    )
+    table_title = str(spec["table_title_contains"]).lower()
+    date_column = str(spec.get("date_column") or "Time period")
+    value_column = str(spec["value_column"])
+    last_error: Exception | None = None
+    for csv_url, distribution_name in csv_candidates:
+        try:
+            response = session.get(csv_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 20))
+            response.raise_for_status()
+            rows = list(csv.reader(io.StringIO(response.content.decode("utf-8-sig", errors="replace"))))
+            start_col = -1
+            title_row_index = -1
+            for row_index, row in enumerate(rows):
+                for column_index, cell in enumerate(row):
+                    if table_title in str(cell).lower():
+                        start_col = column_index
+                        title_row_index = row_index
+                        break
+                if start_col >= 0:
+                    break
+            if start_col < 0:
+                raise ValueError(f"Table title containing {table_title!r} not found in ONS CSV.")
+
+            header_index = -1
+            date_index = -1
+            value_index = -1
+            for index in range(title_row_index + 1, min(title_row_index + 8, len(rows))):
+                row = rows[index]
+                if len(row) <= start_col:
+                    continue
+                lowered = [str(item).strip().lower() for item in row]
+                if lowered[start_col] != date_column.lower():
+                    continue
+                for column_index in range(start_col + 1, len(lowered)):
+                    if lowered[column_index] == value_column.lower():
+                        header_index = index
+                        date_index = start_col
+                        value_index = column_index
+                        break
+                if header_index >= 0:
+                    break
+            if header_index < 0:
+                raise ValueError(f"Columns {date_column!r}/{value_column!r} not found in ONS CSV.")
+            observations = _table_observations(
+                rows,
+                spec,
+                header_index=header_index,
+                date_index=date_index,
+                value_index=value_index,
+            )
+            return {
+                **spec,
+                "observations": observations,
+                "provider_updated": observations[-1]["date"] if observations else "",
+                "api_url": csv_url,
+                "distribution_name": distribution_name,
+            }
+        except Exception as exc:  # noqa: BLE001 - try the next official ONS download candidate.
+            last_error = exc
+            continue
+    raise last_error or RuntimeError("No ONS horizontal CSV candidate could be parsed.")
+
+
 def validate_series(series: dict[str, Any]) -> dict[str, Any]:
     observations = series.get("observations") or []
     notes: list[str] = []
@@ -615,6 +859,10 @@ def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
             series = fetch_govuk_road_fuel(session, spec)
         elif fetcher == "govuk_xlsx_table":
             series = fetch_govuk_xlsx_table(session, spec)
+        elif fetcher == "ons_xlsx_table":
+            series = fetch_ons_xlsx_table(session, spec)
+        elif fetcher == "ons_horizontal_csv_table":
+            series = fetch_ons_horizontal_csv_table(session, spec)
         else:
             series = {**spec, "observations": [], "quality_status": "unavailable", "quality_notes": ["Unknown fetcher."]}
     except Exception as exc:  # noqa: BLE001 - data page should degrade instead of crashing.
