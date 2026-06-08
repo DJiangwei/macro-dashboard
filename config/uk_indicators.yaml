@@ -349,6 +349,36 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "LFS total actual weekly hours worked, seasonally adjusted; captures labour input beyond headcount."
     caveat_zh: "LFS实际总周工时，季调；可捕捉就业人数之外的劳动投入。"
+  - id: redundancy_level
+    section: labour_market
+    label_en: "Redundancy Level"
+    label_zh: "裁员人数"
+    unit: "000s"
+    fetcher: ons_timeseries
+    series: "BEAO"
+    dataset: "LMS"
+    ons_path: "/employmentandlabourmarket/peoplenotinwork/redundancies/timeseries/beao/lms/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peoplenotinwork/redundancies/timeseries/beao/lms"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS LFS redundancy level, seasonally adjusted and shown as a three-month average; LFS sampling uncertainty and rolling-window labels matter."
+    caveat_zh: "ONS LFS裁员人数，季调且以三个月平均呈现；需注意LFS抽样不确定性和滚动窗口标签。"
+  - id: redundancy_rate
+    section: labour_market
+    label_en: "Redundancy Rate"
+    label_zh: "裁员率"
+    unit: "per 1,000 employees"
+    fetcher: ons_timeseries
+    series: "BEIR"
+    dataset: "LMS"
+    ons_path: "/employmentandlabourmarket/peoplenotinwork/redundancies/timeseries/beir/lms/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peoplenotinwork/redundancies/timeseries/beir/lms"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS LFS redundancy rate per 1,000 employees, seasonally adjusted three-month average; read alongside vacancies, unemployment, and claimant count."
+    caveat_zh: "ONS LFS每千名雇员裁员率，季调三个月平均；应与职位空缺、失业率和申领人数结合阅读。"
   - id: awe_total_pay_growth
     section: labour_market
     label_en: "AWE Total Pay Growth"
@@ -699,6 +729,36 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "ONS public sector net debt excluding public-sector banks as a percentage of GDP; conceptually closer to UK fiscal headlines than IMF general-government debt."
     caveat_zh: "ONS公共部门净债务不含公共部门银行，占GDP比；比IMF广义政府债务更贴近英国财政新闻口径。"
+  - id: psnfl_ex_banks
+    section: fiscal_policy
+    label_en: "PSNFL ex Banks"
+    label_zh: "公共部门净金融负债不含银行"
+    unit: "GBP mn"
+    fetcher: ons_timeseries
+    series: "CPNF"
+    dataset: "PUSF"
+    ons_path: "/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/cpnf/pusf/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/cpnf/pusf"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS public sector net financial liabilities excluding public-sector banks; broader balance-sheet measure than PSND and sensitive to liquid financial assets and valuation changes."
+    caveat_zh: "ONS公共部门净金融负债，不含公共部门银行；比PSND更宽的资产负债表指标，受流动金融资产和估值变化影响。"
+  - id: psnd_ex_boe_gdp
+    section: fiscal_policy
+    label_en: "PSND ex Banks ex BoE"
+    label_zh: "公共部门净债务不含银行与央行"
+    unit: "% of GDP"
+    fetcher: ons_timeseries
+    series: "CPOA"
+    dataset: "PUSF"
+    ons_path: "/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/cpoa/pusf/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/cpoa/pusf"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "ONS PSND excluding public-sector banks and Bank of England as a share of GDP; useful for stripping out BoE balance-sheet distortions around APF and QE."
+    caveat_zh: "ONS公共部门净债务占GDP比，不含公共部门银行和英格兰银行；有助于剔除APF/QE相关央行资产负债表扰动。"
   - id: government_balance_gdp
     section: fiscal_policy
     label_en: "General Government Net Lending/Borrowing"
@@ -748,10 +808,10 @@ data_gaps:
     status_en: "MHCLG starts/completions and BoE mortgage approvals are now charted; vendor house-price and sentiment sources still need licensing/API validation."
     status_zh: "MHCLG开工/竣工与BoE按揭批准已接入；供应商房价和情绪数据仍需授权/API验证。"
   - section: labour_market
-    item_en: "Redundancies and pay settlements"
-    item_zh: "裁员与工资协议"
-    status_en: "Core ONS labour-market indicators are now charted; these remaining items need separate release tables or survey/licensing checks."
-    status_zh: "核心ONS劳动力市场指标已接入；剩余项目需要单独发布表或调查/授权核验。"
+    item_en: "Pay settlements"
+    item_zh: "工资协议"
+    status_en: "ONS redundancy level/rate are now charted; pay-settlement series still need stable release-table mappings or survey/licensing checks."
+    status_zh: "ONS裁员人数/裁员率已接入；工资协议序列仍需稳定发布表映射或调查/授权核验。"
   - section: prices
     item_en: "Inflation expectations surveys and index-linked gilt breakevens"
     item_zh: "通胀预期调查与指数挂钩国债隐含通胀"
@@ -763,7 +823,7 @@ data_gaps:
     status_en: "BoE IADB now covers Bank Rate, SONIA, sterling, M4, consumer credit, mortgage approvals, and one quoted-rate series; survey/PDF-style sources remain open."
     status_zh: "BoE IADB已覆盖Bank Rate、SONIA、英镑、M4、消费信贷、按揭批准和一条报价利率；调查/PDF类来源仍未接入。"
   - section: fiscal_policy
-    item_en: "Detailed debt breakdowns and OBR analysis"
-    item_zh: "债务细分与OBR分析"
-    status_en: "Monthly PSNB, PSNCR, and PSND are now charted from ONS; remaining fiscal detail needs additional ONS/OBR table adapters."
-    status_zh: "月度PSNB、PSNCR与PSND已接入ONS；剩余财政细节需要额外ONS/OBR表格adapter。"
+    item_en: "OBR forecast vintages and deeper debt instrument breakdowns"
+    item_zh: "OBR预测版本与更深层债务工具细分"
+    status_en: "Monthly PSNB, PSNCR, PSND, PSNFL, and PSND ex BoE are now charted from ONS; OBR vintages and instrument-level detail still need table adapters."
+    status_zh: "月度PSNB、PSNCR、PSND、PSNFL与不含BoE的PSND已接入ONS；OBR预测版本和工具级细分仍需表格adapter。"
