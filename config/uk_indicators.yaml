@@ -849,6 +849,67 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "ONS PSND excluding public-sector banks and Bank of England as a share of GDP; useful for stripping out BoE balance-sheet distortions around APF and QE."
     caveat_zh: "ONS公共部门净债务占GDP比，不含公共部门银行和英格兰银行；有助于剔除APF/QE相关央行资产负债表扰动。"
+  - id: obr_psnb_forecast
+    section: fiscal_policy
+    label_en: "OBR PSNB Forecast"
+    label_zh: "OBR公共部门净借款预测"
+    unit: "GBP bn"
+    fetcher: obr_xlsx_row
+    source_name: "OBR EFO March 2026"
+    source_url: "https://obr.uk/efo/economic-and-fiscal-outlook-march-2026/"
+    xlsx_url: "https://obr.uk/download/march-2026-economic-and-fiscal-outlook-detailed-forecast-tables-aggregates/"
+    sheet_name: "6.5"
+    row_label: "Net borrowing"
+    frequency: "annual"
+    start_date: "2025-03-31"
+    caveat_en: "Official OBR EFO public-sector net borrowing forecast by UK financial year; this is a forecast vintage, not an ONS outturn series."
+    caveat_zh: "OBR EFO官方公共部门净借款预测，按英国财年；这是预测版本，不是ONS实绩序列。"
+  - id: obr_psnd_ex_boe_forecast
+    section: fiscal_policy
+    label_en: "OBR PSND ex BoE Forecast"
+    label_zh: "OBR不含BoE净债务预测"
+    unit: "% of GDP"
+    fetcher: obr_xlsx_row
+    source_name: "OBR EFO March 2026"
+    source_url: "https://obr.uk/efo/economic-and-fiscal-outlook-march-2026/"
+    xlsx_url: "https://obr.uk/download/march-2026-economic-and-fiscal-outlook-detailed-forecast-tables-aggregates/"
+    sheet_name: "6.13"
+    row_label: "Public sector net debt ex BoE (a-c=d)"
+    frequency: "annual"
+    start_date: "2024-03-31"
+    caveat_en: "OBR forecast for PSND excluding the Bank of England as a share of GDP; used instead of the workbook's headline PSND formula row because the downloaded cached values require sanity checks."
+    caveat_zh: "OBR预测的不含英格兰银行公共部门净债务占GDP比；这里避开工作簿中需额外校验的headline PSND公式缓存行。"
+  - id: obr_cg_debt_interest_forecast
+    section: fiscal_policy
+    label_en: "OBR CG Debt Interest Forecast"
+    label_zh: "OBR中央政府债务利息预测"
+    unit: "GBP bn"
+    fetcher: obr_xlsx_row
+    source_name: "OBR EFO March 2026"
+    source_url: "https://obr.uk/efo/economic-and-fiscal-outlook-march-2026/"
+    xlsx_url: "https://obr.uk/download/march-2026-economic-and-fiscal-outlook-detailed-forecast-tables-aggregates/"
+    sheet_name: "6.16"
+    row_label: "Total CG debt interest (net of APF)"
+    frequency: "annual"
+    start_date: "2024-03-31"
+    caveat_en: "OBR central-government debt-interest forecast net of APF; highly sensitive to gilt yields, inflation-linked uplift, financing mix, and APF treatment."
+    caveat_zh: "OBR中央政府债务利息预测，不含APF影响；对国债收益率、通胀挂钩上调、融资结构和APF处理非常敏感。"
+  - id: obr_public_sector_effective_interest_rate
+    section: fiscal_policy
+    label_en: "OBR Public-Sector Effective Interest Rate"
+    label_zh: "OBR公共部门有效利率"
+    unit: "%"
+    fetcher: obr_xlsx_row
+    source_name: "OBR EFO March 2026"
+    source_url: "https://obr.uk/efo/economic-and-fiscal-outlook-march-2026/"
+    xlsx_url: "https://obr.uk/download/march-2026-economic-and-fiscal-outlook-detailed-forecast-tables-aggregates/"
+    sheet_name: "6.17"
+    row_label: "Effective interest rate"
+    context_above_contains: "Public sector"
+    frequency: "annual"
+    start_date: "2024-03-31"
+    caveat_en: "OBR effective interest-rate forecast for the public-sector debt stock; useful for debt-service pressure, but it is modelled from the OBR forecast vintage."
+    caveat_zh: "OBR公共部门债务存量有效利率预测；适合观察债务服务压力，但属于OBR预测版本模型输出。"
   - id: government_balance_gdp
     section: fiscal_policy
     label_en: "General Government Net Lending/Borrowing"
@@ -915,5 +976,5 @@ data_gaps:
   - section: fiscal_policy
     item_en: "OBR forecast vintages and deeper debt instrument breakdowns"
     item_zh: "OBR预测版本与更深层债务工具细分"
-    status_en: "Monthly PSNB, PSNCR, PSND, PSNFL, and PSND ex BoE are now charted from ONS; OBR vintages and instrument-level detail still need table adapters."
-    status_zh: "月度PSNB、PSNCR、PSND、PSNFL与不含BoE的PSND已接入ONS；OBR预测版本和工具级细分仍需表格adapter。"
+    status_en: "Monthly PSNB, PSNCR, PSND, PSNFL, and PSND ex BoE are charted from ONS; core March 2026 OBR forecast rows for borrowing, PSND ex BoE, debt interest, and effective interest rates are now charted. Full vintage archive and instrument-level history still need deeper adapters."
+    status_zh: "月度PSNB、PSNCR、PSND、PSNFL与不含BoE的PSND已接入ONS；March 2026 OBR核心预测行，包括借款、不含BoE净债务、债务利息和有效利率，已绘图。完整预测版本库和工具级历史仍需更深adapter。"

@@ -139,6 +139,20 @@ def _normalise_date(value: str) -> str | None:
     return parsed.isoformat() if parsed else None
 
 
+def _normalise_obr_period(value: str) -> str | None:
+    value = _clean_text(str(value or ""))
+    financial_year_match = re.match(r"^(\d{4})-(\d{2})$", value)
+    if financial_year_match:
+        # OBR fiscal-year tables are UK financial years ending in March.
+        return date(int(financial_year_match.group(1)) + 1, 3, 31).isoformat()
+    quarter_match = re.match(r"^(\d{4})\s*Q([1-4])$", value, flags=re.I)
+    if quarter_match:
+        year = int(quarter_match.group(1))
+        month = int(quarter_match.group(2)) * 3
+        return date(year, month, monthrange(year, month)[1]).isoformat()
+    return None
+
+
 def _date_matches_frequency(value: str, frequency: str) -> bool:
     """Avoid treating annual or quarterly rows as monthly data in mixed ONS tables."""
     value = _clean_text(value)
@@ -802,6 +816,77 @@ def fetch_ons_horizontal_csv_table(session: requests.Session, spec: dict[str, An
     raise last_error or RuntimeError("No ONS horizontal CSV candidate could be parsed.")
 
 
+def fetch_obr_xlsx_row(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch one horizontal row from an OBR EFO workbook.
+
+    OBR EFO tables often put forecast years across columns and indicator names
+    down rows. This adapter keeps those fiscal forecast additions config-driven.
+    """
+    xlsx_url = str(spec.get("xlsx_url") or "").strip()
+    if not xlsx_url:
+        raise ValueError("OBR XLSX row fetcher requires xlsx_url.")
+    response = session.get(xlsx_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 24))
+    response.raise_for_status()
+    if not response.content.startswith(b"PK"):
+        raise RuntimeError("OBR xlsx URL did not return an XLSX workbook.")
+    rows = _xlsx_sheet_rows(response.content, str(spec["sheet_name"]))
+    row_label = _clean_text(str(spec["row_label"])).lower()
+    context = _clean_text(str(spec.get("context_above_contains") or "")).lower()
+    target_index = -1
+    for index, row in enumerate(rows):
+        cleaned = [_clean_text(str(cell)).lower() for cell in row]
+        if row_label not in cleaned:
+            continue
+        if context:
+            above = " ".join(
+                " ".join(_clean_text(str(cell)).lower() for cell in rows[above_index])
+                for above_index in range(max(0, index - 8), index)
+            )
+            if context not in above:
+                continue
+        target_index = index
+        break
+    if target_index < 0:
+        raise ValueError(f"OBR row {spec['row_label']!r} not found in {spec['sheet_name']!r}.")
+
+    header_index = -1
+    header_dates: dict[int, str] = {}
+    for index in range(target_index - 1, -1, -1):
+        candidates = {
+            column_index: _normalise_obr_period(str(cell))
+            for column_index, cell in enumerate(rows[index])
+            if _normalise_obr_period(str(cell))
+        }
+        if len(candidates) >= 3:
+            header_index = index
+            header_dates = {column_index: value for column_index, value in candidates.items() if value}
+            break
+    if header_index < 0 or not header_dates:
+        raise ValueError(f"Date header not found above OBR row {spec['row_label']!r}.")
+
+    observations: list[dict[str, Any]] = []
+    target_row = rows[target_index]
+    for column_index, obs_date in header_dates.items():
+        if column_index >= len(target_row):
+            continue
+        raw_value = target_row[column_index]
+        if raw_value in (None, "", ".", "-", " - "):
+            continue
+        try:
+            value = float(str(raw_value).replace(",", ""))
+        except (TypeError, ValueError):
+            continue
+        observations.append({"date": obs_date, "value": value})
+    observations.sort(key=lambda item: item["date"])
+    observations = _apply_transform(_start_filter(observations, spec.get("start_date")), spec)
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": xlsx_url,
+    }
+
+
 def validate_series(series: dict[str, Any]) -> dict[str, Any]:
     observations = series.get("observations") or []
     notes: list[str] = []
@@ -863,6 +948,8 @@ def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
             series = fetch_ons_xlsx_table(session, spec)
         elif fetcher == "ons_horizontal_csv_table":
             series = fetch_ons_horizontal_csv_table(session, spec)
+        elif fetcher == "obr_xlsx_row":
+            series = fetch_obr_xlsx_row(session, spec)
         else:
             series = {**spec, "observations": [], "quality_status": "unavailable", "quality_notes": ["Unknown fetcher."]}
     except Exception as exc:  # noqa: BLE001 - data page should degrade instead of crashing.
