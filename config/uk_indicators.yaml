@@ -646,17 +646,30 @@ indicators:
     caveat_zh: "用于GS FCI式短端利率渠道；不等同于官方Bank Rate。"
   - id: long_rate_10y
     section: monetary_financial
-    label_en: "Long-Term Government Bond Yield"
-    label_zh: "长期政府债收益率"
+    label_en: "10Y Nominal Gilt Par Yield"
+    label_zh: "10年期名义英国国债平价收益率"
     unit: "%"
-    fetcher: fred
-    series: "IRLTLT01GBM156N"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/IRLTLT01GBM156N"
-    frequency: "monthly"
+    fetcher: boe_iadb
+    series: "IUDMNPY"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
+    frequency: "daily"
     start_date: "1997-01-01"
-    caveat_en: "Public long-rate channel for financial conditions; not a fitted GS FCI."
-    caveat_zh: "金融条件中的公开长端利率渠道；不是拟合后的GS FCI。"
+    caveat_en: "BoE daily yield from British government securities, 10-year nominal par yield; a cleaner UK-native long-rate channel than the lagged FRED/OECD monthly mirror."
+    caveat_zh: "BoE日频英国政府证券10年期名义平价收益率；相比滞后的FRED/OECD月度镜像，更适合作为英国本土长端利率渠道。"
+  - id: gilt_5y_nominal_par_yield
+    section: monetary_financial
+    label_en: "5Y Nominal Gilt Par Yield"
+    label_zh: "5年期名义英国国债平价收益率"
+    unit: "%"
+    fetcher: boe_iadb
+    series: "IUDSNPY"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
+    frequency: "daily"
+    start_date: "1997-01-01"
+    caveat_en: "BoE daily yield from British government securities, 5-year nominal par yield; useful for reading the belly of the gilt curve alongside Bank Rate, SONIA, and the 10-year yield."
+    caveat_zh: "BoE日频英国政府证券5年期名义平价收益率；可与Bank Rate、SONIA和10年期收益率共同观察英国国债曲线中段。"
   - id: gbp_usd
     section: monetary_financial
     label_en: "GBP/USD Spot"
@@ -971,8 +984,8 @@ data_gaps:
   - section: monetary_financial
     item_en: "Trends in Lending, Credit Conditions Survey, HEW, and fuller quoted-rate matrix"
     item_zh: "Trends in Lending、信贷条件调查、住房权益提取与更完整报价利率矩阵"
-    status_en: "BoE IADB now covers Bank Rate, SONIA, sterling, M4, consumer credit, mortgage approvals, and one quoted-rate series; survey/PDF-style sources remain open."
-    status_zh: "BoE IADB已覆盖Bank Rate、SONIA、英镑、M4、消费信贷、按揭批准和一条报价利率；调查/PDF类来源仍未接入。"
+    status_en: "BoE IADB now covers Bank Rate, SONIA, sterling, 5Y/10Y nominal gilt par yields, M4, consumer credit, mortgage approvals, and one quoted-rate series; survey/PDF-style sources remain open."
+    status_zh: "BoE IADB已覆盖Bank Rate、SONIA、英镑、5年/10年名义国债平价收益率、M4、消费信贷、按揭批准和一条报价利率；调查/PDF类来源仍未接入。"
   - section: fiscal_policy
     item_en: "OBR forecast vintages and deeper debt instrument breakdowns"
     item_zh: "OBR预测版本与更深层债务工具细分"

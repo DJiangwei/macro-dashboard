@@ -117,11 +117,12 @@ make publish MSG="Update dashboard"
 
 Some public-interest sources require user credentials or an account-specific
 download URL before they can be refreshed unattended. Copy `.env.example` to
-`.env` locally and export the variables before running `make build-v4`.
+`.env.local` locally; `scripts/uv_project.sh` loads it automatically before
+running project commands. Never commit real keys.
 
 ```bash
 set -a
-. ./.env
+. ./.env.local
 set +a
 make build-v4
 ```

@@ -388,6 +388,19 @@ indicators:
     start_date: "2013-02-01"
     caveat_en: "Shorter public survey history; useful for current activity breadth in the Seventh District."
     caveat_zh: "公开历史较短；用于观察第七联储区当前活动广度。"
+  - id: weekly_economic_index
+    section: production_orders
+    label_en: "Weekly Economic Index"
+    label_zh: "周度经济指数"
+    unit: "index"
+    fetcher: fred
+    series: "WEI"
+    source_name: "FRED / New York Fed"
+    source_url: "https://fred.stlouisfed.org/series/WEI"
+    frequency: "weekly"
+    start_date: "2008-01-01"
+    caveat_en: "Lewis-Mertens-Stock Weekly Economic Index; a high-frequency public activity composite, not a replacement for ISM or proprietary retail trackers."
+    caveat_zh: "Lewis-Mertens-Stock周度经济指数；是公开高频活动综合指标，不能替代ISM或专有零售追踪器。"
   - id: retail_sales_growth
     section: consumer
     label_en: "Retail Sales Growth"
@@ -2134,8 +2147,8 @@ data_gaps:
   - section: consumer
     item_en: "Conference Board confidence, Redbook, ICSC/UBS, ABC Consumer Comfort"
     item_zh: "Conference Board信心、Redbook、ICSC/UBS、ABC消费者舒适度"
-    status_en: "Vendor-controlled or not yet mapped to a reproducible public endpoint."
-    status_zh: "供应商控制或尚未映射到可复跑公开endpoint。"
+    status_en: "Vendor-controlled or not yet mapped to a reproducible public endpoint. The public Weekly Economic Index is charted as a high-frequency activity composite, but it is not a substitute for these retail/confidence products."
+    status_zh: "供应商控制或尚未映射到可复跑公开endpoint。公开周度经济指数已作为高频活动综合指标绘图，但不能替代这些零售/信心产品。"
   - section: housing
     item_en: "Pending Home Sales Index, NAHB Housing Market Index, mortgage applications"
     item_zh: "待完成房屋销售指数、NAHB住房市场指数、按揭申请"

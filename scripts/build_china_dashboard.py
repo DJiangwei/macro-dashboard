@@ -309,9 +309,15 @@ def _chart_html(series: dict[str, Any]) -> str:
             "size": 12,
             "color": INK,
         },
-        "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": True},
-        "yaxis": {"title": series.get("unit", ""), "gridcolor": "rgba(23,19,16,0.08)", "autorange": True},
+        "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": True, "automargin": True},
+        "yaxis": {
+            "title": series.get("unit", ""),
+            "gridcolor": "rgba(23,19,16,0.08)",
+            "autorange": True,
+            "automargin": True,
+        },
         "legend": {"orientation": "h", "y": -0.24},
+        "hovermode": "x unified",
         "autosize": True,
     }
     latest = _latest(series)
