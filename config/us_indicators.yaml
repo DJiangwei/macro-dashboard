@@ -2149,8 +2149,8 @@ data_gaps:
   - section: employment
     item_en: "Manpower, Challenger layoffs, Monster/help-wanted indexes; BED API quota"
     item_zh: "Manpower、Challenger裁员、Monster/Help-wanted指数；BED API额度"
-    status_en: "ADP private payrolls are charted from FRED. The BLS BED adapter is implemented, but rendering requires available BLS API quota or BLS_API_KEY; vendor releases are not replaced with weak proxies."
-    status_zh: "ADP私营就业已通过FRED绘图。BLS BED adapter已实现，但渲染需要可用BLS API额度或BLS_API_KEY；供应商发布不使用弱proxy替代。"
+    status_en: "ADP private payrolls are charted from FRED and BLS BED gross job gains/losses are charted through the public BLS API with key-aware request windows. Manpower, Challenger, and proprietary help-wanted sources remain vendor/licensing gaps."
+    status_zh: "ADP私营就业已通过FRED绘图，BLS BED总就业创造/损失已通过BLS公开API绘图，并按是否有API key调整请求窗口。Manpower、Challenger和专有Help-wanted来源仍属于供应商/授权缺口。"
   - section: fed_policy
     item_en: "FOMC statement language, minutes, transcripts, projections, and future Treasury auction calendar"
     item_zh: "FOMC声明措辞、纪要、会议记录、预测与未来国债拍卖日历"

@@ -655,7 +655,7 @@ Configured charts: 63. Latest rendered chart count: 63. Source groups: 9.
 
 The US page is generated from `config/us_indicators.yaml`. This table records configured sources for each rendered chart slot; latest dates are tracked in `output/us_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 152. Latest rendered chart count: 148. Source groups: 26.
+Configured charts: 152. Latest rendered chart count: 152. Source groups: 27.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -821,5 +821,5 @@ Configured charts: 152. Latest rendered chart count: 148. Source groups: 26.
 | consumer | Conference Board confidence, Redbook, ICSC/UBS, ABC Consumer Comfort | Vendor-controlled or not yet mapped to a reproducible public endpoint. |
 | housing | Pending Home Sales Index, NAHB Housing Market Index, mortgage applications | Still not validated as license-safe public chart data; public supply, price, and stress gauges are charted. |
 | external | Detailed Treasury International Capital System flows | Core TIC Treasury transactions and holdings are now charted via FRED; deeper country/security tables still need a Treasury TIC adapter if required. |
-| employment | Manpower, Challenger layoffs, Monster/help-wanted indexes; BED API quota | ADP private payrolls are charted from FRED. The BLS BED adapter is implemented, but rendering requires available BLS API quota or BLS_API_KEY; vendor releases are not replaced with weak proxies. |
+| employment | Manpower, Challenger layoffs, Monster/help-wanted indexes; BED API quota | ADP private payrolls are charted from FRED and BLS BED gross job gains/losses are charted through the public BLS API with key-aware request windows. Manpower, Challenger, and proprietary help-wanted sources remain vendor/licensing gaps. |
 | fed_policy | FOMC statement language, minutes, transcripts, projections, and future Treasury auction calendar | Completed Treasury auction quantities and bid-to-cover are now charted from FiscalData; text and future-calendar sources require separate NLP/calendar adapters. |

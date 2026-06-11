@@ -300,13 +300,13 @@ def _chart_html(series: dict[str, Any]) -> str:
         })
 
     layout = {
-        "height": 310,
-        "margin": {"l": 48, "r": 18, "t": 18, "b": 42},
+        "height": 360,
+        "margin": {"l": 52, "r": 18, "t": 20, "b": 46},
         "paper_bgcolor": PAPER,
         "plot_bgcolor": PAPER,
         "font": {
             "family": "Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, sans-serif",
-            "size": 11,
+            "size": 12,
             "color": INK,
         },
         "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": True},
@@ -598,7 +598,7 @@ h1 {
 .chart-quality-verified .quality-pill { color: #3f6f50; border-color: rgba(63,111,80,0.35); }
 .chart-quality-watch .quality-pill { color: var(--warn); border-color: rgba(157,106,46,0.35); }
 .chart-quality-low_confidence .quality-pill { color: var(--low); border-color: rgba(157,61,46,0.35); }
-.plotly-chart { width: 100%; min-width: 0; height: 400px; }
+.plotly-chart { width: 100%; min-width: 0; height: 360px; }
 .plot-container, .svg-container { max-width: 100% !important; }
 #js-plotly-tester { width: 1px !important; max-width: 1px !important; overflow: hidden !important; }
 .chart-card footer {

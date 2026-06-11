@@ -198,8 +198,11 @@ def _fetch_bls_batch(session: requests.Session, specs: list[dict[str, Any]]) -> 
     registration_key = os.environ.get("BLS_API_KEY", "").strip()
     observations_by_series: dict[str, dict[str, float]] = {series_id: {} for series_id in series_ids}
 
-    for chunk_start in range(start_year, end_year + 1, 20):
-        chunk_end = min(chunk_start + 19, end_year)
+    # BLS public API range limits are tighter without a registration key. Keep
+    # the unregistered path conservative so automated refreshes do not drop BED.
+    chunk_years = 20 if registration_key else 10
+    for chunk_start in range(start_year, end_year + 1, chunk_years):
+        chunk_end = min(chunk_start + chunk_years - 1, end_year)
         payload_body: dict[str, Any] = {
             "seriesid": series_ids,
             "startyear": str(chunk_start),
