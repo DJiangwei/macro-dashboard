@@ -630,6 +630,45 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Months' supply links demand, completions, and builder pricing pressure."
     caveat_zh: "库存月数连接需求、竣工和开发商定价压力。"
+  - id: active_listing_count
+    section: housing
+    label_en: "Active Listing Count"
+    label_zh: "活跃挂牌数量"
+    unit: "listings"
+    fetcher: fred
+    series: "ACTLISCOUUS"
+    source_name: "FRED / Realtor.com"
+    source_url: "https://fred.stlouisfed.org/series/ACTLISCOUUS"
+    frequency: "monthly"
+    start_date: "2016-07-01"
+    caveat_en: "Realtor.com national active-listing count via FRED; useful for housing-market slack, but not a substitute for NAHB sentiment or mortgage applications."
+    caveat_zh: "FRED镜像的Realtor.com全国活跃挂牌数量；适合观察住房市场松紧，但不能替代NAHB情绪或按揭申请数据。"
+  - id: pending_listing_count
+    section: housing
+    label_en: "Pending Listing Count"
+    label_zh: "待完成挂牌数量"
+    unit: "listings"
+    fetcher: fred
+    series: "PENLISCOUUS"
+    source_name: "FRED / Realtor.com"
+    source_url: "https://fred.stlouisfed.org/series/PENLISCOUUS"
+    frequency: "monthly"
+    start_date: "2016-07-01"
+    caveat_en: "Realtor.com pending-listing count via FRED; related to transaction pipeline, but it is not the NAR Pending Home Sales Index."
+    caveat_zh: "FRED镜像的Realtor.com待完成挂牌数量；与交易管线相关，但不是NAR待完成房屋销售指数。"
+  - id: median_days_on_market
+    section: housing
+    label_en: "Median Days on Market"
+    label_zh: "挂牌至成交/撤牌中位天数"
+    unit: "days"
+    fetcher: fred
+    series: "MEDDAYONMARUS"
+    source_name: "FRED / Realtor.com"
+    source_url: "https://fred.stlouisfed.org/series/MEDDAYONMARUS"
+    frequency: "monthly"
+    start_date: "2016-07-01"
+    caveat_en: "Realtor.com median days on market via FRED; methodology changes in 2021/2022 mean it is best used for broad market-slack direction, not precise historical level comparison."
+    caveat_zh: "FRED镜像的Realtor.com挂牌中位天数；2021/2022方法调整意味着更适合观察市场松紧方向，而非精确历史水平比较。"
   - id: median_new_home_price_growth
     section: housing
     label_en: "Median New Home Price Growth"
@@ -2139,8 +2178,8 @@ data_gaps:
   - section: housing
     item_en: "Pending Home Sales Index, NAHB Housing Market Index, mortgage applications"
     item_zh: "待完成房屋销售指数、NAHB住房市场指数、按揭申请"
-    status_en: "Still not validated as license-safe public chart data; public supply, price, and stress gauges are charted."
-    status_zh: "仍未验证为授权安全公开图表数据；公开库存、价格和压力指标已绘图。"
+    status_en: "Still not validated as license-safe public chart data. Public supply, price, stress, and listing-market gauges are charted, including Realtor.com active listings, pending listings, and median days on market via FRED."
+    status_zh: "仍未验证为授权安全公开图表数据。公开库存、价格、压力和挂牌市场指标已绘图，包括通过FRED接入的Realtor.com活跃挂牌、待完成挂牌和挂牌中位天数。"
   - section: external
     item_en: "Detailed Treasury International Capital System flows"
     item_zh: "TIC详细资本流"

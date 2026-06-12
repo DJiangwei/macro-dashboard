@@ -655,7 +655,7 @@ Configured charts: 63. Latest rendered chart count: 63. Source groups: 9.
 
 The US page is generated from `config/us_indicators.yaml`. This table records configured sources for each rendered chart slot; latest dates are tracked in `output/us_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 152. Latest rendered chart count: 152. Source groups: 26.
+Configured charts: 155. Latest rendered chart count: 155. Source groups: 27.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -701,6 +701,9 @@ Configured charts: 152. Latest rendered chart count: 152. Source groups: 26.
 | housing | `homeownership_rate` | Homeownership Rate | quarterly | % | fred | FRED / Census | RHORUSQ156N | Homeownership helps contextualize household housing exposure. |
 | housing | `mortgage_delinquency` | Single-Family Mortgage Delinquency | quarterly | % | fred | FRED / MBA | DRSFRMACBS | Mortgage stress channel added to modernize the report's housing section. |
 | housing | `new_home_months_supply` | New Home Months' Supply | monthly | months | fred | FRED / Census | MSACSR | Months' supply links demand, completions, and builder pricing pressure. |
+| housing | `active_listing_count` | Active Listing Count | monthly | listings | fred | FRED / Realtor.com | ACTLISCOUUS | Realtor.com national active-listing count via FRED; useful for housing-market slack, but not a substitute for NAHB sentiment or mortgage applications. |
+| housing | `pending_listing_count` | Pending Listing Count | monthly | listings | fred | FRED / Realtor.com | PENLISCOUUS | Realtor.com pending-listing count via FRED; related to transaction pipeline, but it is not the NAR Pending Home Sales Index. |
+| housing | `median_days_on_market` | Median Days on Market | monthly | days | fred | FRED / Realtor.com | MEDDAYONMARUS | Realtor.com median days on market via FRED; methodology changes in 2021/2022 mean it is best used for broad market-slack direction, not precise historical level comparison. |
 | housing | `median_new_home_price_growth` | Median New Home Price Growth | quarterly | % y/y | fred | FRED / Census | MSPUS | Median new-home prices mix price and composition effects. |
 | housing | `fhfa_house_price_growth` | FHFA House Price Growth | quarterly | % y/y | fred | FRED / FHFA | USSTHPI | FHFA repeat-sales index provides a national house-price cross-check against Case-Shiller. |
 | external | `goods_trade_balance` | Goods Trade Balance | monthly | USD mn | fred | FRED / Census-BEA | BOPGSTB | Monthly goods trade balance; negative values indicate deficit. |
@@ -819,7 +822,7 @@ Configured charts: 152. Latest rendered chart count: 152. Source groups: 26.
 | gs_market_indexes | GSFCI, GSAI, GSSI, GSRI | Proprietary Goldman Sachs indicators; chart public components only. |
 | production_orders | ISM manufacturing/non-manufacturing, Chicago PMI, and Beige Book text | National ISM/PMI and Beige Book remain adapter gaps; public regional Fed survey gauges are charted separately. |
 | consumer | Conference Board confidence, Redbook, ICSC/UBS, ABC Consumer Comfort, stale OECD consumer-confidence mirror | Vendor-controlled, not yet mapped to a reproducible public endpoint, or stale in the public mirror. University of Michigan sentiment remains charted as the durable public confidence gauge; the Weekly Economic Index is charted as a high-frequency activity composite, not a substitute for these retail/confidence products. |
-| housing | Pending Home Sales Index, NAHB Housing Market Index, mortgage applications | Still not validated as license-safe public chart data; public supply, price, and stress gauges are charted. |
+| housing | Pending Home Sales Index, NAHB Housing Market Index, mortgage applications | Still not validated as license-safe public chart data. Public supply, price, stress, and listing-market gauges are charted, including Realtor.com active listings, pending listings, and median days on market via FRED. |
 | external | Detailed Treasury International Capital System flows | Core TIC Treasury transactions and holdings are now charted via FRED; deeper country/security tables still need a Treasury TIC adapter if required. |
 | employment | Manpower, Challenger layoffs, Monster/help-wanted indexes; BED API quota | ADP private payrolls are charted from FRED and BLS BED gross job gains/losses are charted through the public BLS API with key-aware request windows. Manpower, Challenger, and proprietary help-wanted sources remain vendor/licensing gaps. |
 | fed_policy | FOMC statement language, minutes, transcripts, projections, and future Treasury auction calendar | Completed Treasury auction quantities and bid-to-cover are now charted from FiscalData; text and future-calendar sources require separate NLP/calendar adapters. |
