@@ -631,19 +631,6 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "Daily Sterling Overnight Index Average; a modern UK money-market benchmark for the overnight rate complex."
     caveat_zh: "英镑隔夜指数平均利率日频序列；适合观察英国现代货币市场隔夜利率体系。"
-  - id: short_rate_3m
-    section: monetary_financial
-    label_en: "3-Month Interbank Rate"
-    label_zh: "3个月银行间利率"
-    unit: "%"
-    fetcher: fred
-    series: "IR3TIB01GBM156N"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/IR3TIB01GBM156N"
-    frequency: "monthly"
-    start_date: "1997-01-01"
-    caveat_en: "Used for the GS FCI-style short-rate channel; not the same as official Bank Rate."
-    caveat_zh: "用于GS FCI式短端利率渠道；不等同于官方Bank Rate。"
   - id: long_rate_10y
     section: monetary_financial
     label_en: "10Y Nominal Gilt Par Yield"
@@ -982,10 +969,10 @@ data_gaps:
     status_en: "RPIX and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings."
     status_zh: "RPIX与DESNZ汽油/柴油泵价已接入；通胀预期和盈亏平衡通胀仍需稳定且授权安全的映射。"
   - section: monetary_financial
-    item_en: "Trends in Lending, Credit Conditions Survey, HEW, and fuller quoted-rate matrix"
-    item_zh: "Trends in Lending、信贷条件调查、住房权益提取与更完整报价利率矩阵"
-    status_en: "BoE IADB now covers Bank Rate, SONIA, sterling, 5Y/10Y nominal gilt par yields, M4, consumer credit, mortgage approvals, and one quoted-rate series; survey/PDF-style sources remain open."
-    status_zh: "BoE IADB已覆盖Bank Rate、SONIA、英镑、5年/10年名义国债平价收益率、M4、消费信贷、按揭批准和一条报价利率；调查/PDF类来源仍未接入。"
+    item_en: "Trends in Lending, Credit Conditions Survey, HEW, fuller quoted-rate matrix, and stale OECD 3M interbank mirror"
+    item_zh: "Trends in Lending、信贷条件调查、住房权益提取、更完整报价利率矩阵，以及滞后的OECD 3M银行间利率镜像"
+    status_en: "BoE IADB now covers Bank Rate, SONIA, sterling, 5Y/10Y nominal gilt par yields, M4, consumer credit, mortgage approvals, and one quoted-rate series. The lagged FRED/OECD 3M interbank mirror is intentionally not charted; use SONIA/Bank Rate for the short-rate channel until a validated BoE or market-data 3M term source is wired."
+    status_zh: "BoE IADB已覆盖Bank Rate、SONIA、英镑、5年/10年名义国债平价收益率、M4、消费信贷、按揭批准和一条报价利率。滞后的FRED/OECD 3M银行间利率镜像不会作为图表展示；在接入经验证的BoE或市场数据3M期限利率前，短端利率渠道使用SONIA/Bank Rate。"
   - section: fiscal_policy
     item_en: "OBR forecast vintages and deeper debt instrument breakdowns"
     item_zh: "OBR预测版本与更深层债务工具细分"

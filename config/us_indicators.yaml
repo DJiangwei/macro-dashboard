@@ -470,19 +470,6 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Auto sales are an early read on durable-consumption momentum."
     caveat_zh: "汽车销量是耐用品消费动能的早期信号。"
-  - id: consumer_confidence_oecd
-    section: consumer
-    label_en: "Consumer Confidence"
-    label_zh: "消费者信心"
-    unit: "index"
-    fetcher: fred
-    series: "CSCICP03USM665S"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/CSCICP03USM665S"
-    frequency: "monthly"
-    start_date: "1990-01-01"
-    caveat_en: "OECD confidence measure; Conference Board history is not wired in v1."
-    caveat_zh: "OECD信心指标；Conference Board历史序列v1暂未接入。"
   - id: michigan_sentiment
     section: consumer
     label_en: "University of Michigan Sentiment"
@@ -2145,10 +2132,10 @@ data_gaps:
     status_en: "National ISM/PMI and Beige Book remain adapter gaps; public regional Fed survey gauges are charted separately."
     status_zh: "全国ISM/PMI与褐皮书仍是adapter缺口；公开地区联储调查已单独绘图。"
   - section: consumer
-    item_en: "Conference Board confidence, Redbook, ICSC/UBS, ABC Consumer Comfort"
-    item_zh: "Conference Board信心、Redbook、ICSC/UBS、ABC消费者舒适度"
-    status_en: "Vendor-controlled or not yet mapped to a reproducible public endpoint. The public Weekly Economic Index is charted as a high-frequency activity composite, but it is not a substitute for these retail/confidence products."
-    status_zh: "供应商控制或尚未映射到可复跑公开endpoint。公开周度经济指数已作为高频活动综合指标绘图，但不能替代这些零售/信心产品。"
+    item_en: "Conference Board confidence, Redbook, ICSC/UBS, ABC Consumer Comfort, stale OECD consumer-confidence mirror"
+    item_zh: "Conference Board信心、Redbook、ICSC/UBS、ABC消费者舒适度、滞后的OECD消费者信心镜像"
+    status_en: "Vendor-controlled, not yet mapped to a reproducible public endpoint, or stale in the public mirror. University of Michigan sentiment remains charted as the durable public confidence gauge; the Weekly Economic Index is charted as a high-frequency activity composite, not a substitute for these retail/confidence products."
+    status_zh: "供应商控制、尚未映射到可复跑公开endpoint，或公开镜像已滞后。密歇根消费者信心继续作为稳定公开信心指标绘图；周度经济指数作为高频活动综合指标绘图，但不能替代这些零售/信心产品。"
   - section: housing
     item_en: "Pending Home Sales Index, NAHB Housing Market Index, mortgage applications"
     item_zh: "待完成房屋销售指数、NAHB住房市场指数、按揭申请"
