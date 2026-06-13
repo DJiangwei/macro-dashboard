@@ -955,7 +955,27 @@ def _indicator_ledger_html(section_id: str, country_code: str) -> str:
 def _render_section_charts(section_id: str, country_code: str, chart_map: dict[str, str], canonical_frame) -> tuple[str, list[str]]:
     html_parts: list[str] = []
     rendered_ids: list[str] = []
-    prefer_canonical_ids = {"policy_rate", "real_policy_rate", "equity_index", "equity_yoy", "equity_vol_30d"}
+    prefer_canonical_ids = {
+        "policy_rate",
+        "real_policy_rate",
+        "equity_index",
+        "equity_yoy",
+        "equity_vol_30d",
+        "cpi_yoy",
+        "core_cpi_yoy",
+        "services_cpi_yoy",
+        "goods_cpi_yoy",
+        "energy_cpi_yoy",
+        "food_cpi_yoy",
+        "real_wage_yoy",
+        "lending_rate_household",
+        "lending_rate_corp",
+        "mortgage_rate_new",
+        "fx_vs_eur",
+        "fx_3m_forward",
+        "fx_implied_vol",
+        "carry_trade_return",
+    }
     for idx, spec in enumerate(SECTION_INDICATORS_48.get(section_id, ())):
         if is_dropped_proxy_indicator(country_code, spec.indicator_id):
             continue

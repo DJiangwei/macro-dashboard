@@ -12,6 +12,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
 import re
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -23,6 +24,29 @@ import requests
 
 CACHE_DIR = Path(__file__).resolve().parents[2] / "cache"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def _cache_is_fresh(path: Path, *, max_age_hours: int) -> bool:
+    """Return true when a cache file is recent enough for a live dashboard build."""
+    if os.environ.get("COUNTRY_PRIMER_REFRESH_CACHE") == "1":
+        return False
+    if not path.exists():
+        return False
+    age_seconds = datetime.utcnow().timestamp() - path.stat().st_mtime
+    return age_seconds <= max_age_hours * 3600
+
+
+def _cache_ttl_hours_for_frequency(freq: str) -> int:
+    normalized = (freq or "").upper()
+    if normalized in {"D", "B"} or "DAILY" in normalized:
+        return 12
+    if normalized == "M" or "MONTH" in normalized:
+        return 18
+    if normalized == "Q" or "QUARTER" in normalized:
+        return 72
+    if normalized in {"A", "Y"} or "ANNUAL" in normalized or "YEAR" in normalized:
+        return 168
+    return 24
 
 
 @dataclass
@@ -270,7 +294,7 @@ def fetch_ecb_fx(currency: str, key: str, label: str, country: str) -> Series:
     today = datetime.utcnow().strftime("%Y-%m-%d")
     cache_q = f"ecb_xml::{currency}::90d"
     cp = cache_path(cache_q)
-    if cp.exists():
+    if _cache_is_fresh(cp, max_age_hours=12):
         body = cp.read_text()
     else:
         try:
@@ -320,7 +344,7 @@ def fetch_eurostat(dataset: str, geo: str, key: str, label: str, country: str,
     qs = "&".join(f"{k}={v}" for k, v in params.items())
     cache_q = f"eurostat::{dataset}::{geo}::{freq}::{since}::{qs}"
     cp = cache_path(cache_q)
-    if cp.exists():
+    if _cache_is_fresh(cp, max_age_hours=_cache_ttl_hours_for_frequency(freq)):
         data = json.loads(cp.read_text())
     else:
         try:
@@ -387,7 +411,7 @@ def fetch_yahoo(symbol: str, key: str, label: str, country: str,
     cache_q = f"yahoo::{symbol}::{range_}::{interval}"
     cp = cache_path(cache_q)
     headers = {"User-Agent": "Mozilla/5.0"}
-    if cp.exists():
+    if _cache_is_fresh(cp, max_age_hours=12):
         data = json.loads(cp.read_text())
     else:
         try:
@@ -437,7 +461,7 @@ def fetch_oec_trade(iso3: str, key: str, label: str, country: str,
     today = datetime.utcnow().strftime("%Y-%m-%d")
     cache_q = f"oec::{iso3}::{year}"
     cp = cache_path(cache_q)
-    if cp.exists():
+    if _cache_is_fresh(cp, max_age_hours=168):
         data = json.loads(cp.read_text())
     else:
         import os

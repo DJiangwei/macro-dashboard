@@ -746,22 +746,22 @@ indicators:
   indicator_id: lending_rate_household
   label: Household Lending Rate
   unit: '%'
-  source: ECB MIR via DB.nomics
+  source: ECB MIR Data API
   frequency: monthly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: ECB MIR local-currency new-business household consumption loan rate; excludes revolving loans and overdrafts, so compare carefully with broader household lending concepts.
+  quality_note: ECB MIR local-currency new-business household consumption loan rate; direct ECB Data API preferred, with DB.nomics as fallback; excludes revolving loans and overdrafts, so compare carefully with broader household lending concepts.
 - section_id: monetary_financial
   indicator_id: lending_rate_corp
   label: Corporate Lending Rate
   unit: '%'
-  source: ECB MIR via DB.nomics
+  source: ECB MIR Data API
   frequency: monthly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: ECB MIR local-currency new-business non-financial corporate loan rate; excludes revolving loans and overdrafts.
+  quality_note: ECB MIR local-currency new-business non-financial corporate loan rate; direct ECB Data API preferred, with DB.nomics as fallback; excludes revolving loans and overdrafts.
 - section_id: monetary_financial
   indicator_id: fx_vs_eur
   label: FX vs EUR
@@ -826,12 +826,12 @@ indicators:
   indicator_id: mortgage_rate_new
   label: New Mortgage Lending Rate
   unit: '%'
-  source: ECB MIR via DB.nomics
+  source: ECB MIR Data API
   frequency: monthly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: ECB MIR local-currency new-business lending for house purchase; annualised agreed rate / narrowly defined effective rate.
+  quality_note: ECB MIR local-currency new-business lending for house purchase; direct ECB Data API preferred, with DB.nomics as fallback; annualised agreed rate / narrowly defined effective rate.
 - section_id: markets_valuation
   indicator_id: equity_index
   label: Headline Equity Index

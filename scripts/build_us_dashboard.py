@@ -47,6 +47,7 @@ USER_AGENT = (
 )
 TREASURY_AUCTIONS_URL = "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query"
 BLS_API_URL = "https://api.bls.gov/publicAPI/v2/timeseries/data/"
+BLS_BED_CACHE_PATH = ROOT / "data" / "us_bls_bed_cache.json"
 BLS_LOCK = threading.Lock()
 BLS_CACHE: dict[str, list[dict[str, Any]]] = {}
 BLS_BATCH_ERROR: str | None = None
@@ -191,6 +192,28 @@ def _bls_config_specs() -> list[dict[str, Any]]:
     return [item for item in config.get("indicators", []) if item.get("fetcher") == "bls_api"]
 
 
+def _load_bls_bed_cache() -> dict[str, Any]:
+    if not BLS_BED_CACHE_PATH.exists():
+        return {}
+    try:
+        return json.loads(BLS_BED_CACHE_PATH.read_text())
+    except json.JSONDecodeError:
+        return {}
+
+
+def _write_bls_bed_cache(observations_by_series: dict[str, list[dict[str, Any]]]) -> None:
+    if not observations_by_series or any(not values for values in observations_by_series.values()):
+        return
+    BLS_BED_CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "generated": datetime.now(UTC).isoformat(),
+        "source": "BLS public API last-good cache for Business Employment Dynamics series",
+        "source_url": BLS_API_URL,
+        "series": observations_by_series,
+    }
+    BLS_BED_CACHE_PATH.write_text(json.dumps(payload, indent=2, sort_keys=True))
+
+
 def _fetch_bls_batch(session: requests.Session, specs: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
     start_year = min(int(str(item.get("start_date", "1992-01-01"))[:4]) for item in specs)
     end_year = datetime.now(UTC).year
@@ -245,13 +268,15 @@ def _fetch_bls_batch(session: requests.Session, specs: list[dict[str, Any]]) -> 
                 bucket[obs_date] = value
         time.sleep(0.25)
 
-    return {
+    result = {
         series_id: [
             {"date": obs_date, "value": value}
             for obs_date, value in sorted(values.items())
         ]
         for series_id, values in observations_by_series.items()
     }
+    _write_bls_bed_cache(result)
+    return result
 
 
 def fetch_bls_api(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
@@ -265,6 +290,26 @@ def fetch_bls_api(session: requests.Session, spec: dict[str, Any]) -> dict[str, 
             except Exception as exc:  # noqa: BLE001 - preserve one failure for all BLS specs in this run.
                 BLS_BATCH_ERROR = str(exc)
         if BLS_BATCH_ERROR:
+            cache_payload = _load_bls_bed_cache()
+            observations = list((cache_payload.get("series") or {}).get(series_id) or [])
+            if observations:
+                cache_date = str(cache_payload.get("generated") or "")[:10]
+                caveat_en = (
+                    str(spec.get("caveat_en") or "").rstrip()
+                    + " Live BLS API quota was unavailable in this run; rendering the last-good official BED cache."
+                ).strip()
+                caveat_zh = (
+                    str(spec.get("caveat_zh") or "").rstrip()
+                    + " 本次运行BLS实时API额度不可用；当前渲染最近一次验证成功的官方BED缓存。"
+                ).strip()
+                return {
+                    **spec,
+                    "observations": observations,
+                    "provider_updated": cache_date or observations[-1]["date"],
+                    "api_url": BLS_API_URL,
+                    "caveat_en": caveat_en,
+                    "caveat_zh": caveat_zh,
+                }
             raise RuntimeError(BLS_BATCH_ERROR)
         observations = list(BLS_CACHE.get(series_id) or [])
 

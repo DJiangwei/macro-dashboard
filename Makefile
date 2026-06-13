@@ -1,6 +1,6 @@
 UV ?= scripts/uv_project.sh
 
-.PHONY: setup doctor build-v4 data-catalog validate proxy-report publish-check publish clean
+.PHONY: setup doctor build-v4 data-catalog freshness-audit validate proxy-report publish-check publish clean
 
 setup:
 	$(UV) sync
@@ -16,6 +16,9 @@ build-v4:
 
 data-catalog:
 	$(UV) run python scripts/data_source_catalog.py
+
+freshness-audit:
+	$(UV) run python scripts/freshness_audit.py
 
 validate:
 	$(UV) run python -m py_compile build_v4.py src/country_primer/*.py scripts/*.py

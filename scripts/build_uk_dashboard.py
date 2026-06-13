@@ -49,6 +49,7 @@ SUMMARY_JSON = OUTPUT / "uk_dashboard_summary.json"
 
 FRED_GRAPH_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv"
 FRED_API_URL = "https://api.stlouisfed.org/fred/series/observations"
+FRED_SERIES_URL = "https://api.stlouisfed.org/fred/series"
 BOE_BANK_RATE_URL = "https://www.bankofengland.co.uk/boeapps/database/Bank-Rate.asp?hl=en-GB"
 BOE_IADB_URL = "https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp"
 ONS_TIMESERIES_BASE = "https://www.ons.gov.uk"
@@ -220,6 +221,27 @@ def _fred_api_observations(session: requests.Session, spec: dict[str, Any]) -> t
     return observations, updated
 
 
+def _fred_api_series_updated(session: requests.Session, series_id: str) -> str:
+    api_key = os.environ.get("FRED_API_KEY", "").strip()
+    if not api_key:
+        return ""
+    params = {
+        "series_id": series_id,
+        "api_key": api_key,
+        "file_type": "json",
+    }
+    try:
+        response = session.get(FRED_SERIES_URL, params=params, timeout=(4, 12))
+        response.raise_for_status()
+        payload = response.json()
+    except Exception:  # noqa: BLE001 - provider metadata is useful but not critical.
+        return ""
+    series = payload.get("seriess") or []
+    if not series:
+        return ""
+    return str(series[0].get("last_updated") or "")
+
+
 def _fred_graph_observations(session: requests.Session, spec: dict[str, Any]) -> tuple[list[dict[str, Any]], str]:
     params = {"id": spec["series"]}
     # FRED graph CSV accepts cosd/coed. This is important for very long UK rate
@@ -241,6 +263,18 @@ def _fred_graph_observations(session: requests.Session, spec: dict[str, Any]) ->
         observations.append({"date": str(row.get("observation_date")), "value": value})
     updated = response.headers.get("Last-Modified", "")
     return observations, updated
+
+
+def _provider_updated_date(value: str) -> str:
+    value = str(value or "").strip()
+    if not value:
+        return ""
+    if re.match(r"^\d{4}-\d{2}-\d{2}", value):
+        return value[:10]
+    try:
+        return parsedate_to_datetime(value).date().isoformat()
+    except (TypeError, ValueError):
+        return value
 
 
 def _apply_transform(observations: list[dict[str, Any]], spec: dict[str, Any]) -> list[dict[str, Any]]:
@@ -267,18 +301,18 @@ def _apply_transform(observations: list[dict[str, Any]], spec: dict[str, Any]) -
 def fetch_fred(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
     observations: list[dict[str, Any]]
     provider_updated: str
+    used_api = False
     try:
         observations, provider_updated = _fred_api_observations(session, spec)
+        used_api = bool(observations)
     except Exception:  # noqa: BLE001 - API key may be absent/invalid; graph CSV is the durable fallback.
         observations, provider_updated = [], ""
     if not observations:
         observations, provider_updated = _fred_graph_observations(session, spec)
+    elif used_api:
+        provider_updated = _fred_api_series_updated(session, str(spec["series"])) or provider_updated
     observations = _apply_transform(_start_filter(observations, spec.get("start_date")), spec)
-    if provider_updated:
-        try:
-            provider_updated = parsedate_to_datetime(provider_updated).date().isoformat()
-        except (TypeError, ValueError):
-            provider_updated = str(provider_updated)
+    provider_updated = _provider_updated_date(provider_updated)
     return {
         **spec,
         "observations": observations,

@@ -77,11 +77,14 @@ FREQUENCY_GAP_DAYS = {
 
 WORLD_BANK_ESG_URL = "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx"
 IMF_DATAMAPPER_URL = "https://www.imf.org/external/datamapper/api/v1/{indicator}/{iso3}"
+FRED_OBSERVATIONS_URL = "https://api.stlouisfed.org/fred/series/observations"
+FRED_GRAPH_CSV_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv"
 BIS_CREDIT_GAP_URL = "https://data.bis.org/static/bulk/WS_CREDIT_GAP_csv_flat.zip"
 BIS_CBTA_URL = "https://data.bis.org/static/bulk/WS_CBTA_csv_flat.zip"
 DBNOMICS_BIS_LBS_SERIES_URL = "https://api.db.nomics.world/v22/series/BIS/WS_LBS_D_PUB/{series_code}?observations=1"
 DBNOMICS_IMF_FSI_SERIES_URL = "https://api.db.nomics.world/v22/series/IMF/FSI/{series_code}?observations=1"
 DBNOMICS_ECB_MIR_SERIES_URL = "https://api.db.nomics.world/v22/series/ECB/MIR/{series_code}?observations=1"
+ECB_MIR_SERIES_URL = "https://data-api.ecb.europa.eu/service/data/MIR/{series_code}"
 ECB_BPS_SERIES_URL = "https://data-api.ecb.europa.eu/service/data/BPS/{series_code}"
 COHESION_EU_PAYMENTS_URL = "https://cohesiondata.ec.europa.eu/resource/pbbz-hmfu.json"
 CNB_EXTERNAL_DEBT_USD_URLS = (
@@ -110,6 +113,21 @@ _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _XLSX_NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 CONFIG_DIR = Path(__file__).resolve().parents[2] / "config"
 _POLICY_RATE_CACHE: dict | None = None
+
+
+FRED_FX_RESERVE_SERIES = {
+    "PL": "TRESEGPLM052N",
+}
+
+
+def _cache_is_fresh(path: Path, *, max_age_hours: int) -> bool:
+    """Use short-lived caches for live macro builds without hammering public APIs."""
+    if os.environ.get("COUNTRY_PRIMER_REFRESH_CACHE") == "1":
+        return False
+    if not path.exists():
+        return False
+    age_seconds = datetime.utcnow().timestamp() - path.stat().st_mtime
+    return age_seconds <= max_age_hours * 3600
 
 
 @dataclass(frozen=True)
@@ -653,6 +671,58 @@ def _secret_env(name: str) -> str:
     return os.environ.get(name, "").strip()
 
 
+def _fetch_fred_observations(series_id: str, *, start: str = "2010-01-01") -> list[tuple[str, float]]:
+    """Fetch a FRED series using the official API when keyed, graph CSV otherwise."""
+    cache_file = CACHE_DIR / f"fred_{series_id}.json"
+    if _cache_is_fresh(cache_file, max_age_hours=24):
+        payload = json.loads(cache_file.read_text())
+        return [(str(item["date"])[:10], float(item["value"])) for item in payload.get("observations", [])]
+
+    api_key = _secret_env("FRED_API_KEY")
+    observations: list[tuple[str, float]] = []
+    if api_key:
+        response = requests.get(
+            FRED_OBSERVATIONS_URL,
+            params={
+                "series_id": series_id,
+                "api_key": api_key,
+                "file_type": "json",
+                "observation_start": start,
+            },
+            timeout=30,
+        )
+        response.raise_for_status()
+        for item in response.json().get("observations") or []:
+            value = item.get("value")
+            if value in {None, "", "."}:
+                continue
+            try:
+                observations.append((str(item.get("date", ""))[:10], float(value)))
+            except (TypeError, ValueError):
+                continue
+    else:
+        response = requests.get(FRED_GRAPH_CSV_URL, params={"id": series_id}, timeout=30)
+        response.raise_for_status()
+        reader = csv.DictReader(io.StringIO(response.text))
+        for row in reader:
+            date = str(row.get("observation_date") or "")[:10]
+            value = row.get(series_id)
+            if not date or value in {None, "", "."}:
+                continue
+            try:
+                observations.append((date, float(value)))
+            except ValueError:
+                continue
+
+    observations = [(date, value) for date, value in sorted(observations) if date >= start]
+    cache_file.write_text(json.dumps({
+        "series_id": series_id,
+        "fetched": datetime.utcnow().isoformat() + "Z",
+        "observations": [{"date": date, "value": value} for date, value in observations],
+    }, indent=2, sort_keys=True))
+    return observations
+
+
 def _parse_ohlc_csv(text: str) -> list[tuple[str, float]]:
     reader = csv.DictReader(io.StringIO(text))
     observations: list[tuple[str, float]] = []
@@ -775,45 +845,45 @@ class EurostatFetcher(BaseFetcher):
             "unit": "EUR per head",
         },
         "cpi_yoy": {
-            "dataset": "prc_hicp_manr",
+            "dataset": "prc_hicp_minr",
             "freq": "M",
             "since": "2018",
-            "params": {"coicop": "CP00"},
+            "params": {"coicop18": "TOTAL", "unit": "RCH_A"},
             "unit": "% YoY",
         },
         "core_cpi_yoy": {
-            "dataset": "prc_hicp_manr",
+            "dataset": "prc_hicp_minr",
             "freq": "M",
             "since": "2018",
-            "params": {"coicop": "TOT_X_NRG_FOOD"},
+            "params": {"coicop18": "TOT_X_NRG_FOOD", "unit": "RCH_A"},
             "unit": "% YoY",
         },
         "services_cpi_yoy": {
-            "dataset": "prc_hicp_manr",
+            "dataset": "prc_hicp_minr",
             "freq": "M",
             "since": "2018",
-            "params": {"coicop": "SERV"},
+            "params": {"coicop18": "SERV", "unit": "RCH_A"},
             "unit": "% YoY",
         },
         "goods_cpi_yoy": {
-            "dataset": "prc_hicp_manr",
+            "dataset": "prc_hicp_minr",
             "freq": "M",
             "since": "2018",
-            "params": {"coicop": "IGD_NNRG"},
+            "params": {"coicop18": "IGD_NNRG", "unit": "RCH_A"},
             "unit": "% YoY",
         },
         "energy_cpi_yoy": {
-            "dataset": "prc_hicp_manr",
+            "dataset": "prc_hicp_minr",
             "freq": "M",
             "since": "2018",
-            "params": {"coicop": "NRG"},
+            "params": {"coicop18": "NRG", "unit": "RCH_A"},
             "unit": "% YoY",
         },
         "food_cpi_yoy": {
-            "dataset": "prc_hicp_manr",
+            "dataset": "prc_hicp_minr",
             "freq": "M",
             "since": "2018",
-            "params": {"coicop": "FOOD"},
+            "params": {"coicop18": "FOOD", "unit": "RCH_A"},
             "unit": "% YoY",
         },
         "ppi_yoy": {
@@ -1113,7 +1183,7 @@ def _fetch_eurostat_monthly_fx_end(currency: str, since: str) -> list[tuple[str,
     }
     query = urlencode(params)
     cache_file = cache_path(f"eurostat::ert_bil_eur_m::{currency}::END::{since}::{query}")
-    if cache_file.exists():
+    if _cache_is_fresh(cache_file, max_age_hours=18):
         payload = json.loads(cache_file.read_text())
     else:
         response = requests.get(EUROSTAT_DATA_URL.format(dataset="ert_bil_eur_m", params=query), timeout=30)
@@ -1263,14 +1333,14 @@ class DerivedMacroFetcher(BaseFetcher):
             unit_label="% YoY",
         )
         cpi = fetch_eurostat(
-            "prc_hicp_manr",
+            "prc_hicp_minr",
             meta["iso2"],
             "cpi_yoy",
             "Headline CPI/HICP, YoY",
             country,
             freq="M",
             since="2018",
-            extra_params={"coicop": "CP00"},
+            extra_params={"coicop18": "TOTAL", "unit": "RCH_A"},
             unit_label="% YoY",
         )
         if not wages.available or not cpi.available:
@@ -1288,7 +1358,7 @@ class DerivedMacroFetcher(BaseFetcher):
             label=spec.label,
             country=country,
             source="Derived from Eurostat labour-cost and HICP series",
-            series_id="lc_lci_r2_q:D11 minus prc_hicp_manr:CP00",
+            series_id="lc_lci_r2_q:D11 minus prc_hicp_minr:TOTAL:RCH_A",
             unit="% YoY",
             frequency="quarterly",
             last_update=observations[-1][0] if observations else "",
@@ -1317,14 +1387,14 @@ class DerivedMacroFetcher(BaseFetcher):
             "Official policy-rate definition.",
         ))
         cpi = fetch_eurostat(
-            "prc_hicp_manr",
+            "prc_hicp_minr",
             meta["iso2"],
             "cpi_yoy",
             "Headline CPI/HICP, YoY",
             country,
             freq="M",
             since="2018",
-            extra_params={"coicop": "CP00"},
+            extra_params={"coicop18": "TOTAL", "unit": "RCH_A"},
             unit_label="% YoY",
         )
         if not nominal_rate or not nominal_rate.available or not cpi.available:
@@ -1341,7 +1411,7 @@ class DerivedMacroFetcher(BaseFetcher):
             label=spec.label,
             country=country,
             source="Derived from official policy-rate configuration and Eurostat HICP",
-            series_id=f"{nominal_rate.series_id} minus prc_hicp_manr:CP00",
+            series_id=f"{nominal_rate.series_id} minus prc_hicp_minr:TOTAL:RCH_A",
             unit="%",
             frequency="monthly",
             last_update=observations[-1][0] if observations else "",
@@ -2036,7 +2106,7 @@ def _load_bis_credit_gap_data() -> dict[str, list[tuple[str, float]]]:
         return _BIS_CREDIT_GAP_CACHE
 
     zip_path = CACHE_DIR / "bis_ws_credit_gap_csv_flat.zip"
-    if zip_path.exists():
+    if _cache_is_fresh(zip_path, max_age_hours=168):
         zip_bytes = zip_path.read_bytes()
     else:
         response = requests.get(BIS_CREDIT_GAP_URL, timeout=45)
@@ -2091,7 +2161,7 @@ def _bis_quarter_to_date(period: str) -> str | None:
 
 def _fetch_dbnomics_bis_series(series_code: str) -> dict:
     cache_file = CACHE_DIR / f"dbnomics_bis_lbs_{series_code.replace('.', '_')}.json"
-    if cache_file.exists():
+    if _cache_is_fresh(cache_file, max_age_hours=72):
         return json.loads(cache_file.read_text())
     response = requests.get(DBNOMICS_BIS_LBS_SERIES_URL.format(series_code=series_code), timeout=30)
     response.raise_for_status()
@@ -2102,7 +2172,7 @@ def _fetch_dbnomics_bis_series(series_code: str) -> dict:
 
 def _fetch_dbnomics_imf_fsi_series(series_code: str) -> dict:
     cache_file = CACHE_DIR / f"dbnomics_imf_fsi_{series_code.replace('.', '_')}.json"
-    if cache_file.exists():
+    if _cache_is_fresh(cache_file, max_age_hours=72):
         return json.loads(cache_file.read_text())
     response = requests.get(DBNOMICS_IMF_FSI_SERIES_URL.format(series_code=series_code), timeout=30)
     response.raise_for_status()
@@ -2113,13 +2183,32 @@ def _fetch_dbnomics_imf_fsi_series(series_code: str) -> dict:
 
 def _fetch_dbnomics_ecb_mir_series(series_code: str) -> dict:
     cache_file = CACHE_DIR / f"dbnomics_ecb_mir_{series_code.replace('.', '_')}.json"
-    if cache_file.exists():
+    if _cache_is_fresh(cache_file, max_age_hours=72):
         return json.loads(cache_file.read_text())
     response = requests.get(DBNOMICS_ECB_MIR_SERIES_URL.format(series_code=series_code), timeout=30)
     response.raise_for_status()
     payload = response.json()
     cache_file.write_text(json.dumps(payload))
     return payload
+
+
+def _fetch_ecb_mir_series(series_code: str) -> list[tuple[str, float]]:
+    """Fetch ECB MIR directly before falling back to mirrors."""
+    cache_file = CACHE_DIR / f"ecb_mir_{series_code.replace('.', '_')}.json"
+    if _cache_is_fresh(cache_file, max_age_hours=24):
+        payload = json.loads(cache_file.read_text())
+    else:
+        response = requests.get(
+            ECB_MIR_SERIES_URL.format(series_code=series_code),
+            params={"startPeriod": "2018-01", "format": "jsondata"},
+            timeout=30,
+        )
+        if response.status_code == 404:
+            return []
+        response.raise_for_status()
+        payload = response.json()
+        cache_file.write_text(json.dumps(payload, indent=2, sort_keys=True))
+    return _parse_jsonstat_observations(payload)
 
 
 def _load_bis_cbta_data() -> dict[str, list[tuple[str, float]]]:
@@ -2129,7 +2218,7 @@ def _load_bis_cbta_data() -> dict[str, list[tuple[str, float]]]:
         return _BIS_CBTA_CACHE
 
     zip_path = CACHE_DIR / "bis_ws_cbta_csv_flat.zip"
-    if zip_path.exists():
+    if _cache_is_fresh(zip_path, max_age_hours=168):
         zip_bytes = zip_path.read_bytes()
     else:
         response = requests.get(BIS_CBTA_URL, timeout=45)
@@ -2565,7 +2654,7 @@ class GUSDBWFetcher(BaseFetcher):
             f"{self.IMPORT_PRICE_SECTION_ID}::{year}::{month}"
         )
         path = cache_path(query)
-        if path.exists():
+        if _cache_is_fresh(path, max_age_hours=72):
             return json.loads(path.read_text())
         response = session.get(
             GUS_DBW_VARIABLE_DATA_URL,
@@ -2877,31 +2966,43 @@ class ECBMIRFetcher(BaseFetcher):
             return []
         series_code = f"M.{meta['iso2']}.B.{cfg['bs_item']}.A.R.A.{cfg['sector']}.{meta['currency']}.N"
         try:
-            payload = _fetch_dbnomics_ecb_mir_series(series_code)
+            observations = _fetch_ecb_mir_series(series_code)
         except (OSError, requests.RequestException, json.JSONDecodeError, KeyError, IndexError):
-            return []
-        doc = payload.get("series", {}).get("docs", [{}])[0]
-        observations: list[tuple[str, float]] = []
-        for period, value in zip(doc.get("period") or [], doc.get("value") or []):
-            if len(str(period)) != 7:
-                continue
-            date = f"{period}-01"
-            if date < "2018-01-01":
-                continue
+            observations = []
+        source = "ECB MIR"
+        source_note = "ECB Data API is used directly."
+        if observations:
+            observations = [(date, value) for date, value in observations if date >= "2018-01-01"]
+        if not observations:
+            source = "ECB MIR via DB.nomics"
+            source_note = "DB.nomics mirror is used as fallback because the direct ECB Data API returned no observations."
             try:
-                numeric = float(value)
-            except (TypeError, ValueError):
-                continue
-            if math.isfinite(numeric):
-                observations.append((date, numeric))
+                payload = _fetch_dbnomics_ecb_mir_series(series_code)
+            except (OSError, requests.RequestException, json.JSONDecodeError, KeyError, IndexError):
+                return []
+            doc = payload.get("series", {}).get("docs", [{}])[0]
+            observations = []
+            for period, value in zip(doc.get("period") or [], doc.get("value") or []):
+                if len(str(period)) != 7:
+                    continue
+                date = f"{period}-01"
+                if date < "2018-01-01":
+                    continue
+                try:
+                    numeric = float(value)
+                except (TypeError, ValueError):
+                    continue
+                if math.isfinite(numeric):
+                    observations.append((date, numeric))
         if not observations:
             return []
+        observations.sort()
 
         series = finalize_series(Series(
             key=spec.indicator_id,
             label=spec.label,
             country=country,
-            source="ECB MIR via DB.nomics",
+            source=source,
             series_id=series_code,
             unit="%",
             frequency="monthly",
@@ -2911,9 +3012,10 @@ class ECBMIRFetcher(BaseFetcher):
             available=True,
             note=f"ECB MFI interest-rate statistics: {cfg['note']} Annualised agreed rate / narrowly defined effective rate in local currency.",
         ))
-        rows = _series_to_rows(series, spec, unit="%", note="DB.nomics mirror is used for narrow API access.")
-        for row in rows:
-            row["quality_status"] = "watch"
+        rows = _series_to_rows(series, spec, unit="%", note=source_note)
+        if source != "ECB MIR":
+            for row in rows:
+                row["quality_status"] = "watch"
         return rows
 
 
@@ -3022,7 +3124,7 @@ class ECBExternalDebtFetcher(BaseFetcher):
     def _fetch_bps_component(self, series_code: str) -> list[tuple[str, float]]:
         query = f"ecb_bps::{series_code}::2018-2026"
         path = cache_path(query)
-        if path.exists():
+        if _cache_is_fresh(path, max_age_hours=72):
             payload = json.loads(path.read_text())
         else:
             response = requests.get(
@@ -3087,7 +3189,7 @@ class ECBPortfolioFlowsFetcher(BaseFetcher):
     def _fetch_bps_series(self, series_code: str) -> list[tuple[str, float]]:
         query = f"ecb_bps::{series_code}::2018-2026"
         path = cache_path(query)
-        if path.exists():
+        if _cache_is_fresh(path, max_age_hours=72):
             payload = json.loads(path.read_text())
         else:
             response = requests.get(
@@ -3294,7 +3396,7 @@ class IMFDataMapperFetcher(BaseFetcher):
     def _fetch_payload(self, iso3: str, indicator: str) -> dict:
         query = f"imf_datamapper::{iso3}::{indicator}::2010-2026"
         path = cache_path(query)
-        if path.exists():
+        if _cache_is_fresh(path, max_age_hours=168):
             return json.loads(path.read_text())
 
         url = IMF_DATAMAPPER_URL.format(indicator=indicator, iso3=iso3)
@@ -4185,6 +4287,47 @@ class EUFundsAbsorptionFetcher(BaseFetcher):
         return observations
 
 
+class FREDInternationalFetcher(BaseFetcher):
+    """Selected FRED international series where IDs have been explicitly verified."""
+
+    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        if spec.indicator_id != "fx_reserves":
+            return []
+        series_id = FRED_FX_RESERVE_SERIES.get(country)
+        if not series_id:
+            return []
+        try:
+            raw_observations = _fetch_fred_observations(series_id, start="2010-01-01")
+        except (OSError, requests.RequestException, json.JSONDecodeError, csv.Error):
+            return []
+        observations = [(date, value / 1_000.0) for date, value in raw_observations if date >= "2010-01-01"]
+        if not observations:
+            return []
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="FRED / IMF International Financial Statistics",
+            series_id=series_id,
+            unit="USD bn",
+            frequency="monthly",
+            last_update=observations[-1][0],
+            source_url=f"https://fred.stlouisfed.org/series/{series_id}",
+            observations=observations,
+            available=True,
+            note="FRED monthly total reserves excluding gold, sourced from IMF International Financial Statistics; converted from USD millions to USD billions.",
+        ))
+        rows = _series_to_rows(
+            series,
+            spec,
+            unit="USD bn",
+            note="Monthly FRED/IMF IFS series is used where the country-specific ID has been explicitly verified.",
+        )
+        for row in rows:
+            row["quality_status"] = "watch"
+        return rows
+
+
 class WorldBankFetcher(BaseFetcher):
     CONFIGS = {
         "gdp_per_capita": ("NY.GDP.PCAP.PP.KD", 1.0, "constant intl $"),
@@ -4312,6 +4455,7 @@ class DataPipeline:
             EUFundsAbsorptionFetcher(),
             ECBExternalDebtFetcher(),
             ECBPortfolioFlowsFetcher(),
+            FREDInternationalFetcher(),
             WorldBankFetcher(),
             PragueExchangeFetcher(),
             GPWBenchmarkFetcher(),

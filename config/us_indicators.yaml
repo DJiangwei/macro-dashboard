@@ -1861,8 +1861,8 @@ indicators:
     source_url: "https://fred.stlouisfed.org/series/IORB"
     frequency: "daily"
     start_date: "2021-07-29"
-    caveat_en: "IORB is a key administered rate in the modern floor system."
-    caveat_zh: "IORB是现代地板体系中的关键管理利率。"
+    caveat_en: "IORB is a key administered rate in the modern floor system; FRED can include near-future official effective dates."
+    caveat_zh: "IORB是现代地板体系中的关键管理利率；FRED可能包含即将生效的官方日期。"
   - id: sofr
     section: fed_policy
     label_en: "SOFR"
@@ -2186,10 +2186,10 @@ data_gaps:
     status_en: "Core TIC Treasury transactions and holdings are now charted via FRED; deeper country/security tables still need a Treasury TIC adapter if required."
     status_zh: "核心TIC国债交易与持有量已通过FRED绘图；如需更深国家/证券表，仍需要财政部TIC adapter。"
   - section: employment
-    item_en: "Manpower, Challenger layoffs, Monster/help-wanted indexes; BED API quota"
-    item_zh: "Manpower、Challenger裁员、Monster/Help-wanted指数；BED API额度"
-    status_en: "ADP private payrolls are charted from FRED and BLS BED gross job gains/losses are charted through the public BLS API with key-aware request windows. Manpower, Challenger, and proprietary help-wanted sources remain vendor/licensing gaps."
-    status_zh: "ADP私营就业已通过FRED绘图，BLS BED总就业创造/损失已通过BLS公开API绘图，并按是否有API key调整请求窗口。Manpower、Challenger和专有Help-wanted来源仍属于供应商/授权缺口。"
+    item_en: "Manpower, Challenger layoffs, Monster/help-wanted indexes; BED API quota fallback"
+    item_zh: "Manpower、Challenger裁员、Monster/Help-wanted指数；BED API额度fallback"
+    status_en: "ADP private payrolls are charted from FRED. BLS BED gross job gains/losses use the public BLS API first and fall back to a checked-in last-good official cache when anonymous BLS quota is exhausted. Manpower, Challenger, and proprietary help-wanted sources remain vendor/licensing gaps."
+    status_zh: "ADP私营就业已通过FRED绘图。BLS BED总就业创造/损失优先使用BLS公开API；当匿名BLS额度耗尽时，回退到已入库的最近一次官方成功缓存。Manpower、Challenger和专有Help-wanted来源仍属于供应商/授权缺口。"
   - section: fed_policy
     item_en: "FOMC statement language, minutes, transcripts, projections, and future Treasury auction calendar"
     item_zh: "FOMC声明措辞、纪要、会议记录、预测与未来国债拍卖日历"
