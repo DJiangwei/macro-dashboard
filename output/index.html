@@ -18,6 +18,7 @@
   --font-body: "Avenir Next", "PingFang SC", "Noto Sans SC", "Segoe UI", sans-serif;
 }
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
   background:
@@ -26,6 +27,8 @@ body {
     linear-gradient(180deg, #f8f4ed 0%, #f4efe7 48%, #efe7db 100%);
   color: var(--fg);
   font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
 }
 body::before {
   content: "";
@@ -36,6 +39,7 @@ body::before {
     linear-gradient(to right, rgba(23, 19, 16, 0.025) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(23, 19, 16, 0.02) 1px, transparent 1px);
   background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 85%);
 }
 .topbar {
   position: sticky;
@@ -65,7 +69,8 @@ h1 {
   letter-spacing: -0.06em;
   font-weight: 500;
 }
-.subtitle { max-width: 850px; color: var(--muted); font-size: 17px; line-height: 1.7; }
+.subtitle { max-width: 880px; color: var(--muted); font-size: 17px; line-height: 1.7; }
+code { overflow-wrap: anywhere; word-break: break-word; }
 .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 24px 0; }
 .meta-chip {
   background: var(--card);
@@ -103,7 +108,10 @@ h1 {
   border-radius: 999px;
 }
 footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
-@media (max-width: 720px) { .topbar { align-items: flex-start; flex-direction: column; padding: 12px 20px; } .container { padding: 34px 18px; } }
+@media (max-width: 720px) {
+  .topbar { align-items: flex-start; flex-direction: column; padding: 12px 20px; }
+  .container { padding: 34px 18px; }
+}
 </style>
 </head>
 <body>
@@ -114,18 +122,18 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
 <main class="container">
   <header>
     <h1>Macro Dashboard Archive</h1>
-    <p class="subtitle">Generated archive entry for the proxy-free CEE-4 dashboards plus the China, UK, and US data-first pages. This page is rebuilt by <code>make build-v4</code>, so links, indicator counts, proxy status, and quality summary stay synchronized with generated pages.</p>
+    <p class="subtitle">Generated archive for the CEE-4 public dashboards and the China, UK, and US data-first pages. Cards are rebuilt from the latest country summaries and the CE4 canonical pipeline, then exported to <code>dashboard_archive_summary.json</code> so homepage data stays linked to dashboard builds.</p>
   </header>
   <section class="meta-grid" aria-label="coverage summary">
-    <div class="meta-chip"><strong>442</strong><span>CEE-4 rendered indicator slots</span></div>
+    <div class="meta-chip"><strong>686</strong><span>rendered chart slots</span></div>
     <div class="meta-chip"><strong>1</strong><span>remaining proxy fills</span></div>
-    <div class="meta-chip"><strong>14</strong><span>dropped proxy-only slots</span></div>
+    <div class="meta-chip"><strong>35</strong><span>gaps or dropped slots</span></div>
     <div class="meta-chip"><strong>7</strong><span>country dashboards</span></div>
   </section>
   <section class="grid" aria-label="country dashboards">
 
-  <a href="hungary_2026Q2_v4.html" class="card clean">
-    <div class="card-kicker">HUF · MNB · v4 dashboard</div>
+  <a href="hungary_2026Q2_v4.html" class="card clean" data-country="HU">
+    <div class="card-kicker">HUF · MNB · CEE-4 v4 public dashboard</div>
     <h2>Hungary</h2>
     <div class="stats">
       <div class="stat"><span>Rendered indicators</span><strong>110/110</strong></div>
@@ -136,8 +144,8 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <div class="stat"><span>Source quality</span><strong>19 verified · 87 watch · 4 low</strong></div>
     </div>
   </a>
-  <a href="poland_2026Q2_v4.html" class="card clean">
-    <div class="card-kicker">PLN · NBP · v4 dashboard</div>
+  <a href="poland_2026Q2_v4.html" class="card clean" data-country="PL">
+    <div class="card-kicker">PLN · NBP · CEE-4 v4 public dashboard</div>
     <h2>Poland</h2>
     <div class="stats">
       <div class="stat"><span>Rendered indicators</span><strong>113/113</strong></div>
@@ -148,8 +156,8 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <div class="stat"><span>Source quality</span><strong>19 verified · 90 watch · 4 low</strong></div>
     </div>
   </a>
-  <a href="czechia_2026Q2_v4.html" class="card warn">
-    <div class="card-kicker">CZK · CNB · v4 dashboard</div>
+  <a href="czechia_2026Q2_v4.html" class="card warn" data-country="CZ">
+    <div class="card-kicker">CZK · CNB · CEE-4 v4 public dashboard</div>
     <h2>Czechia</h2>
     <div class="stats">
       <div class="stat"><span>Rendered indicators</span><strong>110/110</strong></div>
@@ -157,11 +165,11 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <div class="stat"><span>Dropped proxy slots</span><strong>4</strong></div>
       <div class="stat"><span>Policy rate</span><strong>3.50%</strong></div>
       <div class="stat"><span>10Y yield</span><strong>4.74%</strong></div>
-      <div class="stat"><span>Source quality</span><strong>19 verified · 87 watch · 4 low</strong></div>
+      <div class="stat"><span>Source quality</span><strong>20 verified · 86 watch · 4 low</strong></div>
     </div>
   </a>
-  <a href="romania_2026Q2_v4.html" class="card clean">
-    <div class="card-kicker">RON · BNR · v4 dashboard</div>
+  <a href="romania_2026Q2_v4.html" class="card clean" data-country="RO">
+    <div class="card-kicker">RON · BNR · CEE-4 v4 public dashboard</div>
     <h2>Romania</h2>
     <div class="stats">
       <div class="stat"><span>Rendered indicators</span><strong>109/109</strong></div>
@@ -172,60 +180,52 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <div class="stat"><span>Source quality</span><strong>19 verified · 85 watch · 5 low</strong></div>
     </div>
   </a>
-
-  <!-- China dashboard card -->
-  <a href="china_2026Q2_v1.html" class="card clean">
-    <div class="card-kicker">CNY · PBC · China data-first page</div>
+  <a href="china_2026Q2_v1.html" class="card clean" data-country="CN">
+    <div class="card-kicker">CNY · PBC · data-first country page</div>
     <h2>China</h2>
     <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>26</strong></div>
+      <div class="stat"><span>Rendered charts</span><strong>26/26</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
-      <div class="stat"><span>Official gaps tracked</span><strong>6</strong></div>
+      <div class="stat"><span>Official data gaps</span><strong>6</strong></div>
       <div class="stat"><span>Latest USD/CNY fixing</span><strong>6.8109 (2026-06-12)</strong></div>
       <div class="stat"><span>Source groups</span><strong>4</strong></div>
-      <div class="stat"><span>Framework</span><strong>GS China statistics logic</strong></div>
+      <div class="stat"><span>Source quality</span><strong>4 source groups · 0 low-confidence charts</strong></div>
     </div>
   </a>
-  <!-- /China dashboard card -->
-
-  <!-- UK dashboard card -->
-  <a href="uk_2026Q2_v1.html" class="card clean">
-    <div class="card-kicker">GBP · BoE · UK GS-statistics page</div>
+  <a href="uk_2026Q2_v1.html" class="card clean" data-country="UK">
+    <div class="card-kicker">GBP · BoE · data-first country page</div>
     <h2>United Kingdom</h2>
     <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>63</strong></div>
+      <div class="stat"><span>Rendered charts</span><strong>63/63</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
-      <div class="stat"><span>Data gaps tracked</span><strong>8</strong></div>
+      <div class="stat"><span>Official data gaps</span><strong>8</strong></div>
       <div class="stat"><span>Bank Rate</span><strong>3.75% (2026-06-11)</strong></div>
       <div class="stat"><span>Source groups</span><strong>9</strong></div>
-      <div class="stat"><span>Framework</span><strong>GS UK statistics logic</strong></div>
+      <div class="stat"><span>Source quality</span><strong>9 source groups · 0 low-confidence charts</strong></div>
     </div>
   </a>
-  <!-- /UK dashboard card -->
-
-  <!-- US dashboard card -->
-  <a href="us_2026Q2_v1.html" class="card clean">
-    <div class="card-kicker">USD · Fed · US GS-statistics page</div>
+  <a href="us_2026Q2_v1.html" class="card clean" data-country="US">
+    <div class="card-kicker">USD · Fed · data-first country page</div>
     <h2>United States</h2>
     <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>155</strong></div>
+      <div class="stat"><span>Rendered charts</span><strong>155/155</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
-      <div class="stat"><span>Data gaps tracked</span><strong>7</strong></div>
+      <div class="stat"><span>Official data gaps</span><strong>7</strong></div>
       <div class="stat"><span>Fed funds</span><strong>3.63% (2026-05-01)</strong></div>
       <div class="stat"><span>Source groups</span><strong>27</strong></div>
-      <div class="stat"><span>Framework</span><strong>GS US statistics logic</strong></div>
+      <div class="stat"><span>Source quality</span><strong>27 source groups · 0 low-confidence charts</strong></div>
     </div>
   </a>
-  <!-- /US dashboard card -->
   </section>
   <nav class="links" aria-label="documentation links">
     <a href="../DATA_SOURCE_CATALOG.md">Data Source Catalog</a>
+    <a href="../DATA_FRESHNESS_AUDIT.md">Freshness Audit</a>
     <a href="../PROXY_REVIEW.md">Proxy Review</a>
-    <a href="../SOURCE_DISCOVERY_MATRIX.md">Source Discovery Matrix</a>
     <a href="macro_framework_proposal.html">Framework Proposal</a>
+    <a href="dashboard_archive_summary.json">Archive JSON</a>
   </nav>
   <footer>
-    Generated from the same canonical data pipeline as the country pages. Research artefact only, not investment advice.
+    Generated 2026-06-13 14:27 UTC from country dashboard summaries and canonical CE4 data. Research artefact only, not investment advice.
   </footer>
 </main>
 </body>

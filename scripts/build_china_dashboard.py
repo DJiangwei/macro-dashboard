@@ -7,6 +7,7 @@ that can be fetched reproducibly from public endpoints in this repo.
 from __future__ import annotations
 
 import json
+import os
 import re
 from datetime import UTC, date, datetime, timedelta
 from html import escape
@@ -809,6 +810,9 @@ def build() -> Path:
     }
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
     inject_index(summary)
+    if not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):
+        from build_dashboard_archive import build_archive
+        build_archive()
     return OUT_HTML
 
 

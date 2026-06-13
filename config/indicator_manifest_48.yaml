@@ -405,12 +405,12 @@ indicators:
   indicator_id: fx_reserves
   label: FX Reserves
   unit: USD bn
-  source: World Bank / central bank
+  source: Central banks / FRED IMF IFS / World Bank fallback
   frequency: monthly
   chart: line
   peers: false
   quality_status: verified
-  quality_note: USD valuation effects matter.
+  quality_note: Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter.
 - section_id: external
   indicator_id: ara_metric
   label: IMF ARA Reserve Adequacy
@@ -555,22 +555,22 @@ indicators:
   indicator_id: gov_revenue_pct_gdp
   label: General Government Revenue, % GDP
   unit: '% GDP'
-  source: World Bank / IMF fallback
+  source: Eurostat government finance
   frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Revenue definitions can differ across IMF, Eurostat, and World Bank; use alongside expenditure and balance.
+  quality_note: Eurostat general-government total revenue, ESA 2010, as a share of GDP; EDP and national-account revisions can alter history.
 - section_id: fiscal_sovereign
   indicator_id: gov_expenditure_pct_gdp
   label: General Government Expenditure, % GDP
   unit: '% GDP'
-  source: World Bank / IMF fallback
+  source: Eurostat government finance
   frequency: annual
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Expenditure series can be revised with national accounts and fiscal notifications; compare with deficit path.
+  quality_note: Eurostat general-government total expenditure, ESA 2010, as a share of GDP; compare with balance, interest bill, and debt path.
 - section_id: fiscal_sovereign
   indicator_id: interest_bill_pct_gdp
   label: Interest Bill, % GDP
@@ -937,42 +937,42 @@ indicators:
   indicator_id: bank_car
   label: Bank Capital Ratio
   unit: '%'
-  source: World Bank WDI / IMF FSI
-  frequency: annual
+  source: IMF FSI via DB.nomics
+  frequency: quarterly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Uses bank capital to assets ratio; fresher but not identical to regulatory capital adequacy.
+  quality_note: IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary.
 - section_id: financial_stability
   indicator_id: bank_npl_ratio
   label: Bank NPL Ratio
   unit: '%'
-  source: World Bank WDI / IMF FSI
-  frequency: annual
+  source: IMF FSI via DB.nomics
+  frequency: quarterly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: FSI/national-bank data is lagged and definitions vary.
+  quality_note: IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction.
 - section_id: financial_stability
   indicator_id: bank_roe
   label: Bank Return on Equity
   unit: '%'
-  source: World Bank GFDD
-  frequency: annual
+  source: IMF FSI via DB.nomics
+  frequency: quarterly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: After-tax bank ROE from GFDD; annual and can be distorted by taxes and one-offs.
+  quality_note: IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability.
 - section_id: financial_stability
   indicator_id: bank_ld_ratio
   label: Bank Loan-to-Deposit Ratio
   unit: '%'
-  source: World Bank GFDD
-  frequency: annual
+  source: IMF FSI via DB.nomics
+  frequency: quarterly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Uses bank credit to bank deposits as a loan/deposit proxy; deposit perimeter differs by regulator.
+  quality_note: IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions.
 - section_id: financial_stability
   indicator_id: bank_liquidity_coverage
   label: Bank Liquidity Coverage Ratio

@@ -696,6 +696,9 @@ def build() -> Path:
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
     inject_output_index(summary)
     inject_root_index(summary)
+    if not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):
+        from build_dashboard_archive import build_archive
+        build_archive()
     return OUT_HTML
 
 

@@ -1049,6 +1049,22 @@ class EurostatFetcher(BaseFetcher):
             "params": {"sector": "S13", "na_item": "FGT", "unit": "PC_GDP"},
             "unit": "% GDP",
         },
+        "gov_revenue_pct_gdp": {
+            "dataset": "gov_10a_main",
+            "freq": "A",
+            "since": "2010",
+            "params": {"sector": "S13", "na_item": "TR", "unit": "PC_GDP"},
+            "unit": "% GDP",
+            "note": "Eurostat general-government total revenue, ESA 2010, as a share of GDP.",
+        },
+        "gov_expenditure_pct_gdp": {
+            "dataset": "gov_10a_main",
+            "freq": "A",
+            "since": "2010",
+            "params": {"sector": "S13", "na_item": "TE", "unit": "PC_GDP"},
+            "unit": "% GDP",
+            "note": "Eurostat general-government total expenditure, ESA 2010, as a share of GDP.",
+        },
         "avg_wage_yoy": {
             "dataset": "lc_lci_r2_q",
             "freq": "Q",
@@ -2286,7 +2302,39 @@ class NationalCBFetcher(BaseFetcher):
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
         if country == "CZ" and spec.indicator_id == "short_term_ext_debt":
             return self._czech_short_term_external_debt_reserves(country, spec)
+        if country == "CZ" and spec.indicator_id == "fx_reserves":
+            return self._czech_fx_reserves(country, spec)
         return []
+
+    def _czech_fx_reserves(self, country: str, spec: IndicatorSpec) -> list[dict]:
+        try:
+            reserves = self._cnb_reserves_usd()
+        except (OSError, requests.RequestException, ValueError):
+            return []
+        observations = [(date, value / 1_000.0) for date, value in sorted(reserves.items()) if date >= "2022-01-01"]
+        if not observations:
+            return []
+
+        series = finalize_series(Series(
+            key=spec.indicator_id,
+            label=spec.label,
+            country=country,
+            source="Czech National Bank",
+            series_id="CNB international reserves, USD",
+            unit="USD bn",
+            frequency="monthly",
+            last_update=observations[-1][0],
+            source_url=CNB_RESERVES_USD_TXT_URL,
+            observations=observations,
+            available=True,
+            note="CNB official international reserves in USD, converted from USD millions to USD billions.",
+        ))
+        return _series_to_rows(
+            series,
+            spec,
+            unit="USD bn",
+            note="Official CNB reserves series; USD valuation effects remain material.",
+        )
 
     def _czech_short_term_external_debt_reserves(self, country: str, spec: IndicatorSpec) -> list[dict]:
         try:
@@ -2872,6 +2920,27 @@ class IMFFinancialSoundnessFetcher(BaseFetcher):
     """IMF FSI adapter through DB.nomics narrow series API."""
 
     CONFIGS = {
+        "bank_car": {
+            "indicator": "FSKRC_PT",
+            "unit": "%",
+            "note": "IMF Financial Soundness Indicator: deposit-taker regulatory capital to risk-weighted assets, percent.",
+        },
+        "bank_npl_ratio": {
+            "indicator": "FSANL_PT",
+            "unit": "%",
+            "note": "IMF Financial Soundness Indicator: deposit-taker non-performing loans to total gross loans, percent.",
+        },
+        "bank_roe": {
+            "indicator": "FSERE_PT",
+            "unit": "%",
+            "note": "IMF Financial Soundness Indicator: deposit-taker return on equity, percent.",
+        },
+        "bank_ld_ratio": {
+            "indicator": "FSCD_PT",
+            "unit": "%",
+            "transform": "invert_percent_ratio",
+            "note": "IMF Financial Soundness Indicator reports customer deposits to total non-interbank loans; the dashboard inverts it to approximate loans to customer deposits.",
+        },
         "bank_liquidity_coverage": {
             "indicator": "FSLCR_PT",
             "unit": "%",
@@ -2908,6 +2977,10 @@ class IMFFinancialSoundnessFetcher(BaseFetcher):
                 numeric = float(value)
             except (TypeError, ValueError):
                 continue
+            if cfg.get("transform") == "invert_percent_ratio":
+                if numeric == 0:
+                    continue
+                numeric = 10000.0 / numeric
             if math.isfinite(numeric):
                 observations.append((date, numeric))
         if not observations:
@@ -2932,6 +3005,12 @@ class IMFFinancialSoundnessFetcher(BaseFetcher):
         rows = _series_to_rows(series, spec, unit=cfg["unit"], note="DB.nomics mirror is used for narrow API access.")
         for row in rows:
             row["quality_status"] = "watch"
+            if cfg.get("transform") == "invert_percent_ratio":
+                row["quality_note"] = (
+                    f"{row.get('quality_note') or ''} "
+                    "Series transformed from IMF deposits-to-loans into loans-to-deposits; "
+                    "compare levels with national supervisory definitions."
+                ).strip()
         return rows
 
 
@@ -4455,7 +4534,9 @@ class DataPipeline:
             EUFundsAbsorptionFetcher(),
             ECBExternalDebtFetcher(),
             ECBPortfolioFlowsFetcher(),
+            NationalCBFetcher(),
             FREDInternationalFetcher(),
+            IMFFinancialSoundnessFetcher(),
             WorldBankFetcher(),
             PragueExchangeFetcher(),
             GPWBenchmarkFetcher(),
@@ -4464,11 +4545,9 @@ class DataPipeline:
             YahooMarketFetcher(),
             BISFetcher(),
             WorldBankFallbackFetcher(),
-            IMFFinancialSoundnessFetcher(),
             ECBMIRFetcher(),
             GIEAGSIFetcher(),
             ManualIndicatorFetcher(),
-            NationalCBFetcher(),
             CZSOFetcher(),
             KSHFetcher(),
             GUSDBWFetcher(),

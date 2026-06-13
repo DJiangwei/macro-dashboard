@@ -9,6 +9,7 @@ Usage:
   python build_v4.py ALL   # all four
 """
 from pathlib import Path
+import os
 import re
 import sys
 import json
@@ -3471,3 +3472,11 @@ if __name__ == "__main__":
         print(f"Wrote {path} ({path.stat().st_size:,} bytes)")
     index_path = build_output_index()
     print(f"Wrote {index_path} ({index_path.stat().st_size:,} bytes)")
+    if not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):
+        scripts_path = ROOT / "scripts"
+        if str(scripts_path) not in sys.path:
+            sys.path.insert(0, str(scripts_path))
+        from build_dashboard_archive import build_archive
+
+        for archive_path in build_archive():
+            print(f"Wrote {archive_path} ({archive_path.stat().st_size:,} bytes)")
