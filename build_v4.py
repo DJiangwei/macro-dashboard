@@ -971,6 +971,7 @@ def _render_section_charts(section_id: str, country_code: str, chart_map: dict[s
         "lending_rate_household",
         "lending_rate_corp",
         "mortgage_rate_new",
+        "fx_reserves",
         "fx_vs_eur",
         "fx_3m_forward",
         "fx_implied_vol",
