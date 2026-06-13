@@ -78,14 +78,18 @@ indicators:
     label_en: "Real Private Consumption"
     label_zh: "实际私人消费环比"
     unit: "%"
-    fetcher: fred
-    series: "NAEXKP02GBQ657S"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/NAEXKP02GBQ657S"
+    fetcher: ons_timeseries
+    series: "ABJR"
+    dataset: "PN2"
+    ons_path: "/economy/nationalaccounts/satelliteaccounts/timeseries/abjr/pn2/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/nationalaccounts/satelliteaccounts/timeseries/abjr/pn2"
     frequency: "quarterly"
     start_date: "1997-01-01"
-    caveat_en: "Demand-side national-accounts component; revised alongside GDP balancing."
-    caveat_zh: "需求端国民账户分项；会随GDP平衡过程修订。"
+    transform: "qoq_pct"
+    max_age_days: 170
+    caveat_en: "Quarter-on-quarter growth derived from ONS household final consumption expenditure, national concept CVM SA; revised alongside GDP balancing."
+    caveat_zh: "由ONS居民最终消费支出national concept实际季调水平计算环比；会随GDP平衡过程修订。"
   - id: gfcf_qoq
     section: national_accounts
     label_en: "Real Gross Fixed Capital Formation"
@@ -388,15 +392,18 @@ indicators:
     section: labour_market
     label_en: "Employment Total"
     label_zh: "总就业人数"
-    unit: "persons"
-    fetcher: fred
-    series: "LFEMTTTTGBQ647S"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/LFEMTTTTGBQ647S"
-    frequency: "quarterly"
+    unit: "000s"
+    fetcher: ons_timeseries
+    series: "MGRZ"
+    dataset: "LMS"
+    ons_path: "/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/timeseries/mgrz/lms/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/timeseries/mgrz/lms"
+    frequency: "monthly"
     start_date: "1997-01-01"
-    caveat_en: "Quarterly OECD employment total; not a substitute for the full ONS labour-market release."
-    caveat_zh: "OECD季度总就业人数；不能替代完整ONS劳动力市场发布。"
+    max_age_days: 150
+    caveat_en: "ONS number of people in employment aged 16 and over, seasonally adjusted and labelled as a three-month average; LFS sampling uncertainty remains important."
+    caveat_zh: "ONS 16岁及以上就业人数，季调且以三个月平均标注；仍需注意LFS抽样不确定性。"
   - id: employment_rate_15_64
     section: labour_market
     label_en: "Employment Rate, Ages 16-64"

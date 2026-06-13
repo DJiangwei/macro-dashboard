@@ -1042,7 +1042,7 @@ def _render_cards(series_list: list[dict[str, Any]]) -> str:
         "cpi_yoy",
         "unemployment_rate",
         "bank_rate",
-        "government_debt_gdp",
+        "psnd_ex_banks_gdp",
         "gbp_reer",
     ]
     by_id = {item["id"]: item for item in series_list}
