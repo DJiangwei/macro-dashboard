@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-13T21:51:17.065553+00:00",
+  "generated": "2026-06-13T23:06:38.599894+00:00",
   "as_of_date": "2026-06-13",
   "thresholds": {
     "daily": "14 days",
@@ -11,8 +11,8 @@
   "summary": [
     {
       "dashboard": "China",
-      "charts": 26,
-      "current": 24,
+      "charts": 33,
+      "current": 31,
       "stale": 0,
       "lagged_source": 0,
       "projection": 2,
@@ -7717,6 +7717,40 @@
     },
     {
       "dashboard": "China",
+      "indicator_id": "nominal_residential_property_price_bis",
+      "label": "Residential Property Prices",
+      "frequency": "quarterly",
+      "latest_observation": "2025-10-01 · 116 Index 2010=100",
+      "latest_date": "2025-10-01",
+      "age_basis_date": "2025-12-31",
+      "age_days": 164,
+      "threshold_days": 330,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / BIS Residential Property Price Database",
+      "series_id": "QCNN628BIS",
+      "provider_update": "2025-10-01",
+      "note": "BIS residential property price database; coverage shifts from new dwellings in 70 cities to existing buildings from 2016, so the level break matters."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "real_residential_property_price_bis",
+      "label": "Real Residential Property Prices",
+      "frequency": "quarterly",
+      "latest_observation": "2025-10-01 · 86.8 Index 2010=100",
+      "latest_date": "2025-10-01",
+      "age_basis_date": "2025-12-31",
+      "age_days": 164,
+      "threshold_days": 330,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / BIS Residential Property Price Database",
+      "series_id": "QCNR628BIS",
+      "provider_update": "2025-10-01",
+      "note": "BIS CPI-deflated residential property price series; useful for cycle pressure, but not a replacement for NBS 70-city price details."
+    },
+    {
+      "dashboard": "China",
       "indicator_id": "household_consumption_growth",
       "label": "Household Consumption Growth",
       "frequency": "annual",
@@ -7836,6 +7870,23 @@
     },
     {
       "dashboard": "China",
+      "indicator_id": "fx_reserves_ex_gold_monthly",
+      "label": "FX Reserves ex Gold",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · $3.48tn USD",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 44,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / IMF IFS",
+      "series_id": "TRESEGCNM052N",
+      "provider_update": "2026-04-01",
+      "note": "Monthly IMF IFS reserves excluding gold via FRED; PBC's native monthly release is still preferred for headline official tracking."
+    },
+    {
+      "dashboard": "China",
       "indicator_id": "usd_cny_midpoint",
       "label": "USD/CNY Central Parity",
       "frequency": "daily",
@@ -7870,6 +7921,40 @@
     },
     {
       "dashboard": "China",
+      "indicator_id": "usd_cny_spot",
+      "label": "USD/CNY Spot Rate",
+      "frequency": "daily",
+      "latest_observation": "2026-06-05 · 6.77 CNY per USD",
+      "latest_date": "2026-06-05",
+      "age_basis_date": "2026-06-05",
+      "age_days": 8,
+      "threshold_days": 14,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / Federal Reserve H.10",
+      "series_id": "DEXCHUS",
+      "provider_update": "2026-06-05",
+      "note": "Federal Reserve H.10 spot-rate mirror; use alongside SAFE central parity to separate market spot from official fixing."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "real_effective_exchange_rate_bis",
+      "label": "Real Effective Exchange Rate",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · 91.1 Index 2020=100",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 44,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / BIS Effective Exchange Rate",
+      "series_id": "RBCNBIS",
+      "provider_update": "2026-04-01",
+      "note": "BIS CPI-based broad real effective exchange-rate index; basket weights and CPI adjustments differ from bilateral USD/CNY moves."
+    },
+    {
+      "dashboard": "China",
       "indicator_id": "broad_money_growth",
       "label": "Broad Money Growth",
       "frequency": "annual",
@@ -7901,6 +7986,40 @@
       "series_id": "FS.AST.PRVT.GD.ZS",
       "provider_update": "2026-04-08",
       "note": "Broad financial-depth metric; not a substitute for PBOC loan and TSF flows."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "interbank_3m_rate",
+      "label": "3M Interbank Rate",
+      "frequency": "monthly",
+      "latest_observation": "2026-03-01 · 1.70 %",
+      "latest_date": "2026-03-01",
+      "age_basis_date": "2026-03-31",
+      "age_days": 74,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / OECD",
+      "series_id": "IR3TIB01CNM156N",
+      "provider_update": "2026-03-01",
+      "note": "OECD/FRED 3-month interbank-rate mirror; not the PBC policy-rate corridor and should be checked against ChinaMoney/SHIBOR for trading use."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "share_price_index",
+      "label": "Share Price Index",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · 109 Index 2015=100",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 44,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / OECD",
+      "series_id": "SPASTT01CNM661N",
+      "provider_update": "2026-04-01",
+      "note": "OECD/FRED broad share-price index; useful for domestic risk appetite, but not a substitute for CSI 300/Shanghai Composite market data."
     },
     {
       "dashboard": "China",
@@ -10245,7 +10364,7 @@
       "quality_status": "watch",
       "source": "FRED / Treasury International Capital",
       "series_id": "FORTREASPOS41408",
-      "provider_update": "2026-03-01",
+      "provider_update": "2026-05-19",
       "note": "Country attribution follows TIC reporting and custody conventions; it is not a perfect beneficial-owner measure."
     },
     {
@@ -10262,7 +10381,7 @@
       "quality_status": "watch",
       "source": "FRED / Treasury International Capital",
       "series_id": "FORTREASPOS42609",
-      "provider_update": "2026-03-01",
+      "provider_update": "2026-05-19",
       "note": "Japan is a major foreign holder; use with custody-routing caveats common to TIC geography."
     },
     {
@@ -10279,7 +10398,7 @@
       "quality_status": "watch",
       "source": "FRED / BLS",
       "series_id": "PAYEMS",
-      "provider_update": "2026-05-01",
+      "provider_update": "2026-06-05",
       "note": "Derived monthly change from total nonfarm payroll employment."
     },
     {
@@ -10296,7 +10415,7 @@
       "quality_status": "watch",
       "source": "FRED / ADP Research Institute",
       "series_id": "ADPMNUSNERSA",
-      "provider_update": "2026-05-01",
+      "provider_update": "2026-06-03",
       "note": "Vendor employment release mirrored by FRED; compare against BLS payrolls and avoid treating it as an official labor-statistics substitute."
     },
     {
@@ -11384,7 +11503,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "DRALACBN",
-      "provider_update": "2026-05-19",
+      "provider_update": "2026-01-01",
       "note": "All-bank loan delinquency rate; lagging but useful for credit-cycle stress."
     },
     {
@@ -11401,7 +11520,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "DRCCLACBS",
-      "provider_update": "2026-05-19",
+      "provider_update": "2026-01-01",
       "note": "Credit-card delinquency is a clean consumer-credit stress gauge."
     },
     {

@@ -29,6 +29,11 @@ sections:
     title_zh: "货币、信用与银行"
     report_logic_en: "Money supply, bank credit, total social financing, policy tools, and interbank rates."
     report_logic_zh: "货币供应、银行信贷、社会融资规模、政策工具与银行间利率。"
+  financial_markets:
+    title_en: "Financial Markets"
+    title_zh: "金融市场"
+    report_logic_en: "Market prices that help cross-check macro stress: equities, effective exchange rates, and market rates."
+    report_logic_zh: "用于交叉验证宏观压力的市场价格：股票、有效汇率与市场利率。"
   prices:
     title_en: "Prices"
     title_zh: "价格"
@@ -107,6 +112,30 @@ indicators:
     frequency: "annual"
     caveat_en: "National-accounts investment share; not the same as NBS fixed asset investment growth."
     caveat_zh: "国民账户投资占比；不同于NBS固定资产投资增速。"
+  - id: nominal_residential_property_price_bis
+    section: real_estate
+    label_en: "Residential Property Prices"
+    label_zh: "住宅价格指数"
+    unit: "Index 2010=100"
+    fetcher: fred_graph_csv
+    series: "QCNN628BIS"
+    source_name: "FRED / BIS Residential Property Price Database"
+    source_url: "https://fred.stlouisfed.org/series/QCNN628BIS"
+    frequency: "quarterly"
+    caveat_en: "BIS residential property price database; coverage shifts from new dwellings in 70 cities to existing buildings from 2016, so the level break matters."
+    caveat_zh: "BIS住宅价格数据库；2016年前后口径从70城新建住宅转向既有建筑，需注意水平断点。"
+  - id: real_residential_property_price_bis
+    section: real_estate
+    label_en: "Real Residential Property Prices"
+    label_zh: "实际住宅价格指数"
+    unit: "Index 2010=100"
+    fetcher: fred_graph_csv
+    series: "QCNR628BIS"
+    source_name: "FRED / BIS Residential Property Price Database"
+    source_url: "https://fred.stlouisfed.org/series/QCNR628BIS"
+    frequency: "quarterly"
+    caveat_en: "BIS CPI-deflated residential property price series; useful for cycle pressure, but not a replacement for NBS 70-city price details."
+    caveat_zh: "BIS经CPI平减的住宅价格序列；适合观察周期压力，但不能替代NBS 70城房价分项。"
   - id: household_consumption_growth
     section: consumption
     label_en: "Household Consumption Growth"
@@ -194,6 +223,19 @@ indicators:
     frequency: "annual"
     caveat_en: "Annual reserve stock; PBOC releases monthly reserves around the 7th day of the following month."
     caveat_zh: "年度储备存量；PBOC通常在次月7日左右发布月度外储。"
+  - id: fx_reserves_ex_gold_monthly
+    section: external
+    label_en: "FX Reserves ex Gold"
+    label_zh: "外汇储备（不含黄金）"
+    unit: "USD"
+    transform: "usd_mn_to_trn"
+    fetcher: fred_graph_csv
+    series: "TRESEGCNM052N"
+    source_name: "FRED / IMF IFS"
+    source_url: "https://fred.stlouisfed.org/series/TRESEGCNM052N"
+    frequency: "monthly"
+    caveat_en: "Monthly IMF IFS reserves excluding gold via FRED; PBC's native monthly release is still preferred for headline official tracking."
+    caveat_zh: "FRED镜像的IMF IFS月度不含黄金外储；官方标题跟踪仍应优先使用PBC月度发布。"
   - id: usd_cny_midpoint
     section: external
     label_en: "USD/CNY Central Parity"
@@ -218,6 +260,31 @@ indicators:
     frequency: "daily"
     caveat_en: "Official central parity table; page query is limited to roughly one year at a time."
     caveat_zh: "官方人民币汇率中间价表；页面单次查询区间约一年。"
+  - id: usd_cny_spot
+    section: external
+    label_en: "USD/CNY Spot Rate"
+    label_zh: "美元兑人民币即期汇率"
+    unit: "CNY per USD"
+    fetcher: fred_graph_csv
+    series: "DEXCHUS"
+    source_name: "FRED / Federal Reserve H.10"
+    source_url: "https://fred.stlouisfed.org/series/DEXCHUS"
+    frequency: "daily"
+    start_date: "2015-01-01"
+    caveat_en: "Federal Reserve H.10 spot-rate mirror; use alongside SAFE central parity to separate market spot from official fixing."
+    caveat_zh: "美联储H.10即期汇率镜像；应与SAFE中间价一起使用，以区分市场即期与官方 fixing。"
+  - id: real_effective_exchange_rate_bis
+    section: external
+    label_en: "Real Effective Exchange Rate"
+    label_zh: "实际有效汇率"
+    unit: "Index 2020=100"
+    fetcher: fred_graph_csv
+    series: "RBCNBIS"
+    source_name: "FRED / BIS Effective Exchange Rate"
+    source_url: "https://fred.stlouisfed.org/series/RBCNBIS"
+    frequency: "monthly"
+    caveat_en: "BIS CPI-based broad real effective exchange-rate index; basket weights and CPI adjustments differ from bilateral USD/CNY moves."
+    caveat_zh: "BIS基于CPI的广义实际有效汇率指数；篮子权重和CPI调整不同于双边美元兑人民币。"
   - id: broad_money_growth
     section: money_credit
     label_en: "Broad Money Growth"
@@ -242,6 +309,30 @@ indicators:
     frequency: "annual"
     caveat_en: "Broad financial-depth metric; not a substitute for PBOC loan and TSF flows."
     caveat_zh: "金融深化指标；不能替代PBOC贷款与社融流量。"
+  - id: interbank_3m_rate
+    section: money_credit
+    label_en: "3M Interbank Rate"
+    label_zh: "3个月银行间利率"
+    unit: "%"
+    fetcher: fred_graph_csv
+    series: "IR3TIB01CNM156N"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/IR3TIB01CNM156N"
+    frequency: "monthly"
+    caveat_en: "OECD/FRED 3-month interbank-rate mirror; not the PBC policy-rate corridor and should be checked against ChinaMoney/SHIBOR for trading use."
+    caveat_zh: "OECD/FRED三个月银行间利率镜像；不是PBC政策利率走廊，交易使用前应与中国货币网/SHIBOR交叉核对。"
+  - id: share_price_index
+    section: financial_markets
+    label_en: "Share Price Index"
+    label_zh: "股票价格指数"
+    unit: "Index 2015=100"
+    fetcher: fred_graph_csv
+    series: "SPASTT01CNM661N"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/SPASTT01CNM661N"
+    frequency: "monthly"
+    caveat_en: "OECD/FRED broad share-price index; useful for domestic risk appetite, but not a substitute for CSI 300/Shanghai Composite market data."
+    caveat_zh: "OECD/FRED广义股价指数；可用于观察国内风险偏好，但不能替代沪深300/上证综指行情数据。"
   - id: cpi_inflation
     section: prices
     label_en: "CPI Inflation"
@@ -400,8 +491,8 @@ data_gaps:
   - section: real_estate
     item_en: "NBS property investment, floor-space starts/completions/sales, 70-city price index, land transactions, and inventory"
     item_zh: "NBS房地产开发投资、开工/竣工/销售面积、70城房价、土地成交与库存"
-    status_en: "High priority for the next official-source adapter."
-    status_zh: "下一阶段官方数据adapter的最高优先级之一。"
+    status_en: "BIS residential property price aggregates are charted; NBS property activity details remain the next official-source adapter priority."
+    status_zh: "页面已加入BIS住宅价格总量指标；NBS房地产活动细项仍是下一阶段官方adapter优先项。"
   - section: consumption
     item_en: "NBS retail sales, online retail sales, household survey, auto sales, and consumer confidence"
     item_zh: "NBS社零、网上零售、居民调查、汽车销售与消费者信心"
@@ -410,8 +501,8 @@ data_gaps:
   - section: money_credit
     item_en: "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates"
     item_zh: "PBOC月度人民币贷款、存款、社融流量/存量、LPR/MLF/RRR与银行间利率"
-    status_en: "PBC latest cards are shown; full history requires a dedicated PBOC parser."
-    status_zh: "页面已显示PBC最新卡片；完整历史需要专门的PBOC解析器。"
+    status_en: "A 3M interbank-rate mirror is charted and PBC latest cards are shown; full PBOC money/credit/policy-tool history still requires a dedicated parser."
+    status_zh: "页面已加入3个月银行间利率镜像并显示PBC最新卡片；完整PBOC货币、信用和政策工具历史仍需要专门解析器。"
   - section: prices
     item_en: "NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices"
     item_zh: "NBS月度CPI、核心CPI、PPI、农产品价格与进出口价格指数"

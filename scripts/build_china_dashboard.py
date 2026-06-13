@@ -9,8 +9,10 @@ from __future__ import annotations
 import json
 import os
 import re
+from csv import DictReader
 from datetime import UTC, date, datetime, timedelta
 from html import escape
+from io import StringIO
 from pathlib import Path
 from typing import Any
 
@@ -49,6 +51,8 @@ def _write_clean(path: Path, content: str) -> None:
 def _apply_transform(value: float, transform: str | None) -> float:
     if transform == "usd_trn":
         return value / 1_000_000_000_000
+    if transform == "usd_mn_to_trn":
+        return value / 1_000_000
     if transform == "people_billion":
         return value / 1_000_000_000
     return value
@@ -106,6 +110,35 @@ def fetch_imf_datamapper(spec: dict[str, Any]) -> dict[str, Any]:
         "observations": observations,
         "provider_updated": datetime.now(UTC).date().isoformat(),
         "api_url": url,
+    }
+
+
+def fetch_fred_graph(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch a public FRED graph CSV without requiring a runtime API key."""
+    code = spec["series"]
+    url = "https://fred.stlouisfed.org/graph/fredgraph.csv"
+    params = {"id": code}
+    if spec.get("start_date"):
+        params["cosd"] = str(spec["start_date"])
+    response = requests.get(url, params=params, timeout=45)
+    response.raise_for_status()
+    observations: list[dict[str, Any]] = []
+    for row in DictReader(StringIO(response.text)):
+        raw_date = row.get("observation_date")
+        raw_value = row.get(code)
+        if not raw_date or raw_value in (None, "", "."):
+            continue
+        try:
+            value = _apply_transform(float(raw_value), spec.get("transform"))
+        except (TypeError, ValueError):
+            continue
+        observations.append({"date": raw_date, "value": value})
+    observations.sort(key=lambda item: item["date"])
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": f"{url}?id={code}",
     }
 
 
@@ -186,6 +219,14 @@ def validate_series(series: dict[str, Any]) -> dict[str, Any]:
         latest_year = _parse_year(latest_date)
         if latest_year and latest_year < date.today().year - 2:
             notes.append(f"Lagged annual series; latest observation is {latest_year}.")
+    elif frequency in {"monthly", "quarterly"}:
+        try:
+            latest_dt = datetime.strptime(latest_date, "%Y-%m-%d").date()
+            stale_days = 120 if frequency == "monthly" else 285
+            if (date.today() - latest_dt).days > stale_days:
+                notes.append(f"{frequency.title()} series looks stale; latest observation is {latest_date}.")
+        except ValueError:
+            notes.append(f"{frequency.title()} date could not be parsed.")
     elif frequency == "daily":
         try:
             latest_dt = datetime.strptime(latest_date, "%Y-%m-%d").date()
@@ -199,6 +240,8 @@ def validate_series(series: dict[str, Any]) -> dict[str, Any]:
         notes.append("Annual WDI data is lagged and revision-prone.")
     if "IMF WEO" in source_name:
         notes.append("IMF WEO includes estimates/projections; dashed segment marks forecast years.")
+    if "FRED" in source_name:
+        notes.append("FRED is used as a reproducible public mirror; verify native-source definitions before trading use.")
     if series.get("caveat_en"):
         notes.append(series["caveat_en"])
 
@@ -221,6 +264,8 @@ def fetch_all(config: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[s
                 series = fetch_world_bank(spec)
             elif fetcher == "imf_datamapper":
                 series = fetch_imf_datamapper(spec)
+            elif fetcher == "fred_graph_csv":
+                series = fetch_fred_graph(spec)
             elif fetcher == "safe_rmb_midpoint":
                 if safe_rows is None:
                     safe_rows = _safe_rows()

@@ -571,9 +571,9 @@ Remaining rendered proxy slots: 1.
 
 ## China Data-First Dashboard Sources
 
-The China page is generated from `config/china_indicators.yaml`. Current rendered charts deliberately use reproducible public endpoints: World Bank WDI for annual national-account and structural series, IMF DataMapper for WEO fiscal ratios, SAFE for RMB central parity, and PBC latest-card pages for selected money-market snapshots. China-native monthly NBS/PBOC history is not proxied when an official reusable endpoint has not been validated.
+The China page is generated from `config/china_indicators.yaml`. Current rendered charts deliberately use reproducible public endpoints: World Bank WDI for annual national-account and structural series, IMF DataMapper for WEO fiscal ratios, SAFE for RMB central parity, PBC latest-card pages for selected money-market snapshots, and FRED graph CSV mirrors for validated IMF IFS, BIS, OECD, and Federal Reserve series. China-native monthly NBS/PBOC history is not proxied when an official reusable endpoint has not been validated.
 
-Configured charts: 26. Latest rendered chart count: 26. Source groups: 4.
+Configured charts: 33. Latest rendered chart count: 33. Source groups: 9.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -582,6 +582,8 @@ Configured charts: 26. Latest rendered chart count: 26. Source groups: 4.
 | activity_production | `industry_value_added_growth` | Industry Value Added Growth | annual | % | world_bank | World Bank WDI | NV.IND.TOTL.KD.ZG | Annual industry value added is broader and slower than NBS monthly industrial production. |
 | activity_production | `services_value_added_growth` | Services Value Added Growth | annual | % | world_bank | World Bank WDI | NV.SRV.TOTL.KD.ZG | Services are harder to measure at high frequency; annual data can miss turning points. |
 | investment | `gfcf_share_gdp` | Gross Fixed Capital Formation | annual | % of GDP | world_bank | World Bank WDI | NE.GDI.FTOT.ZS | National-accounts investment share; not the same as NBS fixed asset investment growth. |
+| real_estate | `nominal_residential_property_price_bis` | Residential Property Prices | quarterly | Index 2010=100 | fred_graph_csv | FRED / BIS Residential Property Price Database | QCNN628BIS | BIS residential property price database; coverage shifts from new dwellings in 70 cities to existing buildings from 2016, so the level break matters. |
+| real_estate | `real_residential_property_price_bis` | Real Residential Property Prices | quarterly | Index 2010=100 | fred_graph_csv | FRED / BIS Residential Property Price Database | QCNR628BIS | BIS CPI-deflated residential property price series; useful for cycle pressure, but not a replacement for NBS 70-city price details. |
 | consumption | `household_consumption_growth` | Household Consumption Growth | annual | % | world_bank | World Bank WDI | NE.CON.PRVT.KD.ZG | National-accounts household consumption; not directly comparable to retail sales. |
 | consumption | `household_consumption_share` | Household Consumption Share | annual | % of GDP | world_bank | World Bank WDI | NE.CON.PRVT.ZS | Useful for rebalancing, but too low-frequency for near-term consumption momentum. |
 | external | `current_account_gdp` | Current Account Balance | annual | % of GDP | world_bank | World Bank WDI | BN.CAB.XOKA.GD.ZS | Annual BOP ratio; SAFE quarterly BOP is the preferred higher-frequency source. |
@@ -589,10 +591,15 @@ Configured charts: 26. Latest rendered chart count: 26. Source groups: 4.
 | external | `imports_goods_services` | Imports of Goods & Services | annual | USD | world_bank | World Bank WDI | BM.GSR.GNFS.CD | Annual national-accounts goods and services imports; customs monthly goods trade is the preferred high-frequency source. |
 | external | `trade_openness` | Trade Openness | annual | % of GDP | world_bank | World Bank WDI | NE.TRD.GNFS.ZS | Goods and services trade share of GDP; does not reveal partner/product composition. |
 | external | `fx_reserves` | Foreign Exchange Reserves | annual | USD | world_bank | World Bank WDI | FI.RES.TOTL.CD | Annual reserve stock; PBOC releases monthly reserves around the 7th day of the following month. |
+| external | `fx_reserves_ex_gold_monthly` | FX Reserves ex Gold | monthly | USD | fred_graph_csv | FRED / IMF IFS | TRESEGCNM052N | Monthly IMF IFS reserves excluding gold via FRED; PBC's native monthly release is still preferred for headline official tracking. |
 | external | `usd_cny_midpoint` | USD/CNY Central Parity | daily | CNY per USD | safe_rmb_midpoint | SAFE | SAFE RMBQuery USD column | Official central parity table; page query is limited to roughly one year at a time. |
 | external | `eur_cny_midpoint` | EUR/CNY Central Parity | daily | CNY per EUR | safe_rmb_midpoint | SAFE | SAFE RMBQuery EUR column | Official central parity table; page query is limited to roughly one year at a time. |
+| external | `usd_cny_spot` | USD/CNY Spot Rate | daily | CNY per USD | fred_graph_csv | FRED / Federal Reserve H.10 | DEXCHUS | Federal Reserve H.10 spot-rate mirror; use alongside SAFE central parity to separate market spot from official fixing. |
+| external | `real_effective_exchange_rate_bis` | Real Effective Exchange Rate | monthly | Index 2020=100 | fred_graph_csv | FRED / BIS Effective Exchange Rate | RBCNBIS | BIS CPI-based broad real effective exchange-rate index; basket weights and CPI adjustments differ from bilateral USD/CNY moves. |
 | money_credit | `broad_money_growth` | Broad Money Growth | annual | % | world_bank | World Bank WDI | FM.LBL.BMNY.ZG | Annual WDI broad-money growth; PBOC monthly M2 is the preferred China-native series. |
 | money_credit | `private_credit_gdp` | Private Credit by Financial Sector | annual | % of GDP | world_bank | World Bank WDI | FS.AST.PRVT.GD.ZS | Broad financial-depth metric; not a substitute for PBOC loan and TSF flows. |
+| money_credit | `interbank_3m_rate` | 3M Interbank Rate | monthly | % | fred_graph_csv | FRED / OECD | IR3TIB01CNM156N | OECD/FRED 3-month interbank-rate mirror; not the PBC policy-rate corridor and should be checked against ChinaMoney/SHIBOR for trading use. |
+| financial_markets | `share_price_index` | Share Price Index | monthly | Index 2015=100 | fred_graph_csv | FRED / OECD | SPASTT01CNM661N | OECD/FRED broad share-price index; useful for domestic risk appetite, but not a substitute for CSI 300/Shanghai Composite market data. |
 | prices | `cpi_inflation` | CPI Inflation | annual | % | world_bank | World Bank WDI | FP.CPI.TOTL.ZG | Annual CPI; NBS monthly CPI is the preferred tactical inflation series. |
 | prices | `gdp_deflator` | GDP Deflator | annual | % | world_bank | World Bank WDI | NY.GDP.DEFL.KD.ZG | Useful for economy-wide nominal/real split, but not a monthly price gauge. |
 | population_labor | `unemployment` | Unemployment Rate | annual | % | world_bank | World Bank WDI / ILO estimate | SL.UEM.TOTL.ZS | ILO-modeled annual rate; China urban surveyed unemployment and youth unemployment have definition breaks. |
@@ -618,9 +625,9 @@ Configured charts: 26. Latest rendered chart count: 26. Source groups: 4.
 |---|---|---|
 | activity_production | NBS monthly industrial production, services output index, electricity consumption, rail freight, industrial profits, and PMI series | NBS EasyQuery returned 403 from this runtime; add an official adapter only after the endpoint is reproducible. |
 | investment | NBS fixed asset investment by sector and project pipeline | Core China-native monthly indicators; not proxied in v1. |
-| real_estate | NBS property investment, floor-space starts/completions/sales, 70-city price index, land transactions, and inventory | High priority for the next official-source adapter. |
+| real_estate | NBS property investment, floor-space starts/completions/sales, 70-city price index, land transactions, and inventory | BIS residential property price aggregates are charted; NBS property activity details remain the next official-source adapter priority. |
 | consumption | NBS retail sales, online retail sales, household survey, auto sales, and consumer confidence | Retail sales are not equivalent to national-accounts consumption; keep separate when official data is wired. |
-| money_credit | PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates | PBC latest cards are shown; full history requires a dedicated PBOC parser. |
+| money_credit | PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates | A 3M interbank-rate mirror is charted and PBC latest cards are shown; full PBOC money/credit/policy-tool history still requires a dedicated parser. |
 | prices | NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices | Annual WDI inflation and deflator charts are shown; tactical monthly data is pending. |
 
 ## United Kingdom Data-First Dashboard Sources
