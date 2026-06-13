@@ -33,6 +33,8 @@ COUNTRY_NAMES = {
 }
 US_CONFIG_PATH = ROOT / "config" / "us_indicators.yaml"
 US_SUMMARY_PATH = ROOT / "output" / "us_dashboard_summary.json"
+CHINA_CONFIG_PATH = ROOT / "config" / "china_indicators.yaml"
+CHINA_SUMMARY_PATH = ROOT / "output" / "china_dashboard_summary.json"
 UK_CONFIG_PATH = ROOT / "config" / "uk_indicators.yaml"
 UK_SUMMARY_PATH = ROOT / "output" / "uk_dashboard_summary.json"
 
@@ -63,6 +65,83 @@ def _us_summary() -> dict:
     if not US_SUMMARY_PATH.exists():
         return {}
     return json.loads(US_SUMMARY_PATH.read_text())
+
+
+def _append_china_sources(lines: list[str]) -> None:
+    if not CHINA_CONFIG_PATH.exists():
+        return
+    config = yaml.safe_load(CHINA_CONFIG_PATH.read_text()) or {}
+    indicators = config.get("indicators", [])
+    summary = json.loads(CHINA_SUMMARY_PATH.read_text()) if CHINA_SUMMARY_PATH.exists() else {}
+    lines.extend([
+        "",
+        "## China Data-First Dashboard Sources",
+        "",
+        "The China page is generated from `config/china_indicators.yaml`. Current rendered charts deliberately use reproducible public endpoints: World Bank WDI for annual national-account and structural series, IMF DataMapper for WEO fiscal ratios, SAFE for RMB central parity, and PBC latest-card pages for selected money-market snapshots. China-native monthly NBS/PBOC history is not proxied when an official reusable endpoint has not been validated.",
+        "",
+        f"Configured charts: {len(indicators)}. Latest rendered chart count: {summary.get('charts', 'unknown')}. Source groups: {summary.get('source_groups', 'unknown')}.",
+        "",
+        "| Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |",
+        "|---|---|---|---|---|---|---|---|---|",
+    ])
+    for item in indicators:
+        label = item.get("label_en") or item.get("label_zh") or item.get("id")
+        series_id = item.get("series") or item.get("metric") or ""
+        lines.append(
+            "| "
+            + " | ".join([
+                _clean(item.get("section")),
+                f"`{_clean(item.get('id'))}`",
+                _clean(label),
+                _clean(item.get("frequency")),
+                _clean(item.get("unit")),
+                _clean(item.get("fetcher")),
+                _clean(item.get("source_name")),
+                _clean(series_id),
+                _clean(item.get("caveat_en")),
+            ])
+            + " |"
+        )
+
+    cards = config.get("latest_cards", [])
+    lines.extend([
+        "",
+        "### China Latest-Card Snapshots",
+        "",
+        "| Card | Label | Fetcher | Source page | Main note |",
+        "|---|---|---|---|---|",
+    ])
+    for item in cards:
+        lines.append(
+            "| "
+            + " | ".join([
+                f"`{_clean(item.get('id'))}`",
+                _clean(item.get("label_en") or item.get("label_zh")),
+                _clean(item.get("fetcher")),
+                _clean(item.get("url")),
+                _clean(f"Expected title: {item.get('expected_title', '')}"),
+            ])
+            + " |"
+        )
+
+    gaps = config.get("data_gaps", [])
+    lines.extend([
+        "",
+        "## China Official Data Gaps",
+        "",
+        "| Section | Indicator family | Current status |",
+        "|---|---|---|",
+    ])
+    for item in gaps:
+        lines.append(
+            "| "
+            + " | ".join([
+                _clean(item.get("section")),
+                _clean(item.get("item_en")),
+                _clean(item.get("status_en")),
+            ])
+            + " |"
+        )
 
 
 def _append_uk_sources(lines: list[str]) -> None:
@@ -203,6 +282,7 @@ def build_catalog() -> str:
         "- Derived series must be described in the source note, including denominator, transformation, or spread convention.",
         "- Country-indicator slots that would still rely on transparent proxy data are intentionally dropped from the public pages rather than rendered as low-confidence placeholders.",
         "- `watch` does not mean unusable; it means the series is lagged, manually curated, snapshot-based, derived, definition-sensitive, or should be cross-checked before trading use.",
+        "- External harnesses and generic aggregator libraries are treated as source-discovery aids, not automatic authority. Do not install heavy optional dependencies or substitute proxy series unless the native endpoint, definition, frequency, and update behavior have been validated.",
         "- Re-run `make build-v4`, `make validate`, and `make proxy-report` after changing adapters or this catalog.",
         "",
         "## Current Coverage Summary",
@@ -290,6 +370,7 @@ def build_catalog() -> str:
         suffix = "..." if len(slots) > 12 else ""
         lines.append(f"| {_clean(source)} | {len(slots)} | {_clean(sample + suffix)} |")
 
+    _append_china_sources(lines)
     _append_uk_sources(lines)
     _append_us_sources(lines)
 

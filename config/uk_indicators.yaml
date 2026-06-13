@@ -90,6 +90,38 @@ indicators:
     max_age_days: 170
     caveat_en: "Quarter-on-quarter growth derived from ONS household final consumption expenditure, national concept CVM SA; revised alongside GDP balancing."
     caveat_zh: "由ONS居民最终消费支出national concept实际季调水平计算环比；会随GDP平衡过程修订。"
+  - id: real_household_disposable_income_per_head
+    section: national_accounts
+    label_en: "Real Household Disposable Income per Head"
+    label_zh: "实际居民可支配收入/人"
+    unit: "GBP"
+    fetcher: ons_timeseries
+    series: "CRXX"
+    dataset: "UKEA"
+    ons_path: "/economy/grossdomesticproductgdp/timeseries/crxx/ukea/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/crxx/ukea"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    max_age_days: 330
+    caveat_en: "ONS real household disposable income per head, chained-volume seasonally adjusted; useful for the household purchasing-power channel, but quarterly sector-account revisions can be material."
+    caveat_zh: "ONS实际居民可支配收入/人，链式量季调；适合观察居民购买力渠道，但季度部门账户修订可能较大。"
+  - id: household_saving_ratio
+    section: national_accounts
+    label_en: "Household Saving Ratio"
+    label_zh: "居民储蓄率"
+    unit: "%"
+    fetcher: ons_timeseries
+    series: "NRJS"
+    dataset: "UKEA"
+    ons_path: "/economy/grossdomesticproductgdp/timeseries/nrjs/ukea/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/nrjs/ukea"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    max_age_days: 330
+    caveat_en: "ONS households and NPISH saving ratio, current-price seasonally adjusted; important for consumption resilience, but can be revised with income, pension-saving, and sector-account balancing updates."
+    caveat_zh: "ONS居民与NPISH储蓄率，现价季调；对消费韧性很重要，但会随收入、养老金储蓄和部门账户平衡更新而修订。"
   - id: gfcf_qoq
     section: national_accounts
     label_en: "Real Gross Fixed Capital Formation"
@@ -360,6 +392,22 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "ONS total goods-and-services trade balance from UK Economic Accounts; quarterly and non-seasonally adjusted, so use it for BoP-level context rather than monthly trading impulse."
     caveat_zh: "ONS英国经济账户中的货物与服务总贸易余额；季度、未季调，更适合作为国际收支层面的背景而非月度交易脉冲。"
+  - id: current_account_gdp
+    section: external
+    label_en: "Current Account Balance"
+    label_zh: "经常账户余额/GDP"
+    unit: "% of GDP"
+    fetcher: ons_timeseries
+    series: "AA6H"
+    dataset: "UKEA"
+    ons_path: "/economy/nationalaccounts/balanceofpayments/timeseries/aa6h/ukea/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/timeseries/aa6h/ukea"
+    frequency: "quarterly"
+    start_date: "1997-01-01"
+    max_age_days: 330
+    caveat_en: "ONS balance-of-payments current-account balance as a share of GDP; use for external-funding and sterling vulnerability context, not high-frequency trade timing."
+    caveat_zh: "ONS国际收支经常账户余额占GDP比；适合观察外部融资与英镑脆弱性背景，不适合作为高频贸易时点指标。"
   - id: gbp_reer
     section: external
     label_en: "Sterling Real Effective Exchange Rate"
@@ -419,6 +467,22 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "ONS employment rate, aged 16-64, seasonally adjusted; ONS labels the latest point as a three-month average."
     caveat_zh: "ONS 16-64岁季调就业率；ONS将最新点标注为三个月平均。"
+  - id: economic_inactivity_rate_16_64
+    section: labour_market
+    label_en: "Economic Inactivity Rate, Ages 16-64"
+    label_zh: "16-64岁经济不活跃率"
+    unit: "%"
+    fetcher: ons_timeseries
+    series: "LF2S"
+    dataset: "LMS"
+    ons_path: "/employmentandlabourmarket/peoplenotinwork/economicinactivity/timeseries/lf2s/lms/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peoplenotinwork/economicinactivity/timeseries/lf2s/lms"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    max_age_days: 150
+    caveat_en: "ONS LFS economic inactivity rate for ages 16-64, seasonally adjusted and labelled as a rolling three-month average; central for UK labour-supply and wage-pressure analysis, but LFS sampling uncertainty remains important."
+    caveat_zh: "ONS LFS 16-64岁经济不活跃率，季调且以滚动三个月平均标注；对英国劳动力供给和工资压力分析很关键，但仍需注意LFS抽样不确定性。"
   - id: claimant_count
     section: labour_market
     label_en: "Claimant Count"
@@ -554,6 +618,70 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "Core CPI helps separate domestic persistence from headline energy/import noise."
     caveat_zh: "核心CPI有助于把国内通胀粘性与能源/进口噪音区分开。"
+  - id: cpi_services_yoy
+    section: prices
+    label_en: "CPI Services Inflation"
+    label_zh: "CPI服务通胀"
+    unit: "%"
+    fetcher: ons_timeseries
+    series: "D7NN"
+    dataset: "MM23"
+    ons_path: "/economy/inflationandpriceindices/timeseries/d7nn/mm23/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7nn/mm23"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    max_age_days: 80
+    caveat_en: "ONS CPI annual rate for services; a key BoE domestic-persistence gauge and more policy-relevant than headline energy swings."
+    caveat_zh: "ONS CPI服务项目年度涨幅；是BoE观察国内通胀粘性的关键指标，比整体能源波动更具政策相关性。"
+  - id: cpi_goods_yoy
+    section: prices
+    label_en: "CPI Goods Inflation"
+    label_zh: "CPI商品通胀"
+    unit: "%"
+    fetcher: ons_timeseries
+    series: "D7NM"
+    dataset: "MM23"
+    ons_path: "/economy/inflationandpriceindices/timeseries/d7nm/mm23/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7nm/mm23"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    max_age_days: 80
+    caveat_en: "ONS CPI annual rate for goods; useful for separating imported goods/supply-chain disinflation from domestic services persistence."
+    caveat_zh: "ONS CPI商品年度涨幅；有助于把进口商品/供应链通缩与国内服务粘性区分开。"
+  - id: food_non_alcoholic_cpi_yoy
+    section: prices
+    label_en: "Food & Non-Alcoholic Beverages CPI"
+    label_zh: "食品与非酒精饮料CPI"
+    unit: "%"
+    fetcher: ons_timeseries
+    series: "D7G8"
+    dataset: "MM23"
+    ons_path: "/economy/inflationandpriceindices/timeseries/d7g8/mm23/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7g8/mm23"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    max_age_days: 80
+    caveat_en: "ONS CPI annual rate for food and non-alcoholic beverages; important for household real-income pressure and inflation-expectations narratives."
+    caveat_zh: "ONS食品与非酒精饮料CPI年度涨幅；对居民实际收入压力和通胀预期叙事很重要。"
+  - id: household_energy_cpi_yoy
+    section: prices
+    label_en: "Household Energy CPI"
+    label_zh: "家庭能源CPI"
+    unit: "%"
+    fetcher: ons_timeseries
+    series: "D7GT"
+    dataset: "MM23"
+    ons_path: "/economy/inflationandpriceindices/timeseries/d7gt/mm23/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7gt/mm23"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    max_age_days: 80
+    caveat_en: "ONS CPI annual rate for electricity, gas, and other household fuels; dominated by Ofgem price-cap mechanics and base effects, so read alongside services/core CPI."
+    caveat_zh: "ONS电力、燃气与其他家庭燃料CPI年度涨幅；受Ofgem价格上限机制和基数效应主导，应与服务/核心CPI结合阅读。"
   - id: rpi_yoy
     section: prices
     label_en: "RPI Inflation"
@@ -986,13 +1114,13 @@ data_gaps:
   - section: labour_market
     item_en: "Pay settlements"
     item_zh: "工资协议"
-    status_en: "ONS redundancy level/rate are now charted; pay-settlement series still need stable release-table mappings or survey/licensing checks."
-    status_zh: "ONS裁员人数/裁员率已接入；工资协议序列仍需稳定发布表映射或调查/授权核验。"
+    status_en: "ONS inactivity, redundancy level/rate, vacancies, hours, employment, unemployment, and AWE are now charted; pay-settlement series still need stable release-table mappings or survey/licensing checks."
+    status_zh: "ONS经济不活跃率、裁员人数/裁员率、职位空缺、工时、就业、失业与AWE已接入；工资协议序列仍需稳定发布表映射或调查/授权核验。"
   - section: prices
     item_en: "Inflation expectations surveys and index-linked gilt breakevens"
     item_zh: "通胀预期调查与指数挂钩国债隐含通胀"
-    status_en: "RPIX and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings."
-    status_zh: "RPIX与DESNZ汽油/柴油泵价已接入；通胀预期和盈亏平衡通胀仍需稳定且授权安全的映射。"
+    status_en: "ONS headline/core/services/goods/food/household-energy CPI, RPI/RPIX, PPI, and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings."
+    status_zh: "ONS整体/核心/服务/商品/食品/家庭能源CPI、RPI/RPIX、PPI与DESNZ汽油/柴油泵价已接入；通胀预期和盈亏平衡通胀仍需稳定且授权安全的映射。"
   - section: monetary_financial
     item_en: "Trends in Lending, Credit Conditions Survey, HEW, fuller quoted-rate matrix, and stale OECD 3M interbank mirror"
     item_zh: "Trends in Lending、信贷条件调查、住房权益提取、更完整报价利率矩阵，以及滞后的OECD 3M银行间利率镜像"

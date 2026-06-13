@@ -10,6 +10,7 @@ Purpose: help future models and developers understand exactly which source is us
 - Derived series must be described in the source note, including denominator, transformation, or spread convention.
 - Country-indicator slots that would still rely on transparent proxy data are intentionally dropped from the public pages rather than rendered as low-confidence placeholders.
 - `watch` does not mean unusable; it means the series is lagged, manually curated, snapshot-based, derived, definition-sensitive, or should be cross-checked before trading use.
+- External harnesses and generic aggregator libraries are treated as source-discovery aids, not automatic authority. Do not install heavy optional dependencies or substitute proxy series unless the native endpoint, definition, frequency, and update behavior have been validated.
 - Re-run `make build-v4`, `make validate`, and `make proxy-report` after changing adapters or this catalog.
 
 ## Current Coverage Summary
@@ -568,17 +569,73 @@ Remaining rendered proxy slots: 1.
 | World Bank WDI fallback | 1 | RO:credit_to_gdp_gap |
 | Yahoo Finance derived | 1 | HU:equity_vol_30d |
 
+## China Data-First Dashboard Sources
+
+The China page is generated from `config/china_indicators.yaml`. Current rendered charts deliberately use reproducible public endpoints: World Bank WDI for annual national-account and structural series, IMF DataMapper for WEO fiscal ratios, SAFE for RMB central parity, and PBC latest-card pages for selected money-market snapshots. China-native monthly NBS/PBOC history is not proxied when an official reusable endpoint has not been validated.
+
+Configured charts: 26. Latest rendered chart count: 26. Source groups: 4.
+
+| Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
+|---|---|---|---|---|---|---|---|---|
+| activity_production | `real_gdp_growth` | Real GDP Growth | annual | % | world_bank | World Bank WDI | NY.GDP.MKTP.KD.ZG | Annual WDI series; the report's preferred short-term lens is NBS quarterly/monthly production-side data. |
+| activity_production | `nominal_gdp_usd` | Nominal GDP | annual | USD | world_bank | World Bank WDI | NY.GDP.MKTP.CD | USD conversion adds exchange-rate effects; use RMB NBS levels for domestic accounting work. |
+| activity_production | `industry_value_added_growth` | Industry Value Added Growth | annual | % | world_bank | World Bank WDI | NV.IND.TOTL.KD.ZG | Annual industry value added is broader and slower than NBS monthly industrial production. |
+| activity_production | `services_value_added_growth` | Services Value Added Growth | annual | % | world_bank | World Bank WDI | NV.SRV.TOTL.KD.ZG | Services are harder to measure at high frequency; annual data can miss turning points. |
+| investment | `gfcf_share_gdp` | Gross Fixed Capital Formation | annual | % of GDP | world_bank | World Bank WDI | NE.GDI.FTOT.ZS | National-accounts investment share; not the same as NBS fixed asset investment growth. |
+| consumption | `household_consumption_growth` | Household Consumption Growth | annual | % | world_bank | World Bank WDI | NE.CON.PRVT.KD.ZG | National-accounts household consumption; not directly comparable to retail sales. |
+| consumption | `household_consumption_share` | Household Consumption Share | annual | % of GDP | world_bank | World Bank WDI | NE.CON.PRVT.ZS | Useful for rebalancing, but too low-frequency for near-term consumption momentum. |
+| external | `current_account_gdp` | Current Account Balance | annual | % of GDP | world_bank | World Bank WDI | BN.CAB.XOKA.GD.ZS | Annual BOP ratio; SAFE quarterly BOP is the preferred higher-frequency source. |
+| external | `exports_goods_services` | Exports of Goods & Services | annual | USD | world_bank | World Bank WDI | BX.GSR.GNFS.CD | Annual national-accounts goods and services exports; customs monthly goods trade is the preferred high-frequency source. |
+| external | `imports_goods_services` | Imports of Goods & Services | annual | USD | world_bank | World Bank WDI | BM.GSR.GNFS.CD | Annual national-accounts goods and services imports; customs monthly goods trade is the preferred high-frequency source. |
+| external | `trade_openness` | Trade Openness | annual | % of GDP | world_bank | World Bank WDI | NE.TRD.GNFS.ZS | Goods and services trade share of GDP; does not reveal partner/product composition. |
+| external | `fx_reserves` | Foreign Exchange Reserves | annual | USD | world_bank | World Bank WDI | FI.RES.TOTL.CD | Annual reserve stock; PBOC releases monthly reserves around the 7th day of the following month. |
+| external | `usd_cny_midpoint` | USD/CNY Central Parity | daily | CNY per USD | safe_rmb_midpoint | SAFE | SAFE RMBQuery USD column | Official central parity table; page query is limited to roughly one year at a time. |
+| external | `eur_cny_midpoint` | EUR/CNY Central Parity | daily | CNY per EUR | safe_rmb_midpoint | SAFE | SAFE RMBQuery EUR column | Official central parity table; page query is limited to roughly one year at a time. |
+| money_credit | `broad_money_growth` | Broad Money Growth | annual | % | world_bank | World Bank WDI | FM.LBL.BMNY.ZG | Annual WDI broad-money growth; PBOC monthly M2 is the preferred China-native series. |
+| money_credit | `private_credit_gdp` | Private Credit by Financial Sector | annual | % of GDP | world_bank | World Bank WDI | FS.AST.PRVT.GD.ZS | Broad financial-depth metric; not a substitute for PBOC loan and TSF flows. |
+| prices | `cpi_inflation` | CPI Inflation | annual | % | world_bank | World Bank WDI | FP.CPI.TOTL.ZG | Annual CPI; NBS monthly CPI is the preferred tactical inflation series. |
+| prices | `gdp_deflator` | GDP Deflator | annual | % | world_bank | World Bank WDI | NY.GDP.DEFL.KD.ZG | Useful for economy-wide nominal/real split, but not a monthly price gauge. |
+| population_labor | `unemployment` | Unemployment Rate | annual | % | world_bank | World Bank WDI / ILO estimate | SL.UEM.TOTL.ZS | ILO-modeled annual rate; China urban surveyed unemployment and youth unemployment have definition breaks. |
+| population_labor | `total_population` | Total Population | annual | people | world_bank | World Bank WDI | SP.POP.TOTL | Annual population stock; revisions can follow census updates. |
+| population_labor | `urban_population_share` | Urban Population Share | annual | % | world_bank | World Bank WDI | SP.URB.TOTL.IN.ZS | Structural urbanization metric; not a labor-market cycle indicator. |
+| population_labor | `working_age_share` | Working-age Population Share | annual | % | world_bank | World Bank WDI | SP.POP.1564.TO.ZS | Captures demographic pressure but not employment quality or migrant-worker dynamics. |
+| population_labor | `birth_rate` | Crude Birth Rate | annual | per 1,000 people | world_bank | World Bank WDI | SP.DYN.CBRT.IN | Demographic vital-statistics series; revisions are possible. |
+| population_labor | `death_rate` | Crude Death Rate | annual | per 1,000 people | world_bank | World Bank WDI | SP.DYN.CDRT.IN | Demographic vital-statistics series; revisions are possible. |
+| government_finance | `general_gov_balance` | General Government Balance | annual | % of GDP | imf_datamapper | IMF WEO | GGXCNL_NGDP | IMF WEO includes estimates/projections; China fiscal analysis should also monitor land sales and off-budget local-government financing. |
+| government_finance | `general_gov_debt` | General Government Gross Debt | annual | % of GDP | imf_datamapper | IMF WEO | GGXWDG_NGDP | IMF WEO measure; does not fully solve quasi-fiscal/LGFV boundary issues. |
+
+### China Latest-Card Snapshots
+
+| Card | Label | Fetcher | Source page | Main note |
+|---|---|---|---|---|
+| `pbc_m2_latest` | PBC M2 YoY | pbc_indicator_card | https://www.pbc.gov.cn/en/3688006/3689169/3753760/index.html | Expected title: M2 |
+| `pbc_afre_latest` | PBC AFRE Outstanding | pbc_indicator_card | https://www.pbc.gov.cn/en/3688006/3689169/3753765/index.html | Expected title: AFRE (Outstanding) |
+| `pbc_dr007_latest` | PBC DR007 | pbc_indicator_card | https://www.pbc.gov.cn/en/3688006/3689169/3753752/index.html | Expected title: DR007 |
+
+## China Official Data Gaps
+
+| Section | Indicator family | Current status |
+|---|---|---|
+| activity_production | NBS monthly industrial production, services output index, electricity consumption, rail freight, industrial profits, and PMI series | NBS EasyQuery returned 403 from this runtime; add an official adapter only after the endpoint is reproducible. |
+| investment | NBS fixed asset investment by sector and project pipeline | Core China-native monthly indicators; not proxied in v1. |
+| real_estate | NBS property investment, floor-space starts/completions/sales, 70-city price index, land transactions, and inventory | High priority for the next official-source adapter. |
+| consumption | NBS retail sales, online retail sales, household survey, auto sales, and consumer confidence | Retail sales are not equivalent to national-accounts consumption; keep separate when official data is wired. |
+| money_credit | PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates | PBC latest cards are shown; full history requires a dedicated PBOC parser. |
+| prices | NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices | Annual WDI inflation and deflator charts are shown; tactical monthly data is pending. |
+
 ## United Kingdom Data-First Dashboard Sources
 
 The UK page is generated from `config/uk_indicators.yaml`. Native ONS time-series JSON and Bank of England IADB CSV endpoints are preferred where validated; FRED/OECD/BIS/IMF mirror series remain for broader public-data coverage.
 
-Configured charts: 63. Latest rendered chart count: 63. Source groups: 9.
+Configured charts: 71. Latest rendered chart count: 71. Source groups: 9.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
 | national_accounts | `real_gdp_qoq` | Real GDP Growth | quarterly | % | ons_timeseries | ONS | IHYQ | ONS quarter-on-quarter CVM GDP growth is preferred over the slower FRED/OECD mirror; early UK GDP is still subject to material revisions. |
 | national_accounts | `nominal_gdp_gbp` | Nominal GDP | quarterly | GBP mn | ons_timeseries | ONS | YBHA | Nominal level is useful for scale and debt ratios, but not for real activity momentum. |
 | national_accounts | `private_consumption_qoq` | Real Private Consumption | quarterly | % | ons_timeseries | ONS | ABJR | Quarter-on-quarter growth derived from ONS household final consumption expenditure, national concept CVM SA; revised alongside GDP balancing. |
+| national_accounts | `real_household_disposable_income_per_head` | Real Household Disposable Income per Head | quarterly | GBP | ons_timeseries | ONS | CRXX | ONS real household disposable income per head, chained-volume seasonally adjusted; useful for the household purchasing-power channel, but quarterly sector-account revisions can be material. |
+| national_accounts | `household_saving_ratio` | Household Saving Ratio | quarterly | % | ons_timeseries | ONS | NRJS | ONS households and NPISH saving ratio, current-price seasonally adjusted; important for consumption resilience, but can be revised with income, pension-saving, and sector-account balancing updates. |
 | national_accounts | `gfcf_qoq` | Real Gross Fixed Capital Formation | quarterly | % | ons_timeseries | ONS | NPQT | Quarter-on-quarter growth derived from the ONS CVM SA GFCF level; investment is volatile and revision-prone. |
 | national_accounts | `monthly_gdp_index` | Monthly GDP Index | monthly | index | ons_timeseries | ONS | YBEZ | ONS monthly GDP index gives release-day activity tracking, but still feeds into later quarterly GDP revisions. |
 | monthly_output | `industrial_production` | Industrial Production | monthly | index | ons_timeseries | ONS | K222 | ONS Index of Production, B-E production CVMSA; preferred over the lagged FRED/OECD mirror for UK release work. |
@@ -597,10 +654,12 @@ Configured charts: 63. Latest rendered chart count: 63. Source groups: 9.
 | external | `imports_qoq` | Real Imports | quarterly | % | ons_timeseries | ONS | IKBL | Quarter-on-quarter growth derived from ONS total trade imports CVM SA; trade contribution can change after GDP revisions. |
 | external | `goods_trade_balance` | Goods Trade Balance | monthly | GBP mn | ons_timeseries | ONS | BOKI | ONS seasonally adjusted goods-trade balance, balance-of-payments basis, current prices; volatile erratics and later trade revisions matter. |
 | external | `total_trade_balance` | Total Trade Balance | quarterly | GBP mn | ons_timeseries | ONS | KTMY | ONS total goods-and-services trade balance from UK Economic Accounts; quarterly and non-seasonally adjusted, so use it for BoP-level context rather than monthly trading impulse. |
+| external | `current_account_gdp` | Current Account Balance | quarterly | % of GDP | ons_timeseries | ONS | AA6H | ONS balance-of-payments current-account balance as a share of GDP; use for external-funding and sterling vulnerability context, not high-frequency trade timing. |
 | external | `gbp_reer` | Sterling Real Effective Exchange Rate | monthly | index | fred | FRED / BIS | RBGBBIS | BIS REER is the clean public sterling competitiveness measure used here for the FCI-style FX channel. |
 | labour_market | `unemployment_rate` | Unemployment Rate | monthly | % | ons_timeseries | ONS | MGSX | ONS unemployment rate, aged 16 and over, seasonally adjusted; ONS labels the latest point as a three-month average. |
 | labour_market | `employment_total` | Employment Total | monthly | 000s | ons_timeseries | ONS | MGRZ | ONS number of people in employment aged 16 and over, seasonally adjusted and labelled as a three-month average; LFS sampling uncertainty remains important. |
 | labour_market | `employment_rate_15_64` | Employment Rate, Ages 16-64 | monthly | % | ons_timeseries | ONS | LF24 | ONS employment rate, aged 16-64, seasonally adjusted; ONS labels the latest point as a three-month average. |
+| labour_market | `economic_inactivity_rate_16_64` | Economic Inactivity Rate, Ages 16-64 | monthly | % | ons_timeseries | ONS | LF2S | ONS LFS economic inactivity rate for ages 16-64, seasonally adjusted and labelled as a rolling three-month average; central for UK labour-supply and wage-pressure analysis, but LFS sampling uncertainty remains important. |
 | labour_market | `claimant_count` | Claimant Count | monthly | 000s | ons_timeseries | ONS | BCJD | ONS UK claimant count, people, seasonally adjusted; definition can be affected by benefit-system changes. |
 | labour_market | `vacancies_total` | Job Vacancies | monthly | 000s | ons_timeseries | ONS | AP2Y | ONS UK vacancies, total, in thousands; useful as a labour-demand pressure gauge. |
 | labour_market | `hours_worked_total` | Total Weekly Hours Worked | monthly | mn hours | ons_timeseries | ONS | YBUS | LFS total actual weekly hours worked, seasonally adjusted; captures labour input beyond headcount. |
@@ -610,6 +669,10 @@ Configured charts: 63. Latest rendered chart count: 63. Source groups: 9.
 | labour_market | `awe_regular_pay_growth` | AWE Regular Pay Growth | monthly | % | ons_timeseries | ONS | KAI9 | AWE whole-economy regular-pay growth, three-month average, excluding arrears; cleaner for domestic wage persistence than total pay. |
 | prices | `cpi_yoy` | Headline CPI Inflation | monthly | % | ons_timeseries | ONS | D7G7 | ONS CPI annual rate, all items; this is the MPC target measure and replaces the lagged FRED/OECD mirror. |
 | prices | `core_cpi_yoy` | Core CPI Inflation | monthly | % | ons_timeseries | ONS | DKO8 | Core CPI helps separate domestic persistence from headline energy/import noise. |
+| prices | `cpi_services_yoy` | CPI Services Inflation | monthly | % | ons_timeseries | ONS | D7NN | ONS CPI annual rate for services; a key BoE domestic-persistence gauge and more policy-relevant than headline energy swings. |
+| prices | `cpi_goods_yoy` | CPI Goods Inflation | monthly | % | ons_timeseries | ONS | D7NM | ONS CPI annual rate for goods; useful for separating imported goods/supply-chain disinflation from domestic services persistence. |
+| prices | `food_non_alcoholic_cpi_yoy` | Food & Non-Alcoholic Beverages CPI | monthly | % | ons_timeseries | ONS | D7G8 | ONS CPI annual rate for food and non-alcoholic beverages; important for household real-income pressure and inflation-expectations narratives. |
+| prices | `household_energy_cpi_yoy` | Household Energy CPI | monthly | % | ons_timeseries | ONS | D7GT | ONS CPI annual rate for electricity, gas, and other household fuels; dominated by Ofgem price-cap mechanics and base effects, so read alongside services/core CPI. |
 | prices | `rpi_yoy` | RPI Inflation | monthly | % | ons_timeseries | ONS | CZBH | ONS RPI all-items 12-month change; not a National Statistic, but still relevant for gilts, contracts, and UK inflation history. |
 | prices | `rpix_yoy` | RPIX Inflation | monthly | % | ons_timeseries | ONS | CHMK | Derived year-on-year rate from the ONS RPIX index excluding mortgage interest payments; RPIX is no longer the MPC target but remains useful for historical UK inflation work. |
 | prices | `producer_prices` | PPI Output: Manufactured Products | monthly | index | ons_timeseries | ONS | GD6Y | ONS PPI output total manufactured products excluding duty, index level; use the release table for detailed industry decomposition. |
@@ -648,8 +711,8 @@ Configured charts: 63. Latest rendered chart count: 63. Source groups: 9.
 | monthly_output | Manufacturing, construction, services, and composite PMI | Important in the GS framework, but not yet wired because S&P Global PMI history is vendor-controlled. |
 | monthly_output | CBI Distributive Trades, CBI Industrial Trends, BCC QES, BRC/KPMG Retail Sales Monitor | Survey sources need separate adapters and licensing checks. |
 | housing_construction | Nationwide, Halifax, Rightmove, Hometrack, and RICS | ONS/HMLR UK HPI, MHCLG starts/completions, ONS construction output, and BoE mortgage approvals are now charted; vendor house-price and sentiment sources still need licensing/API validation. |
-| labour_market | Pay settlements | ONS redundancy level/rate are now charted; pay-settlement series still need stable release-table mappings or survey/licensing checks. |
-| prices | Inflation expectations surveys and index-linked gilt breakevens | RPIX and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings. |
+| labour_market | Pay settlements | ONS inactivity, redundancy level/rate, vacancies, hours, employment, unemployment, and AWE are now charted; pay-settlement series still need stable release-table mappings or survey/licensing checks. |
+| prices | Inflation expectations surveys and index-linked gilt breakevens | ONS headline/core/services/goods/food/household-energy CPI, RPI/RPIX, PPI, and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings. |
 | monetary_financial | Trends in Lending, Credit Conditions Survey, HEW, fuller quoted-rate matrix, and stale OECD 3M interbank mirror | BoE IADB now covers Bank Rate, SONIA, sterling, 5Y/10Y nominal gilt par yields, M4, consumer credit, mortgage approvals, and one quoted-rate series. The lagged FRED/OECD 3M interbank mirror is intentionally not charted; use SONIA/Bank Rate for the short-rate channel until a validated BoE or market-data 3M term source is wired. |
 | fiscal_policy | OBR forecast vintages and deeper debt instrument breakdowns | Monthly PSNB, PSNCR, PSND, PSNFL, and PSND ex BoE are charted from ONS; core March 2026 OBR forecast rows for borrowing, PSND ex BoE, debt interest, and effective interest rates are now charted. Full vintage archive and instrument-level history still need deeper adapters. |
 

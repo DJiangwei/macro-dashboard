@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-13T13:47:42.406627+00:00",
+  "generated": "2026-06-13T21:51:17.065553+00:00",
   "as_of_date": "2026-06-13",
   "thresholds": {
     "daily": "14 days",
@@ -86,8 +86,8 @@
     },
     {
       "dashboard": "United Kingdom",
-      "charts": 63,
-      "current": 59,
+      "charts": 71,
+      "current": 67,
       "stale": 0,
       "lagged_source": 0,
       "projection": 4,
@@ -8077,33 +8077,33 @@
       "indicator_id": "real_gdp_qoq",
       "label": "Real GDP Growth",
       "frequency": "quarterly",
-      "latest_observation": "2025-10-01 · 0.05 %",
-      "latest_date": "2025-10-01",
-      "age_basis_date": "2025-12-31",
-      "age_days": 164,
+      "latest_observation": "2026-03-31 · 0.60 %",
+      "latest_date": "2026-03-31",
+      "age_basis_date": "2026-03-31",
+      "age_days": 74,
       "threshold_days": 330,
       "freshness_status": "current",
       "quality_status": "watch",
-      "source": "FRED / OECD",
-      "series_id": "NAEXKP01GBQ657S",
-      "provider_update": "2026-04-15",
-      "note": "Quarter-on-quarter growth from OECD via FRED; early UK GDP is subject to material later revisions."
+      "source": "ONS",
+      "series_id": "IHYQ",
+      "provider_update": "2026-05-13",
+      "note": "ONS quarter-on-quarter CVM GDP growth is preferred over the slower FRED/OECD mirror; early UK GDP is still subject to material revisions."
     },
     {
       "dashboard": "United Kingdom",
       "indicator_id": "nominal_gdp_gbp",
       "label": "Nominal GDP",
       "frequency": "quarterly",
-      "latest_observation": "2025-10-01 · 769,261 GBP mn",
-      "latest_date": "2025-10-01",
-      "age_basis_date": "2025-12-31",
-      "age_days": 164,
+      "latest_observation": "2026-03-31 · 781,743 GBP mn",
+      "latest_date": "2026-03-31",
+      "age_basis_date": "2026-03-31",
+      "age_days": 74,
       "threshold_days": 330,
       "freshness_status": "current",
       "quality_status": "watch",
-      "source": "FRED / OECD",
-      "series_id": "UKNGDP",
-      "provider_update": "2026-04-02",
+      "source": "ONS",
+      "series_id": "YBHA",
+      "provider_update": "2026-05-13",
       "note": "Nominal level is useful for scale and debt ratios, but not for real activity momentum."
     },
     {
@@ -8111,34 +8111,68 @@
       "indicator_id": "private_consumption_qoq",
       "label": "Real Private Consumption",
       "frequency": "quarterly",
-      "latest_observation": "2025-10-01 · 0.05 %",
-      "latest_date": "2025-10-01",
+      "latest_observation": "2026-03-31 · 0.59 %",
+      "latest_date": "2026-03-31",
+      "age_basis_date": "2026-03-31",
+      "age_days": 74,
+      "threshold_days": 330,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "ABJR",
+      "provider_update": "2026-05-13",
+      "note": "Quarter-on-quarter growth derived from ONS household final consumption expenditure, national concept CVM SA; revised alongside GDP balancing."
+    },
+    {
+      "dashboard": "United Kingdom",
+      "indicator_id": "real_household_disposable_income_per_head",
+      "label": "Real Household Disposable Income per Head",
+      "frequency": "quarterly",
+      "latest_observation": "2025-12-31 · 6,353 GBP",
+      "latest_date": "2025-12-31",
       "age_basis_date": "2025-12-31",
       "age_days": 164,
       "threshold_days": 330,
       "freshness_status": "current",
       "quality_status": "watch",
-      "source": "FRED / OECD",
-      "series_id": "NAEXKP02GBQ657S",
-      "provider_update": "2026-04-15",
-      "note": "Demand-side national-accounts component; revised alongside GDP balancing."
+      "source": "ONS",
+      "series_id": "CRXX",
+      "provider_update": "2026-03-30",
+      "note": "ONS real household disposable income per head, chained-volume seasonally adjusted; useful for the household purchasing-power channel, but quarterly sector-account revisions can be material."
+    },
+    {
+      "dashboard": "United Kingdom",
+      "indicator_id": "household_saving_ratio",
+      "label": "Household Saving Ratio",
+      "frequency": "quarterly",
+      "latest_observation": "2025-12-31 · 9.90 %",
+      "latest_date": "2025-12-31",
+      "age_basis_date": "2025-12-31",
+      "age_days": 164,
+      "threshold_days": 330,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "NRJS",
+      "provider_update": "2026-03-30",
+      "note": "ONS households and NPISH saving ratio, current-price seasonally adjusted; important for consumption resilience, but can be revised with income, pension-saving, and sector-account balancing updates."
     },
     {
       "dashboard": "United Kingdom",
       "indicator_id": "gfcf_qoq",
       "label": "Real Gross Fixed Capital Formation",
       "frequency": "quarterly",
-      "latest_observation": "2025-10-01 · 0.16 %",
-      "latest_date": "2025-10-01",
-      "age_basis_date": "2025-12-31",
-      "age_days": 164,
+      "latest_observation": "2026-03-31 · -0.63 %",
+      "latest_date": "2026-03-31",
+      "age_basis_date": "2026-03-31",
+      "age_days": 74,
       "threshold_days": 330,
       "freshness_status": "current",
       "quality_status": "watch",
-      "source": "FRED / OECD",
-      "series_id": "NAEXKP04GBQ657S",
-      "provider_update": "2026-04-15",
-      "note": "Investment is volatile and revision-prone; treat quarterly swings cautiously."
+      "source": "ONS",
+      "series_id": "NPQT",
+      "provider_update": "2026-05-13",
+      "note": "Quarter-on-quarter growth derived from the ONS CVM SA GFCF level; investment is volatile and revision-prone."
     },
     {
       "dashboard": "United Kingdom",
@@ -8366,34 +8400,34 @@
       "indicator_id": "exports_qoq",
       "label": "Real Exports",
       "frequency": "quarterly",
-      "latest_observation": "2025-10-01 · -0.67 %",
-      "latest_date": "2025-10-01",
-      "age_basis_date": "2025-12-31",
-      "age_days": 164,
+      "latest_observation": "2026-03-31 · 0.11 %",
+      "latest_date": "2026-03-31",
+      "age_basis_date": "2026-03-31",
+      "age_days": 74,
       "threshold_days": 330,
       "freshness_status": "current",
       "quality_status": "watch",
-      "source": "FRED / OECD",
-      "series_id": "NAEXKP06GBQ657S",
-      "provider_update": "2026-04-15",
-      "note": "National-accounts exports; use the separate ONS goods-trade balance chart for monthly external-pressure timing."
+      "source": "ONS",
+      "series_id": "IKBK",
+      "provider_update": "2026-05-13",
+      "note": "Quarter-on-quarter growth derived from ONS total trade exports CVM SA; use monthly ONS goods balance for higher-frequency external-pressure timing."
     },
     {
       "dashboard": "United Kingdom",
       "indicator_id": "imports_qoq",
       "label": "Real Imports",
       "frequency": "quarterly",
-      "latest_observation": "2025-10-01 · 0.66 %",
-      "latest_date": "2025-10-01",
-      "age_basis_date": "2025-12-31",
-      "age_days": 164,
+      "latest_observation": "2026-03-31 · 0.65 %",
+      "latest_date": "2026-03-31",
+      "age_basis_date": "2026-03-31",
+      "age_days": 74,
       "threshold_days": 330,
       "freshness_status": "current",
       "quality_status": "watch",
-      "source": "FRED / OECD",
-      "series_id": "NAEXKP07GBQ657S",
-      "provider_update": "2026-04-15",
-      "note": "National-accounts imports; trade contribution can change after GDP revisions, so read with ONS monthly goods balance."
+      "source": "ONS",
+      "series_id": "IKBL",
+      "provider_update": "2026-05-13",
+      "note": "Quarter-on-quarter growth derived from ONS total trade imports CVM SA; trade contribution can change after GDP revisions."
     },
     {
       "dashboard": "United Kingdom",
@@ -8428,6 +8462,23 @@
       "series_id": "KTMY",
       "provider_update": "2026-03-30",
       "note": "ONS total goods-and-services trade balance from UK Economic Accounts; quarterly and non-seasonally adjusted, so use it for BoP-level context rather than monthly trading impulse."
+    },
+    {
+      "dashboard": "United Kingdom",
+      "indicator_id": "current_account_gdp",
+      "label": "Current Account Balance",
+      "frequency": "quarterly",
+      "latest_observation": "2025-12-31 · -2.40 % of GDP",
+      "latest_date": "2025-12-31",
+      "age_basis_date": "2025-12-31",
+      "age_days": 164,
+      "threshold_days": 330,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "AA6H",
+      "provider_update": "2026-03-30",
+      "note": "ONS balance-of-payments current-account balance as a share of GDP; use for external-funding and sterling vulnerability context, not high-frequency trade timing."
     },
     {
       "dashboard": "United Kingdom",
@@ -8467,18 +8518,18 @@
       "dashboard": "United Kingdom",
       "indicator_id": "employment_total",
       "label": "Employment Total",
-      "frequency": "quarterly",
-      "latest_observation": "2025-10-01 · 34,244,000 persons",
-      "latest_date": "2025-10-01",
-      "age_basis_date": "2025-12-31",
-      "age_days": 164,
-      "threshold_days": 330,
+      "frequency": "monthly",
+      "latest_observation": "2026-02-01 · 34,392 000s",
+      "latest_date": "2026-02-01",
+      "age_basis_date": "2026-02-28",
+      "age_days": 105,
+      "threshold_days": 150,
       "freshness_status": "current",
       "quality_status": "watch",
-      "source": "FRED / OECD",
-      "series_id": "LFEMTTTTGBQ647S",
-      "provider_update": "2026-03-16",
-      "note": "Quarterly OECD employment total; not a substitute for the full ONS labour-market release."
+      "source": "ONS",
+      "series_id": "MGRZ",
+      "provider_update": "2026-05-18",
+      "note": "ONS number of people in employment aged 16 and over, seasonally adjusted and labelled as a three-month average; LFS sampling uncertainty remains important."
     },
     {
       "dashboard": "United Kingdom",
@@ -8496,6 +8547,23 @@
       "series_id": "LF24",
       "provider_update": "2026-05-18",
       "note": "ONS employment rate, aged 16-64, seasonally adjusted; ONS labels the latest point as a three-month average."
+    },
+    {
+      "dashboard": "United Kingdom",
+      "indicator_id": "economic_inactivity_rate_16_64",
+      "label": "Economic Inactivity Rate, Ages 16-64",
+      "frequency": "monthly",
+      "latest_observation": "2026-02-01 · 20.9 %",
+      "latest_date": "2026-02-01",
+      "age_basis_date": "2026-02-28",
+      "age_days": 105,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "LF2S",
+      "provider_update": "2026-05-18",
+      "note": "ONS LFS economic inactivity rate for ages 16-64, seasonally adjusted and labelled as a rolling three-month average; central for UK labour-supply and wage-pressure analysis, but LFS sampling uncertainty remains important."
     },
     {
       "dashboard": "United Kingdom",
@@ -8649,6 +8717,74 @@
       "series_id": "DKO8",
       "provider_update": "2026-05-19",
       "note": "Core CPI helps separate domestic persistence from headline energy/import noise."
+    },
+    {
+      "dashboard": "United Kingdom",
+      "indicator_id": "cpi_services_yoy",
+      "label": "CPI Services Inflation",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · 3.20 %",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 44,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "D7NN",
+      "provider_update": "2026-05-19",
+      "note": "ONS CPI annual rate for services; a key BoE domestic-persistence gauge and more policy-relevant than headline energy swings."
+    },
+    {
+      "dashboard": "United Kingdom",
+      "indicator_id": "cpi_goods_yoy",
+      "label": "CPI Goods Inflation",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · 2.40 %",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 44,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "D7NM",
+      "provider_update": "2026-05-19",
+      "note": "ONS CPI annual rate for goods; useful for separating imported goods/supply-chain disinflation from domestic services persistence."
+    },
+    {
+      "dashboard": "United Kingdom",
+      "indicator_id": "food_non_alcoholic_cpi_yoy",
+      "label": "Food & Non-Alcoholic Beverages CPI",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · 3.00 %",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 44,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "D7G8",
+      "provider_update": "2026-05-19",
+      "note": "ONS CPI annual rate for food and non-alcoholic beverages; important for household real-income pressure and inflation-expectations narratives."
+    },
+    {
+      "dashboard": "United Kingdom",
+      "indicator_id": "household_energy_cpi_yoy",
+      "label": "Household Energy CPI",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · -5.70 %",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 44,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "D7GT",
+      "provider_update": "2026-05-19",
+      "note": "ONS CPI annual rate for electricity, gas, and other household fuels; dominated by Ofgem price-cap mechanics and base effects, so read alongside services/core CPI."
     },
     {
       "dashboard": "United Kingdom",
@@ -9922,7 +10058,7 @@
       "quality_status": "watch",
       "source": "FRED / Census",
       "series_id": "MSPUS",
-      "provider_update": "2026-01-01",
+      "provider_update": "2026-05-05",
       "note": "Median new-home prices mix price and composition effects."
     },
     {
@@ -9939,7 +10075,7 @@
       "quality_status": "watch",
       "source": "FRED / FHFA",
       "series_id": "USSTHPI",
-      "provider_update": "2026-01-01",
+      "provider_update": "2026-05-26",
       "note": "FHFA repeat-sales index provides a national house-price cross-check against Case-Shiller."
     },
     {
@@ -9956,7 +10092,7 @@
       "quality_status": "watch",
       "source": "FRED / Census-BEA",
       "series_id": "BOPGSTB",
-      "provider_update": "2026-04-01",
+      "provider_update": "2026-06-09",
       "note": "Monthly goods trade balance; negative values indicate deficit."
     },
     {
@@ -9973,7 +10109,7 @@
       "quality_status": "watch",
       "source": "FRED / BEA",
       "series_id": "IEABC",
-      "provider_update": "2025-10-01",
+      "provider_update": "2026-03-25",
       "note": "Quarterly current account balance from BEA international transactions."
     },
     {
@@ -10041,7 +10177,7 @@
       "quality_status": "watch",
       "source": "FRED / Census",
       "series_id": "BOPGEXP",
-      "provider_update": "2026-06-09",
+      "provider_update": "2026-04-01",
       "note": "Goods exports on a balance-of-payments basis; services trade is not included here."
     },
     {
@@ -10058,7 +10194,7 @@
       "quality_status": "watch",
       "source": "FRED / Census",
       "series_id": "BOPGIMP",
-      "provider_update": "2026-06-09",
+      "provider_update": "2026-04-01",
       "note": "Goods imports are useful for domestic demand and inventory-cycle cross-checks."
     },
     {
@@ -10075,7 +10211,7 @@
       "quality_status": "watch",
       "source": "FRED / Treasury International Capital",
       "series_id": "FORTREASNET99996",
-      "provider_update": "2026-05-19",
+      "provider_update": "2026-03-01",
       "note": "FRED mirror of TIC foreign net transactions in U.S. long-term and short-term Treasury securities; release-day work should verify the Treasury TIC table."
     },
     {
@@ -10092,7 +10228,7 @@
       "quality_status": "watch",
       "source": "FRED / Treasury International Capital",
       "series_id": "FORTREASPOS99996",
-      "provider_update": "2026-05-19",
+      "provider_update": "2026-03-01",
       "note": "Grand-total TIC foreign portfolio holdings of U.S. long-term and short-term Treasury securities."
     },
     {
@@ -10109,7 +10245,7 @@
       "quality_status": "watch",
       "source": "FRED / Treasury International Capital",
       "series_id": "FORTREASPOS41408",
-      "provider_update": "2026-05-19",
+      "provider_update": "2026-03-01",
       "note": "Country attribution follows TIC reporting and custody conventions; it is not a perfect beneficial-owner measure."
     },
     {
@@ -10126,7 +10262,7 @@
       "quality_status": "watch",
       "source": "FRED / Treasury International Capital",
       "series_id": "FORTREASPOS42609",
-      "provider_update": "2026-05-19",
+      "provider_update": "2026-03-01",
       "note": "Japan is a major foreign holder; use with custody-routing caveats common to TIC geography."
     },
     {
@@ -10143,7 +10279,7 @@
       "quality_status": "watch",
       "source": "FRED / BLS",
       "series_id": "PAYEMS",
-      "provider_update": "2026-06-05",
+      "provider_update": "2026-05-01",
       "note": "Derived monthly change from total nonfarm payroll employment."
     },
     {
@@ -10160,7 +10296,7 @@
       "quality_status": "watch",
       "source": "FRED / ADP Research Institute",
       "series_id": "ADPMNUSNERSA",
-      "provider_update": "2026-06-03",
+      "provider_update": "2026-05-01",
       "note": "Vendor employment release mirrored by FRED; compare against BLS payrolls and avoid treating it as an official labor-statistics substitute."
     },
     {
@@ -10177,8 +10313,8 @@
       "quality_status": "watch",
       "source": "BLS Business Employment Dynamics",
       "series_id": "BDS0000000000000000110001LQ5",
-      "provider_update": "2025-07-01",
-      "note": "Quarterly total-private gross job gains from Business Employment Dynamics; BED is QCEW-based and normally arrives with a several-month lag."
+      "provider_update": "2026-06-13",
+      "note": "Quarterly total-private gross job gains from Business Employment Dynamics; BED is QCEW-based and normally arrives with a several-month lag. Live BLS API quota was unavailable in this run; rendering the last-good official BED cache."
     },
     {
       "dashboard": "United States",
@@ -10194,8 +10330,8 @@
       "quality_status": "watch",
       "source": "BLS Business Employment Dynamics",
       "series_id": "BDS0000000000000000110004LQ5",
-      "provider_update": "2025-07-01",
-      "note": "Quarterly total-private gross job losses; useful for seeing churn beneath net payroll changes."
+      "provider_update": "2026-06-13",
+      "note": "Quarterly total-private gross job losses; useful for seeing churn beneath net payroll changes. Live BLS API quota was unavailable in this run; rendering the last-good official BED cache."
     },
     {
       "dashboard": "United States",
@@ -10211,8 +10347,8 @@
       "quality_status": "watch",
       "source": "BLS Business Employment Dynamics",
       "series_id": "BDS0000000000000000110001RQ5",
-      "provider_update": "2025-07-01",
-      "note": "Gross job gains as a percent of average employment; complements the level series when comparing cycles."
+      "provider_update": "2026-06-13",
+      "note": "Gross job gains as a percent of average employment; complements the level series when comparing cycles. Live BLS API quota was unavailable in this run; rendering the last-good official BED cache."
     },
     {
       "dashboard": "United States",
@@ -10228,8 +10364,8 @@
       "quality_status": "watch",
       "source": "BLS Business Employment Dynamics",
       "series_id": "BDS0000000000000000110004RQ5",
-      "provider_update": "2025-07-01",
-      "note": "Gross job losses as a percent of average employment; spikes identify stress not visible in headline payroll levels alone."
+      "provider_update": "2026-06-13",
+      "note": "Gross job losses as a percent of average employment; spikes identify stress not visible in headline payroll levels alone. Live BLS API quota was unavailable in this run; rendering the last-good official BED cache."
     },
     {
       "dashboard": "United States",
@@ -11197,7 +11333,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "BUSLOANS",
-      "provider_update": "2026-05-01",
+      "provider_update": "2026-06-12",
       "note": "C&I loan growth captures bank credit impulse to firms."
     },
     {
@@ -11333,7 +11469,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "FEDFUNDS",
-      "provider_update": "2026-06-01",
+      "provider_update": "2026-05-01",
       "note": "Monthly effective fed funds rate."
     },
     {
