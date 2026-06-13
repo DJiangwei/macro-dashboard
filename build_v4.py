@@ -9,6 +9,7 @@ Usage:
   python build_v4.py ALL   # all four
 """
 from pathlib import Path
+from datetime import datetime
 import os
 import re
 import sys
@@ -897,6 +898,97 @@ def _indicator_frame(frame, country_code: str, indicator_id: str):
         if row.get("country") == country_code and row.get("indicator_id") == indicator_id
     ]
     return sorted(rows, key=lambda row: str(row.get("date", "")))
+
+
+KPI_INDICATOR_PATTERNS = (
+    (r"Real GDP \(YoY\)|实际GDP（同比）", "real_gdp_yoy", True),
+    (r"Headline CPI \(YoY\)|整体CPI（同比）", "cpi_yoy", False),
+    (r"Fiscal Balance|财政赤字", "fiscal_balance_pct_gdp", True),
+    (r"Current Account|经常账户", "current_account_pct_gdp", True),
+    (r"Policy Rate|政策利率", "policy_rate", False),
+    (r"10Y [A-Z]{3} Yield|10年期(?:国债|PLN|CZK|RON)收益率", "sov_yield_10y", False),
+)
+
+
+def _latest_indicator_row(frame, country_code: str, indicator_id: str) -> dict | None:
+    rows = _indicator_frame(frame, country_code, indicator_id)
+    if not rows:
+        return None
+    return rows[-1]
+
+
+def _latest_numeric_value(frame, country_code: str, indicator_id: str) -> float | None:
+    row = _latest_indicator_row(frame, country_code, indicator_id)
+    if not row:
+        return None
+    try:
+        return float(row["value"])
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+def _format_kpi_percent(value: float, *, signed: bool) -> str:
+    sign = "+" if signed and value > 0 else ""
+    return f"{sign}{value:,.2f}%"
+
+
+def _format_kpi_period(date_text: str, indicator_id: str) -> str:
+    try:
+        dt = datetime.fromisoformat(date_text[:10])
+    except ValueError:
+        return date_text[:10]
+    if indicator_id == "real_gdp_yoy":
+        quarter = ((dt.month - 1) // 3) + 1
+        return f"Q{quarter} {dt.year}"
+    if indicator_id in {"fiscal_balance_pct_gdp", "current_account_pct_gdp"}:
+        return str(dt.year)
+    return dt.strftime("%b %Y")
+
+
+def _format_kpi_sub(row: dict, indicator_id: str, *, locale: str) -> str:
+    source = str(row.get("source") or "canonical data")
+    period = _format_kpi_period(str(row.get("date") or ""), indicator_id)
+    if locale == "zh":
+        return f"{source} · 最新 {period}"
+    return f"{source} · latest {period}"
+
+
+def _sync_kpi_html_with_canonical_frame(
+    html: str,
+    frame,
+    country_code: str,
+    *,
+    locale: str,
+) -> str:
+    """Keep legacy narrative KPI cards aligned with the canonical data frame."""
+    synced = html
+    for label_pattern, indicator_id, signed in KPI_INDICATOR_PATTERNS:
+        row = _latest_indicator_row(frame, country_code, indicator_id)
+        if not row:
+            continue
+        try:
+            value = float(row["value"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        value_text = _format_kpi_percent(value, signed=signed)
+        sub_text = _format_kpi_sub(row, indicator_id, locale=locale)
+        pattern = (
+            r'(<div class="kpi-card[^"]*">\s*'
+            rf'<div class="kpi-label">(?:{label_pattern})</div>\s*'
+            r'<div class="kpi-value">)(.*?)(</div>\s*'
+            r'<div class="kpi-sub">)(.*?)(</div>)'
+        )
+        synced = re.sub(
+            pattern,
+            lambda match, value=value_text, sub=sub_text: (
+                f"{match.group(1)}{escape(value)}{match.group(3)}"
+                f"{escape(sub)}{match.group(5)}"
+            ),
+            synced,
+            count=1,
+            flags=re.DOTALL,
+        )
+    return synced
 
 
 def _chart_from_canonical_frame(frame, country_code: str, spec, chart_id: str) -> str:
@@ -3053,6 +3145,18 @@ def build_v4(country_code: str) -> Path:
     if trade_chart_match:
         all_chart_ids.append(trade_chart_match.group(1))
     chart_ids_js = '["' + '","'.join(all_chart_ids) + '"]'
+    kpi_html_en = _sync_kpi_html_with_canonical_frame(
+        data["kpi_html"],
+        canonical_frame,
+        country_code,
+        locale="en",
+    )
+    kpi_html_zh = _sync_kpi_html_with_canonical_frame(
+        data.get("kpi_html_zh", data["kpi_html"]),
+        canonical_frame,
+        country_code,
+        locale="zh",
+    )
 
     final_html = f"""<!doctype html>
 <html lang="en">
@@ -3089,8 +3193,8 @@ def build_v4(country_code: str) -> Path:
   </div>
 </header>
 
-<div data-lang="en">{data["kpi_html"]}</div>
-<div data-lang="zh">{data.get("kpi_html_zh", data["kpi_html"])}</div>
+<div data-lang="en">{kpi_html_en}</div>
+<div data-lang="zh">{kpi_html_zh}</div>
 
 <!-- TOC -->
 <div class="toc">

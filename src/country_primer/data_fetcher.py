@@ -16,6 +16,7 @@ import calendar
 import csv
 from dataclasses import dataclass
 from datetime import datetime
+import hashlib
 import io
 import json
 import math
@@ -79,6 +80,7 @@ WORLD_BANK_ESG_URL = "https://esgdata.worldbank.org/dist/content/data/download/e
 IMF_DATAMAPPER_URL = "https://www.imf.org/external/datamapper/api/v1/{indicator}/{iso3}"
 FRED_OBSERVATIONS_URL = "https://api.stlouisfed.org/fred/series/observations"
 FRED_GRAPH_CSV_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv"
+EIA_API_BASE_URL = "https://api.eia.gov/v2"
 BIS_CREDIT_GAP_URL = "https://data.bis.org/static/bulk/WS_CREDIT_GAP_csv_flat.zip"
 BIS_CBTA_URL = "https://data.bis.org/static/bulk/WS_CBTA_csv_flat.zip"
 DBNOMICS_BIS_LBS_SERIES_URL = "https://api.db.nomics.world/v22/series/BIS/WS_LBS_D_PUB/{series_code}?observations=1"
@@ -721,6 +723,54 @@ def _fetch_fred_observations(series_id: str, *, start: str = "2010-01-01") -> li
         "observations": [{"date": date, "value": value} for date, value in observations],
     }, indent=2, sort_keys=True))
     return observations
+
+
+def fetch_eia_v2(
+    route: str,
+    params: dict[str, object] | None = None,
+    *,
+    cache_key: str | None = None,
+    max_age_hours: int = 24,
+) -> dict:
+    """Fetch an EIA Open Data API v2 route using the local EIA_API_KEY.
+
+    The key is intentionally never written to cache. Callers should pass the
+    route without leading/trailing slash, for example ``natural-gas/stor/wkly``
+    or ``seriesid/PET.RWTC.D``.
+    """
+    api_key = _secret_env("EIA_API_KEY")
+    if not api_key:
+        return {}
+
+    route = route.strip("/")
+    clean_params = {
+        str(key): value
+        for key, value in (params or {}).items()
+        if value is not None and value != ""
+    }
+    if cache_key is None:
+        fingerprint = json.dumps(
+            {"route": route, "params": clean_params},
+            sort_keys=True,
+            default=str,
+        )
+        cache_key = hashlib.sha1(fingerprint.encode("utf-8")).hexdigest()
+    safe_cache_key = re.sub(r"[^A-Za-z0-9_.-]+", "_", cache_key)[:180]
+    cache_file = CACHE_DIR / f"eia_{safe_cache_key}.json"
+    if _cache_is_fresh(cache_file, max_age_hours=max_age_hours):
+        return json.loads(cache_file.read_text())
+
+    request_params = dict(clean_params)
+    request_params["api_key"] = api_key
+    response = requests.get(
+        f"{EIA_API_BASE_URL.rstrip('/')}/{route}/",
+        params=request_params,
+        timeout=30,
+    )
+    response.raise_for_status()
+    payload = response.json()
+    cache_file.write_text(json.dumps(payload, indent=2, sort_keys=True))
+    return payload
 
 
 def _parse_ohlc_csv(text: str) -> list[tuple[str, float]]:
