@@ -46,25 +46,31 @@ indicators:
     label_en: "Real GDP Growth"
     label_zh: "实际GDP环比增速"
     unit: "%"
-    fetcher: fred
-    series: "NAEXKP01GBQ657S"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/NAEXKP01GBQ657S"
+    fetcher: ons_timeseries
+    series: "IHYQ"
+    dataset: "PN2"
+    ons_path: "/economy/grossdomesticproductgdp/timeseries/ihyq/pn2/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ihyq/pn2"
     frequency: "quarterly"
     start_date: "1997-01-01"
-    caveat_en: "Quarter-on-quarter growth from OECD via FRED; early UK GDP is subject to material later revisions."
-    caveat_zh: "OECD经FRED提供的实际GDP环比；英国GDP初值后续修订可能较大。"
+    max_age_days: 170
+    caveat_en: "ONS quarter-on-quarter CVM GDP growth is preferred over the slower FRED/OECD mirror; early UK GDP is still subject to material revisions."
+    caveat_zh: "优先使用ONS实际GDP环比增速，而非较滞后的FRED/OECD镜像；英国GDP初值后续仍可能较大修订。"
   - id: nominal_gdp_gbp
     section: national_accounts
     label_en: "Nominal GDP"
     label_zh: "名义GDP"
     unit: "GBP mn"
-    fetcher: fred
-    series: "UKNGDP"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/UKNGDP"
+    fetcher: ons_timeseries
+    series: "YBHA"
+    dataset: "PN2"
+    ons_path: "/economy/grossdomesticproductgdp/timeseries/ybha/pn2/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ybha/pn2"
     frequency: "quarterly"
     start_date: "1997-01-01"
+    max_age_days: 170
     caveat_en: "Nominal level is useful for scale and debt ratios, but not for real activity momentum."
     caveat_zh: "名义水平适合观察规模和债务比率，但不适合直接判断实际活动动能。"
   - id: private_consumption_qoq
@@ -85,14 +91,18 @@ indicators:
     label_en: "Real Gross Fixed Capital Formation"
     label_zh: "实际固定资本形成环比"
     unit: "%"
-    fetcher: fred
-    series: "NAEXKP04GBQ657S"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/NAEXKP04GBQ657S"
+    fetcher: ons_timeseries
+    series: "NPQT"
+    dataset: "PN2"
+    ons_path: "/economy/grossdomesticproductgdp/timeseries/npqt/pn2/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/npqt/pn2"
     frequency: "quarterly"
     start_date: "1997-01-01"
-    caveat_en: "Investment is volatile and revision-prone; treat quarterly swings cautiously."
-    caveat_zh: "投资波动较大且容易修订；季度波动需谨慎解读。"
+    transform: "qoq_pct"
+    max_age_days: 170
+    caveat_en: "Quarter-on-quarter growth derived from the ONS CVM SA GFCF level; investment is volatile and revision-prone."
+    caveat_zh: "由ONS实际固定资本形成季调水平计算环比；投资波动较大且容易修订。"
   - id: monthly_gdp_index
     section: national_accounts
     label_en: "Monthly GDP Index"
@@ -287,27 +297,35 @@ indicators:
     label_en: "Real Exports"
     label_zh: "实际出口环比"
     unit: "%"
-    fetcher: fred
-    series: "NAEXKP06GBQ657S"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/NAEXKP06GBQ657S"
+    fetcher: ons_timeseries
+    series: "IKBK"
+    dataset: "PN2"
+    ons_path: "/economy/grossdomesticproductgdp/timeseries/ikbk/pn2/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ikbk/pn2"
     frequency: "quarterly"
     start_date: "1997-01-01"
-    caveat_en: "National-accounts exports; use the separate ONS goods-trade balance chart for monthly external-pressure timing."
-    caveat_zh: "国民账户出口；月度外部压力时点可配合单独的ONS货物贸易余额图。"
+    transform: "qoq_pct"
+    max_age_days: 170
+    caveat_en: "Quarter-on-quarter growth derived from ONS total trade exports CVM SA; use monthly ONS goods balance for higher-frequency external-pressure timing."
+    caveat_zh: "由ONS总贸易实际出口季调水平计算环比；月度外部压力时点可配合ONS货物贸易余额图。"
   - id: imports_qoq
     section: external
     label_en: "Real Imports"
     label_zh: "实际进口环比"
     unit: "%"
-    fetcher: fred
-    series: "NAEXKP07GBQ657S"
-    source_name: "FRED / OECD"
-    source_url: "https://fred.stlouisfed.org/series/NAEXKP07GBQ657S"
+    fetcher: ons_timeseries
+    series: "IKBL"
+    dataset: "PN2"
+    ons_path: "/economy/grossdomesticproductgdp/timeseries/ikbl/pn2/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ikbl/pn2"
     frequency: "quarterly"
     start_date: "1997-01-01"
-    caveat_en: "National-accounts imports; trade contribution can change after GDP revisions, so read with ONS monthly goods balance."
-    caveat_zh: "国民账户进口；贸易对GDP贡献会随后续修订变化，因此应结合ONS月度货物贸易余额。"
+    transform: "qoq_pct"
+    max_age_days: 170
+    caveat_en: "Quarter-on-quarter growth derived from ONS total trade imports CVM SA; trade contribution can change after GDP revisions."
+    caveat_zh: "由ONS总贸易实际进口季调水平计算环比；贸易对GDP贡献会随后续GDP修订变化。"
   - id: goods_trade_balance
     section: external
     label_en: "Goods Trade Balance"

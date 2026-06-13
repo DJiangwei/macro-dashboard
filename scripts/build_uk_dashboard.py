@@ -279,10 +279,10 @@ def _provider_updated_date(value: str) -> str:
 
 def _apply_transform(observations: list[dict[str, Any]], spec: dict[str, Any]) -> list[dict[str, Any]]:
     transform = str(spec.get("transform") or "")
-    if transform != "yoy":
+    if transform not in {"yoy", "qoq_pct"}:
         return observations
     frequency = str(spec.get("frequency", "")).lower()
-    periods = 12 if frequency == "monthly" else 4 if frequency == "quarterly" else 1
+    periods = 1 if transform == "qoq_pct" else 12 if frequency == "monthly" else 4 if frequency == "quarterly" else 1
     transformed: list[dict[str, Any]] = []
     for index, item in enumerate(observations):
         if index < periods:
@@ -933,6 +933,15 @@ def validate_series(series: dict[str, Any]) -> dict[str, Any]:
     frequency = str(series.get("frequency", "")).lower()
     if latest_date:
         age_days = (date.today() - latest_date).days
+        max_age_days = series.get("max_age_days")
+        if max_age_days is not None:
+            try:
+                if age_days > int(max_age_days):
+                    notes.append(
+                        f"Series exceeds configured freshness limit ({max_age_days} days); latest observation is {observations[-1]['date']}."
+                    )
+            except (TypeError, ValueError):
+                pass
         if frequency == "monthly" and age_days > 150:
             notes.append(f"Monthly series looks stale; latest observation is {observations[-1]['date']}.")
         elif frequency == "weekly" and age_days > 45:
