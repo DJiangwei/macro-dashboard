@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-14T13:29:05.228641+00:00",
+  "generated": "2026-06-14T14:07:40.901896+00:00",
   "as_of_date": "2026-06-14",
   "thresholds": {
     "daily": "14 days",
@@ -11,8 +11,8 @@
   "summary": [
     {
       "dashboard": "China",
-      "charts": 65,
-      "current": 63,
+      "charts": 76,
+      "current": 74,
       "stale": 0,
       "lagged_source": 0,
       "projection": 2,
@@ -21,7 +21,7 @@
       "missing_date": 0,
       "needs_review": 0,
       "low_confidence": 0,
-      "latest_historical_date": "2026-06-12",
+      "latest_historical_date": "2026-06-14",
       "headline_latest": "6.8109 (2026-06-12)"
     },
     {
@@ -8550,6 +8550,57 @@
     },
     {
       "dashboard": "China",
+      "indicator_id": "cpi_mom_akshare",
+      "label": "CPI Inflation, MoM",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · -0.10 %",
+      "latest_date": "2026-05-01",
+      "age_basis_date": "2026-05-31",
+      "age_days": 14,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "AKShare / Eastmoney Data Center",
+      "series_id": "macro_china_cpi:全国-环比增长",
+      "provider_update": "2026-05-01",
+      "note": "Monthly CPI MoM via AKShare's Eastmoney wrapper; useful for near-term price momentum but volatile around holidays and food-price shocks."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "urban_cpi_yoy_akshare",
+      "label": "Urban CPI, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · 1.30 %",
+      "latest_date": "2026-05-01",
+      "age_basis_date": "2026-05-31",
+      "age_days": 14,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "AKShare / Eastmoney Data Center",
+      "series_id": "macro_china_cpi:城市-同比增长",
+      "provider_update": "2026-05-01",
+      "note": "Urban CPI YoY via AKShare; compare with rural CPI to separate location mix from broad price pressure."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "rural_cpi_yoy_akshare",
+      "label": "Rural CPI, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · 1.10 %",
+      "latest_date": "2026-05-01",
+      "age_basis_date": "2026-05-31",
+      "age_days": 14,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "AKShare / Eastmoney Data Center",
+      "series_id": "macro_china_cpi:农村-同比增长",
+      "provider_update": "2026-05-01",
+      "note": "Rural CPI YoY via AKShare; food and local service baskets can make it diverge from urban CPI."
+    },
+    {
+      "dashboard": "China",
       "indicator_id": "ppi_yoy_akshare",
       "label": "PPI Inflation, YoY",
       "frequency": "monthly",
@@ -8564,6 +8615,142 @@
       "series_id": "macro_china_ppi:当月同比增长",
       "provider_update": "2026-05-01",
       "note": "Monthly producer-price inflation via AKShare's Eastmoney wrapper; energy and upstream commodity cycles can dominate the signal."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "ppi_index_akshare",
+      "label": "PPI Index",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · 104 Index",
+      "latest_date": "2026-05-01",
+      "age_basis_date": "2026-05-31",
+      "age_days": 14,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "AKShare / Eastmoney Data Center",
+      "series_id": "macro_china_ppi:当月",
+      "provider_update": "2026-05-01",
+      "note": "Monthly PPI index via AKShare; the index level helps cross-check the YoY rate but base-period conventions should be verified before level comparisons."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "enterprise_goods_price_yoy_akshare",
+      "label": "Enterprise Goods Prices, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · 5.23 %",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 45,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "AKShare / Eastmoney Data Center",
+      "series_id": "macro_china_qyspjg:总指数-同比增长",
+      "provider_update": "2026-04-01",
+      "note": "Enterprise goods price index via AKShare; it is a useful upstream price-pressure gauge and not the same concept as factory-gate PPI."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "enterprise_agri_goods_price_yoy_akshare",
+      "label": "Enterprise Agri Goods Prices, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · -5.04 %",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 45,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "AKShare / Eastmoney Data Center",
+      "series_id": "macro_china_qyspjg:农产品-同比增长",
+      "provider_update": "2026-04-01",
+      "note": "Enterprise-goods agriculture sub-index via AKShare; read with high-frequency agricultural wholesale indexes for food-price momentum."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "enterprise_mineral_goods_price_yoy_akshare",
+      "label": "Enterprise Mineral Goods Prices, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · 11.0 %",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 45,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "AKShare / Eastmoney Data Center",
+      "series_id": "macro_china_qyspjg:矿产品-同比增长",
+      "provider_update": "2026-04-01",
+      "note": "Enterprise-goods mineral sub-index via AKShare; commodity cycles and import prices can dominate the signal."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "enterprise_energy_goods_price_yoy_akshare",
+      "label": "Enterprise Coal/Oil/Power Prices, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · 16.9 %",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 45,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "AKShare / Eastmoney Data Center",
+      "series_id": "macro_china_qyspjg:煤油电-同比增长",
+      "provider_update": "2026-04-01",
+      "note": "Enterprise-goods coal/oil/power sub-index via AKShare; policy pricing and global energy shocks can both move the series."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "agri_wholesale_price_index_akshare",
+      "label": "Agricultural Wholesale Price Index",
+      "frequency": "daily",
+      "latest_observation": "2026-06-12 · 114 Index",
+      "latest_date": "2026-06-12",
+      "age_basis_date": "2026-06-12",
+      "age_days": 2,
+      "threshold_days": 14,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "AKShare / Agricultural Wholesale Price Index",
+      "series_id": "macro_china_agricultural_product:最新值",
+      "provider_update": "2026-06-12",
+      "note": "High-frequency agricultural wholesale price index via AKShare; useful as a food-price nowcast, but not a direct CPI food component."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "commodity_price_index_akshare",
+      "label": "Commodity Price Index",
+      "frequency": "daily",
+      "latest_observation": "2026-06-14 · 1,077 Index",
+      "latest_date": "2026-06-14",
+      "age_basis_date": "2026-06-14",
+      "age_days": 0,
+      "threshold_days": 14,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "AKShare / Commodity Price Index",
+      "series_id": "macro_china_commodity_price_index:最新值",
+      "provider_update": "2026-06-14",
+      "note": "High-frequency commodity price index via AKShare; useful for upstream price pressure, but composition and rebasing should be checked before attribution."
+    },
+    {
+      "dashboard": "China",
+      "indicator_id": "energy_price_index_akshare",
+      "label": "Energy Price Index",
+      "frequency": "daily",
+      "latest_observation": "2026-06-14 · 1,024 Index",
+      "latest_date": "2026-06-14",
+      "age_basis_date": "2026-06-14",
+      "age_days": 0,
+      "threshold_days": 14,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "AKShare / Energy Price Index",
+      "series_id": "macro_china_energy_index:最新值",
+      "provider_update": "2026-06-14",
+      "note": "High-frequency energy price index via AKShare; use with enterprise coal/oil/power prices because wholesale market moves may not pass through one-for-one to CPI/PPI."
     },
     {
       "dashboard": "China",
@@ -10840,7 +11027,7 @@
       "quality_status": "watch",
       "source": "FRED / Census",
       "series_id": "BOPGEXP",
-      "provider_update": "2026-06-09",
+      "provider_update": "2026-04-01",
       "note": "Goods exports on a balance-of-payments basis; services trade is not included here."
     },
     {
@@ -10857,7 +11044,7 @@
       "quality_status": "watch",
       "source": "FRED / Census",
       "series_id": "BOPGIMP",
-      "provider_update": "2026-06-09",
+      "provider_update": "2026-04-01",
       "note": "Goods imports are useful for domestic demand and inventory-cycle cross-checks."
     },
     {
@@ -10874,7 +11061,7 @@
       "quality_status": "watch",
       "source": "FRED / Treasury International Capital",
       "series_id": "FORTREASNET99996",
-      "provider_update": "2026-05-19",
+      "provider_update": "2026-03-01",
       "note": "FRED mirror of TIC foreign net transactions in U.S. long-term and short-term Treasury securities; release-day work should verify the Treasury TIC table."
     },
     {
@@ -10891,7 +11078,7 @@
       "quality_status": "watch",
       "source": "FRED / Treasury International Capital",
       "series_id": "FORTREASPOS99996",
-      "provider_update": "2026-05-19",
+      "provider_update": "2026-03-01",
       "note": "Grand-total TIC foreign portfolio holdings of U.S. long-term and short-term Treasury securities."
     },
     {
@@ -10908,7 +11095,7 @@
       "quality_status": "watch",
       "source": "FRED / Treasury International Capital",
       "series_id": "FORTREASPOS41408",
-      "provider_update": "2026-05-19",
+      "provider_update": "2026-03-01",
       "note": "Country attribution follows TIC reporting and custody conventions; it is not a perfect beneficial-owner measure."
     },
     {
@@ -10925,7 +11112,7 @@
       "quality_status": "watch",
       "source": "FRED / Treasury International Capital",
       "series_id": "FORTREASPOS42609",
-      "provider_update": "2026-05-19",
+      "provider_update": "2026-03-01",
       "note": "Japan is a major foreign holder; use with custody-routing caveats common to TIC geography."
     },
     {
@@ -10942,7 +11129,7 @@
       "quality_status": "watch",
       "source": "FRED / BLS",
       "series_id": "PAYEMS",
-      "provider_update": "2026-06-05",
+      "provider_update": "2026-05-01",
       "note": "Derived monthly change from total nonfarm payroll employment."
     },
     {
@@ -10959,7 +11146,7 @@
       "quality_status": "watch",
       "source": "FRED / ADP Research Institute",
       "series_id": "ADPMNUSNERSA",
-      "provider_update": "2026-06-03",
+      "provider_update": "2026-05-01",
       "note": "Vendor employment release mirrored by FRED; compare against BLS payrolls and avoid treating it as an official labor-statistics substitute."
     },
     {
@@ -11928,7 +12115,7 @@
       "quality_status": "watch",
       "source": "FRED / ICE BofA",
       "series_id": "BAMLC0A0CM",
-      "provider_update": "2026-06-11",
+      "provider_update": "2026-06-12",
       "note": "FRED mirror of ICE BofA corporate OAS; check ICE/BofA source for release-day work."
     },
     {
@@ -11996,7 +12183,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "BUSLOANS",
-      "provider_update": "2026-05-01",
+      "provider_update": "2026-06-12",
       "note": "C&I loan growth captures bank credit impulse to firms."
     },
     {
@@ -12047,7 +12234,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "DRALACBN",
-      "provider_update": "2026-01-01",
+      "provider_update": "2026-05-19",
       "note": "All-bank loan delinquency rate; lagging but useful for credit-cycle stress."
     },
     {
@@ -12132,7 +12319,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "FEDFUNDS",
-      "provider_update": "2026-06-01",
+      "provider_update": "2026-05-01",
       "note": "Monthly effective fed funds rate."
     },
     {

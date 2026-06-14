@@ -9,6 +9,8 @@ from __future__ import annotations
 import json
 import os
 import re
+import signal
+import time
 from csv import DictReader
 from datetime import UTC, date, datetime, timedelta
 from html import escape
@@ -200,7 +202,31 @@ def fetch_akshare_table(spec: dict[str, Any], cache: dict[str, Any] | None = Non
         frame = cache[cache_key]
     else:
         fetcher = getattr(ak, function_name)
-        frame = fetcher(*args, **kwargs)
+        timeout_seconds = int(spec.get("timeout_seconds", 45))
+        attempts = int(spec.get("retries", 2))
+        last_error: Exception | None = None
+        for attempt in range(attempts):
+            try:
+                if timeout_seconds:
+                    def _timeout_handler(signum: int, frame: Any) -> None:  # noqa: ARG001
+                        raise TimeoutError(f"AKShare fetch timed out after {timeout_seconds}s for {function_name}")
+
+                    old_handler = signal.signal(signal.SIGALRM, _timeout_handler)
+                    signal.alarm(timeout_seconds)
+                    try:
+                        frame = fetcher(*args, **kwargs)
+                    finally:
+                        signal.alarm(0)
+                        signal.signal(signal.SIGALRM, old_handler)
+                else:
+                    frame = fetcher(*args, **kwargs)
+                break
+            except Exception as exc:  # noqa: BLE001 - retry flaky upstream wrappers once before degrading.
+                last_error = exc
+                if attempt < attempts - 1:
+                    time.sleep(2)
+                else:
+                    raise last_error
         if cache is not None:
             cache[cache_key] = frame
     filter_column = spec.get("filter_column")

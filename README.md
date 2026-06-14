@@ -108,13 +108,15 @@ silently hiding it.
 `output/index.html` so the archive page stays synchronized.
 
 The China page uses AKShare for a China-native high-frequency layer including
-CPI, PPI, PMI, industrial value added, fixed-asset investment, retail sales,
-consumer confidence, customs trade, money supply, new RMB loans, TSF flow, LPR,
-RRR, SHIBOR, electricity consumption, selected Beijing/Shanghai housing-price
-samples, reserves/gold, and fiscal revenue execution. These charts are labelled
-as AKShare-wrapped Eastmoney/Sina/PBC-style web data rather than official
-NBS/PBOC API contracts; schema drift, upstream availability, and concept
-coverage should be checked whenever China data is expanded.
+CPI/PPI headline and momentum, urban/rural CPI, enterprise-goods prices,
+agricultural/commodity/energy price indexes, PMI, industrial value added,
+fixed-asset investment, retail sales, consumer confidence, customs trade, money
+supply, new RMB loans, TSF flow, LPR, RRR, SHIBOR, electricity consumption,
+selected Beijing/Shanghai housing-price samples, reserves/gold, and fiscal
+revenue execution. These charts are labelled as AKShare-wrapped
+Eastmoney/Sina/PBC-style web data rather than official NBS/PBOC API contracts;
+schema drift, upstream availability, and concept coverage should be checked
+whenever China data is expanded.
 
 To rebuild and publish the site:
 

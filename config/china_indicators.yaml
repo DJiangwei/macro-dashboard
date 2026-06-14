@@ -808,6 +808,51 @@ indicators:
     frequency: "monthly"
     caveat_en: "Monthly CPI YoY via AKShare's Eastmoney wrapper; keep annual WDI CPI for long-run comparability."
     caveat_zh: "AKShare东方财富包装的月度CPI同比；年度WDI CPI仍用于长期可比。"
+  - id: cpi_mom_akshare
+    section: prices
+    label_en: "CPI Inflation, MoM"
+    label_zh: "CPI环比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_cpi
+    date_column: "月份"
+    value_column: "全国-环比增长"
+    series: "macro_china_cpi:全国-环比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly CPI MoM via AKShare's Eastmoney wrapper; useful for near-term price momentum but volatile around holidays and food-price shocks."
+    caveat_zh: "AKShare东方财富包装的月度CPI环比；适合观察近端价格动能，但受节假日和食品价格冲击影响较大。"
+  - id: urban_cpi_yoy_akshare
+    section: prices
+    label_en: "Urban CPI, YoY"
+    label_zh: "城市CPI同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_cpi
+    date_column: "月份"
+    value_column: "城市-同比增长"
+    series: "macro_china_cpi:城市-同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Urban CPI YoY via AKShare; compare with rural CPI to separate location mix from broad price pressure."
+    caveat_zh: "AKShare包装的城市CPI同比；可与农村CPI对照，以区分城乡结构和广义价格压力。"
+  - id: rural_cpi_yoy_akshare
+    section: prices
+    label_en: "Rural CPI, YoY"
+    label_zh: "农村CPI同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_cpi
+    date_column: "月份"
+    value_column: "农村-同比增长"
+    series: "macro_china_cpi:农村-同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Rural CPI YoY via AKShare; food and local service baskets can make it diverge from urban CPI."
+    caveat_zh: "AKShare包装的农村CPI同比；食品和本地服务篮子可能使其与城市CPI分化。"
   - id: ppi_yoy_akshare
     section: prices
     label_en: "PPI Inflation, YoY"
@@ -823,6 +868,129 @@ indicators:
     frequency: "monthly"
     caveat_en: "Monthly producer-price inflation via AKShare's Eastmoney wrapper; energy and upstream commodity cycles can dominate the signal."
     caveat_zh: "AKShare东方财富包装的月度PPI同比；能源和上游大宗周期可能主导信号。"
+  - id: ppi_index_akshare
+    section: prices
+    label_en: "PPI Index"
+    label_zh: "PPI当月指数"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_ppi
+    date_column: "月份"
+    value_column: "当月"
+    series: "macro_china_ppi:当月"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly PPI index via AKShare; the index level helps cross-check the YoY rate but base-period conventions should be verified before level comparisons."
+    caveat_zh: "AKShare包装的月度PPI当月指数；指数水平可交叉验证同比，但做水平比较前应核对基期口径。"
+  - id: enterprise_goods_price_yoy_akshare
+    section: prices
+    label_en: "Enterprise Goods Prices, YoY"
+    label_zh: "企业商品价格总指数同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_qyspjg
+    date_column: "月份"
+    value_column: "总指数-同比增长"
+    series: "macro_china_qyspjg:总指数-同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Enterprise goods price index via AKShare; it is a useful upstream price-pressure gauge and not the same concept as factory-gate PPI."
+    caveat_zh: "AKShare包装的企业商品价格指数；适合作为上游价格压力指标，但不等同于出厂口径PPI。"
+  - id: enterprise_agri_goods_price_yoy_akshare
+    section: prices
+    label_en: "Enterprise Agri Goods Prices, YoY"
+    label_zh: "企业商品农产品价格同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_qyspjg
+    date_column: "月份"
+    value_column: "农产品-同比增长"
+    series: "macro_china_qyspjg:农产品-同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Enterprise-goods agriculture sub-index via AKShare; read with high-frequency agricultural wholesale indexes for food-price momentum."
+    caveat_zh: "AKShare包装的企业商品农产品分项；应与高频农产品批发指数一起观察食品价格动能。"
+  - id: enterprise_mineral_goods_price_yoy_akshare
+    section: prices
+    label_en: "Enterprise Mineral Goods Prices, YoY"
+    label_zh: "企业商品矿产品价格同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_qyspjg
+    date_column: "月份"
+    value_column: "矿产品-同比增长"
+    series: "macro_china_qyspjg:矿产品-同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Enterprise-goods mineral sub-index via AKShare; commodity cycles and import prices can dominate the signal."
+    caveat_zh: "AKShare包装的企业商品矿产品分项；大宗商品周期和进口价格可能主导信号。"
+  - id: enterprise_energy_goods_price_yoy_akshare
+    section: prices
+    label_en: "Enterprise Coal/Oil/Power Prices, YoY"
+    label_zh: "企业商品煤油电价格同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_qyspjg
+    date_column: "月份"
+    value_column: "煤油电-同比增长"
+    series: "macro_china_qyspjg:煤油电-同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Enterprise-goods coal/oil/power sub-index via AKShare; policy pricing and global energy shocks can both move the series."
+    caveat_zh: "AKShare包装的企业商品煤油电分项；政策定价和全球能源冲击都可能推动该序列。"
+  - id: agri_wholesale_price_index_akshare
+    section: prices
+    label_en: "Agricultural Wholesale Price Index"
+    label_zh: "农产品批发价格指数"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_agricultural_product
+    timeout_seconds: 45
+    date_column: "日期"
+    value_column: "最新值"
+    series: "macro_china_agricultural_product:最新值"
+    source_name: "AKShare / Agricultural Wholesale Price Index"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "daily"
+    caveat_en: "High-frequency agricultural wholesale price index via AKShare; useful as a food-price nowcast, but not a direct CPI food component."
+    caveat_zh: "AKShare包装的高频农产品批发价格指数；可作食品价格 nowcast，但不是CPI食品分项本身。"
+  - id: commodity_price_index_akshare
+    section: prices
+    label_en: "Commodity Price Index"
+    label_zh: "商品价格指数"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_commodity_price_index
+    timeout_seconds: 45
+    date_column: "日期"
+    value_column: "最新值"
+    series: "macro_china_commodity_price_index:最新值"
+    source_name: "AKShare / Commodity Price Index"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "daily"
+    caveat_en: "High-frequency commodity price index via AKShare; useful for upstream price pressure, but composition and rebasing should be checked before attribution."
+    caveat_zh: "AKShare包装的高频商品价格指数；可观察上游价格压力，但归因前应核对成分和基期。"
+  - id: energy_price_index_akshare
+    section: prices
+    label_en: "Energy Price Index"
+    label_zh: "能源价格指数"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_energy_index
+    timeout_seconds: 45
+    date_column: "日期"
+    value_column: "最新值"
+    series: "macro_china_energy_index:最新值"
+    source_name: "AKShare / Energy Price Index"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "daily"
+    caveat_en: "High-frequency energy price index via AKShare; use with enterprise coal/oil/power prices because wholesale market moves may not pass through one-for-one to CPI/PPI."
+    caveat_zh: "AKShare包装的高频能源价格指数；应与企业商品煤油电价格一起使用，因为批发市场变化不会一比一传导到CPI/PPI。"
   - id: gdp_deflator
     section: prices
     label_en: "GDP Deflator"
@@ -1014,5 +1182,5 @@ data_gaps:
   - section: prices
     item_en: "NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices"
     item_zh: "NBS月度CPI、核心CPI、PPI、农产品价格与进出口价格指数"
-    status_en: "Headline monthly CPI and PPI are charted through AKShare's Eastmoney wrapper; core CPI, agriculture prices, and trade-price indices remain open."
-    status_zh: "页面已通过AKShare东方财富包装接入月度CPI和PPI；核心CPI、农产品价格和进出口价格指数仍待补充。"
+    status_en: "Headline CPI/PPI, CPI MoM, urban/rural CPI, enterprise-goods prices, and high-frequency agricultural, commodity, and energy indexes are charted through AKShare; core CPI, services CPI, detailed food categories, retail-price index, and trade-price indices remain open."
+    status_zh: "页面已通过AKShare接入CPI/PPI、CPI环比、城乡CPI、企业商品价格，以及高频农产品、商品和能源价格指数；核心CPI、服务CPI、食品细项、零售价格指数和进出口价格指数仍待补充。"
