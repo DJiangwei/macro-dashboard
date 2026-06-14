@@ -57,8 +57,12 @@ def _apply_transform(value: float, transform: str | None) -> float:
         return value / 1_000_000
     if transform == "usd_100mn_to_trn":
         return value / 10_000
+    if transform == "usd_thousand_to_bn":
+        return value / 1_000_000
     if transform == "cny_100mn_to_trn":
         return value / 10_000
+    if transform == "cny_yuan_to_trn":
+        return value / 1_000_000_000_000
     if transform == "index_100_to_yoy":
         return value - 100
     if transform == "people_billion":
@@ -233,14 +237,35 @@ def fetch_akshare_table(spec: dict[str, Any], cache: dict[str, Any] | None = Non
     if filter_column and spec.get("filter_value") is not None:
         frame = frame[frame[filter_column].astype(str) == str(spec["filter_value"])]
     date_column = spec["date_column"]
-    value_column = spec["value_column"]
+    value_column = spec.get("value_column")
+    value_columns = spec.get("value_columns") or []
     observations: list[dict[str, Any]] = []
 
     for _, row in frame.iterrows():
         raw_date = row.get(date_column)
-        raw_value = row.get(value_column)
-        if pd.isna(raw_date) or pd.isna(raw_value):
+        if pd.isna(raw_date):
             continue
+        if value_columns:
+            raw_values = [row.get(column) for column in value_columns]
+            if any(pd.isna(raw_value) for raw_value in raw_values):
+                continue
+            try:
+                values = [float(raw_value) for raw_value in raw_values]
+            except (TypeError, ValueError):
+                continue
+            operation = spec.get("value_operation", "sum")
+            if operation == "difference":
+                raw_value = values[0] - values[1]
+            elif operation == "ratio":
+                raw_value = values[0] / values[1] if values[1] else None
+            else:
+                raw_value = sum(values)
+            if raw_value is None:
+                continue
+        else:
+            raw_value = row.get(value_column)
+            if pd.isna(raw_value):
+                continue
         parsed_date = _parse_period_date(raw_date)
         if not parsed_date:
             continue

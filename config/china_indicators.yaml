@@ -175,6 +175,51 @@ indicators:
     frequency: "daily"
     caveat_en: "Global dry-bulk freight index exposed through AKShare; use as a shipping/commodity-cycle cross-check rather than a China-only freight series."
     caveat_zh: "AKShare包装的全球干散货运价指数；适合作为航运/商品周期交叉验证，不是中国专属货运指标。"
+  - id: logistics_prosperity_index_akshare
+    section: activity_production
+    label_en: "Logistics Prosperity Index"
+    label_zh: "物流业景气指数"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_lpi_index
+    date_column: "日期"
+    value_column: "最新值"
+    series: "macro_china_lpi_index:最新值"
+    source_name: "AKShare / China Federation of Logistics & Purchasing"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly logistics prosperity index via AKShare; useful for domestic goods-flow momentum, but survey diffusion indexes are directional rather than volume levels."
+    caveat_zh: "AKShare包装的月度物流业景气指数；适合观察国内货物流动动能，但扩散指数反映方向而非数量水平。"
+  - id: civil_aviation_passenger_load_factor_akshare
+    section: activity_production
+    label_en: "Civil Aviation Passenger Load Factor"
+    label_zh: "民航客座率"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_passenger_load_factor
+    date_column: "统计时间"
+    value_column: "客座率"
+    series: "macro_china_passenger_load_factor:客座率"
+    source_name: "AKShare / Civil Aviation Load Factor"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Civil aviation passenger load factor via AKShare; a travel/services demand cross-check, not a full passenger-volume series."
+    caveat_zh: "AKShare包装的民航客座率；可作为出行和服务需求交叉验证，但不是完整客运量序列。"
+  - id: civil_aviation_cargo_load_factor_akshare
+    section: activity_production
+    label_en: "Civil Aviation Cargo Load Factor"
+    label_zh: "民航载运率"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_passenger_load_factor
+    date_column: "统计时间"
+    value_column: "载运率"
+    series: "macro_china_passenger_load_factor:载运率"
+    source_name: "AKShare / Civil Aviation Load Factor"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Civil aviation cargo/load factor via AKShare; useful for high-value logistics stress, but air cargo is only a small slice of total freight."
+    caveat_zh: "AKShare包装的民航载运率；可观察高价值物流压力，但航空货运只是总货运的小部分。"
   - id: gfcf_share_gdp
     section: investment
     label_en: "Gross Fixed Capital Formation"
@@ -459,6 +504,57 @@ indicators:
     frequency: "monthly"
     caveat_en: "Monthly customs goods import growth via AKShare; import prices, commodities, and processing-trade swings can distort the real demand signal."
     caveat_zh: "AKShare包装的月度海关货物进口增速；进口价格、大宗商品和加工贸易波动会扭曲真实需求信号。"
+  - id: customs_exports_value_akshare
+    section: external
+    label_en: "Customs Exports"
+    label_zh: "海关出口金额"
+    unit: "USD bn"
+    transform: "usd_thousand_to_bn"
+    fetcher: akshare_table
+    function: macro_china_hgjck
+    date_column: "月份"
+    value_column: "当月出口额-金额"
+    series: "macro_china_hgjck:当月出口额-金额"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly customs goods exports via AKShare, converted from USD thousand to USD bn; goods-only and not directly comparable to national-accounts exports."
+    caveat_zh: "AKShare包装的月度海关货物出口金额，由千美元转换为十亿美元；仅为货物口径，不可直接与国民账户出口比较。"
+  - id: customs_imports_value_akshare
+    section: external
+    label_en: "Customs Imports"
+    label_zh: "海关进口金额"
+    unit: "USD bn"
+    transform: "usd_thousand_to_bn"
+    fetcher: akshare_table
+    function: macro_china_hgjck
+    date_column: "月份"
+    value_column: "当月进口额-金额"
+    series: "macro_china_hgjck:当月进口额-金额"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly customs goods imports via AKShare, converted from USD thousand to USD bn; price swings can blur the domestic-demand signal."
+    caveat_zh: "AKShare包装的月度海关货物进口金额，由千美元转换为十亿美元；价格波动可能模糊内需信号。"
+  - id: customs_trade_balance_akshare
+    section: external
+    label_en: "Customs Trade Balance"
+    label_zh: "海关贸易差额"
+    unit: "USD bn"
+    transform: "usd_thousand_to_bn"
+    fetcher: akshare_table
+    function: macro_china_hgjck
+    date_column: "月份"
+    value_columns:
+      - "当月出口额-金额"
+      - "当月进口额-金额"
+    value_operation: "difference"
+    series: "macro_china_hgjck:当月出口额-金额-当月进口额-金额"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly goods-trade balance derived from AKShare customs export minus import values; not a full current-account balance."
+    caveat_zh: "由AKShare海关出口金额减进口金额得到的月度货物贸易差额；不是完整经常账户余额。"
   - id: fx_reserves
     section: external
     label_en: "Foreign Exchange Reserves"
@@ -781,6 +877,76 @@ indicators:
     frequency: "monthly"
     caveat_en: "OECD/FRED broad share-price index; useful for domestic risk appetite, but not a substitute for CSI 300/Shanghai Composite market data."
     caveat_zh: "OECD/FRED广义股价指数；可用于观察国内风险偏好，但不能替代沪深300/上证综指行情数据。"
+  - id: a_share_market_cap_akshare
+    section: financial_markets
+    label_en: "A-share Market Capitalization"
+    label_zh: "A股总市值"
+    unit: "CNY tn"
+    transform: "cny_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_stock_market_cap
+    date_column: "数据日期"
+    value_columns:
+      - "市价总值-上海"
+      - "市价总值-深圳"
+    value_operation: "sum"
+    series: "macro_china_stock_market_cap:市价总值-上海+市价总值-深圳"
+    source_name: "AKShare / Exchange Market Statistics"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Shanghai plus Shenzhen market capitalization via AKShare, converted from CNY 100mn to CNY tn; latest incomplete month can have missing market-cap fields and is skipped."
+    caveat_zh: "AKShare包装的沪深市价总值合计，由亿元转换为万亿元；最新未完整月份可能缺市值字段，构建时会跳过。"
+  - id: a_share_trading_value_akshare
+    section: financial_markets
+    label_en: "A-share Trading Value"
+    label_zh: "A股成交金额"
+    unit: "CNY tn"
+    transform: "cny_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_stock_market_cap
+    date_column: "数据日期"
+    value_columns:
+      - "成交金额-上海"
+      - "成交金额-深圳"
+    value_operation: "sum"
+    series: "macro_china_stock_market_cap:成交金额-上海+成交金额-深圳"
+    source_name: "AKShare / Exchange Market Statistics"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Shanghai plus Shenzhen monthly trading value via AKShare; turnover reflects risk appetite and liquidity but is sensitive to trading-day count."
+    caveat_zh: "AKShare包装的沪深月度成交金额合计；成交额反映风险偏好和流动性，但受交易日数量影响。"
+  - id: sh_margin_balance_akshare
+    section: financial_markets
+    label_en: "Shanghai Margin Balance"
+    label_zh: "上海融资融券余额"
+    unit: "CNY tn"
+    transform: "cny_yuan_to_trn"
+    fetcher: akshare_table
+    function: macro_china_market_margin_sh
+    date_column: "日期"
+    value_column: "融资融券余额"
+    series: "macro_china_market_margin_sh:融资融券余额"
+    source_name: "AKShare / Shanghai Stock Exchange Margin Data"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "daily"
+    caveat_en: "Daily Shanghai margin-financing and securities-lending balance via AKShare; use as a leverage/risk-appetite proxy, not a macro credit aggregate."
+    caveat_zh: "AKShare包装的上交所日度融资融券余额；可作杠杆和风险偏好 proxy，不是宏观信用总量。"
+  - id: sz_margin_balance_akshare
+    section: financial_markets
+    label_en: "Shenzhen Margin Balance"
+    label_zh: "深圳融资融券余额"
+    unit: "CNY tn"
+    transform: "cny_yuan_to_trn"
+    fetcher: akshare_table
+    function: macro_china_market_margin_sz
+    date_column: "日期"
+    value_column: "融资融券余额"
+    series: "macro_china_market_margin_sz:融资融券余额"
+    source_name: "AKShare / Shenzhen Stock Exchange Margin Data"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "daily"
+    caveat_en: "Daily Shenzhen margin-financing and securities-lending balance via AKShare; missing lending detail in recent rows does not prevent total-balance tracking."
+    caveat_zh: "AKShare包装的深交所日度融资融券余额；近期融券细项缺失不影响总余额跟踪。"
   - id: cpi_inflation
     section: prices
     label_en: "CPI Inflation"
@@ -1119,6 +1285,37 @@ indicators:
     frequency: "monthly"
     caveat_en: "Monthly cumulative fiscal revenue growth via AKShare; YTD series is affected by base effects and fiscal calendar timing."
     caveat_zh: "AKShare包装的月度财政收入累计同比；累计口径受基数效应和财政日历节奏影响。"
+  - id: tax_receipts_ytd_akshare
+    section: government_finance
+    label_en: "Tax Receipts YTD"
+    label_zh: "税收收入累计"
+    unit: "CNY tn"
+    transform: "cny_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_national_tax_receipts
+    date_column: "季度"
+    value_column: "税收收入合计"
+    series: "macro_china_national_tax_receipts:税收收入合计"
+    source_name: "AKShare / National Tax Receipts"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "quarterly"
+    caveat_en: "Cumulative national tax receipts via AKShare, converted from CNY 100mn to CNY tn; not the full general-government revenue envelope."
+    caveat_zh: "AKShare包装的全国税收收入累计值，由亿元转换为万亿元；不是完整广义政府收入口径。"
+  - id: tax_receipts_yoy_akshare
+    section: government_finance
+    label_en: "Tax Receipts YTD, YoY"
+    label_zh: "税收收入累计同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_national_tax_receipts
+    date_column: "季度"
+    value_column: "较上年同期"
+    series: "macro_china_national_tax_receipts:较上年同期"
+    source_name: "AKShare / National Tax Receipts"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "quarterly"
+    caveat_en: "Cumulative tax-receipts growth via AKShare; quarterly/YTD reporting can create mechanical jumps at year boundaries."
+    caveat_zh: "AKShare包装的税收收入累计同比；季度/累计口径在年初切换时会产生机械跳变。"
   - id: general_gov_debt
     section: government_finance
     label_en: "General Government Gross Debt"
@@ -1157,8 +1354,8 @@ data_gaps:
   - section: activity_production
     item_en: "NBS monthly industrial production, services output index, electricity consumption, rail freight, industrial profits, and PMI series"
     item_zh: "NBS月度工业增加值、服务业生产指数、电力消费、铁路货运、工业企业利润与PMI序列"
-    status_en: "AKShare-wrapped industrial value added, official PMI, electricity consumption, enterprise boom, and global freight are charted; NBS-native services output, rail freight, profits, and direct EasyQuery remain adapter gaps."
-    status_zh: "页面已加入AKShare包装的工业增加值、官方PMI、用电量、企业景气和全球航运指标；NBS原生服务业生产、铁路货运、工业利润和EasyQuery直连仍是adapter缺口。"
+    status_en: "AKShare-wrapped industrial value added, official PMI, electricity consumption, enterprise boom, logistics prosperity, civil-aviation load factors, and global freight are charted; NBS-native services output, rail freight, profits, and direct EasyQuery remain adapter gaps."
+    status_zh: "页面已加入AKShare包装的工业增加值、官方PMI、用电量、企业景气、物流景气、民航负载率和全球航运指标；NBS原生服务业生产、铁路货运、工业利润和EasyQuery直连仍是adapter缺口。"
   - section: investment
     item_en: "NBS fixed asset investment by sector and project pipeline"
     item_zh: "NBS固定资产投资分项与项目施工链条"
@@ -1174,6 +1371,11 @@ data_gaps:
     item_zh: "NBS社零、网上零售、居民调查、汽车销售与消费者信心"
     status_en: "Headline retail-sales growth plus consumer confidence/expectations are charted through AKShare's Eastmoney wrapper; online retail, household surveys, and auto sales remain open."
     status_zh: "页面已通过AKShare东方财富包装接入社零总量增速、消费者信心和预期；网上零售、居民调查和汽车销售仍待补充。"
+  - section: external
+    item_en: "SAFE quarterly BOP, FDI flow/stock, external debt, and customs partner/product details"
+    item_zh: "SAFE季度国际收支、FDI流量/存量、外债，以及海关伙伴国/商品细项"
+    status_en: "Customs export/import values, growth rates, trade balance, reserves, FX fixings, spot USD/CNY, and REER are charted; BOP detail, FDI, external debt, and partner/product customs breakdowns still require stable official adapters."
+    status_zh: "页面已加入海关进出口金额、同比、贸易差额、外储、汇率中间价、美元兑人民币即期和实际有效汇率；国际收支细项、FDI、外债和海关伙伴国/商品拆分仍需稳定官方adapter。"
   - section: money_credit
     item_en: "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates"
     item_zh: "PBOC月度人民币贷款、存款、社融流量/存量、LPR/MLF/RRR与银行间利率"
@@ -1184,3 +1386,8 @@ data_gaps:
     item_zh: "NBS月度CPI、核心CPI、PPI、农产品价格与进出口价格指数"
     status_en: "Headline CPI/PPI, CPI MoM, urban/rural CPI, enterprise-goods prices, and high-frequency agricultural, commodity, and energy indexes are charted through AKShare; core CPI, services CPI, detailed food categories, retail-price index, and trade-price indices remain open."
     status_zh: "页面已通过AKShare接入CPI/PPI、CPI环比、城乡CPI、企业商品价格，以及高频农产品、商品和能源价格指数；核心CPI、服务CPI、食品细项、零售价格指数和进出口价格指数仍待补充。"
+  - section: government_finance
+    item_en: "Detailed fiscal expenditure, central/local split, land-sales revenue, LGFV and quasi-fiscal debt"
+    item_zh: "财政支出细项、中央/地方拆分、土地出让收入、LGFV与准财政债务"
+    status_en: "Fiscal revenue growth, quarterly tax receipts, IMF general-government balance, and debt are charted; expenditure detail, land finance, and quasi-fiscal perimeter remain open."
+    status_zh: "页面已加入财政收入增速、季度税收收入、IMF广义政府余额和债务；财政支出细项、土地财政和准财政边界仍待补充。"

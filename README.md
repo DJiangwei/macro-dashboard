@@ -110,10 +110,12 @@ silently hiding it.
 The China page uses AKShare for a China-native high-frequency layer including
 CPI/PPI headline and momentum, urban/rural CPI, enterprise-goods prices,
 agricultural/commodity/energy price indexes, PMI, industrial value added,
-fixed-asset investment, retail sales, consumer confidence, customs trade, money
-supply, new RMB loans, TSF flow, LPR, RRR, SHIBOR, electricity consumption,
-selected Beijing/Shanghai housing-price samples, reserves/gold, and fiscal
-revenue execution. These charts are labelled as AKShare-wrapped
+logistics prosperity, civil-aviation load factors, fixed-asset investment,
+retail sales, consumer confidence, customs trade values/growth/balance, money
+supply, new RMB loans, TSF flow, LPR, RRR, SHIBOR, A-share market capitalization,
+turnover, margin balances, electricity consumption, selected Beijing/Shanghai
+housing-price samples, reserves/gold, fiscal revenue execution, and tax
+receipts. These charts are labelled as AKShare-wrapped
 Eastmoney/Sina/PBC-style web data rather than official NBS/PBOC API contracts;
 schema drift, upstream availability, and concept coverage should be checked
 whenever China data is expanded.
