@@ -107,6 +107,13 @@ silently hiding it.
 `config/us_indicators.yaml` via their dedicated scripts, then updates
 `output/index.html` so the archive page stays synchronized.
 
+The China page uses AKShare for selected China-native monthly indicators such as
+CPI, PPI, PMI, money supply, new RMB loans, LPR, fixed-asset investment,
+industrial value added, retail sales, and electricity consumption. These charts
+are labelled as AKShare-wrapped Eastmoney/Sina web data rather than official
+NBS/PBOC API contracts; schema drift and upstream availability should be checked
+whenever China data is expanded.
+
 To rebuild and publish the site:
 
 ```bash

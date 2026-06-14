@@ -100,6 +100,51 @@ indicators:
     frequency: "annual"
     caveat_en: "Services are harder to measure at high frequency; annual data can miss turning points."
     caveat_zh: "服务业高频测量难度更高；年度数据可能错过拐点。"
+  - id: industrial_value_added_yoy_akshare
+    section: activity_production
+    label_en: "Industrial Value Added, YoY"
+    label_zh: "工业增加值同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_gyzjz
+    date_column: "月份"
+    value_column: "同比增长"
+    series: "macro_china_gyzjz:同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "China-native monthly industrial value-added growth via AKShare's Eastmoney wrapper; use as a web-wrapped public series, not as a direct NBS API contract."
+    caveat_zh: "AKShare东方财富包装的中国月度工业增加值增速；可作公开网页包装序列，不等同于NBS直连API。"
+  - id: manufacturing_pmi_akshare
+    section: activity_production
+    label_en: "Manufacturing PMI"
+    label_zh: "制造业PMI"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_pmi
+    date_column: "月份"
+    value_column: "制造业-指数"
+    series: "macro_china_pmi:制造业-指数"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Official PMI series as exposed by AKShare's Eastmoney wrapper; cross-check release dates and revisions against NBS/CFLP when precision matters."
+    caveat_zh: "AKShare东方财富包装的官方PMI序列；精确使用时应与NBS/CFLP发布日期和修订交叉核对。"
+  - id: non_manufacturing_pmi_akshare
+    section: activity_production
+    label_en: "Non-Manufacturing PMI"
+    label_zh: "非制造业PMI"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_pmi
+    date_column: "月份"
+    value_column: "非制造业-指数"
+    series: "macro_china_pmi:非制造业-指数"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Uses the Eastmoney-wrapped PMI table rather than the Jin10 non-manufacturing PMI endpoint because the latter returned less reliable tail observations in this runtime."
+    caveat_zh: "使用东方财富包装PMI表，而非金十非制造业PMI端点；后者在当前环境中尾部观测不够稳定。"
   - id: gfcf_share_gdp
     section: investment
     label_en: "Gross Fixed Capital Formation"
@@ -112,6 +157,21 @@ indicators:
     frequency: "annual"
     caveat_en: "National-accounts investment share; not the same as NBS fixed asset investment growth."
     caveat_zh: "国民账户投资占比；不同于NBS固定资产投资增速。"
+  - id: fixed_asset_investment_yoy_akshare
+    section: investment
+    label_en: "Fixed Asset Investment, YoY"
+    label_zh: "固定资产投资同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_gdzctz
+    date_column: "月份"
+    value_column: "同比增长"
+    series: "macro_china_gdzctz:同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Headline fixed-asset investment growth from AKShare's Eastmoney wrapper; sector/project detail remains a separate NBS-native gap."
+    caveat_zh: "AKShare东方财富包装的固定资产投资总量增速；行业和项目细项仍属于NBS原生数据缺口。"
   - id: nominal_residential_property_price_bis
     section: real_estate
     label_en: "Residential Property Prices"
@@ -160,6 +220,21 @@ indicators:
     frequency: "annual"
     caveat_en: "Useful for rebalancing, but too low-frequency for near-term consumption momentum."
     caveat_zh: "适合观察再平衡，但频率太低，不适合捕捉短期消费动能。"
+  - id: retail_sales_yoy_akshare
+    section: consumption
+    label_en: "Retail Sales, YoY"
+    label_zh: "社会消费品零售同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_consumer_goods_retail
+    date_column: "月份"
+    value_column: "同比增长"
+    series: "macro_china_consumer_goods_retail:同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly retail-sales growth via AKShare's Eastmoney wrapper; retail sales are not the same concept as national-accounts household consumption."
+    caveat_zh: "AKShare东方财富包装的月度社零增速；社零并不等同于国民账户居民消费。"
   - id: current_account_gdp
     section: external
     label_en: "Current Account Balance"
@@ -309,6 +384,82 @@ indicators:
     frequency: "annual"
     caveat_en: "Broad financial-depth metric; not a substitute for PBOC loan and TSF flows."
     caveat_zh: "金融深化指标；不能替代PBOC贷款与社融流量。"
+  - id: m2_yoy_akshare
+    section: money_credit
+    label_en: "M2 Growth, YoY"
+    label_zh: "M2同比增速"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_money_supply
+    date_column: "月份"
+    value_column: "货币和准货币(M2)-同比增长"
+    series: "macro_china_money_supply:M2同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly M2 growth via AKShare's Eastmoney wrapper; prefer PBOC native statistical releases once a stable parser is wired."
+    caveat_zh: "AKShare东方财富包装的月度M2增速；若后续接入稳定PBOC解析器，应优先使用PBOC原生统计。"
+  - id: m1_yoy_akshare
+    section: money_credit
+    label_en: "M1 Growth, YoY"
+    label_zh: "M1同比增速"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_money_supply
+    date_column: "月份"
+    value_column: "货币(M1)-同比增长"
+    series: "macro_china_money_supply:M1同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly M1 growth helps track deposit composition and corporate cash-cycle pressure; AKShare schema should be monitored."
+    caveat_zh: "月度M1增速可用于观察存款结构和企业现金循环压力；需持续监控AKShare字段稳定性。"
+  - id: new_rmb_loans_akshare
+    section: money_credit
+    label_en: "New RMB Loans"
+    label_zh: "新增人民币贷款"
+    unit: "CNY tn"
+    transform: "cny_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_new_financial_credit
+    date_column: "月份"
+    value_column: "当月"
+    series: "macro_china_new_financial_credit:当月"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly new RMB loans from AKShare's Eastmoney wrapper, converted from CNY 100mn to CNY tn; not a full TSF-flow substitute."
+    caveat_zh: "AKShare东方财富包装的月度新增人民币贷款，由亿元转换为万亿元；不能替代完整社融流量。"
+  - id: lpr_1y_akshare
+    section: money_credit
+    label_en: "1Y Loan Prime Rate"
+    label_zh: "1年期LPR"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_lpr
+    date_column: "TRADE_DATE"
+    value_column: "LPR1Y"
+    series: "macro_china_lpr:LPR1Y"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "LPR history from AKShare's Eastmoney wrapper; latest LPR fixing should be cross-checked against the National Interbank Funding Center/PBOC release."
+    caveat_zh: "AKShare东方财富包装的LPR历史；最新LPR报价应与全国银行间同业拆借中心/PBOC发布交叉核对。"
+  - id: lpr_5y_akshare
+    section: money_credit
+    label_en: "5Y Loan Prime Rate"
+    label_zh: "5年期LPR"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_lpr
+    date_column: "TRADE_DATE"
+    value_column: "LPR5Y"
+    series: "macro_china_lpr:LPR5Y"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "5Y LPR is more relevant for mortgage and long-term loan pricing; AKShare is a wrapper, not the primary official release."
+    caveat_zh: "5年期LPR对房贷和中长期贷款定价更相关；AKShare是包装源，不是官方原始发布。"
   - id: interbank_3m_rate
     section: money_credit
     label_en: "3M Interbank Rate"
@@ -345,6 +496,36 @@ indicators:
     frequency: "annual"
     caveat_en: "Annual CPI; NBS monthly CPI is the preferred tactical inflation series."
     caveat_zh: "年度CPI；战术性通胀观察应优先使用NBS月度CPI。"
+  - id: cpi_yoy_akshare
+    section: prices
+    label_en: "CPI Inflation, YoY"
+    label_zh: "CPI同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_cpi
+    date_column: "月份"
+    value_column: "全国-同比增长"
+    series: "macro_china_cpi:全国-同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly CPI YoY via AKShare's Eastmoney wrapper; keep annual WDI CPI for long-run comparability."
+    caveat_zh: "AKShare东方财富包装的月度CPI同比；年度WDI CPI仍用于长期可比。"
+  - id: ppi_yoy_akshare
+    section: prices
+    label_en: "PPI Inflation, YoY"
+    label_zh: "PPI同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_ppi
+    date_column: "月份"
+    value_column: "当月同比增长"
+    series: "macro_china_ppi:当月同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly producer-price inflation via AKShare's Eastmoney wrapper; energy and upstream commodity cycles can dominate the signal."
+    caveat_zh: "AKShare东方财富包装的月度PPI同比；能源和上游大宗周期可能主导信号。"
   - id: gdp_deflator
     section: prices
     label_en: "GDP Deflator"
@@ -430,6 +611,21 @@ indicators:
     frequency: "annual"
     caveat_en: "Demographic vital-statistics series; revisions are possible."
     caveat_zh: "人口生命统计序列；可能修订。"
+  - id: electricity_consumption_yoy_akshare
+    section: activity_production
+    label_en: "Electricity Consumption, YoY"
+    label_zh: "全社会用电量同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_society_electricity
+    date_column: "统计时间"
+    value_column: "全社会用电量同比"
+    series: "macro_china_society_electricity:全社会用电量同比"
+    source_name: "AKShare / Sina Finance"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly electricity-consumption growth via AKShare's Sina Finance wrapper; useful as a physical activity cross-check, not a GDP substitute."
+    caveat_zh: "AKShare新浪财经包装的全社会用电量同比；适合作为实体活动交叉验证，不是GDP替代。"
   - id: general_gov_balance
     section: government_finance
     label_en: "General Government Balance"
@@ -481,13 +677,13 @@ data_gaps:
   - section: activity_production
     item_en: "NBS monthly industrial production, services output index, electricity consumption, rail freight, industrial profits, and PMI series"
     item_zh: "NBS月度工业增加值、服务业生产指数、电力消费、铁路货运、工业企业利润与PMI序列"
-    status_en: "NBS EasyQuery returned 403 from this runtime; add an official adapter only after the endpoint is reproducible."
-    status_zh: "当前运行环境访问NBS EasyQuery返回403；只有在官方接口可复跑后才应加入adapter。"
+    status_en: "AKShare-wrapped industrial value added, official PMI, and electricity consumption are charted; NBS-native services output, rail freight, profits, and direct EasyQuery remain adapter gaps."
+    status_zh: "页面已加入AKShare包装的工业增加值、官方PMI和用电量；NBS原生服务业生产、铁路货运、工业利润和EasyQuery直连仍是adapter缺口。"
   - section: investment
     item_en: "NBS fixed asset investment by sector and project pipeline"
     item_zh: "NBS固定资产投资分项与项目施工链条"
-    status_en: "Core China-native monthly indicators; not proxied in v1."
-    status_zh: "中国本土核心月度指标；v1不使用替代proxy。"
+    status_en: "Headline FAI growth is charted through AKShare's Eastmoney wrapper; sector and project-pipeline details remain open."
+    status_zh: "页面已通过AKShare东方财富包装接入固定资产投资总量增速；行业和项目施工链条仍待补充。"
   - section: real_estate
     item_en: "NBS property investment, floor-space starts/completions/sales, 70-city price index, land transactions, and inventory"
     item_zh: "NBS房地产开发投资、开工/竣工/销售面积、70城房价、土地成交与库存"
@@ -496,15 +692,15 @@ data_gaps:
   - section: consumption
     item_en: "NBS retail sales, online retail sales, household survey, auto sales, and consumer confidence"
     item_zh: "NBS社零、网上零售、居民调查、汽车销售与消费者信心"
-    status_en: "Retail sales are not equivalent to national-accounts consumption; keep separate when official data is wired."
-    status_zh: "社零不等同于国民账户消费；接入官方数据时应分开呈现。"
+    status_en: "Headline retail-sales growth is charted through AKShare's Eastmoney wrapper; online retail, household surveys, autos, and confidence remain open."
+    status_zh: "页面已通过AKShare东方财富包装接入社零总量增速；网上零售、居民调查、汽车和信心仍待补充。"
   - section: money_credit
     item_en: "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates"
     item_zh: "PBOC月度人民币贷款、存款、社融流量/存量、LPR/MLF/RRR与银行间利率"
-    status_en: "A 3M interbank-rate mirror is charted and PBC latest cards are shown; full PBOC money/credit/policy-tool history still requires a dedicated parser."
-    status_zh: "页面已加入3个月银行间利率镜像并显示PBC最新卡片；完整PBOC货币、信用和政策工具历史仍需要专门解析器。"
+    status_en: "M2, M1, new RMB loans, LPR, 3M interbank, and PBC latest cards are charted; TSF flow/stock, deposits by sector, MLF, RRR, and full PBOC-native history remain open."
+    status_zh: "页面已加入M2、M1、新增人民币贷款、LPR、3个月银行间利率和PBC最新卡片；社融流量/存量、分部门存款、MLF、RRR和完整PBOC原生历史仍待补充。"
   - section: prices
     item_en: "NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices"
     item_zh: "NBS月度CPI、核心CPI、PPI、农产品价格与进出口价格指数"
-    status_en: "Annual WDI inflation and deflator charts are shown; tactical monthly data is pending."
-    status_zh: "页面显示年度WDI通胀和平减指数；战术性月度数据待接入。"
+    status_en: "Headline monthly CPI and PPI are charted through AKShare's Eastmoney wrapper; core CPI, agriculture prices, and trade-price indices remain open."
+    status_zh: "页面已通过AKShare东方财富包装接入月度CPI和PPI；核心CPI、农产品价格和进出口价格指数仍待补充。"

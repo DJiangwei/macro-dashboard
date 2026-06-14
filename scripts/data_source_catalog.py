@@ -77,7 +77,7 @@ def _append_china_sources(lines: list[str]) -> None:
         "",
         "## China Data-First Dashboard Sources",
         "",
-        "The China page is generated from `config/china_indicators.yaml`. Current rendered charts deliberately use reproducible public endpoints: World Bank WDI for annual national-account and structural series, IMF DataMapper for WEO fiscal ratios, SAFE for RMB central parity, PBC latest-card pages for selected money-market snapshots, and FRED graph CSV mirrors for validated IMF IFS, BIS, OECD, and Federal Reserve series. China-native monthly NBS/PBOC history is not proxied when an official reusable endpoint has not been validated.",
+        "The China page is generated from `config/china_indicators.yaml`. Current rendered charts deliberately use reproducible public endpoints: AKShare-wrapped Eastmoney/Sina tables for selected China-native monthly indicators, World Bank WDI for annual national-account and structural series, IMF DataMapper for WEO fiscal ratios, SAFE for RMB central parity, PBC latest-card pages for selected money-market snapshots, and FRED graph CSV mirrors for validated IMF IFS, BIS, OECD, and Federal Reserve series. China-native monthly NBS/PBOC history is not proxied when an official reusable endpoint has not been validated.",
         "",
         f"Configured charts: {len(indicators)}. Latest rendered chart count: {summary.get('charts', 'unknown')}. Source groups: {summary.get('source_groups', 'unknown')}.",
         "",

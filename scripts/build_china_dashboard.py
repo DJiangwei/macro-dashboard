@@ -53,6 +53,8 @@ def _apply_transform(value: float, transform: str | None) -> float:
         return value / 1_000_000_000_000
     if transform == "usd_mn_to_trn":
         return value / 1_000_000
+    if transform == "cny_100mn_to_trn":
+        return value / 10_000
     if transform == "people_billion":
         return value / 1_000_000_000
     return value
@@ -63,6 +65,28 @@ def _parse_year(value: str) -> int | None:
         return int(str(value)[:4])
     except (TypeError, ValueError):
         return None
+
+
+def _parse_period_date(value: Any) -> str | None:
+    if hasattr(value, "date"):
+        value = value.date()
+    if hasattr(value, "isoformat"):
+        return value.isoformat()
+
+    text = _clean_text(str(value))
+    if not text or text.lower() in {"nan", "none", "nat"}:
+        return None
+
+    match = re.match(r"^(\d{4})年(\d{1,2})月份$", text)
+    if match:
+        return f"{int(match.group(1)):04d}-{int(match.group(2)):02d}-01"
+
+    match = re.match(r"^(\d{4})[.\-/](\d{1,2})(?:[.\-/](\d{1,2}))?$", text)
+    if match:
+        day = int(match.group(3) or 1)
+        return f"{int(match.group(1)):04d}-{int(match.group(2)):02d}-{day:02d}"
+
+    return None
 
 
 def fetch_world_bank(spec: dict[str, Any]) -> dict[str, Any]:
@@ -139,6 +163,51 @@ def fetch_fred_graph(spec: dict[str, Any]) -> dict[str, Any]:
         "observations": observations,
         "provider_updated": observations[-1]["date"] if observations else "",
         "api_url": f"{url}?id={code}",
+    }
+
+
+def fetch_akshare_table(spec: dict[str, Any], cache: dict[str, Any] | None = None) -> dict[str, Any]:
+    try:
+        import akshare as ak  # type: ignore[import-not-found]
+        import pandas as pd
+    except ImportError as exc:
+        raise RuntimeError("AKShare is not installed in the project environment.") from exc
+
+    function_name = spec["function"]
+    args = spec.get("args") or []
+    kwargs = spec.get("kwargs") or {}
+    cache_key = json.dumps({"function": function_name, "args": args, "kwargs": kwargs}, ensure_ascii=False, sort_keys=True)
+    if cache is not None and cache_key in cache:
+        frame = cache[cache_key]
+    else:
+        fetcher = getattr(ak, function_name)
+        frame = fetcher(*args, **kwargs)
+        if cache is not None:
+            cache[cache_key] = frame
+    date_column = spec["date_column"]
+    value_column = spec["value_column"]
+    observations: list[dict[str, Any]] = []
+
+    for _, row in frame.iterrows():
+        raw_date = row.get(date_column)
+        raw_value = row.get(value_column)
+        if pd.isna(raw_date) or pd.isna(raw_value):
+            continue
+        parsed_date = _parse_period_date(raw_date)
+        if not parsed_date:
+            continue
+        try:
+            value = _apply_transform(float(raw_value), spec.get("transform"))
+        except (TypeError, ValueError):
+            continue
+        observations.append({"date": parsed_date, "value": value})
+
+    observations.sort(key=lambda item: item["date"])
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": spec.get("source_url", ""),
     }
 
 
@@ -242,6 +311,8 @@ def validate_series(series: dict[str, Any]) -> dict[str, Any]:
         notes.append("IMF WEO includes estimates/projections; dashed segment marks forecast years.")
     if "FRED" in source_name:
         notes.append("FRED is used as a reproducible public mirror; verify native-source definitions before trading use.")
+    if "AKShare" in source_name:
+        notes.append("AKShare wraps upstream web data; monitor schema drift and upstream availability.")
     if series.get("caveat_en"):
         notes.append(series["caveat_en"])
 
@@ -256,6 +327,7 @@ def validate_series(series: dict[str, Any]) -> dict[str, Any]:
 
 def fetch_all(config: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     safe_rows: list[list[str]] | None = None
+    akshare_cache: dict[str, Any] = {}
     series_list: list[dict[str, Any]] = []
     for spec in config.get("indicators", []):
         fetcher = spec.get("fetcher")
@@ -266,6 +338,8 @@ def fetch_all(config: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[s
                 series = fetch_imf_datamapper(spec)
             elif fetcher == "fred_graph_csv":
                 series = fetch_fred_graph(spec)
+            elif fetcher == "akshare_table":
+                series = fetch_akshare_table(spec, akshare_cache)
             elif fetcher == "safe_rmb_midpoint":
                 if safe_rows is None:
                     safe_rows = _safe_rows()

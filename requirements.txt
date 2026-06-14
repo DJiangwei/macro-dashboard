@@ -1,5 +1,6 @@
 # Compatibility fallback for agents that do not use uv.
 # Preferred workflow: `uv sync` then `uv run ...`.
+akshare>=1.18,<2
 plotly>=5.20,<6
 pandas>=2.2,<3
 pyyaml>=6.0,<7
