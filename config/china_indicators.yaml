@@ -145,6 +145,36 @@ indicators:
     frequency: "monthly"
     caveat_en: "Uses the Eastmoney-wrapped PMI table rather than the Jin10 non-manufacturing PMI endpoint because the latter returned less reliable tail observations in this runtime."
     caveat_zh: "使用东方财富包装PMI表，而非金十非制造业PMI端点；后者在当前环境中尾部观测不够稳定。"
+  - id: enterprise_boom_index_akshare
+    section: activity_production
+    label_en: "Enterprise Boom Index"
+    label_zh: "企业景气指数"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_enterprise_boom_index
+    date_column: "季度"
+    value_column: "企业景气指数-指数"
+    series: "macro_china_enterprise_boom_index:企业景气指数-指数"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "quarterly"
+    caveat_en: "Quarterly enterprise boom index via AKShare's Eastmoney wrapper; useful as a business-cycle sentiment cross-check, not a production-volume measure."
+    caveat_zh: "AKShare东方财富包装的季度企业景气指数；适合作为商业周期情绪交叉验证，不是产量指标。"
+  - id: baltic_dry_index_akshare
+    section: activity_production
+    label_en: "Baltic Dry Index"
+    label_zh: "波罗的海干散货指数"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_freight_index
+    date_column: "截止日期"
+    value_column: "波罗的海综合运价指数BDI"
+    series: "macro_china_freight_index:波罗的海综合运价指数BDI"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "daily"
+    caveat_en: "Global dry-bulk freight index exposed through AKShare; use as a shipping/commodity-cycle cross-check rather than a China-only freight series."
+    caveat_zh: "AKShare包装的全球干散货运价指数；适合作为航运/商品周期交叉验证，不是中国专属货运指标。"
   - id: gfcf_share_gdp
     section: investment
     label_en: "Gross Fixed Capital Formation"
@@ -196,6 +226,90 @@ indicators:
     frequency: "quarterly"
     caveat_en: "BIS CPI-deflated residential property price series; useful for cycle pressure, but not a replacement for NBS 70-city price details."
     caveat_zh: "BIS经CPI平减的住宅价格序列；适合观察周期压力，但不能替代NBS 70城房价分项。"
+  - id: beijing_new_home_price_yoy_akshare
+    section: real_estate
+    label_en: "Beijing New Home Prices, YoY"
+    label_zh: "北京新建商品住宅价格同比"
+    unit: "%"
+    transform: "index_100_to_yoy"
+    fetcher: akshare_table
+    function: macro_china_new_house_price
+    kwargs:
+      city_first: "北京"
+      city_second: "上海"
+    filter_column: "城市"
+    filter_value: "北京"
+    date_column: "日期"
+    value_column: "新建商品住宅价格指数-同比"
+    series: "macro_china_new_house_price:北京:新建商品住宅价格指数-同比"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Selected-city NBS-style price index via AKShare, transformed from index level where year-ago=100 into YoY percentage; not a national 70-city aggregate."
+    caveat_zh: "AKShare包装的城市样本房价指数，由上年同月=100转换为同比百分比；不是全国70城总指数。"
+  - id: shanghai_new_home_price_yoy_akshare
+    section: real_estate
+    label_en: "Shanghai New Home Prices, YoY"
+    label_zh: "上海新建商品住宅价格同比"
+    unit: "%"
+    transform: "index_100_to_yoy"
+    fetcher: akshare_table
+    function: macro_china_new_house_price
+    kwargs:
+      city_first: "北京"
+      city_second: "上海"
+    filter_column: "城市"
+    filter_value: "上海"
+    date_column: "日期"
+    value_column: "新建商品住宅价格指数-同比"
+    series: "macro_china_new_house_price:上海:新建商品住宅价格指数-同比"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Selected-city NBS-style price index via AKShare, transformed from index level where year-ago=100 into YoY percentage; not a national 70-city aggregate."
+    caveat_zh: "AKShare包装的城市样本房价指数，由上年同月=100转换为同比百分比；不是全国70城总指数。"
+  - id: beijing_existing_home_price_yoy_akshare
+    section: real_estate
+    label_en: "Beijing Existing Home Prices, YoY"
+    label_zh: "北京二手住宅价格同比"
+    unit: "%"
+    transform: "index_100_to_yoy"
+    fetcher: akshare_table
+    function: macro_china_new_house_price
+    kwargs:
+      city_first: "北京"
+      city_second: "上海"
+    filter_column: "城市"
+    filter_value: "北京"
+    date_column: "日期"
+    value_column: "二手住宅价格指数-同比"
+    series: "macro_china_new_house_price:北京:二手住宅价格指数-同比"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Selected-city existing-home price index via AKShare; Beijing/Shanghai samples help read property stress but do not replace full 70-city details."
+    caveat_zh: "AKShare包装的城市二手住宅价格样本；北京/上海样本有助于观察地产压力，但不能替代完整70城细项。"
+  - id: shanghai_existing_home_price_yoy_akshare
+    section: real_estate
+    label_en: "Shanghai Existing Home Prices, YoY"
+    label_zh: "上海二手住宅价格同比"
+    unit: "%"
+    transform: "index_100_to_yoy"
+    fetcher: akshare_table
+    function: macro_china_new_house_price
+    kwargs:
+      city_first: "北京"
+      city_second: "上海"
+    filter_column: "城市"
+    filter_value: "上海"
+    date_column: "日期"
+    value_column: "二手住宅价格指数-同比"
+    series: "macro_china_new_house_price:上海:二手住宅价格指数-同比"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Selected-city existing-home price index via AKShare; Beijing/Shanghai samples help read property stress but do not replace full 70-city details."
+    caveat_zh: "AKShare包装的城市二手住宅价格样本；北京/上海样本有助于观察地产压力，但不能替代完整70城细项。"
   - id: household_consumption_growth
     section: consumption
     label_en: "Household Consumption Growth"
@@ -235,6 +349,36 @@ indicators:
     frequency: "monthly"
     caveat_en: "Monthly retail-sales growth via AKShare's Eastmoney wrapper; retail sales are not the same concept as national-accounts household consumption."
     caveat_zh: "AKShare东方财富包装的月度社零增速；社零并不等同于国民账户居民消费。"
+  - id: consumer_confidence_index_akshare
+    section: consumption
+    label_en: "Consumer Confidence Index"
+    label_zh: "消费者信心指数"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_xfzxx
+    date_column: "月份"
+    value_column: "消费者信心指数-指数值"
+    series: "macro_china_xfzxx:消费者信心指数-指数值"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Consumer confidence index via AKShare's Eastmoney wrapper; use alongside retail sales because survey sentiment can diverge from realized spending."
+    caveat_zh: "AKShare东方财富包装的消费者信心指数；应与社零一起使用，因为调查情绪可能与实际支出分化。"
+  - id: consumer_expectations_index_akshare
+    section: consumption
+    label_en: "Consumer Expectations Index"
+    label_zh: "消费者预期指数"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_xfzxx
+    date_column: "月份"
+    value_column: "消费者预期指数-指数值"
+    series: "macro_china_xfzxx:消费者预期指数-指数值"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Consumer expectations index via AKShare's Eastmoney wrapper; levels are survey-based and should be read directionally."
+    caveat_zh: "AKShare东方财富包装的消费者预期指数；属于调查型指标，水平值应方向性解读。"
   - id: current_account_gdp
     section: external
     label_en: "Current Account Balance"
@@ -285,6 +429,36 @@ indicators:
     frequency: "annual"
     caveat_en: "Goods and services trade share of GDP; does not reveal partner/product composition."
     caveat_zh: "货物与服务贸易占GDP比重；不能揭示伙伴国或产品结构。"
+  - id: customs_exports_yoy_akshare
+    section: external
+    label_en: "Customs Exports, YoY"
+    label_zh: "海关出口同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_hgjck
+    date_column: "月份"
+    value_column: "当月出口额-同比增长"
+    series: "macro_china_hgjck:当月出口额-同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly customs goods export growth via AKShare; this is goods trade and should not be confused with national-accounts goods-and-services exports."
+    caveat_zh: "AKShare包装的月度海关货物出口增速；这是货物贸易，不应与国民账户货物和服务出口混同。"
+  - id: customs_imports_yoy_akshare
+    section: external
+    label_en: "Customs Imports, YoY"
+    label_zh: "海关进口同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_hgjck
+    date_column: "月份"
+    value_column: "当月进口额-同比增长"
+    series: "macro_china_hgjck:当月进口额-同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly customs goods import growth via AKShare; import prices, commodities, and processing-trade swings can distort the real demand signal."
+    caveat_zh: "AKShare包装的月度海关货物进口增速；进口价格、大宗商品和加工贸易波动会扭曲真实需求信号。"
   - id: fx_reserves
     section: external
     label_en: "Foreign Exchange Reserves"
@@ -298,6 +472,37 @@ indicators:
     frequency: "annual"
     caveat_en: "Annual reserve stock; PBOC releases monthly reserves around the 7th day of the following month."
     caveat_zh: "年度储备存量；PBOC通常在次月7日左右发布月度外储。"
+  - id: fx_reserves_akshare
+    section: external
+    label_en: "FX Reserves"
+    label_zh: "国家外汇储备"
+    unit: "USD"
+    transform: "usd_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_foreign_exchange_gold
+    date_column: "统计时间"
+    value_column: "国家外汇储备"
+    series: "macro_china_foreign_exchange_gold:国家外汇储备"
+    source_name: "AKShare / PBC-SAFE Reserve Table"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly reserve table via AKShare, converted from USD 100mn to USD tn; use as a China-native cross-check against IMF IFS/FRED reserve mirrors."
+    caveat_zh: "AKShare包装的月度储备表，由亿美元转换为万亿美元；可作为IMF IFS/FRED储备镜像的中国本土交叉验证。"
+  - id: gold_reserves_akshare
+    section: external
+    label_en: "Gold Reserves"
+    label_zh: "黄金储备"
+    unit: "10k troy oz"
+    fetcher: akshare_table
+    function: macro_china_foreign_exchange_gold
+    date_column: "统计时间"
+    value_column: "黄金储备"
+    series: "macro_china_foreign_exchange_gold:黄金储备"
+    source_name: "AKShare / PBC-SAFE Reserve Table"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly gold reserve quantity from AKShare's reserve table; valuation and quantity signals should be separated."
+    caveat_zh: "AKShare储备表中的月度黄金储备数量；应区分估值变化与数量变化。"
   - id: fx_reserves_ex_gold_monthly
     section: external
     label_en: "FX Reserves ex Gold"
@@ -430,6 +635,38 @@ indicators:
     frequency: "monthly"
     caveat_en: "Monthly new RMB loans from AKShare's Eastmoney wrapper, converted from CNY 100mn to CNY tn; not a full TSF-flow substitute."
     caveat_zh: "AKShare东方财富包装的月度新增人民币贷款，由亿元转换为万亿元；不能替代完整社融流量。"
+  - id: tsf_flow_akshare
+    section: money_credit
+    label_en: "Total Social Financing Flow"
+    label_zh: "社会融资规模增量"
+    unit: "CNY tn"
+    transform: "cny_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_shrzgm
+    date_column: "月份"
+    value_column: "社会融资规模增量"
+    series: "macro_china_shrzgm:社会融资规模增量"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly TSF flow via AKShare's Eastmoney wrapper, converted from CNY 100mn to CNY tn; stock, revisions, and component classifications still require PBOC-native checks."
+    caveat_zh: "AKShare东方财富包装的月度社融增量，由亿元转换为万亿元；社融存量、修订和分项口径仍需PBOC原生核对。"
+  - id: tsf_rmb_loans_akshare
+    section: money_credit
+    label_en: "TSF RMB Loan Component"
+    label_zh: "社融人民币贷款分项"
+    unit: "CNY tn"
+    transform: "cny_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_shrzgm
+    date_column: "月份"
+    value_column: "其中-人民币贷款"
+    series: "macro_china_shrzgm:其中-人民币贷款"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "RMB loan component inside TSF flow via AKShare; compare with standalone new RMB loans because concepts and included borrowers can differ."
+    caveat_zh: "AKShare包装的社融口径人民币贷款分项；需与新增人民币贷款单列指标对照，因为概念和主体范围可能不同。"
   - id: lpr_1y_akshare
     section: money_credit
     label_en: "1Y Loan Prime Rate"
@@ -460,6 +697,36 @@ indicators:
     frequency: "monthly"
     caveat_en: "5Y LPR is more relevant for mortgage and long-term loan pricing; AKShare is a wrapper, not the primary official release."
     caveat_zh: "5年期LPR对房贷和中长期贷款定价更相关；AKShare是包装源，不是官方原始发布。"
+  - id: large_bank_rrr_akshare
+    section: money_credit
+    label_en: "Large Bank RRR"
+    label_zh: "大型金融机构存准率"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_reserve_requirement_ratio
+    date_column: "生效时间"
+    value_column: "大型金融机构-调整后"
+    series: "macro_china_reserve_requirement_ratio:大型金融机构-调整后"
+    source_name: "AKShare / PBC RRR Announcements"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "irregular"
+    caveat_en: "Event-based required reserve ratio history via AKShare; effective dates and institution buckets should be cross-checked against PBC announcements."
+    caveat_zh: "AKShare包装的事件型存款准备金率历史；生效日期和机构分类应与PBC公告交叉核对。"
+  - id: small_bank_rrr_akshare
+    section: money_credit
+    label_en: "Small/Mid Bank RRR"
+    label_zh: "中小金融机构存准率"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_reserve_requirement_ratio
+    date_column: "生效时间"
+    value_column: "中小金融机构-调整后"
+    series: "macro_china_reserve_requirement_ratio:中小金融机构-调整后"
+    source_name: "AKShare / PBC RRR Announcements"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "irregular"
+    caveat_en: "Event-based required reserve ratio history via AKShare; smaller-bank categories have changed over time, so use the series as a policy-easing marker."
+    caveat_zh: "AKShare包装的事件型存款准备金率历史；中小银行分类随时间可能变化，应作为政策宽松标记使用。"
   - id: interbank_3m_rate
     section: money_credit
     label_en: "3M Interbank Rate"
@@ -472,6 +739,36 @@ indicators:
     frequency: "monthly"
     caveat_en: "OECD/FRED 3-month interbank-rate mirror; not the PBC policy-rate corridor and should be checked against ChinaMoney/SHIBOR for trading use."
     caveat_zh: "OECD/FRED三个月银行间利率镜像；不是PBC政策利率走廊，交易使用前应与中国货币网/SHIBOR交叉核对。"
+  - id: shibor_overnight_akshare
+    section: money_credit
+    label_en: "SHIBOR Overnight"
+    label_zh: "隔夜SHIBOR"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_shibor_all
+    date_column: "日期"
+    value_column: "O/N-定价"
+    series: "macro_china_shibor_all:O/N-定价"
+    source_name: "AKShare / SHIBOR"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "daily"
+    caveat_en: "Daily SHIBOR quote via AKShare; use for money-market liquidity stress, while trading use should check the official SHIBOR site."
+    caveat_zh: "AKShare包装的日度SHIBOR报价；可用于观察货币市场流动性压力，交易使用应核对SHIBOR官网。"
+  - id: shibor_3m_akshare
+    section: money_credit
+    label_en: "SHIBOR 3M"
+    label_zh: "3个月SHIBOR"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_shibor_all
+    date_column: "日期"
+    value_column: "3M-定价"
+    series: "macro_china_shibor_all:3M-定价"
+    source_name: "AKShare / SHIBOR"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "daily"
+    caveat_en: "Daily 3M SHIBOR via AKShare; this improves over monthly OECD/FRED interbank-rate mirrors but remains a wrapper around the source site."
+    caveat_zh: "AKShare包装的日度3个月SHIBOR；比OECD/FRED月度银行间利率镜像更高频，但仍是来源站点包装。"
   - id: share_price_index
     section: financial_markets
     label_en: "Share Price Index"
@@ -639,6 +936,21 @@ indicators:
     actual_through: 2024
     caveat_en: "IMF WEO includes estimates/projections; China fiscal analysis should also monitor land sales and off-budget local-government financing."
     caveat_zh: "IMF WEO包含估算/预测；中国财政还需要跟踪土地出让与地方政府预算外融资。"
+  - id: fiscal_revenue_ytd_yoy_akshare
+    section: government_finance
+    label_en: "Fiscal Revenue YTD, YoY"
+    label_zh: "财政收入累计同比"
+    unit: "%"
+    fetcher: akshare_table
+    function: macro_china_czsr
+    date_column: "月份"
+    value_column: "累计-同比增长"
+    series: "macro_china_czsr:累计-同比增长"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "monthly"
+    caveat_en: "Monthly cumulative fiscal revenue growth via AKShare; YTD series is affected by base effects and fiscal calendar timing."
+    caveat_zh: "AKShare包装的月度财政收入累计同比；累计口径受基数效应和财政日历节奏影响。"
   - id: general_gov_debt
     section: government_finance
     label_en: "General Government Gross Debt"
@@ -677,8 +989,8 @@ data_gaps:
   - section: activity_production
     item_en: "NBS monthly industrial production, services output index, electricity consumption, rail freight, industrial profits, and PMI series"
     item_zh: "NBS月度工业增加值、服务业生产指数、电力消费、铁路货运、工业企业利润与PMI序列"
-    status_en: "AKShare-wrapped industrial value added, official PMI, and electricity consumption are charted; NBS-native services output, rail freight, profits, and direct EasyQuery remain adapter gaps."
-    status_zh: "页面已加入AKShare包装的工业增加值、官方PMI和用电量；NBS原生服务业生产、铁路货运、工业利润和EasyQuery直连仍是adapter缺口。"
+    status_en: "AKShare-wrapped industrial value added, official PMI, electricity consumption, enterprise boom, and global freight are charted; NBS-native services output, rail freight, profits, and direct EasyQuery remain adapter gaps."
+    status_zh: "页面已加入AKShare包装的工业增加值、官方PMI、用电量、企业景气和全球航运指标；NBS原生服务业生产、铁路货运、工业利润和EasyQuery直连仍是adapter缺口。"
   - section: investment
     item_en: "NBS fixed asset investment by sector and project pipeline"
     item_zh: "NBS固定资产投资分项与项目施工链条"
@@ -687,18 +999,18 @@ data_gaps:
   - section: real_estate
     item_en: "NBS property investment, floor-space starts/completions/sales, 70-city price index, land transactions, and inventory"
     item_zh: "NBS房地产开发投资、开工/竣工/销售面积、70城房价、土地成交与库存"
-    status_en: "BIS residential property price aggregates are charted; NBS property activity details remain the next official-source adapter priority."
-    status_zh: "页面已加入BIS住宅价格总量指标；NBS房地产活动细项仍是下一阶段官方adapter优先项。"
+    status_en: "BIS residential property aggregates and Beijing/Shanghai AKShare city price samples are charted; national 70-city details, investment, starts/completions/sales, land, and inventory remain adapter priorities."
+    status_zh: "页面已加入BIS住宅价格总量和AKShare北京/上海城市房价样本；全国70城细项、开发投资、开工/竣工/销售、土地和库存仍是adapter优先项。"
   - section: consumption
     item_en: "NBS retail sales, online retail sales, household survey, auto sales, and consumer confidence"
     item_zh: "NBS社零、网上零售、居民调查、汽车销售与消费者信心"
-    status_en: "Headline retail-sales growth is charted through AKShare's Eastmoney wrapper; online retail, household surveys, autos, and confidence remain open."
-    status_zh: "页面已通过AKShare东方财富包装接入社零总量增速；网上零售、居民调查、汽车和信心仍待补充。"
+    status_en: "Headline retail-sales growth plus consumer confidence/expectations are charted through AKShare's Eastmoney wrapper; online retail, household surveys, and auto sales remain open."
+    status_zh: "页面已通过AKShare东方财富包装接入社零总量增速、消费者信心和预期；网上零售、居民调查和汽车销售仍待补充。"
   - section: money_credit
     item_en: "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates"
     item_zh: "PBOC月度人民币贷款、存款、社融流量/存量、LPR/MLF/RRR与银行间利率"
-    status_en: "M2, M1, new RMB loans, LPR, 3M interbank, and PBC latest cards are charted; TSF flow/stock, deposits by sector, MLF, RRR, and full PBOC-native history remain open."
-    status_zh: "页面已加入M2、M1、新增人民币贷款、LPR、3个月银行间利率和PBC最新卡片；社融流量/存量、分部门存款、MLF、RRR和完整PBOC原生历史仍待补充。"
+    status_en: "M2, M1, new RMB loans, TSF flow/components, LPR, RRR, daily SHIBOR, 3M interbank, and PBC latest cards are charted; TSF stock, deposits by sector, MLF, and full PBOC-native history remain open."
+    status_zh: "页面已加入M2、M1、新增人民币贷款、社融增量/分项、LPR、存准率、日度SHIBOR、3个月银行间利率和PBC最新卡片；社融存量、分部门存款、MLF和完整PBOC原生历史仍待补充。"
   - section: prices
     item_en: "NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices"
     item_zh: "NBS月度CPI、核心CPI、PPI、农产品价格与进出口价格指数"

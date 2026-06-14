@@ -53,8 +53,12 @@ def _apply_transform(value: float, transform: str | None) -> float:
         return value / 1_000_000_000_000
     if transform == "usd_mn_to_trn":
         return value / 1_000_000
+    if transform == "usd_100mn_to_trn":
+        return value / 10_000
     if transform == "cny_100mn_to_trn":
         return value / 10_000
+    if transform == "index_100_to_yoy":
+        return value - 100
     if transform == "people_billion":
         return value / 1_000_000_000
     return value
@@ -77,9 +81,24 @@ def _parse_period_date(value: Any) -> str | None:
     if not text or text.lower() in {"nan", "none", "nat"}:
         return None
 
+    match = re.match(r"^(\d{4})(\d{2})$", text)
+    if match:
+        return f"{int(match.group(1)):04d}-{int(match.group(2)):02d}-01"
+
     match = re.match(r"^(\d{4})年(\d{1,2})月份$", text)
     if match:
         return f"{int(match.group(1)):04d}-{int(match.group(2)):02d}-01"
+
+    match = re.match(r"^(\d{4})年(\d{1,2})月(\d{1,2})日$", text)
+    if match:
+        return f"{int(match.group(1)):04d}-{int(match.group(2)):02d}-{int(match.group(3)):02d}"
+
+    match = re.match(r"^(\d{4})年第(\d)(?:-(\d))?季度$", text)
+    if match:
+        quarter = int(match.group(3) or match.group(2))
+        month = quarter * 3
+        day = 31 if month in {3, 12} else 30
+        return f"{int(match.group(1)):04d}-{month:02d}-{day:02d}"
 
     match = re.match(r"^(\d{4})[.\-/](\d{1,2})(?:[.\-/](\d{1,2}))?$", text)
     if match:
@@ -184,6 +203,9 @@ def fetch_akshare_table(spec: dict[str, Any], cache: dict[str, Any] | None = Non
         frame = fetcher(*args, **kwargs)
         if cache is not None:
             cache[cache_key] = frame
+    filter_column = spec.get("filter_column")
+    if filter_column and spec.get("filter_value") is not None:
+        frame = frame[frame[filter_column].astype(str) == str(spec["filter_value"])]
     date_column = spec["date_column"]
     value_column = spec["value_column"]
     observations: list[dict[str, Any]] = []
