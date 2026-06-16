@@ -21,6 +21,7 @@ from datetime import UTC, date, datetime
 from email.utils import parsedate_to_datetime
 from html import escape
 from pathlib import Path
+from threading import Lock
 from typing import Any
 from xml.etree import ElementTree as ET
 from zipfile import ZipFile
@@ -57,6 +58,10 @@ USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
 )
+BINARY_DOWNLOAD_CACHE: dict[str, bytes] = {}
+BINARY_DOWNLOAD_CACHE_LOCK = Lock()
+DISTRIBUTION_CACHE: dict[tuple[str, str, str], Any] = {}
+DISTRIBUTION_CACHE_LOCK = Lock()
 MONTHS = {
     "jan": 1,
     "january": 1,
@@ -279,6 +284,14 @@ def _provider_updated_date(value: str) -> str:
 
 def _apply_transform(observations: list[dict[str, Any]], spec: dict[str, Any]) -> list[dict[str, Any]]:
     transform = str(spec.get("transform") or "")
+    if transform in {"divide_1k", "divide_1m", "divide_1bn", "decimal_to_pct"}:
+        divisor = {"divide_1k": 1_000, "divide_1m": 1_000_000, "divide_1bn": 1_000_000_000}.get(transform, 1)
+        multiplier = 100 if transform == "decimal_to_pct" else 1
+        return [
+            {**item, "value": float(item["value"]) / divisor * multiplier}
+            for item in observations
+            if item.get("value") is not None
+        ]
     if transform not in {"yoy", "qoq_pct"}:
         return observations
     frequency = str(spec.get("frequency", "")).lower()
@@ -470,13 +483,18 @@ def _govuk_distribution_url(session: requests.Session, spec: dict[str, Any], ext
     page_url = str(spec.get("source_url") or "").strip()
     if not page_url:
         raise ValueError("GOV.UK fetcher requires source_url.")
-    response = session.get(page_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 20))
-    response.raise_for_status()
     wanted = str(spec.get("distribution_name_contains") or spec.get("csv_label_contains") or "").lower()
+    cache_key = (page_url, extension, wanted)
+    with DISTRIBUTION_CACHE_LOCK:
+        if cache_key in DISTRIBUTION_CACHE:
+            return DISTRIBUTION_CACHE[cache_key]
+        response = session.get(page_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 20))
+        response.raise_for_status()
+        page_text = response.text
     candidates: list[dict[str, Any]] = []
     for match in re.findall(
         r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
-        response.text,
+        page_text,
         flags=re.S | re.I,
     ):
         try:
@@ -497,8 +515,21 @@ def _govuk_distribution_url(session: requests.Session, spec: dict[str, Any], ext
             continue
         if wanted and wanted not in name.lower() and wanted not in url.lower():
             continue
-        return url, name
+        result = (url, name)
+        with DISTRIBUTION_CACHE_LOCK:
+            DISTRIBUTION_CACHE[cache_key] = result
+        return result
     raise RuntimeError(f"No matching GOV.UK {extension} distribution found for {page_url}.")
+
+
+def _download_binary(session: requests.Session, url: str, timeout: tuple[int, int] = (4, 24)) -> bytes:
+    """Cache workbook downloads reused by several indicators in a single build."""
+    with BINARY_DOWNLOAD_CACHE_LOCK:
+        if url not in BINARY_DOWNLOAD_CACHE:
+            response = session.get(url, headers={"User-Agent": USER_AGENT}, timeout=timeout)
+            response.raise_for_status()
+            BINARY_DOWNLOAD_CACHE[url] = response.content
+        return BINARY_DOWNLOAD_CACHE[url]
 
 
 def _ons_distribution_candidates(
@@ -510,56 +541,62 @@ def _ons_distribution_candidates(
     page_url = str(spec.get("source_url") or "").strip()
     if not page_url:
         raise ValueError("ONS dataset fetcher requires source_url.")
-    response = session.get(page_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 20))
-    response.raise_for_status()
     wanted = str(spec.get("distribution_name_contains") or "").lower()
-    candidates: list[tuple[str, str]] = []
+    cache_key = (page_url, extension, wanted)
+    with DISTRIBUTION_CACHE_LOCK:
+        if cache_key in DISTRIBUTION_CACHE:
+            return list(DISTRIBUTION_CACHE[cache_key])
+        response = session.get(page_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 20))
+        response.raise_for_status()
+        page_text = response.text
+        candidates: list[tuple[str, str]] = []
 
-    for match in re.findall(
-        r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
-        response.text,
-        flags=re.S | re.I,
-    ):
-        try:
-            payload = json.loads(match)
-        except json.JSONDecodeError:
-            continue
-        items = payload if isinstance(payload, list) else [payload]
-        for item in items:
-            if not isinstance(item, dict):
+        for match in re.findall(
+            r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
+            page_text,
+            flags=re.S | re.I,
+        ):
+            try:
+                payload = json.loads(match)
+            except json.JSONDecodeError:
                 continue
-            distribution = item.get("distribution") or []
-            if isinstance(distribution, dict):
-                distribution = [distribution]
-            for row in distribution:
-                if not isinstance(row, dict):
+            items = payload if isinstance(payload, list) else [payload]
+            for item in items:
+                if not isinstance(item, dict):
                     continue
-                url = str(row.get("contentUrl") or row.get("url") or "").strip()
-                name = str(row.get("name") or row.get("encodingFormat") or "").strip()
-                if url:
-                    candidates.append((url, name))
+                distribution = item.get("distribution") or []
+                if isinstance(distribution, dict):
+                    distribution = [distribution]
+                for row in distribution:
+                    if not isinstance(row, dict):
+                        continue
+                    url = str(row.get("contentUrl") or row.get("url") or "").strip()
+                    name = str(row.get("name") or row.get("encodingFormat") or "").strip()
+                    if url:
+                        candidates.append((url, name))
 
-    for href, label in re.findall(r'href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', response.text, flags=re.S | re.I):
-        url = href.strip()
-        if url.startswith("/"):
-            url = f"{ONS_TIMESERIES_BASE}{url}"
-        name = _clean_text(re.sub(r"<[^>]+>", " ", label))
-        candidates.append((url, name))
+        for href, label in re.findall(r'href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', page_text, flags=re.S | re.I):
+            url = href.strip()
+            if url.startswith("/"):
+                url = f"{ONS_TIMESERIES_BASE}{url}"
+            name = _clean_text(re.sub(r"<[^>]+>", " ", label))
+            candidates.append((url, name))
 
-    seen: set[str] = set()
-    filtered: list[tuple[str, str]] = []
-    for url, name in candidates:
-        normalized = url.lower().split("#")[0]
-        path_part = normalized.split("?")[0]
-        if not (path_part.endswith(extension) or extension in normalized) or url in seen:
-            continue
-        if wanted and wanted not in name.lower() and wanted not in url.lower():
-            continue
-        seen.add(url)
-        filtered.append((url, name))
-    if not filtered:
-        raise RuntimeError(f"No matching ONS {extension} distribution found for {page_url}.")
-    return filtered
+        seen: set[str] = set()
+        filtered: list[tuple[str, str]] = []
+        for url, name in candidates:
+            normalized = url.lower().split("#")[0]
+            path_part = normalized.split("?")[0]
+            if not (path_part.endswith(extension) or extension in normalized) or url in seen:
+                continue
+            if wanted and wanted not in name.lower() and wanted not in url.lower():
+                continue
+            seen.add(url)
+            filtered.append((url, name))
+        if not filtered:
+            raise RuntimeError(f"No matching ONS {extension} distribution found for {page_url}.")
+        DISTRIBUTION_CACHE[cache_key] = tuple(filtered)
+        return filtered
 
 
 def _table_observations(
@@ -690,9 +727,8 @@ def fetch_govuk_xlsx_table(session: requests.Session, spec: dict[str, Any]) -> d
     distribution_name = ""
     if not xlsx_url:
         xlsx_url, distribution_name = _govuk_distribution_url(session, spec, ".xlsx")
-    response = session.get(xlsx_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 24))
-    response.raise_for_status()
-    rows = _xlsx_sheet_rows(response.content, str(spec["sheet_name"]))
+    content = _download_binary(session, xlsx_url)
+    rows = _xlsx_sheet_rows(content, str(spec["sheet_name"]))
     date_column = str(spec.get("date_column") or "Period")
     value_column = str(spec["value_column"])
     header_index = -1
@@ -732,6 +768,84 @@ def fetch_govuk_xlsx_table(session: requests.Session, spec: dict[str, Any]) -> d
     }
 
 
+def _ods_cell_text(cell: ET.Element) -> str:
+    ns = {
+        "text": "urn:oasis:names:tc:opendocument:xmlns:text:1.0",
+        "office": "urn:oasis:names:tc:opendocument:xmlns:office:1.0",
+    }
+    text_values = ["".join(node.itertext()) for node in cell.findall(".//text:p", ns)]
+    text = " ".join(value for value in text_values if value).strip()
+    if text:
+        return text
+    return (
+        cell.attrib.get(f"{{{ns['office']}}}date-value")
+        or cell.attrib.get(f"{{{ns['office']}}}value")
+        or ""
+    )
+
+
+def _ods_sheet_rows(content: bytes, sheet_name: str) -> list[list[str]]:
+    ns = {"table": "urn:oasis:names:tc:opendocument:xmlns:table:1.0"}
+    with ZipFile(io.BytesIO(content)) as workbook:
+        root = ET.fromstring(workbook.read("content.xml"))
+    table_name_key = f"{{{ns['table']}}}name"
+    repeat_rows_key = f"{{{ns['table']}}}number-rows-repeated"
+    repeat_cols_key = f"{{{ns['table']}}}number-columns-repeated"
+    for table in root.findall(".//table:table", ns):
+        if table.attrib.get(table_name_key) != sheet_name:
+            continue
+        rows: list[list[str]] = []
+        for row in table.findall("table:table-row", ns):
+            row_repeat = min(int(row.attrib.get(repeat_rows_key, "1")), 20)
+            values: list[str] = []
+            for cell in row.findall("table:table-cell", ns):
+                column_repeat = min(int(cell.attrib.get(repeat_cols_key, "1")), 100)
+                values.extend([_ods_cell_text(cell)] * column_repeat)
+            for _ in range(row_repeat):
+                rows.append(values.copy())
+        return rows
+    raise ValueError(f"Worksheet {sheet_name!r} not found in ODS.")
+
+
+def fetch_govuk_ods_table(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    ods_url = str(spec.get("ods_url") or "").strip()
+    distribution_name = ""
+    if not ods_url:
+        ods_url, distribution_name = _govuk_distribution_url(session, spec, ".ods")
+    content = _download_binary(session, ods_url)
+    if not content.startswith(b"PK"):
+        raise RuntimeError("GOV.UK ODS URL did not return a zipped ODS workbook.")
+    rows = _ods_sheet_rows(content, str(spec["sheet_name"]))
+    date_column = str(spec.get("date_column") or "Month and year")
+    value_column = str(spec["value_column"])
+    header_index = -1
+    date_index = -1
+    value_index = -1
+    for index, row in enumerate(rows):
+        lowered = [str(item).strip().lower() for item in row]
+        if date_column.lower() in lowered and value_column.lower() in lowered:
+            header_index = index
+            date_index = lowered.index(date_column.lower())
+            value_index = lowered.index(value_column.lower())
+            break
+    if header_index < 0:
+        raise ValueError(f"Columns {date_column!r}/{value_column!r} not found in ODS.")
+    observations = _table_observations(
+        rows,
+        spec,
+        header_index=header_index,
+        date_index=date_index,
+        value_index=value_index,
+    )
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": ods_url,
+        "distribution_name": distribution_name,
+    }
+
+
 def fetch_ons_xlsx_table(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
     """Fetch a simple ONS xlsx worksheet with a Time period column and one value column."""
     xlsx_candidates = [(str(spec["xlsx_url"]), "configured")] if spec.get("xlsx_url") else _ons_distribution_candidates(
@@ -742,11 +856,10 @@ def fetch_ons_xlsx_table(session: requests.Session, spec: dict[str, Any]) -> dic
     last_error: Exception | None = None
     for xlsx_url, distribution_name in xlsx_candidates:
         try:
-            response = session.get(xlsx_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 24))
-            response.raise_for_status()
-            if not response.content.startswith(b"PK"):
+            content = _download_binary(session, xlsx_url)
+            if not content.startswith(b"PK"):
                 raise RuntimeError("ONS xlsx candidate did not return an XLSX workbook.")
-            rows = _xlsx_sheet_rows(response.content, str(spec["sheet_name"]))
+            rows = _xlsx_sheet_rows(content, str(spec["sheet_name"]))
             date_column = str(spec.get("date_column") or "Time period")
             value_column = str(spec["value_column"])
             header_index = -1
@@ -859,11 +972,10 @@ def fetch_obr_xlsx_row(session: requests.Session, spec: dict[str, Any]) -> dict[
     xlsx_url = str(spec.get("xlsx_url") or "").strip()
     if not xlsx_url:
         raise ValueError("OBR XLSX row fetcher requires xlsx_url.")
-    response = session.get(xlsx_url, headers={"User-Agent": USER_AGENT}, timeout=(4, 24))
-    response.raise_for_status()
-    if not response.content.startswith(b"PK"):
+    content = _download_binary(session, xlsx_url)
+    if not content.startswith(b"PK"):
         raise RuntimeError("OBR xlsx URL did not return an XLSX workbook.")
-    rows = _xlsx_sheet_rows(response.content, str(spec["sheet_name"]))
+    rows = _xlsx_sheet_rows(content, str(spec["sheet_name"]))
     row_label = _clean_text(str(spec["row_label"])).lower()
     context = _clean_text(str(spec.get("context_above_contains") or "")).lower()
     target_index = -1
@@ -987,6 +1099,8 @@ def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
             series = fetch_govuk_road_fuel(session, spec)
         elif fetcher == "govuk_xlsx_table":
             series = fetch_govuk_xlsx_table(session, spec)
+        elif fetcher == "govuk_ods_table":
+            series = fetch_govuk_ods_table(session, spec)
         elif fetcher == "ons_xlsx_table":
             series = fetch_ons_xlsx_table(session, spec)
         elif fetcher == "ons_horizontal_csv_table":

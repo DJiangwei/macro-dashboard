@@ -120,6 +120,16 @@ Eastmoney/Sina/PBC-style web data rather than official NBS/PBOC API contracts;
 schema drift, upstream availability, and concept coverage should be checked
 whenever China data is expanded.
 
+The UK page prioritises native ONS, Bank of England, HMRC/GOV.UK, OBR, and
+DESNZ endpoints for release-sensitive work. It now includes ONS/HMRC PAYE RTI
+payrolled employees, pay, employee flows, and median pay growth; HMRC residential
+and non-residential property transactions; ONS CPI/CPIH/RPI/PPI and household
+energy components; BoE rates, sterling, money, and credit series; ONS public
+sector borrowing, cash, debt, receipts, expenditure, tax, benefits, and OBR
+forecast rows. Remaining UK gaps are mostly proprietary/vendor surveys such as
+GS CAI/FCI, PMI, CBI/BCC/BRC/RICS, pay settlements, expectations surveys, and
+deeper credit-condition or debt-instrument microdata.
+
 To rebuild and publish the site:
 
 ```bash

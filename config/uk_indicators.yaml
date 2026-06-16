@@ -281,6 +281,42 @@ indicators:
     start_date: "2011-01-01"
     caveat_en: "ONS UK HPI annual percentage change; provisional recent months should be cross-checked against the UK HPI release when trading housing-sensitive data."
     caveat_zh: "ONS英国HPI年度百分比变化；交易住房敏感数据时，应对最新暂估月份交叉核对UK HPI发布说明。"
+  - id: residential_property_transactions_sa
+    section: housing_construction
+    label_en: "Residential Property Transactions"
+    label_zh: "住宅物业成交"
+    unit: "transactions"
+    fetcher: govuk_ods_table
+    source_name: "HMRC / GOV.UK"
+    source_url: "https://www.gov.uk/government/statistics/monthly-property-transactions-completed-in-the-uk-with-value-40000-or-above"
+    distribution_name_contains: "UK monthly property transactions tables"
+    sheet_name: "Residential_monthly"
+    date_column: "Month and year"
+    value_column: "UK (seasonally adjusted)"
+    series: "HMRC MPT:Residential_monthly:UK seasonally adjusted"
+    frequency: "monthly"
+    start_date: "2005-04-01"
+    max_age_days: 80
+    caveat_en: "HMRC monthly residential transactions over GBP 40,000, seasonally adjusted; latest months can be provisional and Wales includes estimated recent data from July 2021 onward."
+    caveat_zh: "HMRC月度住宅成交，价值超过4万英镑、季调；最新月份可能暂估，且2021年7月后威尔士最新月含估算数据。"
+  - id: nonresidential_property_transactions_sa
+    section: housing_construction
+    label_en: "Non-Residential Property Transactions"
+    label_zh: "非住宅物业成交"
+    unit: "transactions"
+    fetcher: govuk_ods_table
+    source_name: "HMRC / GOV.UK"
+    source_url: "https://www.gov.uk/government/statistics/monthly-property-transactions-completed-in-the-uk-with-value-40000-or-above"
+    distribution_name_contains: "UK monthly property transactions tables"
+    sheet_name: "Non-residential_monthly"
+    date_column: "Month and year"
+    value_column: "UK (seasonally adjusted)"
+    series: "HMRC MPT:Non-residential_monthly:UK seasonally adjusted"
+    frequency: "monthly"
+    start_date: "2005-04-01"
+    max_age_days: 80
+    caveat_en: "HMRC monthly non-residential transactions over GBP 40,000, seasonally adjusted; useful for commercial-property liquidity but not a valuation series."
+    caveat_zh: "HMRC月度非住宅成交，价值超过4万英镑、季调；适合观察商业地产流动性，但不是估值序列。"
   - id: housing_starts_england_sa
     section: housing_construction
     label_en: "Housing Starts, England SA"
@@ -588,6 +624,131 @@ indicators:
     start_date: "2001-01-01"
     caveat_en: "AWE whole-economy regular-pay growth, three-month average, excluding arrears; cleaner for domestic wage persistence than total pay."
     caveat_zh: "AWE全经济常规薪酬同比三个月平均增速，不含欠薪；比总薪酬更适合观察国内工资粘性。"
+  - id: paye_payrolled_employees
+    section: labour_market
+    label_en: "PAYE Payrolled Employees"
+    label_zh: "PAYE薪资册雇员"
+    unit: "mn"
+    transform: "divide_1m"
+    fetcher: ons_xlsx_table
+    source_name: "ONS / HMRC RTI"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/realtimeinformationstatisticsreferencetableseasonallyadjusted"
+    sheet_name: "1. Payrolled employees (UK)"
+    date_column: "Date"
+    value_column: "Payrolled employees"
+    series: "ONS RTI SA:Payrolled employees"
+    frequency: "monthly"
+    start_date: "2014-07-01"
+    max_age_days: 80
+    caveat_en: "ONS/HMRC PAYE RTI seasonally adjusted payrolled employees; highly timely administrative labour-market evidence, but provisional early estimates can revise."
+    caveat_zh: "ONS/HMRC PAYE RTI季调薪资册雇员；是非常及时的行政劳动力市场证据，但早期估计可能修订。"
+  - id: paye_payrolled_employees_mom_change
+    section: labour_market
+    label_en: "PAYE Employees Monthly Change"
+    label_zh: "PAYE雇员月度变化"
+    unit: "000s"
+    transform: "divide_1k"
+    fetcher: ons_xlsx_table
+    source_name: "ONS / HMRC RTI"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/realtimeinformationstatisticsreferencetableseasonallyadjusted"
+    sheet_name: "1. Payrolled employees (UK)"
+    date_column: "Date"
+    value_column: "Change on previous month"
+    series: "ONS RTI SA:Change on previous month"
+    frequency: "monthly"
+    start_date: "2014-08-01"
+    max_age_days: 80
+    caveat_en: "Monthly change from the ONS/HMRC PAYE RTI workbook; more timely than LFS employment, but can be revised as payroll submissions mature."
+    caveat_zh: "ONS/HMRC PAYE RTI工作簿中的月度变化；比LFS就业更及时，但会随薪资申报成熟而修订。"
+  - id: paye_median_pay
+    section: labour_market
+    label_en: "PAYE Median Monthly Pay"
+    label_zh: "PAYE月度薪资中位数"
+    unit: "GBP/month"
+    fetcher: ons_xlsx_table
+    source_name: "ONS / HMRC RTI"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/realtimeinformationstatisticsreferencetableseasonallyadjusted"
+    sheet_name: "2. Median pay (UK)"
+    date_column: "Date"
+    value_column: "Median pay"
+    series: "ONS RTI SA:Median pay"
+    frequency: "monthly"
+    start_date: "2014-07-01"
+    max_age_days: 80
+    caveat_en: "Seasonally adjusted RTI median monthly pay; complements AWE by using PAYE administrative data rather than the Monthly Wages and Salaries Survey."
+    caveat_zh: "季调RTI月度薪资中位数；用PAYE行政数据补充AWE，而非月度工资薪金调查。"
+  - id: paye_aggregate_pay
+    section: labour_market
+    label_en: "PAYE Aggregate Pay"
+    label_zh: "PAYE薪资总额"
+    unit: "GBP bn/month"
+    transform: "divide_1bn"
+    fetcher: ons_xlsx_table
+    source_name: "ONS / HMRC RTI"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/realtimeinformationstatisticsreferencetableseasonallyadjusted"
+    sheet_name: "4. Aggregate pay (UK)"
+    date_column: "Date"
+    value_column: "Aggregate pay"
+    series: "ONS RTI SA:Aggregate pay"
+    frequency: "monthly"
+    start_date: "2014-07-01"
+    max_age_days: 80
+    caveat_en: "Seasonally adjusted aggregate PAYE pay, converted to GBP bn per month; useful for household-income nowcasting but sensitive to coverage and revisions."
+    caveat_zh: "季调PAYE薪资总额，转换为十亿英镑/月；适合居民收入nowcast，但受覆盖和修订影响。"
+  - id: paye_employee_inflows
+    section: labour_market
+    label_en: "PAYE Employee Inflows"
+    label_zh: "PAYE雇员流入"
+    unit: "000s"
+    transform: "divide_1k"
+    fetcher: ons_xlsx_table
+    source_name: "ONS / HMRC RTI"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/realtimeinformationstatisticsreferencetableseasonallyadjusted"
+    sheet_name: "6. Employee flows (UK)"
+    date_column: "Date"
+    value_column: "Inflows"
+    series: "ONS RTI SA:Inflows"
+    frequency: "monthly"
+    start_date: "2017-01-01"
+    max_age_days: 80
+    caveat_en: "PAYE RTI employee inflows; ONS warns early inflow/outflow estimates have historically revised downward in the following month."
+    caveat_zh: "PAYE RTI雇员流入；ONS提示早期流入/流出估计历史上常在次月向下修订。"
+  - id: paye_employee_outflows
+    section: labour_market
+    label_en: "PAYE Employee Outflows"
+    label_zh: "PAYE雇员流出"
+    unit: "000s"
+    transform: "divide_1k"
+    fetcher: ons_xlsx_table
+    source_name: "ONS / HMRC RTI"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/realtimeinformationstatisticsreferencetableseasonallyadjusted"
+    sheet_name: "6. Employee flows (UK)"
+    date_column: "Date"
+    value_column: "Outflows"
+    series: "ONS RTI SA:Outflows"
+    frequency: "monthly"
+    start_date: "2017-01-01"
+    max_age_days: 80
+    caveat_en: "PAYE RTI employee outflows; read with the same early-estimate revision caveat as inflows."
+    caveat_zh: "PAYE RTI雇员流出；应与流入指标一样注意早期估计修订。"
+  - id: paye_median_pay_growth
+    section: labour_market
+    label_en: "PAYE Median Pay Growth"
+    label_zh: "PAYE薪资中位数增长"
+    unit: "%"
+    transform: "decimal_to_pct"
+    fetcher: ons_xlsx_table
+    source_name: "ONS / HMRC RTI"
+    source_url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/realtimeinformationstatisticsreferencetableseasonallyadjusted"
+    sheet_name: "27. Median of pay growth (UK)"
+    date_column: "Date"
+    value_column: "Median of pay growth"
+    series: "ONS RTI SA:Median of pay growth"
+    frequency: "monthly"
+    start_date: "2015-07-01"
+    max_age_days: 80
+    caveat_en: "Median of individual year-on-year pay growth from PAYE RTI, converted from decimal to percent; it only compares individuals employed in both months."
+    caveat_zh: "PAYE RTI个体薪资同比增长中位数，由小数转换为百分比；仅比较两个对应月份均有就业记录的人群。"
   - id: cpi_yoy
     section: prices
     label_en: "Headline CPI Inflation"
@@ -618,6 +779,38 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "Core CPI helps separate domestic persistence from headline energy/import noise."
     caveat_zh: "核心CPI有助于把国内通胀粘性与能源/进口噪音区分开。"
+  - id: cpih_yoy
+    section: prices
+    label_en: "CPIH Inflation"
+    label_zh: "CPIH通胀"
+    unit: "%"
+    fetcher: ons_timeseries
+    series: "L55O"
+    dataset: "MM23"
+    ons_path: "/economy/inflationandpriceindices/timeseries/l55o/mm23/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l55o/mm23"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    max_age_days: 80
+    caveat_en: "ONS CPIH annual rate including owner occupiers' housing costs; not the MPC target, but important for broad household cost-of-living analysis."
+    caveat_zh: "ONS CPIH同比，包含自有住房成本；不是MPC目标，但对广义居民生活成本分析很重要。"
+  - id: owner_occupiers_housing_costs_cpih_yoy
+    section: prices
+    label_en: "Owner Occupiers' Housing Costs"
+    label_zh: "自有住房成本CPIH"
+    unit: "%"
+    fetcher: ons_timeseries
+    series: "L5P7"
+    dataset: "MM23"
+    ons_path: "/economy/inflationandpriceindices/timeseries/l5p7/mm23/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l5p7/mm23"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    max_age_days: 80
+    caveat_en: "ONS CPIH annual rate for owner occupiers' housing costs; useful for separating the UK housing-cost channel from CPI's target-measure framing."
+    caveat_zh: "ONS CPIH自有住房成本同比；有助于把英国住房成本渠道与CPI目标口径区分开。"
   - id: cpi_services_yoy
     section: prices
     label_en: "CPI Services Inflation"
@@ -957,6 +1150,86 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "ONS public sector net cash requirement excluding public-sector banks; cash timing can diverge from accrual-based PSNB and should be read alongside borrowing."
     caveat_zh: "ONS公共部门净现金需求，不含公共部门银行；现金时点可与权责发生制PSNB分化，应与借款指标结合阅读。"
+  - id: ps_current_receipts_ex_banks
+    section: fiscal_policy
+    label_en: "PS Current Receipts ex Banks"
+    label_zh: "公共部门经常收入不含银行"
+    unit: "GBP mn"
+    fetcher: ons_timeseries
+    series: "JW2O"
+    dataset: "PUSF"
+    ons_path: "/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/jw2o/pusf/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/jw2o/pusf"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    max_age_days: 80
+    caveat_en: "ONS public-sector total current receipts excluding public-sector banks, current-price non-seasonally adjusted; monthly tax timing creates large seasonal patterns."
+    caveat_zh: "ONS公共部门总经常收入，不含公共部门银行，现价未季调；月度税收时点会带来明显季节性。"
+  - id: ps_current_expenditure_ex_banks
+    section: fiscal_policy
+    label_en: "PS Current Expenditure ex Banks"
+    label_zh: "公共部门经常支出不含银行"
+    unit: "GBP mn"
+    fetcher: ons_timeseries
+    series: "JW2Q"
+    dataset: "PUSF"
+    ons_path: "/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/jw2q/pusf/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/jw2q/pusf"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    max_age_days: 80
+    caveat_en: "ONS public-sector total current expenditure excluding public-sector banks, current-price non-seasonally adjusted; compare with receipts and PSNB rather than reading one month in isolation."
+    caveat_zh: "ONS公共部门总经常支出，不含公共部门银行，现价未季调；应与收入和PSNB结合，而不是孤立读取单月。"
+  - id: ps_income_wealth_taxes_ex_banks
+    section: fiscal_policy
+    label_en: "Income & Wealth Taxes ex Banks"
+    label_zh: "所得与财富税不含银行"
+    unit: "GBP mn"
+    fetcher: ons_timeseries
+    series: "JW2J"
+    dataset: "PUSF"
+    ons_path: "/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/jw2j/pusf/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/jw2j/pusf"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    max_age_days: 80
+    caveat_en: "ONS public-sector income and wealth taxes excluding public-sector banks; January self-assessment receipts make this series highly seasonal."
+    caveat_zh: "ONS公共部门所得与财富税，不含公共部门银行；1月自我评估税款会使该序列高度季节性。"
+  - id: ps_social_benefits_ex_banks
+    section: fiscal_policy
+    label_en: "Net Social Benefits Payable"
+    label_zh: "应付净社会福利"
+    unit: "GBP mn"
+    fetcher: ons_timeseries
+    series: "CWNZ"
+    dataset: "PUSF"
+    ons_path: "/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/cwnz/pusf/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/cwnz/pusf"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    max_age_days: 80
+    caveat_en: "ONS public-sector net social benefits payable excluding public-sector banks; captures welfare-spending pressure but is non-seasonally adjusted."
+    caveat_zh: "ONS公共部门应付净社会福利，不含公共部门银行；可观察福利支出压力，但为未季调口径。"
+  - id: ps_total_managed_expenditure_ex_boe
+    section: fiscal_policy
+    label_en: "Total Managed Expenditure ex BoE"
+    label_zh: "总管理支出不含BoE"
+    unit: "GBP mn"
+    fetcher: ons_timeseries
+    series: "KAU3"
+    dataset: "PUSF"
+    ons_path: "/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/kau3/pusf/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/governmentpublicsectorandtaxes/publicsectorfinance/timeseries/kau3/pusf"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    max_age_days: 80
+    caveat_en: "ONS total managed expenditure excluding the Bank of England and public-sector banks; useful for fiscal impulse context, but non-seasonally adjusted and affected by classification changes."
+    caveat_zh: "ONS总管理支出，不含英格兰银行和公共部门银行；适合财政脉冲背景分析，但未季调且受分类变化影响。"
   - id: psnd_ex_banks_gdp
     section: fiscal_policy
     label_en: "PSND ex Banks"
@@ -1109,18 +1382,18 @@ data_gaps:
   - section: housing_construction
     item_en: "Nationwide, Halifax, Rightmove, Hometrack, and RICS"
     item_zh: "Nationwide、Halifax、Rightmove、Hometrack与RICS"
-    status_en: "ONS/HMLR UK HPI, MHCLG starts/completions, ONS construction output, and BoE mortgage approvals are now charted; vendor house-price and sentiment sources still need licensing/API validation."
-    status_zh: "ONS/HMLR英国HPI、MHCLG开工/竣工、ONS建筑产出与BoE按揭批准已接入；供应商房价和情绪数据仍需授权/API验证。"
+    status_en: "ONS/HMLR UK HPI, HMRC property transactions, MHCLG starts/completions, ONS construction output, and BoE mortgage approvals are now charted; vendor house-price and sentiment sources still need licensing/API validation."
+    status_zh: "ONS/HMLR英国HPI、HMRC物业成交、MHCLG开工/竣工、ONS建筑产出与BoE按揭批准已接入；供应商房价和情绪数据仍需授权/API验证。"
   - section: labour_market
     item_en: "Pay settlements"
     item_zh: "工资协议"
-    status_en: "ONS inactivity, redundancy level/rate, vacancies, hours, employment, unemployment, and AWE are now charted; pay-settlement series still need stable release-table mappings or survey/licensing checks."
-    status_zh: "ONS经济不活跃率、裁员人数/裁员率、职位空缺、工时、就业、失业与AWE已接入；工资协议序列仍需稳定发布表映射或调查/授权核验。"
+    status_en: "ONS inactivity, redundancy level/rate, vacancies, hours, employment, unemployment, AWE, and ONS/HMRC PAYE RTI employees/pay/flows are now charted; pay-settlement series still need stable release-table mappings or survey/licensing checks."
+    status_zh: "ONS经济不活跃率、裁员人数/裁员率、职位空缺、工时、就业、失业、AWE，以及ONS/HMRC PAYE RTI雇员/薪资/流动已接入；工资协议序列仍需稳定发布表映射或调查/授权核验。"
   - section: prices
     item_en: "Inflation expectations surveys and index-linked gilt breakevens"
     item_zh: "通胀预期调查与指数挂钩国债隐含通胀"
-    status_en: "ONS headline/core/services/goods/food/household-energy CPI, RPI/RPIX, PPI, and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings."
-    status_zh: "ONS整体/核心/服务/商品/食品/家庭能源CPI、RPI/RPIX、PPI与DESNZ汽油/柴油泵价已接入；通胀预期和盈亏平衡通胀仍需稳定且授权安全的映射。"
+    status_en: "ONS headline/core/services/goods/food/household-energy CPI, CPIH and owner-occupiers' housing costs, RPI/RPIX, PPI, and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings."
+    status_zh: "ONS整体/核心/服务/商品/食品/家庭能源CPI、CPIH与自有住房成本、RPI/RPIX、PPI与DESNZ汽油/柴油泵价已接入；通胀预期和盈亏平衡通胀仍需稳定且授权安全的映射。"
   - section: monetary_financial
     item_en: "Trends in Lending, Credit Conditions Survey, HEW, fuller quoted-rate matrix, and stale OECD 3M interbank mirror"
     item_zh: "Trends in Lending、信贷条件调查、住房权益提取、更完整报价利率矩阵，以及滞后的OECD 3M银行间利率镜像"
@@ -1129,5 +1402,5 @@ data_gaps:
   - section: fiscal_policy
     item_en: "OBR forecast vintages and deeper debt instrument breakdowns"
     item_zh: "OBR预测版本与更深层债务工具细分"
-    status_en: "Monthly PSNB, PSNCR, PSND, PSNFL, and PSND ex BoE are charted from ONS; core March 2026 OBR forecast rows for borrowing, PSND ex BoE, debt interest, and effective interest rates are now charted. Full vintage archive and instrument-level history still need deeper adapters."
-    status_zh: "月度PSNB、PSNCR、PSND、PSNFL与不含BoE的PSND已接入ONS；March 2026 OBR核心预测行，包括借款、不含BoE净债务、债务利息和有效利率，已绘图。完整预测版本库和工具级历史仍需更深adapter。"
+    status_en: "Monthly PSNB, PSNCR, PSND, PSNFL, PSND ex BoE, receipts, expenditure, income/wealth taxes, social benefits, and TME are charted from ONS; core March 2026 OBR forecast rows for borrowing, PSND ex BoE, debt interest, and effective interest rates are now charted. Full vintage archive and instrument-level history still need deeper adapters."
+    status_zh: "月度PSNB、PSNCR、PSND、PSNFL、不含BoE的PSND、收入、支出、所得与财富税、社会福利和TME已接入ONS；March 2026 OBR核心预测行，包括借款、不含BoE净债务、债务利息和有效利率，已绘图。完整预测版本库和工具级历史仍需更深adapter。"
