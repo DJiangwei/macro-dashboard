@@ -41,6 +41,21 @@ CONFIG_PATH = ROOT / "config" / "us_indicators.yaml"
 OUTPUT = ROOT / "output"
 OUT_HTML = OUTPUT / "us_2026Q2_v1.html"
 SUMMARY_JSON = OUTPUT / "us_dashboard_summary.json"
+SUMMARY_KEY_IDS = [
+    "real_gdp_growth",
+    "retail_sales_growth",
+    "real_pce_growth",
+    "housing_starts",
+    "nonfarm_payrolls_change",
+    "unemployment_rate",
+    "cpi_inflation",
+    "core_cpi_inflation",
+    "core_pce_inflation",
+    "mortgage_30y_rate",
+    "daily_fed_funds",
+    "fed_target_upper",
+    "federal_debt_gdp",
+]
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
@@ -478,7 +493,7 @@ def _render_cards(series_list: list[dict[str, Any]]) -> str:
         "nonfarm_payrolls_change",
         "unemployment_rate",
         "core_pce_inflation",
-        "effective_fed_funds",
+        "daily_fed_funds",
         "federal_debt_gdp",
     ]
     by_id = {item["id"]: item for item in series_list}
@@ -495,6 +510,31 @@ def _render_cards(series_list: list[dict[str, Any]]) -> str:
   <small>{escape(str(latest['date']))} · {escape(series.get('source_name', ''))}</small>
 </div>""")
     return "\n".join(cards)
+
+
+def _key_series_latest(series_list: list[dict[str, Any]], indicator_ids: list[str]) -> list[dict[str, Any]]:
+    by_id = {item["id"]: item for item in series_list}
+    rows: list[dict[str, Any]] = []
+    for indicator_id in indicator_ids:
+        series = by_id.get(indicator_id)
+        latest = _latest(series) if series else None
+        if not series or not latest:
+            continue
+        unit = str(series.get("unit", ""))
+        value = float(latest["value"])
+        rows.append({
+            "id": indicator_id,
+            "label_en": series.get("label_en", indicator_id),
+            "label_zh": series.get("label_zh", indicator_id),
+            "latest_date": str(latest["date"]),
+            "latest_value": value,
+            "latest_display": f"{_format_value(value, unit)} {unit}".strip(),
+            "frequency": series.get("frequency", ""),
+            "source_name": series.get("source_name", ""),
+            "series": series.get("series", ""),
+            "quality_status": series.get("quality_status", ""),
+        })
+    return rows
 
 
 def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> str:
@@ -679,7 +719,9 @@ def build() -> Path:
         )
     _write_clean(OUT_HTML, render_html(config, series_list))
 
-    fed_funds = next((item for item in charted if item["id"] == "effective_fed_funds"), None)
+    fed_funds = next((item for item in charted if item["id"] == "daily_fed_funds"), None)
+    if fed_funds is None:
+        fed_funds = next((item for item in charted if item["id"] == "effective_fed_funds"), None)
     fed_latest = _latest(fed_funds) if fed_funds else None
     summary = {
         "file": OUT_HTML.name,
@@ -691,6 +733,7 @@ def build() -> Path:
         "fed_funds_latest": (
             f"{float(fed_latest['value']):.2f}% ({fed_latest['date']})" if fed_latest else "n/a"
         ),
+        "key_series_latest": _key_series_latest(charted, SUMMARY_KEY_IDS),
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
     }
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))

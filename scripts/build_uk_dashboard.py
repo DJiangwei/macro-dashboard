@@ -47,6 +47,19 @@ CONFIG_PATH = ROOT / "config" / "uk_indicators.yaml"
 OUTPUT = ROOT / "output"
 OUT_HTML = OUTPUT / "uk_2026Q2_v1.html"
 SUMMARY_JSON = OUTPUT / "uk_dashboard_summary.json"
+SUMMARY_KEY_IDS = [
+    "real_gdp_qoq",
+    "monthly_gdp_index",
+    "retail_sales_yoy",
+    "unemployment_rate",
+    "paye_payrolled_employees",
+    "cpi_yoy",
+    "core_cpi_yoy",
+    "bank_rate",
+    "sonia_rate",
+    "psnb_ex_banks",
+    "psnd_ex_banks_gdp",
+]
 
 FRED_GRAPH_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv"
 FRED_API_URL = "https://api.stlouisfed.org/fred/series/observations"
@@ -1175,6 +1188,31 @@ def _render_cards(series_list: list[dict[str, Any]]) -> str:
     return "\n".join(cards)
 
 
+def _key_series_latest(series_list: list[dict[str, Any]], indicator_ids: list[str]) -> list[dict[str, Any]]:
+    by_id = {item["id"]: item for item in series_list}
+    rows: list[dict[str, Any]] = []
+    for indicator_id in indicator_ids:
+        series = by_id.get(indicator_id)
+        latest = _latest(series) if series else None
+        if not series or not latest:
+            continue
+        unit = str(series.get("unit", ""))
+        value = float(latest["value"])
+        rows.append({
+            "id": indicator_id,
+            "label_en": series.get("label_en", indicator_id),
+            "label_zh": series.get("label_zh", indicator_id),
+            "latest_date": str(latest["date"]),
+            "latest_value": value,
+            "latest_display": f"{_format_value(value, unit)} {unit}".strip(),
+            "frequency": series.get("frequency", ""),
+            "source_name": series.get("source_name", ""),
+            "series": series.get("series", ""),
+            "quality_status": series.get("quality_status", ""),
+        })
+    return rows
+
+
 def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> str:
     chart_count = sum(1 for item in series_list if item.get("observations"))
     source_count = len({item.get("source_name") for item in series_list if item.get("observations")})
@@ -1345,6 +1383,7 @@ def build() -> Path:
         "bank_rate_latest": (
             f"{float(bank_latest['value']):.2f}% ({bank_latest['date']})" if bank_latest else "n/a"
         ),
+        "key_series_latest": _key_series_latest(charted, SUMMARY_KEY_IDS),
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
     }
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
