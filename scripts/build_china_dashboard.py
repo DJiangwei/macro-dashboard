@@ -27,6 +27,20 @@ CONFIG_PATH = ROOT / "config" / "china_indicators.yaml"
 OUTPUT = ROOT / "output"
 OUT_HTML = OUTPUT / "china_2026Q2_v1.html"
 SUMMARY_JSON = OUTPUT / "china_dashboard_summary.json"
+SUMMARY_KEY_IDS = [
+    "real_gdp_growth",
+    "industrial_value_added_yoy_akshare",
+    "fixed_asset_investment_yoy_akshare",
+    "passenger_vehicle_retail_cpca",
+    "new_energy_vehicle_share_cpca",
+    "customs_exports_yoy_akshare",
+    "usd_cny_midpoint",
+    "m2_yoy_akshare",
+    "pbc_total_assets_akshare",
+    "pbc_reserve_money_akshare",
+    "cpi_yoy_akshare",
+    "ppi_yoy_akshare",
+]
 
 ACCENT = "#8a593d"
 INK = "#171310"
@@ -92,6 +106,14 @@ def _parse_period_date(value: Any) -> str | None:
         return f"{int(match.group(1)):04d}-{int(match.group(2)):02d}-01"
 
     match = re.match(r"^(\d{4})年(\d{1,2})月份$", text)
+    if match:
+        return f"{int(match.group(1)):04d}-{int(match.group(2)):02d}-01"
+
+    match = re.match(r"^(\d{4})-(\d{1,2})月$", text)
+    if match:
+        return f"{int(match.group(1)):04d}-{int(match.group(2)):02d}-01"
+
+    match = re.match(r"^(\d{4})年(\d{1,2})月$", text)
     if match:
         return f"{int(match.group(1)):04d}-{int(match.group(2)):02d}-01"
 
@@ -191,10 +213,9 @@ def fetch_fred_graph(spec: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def fetch_akshare_table(spec: dict[str, Any], cache: dict[str, Any] | None = None) -> dict[str, Any]:
+def _fetch_akshare_frame(spec: dict[str, Any], cache: dict[str, Any] | None = None) -> Any:
     try:
         import akshare as ak  # type: ignore[import-not-found]
-        import pandas as pd
     except ImportError as exc:
         raise RuntimeError("AKShare is not installed in the project environment.") from exc
 
@@ -233,6 +254,16 @@ def fetch_akshare_table(spec: dict[str, Any], cache: dict[str, Any] | None = Non
                     raise last_error
         if cache is not None:
             cache[cache_key] = frame
+    return frame
+
+
+def fetch_akshare_table(spec: dict[str, Any], cache: dict[str, Any] | None = None) -> dict[str, Any]:
+    try:
+        import pandas as pd
+    except ImportError as exc:
+        raise RuntimeError("pandas is not installed in the project environment.") from exc
+
+    frame = _fetch_akshare_frame(spec, cache)
     filter_column = spec.get("filter_column")
     if filter_column and spec.get("filter_value") is not None:
         frame = frame[frame[filter_column].astype(str) == str(spec["filter_value"])]
@@ -274,6 +305,44 @@ def fetch_akshare_table(spec: dict[str, Any], cache: dict[str, Any] | None = Non
         except (TypeError, ValueError):
             continue
         observations.append({"date": parsed_date, "value": value})
+
+    observations.sort(key=lambda item: item["date"])
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": spec.get("source_url", ""),
+    }
+
+
+def fetch_akshare_wide_year_month(spec: dict[str, Any], cache: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Parse AKShare tables with month rows and year columns, e.g. CPCA."""
+    try:
+        import pandas as pd
+    except ImportError as exc:
+        raise RuntimeError("pandas is not installed in the project environment.") from exc
+
+    frame = _fetch_akshare_frame(spec, cache)
+    date_column = spec["date_column"]
+    observations: list[dict[str, Any]] = []
+    for _, row in frame.iterrows():
+        month_text = _clean_text(str(row.get(date_column, "")))
+        month_match = re.match(r"^(\d{1,2})月$", month_text)
+        if not month_match:
+            continue
+        month = int(month_match.group(1))
+        for column in frame.columns:
+            year_match = re.match(r"^(\d{4})年$", str(column))
+            if not year_match:
+                continue
+            raw_value = row.get(column)
+            if pd.isna(raw_value):
+                continue
+            try:
+                value = _apply_transform(float(raw_value), spec.get("transform"))
+            except (TypeError, ValueError):
+                continue
+            observations.append({"date": f"{int(year_match.group(1)):04d}-{month:02d}-01", "value": value})
 
     observations.sort(key=lambda item: item["date"])
     return {
@@ -413,6 +482,8 @@ def fetch_all(config: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[s
                 series = fetch_fred_graph(spec)
             elif fetcher == "akshare_table":
                 series = fetch_akshare_table(spec, akshare_cache)
+            elif fetcher == "akshare_wide_year_month":
+                series = fetch_akshare_wide_year_month(spec, akshare_cache)
             elif fetcher == "safe_rmb_midpoint":
                 if safe_rows is None:
                     safe_rows = _safe_rows()
@@ -568,6 +639,31 @@ def _render_cards(series_list: list[dict[str, Any]], pbc_cards: list[dict[str, A
   <small>{escape(str(card.get('updated', 'n/a')))} · PBC</small>
 </div>""")
     return "\n".join(cards)
+
+
+def _key_series_latest(series_list: list[dict[str, Any]], indicator_ids: list[str]) -> list[dict[str, Any]]:
+    by_id = {item["id"]: item for item in series_list}
+    rows: list[dict[str, Any]] = []
+    for indicator_id in indicator_ids:
+        series = by_id.get(indicator_id)
+        latest = _latest(series) if series else None
+        if not series or not latest:
+            continue
+        unit = str(series.get("unit", ""))
+        value = float(latest["value"])
+        rows.append({
+            "id": indicator_id,
+            "label_en": series.get("label_en", indicator_id),
+            "label_zh": series.get("label_zh", indicator_id),
+            "latest_date": str(latest["date"]),
+            "latest_value": value,
+            "latest_display": f"{_format_value(value, unit)} {unit}".strip(),
+            "frequency": series.get("frequency", ""),
+            "source_name": series.get("source_name", ""),
+            "series": series.get("series", ""),
+            "quality_status": series.get("quality_status", ""),
+        })
+    return rows
 
 
 def _section_nav(config: dict[str, Any]) -> str:
@@ -999,6 +1095,8 @@ def build() -> Path:
         "usd_cny_latest": (
             f"{float(usd_latest['value']):.4f} ({usd_latest['date']})" if usd_latest else "n/a"
         ),
+        "key_series_latest": _key_series_latest(charted, SUMMARY_KEY_IDS),
+        "unavailable": [item["id"] for item in series_list if not item.get("observations")],
     }
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
     inject_index(summary)

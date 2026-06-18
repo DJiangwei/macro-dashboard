@@ -247,6 +247,21 @@ indicators:
     frequency: "monthly"
     caveat_en: "Headline fixed-asset investment growth from AKShare's Eastmoney wrapper; sector/project detail remains a separate NBS-native gap."
     caveat_zh: "AKShare东方财富包装的固定资产投资总量增速；行业和项目细项仍属于NBS原生数据缺口。"
+  - id: construction_materials_index_akshare
+    section: investment
+    label_en: "Construction Materials Index"
+    label_zh: "建材指数"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_construction_index
+    date_column: "日期"
+    value_column: "最新值"
+    series: "macro_china_construction_index:最新值"
+    source_name: "AKShare / Eastmoney Construction Materials Index"
+    source_url: "https://data.eastmoney.com/cjsj/hyzs_list_EMI00662541.html"
+    frequency: "daily"
+    caveat_en: "Daily construction-materials index via AKShare's Eastmoney wrapper; useful as a high-frequency construction-chain price/activity stress gauge, not a fixed-asset-investment volume measure."
+    caveat_zh: "AKShare东方财富包装的日度建材指数；适合作为建筑链价格/活动压力的高频观察，不是固定资产投资数量指标。"
   - id: nominal_residential_property_price_bis
     section: real_estate
     label_en: "Residential Property Prices"
@@ -424,6 +439,56 @@ indicators:
     frequency: "monthly"
     caveat_en: "Consumer expectations index via AKShare's Eastmoney wrapper; levels are survey-based and should be read directionally."
     caveat_zh: "AKShare东方财富包装的消费者预期指数；属于调查型指标，水平值应方向性解读。"
+  - id: passenger_vehicle_retail_cpca
+    section: consumption
+    label_en: "Passenger Vehicle Retail Sales"
+    label_zh: "狭义乘用车零售销量"
+    unit: "10k vehicles"
+    fetcher: akshare_wide_year_month
+    function: car_market_total_cpca
+    kwargs:
+      symbol: "狭义乘用车"
+      indicator: "零售"
+    date_column: "月份"
+    series: "car_market_total_cpca:狭义乘用车:零售"
+    source_name: "AKShare / China Passenger Car Association"
+    source_url: "https://data.cpcadata.com/TotalMarket"
+    frequency: "monthly"
+    caveat_en: "Monthly passenger-vehicle retail sales from CPCA via AKShare; useful for durable-goods demand and policy-sensitive consumption, but not an official NBS retail-sales component."
+    caveat_zh: "AKShare包装的乘联会月度狭义乘用车零售销量；适合观察耐用品需求和政策敏感消费，但不是NBS社零官方分项。"
+  - id: new_energy_vehicle_retail_cpca
+    section: consumption
+    label_en: "New Energy Vehicle Retail Sales"
+    label_zh: "新能源乘用车零售销量"
+    unit: "10k vehicles"
+    fetcher: akshare_wide_year_month
+    function: car_market_fuel_cpca
+    kwargs:
+      symbol: "整体市场"
+    date_column: "月份"
+    series: "car_market_fuel_cpca:整体市场"
+    source_name: "AKShare / China Passenger Car Association"
+    source_url: "https://data.cpcadata.com/FuelMarket"
+    frequency: "monthly"
+    caveat_en: "CPCA new-energy passenger-vehicle retail volume via AKShare; strong cross-check on autos, batteries, and household durable demand, but definitions follow CPCA market statistics."
+    caveat_zh: "AKShare包装的乘联会新能源乘用车零售量；可交叉观察汽车、电池和居民耐用品需求，但定义遵循乘联会市场统计。"
+  - id: new_energy_vehicle_share_cpca
+    section: consumption
+    label_en: "New Energy Vehicle Retail Share"
+    label_zh: "新能源车零售渗透率"
+    unit: "%"
+    fetcher: akshare_table
+    function: car_market_fuel_cpca
+    kwargs:
+      symbol: "销量占比-ICE-NEV"
+    date_column: "月份"
+    value_column: "NEV"
+    series: "car_market_fuel_cpca:销量占比-ICE-NEV:NEV"
+    source_name: "AKShare / China Passenger Car Association"
+    source_url: "https://data.cpcadata.com/FuelMarket"
+    frequency: "monthly"
+    caveat_en: "CPCA retail-market share of new-energy vehicles; use as a diffusion and substitution gauge, not as a macro consumption aggregate."
+    caveat_zh: "乘联会新能源车零售销量占比；适合作为渗透率和替代效应指标，不是宏观消费总量。"
   - id: current_account_gdp
     section: external
     label_en: "Current Account Balance"
@@ -555,6 +620,23 @@ indicators:
     frequency: "monthly"
     caveat_en: "Monthly goods-trade balance derived from AKShare customs export minus import values; not a full current-account balance."
     caveat_zh: "由AKShare海关出口金额减进口金额得到的月度货物贸易差额；不是完整经常账户余额。"
+  - id: passenger_vehicle_exports_cpca
+    section: external
+    label_en: "Passenger Vehicle Exports"
+    label_zh: "狭义乘用车出口"
+    unit: "10k vehicles"
+    fetcher: akshare_wide_year_month
+    function: car_market_total_cpca
+    kwargs:
+      symbol: "狭义乘用车"
+      indicator: "出口"
+    date_column: "月份"
+    series: "car_market_total_cpca:狭义乘用车:出口"
+    source_name: "AKShare / China Passenger Car Association"
+    source_url: "https://data.cpcadata.com/TotalMarket"
+    frequency: "monthly"
+    caveat_en: "CPCA passenger-vehicle exports provide a timely autos/manufacturing external-demand gauge; not the same as customs total vehicle exports or national-accounts exports."
+    caveat_zh: "乘联会乘用车出口可作为汽车制造业外需的及时观察；不同于海关整车出口总量或国民账户出口。"
   - id: fx_reserves
     section: external
     label_en: "Foreign Exchange Reserves"
@@ -823,6 +905,70 @@ indicators:
     frequency: "irregular"
     caveat_en: "Event-based required reserve ratio history via AKShare; smaller-bank categories have changed over time, so use the series as a policy-easing marker."
     caveat_zh: "AKShare包装的事件型存款准备金率历史；中小银行分类随时间可能变化，应作为政策宽松标记使用。"
+  - id: pbc_total_assets_akshare
+    section: money_credit
+    label_en: "PBC Total Assets"
+    label_zh: "央行总资产"
+    unit: "CNY tn"
+    transform: "cny_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_central_bank_balance
+    date_column: "统计时间"
+    value_column: "总资产"
+    series: "macro_china_central_bank_balance:总资产"
+    source_name: "AKShare / Sina Finance / PBC Balance Sheet"
+    source_url: "https://finance.sina.com.cn/mac/#fininfo-8-0-31-2"
+    frequency: "monthly"
+    caveat_en: "Monthly monetary-authority balance-sheet total assets via AKShare's Sina wrapper; compare with PBC statistical releases for release-day precision."
+    caveat_zh: "AKShare新浪财经包装的货币当局资产负债表总资产；发布日精确使用应与PBC统计口径交叉核对。"
+  - id: pbc_fx_assets_akshare
+    section: money_credit
+    label_en: "PBC Foreign-Exchange Assets"
+    label_zh: "央行外汇资产"
+    unit: "CNY tn"
+    transform: "cny_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_central_bank_balance
+    date_column: "统计时间"
+    value_column: "外汇"
+    series: "macro_china_central_bank_balance:外汇"
+    source_name: "AKShare / Sina Finance / PBC Balance Sheet"
+    source_url: "https://finance.sina.com.cn/mac/#fininfo-8-0-31-2"
+    frequency: "monthly"
+    caveat_en: "PBC foreign-exchange asset item in CNY terms; valuation, FX intervention, and balance-sheet classification effects can all move the series."
+    caveat_zh: "央行资产端外汇项目，人民币计价；估值、外汇干预和资产负债表分类变化都会影响该序列。"
+  - id: pbc_claims_on_depository_corps_akshare
+    section: money_credit
+    label_en: "PBC Claims on Depository Corporations"
+    label_zh: "央行对其他存款性公司债权"
+    unit: "CNY tn"
+    transform: "cny_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_central_bank_balance
+    date_column: "统计时间"
+    value_column: "对其他存款性公司债权"
+    series: "macro_china_central_bank_balance:对其他存款性公司债权"
+    source_name: "AKShare / Sina Finance / PBC Balance Sheet"
+    source_url: "https://finance.sina.com.cn/mac/#fininfo-8-0-31-2"
+    frequency: "monthly"
+    caveat_en: "Claims on other depository corporations help track central-bank liquidity support and relending-style balance-sheet channels, but instrument decomposition still needs PBC-native detail."
+    caveat_zh: "对其他存款性公司债权可观察央行流动性支持和再贷款式资产负债表渠道，但工具分解仍需PBC原生细项。"
+  - id: pbc_reserve_money_akshare
+    section: money_credit
+    label_en: "PBC Reserve Money"
+    label_zh: "央行储备货币"
+    unit: "CNY tn"
+    transform: "cny_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_central_bank_balance
+    date_column: "统计时间"
+    value_column: "储备货币"
+    series: "macro_china_central_bank_balance:储备货币"
+    source_name: "AKShare / Sina Finance / PBC Balance Sheet"
+    source_url: "https://finance.sina.com.cn/mac/#fininfo-8-0-31-2"
+    frequency: "monthly"
+    caveat_en: "Reserve money is the liability-side anchor for base-money liquidity; read with RRR, SHIBOR, and PBC open-market operations."
+    caveat_zh: "储备货币是基础货币流动性的负债端锚；应与存准率、SHIBOR和央行公开市场操作结合阅读。"
   - id: interbank_3m_rate
     section: money_credit
     label_en: "3M Interbank Rate"
@@ -1359,8 +1505,8 @@ data_gaps:
   - section: investment
     item_en: "NBS fixed asset investment by sector and project pipeline"
     item_zh: "NBS固定资产投资分项与项目施工链条"
-    status_en: "Headline FAI growth is charted through AKShare's Eastmoney wrapper; sector and project-pipeline details remain open."
-    status_zh: "页面已通过AKShare东方财富包装接入固定资产投资总量增速；行业和项目施工链条仍待补充。"
+    status_en: "Headline FAI growth and a daily construction-materials index are charted through AKShare/Eastmoney; sector-level FAI and project-pipeline details remain open."
+    status_zh: "页面已通过AKShare/东方财富接入固定资产投资总量增速和日度建材指数；行业FAI和项目施工链条细项仍待补充。"
   - section: real_estate
     item_en: "NBS property investment, floor-space starts/completions/sales, 70-city price index, land transactions, and inventory"
     item_zh: "NBS房地产开发投资、开工/竣工/销售面积、70城房价、土地成交与库存"
@@ -1369,18 +1515,18 @@ data_gaps:
   - section: consumption
     item_en: "NBS retail sales, online retail sales, household survey, auto sales, and consumer confidence"
     item_zh: "NBS社零、网上零售、居民调查、汽车销售与消费者信心"
-    status_en: "Headline retail-sales growth plus consumer confidence/expectations are charted through AKShare's Eastmoney wrapper; online retail, household surveys, and auto sales remain open."
-    status_zh: "页面已通过AKShare东方财富包装接入社零总量增速、消费者信心和预期；网上零售、居民调查和汽车销售仍待补充。"
+    status_en: "Headline retail-sales growth, consumer confidence/expectations, and CPCA passenger-vehicle/NEV retail gauges are charted; online retail and household survey details remain open."
+    status_zh: "页面已接入社零总量增速、消费者信心/预期，以及乘联会乘用车和新能源车零售指标；网上零售和居民调查细项仍待补充。"
   - section: external
     item_en: "SAFE quarterly BOP, FDI flow/stock, external debt, and customs partner/product details"
     item_zh: "SAFE季度国际收支、FDI流量/存量、外债，以及海关伙伴国/商品细项"
-    status_en: "Customs export/import values, growth rates, trade balance, reserves, FX fixings, spot USD/CNY, and REER are charted; BOP detail, FDI, external debt, and partner/product customs breakdowns still require stable official adapters."
-    status_zh: "页面已加入海关进出口金额、同比、贸易差额、外储、汇率中间价、美元兑人民币即期和实际有效汇率；国际收支细项、FDI、外债和海关伙伴国/商品拆分仍需稳定官方adapter。"
+    status_en: "Customs export/import values, growth rates, trade balance, CPCA passenger-vehicle exports, reserves, FX fixings, spot USD/CNY, and REER are charted; BOP detail, fresh FDI, external debt, and partner/product customs breakdowns still require stable official adapters."
+    status_zh: "页面已加入海关进出口金额、同比、贸易差额、乘联会乘用车出口、外储、汇率中间价、美元兑人民币即期和实际有效汇率；国际收支细项、新鲜FDI、外债和海关伙伴国/商品拆分仍需稳定官方adapter。"
   - section: money_credit
     item_en: "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates"
     item_zh: "PBOC月度人民币贷款、存款、社融流量/存量、LPR/MLF/RRR与银行间利率"
-    status_en: "M2, M1, new RMB loans, TSF flow/components, LPR, RRR, daily SHIBOR, 3M interbank, and PBC latest cards are charted; TSF stock, deposits by sector, MLF, and full PBOC-native history remain open."
-    status_zh: "页面已加入M2、M1、新增人民币贷款、社融增量/分项、LPR、存准率、日度SHIBOR、3个月银行间利率和PBC最新卡片；社融存量、分部门存款、MLF和完整PBOC原生历史仍待补充。"
+    status_en: "M2, M1, new RMB loans, TSF flow/components, LPR, RRR, daily SHIBOR, 3M interbank, selected PBC balance-sheet items, and PBC latest cards are charted; TSF stock, deposits by sector, MLF, and full PBOC-native history remain open."
+    status_zh: "页面已加入M2、M1、新增人民币贷款、社融增量/分项、LPR、存准率、日度SHIBOR、3个月银行间利率、部分PBC资产负债表项目和PBC最新卡片；社融存量、分部门存款、MLF和完整PBOC原生历史仍待补充。"
   - section: prices
     item_en: "NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices"
     item_zh: "NBS月度CPI、核心CPI、PPI、农产品价格与进出口价格指数"
