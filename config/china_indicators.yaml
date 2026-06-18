@@ -370,6 +370,78 @@ indicators:
     frequency: "monthly"
     caveat_en: "Selected-city existing-home price index via AKShare; Beijing/Shanghai samples help read property stress but do not replace full 70-city details."
     caveat_zh: "AKShare包装的城市二手住宅价格样本；北京/上海样本有助于观察地产压力，但不能替代完整70城细项。"
+  - id: real_estate_climate_index_eastmoney
+    section: real_estate
+    label_en: "Real Estate Climate Index"
+    label_zh: "国房景气指数"
+    unit: "Index"
+    fetcher: eastmoney_industry_indicator
+    indicator_id: "EMM00121987"
+    value_column: "INDICATOR_VALUE"
+    series: "RPT_INDUSTRY_INDEX:EMM00121987:INDICATOR_VALUE"
+    source_name: "Eastmoney Data Center / NBS-style industry index"
+    source_url: "https://data.eastmoney.com/cjsj/hyzs_list_EMM00121987.html"
+    frequency: "monthly"
+    caveat_en: "Eastmoney's structured industry-index API mirrors the NBS-style real-estate climate index; latest observations can lag the property-sales and investment tables."
+    caveat_zh: "东方财富结构化行业指标API包装的国房景气指数；最新日期可能滞后于商品房销售和开发投资表。"
+  - id: commercial_housing_sales_value_eastmoney
+    section: real_estate
+    label_en: "Commercial Housing Sales Value"
+    label_zh: "商品房销售额"
+    unit: "CNY bn"
+    transform: "cny_10k_to_bn"
+    fetcher: eastmoney_industry_indicator
+    indicator_id: "EMI01523157"
+    value_column: "INDICATOR_VALUE"
+    series: "RPT_INDUSTRY_INDEX:EMI01523157:INDICATOR_VALUE"
+    source_name: "Eastmoney Data Center / NBS-style industry index"
+    source_url: "https://data.eastmoney.com/cjsj/hyzs_list_EMI01523157.html"
+    frequency: "monthly"
+    caveat_en: "Monthly commercial-housing sales value from Eastmoney's structured industry-index API; raw series is reported in 10k yuan and converted to CNY bn."
+    caveat_zh: "东方财富结构化行业指标API中的月度商品房销售额；原始单位为万元，页面转换为十亿元人民币。"
+  - id: commercial_housing_sales_value_yoy_eastmoney
+    section: real_estate
+    label_en: "Commercial Housing Sales Value, YoY"
+    label_zh: "商品房销售额同比"
+    unit: "%"
+    fetcher: eastmoney_industry_indicator
+    indicator_id: "EMI01523157"
+    value_column: "CHANGERATE_1Y"
+    series: "RPT_INDUSTRY_INDEX:EMI01523157:CHANGERATE_1Y"
+    source_name: "Eastmoney Data Center / NBS-style industry index"
+    source_url: "https://data.eastmoney.com/cjsj/hyzs_list_EMI01523157.html"
+    frequency: "monthly"
+    caveat_en: "One-year change from the same structured Eastmoney series; use as the sales-cycle growth gauge, not a seasonally adjusted monthly growth rate."
+    caveat_zh: "同一东方财富结构化指标的一年变化率；适合作为销售周期同比，不是季调月环比。"
+  - id: real_estate_development_investment_ytd_eastmoney
+    section: real_estate
+    label_en: "Real Estate Development Investment, YTD"
+    label_zh: "房地产开发投资累计值"
+    unit: "CNY bn"
+    transform: "cny_100mn_to_bn"
+    fetcher: eastmoney_industry_indicator
+    indicator_id: "EMI00120219"
+    value_column: "INDICATOR_VALUE"
+    series: "RPT_INDUSTRY_INDEX:EMI00120219:INDICATOR_VALUE"
+    source_name: "Eastmoney Data Center / NBS-style industry index"
+    source_url: "https://data.eastmoney.com/cjsj/hyzs_list_EMI00120219.html"
+    frequency: "monthly"
+    caveat_en: "Year-to-date real-estate development investment from Eastmoney's structured industry-index API; raw series is reported in 100mn yuan and converted to CNY bn."
+    caveat_zh: "东方财富结构化行业指标API中的房地产开发投资累计值；原始单位为亿元，页面转换为十亿元人民币。"
+  - id: real_estate_development_investment_ytd_yoy_eastmoney
+    section: real_estate
+    label_en: "Real Estate Development Investment, YTD YoY"
+    label_zh: "房地产开发投资累计同比"
+    unit: "%"
+    fetcher: eastmoney_industry_indicator
+    indicator_id: "EMI00120219"
+    value_column: "CHANGERATE_1Y"
+    series: "RPT_INDUSTRY_INDEX:EMI00120219:CHANGERATE_1Y"
+    source_name: "Eastmoney Data Center / NBS-style industry index"
+    source_url: "https://data.eastmoney.com/cjsj/hyzs_list_EMI00120219.html"
+    frequency: "monthly"
+    caveat_en: "One-year change of year-to-date real-estate development investment; useful for investment-cycle direction but should be cross-checked with NBS release-day tables when the EasyQuery API is reachable."
+    caveat_zh: "房地产开发投资累计值的一年变化率；适合观察投资周期方向，NBS EasyQuery可达时应与官方发布表交叉核对。"
   - id: household_consumption_growth
     section: consumption
     label_en: "Household Consumption Growth"
@@ -1510,8 +1582,8 @@ data_gaps:
   - section: real_estate
     item_en: "NBS property investment, floor-space starts/completions/sales, 70-city price index, land transactions, and inventory"
     item_zh: "NBS房地产开发投资、开工/竣工/销售面积、70城房价、土地成交与库存"
-    status_en: "BIS residential property aggregates and Beijing/Shanghai AKShare city price samples are charted; national 70-city details, investment, starts/completions/sales, land, and inventory remain adapter priorities."
-    status_zh: "页面已加入BIS住宅价格总量和AKShare北京/上海城市房价样本；全国70城细项、开发投资、开工/竣工/销售、土地和库存仍是adapter优先项。"
+    status_en: "BIS residential property aggregates, Beijing/Shanghai AKShare city price samples, Eastmoney structured commercial-housing sales value, development-investment YTD, and the real-estate climate index are charted. AKShare/Eastmoney were traversed for inventory, sales-area, floor-space starts/completions, and land-sale series; no reusable API-backed indicator was found yet, and NBS EasyQuery is currently blocked by DNS/WAF in this environment."
+    status_zh: "页面已加入BIS住宅价格总量、AKShare北京/上海城市房价样本、东方财富结构化商品房销售额、房地产开发投资累计值和国房景气指数。已遍历AKShare/东方财富寻找库存、销售面积、开工/竣工和土地成交序列；目前尚未发现可复用API指标，且本环境下NBS EasyQuery受DNS/WAF限制暂不可用。"
   - section: consumption
     item_en: "NBS retail sales, online retail sales, household survey, auto sales, and consumer confidence"
     item_zh: "NBS社零、网上零售、居民调查、汽车销售与消费者信心"

@@ -31,6 +31,8 @@ SUMMARY_KEY_IDS = [
     "real_gdp_growth",
     "industrial_value_added_yoy_akshare",
     "fixed_asset_investment_yoy_akshare",
+    "commercial_housing_sales_value_eastmoney",
+    "real_estate_development_investment_ytd_eastmoney",
     "passenger_vehicle_retail_cpca",
     "new_energy_vehicle_share_cpca",
     "customs_exports_yoy_akshare",
@@ -75,6 +77,10 @@ def _apply_transform(value: float, transform: str | None) -> float:
         return value / 1_000_000
     if transform == "cny_100mn_to_trn":
         return value / 10_000
+    if transform == "cny_100mn_to_bn":
+        return value / 10
+    if transform == "cny_10k_to_bn":
+        return value / 100_000
     if transform == "cny_yuan_to_trn":
         return value / 1_000_000_000_000
     if transform == "index_100_to_yoy":
@@ -100,6 +106,10 @@ def _parse_period_date(value: Any) -> str | None:
     text = _clean_text(str(value))
     if not text or text.lower() in {"nan", "none", "nat"}:
         return None
+
+    match = re.match(r"^(\d{4})-(\d{1,2})-(\d{1,2})(?:\s+\d{1,2}:\d{2}:\d{2})?$", text)
+    if match:
+        return f"{int(match.group(1)):04d}-{int(match.group(2)):02d}-{int(match.group(3)):02d}"
 
     match = re.match(r"^(\d{4})(\d{2})$", text)
     if match:
@@ -353,6 +363,51 @@ def fetch_akshare_wide_year_month(spec: dict[str, Any], cache: dict[str, Any] | 
     }
 
 
+def fetch_eastmoney_industry_indicator(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch Eastmoney's reusable industry-index API by stable INDICATOR_ID."""
+    indicator_id = spec["indicator_id"]
+    value_column = spec.get("value_column", "INDICATOR_VALUE")
+    url = "https://datacenter-web.eastmoney.com/api/data/v1/get"
+    params = {
+        "sortColumns": "REPORT_DATE",
+        "sortTypes": "-1",
+        "pageSize": str(spec.get("page_size", 1000)),
+        "pageNumber": "1",
+        "reportName": "RPT_INDUSTRY_INDEX",
+        "columns": "REPORT_DATE,INDICATOR_ID,INDICATOR_NAME,INDICATOR_VALUE,CHANGE_RATE,CHANGERATE_3M,CHANGERATE_6M,CHANGERATE_1Y,CHANGERATE_2Y,CHANGERATE_3Y",
+        "filter": f'(INDICATOR_ID="{indicator_id}")',
+        "source": "WEB",
+        "client": "WEB",
+    }
+    response = requests.get(url, params=params, headers={"User-Agent": "Mozilla/5.0"}, timeout=45)
+    response.raise_for_status()
+    payload = response.json()
+    rows = ((payload.get("result") or {}).get("data") or [])
+    observations: list[dict[str, Any]] = []
+    seen: set[tuple[str, float]] = set()
+    for row in rows:
+        parsed_date = _parse_period_date(row.get("REPORT_DATE"))
+        raw_value = row.get(value_column)
+        if not parsed_date or raw_value is None:
+            continue
+        try:
+            value = _apply_transform(float(raw_value), spec.get("transform"))
+        except (TypeError, ValueError):
+            continue
+        key = (parsed_date, value)
+        if key in seen:
+            continue
+        seen.add(key)
+        observations.append({"date": parsed_date, "value": value})
+    observations.sort(key=lambda item: item["date"])
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": response.url,
+    }
+
+
 def _safe_rows() -> list[list[str]]:
     end = date.today()
     start = end - timedelta(days=365)
@@ -484,6 +539,8 @@ def fetch_all(config: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[s
                 series = fetch_akshare_table(spec, akshare_cache)
             elif fetcher == "akshare_wide_year_month":
                 series = fetch_akshare_wide_year_month(spec, akshare_cache)
+            elif fetcher == "eastmoney_industry_indicator":
+                series = fetch_eastmoney_industry_indicator(spec)
             elif fetcher == "safe_rmb_midpoint":
                 if safe_rows is None:
                     safe_rows = _safe_rows()

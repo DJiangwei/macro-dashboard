@@ -1,8 +1,8 @@
 {
   "file": "china_2026Q2_v1.html",
-  "generated": "2026-06-18T12:00:21.082955+00:00",
-  "charts": 97,
-  "source_groups": 26,
+  "generated": "2026-06-18T12:46:16.379430+00:00",
+  "charts": 102,
+  "source_groups": 27,
   "data_gaps": 8,
   "low_confidence": 0,
   "usd_cny_latest": "6.8130 (2026-06-18)",
@@ -41,6 +41,30 @@
       "frequency": "monthly",
       "source_name": "AKShare / Eastmoney Data Center",
       "series": "macro_china_gdzctz:同比增长",
+      "quality_status": "watch"
+    },
+    {
+      "id": "commercial_housing_sales_value_eastmoney",
+      "label_en": "Commercial Housing Sales Value",
+      "label_zh": "商品房销售额",
+      "latest_date": "2026-05-01",
+      "latest_value": 636.6,
+      "latest_display": "637 CNY bn",
+      "frequency": "monthly",
+      "source_name": "Eastmoney Data Center / NBS-style industry index",
+      "series": "RPT_INDUSTRY_INDEX:EMI01523157:INDICATOR_VALUE",
+      "quality_status": "watch"
+    },
+    {
+      "id": "real_estate_development_investment_ytd_eastmoney",
+      "label_en": "Real Estate Development Investment, YTD",
+      "label_zh": "房地产开发投资累计值",
+      "latest_date": "2026-05-01",
+      "latest_value": 3035.6,
+      "latest_display": "3,036 CNY bn",
+      "frequency": "monthly",
+      "source_name": "Eastmoney Data Center / NBS-style industry index",
+      "series": "RPT_INDUSTRY_INDEX:EMI00120219:INDICATOR_VALUE",
       "quality_status": "watch"
     },
     {
