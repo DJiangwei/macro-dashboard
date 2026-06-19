@@ -154,6 +154,22 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "ONS monthly GDP index gives release-day activity tracking, but still feeds into later quarterly GDP revisions."
     caveat_zh: "ONS月度GDP指数更适合发布日跟踪活动，但仍会进入后续季度GDP修订。"
+  - id: monthly_gdp_mom
+    section: national_accounts
+    label_en: "Monthly GDP Growth, MoM"
+    label_zh: "月度GDP环比"
+    unit: "% m/m"
+    transform: "mom_pct"
+    fetcher: ons_timeseries
+    series: "YBEZ"
+    dataset: "PN2"
+    ons_path: "/economy/grossdomesticproductgdp/timeseries/ybez/pn2/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ybez/pn2"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "Month-on-month growth derived from the ONS monthly GDP index; this is the release-day activity impulse and should be read with revision risk."
+    caveat_zh: "由ONS月度GDP指数派生的环比增速；更贴近发布日活动脉冲，但需结合修订风险阅读。"
   - id: industrial_production
     section: monthly_output
     label_en: "Industrial Production"
@@ -169,6 +185,22 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "ONS Index of Production, B-E production CVMSA; preferred over the lagged FRED/OECD mirror for UK release work."
     caveat_zh: "ONS生产指数B-E生产CVMSA；相较滞后的FRED/OECD镜像，更适合英国发布日研究。"
+  - id: industrial_production_yoy
+    section: monthly_output
+    label_en: "Industrial Production Growth, YoY"
+    label_zh: "工业生产同比"
+    unit: "% y/y"
+    transform: "yoy"
+    fetcher: ons_timeseries
+    series: "K222"
+    dataset: "DIOP"
+    ons_path: "/economy/economicoutputandproductivity/output/timeseries/k222/diop/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/economicoutputandproductivity/output/timeseries/k222/diop"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "Year-over-year growth derived from the ONS Index of Production; better for cycle reading than the raw index level."
+    caveat_zh: "由ONS生产指数派生的同比增速；比原始指数水平更适合观察工业周期。"
   - id: services_output_index
     section: monthly_output
     label_en: "Index of Services"
@@ -184,11 +216,28 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "ONS Index of Services, monthly seasonally adjusted output index; it covers the largest GDP(O) sector but remains revision-prone around Blue Book and monthly GDP balancing."
     caveat_zh: "ONS服务业产出月度季调指数；覆盖GDP(O)最大部门，但在Blue Book和月度GDP平衡时仍可能修订。"
+  - id: services_output_yoy
+    section: monthly_output
+    label_en: "Services Output Growth, YoY"
+    label_zh: "服务业产出同比"
+    unit: "% y/y"
+    transform: "yoy"
+    fetcher: ons_timeseries
+    series: "S2KU"
+    dataset: "IOS1"
+    ons_path: "/economy/economicoutputandproductivity/output/timeseries/s2ku/ios1/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/economy/economicoutputandproductivity/output/timeseries/s2ku/ios1"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "Year-over-year growth derived from the ONS Index of Services; useful for separating broad service momentum from index-base effects."
+    caveat_zh: "由ONS服务业产出指数派生的同比增速；有助于观察服务业动能而非指数基期水平。"
   - id: retail_sales_yoy
     section: monthly_output
-    label_en: "Retail Sales Volume Index"
-    label_zh: "零售销售量指数"
-    unit: "index"
+    label_en: "Retail Sales Volume Growth, YoY"
+    label_zh: "零售销售量同比"
+    unit: "% y/y"
+    transform: "yoy"
     fetcher: ons_timeseries
     series: "J5EK"
     dataset: "DRSI"
@@ -197,8 +246,24 @@ indicators:
     source_url: "https://www.ons.gov.uk/businessindustryandtrade/retailindustry/timeseries/j5ek/drsi"
     frequency: "monthly"
     start_date: "1997-01-01"
-    caveat_en: "ONS retail sales volume index, all retailers including fuel, seasonally adjusted; this replaces the slower quarterly OECD/FRED retail mirror."
-    caveat_zh: "ONS零售销售量指数，含燃料、季调；替代较慢的OECD/FRED季度零售镜像。"
+    caveat_en: "Year-over-year growth derived from the ONS retail sales volume index, all retailers including fuel; fixes the chart logic so the series now matches the YoY label."
+    caveat_zh: "由ONS含燃料零售销售量指数派生的同比增速；修正此前标题为同比但实际展示指数水平的问题。"
+  - id: retail_sales_mom
+    section: monthly_output
+    label_en: "Retail Sales Volume Growth, MoM"
+    label_zh: "零售销售量环比"
+    unit: "% m/m"
+    transform: "mom_pct"
+    fetcher: ons_timeseries
+    series: "J5EK"
+    dataset: "DRSI"
+    ons_path: "/businessindustryandtrade/retailindustry/timeseries/j5ek/drsi/data"
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/businessindustryandtrade/retailindustry/timeseries/j5ek/drsi"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "Month-on-month retail volume growth derived from the ONS seasonally adjusted index; closer to the release headline but volatile around holidays and fuel swings."
+    caveat_zh: "由ONS季调零售销售量指数派生的环比增速；更接近发布标题，但受节假日和燃料波动影响较大。"
   - id: consumer_confidence
     section: monthly_output
     label_en: "Consumer Confidence"
@@ -364,6 +429,22 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "ONS construction all-work chained-volume seasonally adjusted index from the all-work summary CSV; output is Great Britain rather than full UK and can revise with survey response updates."
     caveat_zh: "ONS建筑业总产出全工作链式量季调指数，来自all-work summary CSV；覆盖英国大不列颠而非完整UK，且会随调查回收更新而修订。"
+  - id: construction_output_yoy
+    section: housing_construction
+    label_en: "Construction Output Growth, YoY"
+    label_zh: "建筑业产出同比"
+    unit: "% y/y"
+    transform: "yoy"
+    fetcher: ons_horizontal_csv_table
+    source_name: "ONS"
+    source_url: "https://www.ons.gov.uk/businessindustryandtrade/constructionindustry/datasets/outputintheconstructionindustryallworksummary"
+    table_title_contains: "Table 10b: Chained volume measure, seasonally adjusted index number"
+    date_column: "Time period"
+    value_column: "All Work"
+    frequency: "monthly"
+    start_date: "1997-01-01"
+    caveat_en: "Year-over-year growth derived from the ONS construction all-work index; better for construction-cycle momentum than the raw index level."
+    caveat_zh: "由ONS建筑业总产出指数派生的同比增速；比原始指数水平更适合观察建筑周期动能。"
   - id: exports_qoq
     section: external
     label_en: "Real Exports"
@@ -908,9 +989,10 @@ indicators:
     caveat_zh: "由ONS RPIX不含按揭利息指数计算同比；RPIX已不是MPC目标，但对英国通胀历史研究仍有用。"
   - id: producer_prices
     section: prices
-    label_en: "PPI Output: Manufactured Products"
-    label_zh: "PPI产出：制成品"
-    unit: "index"
+    label_en: "PPI Output Inflation"
+    label_zh: "制造业产出PPI同比"
+    unit: "% y/y"
+    transform: "yoy"
     fetcher: ons_timeseries
     series: "GD6Y"
     dataset: "PPI"
@@ -919,8 +1001,8 @@ indicators:
     source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/gd6y/ppi"
     frequency: "monthly"
     start_date: "2010-01-01"
-    caveat_en: "ONS PPI output total manufactured products excluding duty, index level; use the release table for detailed industry decomposition."
-    caveat_zh: "ONS PPI产出总制成品不含税指数；行业分解需查看发布表。"
+    caveat_en: "Year-over-year growth derived from the ONS PPI output index for manufactured products excluding duty; more useful for inflation pressure than the raw index level."
+    caveat_zh: "由ONS制造业产出PPI不含税指数派生的同比增速；比原始指数水平更适合观察通胀压力。"
   - id: petrol_pump_price
     section: prices
     label_en: "Petrol Pump Price"
@@ -1367,8 +1449,8 @@ data_gaps:
   - section: monthly_output
     item_en: "GS UK CAI, GS-MAP, GS Surprise Index, and official GS FCI"
     item_zh: "GS UK CAI、GS-MAP、GS Surprise Index与官方GS FCI"
-    status_en: "Proprietary GS products. This page charts public components only."
-    status_zh: "GS专有产品；本页只绘制公开可复跑组成项。"
+    status_en: "Proprietary GS products. This page charts public components only, including ONS monthly GDP MoM, industrial/services output YoY, and retail-sales YoY/MoM derived from official level series."
+    status_zh: "GS专有产品；本页只绘制公开可复跑组成项，包括由官方水平序列派生的ONS月度GDP环比、工业/服务产出同比，以及零售销售同比/环比。"
   - section: monthly_output
     item_en: "Manufacturing, construction, services, and composite PMI"
     item_zh: "制造业、建筑业、服务业与综合PMI"
@@ -1382,8 +1464,8 @@ data_gaps:
   - section: housing_construction
     item_en: "Nationwide, Halifax, Rightmove, Hometrack, and RICS"
     item_zh: "Nationwide、Halifax、Rightmove、Hometrack与RICS"
-    status_en: "ONS/HMLR UK HPI, HMRC property transactions, MHCLG starts/completions, ONS construction output, and BoE mortgage approvals are now charted; vendor house-price and sentiment sources still need licensing/API validation."
-    status_zh: "ONS/HMLR英国HPI、HMRC物业成交、MHCLG开工/竣工、ONS建筑产出与BoE按揭批准已接入；供应商房价和情绪数据仍需授权/API验证。"
+    status_en: "ONS/HMLR UK HPI, HMRC property transactions, MHCLG starts/completions, ONS construction output level and YoY growth, and BoE mortgage approvals are now charted; vendor house-price and sentiment sources still need licensing/API validation."
+    status_zh: "ONS/HMLR英国HPI、HMRC物业成交、MHCLG开工/竣工、ONS建筑产出水平和同比、BoE按揭批准已接入；供应商房价和情绪数据仍需授权/API验证。"
   - section: labour_market
     item_en: "Pay settlements"
     item_zh: "工资协议"
@@ -1392,8 +1474,8 @@ data_gaps:
   - section: prices
     item_en: "Inflation expectations surveys and index-linked gilt breakevens"
     item_zh: "通胀预期调查与指数挂钩国债隐含通胀"
-    status_en: "ONS headline/core/services/goods/food/household-energy CPI, CPIH and owner-occupiers' housing costs, RPI/RPIX, PPI, and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings."
-    status_zh: "ONS整体/核心/服务/商品/食品/家庭能源CPI、CPIH与自有住房成本、RPI/RPIX、PPI与DESNZ汽油/柴油泵价已接入；通胀预期和盈亏平衡通胀仍需稳定且授权安全的映射。"
+    status_en: "ONS headline/core/services/goods/food/household-energy CPI, CPIH and owner-occupiers' housing costs, RPI/RPIX, PPI output inflation derived from the index, and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings."
+    status_zh: "ONS整体/核心/服务/商品/食品/家庭能源CPI、CPIH与自有住房成本、RPI/RPIX、由指数派生的PPI产出同比，以及DESNZ汽油/柴油泵价已接入；通胀预期和盈亏平衡通胀仍需稳定且授权安全的映射。"
   - section: monetary_financial
     item_en: "Trends in Lending, Credit Conditions Survey, HEW, fuller quoted-rate matrix, and stale OECD 3M interbank mirror"
     item_zh: "Trends in Lending、信贷条件调查、住房权益提取、更完整报价利率矩阵，以及滞后的OECD 3M银行间利率镜像"

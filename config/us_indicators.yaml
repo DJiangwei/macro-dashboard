@@ -281,6 +281,20 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Derived year-over-year growth from Federal Reserve industrial production."
     caveat_zh: "由美联储工业生产指数派生的同比增速。"
+  - id: industrial_production_mom
+    section: production_orders
+    label_en: "Industrial Production Growth, MoM"
+    label_zh: "工业生产环比"
+    unit: "% m/m"
+    transform: "pct_change"
+    fetcher: fred
+    series: "INDPRO"
+    source_name: "FRED / Federal Reserve"
+    source_url: "https://fred.stlouisfed.org/series/INDPRO"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Month-on-month growth derived from Federal Reserve industrial production; closer to the release headline than the YoY chart but noisier."
+    caveat_zh: "由美联储工业生产指数派生的环比增速；比同比图更接近发布标题，但波动更大。"
   - id: capacity_utilization
     section: production_orders
     label_en: "Capacity Utilization"
@@ -415,6 +429,20 @@ indicators:
     start_date: "1992-01-01"
     caveat_en: "Derived year-over-year growth from advance retail sales."
     caveat_zh: "由零售销售初值水平派生的同比增速。"
+  - id: retail_sales_mom
+    section: consumer
+    label_en: "Retail Sales Growth, MoM"
+    label_zh: "零售销售环比"
+    unit: "% m/m"
+    transform: "pct_change"
+    fetcher: fred
+    series: "RSAFS"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/RSAFS"
+    frequency: "monthly"
+    start_date: "1992-01-01"
+    caveat_en: "Month-on-month growth derived from advance retail sales; this is closer to the monthly release logic than the YoY chart, but it is volatile and revision-prone."
+    caveat_zh: "由零售销售初值派生的环比增速；比同比图更贴近月度发布逻辑，但波动大且容易修订。"
   - id: retail_ex_auto_growth
     section: consumer
     label_en: "Retail Sales ex Autos Growth"
@@ -429,6 +457,20 @@ indicators:
     start_date: "1992-01-01"
     caveat_en: "Ex-auto retail sales reduce vehicle-driven volatility."
     caveat_zh: "扣除汽车的零售销售可降低汽车项波动。"
+  - id: retail_ex_auto_mom
+    section: consumer
+    label_en: "Retail Sales ex Autos Growth, MoM"
+    label_zh: "扣除汽车零售环比"
+    unit: "% m/m"
+    transform: "pct_change"
+    fetcher: fred
+    series: "RSXFS"
+    source_name: "FRED / Census"
+    source_url: "https://fred.stlouisfed.org/series/RSXFS"
+    frequency: "monthly"
+    start_date: "1992-01-01"
+    caveat_en: "Month-on-month growth in retail sales excluding motor vehicles and parts; cleaner for core goods consumption momentum than headline retail."
+    caveat_zh: "扣除机动车及零部件后的零售销售环比；比整体零售更适合观察核心商品消费动能。"
   - id: nominal_pce_growth
     section: consumer
     label_en: "Nominal PCE Growth"
@@ -457,6 +499,20 @@ indicators:
     start_date: "2007-01-01"
     caveat_en: "Real PCE is the cleanest monthly read on consumption volume."
     caveat_zh: "实际PCE是观察月度消费量的最干净口径。"
+  - id: real_pce_mom
+    section: consumer
+    label_en: "Real PCE Growth, MoM"
+    label_zh: "实际PCE环比"
+    unit: "% m/m"
+    transform: "pct_change"
+    fetcher: fred
+    series: "PCEC96"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/PCEC96"
+    frequency: "monthly"
+    start_date: "2007-01-01"
+    caveat_en: "Month-on-month growth derived from real PCE; the right release-style lens for near-term consumption momentum."
+    caveat_zh: "由实际PCE派生的环比增速；更适合观察近端消费动能。"
   - id: vehicle_sales
     section: consumer
     label_en: "Light Vehicle Sales"
@@ -643,6 +699,20 @@ indicators:
     start_date: "2016-07-01"
     caveat_en: "Realtor.com national active-listing count via FRED; useful for housing-market slack, but not a substitute for NAHB sentiment or mortgage applications."
     caveat_zh: "FRED镜像的Realtor.com全国活跃挂牌数量；适合观察住房市场松紧，但不能替代NAHB情绪或按揭申请数据。"
+  - id: active_listing_count_yoy
+    section: housing
+    label_en: "Active Listing Count Growth, YoY"
+    label_zh: "活跃挂牌数量同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "ACTLISCOUUS"
+    source_name: "FRED / Realtor.com"
+    source_url: "https://fred.stlouisfed.org/series/ACTLISCOUUS"
+    frequency: "monthly"
+    start_date: "2016-07-01"
+    caveat_en: "Year-over-year growth derived from Realtor.com active listings; better for market-slack direction than raw counts, though methodology changes still require caution."
+    caveat_zh: "由Realtor.com活跃挂牌数量派生的同比增速；比原始数量更适合观察市场松紧方向，但仍需注意方法变化。"
   - id: pending_listing_count
     section: housing
     label_en: "Pending Listing Count"
@@ -656,6 +726,20 @@ indicators:
     start_date: "2016-07-01"
     caveat_en: "Realtor.com pending-listing count via FRED; related to transaction pipeline, but it is not the NAR Pending Home Sales Index."
     caveat_zh: "FRED镜像的Realtor.com待完成挂牌数量；与交易管线相关，但不是NAR待完成房屋销售指数。"
+  - id: pending_listing_count_yoy
+    section: housing
+    label_en: "Pending Listing Count Growth, YoY"
+    label_zh: "待完成挂牌数量同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "PENLISCOUUS"
+    source_name: "FRED / Realtor.com"
+    source_url: "https://fred.stlouisfed.org/series/PENLISCOUUS"
+    frequency: "monthly"
+    start_date: "2016-07-01"
+    caveat_en: "Year-over-year growth derived from Realtor.com pending listings; a cleaner transaction-pipeline signal than the raw level when seasonality is material."
+    caveat_zh: "由Realtor.com待完成挂牌数量派生的同比增速；在季节性较强时比原始水平更适合观察交易管线。"
   - id: median_days_on_market
     section: housing
     label_en: "Median Days on Market"
@@ -1161,6 +1245,20 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Derived year-over-year growth from CPI index."
     caveat_zh: "由CPI指数派生的同比增速。"
+  - id: cpi_mom
+    section: prices_wages
+    label_en: "Headline CPI Inflation, MoM"
+    label_zh: "整体CPI环比"
+    unit: "% m/m"
+    transform: "pct_change"
+    fetcher: fred
+    series: "CPIAUCSL"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/CPIAUCSL"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Month-on-month CPI inflation derived from the seasonally adjusted CPI index; closer to release-day inflation momentum than the YoY rate."
+    caveat_zh: "由季调CPI指数派生的环比通胀；比同比率更贴近发布日通胀动能。"
   - id: core_cpi_inflation
     section: prices_wages
     label_en: "Core CPI Inflation"
@@ -1175,6 +1273,20 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Core CPI excludes food and energy."
     caveat_zh: "核心CPI剔除食品和能源。"
+  - id: core_cpi_mom
+    section: prices_wages
+    label_en: "Core CPI Inflation, MoM"
+    label_zh: "核心CPI环比"
+    unit: "% m/m"
+    transform: "pct_change"
+    fetcher: fred
+    series: "CPILFESL"
+    source_name: "FRED / BLS"
+    source_url: "https://fred.stlouisfed.org/series/CPILFESL"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Month-on-month core CPI derived from the seasonally adjusted core CPI index; useful for near-term inflation persistence."
+    caveat_zh: "由季调核心CPI指数派生的环比；适合观察近端通胀粘性。"
   - id: cpi_ex_shelter_inflation
     section: prices_wages
     label_en: "CPI ex Shelter Inflation"
@@ -1245,6 +1357,20 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Core PCE is the Fed's preferred inflation gauge."
     caveat_zh: "核心PCE是美联储偏好的通胀指标。"
+  - id: core_pce_mom
+    section: prices_wages
+    label_en: "Core PCE Inflation, MoM"
+    label_zh: "核心PCE环比"
+    unit: "% m/m"
+    transform: "pct_change"
+    fetcher: fred
+    series: "PCEPILFE"
+    source_name: "FRED / BEA"
+    source_url: "https://fred.stlouisfed.org/series/PCEPILFE"
+    frequency: "monthly"
+    start_date: "1990-01-01"
+    caveat_en: "Month-on-month core PCE inflation derived from the Fed's preferred price index; revision-prone but essential for current inflation momentum."
+    caveat_zh: "由核心PCE价格指数派生的环比通胀；虽会修订，但对当前通胀动能至关重要。"
   - id: median_cpi
     section: prices_wages
     label_en: "Median CPI"
@@ -2168,18 +2294,18 @@ data_gaps:
   - section: production_orders
     item_en: "ISM manufacturing/non-manufacturing, Chicago PMI, and Beige Book text"
     item_zh: "ISM制造业/非制造业、芝加哥PMI与褐皮书文本"
-    status_en: "National ISM/PMI and Beige Book remain adapter gaps; public regional Fed survey gauges are charted separately."
-    status_zh: "全国ISM/PMI与褐皮书仍是adapter缺口；公开地区联储调查已单独绘图。"
+    status_en: "National ISM/PMI and Beige Book remain adapter gaps; public regional Fed survey gauges are charted separately, and industrial production now includes both YoY and MoM release-style momentum."
+    status_zh: "全国ISM/PMI与褐皮书仍是adapter缺口；公开地区联储调查已单独绘图，工业生产也已同时提供同比和发布式环比动能。"
   - section: consumer
     item_en: "Conference Board confidence, Redbook, ICSC/UBS, ABC Consumer Comfort, stale OECD consumer-confidence mirror"
     item_zh: "Conference Board信心、Redbook、ICSC/UBS、ABC消费者舒适度、滞后的OECD消费者信心镜像"
-    status_en: "Vendor-controlled, not yet mapped to a reproducible public endpoint, or stale in the public mirror. University of Michigan sentiment remains charted as the durable public confidence gauge; the Weekly Economic Index is charted as a high-frequency activity composite, not a substitute for these retail/confidence products."
-    status_zh: "供应商控制、尚未映射到可复跑公开endpoint，或公开镜像已滞后。密歇根消费者信心继续作为稳定公开信心指标绘图；周度经济指数作为高频活动综合指标绘图，但不能替代这些零售/信心产品。"
+    status_en: "Vendor-controlled, not yet mapped to a reproducible public endpoint, or stale in the public mirror. University of Michigan sentiment remains charted as the durable public confidence gauge; retail sales and real PCE now include both YoY and MoM public FRED-derived momentum, while the Weekly Economic Index is charted as a high-frequency activity composite."
+    status_zh: "供应商控制、尚未映射到可复跑公开endpoint，或公开镜像已滞后。密歇根消费者信心继续作为稳定公开信心指标绘图；零售销售和实际PCE现在同时提供由FRED公开序列派生的同比与环比动能，周度经济指数作为高频活动综合指标绘图。"
   - section: housing
     item_en: "Pending Home Sales Index, NAHB Housing Market Index, mortgage applications"
     item_zh: "待完成房屋销售指数、NAHB住房市场指数、按揭申请"
-    status_en: "Still not validated as license-safe public chart data. Public supply, price, stress, and listing-market gauges are charted, including Realtor.com active listings, pending listings, and median days on market via FRED."
-    status_zh: "仍未验证为授权安全公开图表数据。公开库存、价格、压力和挂牌市场指标已绘图，包括通过FRED接入的Realtor.com活跃挂牌、待完成挂牌和挂牌中位天数。"
+    status_en: "Still not validated as license-safe public chart data. Public supply, price, stress, and listing-market gauges are charted, including Realtor.com active listings, pending listings, their YoY growth rates, and median days on market via FRED."
+    status_zh: "仍未验证为授权安全公开图表数据。公开库存、价格、压力和挂牌市场指标已绘图，包括通过FRED接入的Realtor.com活跃挂牌、待完成挂牌、对应同比增速和挂牌中位天数。"
   - section: external
     item_en: "Detailed Treasury International Capital System flows"
     item_zh: "TIC详细资本流"

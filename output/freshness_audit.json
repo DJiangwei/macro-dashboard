@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-19T09:52:52.158056+00:00",
+  "generated": "2026-06-19T15:54:34.473212+00:00",
   "as_of_date": "2026-06-19",
   "thresholds": {
     "daily": "14 days",
@@ -86,8 +86,8 @@
     },
     {
       "dashboard": "United Kingdom",
-      "charts": 87,
-      "current": 83,
+      "charts": 92,
+      "current": 88,
       "stale": 0,
       "lagged_source": 0,
       "projection": 4,
@@ -101,8 +101,8 @@
     },
     {
       "dashboard": "United States",
-      "charts": 155,
-      "current": 154,
+      "charts": 164,
+      "current": 163,
       "stale": 0,
       "lagged_source": 0,
       "projection": 0,
@@ -9199,16 +9199,16 @@
       "indicator_id": "energy_price_index_akshare",
       "label": "Energy Price Index",
       "frequency": "daily",
-      "latest_observation": "2026-06-18 · 986 Index",
-      "latest_date": "2026-06-18",
-      "age_basis_date": "2026-06-18",
-      "age_days": 1,
+      "latest_observation": "2026-06-19 · 986 Index",
+      "latest_date": "2026-06-19",
+      "age_basis_date": "2026-06-19",
+      "age_days": 0,
       "threshold_days": 14,
       "freshness_status": "current",
       "quality_status": "watch",
       "source": "AKShare / Energy Price Index",
       "series_id": "macro_china_energy_index:最新值",
-      "provider_update": "2026-06-18",
+      "provider_update": "2026-06-19",
       "note": "High-frequency energy price index via AKShare; use with enterprise coal/oil/power prices because wholesale market moves may not pass through one-for-one to CPI/PPI."
     },
     {
@@ -9536,6 +9536,23 @@
     },
     {
       "dashboard": "United Kingdom",
+      "indicator_id": "monthly_gdp_mom",
+      "label": "Monthly GDP Growth, MoM",
+      "frequency": "monthly",
+      "latest_observation": "2026-03-31 · 0.58 % m/m",
+      "latest_date": "2026-03-31",
+      "age_basis_date": "2026-03-31",
+      "age_days": 80,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "YBEZ",
+      "provider_update": "2026-05-13",
+      "note": "Month-on-month growth derived from the ONS monthly GDP index; this is the release-day activity impulse and should be read with revision risk."
+    },
+    {
+      "dashboard": "United Kingdom",
       "indicator_id": "industrial_production",
       "label": "Industrial Production",
       "frequency": "monthly",
@@ -9550,6 +9567,23 @@
       "series_id": "K222",
       "provider_update": "2026-06-11",
       "note": "ONS Index of Production, B-E production CVMSA; preferred over the lagged FRED/OECD mirror for UK release work."
+    },
+    {
+      "dashboard": "United Kingdom",
+      "indicator_id": "industrial_production_yoy",
+      "label": "Industrial Production Growth, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · -0.20 % y/y",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 50,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "K222",
+      "provider_update": "2026-06-11",
+      "note": "Year-over-year growth derived from the ONS Index of Production; better for cycle reading than the raw index level."
     },
     {
       "dashboard": "United Kingdom",
@@ -9570,10 +9604,27 @@
     },
     {
       "dashboard": "United Kingdom",
-      "indicator_id": "retail_sales_yoy",
-      "label": "Retail Sales Volume Index",
+      "indicator_id": "services_output_yoy",
+      "label": "Services Output Growth, YoY",
       "frequency": "monthly",
-      "latest_observation": "2026-05-01 · 103 index",
+      "latest_observation": "2026-04-01 · 1.66 % y/y",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 50,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "S2KU",
+      "provider_update": "2026-06-11",
+      "note": "Year-over-year growth derived from the ONS Index of Services; useful for separating broad service momentum from index-base effects."
+    },
+    {
+      "dashboard": "United Kingdom",
+      "indicator_id": "retail_sales_yoy",
+      "label": "Retail Sales Volume Growth, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · 3.30 % y/y",
       "latest_date": "2026-05-01",
       "age_basis_date": "2026-05-31",
       "age_days": 19,
@@ -9583,7 +9634,24 @@
       "source": "ONS",
       "series_id": "J5EK",
       "provider_update": "2026-06-18",
-      "note": "ONS retail sales volume index, all retailers including fuel, seasonally adjusted; this replaces the slower quarterly OECD/FRED retail mirror."
+      "note": "Year-over-year growth derived from the ONS retail sales volume index, all retailers including fuel; fixes the chart logic so the series now matches the YoY label."
+    },
+    {
+      "dashboard": "United Kingdom",
+      "indicator_id": "retail_sales_mom",
+      "label": "Retail Sales Volume Growth, MoM",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · 1.17 % m/m",
+      "latest_date": "2026-05-01",
+      "age_basis_date": "2026-05-31",
+      "age_days": 19,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "J5EK",
+      "provider_update": "2026-06-18",
+      "note": "Month-on-month retail volume growth derived from the ONS seasonally adjusted index; closer to the release headline but volatile around holidays and fuel swings."
     },
     {
       "dashboard": "United Kingdom",
@@ -9771,6 +9839,23 @@
       "series_id": "",
       "provider_update": "2026-04-01",
       "note": "ONS construction all-work chained-volume seasonally adjusted index from the all-work summary CSV; output is Great Britain rather than full UK and can revise with survey response updates."
+    },
+    {
+      "dashboard": "United Kingdom",
+      "indicator_id": "construction_output_yoy",
+      "label": "Construction Output Growth, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · -0.98 % y/y",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 50,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "ONS",
+      "series_id": "",
+      "provider_update": "2026-04-01",
+      "note": "Year-over-year growth derived from the ONS construction all-work index; better for construction-cycle momentum than the raw index level."
     },
     {
       "dashboard": "United Kingdom",
@@ -10353,9 +10438,9 @@
     {
       "dashboard": "United Kingdom",
       "indicator_id": "producer_prices",
-      "label": "PPI Output: Manufactured Products",
+      "label": "PPI Output Inflation",
       "frequency": "monthly",
-      "latest_observation": "2026-05-01 · 153 index",
+      "latest_observation": "2026-05-01 · 6.78 % y/y",
       "latest_date": "2026-05-01",
       "age_basis_date": "2026-05-31",
       "age_days": 19,
@@ -10365,7 +10450,7 @@
       "source": "ONS",
       "series_id": "GD6Y",
       "provider_update": "2026-06-16",
-      "note": "ONS PPI output total manufactured products excluding duty, index level; use the release table for detailed industry decomposition."
+      "note": "Year-over-year growth derived from the ONS PPI output index for manufactured products excluding duty; more useful for inflation pressure than the raw index level."
     },
     {
       "dashboard": "United Kingdom",
@@ -11168,6 +11253,23 @@
     },
     {
       "dashboard": "United States",
+      "indicator_id": "industrial_production_mom",
+      "label": "Industrial Production Growth, MoM",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · 0.14 % m/m",
+      "latest_date": "2026-05-01",
+      "age_basis_date": "2026-05-31",
+      "age_days": 19,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / Federal Reserve",
+      "series_id": "INDPRO",
+      "provider_update": "2026-06-15",
+      "note": "Month-on-month growth derived from Federal Reserve industrial production; closer to the release headline than the YoY chart but noisier."
+    },
+    {
+      "dashboard": "United States",
       "indicator_id": "capacity_utilization",
       "label": "Capacity Utilization",
       "frequency": "monthly",
@@ -11338,6 +11440,23 @@
     },
     {
       "dashboard": "United States",
+      "indicator_id": "retail_sales_mom",
+      "label": "Retail Sales Growth, MoM",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · 0.88 % m/m",
+      "latest_date": "2026-05-01",
+      "age_basis_date": "2026-05-31",
+      "age_days": 19,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / Census",
+      "series_id": "RSAFS",
+      "provider_update": "2026-06-17",
+      "note": "Month-on-month growth derived from advance retail sales; this is closer to the monthly release logic than the YoY chart, but it is volatile and revision-prone."
+    },
+    {
+      "dashboard": "United States",
       "indicator_id": "retail_ex_auto_growth",
       "label": "Retail Sales ex Autos Growth",
       "frequency": "monthly",
@@ -11352,6 +11471,23 @@
       "series_id": "RSXFS",
       "provider_update": "2026-06-17",
       "note": "Ex-auto retail sales reduce vehicle-driven volatility."
+    },
+    {
+      "dashboard": "United States",
+      "indicator_id": "retail_ex_auto_mom",
+      "label": "Retail Sales ex Autos Growth, MoM",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · 1.04 % m/m",
+      "latest_date": "2026-05-01",
+      "age_basis_date": "2026-05-31",
+      "age_days": 19,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / Census",
+      "series_id": "RSXFS",
+      "provider_update": "2026-06-17",
+      "note": "Month-on-month growth in retail sales excluding motor vehicles and parts; cleaner for core goods consumption momentum than headline retail."
     },
     {
       "dashboard": "United States",
@@ -11386,6 +11522,23 @@
       "series_id": "PCEC96",
       "provider_update": "2026-05-28",
       "note": "Real PCE is the cleanest monthly read on consumption volume."
+    },
+    {
+      "dashboard": "United States",
+      "indicator_id": "real_pce_mom",
+      "label": "Real PCE Growth, MoM",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · 0.11 % m/m",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 50,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / BEA",
+      "series_id": "PCEC96",
+      "provider_update": "2026-05-28",
+      "note": "Month-on-month growth derived from real PCE; the right release-style lens for near-term consumption momentum."
     },
     {
       "dashboard": "United States",
@@ -11627,6 +11780,23 @@
     },
     {
       "dashboard": "United States",
+      "indicator_id": "active_listing_count_yoy",
+      "label": "Active Listing Count Growth, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · 2.18 % y/y",
+      "latest_date": "2026-05-01",
+      "age_basis_date": "2026-05-31",
+      "age_days": 19,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / Realtor.com",
+      "series_id": "ACTLISCOUUS",
+      "provider_update": "2026-06-04",
+      "note": "Year-over-year growth derived from Realtor.com active listings; better for market-slack direction than raw counts, though methodology changes still require caution."
+    },
+    {
+      "dashboard": "United States",
       "indicator_id": "pending_listing_count",
       "label": "Pending Listing Count",
       "frequency": "monthly",
@@ -11641,6 +11811,23 @@
       "series_id": "PENLISCOUUS",
       "provider_update": "2026-06-04",
       "note": "Realtor.com pending-listing count via FRED; related to transaction pipeline, but it is not the NAR Pending Home Sales Index."
+    },
+    {
+      "dashboard": "United States",
+      "indicator_id": "pending_listing_count_yoy",
+      "label": "Pending Listing Count Growth, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · 4.72 % y/y",
+      "latest_date": "2026-05-01",
+      "age_basis_date": "2026-05-31",
+      "age_days": 19,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / Realtor.com",
+      "series_id": "PENLISCOUUS",
+      "provider_update": "2026-06-04",
+      "note": "Year-over-year growth derived from Realtor.com pending listings; a cleaner transaction-pipeline signal than the raw level when seasonality is material."
     },
     {
       "dashboard": "United States",
@@ -11809,7 +11996,7 @@
       "quality_status": "watch",
       "source": "FRED / Census",
       "series_id": "BOPGIMP",
-      "provider_update": "2026-04-01",
+      "provider_update": "2026-06-09",
       "note": "Goods imports are useful for domestic demand and inventory-cycle cross-checks."
     },
     {
@@ -11843,7 +12030,7 @@
       "quality_status": "watch",
       "source": "FRED / Treasury International Capital",
       "series_id": "FORTREASPOS99996",
-      "provider_update": "2026-04-01",
+      "provider_update": "2026-06-18",
       "note": "Grand-total TIC foreign portfolio holdings of U.S. long-term and short-term Treasury securities."
     },
     {
@@ -12290,6 +12477,23 @@
     },
     {
       "dashboard": "United States",
+      "indicator_id": "cpi_mom",
+      "label": "Headline CPI Inflation, MoM",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · 0.47 % m/m",
+      "latest_date": "2026-05-01",
+      "age_basis_date": "2026-05-31",
+      "age_days": 19,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / BLS",
+      "series_id": "CPIAUCSL",
+      "provider_update": "2026-06-10",
+      "note": "Month-on-month CPI inflation derived from the seasonally adjusted CPI index; closer to release-day inflation momentum than the YoY rate."
+    },
+    {
+      "dashboard": "United States",
       "indicator_id": "core_cpi_inflation",
       "label": "Core CPI Inflation",
       "frequency": "monthly",
@@ -12304,6 +12508,23 @@
       "series_id": "CPILFESL",
       "provider_update": "2026-06-10",
       "note": "Core CPI excludes food and energy."
+    },
+    {
+      "dashboard": "United States",
+      "indicator_id": "core_cpi_mom",
+      "label": "Core CPI Inflation, MoM",
+      "frequency": "monthly",
+      "latest_observation": "2026-05-01 · 0.21 % m/m",
+      "latest_date": "2026-05-01",
+      "age_basis_date": "2026-05-31",
+      "age_days": 19,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / BLS",
+      "series_id": "CPILFESL",
+      "provider_update": "2026-06-10",
+      "note": "Month-on-month core CPI derived from the seasonally adjusted core CPI index; useful for near-term inflation persistence."
     },
     {
       "dashboard": "United States",
@@ -12389,6 +12610,23 @@
       "series_id": "PCEPILFE",
       "provider_update": "2026-05-28",
       "note": "Core PCE is the Fed's preferred inflation gauge."
+    },
+    {
+      "dashboard": "United States",
+      "indicator_id": "core_pce_mom",
+      "label": "Core PCE Inflation, MoM",
+      "frequency": "monthly",
+      "latest_observation": "2026-04-01 · 0.24 % m/m",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-04-30",
+      "age_days": 50,
+      "threshold_days": 150,
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "FRED / BEA",
+      "series_id": "PCEPILFE",
+      "provider_update": "2026-05-28",
+      "note": "Month-on-month core PCE inflation derived from the Fed's preferred price index; revision-prone but essential for current inflation momentum."
     },
     {
       "dashboard": "United States",
@@ -12744,7 +12982,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "DRTSCILM",
-      "provider_update": "2026-05-04",
+      "provider_update": "2026-04-01",
       "note": "Net percentage of banks tightening C&I loan standards for large and middle-market firms."
     },
     {
@@ -12761,7 +12999,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "TDSP",
-      "provider_update": "2026-03-20",
+      "provider_update": "2025-10-01",
       "note": "Debt-service burden modernizes the report's household balance-sheet lens."
     },
     {
@@ -12778,7 +13016,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "TNWBSHNO",
-      "provider_update": "2026-06-11",
+      "provider_update": "2026-01-01",
       "note": "Household net worth is a modern flow-of-funds balance-sheet anchor."
     },
     {
@@ -12795,7 +13033,7 @@
       "quality_status": "watch",
       "source": "FRED / US Treasury",
       "series_id": "DGS10",
-      "provider_update": "2026-06-18",
+      "provider_update": "2026-06-17",
       "note": "Daily 10-year constant-maturity Treasury yield; short history is intentional to keep the page light."
     },
     {
@@ -12812,7 +13050,7 @@
       "quality_status": "watch",
       "source": "FRED / US Treasury",
       "series_id": "DGS2",
-      "provider_update": "2026-06-18",
+      "provider_update": "2026-06-17",
       "note": "Daily 2-year constant-maturity Treasury yield; policy-sensitive front-end proxy."
     },
     {
@@ -12863,7 +13101,7 @@
       "quality_status": "watch",
       "source": "FRED / ICE BofA",
       "series_id": "BAMLH0A0HYM2",
-      "provider_update": "2026-06-18",
+      "provider_update": "2026-06-17",
       "note": "FRED mirror of ICE BofA high-yield OAS; history available through FRED starts in 2023."
     },
     {
@@ -12880,7 +13118,7 @@
       "quality_status": "watch",
       "source": "FRED / ICE BofA",
       "series_id": "BAMLC0A0CM",
-      "provider_update": "2026-06-18",
+      "provider_update": "2026-06-17",
       "note": "FRED mirror of ICE BofA corporate OAS; check ICE/BofA source for release-day work."
     },
     {
@@ -12897,7 +13135,7 @@
       "quality_status": "watch",
       "source": "FRED / Chicago Fed",
       "series_id": "NFCI",
-      "provider_update": "2026-06-17",
+      "provider_update": "2026-06-12",
       "note": "Positive values indicate tighter-than-average financial conditions."
     },
     {
@@ -12914,7 +13152,7 @@
       "quality_status": "watch",
       "source": "FRED / CBOE",
       "series_id": "VIXCLS",
-      "provider_update": "2026-06-18",
+      "provider_update": "2026-06-17",
       "note": "Equity volatility is not in the original GS statistics guide, but is central to modern financial conditions."
     },
     {
@@ -12948,7 +13186,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "BUSLOANS",
-      "provider_update": "2026-05-01",
+      "provider_update": "2026-06-18",
       "note": "C&I loan growth captures bank credit impulse to firms."
     },
     {
@@ -12965,7 +13203,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "TOTLL",
-      "provider_update": "2026-06-10",
+      "provider_update": "2026-06-18",
       "note": "Weekly bank credit can be volatile; use alongside SLOOS and delinquency rates."
     },
     {
@@ -12982,7 +13220,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "DPSACBW027SBOG",
-      "provider_update": "2026-06-10",
+      "provider_update": "2026-06-18",
       "note": "Deposit growth helps track banking-system funding stress after the 2023 banking episode."
     },
     {
@@ -12999,7 +13237,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "DRALACBN",
-      "provider_update": "2026-01-01",
+      "provider_update": "2026-05-19",
       "note": "All-bank loan delinquency rate; lagging but useful for credit-cycle stress."
     },
     {
@@ -13016,7 +13254,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "DRCCLACBS",
-      "provider_update": "2026-01-01",
+      "provider_update": "2026-05-19",
       "note": "Credit-card delinquency is a clean consumer-credit stress gauge."
     },
     {
@@ -13033,7 +13271,7 @@
       "quality_status": "watch",
       "source": "FRED / US Treasury",
       "series_id": "DFII10",
-      "provider_update": "2026-06-17",
+      "provider_update": "2026-06-18",
       "note": "Real-yield channel for discount rates and financial conditions."
     },
     {
@@ -13050,7 +13288,7 @@
       "quality_status": "watch",
       "source": "FRED / US Treasury",
       "series_id": "DGS30",
-      "provider_update": "2026-06-17",
+      "provider_update": "2026-06-18",
       "note": "Long-end Treasury rate anchors mortgage convexity, duration, and fiscal term-premium narratives."
     },
     {
@@ -13067,7 +13305,7 @@
       "quality_status": "watch",
       "source": "FRED / US Treasury",
       "series_id": "DGS3MO",
-      "provider_update": "2026-06-17",
+      "provider_update": "2026-06-18",
       "note": "Front-end Treasury yield cross-checks Fed expectations and bill-market stress."
     },
     {
@@ -13084,7 +13322,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "FEDFUNDS",
-      "provider_update": "2026-05-01",
+      "provider_update": "2026-06-01",
       "note": "Monthly effective fed funds rate."
     },
     {
@@ -13101,7 +13339,7 @@
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "DFF",
-      "provider_update": "2026-06-17",
+      "provider_update": "2026-06-18",
       "note": "Daily effective fed funds rate for policy plumbing."
     },
     {
@@ -13109,16 +13347,16 @@
       "indicator_id": "fed_target_upper",
       "label": "Fed Target Range Upper Bound",
       "frequency": "daily",
-      "latest_observation": "2026-06-18 · 3.75 %",
-      "latest_date": "2026-06-18",
-      "age_basis_date": "2026-06-18",
-      "age_days": 1,
+      "latest_observation": "2026-06-19 · 3.75 %",
+      "latest_date": "2026-06-19",
+      "age_basis_date": "2026-06-19",
+      "age_days": 0,
       "threshold_days": 14,
       "freshness_status": "current",
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "DFEDTARU",
-      "provider_update": "2026-06-18",
+      "provider_update": "2026-06-19",
       "note": "Upper bound of the post-2008 target range."
     },
     {
@@ -13126,16 +13364,16 @@
       "indicator_id": "fed_target_lower",
       "label": "Fed Target Range Lower Bound",
       "frequency": "daily",
-      "latest_observation": "2026-06-18 · 3.50 %",
-      "latest_date": "2026-06-18",
-      "age_basis_date": "2026-06-18",
-      "age_days": 1,
+      "latest_observation": "2026-06-19 · 3.50 %",
+      "latest_date": "2026-06-19",
+      "age_basis_date": "2026-06-19",
+      "age_days": 0,
       "threshold_days": 14,
       "freshness_status": "current",
       "quality_status": "watch",
       "source": "FRED / Federal Reserve",
       "series_id": "DFEDTARL",
-      "provider_update": "2026-06-18",
+      "provider_update": "2026-06-19",
       "note": "Lower bound of the post-2008 target range."
     },
     {

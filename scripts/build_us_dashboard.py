@@ -43,12 +43,15 @@ OUT_HTML = OUTPUT / "us_2026Q2_v1.html"
 SUMMARY_JSON = OUTPUT / "us_dashboard_summary.json"
 SUMMARY_KEY_IDS = [
     "real_gdp_growth",
+    "retail_sales_mom",
     "retail_sales_growth",
+    "real_pce_mom",
     "real_pce_growth",
     "housing_starts",
     "nonfarm_payrolls_change",
     "unemployment_rate",
     "cpi_inflation",
+    "core_cpi_mom",
     "core_cpi_inflation",
     "core_pce_inflation",
     "mortgage_30y_rate",

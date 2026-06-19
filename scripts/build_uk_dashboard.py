@@ -49,7 +49,7 @@ OUT_HTML = OUTPUT / "uk_2026Q2_v1.html"
 SUMMARY_JSON = OUTPUT / "uk_dashboard_summary.json"
 SUMMARY_KEY_IDS = [
     "real_gdp_qoq",
-    "monthly_gdp_index",
+    "monthly_gdp_mom",
     "retail_sales_yoy",
     "unemployment_rate",
     "paye_payrolled_employees",
@@ -305,10 +305,10 @@ def _apply_transform(observations: list[dict[str, Any]], spec: dict[str, Any]) -
             for item in observations
             if item.get("value") is not None
         ]
-    if transform not in {"yoy", "qoq_pct"}:
+    if transform not in {"yoy", "qoq_pct", "mom_pct"}:
         return observations
     frequency = str(spec.get("frequency", "")).lower()
-    periods = 1 if transform == "qoq_pct" else 12 if frequency == "monthly" else 4 if frequency == "quarterly" else 1
+    periods = 1 if transform in {"qoq_pct", "mom_pct"} else 12 if frequency == "monthly" else 4 if frequency == "quarterly" else 1
     transformed: list[dict[str, Any]] = []
     for index, item in enumerate(observations):
         if index < periods:

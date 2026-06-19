@@ -1,7 +1,7 @@
 {
   "file": "us_2026Q2_v1.html",
-  "generated": "2026-06-19T09:48:07.132341+00:00",
-  "charts": 155,
+  "generated": "2026-06-19T15:54:07.691344+00:00",
+  "charts": 164,
   "source_groups": 27,
   "data_gaps": 7,
   "low_confidence": 0,
@@ -20,6 +20,18 @@
       "quality_status": "watch"
     },
     {
+      "id": "retail_sales_mom",
+      "label_en": "Retail Sales Growth, MoM",
+      "label_zh": "零售销售环比",
+      "latest_date": "2026-05-01",
+      "latest_value": 0.8809356490312226,
+      "latest_display": "0.88 % m/m",
+      "frequency": "monthly",
+      "source_name": "FRED / Census",
+      "series": "RSAFS",
+      "quality_status": "watch"
+    },
+    {
       "id": "retail_sales_growth",
       "label_en": "Retail Sales Growth",
       "label_zh": "零售销售同比",
@@ -29,6 +41,18 @@
       "frequency": "monthly",
       "source_name": "FRED / Census",
       "series": "RSAFS",
+      "quality_status": "watch"
+    },
+    {
+      "id": "real_pce_mom",
+      "label_en": "Real PCE Growth, MoM",
+      "label_zh": "实际PCE环比",
+      "latest_date": "2026-04-01",
+      "latest_value": 0.10730829075777937,
+      "latest_display": "0.11 % m/m",
+      "frequency": "monthly",
+      "source_name": "FRED / BEA",
+      "series": "PCEC96",
       "quality_status": "watch"
     },
     {
@@ -92,6 +116,18 @@
       "quality_status": "watch"
     },
     {
+      "id": "core_cpi_mom",
+      "label_en": "Core CPI Inflation, MoM",
+      "label_zh": "核心CPI环比",
+      "latest_date": "2026-05-01",
+      "latest_value": 0.20809544962627768,
+      "latest_display": "0.21 % m/m",
+      "frequency": "monthly",
+      "source_name": "FRED / BLS",
+      "series": "CPILFESL",
+      "quality_status": "watch"
+    },
+    {
       "id": "core_cpi_inflation",
       "label_en": "Core CPI Inflation",
       "label_zh": "核心CPI通胀",
@@ -143,7 +179,7 @@
       "id": "fed_target_upper",
       "label_en": "Fed Target Range Upper Bound",
       "label_zh": "联邦基金目标区间上限",
-      "latest_date": "2026-06-18",
+      "latest_date": "2026-06-19",
       "latest_value": 3.75,
       "latest_display": "3.75 %",
       "frequency": "daily",
