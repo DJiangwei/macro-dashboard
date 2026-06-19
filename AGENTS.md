@@ -2,6 +2,10 @@
 
 Use this file as the first stop for any coding agent working in this repo.
 
+Before making dashboard changes, also read `PROJECT_LESSONS.md`. It records
+hard-earned operating lessons about publishing, source hierarchy, chart
+transform logic, freshness checks, and secret handling.
+
 ## Environment
 
 - Do not rely on the machine's global Python.
