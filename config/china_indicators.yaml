@@ -869,6 +869,38 @@ indicators:
     frequency: "monthly"
     caveat_en: "Monthly M1 growth helps track deposit composition and corporate cash-cycle pressure; AKShare schema should be monitored."
     caveat_zh: "月度M1增速可用于观察存款结构和企业现金循环压力；需持续监控AKShare字段稳定性。"
+  - id: financial_institution_deposits_stock_akshare
+    section: money_credit
+    label_en: "Financial Institution Deposits"
+    label_zh: "金融机构本外币存款余额"
+    unit: "CNY tn"
+    transform: "cny_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_wbck
+    date_column: "月份"
+    value_column: "累计"
+    series: "macro_china_wbck:累计"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://data.eastmoney.com/cjsj/wbck.html"
+    frequency: "monthly"
+    caveat_en: "Aggregate RMB+FX deposit stock via AKShare's Eastmoney wrapper, converted from CNY 100mn to CNY tn; useful for broad banking-system liquidity, but not a sector split."
+    caveat_zh: "AKShare东方财富包装的金融机构本外币存款余额，由亿元转换为万亿元；可观察银行体系广义流动性，但不是分部门存款。"
+  - id: financial_institution_deposits_flow_akshare
+    section: money_credit
+    label_en: "New Deposits, Monthly"
+    label_zh: "当月新增本外币存款"
+    unit: "CNY tn"
+    transform: "cny_100mn_to_trn"
+    fetcher: akshare_table
+    function: macro_china_wbck
+    date_column: "月份"
+    value_column: "当月"
+    series: "macro_china_wbck:当月"
+    source_name: "AKShare / Eastmoney Data Center"
+    source_url: "https://data.eastmoney.com/cjsj/wbck.html"
+    frequency: "monthly"
+    caveat_en: "Monthly change in aggregate RMB+FX deposits via Eastmoney/AKShare; seasonal swings around Lunar New Year and fiscal-payment dates can dominate the signal."
+    caveat_zh: "东方财富/AKShare包装的本外币存款当月新增；春节和财政收支时点会显著影响月度波动。"
   - id: new_rmb_loans_akshare
     section: money_credit
     label_en: "New RMB Loans"
@@ -1343,6 +1375,22 @@ indicators:
     frequency: "daily"
     caveat_en: "High-frequency agricultural wholesale price index via AKShare; useful as a food-price nowcast, but not a direct CPI food component."
     caveat_zh: "AKShare包装的高频农产品批发价格指数；可作食品价格 nowcast，但不是CPI食品分项本身。"
+  - id: vegetable_basket_price_index_akshare
+    section: prices
+    label_en: "Vegetable Basket 200 Price Index"
+    label_zh: "菜篮子产品批发价格200指数"
+    unit: "Index"
+    fetcher: akshare_table
+    function: macro_china_vegetable_basket
+    timeout_seconds: 35
+    date_column: "日期"
+    value_column: "最新值"
+    series: "macro_china_vegetable_basket:最新值"
+    source_name: "AKShare / Agricultural Product Wholesale Price"
+    source_url: "https://www.akshare.xyz/data/macro/macro.html"
+    frequency: "daily"
+    caveat_en: "High-frequency vegetable-basket wholesale price index via AKShare; useful for food-price nowcasting, but it is not the official CPI food sub-index."
+    caveat_zh: "AKShare包装的高频菜篮子批发价格指数；适合作为食品价格 nowcast，但不是官方CPI食品分项。"
   - id: commodity_price_index_akshare
     section: prices
     label_en: "Commodity Price Index"
@@ -1597,13 +1645,13 @@ data_gaps:
   - section: money_credit
     item_en: "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates"
     item_zh: "PBOC月度人民币贷款、存款、社融流量/存量、LPR/MLF/RRR与银行间利率"
-    status_en: "M2, M1, new RMB loans, TSF flow/components, LPR, RRR, daily SHIBOR, 3M interbank, selected PBC balance-sheet items, and PBC latest cards are charted; TSF stock, deposits by sector, MLF, and full PBOC-native history remain open."
-    status_zh: "页面已加入M2、M1、新增人民币贷款、社融增量/分项、LPR、存准率、日度SHIBOR、3个月银行间利率、部分PBC资产负债表项目和PBC最新卡片；社融存量、分部门存款、MLF和完整PBOC原生历史仍待补充。"
+    status_en: "M2, M1, aggregate RMB+FX deposits, new RMB loans, TSF flow/components, LPR, RRR, daily SHIBOR, 3M interbank, selected PBC balance-sheet items, and PBC latest cards are charted; TSF stock, deposits by sector, MLF, and full PBOC-native history remain open."
+    status_zh: "页面已加入M2、M1、本外币存款总量、新增人民币贷款、社融增量/分项、LPR、存准率、日度SHIBOR、3个月银行间利率、部分PBC资产负债表项目和PBC最新卡片；社融存量、分部门存款、MLF和完整PBOC原生历史仍待补充。"
   - section: prices
     item_en: "NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices"
     item_zh: "NBS月度CPI、核心CPI、PPI、农产品价格与进出口价格指数"
-    status_en: "Headline CPI/PPI, CPI MoM, urban/rural CPI, enterprise-goods prices, and high-frequency agricultural, commodity, and energy indexes are charted through AKShare; core CPI, services CPI, detailed food categories, retail-price index, and trade-price indices remain open."
-    status_zh: "页面已通过AKShare接入CPI/PPI、CPI环比、城乡CPI、企业商品价格，以及高频农产品、商品和能源价格指数；核心CPI、服务CPI、食品细项、零售价格指数和进出口价格指数仍待补充。"
+    status_en: "Headline CPI/PPI, CPI MoM, urban/rural CPI, enterprise-goods prices, and high-frequency agricultural, vegetable-basket, commodity, and energy indexes are charted through AKShare; core CPI, services CPI, detailed food categories, retail-price index, and trade-price indices remain open."
+    status_zh: "页面已通过AKShare接入CPI/PPI、CPI环比、城乡CPI、企业商品价格，以及高频农产品、菜篮子、商品和能源价格指数；核心CPI、服务CPI、食品细项、零售价格指数和进出口价格指数仍待补充。"
   - section: government_finance
     item_en: "Detailed fiscal expenditure, central/local split, land-sales revenue, LGFV and quasi-fiscal debt"
     item_zh: "财政支出细项、中央/地方拆分、土地出让收入、LGFV与准财政债务"

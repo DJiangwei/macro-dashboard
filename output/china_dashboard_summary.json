@@ -1,8 +1,8 @@
 {
   "file": "china_2026Q2_v1.html",
-  "generated": "2026-06-18T12:46:16.379430+00:00",
-  "charts": 102,
-  "source_groups": 27,
+  "generated": "2026-06-19T09:46:33.463176+00:00",
+  "charts": 105,
+  "source_groups": 28,
   "data_gaps": 8,
   "low_confidence": 0,
   "usd_cny_latest": "6.8130 (2026-06-18)",
@@ -125,6 +125,30 @@
       "frequency": "monthly",
       "source_name": "AKShare / Eastmoney Data Center",
       "series": "macro_china_money_supply:M2同比增长",
+      "quality_status": "watch"
+    },
+    {
+      "id": "financial_institution_deposits_stock_akshare",
+      "label_en": "Financial Institution Deposits",
+      "label_zh": "金融机构本外币存款余额",
+      "latest_date": "2026-05-01",
+      "latest_value": 352.384817,
+      "latest_display": "352 CNY tn",
+      "frequency": "monthly",
+      "source_name": "AKShare / Eastmoney Data Center",
+      "series": "macro_china_wbck:累计",
+      "quality_status": "watch"
+    },
+    {
+      "id": "vegetable_basket_price_index_akshare",
+      "label_en": "Vegetable Basket 200 Price Index",
+      "label_zh": "菜篮子产品批发价格200指数",
+      "latest_date": "2026-06-18",
+      "latest_value": 112.57,
+      "latest_display": "113 Index",
+      "frequency": "daily",
+      "source_name": "AKShare / Agricultural Product Wholesale Price",
+      "series": "macro_china_vegetable_basket:最新值",
       "quality_status": "watch"
     },
     {

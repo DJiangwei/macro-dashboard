@@ -322,7 +322,7 @@ indicators:
     label_en: "Housing Starts, England SA"
     label_zh: "英格兰住房开工，季调"
     unit: "dwellings"
-    fetcher: govuk_xlsx_table
+    fetcher: govuk_ods_table
     source_name: "MHCLG / GOV.UK"
     source_url: "https://www.gov.uk/government/statistical-data-sets/live-tables-on-house-building"
     distribution_name_contains: "Table 222"
@@ -338,7 +338,7 @@ indicators:
     label_en: "Housing Completions, England SA"
     label_zh: "英格兰住房竣工，季调"
     unit: "dwellings"
-    fetcher: govuk_xlsx_table
+    fetcher: govuk_ods_table
     source_name: "MHCLG / GOV.UK"
     source_url: "https://www.gov.uk/government/statistical-data-sets/live-tables-on-house-building"
     distribution_name_contains: "Table 222"

@@ -38,6 +38,8 @@ SUMMARY_KEY_IDS = [
     "customs_exports_yoy_akshare",
     "usd_cny_midpoint",
     "m2_yoy_akshare",
+    "financial_institution_deposits_stock_akshare",
+    "vegetable_basket_price_index_akshare",
     "pbc_total_assets_akshare",
     "pbc_reserve_money_akshare",
     "cpi_yoy_akshare",
