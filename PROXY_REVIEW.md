@@ -10,7 +10,7 @@ Current public-dashboard proxy baseline after dropping the remaining proxy-only 
 |---|---:|---:|---:|
 | Hungary | 0 | 110 | 0.0% |
 | Poland | 0 | 113 | 0.0% |
-| Czechia | 0 | 110 | 0.0% |
+| Czechia | 0 | 109 | 0.0% |
 | Romania | 0 | 109 | 0.0% |
 
 Proxy union: 0 rendered indicators.
@@ -29,6 +29,7 @@ Proxy union: 0 rendered indicators.
 
 | Indicator | Countries dropped | Rationale | Future restore condition |
 |---|---|---|---|
+| `ara_metric` | CZ | IMF ARA coverage is unavailable for Czechia in the current public adapter, which otherwise fell back to transparent proxy data. | Restore only with a reusable IMF ARA, CNB, or manually validated reserve-adequacy source that is explicitly not a proxy fill. |
 | `breakeven_5y5y` | HU, PL, CZ, RO | Inflation-swap/linker curve data is typically vendor-controlled; the public adapter fell back to proxy data. | Restore only with a reusable linker/swap curve source or a licensed vendor feed. |
 | `equity_fwd_pe` | HU, CZ, RO | Forward earnings valuation is vendor/analyst-consensus based; public exchange coverage is uneven. | Restore with exchange factsheets, index provider aggregate P/E snapshots, or a licensed consensus feed. |
 | `equity_pb` | HU, CZ, RO | P/B may appear in exchange/index factsheets, but no robust public adapter is wired for these countries. | Restore with exchange/index-provider aggregate P/B snapshots. |

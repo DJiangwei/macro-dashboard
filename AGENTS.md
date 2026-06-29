@@ -40,7 +40,9 @@ prints each generated v4 country page's chart-shell count, confirms no empty cha
 containers remain, and runs `git diff --check`.
 
 `make proxy-report` prints the transparent proxy count and proxy indicator list
-for each CEE-4 country.
+for each CEE-4 country from generated archive/catalog artifacts. Use
+`make proxy-report-live` only when you explicitly want to refetch the full CE4
+pipeline.
 
 Before replacing or deleting proxy indicators, read `PROXY_REVIEW.md`. It
 records the current keep/replace/reframe/manual/remove recommendations so agents

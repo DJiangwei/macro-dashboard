@@ -29,6 +29,7 @@ from zipfile import ZipFile
 import requests
 import yaml
 
+from dashboard_summary_utils import build_summary_metadata
 from build_china_dashboard import (  # Reuse the data-first page shell.
     CSS,
     _chart_html,
@@ -1386,6 +1387,7 @@ def build() -> Path:
         "key_series_latest": _key_series_latest(charted, SUMMARY_KEY_IDS),
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
     }
+    summary.update(build_summary_metadata(config, series_list))
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
     inject_output_index(summary)
     if not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):

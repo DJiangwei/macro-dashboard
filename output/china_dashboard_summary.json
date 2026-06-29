@@ -1,11 +1,11 @@
 {
   "file": "china_2026Q2_v1.html",
-  "generated": "2026-06-19T15:52:40.733644+00:00",
+  "generated": "2026-06-28T23:02:26.306919+00:00",
   "charts": 105,
   "source_groups": 28,
   "data_gaps": 8,
   "low_confidence": 0,
-  "usd_cny_latest": "6.8130 (2026-06-18)",
+  "usd_cny_latest": "6.8166 (2026-06-26)",
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -48,7 +48,7 @@
       "label_en": "Commercial Housing Sales Value",
       "label_zh": "商品房销售额",
       "latest_date": "2026-05-01",
-      "latest_value": 636.6,
+      "latest_value": 636.571,
       "latest_display": "637 CNY bn",
       "frequency": "monthly",
       "source_name": "Eastmoney Data Center / NBS-style industry index",
@@ -60,7 +60,7 @@
       "label_en": "Real Estate Development Investment, YTD",
       "label_zh": "房地产开发投资累计值",
       "latest_date": "2026-05-01",
-      "latest_value": 3035.6,
+      "latest_value": 3035.568,
       "latest_display": "3,036 CNY bn",
       "frequency": "monthly",
       "source_name": "Eastmoney Data Center / NBS-style industry index",
@@ -107,9 +107,9 @@
       "id": "usd_cny_midpoint",
       "label_en": "USD/CNY Central Parity",
       "label_zh": "美元兑人民币中间价",
-      "latest_date": "2026-06-18",
-      "latest_value": 6.813,
-      "latest_display": "6.81 CNY per USD",
+      "latest_date": "2026-06-26",
+      "latest_value": 6.816599999999999,
+      "latest_display": "6.82 CNY per USD",
       "frequency": "daily",
       "source_name": "SAFE",
       "series": "SAFE RMBQuery USD column",
@@ -143,9 +143,9 @@
       "id": "vegetable_basket_price_index_akshare",
       "label_en": "Vegetable Basket 200 Price Index",
       "label_zh": "菜篮子产品批发价格200指数",
-      "latest_date": "2026-06-18",
-      "latest_value": 112.57,
-      "latest_display": "113 Index",
+      "latest_date": "2026-06-26",
+      "latest_value": 110.9,
+      "latest_display": "111 Index",
       "frequency": "daily",
       "source_name": "AKShare / Agricultural Product Wholesale Price",
       "series": "macro_china_vegetable_basket:最新值",
@@ -200,5 +200,406 @@
       "quality_status": "watch"
     }
   ],
-  "unavailable": []
+  "unavailable": [],
+  "data_gaps_detail": [
+    {
+      "section": "activity_production",
+      "item_en": "NBS monthly industrial production, services output index, electricity consumption, rail freight, industrial profits, and PMI series",
+      "item_zh": "NBS月度工业增加值、服务业生产指数、电力消费、铁路货运、工业企业利润与PMI序列",
+      "status_en": "AKShare-wrapped industrial value added, official PMI, electricity consumption, enterprise boom, logistics prosperity, civil-aviation load factors, and global freight are charted; NBS-native services output, rail freight, profits, and direct EasyQuery remain adapter gaps.",
+      "status_zh": "页面已加入AKShare包装的工业增加值、官方PMI、用电量、企业景气、物流景气、民航负载率和全球航运指标；NBS原生服务业生产、铁路货运、工业利润和EasyQuery直连仍是adapter缺口。"
+    },
+    {
+      "section": "investment",
+      "item_en": "NBS fixed asset investment by sector and project pipeline",
+      "item_zh": "NBS固定资产投资分项与项目施工链条",
+      "status_en": "Headline FAI growth and a daily construction-materials index are charted through AKShare/Eastmoney; sector-level FAI and project-pipeline details remain open.",
+      "status_zh": "页面已通过AKShare/东方财富接入固定资产投资总量增速和日度建材指数；行业FAI和项目施工链条细项仍待补充。"
+    },
+    {
+      "section": "real_estate",
+      "item_en": "NBS property investment, floor-space starts/completions/sales, 70-city price index, land transactions, and inventory",
+      "item_zh": "NBS房地产开发投资、开工/竣工/销售面积、70城房价、土地成交与库存",
+      "status_en": "BIS residential property aggregates, Beijing/Shanghai AKShare city price samples, Eastmoney structured commercial-housing sales value, development-investment YTD, and the real-estate climate index are charted. AKShare/Eastmoney were traversed for inventory, sales-area, floor-space starts/completions, and land-sale series; no reusable API-backed indicator was found yet, and NBS EasyQuery is currently blocked by DNS/WAF in this environment.",
+      "status_zh": "页面已加入BIS住宅价格总量、AKShare北京/上海城市房价样本、东方财富结构化商品房销售额、房地产开发投资累计值和国房景气指数。已遍历AKShare/东方财富寻找库存、销售面积、开工/竣工和土地成交序列；目前尚未发现可复用API指标，且本环境下NBS EasyQuery受DNS/WAF限制暂不可用。"
+    },
+    {
+      "section": "consumption",
+      "item_en": "NBS retail sales, online retail sales, household survey, auto sales, and consumer confidence",
+      "item_zh": "NBS社零、网上零售、居民调查、汽车销售与消费者信心",
+      "status_en": "Headline retail-sales growth, consumer confidence/expectations, and CPCA passenger-vehicle/NEV retail gauges are charted; online retail and household survey details remain open.",
+      "status_zh": "页面已接入社零总量增速、消费者信心/预期，以及乘联会乘用车和新能源车零售指标；网上零售和居民调查细项仍待补充。"
+    },
+    {
+      "section": "external",
+      "item_en": "SAFE quarterly BOP, FDI flow/stock, external debt, and customs partner/product details",
+      "item_zh": "SAFE季度国际收支、FDI流量/存量、外债，以及海关伙伴国/商品细项",
+      "status_en": "Customs export/import values, growth rates, trade balance, CPCA passenger-vehicle exports, reserves, FX fixings, spot USD/CNY, and REER are charted; BOP detail, fresh FDI, external debt, and partner/product customs breakdowns still require stable official adapters.",
+      "status_zh": "页面已加入海关进出口金额、同比、贸易差额、乘联会乘用车出口、外储、汇率中间价、美元兑人民币即期和实际有效汇率；国际收支细项、新鲜FDI、外债和海关伙伴国/商品拆分仍需稳定官方adapter。"
+    },
+    {
+      "section": "money_credit",
+      "item_en": "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates",
+      "item_zh": "PBOC月度人民币贷款、存款、社融流量/存量、LPR/MLF/RRR与银行间利率",
+      "status_en": "M2, M1, aggregate RMB+FX deposits, new RMB loans, TSF flow/components, LPR, RRR, daily SHIBOR, 3M interbank, selected PBC balance-sheet items, and PBC latest cards are charted; TSF stock, deposits by sector, MLF, and full PBOC-native history remain open.",
+      "status_zh": "页面已加入M2、M1、本外币存款总量、新增人民币贷款、社融增量/分项、LPR、存准率、日度SHIBOR、3个月银行间利率、部分PBC资产负债表项目和PBC最新卡片；社融存量、分部门存款、MLF和完整PBOC原生历史仍待补充。"
+    },
+    {
+      "section": "prices",
+      "item_en": "NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices",
+      "item_zh": "NBS月度CPI、核心CPI、PPI、农产品价格与进出口价格指数",
+      "status_en": "Headline CPI/PPI, CPI MoM, urban/rural CPI, enterprise-goods prices, and high-frequency agricultural, vegetable-basket, commodity, and energy indexes are charted through AKShare; core CPI, services CPI, detailed food categories, retail-price index, and trade-price indices remain open.",
+      "status_zh": "页面已通过AKShare接入CPI/PPI、CPI环比、城乡CPI、企业商品价格，以及高频农产品、菜篮子、商品和能源价格指数；核心CPI、服务CPI、食品细项、零售价格指数和进出口价格指数仍待补充。"
+    },
+    {
+      "section": "government_finance",
+      "item_en": "Detailed fiscal expenditure, central/local split, land-sales revenue, LGFV and quasi-fiscal debt",
+      "item_zh": "财政支出细项、中央/地方拆分、土地出让收入、LGFV与准财政债务",
+      "status_en": "Fiscal revenue growth, quarterly tax receipts, IMF general-government balance, and debt are charted; expenditure detail, land finance, and quasi-fiscal perimeter remain open.",
+      "status_zh": "页面已加入财政收入增速、季度税收收入、IMF广义政府余额和债务；财政支出细项、土地财政和准财政边界仍待补充。"
+    }
+  ],
+  "source_health": {
+    "source_groups": 28,
+    "sources": [
+      {
+        "source_name": "AKShare / Eastmoney Data Center",
+        "charts": 38
+      },
+      {
+        "source_name": "World Bank WDI",
+        "charts": 21
+      },
+      {
+        "source_name": "Eastmoney Data Center / NBS-style industry index",
+        "charts": 5
+      },
+      {
+        "source_name": "AKShare / China Passenger Car Association",
+        "charts": 4
+      },
+      {
+        "source_name": "AKShare / Sina Finance / PBC Balance Sheet",
+        "charts": 4
+      },
+      {
+        "source_name": "AKShare / Civil Aviation Load Factor",
+        "charts": 2
+      },
+      {
+        "source_name": "AKShare / Exchange Market Statistics",
+        "charts": 2
+      },
+      {
+        "source_name": "AKShare / National Tax Receipts",
+        "charts": 2
+      },
+      {
+        "source_name": "AKShare / PBC RRR Announcements",
+        "charts": 2
+      },
+      {
+        "source_name": "AKShare / PBC-SAFE Reserve Table",
+        "charts": 2
+      },
+      {
+        "source_name": "AKShare / SHIBOR",
+        "charts": 2
+      },
+      {
+        "source_name": "FRED / BIS Residential Property Price Database",
+        "charts": 2
+      },
+      {
+        "source_name": "FRED / OECD",
+        "charts": 2
+      },
+      {
+        "source_name": "IMF WEO",
+        "charts": 2
+      },
+      {
+        "source_name": "SAFE",
+        "charts": 2
+      },
+      {
+        "source_name": "AKShare / Agricultural Product Wholesale Price",
+        "charts": 1
+      },
+      {
+        "source_name": "AKShare / Agricultural Wholesale Price Index",
+        "charts": 1
+      },
+      {
+        "source_name": "AKShare / China Federation of Logistics & Purchasing",
+        "charts": 1
+      },
+      {
+        "source_name": "AKShare / Commodity Price Index",
+        "charts": 1
+      },
+      {
+        "source_name": "AKShare / Eastmoney Construction Materials Index",
+        "charts": 1
+      },
+      {
+        "source_name": "AKShare / Energy Price Index",
+        "charts": 1
+      },
+      {
+        "source_name": "AKShare / Shanghai Stock Exchange Margin Data",
+        "charts": 1
+      },
+      {
+        "source_name": "AKShare / Shenzhen Stock Exchange Margin Data",
+        "charts": 1
+      },
+      {
+        "source_name": "AKShare / Sina Finance",
+        "charts": 1
+      },
+      {
+        "source_name": "FRED / BIS Effective Exchange Rate",
+        "charts": 1
+      },
+      {
+        "source_name": "FRED / Federal Reserve H.10",
+        "charts": 1
+      },
+      {
+        "source_name": "FRED / IMF IFS",
+        "charts": 1
+      },
+      {
+        "source_name": "World Bank WDI / ILO estimate",
+        "charts": 1
+      }
+    ],
+    "quality_counts": {
+      "watch": 105
+    },
+    "unavailable_count": 0
+  },
+  "freshness": {
+    "as_of_date": "2026-06-28",
+    "counts": {
+      "current": 102,
+      "projection": 2,
+      "stale": 1
+    },
+    "latest_historical_date": "2026-06-28",
+    "attention": [
+      {
+        "id": "real_estate_climate_index_eastmoney",
+        "label_en": "Real Estate Climate Index",
+        "latest_date": "2025-12-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2025-12-31",
+        "age_days": 179,
+        "threshold_days": 150,
+        "quality_status": "watch",
+        "source_name": "Eastmoney Data Center / NBS-style industry index",
+        "series": "RPT_INDUSTRY_INDEX:EMM00121987:INDICATOR_VALUE",
+        "transform": "level"
+      }
+    ]
+  },
+  "transform_audit": {
+    "counts": {
+      "cny_100mn_to_bn": 1,
+      "cny_100mn_to_trn": 12,
+      "cny_10k_to_bn": 1,
+      "cny_yuan_to_trn": 2,
+      "index_100_to_yoy": 4,
+      "level": 75,
+      "people_billion": 1,
+      "usd_100mn_to_trn": 1,
+      "usd_mn_to_trn": 1,
+      "usd_thousand_to_bn": 3,
+      "usd_trn": 4
+    },
+    "non_level": [
+      {
+        "id": "nominal_gdp_usd",
+        "label_en": "Nominal GDP",
+        "transform": "usd_trn",
+        "unit": "USD"
+      },
+      {
+        "id": "beijing_new_home_price_yoy_akshare",
+        "label_en": "Beijing New Home Prices, YoY",
+        "transform": "index_100_to_yoy",
+        "unit": "%"
+      },
+      {
+        "id": "shanghai_new_home_price_yoy_akshare",
+        "label_en": "Shanghai New Home Prices, YoY",
+        "transform": "index_100_to_yoy",
+        "unit": "%"
+      },
+      {
+        "id": "beijing_existing_home_price_yoy_akshare",
+        "label_en": "Beijing Existing Home Prices, YoY",
+        "transform": "index_100_to_yoy",
+        "unit": "%"
+      },
+      {
+        "id": "shanghai_existing_home_price_yoy_akshare",
+        "label_en": "Shanghai Existing Home Prices, YoY",
+        "transform": "index_100_to_yoy",
+        "unit": "%"
+      },
+      {
+        "id": "commercial_housing_sales_value_eastmoney",
+        "label_en": "Commercial Housing Sales Value",
+        "transform": "cny_10k_to_bn",
+        "unit": "CNY bn"
+      },
+      {
+        "id": "real_estate_development_investment_ytd_eastmoney",
+        "label_en": "Real Estate Development Investment, YTD",
+        "transform": "cny_100mn_to_bn",
+        "unit": "CNY bn"
+      },
+      {
+        "id": "exports_goods_services",
+        "label_en": "Exports of Goods & Services",
+        "transform": "usd_trn",
+        "unit": "USD"
+      },
+      {
+        "id": "imports_goods_services",
+        "label_en": "Imports of Goods & Services",
+        "transform": "usd_trn",
+        "unit": "USD"
+      },
+      {
+        "id": "customs_exports_value_akshare",
+        "label_en": "Customs Exports",
+        "transform": "usd_thousand_to_bn",
+        "unit": "USD bn"
+      },
+      {
+        "id": "customs_imports_value_akshare",
+        "label_en": "Customs Imports",
+        "transform": "usd_thousand_to_bn",
+        "unit": "USD bn"
+      },
+      {
+        "id": "customs_trade_balance_akshare",
+        "label_en": "Customs Trade Balance",
+        "transform": "usd_thousand_to_bn",
+        "unit": "USD bn"
+      },
+      {
+        "id": "fx_reserves",
+        "label_en": "Foreign Exchange Reserves",
+        "transform": "usd_trn",
+        "unit": "USD"
+      },
+      {
+        "id": "fx_reserves_akshare",
+        "label_en": "FX Reserves",
+        "transform": "usd_100mn_to_trn",
+        "unit": "USD"
+      },
+      {
+        "id": "fx_reserves_ex_gold_monthly",
+        "label_en": "FX Reserves ex Gold",
+        "transform": "usd_mn_to_trn",
+        "unit": "USD"
+      },
+      {
+        "id": "financial_institution_deposits_stock_akshare",
+        "label_en": "Financial Institution Deposits",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "financial_institution_deposits_flow_akshare",
+        "label_en": "New Deposits, Monthly",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "new_rmb_loans_akshare",
+        "label_en": "New RMB Loans",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "tsf_flow_akshare",
+        "label_en": "Total Social Financing Flow",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "tsf_rmb_loans_akshare",
+        "label_en": "TSF RMB Loan Component",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "pbc_total_assets_akshare",
+        "label_en": "PBC Total Assets",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "pbc_fx_assets_akshare",
+        "label_en": "PBC Foreign-Exchange Assets",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "pbc_claims_on_depository_corps_akshare",
+        "label_en": "PBC Claims on Depository Corporations",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "pbc_reserve_money_akshare",
+        "label_en": "PBC Reserve Money",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "a_share_market_cap_akshare",
+        "label_en": "A-share Market Capitalization",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "a_share_trading_value_akshare",
+        "label_en": "A-share Trading Value",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "sh_margin_balance_akshare",
+        "label_en": "Shanghai Margin Balance",
+        "transform": "cny_yuan_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "sz_margin_balance_akshare",
+        "label_en": "Shenzhen Margin Balance",
+        "transform": "cny_yuan_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "total_population",
+        "label_en": "Total Population",
+        "transform": "people_billion",
+        "unit": "people"
+      },
+      {
+        "id": "tax_receipts_ytd_akshare",
+        "label_en": "Tax Receipts YTD",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      }
+    ]
+  }
 }

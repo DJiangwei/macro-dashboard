@@ -139,3 +139,6 @@ gh api repos/DJiangwei/macro-dashboard/pages/builds/latest --jq '.status + " " +
   cache-busting query string.
 - If a source cannot be automated reliably, document the gap and either keep a
   transparent quality flag or drop the indicator if it is not decision-useful.
+- Use `make proxy-report` for a fast offline proxy check based on generated
+  artifacts. Use `make proxy-report-live` only when validating the live CE4 data
+  pipeline, because it can block on slow upstream APIs.

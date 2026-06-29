@@ -890,6 +890,16 @@ def _legacy_chart_id(section_id: str, indicator_id: str, chart_map: dict[str, st
     return None
 
 
+def _legacy_chart_is_proxy(chart_block: str | None) -> bool:
+    """Return true when a legacy chart block is a transparent proxy artifact."""
+    haystack = str(chart_block or "").lower()
+    return (
+        "transparent proxy fill" in haystack
+        or "proxy:" in haystack
+        or 'quality-chip low_confidence">proxy' in haystack
+    )
+
+
 def _indicator_frame(frame, country_code: str, indicator_id: str):
     if not frame:
         return []
@@ -1074,6 +1084,8 @@ def _render_section_charts(section_id: str, country_code: str, chart_map: dict[s
         if is_dropped_proxy_indicator(country_code, spec.indicator_id):
             continue
         legacy_id = _legacy_chart_id(section_id, spec.indicator_id, chart_map)
+        if legacy_id and _legacy_chart_is_proxy(chart_map.get(legacy_id)):
+            legacy_id = None
         if spec.indicator_id in prefer_canonical_ids:
             legacy_id = None
         canonical_id = _canonical_chart_id(section_id, spec.indicator_id, idx + 1)
@@ -3070,12 +3082,13 @@ def build_v4(country_code: str) -> Path:
             chart_map[m.group(1)] = cb
 
     coverage = DataPipeline().validate_coverage(canonical_frame)
-    source_chart_ids = {
-        spec.indicator_id
-        for spec in INDICATOR_MANIFEST_48
-        if not is_dropped_proxy_indicator(country_code, spec.indicator_id)
-        if _legacy_chart_id(spec.section_id, spec.indicator_id, chart_map)
-    }
+    source_chart_ids = set()
+    for spec in INDICATOR_MANIFEST_48:
+        if is_dropped_proxy_indicator(country_code, spec.indicator_id):
+            continue
+        legacy_id = _legacy_chart_id(spec.section_id, spec.indicator_id, chart_map)
+        if legacy_id and not _legacy_chart_is_proxy(chart_map.get(legacy_id)):
+            source_chart_ids.add(spec.indicator_id)
     adapter_real_ids = {
         row.get("indicator_id")
         for row in canonical_frame

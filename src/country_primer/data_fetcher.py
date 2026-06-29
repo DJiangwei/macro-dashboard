@@ -253,6 +253,7 @@ DROPPED_PROXY_INDICATORS_BY_COUNTRY: dict[str, frozenset[str]] = {
         "breakeven_5y5y",
     }),
     "CZ": frozenset({
+        "ara_metric",
         "breakeven_5y5y",
         "equity_fwd_pe",
         "equity_pb",
@@ -2451,9 +2452,12 @@ class NationalCBFetcher(BaseFetcher):
                     continue
                 for raw_date, raw_value in zip(header[1:], short_term[1:]):
                     date = _cnb_day_month_year_to_iso(raw_date)
-                    if not date or date < "2022-01-01":
+                    if not date or date < "2022-01-01" or not str(raw_value).strip():
                         continue
-                    observations[date] = _parse_cnb_number(raw_value)
+                    try:
+                        observations[date] = _parse_cnb_number(raw_value)
+                    except ValueError:
+                        continue
         return sorted(observations.items())
 
     def _cnb_reserves_usd(self) -> dict[str, float]:

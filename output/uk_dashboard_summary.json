@@ -1,11 +1,11 @@
 {
   "file": "uk_2026Q2_v1.html",
-  "generated": "2026-06-19T15:52:46.807690+00:00",
+  "generated": "2026-06-28T23:02:33.675489+00:00",
   "charts": 92,
   "source_groups": 11,
   "data_gaps": 8,
   "low_confidence": 0,
-  "bank_rate_latest": "3.75% (2026-06-18)",
+  "bank_rate_latest": "3.75% (2026-06-25)",
   "key_series_latest": [
     {
       "id": "real_gdp_qoq",
@@ -95,7 +95,7 @@
       "id": "bank_rate",
       "label_en": "Bank Rate",
       "label_zh": "英国央行Bank Rate",
-      "latest_date": "2026-06-18",
+      "latest_date": "2026-06-25",
       "latest_value": 3.75,
       "latest_display": "3.75 %",
       "frequency": "daily",
@@ -107,8 +107,8 @@
       "id": "sonia_rate",
       "label_en": "SONIA",
       "label_zh": "SONIA隔夜利率",
-      "latest_date": "2026-06-17",
-      "latest_value": 3.7303,
+      "latest_date": "2026-06-24",
+      "latest_value": 3.729,
       "latest_display": "3.73 %",
       "frequency": "daily",
       "source_name": "Bank of England IADB",
@@ -140,5 +140,247 @@
       "quality_status": "watch"
     }
   ],
-  "unavailable": []
+  "unavailable": [],
+  "data_gaps_detail": [
+    {
+      "section": "monthly_output",
+      "item_en": "GS UK CAI, GS-MAP, GS Surprise Index, and official GS FCI",
+      "item_zh": "GS UK CAI、GS-MAP、GS Surprise Index与官方GS FCI",
+      "status_en": "Proprietary GS products. This page charts public components only, including ONS monthly GDP MoM, industrial/services output YoY, and retail-sales YoY/MoM derived from official level series.",
+      "status_zh": "GS专有产品；本页只绘制公开可复跑组成项，包括由官方水平序列派生的ONS月度GDP环比、工业/服务产出同比，以及零售销售同比/环比。"
+    },
+    {
+      "section": "monthly_output",
+      "item_en": "Manufacturing, construction, services, and composite PMI",
+      "item_zh": "制造业、建筑业、服务业与综合PMI",
+      "status_en": "Important in the GS framework, but not yet wired because S&P Global PMI history is vendor-controlled.",
+      "status_zh": "在GS框架中很重要，但S&P Global PMI历史数据受供应商控制，暂未接入。"
+    },
+    {
+      "section": "monthly_output",
+      "item_en": "CBI Distributive Trades, CBI Industrial Trends, BCC QES, BRC/KPMG Retail Sales Monitor",
+      "item_zh": "CBI分销贸易、CBI工业趋势、BCC QES、BRC/KPMG零售销售监测",
+      "status_en": "Survey sources need separate adapters and licensing checks.",
+      "status_zh": "调查源需要单独adapter并核验授权。"
+    },
+    {
+      "section": "housing_construction",
+      "item_en": "Nationwide, Halifax, Rightmove, Hometrack, and RICS",
+      "item_zh": "Nationwide、Halifax、Rightmove、Hometrack与RICS",
+      "status_en": "ONS/HMLR UK HPI, HMRC property transactions, MHCLG starts/completions, ONS construction output level and YoY growth, and BoE mortgage approvals are now charted; vendor house-price and sentiment sources still need licensing/API validation.",
+      "status_zh": "ONS/HMLR英国HPI、HMRC物业成交、MHCLG开工/竣工、ONS建筑产出水平和同比、BoE按揭批准已接入；供应商房价和情绪数据仍需授权/API验证。"
+    },
+    {
+      "section": "labour_market",
+      "item_en": "Pay settlements",
+      "item_zh": "工资协议",
+      "status_en": "ONS inactivity, redundancy level/rate, vacancies, hours, employment, unemployment, AWE, and ONS/HMRC PAYE RTI employees/pay/flows are now charted; pay-settlement series still need stable release-table mappings or survey/licensing checks.",
+      "status_zh": "ONS经济不活跃率、裁员人数/裁员率、职位空缺、工时、就业、失业、AWE，以及ONS/HMRC PAYE RTI雇员/薪资/流动已接入；工资协议序列仍需稳定发布表映射或调查/授权核验。"
+    },
+    {
+      "section": "prices",
+      "item_en": "Inflation expectations surveys and index-linked gilt breakevens",
+      "item_zh": "通胀预期调查与指数挂钩国债隐含通胀",
+      "status_en": "ONS headline/core/services/goods/food/household-energy CPI, CPIH and owner-occupiers' housing costs, RPI/RPIX, PPI output inflation derived from the index, and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings.",
+      "status_zh": "ONS整体/核心/服务/商品/食品/家庭能源CPI、CPIH与自有住房成本、RPI/RPIX、由指数派生的PPI产出同比，以及DESNZ汽油/柴油泵价已接入；通胀预期和盈亏平衡通胀仍需稳定且授权安全的映射。"
+    },
+    {
+      "section": "monetary_financial",
+      "item_en": "Trends in Lending, Credit Conditions Survey, HEW, fuller quoted-rate matrix, and stale OECD 3M interbank mirror",
+      "item_zh": "Trends in Lending、信贷条件调查、住房权益提取、更完整报价利率矩阵，以及滞后的OECD 3M银行间利率镜像",
+      "status_en": "BoE IADB now covers Bank Rate, SONIA, sterling, 5Y/10Y nominal gilt par yields, M4, consumer credit, mortgage approvals, and one quoted-rate series. The lagged FRED/OECD 3M interbank mirror is intentionally not charted; use SONIA/Bank Rate for the short-rate channel until a validated BoE or market-data 3M term source is wired.",
+      "status_zh": "BoE IADB已覆盖Bank Rate、SONIA、英镑、5年/10年名义国债平价收益率、M4、消费信贷、按揭批准和一条报价利率。滞后的FRED/OECD 3M银行间利率镜像不会作为图表展示；在接入经验证的BoE或市场数据3M期限利率前，短端利率渠道使用SONIA/Bank Rate。"
+    },
+    {
+      "section": "fiscal_policy",
+      "item_en": "OBR forecast vintages and deeper debt instrument breakdowns",
+      "item_zh": "OBR预测版本与更深层债务工具细分",
+      "status_en": "Monthly PSNB, PSNCR, PSND, PSNFL, PSND ex BoE, receipts, expenditure, income/wealth taxes, social benefits, and TME are charted from ONS; core March 2026 OBR forecast rows for borrowing, PSND ex BoE, debt interest, and effective interest rates are now charted. Full vintage archive and instrument-level history still need deeper adapters.",
+      "status_zh": "月度PSNB、PSNCR、PSND、PSNFL、不含BoE的PSND、收入、支出、所得与财富税、社会福利和TME已接入ONS；March 2026 OBR核心预测行，包括借款、不含BoE净债务、债务利息和有效利率，已绘图。完整预测版本库和工具级历史仍需更深adapter。"
+    }
+  ],
+  "source_health": {
+    "source_groups": 11,
+    "sources": [
+      {
+        "source_name": "ONS",
+        "charts": 53
+      },
+      {
+        "source_name": "Bank of England IADB",
+        "charts": 11
+      },
+      {
+        "source_name": "ONS / HMRC RTI",
+        "charts": 7
+      },
+      {
+        "source_name": "OBR EFO March 2026",
+        "charts": 4
+      },
+      {
+        "source_name": "FRED / BIS",
+        "charts": 3
+      },
+      {
+        "source_name": "FRED / IMF",
+        "charts": 3
+      },
+      {
+        "source_name": "FRED / OECD",
+        "charts": 3
+      },
+      {
+        "source_name": "DESNZ / GOV.UK",
+        "charts": 2
+      },
+      {
+        "source_name": "HMRC / GOV.UK",
+        "charts": 2
+      },
+      {
+        "source_name": "MHCLG / GOV.UK",
+        "charts": 2
+      },
+      {
+        "source_name": "ONS / HM Land Registry",
+        "charts": 2
+      }
+    ],
+    "quality_counts": {
+      "watch": 92
+    },
+    "unavailable_count": 0
+  },
+  "freshness": {
+    "as_of_date": "2026-06-28",
+    "counts": {
+      "current": 88,
+      "projection": 4
+    },
+    "latest_historical_date": "2026-06-25",
+    "attention": []
+  },
+  "transform_audit": {
+    "counts": {
+      "decimal_to_pct": 1,
+      "divide_1bn": 1,
+      "divide_1k": 3,
+      "divide_1m": 1,
+      "level": 74,
+      "mom_pct": 2,
+      "qoq_pct": 4,
+      "yoy": 6
+    },
+    "non_level": [
+      {
+        "id": "private_consumption_qoq",
+        "label_en": "Real Private Consumption",
+        "transform": "qoq_pct",
+        "unit": "%"
+      },
+      {
+        "id": "gfcf_qoq",
+        "label_en": "Real Gross Fixed Capital Formation",
+        "transform": "qoq_pct",
+        "unit": "%"
+      },
+      {
+        "id": "monthly_gdp_mom",
+        "label_en": "Monthly GDP Growth, MoM",
+        "transform": "mom_pct",
+        "unit": "% m/m"
+      },
+      {
+        "id": "industrial_production_yoy",
+        "label_en": "Industrial Production Growth, YoY",
+        "transform": "yoy",
+        "unit": "% y/y"
+      },
+      {
+        "id": "services_output_yoy",
+        "label_en": "Services Output Growth, YoY",
+        "transform": "yoy",
+        "unit": "% y/y"
+      },
+      {
+        "id": "retail_sales_yoy",
+        "label_en": "Retail Sales Volume Growth, YoY",
+        "transform": "yoy",
+        "unit": "% y/y"
+      },
+      {
+        "id": "retail_sales_mom",
+        "label_en": "Retail Sales Volume Growth, MoM",
+        "transform": "mom_pct",
+        "unit": "% m/m"
+      },
+      {
+        "id": "construction_output_yoy",
+        "label_en": "Construction Output Growth, YoY",
+        "transform": "yoy",
+        "unit": "% y/y"
+      },
+      {
+        "id": "exports_qoq",
+        "label_en": "Real Exports",
+        "transform": "qoq_pct",
+        "unit": "%"
+      },
+      {
+        "id": "imports_qoq",
+        "label_en": "Real Imports",
+        "transform": "qoq_pct",
+        "unit": "%"
+      },
+      {
+        "id": "paye_payrolled_employees",
+        "label_en": "PAYE Payrolled Employees",
+        "transform": "divide_1m",
+        "unit": "mn"
+      },
+      {
+        "id": "paye_payrolled_employees_mom_change",
+        "label_en": "PAYE Employees Monthly Change",
+        "transform": "divide_1k",
+        "unit": "000s"
+      },
+      {
+        "id": "paye_aggregate_pay",
+        "label_en": "PAYE Aggregate Pay",
+        "transform": "divide_1bn",
+        "unit": "GBP bn/month"
+      },
+      {
+        "id": "paye_employee_inflows",
+        "label_en": "PAYE Employee Inflows",
+        "transform": "divide_1k",
+        "unit": "000s"
+      },
+      {
+        "id": "paye_employee_outflows",
+        "label_en": "PAYE Employee Outflows",
+        "transform": "divide_1k",
+        "unit": "000s"
+      },
+      {
+        "id": "paye_median_pay_growth",
+        "label_en": "PAYE Median Pay Growth",
+        "transform": "decimal_to_pct",
+        "unit": "%"
+      },
+      {
+        "id": "rpix_yoy",
+        "label_en": "RPIX Inflation",
+        "transform": "yoy",
+        "unit": "%"
+      },
+      {
+        "id": "producer_prices",
+        "label_en": "PPI Output Inflation",
+        "transform": "yoy",
+        "unit": "% y/y"
+      }
+    ]
+  }
 }

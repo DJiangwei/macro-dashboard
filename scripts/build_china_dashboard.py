@@ -21,6 +21,8 @@ from typing import Any
 import requests
 import yaml
 
+from dashboard_summary_utils import build_summary_metadata
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config" / "china_indicators.yaml"
@@ -1157,6 +1159,7 @@ def build() -> Path:
         "key_series_latest": _key_series_latest(charted, SUMMARY_KEY_IDS),
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
     }
+    summary.update(build_summary_metadata(config, series_list))
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
     inject_index(summary)
     if not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):
