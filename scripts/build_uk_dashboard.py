@@ -29,7 +29,7 @@ from zipfile import ZipFile
 import requests
 import yaml
 
-from dashboard_summary_utils import build_summary_metadata
+from dashboard_summary_utils import build_summary_metadata, write_canonical_data_first_frame
 from build_china_dashboard import (  # Reuse the data-first page shell.
     CSS,
     _chart_html,
@@ -48,6 +48,7 @@ CONFIG_PATH = ROOT / "config" / "uk_indicators.yaml"
 OUTPUT = ROOT / "output"
 OUT_HTML = OUTPUT / "uk_2026Q2_v1.html"
 SUMMARY_JSON = OUTPUT / "uk_dashboard_summary.json"
+CANONICAL_JSON = OUTPUT / "uk_canonical_frame.json"
 SUMMARY_KEY_IDS = [
     "real_gdp_qoq",
     "monthly_gdp_mom",
@@ -1387,6 +1388,7 @@ def build() -> Path:
         "key_series_latest": _key_series_latest(charted, SUMMARY_KEY_IDS),
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
     }
+    summary["canonical_frame"] = write_canonical_data_first_frame(CANONICAL_JSON, "UK", series_list)
     summary.update(build_summary_metadata(config, series_list))
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
     inject_output_index(summary)

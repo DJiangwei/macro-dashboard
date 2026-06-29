@@ -107,6 +107,21 @@ silently hiding it.
 `config/us_indicators.yaml` via their dedicated scripts, then updates
 `output/index.html` so the archive page stays synchronized.
 
+The same build now refreshes the machine-readable workbench layer used by the
+home/archive pages:
+
+- `output/*_canonical_frame.json` exports compact data-first records for China,
+  UK, and US with the shared schema `[country, date, indicator_id, value]` plus
+  source, quality, frequency, unit, and transform metadata.
+- `output/macro_workbench_summary.json` aggregates country cards, regime
+  signals, cross-country heatmap values, data-gap priorities, and phase
+  coverage in one JSON artifact for future agents or front-end views.
+- `output/release_monitor.json`, `output/what_changed.json`, and
+  `output/data_gap_backlog.json` expose freshness, release attention, and
+  remaining official-data gaps without scraping HTML.
+- `output/dashboard_archive_summary.json` links the archive cards back to the
+  workbench so `index.html` and `output/index.html` stay data-synchronized.
+
 The China page uses AKShare for a China-native high-frequency layer including
 CPI/PPI headline and momentum, urban/rural CPI, enterprise-goods prices,
 agricultural/commodity/energy price indexes, PMI, industrial value added,
@@ -222,6 +237,7 @@ Country_Primer/
 ├── scripts/
 │   ├── doctor_env.py       # environment self-check
 │   ├── build_china_dashboard.py # China chart/data page from public APIs
+│   ├── macro_workbench.py  # archive/workbench JSON + regime/heatmap layer
 │   ├── publish_dashboard.sh # one-command build/validate/commit/push/check
 │   └── uv_project.sh       # uv wrapper that keeps cache/python inside repo
 ├── AGENTS.md               # operating guide for coding agents

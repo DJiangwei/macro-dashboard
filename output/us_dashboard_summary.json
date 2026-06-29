@@ -1,11 +1,11 @@
 {
   "file": "us_2026Q2_v1.html",
-  "generated": "2026-06-29T01:18:48.199342+00:00",
+  "generated": "2026-06-29T21:25:06.948322+00:00",
   "charts": 164,
   "source_groups": 27,
   "data_gaps": 7,
   "low_confidence": 0,
-  "fed_funds_latest": "3.63% (2026-06-25)",
+  "fed_funds_latest": "3.63% (2026-06-26)",
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -167,7 +167,7 @@
       "id": "daily_fed_funds",
       "label_en": "Daily Federal Funds Rate",
       "label_zh": "日度联邦基金利率",
-      "latest_date": "2026-06-25",
+      "latest_date": "2026-06-26",
       "latest_value": 3.63,
       "latest_display": "3.63 %",
       "frequency": "daily",
@@ -179,7 +179,7 @@
       "id": "fed_target_upper",
       "label_en": "Fed Target Range Upper Bound",
       "label_zh": "联邦基金目标区间上限",
-      "latest_date": "2026-06-28",
+      "latest_date": "2026-06-29",
       "latest_value": 3.75,
       "latest_display": "3.75 %",
       "frequency": "daily",
@@ -201,6 +201,24 @@
     }
   ],
   "unavailable": [],
+  "canonical_frame": {
+    "schema_version": "data-first-canonical-v1",
+    "columns": [
+      "country",
+      "date",
+      "indicator_id",
+      "value",
+      "unit",
+      "frequency",
+      "source_name",
+      "series",
+      "transform",
+      "quality_status",
+      "quality_notes"
+    ],
+    "file": "us_canonical_frame.json",
+    "records": 113274
+  },
   "data_gaps_detail": [
     {
       "section": "gs_market_indexes",
@@ -372,7 +390,8 @@
   "freshness": {
     "as_of_date": "2026-06-29",
     "counts": {
-      "current": 164
+      "current": 163,
+      "scheduled_policy": 1
     },
     "latest_historical_date": "2026-06-29",
     "attention": []
@@ -812,5 +831,22 @@
         "unit": "% y/y"
       }
     ]
+  },
+  "canonical_schema": {
+    "schema_version": "data-first-canonical-v1",
+    "columns": [
+      "country",
+      "date",
+      "indicator_id",
+      "value",
+      "unit",
+      "frequency",
+      "source_name",
+      "series",
+      "transform",
+      "quality_status",
+      "quality_notes"
+    ],
+    "charted_series": 164
   }
 }

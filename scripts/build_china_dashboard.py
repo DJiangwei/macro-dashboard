@@ -21,7 +21,7 @@ from typing import Any
 import requests
 import yaml
 
-from dashboard_summary_utils import build_summary_metadata
+from dashboard_summary_utils import build_summary_metadata, write_canonical_data_first_frame
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +29,7 @@ CONFIG_PATH = ROOT / "config" / "china_indicators.yaml"
 OUTPUT = ROOT / "output"
 OUT_HTML = OUTPUT / "china_2026Q2_v1.html"
 SUMMARY_JSON = OUTPUT / "china_dashboard_summary.json"
+CANONICAL_JSON = OUTPUT / "china_canonical_frame.json"
 SUMMARY_KEY_IDS = [
     "real_gdp_growth",
     "industrial_value_added_yoy_akshare",
@@ -1159,6 +1160,7 @@ def build() -> Path:
         "key_series_latest": _key_series_latest(charted, SUMMARY_KEY_IDS),
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
     }
+    summary["canonical_frame"] = write_canonical_data_first_frame(CANONICAL_JSON, "CN", series_list)
     summary.update(build_summary_metadata(config, series_list))
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
     inject_index(summary)

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-29T20:51:40.140993+00:00",
+  "generated": "2026-06-29T21:25:37.649788+00:00",
   "source": "Generated from CE4 DataPipeline plus output/*_dashboard_summary.json files.",
   "cards": [
     {
@@ -19,7 +19,72 @@
       "secondary_label": "10Y yield",
       "secondary": "5.65%",
       "quality": "19 verified · 87 watch · 4 low",
-      "status": "clean"
+      "status": "clean",
+      "signals": {
+        "growth": {
+          "id": "real_gdp_yoy",
+          "label": "Real GDP YoY",
+          "value": 1.7,
+          "display": "1.70 % YoY",
+          "date": "2026-01-01",
+          "source": "Eurostat",
+          "quality_status": "verified"
+        },
+        "inflation": {
+          "id": "cpi_yoy",
+          "label": "Headline CPI",
+          "value": 2.3,
+          "display": "2.30 % YoY",
+          "date": "2026-05-01",
+          "source": "Eurostat",
+          "quality_status": "verified"
+        },
+        "policy": {
+          "id": "policy_rate",
+          "label": "Policy rate",
+          "value": 6.25,
+          "display": "6.25 %",
+          "date": "2026-04-29",
+          "source": "Magyar Nemzeti Bank",
+          "quality_status": "verified"
+        },
+        "external": {
+          "id": "current_account_pct_gdp",
+          "label": "Current account/GDP",
+          "value": 1.58180029565553,
+          "display": "1.58 % GDP",
+          "date": "2024-12-31",
+          "source": "World Bank",
+          "quality_status": "verified"
+        },
+        "fiscal": {
+          "id": "fiscal_balance_pct_gdp",
+          "label": "Fiscal balance/GDP",
+          "value": -5.4954551584929,
+          "display": "-5.50 % GDP",
+          "date": "2026-12-31",
+          "source": "IMF Fiscal Monitor",
+          "quality_status": "verified"
+        },
+        "financial": {
+          "id": "credit_to_gdp_gap",
+          "label": "Credit-to-GDP gap",
+          "value": -7.2482,
+          "display": "-7.25 pp",
+          "date": "2025-12-31",
+          "source": "BIS Credit-to-GDP gaps",
+          "quality_status": "watch"
+        },
+        "property": {
+          "id": "house_price_index",
+          "label": "House price YoY",
+          "value": 21.2,
+          "display": "21.20 % YoY",
+          "date": "2025-10-01",
+          "source": "Eurostat",
+          "quality_status": "watch"
+        }
+      }
     },
     {
       "code": "PL",
@@ -38,7 +103,72 @@
       "secondary_label": "10Y yield",
       "secondary": "5.74%",
       "quality": "19 verified · 90 watch · 4 low",
-      "status": "clean"
+      "status": "clean",
+      "signals": {
+        "growth": {
+          "id": "real_gdp_yoy",
+          "label": "Real GDP YoY",
+          "value": 3.5,
+          "display": "3.50 % YoY",
+          "date": "2026-01-01",
+          "source": "Eurostat",
+          "quality_status": "verified"
+        },
+        "inflation": {
+          "id": "cpi_yoy",
+          "label": "Headline CPI",
+          "value": 3.3,
+          "display": "3.30 % YoY",
+          "date": "2026-05-01",
+          "source": "Eurostat",
+          "quality_status": "verified"
+        },
+        "policy": {
+          "id": "policy_rate",
+          "label": "Policy rate",
+          "value": 3.75,
+          "display": "3.75 %",
+          "date": "2026-05-06",
+          "source": "Narodowy Bank Polski",
+          "quality_status": "verified"
+        },
+        "external": {
+          "id": "current_account_pct_gdp",
+          "label": "Current account/GDP",
+          "value": 0.30454349270969,
+          "display": "0.30 % GDP",
+          "date": "2024-12-31",
+          "source": "World Bank",
+          "quality_status": "verified"
+        },
+        "fiscal": {
+          "id": "fiscal_balance_pct_gdp",
+          "label": "Fiscal balance/GDP",
+          "value": -6.7456378362575,
+          "display": "-6.75 % GDP",
+          "date": "2026-12-31",
+          "source": "IMF Fiscal Monitor",
+          "quality_status": "verified"
+        },
+        "financial": {
+          "id": "credit_to_gdp_gap",
+          "label": "Credit-to-GDP gap",
+          "value": -16.8492,
+          "display": "-16.85 pp",
+          "date": "2025-12-31",
+          "source": "BIS Credit-to-GDP gaps",
+          "quality_status": "watch"
+        },
+        "property": {
+          "id": "house_price_index",
+          "label": "House price YoY",
+          "value": 4.3,
+          "display": "4.30 % YoY",
+          "date": "2025-10-01",
+          "source": "Eurostat",
+          "quality_status": "watch"
+        }
+      }
     },
     {
       "code": "CZ",
@@ -57,7 +187,72 @@
       "secondary_label": "10Y yield",
       "secondary": "4.89%",
       "quality": "20 verified · 85 watch · 4 low",
-      "status": "clean"
+      "status": "clean",
+      "signals": {
+        "growth": {
+          "id": "real_gdp_yoy",
+          "label": "Real GDP YoY",
+          "value": 2.2,
+          "display": "2.20 % YoY",
+          "date": "2026-01-01",
+          "source": "Eurostat",
+          "quality_status": "verified"
+        },
+        "inflation": {
+          "id": "cpi_yoy",
+          "label": "Headline CPI",
+          "value": 1.8,
+          "display": "1.80 % YoY",
+          "date": "2026-05-01",
+          "source": "Eurostat",
+          "quality_status": "verified"
+        },
+        "policy": {
+          "id": "policy_rate",
+          "label": "Policy rate",
+          "value": 3.5,
+          "display": "3.50 %",
+          "date": "2026-05-07",
+          "source": "Czech National Bank",
+          "quality_status": "verified"
+        },
+        "external": {
+          "id": "current_account_pct_gdp",
+          "label": "Current account/GDP",
+          "value": 1.74244358000018,
+          "display": "1.74 % GDP",
+          "date": "2024-12-31",
+          "source": "World Bank",
+          "quality_status": "verified"
+        },
+        "fiscal": {
+          "id": "fiscal_balance_pct_gdp",
+          "label": "Fiscal balance/GDP",
+          "value": -2.2700243642605,
+          "display": "-2.27 % GDP",
+          "date": "2026-12-31",
+          "source": "IMF Fiscal Monitor",
+          "quality_status": "verified"
+        },
+        "financial": {
+          "id": "credit_to_gdp_gap",
+          "label": "Credit-to-GDP gap",
+          "value": -4.0614,
+          "display": "-4.06 pp",
+          "date": "2025-12-31",
+          "source": "BIS Credit-to-GDP gaps",
+          "quality_status": "watch"
+        },
+        "property": {
+          "id": "house_price_index",
+          "label": "House price YoY",
+          "value": 10.4,
+          "display": "10.40 % YoY",
+          "date": "2025-10-01",
+          "source": "Eurostat",
+          "quality_status": "watch"
+        }
+      }
     },
     {
       "code": "RO",
@@ -76,7 +271,72 @@
       "secondary_label": "10Y yield",
       "secondary": "6.17%",
       "quality": "19 verified · 85 watch · 5 low",
-      "status": "clean"
+      "status": "clean",
+      "signals": {
+        "growth": {
+          "id": "real_gdp_yoy",
+          "label": "Real GDP YoY",
+          "value": -1.1,
+          "display": "-1.10 % YoY",
+          "date": "2026-01-01",
+          "source": "Eurostat",
+          "quality_status": "verified"
+        },
+        "inflation": {
+          "id": "cpi_yoy",
+          "label": "Headline CPI",
+          "value": 9.7,
+          "display": "9.70 % YoY",
+          "date": "2026-05-01",
+          "source": "Eurostat",
+          "quality_status": "verified"
+        },
+        "policy": {
+          "id": "policy_rate",
+          "label": "Policy rate",
+          "value": 6.5,
+          "display": "6.50 %",
+          "date": "2026-05-15",
+          "source": "National Bank of Romania",
+          "quality_status": "verified"
+        },
+        "external": {
+          "id": "current_account_pct_gdp",
+          "label": "Current account/GDP",
+          "value": -8.15745555807555,
+          "display": "-8.16 % GDP",
+          "date": "2024-12-31",
+          "source": "World Bank",
+          "quality_status": "verified"
+        },
+        "fiscal": {
+          "id": "fiscal_balance_pct_gdp",
+          "label": "Fiscal balance/GDP",
+          "value": -6.2472695182672,
+          "display": "-6.25 % GDP",
+          "date": "2026-12-31",
+          "source": "IMF Fiscal Monitor",
+          "quality_status": "verified"
+        },
+        "financial": {
+          "id": "credit_to_gdp_gap",
+          "label": "Credit-to-GDP gap",
+          "value": -3.1801147087634867,
+          "display": "-3.18 pp",
+          "date": "2024-12-31",
+          "source": "World Bank WDI fallback",
+          "quality_status": "low_confidence"
+        },
+        "property": {
+          "id": "house_price_index",
+          "label": "House price YoY",
+          "value": 6.7,
+          "display": "6.70 % YoY",
+          "date": "2025-10-01",
+          "source": "Eurostat",
+          "quality_status": "watch"
+        }
+      }
     },
     {
       "code": "CN",
@@ -91,7 +351,7 @@
       "gaps_or_dropped": 8,
       "gaps_label": "Official data gaps",
       "headline_label": "Latest USD/CNY fixing",
-      "headline": "6.8166 (2026-06-26)",
+      "headline": "6.8175 (2026-06-29)",
       "secondary_label": "Source groups",
       "secondary": "28",
       "quality": "28 source groups · 0 low-confidence charts",
@@ -111,7 +371,7 @@
       "gaps_or_dropped": 8,
       "gaps_label": "Official data gaps",
       "headline_label": "Bank Rate",
-      "headline": "3.75% (2026-06-25)",
+      "headline": "3.75% (2026-06-26)",
       "secondary_label": "Source groups",
       "secondary": "11",
       "quality": "11 source groups · 0 low-confidence charts",
@@ -131,12 +391,19 @@
       "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
       "headline_label": "Fed funds",
-      "headline": "3.63% (2026-06-25)",
+      "headline": "3.63% (2026-06-26)",
       "secondary_label": "Source groups",
       "secondary": "27",
       "quality": "27 source groups · 0 low-confidence charts",
       "framework": "GS US statistics logic",
       "status": "clean"
     }
-  ]
+  ],
+  "workbench": {
+    "file": "macro_workbench_summary.json",
+    "release_monitor": "release_monitor.json",
+    "what_changed": "what_changed.json",
+    "data_gap_backlog": "data_gap_backlog.json",
+    "schema_version": "macro-workbench-v1"
+  }
 }

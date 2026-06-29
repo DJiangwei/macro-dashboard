@@ -1,0 +1,248 @@
+{
+  "generated": "2026-06-29T21:25:37.647393+00:00",
+  "items": [
+    {
+      "code": "CN",
+      "country": "China",
+      "section": "activity_production",
+      "item": "NBS monthly industrial production, services output index, electricity consumption, rail freight, industrial profits, and PMI series",
+      "status": "AKShare-wrapped industrial value added, official PMI, electricity consumption, enterprise boom, logistics prosperity, civil-aviation load factors, and global freight are charted; NBS-native services output, rail freight, profits, and direct EasyQuery remain adapter gaps.",
+      "priority": "high",
+      "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
+    },
+    {
+      "code": "CN",
+      "country": "China",
+      "section": "consumption",
+      "item": "NBS retail sales, online retail sales, household survey, auto sales, and consumer confidence",
+      "status": "Headline retail-sales growth, consumer confidence/expectations, and CPCA passenger-vehicle/NEV retail gauges are charted; online retail and household survey details remain open.",
+      "priority": "high",
+      "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
+    },
+    {
+      "code": "CN",
+      "country": "China",
+      "section": "investment",
+      "item": "NBS fixed asset investment by sector and project pipeline",
+      "status": "Headline FAI growth and a daily construction-materials index are charted through AKShare/Eastmoney; sector-level FAI and project-pipeline details remain open.",
+      "priority": "high",
+      "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
+    },
+    {
+      "code": "CN",
+      "country": "China",
+      "section": "prices",
+      "item": "NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices",
+      "status": "Headline CPI/PPI, CPI MoM, urban/rural CPI, enterprise-goods prices, and high-frequency agricultural, vegetable-basket, commodity, and energy indexes are charted through AKShare; core CPI, services CPI, detailed food categories, retail-price index, and trade-price indices remain open.",
+      "priority": "high",
+      "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
+    },
+    {
+      "code": "CN",
+      "country": "China",
+      "section": "real_estate",
+      "item": "NBS property investment, floor-space starts/completions/sales, 70-city price index, land transactions, and inventory",
+      "status": "BIS residential property aggregates, Beijing/Shanghai AKShare city price samples, Eastmoney structured commercial-housing sales value, development-investment YTD, and the real-estate climate index are charted. AKShare/Eastmoney were traversed for inventory, sales-area, floor-space starts/completions, and land-sale series; no reusable API-backed indicator was found yet, and NBS EasyQuery is currently blocked by DNS/WAF in this environment.",
+      "priority": "high",
+      "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
+    },
+    {
+      "code": "UK",
+      "country": "United Kingdom",
+      "section": "housing_construction",
+      "item": "Nationwide, Halifax, Rightmove, Hometrack, and RICS",
+      "status": "ONS/HMLR UK HPI, HMRC property transactions, MHCLG starts/completions, ONS construction output level and YoY growth, and BoE mortgage approvals are now charted; vendor house-price and sentiment sources still need licensing/API validation.",
+      "priority": "high",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "UK",
+      "country": "United Kingdom",
+      "section": "monetary_financial",
+      "item": "Trends in Lending, Credit Conditions Survey, HEW, fuller quoted-rate matrix, and stale OECD 3M interbank mirror",
+      "status": "BoE IADB now covers Bank Rate, SONIA, sterling, 5Y/10Y nominal gilt par yields, M4, consumer credit, mortgage approvals, and one quoted-rate series. The lagged FRED/OECD 3M interbank mirror is intentionally not charted; use SONIA/Bank Rate for the short-rate channel until a validated BoE or market-data 3M term source is wired.",
+      "priority": "high",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "UK",
+      "country": "United Kingdom",
+      "section": "monthly_output",
+      "item": "Manufacturing, construction, services, and composite PMI",
+      "status": "Important in the GS framework, but not yet wired because S&P Global PMI history is vendor-controlled.",
+      "priority": "high",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "UK",
+      "country": "United Kingdom",
+      "section": "prices",
+      "item": "Inflation expectations surveys and index-linked gilt breakevens",
+      "status": "ONS headline/core/services/goods/food/household-energy CPI, CPIH and owner-occupiers' housing costs, RPI/RPIX, PPI output inflation derived from the index, and DESNZ petrol/diesel pump prices are now charted; expectations and breakeven series still need stable license-safe mappings.",
+      "priority": "high",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "US",
+      "country": "United States",
+      "section": "external",
+      "item": "Detailed Treasury International Capital System flows",
+      "status": "Core TIC Treasury transactions and holdings are now charted via FRED; deeper country/security tables still need a Treasury TIC adapter if required.",
+      "priority": "high",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "US",
+      "country": "United States",
+      "section": "fed_policy",
+      "item": "FOMC statement language, minutes, transcripts, projections, and future Treasury auction calendar",
+      "status": "Completed Treasury auction quantities and bid-to-cover are now charted from FiscalData; text and future-calendar sources require separate NLP/calendar adapters.",
+      "priority": "high",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "US",
+      "country": "United States",
+      "section": "housing",
+      "item": "Pending Home Sales Index, NAHB Housing Market Index, mortgage applications",
+      "status": "Still not validated as license-safe public chart data. Public supply, price, stress, and listing-market gauges are charted, including Realtor.com active listings, pending listings, their YoY growth rates, and median days on market via FRED.",
+      "priority": "high",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "US",
+      "country": "United States",
+      "section": "production_orders",
+      "item": "ISM manufacturing/non-manufacturing, Chicago PMI, and Beige Book text",
+      "status": "National ISM/PMI and Beige Book remain adapter gaps; public regional Fed survey gauges are charted separately, and industrial production now includes both YoY and MoM release-style momentum.",
+      "priority": "high",
+      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
+    },
+    {
+      "code": "CN",
+      "country": "China",
+      "section": "external",
+      "item": "SAFE quarterly BOP, FDI flow/stock, external debt, and customs partner/product details",
+      "status": "Customs export/import values, growth rates, trade balance, CPCA passenger-vehicle exports, reserves, FX fixings, spot USD/CNY, and REER are charted; BOP detail, fresh FDI, external debt, and partner/product customs breakdowns still require stable official adapters.",
+      "priority": "medium",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "CN",
+      "country": "China",
+      "section": "government_finance",
+      "item": "Detailed fiscal expenditure, central/local split, land-sales revenue, LGFV and quasi-fiscal debt",
+      "status": "Fiscal revenue growth, quarterly tax receipts, IMF general-government balance, and debt are charted; expenditure detail, land finance, and quasi-fiscal perimeter remain open.",
+      "priority": "medium",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "CN",
+      "country": "China",
+      "section": "money_credit",
+      "item": "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates",
+      "status": "M2, M1, aggregate RMB+FX deposits, new RMB loans, TSF flow/components, LPR, RRR, daily SHIBOR, 3M interbank, selected PBC balance-sheet items, and PBC latest cards are charted; TSF stock, deposits by sector, MLF, and full PBOC-native history remain open.",
+      "priority": "medium",
+      "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
+    },
+    {
+      "code": "UK",
+      "country": "United Kingdom",
+      "section": "fiscal_policy",
+      "item": "OBR forecast vintages and deeper debt instrument breakdowns",
+      "status": "Monthly PSNB, PSNCR, PSND, PSNFL, PSND ex BoE, receipts, expenditure, income/wealth taxes, social benefits, and TME are charted from ONS; core March 2026 OBR forecast rows for borrowing, PSND ex BoE, debt interest, and effective interest rates are now charted. Full vintage archive and instrument-level history still need deeper adapters.",
+      "priority": "medium",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "UK",
+      "country": "United Kingdom",
+      "section": "labour_market",
+      "item": "Pay settlements",
+      "status": "ONS inactivity, redundancy level/rate, vacancies, hours, employment, unemployment, AWE, and ONS/HMRC PAYE RTI employees/pay/flows are now charted; pay-settlement series still need stable release-table mappings or survey/licensing checks.",
+      "priority": "medium",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "UK",
+      "country": "United Kingdom",
+      "section": "monthly_output",
+      "item": "CBI Distributive Trades, CBI Industrial Trends, BCC QES, BRC/KPMG Retail Sales Monitor",
+      "status": "Survey sources need separate adapters and licensing checks.",
+      "priority": "medium",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "CZ",
+      "country": "Czechia",
+      "section": "dropped_proxy_slots",
+      "item": "5 dropped proxy-only slots",
+      "status": "Restore only with reusable public or licensed non-proxy sources.",
+      "priority": "watch",
+      "source_hint": "Review PROXY_REVIEW.md and DATA_SOURCE_CATALOG.md before restoring."
+    },
+    {
+      "code": "HU",
+      "country": "Hungary",
+      "section": "dropped_proxy_slots",
+      "item": "4 dropped proxy-only slots",
+      "status": "Restore only with reusable public or licensed non-proxy sources.",
+      "priority": "watch",
+      "source_hint": "Review PROXY_REVIEW.md and DATA_SOURCE_CATALOG.md before restoring."
+    },
+    {
+      "code": "PL",
+      "country": "Poland",
+      "section": "dropped_proxy_slots",
+      "item": "1 dropped proxy-only slots",
+      "status": "Restore only with reusable public or licensed non-proxy sources.",
+      "priority": "watch",
+      "source_hint": "Review PROXY_REVIEW.md and DATA_SOURCE_CATALOG.md before restoring."
+    },
+    {
+      "code": "RO",
+      "country": "Romania",
+      "section": "dropped_proxy_slots",
+      "item": "5 dropped proxy-only slots",
+      "status": "Restore only with reusable public or licensed non-proxy sources.",
+      "priority": "watch",
+      "source_hint": "Review PROXY_REVIEW.md and DATA_SOURCE_CATALOG.md before restoring."
+    },
+    {
+      "code": "UK",
+      "country": "United Kingdom",
+      "section": "monthly_output",
+      "item": "GS UK CAI, GS-MAP, GS Surprise Index, and official GS FCI",
+      "status": "Proprietary GS products. This page charts public components only, including ONS monthly GDP MoM, industrial/services output YoY, and retail-sales YoY/MoM derived from official level series.",
+      "priority": "watch",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "US",
+      "country": "United States",
+      "section": "consumer",
+      "item": "Conference Board confidence, Redbook, ICSC/UBS, ABC Consumer Comfort, stale OECD consumer-confidence mirror",
+      "status": "Vendor-controlled, not yet mapped to a reproducible public endpoint, or stale in the public mirror. University of Michigan sentiment remains charted as the durable public confidence gauge; retail sales and real PCE now include both YoY and MoM public FRED-derived momentum, while the Weekly Economic Index is charted as a high-frequency activity composite.",
+      "priority": "watch",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "US",
+      "country": "United States",
+      "section": "employment",
+      "item": "Manpower, Challenger layoffs, Monster/help-wanted indexes; BED API quota fallback",
+      "status": "ADP private payrolls are charted from FRED. BLS BED gross job gains/losses use the public BLS API first and fall back to a checked-in last-good official cache when anonymous BLS quota is exhausted. Manpower, Challenger, and proprietary help-wanted sources remain vendor/licensing gaps.",
+      "priority": "watch",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "US",
+      "country": "United States",
+      "section": "gs_market_indexes",
+      "item": "GSFCI, GSAI, GSSI, GSRI",
+      "status": "Proprietary Goldman Sachs indicators; chart public components only.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    }
+  ]
+}

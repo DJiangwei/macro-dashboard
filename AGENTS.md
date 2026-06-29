@@ -37,7 +37,14 @@ make proxy-report
 
 `make validate` must pass before committing. It checks Python compilation,
 prints each generated v4 country page's chart-shell count, confirms no empty chart
-containers remain, and runs `git diff --check`.
+containers remain, validates the China/UK/US canonical data-frame exports,
+checks the macro workbench JSON artifacts, and runs `git diff --check`.
+
+`make build-v4` is the full synchronized build. It rebuilds CE4, China, UK, and
+US pages, then refreshes `DATA_SOURCE_CATALOG.md`, `DATA_FRESHNESS_AUDIT.md`,
+`output/freshness_audit.json`, `output/macro_workbench_summary.json`,
+`output/release_monitor.json`, `output/what_changed.json`,
+`output/data_gap_backlog.json`, and both archive entry points.
 
 `make proxy-report` prints the transparent proxy count and proxy indicator list
 for each CEE-4 country from generated archive/catalog artifacts. Use
@@ -59,6 +66,11 @@ make publish MSG="<clear message>"
 The publish script rebuilds, validates, commits, pushes, polls the GitHub Pages
 build when `gh` is available, and runs cache-busted online smoke tests. The work
 is not complete until the GitHub Pages URLs show the new content.
+
+The publish script intentionally stages the full repo after validation. Do not
+replace that with a narrow allow-list unless the allow-list includes the data
+catalog, freshness audit, archive summaries, canonical frames, and workbench
+JSON outputs; otherwise the live index can drift away from country pages.
 
 ## Indicator Manifest
 

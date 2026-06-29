@@ -1,11 +1,11 @@
 {
   "file": "china_2026Q2_v1.html",
-  "generated": "2026-06-28T23:02:26.306919+00:00",
+  "generated": "2026-06-29T21:23:19.647463+00:00",
   "charts": 105,
   "source_groups": 28,
   "data_gaps": 8,
   "low_confidence": 0,
-  "usd_cny_latest": "6.8166 (2026-06-26)",
+  "usd_cny_latest": "6.8175 (2026-06-29)",
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -107,8 +107,8 @@
       "id": "usd_cny_midpoint",
       "label_en": "USD/CNY Central Parity",
       "label_zh": "美元兑人民币中间价",
-      "latest_date": "2026-06-26",
-      "latest_value": 6.816599999999999,
+      "latest_date": "2026-06-29",
+      "latest_value": 6.8175,
       "latest_display": "6.82 CNY per USD",
       "frequency": "daily",
       "source_name": "SAFE",
@@ -143,9 +143,9 @@
       "id": "vegetable_basket_price_index_akshare",
       "label_en": "Vegetable Basket 200 Price Index",
       "label_zh": "菜篮子产品批发价格200指数",
-      "latest_date": "2026-06-26",
-      "latest_value": 110.9,
-      "latest_display": "111 Index",
+      "latest_date": "2026-06-29",
+      "latest_value": 110.22,
+      "latest_display": "110 Index",
       "frequency": "daily",
       "source_name": "AKShare / Agricultural Product Wholesale Price",
       "series": "macro_china_vegetable_basket:最新值",
@@ -201,6 +201,24 @@
     }
   ],
   "unavailable": [],
+  "canonical_frame": {
+    "schema_version": "data-first-canonical-v1",
+    "columns": [
+      "country",
+      "date",
+      "indicator_id",
+      "value",
+      "unit",
+      "frequency",
+      "source_name",
+      "series",
+      "transform",
+      "quality_status",
+      "quality_notes"
+    ],
+    "file": "china_canonical_frame.json",
+    "records": 62232
+  },
   "data_gaps_detail": [
     {
       "section": "activity_production",
@@ -381,13 +399,13 @@
     "unavailable_count": 0
   },
   "freshness": {
-    "as_of_date": "2026-06-28",
+    "as_of_date": "2026-06-29",
     "counts": {
       "current": 102,
       "projection": 2,
       "stale": 1
     },
-    "latest_historical_date": "2026-06-28",
+    "latest_historical_date": "2026-06-29",
     "attention": [
       {
         "id": "real_estate_climate_index_eastmoney",
@@ -396,7 +414,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-12-31",
-        "age_days": 179,
+        "age_days": 180,
         "threshold_days": 150,
         "quality_status": "watch",
         "source_name": "Eastmoney Data Center / NBS-style industry index",
@@ -601,5 +619,22 @@
         "unit": "CNY tn"
       }
     ]
+  },
+  "canonical_schema": {
+    "schema_version": "data-first-canonical-v1",
+    "columns": [
+      "country",
+      "date",
+      "indicator_id",
+      "value",
+      "unit",
+      "frequency",
+      "source_name",
+      "series",
+      "transform",
+      "quality_status",
+      "quality_notes"
+    ],
+    "charted_series": 105
   }
 }

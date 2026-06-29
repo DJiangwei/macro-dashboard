@@ -28,6 +28,7 @@ from country_primer.data_fetcher import (  # noqa: E402
     INDICATOR_MANIFEST_48,
     is_dropped_proxy_indicator,
 )
+from macro_workbench import build_workbench  # noqa: E402
 
 
 CE4_COUNTRIES = [
@@ -107,6 +108,42 @@ def _read_json(path: Path) -> dict:
         return {}
 
 
+def _latest_row(frame: list[dict], indicator_id: str) -> dict:
+    rows = [row for row in frame if row.get("indicator_id") == indicator_id]
+    return sorted(rows, key=lambda row: str(row.get("date", "")))[-1] if rows else {}
+
+
+def _signal(frame: list[dict], indicator_id: str, label: str) -> dict:
+    row = _latest_row(frame, indicator_id)
+    if not row:
+        return {}
+    try:
+        value = float(row.get("value"))
+    except (TypeError, ValueError):
+        value = None
+    return {
+        "id": indicator_id,
+        "label": label,
+        "value": value,
+        "display": f"{value:.2f} {row.get('unit', '')}".strip() if value is not None else "n/a",
+        "date": row.get("date", ""),
+        "source": row.get("source", ""),
+        "quality_status": row.get("quality_status", ""),
+    }
+
+
+def _ce4_signals(frame: list[dict]) -> dict[str, dict]:
+    return {
+        "growth": _signal(frame, "real_gdp_yoy", "Real GDP YoY"),
+        "inflation": _signal(frame, "cpi_yoy", "Headline CPI"),
+        "policy": _signal(frame, "policy_rate", "Policy rate"),
+        "external": _signal(frame, "current_account_pct_gdp", "Current account/GDP"),
+        "fiscal": _signal(frame, "fiscal_balance_pct_gdp", "Fiscal balance/GDP"),
+        "financial": _signal(frame, "credit_to_gdp_gap", "Credit-to-GDP gap"),
+        "property": _signal(frame, "house_price_index", "House price YoY"),
+    }
+
+
 def _ce4_cards() -> list[dict]:
     pipeline = DataPipeline()
     cards: list[dict] = []
@@ -140,6 +177,7 @@ def _ce4_cards() -> list[dict]:
                 "secondary": f"{_latest_value(frame, code, 'sov_yield_10y')}%",
                 "quality": f"{verified} verified · {watch} watch · {low} low",
                 "status": "watch" if proxy else "clean",
+                "signals": _ce4_signals(frame),
             }
         )
     return cards
@@ -193,13 +231,130 @@ def _card_html(card: dict, *, prefix: str) -> str:
   </a>"""
 
 
-def _html(cards: list[dict], *, prefix: str, docs_prefix: str) -> str:
+def _status_class(value: object, *, inverse: bool = False) -> str:
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return "neutral"
+    if inverse:
+        if number <= 0:
+            return "good"
+        if number <= 5:
+            return "neutral"
+        return "bad"
+    if number >= 80:
+        return "good"
+    if number >= 60:
+        return "neutral"
+    return "bad"
+
+
+def _workbench_html(workbench: dict, *, prefix: str) -> str:
+    regimes = workbench.get("regimes", {}) or {}
+    heatmap = workbench.get("heatmap", []) or []
+    monitor = workbench.get("release_monitor", []) or []
+    backlog = workbench.get("gap_backlog", []) or []
+    changes = workbench.get("what_changed", []) or []
+
+    regime_rows = []
+    for card in workbench.get("cards", []) or []:
+        code = card.get("code", "")
+        regime = regimes.get(code, {})
+        dims = regime.get("dimensions", {}) or {}
+        regime_rows.append(f"""
+      <tr>
+        <td><strong>{escape(str(code))}</strong><span>{escape(str(card.get('name', '')))}</span></td>
+        <td><span class="score-pill {_status_class(regime.get('composite_score'))}">{escape(str(regime.get('composite_score', 'n/a')))}</span><em>{escape(str(regime.get('composite_label', 'n/a')))}</em></td>
+        <td>{escape(str((dims.get('growth') or {}).get('label', 'n/a')))}</td>
+        <td>{escape(str((dims.get('inflation') or {}).get('label', 'n/a')))}</td>
+        <td>{escape(str((dims.get('policy') or {}).get('label', 'n/a')))}</td>
+        <td><span class="score-pill {_status_class((regime.get('quality') or {}).get('score'))}">{escape(str((regime.get('quality') or {}).get('score', 'n/a')))}</span></td>
+      </tr>""")
+
+    heatmap_rows = []
+    for row in heatmap:
+        heatmap_rows.append(f"""
+      <tr>
+        <td><strong>{escape(str(row.get('code', '')))}</strong></td>
+        <td class="{_status_class(row.get('coverage_pct'))}">{escape(str(row.get('coverage_pct', 'n/a')))}%</td>
+        <td class="{_status_class(row.get('freshness_pct'))}">{escape(str(row.get('freshness_pct', 'n/a')))}%</td>
+        <td class="{_status_class(row.get('proxy_fills'), inverse=True)}">{escape(str(row.get('proxy_fills', 'n/a')))}</td>
+        <td class="{_status_class(row.get('gaps'), inverse=True)}">{escape(str(row.get('gaps', 'n/a')))}</td>
+        <td class="{_status_class(row.get('regime_score'))}">{escape(str(row.get('regime_score', 'n/a')))}</td>
+      </tr>""")
+
+    monitor_items = []
+    for item in monitor[:8]:
+        monitor_items.append(f"""
+      <li>
+        <strong>{escape(str(item.get('code', '')))} · {escape(str(item.get('indicator_id', '')))}</strong>
+        <span>{escape(str(item.get('status', '')))} · {escape(str(item.get('latest', '')))} · {escape(str(item.get('source', '')))}</span>
+      </li>""")
+    if not monitor_items:
+        monitor_items.append("<li><strong>All clear</strong><span>No freshness-monitor attention items.</span></li>")
+
+    backlog_items = []
+    for item in backlog[:8]:
+        backlog_items.append(f"""
+      <li>
+        <strong>{escape(str(item.get('priority', 'watch')).upper())} · {escape(str(item.get('code', '')))} · {escape(str(item.get('section', '')))}</strong>
+        <span>{escape(str(item.get('item', '')))}</span>
+      </li>""")
+
+    change_items = []
+    for item in changes[:8]:
+        detail = item.get("detail") or f"{item.get('change', '')}: {item.get('from', '')} -> {item.get('to', '')}"
+        change_items.append(f"""
+      <li>
+        <strong>{escape(str(item.get('scope', 'workbench')))}</strong>
+        <span>{escape(str(detail))}</span>
+      </li>""")
+
+    return f"""
+  <section class="workbench" aria-label="macro workbench">
+    <div class="section-head">
+      <p class="eyebrow">Macro Workbench</p>
+      <h2>Regime, Data Quality, And Maintenance Queue</h2>
+      <p>Generated from <code>{escape(prefix)}macro_workbench_summary.json</code>. Scores are directional research aids: they combine public data coverage, freshness, proxy status, and selected macro signals.</p>
+    </div>
+    <div class="table-wrap">
+      <table class="regime-table">
+        <thead><tr><th>Country</th><th>Composite</th><th>Growth</th><th>Inflation</th><th>Policy</th><th>Data Quality</th></tr></thead>
+        <tbody>{''.join(regime_rows)}</tbody>
+      </table>
+    </div>
+    <div class="workbench-grid">
+      <div class="workbench-card">
+        <h3>Cross-Country Heatmap</h3>
+        <table class="heatmap-table">
+          <thead><tr><th>Country</th><th>Coverage</th><th>Fresh</th><th>Proxy</th><th>Gaps</th><th>Regime</th></tr></thead>
+          <tbody>{''.join(heatmap_rows)}</tbody>
+        </table>
+      </div>
+      <div class="workbench-card">
+        <h3>Release Monitor</h3>
+        <ul class="signal-list">{''.join(monitor_items)}</ul>
+      </div>
+      <div class="workbench-card">
+        <h3>Priority Gap Backlog</h3>
+        <ul class="signal-list">{''.join(backlog_items)}</ul>
+      </div>
+      <div class="workbench-card">
+        <h3>What Changed</h3>
+        <ul class="signal-list">{''.join(change_items)}</ul>
+      </div>
+    </div>
+  </section>"""
+
+
+def _html(cards: list[dict], workbench: dict, *, prefix: str, docs_prefix: str) -> str:
     total_charts = sum(int(card["charts"]) for card in cards)
     total_proxy = sum(int(card["proxy_fills"]) for card in cards)
     total_gaps = sum(int(card["gaps_or_dropped"]) for card in cards)
     generated = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
     card_markup = "".join(_card_html(card, prefix=prefix) for card in cards)
     archive_json_href = f"{prefix}dashboard_archive_summary.json" if prefix else "dashboard_archive_summary.json"
+    workbench_markup = _workbench_html(workbench, prefix=prefix)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -281,6 +436,42 @@ code {{ overflow-wrap: anywhere; word-break: break-word; }}
 }}
 .meta-chip strong {{ display: block; font-family: var(--font-display); font-size: 28px; font-weight: 500; }}
 .meta-chip span {{ color: var(--muted); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }}
+.section-head {{ margin: 42px 0 18px; max-width: 900px; }}
+.section-head .eyebrow {{ color: var(--accent); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 8px; }}
+.section-head h2 {{ margin: 0; font-family: var(--font-display); font-size: clamp(28px, 4vw, 48px); font-weight: 500; letter-spacing: -0.04em; }}
+.section-head p {{ color: var(--muted); }}
+.table-wrap, .workbench-card {{
+  background: var(--card);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}}
+table {{ width: 100%; border-collapse: collapse; min-width: 720px; }}
+th {{ text-align: left; color: var(--accent); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }}
+th, td {{ border-bottom: 1px solid var(--border); padding: 12px 14px; vertical-align: top; }}
+td span, td em {{ display: block; color: var(--muted); font-style: normal; font-size: 12px; }}
+.score-pill {{ display: inline-block; min-width: 46px; text-align: center; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--border); font-family: var(--font-display); }}
+.good {{ background: rgba(63, 111, 80, 0.12); color: #315b40; }}
+.neutral {{ background: rgba(138, 89, 61, 0.10); color: var(--accent); }}
+.bad {{ background: rgba(157, 61, 46, 0.12); color: var(--warn); }}
+.workbench-grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }}
+.workbench-card {{ padding: 18px; }}
+.workbench-card h3 {{ margin: 0 0 12px; font-family: var(--font-display); font-weight: 500; font-size: 24px; }}
+.workbench-card table {{ min-width: 520px; }}
+.signal-list {{ list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }}
+.signal-list li {{ border-top: 1px solid var(--border); padding-top: 10px; }}
+.signal-list strong {{ display: block; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }}
+.signal-list span {{ display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }}
+.controls {{ display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 24px 0 14px; }}
+.controls button, .controls input {{
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--fg);
+  padding: 9px 12px;
+  border-radius: 999px;
+  font: inherit;
+}}
+.controls button.active {{ border-color: rgba(138, 89, 61, 0.55); background: rgba(138, 89, 61, 0.12); }}
+.controls input {{ min-width: min(280px, 100%); border-radius: 14px; }}
 .grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }}
 .card {{
   display: block;
@@ -313,6 +504,7 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
 @media (max-width: 720px) {{
   .topbar {{ align-items: flex-start; flex-direction: column; padding: 12px 20px; }}
   .container {{ padding: 34px 18px; }}
+  .workbench-grid {{ grid-template-columns: 1fr; }}
 }}
 </style>
 </head>
@@ -332,6 +524,13 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
     <div class="meta-chip"><strong>{total_gaps}</strong><span>gaps or dropped slots</span></div>
     <div class="meta-chip"><strong>{len(cards)}</strong><span>country dashboards</span></div>
   </section>
+{workbench_markup}
+  <div class="controls" aria-label="country filters">
+    <button type="button" class="active" data-filter="all">All</button>
+    <button type="button" data-filter="clean">Clean</button>
+    <button type="button" data-filter="watch">Watch</button>
+    <input id="countrySearch" type="search" placeholder="Filter countries, currencies, institutions..." aria-label="Filter country cards">
+  </div>
   <section class="grid" aria-label="country dashboards">
 {card_markup}
   </section>
@@ -341,11 +540,36 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
     <a href="{docs_prefix}PROXY_REVIEW.md">Proxy Review</a>
     <a href="{prefix}macro_framework_proposal.html">Framework Proposal</a>
     <a href="{escape(archive_json_href)}">Archive JSON</a>
+    <a href="{prefix}macro_workbench_summary.json">Workbench JSON</a>
+    <a href="{prefix}release_monitor.json">Release Monitor</a>
+    <a href="{prefix}what_changed.json">What Changed</a>
   </nav>
   <footer>
     Generated {generated} from country dashboard summaries and canonical CE4 data. Research artefact only, not investment advice.
   </footer>
 </main>
+<script>
+const buttons = Array.from(document.querySelectorAll('[data-filter]'));
+const cards = Array.from(document.querySelectorAll('.card[data-country]'));
+const search = document.getElementById('countrySearch');
+let activeFilter = 'all';
+function applyFilters() {{
+  const query = (search.value || '').trim().toLowerCase();
+  cards.forEach(card => {{
+    const statusOk = activeFilter === 'all' || card.classList.contains(activeFilter);
+    const textOk = !query || card.textContent.toLowerCase().includes(query);
+    card.style.display = statusOk && textOk ? '' : 'none';
+  }});
+}}
+buttons.forEach(button => {{
+  button.addEventListener('click', () => {{
+    activeFilter = button.dataset.filter || 'all';
+    buttons.forEach(item => item.classList.toggle('active', item === button));
+    applyFilters();
+  }});
+}});
+if (search) search.addEventListener('input', applyFilters);
+</script>
 </body>
 </html>
 """
@@ -358,16 +582,24 @@ def _write(path: Path, content: str) -> None:
 def build_archive() -> tuple[Path, Path, Path]:
     OUTPUT.mkdir(parents=True, exist_ok=True)
     cards = _ce4_cards() + _data_first_cards()
+    workbench = build_workbench(cards)
     payload = {
         "generated": datetime.now(UTC).isoformat(),
         "source": "Generated from CE4 DataPipeline plus output/*_dashboard_summary.json files.",
         "cards": cards,
+        "workbench": {
+            "file": "macro_workbench_summary.json",
+            "release_monitor": "release_monitor.json",
+            "what_changed": "what_changed.json",
+            "data_gap_backlog": "data_gap_backlog.json",
+            "schema_version": workbench.get("schema_version"),
+        },
     }
     ARCHIVE_JSON.write_text(json.dumps(payload, indent=2, ensure_ascii=False))
     output_index = OUTPUT / "index.html"
     root_index = ROOT / "index.html"
-    _write(output_index, _html(cards, prefix="", docs_prefix="../"))
-    _write(root_index, _html(cards, prefix="output/", docs_prefix=""))
+    _write(output_index, _html(cards, workbench, prefix="", docs_prefix="../"))
+    _write(root_index, _html(cards, workbench, prefix="output/", docs_prefix=""))
     return root_index, output_index, ARCHIVE_JSON
 
 

@@ -7,11 +7,26 @@ transform choices without scraping HTML or refetching live sources.
 from __future__ import annotations
 
 import re
+import json
 from calendar import monthrange
 from collections import Counter, defaultdict
 from datetime import UTC, date, datetime
 from typing import Any
 
+
+CANONICAL_FRAME_COLUMNS = [
+    "country",
+    "date",
+    "indicator_id",
+    "value",
+    "unit",
+    "frequency",
+    "source_name",
+    "series",
+    "transform",
+    "quality_status",
+    "quality_notes",
+]
 
 THRESHOLD_DAYS = {
     "daily": 14,
@@ -109,6 +124,54 @@ def _latest_observation(series: dict[str, Any]) -> dict[str, Any] | None:
     if not observations:
         return None
     return observations[-1]
+
+
+def canonical_data_first_records(country_code: str, series_list: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Return data-first observations in a canonical macro frame shape."""
+    records: list[dict[str, Any]] = []
+    for item in series_list:
+        indicator_id = _clean(item.get("id"))
+        for observation in item.get("observations") or []:
+            try:
+                value = float(observation.get("value"))
+            except (TypeError, ValueError):
+                continue
+            records.append({
+                "country": country_code,
+                "date": _clean(observation.get("date")),
+                "indicator_id": indicator_id,
+                "value": value,
+                "unit": _clean(item.get("unit")),
+                "frequency": _clean(item.get("frequency")),
+                "source_name": _clean(item.get("source_name")),
+                "series": _clean(item.get("series")),
+                "transform": _clean(item.get("transform") or "level"),
+                "quality_status": _clean(item.get("quality_status") or "unchecked"),
+                "quality_notes": list(item.get("quality_notes") or []),
+            })
+    return sorted(records, key=lambda row: (row["indicator_id"], row["date"]))
+
+
+def write_canonical_data_first_frame(path: Any, country_code: str, series_list: list[dict[str, Any]]) -> dict[str, Any]:
+    """Write a canonical data-first frame JSON and return compact metadata."""
+    from pathlib import Path
+
+    records = canonical_data_first_records(country_code, series_list)
+    payload = {
+        "schema_version": "data-first-canonical-v1",
+        "columns": CANONICAL_FRAME_COLUMNS,
+        "generated": datetime.now(UTC).isoformat(),
+        "country": country_code,
+        "records": records,
+    }
+    output_path = Path(path)
+    output_path.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n")
+    return {
+        "schema_version": payload["schema_version"],
+        "columns": CANONICAL_FRAME_COLUMNS,
+        "file": output_path.name,
+        "records": len(records),
+    }
 
 
 def _quality_counts(series_list: list[dict[str, Any]]) -> dict[str, int]:
@@ -234,5 +297,10 @@ def build_summary_metadata(config: dict[str, Any], series_list: list[dict[str, A
                 for item in charted
                 if _clean(item.get("transform") or "level") != "level"
             ],
+        },
+        "canonical_schema": {
+            "schema_version": "data-first-canonical-v1",
+            "columns": CANONICAL_FRAME_COLUMNS,
+            "charted_series": len(charted),
         },
     }

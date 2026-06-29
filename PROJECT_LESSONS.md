@@ -30,6 +30,10 @@ gh api repos/DJiangwei/macro-dashboard/pages/builds/latest --jq '.status + " " +
 - Always check both the country page and the archive pages:
   `index.html`, `output/index.html`, and `output/dashboard_archive_summary.json`.
   The archive must update when any country dashboard changes.
+- The archive now has a machine-readable workbench layer. After full builds,
+  verify `output/macro_workbench_summary.json`, `output/release_monitor.json`,
+  `output/what_changed.json`, and `output/data_gap_backlog.json` as well as the
+  HTML. These files are the safest handoff surface for future agents.
 - Finish with `git status --short --branch`; the ideal final state is
   `main...origin/main` with no local modifications.
 
@@ -100,6 +104,10 @@ gh api repos/DJiangwei/macro-dashboard/pages/builds/latest --jq '.status + " " +
 - After changing configs, inspect the generated summary JSON, not only the HTML.
   The summary feeds archive cards and is often where stale headline values show
   up first.
+- China, UK, and US pages also write `output/*_canonical_frame.json`. Treat
+  those canonical frames as the data-first contract for future cross-country
+  tools: every row should preserve country, date, indicator ID, value, source,
+  frequency, unit, transform, and quality metadata.
 
 ## 6. Validation Patterns
 
@@ -142,3 +150,6 @@ gh api repos/DJiangwei/macro-dashboard/pages/builds/latest --jq '.status + " " +
 - Use `make proxy-report` for a fast offline proxy check based on generated
   artifacts. Use `make proxy-report-live` only when validating the live CE4 data
   pipeline, because it can block on slow upstream APIs.
+- Use the macro workbench JSON files before scraping pages. They expose regime
+  scores, cross-country heatmap values, freshness attention, data-gap backlog,
+  and what-changed deltas in stable machine-readable form.

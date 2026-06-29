@@ -1,11 +1,11 @@
 {
   "file": "uk_2026Q2_v1.html",
-  "generated": "2026-06-28T23:02:33.675489+00:00",
+  "generated": "2026-06-29T21:23:27.005738+00:00",
   "charts": 92,
   "source_groups": 11,
   "data_gaps": 8,
   "low_confidence": 0,
-  "bank_rate_latest": "3.75% (2026-06-25)",
+  "bank_rate_latest": "3.75% (2026-06-26)",
   "key_series_latest": [
     {
       "id": "real_gdp_qoq",
@@ -95,7 +95,7 @@
       "id": "bank_rate",
       "label_en": "Bank Rate",
       "label_zh": "英国央行Bank Rate",
-      "latest_date": "2026-06-25",
+      "latest_date": "2026-06-26",
       "latest_value": 3.75,
       "latest_display": "3.75 %",
       "frequency": "daily",
@@ -107,8 +107,8 @@
       "id": "sonia_rate",
       "label_en": "SONIA",
       "label_zh": "SONIA隔夜利率",
-      "latest_date": "2026-06-24",
-      "latest_value": 3.729,
+      "latest_date": "2026-06-25",
+      "latest_value": 3.7287,
       "latest_display": "3.73 %",
       "frequency": "daily",
       "source_name": "Bank of England IADB",
@@ -141,6 +141,24 @@
     }
   ],
   "unavailable": [],
+  "canonical_frame": {
+    "schema_version": "data-first-canonical-v1",
+    "columns": [
+      "country",
+      "date",
+      "indicator_id",
+      "value",
+      "unit",
+      "frequency",
+      "source_name",
+      "series",
+      "transform",
+      "quality_status",
+      "quality_notes"
+    ],
+    "file": "uk_canonical_frame.json",
+    "records": 59074
+  },
   "data_gaps_detail": [
     {
       "section": "monthly_output",
@@ -253,12 +271,12 @@
     "unavailable_count": 0
   },
   "freshness": {
-    "as_of_date": "2026-06-28",
+    "as_of_date": "2026-06-29",
     "counts": {
       "current": 88,
       "projection": 4
     },
-    "latest_historical_date": "2026-06-25",
+    "latest_historical_date": "2026-06-26",
     "attention": []
   },
   "transform_audit": {
@@ -382,5 +400,22 @@
         "unit": "% y/y"
       }
     ]
+  },
+  "canonical_schema": {
+    "schema_version": "data-first-canonical-v1",
+    "columns": [
+      "country",
+      "date",
+      "indicator_id",
+      "value",
+      "unit",
+      "frequency",
+      "source_name",
+      "series",
+      "transform",
+      "quality_status",
+      "quality_notes"
+    ],
+    "charted_series": 92
   }
 }

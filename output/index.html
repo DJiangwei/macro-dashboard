@@ -79,6 +79,42 @@ code { overflow-wrap: anywhere; word-break: break-word; }
 }
 .meta-chip strong { display: block; font-family: var(--font-display); font-size: 28px; font-weight: 500; }
 .meta-chip span { color: var(--muted); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+.section-head { margin: 42px 0 18px; max-width: 900px; }
+.section-head .eyebrow { color: var(--accent); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 8px; }
+.section-head h2 { margin: 0; font-family: var(--font-display); font-size: clamp(28px, 4vw, 48px); font-weight: 500; letter-spacing: -0.04em; }
+.section-head p { color: var(--muted); }
+.table-wrap, .workbench-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; min-width: 720px; }
+th { text-align: left; color: var(--accent); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+th, td { border-bottom: 1px solid var(--border); padding: 12px 14px; vertical-align: top; }
+td span, td em { display: block; color: var(--muted); font-style: normal; font-size: 12px; }
+.score-pill { display: inline-block; min-width: 46px; text-align: center; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--border); font-family: var(--font-display); }
+.good { background: rgba(63, 111, 80, 0.12); color: #315b40; }
+.neutral { background: rgba(138, 89, 61, 0.10); color: var(--accent); }
+.bad { background: rgba(157, 61, 46, 0.12); color: var(--warn); }
+.workbench-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+.workbench-card { padding: 18px; }
+.workbench-card h3 { margin: 0 0 12px; font-family: var(--font-display); font-weight: 500; font-size: 24px; }
+.workbench-card table { min-width: 520px; }
+.signal-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.signal-list li { border-top: 1px solid var(--border); padding-top: 10px; }
+.signal-list strong { display: block; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+.signal-list span { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 24px 0 14px; }
+.controls button, .controls input {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--fg);
+  padding: 9px 12px;
+  border-radius: 999px;
+  font: inherit;
+}
+.controls button.active { border-color: rgba(138, 89, 61, 0.55); background: rgba(138, 89, 61, 0.12); }
+.controls input { min-width: min(280px, 100%); border-radius: 14px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
 .card {
   display: block;
@@ -111,6 +147,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
 @media (max-width: 720px) {
   .topbar { align-items: flex-start; flex-direction: column; padding: 12px 20px; }
   .container { padding: 34px 18px; }
+  .workbench-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -130,6 +167,227 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
     <div class="meta-chip"><strong>38</strong><span>gaps or dropped slots</span></div>
     <div class="meta-chip"><strong>7</strong><span>country dashboards</span></div>
   </section>
+
+  <section class="workbench" aria-label="macro workbench">
+    <div class="section-head">
+      <p class="eyebrow">Macro Workbench</p>
+      <h2>Regime, Data Quality, And Maintenance Queue</h2>
+      <p>Generated from <code>macro_workbench_summary.json</code>. Scores are directional research aids: they combine public data coverage, freshness, proxy status, and selected macro signals.</p>
+    </div>
+    <div class="table-wrap">
+      <table class="regime-table">
+        <thead><tr><th>Country</th><th>Composite</th><th>Growth</th><th>Inflation</th><th>Policy</th><th>Data Quality</th></tr></thead>
+        <tbody>
+      <tr>
+        <td><strong>HU</strong><span>Hungary</span></td>
+        <td><span class="score-pill neutral">62.1</span><em>mixed</em></td>
+        <td>moderate expansion</td>
+        <td>near-target inflation</td>
+        <td>restrictive stance</td>
+        <td><span class="score-pill neutral">76.6</span></td>
+      </tr>
+      <tr>
+        <td><strong>PL</strong><span>Poland</span></td>
+        <td><span class="score-pill neutral">63.7</span><em>mixed</em></td>
+        <td>above-trend expansion</td>
+        <td>above-target inflation</td>
+        <td>neutral-tight stance</td>
+        <td><span class="score-pill good">84.5</span></td>
+      </tr>
+      <tr>
+        <td><strong>CZ</strong><span>Czechia</span></td>
+        <td><span class="score-pill neutral">67.0</span><em>mixed</em></td>
+        <td>moderate expansion</td>
+        <td>near-target inflation</td>
+        <td>neutral-tight stance</td>
+        <td><span class="score-pill neutral">74.7</span></td>
+      </tr>
+      <tr>
+        <td><strong>RO</strong><span>Romania</span></td>
+        <td><span class="score-pill bad">50.5</span><em>mixed</em></td>
+        <td>contraction</td>
+        <td>inflation pressure</td>
+        <td>restrictive stance</td>
+        <td><span class="score-pill neutral">71.4</span></td>
+      </tr>
+      <tr>
+        <td><strong>CN</strong><span>China</span></td>
+        <td><span class="score-pill neutral">69.9</span><em>mixed</em></td>
+        <td>above-trend expansion</td>
+        <td>near-target inflation</td>
+        <td>restrictive stance</td>
+        <td><span class="score-pill neutral">79.0</span></td>
+      </tr>
+      <tr>
+        <td><strong>UK</strong><span>United Kingdom</span></td>
+        <td><span class="score-pill neutral">65.8</span><em>mixed</em></td>
+        <td>stall-speed growth</td>
+        <td>near-target inflation</td>
+        <td>neutral-tight stance</td>
+        <td><span class="score-pill neutral">78.5</span></td>
+      </tr>
+      <tr>
+        <td><strong>US</strong><span>United States</span></td>
+        <td><span class="score-pill neutral">70.0</span><em>mixed</em></td>
+        <td>moderate expansion</td>
+        <td>near-target inflation</td>
+        <td>neutral-tight stance</td>
+        <td><span class="score-pill good">82.3</span></td>
+      </tr></tbody>
+      </table>
+    </div>
+    <div class="workbench-grid">
+      <div class="workbench-card">
+        <h3>Cross-Country Heatmap</h3>
+        <table class="heatmap-table">
+          <thead><tr><th>Country</th><th>Coverage</th><th>Fresh</th><th>Proxy</th><th>Gaps</th><th>Regime</th></tr></thead>
+          <tbody>
+      <tr>
+        <td><strong>HU</strong></td>
+        <td class="good">100.0%</td>
+        <td class="good">84.5%</td>
+        <td class="good">0</td>
+        <td class="neutral">4</td>
+        <td class="neutral">62.1</td>
+      </tr>
+      <tr>
+        <td><strong>PL</strong></td>
+        <td class="good">100.0%</td>
+        <td class="good">85.8%</td>
+        <td class="good">0</td>
+        <td class="neutral">1</td>
+        <td class="neutral">63.7</td>
+      </tr>
+      <tr>
+        <td><strong>CZ</strong></td>
+        <td class="good">100.0%</td>
+        <td class="good">86.2%</td>
+        <td class="good">0</td>
+        <td class="neutral">5</td>
+        <td class="neutral">67.0</td>
+      </tr>
+      <tr>
+        <td><strong>RO</strong></td>
+        <td class="good">100.0%</td>
+        <td class="good">82.6%</td>
+        <td class="good">0</td>
+        <td class="neutral">5</td>
+        <td class="bad">50.5</td>
+      </tr>
+      <tr>
+        <td><strong>CN</strong></td>
+        <td class="good">100.0%</td>
+        <td class="good">97.1%</td>
+        <td class="good">0</td>
+        <td class="bad">8</td>
+        <td class="neutral">69.9</td>
+      </tr>
+      <tr>
+        <td><strong>UK</strong></td>
+        <td class="good">100.0%</td>
+        <td class="good">95.7%</td>
+        <td class="good">0</td>
+        <td class="bad">8</td>
+        <td class="neutral">65.8</td>
+      </tr>
+      <tr>
+        <td><strong>US</strong></td>
+        <td class="good">100.0%</td>
+        <td class="good">99.4%</td>
+        <td class="good">0</td>
+        <td class="bad">7</td>
+        <td class="neutral">70.0</td>
+      </tr></tbody>
+        </table>
+      </div>
+      <div class="workbench-card">
+        <h3>Release Monitor</h3>
+        <ul class="signal-list">
+      <li>
+        <strong>CZ · foreign_bank_share</strong>
+        <span>lagged_source · 2013-12-31 · World Bank</span>
+      </li>
+      <li>
+        <strong>HU · foreign_bank_share</strong>
+        <span>lagged_source · 2013-12-31 · World Bank</span>
+      </li>
+      <li>
+        <strong>PL · foreign_bank_share</strong>
+        <span>lagged_source · 2013-12-31 · World Bank</span>
+      </li>
+      <li>
+        <strong>CZ · bank_nim</strong>
+        <span>lagged_source · 2021-12-31 · World Bank</span>
+      </li>
+      <li>
+        <strong>HU · bank_nim</strong>
+        <span>lagged_source · 2021-12-31 · World Bank</span>
+      </li>
+      <li>
+        <strong>PL · bank_nim</strong>
+        <span>lagged_source · 2021-12-31 · World Bank</span>
+      </li>
+      <li>
+        <strong>RO · bank_nim</strong>
+        <span>lagged_source · 2021-12-31 · World Bank</span>
+      </li>
+      <li>
+        <strong>RO · fx_loan_share</strong>
+        <span>stale · 2023-03-31 · IMF FSI via DB.nomics</span>
+      </li></ul>
+      </div>
+      <div class="workbench-card">
+        <h3>Priority Gap Backlog</h3>
+        <ul class="signal-list">
+      <li>
+        <strong>HIGH · CN · activity_production</strong>
+        <span>NBS monthly industrial production, services output index, electricity consumption, rail freight, industrial profits, and PMI series</span>
+      </li>
+      <li>
+        <strong>HIGH · CN · consumption</strong>
+        <span>NBS retail sales, online retail sales, household survey, auto sales, and consumer confidence</span>
+      </li>
+      <li>
+        <strong>HIGH · CN · investment</strong>
+        <span>NBS fixed asset investment by sector and project pipeline</span>
+      </li>
+      <li>
+        <strong>HIGH · CN · prices</strong>
+        <span>NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices</span>
+      </li>
+      <li>
+        <strong>HIGH · CN · real_estate</strong>
+        <span>NBS property investment, floor-space starts/completions/sales, 70-city price index, land transactions, and inventory</span>
+      </li>
+      <li>
+        <strong>HIGH · UK · housing_construction</strong>
+        <span>Nationwide, Halifax, Rightmove, Hometrack, and RICS</span>
+      </li>
+      <li>
+        <strong>HIGH · UK · monetary_financial</strong>
+        <span>Trends in Lending, Credit Conditions Survey, HEW, fuller quoted-rate matrix, and stale OECD 3M interbank mirror</span>
+      </li>
+      <li>
+        <strong>HIGH · UK · monthly_output</strong>
+        <span>Manufacturing, construction, services, and composite PMI</span>
+      </li></ul>
+      </div>
+      <div class="workbench-card">
+        <h3>What Changed</h3>
+        <ul class="signal-list">
+      <li>
+        <strong>workbench</strong>
+        <span>Coverage, proxy, headline, and regime metrics are unchanged versus the previous workbench build.</span>
+      </li></ul>
+      </div>
+    </div>
+  </section>
+  <div class="controls" aria-label="country filters">
+    <button type="button" class="active" data-filter="all">All</button>
+    <button type="button" data-filter="clean">Clean</button>
+    <button type="button" data-filter="watch">Watch</button>
+    <input id="countrySearch" type="search" placeholder="Filter countries, currencies, institutions..." aria-label="Filter country cards">
+  </div>
   <section class="grid" aria-label="country dashboards">
 
   <a href="hungary_2026Q2_v4.html" class="card clean" data-country="HU">
@@ -187,7 +445,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <div class="stat"><span>Rendered charts</span><strong>105/105</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>8</strong></div>
-      <div class="stat"><span>Latest USD/CNY fixing</span><strong>6.8166 (2026-06-26)</strong></div>
+      <div class="stat"><span>Latest USD/CNY fixing</span><strong>6.8175 (2026-06-29)</strong></div>
       <div class="stat"><span>Source groups</span><strong>28</strong></div>
       <div class="stat"><span>Source quality</span><strong>28 source groups · 0 low-confidence charts</strong></div>
     </div>
@@ -199,7 +457,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <div class="stat"><span>Rendered charts</span><strong>92/92</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>8</strong></div>
-      <div class="stat"><span>Bank Rate</span><strong>3.75% (2026-06-25)</strong></div>
+      <div class="stat"><span>Bank Rate</span><strong>3.75% (2026-06-26)</strong></div>
       <div class="stat"><span>Source groups</span><strong>11</strong></div>
       <div class="stat"><span>Source quality</span><strong>11 source groups · 0 low-confidence charts</strong></div>
     </div>
@@ -211,7 +469,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <div class="stat"><span>Rendered charts</span><strong>164/164</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>7</strong></div>
-      <div class="stat"><span>Fed funds</span><strong>3.63% (2026-06-25)</strong></div>
+      <div class="stat"><span>Fed funds</span><strong>3.63% (2026-06-26)</strong></div>
       <div class="stat"><span>Source groups</span><strong>27</strong></div>
       <div class="stat"><span>Source quality</span><strong>27 source groups · 0 low-confidence charts</strong></div>
     </div>
@@ -223,10 +481,35 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
     <a href="../PROXY_REVIEW.md">Proxy Review</a>
     <a href="macro_framework_proposal.html">Framework Proposal</a>
     <a href="dashboard_archive_summary.json">Archive JSON</a>
+    <a href="macro_workbench_summary.json">Workbench JSON</a>
+    <a href="release_monitor.json">Release Monitor</a>
+    <a href="what_changed.json">What Changed</a>
   </nav>
   <footer>
-    Generated 2026-06-29 20:51 UTC from country dashboard summaries and canonical CE4 data. Research artefact only, not investment advice.
+    Generated 2026-06-29 21:25 UTC from country dashboard summaries and canonical CE4 data. Research artefact only, not investment advice.
   </footer>
 </main>
+<script>
+const buttons = Array.from(document.querySelectorAll('[data-filter]'));
+const cards = Array.from(document.querySelectorAll('.card[data-country]'));
+const search = document.getElementById('countrySearch');
+let activeFilter = 'all';
+function applyFilters() {
+  const query = (search.value || '').trim().toLowerCase();
+  cards.forEach(card => {
+    const statusOk = activeFilter === 'all' || card.classList.contains(activeFilter);
+    const textOk = !query || card.textContent.toLowerCase().includes(query);
+    card.style.display = statusOk && textOk ? '' : 'none';
+  });
+}
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    activeFilter = button.dataset.filter || 'all';
+    buttons.forEach(item => item.classList.toggle('active', item === button));
+    applyFilters();
+  });
+});
+if (search) search.addEventListener('input', applyFilters);
+</script>
 </body>
 </html>
