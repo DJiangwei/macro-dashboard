@@ -27,6 +27,9 @@ import yaml
 from dashboard_summary_utils import (
     apply_quality_assessments,
     build_summary_metadata,
+    canonical_frame_metadata,
+    load_canonical_data_first_frame,
+    retain_last_known_good_series,
     write_canonical_data_first_frame,
 )
 from build_china_dashboard import (  # Reuse the data-first page shell.
@@ -39,6 +42,12 @@ from build_china_dashboard import (  # Reuse the data-first page shell.
     _write_clean,
 )
 from build_uk_dashboard import FRED_API_URL, FRED_GRAPH_URL, fetch_fred, validate_series
+from country_primer.source_health import (
+    SOURCE_HEALTH,
+    failure_series,
+    guarded_source_call,
+    write_source_health_report,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -442,22 +451,25 @@ def fetch_treasury_auctions(session: requests.Session, spec: dict[str, Any]) -> 
 
 def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
     session = requests.Session()
-    try:
+
+    def operation() -> dict[str, Any]:
         if spec.get("fetcher") == "fred":
-            series = _apply_transform(fetch_fred_us(session, spec))
-        elif spec.get("fetcher") == "bls_api":
-            series = fetch_bls_api(session, spec)
-        elif spec.get("fetcher") == "treasury_auctions":
-            series = fetch_treasury_auctions(session, spec)
-        else:
-            series = {**spec, "observations": [], "quality_status": "unavailable", "quality_notes": ["Unknown fetcher."]}
-    except Exception as exc:  # noqa: BLE001 - data page should degrade instead of crashing.
-        series = {
-            **spec,
-            "observations": [],
-            "quality_status": "unavailable",
-            "quality_notes": [f"Fetch failed: {exc}"],
-        }
+            return _apply_transform(fetch_fred_us(session, spec))
+        if spec.get("fetcher") == "bls_api":
+            return fetch_bls_api(session, spec)
+        if spec.get("fetcher") == "treasury_auctions":
+            return fetch_treasury_auctions(session, spec)
+        raise ValueError(f"Unknown fetcher: {spec.get('fetcher')}")
+
+    try:
+        series = guarded_source_call(
+            country="US",
+            indicator_id=str(spec.get("id") or "unknown"),
+            source_id=str(spec.get("fetcher") or "unknown"),
+            operation=operation,
+        )
+    except Exception as exc:  # noqa: BLE001 - structured degradation is intentional.
+        series = failure_series(spec, exc)
     return validate_series(series)
 
 
@@ -728,10 +740,16 @@ def inject_root_index(summary: dict[str, Any]) -> None:
     _write_clean(index_path, html)
 
 
-def build() -> Path:
+def build(data_mode: str | None = None) -> Path:
     OUTPUT.mkdir(parents=True, exist_ok=True)
+    data_mode = (data_mode or os.environ.get("COUNTRY_PRIMER_DATA_MODE") or "refresh").strip().lower()
     config = _load_config()
-    series_list = fetch_all(config)
+    if data_mode == "snapshot":
+        series_list = load_canonical_data_first_frame(CANONICAL_JSON, config)
+    else:
+        SOURCE_HEALTH.reset()
+        series_list = fetch_all(config)
+        series_list = retain_last_known_good_series(series_list, CANONICAL_JSON, config)
     apply_quality_assessments(series_list)
     charted = [item for item in series_list if item.get("observations")]
     min_chart_count = int(config.get("min_chart_count", 55))
@@ -761,10 +779,17 @@ def build() -> Path:
         ),
         "key_series_latest": _key_series_latest(charted, SUMMARY_KEY_IDS),
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
+        "data_mode": data_mode,
     }
-    summary["canonical_frame"] = write_canonical_data_first_frame(CANONICAL_JSON, "US", series_list)
+    summary["canonical_frame"] = (
+        canonical_frame_metadata(CANONICAL_JSON)
+        if data_mode == "snapshot"
+        else write_canonical_data_first_frame(CANONICAL_JSON, "US", series_list)
+    )
     summary.update(build_summary_metadata(config, series_list, "US"))
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
+    if data_mode != "snapshot":
+        write_source_health_report(OUTPUT / "source_health.json", ["US"])
     inject_output_index(summary)
     inject_root_index(summary)
     if not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):

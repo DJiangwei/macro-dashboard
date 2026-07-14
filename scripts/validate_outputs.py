@@ -57,6 +57,17 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
             raise AssertionError(f"{name} canonical series count does not match rendered charts")
         if not all("quality" in item and "concept_id" in item for item in canonical["series"]):
             raise AssertionError(f"{name} canonical metadata is incomplete")
+        summary = _load_json(output / f"{name}_dashboard_summary.json")
+        if summary.get("data_mode") not in {"refresh", "snapshot"}:
+            raise AssertionError(f"{name} summary is missing its data mode")
+        if summary.get("canonical_frame", {}).get("series_count") != cards:
+            raise AssertionError(f"{name} summary canonical count does not match rendered charts")
+
+    cee_canonical = _load_json(output / "cee_canonical_frame.json")
+    if cee_canonical.get("schema_version") != "cee-canonical-v2":
+        raise AssertionError("CEE canonical history schema mismatch")
+    if {item.get("country") for item in cee_canonical.get("series") or []} != {"HU", "PL", "CZ", "RO"}:
+        raise AssertionError("CEE canonical history must contain all four countries")
 
     snapshot = _load_json(output / "cee_build_snapshot.json")
     if snapshot.get("schema_version") != "cee-build-snapshot-v1":
@@ -69,6 +80,22 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
             raise AssertionError(f"CEE snapshot has no indicators for {code}")
         if any(bool(item.get("is_proxy")) for item in indicators.values()):
             raise AssertionError(f"CEE snapshot contains a proxy row for {code}")
+
+    source_health = _load_json(output / "source_health.json")
+    if source_health.get("schema_version") != "source-health-v1":
+        raise AssertionError("Source-health schema mismatch")
+    if set((source_health.get("countries") or {})) != set(COUNTRY_FILES):
+        raise AssertionError("Source-health report must contain all seven countries")
+    if any(payload.get("circuit_open") for payload in source_health["countries"].values()):
+        raise AssertionError("Source-health report contains an open source circuit")
+
+    coverage = _load_json(output / "core_coverage_matrix.json")
+    if coverage.get("schema_version") != "core-coverage-v1":
+        raise AssertionError("Core coverage matrix schema mismatch")
+    if coverage.get("concept_count") != 48 or len(coverage.get("concepts") or []) != 48:
+        raise AssertionError("Core coverage matrix must contain 48 concepts")
+    if coverage.get("countries") != list(COUNTRY_FILES):
+        raise AssertionError("Core coverage matrix country order mismatch")
 
     archive = _load_json(output / "dashboard_archive_summary.json")
     cards = archive.get("cards") or []

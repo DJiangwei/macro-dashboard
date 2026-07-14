@@ -63,11 +63,18 @@ from country_primer.data_fetcher import (  # noqa: E402
     fetch_canonical_macro_frame,
     is_dropped_proxy_indicator,
 )
+from country_primer.source_health import SOURCE_HEALTH, write_source_health_report  # noqa: E402
+from country_primer.snapshots import (  # noqa: E402
+    load_cee_canonical_snapshot,
+    retain_last_known_good_cee_rows,
+    write_cee_canonical_snapshot,
+)
 from country_primer.catalog import load_countries  # noqa: E402
 from country_primer.framework import concept_id_for  # noqa: E402
 
 OUTPUT = ROOT / "output"
 CEE_SNAPSHOT = OUTPUT / "cee_build_snapshot.json"
+CEE_CANONICAL = OUTPUT / "cee_canonical_frame.json"
 BUILD_FRAMES: dict[str, list[dict]] = {}
 
 
@@ -722,6 +729,15 @@ footer a { color: var(--accent) !important; }
   .snapshot-prose { grid-template-columns: 1fr; }
 }
 @media (max-width: 620px) {
+  .topbar { padding: 12px 18px; gap: 12px; }
+  .topbar > a { max-width: 100%; }
+  .topbar .brand {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+  }
   .container { padding: 24px 18px 42px; }
   header { padding-top: 34px; }
   .section-card-body,
@@ -3094,9 +3110,24 @@ COUNTRY_DATA["RO"] = {
 
 # ── Build logic ───────────────────────────────────────────────────────────────
 
-def build_v4(country_code: str) -> Path:
+def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Path:
     data = COUNTRY_DATA[country_code]
-    canonical_frame = fetch_canonical_macro_frame(country_code)
+    if canonical_frame is not None:
+        canonical_frame = list(canonical_frame)
+    else:
+        canonical_frame = fetch_canonical_macro_frame(country_code)
+        if CEE_CANONICAL.exists():
+            prior_frame = load_cee_canonical_snapshot(CEE_CANONICAL).get(country_code, [])
+            expected_ids = {
+                spec.indicator_id
+                for spec in INDICATOR_MANIFEST_48
+                if not is_dropped_proxy_indicator(country_code, spec.indicator_id)
+            }
+            canonical_frame = retain_last_known_good_cee_rows(
+                canonical_frame,
+                prior_frame,
+                expected_ids,
+            )
     iso_lower = country_code.lower()
     # Map to base HTML filename
     name_map = {"HU": "hungary", "PL": "poland", "CZ": "czechia", "RO": "romania"}
@@ -3456,6 +3487,7 @@ def write_cee_build_snapshot(frames: dict[str, list[dict]]) -> Path:
                         "frequency", "source", "source_url", "quality_status", "quality_note",
                         "source_authority", "derivation", "freshness_status", "validation_status",
                         "comparability", "observation_type", "is_projection", "is_proxy",
+                        "refresh_fallback",
                     )
                 }
         coverage = pipeline.validate_coverage(frame)
@@ -3694,11 +3726,22 @@ if __name__ == "__main__":
         print(f"Unknown country: {target}. Use HU, PL, CZ, RO, or ALL")
         sys.exit(1)
 
+    data_mode = os.environ.get("COUNTRY_PRIMER_DATA_MODE", "refresh").strip().lower()
+    snapshot_frames = load_cee_canonical_snapshot(CEE_CANONICAL) if data_mode == "snapshot" else {}
+    SOURCE_HEALTH.reset()
     for cc in targets:
-        path = build_v4(cc)
+        if data_mode == "snapshot" and cc not in snapshot_frames:
+            raise KeyError(f"CEE canonical snapshot has no frame for {cc}")
+        path = build_v4(cc, snapshot_frames.get(cc) if data_mode == "snapshot" else None)
         print(f"Wrote {path} ({path.stat().st_size:,} bytes)")
+    if data_mode != "snapshot":
+        canonical_path = write_cee_canonical_snapshot(CEE_CANONICAL, BUILD_FRAMES)
+        print(f"Wrote {canonical_path} ({canonical_path.stat().st_size:,} bytes)")
     snapshot_path = write_cee_build_snapshot(BUILD_FRAMES)
     print(f"Wrote {snapshot_path} ({snapshot_path.stat().st_size:,} bytes)")
+    if data_mode != "snapshot":
+        health_path = write_source_health_report(OUTPUT / "source_health.json", targets)
+        print(f"Wrote {health_path} ({health_path.stat().st_size:,} bytes)")
     snapshot_countries = set((load_cee_build_snapshot().get("countries") or {}))
     has_full_cee_snapshot = {"HU", "PL", "CZ", "RO"}.issubset(snapshot_countries)
     if has_full_cee_snapshot:

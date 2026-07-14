@@ -33,7 +33,7 @@ global Python install.
 cd /Users/jiangwei/Claude/Country_Primer
 scripts/uv_project.sh sync
 make doctor
-make build-v4
+make refresh-data
 make validate
 ```
 
@@ -86,7 +86,7 @@ The v4 dashboard also includes a dedicated canonical pipeline in
 canonical macro table: observations + source, concept, quality, and projection metadata
                          │
                          ▼
-build_v4.py → stable country pages + one CEE build snapshot
+build_v4.py → stable country pages + latest snapshot + compact historical snapshot
 ```
 
 The CEE manifest currently defines 114 country indicators across real
@@ -110,6 +110,9 @@ home/archive pages:
 - `output/cee_build_snapshot.json` stores the latest CEE indicator rows from the
   same fetch used to render country pages. Archive cards and consistency checks
   consume this snapshot rather than refetching live values.
+- `output/cee_canonical_frame.json` stores the full CEE chart history in compact
+  `cee-canonical-v2` form. Together with the three data-first canonical files,
+  it lets `make rebuild-ui` regenerate all seven pages without network access.
 - `output/*_canonical_frame.json` uses `data-first-canonical-v2` for China, UK,
   and US: metadata is stored once per series and observations are compact
   `[date, value]` pairs.
@@ -121,6 +124,26 @@ home/archive pages:
   remaining official-data gaps without scraping HTML.
 - `output/dashboard_archive_summary.json` links the archive cards back to the
   workbench so `index.html` and `output/index.html` stay data-synchronized.
+- `output/source_health.json` records source-level calls, empty responses,
+  structured failure reasons, and circuit-breaker state for the latest live
+  refresh. Temporary failures retain the last-known-good canonical series with
+  an explicit `refresh_fallback/watch` marker instead of silently deleting a
+  chart.
+- `output/core_coverage_matrix.json` and `CORE_COVERAGE_MATRIX.md` report the
+  seven-country by 48-concept comparable-core matrix and rank gaps by explicit
+  macro-value weights rather than raw chart count.
+
+The build commands deliberately separate data acquisition from presentation:
+
+```bash
+make refresh-check  # seven lightweight live-vs-snapshot headline probes
+make refresh-data   # networked full refresh and snapshot update
+make rebuild-ui     # no data-source calls; render only from snapshots
+make validate       # deterministic, offline contracts and tests
+```
+
+`make build-v4` remains a backward-compatible alias for `make refresh-data`.
+Official release cadence overrides live in `config/release_calendars.yaml`.
 
 The China page uses AKShare for a China-native high-frequency layer including
 CPI/PPI headline and momentum, urban/rural CPI, enterprise-goods prices,
@@ -178,7 +201,8 @@ Supported optional sources:
 | `STOOQ_BET_CSV_URL` | Exact Stooq CSV download URL for Romania BET daily closes. |
 
 If these variables are missing or a source rejects automated access, the
-dashboard keeps a validated cache where policy permits or marks the series
+dashboard retains a previously validated canonical observation where one
+exists and marks it `refresh_fallback/watch`; otherwise it marks the series
 unavailable. It never creates a synthetic replacement merely to preserve a
 chart count.
 

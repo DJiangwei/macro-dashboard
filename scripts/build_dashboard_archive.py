@@ -533,6 +533,7 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
 {card_markup}
   </section>
   <nav class="links" aria-label="documentation links">
+    <a href="{docs_prefix}CORE_COVERAGE_MATRIX.md">Core 48 Coverage</a>
     <a href="{docs_prefix}DATA_SOURCE_CATALOG.md">Data Source Catalog</a>
     <a href="{docs_prefix}DATA_FRESHNESS_AUDIT.md">Freshness Audit</a>
     <a href="{docs_prefix}PROXY_REVIEW.md">Proxy Review</a>

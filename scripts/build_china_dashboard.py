@@ -24,9 +24,18 @@ import yaml
 from dashboard_summary_utils import (
     apply_quality_assessments,
     build_summary_metadata,
+    canonical_frame_metadata,
+    load_canonical_data_first_frame,
+    retain_last_known_good_series,
     write_canonical_data_first_frame,
 )
 from country_primer.framework import concept_id_for
+from country_primer.source_health import (
+    SOURCE_HEALTH,
+    failure_series,
+    guarded_source_call,
+    write_source_health_report,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -538,38 +547,48 @@ def fetch_all(config: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[s
     series_list: list[dict[str, Any]] = []
     for spec in config.get("indicators", []):
         fetcher = spec.get("fetcher")
-        try:
+
+        def operation() -> dict[str, Any]:
+            nonlocal safe_rows
             if fetcher == "world_bank":
-                series = fetch_world_bank(spec)
-            elif fetcher == "imf_datamapper":
-                series = fetch_imf_datamapper(spec)
-            elif fetcher == "fred_graph_csv":
-                series = fetch_fred_graph(spec)
-            elif fetcher == "akshare_table":
-                series = fetch_akshare_table(spec, akshare_cache)
-            elif fetcher == "akshare_wide_year_month":
-                series = fetch_akshare_wide_year_month(spec, akshare_cache)
-            elif fetcher == "eastmoney_industry_indicator":
-                series = fetch_eastmoney_industry_indicator(spec)
-            elif fetcher == "safe_rmb_midpoint":
+                return fetch_world_bank(spec)
+            if fetcher == "imf_datamapper":
+                return fetch_imf_datamapper(spec)
+            if fetcher == "fred_graph_csv":
+                return fetch_fred_graph(spec)
+            if fetcher == "akshare_table":
+                return fetch_akshare_table(spec, akshare_cache)
+            if fetcher == "akshare_wide_year_month":
+                return fetch_akshare_wide_year_month(spec, akshare_cache)
+            if fetcher == "eastmoney_industry_indicator":
+                return fetch_eastmoney_industry_indicator(spec)
+            if fetcher == "safe_rmb_midpoint":
                 if safe_rows is None:
                     safe_rows = _safe_rows()
-                series = fetch_safe_midpoint(spec, safe_rows)
-            else:
-                series = {**spec, "observations": [], "quality_status": "unavailable", "quality_notes": ["Unknown fetcher."]}
-        except Exception as exc:  # noqa: BLE001 - build should degrade, not crash, per data-quality policy.
-            series = {
-                **spec,
-                "observations": [],
-                "quality_status": "unavailable",
-                "quality_notes": [f"Fetch failed: {exc}"],
-            }
+                return fetch_safe_midpoint(spec, safe_rows)
+            raise ValueError(f"Unknown fetcher: {fetcher}")
+
+        try:
+            series = guarded_source_call(
+                country="CN",
+                indicator_id=str(spec.get("id") or "unknown"),
+                source_id=str(fetcher or "unknown"),
+                operation=operation,
+            )
+        except Exception as exc:  # noqa: BLE001 - structured degradation is intentional.
+            series = failure_series(spec, exc)
         series_list.append(validate_series(series))
 
     cards: list[dict[str, Any]] = []
     for card in config.get("latest_cards", []):
         try:
-            cards.append(fetch_pbc_card(card))
+            cards.append(guarded_source_call(
+                country="CN",
+                indicator_id=str(card.get("id") or card.get("label_en") or "pbc_card"),
+                source_id="pbc_card",
+                operation=lambda card=card: fetch_pbc_card(card),
+                record_empty=False,
+            ))
         except Exception as exc:  # noqa: BLE001
             cards.append({**card, "value": "n/a", "updated": "n/a", "error": str(exc)})
     return series_list, cards
@@ -1181,10 +1200,21 @@ def inject_index(summary: dict[str, Any]) -> None:
     _write_clean(index_path, html)
 
 
-def build() -> Path:
+def build(data_mode: str | None = None) -> Path:
     OUTPUT.mkdir(parents=True, exist_ok=True)
+    data_mode = (data_mode or os.environ.get("COUNTRY_PRIMER_DATA_MODE") or "refresh").strip().lower()
     config = _load_config()
-    series_list, cards = fetch_all(config)
+    if data_mode == "snapshot":
+        series_list = load_canonical_data_first_frame(CANONICAL_JSON, config)
+        previous_summary = json.loads(SUMMARY_JSON.read_text()) if SUMMARY_JSON.exists() else {}
+        cards = list(previous_summary.get("latest_cards") or [
+            {**card, "value": "n/a", "updated": "n/a"}
+            for card in config.get("latest_cards", [])
+        ])
+    else:
+        SOURCE_HEALTH.reset()
+        series_list, cards = fetch_all(config)
+        series_list = retain_last_known_good_series(series_list, CANONICAL_JSON, config)
     apply_quality_assessments(series_list)
     _write_clean(OUT_HTML, render_html(config, series_list, cards))
 
@@ -1203,10 +1233,18 @@ def build() -> Path:
         ),
         "key_series_latest": _key_series_latest(charted, SUMMARY_KEY_IDS),
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
+        "data_mode": data_mode,
+        "latest_cards": cards,
     }
-    summary["canonical_frame"] = write_canonical_data_first_frame(CANONICAL_JSON, "CN", series_list)
+    summary["canonical_frame"] = (
+        canonical_frame_metadata(CANONICAL_JSON)
+        if data_mode == "snapshot"
+        else write_canonical_data_first_frame(CANONICAL_JSON, "CN", series_list)
+    )
     summary.update(build_summary_metadata(config, series_list, "CN"))
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
+    if data_mode != "snapshot":
+        write_source_health_report(OUTPUT / "source_health.json", ["CN"])
     inject_index(summary)
     if not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):
         from build_dashboard_archive import build_archive

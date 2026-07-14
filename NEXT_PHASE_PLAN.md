@@ -1,6 +1,6 @@
 # Macro Dashboard Framework v2: Operating Plan
 
-Updated: 2026-07-13
+Updated: 2026-07-14
 
 This is the current handoff for future models and developers. The pre-v2 plan
 is archived under `docs/archive/` and should not be used as the active build
@@ -75,12 +75,15 @@ row-level `is_projection`. Do not draw forecasts as observed history.
 ```bash
 scripts/uv_project.sh sync
 make doctor
-make build-v4
+make refresh-check
+make refresh-data
 make validate
 make publish MSG="Describe the data or framework change"
 ```
 
-`make build-v4` is the source-refresh path and requires network access.
+`make refresh-data` is the source-refresh path and requires network access;
+`make build-v4` remains its compatibility alias. `make rebuild-ui` renders all
+seven pages from committed canonical snapshots and never calls data sources.
 `make validate` never refetches data. After a successful push,
 `scripts/publish_dashboard.sh` waits for the exact GitHub Pages commit and
 smoke-tests all stable routes with a cache-busting query string.
@@ -102,21 +105,24 @@ Never place API keys in configs, generated HTML, summary JSON, tests, or docs.
 
 ## Next Optimisation Phases
 
-### P1: Source Reliability and Release Calendars
+### P1: Source Reliability and Release Calendars — Completed 2026-07-14
 
-- Add per-source circuit breakers and structured failure reasons instead of
-  broad exception swallowing.
-- Add release-calendar overrides for ONS, BEA/BLS, NBS/PBC, Eurostat, and
-  central-bank series so `due` is based on expected publication dates.
-- Split refresh into `make refresh-data` and `make rebuild-ui`; the latter
-  should use committed/cache snapshots and avoid network calls.
-- Add a non-blocking `make refresh-check` that compares live headline data with
-  the committed snapshot without changing generated output.
+- Per-source circuit breakers and structured failure reasons are written to
+  `output/source_health.json`; transient misses retain last-known-good data with
+  an explicit `refresh_fallback/watch` marker.
+- `config/release_calendars.yaml` supplies source/indicator cadence overrides
+  for ONS/BoE, BEA/BLS, NBS/PBC/SAFE, and Eurostat.
+- `make refresh-data`, `make rebuild-ui`, and `make refresh-check` now separate
+  network refresh, snapshot-only rendering, and non-blocking headline probes.
+- All four canonical snapshots are byte-identical before and after an offline
+  `make rebuild-ui` run; this is the required UI-only development path.
 
-### P2: Comparable Core Coverage
+### P2: Comparable Core Coverage — Current
 
-- Produce a 7-country by 48-concept coverage matrix from canonical metadata.
-- Prioritise missing concepts by macro value, not by chart count.
+- `output/core_coverage_matrix.json` and `CORE_COVERAGE_MATRIX.md` now provide
+  the 7-country by 48-concept matrix from canonical metadata.
+- Gap priority now uses explicit pillar macro-value weights plus missing/weak
+  country counts, rather than raw chart count.
 - Resolve remaining semantic substitutes such as local-yield spread versus
   licensed EMBI/CDS; keep names economically explicit where exact public data
   does not exist.

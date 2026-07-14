@@ -1,5 +1,5 @@
 from country_primer.data_fetcher import INDICATOR_MANIFEST_48
-from country_primer.framework import canonical_indicator_id, concept_id_for, framework_summary
+from country_primer.framework import canonical_indicator_id, concept_id_for, framework_summary, load_macro_framework
 
 
 def test_framework_v2_has_nine_pillars_and_48_concepts() -> None:
@@ -9,6 +9,10 @@ def test_framework_v2_has_nine_pillars_and_48_concepts() -> None:
         "core_concepts": 48,
         "legacy_aliases": 7,
     }
+    assert all(
+        int(pillar.get("priority_weight") or 0) in range(1, 6)
+        for pillar in load_macro_framework().pillars.values()
+    )
 
 
 def test_legacy_semantic_aliases_resolve_to_accurate_ids() -> None:

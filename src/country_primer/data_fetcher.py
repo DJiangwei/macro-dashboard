@@ -5,10 +5,9 @@ produce one long-form table with columns:
 
     country, date, indicator_id, value
 
-The current implementation is cache/API/proxy aware: it first tries the
-existing project fetch stack, then emits transparent research proxies for
-indicators whose public-source adapter is not yet wired. That keeps every
-dashboard section populated while marking data quality clearly.
+The current implementation is cache/API aware: it tries declared public-source
+adapters in order and omits indicators that have no validated observations.
+It never synthesizes a time series merely to populate a dashboard slot.
 """
 from __future__ import annotations
 
@@ -38,6 +37,7 @@ from .catalog import load_countries
 from .data_quality import assess_series_quality
 from .fetch import CACHE_DIR, Series, cache_path, fetch_ecb_fx, fetch_eurostat, fetch_wb, fetch_yahoo, finalize_series
 from .framework import concept_id_for
+from .source_health import guarded_source_call
 
 
 CANONICAL_COLUMNS = [
@@ -63,6 +63,7 @@ CANONICAL_COLUMNS = [
     "comparability",
     "observation_type",
     "is_projection",
+    "refresh_fallback",
 ]
 
 
@@ -4491,7 +4492,17 @@ class DataPipeline:
             allowed = set(spec.adapter_order)
             fetchers = [fetcher for fetcher in self.fetchers if fetcher.__class__.__name__ in allowed]
         for fetcher in fetchers:
-            rows = fetcher.fetch(country, spec)
+            try:
+                rows = guarded_source_call(
+                    country=country,
+                    indicator_id=spec.indicator_id,
+                    source_id=fetcher.__class__.__name__,
+                    operation=lambda fetcher=fetcher: fetcher.fetch(country, spec),
+                )
+            except Exception:
+                # The registry retains the structured failure reason while a
+                # later adapter in the declared order may still recover.
+                continue
             if rows:
                 return rows
         return []

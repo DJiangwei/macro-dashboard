@@ -22,7 +22,10 @@ from xml.etree import ElementTree as ET
 
 import requests
 
-CACHE_DIR = Path(__file__).resolve().parents[2] / "cache"
+CACHE_DIR = Path(
+    os.environ.get("COUNTRY_PRIMER_CACHE_DIR")
+    or Path(__file__).resolve().parents[2] / "cache"
+)
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 

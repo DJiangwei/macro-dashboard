@@ -65,6 +65,8 @@ def canonical_data_first_series(country_code: str, series_list: list[dict[str, A
             "quality": quality,
             "quality_notes": list(item.get("quality_notes") or []),
             "actual_through": _clean(item.get("actual_through")),
+            "provider_updated": _clean(item.get("provider_updated")),
+            "refresh_fallback": bool(item.get("refresh_fallback")),
             "observations": observations,
         })
     return sorted(output, key=lambda row: row["indicator_id"])
@@ -97,6 +99,130 @@ def write_canonical_data_first_frame(path: Any, country_code: str, series_list: 
         "series_count": len(compact_series),
         "observation_count": observation_count,
     }
+
+
+def canonical_frame_metadata(path: Any) -> dict[str, Any]:
+    from pathlib import Path
+
+    payload = json.loads(Path(path).read_text())
+    compact_series = list(payload.get("series") or [])
+    observation_count = sum(len(item.get("observations") or []) for item in compact_series)
+    return {
+        "schema_version": payload.get("schema_version", ""),
+        "observation_columns": list(payload.get("observation_columns") or CANONICAL_OBSERVATION_COLUMNS),
+        "file": Path(path).name,
+        "series": len(compact_series),
+        "observations": observation_count,
+        "series_count": len(compact_series),
+        "observation_count": observation_count,
+        "snapshot_generated": payload.get("generated", ""),
+    }
+
+
+def load_canonical_data_first_frame(path: Any, config: dict[str, Any]) -> list[dict[str, Any]]:
+    """Restore renderer-ready series from a committed canonical v2 snapshot."""
+    from pathlib import Path
+
+    payload = json.loads(Path(path).read_text())
+    if payload.get("schema_version") != "data-first-canonical-v2":
+        raise ValueError(f"Unsupported canonical snapshot: {payload.get('schema_version')}")
+    specs = {
+        _clean(item.get("id")): dict(item)
+        for item in (config.get("indicators") or [])
+        if _clean(item.get("id"))
+    }
+    restored: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for item in payload.get("series") or []:
+        indicator_id = _clean(item.get("indicator_id"))
+        if not indicator_id:
+            continue
+        source = dict(item.get("source") or {})
+        quality = dict(item.get("quality") or {})
+        observations = []
+        for row in item.get("observations") or []:
+            if not isinstance(row, list) or len(row) < 2:
+                continue
+            try:
+                observations.append({"date": _clean(row[0]), "value": float(row[1])})
+            except (TypeError, ValueError):
+                continue
+        spec = dict(specs.get(indicator_id) or {})
+        restored.append({
+            **spec,
+            "id": indicator_id,
+            "section": _clean(item.get("section") or spec.get("section")),
+            "label_en": _clean(item.get("label_en") or spec.get("label_en") or indicator_id),
+            "label_zh": _clean(item.get("label_zh") or spec.get("label_zh") or indicator_id),
+            "unit": _clean(item.get("unit") or spec.get("unit")),
+            "frequency": _clean(item.get("frequency") or spec.get("frequency")),
+            "transform": _clean(item.get("transform") or spec.get("transform") or "level"),
+            "source_name": _clean(source.get("name") or spec.get("source_name")),
+            "series": _clean(source.get("series") or spec.get("series")),
+            "source_url": _clean(source.get("url") or spec.get("source_url")),
+            "api_url": _clean(source.get("url") or spec.get("api_url")),
+            "quality_notes": list(item.get("quality_notes") or []),
+            "actual_through": _clean(item.get("actual_through") or spec.get("actual_through")),
+            "provider_updated": _clean(item.get("provider_updated") or spec.get("provider_updated")),
+            "refresh_fallback": bool(item.get("refresh_fallback")),
+            "observations": observations,
+            "data_quality": quality,
+            "quality_status": _clean(quality.get("status") or spec.get("quality_status") or "watch"),
+            "snapshot_generated": payload.get("generated", ""),
+        })
+        seen.add(indicator_id)
+
+    # Keep configured gaps visible in summary metadata without fabricating data.
+    for indicator_id, spec in specs.items():
+        if indicator_id in seen:
+            continue
+        restored.append({
+            **spec,
+            "id": indicator_id,
+            "observations": [],
+            "quality_status": "unavailable",
+            "quality_notes": ["No observations in committed canonical snapshot."],
+        })
+    return restored
+
+
+def retain_last_known_good_series(
+    series_list: list[dict[str, Any]],
+    canonical_path: Any,
+    config: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Retain prior observations when a live refresh fails for an existing series."""
+    from pathlib import Path
+
+    path = Path(canonical_path)
+    if not path.exists():
+        return series_list
+    previous = {
+        item["id"]: item
+        for item in load_canonical_data_first_frame(path, config)
+        if item.get("observations")
+    }
+    merged: list[dict[str, Any]] = []
+    for item in series_list:
+        if item.get("observations") or item.get("id") not in previous:
+            merged.append(item)
+            continue
+        prior = dict(previous[item["id"]])
+        reason = _clean(item.get("failure_reason") or "live_unavailable")
+        prior_notes = [
+            note for note in (prior.get("quality_notes") or [])
+            if "retained prior canonical snapshot" not in _clean(note).lower()
+        ]
+        prior.update({
+            "refresh_fallback": True,
+            "refresh_failure_reason": reason,
+            "quality_status": "watch",
+            "quality_notes": prior_notes + [
+                f"Live refresh unavailable [{reason}]; retained prior canonical snapshot."
+            ],
+        })
+        merged.append(prior)
+    return merged
 
 
 def _quality_counts(series_list: list[dict[str, Any]]) -> dict[str, int]:
@@ -162,6 +288,9 @@ def _chart_freshness_records(
             "age_basis_date": quality["latest_date"],
             "age_days": quality["age_days"],
             "threshold_days": quality["max_age_days"],
+            "release_calendar_id": quality.get("release_calendar_id", ""),
+            "expected_release_date": quality.get("expected_release_date", ""),
+            "due_date": quality.get("due_date", ""),
             "quality_status": quality["status"],
             "source_authority": quality["source_authority"],
             "derivation": quality["derivation"],

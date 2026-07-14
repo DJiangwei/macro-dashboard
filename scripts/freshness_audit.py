@@ -16,6 +16,8 @@ from datetime import UTC, date, datetime
 from html import unescape
 from pathlib import Path
 
+from country_primer.data_quality import assess_series_quality
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
@@ -52,6 +54,9 @@ class ChartFreshness:
     age_basis_date: str
     age_days: int | None
     threshold_days: int | None
+    release_calendar_id: str
+    expected_release_date: str
+    due_date: str
     freshness_status: str
     quality_status: str
     source: str
@@ -187,6 +192,25 @@ def _record(
 ) -> ChartFreshness:
     latest = _parse_date(latest_observation)
     freshness_status, age_basis, age_days, threshold_days = _classify(latest, frequency, quality_status)
+    shared_quality: dict = {}
+    if latest:
+        shared_quality = assess_series_quality(
+            {
+                "id": indicator_id,
+                "frequency": frequency,
+                "source_name": source,
+                "quality_notes": [note] if note else [],
+                "observations": [{"date": latest.isoformat(), "value": 0.0}],
+            },
+            today=TODAY,
+        )
+        if freshness_status != "projection":
+            freshness_status = shared_quality["freshness"]
+            if freshness_status == "current" and quality_status == "low_confidence":
+                freshness_status = "needs_review"
+        age_days = shared_quality.get("age_days")
+        threshold_days = shared_quality.get("max_age_days")
+        age_basis = min(_period_end_for_age(latest, frequency), TODAY) if latest <= TODAY else latest
     scheduled_haystack = " ".join([indicator_id, source, note]).lower()
     if freshness_status == "future_date" and (
         indicator_id in {"reserve_balance_rate", "fed_upper_target", "fed_lower_target"}
@@ -203,6 +227,9 @@ def _record(
         age_basis_date=age_basis.isoformat() if age_basis else "",
         age_days=age_days,
         threshold_days=threshold_days,
+        release_calendar_id=str(shared_quality.get("release_calendar_id") or ""),
+        expected_release_date=str(shared_quality.get("expected_release_date") or ""),
+        due_date=str(shared_quality.get("due_date") or ""),
         freshness_status=freshness_status,
         quality_status=_clean(quality_status),
         source=_clean(source),

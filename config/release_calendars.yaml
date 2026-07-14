@@ -1,0 +1,114 @@
+schema_version: release-calendar-v1
+due_warning_days: 7
+
+# Lags are measured from the end of the next observation period to the
+# expected publication date. Grace days absorb weekends and routine release
+# slippage. Indicator-specific rules intentionally precede broad source rules.
+rules:
+  - id: ons_fast_monthly
+    source_contains: ["office for national statistics", "ons", "ons.gov.uk"]
+    indicator_ids:
+      - cpi_yoy
+      - core_cpi_yoy
+      - unemployment_rate
+      - employment_rate
+      - inactivity_rate
+      - vacancies
+      - retail_sales_yoy
+      - retail_sales_mom
+      - average_weekly_earnings
+      - regular_pay_growth
+    frequencies: [monthly]
+    publication_lag_days: 20
+    grace_days: 7
+
+  - id: ons_monthly_activity
+    source_contains: ["office for national statistics", "ons", "ons.gov.uk"]
+    frequencies: [monthly]
+    publication_lag_days: 45
+    grace_days: 10
+
+  - id: ons_quarterly
+    source_contains: ["office for national statistics", "ons", "ons.gov.uk"]
+    frequencies: [quarterly]
+    publication_lag_days: 45
+    grace_days: 15
+
+  - id: boe_monthly
+    source_contains: ["bank of england", "boe", "bankofengland.co.uk"]
+    frequencies: [monthly]
+    publication_lag_days: 30
+    grace_days: 10
+
+  - id: bls_monthly
+    source_contains: ["bureau of labor statistics", "bls", "bls.gov"]
+    frequencies: [monthly]
+    publication_lag_days: 15
+    grace_days: 5
+
+  - id: bea_monthly
+    indicator_ids:
+      - personal_income
+      - disposable_personal_income
+      - real_disposable_income
+      - personal_consumption
+      - real_personal_consumption
+      - real_pce_mom
+      - pce_inflation
+      - core_pce_inflation
+    frequencies: [monthly]
+    publication_lag_days: 30
+    grace_days: 7
+
+  - id: bea_quarterly
+    indicator_ids:
+      - real_gdp_growth
+      - real_gdp_level
+      - nominal_gdp
+      - gdp_deflator
+      - corporate_profits
+    frequencies: [quarterly]
+    publication_lag_days: 35
+    grace_days: 10
+
+  - id: nbs_monthly
+    source_contains: ["national bureau of statistics", "nbs", "akshare"]
+    frequencies: [monthly]
+    publication_lag_days: 20
+    grace_days: 10
+
+  - id: nbs_quarterly
+    source_contains: ["national bureau of statistics", "nbs", "akshare"]
+    frequencies: [quarterly]
+    publication_lag_days: 20
+    grace_days: 10
+
+  - id: pbc_monthly
+    source_contains: ["people's bank of china", "pbc", "pboc", "pbc.gov.cn"]
+    frequencies: [monthly]
+    publication_lag_days: 30
+    grace_days: 10
+
+  - id: safe_monthly
+    source_contains: ["state administration of foreign exchange", "safe", "safe.gov.cn"]
+    frequencies: [monthly]
+    publication_lag_days: 35
+    grace_days: 10
+
+  - id: eurostat_monthly
+    source_contains: ["eurostat", "ec.europa.eu/eurostat"]
+    frequencies: [monthly]
+    publication_lag_days: 45
+    grace_days: 15
+
+  - id: eurostat_quarterly
+    source_contains: ["eurostat", "ec.europa.eu/eurostat"]
+    frequencies: [quarterly]
+    publication_lag_days: 75
+    grace_days: 20
+
+  - id: eurostat_annual
+    source_contains: ["eurostat", "ec.europa.eu/eurostat"]
+    frequencies: [annual]
+    publication_lag_days: 180
+    grace_days: 45

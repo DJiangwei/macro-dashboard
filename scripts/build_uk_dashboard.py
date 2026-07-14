@@ -32,6 +32,9 @@ import yaml
 from dashboard_summary_utils import (
     apply_quality_assessments,
     build_summary_metadata,
+    canonical_frame_metadata,
+    load_canonical_data_first_frame,
+    retain_last_known_good_series,
     write_canonical_data_first_frame,
 )
 from build_china_dashboard import (  # Reuse the data-first page shell.
@@ -44,6 +47,12 @@ from build_china_dashboard import (  # Reuse the data-first page shell.
     _section_nav,
     _sections_html,
     _write_clean,
+)
+from country_primer.source_health import (
+    SOURCE_HEALTH,
+    failure_series,
+    guarded_source_call,
+    write_source_health_report,
 )
 
 
@@ -1104,37 +1113,40 @@ def validate_series(series: dict[str, Any]) -> dict[str, Any]:
 
 def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
     session = requests.Session()
-    try:
+
+    def operation() -> dict[str, Any]:
         fetcher = spec.get("fetcher")
         if fetcher == "fred":
-            series = fetch_fred(session, spec)
-        elif fetcher == "ons_timeseries":
-            series = fetch_ons_timeseries(session, spec)
-        elif fetcher == "boe_iadb":
-            series = fetch_boe_iadb(session, spec)
-        elif fetcher == "boe_bank_rate":
-            series = fetch_boe_bank_rate(session, spec)
-        elif fetcher == "govuk_road_fuel":
-            series = fetch_govuk_road_fuel(session, spec)
-        elif fetcher == "govuk_xlsx_table":
-            series = fetch_govuk_xlsx_table(session, spec)
-        elif fetcher == "govuk_ods_table":
-            series = fetch_govuk_ods_table(session, spec)
-        elif fetcher == "ons_xlsx_table":
-            series = fetch_ons_xlsx_table(session, spec)
-        elif fetcher == "ons_horizontal_csv_table":
-            series = fetch_ons_horizontal_csv_table(session, spec)
-        elif fetcher == "obr_xlsx_row":
-            series = fetch_obr_xlsx_row(session, spec)
-        else:
-            series = {**spec, "observations": [], "quality_status": "unavailable", "quality_notes": ["Unknown fetcher."]}
-    except Exception as exc:  # noqa: BLE001 - data page should degrade instead of crashing.
-        series = {
-            **spec,
-            "observations": [],
-            "quality_status": "unavailable",
-            "quality_notes": [f"Fetch failed: {exc}"],
-        }
+            return fetch_fred(session, spec)
+        if fetcher == "ons_timeseries":
+            return fetch_ons_timeseries(session, spec)
+        if fetcher == "boe_iadb":
+            return fetch_boe_iadb(session, spec)
+        if fetcher == "boe_bank_rate":
+            return fetch_boe_bank_rate(session, spec)
+        if fetcher == "govuk_road_fuel":
+            return fetch_govuk_road_fuel(session, spec)
+        if fetcher == "govuk_xlsx_table":
+            return fetch_govuk_xlsx_table(session, spec)
+        if fetcher == "govuk_ods_table":
+            return fetch_govuk_ods_table(session, spec)
+        if fetcher == "ons_xlsx_table":
+            return fetch_ons_xlsx_table(session, spec)
+        if fetcher == "ons_horizontal_csv_table":
+            return fetch_ons_horizontal_csv_table(session, spec)
+        if fetcher == "obr_xlsx_row":
+            return fetch_obr_xlsx_row(session, spec)
+        raise ValueError(f"Unknown fetcher: {fetcher}")
+
+    try:
+        series = guarded_source_call(
+            country="UK",
+            indicator_id=str(spec.get("id") or "unknown"),
+            source_id=str(spec.get("fetcher") or "unknown"),
+            operation=operation,
+        )
+    except Exception as exc:  # noqa: BLE001 - structured degradation is intentional.
+        series = failure_series(spec, exc)
     return validate_series(series)
 
 
@@ -1386,10 +1398,16 @@ def inject_output_index(summary: dict[str, Any]) -> None:
     _write_clean(index_path, html)
 
 
-def build() -> Path:
+def build(data_mode: str | None = None) -> Path:
     OUTPUT.mkdir(parents=True, exist_ok=True)
+    data_mode = (data_mode or os.environ.get("COUNTRY_PRIMER_DATA_MODE") or "refresh").strip().lower()
     config = _load_config()
-    series_list = fetch_all(config)
+    if data_mode == "snapshot":
+        series_list = load_canonical_data_first_frame(CANONICAL_JSON, config)
+    else:
+        SOURCE_HEALTH.reset()
+        series_list = fetch_all(config)
+        series_list = retain_last_known_good_series(series_list, CANONICAL_JSON, config)
     apply_quality_assessments(series_list)
     _write_clean(OUT_HTML, render_html(config, series_list))
 
@@ -1408,10 +1426,17 @@ def build() -> Path:
         ),
         "key_series_latest": _key_series_latest(charted, SUMMARY_KEY_IDS),
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
+        "data_mode": data_mode,
     }
-    summary["canonical_frame"] = write_canonical_data_first_frame(CANONICAL_JSON, "UK", series_list)
+    summary["canonical_frame"] = (
+        canonical_frame_metadata(CANONICAL_JSON)
+        if data_mode == "snapshot"
+        else write_canonical_data_first_frame(CANONICAL_JSON, "UK", series_list)
+    )
     summary.update(build_summary_metadata(config, series_list, "UK"))
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
+    if data_mode != "snapshot":
+        write_source_health_report(OUTPUT / "source_health.json", ["UK"])
     inject_output_index(summary)
     if not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):
         from build_dashboard_archive import build_archive
