@@ -454,13 +454,59 @@ p { color: var(--muted); }
 .chart-cell .plotly-graph-div { height: 100% !important; }
 .chart-shell {
   position: relative;
-  min-height: 440px;
+  min-height: 492px;
   height: auto;
 }
-.chart-shell .chart-cell,
-.chart-shell > div:first-child {
+.chart-toolbar {
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(23,19,16,0.08);
+  background: rgba(237,223,204,0.12);
+}
+.chart-reading {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  column-gap: 10px;
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+}
+.chart-reading-label {
+  grid-column: 1 / -1;
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.chart-reading-value { display: inline-flex; align-items: baseline; gap: 6px; min-width: 0; }
+.chart-reading-value strong {
+  color: var(--fg);
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.chart-reading-value em {
+  color: var(--muted);
+  font-size: 9px;
+  font-style: normal;
+  white-space: nowrap;
+}
+.chart-reading time { color: var(--muted); font-size: 10px; white-space: nowrap; }
+.chart-canvas,
+.chart-canvas .chart-cell,
+.chart-canvas > div:first-child {
   height: 400px;
 }
+.chart-canvas .plotly-graph-div { height: 100% !important; }
 .chart-footnote {
   display: flex;
   align-items: flex-start;
@@ -488,13 +534,10 @@ p { color: var(--muted); }
 .quality-chip.watch { color: var(--accent); border-color: rgba(138,89,61,0.38); background: rgba(138,89,61,0.08); }
 .quality-chip.low_confidence { color: var(--danger); border-color: rgba(157,61,46,0.35); background: rgba(157,61,46,0.08); }
 .chart-quality-corner {
-  position: absolute;
-  z-index: 4;
-  top: 8px;
-  right: 10px;
+  position: static;
+  z-index: auto;
   background: rgba(255,252,246,0.92);
-  box-shadow: 0 4px 16px rgba(23,19,16,0.08);
-  backdrop-filter: blur(8px);
+  box-shadow: none;
 }
 .indicator-ledger {
   display: grid;
@@ -745,6 +788,13 @@ footer a { color: var(--accent) !important; }
   .trade-card-body,
   .cb-card-body { overflow-x: auto; }
   .section-card-header { align-items: flex-start; flex-direction: column; }
+  .chart-toolbar { padding: 9px 10px; }
+  .chart-reading { column-gap: 8px; }
+  .chart-reading-value strong { font-size: 21px; }
+  .chart-reading-value em { max-width: 112px; overflow: hidden; text-overflow: ellipsis; }
+  .chart-canvas,
+  .chart-canvas .chart-cell,
+  .chart-canvas > div:first-child { height: 360px; }
 }
 """
 
@@ -967,6 +1017,18 @@ def _latest_indicator_row(frame, country_code: str, indicator_id: str) -> dict |
     return rows[-1]
 
 
+def _latest_observed_indicator_row(frame, country_code: str, indicator_id: str) -> dict | None:
+    rows = _indicator_frame(frame, country_code, indicator_id)
+    if not rows:
+        return None
+    observed = [
+        row for row in rows
+        if not bool(row.get("is_projection"))
+        and str(row.get("observation_type") or "").lower() not in {"forecast", "projection"}
+    ]
+    return observed[-1] if observed else rows[-1]
+
+
 def _latest_numeric_value(frame, country_code: str, indicator_id: str) -> float | None:
     row = _latest_indicator_row(frame, country_code, indicator_id)
     if not row:
@@ -993,6 +1055,64 @@ def _format_kpi_period(date_text: str, indicator_id: str) -> str:
     if indicator_id in {"fiscal_balance_pct_gdp", "current_account_pct_gdp"}:
         return str(dt.year)
     return dt.strftime("%b %Y")
+
+
+def _format_chart_period(date_text: str, frequency: str, *, locale: str) -> str:
+    try:
+        dt = datetime.fromisoformat(str(date_text)[:10])
+    except ValueError:
+        return str(date_text)
+    frequency = str(frequency or "").lower()
+    if frequency == "annual":
+        return f"{dt.year}年" if locale == "zh" else str(dt.year)
+    if frequency == "quarterly":
+        quarter = ((dt.month - 1) // 3) + 1
+        return f"{dt.year}年 Q{quarter}" if locale == "zh" else f"Q{quarter} {dt.year}"
+    if frequency == "monthly":
+        return f"{dt.year}年{dt.month}月" if locale == "zh" else dt.strftime("%b %Y")
+    if locale == "zh":
+        return f"{dt.year}年{dt.month}月{dt.day}日"
+    return f"{dt.day} {dt.strftime('%b %Y')}"
+
+
+def _format_chart_reading(value: float, unit: str) -> str:
+    unit_lower = str(unit or "").lower()
+    absolute = abs(value)
+    if "bp" in unit_lower or "basis" in unit_lower:
+        decimals = 0 if value.is_integer() else 1
+    elif "%" in unit_lower or "rate" in unit_lower or "ratio" in unit_lower:
+        decimals = 2 if absolute < 10 else 1
+    elif absolute >= 1000:
+        decimals = 0
+    elif absolute >= 10:
+        decimals = 1
+    else:
+        decimals = 2
+    return f"{value:,.{decimals}f}"
+
+
+def _chart_latest_reading(row: dict | None, spec, chart_id: str) -> str:
+    if row:
+        try:
+            value = _format_chart_reading(float(row["value"]), str(row.get("unit") or spec.unit))
+        except (KeyError, TypeError, ValueError):
+            value = "n/a"
+        date_text = str(row.get("date") or "")
+        frequency = str(row.get("frequency") or getattr(spec, "frequency", ""))
+        period_en = _format_chart_period(date_text, frequency, locale="en")
+        period_zh = _format_chart_period(date_text, frequency, locale="zh")
+    else:
+        value = "n/a"
+        date_text = ""
+        period_en = "Awaiting chart"
+        period_zh = "等待图表数据"
+    unit = str(row.get("unit") if row else "") or str(spec.unit or "")
+    return f"""
+<div class="chart-reading" data-latest-reading data-chart-id="{escape(chart_id)}" data-latest-date="{escape(date_text)}">
+  <span class="chart-reading-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+  <span class="chart-reading-value"><strong>{escape(value)}</strong><em>{escape(unit)}</em></span>
+  <time datetime="{escape(date_text)}"><span data-lang="en">{escape(period_en)}</span><span data-lang="zh">{escape(period_zh)}</span></time>
+</div>"""
 
 
 def _format_kpi_sub(row: dict, indicator_id: str, *, locale: str) -> str:
@@ -1135,7 +1255,7 @@ def _render_section_charts(section_id: str, country_code: str, chart_map: dict[s
         rows = _indicator_frame(canonical_frame, country_code, spec.indicator_id)
         if not legacy_id and not rows:
             continue
-        row = rows[-1] if rows else {}
+        row = _latest_observed_indicator_row(canonical_frame, country_code, spec.indicator_id) or {}
         status = str(row.get("quality_status") or spec.quality_status)
         source = str(row.get("source") or spec.source)
         note = str(row.get("quality_note") or spec.quality_note)
@@ -1158,18 +1278,22 @@ def _render_section_charts(section_id: str, country_code: str, chart_map: dict[s
                 False,
             )
             badge = _chart_corner_badge("verified", legacy_note, False)
+            reading = _chart_latest_reading(row or None, spec, legacy_id)
             html_parts.append(
                 f'<div class="chart-cell chart-shell" {chart_attrs}>'
-                f'{badge}{inner}{footnote}</div>'
+                f'<div class="chart-toolbar">{reading}{badge}</div>'
+                f'<div class="chart-canvas">{inner}</div>{footnote}</div>'
             )
             continue
 
         rendered_ids.append(canonical_id)
         footnote = _chart_footnote(status, source, note, is_proxy)
         badge = _chart_corner_badge(status, note, is_proxy)
+        reading = _chart_latest_reading(row or None, spec, canonical_id)
         html_parts.append(
             f'<div class="chart-cell chart-shell" {chart_attrs}>'
-            f'{badge}{_chart_from_canonical_frame(canonical_frame, country_code, spec, canonical_id)}'
+            f'<div class="chart-toolbar">{reading}{badge}</div>'
+            f'<div class="chart-canvas">{_chart_from_canonical_frame(canonical_frame, country_code, spec, canonical_id)}</div>'
             f'{footnote}</div>'
         )
     return "\n".join(html_parts), rendered_ids
@@ -3370,7 +3494,7 @@ setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
 
 <script>
 (function() {{
-  // After all Plotly charts render, fix autorange + annotate latest values
+  // Keep full history visible and link each chart to a restrained endpoint marker.
   var chartIds = {chart_ids_js};
   var mainCountry = '{country_code}';
 
@@ -3383,7 +3507,7 @@ setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
         Plotly.relayout(cid, {{'xaxis.autorange': true, 'yaxis.autorange': true}});
       }} catch(e) {{}}
 
-      // Annotate latest value of the main-country trace
+      // The exact reading lives in the toolbar; the plot only needs a clear endpoint.
       try {{
         var gd = document.getElementById(cid);
         if (!gd || !gd.data || !gd.data.length) return;
@@ -3409,24 +3533,31 @@ setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
           else if (Math.abs(lastY) < 100) valStr = lastY.toFixed(1);
           else valStr = lastY.toLocaleString('en-US', {{maximumFractionDigits: 0}});
         }} else {{ valStr = String(lastY); }}
-        var curAnn = (gd.layout && gd.layout.annotations) ? gd.layout.annotations.slice() : [];
-        curAnn.push({{
-          x: lastX, y: lastY, xref: 'x', yref: 'y',
-          text: '<b>' + valStr + '</b>',
-          showarrow: true, arrowhead: 2, arrowsize: 1,
-          arrowwidth: 1.5, arrowcolor: '#8a593d',
-          ax: 40, ay: -30,
-          font: {{color: '#8a593d', size: 12, family: 'Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, Helvetica Neue, Arial, sans-serif'}},
-          bgcolor: 'rgba(255,255,255,0.85)',
-          borderpad: 3, xanchor: 'left'
-        }});
-        Plotly.relayout(cid, {{annotations: curAnn}});
+        var readout = document.querySelector('.chart-reading[data-chart-id="' + cid + '"]');
+        if (readout) {{
+          var number = readout.querySelector('.chart-reading-value strong');
+          if (number && number.textContent.trim() === 'n/a') number.textContent = valStr;
+          var periods = readout.querySelectorAll('time span');
+          if (!readout.dataset.latestDate && periods.length) {{
+            periods.forEach(function(period) {{ period.textContent = String(lastX); }});
+          }}
+        }}
+        var alreadyMarked = traces.some(function(trace) {{ return trace.meta === 'cp-latest-marker'; }});
+        if (!alreadyMarked) {{
+          Plotly.addTraces(gd, {{
+            x: [lastX], y: [lastY], type: 'scatter', mode: 'markers',
+            name: 'Latest observation', meta: 'cp-latest-marker', showlegend: false,
+            marker: {{size: 9, color: '#8a593d', line: {{width: 2, color: '#fffdf8'}}}},
+            hovertemplate: '<b>' + valStr + '</b><extra>Latest</extra>',
+            cliponaxis: false
+          }});
+        }}
       }} catch(e) {{}}
     }});
   }}
 
   if (typeof Plotly !== 'undefined') {{
-    fixCharts();
+    window.setTimeout(fixCharts, 80);
   }} else {{
     var check = setInterval(function() {{
       if (typeof Plotly !== 'undefined') {{ clearInterval(check); fixCharts(); }}
@@ -3444,10 +3575,10 @@ setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
 
 
 def _latest_value(frame, country_code: str, indicator_id: str, *, decimals: int = 2) -> str:
-    rows = _indicator_frame(frame, country_code, indicator_id)
-    if not rows:
+    row = _latest_indicator_row(frame, country_code, indicator_id)
+    if not row:
         return "n/a"
-    value = float(rows[-1]["value"])
+    value = float(row["value"])
     if abs(value) >= 100:
         return f"{value:,.0f}"
     return f"{value:,.{decimals}f}"

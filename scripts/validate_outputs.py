@@ -41,6 +41,13 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
             raise AssertionError(f"{filename} does not persist the chart-view preference")
         if text.count(" Dashboard Dashboard"):
             raise AssertionError(f"{filename} contains a duplicated dashboard title")
+        chart_count = (
+            len(re.findall(r'class="chart-card(?:\s|\")', text))
+            if code in {"CN", "UK", "US"}
+            else text.count('class="chart-cell chart-shell"')
+        )
+        if chart_count and text.count("data-latest-reading") != chart_count:
+            raise AssertionError(f"{filename} does not show a latest reading for every chart")
         messages.append(f"{code}: stable route and view contract ok")
 
     for name in ("china", "uk", "us"):
@@ -50,6 +57,8 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
         plots = re.findall(r'Plotly\.newPlot\("(chart-[^"]+)"', text)
         if not cards or cards != len(divs) or set(divs) != set(plots):
             raise AssertionError(f"{name}.html has mismatched chart cards, divs, or Plotly calls")
+        if text.count('meta": "cp-latest-marker"') != cards:
+            raise AssertionError(f"{name}.html is missing one endpoint marker per chart")
         canonical = _load_json(output / f"{name}_canonical_frame.json")
         if canonical.get("schema_version") != "data-first-canonical-v2":
             raise AssertionError(f"{name} canonical output is not v2")

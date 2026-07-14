@@ -596,7 +596,50 @@ def fetch_all(config: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[s
 
 def _latest(series: dict[str, Any]) -> dict[str, Any] | None:
     observations = series.get("observations") or []
-    return observations[-1] if observations else None
+    if not observations:
+        return None
+
+    actual_through = series.get("actual_through")
+    if actual_through not in (None, ""):
+        try:
+            cutoff_year = int(actual_through)
+        except (TypeError, ValueError):
+            cutoff_year = None
+        if cutoff_year is not None:
+            actual = [
+                item for item in observations
+                if (_parse_year(str(item.get("date", ""))) or 9999) <= cutoff_year
+            ]
+            if actual:
+                return actual[-1]
+
+    observed = [
+        item for item in observations
+        if not bool(item.get("is_projection"))
+        and str(item.get("observation_type") or "").lower() not in {"forecast", "projection"}
+    ]
+    return observed[-1] if observed else observations[-1]
+
+
+def _format_period(date_text: str, frequency: str, locale: str) -> str:
+    text = str(date_text or "")
+    try:
+        parsed = datetime.strptime(text[:10], "%Y-%m-%d")
+    except ValueError:
+        year = _parse_year(text)
+        return f"{year}年" if year and locale == "zh" else str(year or text)
+
+    frequency = str(frequency or "").lower()
+    if frequency == "annual":
+        return f"{parsed.year}年" if locale == "zh" else str(parsed.year)
+    if frequency == "quarterly":
+        quarter = ((parsed.month - 1) // 3) + 1
+        return f"{parsed.year}年 Q{quarter}" if locale == "zh" else f"Q{quarter} {parsed.year}"
+    if frequency == "monthly":
+        return f"{parsed.year}年{parsed.month}月" if locale == "zh" else parsed.strftime("%b %Y")
+    if locale == "zh":
+        return f"{parsed.year}年{parsed.month}月{parsed.day}日"
+    return f"{parsed.day} {parsed.strftime('%b %Y')}"
 
 
 def _format_value(value: float, unit: str) -> str:
@@ -649,9 +692,28 @@ def _chart_html(series: dict[str, Any], country_code: str) -> str:
             "type": "scatter",
         })
 
+    latest = _latest(series)
+    if latest:
+        traces.append({
+            "name": "Latest observation",
+            "meta": "cp-latest-marker",
+            "x": [latest["date"]],
+            "y": [latest["value"]],
+            "mode": "markers",
+            "marker": {
+                "size": 9,
+                "color": ACCENT,
+                "line": {"width": 2, "color": "#fffdf8"},
+            },
+            "showlegend": False,
+            "hovertemplate": "Latest: %{y}<extra></extra>",
+            "cliponaxis": False,
+            "type": "scatter",
+        })
+
     layout = {
         "height": 360,
-        "margin": {"l": 52, "r": 18, "t": 20, "b": 46},
+        "margin": {"l": 52, "r": 26, "t": 20, "b": 46},
         "paper_bgcolor": PAPER,
         "plot_bgcolor": PAPER,
         "font": {
@@ -670,10 +732,19 @@ def _chart_html(series: dict[str, Any], country_code: str) -> str:
         "hovermode": "x unified",
         "autosize": True,
     }
-    latest = _latest(series)
-    latest_text = ""
+    latest_reading = ""
     if latest:
-        latest_text = f"{escape(str(latest['date']))} · {_format_value(float(latest['value']), series.get('unit', ''))} {escape(series.get('unit', ''))}"
+        value = _format_value(float(latest["value"]), series.get("unit", ""))
+        unit = escape(series.get("unit", ""))
+        date_text = escape(str(latest["date"]))
+        period_en = escape(_format_period(str(latest["date"]), series.get("frequency", ""), "en"))
+        period_zh = escape(_format_period(str(latest["date"]), series.get("frequency", ""), "zh"))
+        latest_reading = f"""
+      <div class="latest-reading" data-latest-reading data-latest-date="{date_text}">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>{value}</strong><em>{unit}</em></span>
+        <time datetime="{date_text}"><span data-lang="en">{period_en}</span><span data-lang="zh">{period_zh}</span></time>
+      </div>"""
     quality = escape(series.get("quality_status", "unchecked").replace("_", " "))
     caveat_en = escape(series.get("caveat_en", ""))
     caveat_zh = escape(series.get("caveat_zh", ""))
@@ -683,11 +754,13 @@ def _chart_html(series: dict[str, Any], country_code: str) -> str:
     return f"""
 <article class="chart-card chart-quality-{escape(series.get('quality_status', 'unchecked'))}" data-dashboard-view="{view}" data-concept-id="{escape(concept_id)}">
   <div class="chart-head">
-    <div>
+    <div class="chart-title">
       <h3><span data-lang="en">{escape(series['label_en'])}</span><span data-lang="zh">{escape(series['label_zh'])}</span></h3>
-      <p>{latest_text}</p>
     </div>
-    <span class="quality-pill">{quality}</span>
+    <div class="chart-status">
+      {latest_reading}
+      <span class="quality-pill">{quality}</span>
+    </div>
   </div>
   <div id="{chart_id}" class="plotly-chart"></div>
   <script>
@@ -986,10 +1059,41 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
 .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px; margin-bottom: 20px; }
 .chart-card { padding: 16px; min-width: 0; overflow: hidden; transition: transform 0.16s ease, border-color 0.16s ease; }
 .chart-card:hover { transform: translateY(-2px); border-color: rgba(23,19,16,0.26); }
-.chart-head { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 8px; }
-.chart-head > div { min-width: 0; }
+.chart-head { display: flex; justify-content: space-between; gap: 18px; align-items: stretch; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 8px; }
+.chart-title { min-width: 0; flex: 1 1 auto; padding-top: 2px; }
 .chart-head h3 { margin: 0; font-family: var(--font-display); font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
-.chart-head p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+.chart-status { display: flex; align-items: flex-start; gap: 10px; flex: 0 0 auto; }
+.latest-reading {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 9px;
+  align-items: baseline;
+  min-width: 160px;
+  padding-left: 14px;
+  border-left: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+}
+.latest-label {
+  grid-column: 1 / -1;
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.latest-value { display: inline-flex; align-items: baseline; gap: 5px; min-width: 0; }
+.latest-value strong {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--fg);
+  white-space: nowrap;
+}
+.latest-value em { color: var(--muted); font-size: 9px; font-style: normal; white-space: nowrap; }
+.latest-reading time { color: var(--muted); font-size: 10px; white-space: nowrap; }
 .quality-pill {
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -1026,9 +1130,13 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   .section-title { grid-template-columns: 1fr; }
   .logic { grid-column: 1; }
   .charts-grid { grid-template-columns: 1fr; }
+  .panel { overflow-x: auto; }
   .chart-card { padding: 13px; }
   .chart-head { flex-direction: column; gap: 8px; }
   .chart-head h3 { font-size: 19px; }
+  .chart-status { width: 100%; justify-content: space-between; align-items: center; }
+  .latest-reading { flex: 1 1 auto; min-width: 0; border-left: 0; border-top: 1px solid var(--border); padding: 8px 0 0; }
+  .latest-value strong { font-size: 22px; }
   .plotly-chart { height: 320px; }
 }
 """
