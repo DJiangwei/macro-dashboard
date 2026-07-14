@@ -6,117 +6,15 @@ transform choices without scraping HTML or refetching live sources.
 """
 from __future__ import annotations
 
-import re
 import json
-from calendar import monthrange
 from collections import Counter, defaultdict
 from datetime import UTC, date, datetime
 from typing import Any
 
+from country_primer.data_quality import assess_series_quality, clean as _clean
+from country_primer.framework import concept_id_for, framework_summary, load_macro_framework
 
-CANONICAL_FRAME_COLUMNS = [
-    "country",
-    "date",
-    "indicator_id",
-    "value",
-    "unit",
-    "frequency",
-    "source_name",
-    "series",
-    "transform",
-    "quality_status",
-    "quality_notes",
-]
-
-THRESHOLD_DAYS = {
-    "daily": 14,
-    "business daily": 14,
-    "weekly": 45,
-    "monthly": 150,
-    "quarterly": 330,
-}
-
-
-def _clean(value: object) -> str:
-    return " ".join(str(value or "").replace("\xa0", " ").split())
-
-
-def _parse_date(value: object) -> date | None:
-    text = _clean(value)
-    if not text or text.lower() in {"missing", "n/a", "nan"}:
-        return None
-    text = text.split("·", 1)[0].strip()
-    iso_match = re.search(r"(\d{4})-(\d{2})-(\d{2})", text)
-    if iso_match:
-        try:
-            return date(int(iso_match.group(1)), int(iso_match.group(2)), int(iso_match.group(3)))
-        except ValueError:
-            return None
-    year_month_match = re.fullmatch(r"(\d{4})-(\d{2})", text)
-    if year_month_match:
-        try:
-            return date(int(year_month_match.group(1)), int(year_month_match.group(2)), 1)
-        except ValueError:
-            return None
-    quarter_match = re.search(r"(\d{4})\s*Q([1-4])", text, flags=re.I)
-    if quarter_match:
-        year = int(quarter_match.group(1))
-        month = int(quarter_match.group(2)) * 3
-        return date(year, month, monthrange(year, month)[1])
-    if re.fullmatch(r"\d{4}", text):
-        return date(int(text), 12, 31)
-    return None
-
-
-def _threshold_for_frequency(frequency: object) -> int | None:
-    normalized = _clean(frequency).lower()
-    if normalized in THRESHOLD_DAYS:
-        return THRESHOLD_DAYS[normalized]
-    if "daily" in normalized:
-        return THRESHOLD_DAYS["daily"]
-    if "week" in normalized:
-        return THRESHOLD_DAYS["weekly"]
-    if "month" in normalized:
-        return THRESHOLD_DAYS["monthly"]
-    if "quarter" in normalized:
-        return THRESHOLD_DAYS["quarterly"]
-    return None
-
-
-def _period_end_for_age(latest: date, frequency: object) -> date:
-    normalized = _clean(frequency).lower()
-    if "quarter" in normalized and latest.day == 1 and latest.month in {1, 4, 7, 10}:
-        month = latest.month + 2
-        return date(latest.year, month, monthrange(latest.year, month)[1])
-    if "month" in normalized and latest.day == 1:
-        return date(latest.year, latest.month, monthrange(latest.year, latest.month)[1])
-    return latest
-
-
-def _classify(latest: date | None, frequency: object, quality_status: object, *, today: date) -> tuple[str, date | None, int | None, int | None]:
-    threshold = _threshold_for_frequency(frequency)
-    if latest is None:
-        return "missing_date", None, None, threshold
-
-    normalized = _clean(frequency).lower()
-    if "annual" in normalized or "year" in normalized:
-        if latest.year > today.year:
-            return "projection", latest, (today - latest).days, None
-        age_basis = latest if latest <= today else today
-        if latest.year < today.year - 2:
-            return "lagged_source", age_basis, (today - age_basis).days, None
-        return "current", age_basis, (today - age_basis).days, None
-
-    if latest > today:
-        return "future_date", latest, (today - latest).days, threshold
-
-    age_basis = min(_period_end_for_age(latest, frequency), today)
-    age_days = (today - age_basis).days
-    if threshold is not None and age_days > threshold:
-        return "stale", age_basis, age_days, threshold
-    if _clean(quality_status) == "low_confidence":
-        return "needs_review", age_basis, age_days, threshold
-    return "current", age_basis, age_days, threshold
+CANONICAL_OBSERVATION_COLUMNS = ["date", "value"]
 
 
 def _latest_observation(series: dict[str, Any]) -> dict[str, Any] | None:
@@ -126,51 +24,78 @@ def _latest_observation(series: dict[str, Any]) -> dict[str, Any] | None:
     return observations[-1]
 
 
-def canonical_data_first_records(country_code: str, series_list: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Return data-first observations in a canonical macro frame shape."""
-    records: list[dict[str, Any]] = []
+def apply_quality_assessments(series_list: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Attach the shared quality model before HTML and JSON are rendered."""
     for item in series_list:
-        indicator_id = _clean(item.get("id"))
+        quality = assess_series_quality(item)
+        item["data_quality"] = quality
+        item["quality_status"] = quality["status"]
+    return series_list
+
+
+def canonical_data_first_series(country_code: str, series_list: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Return compact series metadata plus [date, value] observations."""
+    output: list[dict[str, Any]] = []
+    for item in series_list:
+        indicator_id = _clean(item.get("id") or item.get("indicator_id"))
+        observations: list[list[Any]] = []
         for observation in item.get("observations") or []:
             try:
                 value = float(observation.get("value"))
             except (TypeError, ValueError):
                 continue
-            records.append({
-                "country": country_code,
-                "date": _clean(observation.get("date")),
-                "indicator_id": indicator_id,
-                "value": value,
-                "unit": _clean(item.get("unit")),
-                "frequency": _clean(item.get("frequency")),
-                "source_name": _clean(item.get("source_name")),
+            observations.append([_clean(observation.get("date")), value])
+        if not observations:
+            continue
+        quality = dict(item.get("data_quality") or assess_series_quality(item))
+        output.append({
+            "indicator_id": indicator_id,
+            "concept_id": concept_id_for(country_code, indicator_id),
+            "section": _clean(item.get("section")),
+            "label_en": _clean(item.get("label_en") or item.get("label")),
+            "label_zh": _clean(item.get("label_zh") or item.get("label_en") or item.get("label")),
+            "unit": _clean(item.get("unit")),
+            "frequency": _clean(item.get("frequency")),
+            "transform": _clean(item.get("transform") or "level"),
+            "source": {
+                "name": _clean(item.get("source_name")),
                 "series": _clean(item.get("series")),
-                "transform": _clean(item.get("transform") or "level"),
-                "quality_status": _clean(item.get("quality_status") or "unchecked"),
-                "quality_notes": list(item.get("quality_notes") or []),
-            })
-    return sorted(records, key=lambda row: (row["indicator_id"], row["date"]))
+                "url": _clean(item.get("source_url") or item.get("api_url")),
+            },
+            "quality": quality,
+            "quality_notes": list(item.get("quality_notes") or []),
+            "actual_through": _clean(item.get("actual_through")),
+            "observations": observations,
+        })
+    return sorted(output, key=lambda row: row["indicator_id"])
 
 
 def write_canonical_data_first_frame(path: Any, country_code: str, series_list: list[dict[str, Any]]) -> dict[str, Any]:
-    """Write a canonical data-first frame JSON and return compact metadata."""
+    """Write canonical v2 without repeating metadata for every observation."""
     from pathlib import Path
 
-    records = canonical_data_first_records(country_code, series_list)
+    compact_series = canonical_data_first_series(country_code, series_list)
+    observation_count = sum(len(item["observations"]) for item in compact_series)
+    framework = load_macro_framework()
     payload = {
-        "schema_version": "data-first-canonical-v1",
-        "columns": CANONICAL_FRAME_COLUMNS,
+        "schema_version": "data-first-canonical-v2",
         "generated": datetime.now(UTC).isoformat(),
         "country": country_code,
-        "records": records,
+        "framework": framework_summary(),
+        "observation_columns": CANONICAL_OBSERVATION_COLUMNS,
+        "legacy_aliases": framework.legacy_aliases,
+        "series": compact_series,
     }
     output_path = Path(path)
     output_path.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n")
     return {
         "schema_version": payload["schema_version"],
-        "columns": CANONICAL_FRAME_COLUMNS,
+        "observation_columns": CANONICAL_OBSERVATION_COLUMNS,
         "file": output_path.name,
-        "records": len(records),
+        "series": len(compact_series),
+        "observations": observation_count,
+        "series_count": len(compact_series),
+        "observation_count": observation_count,
     }
 
 
@@ -210,17 +135,13 @@ def _gap_detail(config: dict[str, Any]) -> list[dict[str, str]]:
     return gaps
 
 
-def _chart_freshness_records(series_list: list[dict[str, Any]], *, today: date) -> list[dict[str, Any]]:
+def _chart_freshness_records(
+    series_list: list[dict[str, Any]], *, country_code: str, today: date
+) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for item in series_list:
-        latest_observation = _latest_observation(item)
-        latest_date = _parse_date(latest_observation.get("date") if latest_observation else "")
-        status, age_basis, age_days, threshold_days = _classify(
-            latest_date,
-            item.get("frequency"),
-            item.get("quality_status"),
-            today=today,
-        )
+        quality = dict(item.get("data_quality") or assess_series_quality(item, today=today))
+        status = quality["freshness"]
         haystack = " ".join([
             _clean(item.get("id")),
             _clean(item.get("source_name")),
@@ -233,14 +154,19 @@ def _chart_freshness_records(series_list: list[dict[str, Any]], *, today: date) 
             status = "scheduled_policy"
         records.append({
             "id": _clean(item.get("id")),
+            "concept_id": concept_id_for(country_code, _clean(item.get("id"))),
             "label_en": _clean(item.get("label_en") or item.get("label")),
-            "latest_date": latest_date.isoformat() if latest_date else "",
+            "latest_date": quality["latest_date"],
             "frequency": _clean(item.get("frequency")),
             "freshness_status": status,
-            "age_basis_date": age_basis.isoformat() if age_basis else "",
-            "age_days": age_days,
-            "threshold_days": threshold_days,
-            "quality_status": _clean(item.get("quality_status") or "unchecked"),
+            "age_basis_date": quality["latest_date"],
+            "age_days": quality["age_days"],
+            "threshold_days": quality["max_age_days"],
+            "quality_status": quality["status"],
+            "source_authority": quality["source_authority"],
+            "derivation": quality["derivation"],
+            "validation": quality["validation"],
+            "comparability": quality["comparability"],
             "source_name": _clean(item.get("source_name")),
             "series": _clean(item.get("series")),
             "transform": _clean(item.get("transform") or "level"),
@@ -248,14 +174,17 @@ def _chart_freshness_records(series_list: list[dict[str, Any]], *, today: date) 
     return records
 
 
-def build_summary_metadata(config: dict[str, Any], series_list: list[dict[str, Any]]) -> dict[str, Any]:
+def build_summary_metadata(
+    config: dict[str, Any], series_list: list[dict[str, Any]], country_code: str
+) -> dict[str, Any]:
     """Return structured audit metadata for a dashboard summary JSON."""
     today = datetime.now(UTC).date()
+    apply_quality_assessments(series_list)
     charted = [item for item in series_list if item.get("observations")]
     unavailable = [item for item in series_list if not item.get("observations")]
-    freshness_records = _chart_freshness_records(charted, today=today)
+    freshness_records = _chart_freshness_records(charted, country_code=country_code, today=today)
     freshness_counts = Counter(item["freshness_status"] for item in freshness_records)
-    attention_statuses = {"stale", "lagged_source", "missing_date", "future_date", "needs_review"}
+    attention_statuses = {"stale", "due", "missing", "future_date"}
     attention = [
         item
         for item in freshness_records
@@ -279,6 +208,7 @@ def build_summary_metadata(config: dict[str, Any], series_list: list[dict[str, A
             "quality_counts": _quality_counts(charted),
             "unavailable_count": len(unavailable),
         },
+        "framework": framework_summary(),
         "freshness": {
             "as_of_date": today.isoformat(),
             "counts": {key: freshness_counts[key] for key in sorted(freshness_counts)},
@@ -299,8 +229,8 @@ def build_summary_metadata(config: dict[str, Any], series_list: list[dict[str, A
             ],
         },
         "canonical_schema": {
-            "schema_version": "data-first-canonical-v1",
-            "columns": CANONICAL_FRAME_COLUMNS,
+            "schema_version": "data-first-canonical-v2",
+            "observation_columns": CANONICAL_OBSERVATION_COLUMNS,
             "charted_series": len(charted),
         },
     }

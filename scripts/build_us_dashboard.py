@@ -24,7 +24,11 @@ from typing import Any
 import requests
 import yaml
 
-from dashboard_summary_utils import build_summary_metadata, write_canonical_data_first_frame
+from dashboard_summary_utils import (
+    apply_quality_assessments,
+    build_summary_metadata,
+    write_canonical_data_first_frame,
+)
 from build_china_dashboard import (  # Reuse the data-first page shell.
     CSS,
     _format_value,
@@ -40,7 +44,7 @@ from build_uk_dashboard import FRED_API_URL, FRED_GRAPH_URL, fetch_fred, validat
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config" / "us_indicators.yaml"
 OUTPUT = ROOT / "output"
-OUT_HTML = OUTPUT / "us_2026Q2_v1.html"
+OUT_HTML = OUTPUT / "us.html"
 SUMMARY_JSON = OUTPUT / "us_dashboard_summary.json"
 CANONICAL_JSON = OUTPUT / "us_canonical_frame.json"
 SUMMARY_KEY_IDS = [
@@ -557,17 +561,17 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> st
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 <style>{CSS}</style>
 </head>
-<body>
+<body data-dashboard-view="core">
 <div class="topbar">
   <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">East Meridian <span>/ Macro Dashboard</span></div></a>
   <nav class="country-nav" aria-label="country dashboards">
-    <a href="hungary_2026Q2_v4.html">HU</a>
-    <a href="poland_2026Q2_v4.html">PL</a>
-    <a href="czechia_2026Q2_v4.html">CZ</a>
-    <a href="romania_2026Q2_v4.html">RO</a>
-    <a href="china_2026Q2_v1.html">CN</a>
-    <a href="uk_2026Q2_v1.html">UK</a>
-    <a href="us_2026Q2_v1.html" class="active">US</a>
+    <a href="hungary.html">HU</a>
+    <a href="poland.html">PL</a>
+    <a href="czechia.html">CZ</a>
+    <a href="romania.html">RO</a>
+    <a href="china.html">CN</a>
+    <a href="uk.html">UK</a>
+    <a href="us.html" class="active">US</a>
   </nav>
   <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">中文</button>
 </div>
@@ -592,12 +596,18 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> st
     {_section_nav(config)}
   </nav>
 
+  <div class="view-switch" role="group" aria-label="chart density">
+    <span><span data-lang="en">Chart view</span><span data-lang="zh">图表视图</span></span>
+    <button type="button" data-view-option="core" aria-pressed="true" onclick="setDashboardView('core')"><span data-lang="en">Core 48</span><span data-lang="zh">核心 48</span></button>
+    <button type="button" data-view-option="deep" aria-pressed="false" onclick="setDashboardView('deep')"><span data-lang="en">All deep-dive charts</span><span data-lang="zh">全部深度指标</span></button>
+  </div>
+
   <div class="data-note">
     <span data-lang="en">Data policy: no fabricated proxies. FRED is the durable public backbone; if <code>FRED_API_KEY</code> is available, the official FRED API is used automatically. Derived charts such as year-over-year inflation or payroll change are computed directly from the cited FRED source series.</span>
     <span data-lang="zh">数据原则：不制造假proxy。FRED是稳定公开骨架；如果运行环境提供 <code>FRED_API_KEY</code>，脚本会自动使用FRED官方API。同比通胀、非农月度变化等派生图直接由标注的FRED原始序列计算。</span>
   </div>
 
-  {_sections_html(config, series_list)}
+  {_sections_html(config, series_list, "US")}
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
@@ -624,12 +634,22 @@ function resizeCharts() {{
     Plotly.Plots.resize(el);
   }});
 }}
+function setDashboardView(view) {{
+  var normalized = view === 'deep' ? 'deep' : 'core';
+  document.body.dataset.dashboardView = normalized;
+  localStorage.setItem('cp-dashboard-view', normalized);
+  document.querySelectorAll('[data-view-option]').forEach(function(btn) {{
+    btn.setAttribute('aria-pressed', String(btn.dataset.viewOption === normalized));
+  }});
+  requestAnimationFrame(resizeCharts);
+}}
 (function() {{
   var saved = localStorage.getItem('cp-lang');
   if (saved === 'zh') {{
     document.documentElement.lang = 'zh';
     document.getElementById('lang-btn').textContent = 'English';
   }}
+  setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
   requestAnimationFrame(resizeCharts);
 }})();
 function toggleLang() {{
@@ -656,7 +676,7 @@ window.addEventListener('resize', resizeCharts);
 def _index_card(summary: dict[str, Any]) -> str:
     return f"""
   <!-- US dashboard card -->
-  <a href="us_2026Q2_v1.html" class="card clean">
+  <a href="us.html" class="card clean">
     <div class="card-kicker">USD · Fed · US GS-statistics page</div>
     <h2>United States</h2>
     <div class="stats">
@@ -699,7 +719,7 @@ def inject_root_index(summary: dict[str, Any]) -> None:
         return
     html = index_path.read_text()
     html = re.sub(
-        r'(<a href="output/us_2026Q2_v1.html" class="card">.*?<span class="label">Charts</span><span class="value">)\d+(</span>)',
+        r'(<a href="output/us.html" class="card">.*?<span class="label">Charts</span><span class="value">)\d+(</span>)',
         rf"\g<1>{summary['charts']}\2",
         html,
         count=1,
@@ -712,6 +732,7 @@ def build() -> Path:
     OUTPUT.mkdir(parents=True, exist_ok=True)
     config = _load_config()
     series_list = fetch_all(config)
+    apply_quality_assessments(series_list)
     charted = [item for item in series_list if item.get("observations")]
     min_chart_count = int(config.get("min_chart_count", 55))
     if len(charted) < min_chart_count:
@@ -742,7 +763,7 @@ def build() -> Path:
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
     }
     summary["canonical_frame"] = write_canonical_data_first_frame(CANONICAL_JSON, "US", series_list)
-    summary.update(build_summary_metadata(config, series_list))
+    summary.update(build_summary_metadata(config, series_list, "US"))
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
     inject_output_index(summary)
     inject_root_index(summary)

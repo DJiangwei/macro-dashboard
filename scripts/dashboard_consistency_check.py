@@ -18,15 +18,14 @@ for path in (ROOT, SRC):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
-from build_v4 import _latest_numeric_value  # noqa: E402
-from country_primer.data_fetcher import DataPipeline, INDICATOR_MANIFEST_48  # noqa: E402
+from build_v4 import _latest_numeric_value, load_cee_build_snapshot  # noqa: E402
 
 
 CE4_COUNTRIES = {
-    "HU": "hungary_2026Q2_v4.html",
-    "PL": "poland_2026Q2_v4.html",
-    "CZ": "czechia_2026Q2_v4.html",
-    "RO": "romania_2026Q2_v4.html",
+    "HU": "hungary.html",
+    "PL": "poland.html",
+    "CZ": "czechia.html",
+    "RO": "romania.html",
 }
 
 KPI_INDICATORS = {
@@ -60,19 +59,14 @@ def _assert_contains(path: Path, needle: str, *, context: str) -> None:
 
 
 def main() -> int:
-    specs = [
-        spec
-        for spec in INDICATOR_MANIFEST_48
-        if spec.indicator_id in KPI_INDICATORS
-    ]
-    pipeline = DataPipeline()
+    snapshot = load_cee_build_snapshot()
     archive_cards = _load_archive_cards()
     root_index = ROOT / "index.html"
     output_index = OUTPUT / "index.html"
     errors: list[str] = []
 
     for country, filename in CE4_COUNTRIES.items():
-        frame = pipeline.fetch_country(country, specs)
+        frame = list((((snapshot.get("countries") or {}).get(country) or {}).get("indicators") or {}).values())
         page = OUTPUT / filename
         if not page.exists():
             errors.append(f"Missing country page: {page}")

@@ -35,7 +35,9 @@ import requests
 import yaml
 
 from .catalog import load_countries
+from .data_quality import assess_series_quality
 from .fetch import CACHE_DIR, Series, cache_path, fetch_ecb_fx, fetch_eurostat, fetch_wb, fetch_yahoo, finalize_series
+from .framework import concept_id_for
 
 
 CANONICAL_COLUMNS = [
@@ -51,6 +53,16 @@ CANONICAL_COLUMNS = [
     "quality_status",
     "quality_note",
     "is_proxy",
+    "concept_id",
+    "frequency",
+    "source_url",
+    "source_authority",
+    "derivation",
+    "freshness_status",
+    "validation_status",
+    "comparability",
+    "observation_type",
+    "is_projection",
 ]
 
 
@@ -143,69 +155,20 @@ class IndicatorSpec:
     chart: str = "line"
     peers: bool = False
     quality_status: str = "watch"
-    quality_note: str = "Adapter pending; chart uses transparent proxy fill when primary data is unavailable."
+    quality_note: str = "Adapter pending; omit the chart when no validated public series is available."
+    adapter_order: tuple[str, ...] = ()
 
 
-INDICATOR_MANIFEST_48: tuple[IndicatorSpec, ...] = (
-    IndicatorSpec("real_activity", "real_gdp_yoy", "Real GDP Growth, YoY", "% YoY", "Eurostat / national accounts", "quarterly", "peer_overlay", True, "verified", "Primary national accounts where available; revisions are common."),
-    IndicatorSpec("real_activity", "real_gdp_qoq", "Real GDP Growth, QoQ SA", "% QoQ", "Eurostat / national accounts", "quarterly", "line", False, "watch", "Seasonal adjustment differs by source."),
-    IndicatorSpec("real_activity", "gdp_components", "GDP Demand Components", "Index", "Eurostat / national accounts", "quarterly", "line", False, "watch", "Component split is a compact proxy until contribution charts are wired."),
-    IndicatorSpec("real_activity", "industrial_production_yoy", "Industrial Production, YoY", "% YoY", "Eurostat STS", "monthly", "line", False, "verified", "Industrial-production series may be rebased."),
-    IndicatorSpec("real_activity", "retail_sales_yoy", "Retail Sales Volume, YoY", "% YoY", "Eurostat STS", "monthly", "line", False, "watch", "Retail volume excludes some services consumption."),
-    IndicatorSpec("real_activity", "unemployment_rate", "Unemployment Rate", "%", "Eurostat LFS", "monthly", "peer_overlay", True, "verified", "ILO/LFS definition preferred."),
-    IndicatorSpec("real_activity", "economic_sentiment", "Economic Sentiment Indicator", "Index", "European Commission", "monthly", "peer_overlay", True, "watch", "Survey data is best used as a turning-point signal."),
-    IndicatorSpec("prices_wages", "cpi_yoy", "Headline CPI/HICP, YoY", "% YoY", "Eurostat HICP / national CPI", "monthly", "peer_overlay", True, "verified", "Classification changes can affect component inflation."),
-    IndicatorSpec("prices_wages", "core_cpi_yoy", "Core CPI, YoY", "% YoY", "Eurostat / national CPI", "monthly", "line", False, "verified", "Core definition should be checked against source metadata."),
-    IndicatorSpec("prices_wages", "services_cpi_yoy", "Services CPI, YoY", "% YoY", "Eurostat HICP", "monthly", "line", False, "watch", "Services basket definitions vary across releases."),
-    IndicatorSpec("prices_wages", "ppi_yoy", "Producer Prices, YoY", "% YoY", "Eurostat STS", "monthly", "line", False, "verified", "Energy weights can dominate PPI prints."),
-    IndicatorSpec("prices_wages", "avg_wage_yoy", "Average Gross Wage, YoY", "% YoY", "Eurostat / national labour data", "quarterly", "line", False, "watch", "Enterprise-survey coverage differs across countries."),
-    IndicatorSpec("prices_wages", "real_wage_yoy", "Real Wage, YoY", "% YoY", "Derived from wages and CPI", "quarterly", "line", False, "watch", "Derived indicator; deflator choice matters."),
-    IndicatorSpec("external", "current_account_pct_gdp", "Current Account, % GDP", "% GDP", "IMF WEO / Eurostat BoP", "annual", "peer_overlay", True, "verified", "BoP revisions are common."),
-    IndicatorSpec("external", "trade_balance", "Trade Balance", "USD bn", "Eurostat / World Bank proxy", "monthly", "bar", False, "watch", "Goods/services perimeter and currency conversion can vary."),
-    IndicatorSpec("external", "services_balance", "Services Balance", "USD bn", "Eurostat BoP", "quarterly", "bar", False, "watch", "Adapter pending; use directionally until BoP adapter is wired."),
-    IndicatorSpec("external", "fx_reserves", "FX Reserves", "USD bn", "World Bank / central bank", "monthly", "line", False, "verified", "USD valuation effects matter."),
-    IndicatorSpec("external", "reer", "Real Effective Exchange Rate", "Index", "BIS / ECB", "monthly", "peer_overlay", True, "verified", "Normalize base year when comparing peers."),
-    IndicatorSpec("external", "short_term_ext_debt", "Short-Term External Debt / Reserves", "%", "World Bank / BIS", "annual", "line", False, "watch", "Annual and lagged; structural vulnerability signal."),
-    IndicatorSpec("fiscal_sovereign", "fiscal_balance_pct_gdp", "General Government Balance, % GDP", "% GDP", "Eurostat / IMF WEO", "annual", "peer_overlay", True, "verified", "EDP notifications can revise deficit history."),
-    IndicatorSpec("fiscal_sovereign", "structural_balance", "Structural Fiscal Balance", "% potential GDP", "IMF / EC AMECO", "annual", "line", False, "watch", "Model-based estimate; output-gap assumptions matter."),
-    IndicatorSpec("fiscal_sovereign", "primary_balance", "Primary Balance, % GDP", "% GDP", "IMF / Eurostat", "annual", "line", False, "watch", "Check interest-expenditure classification."),
-    IndicatorSpec("fiscal_sovereign", "gov_debt_pct_gdp", "General Government Debt, % GDP", "% GDP", "Eurostat EDP", "annual", "peer_overlay", True, "verified", "Nominal GDP revisions affect the ratio."),
-    IndicatorSpec("fiscal_sovereign", "interest_bill_pct_gdp", "Interest Bill, % GDP", "% GDP", "IMF / Eurostat", "annual", "line", False, "watch", "Annual/lagged; combine with current curve."),
-    IndicatorSpec("fiscal_sovereign", "sov_yield_10y", "10Y Government Bond Yield", "%", "Eurostat / market data", "monthly", "peer_overlay", True, "verified", "Confirm market data against terminal for trading."),
-    IndicatorSpec("monetary_financial", "policy_rate", "Central Bank Policy Rate", "%", "BIS / central bank", "monthly", "peer_overlay", True, "verified", "Corridor systems require definition check."),
-    IndicatorSpec("monetary_financial", "real_policy_rate", "Real Policy Rate", "%", "Derived from policy rate and CPI", "monthly", "line", False, "watch", "Ex-post vs ex-ante definition matters."),
-    IndicatorSpec("monetary_financial", "m3_yoy", "Broad Money M3, YoY", "% YoY", "World Bank / national central bank", "monthly", "line", False, "watch", "May use broad-money proxy where M3 is unavailable."),
-    IndicatorSpec("monetary_financial", "private_credit_yoy", "Private Credit, YoY", "% YoY", "Eurostat / BIS", "monthly", "line", False, "watch", "Credit aggregates differ by sector perimeter."),
-    IndicatorSpec("monetary_financial", "credit_to_gdp_gap", "Credit-to-GDP Gap", "pp", "BIS", "quarterly", "line", False, "watch", "Filter-based series can revise with history."),
-    IndicatorSpec("monetary_financial", "fx_vs_eur", "FX vs EUR", "LCU per EUR", "ECB", "daily", "line", False, "verified", "ECB reference rate; not executable intraday price."),
-    IndicatorSpec("markets_valuation", "equity_index", "Headline Equity Index", "Index", "Yahoo Finance / exchange", "monthly", "line", False, "watch", "Vendor feed; confirm index convention."),
-    IndicatorSpec("markets_valuation", "equity_yoy", "Headline Equity Index, YoY", "% YoY", "Derived from equity index", "monthly", "line", False, "watch", "Derived from market index level."),
-    IndicatorSpec("markets_valuation", "equity_fwd_pe", "Equity P/E", "x", "Exchange factsheets / vendor estimates", "monthly", "line", False, "low_confidence", "Index-level P/E is sourced from exchange factsheets where available; forward-consensus estimates usually require vendor data."),
-    IndicatorSpec("markets_valuation", "equity_div_yield", "Equity Dividend Yield", "%", "Exchange factsheets / vendor estimates", "monthly", "line", False, "low_confidence", "Trailing/forward methodology must be checked."),
-    IndicatorSpec("markets_valuation", "sov_spread_vs_bund", "10Y Spread vs Bund", "bp", "Derived from sovereign yields", "monthly", "peer_overlay", True, "watch", "Derived spread; check maturity matching."),
-    IndicatorSpec("financial_stability", "bank_car", "Bank Capital Adequacy Ratio", "%", "IMF FSI / national bank", "quarterly", "line", False, "watch", "Regulatory definitions can change."),
-    IndicatorSpec("financial_stability", "bank_npl_ratio", "Bank NPL Ratio", "%", "IMF FSI / national bank", "quarterly", "line", False, "watch", "FSI/national-bank data is lagged and definitions vary."),
-    IndicatorSpec("financial_stability", "bank_roe", "Bank Return on Equity", "%", "IMF FSI / national bank", "quarterly", "line", False, "watch", "Taxes and one-offs can distort sector ROE."),
-    IndicatorSpec("financial_stability", "bank_ld_ratio", "Bank Loan-to-Deposit Ratio", "%", "IMF FSI / national bank", "quarterly", "line", False, "watch", "Deposit perimeter differs by regulator."),
-    IndicatorSpec("demographics", "population_total", "Total Population", "mn people", "Eurostat / World Bank", "annual", "line", False, "verified", "Census rebasing can revise history."),
-    IndicatorSpec("demographics", "working_age_population", "Working-Age Population", "mn people", "Eurostat / World Bank", "annual", "peer_overlay", True, "verified", "Structural labour-supply signal."),
-    IndicatorSpec("demographics", "old_age_dependency", "Old-Age Dependency Ratio", "%", "Eurostat / World Bank", "annual", "peer_overlay", True, "verified", "Slow-moving structural series."),
-    IndicatorSpec("demographics", "median_age", "Median Age", "years", "Eurostat / UN WPP", "annual", "line", False, "verified", "Annual structural estimate."),
-    IndicatorSpec("political_economy", "wgi_government_effectiveness", "WGI Government Effectiveness", "Estimate score", "World Bank Sovereign ESG / WGI", "annual", "line", False, "watch", "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown."),
-    IndicatorSpec("political_economy", "wgi_rule_of_law", "WGI Rule of Law", "Estimate score", "World Bank Sovereign ESG / WGI", "annual", "line", False, "watch", "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown."),
-    IndicatorSpec("political_economy", "wgi_control_of_corruption", "WGI Control of Corruption", "Estimate score", "World Bank Sovereign ESG / WGI", "annual", "line", False, "watch", "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology."),
-    IndicatorSpec("political_economy", "eu_funds_frozen", "EU Funds Frozen / At Risk", "% allocation", "European Commission / public proxy", "annual", "line", False, "low_confidence", "Public programme-cycle data is fragmented; verify manually."),
-)
-
-
-def _load_manifest_from_yaml(fallback: tuple[IndicatorSpec, ...]) -> tuple[IndicatorSpec, ...]:
-    """Load the editable canonical indicator manifest from config when available."""
+def _load_manifest_from_yaml() -> tuple[IndicatorSpec, ...]:
+    """Load the required editable indicator manifest from its single source of truth."""
     manifest_path = CONFIG_DIR / "indicator_manifest_48.yaml"
     if not manifest_path.exists():
-        return fallback
+        raise FileNotFoundError(f"Required indicator manifest is missing: {manifest_path}")
 
     payload = yaml.safe_load(manifest_path.read_text()) or {}
     raw_indicators = payload.get("indicators") or []
+    if not raw_indicators:
+        raise ValueError(f"Indicator manifest is empty: {manifest_path}")
     specs: list[IndicatorSpec] = []
     seen: set[str] = set()
 
@@ -221,6 +184,7 @@ def _load_manifest_from_yaml(fallback: tuple[IndicatorSpec, ...]) -> tuple[Indic
             peers=bool(raw.get("peers", False)),
             quality_status=str(raw.get("quality_status", "watch")),
             quality_note=str(raw.get("quality_note", "")),
+            adapter_order=tuple(str(item) for item in (raw.get("adapters") or [])),
         )
         if spec.indicator_id in seen:
             raise ValueError(f"Duplicate indicator_id in manifest: {spec.indicator_id}")
@@ -233,7 +197,7 @@ def _load_manifest_from_yaml(fallback: tuple[IndicatorSpec, ...]) -> tuple[Indic
     return tuple(specs)
 
 
-INDICATOR_MANIFEST_48 = _load_manifest_from_yaml(INDICATOR_MANIFEST_48)
+INDICATOR_MANIFEST_48 = _load_manifest_from_yaml()
 
 
 SECTION_INDICATORS_48: dict[str, tuple[IndicatorSpec, ...]] = {}
@@ -303,106 +267,6 @@ LEGACY_INDICATOR_KEYS: dict[str, tuple[str, ...]] = {
     "equity_index": ("equity_index",),
     "equity_yoy": ("equity_yoy",),
 }
-
-
-COUNTRY_OFFSETS = {
-    "HU": -0.20,
-    "PL": 0.35,
-    "CZ": 0.10,
-    "RO": 0.55,
-}
-
-
-BASELINE = {
-    "real_gdp_yoy": 2.0, "real_gdp_qoq": 0.5, "gdp_components": 100.0, "gdp_per_capita": 32000.0,
-    "gross_fixed_capital": 23.0, "construction_production": 2.0, "fdi_inflows": 2.5,
-    "oecd_cli": 100.0, "ifo_expectations": 88.0, "truck_km_index": 100.0,
-    "industrial_production_yoy": 1.0, "retail_sales_yoy": 2.5, "unemployment_rate": 4.5,
-    "economic_sentiment": 98.0, "manufacturing_pmi": 50.0, "capacity_utilization": 78.0,
-    "consumer_confidence": -12.0, "employment_growth": 1.0, "participation_rate": 58.0,
-    "vacancy_rate": 2.0, "cpi_yoy": 4.0, "core_cpi_yoy": 4.3, "services_cpi_yoy": 5.0,
-    "goods_cpi_yoy": 3.0, "energy_cpi_yoy": 2.5, "food_cpi_yoy": 4.2,
-    "ppi_yoy": 2.2, "import_prices_yoy": 2.0, "avg_wage_yoy": 8.0, "real_wage_yoy": 3.2,
-    "inflation_expectations": 4.0, "breakeven_5y5y": 3.0, "house_price_index": 4.0,
-    "administered_prices": 15.0,
-    "unit_labour_cost": 5.0, "minimum_wage": 700.0, "current_account_pct_gdp": -1.5,
-    "trade_balance": 0.0, "services_balance": 2.0, "income_balance": -2.0,
-    "fx_reserves": 80.0, "ara_metric": 110.0, "reer": 102.0, "neer": 101.0,
-    "fx_implied_vol": 8.0, "iip_position": -35.0, "gross_ext_debt": 60.0, "bis_cross_border": 40.0,
-    "energy_import_dependency": 40.0, "gas_storage_level": 65.0,
-    "short_term_ext_debt": 55.0,
-    "fiscal_balance_pct_gdp": -3.5, "structural_balance": -3.0, "primary_balance": -1.0,
-    "gov_debt_pct_gdp": 55.0, "gov_revenue_pct_gdp": 42.0, "gov_expenditure_pct_gdp": 46.0,
-    "interest_bill_pct_gdp": 2.0, "debt_fx_share": 25.0, "avg_debt_maturity": 6.0,
-    "sov_yield_10y": 5.0, "sov_yield_2y": 4.5, "cds_5y": 120.0, "yield_curve_slope": 50.0,
-    "sovereign_rating": 11.0, "eu_funds_absorption": 42.0, "edp_status": 0.0,
-    "contingent_liabilities": 8.0,
-    "policy_rate": 5.0, "real_policy_rate": 1.0, "m3_yoy": 7.0, "private_credit_yoy": 5.5,
-    "credit_to_gdp_gap": 0.0, "interbank_3m": 5.0, "lending_rate_household": 7.0,
-    "lending_rate_corp": 6.0, "fx_vs_eur": 100.0, "fx_3m_forward": 0.5,
-    "carry_trade_return": 3.0, "cb_balance_sheet_gdp": 35.0, "cb_forward_guidance": 0.0,
-    "fx_loan_share": 18.0, "mortgage_rate_new": 6.0,
-    "equity_index": 100.0, "equity_yoy": 8.0,
-    "equity_fwd_pe": 9.5, "equity_pb": 1.2, "equity_div_yield": 4.0, "equity_vol_30d": 18.0,
-    "sov_spread_vs_bund": 220.0, "embi_spread": 180.0, "foreign_ownership_bonds": 25.0,
-    "portfolio_flows": 0.0,
-    "bank_car": 19.0, "bank_npl_ratio": 3.5, "bank_roe": 12.0, "bank_ld_ratio": 86.0,
-    "bank_liquidity_coverage": 180.0, "bank_nim": 3.0, "household_debt_pct_gdp": 25.0, "corp_debt_pct_gdp": 45.0,
-    "real_estate_price_gap": 0.0, "foreign_bank_share": 60.0,
-    "population_total": 20.0, "working_age_population": 12.5, "old_age_dependency": 29.0,
-    "median_age": 42.0, "net_migration": -25000.0, "fertility_rate": 1.5, "pension_spending_pct_gdp": 10.0,
-    "wgi_government_effectiveness": 70.0, "wgi_rule_of_law": 72.0,
-    "wgi_control_of_corruption": 68.0, "eu_funds_frozen": 8.0,
-}
-
-
-COUNTRY_LEVEL_OVERRIDES = {
-    "HU": {"fx_vs_eur": 390.0, "population_total": 9.6, "working_age_population": 6.2, "median_age": 43.6, "gov_debt_pct_gdp": 74.0, "sov_spread_vs_bund": 420.0, "eu_funds_frozen": 35.0},
-    "PL": {"fx_vs_eur": 4.3, "population_total": 36.6, "working_age_population": 22.0, "median_age": 42.7, "gov_debt_pct_gdp": 55.0, "sov_spread_vs_bund": 280.0, "eu_funds_frozen": 3.0},
-    "CZ": {"fx_vs_eur": 25.0, "population_total": 10.9, "working_age_population": 6.9, "median_age": 43.2, "gov_debt_pct_gdp": 45.0, "sov_spread_vs_bund": 140.0, "eu_funds_frozen": 1.0},
-    "RO": {"fx_vs_eur": 5.0, "population_total": 19.0, "working_age_population": 12.0, "median_age": 42.3, "gov_debt_pct_gdp": 52.0, "sov_spread_vs_bund": 520.0, "eu_funds_frozen": 9.0},
-}
-
-
-def _stable_wave(country: str, indicator_id: str, index: int) -> float:
-    seed = sum(ord(c) for c in f"{country}:{indicator_id}")
-    return math.sin((index + 1) * 0.85 + seed % 11) * 0.55
-
-
-def _dates_for_frequency(frequency: str) -> list[str]:
-    if frequency == "monthly" or frequency == "daily":
-        return [f"2025-{m:02d}-01" for m in range(1, 13)] + [f"2026-{m:02d}-01" for m in range(1, 5)]
-    if frequency == "quarterly":
-        return ["2021-03-31", "2021-06-30", "2021-09-30", "2021-12-31",
-                "2022-03-31", "2022-06-30", "2022-09-30", "2022-12-31",
-                "2023-03-31", "2023-06-30", "2023-09-30", "2023-12-31",
-                "2024-03-31", "2024-06-30", "2024-09-30", "2024-12-31",
-                "2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31"]
-    if frequency == "seasonal":
-        return [
-            "2022-04-01", "2022-10-01",
-            "2023-04-01", "2023-10-01",
-            "2024-04-01", "2024-10-01",
-            "2025-04-01", "2025-10-01",
-            "2026-04-01",
-        ]
-    return [f"{year}-12-31" for year in range(2017, 2026)]
-
-
-def _proxy_values(country: str, spec: IndicatorSpec, n: int) -> list[float]:
-    base = COUNTRY_LEVEL_OVERRIDES.get(country, {}).get(spec.indicator_id, BASELINE.get(spec.indicator_id, 1.0))
-    offset = COUNTRY_OFFSETS.get(country, 0.0)
-    values: list[float] = []
-    for i in range(n):
-        drift = (i - (n - 1) / 2) * 0.06
-        wave = _stable_wave(country, spec.indicator_id, i)
-        level = base + offset + drift + wave
-        if spec.unit in {"Index", "LCU per EUR", "mn people", "years", "bp"}:
-            level = base * (1 + 0.006 * (i - n / 2)) + wave
-        if spec.indicator_id in {"trade_balance", "services_balance", "primary_balance", "fiscal_balance_pct_gdp", "structural_balance"}:
-            level = base + offset * 1.5 + drift + wave
-        values.append(round(float(level), 2))
-    return values
 
 
 def _parse_row_date(row: dict) -> datetime | None:
@@ -566,6 +430,26 @@ def _apply_source_validation(rows: list[dict], spec: IndicatorSpec) -> list[dict
     for row in rows:
         row["quality_status"] = status
         row["quality_note"] = f"{row.get('quality_note') or spec.quality_note} {suffix}".strip()
+    latest = rows[-1]
+    quality = assess_series_quality({
+        "id": spec.indicator_id,
+        "frequency": latest.get("frequency") or spec.frequency,
+        "source_name": latest.get("source"),
+        "source_url": latest.get("source_url"),
+        "quality_notes": [latest.get("quality_note")],
+        "observations": [{"date": row.get("date"), "value": row.get("value")} for row in rows],
+        "actual_through": next(
+            (row.get("date") for row in reversed(rows) if not row.get("is_projection")),
+            "",
+        ),
+    })
+    for row in rows:
+        row["quality_status"] = quality["status"]
+        row["source_authority"] = quality["source_authority"]
+        row["derivation"] = quality["derivation"]
+        row["freshness_status"] = quality["freshness"]
+        row["validation_status"] = quality["validation"]
+        row["comparability"] = quality["comparability"]
     return rows
 
 
@@ -576,6 +460,7 @@ def _series_to_rows(
     scale: float = 1.0,
     unit: str | None = None,
     note: str = "",
+    actual_through: int | None = None,
 ) -> list[dict]:
     if not series.available or not series.observations:
         return []
@@ -585,6 +470,8 @@ def _series_to_rows(
     if note:
         quality_note = f"{quality_note} {note}"
     for date, value in series.observations:
+        observation_year = int(str(date)[:4]) if str(date)[:4].isdigit() else None
+        is_projection = bool(actual_through and observation_year and observation_year > actual_through)
         rows.append({
             "country": series.country,
             "date": str(date)[:10],
@@ -598,6 +485,11 @@ def _series_to_rows(
             "quality_status": "verified",
             "quality_note": quality_note,
             "is_proxy": False,
+            "concept_id": concept_id_for(series.country, spec.indicator_id),
+            "frequency": series.frequency or spec.frequency,
+            "source_url": series.source_url,
+            "observation_type": "projection" if is_projection else "historical",
+            "is_projection": is_projection,
         })
     return _apply_source_validation(rows, spec)
 
@@ -843,28 +735,6 @@ def _cnb_day_month_year_to_iso(raw: str) -> str | None:
     return f"{int(year):04d}-{int(month):02d}-{int(day):02d}"
 
 
-def proxy_rows(country: str, spec: IndicatorSpec) -> list[dict]:
-    dates = _dates_for_frequency(spec.frequency)
-    values = _proxy_values(country, spec, len(dates))
-    return [
-        {
-            "country": country,
-            "date": date,
-            "indicator_id": spec.indicator_id,
-            "value": value,
-            "label": spec.label,
-            "section_id": spec.section_id,
-            "unit": spec.unit,
-            "source": f"Transparent proxy fill; target source: {spec.source}",
-            "series_id": f"proxy:{spec.indicator_id}",
-            "quality_status": "low_confidence" if spec.quality_status == "low_confidence" else "watch",
-            "quality_note": f"Transparent proxy fill. {spec.quality_note}",
-            "is_proxy": True,
-        }
-        for date, value in zip(dates, values)
-    ]
-
-
 class BaseFetcher:
     """Adapter interface: subclasses return canonical rows for one indicator."""
 
@@ -968,15 +838,15 @@ class EurostatFetcher(BaseFetcher):
             "params": {"indic": "BS-ESI-I", "s_adj": "SA"},
             "unit": "Index",
         },
-        "manufacturing_pmi": {
+        "industry_confidence": {
             "dataset": "ei_bsin_m_r2",
             "freq": "M",
             "since": "2018",
             "params": {"indic": "BS-ICI", "s_adj": "SA", "unit": "BAL"},
             "unit": "Balance",
-            "note": "European Commission industry confidence indicator from harmonised business surveys; replaces the vendor PMI placeholder with a public domestic industrial survey signal.",
+            "note": "European Commission industry confidence indicator from harmonised business surveys; not an S&P Global PMI.",
         },
-        "ifo_expectations": {
+        "german_industry_confidence": {
             "dataset": "ei_bsin_m_r2",
             "geo": "DE",
             "freq": "M",
@@ -985,21 +855,28 @@ class EurostatFetcher(BaseFetcher):
             "unit": "Balance",
             "note": "Germany industrial confidence from the harmonised European Commission business survey; used as a transparent external-demand spillover signal for CEE, not as a domestic country survey.",
         },
-        "oecd_cli": {
+        "employment_expectations": {
             "dataset": "ei_bsee_m_r2",
             "freq": "M",
             "since": "2018",
             "params": {"indic": "BS-EEI-I", "s_adj": "SA", "unit": "INX"},
             "unit": "Index",
-            "note": "European Commission Employment Expectations Indicator from harmonised business surveys; replaces the unavailable OECD CLI slot with a transparent domestic leading-labour-demand survey signal.",
+            "note": "European Commission Employment Expectations Indicator from harmonised business surveys; not an OECD CLI.",
         },
-        "truck_km_index": {
+        "road_freight_activity": {
             "dataset": "road_go_tq_tott",
             "freq": "Q",
             "since": "2018",
             "params": {"tra_type": "TOTAL", "tra_oper": "TOTAL", "unit": "MIO_TKM"},
             "unit": "million tonne-km",
-            "note": "Eurostat quarterly road freight transport performance by reporting country, total transport and operation, measured in million tonne-kilometres; replaces the unavailable toll-road truck-km alternative-data placeholder.",
+            "note": "Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres.",
+        },
+        "unemployment_rate": {
+            "dataset": "une_rt_m",
+            "freq": "M",
+            "since": "2018",
+            "params": {"age": "TOTAL", "sex": "T", "unit": "PC_ACT", "s_adj": "SA"},
+            "unit": "%",
         },
         "consumer_confidence": {
             "dataset": "ei_bsco_m",
@@ -1019,7 +896,7 @@ class EurostatFetcher(BaseFetcher):
             "dataset": "namq_10_pe",
             "freq": "Q",
             "since": "2018",
-            "params": {"na_item": "EMP_DC", "unit": "PCH_SM", "s_adj": "SCA"},
+            "params": {"na_item": "EMP_DC", "unit": "PCH_SM_PER", "s_adj": "NSA"},
             "unit": "% YoY",
         },
         "participation_rate": {
@@ -3404,24 +3281,28 @@ class IMFDataMapperFetcher(BaseFetcher):
             "unit": "% GDP",
             "source": "IMF Fiscal Monitor",
             "note": "General government net lending/borrowing from IMF Fiscal Monitor; latest years may include IMF forecasts.",
+            "actual_through": 2024,
         },
         "primary_balance": {
             "indicator": "GGXONLB_G01_GDP_PT",
             "unit": "% GDP",
             "source": "IMF Fiscal Monitor",
             "note": "General government primary net lending/borrowing from IMF Fiscal Monitor; latest years may include IMF forecasts.",
+            "actual_through": 2024,
         },
         "structural_balance": {
             "indicator": "GGCB_G01_PGDP_PT",
             "unit": "% potential GDP",
             "source": "IMF Fiscal Monitor",
             "note": "Cyclically adjusted balance used as the structural-balance estimate; output-gap assumptions matter.",
+            "actual_through": 2024,
         },
         "gov_debt_pct_gdp": {
             "indicator": "G_XWDG_G01_GDP_PT",
             "unit": "% GDP",
             "source": "IMF Fiscal Monitor",
             "note": "General government gross debt position from IMF Fiscal Monitor; nominal GDP revisions affect the ratio.",
+            "actual_through": 2024,
         },
         "interest_bill_pct_gdp": {
             "indicator": "ie",
@@ -3434,6 +3315,7 @@ class IMFDataMapperFetcher(BaseFetcher):
             "unit": "%",
             "source": "IMF WEO",
             "note": "Annual unemployment rate from IMF WEO; use Eurostat for higher-frequency labour-market timing.",
+            "actual_through": 2024,
         },
         "short_term_ext_debt": {
             "indicator": "Reserves_STD",
@@ -3524,6 +3406,7 @@ class IMFDataMapperFetcher(BaseFetcher):
             spec,
             unit=cfg["unit"],
             note=f"{cfg['note']} IMF DataMapper indicator {indicator}.",
+            actual_through=cfg.get("actual_through"),
         )
 
     def _fetch_payload(self, iso3: str, indicator: str) -> dict:
@@ -4292,11 +4175,6 @@ class GIEAGSIFetcher(BaseFetcher):
         return sorted({date: value for date, value in observations}.items())
 
 
-class ProxyFetcher(BaseFetcher):
-    def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
-        return proxy_rows(country, spec)
-
-
 class WorldBankESGFetcher(BaseFetcher):
     CONFIGS = {
         "wgi_government_effectiveness": "GE.EST",
@@ -4467,7 +4345,6 @@ class WorldBankFetcher(BaseFetcher):
         "gross_fixed_capital": ("NE.GDI.FTOT.ZS", 1.0, "% GDP"),
         "fdi_inflows": ("BX.KLT.DINV.WD.GD.ZS", 1.0, "% GDP"),
         "participation_rate": ("SL.TLF.CACT.ZS", 1.0, "%"),
-        "employment_growth": ("SL.EMP.TOTL.SP.ZS", 1.0, "% population"),
         "population_total": ("SP.POP.TOTL", 1 / 1_000_000, "mn people"),
         "working_age_population": ("SP.POP.1564.TO", 1 / 1_000_000, "mn people"),
         "old_age_dependency": ("SP.POP.DPND.OL", 1.0, "%"),
@@ -4606,22 +4483,27 @@ class DataPipeline:
             KSHFetcher(),
             GUSDBWFetcher(),
             INSSETempoFetcher(),
-            ProxyFetcher(),
         ])
 
     def fetch_indicator(self, country: str, spec: IndicatorSpec) -> list[dict]:
-        for fetcher in self.fetchers:
+        fetchers = self.fetchers
+        if spec.adapter_order:
+            allowed = set(spec.adapter_order)
+            fetchers = [fetcher for fetcher in self.fetchers if fetcher.__class__.__name__ in allowed]
+        for fetcher in fetchers:
             rows = fetcher.fetch(country, spec)
             if rows:
                 return rows
-        return proxy_rows(country, spec)
+        return []
 
     def fetch_country(self, country: str, specs: Iterable[IndicatorSpec] = INDICATOR_MANIFEST_48) -> list[dict]:
         rows: list[dict] = []
         for spec in specs:
             if is_dropped_proxy_indicator(country, spec.indicator_id):
                 continue
-            rows.extend(self.fetch_indicator(country, spec))
+            fetched = self.fetch_indicator(country, spec)
+            if fetched and not any(row.get("is_proxy") for row in fetched):
+                rows.extend(fetched)
         clean_rows: list[dict] = []
         for row in rows:
             try:

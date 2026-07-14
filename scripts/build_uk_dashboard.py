@@ -29,7 +29,11 @@ from zipfile import ZipFile
 import requests
 import yaml
 
-from dashboard_summary_utils import build_summary_metadata, write_canonical_data_first_frame
+from dashboard_summary_utils import (
+    apply_quality_assessments,
+    build_summary_metadata,
+    write_canonical_data_first_frame,
+)
 from build_china_dashboard import (  # Reuse the data-first page shell.
     CSS,
     _chart_html,
@@ -46,7 +50,7 @@ from build_china_dashboard import (  # Reuse the data-first page shell.
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config" / "uk_indicators.yaml"
 OUTPUT = ROOT / "output"
-OUT_HTML = OUTPUT / "uk_2026Q2_v1.html"
+OUT_HTML = OUTPUT / "uk.html"
 SUMMARY_JSON = OUTPUT / "uk_dashboard_summary.json"
 CANONICAL_JSON = OUTPUT / "uk_canonical_frame.json"
 SUMMARY_KEY_IDS = [
@@ -1230,17 +1234,17 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> st
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 <style>{CSS}</style>
 </head>
-<body>
+<body data-dashboard-view="core">
 <div class="topbar">
   <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">East Meridian <span>/ Macro Dashboard</span></div></a>
   <nav class="country-nav" aria-label="country dashboards">
-    <a href="hungary_2026Q2_v4.html">HU</a>
-    <a href="poland_2026Q2_v4.html">PL</a>
-    <a href="czechia_2026Q2_v4.html">CZ</a>
-    <a href="romania_2026Q2_v4.html">RO</a>
-    <a href="china_2026Q2_v1.html">CN</a>
-    <a href="uk_2026Q2_v1.html" class="active">UK</a>
-    <a href="us_2026Q2_v1.html">US</a>
+    <a href="hungary.html">HU</a>
+    <a href="poland.html">PL</a>
+    <a href="czechia.html">CZ</a>
+    <a href="romania.html">RO</a>
+    <a href="china.html">CN</a>
+    <a href="uk.html" class="active">UK</a>
+    <a href="us.html">US</a>
   </nav>
   <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">中文</button>
 </div>
@@ -1265,12 +1269,18 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> st
     {_section_nav(config)}
   </nav>
 
+  <div class="view-switch" role="group" aria-label="chart density">
+    <span><span data-lang="en">Chart view</span><span data-lang="zh">图表视图</span></span>
+    <button type="button" data-view-option="core" aria-pressed="true" onclick="setDashboardView('core')"><span data-lang="en">Core 48</span><span data-lang="zh">核心 48</span></button>
+    <button type="button" data-view-option="deep" aria-pressed="false" onclick="setDashboardView('deep')"><span data-lang="en">All deep-dive charts</span><span data-lang="zh">全部深度指标</span></button>
+  </div>
+
   <div class="data-note">
     <span data-lang="en">Data policy: no fabricated proxies. FRED remains the durable public backbone, while release-sensitive UK series prefer native ONS time-series JSON and Bank of England IADB CSV endpoints when validated.</span>
     <span data-lang="zh">数据原则：不制造假proxy。FRED继续作为稳定公开骨架；对发布时效更敏感的英国序列，在验证后优先使用ONS time-series JSON与Bank of England IADB CSV原生接口。</span>
   </div>
 
-  {_sections_html(config, series_list)}
+  {_sections_html(config, series_list, "UK")}
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
@@ -1297,12 +1307,22 @@ function resizeCharts() {{
     Plotly.Plots.resize(el);
   }});
 }}
+function setDashboardView(view) {{
+  var normalized = view === 'deep' ? 'deep' : 'core';
+  document.body.dataset.dashboardView = normalized;
+  localStorage.setItem('cp-dashboard-view', normalized);
+  document.querySelectorAll('[data-view-option]').forEach(function(btn) {{
+    btn.setAttribute('aria-pressed', String(btn.dataset.viewOption === normalized));
+  }});
+  requestAnimationFrame(resizeCharts);
+}}
 (function() {{
   var saved = localStorage.getItem('cp-lang');
   if (saved === 'zh') {{
     document.documentElement.lang = 'zh';
     document.getElementById('lang-btn').textContent = 'English';
   }}
+  setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
   requestAnimationFrame(resizeCharts);
 }})();
 function toggleLang() {{
@@ -1329,7 +1349,7 @@ window.addEventListener('resize', resizeCharts);
 def _index_card(summary: dict[str, Any]) -> str:
     return f"""
   <!-- UK dashboard card -->
-  <a href="uk_2026Q2_v1.html" class="card clean">
+  <a href="uk.html" class="card clean">
     <div class="card-kicker">GBP · BoE · UK GS-statistics page</div>
     <h2>United Kingdom</h2>
     <div class="stats">
@@ -1370,6 +1390,7 @@ def build() -> Path:
     OUTPUT.mkdir(parents=True, exist_ok=True)
     config = _load_config()
     series_list = fetch_all(config)
+    apply_quality_assessments(series_list)
     _write_clean(OUT_HTML, render_html(config, series_list))
 
     charted = [item for item in series_list if item.get("observations")]
@@ -1389,7 +1410,7 @@ def build() -> Path:
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
     }
     summary["canonical_frame"] = write_canonical_data_first_frame(CANONICAL_JSON, "UK", series_list)
-    summary.update(build_summary_metadata(config, series_list))
+    summary.update(build_summary_metadata(config, series_list, "UK"))
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
     inject_output_index(summary)
     if not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):

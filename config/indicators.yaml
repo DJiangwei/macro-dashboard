@@ -50,7 +50,7 @@ sections:
         cycle_role: lagging
         unit: "%"
         quality: {confidence: high, validation: "ILO/LFS definition preferred; local definitions may differ."}
-      - key: manufacturing_pmi
+      - key: industry_confidence
         label: "Manufacturing PMI"
         mcp_query: "{country} manufacturing PMI monthly last 5 years"
         chart: line

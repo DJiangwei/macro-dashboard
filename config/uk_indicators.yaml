@@ -1370,6 +1370,7 @@ indicators:
     row_label: "Net borrowing"
     frequency: "annual"
     start_date: "2025-03-31"
+    actual_through: 2024
     caveat_en: "Official OBR EFO public-sector net borrowing forecast by UK financial year; this is a forecast vintage, not an ONS outturn series."
     caveat_zh: "OBR EFO官方公共部门净借款预测，按英国财年；这是预测版本，不是ONS实绩序列。"
   - id: obr_psnd_ex_boe_forecast
@@ -1385,6 +1386,7 @@ indicators:
     row_label: "Public sector net debt ex BoE (a-c=d)"
     frequency: "annual"
     start_date: "2024-03-31"
+    actual_through: 2024
     caveat_en: "OBR forecast for PSND excluding the Bank of England as a share of GDP; used instead of the workbook's headline PSND formula row because the downloaded cached values require sanity checks."
     caveat_zh: "OBR预测的不含英格兰银行公共部门净债务占GDP比；这里避开工作簿中需额外校验的headline PSND公式缓存行。"
   - id: obr_cg_debt_interest_forecast
@@ -1400,6 +1402,7 @@ indicators:
     row_label: "Total CG debt interest (net of APF)"
     frequency: "annual"
     start_date: "2024-03-31"
+    actual_through: 2024
     caveat_en: "OBR central-government debt-interest forecast net of APF; highly sensitive to gilt yields, inflation-linked uplift, financing mix, and APF treatment."
     caveat_zh: "OBR中央政府债务利息预测，不含APF影响；对国债收益率、通胀挂钩上调、融资结构和APF处理非常敏感。"
   - id: obr_public_sector_effective_interest_rate
@@ -1416,6 +1419,7 @@ indicators:
     context_above_contains: "Public sector"
     frequency: "annual"
     start_date: "2024-03-31"
+    actual_through: 2024
     caveat_en: "OBR effective interest-rate forecast for the public-sector debt stock; useful for debt-service pressure, but it is modelled from the OBR forecast vintage."
     caveat_zh: "OBR公共部门债务存量有效利率预测；适合观察债务服务压力，但属于OBR预测版本模型输出。"
   - id: government_balance_gdp

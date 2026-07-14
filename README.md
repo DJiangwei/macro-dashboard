@@ -6,7 +6,8 @@ World Bank · OECD), with ECB XML fallback for EUR-cross FX.
 
 ## Framework
 
-Synthesis of three sources, mapped to one 7-section dashboard:
+Framework v2 combines three research lenses with a shared nine-pillar,
+48-concept ontology in `config/framework_v2.yaml`:
 
 | Source | Contribution |
 |---|---|
@@ -14,15 +15,11 @@ Synthesis of three sources, mapped to one 7-section dashboard:
 | **Goldman Sachs "Understanding Economic Indicators"** | Lead/coincident/lag tagging, source attribution discipline, financial-conditions overlay. |
 | **Buy-side PM lens** | Asset-side mirror: yield curve, sov spread, FX vs peers, regime classification. |
 
-### 7 sections
-
-1. **§1 Country Snapshot** — population, ratings, FX regime, central bank, partners.
-2. **§2 Real Activity** — GDP, IP, retail sales, unemployment.
-3. **§3 Prices & Wages** — CPI (with target band), core CPI, PPI, wages.
-4. **§4 External Sector** — current account, trade, FX reserves, REER.
-5. **§5 Fiscal & Sovereign** — gen-gov balance, debt/GDP, 10y yield.
-6. **§6 Monetary & Financial** — policy rate, M3, private credit, EUR-cross.
-7. **§7 Markets & Valuation** — equity index level + YoY.
+The comparable core covers growth/demand, production/cycle, labour/income,
+prices/costs, housing/investment, external/FX, fiscal/sovereign,
+monetary/financial conditions, and stability/structural risk. Country pages
+default to the Core 48 view; the All deep-dive charts control reveals
+country-specific extensions without discarding them.
 
 Each chart shows a footer line: `Source: <provider> · Series: <id> · Updated <date> · Fetched <date>`.
 
@@ -52,8 +49,8 @@ python scripts/doctor_env.py
 ```bash
 cd /Users/jiangwei/Claude/Country_Primer
 pip install -r requirements.txt
-python -m country_primer HU --peers PL,CZ,RO --out output/hungary_2026Q2.html
-open output/hungary_2026Q2.html
+python -m country_primer HU --peers PL,CZ,RO --out output/hungary.html
+open output/hungary.html
 ```
 
 CLI flags:
@@ -86,33 +83,36 @@ The v4 dashboard also includes a dedicated canonical pipeline in
 [EurostatFetcher / ECBFetcher / BISFetcher / NationalCBFetcher]
                          │
                          ▼
-canonical macro table: [country, date, indicator_id, value]
+canonical macro table: observations + source, concept, quality, and projection metadata
                          │
                          ▼
-build_v4.py → 114-indicator dashboard pages
+build_v4.py → stable country pages + one CEE build snapshot
 ```
 
-The canonical manifest currently defines 114 core indicators across real
+The CEE manifest currently defines 114 country indicators across real
 activity, prices/wages, external, fiscal/sovereign, monetary/financial,
 markets/valuation, financial stability, demographics, and political economy.
-The editable source of truth is `config/indicator_manifest_48.yaml`; the Python
-module loads that file and only uses its embedded manifest as a fallback.
-When a primary adapter is not yet wired, the pipeline emits a transparent proxy
-series and marks it in the UI with quality footnotes. This keeps every country
-page structurally complete while making uncertain data visible rather than
-silently hiding it.
+The editable source of truth is `config/indicator_manifest_48.yaml`; shared
+economic concepts and compatibility aliases live in `config/framework_v2.yaml`.
+When no validated public series exists, the public page omits that chart and
+records the gap instead of emitting a proxy.
 
 `make build-v4` also builds the China, UK, and US data-first pages from
 `config/china_indicators.yaml`, `config/uk_indicators.yaml`, and
 `config/us_indicators.yaml` via their dedicated scripts, then updates
-`output/index.html` so the archive page stays synchronized.
+`output/index.html` so the archive page stays synchronized. Public country
+routes are stable (`output/hungary.html` through `output/us.html`) and do not
+encode a quarter or generator version.
 
 The same build now refreshes the machine-readable workbench layer used by the
 home/archive pages:
 
-- `output/*_canonical_frame.json` exports compact data-first records for China,
-  UK, and US with the shared schema `[country, date, indicator_id, value]` plus
-  source, quality, frequency, unit, and transform metadata.
+- `output/cee_build_snapshot.json` stores the latest CEE indicator rows from the
+  same fetch used to render country pages. Archive cards and consistency checks
+  consume this snapshot rather than refetching live values.
+- `output/*_canonical_frame.json` uses `data-first-canonical-v2` for China, UK,
+  and US: metadata is stored once per series and observations are compact
+  `[date, value]` pairs.
 - `output/macro_workbench_summary.json` aggregates country cards, regime
   signals, cross-country heatmap values, data-gap priorities, and phase
   coverage in one JSON artifact for future agents or front-end views.
@@ -178,11 +178,11 @@ Supported optional sources:
 | `STOOQ_BET_CSV_URL` | Exact Stooq CSV download URL for Romania BET daily closes. |
 
 If these variables are missing or a source rejects automated access, the
-dashboard keeps the existing transparent proxy and marks it in the UI. This is
-intentional: a failed credentialed source should not silently become fake data.
+dashboard keeps a validated cache where policy permits or marks the series
+unavailable. It never creates a synthetic replacement merely to preserve a
+chart count.
 
-To review the remaining transparent proxies and decide whether to keep, replace,
-reframe, manually maintain, or remove them:
+To review intentionally dropped historical proxy slots and source gaps:
 
 ```bash
 make proxy-report

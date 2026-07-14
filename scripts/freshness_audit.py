@@ -25,9 +25,9 @@ CATALOG = ROOT / "DATA_SOURCE_CATALOG.md"
 TODAY = datetime.now(UTC).date()
 
 DATA_FIRST_PAGES = {
-    "China": OUTPUT / "china_2026Q2_v1.html",
-    "United Kingdom": OUTPUT / "uk_2026Q2_v1.html",
-    "United States": OUTPUT / "us_2026Q2_v1.html",
+    "China": OUTPUT / "china.html",
+    "United Kingdom": OUTPUT / "uk.html",
+    "United States": OUTPUT / "us.html",
 }
 
 CE4_COUNTRIES = ("Hungary", "Poland", "Czechia", "Romania")

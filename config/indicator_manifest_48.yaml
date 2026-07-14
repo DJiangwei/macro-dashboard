@@ -16,7 +16,8 @@ indicators:
   label: Real GDP Growth, QoQ SA
   unit: '% QoQ'
   source: Eurostat / national accounts
-  frequency: monthly
+  frequency: quarterly
+  adapters: [EurostatFetcher]
   chart: line
   peers: false
   quality_status: watch
@@ -65,12 +66,13 @@ indicators:
   indicator_id: unemployment_rate
   label: Unemployment Rate
   unit: '%'
-  source: Eurostat LFS / IMF WEO
-  frequency: annual
+  source: Eurostat LFS
+  frequency: monthly
+  adapters: [EurostatFetcher]
   chart: peer_overlay
   peers: true
   quality_status: verified
-  quality_note: IMF WEO annual unemployment is used in the canonical frame; Eurostat remains preferred for higher-frequency timing.
+  quality_note: Harmonised monthly Eurostat unemployment rate; national definitions can differ.
 - section_id: real_activity
   indicator_id: economic_sentiment
   label: Economic Sentiment Indicator
@@ -82,7 +84,7 @@ indicators:
   quality_status: verified
   quality_note: Eurostat European Commission ESI, seasonally adjusted; survey data is best used as a turning-point signal.
 - section_id: real_activity
-  indicator_id: manufacturing_pmi
+  indicator_id: industry_confidence
   label: Industry Confidence Indicator
   unit: Balance
   source: Eurostat / European Commission BCS
@@ -90,7 +92,8 @@ indicators:
   chart: line
   peers: false
   quality_status: watch
-  quality_note: European Commission industry confidence indicator from harmonised business surveys replaces the vendor PMI placeholder with a public domestic industrial survey signal; it is not an S&P Global PMI diffusion index.
+  adapters: [EurostatFetcher]
+  quality_note: European Commission industry confidence indicator from harmonised business surveys; it is not an S&P Global PMI diffusion index.
 - section_id: real_activity
   indicator_id: capacity_utilization
   label: Manufacturing Capacity Utilization
@@ -115,12 +118,13 @@ indicators:
   indicator_id: employment_growth
   label: Employment Growth, YoY
   unit: '% YoY'
-  source: Eurostat national accounts / World Bank fallback
+  source: Eurostat national accounts
   frequency: quarterly
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Employment-growth series may fall back to lower-frequency labour-market proxies where quarterly national accounts are unavailable.
+  adapters: [EurostatFetcher]
+  quality_note: Quarterly year-on-year employment growth from Eurostat national accounts, using non-seasonally-adjusted persons for harmonized CEE-4 coverage; no employment-ratio substitute is permitted.
 - section_id: real_activity
   indicator_id: participation_rate
   label: Labour Force Participation Rate
@@ -172,7 +176,7 @@ indicators:
   quality_status: watch
   quality_note: Annual FDI inflows can be volatile and revised; use as structural financing context rather than high-frequency flow timing.
 - section_id: real_activity
-  indicator_id: oecd_cli
+  indicator_id: employment_expectations
   label: Employment Expectations Indicator
   unit: Index
   source: Eurostat / European Commission BCS
@@ -180,9 +184,10 @@ indicators:
   chart: line
   peers: false
   quality_status: watch
-  quality_note: European Commission Employment Expectations Indicator from harmonised business surveys is used as a transparent domestic leading-labour-demand survey signal; it replaces the unavailable OECD CLI slot and is not an OECD composite leading indicator.
+  adapters: [EurostatFetcher]
+  quality_note: European Commission Employment Expectations Indicator from harmonised business surveys; it is not an OECD composite leading indicator.
 - section_id: real_activity
-  indicator_id: ifo_expectations
+  indicator_id: german_industry_confidence
   label: German Industry Confidence Spillover
   unit: Balance
   source: Eurostat Germany industry confidence
@@ -190,9 +195,10 @@ indicators:
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Germany industrial confidence from the harmonised European Commission business survey is used as an external-demand spillover signal for CEE exporters; it is not a domestic country survey and should be read alongside each country's own ESI.
+  adapters: [EurostatFetcher]
+  quality_note: Germany industrial confidence from the harmonised European Commission business survey; use as an external-demand spillover signal, not a domestic survey.
 - section_id: real_activity
-  indicator_id: truck_km_index
+  indicator_id: road_freight_activity
   label: Road Freight Activity
   unit: million tonne-km
   source: Eurostat road freight transport
@@ -200,7 +206,8 @@ indicators:
   chart: line
   peers: false
   quality_status: watch
-  quality_note: Eurostat quarterly road freight transport performance by reporting country, total transport and operation, measured in million tonne-kilometres. This replaces the toll-road truck-km alternative-data placeholder and is not a high-frequency traffic-count series.
+  adapters: [EurostatFetcher]
+  quality_note: Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series.
 - section_id: prices_wages
   indicator_id: cpi_yoy
   label: Headline CPI/HICP, YoY

@@ -1,0 +1,490 @@
+version: 2
+core_concept_count: 48
+
+pillars:
+  growth_demand:
+    order: 1
+    title_en: Growth & Domestic Demand
+    title_zh: 增长与内需
+  production_cycle:
+    order: 2
+    title_en: Production & Business Cycle
+    title_zh: 生产与商业周期
+  labour_household:
+    order: 3
+    title_en: Labour & Household Income
+    title_zh: 劳动力与居民收入
+  prices_costs:
+    order: 4
+    title_en: Prices, Wages & Costs
+    title_zh: 价格、工资与成本
+  housing_investment:
+    order: 5
+    title_en: Housing & Investment
+    title_zh: 房地产与投资
+  external_fx:
+    order: 6
+    title_en: External Balance & FX
+    title_zh: 外部平衡与汇率
+  fiscal_sovereign:
+    order: 7
+    title_en: Fiscal & Sovereign
+    title_zh: 财政与主权
+  monetary_financial:
+    order: 8
+    title_en: Monetary, Credit & Financial Conditions
+    title_zh: 货币、信用与金融条件
+  stability_structural:
+    order: 9
+    title_en: Financial Stability & Structural Risk
+    title_zh: 金融稳定与结构性风险
+
+# Old identifiers remain resolvable for downstream readers, but new output uses
+# economically accurate identifiers.
+legacy_aliases:
+  manufacturing_pmi: industry_confidence
+  oecd_cli: employment_expectations
+  ifo_expectations: german_industry_confidence
+  truck_km_index: road_freight_activity
+  cds_5y: sovereign_spread_public
+  embi_spread: sovereign_spread_public
+  fx_implied_vol: fx_realised_volatility
+
+concepts:
+  - id: real_gdp_growth_qoq
+    pillar: growth_demand
+    label_en: Real GDP Growth, QoQ
+    label_zh: 实际GDP环比
+    unit: percent
+    mappings:
+      CEE: [real_gdp_qoq]
+      CN: []
+      UK: [real_gdp_qoq]
+      US: [real_gdp_growth]
+  - id: real_gdp_growth_yoy
+    pillar: growth_demand
+    label_en: Real GDP Growth, YoY
+    label_zh: 实际GDP同比
+    unit: percent
+    mappings:
+      CEE: [real_gdp_yoy]
+      CN: [real_gdp_growth]
+      UK: []
+      US: []
+  - id: nominal_gdp_growth
+    pillar: growth_demand
+    label_en: Nominal GDP Growth
+    label_zh: 名义GDP增速
+    unit: percent
+    mappings:
+      CN: [nominal_gdp_usd]
+      UK: [nominal_gdp_gbp]
+      US: [nominal_gdp_growth]
+  - id: consumption_growth
+    pillar: growth_demand
+    label_en: Household Consumption Growth
+    label_zh: 居民消费增速
+    unit: percent
+    mappings:
+      CN: [household_consumption_growth]
+      UK: [private_consumption_qoq]
+      US: [real_pce_growth]
+  - id: investment_growth
+    pillar: growth_demand
+    label_en: Investment Growth
+    label_zh: 投资增速
+    unit: percent
+    mappings:
+      CEE: [gross_fixed_capital]
+      CN: [fixed_asset_investment_yoy_akshare]
+      UK: [gfcf_qoq]
+      US: [private_investment_growth]
+  - id: industrial_production_growth
+    pillar: production_cycle
+    label_en: Industrial Production Growth
+    label_zh: 工业生产增速
+    unit: percent
+    mappings:
+      CEE: [industrial_production_yoy]
+      CN: [industrial_value_added_yoy_akshare]
+      UK: [industrial_production_yoy]
+      US: [industrial_production_growth]
+  - id: retail_sales_growth
+    pillar: production_cycle
+    label_en: Retail Sales Growth
+    label_zh: 零售销售增速
+    unit: percent
+    mappings:
+      CEE: [retail_sales_yoy]
+      CN: [retail_sales_yoy_akshare]
+      UK: [retail_sales_yoy]
+      US: [retail_sales_growth]
+  - id: business_confidence
+    pillar: production_cycle
+    label_en: Business Confidence
+    label_zh: 企业信心
+    unit: index
+    mappings:
+      CEE: [economic_sentiment, industry_confidence]
+      CN: [enterprise_boom_index_akshare, manufacturing_pmi_akshare]
+      UK: [composite_leading_indicator]
+      US: [philly_fed_outlook, empire_state_manufacturing]
+  - id: unemployment_rate
+    pillar: labour_household
+    label_en: Unemployment Rate
+    label_zh: 失业率
+    unit: percent
+    mappings:
+      CEE: [unemployment_rate]
+      CN: [unemployment]
+      UK: [unemployment_rate]
+      US: [unemployment_rate]
+  - id: employment_growth
+    pillar: labour_household
+    label_en: Employment Growth
+    label_zh: 就业增速
+    unit: percent
+    mappings:
+      CEE: [employment_growth]
+      UK: [paye_payrolled_employees_mom_change]
+      US: [nonfarm_payrolls_change]
+  - id: participation_rate
+    pillar: labour_household
+    label_en: Labour Force Participation
+    label_zh: 劳动参与率
+    unit: percent
+    mappings:
+      CEE: [participation_rate]
+      UK: [employment_rate_15_64]
+      US: [labor_force_participation]
+  - id: vacancies
+    pillar: labour_household
+    label_en: Labour Demand / Vacancies
+    label_zh: 劳动力需求与职位空缺
+    unit: mixed
+    mappings:
+      CEE: [vacancy_rate]
+      UK: [vacancies_total]
+      US: [jolts_openings]
+  - id: wage_growth
+    pillar: labour_household
+    label_en: Wage Growth
+    label_zh: 工资增速
+    unit: percent
+    mappings:
+      CEE: [avg_wage_yoy]
+      UK: [awe_regular_pay_growth]
+      US: [hourly_earnings_growth]
+  - id: real_income_growth
+    pillar: labour_household
+    label_en: Real Household Income Growth
+    label_zh: 居民实际收入增速
+    unit: percent
+    mappings:
+      CEE: [real_wage_yoy]
+      UK: [real_household_disposable_income_per_head]
+      US: [real_disposable_income_growth]
+  - id: headline_inflation
+    pillar: prices_costs
+    label_en: Headline Inflation
+    label_zh: 整体通胀
+    unit: percent
+    mappings:
+      CEE: [cpi_yoy]
+      CN: [cpi_yoy_akshare]
+      UK: [cpi_yoy]
+      US: [cpi_inflation]
+  - id: core_inflation
+    pillar: prices_costs
+    label_en: Core Inflation
+    label_zh: 核心通胀
+    unit: percent
+    mappings:
+      CEE: [core_cpi_yoy]
+      UK: [core_cpi_yoy]
+      US: [core_cpi_inflation]
+  - id: services_inflation
+    pillar: prices_costs
+    label_en: Services Inflation
+    label_zh: 服务通胀
+    unit: percent
+    mappings:
+      CEE: [services_cpi_yoy]
+      UK: [cpi_services_yoy]
+      US: [services_ex_energy_cpi_inflation]
+  - id: goods_inflation
+    pillar: prices_costs
+    label_en: Goods Inflation
+    label_zh: 商品通胀
+    unit: percent
+    mappings:
+      CEE: [goods_cpi_yoy]
+      UK: [cpi_goods_yoy]
+      US: [core_goods_cpi_inflation]
+  - id: producer_price_inflation
+    pillar: prices_costs
+    label_en: Producer Price Inflation
+    label_zh: 生产者价格通胀
+    unit: percent
+    mappings:
+      CEE: [ppi_yoy]
+      CN: [ppi_yoy_akshare]
+      UK: [producer_prices]
+      US: [final_demand_ppi_inflation]
+  - id: wage_cost_inflation
+    pillar: prices_costs
+    label_en: Labour Cost Inflation
+    label_zh: 劳动力成本通胀
+    unit: percent
+    mappings:
+      CEE: [unit_labour_cost]
+      UK: [awe_total_pay_growth]
+      US: [unit_labor_cost_growth]
+  - id: inflation_expectations
+    pillar: prices_costs
+    label_en: Inflation Expectations
+    label_zh: 通胀预期
+    unit: percent
+    mappings:
+      CEE: [inflation_expectations]
+      US: [michigan_inflation_expectation, ten_year_breakeven]
+  - id: house_price_growth
+    pillar: housing_investment
+    label_en: House Price Growth
+    label_zh: 房价增速
+    unit: percent
+    mappings:
+      CEE: [house_price_index]
+      CN: [nominal_residential_property_price_bis]
+      UK: [uk_hpi_annual_change]
+      US: [fhfa_house_price_growth]
+  - id: housing_activity
+    pillar: housing_investment
+    label_en: Housing Activity
+    label_zh: 房地产活动
+    unit: mixed
+    mappings:
+      CN: [commercial_housing_sales_value_yoy_eastmoney]
+      UK: [residential_property_transactions_sa]
+      US: [housing_starts]
+  - id: construction_activity
+    pillar: housing_investment
+    label_en: Construction Activity
+    label_zh: 建筑活动
+    unit: percent
+    mappings:
+      CEE: [construction_production]
+      CN: [real_estate_development_investment_ytd_yoy_eastmoney]
+      UK: [construction_output_yoy]
+      US: [construction_spending_growth]
+  - id: mortgage_rate
+    pillar: housing_investment
+    label_en: Mortgage Rate
+    label_zh: 按揭利率
+    unit: percent
+    mappings:
+      CEE: [mortgage_rate_new]
+      UK: [quoted_mortgage_rate]
+      US: [mortgage_30y_rate]
+  - id: property_inventory
+    pillar: housing_investment
+    label_en: Property Inventory / Supply
+    label_zh: 房地产库存与供给
+    unit: mixed
+    mappings:
+      US: [active_listing_count, new_home_months_supply]
+  - id: current_account_gdp
+    pillar: external_fx
+    label_en: Current Account, % GDP
+    label_zh: 经常账户占GDP
+    unit: percent_gdp
+    mappings:
+      CEE: [current_account_pct_gdp]
+      CN: [current_account_gdp]
+      UK: [current_account_gdp]
+      US: [current_account_balance]
+  - id: trade_balance
+    pillar: external_fx
+    label_en: Trade Balance
+    label_zh: 贸易差额
+    unit: currency
+    mappings:
+      CEE: [trade_balance]
+      CN: [customs_trade_balance_akshare]
+      UK: [total_trade_balance]
+      US: [goods_trade_balance]
+  - id: exports_growth
+    pillar: external_fx
+    label_en: Exports Growth
+    label_zh: 出口增速
+    unit: percent
+    mappings:
+      CN: [customs_exports_yoy_akshare]
+      UK: [exports_qoq]
+      US: [goods_exports_growth]
+  - id: imports_growth
+    pillar: external_fx
+    label_en: Imports Growth
+    label_zh: 进口增速
+    unit: percent
+    mappings:
+      CN: [customs_imports_yoy_akshare]
+      UK: [imports_qoq]
+      US: [goods_imports_growth]
+  - id: fx_spot
+    pillar: external_fx
+    label_en: Spot Exchange Rate
+    label_zh: 即期汇率
+    unit: fx
+    mappings:
+      CEE: [fx_vs_eur]
+      CN: [usd_cny_spot]
+      UK: [gbp_usd]
+      US: [nominal_broad_dollar_index]
+  - id: reer
+    pillar: external_fx
+    label_en: Real Effective Exchange Rate
+    label_zh: 实际有效汇率
+    unit: index
+    mappings:
+      CEE: [reer]
+      CN: [real_effective_exchange_rate_bis]
+      UK: [gbp_reer]
+      US: [usd_reer]
+  - id: fiscal_balance_gdp
+    pillar: fiscal_sovereign
+    label_en: Fiscal Balance, % GDP
+    label_zh: 财政余额占GDP
+    unit: percent_gdp
+    mappings:
+      CEE: [fiscal_balance_pct_gdp]
+      CN: [general_gov_balance]
+      UK: [government_balance_gdp]
+      US: [fiscal_year_deficit]
+  - id: primary_balance_gdp
+    pillar: fiscal_sovereign
+    label_en: Primary Balance, % GDP
+    label_zh: 初级财政余额占GDP
+    unit: percent_gdp
+    mappings:
+      CEE: [primary_balance]
+  - id: government_debt_gdp
+    pillar: fiscal_sovereign
+    label_en: Government Debt, % GDP
+    label_zh: 政府债务占GDP
+    unit: percent_gdp
+    mappings:
+      CEE: [gov_debt_pct_gdp]
+      CN: [general_gov_debt]
+      UK: [government_debt_gdp]
+      US: [federal_debt_gdp]
+  - id: government_interest_cost
+    pillar: fiscal_sovereign
+    label_en: Government Interest Cost
+    label_zh: 政府利息成本
+    unit: mixed
+    mappings:
+      CEE: [interest_bill_pct_gdp]
+      UK: [obr_cg_debt_interest_forecast]
+      US: [federal_interest_outlays_gdp]
+  - id: sovereign_yield_10y
+    pillar: fiscal_sovereign
+    label_en: 10Y Sovereign Yield
+    label_zh: 10年主权债收益率
+    unit: percent
+    mappings:
+      CEE: [sov_yield_10y]
+      UK: [long_rate_10y]
+      US: [treasury_10y_yield]
+  - id: policy_rate
+    pillar: monetary_financial
+    label_en: Policy Rate
+    label_zh: 政策利率
+    unit: percent
+    mappings:
+      CEE: [policy_rate]
+      CN: [lpr_1y_akshare]
+      UK: [bank_rate]
+      US: [daily_fed_funds]
+  - id: real_policy_rate
+    pillar: monetary_financial
+    label_en: Real Policy Rate
+    label_zh: 实际政策利率
+    unit: percent
+    mappings:
+      CEE: [real_policy_rate]
+  - id: broad_money_growth
+    pillar: monetary_financial
+    label_en: Broad Money Growth
+    label_zh: 广义货币增速
+    unit: percent
+    mappings:
+      CEE: [m3_yoy]
+      CN: [m2_yoy_akshare]
+      UK: [broad_money_m3_yoy]
+      US: [broad_money_growth]
+  - id: private_credit_growth
+    pillar: monetary_financial
+    label_en: Private Credit Growth
+    label_zh: 私营部门信用增速
+    unit: percent
+    mappings:
+      CEE: [private_credit_yoy]
+      CN: [new_rmb_loans_akshare]
+      UK: [m4_lending_growth]
+      US: [bank_credit_growth]
+  - id: bank_lending_rate
+    pillar: monetary_financial
+    label_en: Bank Lending Rate
+    label_zh: 银行贷款利率
+    unit: percent
+    mappings:
+      CEE: [lending_rate_corp]
+      UK: [quoted_mortgage_rate]
+      US: [mortgage_30y_rate]
+  - id: equity_return
+    pillar: monetary_financial
+    label_en: Equity Market Return
+    label_zh: 股票市场回报
+    unit: percent
+    mappings:
+      CEE: [equity_yoy]
+      CN: [share_price_index]
+      UK: [equity_prices]
+      US: []
+  - id: yield_curve_slope
+    pillar: monetary_financial
+    label_en: Yield Curve Slope
+    label_zh: 收益率曲线斜率
+    unit: basis_points
+    mappings:
+      CEE: [yield_curve_slope]
+      US: [yield_curve_10y2y]
+  - id: financial_conditions
+    pillar: monetary_financial
+    label_en: Financial Conditions
+    label_zh: 金融条件
+    unit: index
+    mappings:
+      US: [chicago_fed_nfci]
+  - id: credit_gap
+    pillar: stability_structural
+    label_en: Credit-to-GDP Gap
+    label_zh: 信贷与GDP缺口
+    unit: percentage_points
+    mappings:
+      CEE: [credit_to_gdp_gap]
+  - id: bank_capital_ratio
+    pillar: stability_structural
+    label_en: Bank Capital Ratio
+    label_zh: 银行资本充足率
+    unit: percent
+    mappings:
+      CEE: [bank_car]
+  - id: bank_npl_ratio
+    pillar: stability_structural
+    label_en: Bank NPL Ratio
+    label_zh: 银行不良贷款率
+    unit: percent
+    mappings:
+      CEE: [bank_npl_ratio]

@@ -12,4 +12,13 @@ if [ -f "$ROOT/.env.local" ]; then
   set +a
 fi
 
-exec uv "$@"
+if command -v uv >/dev/null 2>&1; then
+  UV_BIN="$(command -v uv)"
+elif [ -x "$HOME/.local/bin/uv" ]; then
+  UV_BIN="$HOME/.local/bin/uv"
+else
+  echo "uv is required. Install it from https://docs.astral.sh/uv/." >&2
+  exit 127
+fi
+
+exec "$UV_BIN" --directory "$ROOT" "$@"

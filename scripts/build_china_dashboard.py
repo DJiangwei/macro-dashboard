@@ -21,13 +21,18 @@ from typing import Any
 import requests
 import yaml
 
-from dashboard_summary_utils import build_summary_metadata, write_canonical_data_first_frame
+from dashboard_summary_utils import (
+    apply_quality_assessments,
+    build_summary_metadata,
+    write_canonical_data_first_frame,
+)
+from country_primer.framework import concept_id_for
 
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config" / "china_indicators.yaml"
 OUTPUT = ROOT / "output"
-OUT_HTML = OUTPUT / "china_2026Q2_v1.html"
+OUT_HTML = OUTPUT / "china.html"
 SUMMARY_JSON = OUTPUT / "china_dashboard_summary.json"
 CANONICAL_JSON = OUTPUT / "china_canonical_frame.json"
 SUMMARY_KEY_IDS = [
@@ -587,7 +592,7 @@ def _format_value(value: float, unit: str) -> str:
     return f"{value:,.2f}"
 
 
-def _chart_html(series: dict[str, Any]) -> str:
+def _chart_html(series: dict[str, Any], country_code: str) -> str:
     observations = series.get("observations") or []
     if not observations:
         return ""
@@ -654,8 +659,10 @@ def _chart_html(series: dict[str, Any]) -> str:
     caveat_en = escape(series.get("caveat_en", ""))
     caveat_zh = escape(series.get("caveat_zh", ""))
     source_url = escape(series.get("source_url") or series.get("api_url") or "#")
+    concept_id = concept_id_for(country_code, str(series["id"]))
+    view = "deep" if ":" in concept_id else "core"
     return f"""
-<article class="chart-card chart-quality-{escape(series.get('quality_status', 'unchecked'))}">
+<article class="chart-card chart-quality-{escape(series.get('quality_status', 'unchecked'))}" data-dashboard-view="{view}" data-concept-id="{escape(concept_id)}">
   <div class="chart-head">
     <div>
       <h3><span data-lang="en">{escape(series['label_en'])}</span><span data-lang="zh">{escape(series['label_zh'])}</span></h3>
@@ -739,14 +746,14 @@ def _section_nav(config: dict[str, Any]) -> str:
     return "\n".join(links)
 
 
-def _sections_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> str:
+def _sections_html(config: dict[str, Any], series_list: list[dict[str, Any]], country_code: str) -> str:
     by_section: dict[str, list[dict[str, Any]]] = {}
     for item in series_list:
         if item.get("observations"):
             by_section.setdefault(item["section"], []).append(item)
     html_parts: list[str] = []
     for section_id, section in config.get("sections", {}).items():
-        charts = "\n".join(_chart_html(item) for item in by_section.get(section_id, []))
+        charts = "\n".join(_chart_html(item, country_code) for item in by_section.get(section_id, []))
         empty = ""
         if not charts:
             empty = '<div class="empty-note"><span data-lang="en">No reproducible public chart wired yet for this section.</span><span data-lang="zh">本节暂未接入可复跑的公开图表数据。</span></div>'
@@ -893,6 +900,26 @@ h1 {
   color: var(--muted);
   font-size: 12px;
 }
+.view-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: -12px 0 26px;
+}
+.view-switch > span { color: var(--muted); font-size: 12px; margin-right: 3px; }
+.view-switch button {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 13px;
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+.view-switch button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { display: none; }
 .data-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -1003,17 +1030,17 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]], cards
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 <style>{CSS}</style>
 </head>
-<body>
+<body data-dashboard-view="core">
 <div class="topbar">
   <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">East Meridian <span>/ Macro Dashboard</span></div></a>
   <nav class="country-nav" aria-label="country dashboards">
-    <a href="hungary_2026Q2_v4.html">HU</a>
-    <a href="poland_2026Q2_v4.html">PL</a>
-    <a href="czechia_2026Q2_v4.html">CZ</a>
-    <a href="romania_2026Q2_v4.html">RO</a>
-    <a href="china_2026Q2_v1.html" class="active">CN</a>
-    <a href="uk_2026Q2_v1.html">UK</a>
-    <a href="us_2026Q2_v1.html">US</a>
+    <a href="hungary.html">HU</a>
+    <a href="poland.html">PL</a>
+    <a href="czechia.html">CZ</a>
+    <a href="romania.html">RO</a>
+    <a href="china.html" class="active">CN</a>
+    <a href="uk.html">UK</a>
+    <a href="us.html">US</a>
   </nav>
   <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">中文</button>
 </div>
@@ -1038,12 +1065,18 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]], cards
     {_section_nav(config)}
   </nav>
 
+  <div class="view-switch" role="group" aria-label="chart density">
+    <span><span data-lang="en">Chart view</span><span data-lang="zh">图表视图</span></span>
+    <button type="button" data-view-option="core" aria-pressed="true" onclick="setDashboardView('core')"><span data-lang="en">Core 48</span><span data-lang="zh">核心 48</span></button>
+    <button type="button" data-view-option="deep" aria-pressed="false" onclick="setDashboardView('deep')"><span data-lang="en">All deep-dive charts</span><span data-lang="zh">全部深度指标</span></button>
+  </div>
+
   <div class="data-note">
     <span data-lang="en">Data policy: no fabricated proxies. World Bank and IMF annual series provide the durable public skeleton; SAFE provides official daily RMB fixing data; PBC cards show latest official monetary prints where history is not yet wired.</span>
     <span data-lang="zh">数据原则：不制造 proxy。World Bank 与 IMF 年度序列提供可维护的公开骨架；SAFE 提供官方人民币日度中间价；PBC 卡片展示暂未接入历史序列的最新官方货币数据。</span>
   </div>
 
-  {_sections_html(config, series_list)}
+  {_sections_html(config, series_list, "CN")}
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
@@ -1070,12 +1103,22 @@ function resizeCharts() {{
     Plotly.Plots.resize(el);
   }});
 }}
+function setDashboardView(view) {{
+  var normalized = view === 'deep' ? 'deep' : 'core';
+  document.body.dataset.dashboardView = normalized;
+  localStorage.setItem('cp-dashboard-view', normalized);
+  document.querySelectorAll('[data-view-option]').forEach(function(btn) {{
+    btn.setAttribute('aria-pressed', String(btn.dataset.viewOption === normalized));
+  }});
+  requestAnimationFrame(resizeCharts);
+}}
 (function() {{
   var saved = localStorage.getItem('cp-lang');
   if (saved === 'zh') {{
     document.documentElement.lang = 'zh';
     document.getElementById('lang-btn').textContent = 'English';
   }}
+  setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
   requestAnimationFrame(resizeCharts);
 }})();
 function toggleLang() {{
@@ -1102,7 +1145,7 @@ window.addEventListener('resize', resizeCharts);
 def _index_card(summary: dict[str, Any]) -> str:
     return f"""
   <!-- China dashboard card -->
-  <a href="china_2026Q2_v1.html" class="card clean">
+  <a href="china.html" class="card clean">
     <div class="card-kicker">CNY · PBC · China data-first page</div>
     <h2>China</h2>
     <div class="stats">
@@ -1142,6 +1185,7 @@ def build() -> Path:
     OUTPUT.mkdir(parents=True, exist_ok=True)
     config = _load_config()
     series_list, cards = fetch_all(config)
+    apply_quality_assessments(series_list)
     _write_clean(OUT_HTML, render_html(config, series_list, cards))
 
     charted = [item for item in series_list if item.get("observations")]
@@ -1161,7 +1205,7 @@ def build() -> Path:
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
     }
     summary["canonical_frame"] = write_canonical_data_first_frame(CANONICAL_JSON, "CN", series_list)
-    summary.update(build_summary_metadata(config, series_list))
+    summary.update(build_summary_metadata(config, series_list, "CN"))
     SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
     inject_index(summary)
     if not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):

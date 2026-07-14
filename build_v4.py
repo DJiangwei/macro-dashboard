@@ -64,8 +64,11 @@ from country_primer.data_fetcher import (  # noqa: E402
     is_dropped_proxy_indicator,
 )
 from country_primer.catalog import load_countries  # noqa: E402
+from country_primer.framework import concept_id_for  # noqa: E402
 
 OUTPUT = ROOT / "output"
+CEE_SNAPSHOT = OUTPUT / "cee_build_snapshot.json"
+BUILD_FRAMES: dict[str, list[dict]] = {}
 
 
 def _html_text(value):
@@ -626,6 +629,27 @@ p { color: var(--muted); }
   border-color: var(--fg);
   text-decoration: none;
 }
+.view-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: -12px 0 24px;
+}
+.view-switch > span { color: var(--muted); font-size: 12px; margin-right: 3px; }
+.view-switch button {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+.view-switch button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+body[data-dashboard-view="core"] .chart-cell[data-dashboard-view="deep"],
+body[data-dashboard-view="core"] .indicator-ledger-item[data-dashboard-view="deep"] { display: none; }
 table,
 .indicator-table,
 .trade-card-body table {
@@ -716,7 +740,7 @@ SECTION_CHART_MAP = {
         "chart-real_activity-real_gdp_qoq-1b",
         "chart-real_activity-gdp_components-1c",
         "chart-real_activity-industrial_production_yoy-2",
-        "chart-real_activity-manufacturing_pmi-2b",
+        "chart-real_activity-industry_confidence-2b",
         "chart-real_activity-capacity_utilization-2c",
         "chart-real_activity-retail_sales_yoy-3",
         "chart-real_activity-economic_sentiment-3b",
@@ -1046,8 +1070,11 @@ def _indicator_ledger_html(section_id: str, country_code: str) -> str:
         if is_dropped_proxy_indicator(country_code, spec.indicator_id):
             continue
         cls = _quality_class(spec.quality_status)
+        concept_id = concept_id_for(country_code, spec.indicator_id)
+        view = "deep" if ":" in concept_id else "core"
         items.append(
-            f'<div class="indicator-ledger-item" data-indicator-id="{escape(spec.indicator_id)}">'
+            f'<div class="indicator-ledger-item" data-indicator-id="{escape(spec.indicator_id)}" '
+            f'data-dashboard-view="{view}" data-concept-id="{escape(concept_id)}">'
             f'<span>{escape(spec.label)}</span>'
             f'<span class="quality-chip {cls}">{escape(spec.quality_status)}</span>'
             f'</div>'
@@ -1090,11 +1117,19 @@ def _render_section_charts(section_id: str, country_code: str, chart_map: dict[s
             legacy_id = None
         canonical_id = _canonical_chart_id(section_id, spec.indicator_id, idx + 1)
         rows = _indicator_frame(canonical_frame, country_code, spec.indicator_id)
+        if not legacy_id and not rows:
+            continue
         row = rows[-1] if rows else {}
         status = str(row.get("quality_status") or spec.quality_status)
         source = str(row.get("source") or spec.source)
         note = str(row.get("quality_note") or spec.quality_note)
         is_proxy = bool(row.get("is_proxy", False))
+        concept_id = concept_id_for(country_code, spec.indicator_id)
+        view = "deep" if ":" in concept_id else "core"
+        chart_attrs = (
+            f'data-indicator-id="{escape(spec.indicator_id)}" '
+            f'data-dashboard-view="{view}" data-concept-id="{escape(concept_id)}"'
+        )
 
         if legacy_id:
             inner = _strip_outer_chart_cell(chart_map[legacy_id])
@@ -1108,7 +1143,7 @@ def _render_section_charts(section_id: str, country_code: str, chart_map: dict[s
             )
             badge = _chart_corner_badge("verified", legacy_note, False)
             html_parts.append(
-                f'<div class="chart-cell chart-shell" data-indicator-id="{escape(spec.indicator_id)}">'
+                f'<div class="chart-cell chart-shell" {chart_attrs}>'
                 f'{badge}{inner}{footnote}</div>'
             )
             continue
@@ -1117,7 +1152,7 @@ def _render_section_charts(section_id: str, country_code: str, chart_map: dict[s
         footnote = _chart_footnote(status, source, note, is_proxy)
         badge = _chart_corner_badge(status, note, is_proxy)
         html_parts.append(
-            f'<div class="chart-cell chart-shell" data-indicator-id="{escape(spec.indicator_id)}">'
+            f'<div class="chart-cell chart-shell" {chart_attrs}>'
             f'{badge}{_chart_from_canonical_frame(canonical_frame, country_code, spec, canonical_id)}'
             f'{footnote}</div>'
         )
@@ -3066,8 +3101,8 @@ def build_v4(country_code: str) -> Path:
     # Map to base HTML filename
     name_map = {"HU": "hungary", "PL": "poland", "CZ": "czechia", "RO": "romania"}
     base_name = name_map[country_code]
-    base_path = OUTPUT / f"{base_name}_2026Q2.html"
-    out_path = OUTPUT / f"{base_name}_2026Q2_v4.html"
+    base_path = ROOT / "templates" / "cee_base" / f"{base_name}.html"
+    out_path = OUTPUT / f"{base_name}.html"
 
     html = base_path.read_text()
 
@@ -3137,13 +3172,13 @@ def build_v4(country_code: str) -> Path:
 
     # Build country switcher nav
     all_countries = [
-        ("HU", "Hungary", "hungary_2026Q2_v4.html"),
-        ("PL", "Poland", "poland_2026Q2_v4.html"),
-        ("CZ", "Czechia", "czechia_2026Q2_v4.html"),
-        ("RO", "Romania", "romania_2026Q2_v4.html"),
-        ("CN", "China", "china_2026Q2_v1.html"),
-        ("UK", "United Kingdom", "uk_2026Q2_v1.html"),
-        ("US", "United States", "us_2026Q2_v1.html"),
+        ("HU", "Hungary", "hungary.html"),
+        ("PL", "Poland", "poland.html"),
+        ("CZ", "Czechia", "czechia.html"),
+        ("RO", "Romania", "romania.html"),
+        ("CN", "China", "china.html"),
+        ("UK", "United Kingdom", "uk.html"),
+        ("US", "United States", "us.html"),
     ]
     nav_links = []
     for cc, cname, cfile in all_countries:
@@ -3170,6 +3205,7 @@ def build_v4(country_code: str) -> Path:
         country_code,
         locale="zh",
     )
+    name_zh = {"HU": "匈牙利", "PL": "波兰", "CZ": "捷克", "RO": "罗马尼亚"}[country_code]
 
     final_html = f"""<!doctype html>
 <html lang="en">
@@ -3180,7 +3216,7 @@ def build_v4(country_code: str) -> Path:
 {plotly_tag}
 <style>{CSS}</style>
 </head>
-<body>
+<body data-dashboard-view="core">
 
 <div class="topbar">
   <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">East Meridian <span>/ Country Primer</span></div></a>
@@ -3196,7 +3232,7 @@ def build_v4(country_code: str) -> Path:
 <div class="container">
 
 <header>
-  <h1>{data["name"]} Dashboard</h1>
+  <h1><span data-lang="en">{data["name"]} Dashboard</span><span data-lang="zh">{name_zh} Dashboard</span></h1>
   <div class="subtitle"><span data-lang="en">{data["subtitle"]}</span><span data-lang="zh">{data.get("subtitle_zh", data["subtitle"])}</span></div>
   <div class="meta-row">
     <div class="meta-chip"><span data-lang="en">Framework:</span><span data-lang="zh">框架:</span> <strong>IMF FPP × GS Indicators × Buy-side PM</strong></div>
@@ -3222,6 +3258,12 @@ def build_v4(country_code: str) -> Path:
   <a href="#financial_stability"><span data-lang="en">§8 Financial Stability</span><span data-lang="zh">§8 金融稳定</span></a>
   <a href="#demographics"><span data-lang="en">§9 Demographics</span><span data-lang="zh">§9 人口结构</span></a>
   <a href="#political_economy"><span data-lang="en">§10 Political Economy</span><span data-lang="zh">§10 政治经济</span></a>
+</div>
+
+<div class="view-switch" role="group" aria-label="chart density">
+  <span><span data-lang="en">Chart view</span><span data-lang="zh">图表视图</span></span>
+  <button type="button" data-view-option="core" aria-pressed="true" onclick="setDashboardView('core')"><span data-lang="en">Core 48</span><span data-lang="zh">核心 48</span></button>
+  <button type="button" data-view-option="deep" aria-pressed="false" onclick="setDashboardView('deep')"><span data-lang="en">All deep-dive charts</span><span data-lang="zh">全部深度指标</span></button>
 </div>
 
 {_quality_panel_html()}
@@ -3277,6 +3319,22 @@ function toggleLang() {{
     localStorage.setItem('cp-lang', 'en');
   }}
 }}
+function resizeVisibleCharts() {{
+  if (!window.Plotly) return;
+  document.querySelectorAll('.chart-cell .plotly-graph-div').forEach(function(el) {{
+    if (el.offsetParent !== null) Plotly.Plots.resize(el);
+  }});
+}}
+function setDashboardView(view) {{
+  var normalized = view === 'deep' ? 'deep' : 'core';
+  document.body.dataset.dashboardView = normalized;
+  localStorage.setItem('cp-dashboard-view', normalized);
+  document.querySelectorAll('[data-view-option]').forEach(function(btn) {{
+    btn.setAttribute('aria-pressed', String(btn.dataset.viewOption === normalized));
+  }});
+  requestAnimationFrame(resizeVisibleCharts);
+}}
+setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
 </script>
 
 <script>
@@ -3350,6 +3408,7 @@ function toggleLang() {{
 """
 
     out_path.write_text(final_html)
+    BUILD_FRAMES[country_code] = canonical_frame
     return out_path
 
 
@@ -3378,27 +3437,78 @@ def _source_mix(frame) -> tuple[int, int, int]:
     return verified, watch, low
 
 
-def build_output_index(country_codes: list[str] | None = None) -> Path:
-    """Build the output archive index from the same data pipeline as v4 pages."""
+def write_cee_build_snapshot(frames: dict[str, list[dict]]) -> Path:
+    """Persist one internally consistent set of latest CEE observations."""
+    pipeline = DataPipeline()
+    existing = json.loads(CEE_SNAPSHOT.read_text()) if CEE_SNAPSHOT.exists() else {}
+    countries: dict[str, dict] = dict(existing.get("countries") or {})
+    for country_code, frame in frames.items():
+        latest: dict[str, dict] = {}
+        for row in frame:
+            indicator_id = str(row.get("indicator_id") or "")
+            if not indicator_id:
+                continue
+            if indicator_id not in latest or str(row.get("date", "")) > str(latest[indicator_id].get("date", "")):
+                latest[indicator_id] = {
+                    key: row.get(key)
+                    for key in (
+                        "country", "date", "indicator_id", "concept_id", "value", "unit",
+                        "frequency", "source", "source_url", "quality_status", "quality_note",
+                        "source_authority", "derivation", "freshness_status", "validation_status",
+                        "comparability", "observation_type", "is_projection", "is_proxy",
+                    )
+                }
+        coverage = pipeline.validate_coverage(frame)
+        countries[country_code] = {
+            "coverage": coverage,
+            "source_mix": dict(zip(("verified", "watch", "low_confidence"), _source_mix(frame))),
+            "dropped_proxy_slots": sum(
+                1 for spec in INDICATOR_MANIFEST_48
+                if is_dropped_proxy_indicator(country_code, spec.indicator_id)
+            ),
+            "indicators": latest,
+        }
+    payload = {
+        "schema_version": "cee-build-snapshot-v1",
+        "generated": datetime.now().astimezone().isoformat(),
+        "countries": countries,
+    }
+    CEE_SNAPSHOT.write_text(json.dumps(payload, ensure_ascii=False, indent=2, default=str) + "\n")
+    return CEE_SNAPSHOT
+
+
+def load_cee_build_snapshot() -> dict:
+    if not CEE_SNAPSHOT.exists():
+        raise FileNotFoundError(
+            f"Missing {CEE_SNAPSHOT}; run `python build_v4.py ALL` before building archive pages."
+        )
+    return json.loads(CEE_SNAPSHOT.read_text())
+
+
+def build_output_index(country_codes: list[str] | None = None, frames: dict[str, list[dict]] | None = None) -> Path:
+    """Build the CEE index from the exact snapshot used by country pages."""
     country_codes = country_codes or ["HU", "PL", "CZ", "RO"]
     names = {"HU": "Hungary", "PL": "Poland", "CZ": "Czechia", "RO": "Romania"}
     filenames = {
-        "HU": "hungary_2026Q2_v4.html",
-        "PL": "poland_2026Q2_v4.html",
-        "CZ": "czechia_2026Q2_v4.html",
-        "RO": "romania_2026Q2_v4.html",
+        "HU": "hungary.html",
+        "PL": "poland.html",
+        "CZ": "czechia.html",
+        "RO": "romania.html",
     }
     currency = {"HU": "HUF", "PL": "PLN", "CZ": "CZK", "RO": "RON"}
     cb = {"HU": "MNB", "PL": "NBP", "CZ": "CNB", "RO": "BNR"}
-    pipeline = DataPipeline()
+    snapshot = load_cee_build_snapshot() if frames is None else None
     cards: list[str] = []
     total_rendered = 0
     total_dropped = 0
     total_proxy = 0
 
     for code in country_codes:
-        frame = pipeline.fetch_country(code)
-        coverage = pipeline.validate_coverage(frame)
+        country_snapshot = (snapshot or {}).get("countries", {}).get(code, {})
+        frame = (frames or {}).get(code) or list((country_snapshot.get("indicators") or {}).values())
+        if not frame:
+            raise ValueError(f"CEE build snapshot has no rows for {code}")
+        coverage = country_snapshot.get("coverage") or DataPipeline().validate_coverage(frame)
         verified, watch, low = _source_mix(frame)
         dropped = len([
             spec for spec in INDICATOR_MANIFEST_48
@@ -3587,9 +3697,16 @@ if __name__ == "__main__":
     for cc in targets:
         path = build_v4(cc)
         print(f"Wrote {path} ({path.stat().st_size:,} bytes)")
-    index_path = build_output_index()
-    print(f"Wrote {index_path} ({index_path.stat().st_size:,} bytes)")
-    if not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):
+    snapshot_path = write_cee_build_snapshot(BUILD_FRAMES)
+    print(f"Wrote {snapshot_path} ({snapshot_path.stat().st_size:,} bytes)")
+    snapshot_countries = set((load_cee_build_snapshot().get("countries") or {}))
+    has_full_cee_snapshot = {"HU", "PL", "CZ", "RO"}.issubset(snapshot_countries)
+    if has_full_cee_snapshot:
+        index_path = build_output_index()
+        print(f"Wrote {index_path} ({index_path.stat().st_size:,} bytes)")
+    else:
+        print("Skipped full CEE index: snapshot does not yet contain all four countries.")
+    if has_full_cee_snapshot and not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):
         scripts_path = ROOT / "scripts"
         if str(scripts_path) not in sys.path:
             sys.path.insert(0, str(scripts_path))

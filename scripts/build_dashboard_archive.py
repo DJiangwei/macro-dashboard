@@ -22,9 +22,8 @@ for path in (ROOT, SRC):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
-from build_v4 import _latest_value, _source_mix  # noqa: E402
+from build_v4 import _latest_value, _source_mix, load_cee_build_snapshot  # noqa: E402
 from country_primer.data_fetcher import (  # noqa: E402
-    DataPipeline,
     INDICATOR_MANIFEST_48,
     is_dropped_proxy_indicator,
 )
@@ -35,28 +34,28 @@ CE4_COUNTRIES = [
     {
         "code": "HU",
         "name": "Hungary",
-        "file": "hungary_2026Q2_v4.html",
+        "file": "hungary.html",
         "currency": "HUF",
         "institution": "MNB",
     },
     {
         "code": "PL",
         "name": "Poland",
-        "file": "poland_2026Q2_v4.html",
+        "file": "poland.html",
         "currency": "PLN",
         "institution": "NBP",
     },
     {
         "code": "CZ",
         "name": "Czechia",
-        "file": "czechia_2026Q2_v4.html",
+        "file": "czechia.html",
         "currency": "CZK",
         "institution": "CNB",
     },
     {
         "code": "RO",
         "name": "Romania",
-        "file": "romania_2026Q2_v4.html",
+        "file": "romania.html",
         "currency": "RON",
         "institution": "BNR",
     },
@@ -66,7 +65,7 @@ DATA_FIRST_COUNTRIES = [
     {
         "code": "CN",
         "name": "China",
-        "file": "china_2026Q2_v1.html",
+        "file": "china.html",
         "currency": "CNY",
         "institution": "PBC",
         "summary": "china_dashboard_summary.json",
@@ -77,7 +76,7 @@ DATA_FIRST_COUNTRIES = [
     {
         "code": "UK",
         "name": "United Kingdom",
-        "file": "uk_2026Q2_v1.html",
+        "file": "uk.html",
         "currency": "GBP",
         "institution": "BoE",
         "summary": "uk_dashboard_summary.json",
@@ -88,7 +87,7 @@ DATA_FIRST_COUNTRIES = [
     {
         "code": "US",
         "name": "United States",
-        "file": "us_2026Q2_v1.html",
+        "file": "us.html",
         "currency": "USD",
         "institution": "Fed",
         "summary": "us_dashboard_summary.json",
@@ -145,20 +144,19 @@ def _ce4_signals(frame: list[dict]) -> dict[str, dict]:
 
 
 def _ce4_cards() -> list[dict]:
-    pipeline = DataPipeline()
+    snapshot = load_cee_build_snapshot()
     cards: list[dict] = []
     for country in CE4_COUNTRIES:
         code = country["code"]
-        frame = pipeline.fetch_country(code)
-        coverage = pipeline.validate_coverage(frame)
+        country_snapshot = (snapshot.get("countries") or {}).get(code) or {}
+        frame = list((country_snapshot.get("indicators") or {}).values())
+        if not frame:
+            raise ValueError(f"CEE snapshot has no indicators for {code}")
+        coverage = country_snapshot.get("coverage") or {}
         verified, watch, low = _source_mix(frame)
-        dropped = len(
-            [
-                spec
-                for spec in INDICATOR_MANIFEST_48
-                if is_dropped_proxy_indicator(code, spec.indicator_id)
-            ]
-        )
+        dropped = int(country_snapshot.get("dropped_proxy_slots") or len(
+            [spec for spec in INDICATOR_MANIFEST_48 if is_dropped_proxy_indicator(code, spec.indicator_id)]
+        ))
         rendered = int(coverage.get("indicator_count", 0))
         expected = int(coverage.get("expected", rendered))
         proxy = int(coverage.get("proxy_count", 0))
@@ -585,7 +583,7 @@ def build_archive() -> tuple[Path, Path, Path]:
     workbench = build_workbench(cards)
     payload = {
         "generated": datetime.now(UTC).isoformat(),
-        "source": "Generated from CE4 DataPipeline plus output/*_dashboard_summary.json files.",
+        "source": "Generated from one CEE build snapshot plus output/*_dashboard_summary.json files.",
         "cards": cards,
         "workbench": {
             "file": "macro_workbench_summary.json",

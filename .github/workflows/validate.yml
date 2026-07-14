@@ -1,0 +1,23 @@
+name: Validate dashboard
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv python install 3.12
+      - run: uv sync --frozen
+      - run: uv run pytest -q
+      - run: uv run python scripts/validate_outputs.py
+      - run: uv run python scripts/dashboard_consistency_check.py

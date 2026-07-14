@@ -1,11 +1,11 @@
 {
-  "generated": "2026-06-29T21:25:37.649788+00:00",
-  "source": "Generated from CE4 DataPipeline plus output/*_dashboard_summary.json files.",
+  "generated": "2026-07-13T22:08:45.116189+00:00",
+  "source": "Generated from one CEE build snapshot plus output/*_dashboard_summary.json files.",
   "cards": [
     {
       "code": "HU",
       "name": "Hungary",
-      "file": "hungary_2026Q2_v4.html",
+      "file": "hungary.html",
       "currency": "HUF",
       "institution": "MNB",
       "category": "CEE-4 v4 public dashboard",
@@ -17,8 +17,8 @@
       "headline_label": "Policy rate",
       "headline": "6.25%",
       "secondary_label": "10Y yield",
-      "secondary": "5.65%",
-      "quality": "19 verified · 87 watch · 4 low",
+      "secondary": "5.26%",
+      "quality": "34 verified · 61 watch · 13 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -55,7 +55,7 @@
           "display": "1.58 % GDP",
           "date": "2024-12-31",
           "source": "World Bank",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "fiscal": {
           "id": "fiscal_balance_pct_gdp",
@@ -64,7 +64,7 @@
           "display": "-5.50 % GDP",
           "date": "2026-12-31",
           "source": "IMF Fiscal Monitor",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "financial": {
           "id": "credit_to_gdp_gap",
@@ -73,23 +73,23 @@
           "display": "-7.25 pp",
           "date": "2025-12-31",
           "source": "BIS Credit-to-GDP gaps",
-          "quality_status": "watch"
+          "quality_status": "low_confidence"
         },
         "property": {
           "id": "house_price_index",
           "label": "House price YoY",
-          "value": 21.2,
-          "display": "21.20 % YoY",
-          "date": "2025-10-01",
+          "value": 11.2,
+          "display": "11.20 % YoY",
+          "date": "2026-01-01",
           "source": "Eurostat",
-          "quality_status": "watch"
+          "quality_status": "verified"
         }
       }
     },
     {
       "code": "PL",
       "name": "Poland",
-      "file": "poland_2026Q2_v4.html",
+      "file": "poland.html",
       "currency": "PLN",
       "institution": "NBP",
       "category": "CEE-4 v4 public dashboard",
@@ -101,8 +101,8 @@
       "headline_label": "Policy rate",
       "headline": "3.75%",
       "secondary_label": "10Y yield",
-      "secondary": "5.74%",
-      "quality": "19 verified · 90 watch · 4 low",
+      "secondary": "5.51%",
+      "quality": "35 verified · 62 watch · 14 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -139,7 +139,7 @@
           "display": "0.30 % GDP",
           "date": "2024-12-31",
           "source": "World Bank",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "fiscal": {
           "id": "fiscal_balance_pct_gdp",
@@ -148,7 +148,7 @@
           "display": "-6.75 % GDP",
           "date": "2026-12-31",
           "source": "IMF Fiscal Monitor",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "financial": {
           "id": "credit_to_gdp_gap",
@@ -157,23 +157,23 @@
           "display": "-16.85 pp",
           "date": "2025-12-31",
           "source": "BIS Credit-to-GDP gaps",
-          "quality_status": "watch"
+          "quality_status": "low_confidence"
         },
         "property": {
           "id": "house_price_index",
           "label": "House price YoY",
-          "value": 4.3,
-          "display": "4.30 % YoY",
-          "date": "2025-10-01",
+          "value": 5.9,
+          "display": "5.90 % YoY",
+          "date": "2026-01-01",
           "source": "Eurostat",
-          "quality_status": "watch"
+          "quality_status": "verified"
         }
       }
     },
     {
       "code": "CZ",
       "name": "Czechia",
-      "file": "czechia_2026Q2_v4.html",
+      "file": "czechia.html",
       "currency": "CZK",
       "institution": "CNB",
       "category": "CEE-4 v4 public dashboard",
@@ -185,8 +185,8 @@
       "headline_label": "Policy rate",
       "headline": "3.50%",
       "secondary_label": "10Y yield",
-      "secondary": "4.89%",
-      "quality": "20 verified · 85 watch · 4 low",
+      "secondary": "4.70%",
+      "quality": "36 verified · 57 watch · 14 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -223,7 +223,7 @@
           "display": "1.74 % GDP",
           "date": "2024-12-31",
           "source": "World Bank",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "fiscal": {
           "id": "fiscal_balance_pct_gdp",
@@ -232,7 +232,7 @@
           "display": "-2.27 % GDP",
           "date": "2026-12-31",
           "source": "IMF Fiscal Monitor",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "financial": {
           "id": "credit_to_gdp_gap",
@@ -241,23 +241,23 @@
           "display": "-4.06 pp",
           "date": "2025-12-31",
           "source": "BIS Credit-to-GDP gaps",
-          "quality_status": "watch"
+          "quality_status": "low_confidence"
         },
         "property": {
           "id": "house_price_index",
           "label": "House price YoY",
-          "value": 10.4,
-          "display": "10.40 % YoY",
-          "date": "2025-10-01",
+          "value": 10.0,
+          "display": "10.00 % YoY",
+          "date": "2026-01-01",
           "source": "Eurostat",
-          "quality_status": "watch"
+          "quality_status": "verified"
         }
       }
     },
     {
       "code": "RO",
       "name": "Romania",
-      "file": "romania_2026Q2_v4.html",
+      "file": "romania.html",
       "currency": "RON",
       "institution": "BNR",
       "category": "CEE-4 v4 public dashboard",
@@ -269,8 +269,8 @@
       "headline_label": "Policy rate",
       "headline": "6.50%",
       "secondary_label": "10Y yield",
-      "secondary": "6.17%",
-      "quality": "19 verified · 85 watch · 5 low",
+      "secondary": "5.98%",
+      "quality": "34 verified · 60 watch · 13 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -307,7 +307,7 @@
           "display": "-8.16 % GDP",
           "date": "2024-12-31",
           "source": "World Bank",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "fiscal": {
           "id": "fiscal_balance_pct_gdp",
@@ -316,7 +316,7 @@
           "display": "-6.25 % GDP",
           "date": "2026-12-31",
           "source": "IMF Fiscal Monitor",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "financial": {
           "id": "credit_to_gdp_gap",
@@ -330,18 +330,18 @@
         "property": {
           "id": "house_price_index",
           "label": "House price YoY",
-          "value": 6.7,
-          "display": "6.70 % YoY",
-          "date": "2025-10-01",
+          "value": 7.8,
+          "display": "7.80 % YoY",
+          "date": "2026-01-01",
           "source": "Eurostat",
-          "quality_status": "watch"
+          "quality_status": "verified"
         }
       }
     },
     {
       "code": "CN",
       "name": "China",
-      "file": "china_2026Q2_v1.html",
+      "file": "china.html",
       "currency": "CNY",
       "institution": "PBC",
       "category": "data-first country page",
@@ -351,17 +351,17 @@
       "gaps_or_dropped": 8,
       "gaps_label": "Official data gaps",
       "headline_label": "Latest USD/CNY fixing",
-      "headline": "6.8175 (2026-06-29)",
+      "headline": "6.7972 (2026-07-13)",
       "secondary_label": "Source groups",
       "secondary": "28",
-      "quality": "28 source groups · 0 low-confidence charts",
+      "quality": "28 source groups · 3 low-confidence charts",
       "framework": "GS China statistics logic",
       "status": "clean"
     },
     {
       "code": "UK",
       "name": "United Kingdom",
-      "file": "uk_2026Q2_v1.html",
+      "file": "uk.html",
       "currency": "GBP",
       "institution": "BoE",
       "category": "data-first country page",
@@ -371,17 +371,17 @@
       "gaps_or_dropped": 8,
       "gaps_label": "Official data gaps",
       "headline_label": "Bank Rate",
-      "headline": "3.75% (2026-06-26)",
+      "headline": "3.75% (2026-07-10)",
       "secondary_label": "Source groups",
       "secondary": "11",
-      "quality": "11 source groups · 0 low-confidence charts",
+      "quality": "11 source groups · 9 low-confidence charts",
       "framework": "GS UK statistics logic",
       "status": "clean"
     },
     {
       "code": "US",
       "name": "United States",
-      "file": "us_2026Q2_v1.html",
+      "file": "us.html",
       "currency": "USD",
       "institution": "Fed",
       "category": "data-first country page",
@@ -391,10 +391,10 @@
       "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
       "headline_label": "Fed funds",
-      "headline": "3.63% (2026-06-26)",
+      "headline": "3.62% (2026-07-10)",
       "secondary_label": "Source groups",
       "secondary": "27",
-      "quality": "27 source groups · 0 low-confidence charts",
+      "quality": "27 source groups · 5 low-confidence charts",
       "framework": "GS US statistics logic",
       "status": "clean"
     }

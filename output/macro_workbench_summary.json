@@ -1,11 +1,11 @@
 {
-  "generated": "2026-06-29T21:25:37.647393+00:00",
+  "generated": "2026-07-13T22:08:45.104569+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
       "code": "HU",
       "name": "Hungary",
-      "file": "hungary_2026Q2_v4.html",
+      "file": "hungary.html",
       "currency": "HUF",
       "institution": "MNB",
       "category": "CEE-4 v4 public dashboard",
@@ -17,8 +17,8 @@
       "headline_label": "Policy rate",
       "headline": "6.25%",
       "secondary_label": "10Y yield",
-      "secondary": "5.65%",
-      "quality": "19 verified · 87 watch · 4 low",
+      "secondary": "5.26%",
+      "quality": "34 verified · 61 watch · 13 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -55,7 +55,7 @@
           "display": "1.58 % GDP",
           "date": "2024-12-31",
           "source": "World Bank",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "fiscal": {
           "id": "fiscal_balance_pct_gdp",
@@ -64,7 +64,7 @@
           "display": "-5.50 % GDP",
           "date": "2026-12-31",
           "source": "IMF Fiscal Monitor",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "financial": {
           "id": "credit_to_gdp_gap",
@@ -73,38 +73,38 @@
           "display": "-7.25 pp",
           "date": "2025-12-31",
           "source": "BIS Credit-to-GDP gaps",
-          "quality_status": "watch"
+          "quality_status": "low_confidence"
         },
         "property": {
           "id": "house_price_index",
           "label": "House price YoY",
-          "value": 21.2,
-          "display": "21.20 % YoY",
-          "date": "2025-10-01",
+          "value": 11.2,
+          "display": "11.20 % YoY",
+          "date": "2026-01-01",
           "source": "Eurostat",
-          "quality_status": "watch"
+          "quality_status": "verified"
         }
       },
       "freshness_summary": {
         "dashboard": "Hungary",
         "charts": 110,
-        "current": 93,
+        "current": 90,
         "stale": 9,
-        "lagged_source": 6,
+        "lagged_source": 5,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
-        "needs_review": 2,
-        "low_confidence": 4,
-        "latest_historical_date": "2026-06-29",
+        "needs_review": 6,
+        "low_confidence": 13,
+        "latest_historical_date": "2026-07-13",
         "headline_latest": ""
       }
     },
     {
       "code": "PL",
       "name": "Poland",
-      "file": "poland_2026Q2_v4.html",
+      "file": "poland.html",
       "currency": "PLN",
       "institution": "NBP",
       "category": "CEE-4 v4 public dashboard",
@@ -116,8 +116,8 @@
       "headline_label": "Policy rate",
       "headline": "3.75%",
       "secondary_label": "10Y yield",
-      "secondary": "5.74%",
-      "quality": "19 verified · 90 watch · 4 low",
+      "secondary": "5.51%",
+      "quality": "35 verified · 62 watch · 14 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -154,7 +154,7 @@
           "display": "0.30 % GDP",
           "date": "2024-12-31",
           "source": "World Bank",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "fiscal": {
           "id": "fiscal_balance_pct_gdp",
@@ -163,7 +163,7 @@
           "display": "-6.75 % GDP",
           "date": "2026-12-31",
           "source": "IMF Fiscal Monitor",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "financial": {
           "id": "credit_to_gdp_gap",
@@ -172,38 +172,38 @@
           "display": "-16.85 pp",
           "date": "2025-12-31",
           "source": "BIS Credit-to-GDP gaps",
-          "quality_status": "watch"
+          "quality_status": "low_confidence"
         },
         "property": {
           "id": "house_price_index",
           "label": "House price YoY",
-          "value": 4.3,
-          "display": "4.30 % YoY",
-          "date": "2025-10-01",
+          "value": 5.9,
+          "display": "5.90 % YoY",
+          "date": "2026-01-01",
           "source": "Eurostat",
-          "quality_status": "watch"
+          "quality_status": "verified"
         }
       },
       "freshness_summary": {
         "dashboard": "Poland",
         "charts": 113,
-        "current": 97,
+        "current": 93,
         "stale": 8,
         "lagged_source": 6,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
-        "needs_review": 2,
-        "low_confidence": 4,
-        "latest_historical_date": "2026-06-29",
+        "needs_review": 6,
+        "low_confidence": 14,
+        "latest_historical_date": "2026-07-13",
         "headline_latest": ""
       }
     },
     {
       "code": "CZ",
       "name": "Czechia",
-      "file": "czechia_2026Q2_v4.html",
+      "file": "czechia.html",
       "currency": "CZK",
       "institution": "CNB",
       "category": "CEE-4 v4 public dashboard",
@@ -215,8 +215,8 @@
       "headline_label": "Policy rate",
       "headline": "3.50%",
       "secondary_label": "10Y yield",
-      "secondary": "4.89%",
-      "quality": "20 verified · 85 watch · 4 low",
+      "secondary": "4.70%",
+      "quality": "36 verified · 57 watch · 14 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -253,7 +253,7 @@
           "display": "1.74 % GDP",
           "date": "2024-12-31",
           "source": "World Bank",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "fiscal": {
           "id": "fiscal_balance_pct_gdp",
@@ -262,7 +262,7 @@
           "display": "-2.27 % GDP",
           "date": "2026-12-31",
           "source": "IMF Fiscal Monitor",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "financial": {
           "id": "credit_to_gdp_gap",
@@ -271,38 +271,38 @@
           "display": "-4.06 pp",
           "date": "2025-12-31",
           "source": "BIS Credit-to-GDP gaps",
-          "quality_status": "watch"
+          "quality_status": "low_confidence"
         },
         "property": {
           "id": "house_price_index",
           "label": "House price YoY",
-          "value": 10.4,
-          "display": "10.40 % YoY",
-          "date": "2025-10-01",
+          "value": 10.0,
+          "display": "10.00 % YoY",
+          "date": "2026-01-01",
           "source": "Eurostat",
-          "quality_status": "watch"
+          "quality_status": "verified"
         }
       },
       "freshness_summary": {
         "dashboard": "Czechia",
         "charts": 109,
-        "current": 94,
+        "current": 90,
         "stale": 7,
         "lagged_source": 6,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
-        "needs_review": 2,
-        "low_confidence": 4,
-        "latest_historical_date": "2026-06-29",
+        "needs_review": 6,
+        "low_confidence": 14,
+        "latest_historical_date": "2026-07-13",
         "headline_latest": ""
       }
     },
     {
       "code": "RO",
       "name": "Romania",
-      "file": "romania_2026Q2_v4.html",
+      "file": "romania.html",
       "currency": "RON",
       "institution": "BNR",
       "category": "CEE-4 v4 public dashboard",
@@ -314,8 +314,8 @@
       "headline_label": "Policy rate",
       "headline": "6.50%",
       "secondary_label": "10Y yield",
-      "secondary": "6.17%",
-      "quality": "19 verified · 85 watch · 5 low",
+      "secondary": "5.98%",
+      "quality": "34 verified · 60 watch · 13 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -352,7 +352,7 @@
           "display": "-8.16 % GDP",
           "date": "2024-12-31",
           "source": "World Bank",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "fiscal": {
           "id": "fiscal_balance_pct_gdp",
@@ -361,7 +361,7 @@
           "display": "-6.25 % GDP",
           "date": "2026-12-31",
           "source": "IMF Fiscal Monitor",
-          "quality_status": "verified"
+          "quality_status": "watch"
         },
         "financial": {
           "id": "credit_to_gdp_gap",
@@ -375,33 +375,33 @@
         "property": {
           "id": "house_price_index",
           "label": "House price YoY",
-          "value": 6.7,
-          "display": "6.70 % YoY",
-          "date": "2025-10-01",
+          "value": 7.8,
+          "display": "7.80 % YoY",
+          "date": "2026-01-01",
           "source": "Eurostat",
-          "quality_status": "watch"
+          "quality_status": "verified"
         }
       },
       "freshness_summary": {
         "dashboard": "Romania",
         "charts": 109,
-        "current": 90,
+        "current": 87,
         "stale": 11,
         "lagged_source": 6,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
-        "needs_review": 2,
-        "low_confidence": 5,
-        "latest_historical_date": "2026-06-29",
+        "needs_review": 5,
+        "low_confidence": 13,
+        "latest_historical_date": "2026-07-13",
         "headline_latest": ""
       }
     },
     {
       "code": "CN",
       "name": "China",
-      "file": "china_2026Q2_v1.html",
+      "file": "china.html",
       "currency": "CNY",
       "institution": "PBC",
       "category": "data-first country page",
@@ -411,10 +411,10 @@
       "gaps_or_dropped": 8,
       "gaps_label": "Official data gaps",
       "headline_label": "Latest USD/CNY fixing",
-      "headline": "6.8175 (2026-06-29)",
+      "headline": "6.7972 (2026-07-13)",
       "secondary_label": "Source groups",
       "secondary": "28",
-      "quality": "28 source groups · 0 low-confidence charts",
+      "quality": "28 source groups · 3 low-confidence charts",
       "framework": "GS China statistics logic",
       "status": "clean",
       "signals": {
@@ -430,9 +430,9 @@
         "inflation": {
           "id": "cpi_yoy_akshare",
           "label": "CPI inflation",
-          "value": 1.2,
-          "display": "1.20 %",
-          "date": "2026-05-01",
+          "value": 1.0,
+          "display": "1.00 %",
+          "date": "2026-06-01",
           "source": "AKShare / Eastmoney Data Center",
           "quality_status": "watch"
         },
@@ -581,73 +581,308 @@
           }
         ],
         "quality_counts": {
-          "watch": 105
+          "low_confidence": 3,
+          "verified": 5,
+          "watch": 97
         },
         "unavailable_count": 0
       },
       "freshness": {
-        "as_of_date": "2026-06-29",
+        "as_of_date": "2026-07-13",
         "counts": {
-          "current": 102,
+          "current": 89,
+          "due": 11,
           "projection": 2,
-          "stale": 1
+          "stale": 3
         },
-        "latest_historical_date": "2026-06-29",
+        "latest_historical_date": "2026-07-13",
         "attention": [
           {
+            "id": "birth_rate",
+            "concept_id": "cn:birth_rate",
+            "label_en": "Crude Birth Rate",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 559,
+            "threshold_days": 730,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank WDI",
+            "series": "SP.DYN.CBRT.IN",
+            "transform": "level"
+          },
+          {
+            "id": "broad_money_growth",
+            "concept_id": "cn:broad_money_growth",
+            "label_en": "Broad Money Growth",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 559,
+            "threshold_days": 730,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank WDI",
+            "series": "FM.LBL.BMNY.ZG",
+            "transform": "level"
+          },
+          {
+            "id": "death_rate",
+            "concept_id": "cn:death_rate",
+            "label_en": "Crude Death Rate",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 559,
+            "threshold_days": 730,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank WDI",
+            "series": "SP.DYN.CDRT.IN",
+            "transform": "level"
+          },
+          {
+            "id": "gfcf_share_gdp",
+            "concept_id": "cn:gfcf_share_gdp",
+            "label_en": "Gross Fixed Capital Formation",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 559,
+            "threshold_days": 730,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank WDI",
+            "series": "NE.GDI.FTOT.ZS",
+            "transform": "level"
+          },
+          {
+            "id": "household_consumption_growth",
+            "concept_id": "consumption_growth",
+            "label_en": "Household Consumption Growth",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 559,
+            "threshold_days": 730,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank WDI",
+            "series": "NE.CON.PRVT.KD.ZG",
+            "transform": "level"
+          },
+          {
+            "id": "household_consumption_share",
+            "concept_id": "cn:household_consumption_share",
+            "label_en": "Household Consumption Share",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 559,
+            "threshold_days": 730,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank WDI",
+            "series": "NE.CON.PRVT.ZS",
+            "transform": "level"
+          },
+          {
+            "id": "private_credit_gdp",
+            "concept_id": "cn:private_credit_gdp",
+            "label_en": "Private Credit by Financial Sector",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 559,
+            "threshold_days": 730,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank WDI",
+            "series": "FS.AST.PRVT.GD.ZS",
+            "transform": "level"
+          },
+          {
+            "id": "large_bank_rrr_akshare",
+            "concept_id": "cn:large_bank_rrr_akshare",
+            "label_en": "Large Bank RRR",
+            "latest_date": "2025-05-15",
+            "frequency": "irregular",
+            "freshness_status": "stale",
+            "age_basis_date": "2025-05-15",
+            "age_days": 424,
+            "threshold_days": 365,
+            "quality_status": "low_confidence",
+            "source_authority": "public_wrapper",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "AKShare / PBC RRR Announcements",
+            "series": "macro_china_reserve_requirement_ratio:大型金融机构-调整后",
+            "transform": "level"
+          },
+          {
+            "id": "small_bank_rrr_akshare",
+            "concept_id": "cn:small_bank_rrr_akshare",
+            "label_en": "Small/Mid Bank RRR",
+            "latest_date": "2025-05-15",
+            "frequency": "irregular",
+            "freshness_status": "stale",
+            "age_basis_date": "2025-05-15",
+            "age_days": 424,
+            "threshold_days": 365,
+            "quality_status": "low_confidence",
+            "source_authority": "public_wrapper",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "AKShare / PBC RRR Announcements",
+            "series": "macro_china_reserve_requirement_ratio:中小金融机构-调整后",
+            "transform": "level"
+          },
+          {
             "id": "real_estate_climate_index_eastmoney",
+            "concept_id": "cn:real_estate_climate_index_eastmoney",
             "label_en": "Real Estate Climate Index",
             "latest_date": "2025-12-01",
             "frequency": "monthly",
             "freshness_status": "stale",
-            "age_basis_date": "2025-12-31",
-            "age_days": 180,
-            "threshold_days": 150,
-            "quality_status": "watch",
+            "age_basis_date": "2025-12-01",
+            "age_days": 194,
+            "threshold_days": 75,
+            "quality_status": "low_confidence",
+            "source_authority": "public_wrapper",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
             "source_name": "Eastmoney Data Center / NBS-style industry index",
             "series": "RPT_INDUSTRY_INDEX:EMM00121987:INDICATOR_VALUE",
             "transform": "level"
+          },
+          {
+            "id": "fx_reserves_ex_gold_monthly",
+            "concept_id": "cn:fx_reserves_ex_gold_monthly",
+            "label_en": "FX Reserves ex Gold",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / IMF IFS",
+            "series": "TRESEGCNM052N",
+            "transform": "usd_mn_to_trn"
+          },
+          {
+            "id": "interbank_3m_rate",
+            "concept_id": "cn:interbank_3m_rate",
+            "label_en": "3M Interbank Rate",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / OECD",
+            "series": "IR3TIB01CNM156N",
+            "transform": "level"
+          },
+          {
+            "id": "tsf_flow_akshare",
+            "concept_id": "cn:tsf_flow_akshare",
+            "label_en": "Total Social Financing Flow",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "public_wrapper",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "AKShare / Eastmoney Data Center",
+            "series": "macro_china_shrzgm:社会融资规模增量",
+            "transform": "cny_100mn_to_trn"
+          },
+          {
+            "id": "tsf_rmb_loans_akshare",
+            "concept_id": "cn:tsf_rmb_loans_akshare",
+            "label_en": "TSF RMB Loan Component",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "public_wrapper",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "AKShare / Eastmoney Data Center",
+            "series": "macro_china_shrzgm:其中-人民币贷款",
+            "transform": "cny_100mn_to_trn"
           }
         ]
       },
       "canonical_frame": {
-        "schema_version": "data-first-canonical-v1",
-        "columns": [
-          "country",
+        "schema_version": "data-first-canonical-v2",
+        "observation_columns": [
           "date",
-          "indicator_id",
-          "value",
-          "unit",
-          "frequency",
-          "source_name",
-          "series",
-          "transform",
-          "quality_status",
-          "quality_notes"
+          "value"
         ],
         "file": "china_canonical_frame.json",
-        "records": 62232
+        "series": 105,
+        "observations": 62388,
+        "series_count": 105,
+        "observation_count": 62388
       },
-      "freshness_summary": {
-        "dashboard": "China",
-        "charts": 105,
-        "current": 102,
-        "stale": 1,
-        "lagged_source": 0,
-        "projection": 2,
-        "scheduled_policy": 0,
-        "future_date": 0,
-        "missing_date": 0,
-        "needs_review": 0,
-        "low_confidence": 0,
-        "latest_historical_date": "2026-06-29",
-        "headline_latest": "6.8175 (2026-06-29)"
-      }
+      "freshness_summary": {}
     },
     {
       "code": "UK",
       "name": "United Kingdom",
-      "file": "uk_2026Q2_v1.html",
+      "file": "uk.html",
       "currency": "GBP",
       "institution": "BoE",
       "category": "data-first country page",
@@ -657,10 +892,10 @@
       "gaps_or_dropped": 8,
       "gaps_label": "Official data gaps",
       "headline_label": "Bank Rate",
-      "headline": "3.75% (2026-06-26)",
+      "headline": "3.75% (2026-07-10)",
       "secondary_label": "Source groups",
       "secondary": "11",
-      "quality": "11 source groups · 0 low-confidence charts",
+      "quality": "11 source groups · 9 low-confidence charts",
       "framework": "GS UK statistics logic",
       "status": "clean",
       "signals": {
@@ -671,7 +906,7 @@
           "display": "0.58 % m/m",
           "date": "2026-03-31",
           "source": "ONS",
-          "quality_status": "watch"
+          "quality_status": "low_confidence"
         },
         "inflation": {
           "id": "cpi_yoy",
@@ -680,16 +915,16 @@
           "display": "2.80 %",
           "date": "2026-05-01",
           "source": "ONS",
-          "quality_status": "watch"
+          "quality_status": "verified"
         },
         "policy": {
           "id": "bank_rate",
           "label": "Bank Rate",
           "value": 3.75,
           "display": "3.75 %",
-          "date": "2026-06-26",
+          "date": "2026-07-10",
           "source": "Bank of England IADB",
-          "quality_status": "watch"
+          "quality_status": "verified"
         },
         "fiscal": {
           "id": "psnb_ex_banks",
@@ -698,16 +933,16 @@
           "display": "23,294 GBP mn",
           "date": "2026-05-01",
           "source": "ONS",
-          "quality_status": "watch"
+          "quality_status": "verified"
         },
         "financial": {
           "id": "sonia_rate",
           "label": "SONIA",
-          "value": 3.7287,
+          "value": 3.7311,
           "display": "3.73 %",
-          "date": "2026-06-25",
+          "date": "2026-07-09",
           "source": "Bank of England IADB",
-          "quality_status": "watch"
+          "quality_status": "verified"
         }
       },
       "source_health": {
@@ -759,57 +994,517 @@
           }
         ],
         "quality_counts": {
-          "watch": 92
+          "low_confidence": 9,
+          "verified": 42,
+          "watch": 41
         },
         "unavailable_count": 0
       },
       "freshness": {
-        "as_of_date": "2026-06-29",
+        "as_of_date": "2026-07-13",
         "counts": {
-          "current": 88,
-          "projection": 4
+          "current": 63,
+          "due": 16,
+          "projection": 4,
+          "stale": 9
         },
-        "latest_historical_date": "2026-06-26",
-        "attention": []
+        "latest_historical_date": "2026-07-10",
+        "attention": [
+          {
+            "id": "government_balance_gdp",
+            "concept_id": "fiscal_balance_gdp",
+            "label_en": "General Government Net Lending/Borrowing",
+            "latest_date": "2024-01-01",
+            "frequency": "annual",
+            "freshness_status": "stale",
+            "age_basis_date": "2024-01-01",
+            "age_days": 924,
+            "threshold_days": 730,
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / IMF",
+            "series": "GGNLBAGBA188N",
+            "transform": "level"
+          },
+          {
+            "id": "government_debt_gdp",
+            "concept_id": "government_debt_gdp",
+            "label_en": "General Government Gross Debt",
+            "latest_date": "2024-01-01",
+            "frequency": "annual",
+            "freshness_status": "stale",
+            "age_basis_date": "2024-01-01",
+            "age_days": 924,
+            "threshold_days": 730,
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / IMF",
+            "series": "GGGDTAGBA188N",
+            "transform": "level"
+          },
+          {
+            "id": "employment_rate_15_64",
+            "concept_id": "participation_rate",
+            "label_en": "Employment Rate, Ages 16-64",
+            "latest_date": "2026-03-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-03-01",
+            "age_days": 104,
+            "threshold_days": 75,
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "LF24",
+            "transform": "level"
+          },
+          {
+            "id": "hours_worked_total",
+            "concept_id": "uk:hours_worked_total",
+            "label_en": "Total Weekly Hours Worked",
+            "latest_date": "2026-03-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-03-01",
+            "age_days": 104,
+            "threshold_days": 75,
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "YBUS",
+            "transform": "level"
+          },
+          {
+            "id": "monthly_gdp_index",
+            "concept_id": "uk:monthly_gdp_index",
+            "label_en": "Monthly GDP Index",
+            "latest_date": "2026-03-31",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-03-31",
+            "age_days": 104,
+            "threshold_days": 75,
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "YBEZ",
+            "transform": "level"
+          },
+          {
+            "id": "monthly_gdp_mom",
+            "concept_id": "uk:monthly_gdp_mom",
+            "label_en": "Monthly GDP Growth, MoM",
+            "latest_date": "2026-03-31",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-03-31",
+            "age_days": 104,
+            "threshold_days": 75,
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "ONS",
+            "series": "YBEZ",
+            "transform": "mom_pct"
+          },
+          {
+            "id": "redundancy_level",
+            "concept_id": "uk:redundancy_level",
+            "label_en": "Redundancy Level",
+            "latest_date": "2026-03-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-03-01",
+            "age_days": 104,
+            "threshold_days": 75,
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "BEAO",
+            "transform": "level"
+          },
+          {
+            "id": "redundancy_rate",
+            "concept_id": "uk:redundancy_rate",
+            "label_en": "Redundancy Rate",
+            "latest_date": "2026-03-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-03-01",
+            "age_days": 104,
+            "threshold_days": 75,
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "BEIR",
+            "transform": "level"
+          },
+          {
+            "id": "unemployment_rate",
+            "concept_id": "unemployment_rate",
+            "label_en": "Unemployment Rate",
+            "latest_date": "2026-03-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-03-01",
+            "age_days": 104,
+            "threshold_days": 75,
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "MGSX",
+            "transform": "level"
+          },
+          {
+            "id": "awe_regular_pay_growth",
+            "concept_id": "wage_growth",
+            "label_en": "AWE Regular Pay Growth",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "KAI9",
+            "transform": "level"
+          },
+          {
+            "id": "awe_total_pay_growth",
+            "concept_id": "wage_cost_inflation",
+            "label_en": "AWE Total Pay Growth",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "KAC3",
+            "transform": "level"
+          },
+          {
+            "id": "construction_output_index",
+            "concept_id": "uk:construction_output_index",
+            "label_en": "Construction Output All Work",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "",
+            "transform": "level"
+          },
+          {
+            "id": "construction_output_yoy",
+            "concept_id": "construction_activity",
+            "label_en": "Construction Output Growth, YoY",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "ONS",
+            "series": "",
+            "transform": "yoy"
+          },
+          {
+            "id": "goods_trade_balance",
+            "concept_id": "uk:goods_trade_balance",
+            "label_en": "Goods Trade Balance",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "BOKI",
+            "transform": "level"
+          },
+          {
+            "id": "industrial_production",
+            "concept_id": "uk:industrial_production",
+            "label_en": "Industrial Production",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "K222",
+            "transform": "level"
+          },
+          {
+            "id": "industrial_production_yoy",
+            "concept_id": "industrial_production_growth",
+            "label_en": "Industrial Production Growth, YoY",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "ONS",
+            "series": "K222",
+            "transform": "yoy"
+          },
+          {
+            "id": "paye_aggregate_pay",
+            "concept_id": "uk:paye_aggregate_pay",
+            "label_en": "PAYE Aggregate Pay",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 80,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "ONS / HMRC RTI",
+            "series": "ONS RTI SA:Aggregate pay",
+            "transform": "divide_1bn"
+          },
+          {
+            "id": "paye_employee_inflows",
+            "concept_id": "uk:paye_employee_inflows",
+            "label_en": "PAYE Employee Inflows",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 80,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "ONS / HMRC RTI",
+            "series": "ONS RTI SA:Inflows",
+            "transform": "divide_1k"
+          },
+          {
+            "id": "paye_employee_outflows",
+            "concept_id": "uk:paye_employee_outflows",
+            "label_en": "PAYE Employee Outflows",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 80,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "ONS / HMRC RTI",
+            "series": "ONS RTI SA:Outflows",
+            "transform": "divide_1k"
+          },
+          {
+            "id": "reserves_ex_gold",
+            "concept_id": "uk:reserves_ex_gold",
+            "label_en": "Official Reserves ex Gold",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / IMF",
+            "series": "TRESEGGBM052N",
+            "transform": "level"
+          },
+          {
+            "id": "services_output_index",
+            "concept_id": "uk:services_output_index",
+            "label_en": "Index of Services",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "S2KU",
+            "transform": "level"
+          },
+          {
+            "id": "services_output_yoy",
+            "concept_id": "uk:services_output_yoy",
+            "label_en": "Services Output Growth, YoY",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "ONS",
+            "series": "S2KU",
+            "transform": "yoy"
+          },
+          {
+            "id": "uk_hpi_annual_change",
+            "concept_id": "house_price_growth",
+            "label_en": "UK HPI Annual Change",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS / HM Land Registry",
+            "series": "",
+            "transform": "level"
+          },
+          {
+            "id": "uk_hpi_average_price",
+            "concept_id": "uk:uk_hpi_average_price",
+            "label_en": "UK HPI Average Price",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS / HM Land Registry",
+            "series": "",
+            "transform": "level"
+          },
+          {
+            "id": "vacancies_total",
+            "concept_id": "vacancies",
+            "label_en": "Job Vacancies",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "ONS",
+            "series": "AP2Y",
+            "transform": "level"
+          }
+        ]
       },
       "canonical_frame": {
-        "schema_version": "data-first-canonical-v1",
-        "columns": [
-          "country",
+        "schema_version": "data-first-canonical-v2",
+        "observation_columns": [
           "date",
-          "indicator_id",
-          "value",
-          "unit",
-          "frequency",
-          "source_name",
-          "series",
-          "transform",
-          "quality_status",
-          "quality_notes"
+          "value"
         ],
         "file": "uk_canonical_frame.json",
-        "records": 59074
+        "series": 92,
+        "observations": 59136,
+        "series_count": 92,
+        "observation_count": 59136
       },
-      "freshness_summary": {
-        "dashboard": "United Kingdom",
-        "charts": 92,
-        "current": 88,
-        "stale": 0,
-        "lagged_source": 0,
-        "projection": 4,
-        "scheduled_policy": 0,
-        "future_date": 0,
-        "missing_date": 0,
-        "needs_review": 0,
-        "low_confidence": 0,
-        "latest_historical_date": "2026-06-26",
-        "headline_latest": "3.75% (2026-06-26)"
-      }
+      "freshness_summary": {}
     },
     {
       "code": "US",
       "name": "United States",
-      "file": "us_2026Q2_v1.html",
+      "file": "us.html",
       "currency": "USD",
       "institution": "Fed",
       "category": "data-first country page",
@@ -819,10 +1514,10 @@
       "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
       "headline_label": "Fed funds",
-      "headline": "3.63% (2026-06-26)",
+      "headline": "3.62% (2026-07-10)",
       "secondary_label": "Source groups",
       "secondary": "27",
-      "quality": "27 source groups · 0 low-confidence charts",
+      "quality": "27 source groups · 5 low-confidence charts",
       "framework": "GS US statistics logic",
       "status": "clean",
       "signals": {
@@ -847,9 +1542,9 @@
         "policy": {
           "id": "daily_fed_funds",
           "label": "Fed funds",
-          "value": 3.63,
-          "display": "3.63 %",
-          "date": "2026-06-26",
+          "value": 3.62,
+          "display": "3.62 %",
+          "date": "2026-07-10",
           "source": "FRED / Federal Reserve",
           "quality_status": "watch"
         },
@@ -860,14 +1555,14 @@
           "display": "123 % of GDP",
           "date": "2026-01-01",
           "source": "FRED / US Treasury",
-          "quality_status": "watch"
+          "quality_status": "verified"
         },
         "financial": {
           "id": "mortgage_30y_rate",
           "label": "Mortgage rate",
           "value": 6.49,
           "display": "6.49 %",
-          "date": "2026-06-25",
+          "date": "2026-07-09",
           "source": "FRED / Freddie Mac",
           "quality_status": "watch"
         },
@@ -994,63 +1689,295 @@
           }
         ],
         "quality_counts": {
-          "watch": 164
+          "low_confidence": 5,
+          "verified": 15,
+          "watch": 144
         },
         "unavailable_count": 0
       },
       "freshness": {
-        "as_of_date": "2026-06-29",
+        "as_of_date": "2026-07-13",
         "counts": {
-          "current": 163,
-          "scheduled_policy": 1
+          "current": 150,
+          "due": 9,
+          "scheduled_policy": 1,
+          "stale": 4
         },
-        "latest_historical_date": "2026-06-29",
-        "attention": []
+        "latest_historical_date": "2026-07-13",
+        "attention": [
+          {
+            "id": "federal_interest_outlays_gdp",
+            "concept_id": "government_interest_cost",
+            "label_en": "Federal Interest Outlays to GDP",
+            "latest_date": "2025-01-01",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2025-01-01",
+            "age_days": 558,
+            "threshold_days": 730,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / OMB",
+            "series": "FYOIGDA188S",
+            "transform": "level"
+          },
+          {
+            "id": "federal_net_outlays_gdp",
+            "concept_id": "us:federal_net_outlays_gdp",
+            "label_en": "Federal Net Outlays to GDP",
+            "latest_date": "2025-01-01",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2025-01-01",
+            "age_days": 558,
+            "threshold_days": 730,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / OMB",
+            "series": "FYONGDA188S",
+            "transform": "level"
+          },
+          {
+            "id": "bed_gross_job_gains_level",
+            "concept_id": "us:bed_gross_job_gains_level",
+            "label_en": "BED Gross Job Gains",
+            "latest_date": "2025-07-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2025-07-01",
+            "age_days": 286,
+            "threshold_days": 165,
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "BLS Business Employment Dynamics",
+            "series": "BDS0000000000000000110001LQ5",
+            "transform": "level"
+          },
+          {
+            "id": "bed_gross_job_gains_rate",
+            "concept_id": "us:bed_gross_job_gains_rate",
+            "label_en": "BED Gross Job Gains Rate",
+            "latest_date": "2025-07-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2025-07-01",
+            "age_days": 286,
+            "threshold_days": 165,
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "BLS Business Employment Dynamics",
+            "series": "BDS0000000000000000110001RQ5",
+            "transform": "level"
+          },
+          {
+            "id": "bed_gross_job_losses_level",
+            "concept_id": "us:bed_gross_job_losses_level",
+            "label_en": "BED Gross Job Losses",
+            "latest_date": "2025-07-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2025-07-01",
+            "age_days": 286,
+            "threshold_days": 165,
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "BLS Business Employment Dynamics",
+            "series": "BDS0000000000000000110004LQ5",
+            "transform": "level"
+          },
+          {
+            "id": "bed_gross_job_losses_rate",
+            "concept_id": "us:bed_gross_job_losses_rate",
+            "label_en": "BED Gross Job Losses Rate",
+            "latest_date": "2025-07-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2025-07-01",
+            "age_days": 286,
+            "threshold_days": 165,
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "BLS Business Employment Dynamics",
+            "series": "BDS0000000000000000110004RQ5",
+            "transform": "level"
+          },
+          {
+            "id": "business_inventories_growth",
+            "concept_id": "us:business_inventories_growth",
+            "label_en": "Business Inventories Growth",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / Census",
+            "series": "BUSINV",
+            "transform": "yoy_pct"
+          },
+          {
+            "id": "case_shiller_20_city_growth",
+            "concept_id": "us:case_shiller_20_city_growth",
+            "label_en": "Case-Shiller 20-City Home Prices",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / S&P CoreLogic Case-Shiller",
+            "series": "SPCS20RSA",
+            "transform": "yoy_pct"
+          },
+          {
+            "id": "inventory_sales_ratio",
+            "concept_id": "us:inventory_sales_ratio",
+            "label_en": "Inventory-to-Sales Ratio",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / Census",
+            "series": "ISRATIO",
+            "transform": "level"
+          },
+          {
+            "id": "tic_china_treasury_holdings",
+            "concept_id": "us:tic_china_treasury_holdings",
+            "label_en": "TIC China Treasury Holdings",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / Treasury International Capital",
+            "series": "FORTREASPOS41408",
+            "transform": "level"
+          },
+          {
+            "id": "tic_foreign_treasury_holdings",
+            "concept_id": "us:tic_foreign_treasury_holdings",
+            "label_en": "TIC Foreign Treasury Holdings",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / Treasury International Capital",
+            "series": "FORTREASPOS99996",
+            "transform": "level"
+          },
+          {
+            "id": "tic_foreign_treasury_net_transactions",
+            "concept_id": "us:tic_foreign_treasury_net_transactions",
+            "label_en": "TIC Foreign Net Treasury Transactions",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / Treasury International Capital",
+            "series": "FORTREASNET99996",
+            "transform": "level"
+          },
+          {
+            "id": "tic_japan_treasury_holdings",
+            "concept_id": "us:tic_japan_treasury_holdings",
+            "label_en": "TIC Japan Treasury Holdings",
+            "latest_date": "2026-04-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-04-01",
+            "age_days": 74,
+            "threshold_days": 75,
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / Treasury International Capital",
+            "series": "FORTREASPOS42609",
+            "transform": "level"
+          }
+        ]
       },
       "canonical_frame": {
-        "schema_version": "data-first-canonical-v1",
-        "columns": [
-          "country",
+        "schema_version": "data-first-canonical-v2",
+        "observation_columns": [
           "date",
-          "indicator_id",
-          "value",
-          "unit",
-          "frequency",
-          "source_name",
-          "series",
-          "transform",
-          "quality_status",
-          "quality_notes"
+          "value"
         ],
         "file": "us_canonical_frame.json",
-        "records": 113274
+        "series": 164,
+        "observations": 113528,
+        "series_count": 164,
+        "observation_count": 113528
       },
-      "freshness_summary": {
-        "dashboard": "United States",
-        "charts": 164,
-        "current": 163,
-        "stale": 0,
-        "lagged_source": 0,
-        "projection": 0,
-        "scheduled_policy": 1,
-        "future_date": 0,
-        "missing_date": 0,
-        "needs_review": 0,
-        "low_confidence": 0,
-        "latest_historical_date": "2026-06-29",
-        "headline_latest": "3.63% (2026-06-26)"
-      }
+      "freshness_summary": {}
     }
   ],
   "regimes": {
     "HU": {
-      "composite_score": 62.1,
+      "composite_score": 57.5,
       "composite_label": "mixed",
       "quality": {
-        "score": 76.6,
+        "score": 63.6,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 84.5,
+        "freshness_score": 81.8,
         "proxy_penalty": 0.0,
         "gap_penalty": 10.0
       },
@@ -1100,20 +2027,20 @@
         "property": {
           "label": "property hot",
           "score": 65.0,
-          "value": 21.2,
-          "display": "21.20 % YoY",
+          "value": 11.2,
+          "display": "11.20 % YoY",
           "source_signal": "house_price_index"
         }
       }
     },
     "PL": {
-      "composite_score": 63.7,
+      "composite_score": 59.8,
       "composite_label": "mixed",
       "quality": {
-        "score": 84.5,
-        "label": "high-confidence dashboard",
+        "score": 71.3,
+        "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 85.8,
+        "freshness_score": 82.3,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -1161,22 +2088,22 @@
           "source_signal": "credit_to_gdp_gap"
         },
         "property": {
-          "label": "property stable",
-          "score": 58.0,
-          "value": 4.3,
-          "display": "4.30 % YoY",
+          "label": "property hot",
+          "score": 65.0,
+          "value": 5.9,
+          "display": "5.90 % YoY",
           "source_signal": "house_price_index"
         }
       }
     },
     "CZ": {
-      "composite_score": 67.0,
+      "composite_score": 62.3,
       "composite_label": "mixed",
       "quality": {
-        "score": 74.7,
+        "score": 61.4,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 86.2,
+        "freshness_score": 82.6,
         "proxy_penalty": 0.0,
         "gap_penalty": 12.5
       },
@@ -1226,20 +2153,20 @@
         "property": {
           "label": "property hot",
           "score": 65.0,
-          "value": 10.4,
-          "display": "10.40 % YoY",
+          "value": 10.0,
+          "display": "10.00 % YoY",
           "source_signal": "house_price_index"
         }
       }
     },
     "RO": {
-      "composite_score": 50.5,
-      "composite_label": "mixed",
+      "composite_score": 46.7,
+      "composite_label": "defensive",
       "quality": {
-        "score": 71.4,
+        "score": 60.4,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 82.6,
+        "freshness_score": 79.8,
         "proxy_penalty": 0.0,
         "gap_penalty": 12.5
       },
@@ -1289,20 +2216,20 @@
         "property": {
           "label": "property hot",
           "score": 65.0,
-          "value": 6.7,
-          "display": "6.70 % YoY",
+          "value": 7.8,
+          "display": "7.80 % YoY",
           "source_signal": "house_price_index"
         }
       }
     },
     "CN": {
-      "composite_score": 69.9,
+      "composite_score": 58.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 79.0,
-        "label": "usable with watch-list",
+        "score": 45.0,
+        "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 97.1,
+        "freshness_score": 0.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 20.0
       },
@@ -1317,8 +2244,8 @@
         "inflation": {
           "label": "near-target inflation",
           "score": 70.0,
-          "value": 1.2,
-          "display": "1.20 %",
+          "value": 1.0,
+          "display": "1.00 %",
           "source_signal": "cpi_yoy_akshare"
         },
         "policy": {
@@ -1359,13 +2286,13 @@
       }
     },
     "UK": {
-      "composite_score": 65.8,
+      "composite_score": 54.1,
       "composite_label": "mixed",
       "quality": {
-        "score": 78.5,
-        "label": "usable with watch-list",
+        "score": 45.0,
+        "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 95.7,
+        "freshness_score": 0.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 20.0
       },
@@ -1408,7 +2335,7 @@
         "financial": {
           "label": "financial conditions stable",
           "score": 60.0,
-          "value": 3.7287,
+          "value": 3.7311,
           "display": "3.73 %",
           "source_signal": "sonia_rate"
         },
@@ -1422,13 +2349,13 @@
       }
     },
     "US": {
-      "composite_score": 70.0,
+      "composite_score": 57.8,
       "composite_label": "mixed",
       "quality": {
-        "score": 82.3,
-        "label": "high-confidence dashboard",
+        "score": 47.5,
+        "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 99.4,
+        "freshness_score": 0.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 17.5
       },
@@ -1450,8 +2377,8 @@
         "policy": {
           "label": "neutral-tight stance",
           "score": 55.0,
-          "value": 3.63,
-          "display": "3.63 %",
+          "value": 3.62,
+          "display": "3.62 %",
           "source_signal": "daily_fed_funds"
         },
         "external": {
@@ -1490,71 +2417,71 @@
       "code": "HU",
       "name": "Hungary",
       "coverage_pct": 100.0,
-      "freshness_pct": 84.5,
+      "freshness_pct": 81.8,
       "proxy_fills": 0,
       "gaps": 4,
-      "regime_score": 62.1,
-      "quality_score": 76.6
+      "regime_score": 57.5,
+      "quality_score": 63.6
     },
     {
       "code": "PL",
       "name": "Poland",
       "coverage_pct": 100.0,
-      "freshness_pct": 85.8,
+      "freshness_pct": 82.3,
       "proxy_fills": 0,
       "gaps": 1,
-      "regime_score": 63.7,
-      "quality_score": 84.5
+      "regime_score": 59.8,
+      "quality_score": 71.3
     },
     {
       "code": "CZ",
       "name": "Czechia",
       "coverage_pct": 100.0,
-      "freshness_pct": 86.2,
+      "freshness_pct": 82.6,
       "proxy_fills": 0,
       "gaps": 5,
-      "regime_score": 67.0,
-      "quality_score": 74.7
+      "regime_score": 62.3,
+      "quality_score": 61.4
     },
     {
       "code": "RO",
       "name": "Romania",
       "coverage_pct": 100.0,
-      "freshness_pct": 82.6,
+      "freshness_pct": 79.8,
       "proxy_fills": 0,
       "gaps": 5,
-      "regime_score": 50.5,
-      "quality_score": 71.4
+      "regime_score": 46.7,
+      "quality_score": 60.4
     },
     {
       "code": "CN",
       "name": "China",
       "coverage_pct": 100.0,
-      "freshness_pct": 97.1,
+      "freshness_pct": 0.0,
       "proxy_fills": 0,
       "gaps": 8,
-      "regime_score": 69.9,
-      "quality_score": 79.0
+      "regime_score": 58.0,
+      "quality_score": 45.0
     },
     {
       "code": "UK",
       "name": "United Kingdom",
       "coverage_pct": 100.0,
-      "freshness_pct": 95.7,
+      "freshness_pct": 0.0,
       "proxy_fills": 0,
       "gaps": 8,
-      "regime_score": 65.8,
-      "quality_score": 78.5
+      "regime_score": 54.1,
+      "quality_score": 45.0
     },
     {
       "code": "US",
       "name": "United States",
       "coverage_pct": 100.0,
-      "freshness_pct": 99.4,
+      "freshness_pct": 0.0,
       "proxy_fills": 0,
       "gaps": 7,
-      "regime_score": 70.0,
-      "quality_score": 82.3
+      "regime_score": 57.8,
+      "quality_score": 47.5
     }
   ],
   "release_monitor": [
@@ -1566,10 +2493,10 @@
       "latest": "2013-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 4563,
+      "age_days": 4577,
       "severity": "medium",
       "source": "World Bank",
-      "note": "Foreign-owned bank asset share from World Bank GFDD where available, or official banking-sector snapshots where GFDD coverage is missing; structural and slow-moving, so use mainly as ownership-history context. World Bank indicator GFDD.OI.16. Source validation: Latest observation is 4563 days old for annual data. Short history returned by adapter."
+      "note": "Foreign-owned bank asset share from World Bank GFDD where available, or official banking-sector snapshots where GFDD coverage is missing; structural and slow-moving, so use mainly as ownership-history context. World Bank indicator GFDD.OI.16. Source validation: Latest observation is 4577 days old for annual data. Short history returned by adapter."
     },
     {
       "code": "HU",
@@ -1579,10 +2506,10 @@
       "latest": "2013-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 4563,
+      "age_days": 4577,
       "severity": "medium",
       "source": "World Bank",
-      "note": "Foreign-owned bank asset share from World Bank GFDD where available, or official banking-sector snapshots where GFDD coverage is missing; structural and slow-moving, so use mainly as ownership-history context. World Bank indicator GFDD.OI.16. Source validation: Latest observation is 4563 days old for annual data. Short history returned by adapter."
+      "note": "Foreign-owned bank asset share from World Bank GFDD where available, or official banking-sector snapshots where GFDD coverage is missing; structural and slow-moving, so use mainly as ownership-history context. World Bank indicator GFDD.OI.16. Source validation: Latest observation is 4577 days old for annual data. Short history returned by adapter."
     },
     {
       "code": "PL",
@@ -1592,10 +2519,10 @@
       "latest": "2013-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 4563,
+      "age_days": 4577,
       "severity": "medium",
       "source": "World Bank",
-      "note": "Foreign-owned bank asset share from World Bank GFDD where available, or official banking-sector snapshots where GFDD coverage is missing; structural and slow-moving, so use mainly as ownership-history context. World Bank indicator GFDD.OI.16. Source validation: Latest observation is 4563 days old for annual data. Short history returned by adapter."
+      "note": "Foreign-owned bank asset share from World Bank GFDD where available, or official banking-sector snapshots where GFDD coverage is missing; structural and slow-moving, so use mainly as ownership-history context. World Bank indicator GFDD.OI.16. Source validation: Latest observation is 4577 days old for annual data. Short history returned by adapter."
     },
     {
       "code": "CZ",
@@ -1605,10 +2532,10 @@
       "latest": "2021-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 1641,
+      "age_days": 1655,
       "severity": "medium",
       "source": "World Bank",
-      "note": "World Bank GFDD net interest margin is annual and lagged; compare with local supervisory releases. World Bank indicator GFDD.EI.01. Source validation: Latest observation is 1641 days old for annual data."
+      "note": "World Bank GFDD net interest margin is annual and lagged; compare with local supervisory releases. World Bank indicator GFDD.EI.01. Source validation: Latest observation is 1655 days old for annual data."
     },
     {
       "code": "HU",
@@ -1618,10 +2545,10 @@
       "latest": "2021-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 1641,
+      "age_days": 1655,
       "severity": "medium",
       "source": "World Bank",
-      "note": "World Bank GFDD net interest margin is annual and lagged; compare with local supervisory releases. World Bank indicator GFDD.EI.01. Source validation: Latest observation is 1641 days old for annual data."
+      "note": "World Bank GFDD net interest margin is annual and lagged; compare with local supervisory releases. World Bank indicator GFDD.EI.01. Source validation: Latest observation is 1655 days old for annual data."
     },
     {
       "code": "PL",
@@ -1631,10 +2558,10 @@
       "latest": "2021-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 1641,
+      "age_days": 1655,
       "severity": "medium",
       "source": "World Bank",
-      "note": "World Bank GFDD net interest margin is annual and lagged; compare with local supervisory releases. World Bank indicator GFDD.EI.01. Source validation: Latest observation is 1641 days old for annual data."
+      "note": "World Bank GFDD net interest margin is annual and lagged; compare with local supervisory releases. World Bank indicator GFDD.EI.01. Source validation: Latest observation is 1655 days old for annual data."
     },
     {
       "code": "RO",
@@ -1644,10 +2571,10 @@
       "latest": "2021-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 1641,
+      "age_days": 1655,
       "severity": "medium",
       "source": "World Bank",
-      "note": "World Bank GFDD net interest margin is annual and lagged; compare with local supervisory releases. World Bank indicator GFDD.EI.01. Source validation: Latest observation is 1641 days old for annual data."
+      "note": "World Bank GFDD net interest margin is annual and lagged; compare with local supervisory releases. World Bank indicator GFDD.EI.01. Source validation: Latest observation is 1655 days old for annual data."
     },
     {
       "code": "RO",
@@ -1657,10 +2584,10 @@
       "latest": "2023-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 1186,
+      "age_days": 1200,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF FSI deposit-taker FX-loan ratio is used where recent FSFC_PT coverage exists; otherwise the dashboard uses national-central-bank or OeNB CESEE snapshots with explicit definition notes. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 1186 days old for quarterly data."
+      "note": "IMF FSI deposit-taker FX-loan ratio is used where recent FSFC_PT coverage exists; otherwise the dashboard uses national-central-bank or OeNB CESEE snapshots with explicit definition notes. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 1200 days old for quarterly data."
     },
     {
       "code": "CZ",
@@ -1670,10 +2597,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "Eurostat",
-      "note": "Eurostat old-age pension expenditure, % GDP; historical social-protection series, not a forward projection. Source validation: Latest observation is 911 days old for annual data."
+      "note": "Eurostat old-age pension expenditure, % GDP; historical social-protection series, not a forward projection. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "CZ",
@@ -1683,10 +2610,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 911 days old for annual data."
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "CZ",
@@ -1696,10 +2623,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 911 days old for annual data."
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "CZ",
@@ -1709,23 +2636,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 911 days old for annual data."
-    },
-    {
-      "code": "HU",
-      "dashboard": "Hungary",
-      "indicator_id": "pension_spending_pct_gdp",
-      "label": "Pension Expenditure, % GDP",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "lagged_source",
-      "age_days": 911,
-      "severity": "medium",
-      "source": "Eurostat",
-      "note": "Eurostat old-age pension expenditure, % GDP; historical social-protection series, not a forward projection. Source validation: Latest observation is 911 days old for annual data."
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "HU",
@@ -1735,10 +2649,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 911 days old for annual data."
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "HU",
@@ -1748,10 +2662,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 911 days old for annual data."
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "HU",
@@ -1761,10 +2675,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 911 days old for annual data."
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "PL",
@@ -1774,10 +2688,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "Eurostat",
-      "note": "Eurostat old-age pension expenditure, % GDP; historical social-protection series, not a forward projection. Source validation: Latest observation is 911 days old for annual data."
+      "note": "Eurostat old-age pension expenditure, % GDP; historical social-protection series, not a forward projection. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "PL",
@@ -1787,10 +2701,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 911 days old for annual data."
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "PL",
@@ -1800,10 +2714,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 911 days old for annual data."
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "PL",
@@ -1813,10 +2727,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 911 days old for annual data."
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "RO",
@@ -1826,10 +2740,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "National Bank of Romania Annual Report snapshot",
-      "note": "Foreign-owned bank asset share from World Bank GFDD where available, or official banking-sector snapshots where GFDD coverage is missing; structural and slow-moving, so use mainly as ownership-history context. Maintained in config/manual_indicators.yaml; revise manually when source values change. Source validation: Latest observation is 911 days old for annual data. Short history returned by adapter. Manual official snapshot maintained because the harmonised World Bank GFDD series lacks recent Romania coverage and the ECB SSI feed exposes foreign branch/subsidiary assets without a matching Romania banking-sector total-assets denominator."
+      "note": "Foreign-owned bank asset share from World Bank GFDD where available, or official banking-sector snapshots where GFDD coverage is missing; structural and slow-moving, so use mainly as ownership-history context. Maintained in config/manual_indicators.yaml; revise manually when source values change. Source validation: Latest observation is 925 days old for annual data. Short history returned by adapter. Manual official snapshot maintained because the harmonised World Bank GFDD series lacks recent Romania coverage and the ECB SSI feed exposes foreign branch/subsidiary assets without a matching Romania banking-sector total-assets denominator."
     },
     {
       "code": "RO",
@@ -1839,10 +2753,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "Eurostat",
-      "note": "Eurostat old-age pension expenditure, % GDP; historical social-protection series, not a forward projection. Source validation: Latest observation is 911 days old for annual data."
+      "note": "Eurostat old-age pension expenditure, % GDP; historical social-protection series, not a forward projection. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "RO",
@@ -1852,10 +2766,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 911 days old for annual data."
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "RO",
@@ -1865,10 +2779,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 911 days old for annual data."
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "RO",
@@ -1878,10 +2792,10 @@
       "latest": "2023-12-31",
       "frequency": "annual",
       "status": "lagged_source",
-      "age_days": 911,
+      "age_days": 925,
       "severity": "medium",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 911 days old for annual data."
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 925 days old for annual data."
     },
     {
       "code": "HU",
@@ -1891,10 +2805,10 @@
       "latest": "2024-01-01",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 820,
+      "age_days": 834,
       "severity": "high",
       "source": "ECB BPS / Eurostat GDP",
-      "note": "Component-based external-debt liability estimate from ECB balance-of-payments positions, scaled by Eurostat rolling four-quarter nominal GDP; direct-investment intercompany debt may need national-release cross-checks. Official ECB BPS component stack; direct-investment intercompany debt is not included unless reported through the selected debt-instrument components, so compare with national external-debt releases. Source validation: Latest observation is 910 days old for quarterly data."
+      "note": "Component-based external-debt liability estimate from ECB balance-of-payments positions, scaled by Eurostat rolling four-quarter nominal GDP; direct-investment intercompany debt may need national-release cross-checks. Official ECB BPS component stack; direct-investment intercompany debt is not included unless reported through the selected debt-instrument components, so compare with national external-debt releases. Source validation: Latest observation is 924 days old for quarterly data."
     },
     {
       "code": "CZ",
@@ -1904,10 +2818,10 @@
       "latest": "2024-12-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 545,
+      "age_days": 559,
       "severity": "high",
       "source": "BIS LBS via DB.nomics",
-      "note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions. Source validation: Latest observation is 545 days old for quarterly data."
+      "note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions. Source validation: Latest observation is 559 days old for quarterly data."
     },
     {
       "code": "HU",
@@ -1917,10 +2831,10 @@
       "latest": "2024-12-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 545,
+      "age_days": 559,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 545 days old for quarterly data."
+      "note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 559 days old for quarterly data."
     },
     {
       "code": "HU",
@@ -1930,10 +2844,10 @@
       "latest": "2024-12-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 545,
+      "age_days": 559,
       "severity": "high",
       "source": "BIS LBS via DB.nomics",
-      "note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions. Source validation: Latest observation is 545 days old for quarterly data."
+      "note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions. Source validation: Latest observation is 559 days old for quarterly data."
     },
     {
       "code": "HU",
@@ -1943,10 +2857,10 @@
       "latest": "2024-12-31",
       "frequency": "monthly",
       "status": "stale",
-      "age_days": 545,
+      "age_days": 559,
       "severity": "high",
       "source": "World Bank",
-      "note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD. Source validation: Latest observation is 545 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence."
+      "note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD. Source validation: Latest observation is 559 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence."
     },
     {
       "code": "PL",
@@ -1956,10 +2870,10 @@
       "latest": "2024-12-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 545,
+      "age_days": 559,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 545 days old for quarterly data."
+      "note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 559 days old for quarterly data."
     },
     {
       "code": "PL",
@@ -1969,10 +2883,10 @@
       "latest": "2024-12-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 545,
+      "age_days": 559,
       "severity": "high",
       "source": "BIS LBS via DB.nomics",
-      "note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions. Source validation: Latest observation is 545 days old for quarterly data."
+      "note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions. Source validation: Latest observation is 559 days old for quarterly data."
     },
     {
       "code": "RO",
@@ -1982,10 +2896,10 @@
       "latest": "2024-12-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 545,
+      "age_days": 559,
       "severity": "high",
       "source": "BIS LBS via DB.nomics",
-      "note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions. Source validation: Latest observation is 545 days old for quarterly data."
+      "note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions. Source validation: Latest observation is 559 days old for quarterly data."
     },
     {
       "code": "RO",
@@ -1995,10 +2909,10 @@
       "latest": "2024-12-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 545,
+      "age_days": 559,
       "severity": "high",
       "source": "World Bank WDI fallback",
-      "note": "BIS private non-financial credit gap preferred; World Bank annual credit/GDP trailing-trend fallback used only where BIS coverage is unavailable. Used only when BIS credit-gap data is unavailable; annual and not methodologically identical to BIS HP-filter gap. Source validation: Latest observation is 545 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence. Methodology fallback: World Bank annual credit/GDP minus trailing average, not BIS HP-filter credit gap."
+      "note": "BIS private non-financial credit gap preferred; World Bank annual credit/GDP trailing-trend fallback used only where BIS coverage is unavailable. Used only when BIS credit-gap data is unavailable; annual and not methodologically identical to BIS HP-filter gap. Source validation: Latest observation is 559 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence. Methodology fallback: World Bank annual credit/GDP minus trailing average, not BIS HP-filter credit gap."
     },
     {
       "code": "RO",
@@ -2008,10 +2922,10 @@
       "latest": "2024-12-31",
       "frequency": "monthly",
       "status": "stale",
-      "age_days": 545,
+      "age_days": 559,
       "severity": "high",
       "source": "World Bank",
-      "note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD. Source validation: Latest observation is 545 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence."
+      "note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD. Source validation: Latest observation is 559 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence."
     },
     {
       "code": "RO",
@@ -2021,7 +2935,7 @@
       "latest": "2024-12-31",
       "frequency": "monthly",
       "status": "stale",
-      "age_days": 545,
+      "age_days": 559,
       "severity": "high",
       "source": "INSSE TEMPO",
       "note": "Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Romania substitute uses annual import unit-value indices, not a monthly transaction import-price index; use as a broad external-price signal. Source validation passed."
@@ -2034,10 +2948,10 @@
       "latest": "2025-01-31",
       "frequency": "monthly",
       "status": "stale",
-      "age_days": 514,
+      "age_days": 528,
       "severity": "high",
       "source": "National Bank of Romania Monthly Bulletin / Romania Ministry of Finance GDP snapshot",
-      "note": "Central-bank total assets scaled by nominal GDP from BIS/World Bank where available, or official national-bank and GDP snapshots where automated coverage is missing; monthly numerator is paired with annual GDP, so use as a balance-sheet scale proxy rather than exact national-account ratio. Maintained in config/manual_indicators.yaml; revise manually when source values change. Source validation: Latest observation is 514 days old for monthly data. Short history returned by adapter. Manual snapshot maintained because BIS CBTA does not currently return Romania coverage in this pipeline and BNR's direct statistical-data endpoints reject automated access in this environment. Update when the latest BNR monthly bulletin and current-price GDP snapshot are refreshed."
+      "note": "Central-bank total assets scaled by nominal GDP from BIS/World Bank where available, or official national-bank and GDP snapshots where automated coverage is missing; monthly numerator is paired with annual GDP, so use as a balance-sheet scale proxy rather than exact national-account ratio. Maintained in config/manual_indicators.yaml; revise manually when source values change. Source validation: Latest observation is 528 days old for monthly data. Short history returned by adapter. Manual snapshot maintained because BIS CBTA does not currently return Romania coverage in this pipeline and BNR's direct statistical-data endpoints reject automated access in this environment. Update when the latest BNR monthly bulletin and current-price GDP snapshot are refreshed."
     },
     {
       "code": "CZ",
@@ -2047,10 +2961,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "CZ",
@@ -2060,10 +2974,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions."
+      "note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions."
     },
     {
       "code": "CZ",
@@ -2073,10 +2987,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "CZ",
@@ -2086,10 +3000,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "CZ",
@@ -2099,10 +3013,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "HU",
@@ -2112,10 +3026,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions."
+      "note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions."
     },
     {
       "code": "HU",
@@ -2125,10 +3039,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "HU",
@@ -2138,10 +3052,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "HU",
@@ -2151,10 +3065,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "PL",
@@ -2164,10 +3078,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions."
+      "note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions."
     },
     {
       "code": "PL",
@@ -2177,10 +3091,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "PL",
@@ -2190,10 +3104,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "PL",
@@ -2203,10 +3117,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "PL",
@@ -2216,10 +3130,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF FSI deposit-taker FX-loan ratio is used where recent FSFC_PT coverage exists; otherwise the dashboard uses national-central-bank or OeNB CESEE snapshots with explicit definition notes. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF FSI deposit-taker FX-loan ratio is used where recent FSFC_PT coverage exists; otherwise the dashboard uses national-central-bank or OeNB CESEE snapshots with explicit definition notes. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "RO",
@@ -2229,10 +3143,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "RO",
@@ -2242,10 +3156,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions."
+      "note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions."
     },
     {
       "code": "RO",
@@ -2255,10 +3169,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "RO",
@@ -2268,10 +3182,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "RO",
@@ -2281,10 +3195,10 @@
       "latest": "2025-03-31",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 455,
+      "age_days": 469,
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
-      "note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 455 days old for quarterly data."
+      "note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 469 days old for quarterly data."
     },
     {
       "code": "CZ",
@@ -2294,10 +3208,10 @@
       "latest": "2025-06-30",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 364,
+      "age_days": 378,
       "severity": "high",
       "source": "OeNB CESEE report / national central banks",
-      "note": "IMF FSI deposit-taker FX-loan ratio is used where recent FSFC_PT coverage exists; otherwise the dashboard uses national-central-bank or OeNB CESEE snapshots with explicit definition notes. Maintained in config/manual_indicators.yaml; revise manually when source values change. Source validation: Latest observation is 364 days old for quarterly data. Observed date gap of 365 days exceeds expected quarterly cadence. Manual official secondary-source snapshot used where IMF FSI coverage is missing or stale. This is not the exact IMF deposit-taker foreign-currency-loans-to-total-loans FSI definition used for countries with recent IMF FSI coverage."
+      "note": "IMF FSI deposit-taker FX-loan ratio is used where recent FSFC_PT coverage exists; otherwise the dashboard uses national-central-bank or OeNB CESEE snapshots with explicit definition notes. Maintained in config/manual_indicators.yaml; revise manually when source values change. Source validation: Latest observation is 378 days old for quarterly data. Observed date gap of 365 days exceeds expected quarterly cadence. Manual official secondary-source snapshot used where IMF FSI coverage is missing or stale. This is not the exact IMF deposit-taker foreign-currency-loans-to-total-loans FSI definition used for countries with recent IMF FSI coverage."
     },
     {
       "code": "HU",
@@ -2307,140 +3221,309 @@
       "latest": "2025-06-30",
       "frequency": "quarterly",
       "status": "stale",
-      "age_days": 364,
+      "age_days": 378,
       "severity": "high",
       "source": "OeNB CESEE report / national central banks",
-      "note": "IMF FSI deposit-taker FX-loan ratio is used where recent FSFC_PT coverage exists; otherwise the dashboard uses national-central-bank or OeNB CESEE snapshots with explicit definition notes. Maintained in config/manual_indicators.yaml; revise manually when source values change. Source validation: Latest observation is 364 days old for quarterly data. Observed date gap of 365 days exceeds expected quarterly cadence. Manual official secondary-source snapshot used where IMF FSI coverage is missing or stale. This is not the exact IMF deposit-taker foreign-currency-loans-to-total-loans FSI definition used for countries with recent IMF FSI coverage."
+      "note": "IMF FSI deposit-taker FX-loan ratio is used where recent FSFC_PT coverage exists; otherwise the dashboard uses national-central-bank or OeNB CESEE snapshots with explicit definition notes. Maintained in config/manual_indicators.yaml; revise manually when source values change. Source validation: Latest observation is 378 days old for quarterly data. Observed date gap of 365 days exceeds expected quarterly cadence. Manual official secondary-source snapshot used where IMF FSI coverage is missing or stale. This is not the exact IMF deposit-taker foreign-currency-loans-to-total-loans FSI definition used for countries with recent IMF FSI coverage."
     },
     {
-      "code": "CN",
-      "dashboard": "China",
-      "indicator_id": "real_estate_climate_index_eastmoney",
-      "label": "Real Estate Climate Index",
-      "latest": "2025-12-01 · 91.5 Index",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 180,
+      "code": "CZ",
+      "dashboard": "Czechia",
+      "indicator_id": "credit_to_gdp_gap",
+      "label": "Credit-to-GDP Gap",
+      "latest": "2025-12-31",
+      "frequency": "quarterly",
+      "status": "needs_review",
+      "age_days": 194,
       "severity": "medium",
-      "source": "Eastmoney Data Center / NBS-style industry index",
-      "note": "Eastmoney's structured industry-index API mirrors the NBS-style real-estate climate index; latest observations can lag the property-sales and investment tables."
+      "source": "BIS Credit-to-GDP gaps",
+      "note": "BIS private non-financial credit gap preferred; World Bank annual credit/GDP trailing-trend fallback used only where BIS coverage is unavailable. BIS bulk CSV data type C: actual minus trend. Source validation passed."
+    },
+    {
+      "code": "CZ",
+      "dashboard": "Czechia",
+      "indicator_id": "road_freight_activity",
+      "label": "Road Freight Activity",
+      "latest": "2025-10-01",
+      "frequency": "quarterly",
+      "status": "needs_review",
+      "age_days": 194,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series. Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres. Source validation: Latest observation is 285 days old for quarterly data."
+    },
+    {
+      "code": "CZ",
+      "dashboard": "Czechia",
+      "indicator_id": "vacancy_rate",
+      "label": "Job Vacancy Rate",
+      "latest": "2025-10-01",
+      "frequency": "quarterly",
+      "status": "needs_review",
+      "age_days": 194,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy. Source validation: Latest observation is 285 days old for quarterly data."
+    },
+    {
+      "code": "HU",
+      "dashboard": "Hungary",
+      "indicator_id": "credit_to_gdp_gap",
+      "label": "Credit-to-GDP Gap",
+      "latest": "2025-12-31",
+      "frequency": "quarterly",
+      "status": "needs_review",
+      "age_days": 194,
+      "severity": "medium",
+      "source": "BIS Credit-to-GDP gaps",
+      "note": "BIS private non-financial credit gap preferred; World Bank annual credit/GDP trailing-trend fallback used only where BIS coverage is unavailable. BIS bulk CSV data type C: actual minus trend. Source validation passed."
+    },
+    {
+      "code": "HU",
+      "dashboard": "Hungary",
+      "indicator_id": "road_freight_activity",
+      "label": "Road Freight Activity",
+      "latest": "2025-10-01",
+      "frequency": "quarterly",
+      "status": "needs_review",
+      "age_days": 194,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series. Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres. Source validation: Latest observation is 285 days old for quarterly data."
+    },
+    {
+      "code": "HU",
+      "dashboard": "Hungary",
+      "indicator_id": "vacancy_rate",
+      "label": "Job Vacancy Rate",
+      "latest": "2025-10-01",
+      "frequency": "quarterly",
+      "status": "needs_review",
+      "age_days": 194,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy. Source validation: Latest observation is 285 days old for quarterly data."
     },
     {
       "code": "PL",
       "dashboard": "Poland",
-      "indicator_id": "equity_vol_30d",
-      "label": "30D Realised Equity Volatility",
-      "latest": "2026-05-22",
-      "frequency": "daily",
-      "status": "stale",
-      "age_days": 38,
+      "indicator_id": "credit_to_gdp_gap",
+      "label": "Credit-to-GDP Gap",
+      "latest": "2025-12-31",
+      "frequency": "quarterly",
+      "status": "needs_review",
+      "age_days": 194,
       "severity": "medium",
-      "source": "GPW Benchmark",
-      "note": "Annualised realised volatility from daily closes; vendor closes and holidays should be checked against exchange data. Official GPW Benchmark index volatility snapshot based on the last 20 sessions; this is a close substitute for the dashboard's 30D realised-volatility slot. Source validation: Latest observation is 38 days old for daily data. Short history returned by adapter."
+      "source": "BIS Credit-to-GDP gaps",
+      "note": "BIS private non-financial credit gap preferred; World Bank annual credit/GDP trailing-trend fallback used only where BIS coverage is unavailable. BIS bulk CSV data type C: actual minus trend. Source validation passed."
+    },
+    {
+      "code": "PL",
+      "dashboard": "Poland",
+      "indicator_id": "road_freight_activity",
+      "label": "Road Freight Activity",
+      "latest": "2025-10-01",
+      "frequency": "quarterly",
+      "status": "needs_review",
+      "age_days": 194,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series. Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres. Source validation: Latest observation is 285 days old for quarterly data."
+    },
+    {
+      "code": "PL",
+      "dashboard": "Poland",
+      "indicator_id": "vacancy_rate",
+      "label": "Job Vacancy Rate",
+      "latest": "2025-10-01",
+      "frequency": "quarterly",
+      "status": "needs_review",
+      "age_days": 194,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy. Source validation: Latest observation is 285 days old for quarterly data."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "road_freight_activity",
+      "label": "Road Freight Activity",
+      "latest": "2025-10-01",
+      "frequency": "quarterly",
+      "status": "needs_review",
+      "age_days": 194,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series. Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres. Source validation: Latest observation is 285 days old for quarterly data."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "vacancy_rate",
+      "label": "Job Vacancy Rate",
+      "latest": "2025-10-01",
+      "frequency": "quarterly",
+      "status": "needs_review",
+      "age_days": 194,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy. Source validation: Latest observation is 285 days old for quarterly data."
+    },
+    {
+      "code": "CZ",
+      "dashboard": "Czechia",
+      "indicator_id": "interbank_3m",
+      "label": "3M Interbank Rate",
+      "latest": "2026-03-01",
+      "frequency": "monthly",
+      "status": "needs_review",
+      "age_days": 104,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Eurostat short-term rate is used as a public 3M interbank-rate proxy; local fixing conventions should be checked. Source validation: Latest observation is 134 days old for monthly data."
     },
     {
       "code": "CZ",
       "dashboard": "Czechia",
       "indicator_id": "sov_yield_2y",
       "label": "2Y Government Bond Yield",
-      "latest": "2026-05-01",
+      "latest": "2026-03-01",
       "frequency": "monthly",
       "status": "needs_review",
-      "age_days": 29,
+      "age_days": 104,
       "severity": "medium",
       "source": "Eurostat",
-      "note": "Public short-rate proxy is used until a true 2Y sovereign yield feed is wired; not suitable for precise curve trades. Uses Eurostat short-term money-market rate as a public proxy until a true 2Y sovereign-yield feed is wired. Source validation passed. Proxy mismatch: short-term money-market rate is not a 2Y government bond yield."
+      "note": "Public short-rate proxy is used until a true 2Y sovereign yield feed is wired; not suitable for precise curve trades. Uses Eurostat short-term money-market rate as a public proxy until a true 2Y sovereign-yield feed is wired. Source validation: Latest observation is 134 days old for monthly data. Proxy mismatch: short-term money-market rate is not a 2Y government bond yield."
     },
     {
       "code": "CZ",
       "dashboard": "Czechia",
       "indicator_id": "yield_curve_slope",
       "label": "10Y-2Y Yield Curve Slope",
-      "latest": "2026-05-01",
+      "latest": "2026-03-01",
       "frequency": "monthly",
       "status": "needs_review",
-      "age_days": 29,
+      "age_days": 104,
       "severity": "medium",
       "source": "Derived from Eurostat interest-rate series",
-      "note": "Current public implementation uses 10Y minus short-term rate until a true 2Y yield feed is wired. Uses short-term rate as the 2Y leg until a true 2Y feed is wired. Source validation passed. Proxy mismatch: slope is 10Y minus short rate, not exact 10Y-2Y."
+      "note": "Current public implementation uses 10Y minus short-term rate until a true 2Y yield feed is wired. Uses short-term rate as the 2Y leg until a true 2Y feed is wired. Source validation: Latest observation is 134 days old for monthly data. Proxy mismatch: slope is 10Y minus short rate, not exact 10Y-2Y."
+    },
+    {
+      "code": "HU",
+      "dashboard": "Hungary",
+      "indicator_id": "interbank_3m",
+      "label": "3M Interbank Rate",
+      "latest": "2026-03-01",
+      "frequency": "monthly",
+      "status": "needs_review",
+      "age_days": 104,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Eurostat short-term rate is used as a public 3M interbank-rate proxy; local fixing conventions should be checked. Source validation: Latest observation is 134 days old for monthly data."
     },
     {
       "code": "HU",
       "dashboard": "Hungary",
       "indicator_id": "sov_yield_2y",
       "label": "2Y Government Bond Yield",
-      "latest": "2026-05-01",
+      "latest": "2026-03-01",
       "frequency": "monthly",
       "status": "needs_review",
-      "age_days": 29,
+      "age_days": 104,
       "severity": "medium",
       "source": "Eurostat",
-      "note": "Public short-rate proxy is used until a true 2Y sovereign yield feed is wired; not suitable for precise curve trades. Uses Eurostat short-term money-market rate as a public proxy until a true 2Y sovereign-yield feed is wired. Source validation passed. Proxy mismatch: short-term money-market rate is not a 2Y government bond yield."
+      "note": "Public short-rate proxy is used until a true 2Y sovereign yield feed is wired; not suitable for precise curve trades. Uses Eurostat short-term money-market rate as a public proxy until a true 2Y sovereign-yield feed is wired. Source validation: Latest observation is 134 days old for monthly data. Proxy mismatch: short-term money-market rate is not a 2Y government bond yield."
     },
     {
       "code": "HU",
       "dashboard": "Hungary",
       "indicator_id": "yield_curve_slope",
       "label": "10Y-2Y Yield Curve Slope",
-      "latest": "2026-05-01",
+      "latest": "2026-03-01",
       "frequency": "monthly",
       "status": "needs_review",
-      "age_days": 29,
+      "age_days": 104,
       "severity": "medium",
       "source": "Derived from Eurostat interest-rate series",
-      "note": "Current public implementation uses 10Y minus short-term rate until a true 2Y yield feed is wired. Uses short-term rate as the 2Y leg until a true 2Y feed is wired. Source validation passed. Proxy mismatch: slope is 10Y minus short rate, not exact 10Y-2Y."
+      "note": "Current public implementation uses 10Y minus short-term rate until a true 2Y yield feed is wired. Uses short-term rate as the 2Y leg until a true 2Y feed is wired. Source validation: Latest observation is 134 days old for monthly data. Proxy mismatch: slope is 10Y minus short rate, not exact 10Y-2Y."
+    },
+    {
+      "code": "PL",
+      "dashboard": "Poland",
+      "indicator_id": "interbank_3m",
+      "label": "3M Interbank Rate",
+      "latest": "2026-03-01",
+      "frequency": "monthly",
+      "status": "needs_review",
+      "age_days": 104,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Eurostat short-term rate is used as a public 3M interbank-rate proxy; local fixing conventions should be checked. Source validation: Latest observation is 134 days old for monthly data."
     },
     {
       "code": "PL",
       "dashboard": "Poland",
       "indicator_id": "sov_yield_2y",
       "label": "2Y Government Bond Yield",
-      "latest": "2026-05-01",
+      "latest": "2026-03-01",
       "frequency": "monthly",
       "status": "needs_review",
-      "age_days": 29,
+      "age_days": 104,
       "severity": "medium",
       "source": "Eurostat",
-      "note": "Public short-rate proxy is used until a true 2Y sovereign yield feed is wired; not suitable for precise curve trades. Uses Eurostat short-term money-market rate as a public proxy until a true 2Y sovereign-yield feed is wired. Source validation passed. Proxy mismatch: short-term money-market rate is not a 2Y government bond yield."
+      "note": "Public short-rate proxy is used until a true 2Y sovereign yield feed is wired; not suitable for precise curve trades. Uses Eurostat short-term money-market rate as a public proxy until a true 2Y sovereign-yield feed is wired. Source validation: Latest observation is 134 days old for monthly data. Proxy mismatch: short-term money-market rate is not a 2Y government bond yield."
     },
     {
       "code": "PL",
       "dashboard": "Poland",
       "indicator_id": "yield_curve_slope",
       "label": "10Y-2Y Yield Curve Slope",
-      "latest": "2026-05-01",
+      "latest": "2026-03-01",
       "frequency": "monthly",
       "status": "needs_review",
-      "age_days": 29,
+      "age_days": 104,
       "severity": "medium",
       "source": "Derived from Eurostat interest-rate series",
-      "note": "Current public implementation uses 10Y minus short-term rate until a true 2Y yield feed is wired. Uses short-term rate as the 2Y leg until a true 2Y feed is wired. Source validation passed. Proxy mismatch: slope is 10Y minus short rate, not exact 10Y-2Y."
+      "note": "Current public implementation uses 10Y minus short-term rate until a true 2Y yield feed is wired. Uses short-term rate as the 2Y leg until a true 2Y feed is wired. Source validation: Latest observation is 134 days old for monthly data. Proxy mismatch: slope is 10Y minus short rate, not exact 10Y-2Y."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "interbank_3m",
+      "label": "3M Interbank Rate",
+      "latest": "2026-03-01",
+      "frequency": "monthly",
+      "status": "needs_review",
+      "age_days": 104,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Eurostat short-term rate is used as a public 3M interbank-rate proxy; local fixing conventions should be checked. Source validation: Latest observation is 134 days old for monthly data."
     },
     {
       "code": "RO",
       "dashboard": "Romania",
       "indicator_id": "sov_yield_2y",
       "label": "2Y Government Bond Yield",
-      "latest": "2026-05-01",
+      "latest": "2026-03-01",
       "frequency": "monthly",
       "status": "needs_review",
-      "age_days": 29,
+      "age_days": 104,
       "severity": "medium",
       "source": "Eurostat",
-      "note": "Public short-rate proxy is used until a true 2Y sovereign yield feed is wired; not suitable for precise curve trades. Uses Eurostat short-term money-market rate as a public proxy until a true 2Y sovereign-yield feed is wired. Source validation passed. Proxy mismatch: short-term money-market rate is not a 2Y government bond yield."
+      "note": "Public short-rate proxy is used until a true 2Y sovereign yield feed is wired; not suitable for precise curve trades. Uses Eurostat short-term money-market rate as a public proxy until a true 2Y sovereign-yield feed is wired. Source validation: Latest observation is 134 days old for monthly data. Proxy mismatch: short-term money-market rate is not a 2Y government bond yield."
     },
     {
       "code": "RO",
       "dashboard": "Romania",
       "indicator_id": "yield_curve_slope",
       "label": "10Y-2Y Yield Curve Slope",
-      "latest": "2026-05-01",
+      "latest": "2026-03-01",
       "frequency": "monthly",
       "status": "needs_review",
-      "age_days": 29,
+      "age_days": 104,
       "severity": "medium",
       "source": "Derived from Eurostat interest-rate series",
-      "note": "Current public implementation uses 10Y minus short-term rate until a true 2Y yield feed is wired. Uses short-term rate as the 2Y leg until a true 2Y feed is wired. Source validation passed. Proxy mismatch: slope is 10Y minus short rate, not exact 10Y-2Y."
+      "note": "Current public implementation uses 10Y minus short-term rate until a true 2Y yield feed is wired. Uses short-term rate as the 2Y leg until a true 2Y feed is wired. Source validation: Latest observation is 134 days old for monthly data. Proxy mismatch: slope is 10Y minus short rate, not exact 10Y-2Y."
     }
   ],
   "gap_backlog": [
