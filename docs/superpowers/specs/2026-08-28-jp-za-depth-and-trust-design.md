@@ -66,13 +66,34 @@ an unknown period because its chart regex predated the Core 48 view attributes.
 `make validate` passed throughout: it asserts page structure, never pipeline
 outcomes. Fixed on 2026-08-28, but the class of bug remains unguarded.
 
+### E6 — Eskom is not currently automatable
+
+Every CSV link published on the Eskom data portal returns HTTP 404, across all
+categories tested on 2026-08-28:
+
+| Dataset | Result |
+|---|---|
+| `System_hourly_demand_and_available_capacity.csv` | 404 |
+| `Weekly_Peak_Demand_Financial_Year.csv` | 404 |
+| `Weekly_unplanned_outages.csv` | 404 |
+| `Wind_Generation_Weekly_Load_Factor.csv` | 404 |
+
+Alternate month paths (`2026/08`, `2026/06`, `2025/12`) also 404. The pages load
+data through WordPress `admin-ajax`, so the data is presumably reachable by
+reverse-engineering the page JavaScript — but that is an undocumented internal
+endpoint, not a published contract, and `PROJECT_LESSONS.md` explicitly warns
+against depending on that class of source.
+
+Decision: Eskom is dropped from this round and recorded as a South Africa data
+gap citing the 404 evidence. Revisit only if Eskom publishes a documented API.
+
 ### E5 — Source feasibility (probed 2026-08-28)
 
 | Source | Credential | Status |
 |---|---|---|
 | BOJ flat files | none | 16 stable ZIPs incl. CGPI, SPPI, monthly BoP, IIP, Flow of Funds |
 | e-Stat | `ESTAT_APP_ID` | verified working (`STATUS=0`); free-text search times out, narrow `statsCode` lookups required |
-| Eskom data portal | none | ~24 public CSV datasets across demand, outage, OCGT, renewables |
+| Eskom data portal | none | **NOT VIABLE** — all published CSV links return 404 (see E6) |
 | IMF SDMX BOP/IIP/MFS | none | live through 2026-Q1, dozens of indicator codes, largely untapped |
 | SARB Web API | none | capped at ~13 curated series; arbitrary QB codes return `[]` |
 | Stats SA | n/a | behind an Incapsula WAF; not automatable |
@@ -87,7 +108,7 @@ Three new fetchers in a shared adapter module (not inside a builder):
 |---|---|---|
 | `fetch_boj_flatfile` | none | CGPI, SPPI, monthly BoP, IIP, Flow of Funds |
 | `fetch_estat` | `ESTAT_APP_ID` | Statistics Bureau / MHLW / MLIT tables |
-| `fetch_eskom_csv` | none | Eskom demand, outage performance, OCGT, renewables |
+| `fetch_eskom_csv` | — | **dropped, see E6** |
 
 Japan Core-48 concept gaps closed with native official data:
 
@@ -113,10 +134,9 @@ same way the existing FRED series ids are recorded. A concept whose series
 cannot be resolved and validated stays a documented gap rather than being filled
 with an approximation.
 
-South Africa gains the Eskom energy block. Available capacity, UCLF/OCLF, OCGT
-load factors and renewable generation are country-specific: they are namespaced
-`za:*` and deliberately do **not** occupy Core-48 slots. This deepens the page
-without inflating its comparable-core count.
+South Africa's breadth comes from the IMF SDMX dataflows that are live but
+untapped — BOP, IIP, and the monetary survey (`MFS_ODC`) — plus additional FRED
+and World Bank series. The Eskom energy block is dropped from this round; see E6.
 
 Naming discipline: BOJ's SPPI is producer-side services prices, not consumer
 services inflation. `services_inflation` maps to the e-Stat CPI services
@@ -236,8 +256,7 @@ the broader P5 generator consolidation, which remains a separate project.
 
 | Risk | Mitigation |
 |---|---|
-| BOJ ZIP internals unknown; Shift-JIS encoding likely | Parse one before committing to the config shape; fixture-test the parser |
+| ~~BOJ ZIP internals unknown~~ | **Retired.** Inspected: `_en` files are plain ASCII, wide format, header row of `YYYYMM` periods, rows of `code,dataset,label,v1..vN`. Headline PPI is `PRCG20_2200000000`. |
 | e-Stat slow (30s timeout observed on free-text search) | Narrow `statsCode`/`statsDataId` lookups only, generous read timeouts |
-| Eskom CSV path is dated (`/2026/07/`) | Discover the link from the page, as `build_uk_dashboard` already does for GOV.UK |
 | Phase 1 shifts quality pills on all nine pages | Snapshot-only rebuild, diff distributions, review before publish |
 | New breadth could dilute quality | All new breadth comes from native official sources, so authority and coverage move together |
