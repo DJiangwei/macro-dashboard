@@ -348,3 +348,82 @@ US:
   equity_index: S&P 500
   default_peers: [DE, JP, GB]
   trading_partners: [Canada, Mexico, China, Japan, Germany]
+
+JP:
+  name: Japan
+  iso2: JP
+  iso3: JPN
+  currency: JPY
+  central_bank: Bank of Japan (BoJ)
+  fx_regime: Free float
+  inflation_target: "2.0% CPI"
+  sovereign_ratings:
+    sp: A+
+    moody: A1
+    fitch: A
+  equity_index: Nikkei 225
+  default_peers: [US, GB, DE]
+  trading_partners: [China, United States, South Korea, Taiwan, Australia]
+  major_industries:
+    - Automotive & auto components
+    - Semiconductor materials & manufacturing equipment
+    - Industrial machinery & robotics
+    - Electronics & precision instruments
+    - Trading houses & overseas asset management
+  geo_context: |
+    Archipelago economy with no meaningful domestic energy or food resource base,
+    so the terms of trade move with imported energy prices and the yen. Deeply
+    embedded in East Asian supply chains, with China and the United States as the
+    two dominant trade counterparties. G7 and OECD member.
+  policy_context: |
+    Japan exited its negative-interest-rate and yield-curve-control regime in 2024
+    after roughly a decade of unconventional easing. The macro question for the
+    page is whether the shift from deflation to a positive nominal-growth regime
+    is durable, which is why the nominal-versus-real GDP gap, broad money, and
+    wage series sit next to each other in the dashboard layout.
+  data_context: |
+    Japan is the one country in this repo where the FRED/OECD mirror is
+    insufficient on its own: OECD discontinued its Japan CPI, retail-value, and
+    money-stock mirrors between 2021 and 2024. National CPI and bank soundness
+    therefore come from the IMF SDMX API. Japan-native releases behind the e-Stat
+    application-ID wall (ex-fresh-food core CPI, job-to-applicant ratio, housing
+    starts) are recorded as explicit data gaps rather than proxied.
+
+ZA:
+  name: South Africa
+  iso2: ZA
+  iso3: ZAF
+  currency: ZAR
+  central_bank: South African Reserve Bank (SARB)
+  fx_regime: Free float
+  inflation_target: "3-6% CPI target band"
+  sovereign_ratings:
+    sp: BB-
+    moody: Ba2
+    fitch: BB-
+  equity_index: FTSE/JSE All Share
+  default_peers: [BR, MX, TR]
+  trading_partners: [China, United States, Germany, United Kingdom, India]
+  major_industries:
+    - Mining (platinum-group metals, gold, coal, iron ore, manganese)
+    - Financial services & banking
+    - Automotive assembly & components
+    - Agriculture & agri-processing
+    - Wholesale, retail & tourism
+  geo_context: |
+    The most industrialised economy in Sub-Saharan Africa and the region's deepest
+    capital market, with Durban and Cape Town as the main maritime gateways.
+    Commodity exports dominate the trade account, so the terms of trade move with
+    PGM, gold, and coal prices. G20 and BRICS member.
+  policy_context: |
+    SARB runs an inflation-targeting regime with a 3-6% band and has deliberately
+    held positive real policy rates, which puts monetary policy in tension with an
+    unemployment rate above 30%. The binding constraints are structural rather
+    than cyclical: electricity supply, logistics capacity, and a fiscal path
+    dominated by rising debt-service cost.
+  data_context: |
+    SARB exposes a public JSON web API and is the compiling authority for rates,
+    CPI/PPI, and the rand crosses, so those series are taken natively rather than
+    from a mirror. FRED carries OECD/Stats SA/BIS series for national accounts,
+    production, labour, trade, and credit. Eskom load-shedding data and the
+    vendor-controlled BER and Absa PMI surveys remain explicit data gaps.

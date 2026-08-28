@@ -15,9 +15,13 @@ COUNTRY_FILES = {
     "CZ": "czechia.html",
     "RO": "romania.html",
     "CN": "china.html",
+    "JP": "japan.html",
+    "ZA": "south_africa.html",
     "UK": "uk.html",
     "US": "us.html",
 }
+DATA_FIRST_CODES = {"CN", "JP", "ZA", "UK", "US"}
+DATA_FIRST_NAMES = ("china", "japan", "south_africa", "uk", "us")
 
 
 def _load_json(path: Path) -> dict:
@@ -43,14 +47,14 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
             raise AssertionError(f"{filename} contains a duplicated dashboard title")
         chart_count = (
             len(re.findall(r'class="chart-card(?:\s|\")', text))
-            if code in {"CN", "UK", "US"}
+            if code in DATA_FIRST_CODES
             else text.count('class="chart-cell chart-shell"')
         )
         if chart_count and text.count("data-latest-reading") != chart_count:
             raise AssertionError(f"{filename} does not show a latest reading for every chart")
         messages.append(f"{code}: stable route and view contract ok")
 
-    for name in ("china", "uk", "us"):
+    for name in DATA_FIRST_NAMES:
         text = (output / f"{name}.html").read_text()
         cards = len(re.findall(r'class="chart-card', text))
         divs = re.findall(r'id="(chart-[^"]+)" class="plotly-chart"', text)
@@ -94,7 +98,7 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
     if source_health.get("schema_version") != "source-health-v1":
         raise AssertionError("Source-health schema mismatch")
     if set((source_health.get("countries") or {})) != set(COUNTRY_FILES):
-        raise AssertionError("Source-health report must contain all seven countries")
+        raise AssertionError("Source-health report must contain every dashboard country")
     if any(payload.get("circuit_open") for payload in source_health["countries"].values()):
         raise AssertionError("Source-health report contains an open source circuit")
 
@@ -108,8 +112,8 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
 
     archive = _load_json(output / "dashboard_archive_summary.json")
     cards = archive.get("cards") or []
-    if len(cards) != 7:
-        raise AssertionError(f"Archive expected seven countries, found {len(cards)}")
+    if len(cards) != len(COUNTRY_FILES):
+        raise AssertionError(f"Archive expected {len(COUNTRY_FILES)} countries, found {len(cards)}")
     if {card.get("file") for card in cards} != set(COUNTRY_FILES.values()):
         raise AssertionError("Archive country routes do not match stable output routes")
     for index_path in (root / "index.html", output / "index.html"):

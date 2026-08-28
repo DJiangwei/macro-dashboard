@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-07-14T21:30:55.930567+00:00",
+  "generated": "2026-08-28T15:39:22.726269+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -445,6 +445,7 @@
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
+      "empty_reasons": {},
       "sources": {
         "akshare_table": {
           "success": 64
@@ -480,6 +481,7 @@
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
+      "empty_reasons": {},
       "sources": {
         "boe_iadb": {
           "success": 11
@@ -515,6 +517,7 @@
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
+      "empty_reasons": {},
       "sources": {
         "bls_api": {
           "success": 4
@@ -524,6 +527,51 @@
         },
         "treasury_auctions": {
           "success": 4
+        }
+      },
+      "events": []
+    },
+    "JP": {
+      "calls": 46,
+      "success": 46,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "fred": {
+          "success": 38
+        },
+        "imf_datamapper": {
+          "success": 3
+        },
+        "imf_sdmx": {
+          "success": 5
+        }
+      },
+      "events": []
+    },
+    "ZA": {
+      "calls": 51,
+      "success": 51,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "fred": {
+          "success": 32
+        },
+        "imf_datamapper": {
+          "success": 3
+        },
+        "imf_sdmx": {
+          "success": 5
+        },
+        "sarb": {
+          "success": 11
         }
       },
       "events": []

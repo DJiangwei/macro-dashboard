@@ -1,0 +1,739 @@
+sections:
+  data_quirks:
+    title_en: "Data Quirks & Release Discipline"
+    title_zh: "数据特性与发布纪律"
+    report_logic_en: "Japan's national accounts are revised heavily between the first preliminary and the second preliminary QoQ prints, and headline CPI is dominated by fresh-food and energy swings. The dashboard keeps FRED/OECD, IMF SDMX, and BIS provenance explicit so revision behaviour can be traced back to the compiling agency."
+    report_logic_zh: "日本国民账户在一次速报与二次速报之间修订幅度较大，总体CPI又高度受生鲜食品与能源波动影响。页面明确标注FRED/OECD、IMF SDMX与BIS的数据来源，以便把修订行为追溯到编制机构。"
+  growth_accounts:
+    title_en: "GDP & National Accounts"
+    title_zh: "GDP与国民账户"
+    report_logic_en: "Cabinet Office national accounts anchor the macro story: real GDP level, sequential and year-over-year growth, nominal GDP, fixed investment, and government consumption."
+    report_logic_zh: "内阁府国民账户构成宏观叙事基准：实际GDP水平、环比与同比增速、名义GDP、固定资本形成与政府消费。"
+  production_cycle:
+    title_en: "Production & Business Cycle"
+    title_zh: "生产与商业周期"
+    report_logic_en: "METI industrial and manufacturing production, capacity utilisation, the Tankan-style business tendency survey, and the OECD composite leading indicator read Japan's cyclical momentum."
+    report_logic_zh: "经产省工业与制造业生产、产能利用率、短观式企业景气调查以及OECD综合领先指标共同刻画日本周期动能。"
+  consumption_retail:
+    title_en: "Consumption & Retail Demand"
+    title_zh: "消费与零售需求"
+    report_logic_en: "Retail trade volume is the highest-frequency read on Japanese household demand, which has been the swing factor between deflationary and reflationary regimes."
+    report_logic_zh: "零售贸易量是观察日本居民需求最高频的指标，而居民需求正是通缩与再通胀体制之间的摆动因素。"
+  labour_wages:
+    title_en: "Labour Market & Wages"
+    title_zh: "劳动力市场与工资"
+    report_logic_en: "Japan's structurally tight labour market makes unemployment a weak signal; participation, employment levels, and manufacturing earnings carry more information for the BoJ reaction function."
+    report_logic_zh: "日本劳动力市场结构性紧张，失业率信号偏弱；劳动参与率、就业人数与制造业工资对日银反应函数信息量更大。"
+  prices_costs:
+    title_en: "Prices & Costs"
+    title_zh: "价格与成本"
+    report_logic_en: "IMF-compiled national CPI gives headline year-over-year and month-over-month inflation and the price level itself, which is the reproducible public path now that OECD's Japan CPI mirror is discontinued. The COICOP division breakdown is declared by the IMF but published empty for Japan, so it is tracked as a gap."
+    report_logic_zh: "IMF汇编的日本CPI提供总体同比、环比与价格水平本身。在OECD日本CPI镜像停更后，这是可复跑的公开路径。COICOP大类分项虽由IMF声明但对日本为空值，故列为缺口。"
+  housing_property:
+    title_en: "Housing & Property Prices"
+    title_zh: "住房与房地产价格"
+    report_logic_en: "BIS residential property price indices give an internationally comparable nominal and real house-price series for Japan, where the domestic land-price statistics are annual and lagged."
+    report_logic_zh: "BIS住宅价格指数提供国际可比的名义与实际房价序列。日本本土地价统计为年度且滞后较久。"
+  external_fx:
+    title_en: "External Balance & FX"
+    title_zh: "外部平衡与汇率"
+    report_logic_en: "Merchandise trade, the current-account ratio, USD/JPY, and BIS effective exchange rates capture Japan's external position — the dominant transmission channel for the 2022-2026 yen regime."
+    report_logic_zh: "货物贸易、经常账户比率、美元兑日元与BIS有效汇率共同刻画日本外部头寸，这也是2022-2026年日元体制的主要传导渠道。"
+  fiscal_sovereign:
+    title_en: "Fiscal & Sovereign"
+    title_zh: "财政与主权"
+    report_logic_en: "IMF WEO fiscal ratios and the 10-year JGB yield frame the sustainability question for the world's most indebted advanced economy."
+    report_logic_zh: "IMF WEO财政比率与10年期日本国债收益率共同框定全球负债率最高的发达经济体的可持续性问题。"
+  monetary_financial:
+    title_en: "Monetary & Financial Conditions"
+    title_zh: "货币与金融条件"
+    report_logic_en: "The uncollateralised overnight call rate is the BoJ's operating target; broad money, BIS credit ratios, and the Nikkei complete the financial-conditions picture."
+    report_logic_zh: "无担保隔夜拆借利率是日银的操作目标；广义货币、BIS信贷比率与日经指数补齐金融条件全貌。"
+  stability_structural:
+    title_en: "Financial Stability & Structural Risk"
+    title_zh: "金融稳定与结构性风险"
+    report_logic_en: "IMF Financial Soundness Indicators give the deposit-taker capital and asset-quality core, and BIS total-credit ratios show the aggregate leverage stock."
+    report_logic_zh: "IMF金融稳健指标提供存款机构资本与资产质量核心指标，BIS总信贷比率反映整体杠杆存量。"
+
+min_chart_count: 34
+
+indicators:
+  # --- growth_accounts -----------------------------------------------------
+  - id: real_gdp_growth
+    section: growth_accounts
+    label_en: "Real GDP Growth, QoQ"
+    label_zh: "实际GDP环比"
+    unit: "% q/q"
+    transform: "pct_change"
+    fetcher: fred
+    series: "JPNRGDPEXP"
+    source_name: "FRED / OECD (Cabinet Office)"
+    source_url: "https://fred.stlouisfed.org/series/JPNRGDPEXP"
+    frequency: "quarterly"
+    start_date: "1994-01-01"
+    caveat_en: "Derived quarter-on-quarter growth from the chained-yen real GDP level; Japanese first preliminary estimates are revised materially."
+    caveat_zh: "由链式日元实际GDP水平派生的环比增速；日本一次速报后续修订幅度较大。"
+  - id: real_gdp_yoy
+    section: growth_accounts
+    label_en: "Real GDP Growth, YoY"
+    label_zh: "实际GDP同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "JPNRGDPEXP"
+    source_name: "FRED / OECD (Cabinet Office)"
+    source_url: "https://fred.stlouisfed.org/series/JPNRGDPEXP"
+    frequency: "quarterly"
+    start_date: "1994-01-01"
+    caveat_en: "Derived year-over-year growth from the chained-yen real GDP level."
+    caveat_zh: "由链式日元实际GDP水平派生的同比增速。"
+  - id: real_gdp_level
+    section: growth_accounts
+    label_en: "Real GDP Level"
+    label_zh: "实际GDP水平"
+    unit: "JPY bn"
+    fetcher: fred
+    series: "JPNRGDPEXP"
+    source_name: "FRED / OECD (Cabinet Office)"
+    source_url: "https://fred.stlouisfed.org/series/JPNRGDPEXP"
+    frequency: "quarterly"
+    start_date: "1994-01-01"
+    caveat_en: "Chained 2015-yen real GDP level; useful for judging cycle depth against the pre-COVID trend."
+    caveat_zh: "2015年链式日元实际GDP水平；适合对照疫情前趋势判断周期深度。"
+  - id: nominal_gdp_growth
+    section: growth_accounts
+    label_en: "Nominal GDP Growth"
+    label_zh: "名义GDP同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "NGDPSAXDCJPQ"
+    source_name: "FRED / OECD (Cabinet Office)"
+    source_url: "https://fred.stlouisfed.org/series/NGDPSAXDCJPQ"
+    frequency: "quarterly"
+    start_date: "1994-01-01"
+    caveat_en: "Derived from seasonally adjusted nominal GDP in yen; the nominal-versus-real gap is the cleanest reflation read for Japan."
+    caveat_zh: "由季调名义日元GDP派生；名义与实际增速之差是判断日本再通胀最直接的读数。"
+  - id: gfcf_growth
+    section: growth_accounts
+    label_en: "Gross Fixed Capital Formation Growth"
+    label_zh: "固定资本形成同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "NFIRSAXDCJPQ"
+    source_name: "FRED / OECD (Cabinet Office)"
+    source_url: "https://fred.stlouisfed.org/series/NFIRSAXDCJPQ"
+    frequency: "quarterly"
+    start_date: "1994-01-01"
+    caveat_en: "Derived year-over-year growth from real gross fixed capital formation; covers business, housing, and public investment together."
+    caveat_zh: "由实际固定资本形成总额派生的同比增速；包含企业、住宅与公共投资。"
+  - id: government_consumption_growth
+    section: growth_accounts
+    label_en: "Government Consumption Growth"
+    label_zh: "政府消费同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "NCGGRSAXDCJPQ"
+    source_name: "FRED / OECD (Cabinet Office)"
+    source_url: "https://fred.stlouisfed.org/series/NCGGRSAXDCJPQ"
+    frequency: "quarterly"
+    start_date: "1994-01-01"
+    caveat_en: "Derived from real general-government final consumption expenditure; publishes with a longer lag than headline GDP."
+    caveat_zh: "由实际广义政府最终消费支出派生；发布滞后长于总体GDP。"
+
+  # --- production_cycle ----------------------------------------------------
+  - id: industrial_production_growth
+    section: production_cycle
+    label_en: "Industrial Production, YoY"
+    label_zh: "工业生产同比"
+    unit: "% y/y"
+    fetcher: fred
+    series: "JPNPRINTO01GYSAM"
+    source_name: "FRED / OECD (METI)"
+    source_url: "https://fred.stlouisfed.org/series/JPNPRINTO01GYSAM"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Total industry excluding construction; METI publishes a preliminary print then revises it in the following month."
+    caveat_zh: "不含建筑业的工业总体；经产省先发布速报，次月修订。"
+  - id: manufacturing_production_growth
+    section: production_cycle
+    label_en: "Manufacturing Production, YoY"
+    label_zh: "制造业生产同比"
+    unit: "% y/y"
+    fetcher: fred
+    series: "JPNPRMNTO01GYSAM"
+    source_name: "FRED / OECD (METI)"
+    source_url: "https://fred.stlouisfed.org/series/JPNPRMNTO01GYSAM"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Total manufacturing output; more exposed than total industry to the global goods cycle and auto-sector shutdowns."
+    caveat_zh: "制造业总产出；相比工业总体更易受全球商品周期与汽车行业停产影响。"
+  - id: capacity_utilisation
+    section: production_cycle
+    label_en: "Capacity Utilisation Balance"
+    label_zh: "产能利用率景气差"
+    unit: "% balance"
+    fetcher: fred
+    series: "BSCURT02JPQ160S"
+    source_name: "FRED / OECD Business Tendency Surveys"
+    source_url: "https://fred.stlouisfed.org/series/BSCURT02JPQ160S"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Survey-based percentage balance for manufacturing capacity utilisation, not a physical utilisation rate."
+    caveat_zh: "制造业产能利用率的调查百分比差值，并非物理利用率。"
+  - id: business_confidence
+    section: production_cycle
+    label_en: "Manufacturing Business Confidence"
+    label_zh: "制造业企业信心"
+    unit: "index"
+    fetcher: fred
+    series: "JPNBSCICP02STSAQ"
+    source_name: "FRED / OECD Business Tendency Surveys"
+    source_url: "https://fred.stlouisfed.org/series/JPNBSCICP02STSAQ"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "OECD composite confidence indicator built from the BoJ Tankan survey; the proprietary Tankan diffusion indices themselves are not redistributable here."
+    caveat_zh: "基于日银短观构建的OECD综合信心指标；短观本身的扩散指数不可在此再分发。"
+  - id: composite_leading_indicator
+    section: production_cycle
+    label_en: "OECD Composite Leading Indicator"
+    label_zh: "OECD综合领先指标"
+    unit: "index"
+    fetcher: fred
+    series: "JPNLOLITOAASTSAM"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/JPNLOLITOAASTSAM"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Amplitude-adjusted CLI centred on 100; turning points are revised as component series are restated."
+    caveat_zh: "振幅调整后的CLI，以100为中枢；随分项序列修订，拐点会被调整。"
+
+  # --- consumption_retail --------------------------------------------------
+  - id: retail_sales_growth
+    section: consumption_retail
+    label_en: "Retail Trade Volume, YoY"
+    label_zh: "零售贸易量同比"
+    unit: "% y/y"
+    fetcher: fred
+    series: "JPNSLRTTO01GYSAM"
+    source_name: "FRED / OECD (METI)"
+    source_url: "https://fred.stlouisfed.org/series/JPNSLRTTO01GYSAM"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Volume rather than value, so it strips the consumption-tax and inflation distortions that dominate the nominal retail series."
+    caveat_zh: "为量指标而非值指标，剔除了主导名义零售序列的消费税与通胀扰动。"
+
+  # --- labour_wages --------------------------------------------------------
+  - id: unemployment_rate
+    section: labour_wages
+    label_en: "Unemployment Rate"
+    label_zh: "失业率"
+    unit: "%"
+    fetcher: fred
+    series: "LRHUTTTTJPM156S"
+    source_name: "FRED / OECD (Statistics Bureau)"
+    source_url: "https://fred.stlouisfed.org/series/LRHUTTTTJPM156S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Harmonised unemployment rate, 15 years and over. Japan's rate is structurally low, so it is a weak cyclical signal on its own."
+    caveat_zh: "15岁及以上统一口径失业率。日本失业率结构性偏低，单独看周期信号较弱。"
+  - id: participation_rate
+    section: labour_wages
+    label_en: "Labour Force Participation Rate"
+    label_zh: "劳动参与率"
+    unit: "%"
+    fetcher: fred
+    series: "LRACTTTTJPM156S"
+    source_name: "FRED / OECD (Statistics Bureau)"
+    source_url: "https://fred.stlouisfed.org/series/LRACTTTTJPM156S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Participation, 15 years and over. The post-2013 rise in female and older-worker participation is the main offset to population decline."
+    caveat_zh: "15岁及以上劳动参与率。2013年后女性与高龄劳动参与上升是对冲人口下降的主要来源。"
+  - id: employment_rate
+    section: labour_wages
+    label_en: "Employment Rate, 15-64"
+    label_zh: "就业率（15-64岁）"
+    unit: "%"
+    fetcher: fred
+    series: "LREM64TTJPM156S"
+    source_name: "FRED / OECD (Statistics Bureau)"
+    source_url: "https://fred.stlouisfed.org/series/LREM64TTJPM156S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Prime-and-core working-age employment rate; among the highest in the OECD."
+    caveat_zh: "核心劳动年龄就业率，在OECD中处于最高之列。"
+  - id: employment_growth
+    section: labour_wages
+    label_en: "Employment Growth"
+    label_zh: "就业人数同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "LFEMTTTTJPM647S"
+    source_name: "FRED / OECD (Statistics Bureau)"
+    source_url: "https://fred.stlouisfed.org/series/LFEMTTTTJPM647S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Derived year-over-year growth from the total employment level; a shrinking working-age population caps the sustainable rate."
+    caveat_zh: "由总就业人数派生的同比增速；劳动年龄人口收缩限制了可持续增速上限。"
+  - id: manufacturing_earnings_growth
+    section: labour_wages
+    label_en: "Manufacturing Hourly Earnings, YoY"
+    label_zh: "制造业时薪同比"
+    unit: "% y/y"
+    fetcher: fred
+    series: "LCEAMN01JPM659S"
+    source_name: "FRED / OECD (MHLW)"
+    source_url: "https://fred.stlouisfed.org/series/LCEAMN01JPM659S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Manufacturing hourly earnings only. The economy-wide shunto wage-round outcome is published by Rengo and is not a redistributable public series."
+    caveat_zh: "仅为制造业时薪。全经济口径的春斗工资谈判结果由连合发布，不属于可再分发的公开序列。"
+
+  # --- prices_costs --------------------------------------------------------
+  - id: cpi_inflation
+    section: prices_costs
+    label_en: "Headline CPI, YoY"
+    label_zh: "总体CPI同比"
+    unit: "% y/y"
+    fetcher: imf_sdmx
+    dataflow: "CPI"
+    series: "JPN.CPI._T.YOY_PCH_PA_PT.M"
+    source_name: "IMF SDMX / CPI (Statistics Bureau)"
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/CPI/JPN.CPI._T.YOY_PCH_PA_PT.M"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "IMF-compiled national CPI for Japan. This is the all-items index; Japan's headline policy reference is the ex-fresh-food 'core' measure, which is tracked as a data gap."
+    caveat_zh: "IMF汇编的日本全国CPI，为总体指数。日本政策参考的是剔除生鲜食品的核心口径，该口径列为数据缺口。"
+  - id: cpi_mom
+    section: prices_costs
+    label_en: "Headline CPI, MoM"
+    label_zh: "总体CPI环比"
+    unit: "% m/m"
+    fetcher: imf_sdmx
+    dataflow: "CPI"
+    series: "JPN.CPI._T.POP_PCH_PA_PT.M"
+    source_name: "IMF SDMX / CPI (Statistics Bureau)"
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/CPI/JPN.CPI._T.POP_PCH_PA_PT.M"
+    frequency: "monthly"
+    start_date: "2000-01-01"
+    caveat_en: "Not seasonally adjusted, so month-over-month prints carry a strong seasonal pattern; read against the same month a year earlier."
+    caveat_zh: "未季调，环比读数季节性明显；应与去年同月对照阅读。"
+  - id: cpi_index
+    section: prices_costs
+    label_en: "Headline CPI Index"
+    label_zh: "总体CPI指数"
+    unit: "index"
+    fetcher: imf_sdmx
+    dataflow: "CPI"
+    series: "JPN.CPI._T.IX.M"
+    source_name: "IMF SDMX / CPI (Statistics Bureau)"
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/CPI/JPN.CPI._T.IX.M"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Price level rather than a rate. The flat 1995-2012 stretch is the clearest single picture of Japan's deflation era."
+    caveat_zh: "为价格水平而非增速。1995-2012年的平坦区间是日本通缩时期最直观的单张图。"
+
+  # --- housing_property ----------------------------------------------------
+  - id: house_price_index
+    section: housing_property
+    label_en: "Residential Property Prices"
+    label_zh: "住宅价格指数"
+    unit: "index"
+    fetcher: fred
+    series: "QJPN628BIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QJPN628BIS"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "BIS nominal residential property price index, 2010=100; internationally comparable but shallower in coverage than the domestic land-price survey."
+    caveat_zh: "BIS名义住宅价格指数（2010=100）；国际可比，但覆盖范围不及日本本土地价调查。"
+  - id: real_house_price_index
+    section: housing_property
+    label_en: "Real Residential Property Prices"
+    label_zh: "实际住宅价格指数"
+    unit: "index"
+    fetcher: fred
+    series: "QJPR628BIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QJPR628BIS"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "CPI-deflated house prices. The gap versus the nominal index is the clearest read on whether reflation is reaching real asset values."
+    caveat_zh: "经CPI平减的房价。与名义指数之差最能反映再通胀是否传导到实际资产价值。"
+  - id: house_price_growth
+    section: housing_property
+    label_en: "House Price Growth, YoY"
+    label_zh: "房价同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "QJPN628BIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QJPN628BIS"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Derived year-over-year growth from the BIS nominal residential price index."
+    caveat_zh: "由BIS名义住宅价格指数派生的同比增速。"
+
+  # --- external_fx ---------------------------------------------------------
+  - id: goods_exports
+    section: external_fx
+    label_en: "Goods Exports"
+    label_zh: "货物出口"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: fred
+    series: "XTEXVA01JPM667S"
+    source_name: "FRED / OECD (MOF Customs)"
+    source_url: "https://fred.stlouisfed.org/series/XTEXVA01JPM667S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Exchange-rate converted to US dollars, so yen swings move the series independently of export volumes."
+    caveat_zh: "按汇率折算为美元，日元波动会独立于出口量影响该序列。"
+  - id: goods_imports
+    section: external_fx
+    label_en: "Goods Imports"
+    label_zh: "货物进口"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: fred
+    series: "XTIMVA01JPM667S"
+    source_name: "FRED / OECD (MOF Customs)"
+    source_url: "https://fred.stlouisfed.org/series/XTIMVA01JPM667S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Exchange-rate converted to US dollars; energy import values dominate the cyclical swings."
+    caveat_zh: "按汇率折算为美元；能源进口值主导周期性波动。"
+  - id: goods_trade_balance
+    section: external_fx
+    label_en: "Goods Trade Balance"
+    label_zh: "货物贸易差额"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: fred
+    series: "XTNTVA01JPM667S"
+    source_name: "FRED / OECD (MOF Customs)"
+    source_url: "https://fred.stlouisfed.org/series/XTNTVA01JPM667S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Japan's structural goods surplus flipped to deficit after 2011; the balance is now driven mainly by energy import prices."
+    caveat_zh: "2011年后日本结构性货物顺差转为逆差；当前差额主要由能源进口价格驱动。"
+  - id: goods_exports_growth
+    section: external_fx
+    label_en: "Goods Exports Growth"
+    label_zh: "货物出口同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "XTEXVA01JPM667S"
+    source_name: "FRED / OECD (MOF Customs)"
+    source_url: "https://fred.stlouisfed.org/series/XTEXVA01JPM667S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Derived from the USD export value, so it blends volume, price, and yen effects."
+    caveat_zh: "由美元出口值派生，混合了量、价与日元汇率效应。"
+  - id: goods_imports_growth
+    section: external_fx
+    label_en: "Goods Imports Growth"
+    label_zh: "货物进口同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "XTIMVA01JPM667S"
+    source_name: "FRED / OECD (MOF Customs)"
+    source_url: "https://fred.stlouisfed.org/series/XTIMVA01JPM667S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Derived from the USD import value; blends volume, price, and yen effects."
+    caveat_zh: "由美元进口值派生；混合了量、价与日元汇率效应。"
+  - id: current_account_gdp
+    section: external_fx
+    label_en: "Current Account, % of GDP"
+    label_zh: "经常账户占GDP比重"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "JPNB6BLTT02STSAQ"
+    source_name: "FRED / OECD (MOF-BoJ BoP)"
+    source_url: "https://fred.stlouisfed.org/series/JPNB6BLTT02STSAQ"
+    frequency: "quarterly"
+    start_date: "1996-01-01"
+    caveat_en: "Publishes with a long lag. Japan's surplus is now dominated by primary income on overseas assets rather than the goods balance."
+    caveat_zh: "发布滞后较久。当前日本顺差主要来自海外资产的初次收入，而非货物差额。"
+  - id: usd_jpy
+    section: external_fx
+    label_en: "USD/JPY Spot Rate"
+    label_zh: "美元兑日元"
+    unit: "JPY per USD"
+    fetcher: fred
+    series: "DEXJPUS"
+    source_name: "FRED / Federal Reserve H.10"
+    source_url: "https://fred.stlouisfed.org/series/DEXJPUS"
+    frequency: "daily"
+    start_date: "2015-01-01"
+    caveat_en: "Noon buying rate in New York; a higher value means a weaker yen."
+    caveat_zh: "纽约中午买入价；数值上升代表日元贬值。"
+  - id: reer
+    section: external_fx
+    label_en: "Real Effective Exchange Rate"
+    label_zh: "实际有效汇率"
+    unit: "index"
+    fetcher: fred
+    series: "RBJPBIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/RBJPBIS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "BIS broad real effective exchange rate, 2020=100. Japan's REER sits near multi-decade lows, which is the core of the cheap-yen debate."
+    caveat_zh: "BIS广义实际有效汇率（2020=100）。日本REER接近数十年低位，这是弱日元讨论的核心。"
+  - id: neer
+    section: external_fx
+    label_en: "Nominal Effective Exchange Rate"
+    label_zh: "名义有效汇率"
+    unit: "index"
+    fetcher: fred
+    series: "NBJPBIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/NBJPBIS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "BIS broad nominal effective exchange rate, 2020=100; the gap versus the REER is the accumulated inflation differential."
+    caveat_zh: "BIS广义名义有效汇率（2020=100）；与REER之差即累计通胀差。"
+
+  # --- fiscal_sovereign ----------------------------------------------------
+  - id: government_debt_gdp
+    section: fiscal_sovereign
+    label_en: "General Government Gross Debt"
+    label_zh: "广义政府总债务"
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: "GGXWDG_NGDP"
+    country_iso3: "JPN"
+    source_name: "IMF WEO DataMapper"
+    source_url: "https://www.imf.org/external/datamapper/GGXWDG_NGDP@WEO/JPN"
+    frequency: "annual"
+    actual_through: 2025
+    caveat_en: "IMF WEO includes estimates and projections; the dashed segment marks forecast years. Gross debt overstates the net position because the government holds large financial assets."
+    caveat_zh: "IMF WEO含估计与预测，虚线段为预测年份。由于政府持有大量金融资产，总债务高估了净债务水平。"
+  - id: fiscal_balance_gdp
+    section: fiscal_sovereign
+    label_en: "General Government Balance"
+    label_zh: "广义政府收支差额"
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: "GGXCNL_NGDP"
+    country_iso3: "JPN"
+    source_name: "IMF WEO DataMapper"
+    source_url: "https://www.imf.org/external/datamapper/GGXCNL_NGDP@WEO/JPN"
+    frequency: "annual"
+    actual_through: 2025
+    caveat_en: "Net lending/borrowing including interest. IMF WEO includes estimates and projections."
+    caveat_zh: "含利息的净贷出/净借入。IMF WEO含估计与预测。"
+  - id: primary_balance_gdp
+    section: fiscal_sovereign
+    label_en: "General Government Primary Balance"
+    label_zh: "广义政府基本差额"
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: "GGXONLB_G01_GDP_PT"
+    country_iso3: "JPN"
+    source_name: "IMF Fiscal Monitor DataMapper"
+    source_url: "https://www.imf.org/external/datamapper/GGXONLB_G01_GDP_PT@FM/JPN"
+    frequency: "annual"
+    actual_through: 2025
+    caveat_en: "Balance excluding interest payments; the government's stated consolidation target is framed in primary-balance terms."
+    caveat_zh: "剔除利息支出的差额；日本政府的财政整顿目标即以基本收支表述。"
+  - id: sovereign_yield_10y
+    section: fiscal_sovereign
+    label_en: "10-Year JGB Yield"
+    label_zh: "10年期日本国债收益率"
+    unit: "%"
+    fetcher: fred
+    series: "IRLTLT01JPM156N"
+    source_name: "FRED / OECD (MOF)"
+    source_url: "https://fred.stlouisfed.org/series/IRLTLT01JPM156N"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Monthly average benchmark yield. The 2016-2024 range was administered under yield-curve control, so the pre-2024 series is not a free-market price."
+    caveat_zh: "月度平均基准收益率。2016-2024年受收益率曲线控制管理，因此2024年前的序列并非自由市场价格。"
+
+  # --- monetary_financial --------------------------------------------------
+  - id: policy_rate
+    section: monetary_financial
+    label_en: "Overnight Call Rate (BoJ Target)"
+    label_zh: "隔夜拆借利率（日银目标）"
+    unit: "%"
+    fetcher: fred
+    series: "IRSTCI01JPM156N"
+    source_name: "FRED / OECD (Bank of Japan)"
+    source_url: "https://fred.stlouisfed.org/series/IRSTCI01JPM156N"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "The uncollateralised overnight call rate is the BoJ's operating target. Monthly averages smooth the exact meeting-date step changes."
+    caveat_zh: "无担保隔夜拆借利率是日银的操作目标。月度均值会平滑议息日的阶跃变化。"
+  - id: interbank_3m
+    section: monetary_financial
+    label_en: "3-Month Interbank Rate"
+    label_zh: "3个月银行间利率"
+    unit: "%"
+    fetcher: fred
+    series: "IR3TIB01JPM156N"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/IR3TIB01JPM156N"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "The spread over the overnight call rate is the cleanest public read on how much tightening the market has priced in."
+    caveat_zh: "与隔夜拆借利率之差是观察市场已定价紧缩幅度最直接的公开读数。"
+  - id: broad_money_growth
+    section: monetary_financial
+    label_en: "Broad Money (M3) Growth"
+    label_zh: "广义货币M3同比"
+    unit: "% y/y"
+    fetcher: fred
+    series: "JPNMABMM301GYSAM"
+    source_name: "FRED / OECD (Bank of Japan)"
+    source_url: "https://fred.stlouisfed.org/series/JPNMABMM301GYSAM"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Japanese M3 growth stayed in a narrow 2-4% band through decades of unconventional policy, which is the standard evidence that base-money expansion did not pass through to broad money."
+    caveat_zh: "在数十年非常规政策期间，日本M3增速始终维持在2-4%的窄幅区间，这是基础货币扩张未传导至广义货币的标准证据。"
+  - id: private_credit_gdp
+    section: monetary_financial
+    label_en: "Credit to Private Non-Financial Sector"
+    label_zh: "私人非金融部门信贷"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "QJPPAM770A"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QJPPAM770A"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "BIS total credit to the private non-financial sector, adjusted for breaks; a stock ratio rather than a flow."
+    caveat_zh: "BIS对私人非金融部门的总信贷（已作断点调整）；为存量比率而非流量。"
+  - id: household_credit_gdp
+    section: monetary_financial
+    label_en: "Household Credit"
+    label_zh: "居民部门信贷"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "QJPHAM770A"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QJPHAM770A"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Household and NPISH credit, adjusted for breaks. Japanese household leverage has been broadly flat since the 1990s deleveraging."
+    caveat_zh: "居民与为居民服务的非营利机构信贷（已作断点调整）。自1990年代去杠杆后，日本居民杠杆基本持平。"
+  - id: bank_credit_gdp
+    section: monetary_financial
+    label_en: "Bank Credit to Private Sector"
+    label_zh: "银行对私人部门信贷"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "QJPPBM770A"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QJPPBM770A"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "The bank-only subset of private credit; the gap versus total private credit is non-bank and market-based funding."
+    caveat_zh: "私人信贷中仅银行部分；与私人总信贷之差为非银与市场化融资。"
+  - id: equity_index
+    section: monetary_financial
+    label_en: "Nikkei 225"
+    label_zh: "日经225指数"
+    unit: "index"
+    fetcher: fred
+    series: "NIKKEI225"
+    source_name: "FRED / Nikkei Inc."
+    source_url: "https://fred.stlouisfed.org/series/NIKKEI225"
+    frequency: "daily"
+    start_date: "2015-01-01"
+    caveat_en: "Price index, not total return, and price-weighted rather than capitalisation-weighted, so a handful of high-priced constituents dominate the level."
+    caveat_zh: "为价格指数而非全收益指数，且按股价加权而非市值加权，少数高价成分股主导指数水平。"
+
+  # --- stability_structural ------------------------------------------------
+  - id: bank_capital_ratio
+    section: stability_structural
+    label_en: "Regulatory Capital to Risk-Weighted Assets"
+    label_zh: "监管资本充足率"
+    unit: "%"
+    fetcher: imf_sdmx
+    dataflow: "FSIC"
+    series: "JPN.S12CFSI.FSI688_CFSI_PT.Q"
+    source_name: "IMF SDMX / Financial Soundness Indicators"
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/FSIC/JPN.S12CFSI.FSI688_CFSI_PT.Q"
+    frequency: "quarterly"
+    start_date: "2008-01-01"
+    caveat_en: "Deposit-taker aggregate reported to the IMF; national regulatory definitions differ, so cross-country levels are indicative rather than exact."
+    caveat_zh: "报送IMF的存款机构合计口径；各国监管定义不同，跨国水平比较仅供参考。"
+  - id: bank_npl_ratio
+    section: stability_structural
+    label_en: "Non-Performing Loans to Total Gross Loans"
+    label_zh: "不良贷款率"
+    unit: "%"
+    fetcher: imf_sdmx
+    dataflow: "FSIC"
+    series: "JPN.S12CFSI.AQ12_CFSI_PT.Q"
+    source_name: "IMF SDMX / Financial Soundness Indicators"
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/FSIC/JPN.S12CFSI.AQ12_CFSI_PT.Q"
+    frequency: "quarterly"
+    start_date: "2008-01-01"
+    caveat_en: "Deposit-taker aggregate. Japan's ratio is among the lowest in the G7, partly reflecting decades of balance-sheet cleanup after the 1990s crisis."
+    caveat_zh: "存款机构合计口径。日本不良率在G7中处于最低之列，部分反映1990年代危机后数十年的资产负债表清理。"
+  - id: total_credit_gdp
+    section: stability_structural
+    label_en: "Total Credit to Non-Financial Sector"
+    label_zh: "非金融部门总信贷"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "QJPCAM770A"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QJPCAM770A"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Includes general government, so this is the aggregate economy-wide leverage stock and the highest in the BIS reporting population."
+    caveat_zh: "包含广义政府，因此是全经济杠杆存量，在BIS报送国中最高。"
+
+data_gaps:
+  - section: prices_costs
+    item_en: "Core CPI excluding fresh food (and ex-fresh-food-and-energy)"
+    item_zh: "剔除生鲜食品的核心CPI（及剔除生鲜与能源口径）"
+    status_en: "Japan's policy-relevant core measures are published by the Statistics Bureau via e-Stat, whose API requires a registered application ID. No key-free reproducible endpoint validated."
+    status_zh: "日本政策相关的核心口径由总务省统计局通过e-Stat发布，其API需注册应用ID。尚未验证无密钥的可复跑接口。"
+  - section: prices_costs
+    item_en: "CPI by COICOP division, and the services/goods split"
+    item_zh: "CPI的COICOP大类分项，以及服务/商品拆分"
+    status_en: "OECD's Japan services/goods CPI mirror was discontinued after June 2021. The IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations, so only the all-items aggregate is chartable from that source."
+    status_zh: "OECD日本服务/商品CPI镜像在2021年6月后停更。IMF CPI数据集虽声明了日本的COICOP大类键（CP01-CP12），但返回值为空，因此该来源仅总体口径可绘图。"
+  - section: prices_costs
+    item_en: "Corporate Goods Price Index (domestic PPI)"
+    item_zh: "企业物价指数（国内PPI）"
+    status_en: "Published by the Bank of Japan time-series search; no stable machine-readable download URL validated for unattended refresh."
+    status_zh: "由日本银行时间序列检索发布；尚未验证可用于无人值守刷新的稳定机读下载地址。"
+  - section: labour_wages
+    item_en: "Job-to-applicant ratio and shunto wage settlements"
+    item_zh: "有效求人倍率与春斗工资谈判结果"
+    status_en: "MHLW job-openings statistics require e-Stat credentials; shunto outcomes are compiled by Rengo and are not redistributable as a public series."
+    status_zh: "厚生劳动省求人统计需e-Stat凭证；春斗结果由连合汇编，不可作为公开序列再分发。"
+  - section: consumption_retail
+    item_en: "Household consumption expenditure and consumer confidence"
+    item_zh: "家庭消费支出与消费者信心"
+    status_en: "The FRED/OECD household consumption mirror stops in 2023Q3 and the OECD Japan consumer confidence mirror stops in January 2024; no replacement key-free endpoint validated."
+    status_zh: "FRED/OECD家庭消费镜像止于2023年三季度，OECD日本消费者信心镜像止于2024年1月；尚未验证替代的无密钥接口。"
+  - section: housing_property
+    item_en: "Housing starts and mortgage rates"
+    item_zh: "住宅开工与按揭利率"
+    status_en: "MLIT construction starts require e-Stat credentials; Japanese mortgage rates are posted per-bank rather than as an official aggregate series."
+    status_zh: "国土交通省开工统计需e-Stat凭证；日本按揭利率由各行分别公布，无官方合计序列。"
+  - section: monetary_financial
+    item_en: "BoJ balance sheet, ETF holdings, and financial conditions index"
+    item_zh: "日银资产负债表、ETF持仓与金融条件指数"
+    status_en: "BoJ balance-sheet accounts are published as flat files without a documented stable API; composite financial-conditions indices are vendor-proprietary."
+    status_zh: "日银资产负债表以平面文件发布，无有文档的稳定API；综合金融条件指数为供应商专有。"
+  - section: prices_costs
+    item_en: "Inflation expectations (Tankan price outlook, breakevens)"
+    item_zh: "通胀预期（短观价格预期、盈亏平衡通胀）"
+    status_en: "Tankan price expectations are BoJ-proprietary in redistributable form and the JGBi breakeven series has no validated key-free public endpoint."
+    status_zh: "短观价格预期的可再分发形式属日银专有，物价联动国债盈亏平衡序列亦无经验证的无密钥公开接口。"

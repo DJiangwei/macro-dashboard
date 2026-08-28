@@ -74,6 +74,28 @@ DATA_FIRST_COUNTRIES = [
         "framework": "GS China statistics logic",
     },
     {
+        "code": "JP",
+        "name": "Japan",
+        "file": "japan.html",
+        "currency": "JPY",
+        "institution": "BoJ",
+        "summary": "japan_dashboard_summary.json",
+        "headline_label": "Overnight call rate",
+        "headline_key": "policy_rate_latest",
+        "framework": "Nine-pillar comparable core",
+    },
+    {
+        "code": "ZA",
+        "name": "South Africa",
+        "file": "south_africa.html",
+        "currency": "ZAR",
+        "institution": "SARB",
+        "summary": "south_africa_dashboard_summary.json",
+        "headline_label": "SARB repo rate",
+        "headline_key": "policy_rate_latest",
+        "framework": "Nine-pillar comparable core",
+    },
+    {
         "code": "UK",
         "name": "United Kingdom",
         "file": "uk.html",
@@ -509,7 +531,7 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
 <body>
 <div class="topbar">
   <div class="brand">East Meridian <span>/ Country Primer</span></div>
-  <div>Macro Dashboard Archive · CEE-4 v4 + China + UK + US</div>
+  <div>Macro Dashboard Archive · CEE-4 v4 + China + Japan + South Africa + UK + US</div>
 </div>
 <main class="container">
   <header>

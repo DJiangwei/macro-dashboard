@@ -97,12 +97,13 @@ economic concepts and compatibility aliases live in `config/framework_v2.yaml`.
 When no validated public series exists, the public page omits that chart and
 records the gap instead of emitting a proxy.
 
-`make build-v4` also builds the China, UK, and US data-first pages from
-`config/china_indicators.yaml`, `config/uk_indicators.yaml`, and
-`config/us_indicators.yaml` via their dedicated scripts, then updates
-`output/index.html` so the archive page stays synchronized. Public country
-routes are stable (`output/hungary.html` through `output/us.html`) and do not
-encode a quarter or generator version.
+`make build-v4` also builds the China, Japan, South Africa, UK, and US
+data-first pages from `config/china_indicators.yaml`,
+`config/japan_indicators.yaml`, `config/south_africa_indicators.yaml`,
+`config/uk_indicators.yaml`, and `config/us_indicators.yaml` via their dedicated
+scripts, then updates `output/index.html` so the archive page stays
+synchronized. Public country routes are stable (`output/hungary.html` through
+`output/us.html`) and do not encode a quarter or generator version.
 
 The same build now refreshes the machine-readable workbench layer used by the
 home/archive pages:
@@ -111,11 +112,11 @@ home/archive pages:
   same fetch used to render country pages. Archive cards and consistency checks
   consume this snapshot rather than refetching live values.
 - `output/cee_canonical_frame.json` stores the full CEE chart history in compact
-  `cee-canonical-v2` form. Together with the three data-first canonical files,
-  it lets `make rebuild-ui` regenerate all seven pages without network access.
-- `output/*_canonical_frame.json` uses `data-first-canonical-v2` for China, UK,
-  and US: metadata is stored once per series and observations are compact
-  `[date, value]` pairs.
+  `cee-canonical-v2` form. Together with the five data-first canonical files,
+  it lets `make rebuild-ui` regenerate all nine pages without network access.
+- `output/*_canonical_frame.json` uses `data-first-canonical-v2` for China,
+  Japan, South Africa, UK, and US: metadata is stored once per series and
+  observations are compact `[date, value]` pairs.
 - `output/macro_workbench_summary.json` aggregates country cards, regime
   signals, cross-country heatmap values, data-gap priorities, and phase
   coverage in one JSON artifact for future agents or front-end views.
@@ -130,13 +131,13 @@ home/archive pages:
   an explicit `refresh_fallback/watch` marker instead of silently deleting a
   chart.
 - `output/core_coverage_matrix.json` and `CORE_COVERAGE_MATRIX.md` report the
-  seven-country by 48-concept comparable-core matrix and rank gaps by explicit
+  nine-country by 48-concept comparable-core matrix and rank gaps by explicit
   macro-value weights rather than raw chart count.
 
 The build commands deliberately separate data acquisition from presentation:
 
 ```bash
-make refresh-check  # seven lightweight live-vs-snapshot headline probes
+make refresh-check  # nine lightweight live-vs-snapshot headline probes
 make refresh-data   # networked full refresh and snapshot update
 make rebuild-ui     # no data-source calls; render only from snapshots
 make validate       # deterministic, offline contracts and tests
@@ -157,6 +158,29 @@ receipts. These charts are labelled as AKShare-wrapped
 Eastmoney/Sina/PBC-style web data rather than official NBS/PBOC API contracts;
 schema drift, upstream availability, and concept coverage should be checked
 whenever China data is expanded.
+
+The Japan page is the one country where the FRED/OECD mirror is not enough on
+its own: OECD discontinued its Japan CPI, retail-value, and money-stock mirrors
+between 2021 and 2024, so those FRED series now return metadata with no
+observations. FRED still carries national accounts, production, labour, trade,
+rates, and BIS property/credit series, while national CPI and the deposit-taker
+soundness ratios come from the IMF SDMX 2.1 API (`api.imf.org`) and fiscal
+ratios come from the IMF WEO/Fiscal Monitor DataMapper with a dashed forecast
+segment. Japan-native releases behind the e-Stat application-ID wall — the
+ex-fresh-food core CPI, the job-to-applicant ratio, housing starts, and the BoJ
+corporate goods price index — are recorded as explicit data gaps.
+
+The South Africa page is the first to use a national central bank's own public
+JSON API. SARB Web Indicators
+(`custom.resbank.co.za/SarbWebApi/WebIndicators/...`) is the compiling authority
+for the policy and prime rates, SABOR/ZARONIA, the R2030/R209 benchmark bond
+yields, CPI, PPI, the rand crosses, and the NEER, so those come natively and
+same-day. The bare `GetTimeseriesObservations/{code}` form returns only the last
+25 observations, so the builder always uses the explicit date-range form. FRED
+carries the OECD/Stats SA/BIS mirrors for national accounts, production, labour,
+trade, and credit; IMF SDMX supplies the CPI cross-check and Financial Soundness
+Indicators. Eskom load-shedding data and the vendor-controlled BER and Absa PMI
+surveys remain explicit gaps.
 
 The UK page prioritises native ONS, Bank of England, HMRC/GOV.UK, OBR, and
 DESNZ endpoints for release-sensitive work. It now includes ONS/HMRC PAYE RTI
@@ -215,12 +239,45 @@ open PROXY_REVIEW.md
 
 ## Adding a country
 
+### v1 MCP-cache path (CEE-style)
+
 1. Add it to `config/countries.yaml` with name, ISO codes, currency, central
    bank, FX regime, sovereign ratings, equity index, default peers.
 2. Ask Claude Code to prefetch the new country's indicators (the catalog uses
    `{country}` / `{currency}` / `{equity_index}` placeholders and runs the same
    set of queries automatically).
 3. Run `python -m country_primer <ISO2>`.
+
+### v4 data-first path (China, Japan, South Africa, UK, US)
+
+This is the path to use for any country outside the Eurostat-covered CEE set.
+`scripts/build_japan_dashboard.py` is the smallest complete example.
+
+1. **Validate sources before writing config.** Probe every candidate series and
+   keep only those that actually return observations — several FRED/OECD mirrors
+   are alive as metadata but empty as data. Anything you cannot validate belongs
+   in `data_gaps`, not in a proxy chart.
+2. Add `config/<country>_indicators.yaml` with `sections`, `indicators`,
+   `min_chart_count`, and `data_gaps`. Each indicator needs `id`, `section`,
+   bilingual labels, `unit`, `fetcher`, `series`, `source_name`, `source_url`,
+   `frequency`, and bilingual caveats. Optional: `transform` (`yoy_pct`,
+   `pct_change`, `diff`), `scale`, `start_date`, `actual_through`.
+3. Add `scripts/build_<country>_dashboard.py`, reusing the page shell from
+   `build_china_dashboard`, `validate_series` from `build_uk_dashboard`,
+   `_apply_transform`/`fetch_fred_us` from `build_us_dashboard`, and the IMF
+   adapters plus `apply_scale` from `build_japan_dashboard`. Add a new fetcher
+   only when the country has a native source worth preferring, as SARB is for
+   South Africa.
+4. Map the new indicator ids into the 48 shared concepts under a new country
+   scope in `config/framework_v2.yaml`. Unmapped ids become `<code>:<id>`
+   deep-dive charts, which is the correct outcome for country-specific extras.
+5. Register the country in `config/countries.yaml`, the nav block of every other
+   page builder, `Makefile` (`refresh-data`, `rebuild-ui`, `publish-check`),
+   `scripts/publish_dashboard.sh`, and these six scripts:
+   `validate_outputs.py`, `core_coverage_matrix.py`, `freshness_audit.py`,
+   `macro_workbench.py`, `build_dashboard_archive.py`, `data_source_catalog.py`,
+   `refresh_check.py`.
+6. Run `make refresh-data && make validate`.
 
 ## Adding an indicator
 
@@ -261,6 +318,8 @@ Country_Primer/
 ├── scripts/
 │   ├── doctor_env.py       # environment self-check
 │   ├── build_china_dashboard.py # China chart/data page from public APIs
+│   ├── build_japan_dashboard.py # Japan page; also holds the shared IMF adapters
+│   ├── build_south_africa_dashboard.py # South Africa page; SARB web API adapter
 │   ├── macro_workbench.py  # archive/workbench JSON + regime/heatmap layer
 │   ├── publish_dashboard.sh # one-command build/validate/commit/push/check
 │   └── uv_project.sh       # uv wrapper that keeps cache/python inside repo

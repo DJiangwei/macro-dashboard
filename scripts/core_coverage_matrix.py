@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the seven-country by 48-concept comparable-core coverage matrix."""
+"""Build the nine-country by 48-concept comparable-core coverage matrix."""
 from __future__ import annotations
 
 from datetime import UTC, datetime
@@ -14,9 +14,11 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
 OUT_JSON = OUTPUT / "core_coverage_matrix.json"
 OUT_MD = ROOT / "CORE_COVERAGE_MATRIX.md"
-COUNTRIES = ("HU", "PL", "CZ", "RO", "CN", "UK", "US")
+COUNTRIES = ("HU", "PL", "CZ", "RO", "CN", "JP", "ZA", "UK", "US")
 DATA_FIRST_FILES = {
     "CN": OUTPUT / "china_canonical_frame.json",
+    "JP": OUTPUT / "japan_canonical_frame.json",
+    "ZA": OUTPUT / "south_africa_canonical_frame.json",
     "UK": OUTPUT / "uk_canonical_frame.json",
     "US": OUTPUT / "us_canonical_frame.json",
 }

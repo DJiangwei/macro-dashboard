@@ -70,6 +70,8 @@ def run_checks() -> list[dict[str, Any]]:
     os.environ["COUNTRY_PRIMER_CACHE_DIR"] = tempfile.mkdtemp(prefix="country-primer-refresh-check-")
 
     import build_china_dashboard as china
+    import build_japan_dashboard as japan
+    import build_south_africa_dashboard as south_africa
     import build_uk_dashboard as uk
     import build_us_dashboard as us
     from country_primer.data_fetcher import DataPipeline, INDICATOR_MANIFEST_48
@@ -109,6 +111,28 @@ def run_checks() -> list[dict[str, Any]]:
         "UK:real_gdp_qoq",
         _latest_data_first(OUTPUT / "uk_canonical_frame.json", "real_gdp_qoq"),
         live_uk,
+    ))
+
+    japan_spec = _selected(japan._load_config(), "policy_rate")
+    try:
+        live_japan = _latest_live(japan._fetch_one(japan_spec))
+    except Exception:
+        live_japan = {}
+    results.append(_compare(
+        "JP:policy_rate",
+        _latest_data_first(OUTPUT / "japan_canonical_frame.json", "policy_rate"),
+        live_japan,
+    ))
+
+    za_spec = _selected(south_africa._load_config(), "policy_rate")
+    try:
+        live_za = _latest_live(south_africa._fetch_one(za_spec))
+    except Exception:
+        live_za = {}
+    results.append(_compare(
+        "ZA:policy_rate",
+        _latest_data_first(OUTPUT / "south_africa_canonical_frame.json", "policy_rate"),
+        live_za,
     ))
 
     us_spec = _selected(us._load_config(), "daily_fed_funds")

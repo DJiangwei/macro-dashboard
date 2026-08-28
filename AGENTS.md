@@ -37,11 +37,13 @@ make proxy-report
 
 `make validate` must pass before committing. It checks Python compilation,
 prints each generated v4 country page's chart-shell count, confirms no empty chart
-containers remain, validates the China/UK/US canonical data-frame exports,
-checks the macro workbench JSON artifacts, and runs `git diff --check`.
+containers remain, validates the China/Japan/South Africa/UK/US canonical
+data-frame exports, checks the macro workbench JSON artifacts, and runs
+`git diff --check`.
 
-`make build-v4` is the full synchronized build. It rebuilds CE4, China, UK, and
-US pages, then refreshes `DATA_SOURCE_CATALOG.md`, `DATA_FRESHNESS_AUDIT.md`,
+`make build-v4` is the full synchronized build. It rebuilds CE4, China, Japan,
+South Africa, UK, and US pages, then refreshes `DATA_SOURCE_CATALOG.md`,
+`DATA_FRESHNESS_AUDIT.md`,
 `output/freshness_audit.json`, `output/macro_workbench_summary.json`,
 `output/release_monitor.json`, `output/what_changed.json`,
 `output/data_gap_backlog.json`, and both archive entry points.

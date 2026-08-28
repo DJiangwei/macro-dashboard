@@ -70,6 +70,8 @@ concepts:
       CN: []
       UK: [real_gdp_qoq]
       US: [real_gdp_growth]
+      JP: [real_gdp_growth]
+      ZA: [real_gdp_growth]
   - id: real_gdp_growth_yoy
     pillar: growth_demand
     label_en: Real GDP Growth, YoY
@@ -80,6 +82,8 @@ concepts:
       CN: [real_gdp_growth]
       UK: []
       US: []
+      JP: [real_gdp_yoy]
+      ZA: [real_gdp_yoy]
   - id: nominal_gdp_growth
     pillar: growth_demand
     label_en: Nominal GDP Growth
@@ -89,6 +93,8 @@ concepts:
       CN: [nominal_gdp_usd]
       UK: [nominal_gdp_gbp]
       US: [nominal_gdp_growth]
+      JP: [nominal_gdp_growth]
+      ZA: [nominal_gdp_growth]
   - id: consumption_growth
     pillar: growth_demand
     label_en: Household Consumption Growth
@@ -98,6 +104,8 @@ concepts:
       CN: [household_consumption_growth]
       UK: [private_consumption_qoq]
       US: [real_pce_growth]
+      JP: []
+      ZA: []
   - id: investment_growth
     pillar: growth_demand
     label_en: Investment Growth
@@ -108,6 +116,8 @@ concepts:
       CN: [fixed_asset_investment_yoy_akshare]
       UK: [gfcf_qoq]
       US: [private_investment_growth]
+      JP: [gfcf_growth]
+      ZA: [gfcf_growth]
   - id: industrial_production_growth
     pillar: production_cycle
     label_en: Industrial Production Growth
@@ -118,6 +128,8 @@ concepts:
       CN: [industrial_value_added_yoy_akshare]
       UK: [industrial_production_yoy]
       US: [industrial_production_growth]
+      JP: [industrial_production_growth]
+      ZA: [manufacturing_production_growth]
   - id: retail_sales_growth
     pillar: production_cycle
     label_en: Retail Sales Growth
@@ -128,6 +140,8 @@ concepts:
       CN: [retail_sales_yoy_akshare]
       UK: [retail_sales_yoy]
       US: [retail_sales_growth]
+      JP: [retail_sales_growth]
+      ZA: [retail_sales_growth]
   - id: business_confidence
     pillar: production_cycle
     label_en: Business Confidence
@@ -138,6 +152,8 @@ concepts:
       CN: [enterprise_boom_index_akshare, manufacturing_pmi_akshare]
       UK: [composite_leading_indicator]
       US: [philly_fed_outlook, empire_state_manufacturing]
+      JP: [business_confidence, composite_leading_indicator]
+      ZA: [composite_leading_indicator]
   - id: unemployment_rate
     pillar: labour_household
     label_en: Unemployment Rate
@@ -148,6 +164,8 @@ concepts:
       CN: [unemployment]
       UK: [unemployment_rate]
       US: [unemployment_rate]
+      JP: [unemployment_rate]
+      ZA: [unemployment_rate]
   - id: employment_growth
     pillar: labour_household
     label_en: Employment Growth
@@ -157,6 +175,8 @@ concepts:
       CEE: [employment_growth]
       UK: [paye_payrolled_employees_mom_change]
       US: [nonfarm_payrolls_change]
+      JP: [employment_growth]
+      ZA: [manufacturing_employment_growth]
   - id: participation_rate
     pillar: labour_household
     label_en: Labour Force Participation
@@ -166,6 +186,8 @@ concepts:
       CEE: [participation_rate]
       UK: [employment_rate_15_64]
       US: [labor_force_participation]
+      JP: [participation_rate]
+      ZA: []
   - id: vacancies
     pillar: labour_household
     label_en: Labour Demand / Vacancies
@@ -175,6 +197,8 @@ concepts:
       CEE: [vacancy_rate]
       UK: [vacancies_total]
       US: [jolts_openings]
+      JP: []
+      ZA: []
   - id: wage_growth
     pillar: labour_household
     label_en: Wage Growth
@@ -184,6 +208,8 @@ concepts:
       CEE: [avg_wage_yoy]
       UK: [awe_regular_pay_growth]
       US: [hourly_earnings_growth]
+      JP: [manufacturing_earnings_growth]
+      ZA: []
   - id: real_income_growth
     pillar: labour_household
     label_en: Real Household Income Growth
@@ -193,6 +219,8 @@ concepts:
       CEE: [real_wage_yoy]
       UK: [real_household_disposable_income_per_head]
       US: [real_disposable_income_growth]
+      JP: []
+      ZA: []
   - id: headline_inflation
     pillar: prices_costs
     label_en: Headline Inflation
@@ -203,6 +231,8 @@ concepts:
       CN: [cpi_yoy_akshare]
       UK: [cpi_yoy]
       US: [cpi_inflation]
+      JP: [cpi_inflation]
+      ZA: [cpi_inflation]
   - id: core_inflation
     pillar: prices_costs
     label_en: Core Inflation
@@ -212,6 +242,8 @@ concepts:
       CEE: [core_cpi_yoy]
       UK: [core_cpi_yoy]
       US: [core_cpi_inflation]
+      JP: []
+      ZA: []
   - id: services_inflation
     pillar: prices_costs
     label_en: Services Inflation
@@ -221,6 +253,8 @@ concepts:
       CEE: [services_cpi_yoy]
       UK: [cpi_services_yoy]
       US: [services_ex_energy_cpi_inflation]
+      JP: []
+      ZA: []
   - id: goods_inflation
     pillar: prices_costs
     label_en: Goods Inflation
@@ -230,6 +264,8 @@ concepts:
       CEE: [goods_cpi_yoy]
       UK: [cpi_goods_yoy]
       US: [core_goods_cpi_inflation]
+      JP: []
+      ZA: []
   - id: producer_price_inflation
     pillar: prices_costs
     label_en: Producer Price Inflation
@@ -240,6 +276,8 @@ concepts:
       CN: [ppi_yoy_akshare]
       UK: [producer_prices]
       US: [final_demand_ppi_inflation]
+      JP: []
+      ZA: [ppi_inflation]
   - id: wage_cost_inflation
     pillar: prices_costs
     label_en: Labour Cost Inflation
@@ -249,6 +287,8 @@ concepts:
       CEE: [unit_labour_cost]
       UK: [awe_total_pay_growth]
       US: [unit_labor_cost_growth]
+      JP: []
+      ZA: []
   - id: inflation_expectations
     pillar: prices_costs
     label_en: Inflation Expectations
@@ -257,6 +297,8 @@ concepts:
     mappings:
       CEE: [inflation_expectations]
       US: [michigan_inflation_expectation, ten_year_breakeven]
+      JP: []
+      ZA: []
   - id: house_price_growth
     pillar: housing_investment
     label_en: House Price Growth
@@ -267,6 +309,8 @@ concepts:
       CN: [nominal_residential_property_price_bis]
       UK: [uk_hpi_annual_change]
       US: [fhfa_house_price_growth]
+      JP: [house_price_growth]
+      ZA: [house_price_growth]
   - id: housing_activity
     pillar: housing_investment
     label_en: Housing Activity
@@ -276,6 +320,8 @@ concepts:
       CN: [commercial_housing_sales_value_yoy_eastmoney]
       UK: [residential_property_transactions_sa]
       US: [housing_starts]
+      JP: []
+      ZA: []
   - id: construction_activity
     pillar: housing_investment
     label_en: Construction Activity
@@ -286,6 +332,8 @@ concepts:
       CN: [real_estate_development_investment_ytd_yoy_eastmoney]
       UK: [construction_output_yoy]
       US: [construction_spending_growth]
+      JP: []
+      ZA: []
   - id: mortgage_rate
     pillar: housing_investment
     label_en: Mortgage Rate
@@ -295,6 +343,8 @@ concepts:
       CEE: [mortgage_rate_new]
       UK: [quoted_mortgage_rate]
       US: [mortgage_30y_rate]
+      JP: []
+      ZA: []
   - id: property_inventory
     pillar: housing_investment
     label_en: Property Inventory / Supply
@@ -302,6 +352,8 @@ concepts:
     unit: mixed
     mappings:
       US: [active_listing_count, new_home_months_supply]
+      JP: []
+      ZA: []
   - id: current_account_gdp
     pillar: external_fx
     label_en: Current Account, % GDP
@@ -312,6 +364,8 @@ concepts:
       CN: [current_account_gdp]
       UK: [current_account_gdp]
       US: [current_account_balance]
+      JP: [current_account_gdp]
+      ZA: [current_account_gdp]
   - id: trade_balance
     pillar: external_fx
     label_en: Trade Balance
@@ -322,6 +376,8 @@ concepts:
       CN: [customs_trade_balance_akshare]
       UK: [total_trade_balance]
       US: [goods_trade_balance]
+      JP: [goods_trade_balance]
+      ZA: [goods_trade_balance]
   - id: exports_growth
     pillar: external_fx
     label_en: Exports Growth
@@ -331,6 +387,8 @@ concepts:
       CN: [customs_exports_yoy_akshare]
       UK: [exports_qoq]
       US: [goods_exports_growth]
+      JP: [goods_exports_growth]
+      ZA: [goods_exports_growth]
   - id: imports_growth
     pillar: external_fx
     label_en: Imports Growth
@@ -340,6 +398,8 @@ concepts:
       CN: [customs_imports_yoy_akshare]
       UK: [imports_qoq]
       US: [goods_imports_growth]
+      JP: [goods_imports_growth]
+      ZA: [goods_imports_growth]
   - id: fx_spot
     pillar: external_fx
     label_en: Spot Exchange Rate
@@ -350,6 +410,8 @@ concepts:
       CN: [usd_cny_spot]
       UK: [gbp_usd]
       US: [nominal_broad_dollar_index]
+      JP: [usd_jpy]
+      ZA: [zar_usd]
   - id: reer
     pillar: external_fx
     label_en: Real Effective Exchange Rate
@@ -360,6 +422,8 @@ concepts:
       CN: [real_effective_exchange_rate_bis]
       UK: [gbp_reer]
       US: [usd_reer]
+      JP: [reer]
+      ZA: [reer]
   - id: fiscal_balance_gdp
     pillar: fiscal_sovereign
     label_en: Fiscal Balance, % GDP
@@ -370,6 +434,8 @@ concepts:
       CN: [general_gov_balance]
       UK: [government_balance_gdp]
       US: [fiscal_year_deficit]
+      JP: [fiscal_balance_gdp]
+      ZA: [fiscal_balance_gdp]
   - id: primary_balance_gdp
     pillar: fiscal_sovereign
     label_en: Primary Balance, % GDP
@@ -377,6 +443,8 @@ concepts:
     unit: percent_gdp
     mappings:
       CEE: [primary_balance]
+      JP: [primary_balance_gdp]
+      ZA: [primary_balance_gdp]
   - id: government_debt_gdp
     pillar: fiscal_sovereign
     label_en: Government Debt, % GDP
@@ -387,6 +455,8 @@ concepts:
       CN: [general_gov_debt]
       UK: [government_debt_gdp]
       US: [federal_debt_gdp]
+      JP: [government_debt_gdp]
+      ZA: [government_debt_gdp]
   - id: government_interest_cost
     pillar: fiscal_sovereign
     label_en: Government Interest Cost
@@ -396,6 +466,8 @@ concepts:
       CEE: [interest_bill_pct_gdp]
       UK: [obr_cg_debt_interest_forecast]
       US: [federal_interest_outlays_gdp]
+      JP: []
+      ZA: []
   - id: sovereign_yield_10y
     pillar: fiscal_sovereign
     label_en: 10Y Sovereign Yield
@@ -405,6 +477,8 @@ concepts:
       CEE: [sov_yield_10y]
       UK: [long_rate_10y]
       US: [treasury_10y_yield]
+      JP: [sovereign_yield_10y]
+      ZA: [sovereign_yield_10y]
   - id: policy_rate
     pillar: monetary_financial
     label_en: Policy Rate
@@ -415,6 +489,8 @@ concepts:
       CN: [lpr_1y_akshare]
       UK: [bank_rate]
       US: [daily_fed_funds]
+      JP: [policy_rate]
+      ZA: [policy_rate]
   - id: real_policy_rate
     pillar: monetary_financial
     label_en: Real Policy Rate
@@ -422,6 +498,8 @@ concepts:
     unit: percent
     mappings:
       CEE: [real_policy_rate]
+      JP: []
+      ZA: []
   - id: broad_money_growth
     pillar: monetary_financial
     label_en: Broad Money Growth
@@ -432,6 +510,8 @@ concepts:
       CN: [m2_yoy_akshare]
       UK: [broad_money_m3_yoy]
       US: [broad_money_growth]
+      JP: [broad_money_growth]
+      ZA: [broad_money_growth]
   - id: private_credit_growth
     pillar: monetary_financial
     label_en: Private Credit Growth
@@ -442,6 +522,8 @@ concepts:
       CN: [new_rmb_loans_akshare]
       UK: [m4_lending_growth]
       US: [bank_credit_growth]
+      JP: [private_credit_gdp]
+      ZA: [private_credit_gdp]
   - id: bank_lending_rate
     pillar: monetary_financial
     label_en: Bank Lending Rate
@@ -451,6 +533,8 @@ concepts:
       CEE: [lending_rate_corp]
       UK: [quoted_mortgage_rate]
       US: [mortgage_30y_rate]
+      JP: []
+      ZA: [prime_lending_rate]
   - id: equity_return
     pillar: monetary_financial
     label_en: Equity Market Return
@@ -461,6 +545,8 @@ concepts:
       CN: [share_price_index]
       UK: [equity_prices]
       US: []
+      JP: [equity_index]
+      ZA: []
   - id: yield_curve_slope
     pillar: monetary_financial
     label_en: Yield Curve Slope
@@ -469,6 +555,8 @@ concepts:
     mappings:
       CEE: [yield_curve_slope]
       US: [yield_curve_10y2y]
+      JP: []
+      ZA: []
   - id: financial_conditions
     pillar: monetary_financial
     label_en: Financial Conditions
@@ -476,6 +564,8 @@ concepts:
     unit: index
     mappings:
       US: [chicago_fed_nfci]
+      JP: []
+      ZA: []
   - id: credit_gap
     pillar: stability_structural
     label_en: Credit-to-GDP Gap
@@ -483,6 +573,8 @@ concepts:
     unit: percentage_points
     mappings:
       CEE: [credit_to_gdp_gap]
+      JP: []
+      ZA: []
   - id: bank_capital_ratio
     pillar: stability_structural
     label_en: Bank Capital Ratio
@@ -490,6 +582,8 @@ concepts:
     unit: percent
     mappings:
       CEE: [bank_car]
+      JP: [bank_capital_ratio]
+      ZA: [bank_capital_ratio]
   - id: bank_npl_ratio
     pillar: stability_structural
     label_en: Bank NPL Ratio
@@ -497,3 +591,5 @@ concepts:
     unit: percent
     mappings:
       CEE: [bank_npl_ratio]
+      JP: [bank_npl_ratio]
+      ZA: [bank_npl_ratio]

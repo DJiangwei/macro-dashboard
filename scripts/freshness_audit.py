@@ -28,6 +28,8 @@ TODAY = datetime.now(UTC).date()
 
 DATA_FIRST_PAGES = {
     "China": OUTPUT / "china.html",
+    "Japan": OUTPUT / "japan.html",
+    "South Africa": OUTPUT / "south_africa.html",
     "United Kingdom": OUTPUT / "uk.html",
     "United States": OUTPUT / "us.html",
 }
@@ -243,15 +245,17 @@ def _parse_data_first_page(dashboard: str, path: Path) -> list[ChartFreshness]:
     if not path.exists():
         return []
     html = path.read_text()
+    # The chart card carries data-dashboard-view / data-concept-id attributes
+    # after the quality class, so the class match must not be anchored to '">'.
     article_re = re.compile(
-        r'<article class="chart-card chart-quality-([^"]+)">(.*?)</article>',
+        r'<article class="chart-card chart-quality-([^" ]+)"[^>]*>(.*?)</article>',
         flags=re.S,
     )
     records: list[ChartFreshness] = []
     for quality, body in article_re.findall(html):
         chart_match = re.search(r'id="chart-([^"]+)" class="plotly-chart"', body)
         label_match = re.search(r"<h3>.*?<span data-lang=\"en\">(.*?)</span>", body, flags=re.S)
-        latest_match = re.search(r"</h3>\s*<p>(.*?)</p>", body, flags=re.S)
+        latest_match = re.search(r'data-latest-date="([^"]+)"', body)
         source_match = re.search(r"Source:\s*<a [^>]+>(.*?)</a>", body, flags=re.S)
         series_match = re.search(r"<span>Series:\s*(.*?)</span>", body, flags=re.S)
         frequency_match = re.search(r"<span>Frequency:\s*(.*?)</span>", body, flags=re.S)

@@ -1,0 +1,798 @@
+sections:
+  data_quirks:
+    title_en: "Data Quirks & Release Discipline"
+    title_zh: "数据特性与发布纪律"
+    report_logic_en: "South African labour data comes from the quarterly QLFS, whose headline unemployment rate excludes discouraged workers reported separately in the expanded definition. Activity data is monthly but thin, and load-shedding breaks make several production series non-comparable across years. SARB's own web API is preferred for rates and prices because it is the compiling authority."
+    report_logic_zh: "南非劳动力数据来自季度QLFS，其官方失业率不含在扩大口径中单独统计的沮丧工人。活动数据为月度但覆盖较薄，限电断点使部分生产序列跨年不可比。利率与价格优先使用SARB自有Web API，因其为编制机构。"
+  growth_accounts:
+    title_en: "GDP & National Accounts"
+    title_zh: "GDP与国民账户"
+    report_logic_en: "Stats SA national accounts anchor the macro story: real GDP level, sequential and year-over-year growth, nominal GDP, and fixed investment."
+    report_logic_zh: "南非统计局国民账户构成宏观叙事基准：实际GDP水平、环比与同比增速、名义GDP与固定投资。"
+  production_cycle:
+    title_en: "Production & Business Cycle"
+    title_zh: "生产与商业周期"
+    report_logic_en: "Manufacturing production, capacity utilisation, and the OECD composite leading indicator read the cycle. South Africa has no monthly total-industry index on a validated public endpoint, so manufacturing carries the cyclical signal."
+    report_logic_zh: "制造业生产、产能利用率与OECD综合领先指标用于判断周期。南非在已验证的公开接口上没有月度工业总体指数，因此由制造业承载周期信号。"
+  consumption_retail:
+    title_en: "Consumption & Retail Demand"
+    title_zh: "消费与零售需求"
+    report_logic_en: "Retail trade volume is the highest-frequency read on South African household demand, which is squeezed between high unemployment and high real policy rates."
+    report_logic_zh: "零售贸易量是观察南非居民需求最高频的指标，而居民需求同时受高失业与高实际政策利率挤压。"
+  labour_wages:
+    title_en: "Labour Market"
+    title_zh: "劳动力市场"
+    report_logic_en: "Unemployment is South Africa's central macro and political variable. The headline, working-age, and youth rates plus long-term unemployment describe a structural rather than cyclical problem."
+    report_logic_zh: "失业是南非最核心的宏观与政治变量。总体、劳动年龄与青年失业率以及长期失业共同刻画的是结构性而非周期性问题。"
+  prices_costs:
+    title_en: "Prices & Costs"
+    title_zh: "价格与成本"
+    report_logic_en: "SARB publishes headline CPI and PPI directly through its web API, which is the compiling-authority path. The IMF CPI series is charted alongside as an independent cross-check."
+    report_logic_zh: "SARB通过其Web API直接发布总体CPI与PPI，属编制机构路径。IMF CPI序列并列展示，作为独立交叉校验。"
+  housing_property:
+    title_en: "Housing & Property Prices"
+    title_zh: "住房与房地产价格"
+    report_logic_en: "BIS residential property price indices give internationally comparable nominal and real house prices. The real index shows that South African housing has lost value in inflation-adjusted terms for over a decade."
+    report_logic_zh: "BIS住宅价格指数提供国际可比的名义与实际房价。实际指数显示南非住房在通胀调整口径下已贬值十余年。"
+  external_fx:
+    title_en: "External Balance & FX"
+    title_zh: "外部平衡与汇率"
+    report_logic_en: "Commodity-driven merchandise trade, the current-account ratio, the rand crosses, and effective exchange rates capture the external funding channel that dominates South African risk premia."
+    report_logic_zh: "由大宗商品驱动的货物贸易、经常账户比率、兰特汇率与有效汇率共同刻画主导南非风险溢价的外部融资渠道。"
+  fiscal_sovereign:
+    title_en: "Fiscal & Sovereign"
+    title_zh: "财政与主权"
+    report_logic_en: "IMF WEO fiscal ratios plus SARB's published benchmark bond yields frame the debt-sustainability question that drives the sovereign rating."
+    report_logic_zh: "IMF WEO财政比率与SARB公布的基准国债收益率共同框定驱动主权评级的债务可持续性问题。"
+  monetary_financial:
+    title_en: "Monetary & Financial Conditions"
+    title_zh: "货币与金融条件"
+    report_logic_en: "The SARB policy rate, prime lending rate, SABOR and ZARONIA benchmarks, broad money, and BIS credit ratios describe an inflation-targeting regime running deliberately positive real rates."
+    report_logic_zh: "SARB政策利率、优惠贷款利率、SABOR与ZARONIA基准、广义货币及BIS信贷比率共同描述一个有意维持正实际利率的通胀目标制。"
+  stability_structural:
+    title_en: "Financial Stability & Structural Risk"
+    title_zh: "金融稳定与结构性风险"
+    report_logic_en: "IMF Financial Soundness Indicators give the deposit-taker capital and asset-quality core; BIS total-credit ratios show aggregate leverage, which is moderate by emerging-market standards."
+    report_logic_zh: "IMF金融稳健指标提供存款机构资本与资产质量核心指标；BIS总信贷比率反映整体杠杆，按新兴市场标准处于温和水平。"
+
+min_chart_count: 34
+
+indicators:
+  # --- growth_accounts -----------------------------------------------------
+  - id: real_gdp_growth
+    section: growth_accounts
+    label_en: "Real GDP Growth, QoQ"
+    label_zh: "实际GDP环比"
+    unit: "% q/q"
+    transform: "pct_change"
+    fetcher: fred
+    series: "NGDPRSAXDCZAQ"
+    source_name: "FRED / OECD (Stats SA)"
+    source_url: "https://fred.stlouisfed.org/series/NGDPRSAXDCZAQ"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Derived quarter-on-quarter growth from the seasonally adjusted real GDP level in rand."
+    caveat_zh: "由季调实际兰特GDP水平派生的环比增速。"
+  - id: real_gdp_yoy
+    section: growth_accounts
+    label_en: "Real GDP Growth, YoY"
+    label_zh: "实际GDP同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "NGDPRSAXDCZAQ"
+    source_name: "FRED / OECD (Stats SA)"
+    source_url: "https://fred.stlouisfed.org/series/NGDPRSAXDCZAQ"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Derived year-over-year growth from the seasonally adjusted real GDP level."
+    caveat_zh: "由季调实际GDP水平派生的同比增速。"
+  - id: real_gdp_level
+    section: growth_accounts
+    label_en: "Real GDP Level"
+    label_zh: "实际GDP水平"
+    unit: "ZAR mn"
+    fetcher: fred
+    series: "NGDPRSAXDCZAQ"
+    source_name: "FRED / OECD (Stats SA)"
+    source_url: "https://fred.stlouisfed.org/series/NGDPRSAXDCZAQ"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Seasonally adjusted real GDP in millions of rand; the flat post-2014 level is the clearest picture of South Africa's lost decade."
+    caveat_zh: "以百万兰特计的季调实际GDP；2014年后的平坦水平最直观地呈现了南非失去的十年。"
+  - id: nominal_gdp_growth
+    section: growth_accounts
+    label_en: "Nominal GDP Growth"
+    label_zh: "名义GDP同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "NGDPSAXDCZAQ"
+    source_name: "FRED / OECD (Stats SA)"
+    source_url: "https://fred.stlouisfed.org/series/NGDPSAXDCZAQ"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Derived from seasonally adjusted nominal GDP in rand; nominal growth is the denominator that drives the debt-to-GDP path."
+    caveat_zh: "由季调名义兰特GDP派生；名义增速是决定债务/GDP路径的分母。"
+  - id: gfcf_growth
+    section: growth_accounts
+    label_en: "Gross Fixed Capital Formation Growth"
+    label_zh: "固定资本形成同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "NFIRSAXDCZAQ"
+    source_name: "FRED / OECD (Stats SA)"
+    source_url: "https://fred.stlouisfed.org/series/NFIRSAXDCZAQ"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Derived from real gross fixed capital formation; South Africa's investment ratio has run well below the National Development Plan target for a decade."
+    caveat_zh: "由实际固定资本形成总额派生；南非投资率已连续十年远低于国家发展规划目标。"
+
+  # --- production_cycle ----------------------------------------------------
+  - id: manufacturing_production_growth
+    section: production_cycle
+    label_en: "Manufacturing Production, YoY"
+    label_zh: "制造业生产同比"
+    unit: "% y/y"
+    fetcher: fred
+    series: "ZAFPRMNTO01GYSAM"
+    source_name: "FRED / OECD (Stats SA)"
+    source_url: "https://fred.stlouisfed.org/series/ZAFPRMNTO01GYSAM"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Manufacturing output is the monthly cyclical proxy for South African industry; load-shedding episodes create breaks that are not seasonal."
+    caveat_zh: "制造业产出是南非工业的月度周期代理；限电时段造成的断点并非季节性因素。"
+  - id: manufacturing_production_mom
+    section: production_cycle
+    label_en: "Manufacturing Production, MoM"
+    label_zh: "制造业生产环比"
+    unit: "% m/m"
+    fetcher: fred
+    series: "ZAFPRMNTO01GPSAM"
+    source_name: "FRED / OECD (Stats SA)"
+    source_url: "https://fred.stlouisfed.org/series/ZAFPRMNTO01GPSAM"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Seasonally adjusted month-over-month change; noisy at monthly frequency and best read as a three-month average."
+    caveat_zh: "季调环比变化；月度频率噪声较大，宜以三个月均值阅读。"
+  - id: capacity_utilisation
+    section: production_cycle
+    label_en: "Capacity Utilisation Balance"
+    label_zh: "产能利用率景气差"
+    unit: "% balance"
+    fetcher: fred
+    series: "BSCURT02ZAQ160S"
+    source_name: "FRED / OECD Business Tendency Surveys"
+    source_url: "https://fred.stlouisfed.org/series/BSCURT02ZAQ160S"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Survey-based percentage balance for manufacturing capacity utilisation, not a physical utilisation rate."
+    caveat_zh: "制造业产能利用率的调查百分比差值，并非物理利用率。"
+  - id: composite_leading_indicator
+    section: production_cycle
+    label_en: "OECD Composite Leading Indicator"
+    label_zh: "OECD综合领先指标"
+    unit: "index"
+    fetcher: fred
+    series: "ZAFLOLITOAASTSAM"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/ZAFLOLITOAASTSAM"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Amplitude-adjusted CLI centred on 100; the closest validated public stand-in for the vendor-proprietary business-confidence indices."
+    caveat_zh: "振幅调整后的CLI，以100为中枢；是供应商专有企业信心指数最接近的已验证公开替代。"
+
+  # --- consumption_retail --------------------------------------------------
+  - id: retail_sales_growth
+    section: consumption_retail
+    label_en: "Retail Trade Volume, YoY"
+    label_zh: "零售贸易量同比"
+    unit: "% y/y"
+    fetcher: fred
+    series: "ZAFSLRTTO01GYSAM"
+    source_name: "FRED / OECD (Stats SA)"
+    source_url: "https://fred.stlouisfed.org/series/ZAFSLRTTO01GYSAM"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Volume rather than value, so it isolates real household demand from the high domestic inflation base."
+    caveat_zh: "为量指标而非值指标，从而把实际居民需求与国内高通胀基数区分开。"
+  - id: retail_sales_mom
+    section: consumption_retail
+    label_en: "Retail Trade Volume, MoM"
+    label_zh: "零售贸易量环比"
+    unit: "% m/m"
+    fetcher: fred
+    series: "ZAFSLRTTO01GPSAM"
+    source_name: "FRED / OECD (Stats SA)"
+    source_url: "https://fred.stlouisfed.org/series/ZAFSLRTTO01GPSAM"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Seasonally adjusted month-over-month change; single months are noisy around festive-season trading."
+    caveat_zh: "季调环比变化；节庆消费季前后单月噪声较大。"
+
+  # --- labour_wages --------------------------------------------------------
+  - id: unemployment_rate
+    section: labour_wages
+    label_en: "Unemployment Rate"
+    label_zh: "失业率"
+    unit: "%"
+    fetcher: fred
+    series: "LRUNTTTTZAQ156S"
+    source_name: "FRED / OECD (Stats SA QLFS)"
+    source_url: "https://fred.stlouisfed.org/series/LRUNTTTTZAQ156S"
+    frequency: "quarterly"
+    start_date: "2008-01-01"
+    caveat_en: "Narrow (official) definition, 15 years and over. Stats SA's expanded definition including discouraged work-seekers runs roughly 10pp higher."
+    caveat_zh: "15岁及以上的窄口径（官方）定义。南非统计局含沮丧求职者的扩大口径约高出10个百分点。"
+  - id: unemployment_rate_15_64
+    section: labour_wages
+    label_en: "Unemployment Rate, 15-64"
+    label_zh: "失业率（15-64岁）"
+    unit: "%"
+    fetcher: fred
+    series: "LRUN64TTZAQ156S"
+    source_name: "FRED / OECD (Stats SA QLFS)"
+    source_url: "https://fred.stlouisfed.org/series/LRUN64TTZAQ156S"
+    frequency: "quarterly"
+    start_date: "2008-01-01"
+    caveat_en: "Working-age restriction of the narrow definition; tracks the headline rate closely because youth cohorts dominate the unemployed pool."
+    caveat_zh: "窄口径在劳动年龄段的限定；因失业人口以青年为主，与总体失业率走势接近。"
+  - id: youth_unemployment_rate
+    section: labour_wages
+    label_en: "Youth Unemployment Rate, 15-24"
+    label_zh: "青年失业率（15-24岁）"
+    unit: "%"
+    fetcher: fred
+    series: "LRUN24TTZAQ156S"
+    source_name: "FRED / OECD (Stats SA QLFS)"
+    source_url: "https://fred.stlouisfed.org/series/LRUN24TTZAQ156S"
+    frequency: "quarterly"
+    start_date: "2008-01-01"
+    caveat_en: "The highest youth unemployment rate in the OECD reporting population; it is the core structural and political constraint on South African policy."
+    caveat_zh: "在OECD报送国中最高的青年失业率；这是南非政策面临的核心结构性与政治约束。"
+  - id: long_term_unemployment
+    section: labour_wages
+    label_en: "Long-Term Unemployment"
+    label_zh: "长期失业人数"
+    unit: "persons"
+    fetcher: fred
+    series: "LFUTLTTTZAQ647S"
+    source_name: "FRED / OECD (Stats SA QLFS)"
+    source_url: "https://fred.stlouisfed.org/series/LFUTLTTTZAQ647S"
+    frequency: "quarterly"
+    start_date: "2008-01-01"
+    caveat_en: "Persons unemployed for a year or more. The share of long-term in total unemployment is what makes the South African problem structural rather than cyclical."
+    caveat_zh: "失业一年以上的人数。长期失业在总失业中的占比，正是南非问题属结构性而非周期性的原因。"
+  - id: manufacturing_employment_growth
+    section: labour_wages
+    label_en: "Manufacturing Employment Growth"
+    label_zh: "制造业就业同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "LFEAMNTTZAQ647S"
+    source_name: "FRED / OECD (Stats SA QLFS)"
+    source_url: "https://fred.stlouisfed.org/series/LFEAMNTTZAQ647S"
+    frequency: "quarterly"
+    start_date: "2008-01-01"
+    caveat_en: "Derived from the manufacturing employment level; the sector's long-run decline is the counterpart to the services and public-sector employment share."
+    caveat_zh: "由制造业就业人数派生；该部门的长期萎缩与服务业及公共部门就业占比上升互为对应。"
+
+  # --- prices_costs --------------------------------------------------------
+  - id: cpi_inflation
+    section: prices_costs
+    label_en: "Headline CPI, YoY"
+    label_zh: "总体CPI同比"
+    unit: "% y/y"
+    fetcher: sarb
+    series: "CPI1000F"
+    source_name: "SARB Web API (Stats SA)"
+    source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
+    frequency: "monthly"
+    start_date: "2000-01-01"
+    caveat_en: "Total all-urban-areas CPI, 12-term percentage change, as published by SARB from Stats SA source data. The SARB inflation target band is 3-6%."
+    caveat_zh: "SARB依据南非统计局源数据发布的全城市地区CPI 12期同比。SARB通胀目标区间为3-6%。"
+  - id: ppi_inflation
+    section: prices_costs
+    label_en: "Producer Prices, YoY"
+    label_zh: "生产者价格同比"
+    unit: "% y/y"
+    fetcher: sarb
+    series: "PPI1000F"
+    source_name: "SARB Web API (Stats SA)"
+    source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
+    frequency: "monthly"
+    start_date: "2000-01-01"
+    caveat_en: "Total producer prices, 12-term percentage change. Leads headline CPI by roughly one to two quarters in food and fuel channels."
+    caveat_zh: "总体生产者价格12期同比。在食品与燃料渠道上领先总体CPI约一至两个季度。"
+  - id: cpi_inflation_imf
+    section: prices_costs
+    label_en: "Headline CPI, YoY (IMF cross-check)"
+    label_zh: "总体CPI同比（IMF交叉校验）"
+    unit: "% y/y"
+    fetcher: imf_sdmx
+    dataflow: "CPI"
+    series: "ZAF.CPI._T.YOY_PCH_PA_PT.M"
+    source_name: "IMF SDMX / CPI (Stats SA)"
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/CPI/ZAF.CPI._T.YOY_PCH_PA_PT.M"
+    frequency: "monthly"
+    start_date: "2000-01-01"
+    caveat_en: "Independently compiled from the same Stats SA source. Charted deliberately alongside the SARB series so any divergence between the two publication paths is visible."
+    caveat_zh: "由IMF依据相同的南非统计局源数据独立汇编。刻意与SARB序列并列展示，以便发现两条发布路径之间的差异。"
+  - id: cpi_mom
+    section: prices_costs
+    label_en: "Headline CPI, MoM"
+    label_zh: "总体CPI环比"
+    unit: "% m/m"
+    fetcher: imf_sdmx
+    dataflow: "CPI"
+    series: "ZAF.CPI._T.POP_PCH_PA_PT.M"
+    source_name: "IMF SDMX / CPI (Stats SA)"
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/CPI/ZAF.CPI._T.POP_PCH_PA_PT.M"
+    frequency: "monthly"
+    start_date: "2000-01-01"
+    caveat_en: "Not seasonally adjusted; month-over-month prints carry an administered-price seasonal pattern from the annual electricity and fuel levy resets."
+    caveat_zh: "未季调；受电价与燃油税年度调整影响，环比读数带有管制价格的季节性形态。"
+  - id: cpi_index
+    section: prices_costs
+    label_en: "Headline CPI Index"
+    label_zh: "总体CPI指数"
+    unit: "index"
+    fetcher: imf_sdmx
+    dataflow: "CPI"
+    series: "ZAF.CPI._T.IX.M"
+    source_name: "IMF SDMX / CPI (Stats SA)"
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/CPI/ZAF.CPI._T.IX.M"
+    frequency: "monthly"
+    start_date: "2000-01-01"
+    caveat_en: "Price level rather than a rate; the cumulative slope is what erodes the real house-price and real-wage series."
+    caveat_zh: "为价格水平而非增速；其累计斜率正是侵蚀实际房价与实际工资序列的因素。"
+
+  # --- housing_property ----------------------------------------------------
+  - id: house_price_index
+    section: housing_property
+    label_en: "Residential Property Prices"
+    label_zh: "住宅价格指数"
+    unit: "index"
+    fetcher: fred
+    series: "QZAN628BIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QZAN628BIS"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "BIS nominal residential property price index, 2010=100; sourced from bank mortgage-valuation data rather than a deeds-registry transaction index."
+    caveat_zh: "BIS名义住宅价格指数（2010=100）；来源为银行按揭估值数据，而非产权登记成交指数。"
+  - id: real_house_price_index
+    section: housing_property
+    label_en: "Real Residential Property Prices"
+    label_zh: "实际住宅价格指数"
+    unit: "index"
+    fetcher: fred
+    series: "QZAR628BIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QZAR628BIS"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "CPI-deflated house prices. The sustained decline since 2008 means South African housing has been a negative real asset for most of a generation."
+    caveat_zh: "经CPI平减的房价。自2008年以来的持续下滑意味着南非住房在近一代人时间内多数时候是负实际收益资产。"
+  - id: house_price_growth
+    section: housing_property
+    label_en: "House Price Growth, YoY"
+    label_zh: "房价同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "QZAN628BIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QZAN628BIS"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Derived year-over-year growth from the BIS nominal residential price index; compare against headline CPI to read the real trend."
+    caveat_zh: "由BIS名义住宅价格指数派生的同比增速；与总体CPI对照可读出实际趋势。"
+
+  # --- external_fx ---------------------------------------------------------
+  - id: goods_exports
+    section: external_fx
+    label_en: "Goods Exports"
+    label_zh: "货物出口"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: fred
+    series: "XTEXVA01ZAM667S"
+    source_name: "FRED / OECD (SARS Customs)"
+    source_url: "https://fred.stlouisfed.org/series/XTEXVA01ZAM667S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Exchange-rate converted to US dollars. Platinum-group metals, gold, coal, and iron ore dominate, so the series tracks commodity prices closely."
+    caveat_zh: "按汇率折算为美元。铂族金属、黄金、煤炭与铁矿石占主导，因此该序列与大宗商品价格高度相关。"
+  - id: goods_imports
+    section: external_fx
+    label_en: "Goods Imports"
+    label_zh: "货物进口"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: fred
+    series: "XTIMVA01ZAM667S"
+    source_name: "FRED / OECD (SARS Customs)"
+    source_url: "https://fred.stlouisfed.org/series/XTIMVA01ZAM667S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Exchange-rate converted to US dollars; refined fuel and machinery imports drive the cyclical swings."
+    caveat_zh: "按汇率折算为美元；成品油与机械设备进口驱动周期性波动。"
+  - id: goods_trade_balance
+    section: external_fx
+    label_en: "Goods Trade Balance"
+    label_zh: "货物贸易差额"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: fred
+    series: "XTNTVA01ZAM667S"
+    source_name: "FRED / OECD (SARS Customs)"
+    source_url: "https://fred.stlouisfed.org/series/XTNTVA01ZAM667S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "The trade balance is the swing factor in the current account and therefore in the rand's external funding requirement."
+    caveat_zh: "贸易差额是经常账户的摆动因素，也因此决定兰特的外部融资需求。"
+  - id: goods_exports_growth
+    section: external_fx
+    label_en: "Goods Exports Growth"
+    label_zh: "货物出口同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "XTEXVA01ZAM667S"
+    source_name: "FRED / OECD (SARS Customs)"
+    source_url: "https://fred.stlouisfed.org/series/XTEXVA01ZAM667S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Derived from the USD export value, so it blends volume, commodity price, and rand effects."
+    caveat_zh: "由美元出口值派生，混合了量、大宗商品价格与兰特汇率效应。"
+  - id: goods_imports_growth
+    section: external_fx
+    label_en: "Goods Imports Growth"
+    label_zh: "货物进口同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: fred
+    series: "XTIMVA01ZAM667S"
+    source_name: "FRED / OECD (SARS Customs)"
+    source_url: "https://fred.stlouisfed.org/series/XTIMVA01ZAM667S"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Derived from the USD import value; blends volume, price, and rand effects."
+    caveat_zh: "由美元进口值派生；混合了量、价与兰特汇率效应。"
+  - id: current_account_gdp
+    section: external_fx
+    label_en: "Current Account, % of GDP"
+    label_zh: "经常账户占GDP比重"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "ZAFB6BLTT02STSAQ"
+    source_name: "FRED / OECD (SARB BoP)"
+    source_url: "https://fred.stlouisfed.org/series/ZAFB6BLTT02STSAQ"
+    frequency: "quarterly"
+    start_date: "1996-01-01"
+    caveat_en: "Publishes with a long lag. The structural deficit is what makes South Africa dependent on portfolio inflows and therefore sensitive to global risk appetite."
+    caveat_zh: "发布滞后较久。结构性逆差使南非依赖组合投资流入，也因此对全球风险偏好高度敏感。"
+  - id: zar_usd
+    section: external_fx
+    label_en: "ZAR/USD Spot Rate"
+    label_zh: "美元兑兰特"
+    unit: "ZAR per USD"
+    fetcher: sarb
+    series: "EXCX135D"
+    source_name: "SARB Web API"
+    source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
+    frequency: "daily"
+    start_date: "2015-01-01"
+    caveat_en: "SARB published daily rate; a higher value means a weaker rand."
+    caveat_zh: "SARB公布的每日汇率；数值上升代表兰特贬值。"
+  - id: zar_eur
+    section: external_fx
+    label_en: "ZAR/EUR Spot Rate"
+    label_zh: "欧元兑兰特"
+    unit: "ZAR per EUR"
+    fetcher: sarb
+    series: "EXCZ002D"
+    source_name: "SARB Web API"
+    source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
+    frequency: "daily"
+    start_date: "2015-01-01"
+    caveat_en: "The euro cross matters for the import basket; the dollar cross matters for the commodity export basket."
+    caveat_zh: "欧元交叉汇率影响进口篮子；美元交叉汇率影响大宗出口篮子。"
+  - id: neer
+    section: external_fx
+    label_en: "Nominal Effective Exchange Rate (SARB)"
+    label_zh: "名义有效汇率（SARB）"
+    unit: "index"
+    fetcher: sarb
+    series: "EER4504A"
+    source_name: "SARB Web API"
+    source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
+    frequency: "daily"
+    start_date: "2015-01-01"
+    caveat_en: "SARB's own trade-weighted rand index; a lower value means broad rand weakness against the trade basket."
+    caveat_zh: "SARB自有的贸易加权兰特指数；数值下降代表兰特对贸易篮子整体走弱。"
+  - id: reer
+    section: external_fx
+    label_en: "Real Effective Exchange Rate (BIS)"
+    label_zh: "实际有效汇率（BIS）"
+    unit: "index"
+    fetcher: fred
+    series: "RBZABIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/RBZABIS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "BIS broad real effective exchange rate, 2020=100; high domestic inflation keeps the real rate far above the nominal rate."
+    caveat_zh: "BIS广义实际有效汇率（2020=100）；国内高通胀使实际汇率长期高于名义汇率。"
+
+  # --- fiscal_sovereign ----------------------------------------------------
+  - id: government_debt_gdp
+    section: fiscal_sovereign
+    label_en: "General Government Gross Debt"
+    label_zh: "广义政府总债务"
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: "GGXWDG_NGDP"
+    country_iso3: "ZAF"
+    source_name: "IMF WEO DataMapper"
+    source_url: "https://www.imf.org/external/datamapper/GGXWDG_NGDP@WEO/ZAF"
+    frequency: "annual"
+    actual_through: 2025
+    caveat_en: "IMF WEO includes estimates and projections; the dashed segment marks forecast years. Excludes Eskom and other state-owned enterprise debt not yet assumed by the sovereign."
+    caveat_zh: "IMF WEO含估计与预测，虚线段为预测年份。不含尚未由主权承接的Eskom等国有企业债务。"
+  - id: fiscal_balance_gdp
+    section: fiscal_sovereign
+    label_en: "General Government Balance"
+    label_zh: "广义政府收支差额"
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: "GGXCNL_NGDP"
+    country_iso3: "ZAF"
+    source_name: "IMF WEO DataMapper"
+    source_url: "https://www.imf.org/external/datamapper/GGXCNL_NGDP@WEO/ZAF"
+    frequency: "annual"
+    actual_through: 2025
+    caveat_en: "Net lending/borrowing including interest. Debt-service cost is now the fastest-growing line in the National Treasury budget."
+    caveat_zh: "含利息的净贷出/净借入。偿债成本已成为南非国库预算中增长最快的科目。"
+  - id: primary_balance_gdp
+    section: fiscal_sovereign
+    label_en: "General Government Primary Balance"
+    label_zh: "广义政府基本差额"
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: "GGXONLB_G01_GDP_PT"
+    country_iso3: "ZAF"
+    source_name: "IMF Fiscal Monitor DataMapper"
+    source_url: "https://www.imf.org/external/datamapper/GGXONLB_G01_GDP_PT@FM/ZAF"
+    frequency: "annual"
+    actual_through: 2025
+    caveat_en: "Balance excluding interest. The National Treasury's consolidation strategy is anchored on sustaining a primary surplus."
+    caveat_zh: "剔除利息的差额。南非国库的财政整顿战略以维持基本盈余为锚。"
+  - id: sovereign_yield_10y
+    section: fiscal_sovereign
+    label_en: "R2030 Benchmark Bond Yield"
+    label_zh: "R2030基准国债收益率"
+    unit: "%"
+    fetcher: sarb
+    series: "MMRD708A"
+    source_name: "SARB Web API"
+    source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
+    frequency: "daily"
+    start_date: "2015-01-01"
+    caveat_en: "Closing yield on the 8.00% 2030 government bond, SARB's published medium-tenor benchmark. Not a constant-maturity 10-year series, so its tenor shortens over time."
+    caveat_zh: "8.00% 2030年国债的收盘收益率，为SARB公布的中期基准。并非固定期限10年序列，其剩余期限随时间缩短。"
+  - id: sovereign_yield_long
+    section: fiscal_sovereign
+    label_en: "R209 Long Bond Yield"
+    label_zh: "R209长期国债收益率"
+    unit: "%"
+    fetcher: sarb
+    series: "MMRD709A"
+    source_name: "SARB Web API"
+    source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
+    frequency: "daily"
+    start_date: "2015-01-01"
+    caveat_en: "Closing yield on the 6.25% 2036 government bond. The spread over R2030 is the public read on term premium and fiscal risk."
+    caveat_zh: "6.25% 2036年国债的收盘收益率。与R2030之差是观察期限溢价与财政风险的公开读数。"
+
+  # --- monetary_financial --------------------------------------------------
+  - id: policy_rate
+    section: monetary_financial
+    label_en: "SARB Policy Rate"
+    label_zh: "南非央行政策利率"
+    unit: "%"
+    fetcher: sarb
+    series: "MMRD002A"
+    source_name: "SARB Web API"
+    source_url: "https://www.resbank.co.za/en/home/what-we-do/monetary-policy"
+    frequency: "daily"
+    start_date: "2015-01-01"
+    caveat_en: "The repo rate set by the Monetary Policy Committee. Published daily, so the series is a step function that changes only on MPC decision dates."
+    caveat_zh: "由货币政策委员会设定的回购利率。按日发布，因此序列为阶梯函数，仅在议息日变动。"
+  - id: prime_lending_rate
+    section: monetary_financial
+    label_en: "Prime Lending Rate"
+    label_zh: "优惠贷款利率"
+    unit: "%"
+    fetcher: sarb
+    series: "MMRD000A"
+    source_name: "SARB Web API"
+    source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
+    frequency: "daily"
+    start_date: "2015-01-01"
+    caveat_en: "Commercial bank prime rate, conventionally the policy rate plus 350bp. Most South African household and SME lending is priced off this benchmark."
+    caveat_zh: "商业银行优惠利率，惯例为政策利率加350个基点。南非多数居民与中小企业贷款以此为定价基准。"
+  - id: sabor_rate
+    section: monetary_financial
+    label_en: "SABOR Overnight Rate"
+    label_zh: "SABOR隔夜利率"
+    unit: "%"
+    fetcher: sarb
+    series: "MMRD851A"
+    source_name: "SARB Web API"
+    source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
+    frequency: "daily"
+    start_date: "2015-01-01"
+    caveat_en: "South African Benchmark Overnight Rate. Its spread to the policy rate is the money-market liquidity signal."
+    caveat_zh: "南非基准隔夜利率。与政策利率之差是货币市场流动性信号。"
+  - id: zaronia_rate
+    section: monetary_financial
+    label_en: "ZARONIA Overnight Rate"
+    label_zh: "ZARONIA隔夜利率"
+    unit: "%"
+    fetcher: sarb
+    series: "MMRD855A"
+    source_name: "SARB Web API"
+    source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
+    frequency: "daily"
+    start_date: "2021-01-01"
+    caveat_en: "The reformed transaction-based overnight benchmark that is replacing JIBAR. History starts in the 2020s, so it is short by design."
+    caveat_zh: "以真实交易为基础、用于替代JIBAR的改革后隔夜基准。历史自2020年代开始，序列本身较短。"
+  - id: interbank_3m
+    section: monetary_financial
+    label_en: "3-Month Interbank Rate (JIBAR)"
+    label_zh: "3个月银行间利率（JIBAR）"
+    unit: "%"
+    fetcher: fred
+    series: "IR3TIB01ZAM156N"
+    source_name: "FRED / OECD"
+    source_url: "https://fred.stlouisfed.org/series/IR3TIB01ZAM156N"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "The spread over the policy rate shows how much tightening or easing the money market has priced in ahead of MPC meetings."
+    caveat_zh: "与政策利率之差反映货币市场在议息会议前已定价的紧缩或宽松幅度。"
+  - id: broad_money_growth
+    section: monetary_financial
+    label_en: "Broad Money (M3) Growth"
+    label_zh: "广义货币M3同比"
+    unit: "% y/y"
+    fetcher: fred
+    series: "ZAFMABMM301GYSAM"
+    source_name: "FRED / OECD (SARB)"
+    source_url: "https://fred.stlouisfed.org/series/ZAFMABMM301GYSAM"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "M3 growth running near nominal GDP growth is the standard sign that credit is neither amplifying nor draining the cycle."
+    caveat_zh: "M3增速接近名义GDP增速，是信贷既未放大也未抽离周期的常规信号。"
+  - id: private_credit_gdp
+    section: monetary_financial
+    label_en: "Credit to Private Non-Financial Sector"
+    label_zh: "私人非金融部门信贷"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "QZAPAM770A"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QZAPAM770A"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "BIS total credit to the private non-financial sector, adjusted for breaks; a stock ratio rather than a flow."
+    caveat_zh: "BIS对私人非金融部门的总信贷（已作断点调整）；为存量比率而非流量。"
+  - id: household_credit_gdp
+    section: monetary_financial
+    label_en: "Household Credit"
+    label_zh: "居民部门信贷"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "QZAHAM770A"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QZAHAM770A"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Household and NPISH credit, adjusted for breaks; South African household leverage has fallen steadily since the 2008 peak."
+    caveat_zh: "居民与为居民服务的非营利机构信贷（已作断点调整）；南非居民杠杆自2008年峰值以来持续下降。"
+  - id: bank_credit_gdp
+    section: monetary_financial
+    label_en: "Bank Credit to Private Sector"
+    label_zh: "银行对私人部门信贷"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "QZAPBM770A"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QZAPBM770A"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "The bank-only subset of private credit; South Africa's banking system is concentrated in five large institutions."
+    caveat_zh: "私人信贷中仅银行部分；南非银行体系集中于五家大型机构。"
+
+  # --- stability_structural ------------------------------------------------
+  - id: bank_capital_ratio
+    section: stability_structural
+    label_en: "Regulatory Capital to Risk-Weighted Assets"
+    label_zh: "监管资本充足率"
+    unit: "%"
+    fetcher: imf_sdmx
+    dataflow: "FSIC"
+    series: "ZAF.S12CFSI.FSI688_CFSI_PT.Q"
+    source_name: "IMF SDMX / Financial Soundness Indicators"
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/FSIC/ZAF.S12CFSI.FSI688_CFSI_PT.Q"
+    frequency: "quarterly"
+    start_date: "2008-01-01"
+    caveat_en: "Deposit-taker aggregate reported to the IMF; national regulatory definitions differ, so cross-country levels are indicative rather than exact."
+    caveat_zh: "报送IMF的存款机构合计口径；各国监管定义不同，跨国水平比较仅供参考。"
+  - id: bank_npl_ratio
+    section: stability_structural
+    label_en: "Non-Performing Loans to Total Gross Loans"
+    label_zh: "不良贷款率"
+    unit: "%"
+    fetcher: imf_sdmx
+    dataflow: "FSIC"
+    series: "ZAF.S12CFSI.AQ12_CFSI_PT.Q"
+    source_name: "IMF SDMX / Financial Soundness Indicators"
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/FSIC/ZAF.S12CFSI.AQ12_CFSI_PT.Q"
+    frequency: "quarterly"
+    start_date: "2008-01-01"
+    caveat_en: "Deposit-taker aggregate. The post-2020 rise reflects the interaction of high prime lending rates with stagnant household income."
+    caveat_zh: "存款机构合计口径。2020年后的上升反映了高优惠贷款利率与停滞的居民收入之间的相互作用。"
+  - id: total_credit_gdp
+    section: stability_structural
+    label_en: "Total Credit to Non-Financial Sector"
+    label_zh: "非金融部门总信贷"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "QZACAM770A"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QZACAM770A"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "Includes general government, so this is the aggregate economy-wide leverage stock; moderate by developed-market standards but rising through the government channel."
+    caveat_zh: "包含广义政府，因此是全经济杠杆存量；按发达市场标准处于温和水平，但正通过政府渠道上升。"
+
+data_gaps:
+  - section: prices_costs
+    item_en: "Core CPI excluding food and energy, and the services/goods split"
+    item_zh: "剔除食品与能源的核心CPI，以及服务/商品拆分"
+    status_en: "Stats SA publishes core CPI in its P0141 release as PDF and Excel without a documented stable API; the IMF CPI dataset carries no COICOP breakdown for South Africa."
+    status_zh: "南非统计局在P0141发布中以PDF与Excel形式公布核心CPI，无有文档的稳定API；IMF CPI数据集不含南非的COICOP分项。"
+  - section: labour_wages
+    item_en: "Expanded unemployment rate, vacancies, and earnings"
+    item_zh: "扩大口径失业率、职位空缺与薪酬"
+    status_en: "The expanded QLFS definition and the Quarterly Employment Statistics earnings series are published as Stats SA releases without a validated machine-readable endpoint."
+    status_zh: "扩大口径QLFS定义与季度就业统计薪酬序列以南非统计局发布物形式公布，尚无经验证的机读接口。"
+  - section: production_cycle
+    item_en: "Total industry production, mining production, and the BER/PMI business surveys"
+    item_zh: "工业总体生产、采矿业生产以及BER/PMI企业调查"
+    status_en: "No monthly total-industry or mining index validated on a key-free public endpoint; BER business confidence and the Absa PMI are vendor-controlled."
+    status_zh: "尚未在无密钥公开接口上验证月度工业总体或采矿业指数；BER企业信心与Absa PMI由供应商控制。"
+  - section: monetary_financial
+    item_en: "FTSE/JSE All Share index and equity valuation"
+    item_zh: "富时/约翰内斯堡全股指数与股票估值"
+    status_en: "JSE index levels are licensed through the exchange and its data vendors; no redistributable public series validated."
+    status_zh: "JSE指数水平通过交易所及其数据供应商授权；尚未验证可再分发的公开序列。"
+  - section: monetary_financial
+    item_en: "Eskom load-shedding stages and electricity availability factor"
+    item_zh: "Eskom限电等级与发电可用率"
+    status_en: "Published through Eskom's data portal and dashboards without a documented stable API contract; this is the single largest South Africa-specific supply-side variable still missing."
+    status_zh: "通过Eskom数据门户与看板发布，无有文档的稳定API契约；这是南非特有供给侧变量中仍缺失的最重要一项。"
+  - section: external_fx
+    item_en: "Gross reserves, capital-flow detail, and sovereign risk spread"
+    item_zh: "总储备、资本流动明细与主权风险利差"
+    status_en: "SARB's reserves and BoP detail are in the Quarterly Bulletin series set, which the public web API does not expose; CDS and EMBI spreads are vendor-controlled."
+    status_zh: "SARB的储备与国际收支明细位于季度公报序列集，公开Web API未暴露；CDS与EMBI利差由供应商控制。"
+  - section: fiscal_sovereign
+    item_en: "National Treasury monthly revenue and expenditure execution"
+    item_zh: "国库月度收支执行"
+    status_en: "Section 32 monthly statements are published as PDF and Excel attachments without a stable programmatic endpoint."
+    status_zh: "第32条月度报表以PDF与Excel附件形式发布，无稳定的程序化接口。"

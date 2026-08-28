@@ -28,6 +28,8 @@ DASHBOARD_TO_CODE = {
     "Czechia": "CZ",
     "Romania": "RO",
     "China": "CN",
+    "Japan": "JP",
+    "South Africa": "ZA",
     "United Kingdom": "UK",
     "United States": "US",
 }
@@ -35,6 +37,8 @@ CODE_TO_DASHBOARD = {code: name for name, code in DASHBOARD_TO_CODE.items()}
 
 DATA_FIRST_SUMMARIES = {
     "CN": "china_dashboard_summary.json",
+    "JP": "japan_dashboard_summary.json",
+    "ZA": "south_africa_dashboard_summary.json",
     "UK": "uk_dashboard_summary.json",
     "US": "us_dashboard_summary.json",
 }
@@ -46,6 +50,24 @@ DATA_FIRST_SIGNAL_MAP = {
         "policy": ("m2_yoy_akshare", "Broad-money impulse"),
         "external": ("customs_exports_yoy_akshare", "Exports"),
         "property": ("real_estate_development_investment_ytd_eastmoney", "Property investment"),
+    },
+    "JP": {
+        "growth": ("real_gdp_yoy", "Real GDP"),
+        "inflation": ("cpi_inflation", "Headline CPI"),
+        "policy": ("policy_rate", "Overnight call rate"),
+        "external": ("goods_trade_balance", "Goods trade balance"),
+        "fiscal": ("government_debt_gdp", "Government debt/GDP"),
+        "financial": ("sovereign_yield_10y", "10Y JGB"),
+        "property": ("house_price_growth", "House prices"),
+    },
+    "ZA": {
+        "growth": ("real_gdp_yoy", "Real GDP"),
+        "inflation": ("cpi_inflation", "Headline CPI"),
+        "policy": ("policy_rate", "SARB repo rate"),
+        "external": ("goods_trade_balance", "Goods trade balance"),
+        "fiscal": ("government_debt_gdp", "Government debt/GDP"),
+        "financial": ("prime_lending_rate", "Prime lending rate"),
+        "property": ("house_price_growth", "House prices"),
     },
     "UK": {
         "growth": ("monthly_gdp_mom", "Monthly GDP"),

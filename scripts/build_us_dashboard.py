@@ -582,6 +582,8 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> st
     <a href="czechia.html">CZ</a>
     <a href="romania.html">RO</a>
     <a href="china.html">CN</a>
+    <a href="japan.html">JP</a>
+    <a href="south_africa.html">ZA</a>
     <a href="uk.html">UK</a>
     <a href="us.html" class="active">US</a>
   </nav>
@@ -712,14 +714,11 @@ def inject_output_index(summary: dict[str, Any]) -> None:
     marker = '  </section>\n  <nav class="links"'
     if marker in html:
         html = html.replace(marker, _index_card(summary) + "\n  </section>\n  <nav class=\"links\"", 1)
+    html = re.sub(r"Macro Dashboard Archive · CEE-4 v4 \+ China[^<]*", "Macro Dashboard Archive · CEE-4 v4 + China + Japan + South Africa + UK + US", html)
     html = re.sub(
-        r"Macro Dashboard Archive · CEE-4 v4 \+ China(?: \+ UK)?(?: \+ US)*",
-        "Macro Dashboard Archive · CEE-4 v4 + China + UK + US",
+        r"Generated archive entry for the proxy-free CEE-4 dashboards plus the [^.]*\.",
+        "Generated archive entry for the proxy-free CEE-4 dashboards plus the China, Japan, South Africa, UK, and US data-first pages.",
         html,
-    )
-    html = html.replace(
-        "Generated archive entry for the proxy-free CEE-4 dashboards plus the China and UK data-first pages.",
-        "Generated archive entry for the proxy-free CEE-4 dashboards plus the China, UK, and US data-first pages.",
     )
     html = html.replace("<strong>6</strong><span>country dashboards</span>", "<strong>7</strong><span>country dashboards</span>")
     _write_clean(index_path, html)

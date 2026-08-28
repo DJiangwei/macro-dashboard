@@ -1166,6 +1166,8 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]], cards
     <a href="czechia.html">CZ</a>
     <a href="romania.html">RO</a>
     <a href="china.html" class="active">CN</a>
+    <a href="japan.html">JP</a>
+    <a href="south_africa.html">ZA</a>
     <a href="uk.html">UK</a>
     <a href="us.html">US</a>
   </nav>

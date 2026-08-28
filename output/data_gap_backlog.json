@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-14T22:29:09.757056+00:00",
+  "generated": "2026-08-28T15:39:43.032999+00:00",
   "items": [
     {
       "code": "CN",
@@ -45,6 +45,42 @@
       "status": "BIS residential property aggregates, Beijing/Shanghai AKShare city price samples, Eastmoney structured commercial-housing sales value, development-investment YTD, and the real-estate climate index are charted. AKShare/Eastmoney were traversed for inventory, sales-area, floor-space starts/completions, and land-sale series; no reusable API-backed indicator was found yet, and NBS EasyQuery is currently blocked by DNS/WAF in this environment.",
       "priority": "high",
       "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
+    },
+    {
+      "code": "JP",
+      "country": "Japan",
+      "section": "housing_property",
+      "item": "Housing starts and mortgage rates",
+      "status": "MLIT construction starts require e-Stat credentials; Japanese mortgage rates are posted per-bank rather than as an official aggregate series.",
+      "priority": "high",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "JP",
+      "country": "Japan",
+      "section": "labour_wages",
+      "item": "Job-to-applicant ratio and shunto wage settlements",
+      "status": "MHLW job-openings statistics require e-Stat credentials; shunto outcomes are compiled by Rengo and are not redistributable as a public series.",
+      "priority": "high",
+      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
+    },
+    {
+      "code": "JP",
+      "country": "Japan",
+      "section": "prices_costs",
+      "item": "Core CPI excluding fresh food (and ex-fresh-food-and-energy)",
+      "status": "Japan's policy-relevant core measures are published by the Statistics Bureau via e-Stat, whose API requires a registered application ID. No key-free reproducible endpoint validated.",
+      "priority": "high",
+      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
+    },
+    {
+      "code": "JP",
+      "country": "Japan",
+      "section": "prices_costs",
+      "item": "Corporate Goods Price Index (domestic PPI)",
+      "status": "Published by the Bank of Japan time-series search; no stable machine-readable download URL validated for unattended refresh.",
+      "priority": "high",
+      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
     },
     {
       "code": "UK",
@@ -119,6 +155,33 @@
       "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
     },
     {
+      "code": "ZA",
+      "country": "South Africa",
+      "section": "fiscal_sovereign",
+      "item": "National Treasury monthly revenue and expenditure execution",
+      "status": "Section 32 monthly statements are published as PDF and Excel attachments without a stable programmatic endpoint.",
+      "priority": "high",
+      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
+    },
+    {
+      "code": "ZA",
+      "country": "South Africa",
+      "section": "labour_wages",
+      "item": "Expanded unemployment rate, vacancies, and earnings",
+      "status": "The expanded QLFS definition and the Quarterly Employment Statistics earnings series are published as Stats SA releases without a validated machine-readable endpoint.",
+      "priority": "high",
+      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
+    },
+    {
+      "code": "ZA",
+      "country": "South Africa",
+      "section": "production_cycle",
+      "item": "Total industry production, mining production, and the BER/PMI business surveys",
+      "status": "No monthly total-industry or mining index validated on a key-free public endpoint; BER business confidence and the Absa PMI are vendor-controlled.",
+      "priority": "high",
+      "source_hint": "Check licensing before rendering; vendor surveys should stay as official gaps unless source-safe."
+    },
+    {
       "code": "CN",
       "country": "China",
       "section": "external",
@@ -144,6 +207,15 @@
       "status": "M2, M1, aggregate RMB+FX deposits, new RMB loans, TSF flow/components, LPR, RRR, daily SHIBOR, 3M interbank, selected PBC balance-sheet items, and PBC latest cards are charted; TSF stock, deposits by sector, MLF, and full PBOC-native history remain open.",
       "priority": "medium",
       "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
+    },
+    {
+      "code": "JP",
+      "country": "Japan",
+      "section": "prices_costs",
+      "item": "Inflation expectations (Tankan price outlook, breakevens)",
+      "status": "Tankan price expectations are BoJ-proprietary in redistributable form and the JGBi breakeven series has no validated key-free public endpoint.",
+      "priority": "medium",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
     },
     {
       "code": "UK",
@@ -189,6 +261,33 @@
       "status": "Restore only with reusable public or licensed non-proxy sources.",
       "priority": "watch",
       "source_hint": "Review PROXY_REVIEW.md and DATA_SOURCE_CATALOG.md before restoring."
+    },
+    {
+      "code": "JP",
+      "country": "Japan",
+      "section": "consumption_retail",
+      "item": "Household consumption expenditure and consumer confidence",
+      "status": "The FRED/OECD household consumption mirror stops in 2023Q3 and the OECD Japan consumer confidence mirror stops in January 2024; no replacement key-free endpoint validated.",
+      "priority": "watch",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "JP",
+      "country": "Japan",
+      "section": "monetary_financial",
+      "item": "BoJ balance sheet, ETF holdings, and financial conditions index",
+      "status": "BoJ balance-sheet accounts are published as flat files without a documented stable API; composite financial-conditions indices are vendor-proprietary.",
+      "priority": "watch",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "JP",
+      "country": "Japan",
+      "section": "prices_costs",
+      "item": "CPI by COICOP division, and the services/goods split",
+      "status": "OECD's Japan services/goods CPI mirror was discontinued after June 2021. The IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations, so only the all-items aggregate is chartable from that source.",
+      "priority": "watch",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
     },
     {
       "code": "PL",
@@ -241,6 +340,42 @@
       "section": "gs_market_indexes",
       "item": "GSFCI, GSAI, GSSI, GSRI",
       "status": "Proprietary Goldman Sachs indicators; chart public components only.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "ZA",
+      "country": "South Africa",
+      "section": "external_fx",
+      "item": "Gross reserves, capital-flow detail, and sovereign risk spread",
+      "status": "SARB's reserves and BoP detail are in the Quarterly Bulletin series set, which the public web API does not expose; CDS and EMBI spreads are vendor-controlled.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "ZA",
+      "country": "South Africa",
+      "section": "monetary_financial",
+      "item": "FTSE/JSE All Share index and equity valuation",
+      "status": "JSE index levels are licensed through the exchange and its data vendors; no redistributable public series validated.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "ZA",
+      "country": "South Africa",
+      "section": "monetary_financial",
+      "item": "Eskom load-shedding stages and electricity availability factor",
+      "status": "Published through Eskom's data portal and dashboards without a documented stable API contract; this is the single largest South Africa-specific supply-side variable still missing.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "ZA",
+      "country": "South Africa",
+      "section": "prices_costs",
+      "item": "Core CPI excluding food and energy, and the services/goods split",
+      "status": "Stats SA publishes core CPI in its P0141 release as PDF and Excel without a documented stable API; the IMF CPI dataset carries no COICOP breakdown for South Africa.",
       "priority": "watch",
       "source_hint": "Wire only a reproducible source with definition and freshness validation."
     }

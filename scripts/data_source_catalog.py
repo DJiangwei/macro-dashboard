@@ -256,6 +256,97 @@ def _append_us_sources(lines: list[str]) -> None:
         )
 
 
+DATA_FIRST_PAGES = (
+    {
+        "name": "Japan",
+        "config": ROOT / "config" / "japan_indicators.yaml",
+        "summary": ROOT / "output" / "japan_dashboard_summary.json",
+        "config_ref": "config/japan_indicators.yaml",
+        "summary_ref": "output/japan_dashboard_summary.json",
+        "note": (
+            "The Japan page is generated from `config/japan_indicators.yaml`. FRED (official API when "
+            "`FRED_API_KEY` is set) carries national accounts, production, labour, trade, rates, and BIS "
+            "series. Because OECD discontinued its Japan CPI, retail-value, and money-stock mirrors between "
+            "2021 and 2024, national CPI and bank soundness come from the IMF SDMX 2.1 API instead, and IMF "
+            "WEO DataMapper carries fiscal ratios with an explicit forecast split. Japan-native releases "
+            "behind the e-Stat application-ID wall are recorded as gaps rather than proxied."
+        ),
+    },
+    {
+        "name": "South Africa",
+        "config": ROOT / "config" / "south_africa_indicators.yaml",
+        "summary": ROOT / "output" / "south_africa_dashboard_summary.json",
+        "config_ref": "config/south_africa_indicators.yaml",
+        "summary_ref": "output/south_africa_dashboard_summary.json",
+        "note": (
+            "The South Africa page is generated from `config/south_africa_indicators.yaml`. The SARB Web "
+            "Indicators JSON API is preferred wherever SARB is the compiling authority (policy and prime "
+            "rates, SABOR/ZARONIA, benchmark bond yields, CPI, PPI, rand crosses, NEER). FRED carries the "
+            "OECD/Stats SA/BIS mirrors for national accounts, production, labour, trade, and credit; IMF "
+            "SDMX supplies the CPI cross-check and Financial Soundness Indicators; IMF WEO supplies fiscal "
+            "ratios. Eskom supply data and vendor-controlled BER/PMI surveys remain explicit gaps."
+        ),
+    },
+)
+
+
+def _append_data_first_sources(lines: list[str], page: dict) -> None:
+    if not page["config"].exists():
+        return
+    config = yaml.safe_load(page["config"].read_text()) or {}
+    indicators = config.get("indicators", [])
+    summary = json.loads(page["summary"].read_text()) if page["summary"].exists() else {}
+    name = page["name"]
+    lines.extend([
+        "",
+        f"## {name} Data-First Dashboard Sources",
+        "",
+        page["note"],
+        "",
+        f"Generated from `{page['config_ref']}`; latest dates are tracked in `{page['summary_ref']}` and the generated HTML rather than fetched again here.",
+        "",
+        f"Configured charts: {len(indicators)}. Latest rendered chart count: {summary.get('charts', 'unknown')}. Source groups: {summary.get('source_groups', 'unknown')}.",
+        "",
+        "| Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |",
+        "|---|---|---|---|---|---|---|---|---|",
+    ])
+    for item in indicators:
+        label = item.get("label_en") or item.get("label_zh") or item.get("id")
+        lines.append(
+            "| "
+            + " | ".join([
+                _clean(item.get("section")),
+                f"`{_clean(item.get('id'))}`",
+                _clean(label),
+                _clean(item.get("frequency")),
+                _clean(item.get("unit")),
+                _clean(item.get("fetcher")),
+                _clean(item.get("source_name")),
+                _clean(item.get("series") or ""),
+                _clean(item.get("caveat_en")),
+            ])
+            + " |"
+        )
+
+    lines.extend([
+        "",
+        f"## {name} Official / Vendor Data Gaps",
+        "",
+        "| Section | Indicator family | Current status |",
+        "|---|---|---|",
+    ])
+    for item in config.get("data_gaps", []):
+        lines.append(
+            "| "
+            + " | ".join([
+                _clean(item.get("section")),
+                _clean(item.get("item_en")),
+                _clean(item.get("status_en")),
+            ])
+            + " |"
+        )
+
+
 def build_catalog() -> str:
     pipeline = DataPipeline()
     specs = {spec.indicator_id: spec for spec in INDICATOR_MANIFEST_48}
@@ -371,6 +462,8 @@ def build_catalog() -> str:
         lines.append(f"| {_clean(source)} | {len(slots)} | {_clean(sample + suffix)} |")
 
     _append_china_sources(lines)
+    for page in DATA_FIRST_PAGES:
+        _append_data_first_sources(lines, page)
     _append_uk_sources(lines)
     _append_us_sources(lines)
 
