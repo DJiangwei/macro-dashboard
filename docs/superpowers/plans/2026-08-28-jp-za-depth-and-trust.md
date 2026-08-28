@@ -1233,10 +1233,132 @@ git commit -m "feat: surface source authority, freshness, and cross-checks on ch
 
 ---
 
+### Task 10: South Africa breadth from IMF SDMX
+
+**Files:**
+- Create: `docs/superpowers/notes/2026-08-28-zaf-imf-code-selection.md`
+- Modify: `config/south_africa_indicators.yaml`
+- Test: `tests/test_outputs.py`
+
+**Interfaces:**
+- Consumes: `fetch_imf_sdmx(session, spec)` from Task 4 — already wired into the South Africa builder, so **no new adapter code is required**; this task is source selection plus config.
+
+**Why this is a selection task, not a coding task.** IMF BOP is confirmed live for
+South Africa through 2026-Q1, but the `SERIES_NAME` field comes back empty, so the
+codes are opaque (`ZAF.A_NFA_T.O_F4_S122.USD`). The project's Adapter Acceptance
+Checklist requires confirming the economic definition *before* selecting a code.
+Charting a code whose meaning has not been established would breach that rule and
+the no-fabrication constraint.
+
+**Acceptance bar:** every code added to the config has (a) a definition resolved
+from the IMF BPM6 codelist, (b) a confirmed unit and sign convention, (c) a latest
+observation within one release cycle, and (d) a `caveat_en` stating the definition
+in plain English. Any code failing these stays out and, if the concept matters,
+becomes a `data_gaps` entry.
+
+- [ ] **Step 1: Pull the BPM6 codelists that decode the dimensions**
+
+```bash
+cd /tmp
+curl -s "https://api.imf.org/external/sdmx/2.1/datastructure/IMF.STA/DSD_BOP?references=children" -o bop_dsd.xml
+scripts/uv_project.sh run python -c "
+import re
+t = open('/tmp/bop_dsd.xml').read()
+for cl in re.findall(r'<str:Codelist[^>]*id=\"(CL_[A-Z0-9_]+)\".*?</str:Codelist>', t, re.S):
+    pass
+for m in re.finditer(r'<str:Code[^>]*id=\"([^\"]+)\"[^>]*>.*?<com:Name xml:lang=\"en\">([^<]+)</com:Name>', t, re.S):
+    print(m.group(1), '|', m.group(2)[:70])
+" | sort -u > /tmp/bop_codes.txt
+wc -l /tmp/bop_codes.txt && head -20 /tmp/bop_codes.txt
+```
+
+- [ ] **Step 2: List every South Africa BOP series that carries current data**
+
+```bash
+scripts/uv_project.sh run python -c "
+import csv, io, collections, requests
+r = requests.get('https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF....Q',
+                 params={'startPeriod': '2024-01'},
+                 headers={'Accept': 'application/vnd.sdmx.data+csv;version=1.0.0'},
+                 timeout=(10, 300))
+rows = list(csv.DictReader(io.StringIO(r.text)))
+seen = collections.defaultdict(list)
+for row in rows:
+    if row.get('OBS_VALUE'):
+        seen[(row['BOP_ACCOUNTING_ENTRY'], row['INDICATOR'], row['UNIT'])].append(row['TIME_PERIOD'])
+for k, v in sorted(seen.items()):
+    print('.'.join(k), 'n=', len(v), 'last=', max(v))
+" > /tmp/zaf_bop_series.txt
+wc -l /tmp/zaf_bop_series.txt
+```
+
+- [ ] **Step 3: Select and document**
+
+Join the two files and write `docs/superpowers/notes/2026-08-28-zaf-imf-code-selection.md`
+with one row per candidate: full SDMX key, decoded definition, unit, sign
+convention, latest period, and a keep/reject decision with reason.
+
+Target the concepts South Africa is currently missing or thin on, in priority
+order: current account balance and its goods / services / primary income
+components, the financial account, and reserve assets. Aim for 10-15 accepted
+series; reject anything whose definition cannot be established.
+
+- [ ] **Step 4: Add the accepted series to the config**
+
+For each accepted code, append to the relevant section of
+`config/south_africa_indicators.yaml`, following the existing `imf_sdmx` pattern:
+
+```yaml
+  - id: current_account_balance_usd
+    section: external_fx
+    label_en: "Current Account Balance"
+    label_zh: "经常账户差额"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.<ENTRY>.<INDICATOR>.USD"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.<ENTRY>.<INDICATOR>.USD"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "<definition resolved in Step 3, stated plainly, including sign convention>"
+    caveat_zh: "<same in Chinese>"
+```
+
+Map any series that fills a Core-48 slot into `config/framework_v2.yaml` under the
+`ZA` scope. Leave country-specific detail namespaced as `za:*`.
+
+- [ ] **Step 5: Build live and verify the chart count rose**
+
+```bash
+set -a && . ./.env.local && set +a
+COUNTRY_PRIMER_SKIP_ARCHIVE=1 scripts/uv_project.sh run python scripts/build_south_africa_dashboard.py
+scripts/uv_project.sh run python -c "
+import json; s=json.load(open('output/south_africa_dashboard_summary.json'))
+print('charts', s['charts'], 'unavailable', s['unavailable'])"
+```
+Expected: charts risen from 51 by the number of accepted series; `unavailable` empty.
+
+- [ ] **Step 6: Assert the floor so the page cannot silently shrink**
+
+In `config/south_africa_indicators.yaml`, raise `min_chart_count` to the new count
+minus 3. Run `make validate`. Expected: PASS.
+
+- [ ] **Step 7: Commit**
+
+```bash
+git add docs/superpowers/notes/ config/south_africa_indicators.yaml config/framework_v2.yaml output/
+git commit -m "feat: add validated IMF BOP series to the South Africa page"
+```
+
+---
+
 ## Follow-on work, deliberately out of this plan
 
 - **Additional e-Stat tables** — job-to-applicant ratio (MHLW), housing starts (MLIT), household consumption. The adapter and the discovery procedure exist after Task 6; each needs its own `statsDataId` and `cdCat01` resolved via `getStatsList` → `getMetaInfo` before it can be specified without placeholders.
-- **IMF BOP / IIP / MFS_ODC expansion** for both countries. The seam is confirmed live through 2026-Q1 (`CAB`, `CABXEF`, `CKAB`, `ANPNFA`, `D1`…) but the indicator codes are not yet resolved.
+- **IMF IIP and MFS_ODC expansion**, and the same treatment for Japan. Task 10 establishes the code-resolution procedure; applying it to the other dataflows is mechanical once done.
 - **BOJ SPPI, monthly BoP, Flow of Funds** — the adapter from Task 5 handles them; each needs its series codes read out of the relevant ZIP.
 - **Eskom** — blocked, see spec E6. Revisit only if a documented API appears.
 - **Vintage and revision tracking (P3)** — the agreed next spec.
