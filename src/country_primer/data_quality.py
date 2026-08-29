@@ -297,7 +297,15 @@ def assess_series_quality(series: dict[str, Any], *, today: date | None = None) 
         status = "unavailable"
     elif comparability == "low" or freshness == "stale":
         status = "low_confidence"
-    elif authority == "official_primary" and derivation == "observed" and freshness == "current" and validation == "passed":
+    elif (
+        # A declared transform of an official series (YoY from an official index) is
+        # normal macro practice, not a trust deduction. Substitutes standing in for a
+        # different concept remain excluded via comparability.
+        authority == "official_primary"
+        and derivation in {"observed", "derived"}
+        and freshness == "current"
+        and validation == "passed"
+    ):
         status = "verified"
     else:
         status = "watch"

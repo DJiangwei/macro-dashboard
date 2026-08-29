@@ -163,3 +163,31 @@ def test_declared_authority_flows_through_assessment():
         "observations": [{"date": "2026-07-01", "value": 4.3}],
     }
     assert assess_series_quality(series)["source_authority"] == "official_primary"
+
+
+def _series(**overrides):
+    base = {
+        "id": "core_cpi_inflation", "frequency": "monthly",
+        "source_name": "e-Stat API", "source_authority": "official_primary",
+        "observations": [{"date": "2026-07-01", "value": 1.7}],
+    }
+    base.update(overrides)
+    return base
+
+
+def test_declared_transform_can_still_be_verified(monkeypatch):
+    import country_primer.data_quality as dq
+    monkeypatch.setattr(dq, "DEFAULT_MAX_AGE_DAYS", {**dq.DEFAULT_MAX_AGE_DAYS, "monthly": 3650})
+    result = dq.assess_series_quality(_series(transform="yoy_pct"), today=__import__("datetime").date(2026, 8, 1))
+    assert result["derivation"] == "derived"
+    assert result["status"] == "verified"
+
+
+def test_substitute_is_still_not_verified(monkeypatch):
+    import country_primer.data_quality as dq
+    monkeypatch.setattr(dq, "DEFAULT_MAX_AGE_DAYS", {**dq.DEFAULT_MAX_AGE_DAYS, "monthly": 3650})
+    result = dq.assess_series_quality(
+        _series(transform="level", derivation="substitute"),
+        today=__import__("datetime").date(2026, 8, 1),
+    )
+    assert result["status"] != "verified"
