@@ -48,8 +48,10 @@ from build_uk_dashboard import validate_series
 from build_us_dashboard import _apply_transform, fetch_fred_us
 from country_primer.adapters import (
     USER_AGENT,
+    EstatCredentialMissing,
     apply_scale,
     fetch_boj_flatfile,
+    fetch_estat,
     fetch_imf_datamapper,
     fetch_imf_sdmx,
 )
@@ -106,6 +108,8 @@ def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
             return _apply_transform(fetch_imf_datamapper(session, spec))
         if fetcher == "boj_flatfile":
             return _apply_transform(apply_scale(fetch_boj_flatfile(session, spec)))
+        if fetcher == "estat":
+            return _apply_transform(apply_scale(fetch_estat(session, spec)))
         raise ValueError(f"Unknown fetcher: {fetcher}")
 
     try:
@@ -115,6 +119,11 @@ def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
             source_id=str(spec.get("fetcher") or "unknown"),
             operation=operation,
         )
+    except EstatCredentialMissing as exc:
+        # No credential is a configuration state, not a source failure: leave the
+        # indicator unavailable so it renders as a documented gap.
+        series = {**spec, "observations": [], "quality_status": "unavailable",
+                  "quality_notes": [f"Requires ESTAT_APP_ID: {exc}"]}
     except Exception as exc:  # noqa: BLE001 - structured degradation is intentional.
         series = failure_series(spec, exc)
     return validate_series(series)

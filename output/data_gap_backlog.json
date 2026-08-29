@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-29T14:47:18.653736+00:00",
+  "generated": "2026-08-29T15:18:10.535745+00:00",
   "items": [
     {
       "code": "CN",
@@ -68,10 +68,10 @@
       "code": "JP",
       "country": "Japan",
       "section": "prices_costs",
-      "item": "Core CPI excluding fresh food (and ex-fresh-food-and-energy)",
-      "status": "Japan's policy-relevant core measures are published by the Statistics Bureau via e-Stat, whose API requires a registered application ID. No key-free reproducible endpoint validated.",
+      "item": "CPI by COICOP division (food, housing, transport, and the other CP01-CP12 categories)",
+      "status": "OECD's Japan COICOP-division CPI mirror was discontinued after June 2021, and the IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations. The Statistics Bureau's e-Stat table carries these divisions too, but they are not yet wired here; only the goods/services split is chartable so far.",
       "priority": "high",
-      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
     },
     {
       "code": "UK",
@@ -268,15 +268,6 @@
       "section": "monetary_financial",
       "item": "BoJ balance sheet, ETF holdings, and financial conditions index",
       "status": "BoJ balance-sheet accounts are published as flat files without a documented stable API; composite financial-conditions indices are vendor-proprietary.",
-      "priority": "watch",
-      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
-    },
-    {
-      "code": "JP",
-      "country": "Japan",
-      "section": "prices_costs",
-      "item": "CPI by COICOP division, and the services/goods split",
-      "status": "OECD's Japan services/goods CPI mirror was discontinued after June 2021. The IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations, so only the all-items aggregate is chartable from that source.",
       "priority": "watch",
       "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
     },

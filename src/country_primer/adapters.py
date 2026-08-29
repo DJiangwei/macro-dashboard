@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import csv
 import io
+import os
 import re
 import threading
 import zipfile
@@ -204,4 +205,75 @@ def fetch_boj_flatfile(session: requests.Session, spec: dict[str, Any]) -> dict[
         "observations": observations,
         "provider_updated": observations[-1]["date"],
         "api_url": url,
+    }
+
+
+ESTAT_BASE = "https://api.e-stat.go.jp/rest/3.0/app/json/getStatsData"
+
+
+class EstatCredentialMissing(RuntimeError):
+    """Raised when ESTAT_APP_ID is absent so the caller can fall back to a gap."""
+
+
+def estat_time_to_date(value: str) -> str | None:
+    """e-Stat encodes monthly periods as YYYY00MMMM; month is the last two digits."""
+    text = str(value or "").strip()
+    if len(text) != 10 or not text.isdigit():
+        return None
+    year, month = text[:4], text[8:10]
+    if not ("01" <= month <= "12"):
+        return None
+    return f"{year}-{month}-01"
+
+
+def estat_observations(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    rows = (
+        payload.get("GET_STATS_DATA", {})
+        .get("STATISTICAL_DATA", {})
+        .get("DATA_INF", {})
+        .get("VALUE")
+    ) or []
+    observations: list[dict[str, Any]] = []
+    for row in rows:
+        obs_date = estat_time_to_date(row.get("@time"))
+        if not obs_date:
+            continue
+        try:
+            observations.append({"date": obs_date, "value": float(row.get("$"))})
+        except (TypeError, ValueError):
+            continue
+    observations.sort(key=lambda item: item["date"])
+    return observations
+
+
+def fetch_estat(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    app_id = os.environ.get("ESTAT_APP_ID", "").strip()
+    if not app_id:
+        raise EstatCredentialMissing("ESTAT_APP_ID is not set.")
+    params = {
+        "appId": app_id,
+        "statsDataId": str(spec["stats_data_id"]),
+        "cdTab": str(spec["estat_tab"]),
+        "cdCat01": str(spec["estat_cat01"]),
+        # Nationwide. Omitting this returns the Tokyo ward area, not Japan.
+        "cdArea": str(spec.get("estat_area") or "00000"),
+    }
+    # e-Stat free-text search times out; narrow id lookups still need a long read.
+    response = session.get(ESTAT_BASE, params=params, timeout=(10, 240))
+    response.raise_for_status()
+    payload = response.json()
+    status = payload.get("GET_STATS_DATA", {}).get("RESULT", {}).get("STATUS")
+    if status != 0:
+        raise RuntimeError(f"e-Stat returned STATUS={status} for {spec['stats_data_id']}.")
+    observations = estat_observations(payload)
+    start_date = str(spec.get("start_date") or "")
+    if start_date:
+        observations = [o for o in observations if o["date"] >= start_date]
+    if not observations:
+        raise RuntimeError(f"e-Stat returned no observations for {spec['stats_data_id']}.")
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"],
+        "api_url": ESTAT_BASE,
     }

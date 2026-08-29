@@ -708,7 +708,7 @@ The Japan page is generated from `config/japan_indicators.yaml`. FRED (official 
 
 Generated from `config/japan_indicators.yaml`; latest dates are tracked in `output/japan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 47. Latest rendered chart count: 47. Source groups: 18.
+Configured charts: 51. Latest rendered chart count: 51. Source groups: 19.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -733,6 +733,10 @@ Configured charts: 47. Latest rendered chart count: 47. Source groups: 18.
 | prices_costs | `cpi_mom` | Headline CPI, MoM | monthly | % m/m | imf_sdmx | IMF SDMX / CPI (Statistics Bureau) | JPN.CPI._T.POP_PCH_PA_PT.M | Not seasonally adjusted, so month-over-month prints carry a strong seasonal pattern; read against the same month a year earlier. |
 | prices_costs | `cpi_index` | Headline CPI Index | monthly | index | imf_sdmx | IMF SDMX / CPI (Statistics Bureau) | JPN.CPI._T.IX.M | Price level rather than a rate. The flat 1995-2012 stretch is the clearest single picture of Japan's deflation era. |
 | prices_costs | `producer_price_inflation` | Corporate Goods Price Index, YoY | monthly | % y/y | boj_flatfile | Bank of Japan / Corporate Goods Price Index | PRCG20_2200000000 | Domestic producer prices for all commodities, 2020 base. Derived year-over-year from the published index. |
+| prices_costs | `core_inflation` | Core CPI ex-Fresh Food, YoY | monthly | % y/y | estat | e-Stat / Statistics Bureau CPI | 0004052037/3/0161/00000 | The BoJ's policy reference measure. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base. |
+| prices_costs | `core_core_inflation` | Core-Core CPI ex-Fresh Food & Energy, YoY | monthly | % y/y | estat | e-Stat / Statistics Bureau CPI | 0004052037/3/0178/00000 | A supplementary measure the BoJ also watches, excluding both fresh food and energy. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base. |
+| prices_costs | `goods_inflation` | Goods CPI, YoY | monthly | % y/y | estat | e-Stat / Statistics Bureau CPI | 0004052037/3/0202/00000 | The goods component of the CPI basket, a supply-chain and import-price-sensitive counterpart to the services split below. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base. |
+| prices_costs | `services_inflation` | Services CPI, YoY | monthly | % y/y | estat | e-Stat / Statistics Bureau CPI | 0004052037/3/0220/00000 | The services component of the CPI basket, generally read as the more persistent, domestic-demand-driven half of inflation versus the goods split above. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base. |
 | housing_property | `house_price_index` | Residential Property Prices | quarterly | index | fred | FRED / BIS | QJPN628BIS | BIS nominal residential property price index, 2010=100; internationally comparable but shallower in coverage than the domestic land-price survey. |
 | housing_property | `real_house_price_index` | Real Residential Property Prices | quarterly | index | fred | FRED / BIS | QJPR628BIS | CPI-deflated house prices. The gap versus the nominal index is the clearest read on whether reflation is reaching real asset values. |
 | housing_property | `house_price_growth` | House Price Growth, YoY | quarterly | % y/y | fred | FRED / BIS | QJPN628BIS | Derived year-over-year growth from the BIS nominal residential price index. |
@@ -764,8 +768,7 @@ Configured charts: 47. Latest rendered chart count: 47. Source groups: 18.
 
 | Section | Indicator family | Current status |
 |---|---|---|
-| prices_costs | Core CPI excluding fresh food (and ex-fresh-food-and-energy) | Japan's policy-relevant core measures are published by the Statistics Bureau via e-Stat, whose API requires a registered application ID. No key-free reproducible endpoint validated. |
-| prices_costs | CPI by COICOP division, and the services/goods split | OECD's Japan services/goods CPI mirror was discontinued after June 2021. The IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations, so only the all-items aggregate is chartable from that source. |
+| prices_costs | CPI by COICOP division (food, housing, transport, and the other CP01-CP12 categories) | OECD's Japan COICOP-division CPI mirror was discontinued after June 2021, and the IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations. The Statistics Bureau's e-Stat table carries these divisions too, but they are not yet wired here; only the goods/services split is chartable so far. |
 | labour_wages | Job-to-applicant ratio and shunto wage settlements | MHLW job-openings statistics require e-Stat credentials; shunto outcomes are compiled by Rengo and are not redistributable as a public series. |
 | consumption_retail | Household consumption expenditure and consumer confidence | The FRED/OECD household consumption mirror stops in 2023Q3 and the OECD Japan consumer confidence mirror stops in January 2024; no replacement key-free endpoint validated. |
 | housing_property | Housing starts and mortgage rates | MLIT construction starts require e-Stat credentials; Japanese mortgage rates are posted per-bank rather than as an official aggregate series. |

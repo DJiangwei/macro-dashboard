@@ -1,9 +1,9 @@
 {
   "file": "japan.html",
-  "generated": "2026-08-29T14:45:21.602150+00:00",
-  "charts": 47,
-  "source_groups": 18,
-  "data_gaps": 7,
+  "generated": "2026-08-29T15:17:39.860822+00:00",
+  "charts": 51,
+  "source_groups": 19,
+  "data_gaps": 6,
   "low_confidence": 17,
   "policy_rate_latest": "0.84% (2026-06-01)",
   "key_series_latest": [
@@ -221,25 +221,18 @@
       "value"
     ],
     "file": "japan_canonical_frame.json",
-    "series": 47,
-    "observations": 16519,
-    "series_count": 47,
-    "observation_count": 16519
+    "series": 51,
+    "observations": 18035,
+    "series_count": 51,
+    "observation_count": 18035
   },
   "data_gaps_detail": [
     {
       "section": "prices_costs",
-      "item_en": "Core CPI excluding fresh food (and ex-fresh-food-and-energy)",
-      "item_zh": "剔除生鲜食品的核心CPI（及剔除生鲜与能源口径）",
-      "status_en": "Japan's policy-relevant core measures are published by the Statistics Bureau via e-Stat, whose API requires a registered application ID. No key-free reproducible endpoint validated.",
-      "status_zh": "日本政策相关的核心口径由总务省统计局通过e-Stat发布，其API需注册应用ID。尚未验证无密钥的可复跑接口。"
-    },
-    {
-      "section": "prices_costs",
-      "item_en": "CPI by COICOP division, and the services/goods split",
-      "item_zh": "CPI的COICOP大类分项，以及服务/商品拆分",
-      "status_en": "OECD's Japan services/goods CPI mirror was discontinued after June 2021. The IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations, so only the all-items aggregate is chartable from that source.",
-      "status_zh": "OECD日本服务/商品CPI镜像在2021年6月后停更。IMF CPI数据集虽声明了日本的COICOP大类键（CP01-CP12），但返回值为空，因此该来源仅总体口径可绘图。"
+      "item_en": "CPI by COICOP division (food, housing, transport, and the other CP01-CP12 categories)",
+      "item_zh": "CPI的COICOP大类分项（食品、住房、交通等CP01-CP12类别）",
+      "status_en": "OECD's Japan COICOP-division CPI mirror was discontinued after June 2021, and the IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations. The Statistics Bureau's e-Stat table carries these divisions too, but they are not yet wired here; only the goods/services split is chartable so far.",
+      "status_zh": "OECD日本COICOP大类CPI镜像在2021年6月后停更，IMF CPI数据集虽声明了日本的COICOP大类键（CP01-CP12），但返回值为空。总务省统计局e-Stat表中也含这些大类，但尚未接入本页；目前仅商品/服务拆分可绘图。"
     },
     {
       "section": "labour_wages",
@@ -278,7 +271,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 18,
+    "source_groups": 19,
     "sources": [
       {
         "source_name": "FRED / BIS",
@@ -294,6 +287,10 @@
       },
       {
         "source_name": "FRED / OECD (Statistics Bureau)",
+        "charts": 4
+      },
+      {
+        "source_name": "e-Stat / Statistics Bureau CPI",
         "charts": 4
       },
       {
@@ -355,7 +352,7 @@
     ],
     "quality_counts": {
       "low_confidence": 17,
-      "verified": 1,
+      "verified": 5,
       "watch": 29
     },
     "unavailable_count": 0
@@ -369,7 +366,7 @@
   "freshness": {
     "as_of_date": "2026-08-29",
     "counts": {
-      "current": 9,
+      "current": 13,
       "due": 18,
       "projection": 3,
       "stale": 17
@@ -1150,7 +1147,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 37,
+      "level": 41,
       "pct_change": 1,
       "yoy_pct": 9
     },
@@ -1223,6 +1220,6 @@
       "date",
       "value"
     ],
-    "charted_series": 47
+    "charted_series": 51
   }
 }

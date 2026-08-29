@@ -42,3 +42,27 @@ def test_parse_boj_wide_csv_unknown_code_returns_empty() -> None:
     from country_primer.adapters import parse_boj_wide_csv
     text = open("tests/fixtures/boj_cgpi_sample.csv").read()
     assert parse_boj_wide_csv(text, "NOT_A_CODE") == []
+
+
+def test_estat_time_parsing() -> None:
+    from country_primer.adapters import estat_time_to_date
+    assert estat_time_to_date("2026000808") == "2026-08-01"
+    assert estat_time_to_date("2026000707") == "2026-07-01"
+    assert estat_time_to_date("1970000000") is None
+
+
+def test_estat_value_rows_parse_into_observations() -> None:
+    import json
+    from country_primer.adapters import estat_observations
+    payload = json.load(open("tests/fixtures/estat_cpi_sample.json"))
+    obs = estat_observations(payload)
+    assert obs
+    assert all(o["date"][4] == "-" and isinstance(o["value"], float) for o in obs)
+    assert obs == sorted(obs, key=lambda o: o["date"])
+
+
+def test_estat_without_credential_raises_a_typed_error(monkeypatch: pytest.MonkeyPatch) -> None:
+    from country_primer.adapters import EstatCredentialMissing, fetch_estat
+    monkeypatch.delenv("ESTAT_APP_ID", raising=False)
+    with pytest.raises(EstatCredentialMissing):
+        fetch_estat(None, {"stats_data_id": "0004052037", "estat_tab": "3", "estat_cat01": "0161"})
