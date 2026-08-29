@@ -286,6 +286,7 @@ indicators:
     label_zh: "总体CPI同比"
     unit: "% y/y"
     fetcher: sarb
+    source_authority: official_primary
     series: "CPI1000F"
     source_name: "SARB Web API (Stats SA)"
     source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
@@ -299,6 +300,7 @@ indicators:
     label_zh: "生产者价格同比"
     unit: "% y/y"
     fetcher: sarb
+    source_authority: official_primary
     series: "PPI1000F"
     source_name: "SARB Web API (Stats SA)"
     source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
@@ -481,6 +483,7 @@ indicators:
     label_zh: "美元兑兰特"
     unit: "ZAR per USD"
     fetcher: sarb
+    source_authority: official_primary
     series: "EXCX135D"
     source_name: "SARB Web API"
     source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
@@ -494,6 +497,7 @@ indicators:
     label_zh: "欧元兑兰特"
     unit: "ZAR per EUR"
     fetcher: sarb
+    source_authority: official_primary
     series: "EXCZ002D"
     source_name: "SARB Web API"
     source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
@@ -507,6 +511,7 @@ indicators:
     label_zh: "名义有效汇率（SARB）"
     unit: "index"
     fetcher: sarb
+    source_authority: official_primary
     series: "EER4504A"
     source_name: "SARB Web API"
     source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
@@ -577,6 +582,7 @@ indicators:
     label_zh: "R2030基准国债收益率"
     unit: "%"
     fetcher: sarb
+    source_authority: official_primary
     series: "MMRD708A"
     source_name: "SARB Web API"
     source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
@@ -590,6 +596,7 @@ indicators:
     label_zh: "R209长期国债收益率"
     unit: "%"
     fetcher: sarb
+    source_authority: official_primary
     series: "MMRD709A"
     source_name: "SARB Web API"
     source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
@@ -605,6 +612,7 @@ indicators:
     label_zh: "南非央行政策利率"
     unit: "%"
     fetcher: sarb
+    source_authority: official_primary
     series: "MMRD002A"
     source_name: "SARB Web API"
     source_url: "https://www.resbank.co.za/en/home/what-we-do/monetary-policy"
@@ -618,6 +626,7 @@ indicators:
     label_zh: "优惠贷款利率"
     unit: "%"
     fetcher: sarb
+    source_authority: official_primary
     series: "MMRD000A"
     source_name: "SARB Web API"
     source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
@@ -631,6 +640,7 @@ indicators:
     label_zh: "SABOR隔夜利率"
     unit: "%"
     fetcher: sarb
+    source_authority: official_primary
     series: "MMRD851A"
     source_name: "SARB Web API"
     source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"
@@ -644,6 +654,7 @@ indicators:
     label_zh: "ZARONIA隔夜利率"
     unit: "%"
     fetcher: sarb
+    source_authority: official_primary
     series: "MMRD855A"
     source_name: "SARB Web API"
     source_url: "https://www.resbank.co.za/en/home/what-we-do/statistics"

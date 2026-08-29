@@ -141,3 +141,25 @@ def test_wrappers_and_mirrors_take_precedence_over_embedded_agency_names() -> No
     assert source_authority("AKShare / National Bureau of Statistics") == "public_wrapper"
     assert source_authority("FRED / Bureau of Economic Analysis") == "official_mirror"
     assert source_authority("Bureau of Economic Analysis", "https://www.bea.gov/") == "official_primary"
+
+
+def test_declared_authority_overrides_name_matching():
+    assert source_authority("SARB Web API", "", "official_primary") == "official_primary"
+
+
+def test_declared_authority_ignored_when_invalid():
+    assert source_authority("FRED / OECD", "", "not_a_tier") == "official_mirror"
+
+
+def test_native_sources_match_as_primary_without_declaration():
+    for name in ("Bank of Japan flat file", "e-Stat API", "SARB Web API"):
+        assert source_authority(name) == "official_primary", name
+
+
+def test_declared_authority_flows_through_assessment():
+    series = {
+        "id": "cpi_inflation", "frequency": "monthly", "transform": "level",
+        "source_name": "SARB Web API", "source_authority": "official_primary",
+        "observations": [{"date": "2026-07-01", "value": 4.3}],
+    }
+    assert assess_series_quality(series)["source_authority"] == "official_primary"
