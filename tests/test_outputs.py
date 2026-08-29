@@ -1,6 +1,13 @@
 import json
 
-from validate_outputs import validate_output_contract, COUNTRY_FILES, DATA_FIRST_NAMES
+import pytest
+
+from validate_outputs import (
+    validate_output_contract,
+    _assert_cross_checks,
+    COUNTRY_FILES,
+    DATA_FIRST_NAMES,
+)
 
 
 def test_generated_output_contract() -> None:
@@ -20,6 +27,34 @@ def test_cross_checks_are_present_and_within_tolerance() -> None:
         assert checks, f"{name} declares no cross-checks"
         bad = [c for c in checks if c["status"] == "diverged"]
         assert not bad, f"{name} cross-checks diverged: {[c['label_en'] for c in bad]}"
+
+
+def test_assert_cross_checks_raises_on_diverged_status() -> None:
+    # Synthetic summary standing in for a committed dashboard summary; only
+    # the fields _assert_cross_checks reads are populated.
+    summary = {
+        "cross_checks": [
+            {
+                "label_en": "Fake CPI check",
+                "status": "diverged",
+                "n_breaches": 99,
+                "tolerance": 0.15,
+                "last_breach_date": "2024-01-01",
+            }
+        ]
+    }
+    with pytest.raises(AssertionError, match="japan.*diverged"):
+        _assert_cross_checks("japan", summary)
+
+
+def test_assert_cross_checks_allows_minor_and_agree_status() -> None:
+    summary = {
+        "cross_checks": [
+            {"label_en": "Fake check A", "status": "minor"},
+            {"label_en": "Fake check B", "status": "agree"},
+        ]
+    }
+    _assert_cross_checks("japan", summary)  # must not raise
 
 
 def test_every_canonical_series_carries_trust_dimensions():

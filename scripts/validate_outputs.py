@@ -30,6 +30,24 @@ def _load_json(path: Path) -> dict:
     return json.loads(path.read_text())
 
 
+def _assert_cross_checks(name: str, summary: dict) -> None:
+    """Fail the build if any declared cross-check pair has diverged.
+
+    Gates on the windowed `status` field alone (see evaluate_cross_checks) —
+    never on raw `n_breaches` / `max_abs_diff` directly, since full-history
+    breach counts include documented historical events (e.g. CPI rebasing)
+    that are real economics, not adapter defects. A country with no declared
+    cross-checks (an absent or empty list) is a no-op.
+    """
+    for check in summary.get("cross_checks") or []:
+        if check.get("status") == "diverged":
+            raise AssertionError(
+                f"{name} cross-check '{check.get('label_en')}' diverged: "
+                f"{check.get('n_breaches')} breaches beyond {check.get('tolerance')}, "
+                f"latest {check.get('last_breach_date')}"
+            )
+
+
 def validate_output_contract(root: Path = ROOT) -> list[str]:
     output = root / "output"
     messages: list[str] = []
@@ -84,13 +102,7 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
             raise AssertionError(f"{name} summary is missing its data mode")
         if summary.get("canonical_frame", {}).get("series_count") != cards:
             raise AssertionError(f"{name} summary canonical count does not match rendered charts")
-        for check in summary.get("cross_checks") or []:
-            if check.get("status") == "diverged":
-                raise AssertionError(
-                    f"{name} cross-check '{check.get('label_en')}' diverged: "
-                    f"{check.get('n_breaches')} breaches beyond {check.get('tolerance')}, "
-                    f"latest {check.get('last_breach_date')}"
-                )
+        _assert_cross_checks(name, summary)
 
     cee_canonical = _load_json(output / "cee_canonical_frame.json")
     if cee_canonical.get("schema_version") != "cee-canonical-v2":
