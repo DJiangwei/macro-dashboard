@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-08-28T15:39:22.726269+00:00",
+  "generated": "2026-08-29T14:45:21.617724+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -532,14 +532,17 @@
       "events": []
     },
     "JP": {
-      "calls": 46,
-      "success": 46,
+      "calls": 47,
+      "success": 47,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {},
       "sources": {
+        "boj_flatfile": {
+          "success": 1
+        },
         "fred": {
           "success": 38
         },

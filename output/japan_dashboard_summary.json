@@ -1,9 +1,9 @@
 {
   "file": "japan.html",
-  "generated": "2026-08-29T14:36:58.475665+00:00",
-  "charts": 46,
-  "source_groups": 17,
-  "data_gaps": 8,
+  "generated": "2026-08-29T14:45:21.602150+00:00",
+  "charts": 47,
+  "source_groups": 18,
+  "data_gaps": 7,
   "low_confidence": 17,
   "policy_rate_latest": "0.84% (2026-06-01)",
   "key_series_latest": [
@@ -213,7 +213,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "snapshot",
+  "data_mode": "refresh",
   "canonical_frame": {
     "schema_version": "data-first-canonical-v2",
     "observation_columns": [
@@ -221,11 +221,10 @@
       "value"
     ],
     "file": "japan_canonical_frame.json",
-    "series": 46,
-    "observations": 16452,
-    "series_count": 46,
-    "observation_count": 16452,
-    "snapshot_generated": "2026-08-28T15:38:27.117784+00:00"
+    "series": 47,
+    "observations": 16519,
+    "series_count": 47,
+    "observation_count": 16519
   },
   "data_gaps_detail": [
     {
@@ -241,13 +240,6 @@
       "item_zh": "CPI的COICOP大类分项，以及服务/商品拆分",
       "status_en": "OECD's Japan services/goods CPI mirror was discontinued after June 2021. The IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations, so only the all-items aggregate is chartable from that source.",
       "status_zh": "OECD日本服务/商品CPI镜像在2021年6月后停更。IMF CPI数据集虽声明了日本的COICOP大类键（CP01-CP12），但返回值为空，因此该来源仅总体口径可绘图。"
-    },
-    {
-      "section": "prices_costs",
-      "item_en": "Corporate Goods Price Index (domestic PPI)",
-      "item_zh": "企业物价指数（国内PPI）",
-      "status_en": "Published by the Bank of Japan time-series search; no stable machine-readable download URL validated for unattended refresh.",
-      "status_zh": "由日本银行时间序列检索发布；尚未验证可用于无人值守刷新的稳定机读下载地址。"
     },
     {
       "section": "labour_wages",
@@ -286,7 +278,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 17,
+    "source_groups": 18,
     "sources": [
       {
         "source_name": "FRED / BIS",
@@ -333,6 +325,10 @@
         "charts": 2
       },
       {
+        "source_name": "Bank of Japan / Corporate Goods Price Index",
+        "charts": 1
+      },
+      {
         "source_name": "FRED / Federal Reserve H.10",
         "charts": 1
       },
@@ -359,6 +355,7 @@
     ],
     "quality_counts": {
       "low_confidence": 17,
+      "verified": 1,
       "watch": 29
     },
     "unavailable_count": 0
@@ -372,7 +369,7 @@
   "freshness": {
     "as_of_date": "2026-08-29",
     "counts": {
-      "current": 8,
+      "current": 9,
       "due": 18,
       "projection": 3,
       "stale": 17
@@ -1155,9 +1152,39 @@
     "counts": {
       "level": 37,
       "pct_change": 1,
-      "yoy_pct": 8
+      "yoy_pct": 9
     },
     "non_level": [
+      {
+        "id": "real_gdp_growth",
+        "label_en": "Real GDP Growth, QoQ",
+        "transform": "pct_change",
+        "unit": "% q/q"
+      },
+      {
+        "id": "real_gdp_yoy",
+        "label_en": "Real GDP Growth, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "nominal_gdp_growth",
+        "label_en": "Nominal GDP Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "gfcf_growth",
+        "label_en": "Gross Fixed Capital Formation Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "government_consumption_growth",
+        "label_en": "Government Consumption Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
       {
         "id": "employment_growth",
         "label_en": "Employment Growth",
@@ -1165,8 +1192,14 @@
         "unit": "% y/y"
       },
       {
-        "id": "gfcf_growth",
-        "label_en": "Gross Fixed Capital Formation Growth",
+        "id": "producer_price_inflation",
+        "label_en": "Corporate Goods Price Index, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "house_price_growth",
+        "label_en": "House Price Growth, YoY",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
@@ -1181,36 +1214,6 @@
         "label_en": "Goods Imports Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
-      },
-      {
-        "id": "government_consumption_growth",
-        "label_en": "Government Consumption Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "house_price_growth",
-        "label_en": "House Price Growth, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "nominal_gdp_growth",
-        "label_en": "Nominal GDP Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "real_gdp_growth",
-        "label_en": "Real GDP Growth, QoQ",
-        "transform": "pct_change",
-        "unit": "% q/q"
-      },
-      {
-        "id": "real_gdp_yoy",
-        "label_en": "Real GDP Growth, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
       }
     ]
   },
@@ -1220,6 +1223,6 @@
       "date",
       "value"
     ],
-    "charted_series": 46
+    "charted_series": 47
   }
 }

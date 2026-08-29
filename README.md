@@ -166,9 +166,12 @@ observations. FRED still carries national accounts, production, labour, trade,
 rates, and BIS property/credit series, while national CPI and the deposit-taker
 soundness ratios come from the IMF SDMX 2.1 API (`api.imf.org`) and fiscal
 ratios come from the IMF WEO/Fiscal Monitor DataMapper with a dashed forecast
-segment. Japan-native releases behind the e-Stat application-ID wall — the
-ex-fresh-food core CPI, the job-to-applicant ratio, housing starts, and the BoJ
-corporate goods price index — are recorded as explicit data gaps.
+segment. The Bank of Japan's own stable flat-file download
+(`stat-search.boj.or.jp`) supplies the Corporate Goods Price Index — Japan's
+domestic producer prices — needing no credential, which makes it the page's
+first `official_primary`, `verified` series. Japan-native releases behind the
+e-Stat application-ID wall — the ex-fresh-food core CPI, the job-to-applicant
+ratio, and housing starts — remain recorded as explicit data gaps.
 
 The South Africa page is the first to use a national central bank's own public
 JSON API. SARB Web Indicators

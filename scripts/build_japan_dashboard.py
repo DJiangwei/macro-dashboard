@@ -49,6 +49,7 @@ from build_us_dashboard import _apply_transform, fetch_fred_us
 from country_primer.adapters import (
     USER_AGENT,
     apply_scale,
+    fetch_boj_flatfile,
     fetch_imf_datamapper,
     fetch_imf_sdmx,
 )
@@ -103,6 +104,8 @@ def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
             return _apply_transform(fetch_imf_sdmx(session, spec))
         if fetcher == "imf_datamapper":
             return _apply_transform(fetch_imf_datamapper(session, spec))
+        if fetcher == "boj_flatfile":
+            return _apply_transform(apply_scale(fetch_boj_flatfile(session, spec)))
         raise ValueError(f"Unknown fetcher: {fetcher}")
 
     try:

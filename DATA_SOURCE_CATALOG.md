@@ -708,7 +708,7 @@ The Japan page is generated from `config/japan_indicators.yaml`. FRED (official 
 
 Generated from `config/japan_indicators.yaml`; latest dates are tracked in `output/japan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 46. Latest rendered chart count: 46. Source groups: 17.
+Configured charts: 47. Latest rendered chart count: 47. Source groups: 18.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -732,6 +732,7 @@ Configured charts: 46. Latest rendered chart count: 46. Source groups: 17.
 | prices_costs | `cpi_inflation` | Headline CPI, YoY | monthly | % y/y | imf_sdmx | IMF SDMX / CPI (Statistics Bureau) | JPN.CPI._T.YOY_PCH_PA_PT.M | IMF-compiled national CPI for Japan. This is the all-items index; Japan's headline policy reference is the ex-fresh-food 'core' measure, which is tracked as a data gap. |
 | prices_costs | `cpi_mom` | Headline CPI, MoM | monthly | % m/m | imf_sdmx | IMF SDMX / CPI (Statistics Bureau) | JPN.CPI._T.POP_PCH_PA_PT.M | Not seasonally adjusted, so month-over-month prints carry a strong seasonal pattern; read against the same month a year earlier. |
 | prices_costs | `cpi_index` | Headline CPI Index | monthly | index | imf_sdmx | IMF SDMX / CPI (Statistics Bureau) | JPN.CPI._T.IX.M | Price level rather than a rate. The flat 1995-2012 stretch is the clearest single picture of Japan's deflation era. |
+| prices_costs | `producer_price_inflation` | Corporate Goods Price Index, YoY | monthly | % y/y | boj_flatfile | Bank of Japan / Corporate Goods Price Index | PRCG20_2200000000 | Domestic producer prices for all commodities, 2020 base. Derived year-over-year from the published index. |
 | housing_property | `house_price_index` | Residential Property Prices | quarterly | index | fred | FRED / BIS | QJPN628BIS | BIS nominal residential property price index, 2010=100; internationally comparable but shallower in coverage than the domestic land-price survey. |
 | housing_property | `real_house_price_index` | Real Residential Property Prices | quarterly | index | fred | FRED / BIS | QJPR628BIS | CPI-deflated house prices. The gap versus the nominal index is the clearest read on whether reflation is reaching real asset values. |
 | housing_property | `house_price_growth` | House Price Growth, YoY | quarterly | % y/y | fred | FRED / BIS | QJPN628BIS | Derived year-over-year growth from the BIS nominal residential price index. |
@@ -765,7 +766,6 @@ Configured charts: 46. Latest rendered chart count: 46. Source groups: 17.
 |---|---|---|
 | prices_costs | Core CPI excluding fresh food (and ex-fresh-food-and-energy) | Japan's policy-relevant core measures are published by the Statistics Bureau via e-Stat, whose API requires a registered application ID. No key-free reproducible endpoint validated. |
 | prices_costs | CPI by COICOP division, and the services/goods split | OECD's Japan services/goods CPI mirror was discontinued after June 2021. The IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations, so only the all-items aggregate is chartable from that source. |
-| prices_costs | Corporate Goods Price Index (domestic PPI) | Published by the Bank of Japan time-series search; no stable machine-readable download URL validated for unattended refresh. |
 | labour_wages | Job-to-applicant ratio and shunto wage settlements | MHLW job-openings statistics require e-Stat credentials; shunto outcomes are compiled by Rengo and are not redistributable as a public series. |
 | consumption_retail | Household consumption expenditure and consumer confidence | The FRED/OECD household consumption mirror stops in 2023Q3 and the OECD Japan consumer confidence mirror stops in January 2024; no replacement key-free endpoint validated. |
 | housing_property | Housing starts and mortgage rates | MLIT construction starts require e-Stat credentials; Japanese mortgage rates are posted per-bank rather than as an official aggregate series. |

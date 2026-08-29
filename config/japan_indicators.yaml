@@ -336,6 +336,22 @@ indicators:
     start_date: "1995-01-01"
     caveat_en: "Price level rather than a rate. The flat 1995-2012 stretch is the clearest single picture of Japan's deflation era."
     caveat_zh: "为价格水平而非增速。1995-2012年的平坦区间是日本通缩时期最直观的单张图。"
+  - id: producer_price_inflation
+    section: prices_costs
+    label_en: "Corporate Goods Price Index, YoY"
+    label_zh: "企业物价指数同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: boj_flatfile
+    boj_file: "cgpi_m_en"
+    series: "PRCG20_2200000000"
+    source_name: "Bank of Japan / Corporate Goods Price Index"
+    source_authority: official_primary
+    source_url: "https://www.stat-search.boj.or.jp/info/dload_en.html"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Domestic producer prices for all commodities, 2020 base. Derived year-over-year from the published index."
+    caveat_zh: "全部商品的国内生产者价格，2020年基准。由公布指数派生的同比增速。"
 
   # --- housing_property ----------------------------------------------------
   - id: house_price_index
@@ -707,11 +723,6 @@ data_gaps:
     item_zh: "CPI的COICOP大类分项，以及服务/商品拆分"
     status_en: "OECD's Japan services/goods CPI mirror was discontinued after June 2021. The IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations, so only the all-items aggregate is chartable from that source."
     status_zh: "OECD日本服务/商品CPI镜像在2021年6月后停更。IMF CPI数据集虽声明了日本的COICOP大类键（CP01-CP12），但返回值为空，因此该来源仅总体口径可绘图。"
-  - section: prices_costs
-    item_en: "Corporate Goods Price Index (domestic PPI)"
-    item_zh: "企业物价指数（国内PPI）"
-    status_en: "Published by the Bank of Japan time-series search; no stable machine-readable download URL validated for unattended refresh."
-    status_zh: "由日本银行时间序列检索发布；尚未验证可用于无人值守刷新的稳定机读下载地址。"
   - section: labour_wages
     item_en: "Job-to-applicant ratio and shunto wage settlements"
     item_zh: "有效求人倍率与春斗工资谈判结果"

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-29T14:37:15.251095+00:00",
+  "generated": "2026-08-29T14:47:18.653736+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -1075,16 +1075,16 @@
       "currency": "JPY",
       "institution": "BoJ",
       "category": "data-first country page",
-      "charts": 46,
-      "expected": 46,
+      "charts": 47,
+      "expected": 47,
       "proxy_fills": 0,
-      "gaps_or_dropped": 8,
+      "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
       "headline_label": "Overnight call rate",
       "headline": "0.84% (2026-06-01)",
       "secondary_label": "Source groups",
-      "secondary": "17",
-      "quality": "17 source groups · 17 low-confidence charts",
+      "secondary": "18",
+      "quality": "18 source groups · 17 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -1153,7 +1153,7 @@
         }
       },
       "source_health": {
-        "source_groups": 17,
+        "source_groups": 18,
         "sources": [
           {
             "source_name": "FRED / BIS",
@@ -1200,6 +1200,10 @@
             "charts": 2
           },
           {
+            "source_name": "Bank of Japan / Corporate Goods Price Index",
+            "charts": 1
+          },
+          {
             "source_name": "FRED / Federal Reserve H.10",
             "charts": 1
           },
@@ -1226,6 +1230,7 @@
         ],
         "quality_counts": {
           "low_confidence": 17,
+          "verified": 1,
           "watch": 29
         },
         "unavailable_count": 0
@@ -1233,7 +1238,7 @@
       "freshness": {
         "as_of_date": "2026-08-29",
         "counts": {
-          "current": 8,
+          "current": 9,
           "due": 18,
           "projection": 3,
           "stale": 17
@@ -2019,16 +2024,15 @@
           "value"
         ],
         "file": "japan_canonical_frame.json",
-        "series": 46,
-        "observations": 16452,
-        "series_count": 46,
-        "observation_count": 16452,
-        "snapshot_generated": "2026-08-28T15:38:27.117784+00:00"
+        "series": 47,
+        "observations": 16519,
+        "series_count": 47,
+        "observation_count": 16519
       },
       "freshness_summary": {
         "dashboard": "Japan",
-        "charts": 46,
-        "current": 11,
+        "charts": 47,
+        "current": 12,
         "stale": 17,
         "lagged_source": 0,
         "projection": 0,
@@ -4817,15 +4821,15 @@
       }
     },
     "JP": {
-      "composite_score": 49.3,
-      "composite_label": "defensive",
+      "composite_score": 50.3,
+      "composite_label": "mixed",
       "quality": {
-        "score": 33.4,
+        "score": 36.4,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 23.9,
+        "freshness_score": 25.5,
         "proxy_penalty": 0.0,
-        "gap_penalty": 20.0
+        "gap_penalty": 17.5
       },
       "dimensions": {
         "growth": {
@@ -5124,11 +5128,11 @@
       "code": "JP",
       "name": "Japan",
       "coverage_pct": 100.0,
-      "freshness_pct": 23.9,
+      "freshness_pct": 25.5,
       "proxy_fills": 0,
-      "gaps": 8,
-      "regime_score": 49.3,
-      "quality_score": 33.4
+      "gaps": 7,
+      "regime_score": 50.3,
+      "quality_score": 36.4
     },
     {
       "code": "ZA",
@@ -6277,15 +6281,6 @@
       "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
     },
     {
-      "code": "JP",
-      "country": "Japan",
-      "section": "prices_costs",
-      "item": "Corporate Goods Price Index (domestic PPI)",
-      "status": "Published by the Bank of Japan time-series search; no stable machine-readable download URL validated for unattended refresh.",
-      "priority": "high",
-      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
-    },
-    {
       "code": "UK",
       "country": "United Kingdom",
       "section": "housing_construction",
@@ -6585,9 +6580,16 @@
   ],
   "what_changed": [
     {
-      "scope": "workbench",
-      "change": "no_material_change",
-      "detail": "Coverage, proxy, headline, and regime metrics are unchanged versus the previous workbench build."
+      "scope": "JP",
+      "change": "charts",
+      "from": 46,
+      "to": 47
+    },
+    {
+      "scope": "JP",
+      "change": "gaps_or_dropped",
+      "from": 8,
+      "to": 7
     }
   ],
   "degradation_alerts": [],

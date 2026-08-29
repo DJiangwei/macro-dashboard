@@ -26,3 +26,19 @@ def test_apply_scale_divides_and_is_a_noop_without_scale() -> None:
 def test_builders_no_longer_import_fetchers_from_each_other() -> None:
     source = open("scripts/build_south_africa_dashboard.py").read()
     assert "from build_japan_dashboard import" not in source
+
+
+def test_parse_boj_wide_csv_reads_periods_from_the_header() -> None:
+    from country_primer.adapters import parse_boj_wide_csv
+    text = open("tests/fixtures/boj_cgpi_sample.csv").read()
+    obs = parse_boj_wide_csv(text, "PRCG20_2200000000")
+    assert obs, "expected observations for the all-commodities series"
+    assert obs[0]["date"] == "2020-01-01"
+    assert isinstance(obs[0]["value"], float)
+    assert obs == sorted(obs, key=lambda o: o["date"])
+
+
+def test_parse_boj_wide_csv_unknown_code_returns_empty() -> None:
+    from country_primer.adapters import parse_boj_wide_csv
+    text = open("tests/fixtures/boj_cgpi_sample.csv").read()
+    assert parse_boj_wide_csv(text, "NOT_A_CODE") == []

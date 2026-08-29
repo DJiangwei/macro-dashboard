@@ -9,6 +9,7 @@ import csv
 import io
 import re
 import threading
+import zipfile
 from datetime import UTC, datetime
 from typing import Any
 
@@ -17,6 +18,7 @@ import requests
 
 IMF_SDMX_BASE = "https://api.imf.org/external/sdmx/2.1/data"
 IMF_DATAMAPPER_BASE = "https://www.imf.org/external/datamapper/api/v1"
+BOJ_FLATFILE_BASE = "https://www.stat-search.boj.or.jp/info"
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
@@ -153,4 +155,53 @@ def apply_scale(series: dict[str, Any]) -> dict[str, Any]:
         "observations": [
             {**item, "value": float(item["value"]) / scale} for item in observations
         ],
+    }
+
+
+def parse_boj_wide_csv(text: str, series_code: str) -> list[dict[str, Any]]:
+    """Parse a BOJ flat file. Row 1 holds YYYYMM periods from column 4 onward;
+    each data row is `code,dataset,label,v1..vN`."""
+    rows = list(csv.reader(io.StringIO(text)))
+    if not rows:
+        return []
+    periods = rows[0][3:]
+    for row in rows[1:]:
+        if not row or row[0].strip() != series_code:
+            continue
+        observations: list[dict[str, Any]] = []
+        for period, raw in zip(periods, row[3:]):
+            period = period.strip()
+            if len(period) != 6 or not period.isdigit():
+                continue
+            try:
+                value = float(str(raw).strip())
+            except (TypeError, ValueError):
+                continue
+            observations.append({"date": f"{period[:4]}-{period[4:6]}-01", "value": value})
+        observations.sort(key=lambda item: item["date"])
+        return observations
+    return []
+
+
+def fetch_boj_flatfile(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    name = str(spec["boj_file"])
+    url = f"{BOJ_FLATFILE_BASE}/{name}.zip"
+    response = session.get(url, headers={"User-Agent": USER_AGENT}, timeout=(5, 120))
+    response.raise_for_status()
+    with zipfile.ZipFile(io.BytesIO(response.content)) as archive:
+        member = next((n for n in archive.namelist() if n.endswith(".csv")), None)
+        if member is None:
+            raise RuntimeError(f"BOJ archive {name}.zip contains no CSV.")
+        text = archive.read(member).decode("ascii", "replace")
+    observations = parse_boj_wide_csv(text, str(spec["series"]))
+    start_date = str(spec.get("start_date") or "")
+    if start_date:
+        observations = [o for o in observations if o["date"] >= start_date]
+    if not observations:
+        raise RuntimeError(f"BOJ {name} returned no observations for {spec['series']}.")
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"],
+        "api_url": url,
     }
