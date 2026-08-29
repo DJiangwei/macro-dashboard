@@ -1,6 +1,6 @@
 {
   "file": "south_africa.html",
-  "generated": "2026-08-29T14:36:58.723457+00:00",
+  "generated": "2026-08-29T19:42:20.874962+00:00",
   "charts": 51,
   "source_groups": 14,
   "data_gaps": 7,
@@ -95,7 +95,7 @@
       "id": "cpi_inflation",
       "label_en": "Headline CPI, YoY",
       "label_zh": "总体CPI同比",
-      "latest_date": "2026-07-31",
+      "latest_date": "2026-07-01",
       "latest_value": 4.3,
       "latest_display": "4.30 % y/y",
       "frequency": "monthly",
@@ -107,7 +107,7 @@
       "id": "ppi_inflation",
       "label_en": "Producer Prices, YoY",
       "label_zh": "生产者价格同比",
-      "latest_date": "2026-07-31",
+      "latest_date": "2026-07-01",
       "latest_value": 5.7115,
       "latest_display": "5.71 % y/y",
       "frequency": "monthly",
@@ -225,7 +225,22 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "snapshot",
+  "data_mode": "refresh",
+  "cross_checks": [
+    {
+      "concept": "headline_inflation",
+      "primary": "cpi_inflation",
+      "secondary": "cpi_inflation_imf",
+      "label_en": "SARB vs IMF headline CPI",
+      "n_common": 318,
+      "latest_diff": 0.01953125,
+      "max_abs_diff": 2.740149021858956,
+      "n_breaches": 161,
+      "last_breach_date": "2023-11-01",
+      "tolerance": 0.15,
+      "status": "diverged"
+    }
+  ],
   "canonical_frame": {
     "schema_version": "data-first-canonical-v2",
     "observation_columns": [
@@ -236,8 +251,7 @@
     "series": 51,
     "observations": 28737,
     "series_count": 51,
-    "observation_count": 28737,
-    "snapshot_generated": "2026-08-29T14:11:30.404647+00:00"
+    "observation_count": 28737
   },
   "data_gaps_detail": [
     {
@@ -1153,8 +1167,38 @@
     },
     "non_level": [
       {
+        "id": "real_gdp_growth",
+        "label_en": "Real GDP Growth, QoQ",
+        "transform": "pct_change",
+        "unit": "% q/q"
+      },
+      {
+        "id": "real_gdp_yoy",
+        "label_en": "Real GDP Growth, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "nominal_gdp_growth",
+        "label_en": "Nominal GDP Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
         "id": "gfcf_growth",
         "label_en": "Gross Fixed Capital Formation Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "manufacturing_employment_growth",
+        "label_en": "Manufacturing Employment Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "house_price_growth",
+        "label_en": "House Price Growth, YoY",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
@@ -1167,36 +1211,6 @@
       {
         "id": "goods_imports_growth",
         "label_en": "Goods Imports Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "house_price_growth",
-        "label_en": "House Price Growth, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "manufacturing_employment_growth",
-        "label_en": "Manufacturing Employment Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "nominal_gdp_growth",
-        "label_en": "Nominal GDP Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "real_gdp_growth",
-        "label_en": "Real GDP Growth, QoQ",
-        "transform": "pct_change",
-        "unit": "% q/q"
-      },
-      {
-        "id": "real_gdp_yoy",
-        "label_en": "Real GDP Growth, YoY",
         "transform": "yoy_pct",
         "unit": "% y/y"
       }

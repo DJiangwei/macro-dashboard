@@ -807,3 +807,10 @@ data_gaps:
     item_zh: "国库月度收支执行"
     status_en: "Section 32 monthly statements are published as PDF and Excel attachments without a stable programmatic endpoint."
     status_zh: "第32条月度报表以PDF与Excel附件形式发布，无稳定的程序化接口。"
+
+cross_checks:
+  - concept: headline_inflation
+    primary: cpi_inflation          # SARB, compiling authority
+    secondary: cpi_inflation_imf    # IMF SDMX, independent path
+    tolerance: 0.15
+    label_en: "SARB vs IMF headline CPI"

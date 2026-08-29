@@ -708,7 +708,7 @@ The Japan page is generated from `config/japan_indicators.yaml`. FRED (official 
 
 Generated from `config/japan_indicators.yaml`; latest dates are tracked in `output/japan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 51. Latest rendered chart count: 51. Source groups: 19.
+Configured charts: 52. Latest rendered chart count: 52. Source groups: 19.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -729,6 +729,7 @@ Configured charts: 51. Latest rendered chart count: 51. Source groups: 19.
 | labour_wages | `employment_rate` | Employment Rate, 15-64 | monthly | % | fred | FRED / OECD (Statistics Bureau) | LREM64TTJPM156S | Prime-and-core working-age employment rate; among the highest in the OECD. |
 | labour_wages | `employment_growth` | Employment Growth | monthly | % y/y | fred | FRED / OECD (Statistics Bureau) | LFEMTTTTJPM647S | Derived year-over-year growth from the total employment level; a shrinking working-age population caps the sustainable rate. |
 | labour_wages | `manufacturing_earnings_growth` | Manufacturing Hourly Earnings, YoY | monthly | % y/y | fred | FRED / OECD (MHLW) | LCEAMN01JPM659S | Manufacturing hourly earnings only. The economy-wide shunto wage-round outcome is published by Rengo and is not a redistributable public series. |
+| prices_costs | `cpi_inflation_estat` | Headline CPI, YoY (e-Stat) | monthly | % y/y | estat | e-Stat / Statistics Bureau CPI | 0004052037/3/0001/00000 | All-items headline CPI. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base. Charted alongside the IMF SDMX mirror below as a cross-check between the two publication paths. |
 | prices_costs | `cpi_inflation` | Headline CPI, YoY | monthly | % y/y | imf_sdmx | IMF SDMX / CPI (Statistics Bureau) | JPN.CPI._T.YOY_PCH_PA_PT.M | IMF-compiled national CPI for Japan. This is the all-items index; Japan's headline policy reference is the ex-fresh-food 'core' measure, which is tracked as a data gap. |
 | prices_costs | `cpi_mom` | Headline CPI, MoM | monthly | % m/m | imf_sdmx | IMF SDMX / CPI (Statistics Bureau) | JPN.CPI._T.POP_PCH_PA_PT.M | Not seasonally adjusted, so month-over-month prints carry a strong seasonal pattern; read against the same month a year earlier. |
 | prices_costs | `cpi_index` | Headline CPI Index | monthly | index | imf_sdmx | IMF SDMX / CPI (Statistics Bureau) | JPN.CPI._T.IX.M | Price level rather than a rate. The flat 1995-2012 stretch is the clearest single picture of Japan's deflation era. |

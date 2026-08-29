@@ -294,6 +294,24 @@ indicators:
     caveat_zh: "仅为制造业时薪。全经济口径的春斗工资谈判结果由连合发布，不属于可再分发的公开序列。"
 
   # --- prices_costs --------------------------------------------------------
+  - id: cpi_inflation_estat
+    section: prices_costs
+    label_en: "Headline CPI, YoY (e-Stat)"
+    label_zh: "总体CPI同比（e-Stat）"
+    unit: "% y/y"
+    fetcher: estat
+    stats_data_id: "0004052037"
+    estat_tab: "3"
+    estat_cat01: "0001"
+    estat_area: "00000"
+    series: "0004052037/3/0001/00000"
+    source_name: "e-Stat / Statistics Bureau CPI"
+    source_authority: official_primary
+    source_url: "https://www.e-stat.go.jp/en/dbview?sid=0004052037"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "All-items headline CPI. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base. Charted alongside the IMF SDMX mirror below as a cross-check between the two publication paths."
+    caveat_zh: "总体（全项目）CPI。同比由总务省统计局直接公布，非本页派生。全国口径，2025年基准。与下方IMF SDMX镜像并列展示，作为两条发布路径之间的交叉校验。"
   - id: cpi_inflation
     section: prices_costs
     label_en: "Headline CPI, YoY"
@@ -815,3 +833,10 @@ data_gaps:
     item_zh: "通胀预期（短观价格预期、盈亏平衡通胀）"
     status_en: "Tankan price expectations are BoJ-proprietary in redistributable form and the JGBi breakeven series has no validated key-free public endpoint."
     status_zh: "短观价格预期的可再分发形式属日银专有，物价联动国债盈亏平衡序列亦无经验证的无密钥公开接口。"
+
+cross_checks:
+  - concept: headline_inflation
+    primary: cpi_inflation_estat    # e-Stat, compiling authority
+    secondary: cpi_inflation        # IMF SDMX, independent path
+    tolerance: 0.15
+    label_en: "e-Stat vs IMF headline CPI"

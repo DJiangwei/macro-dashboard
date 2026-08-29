@@ -51,6 +51,7 @@ from country_primer.adapters import (
     fetch_imf_datamapper,
     fetch_imf_sdmx,
 )
+from country_primer.cross_checks import evaluate_cross_checks
 from country_primer.source_health import (
     SOURCE_HEALTH,
     failure_series,
@@ -115,12 +116,20 @@ def fetch_sarb(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any
     if not isinstance(payload, list):
         raise RuntimeError(f"SARB returned an unexpected payload for {code}.")
 
+    frequency = str(spec.get("frequency") or "").strip().lower()
     observations: list[dict[str, Any]] = []
     for row in payload:
         period = str(row.get("Period") or "")[:10]
         raw_value = row.get("Value")
         if not re.match(r"^\d{4}-\d{2}-\d{2}$", period) or raw_value is None:
             continue
+        if frequency == "monthly":
+            # SARB stamps monthly readings with the last calendar day of the
+            # reference month (e.g. "2026-07-31"); every other source in this
+            # repo (FRED, IMF SDMX, e-Stat) stamps the first day instead. Align
+            # to that convention so same-period observations from independent
+            # sources share a date key for cross-source comparison.
+            period = f"{period[:7]}-01"
         try:
             observations.append({"date": period, "value": float(raw_value)})
         except (TypeError, ValueError):
@@ -454,6 +463,7 @@ def build(data_mode: str | None = None) -> Path:
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
         "data_mode": data_mode,
     }
+    summary["cross_checks"] = evaluate_cross_checks(config, series_list)
     summary["canonical_frame"] = (
         canonical_frame_metadata(CANONICAL_JSON)
         if data_mode == "snapshot"

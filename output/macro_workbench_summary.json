@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-29T15:18:10.535745+00:00",
+  "generated": "2026-08-29T19:47:50.894608+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -1075,8 +1075,8 @@
       "currency": "JPY",
       "institution": "BoJ",
       "category": "data-first country page",
-      "charts": 51,
-      "expected": 51,
+      "charts": 52,
+      "expected": 52,
       "proxy_fills": 0,
       "gaps_or_dropped": 6,
       "gaps_label": "Official data gaps",
@@ -1168,11 +1168,11 @@
             "charts": 5
           },
           {
-            "source_name": "FRED / OECD (Statistics Bureau)",
-            "charts": 4
+            "source_name": "e-Stat / Statistics Bureau CPI",
+            "charts": 5
           },
           {
-            "source_name": "e-Stat / Statistics Bureau CPI",
+            "source_name": "FRED / OECD (Statistics Bureau)",
             "charts": 4
           },
           {
@@ -1234,7 +1234,7 @@
         ],
         "quality_counts": {
           "low_confidence": 17,
-          "verified": 5,
+          "verified": 6,
           "watch": 29
         },
         "unavailable_count": 0
@@ -1242,7 +1242,7 @@
       "freshness": {
         "as_of_date": "2026-08-29",
         "counts": {
-          "current": 13,
+          "current": 14,
           "due": 18,
           "projection": 3,
           "stale": 17
@@ -2028,15 +2028,15 @@
           "value"
         ],
         "file": "japan_canonical_frame.json",
-        "series": 51,
-        "observations": 18035,
-        "series_count": 51,
-        "observation_count": 18035
+        "series": 52,
+        "observations": 18414,
+        "series_count": 52,
+        "observation_count": 18414
       },
       "freshness_summary": {
         "dashboard": "Japan",
-        "charts": 51,
-        "current": 16,
+        "charts": 52,
+        "current": 17,
         "stale": 17,
         "lagged_source": 0,
         "projection": 0,
@@ -2083,7 +2083,7 @@
           "label": "Headline CPI",
           "value": 4.3,
           "display": "4.30 % y/y",
-          "date": "2026-07-31",
+          "date": "2026-07-01",
           "source": "SARB Web API (Stats SA)",
           "quality_status": "verified"
         },
@@ -2992,8 +2992,7 @@
         "series": 51,
         "observations": 28737,
         "series_count": 51,
-        "observation_count": 28737,
-        "snapshot_generated": "2026-08-29T14:11:30.404647+00:00"
+        "observation_count": 28737
       },
       "freshness_summary": {
         "dashboard": "South Africa",
@@ -4825,13 +4824,13 @@
       }
     },
     "JP": {
-      "composite_score": 52.0,
+      "composite_score": 52.1,
       "composite_label": "mixed",
       "quality": {
-        "score": 41.0,
+        "score": 41.4,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 31.4,
+        "freshness_score": 32.7,
         "proxy_penalty": 0.0,
         "gap_penalty": 15.0
       },
@@ -5132,11 +5131,11 @@
       "code": "JP",
       "name": "Japan",
       "coverage_pct": 100.0,
-      "freshness_pct": 31.4,
+      "freshness_pct": 32.7,
       "proxy_fills": 0,
       "gaps": 6,
-      "regime_score": 52.0,
-      "quality_score": 41.0
+      "regime_score": 52.1,
+      "quality_score": 41.4
     },
     {
       "code": "ZA",
@@ -6577,14 +6576,8 @@
     {
       "scope": "JP",
       "change": "charts",
-      "from": 47,
-      "to": 51
-    },
-    {
-      "scope": "JP",
-      "change": "gaps_or_dropped",
-      "from": 7,
-      "to": 6
+      "from": 51,
+      "to": 52
     }
   ],
   "degradation_alerts": [],

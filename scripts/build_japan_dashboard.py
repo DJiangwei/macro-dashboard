@@ -55,6 +55,7 @@ from country_primer.adapters import (
     fetch_imf_datamapper,
     fetch_imf_sdmx,
 )
+from country_primer.cross_checks import evaluate_cross_checks
 from country_primer.source_health import (
     SOURCE_HEALTH,
     failure_series,
@@ -420,6 +421,7 @@ def build(data_mode: str | None = None) -> Path:
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
         "data_mode": data_mode,
     }
+    summary["cross_checks"] = evaluate_cross_checks(config, series_list)
     summary["canonical_frame"] = (
         canonical_frame_metadata(CANONICAL_JSON)
         if data_mode == "snapshot"

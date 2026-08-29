@@ -1,7 +1,7 @@
 {
   "file": "japan.html",
-  "generated": "2026-08-29T15:17:39.860822+00:00",
-  "charts": 51,
+  "generated": "2026-08-29T19:37:53.877254+00:00",
+  "charts": 52,
   "source_groups": 19,
   "data_gaps": 6,
   "low_confidence": 17,
@@ -214,6 +214,21 @@
   ],
   "unavailable": [],
   "data_mode": "refresh",
+  "cross_checks": [
+    {
+      "concept": "headline_inflation",
+      "primary": "cpi_inflation_estat",
+      "secondary": "cpi_inflation",
+      "label_en": "e-Stat vs IMF headline CPI",
+      "n_common": 378,
+      "latest_diff": -0.10098478066248884,
+      "max_abs_diff": 0.4120922946692388,
+      "n_breaches": 24,
+      "last_breach_date": "2020-10-01",
+      "tolerance": 0.15,
+      "status": "diverged"
+    }
+  ],
   "canonical_frame": {
     "schema_version": "data-first-canonical-v2",
     "observation_columns": [
@@ -221,10 +236,10 @@
       "value"
     ],
     "file": "japan_canonical_frame.json",
-    "series": 51,
-    "observations": 18035,
-    "series_count": 51,
-    "observation_count": 18035
+    "series": 52,
+    "observations": 18414,
+    "series_count": 52,
+    "observation_count": 18414
   },
   "data_gaps_detail": [
     {
@@ -286,11 +301,11 @@
         "charts": 5
       },
       {
-        "source_name": "FRED / OECD (Statistics Bureau)",
-        "charts": 4
+        "source_name": "e-Stat / Statistics Bureau CPI",
+        "charts": 5
       },
       {
-        "source_name": "e-Stat / Statistics Bureau CPI",
+        "source_name": "FRED / OECD (Statistics Bureau)",
         "charts": 4
       },
       {
@@ -352,7 +367,7 @@
     ],
     "quality_counts": {
       "low_confidence": 17,
-      "verified": 5,
+      "verified": 6,
       "watch": 29
     },
     "unavailable_count": 0
@@ -366,7 +381,7 @@
   "freshness": {
     "as_of_date": "2026-08-29",
     "counts": {
-      "current": 13,
+      "current": 14,
       "due": 18,
       "projection": 3,
       "stale": 17
@@ -1147,7 +1162,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 41,
+      "level": 42,
       "pct_change": 1,
       "yoy_pct": 9
     },
@@ -1220,6 +1235,6 @@
       "date",
       "value"
     ],
-    "charted_series": 51
+    "charted_series": 52
   }
 }
