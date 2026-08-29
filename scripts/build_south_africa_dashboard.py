@@ -45,7 +45,7 @@ from build_china_dashboard import (  # Reuse the data-first page shell.
 )
 from build_uk_dashboard import validate_series
 from build_us_dashboard import _apply_transform, fetch_fred_us
-from build_japan_dashboard import (  # Shared adapters, first written for Japan.
+from country_primer.adapters import (
     USER_AGENT,
     apply_scale,
     fetch_imf_datamapper,
