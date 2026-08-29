@@ -324,8 +324,8 @@ indicators:
     source_url: "https://api.imf.org/external/sdmx/2.1/data/CPI/JPN.CPI._T.YOY_PCH_PA_PT.M"
     frequency: "monthly"
     start_date: "1995-01-01"
-    caveat_en: "IMF-compiled national CPI for Japan. This is the all-items index; Japan's headline policy reference is the ex-fresh-food 'core' measure, which is tracked as a data gap."
-    caveat_zh: "IMF汇编的日本全国CPI，为总体指数。日本政策参考的是剔除生鲜食品的核心口径，该口径列为数据缺口。"
+    caveat_en: "IMF-compiled national CPI for Japan. This is the all-items index; the BoJ's actual policy reference is the ex-fresh-food 'core' measure, charted separately below as Core CPI ex-Fresh Food, YoY, published natively by the Statistics Bureau via e-Stat."
+    caveat_zh: "IMF汇编的日本全国CPI，为总体指数。日银的实际政策参考口径为剔除生鲜食品的「核心」CPI，已在下方以「核心CPI（剔除生鲜食品）同比」单独图表原生呈现，数据来自总务省统计局e-Stat。"
   - id: cpi_mom
     section: prices_costs
     label_en: "Headline CPI, MoM"

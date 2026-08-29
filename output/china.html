@@ -232,6 +232,15 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
 .chart-quality-verified .quality-pill { color: #3f6f50; border-color: rgba(63,111,80,0.35); }
 .chart-quality-watch .quality-pill { color: var(--warn); border-color: rgba(157,106,46,0.35); }
 .chart-quality-low_confidence .quality-pill { color: var(--low); border-color: rgba(157,61,46,0.35); }
+.authority-chip, .freshness-chip {
+  font-size: 11px; letter-spacing: .02em; padding: 2px 7px; border-radius: 999px;
+  border: 1px solid rgba(23,19,16,0.16); color: var(--muted, #63574e); margin-left: 6px;
+}
+.authority-chip { background: rgba(63,111,80,0.10); }
+.freshness-chip { background: rgba(54,75,97,0.10); }
+.cross-check { font-size: 12px; color: #63574e; margin-top: 4px; }
+.cross-check.diverged { color: #9d3d2e; }
+.cross-check-history { color: var(--muted); }
 .plotly-chart { width: 100%; min-width: 0; height: 360px; }
 .plot-container, .svg-container { max-width: 100% !important; }
 #js-plotly-tester { width: 1px !important; max-width: 1px !important; overflow: hidden !important; }
@@ -388,7 +397,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>3,107</strong><em>Index</em></span>
         <time datetime="2026-08-27"><span data-lang="en">27 Aug 2026</span><span data-lang="zh">2026年8月27日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-baltic_dry_index_akshare" class="plotly-chart"></div>
@@ -417,7 +426,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>74.7</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-civil_aviation_cargo_load_factor_akshare" class="plotly-chart"></div>
@@ -446,7 +455,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>86.3</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-civil_aviation_passenger_load_factor_akshare" class="plotly-chart"></div>
@@ -475,7 +484,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>4.70</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-electricity_consumption_yoy_akshare" class="plotly-chart"></div>
@@ -504,7 +513,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>110</strong><em>Index</em></span>
         <time datetime="2026-06-30"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-enterprise_boom_index_akshare" class="plotly-chart"></div>
@@ -533,7 +542,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>4.50</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-industrial_value_added_yoy_akshare" class="plotly-chart"></div>
@@ -562,7 +571,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>4.50</strong><em>%</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-industry_value_added_growth" class="plotly-chart"></div>
@@ -591,7 +600,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>50.4</strong><em>Index</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-logistics_prosperity_index_akshare" class="plotly-chart"></div>
@@ -620,7 +629,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>49.2</strong><em>Index</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-manufacturing_pmi_akshare" class="plotly-chart"></div>
@@ -649,7 +658,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>$19.50tn</strong><em>USD</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-nominal_gdp_usd" class="plotly-chart"></div>
@@ -678,7 +687,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>49.0</strong><em>Index</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-non_manufacturing_pmi_akshare" class="plotly-chart"></div>
@@ -707,7 +716,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>4.96</strong><em>%</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-real_gdp_growth" class="plotly-chart"></div>
@@ -736,7 +745,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>5.39</strong><em>%</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-services_value_added_growth" class="plotly-chart"></div>
@@ -776,7 +785,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>921</strong><em>Index</em></span>
         <time datetime="2026-08-28"><span data-lang="en">28 Aug 2026</span><span data-lang="zh">2026年8月28日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-construction_materials_index_akshare" class="plotly-chart"></div>
@@ -805,7 +814,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-14.2</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-fixed_asset_investment_yoy_akshare" class="plotly-chart"></div>
@@ -834,7 +843,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>39.7</strong><em>% of GDP</em></span>
         <time datetime="2024"><span data-lang="en">2024</span><span data-lang="zh">2024年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-gfcf_share_gdp" class="plotly-chart"></div>
@@ -874,7 +883,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-4.50</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-beijing_existing_home_price_yoy_akshare" class="plotly-chart"></div>
@@ -903,7 +912,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-2.30</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-beijing_new_home_price_yoy_akshare" class="plotly-chart"></div>
@@ -932,7 +941,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>477</strong><em>CNY bn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-commercial_housing_sales_value_eastmoney" class="plotly-chart"></div>
@@ -961,7 +970,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-10.3</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-commercial_housing_sales_value_yoy_eastmoney" class="plotly-chart"></div>
@@ -990,7 +999,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>114</strong><em>Index 2010=100</em></span>
         <time datetime="2026-01-01"><span data-lang="en">Q1 2026</span><span data-lang="zh">2026年 Q1</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-nominal_residential_property_price_bis" class="plotly-chart"></div>
@@ -1019,7 +1028,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>91.5</strong><em>Index</em></span>
         <time datetime="2025-12-01"><span data-lang="en">Dec 2025</span><span data-lang="zh">2025年12月</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-real_estate_climate_index_eastmoney" class="plotly-chart"></div>
@@ -1048,7 +1057,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>4,301</strong><em>CNY bn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-real_estate_development_investment_ytd_eastmoney" class="plotly-chart"></div>
@@ -1077,7 +1086,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-19.7</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-real_estate_development_investment_ytd_yoy_eastmoney" class="plotly-chart"></div>
@@ -1106,7 +1115,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>85.1</strong><em>Index 2010=100</em></span>
         <time datetime="2026-01-01"><span data-lang="en">Q1 2026</span><span data-lang="zh">2026年 Q1</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-real_residential_property_price_bis" class="plotly-chart"></div>
@@ -1135,7 +1144,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-2.00</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-shanghai_existing_home_price_yoy_akshare" class="plotly-chart"></div>
@@ -1164,7 +1173,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>3.00</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-shanghai_new_home_price_yoy_akshare" class="plotly-chart"></div>
@@ -1204,7 +1213,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>89.4</strong><em>Index</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-consumer_confidence_index_akshare" class="plotly-chart"></div>
@@ -1233,7 +1242,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>87.8</strong><em>Index</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-consumer_expectations_index_akshare" class="plotly-chart"></div>
@@ -1262,7 +1271,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>5.02</strong><em>%</em></span>
         <time datetime="2024"><span data-lang="en">2024</span><span data-lang="zh">2024年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-household_consumption_growth" class="plotly-chart"></div>
@@ -1291,7 +1300,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>40.0</strong><em>% of GDP</em></span>
         <time datetime="2024"><span data-lang="en">2024</span><span data-lang="zh">2024年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-household_consumption_share" class="plotly-chart"></div>
@@ -1320,7 +1329,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>95.1</strong><em>10k vehicles</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-new_energy_vehicle_retail_cpca" class="plotly-chart"></div>
@@ -1349,7 +1358,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>64.2</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-new_energy_vehicle_share_cpca" class="plotly-chart"></div>
@@ -1378,7 +1387,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>146</strong><em>10k vehicles</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-passenger_vehicle_retail_cpca" class="plotly-chart"></div>
@@ -1407,7 +1416,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.60</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-retail_sales_yoy_akshare" class="plotly-chart"></div>
@@ -1447,7 +1456,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>3.77</strong><em>% of GDP</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-current_account_gdp" class="plotly-chart"></div>
@@ -1476,7 +1485,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>398</strong><em>USD bn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-customs_exports_value_akshare" class="plotly-chart"></div>
@@ -1505,7 +1514,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>23.9</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-customs_exports_yoy_akshare" class="plotly-chart"></div>
@@ -1534,7 +1543,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>286</strong><em>USD bn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-customs_imports_value_akshare" class="plotly-chart"></div>
@@ -1563,7 +1572,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>27.6</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-customs_imports_yoy_akshare" class="plotly-chart"></div>
@@ -1592,7 +1601,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>112</strong><em>USD bn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-customs_trade_balance_akshare" class="plotly-chart"></div>
@@ -1621,7 +1630,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>7.87</strong><em>CNY per EUR</em></span>
         <time datetime="2026-08-28"><span data-lang="en">28 Aug 2026</span><span data-lang="zh">2026年8月28日</span></time>
       </div>
-      <span class="quality-pill">verified</span>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-eur_cny_midpoint" class="plotly-chart"></div>
@@ -1650,7 +1659,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>$4.14tn</strong><em>USD</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-exports_goods_services" class="plotly-chart"></div>
@@ -1679,7 +1688,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>$3.75tn</strong><em>USD</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-fx_reserves" class="plotly-chart"></div>
@@ -1708,7 +1717,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>$3.42tn</strong><em>USD</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-fx_reserves_akshare" class="plotly-chart"></div>
@@ -1737,7 +1746,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>$3.48tn</strong><em>USD</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-fx_reserves_ex_gold_monthly" class="plotly-chart"></div>
@@ -1766,7 +1775,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>7,608</strong><em>10k troy oz</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-gold_reserves_akshare" class="plotly-chart"></div>
@@ -1795,7 +1804,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>$3.31tn</strong><em>USD</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-imports_goods_services" class="plotly-chart"></div>
@@ -1824,7 +1833,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>91.8</strong><em>10k vehicles</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-passenger_vehicle_exports_cpca" class="plotly-chart"></div>
@@ -1853,7 +1862,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>92.7</strong><em>Index 2020=100</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-real_effective_exchange_rate_bis" class="plotly-chart"></div>
@@ -1882,7 +1891,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>38.0</strong><em>% of GDP</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-trade_openness" class="plotly-chart"></div>
@@ -1911,7 +1920,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>6.78</strong><em>CNY per USD</em></span>
         <time datetime="2026-08-28"><span data-lang="en">28 Aug 2026</span><span data-lang="zh">2026年8月28日</span></time>
       </div>
-      <span class="quality-pill">verified</span>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-usd_cny_midpoint" class="plotly-chart"></div>
@@ -1940,7 +1949,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>6.72</strong><em>CNY per USD</em></span>
         <time datetime="2026-08-21"><span data-lang="en">21 Aug 2026</span><span data-lang="zh">2026年8月21日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-usd_cny_spot" class="plotly-chart"></div>
@@ -1980,7 +1989,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>6.81</strong><em>%</em></span>
         <time datetime="2024"><span data-lang="en">2024</span><span data-lang="zh">2024年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-broad_money_growth" class="plotly-chart"></div>
@@ -2009,7 +2018,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.16</strong><em>CNY tn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-financial_institution_deposits_flow_akshare" class="plotly-chart"></div>
@@ -2038,7 +2047,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>354</strong><em>CNY tn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-financial_institution_deposits_stock_akshare" class="plotly-chart"></div>
@@ -2067,7 +2076,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>1.51</strong><em>%</em></span>
         <time datetime="2026-05-01"><span data-lang="en">May 2026</span><span data-lang="zh">2026年5月</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-interbank_3m_rate" class="plotly-chart"></div>
@@ -2096,7 +2105,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>9.00</strong><em>%</em></span>
         <time datetime="2025-05-15"><span data-lang="en">15 May 2025</span><span data-lang="zh">2025年5月15日</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-large_bank_rrr_akshare" class="plotly-chart"></div>
@@ -2125,7 +2134,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>3.00</strong><em>%</em></span>
         <time datetime="2026-08-20"><span data-lang="en">Aug 2026</span><span data-lang="zh">2026年8月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-lpr_1y_akshare" class="plotly-chart"></div>
@@ -2154,7 +2163,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>3.50</strong><em>%</em></span>
         <time datetime="2026-08-20"><span data-lang="en">Aug 2026</span><span data-lang="zh">2026年8月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-lpr_5y_akshare" class="plotly-chart"></div>
@@ -2183,7 +2192,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>4.00</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-m1_yoy_akshare" class="plotly-chart"></div>
@@ -2212,7 +2221,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>7.70</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-m2_yoy_akshare" class="plotly-chart"></div>
@@ -2241,7 +2250,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-0.59</strong><em>CNY tn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-new_rmb_loans_akshare" class="plotly-chart"></div>
@@ -2270,7 +2279,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>21.8</strong><em>CNY tn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-pbc_claims_on_depository_corps_akshare" class="plotly-chart"></div>
@@ -2299,7 +2308,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>21.7</strong><em>CNY tn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-pbc_fx_assets_akshare" class="plotly-chart"></div>
@@ -2328,7 +2337,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>40.5</strong><em>CNY tn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-pbc_reserve_money_akshare" class="plotly-chart"></div>
@@ -2357,7 +2366,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>50.2</strong><em>CNY tn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-pbc_total_assets_akshare" class="plotly-chart"></div>
@@ -2386,7 +2395,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>194</strong><em>% of GDP</em></span>
         <time datetime="2024"><span data-lang="en">2024</span><span data-lang="zh">2024年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-private_credit_gdp" class="plotly-chart"></div>
@@ -2415,7 +2424,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>1.43</strong><em>%</em></span>
         <time datetime="2026-08-28"><span data-lang="en">28 Aug 2026</span><span data-lang="zh">2026年8月28日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-shibor_3m_akshare" class="plotly-chart"></div>
@@ -2444,7 +2453,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>1.34</strong><em>%</em></span>
         <time datetime="2026-08-28"><span data-lang="en">28 Aug 2026</span><span data-lang="zh">2026年8月28日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-shibor_overnight_akshare" class="plotly-chart"></div>
@@ -2473,7 +2482,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>6.00</strong><em>%</em></span>
         <time datetime="2025-05-15"><span data-lang="en">15 May 2025</span><span data-lang="zh">2025年5月15日</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-small_bank_rrr_akshare" class="plotly-chart"></div>
@@ -2502,7 +2511,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.62</strong><em>CNY tn</em></span>
         <time datetime="2026-04-01"><span data-lang="en">Apr 2026</span><span data-lang="zh">2026年4月</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-tsf_flow_akshare" class="plotly-chart"></div>
@@ -2531,7 +2540,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-0.40</strong><em>CNY tn</em></span>
         <time datetime="2026-04-01"><span data-lang="en">Apr 2026</span><span data-lang="zh">2026年4月</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-tsf_rmb_loans_akshare" class="plotly-chart"></div>
@@ -2571,7 +2580,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>110</strong><em>CNY tn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-a_share_market_cap_akshare" class="plotly-chart"></div>
@@ -2600,7 +2609,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>61.8</strong><em>CNY tn</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-a_share_trading_value_akshare" class="plotly-chart"></div>
@@ -2629,7 +2638,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>1.37</strong><em>CNY tn</em></span>
         <time datetime="2026-08-27"><span data-lang="en">27 Aug 2026</span><span data-lang="zh">2026年8月27日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-sh_margin_balance_akshare" class="plotly-chart"></div>
@@ -2658,7 +2667,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>110</strong><em>Index 2015=100</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-share_price_index" class="plotly-chart"></div>
@@ -2687,7 +2696,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>1.29</strong><em>CNY tn</em></span>
         <time datetime="2026-08-27"><span data-lang="en">27 Aug 2026</span><span data-lang="zh">2026年8月27日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-sz_margin_balance_akshare" class="plotly-chart"></div>
@@ -2727,7 +2736,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>116</strong><em>Index</em></span>
         <time datetime="2026-08-28"><span data-lang="en">28 Aug 2026</span><span data-lang="zh">2026年8月28日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-agri_wholesale_price_index_akshare" class="plotly-chart"></div>
@@ -2756,7 +2765,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>1,080</strong><em>Index</em></span>
         <time datetime="2026-08-28"><span data-lang="en">28 Aug 2026</span><span data-lang="zh">2026年8月28日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-commodity_price_index_akshare" class="plotly-chart"></div>
@@ -2785,7 +2794,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.06</strong><em>%</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-cpi_inflation" class="plotly-chart"></div>
@@ -2814,7 +2823,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-0.10</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-cpi_mom_akshare" class="plotly-chart"></div>
@@ -2843,7 +2852,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.50</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-cpi_yoy_akshare" class="plotly-chart"></div>
@@ -2872,7 +2881,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>1,085</strong><em>Index</em></span>
         <time datetime="2026-08-28"><span data-lang="en">28 Aug 2026</span><span data-lang="zh">2026年8月28日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-energy_price_index_akshare" class="plotly-chart"></div>
@@ -2901,7 +2910,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-1.34</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-enterprise_agri_goods_price_yoy_akshare" class="plotly-chart"></div>
@@ -2930,7 +2939,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>10.8</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-enterprise_energy_goods_price_yoy_akshare" class="plotly-chart"></div>
@@ -2959,7 +2968,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>5.25</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-enterprise_goods_price_yoy_akshare" class="plotly-chart"></div>
@@ -2988,7 +2997,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>7.50</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-enterprise_mineral_goods_price_yoy_akshare" class="plotly-chart"></div>
@@ -3017,7 +3026,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-0.92</strong><em>%</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-gdp_deflator" class="plotly-chart"></div>
@@ -3046,7 +3055,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>104</strong><em>Index</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-ppi_index_akshare" class="plotly-chart"></div>
@@ -3075,7 +3084,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>3.50</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-ppi_yoy_akshare" class="plotly-chart"></div>
@@ -3104,7 +3113,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.40</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-rural_cpi_yoy_akshare" class="plotly-chart"></div>
@@ -3133,7 +3142,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.50</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-urban_cpi_yoy_akshare" class="plotly-chart"></div>
@@ -3162,7 +3171,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>116</strong><em>Index</em></span>
         <time datetime="2026-08-28"><span data-lang="en">28 Aug 2026</span><span data-lang="zh">2026年8月28日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-vegetable_basket_price_index_akshare" class="plotly-chart"></div>
@@ -3202,7 +3211,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>6.77</strong><em>per 1,000 people</em></span>
         <time datetime="2024"><span data-lang="en">2024</span><span data-lang="zh">2024年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-birth_rate" class="plotly-chart"></div>
@@ -3231,7 +3240,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>7.76</strong><em>per 1,000 people</em></span>
         <time datetime="2024"><span data-lang="en">2024</span><span data-lang="zh">2024年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-death_rate" class="plotly-chart"></div>
@@ -3260,7 +3269,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>1.41bn</strong><em>people</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-total_population" class="plotly-chart"></div>
@@ -3289,7 +3298,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>4.62</strong><em>%</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-unemployment" class="plotly-chart"></div>
@@ -3318,7 +3327,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>66.3</strong><em>%</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-urban_population_share" class="plotly-chart"></div>
@@ -3347,7 +3356,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>69.7</strong><em>%</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-working_age_share" class="plotly-chart"></div>
@@ -3387,7 +3396,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>5.80</strong><em>%</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-fiscal_revenue_ytd_yoy_akshare" class="plotly-chart"></div>
@@ -3416,7 +3425,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-7.10</strong><em>% of GDP</em></span>
         <time datetime="2024"><span data-lang="en">2024</span><span data-lang="zh">2024年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">projection</span>
     </div>
   </div>
   <div id="chart-general_gov_balance" class="plotly-chart"></div>
@@ -3445,7 +3454,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>90.4</strong><em>% of GDP</em></span>
         <time datetime="2024"><span data-lang="en">2024</span><span data-lang="zh">2024年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">projection</span>
     </div>
   </div>
   <div id="chart-general_gov_debt" class="plotly-chart"></div>
@@ -3474,7 +3483,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>5.30</strong><em>%</em></span>
         <time datetime="2026-06-30"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-tax_receipts_yoy_akshare" class="plotly-chart"></div>
@@ -3503,7 +3512,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>9.79</strong><em>CNY tn</em></span>
         <time datetime="2026-06-30"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-tax_receipts_ytd_akshare" class="plotly-chart"></div>

@@ -14,6 +14,7 @@ than filled with a proxy.
 """
 from __future__ import annotations
 
+import collections
 import json
 import os
 import re
@@ -262,6 +263,12 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> st
     source_count = len({item.get("source_name") for item in series_list if item.get("observations")})
     gap_count = len(config.get("data_gaps", []))
     low_count = sum(1 for item in series_list if item.get("quality_status") == "low_confidence" and item.get("observations"))
+    authority_mix = collections.Counter(
+        (item.get("data_quality") or {}).get("source_authority")
+        for item in series_list if item.get("observations")
+    )
+    native = authority_mix.get("official_primary", 0)
+    mirror = authority_mix.get("official_mirror", 0)
     generated_date = datetime.now(UTC).date().isoformat()
     return f"""<!doctype html>
 <html lang="en">
@@ -298,6 +305,7 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> st
       <span class="meta-chip">{source_count} <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
       <span class="meta-chip">{gap_count} <span data-lang="en">official/vendor gaps tracked</span><span data-lang="zh">个官方/供应商缺口</span></span>
       <span class="meta-chip">{low_count} <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
+      <span class="meta-chip">{native} <span data-lang="en">native official</span><span data-lang="zh">原生官方</span> · {mirror} <span data-lang="en">mirror</span><span data-lang="zh">镜像</span></span>
     </div>
   </header>
 
@@ -445,6 +453,13 @@ def build(data_mode: str | None = None) -> Path:
             f"Unavailable indicators: {', '.join(unavailable[:12])}"
             f"{'...' if len(unavailable) > 12 else ''}"
         )
+    cross_checks = evaluate_cross_checks(config, series_list)
+    checks_by_id: dict[str, dict[str, Any]] = {}
+    for check in cross_checks:
+        for side in (check["primary"], check["secondary"]):
+            checks_by_id[side] = check
+    for item in series_list:
+        item["cross_check"] = checks_by_id.get(item["id"])
     _write_clean(OUT_HTML, render_html(config, series_list))
 
     policy_rate = next((item for item in charted if item["id"] == "policy_rate"), None)
@@ -463,7 +478,7 @@ def build(data_mode: str | None = None) -> Path:
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
         "data_mode": data_mode,
     }
-    summary["cross_checks"] = evaluate_cross_checks(config, series_list)
+    summary["cross_checks"] = cross_checks
     summary["canonical_frame"] = (
         canonical_frame_metadata(CANONICAL_JSON)
         if data_mode == "snapshot"
