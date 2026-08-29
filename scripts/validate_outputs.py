@@ -70,6 +70,15 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
             raise AssertionError(f"{name} canonical series count does not match rendered charts")
         if not all("quality" in item and "concept_id" in item for item in canonical["series"]):
             raise AssertionError(f"{name} canonical metadata is incomplete")
+        for item in canonical.get("series") or []:
+            quality = item.get("quality") or {}
+            missing = [f for f in ("source_authority", "freshness", "derivation") if not quality.get(f)]
+            if missing:
+                raise AssertionError(f"{name}:{item.get('indicator_id')} missing quality fields {missing}")
+            if quality.get("source_authority") == "public_secondary":
+                raise AssertionError(
+                    f"{name}:{item.get('indicator_id')} classified public_secondary; declare source_authority in config"
+                )
         summary = _load_json(output / f"{name}_dashboard_summary.json")
         if summary.get("data_mode") not in {"refresh", "snapshot"}:
             raise AssertionError(f"{name} summary is missing its data mode")
@@ -121,6 +130,14 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
         for filename in COUNTRY_FILES.values():
             if filename not in text:
                 raise AssertionError(f"{index_path} is missing {filename}")
+
+    audit = _load_json(output / "freshness_audit.json")
+    audit_dashboards = {row.get("dashboard") for row in audit.get("records") or []}
+    if len(audit_dashboards) != len(COUNTRY_FILES):
+        raise AssertionError(
+            f"Freshness audit covers {sorted(audit_dashboards)}, expected all {len(COUNTRY_FILES)} dashboards"
+        )
+    messages.append("pipeline outcome contract ok")
 
     return messages
 
