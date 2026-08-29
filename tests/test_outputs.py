@@ -13,6 +13,15 @@ def test_every_dashboard_produces_freshness_records():
     assert len(dashboards) == len(COUNTRY_FILES), f"only {sorted(dashboards)} produced records"
 
 
+def test_cross_checks_are_present_and_within_tolerance() -> None:
+    for name in ("japan", "south_africa"):
+        summary = json.loads(open(f"output/{name}_dashboard_summary.json").read())
+        checks = summary.get("cross_checks")
+        assert checks, f"{name} declares no cross-checks"
+        bad = [c for c in checks if c["status"] == "diverged"]
+        assert not bad, f"{name} cross-checks diverged: {[c['label_en'] for c in bad]}"
+
+
 def test_every_canonical_series_carries_trust_dimensions():
     # Scoped to the data-first canonical frames (china/japan/south_africa/uk/us).
     # cee_canonical_frame.json uses a different schema (cee-canonical-v2) that
