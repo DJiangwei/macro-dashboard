@@ -15,7 +15,7 @@ import re
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from email.utils import parsedate_to_datetime
 from html import escape
 from pathlib import Path
@@ -27,6 +27,7 @@ import yaml
 from dashboard_summary_utils import (
     apply_quality_assessments,
     build_summary_metadata,
+    calendar_gap_matches,
     canonical_frame_metadata,
     load_canonical_data_first_frame,
     retain_last_known_good_series,
@@ -101,36 +102,72 @@ def _lag_for_frequency(frequency: str) -> int:
     return 12
 
 
+def _parse_obs_date(value: Any) -> date | None:
+    try:
+        return date.fromisoformat(str(value)[:10])
+    except (TypeError, ValueError):
+        return None
+
+
+def _aligned_base(
+    observations: list[dict[str, Any]], index: int, periods: int, frequency: str
+) -> dict[str, Any] | None:
+    """Return observations[index - periods] only if it is calendar-aligned.
+
+    A lag-based transform steps back `periods` array slots, which silently
+    drifts when the series has an interior gap (a suppressed or missing
+    observation): index-N-back then lands more than N calendar periods
+    behind, but the code has no way to notice unless it checks the dates.
+    Callers must skip the point outright on a mismatch rather than compute a
+    value from a miscalibrated base — a skipped point is an honest gap, a
+    wrong point is a lie about what "YoY" or "MoM" means.
+    """
+    if index < periods:
+        return None
+    base = observations[index - periods]
+    base_date = _parse_obs_date(base.get("date"))
+    item_date = _parse_obs_date(observations[index].get("date"))
+    if base_date is None or item_date is None:
+        return None
+    if not calendar_gap_matches(frequency, periods, base_date, item_date):
+        return None
+    return base
+
+
 def _apply_transform(series: dict[str, Any]) -> dict[str, Any]:
     transform = series.get("transform")
     observations = list(series.get("observations") or [])
     if not transform or not observations:
         return series
 
+    frequency = str(series.get("frequency", ""))
     transformed: list[dict[str, Any]] = []
     if transform == "yoy_pct":
-        lag = _lag_for_frequency(str(series.get("frequency", "")))
+        lag = _lag_for_frequency(frequency)
         for index, item in enumerate(observations):
-            if index < lag:
+            base_item = _aligned_base(observations, index, lag, frequency)
+            if base_item is None:
                 continue
-            base = float(observations[index - lag]["value"])
+            base = float(base_item["value"])
             value = float(item["value"])
             if base == 0:
                 continue
             transformed.append({"date": item["date"], "value": ((value / base) - 1.0) * 100.0})
     elif transform == "diff":
         for index, item in enumerate(observations):
-            if index == 0:
+            base_item = _aligned_base(observations, index, 1, frequency)
+            if base_item is None:
                 continue
             transformed.append({
                 "date": item["date"],
-                "value": float(item["value"]) - float(observations[index - 1]["value"]),
+                "value": float(item["value"]) - float(base_item["value"]),
             })
     elif transform == "pct_change":
         for index, item in enumerate(observations):
-            if index == 0:
+            base_item = _aligned_base(observations, index, 1, frequency)
+            if base_item is None:
                 continue
-            base = float(observations[index - 1]["value"])
+            base = float(base_item["value"])
             value = float(item["value"])
             if base == 0:
                 continue

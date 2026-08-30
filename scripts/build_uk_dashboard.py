@@ -32,6 +32,7 @@ import yaml
 from dashboard_summary_utils import (
     apply_quality_assessments,
     build_summary_metadata,
+    calendar_gap_matches,
     canonical_frame_metadata,
     load_canonical_data_first_frame,
     retain_last_known_good_series,
@@ -328,8 +329,19 @@ def _apply_transform(observations: list[dict[str, Any]], spec: dict[str, Any]) -
     for index, item in enumerate(observations):
         if index < periods:
             continue
-        base = observations[index - periods]["value"]
+        base_item = observations[index - periods]
+        base = base_item["value"]
         if base in (0, None):
+            continue
+        base_date = _parse_date(str(base_item.get("date", "")))
+        item_date = _parse_date(str(item.get("date", "")))
+        if base_date is None or item_date is None:
+            continue
+        if not calendar_gap_matches(frequency, periods, base_date, item_date):
+            # The base observation is `periods` array slots back but not
+            # `periods` calendar periods back (an interior gap shifted it
+            # further). Skip rather than emit a mislabeled rate — an honest
+            # gap beats a wrong number with a confident badge.
             continue
         try:
             value = (float(item["value"]) / float(base) - 1.0) * 100.0

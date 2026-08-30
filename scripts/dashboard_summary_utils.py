@@ -17,6 +17,29 @@ from country_primer.framework import concept_id_for, framework_summary, load_mac
 CANONICAL_OBSERVATION_COLUMNS = ["date", "value"]
 
 
+def month_index(value: date) -> int:
+    """A monotonic month counter (year*12 + month) for calendar-gap arithmetic."""
+    return value.year * 12 + value.month
+
+
+def calendar_gap_matches(frequency: str, periods: int, base_date: date, item_date: date) -> bool:
+    """True when ``item_date`` is exactly ``periods`` calendar periods after ``base_date``.
+
+    Lag-based transforms (yoy/qoq/mom/pct_change/diff) step back ``periods``
+    array *indices*, not calendar periods. When the underlying series has an
+    interior gap (a suppressed or missing observation), index-N-back lands
+    further back in calendar time than the label promises — e.g. a "YoY"
+    reading that is actually a 13-month change across a missing October. This
+    guard must be checked before using the base observation; on a mismatch the
+    caller should skip the point rather than emit a mislabeled value.
+    """
+    frequency = str(frequency or "").lower()
+    if frequency == "weekly":
+        return (item_date - base_date).days == periods * 7
+    months_per_period = {"quarterly": 3, "annual": 12}.get(frequency, 1)
+    return (month_index(item_date) - month_index(base_date)) == periods * months_per_period
+
+
 def _latest_observation(series: dict[str, Any]) -> dict[str, Any] | None:
     observations = series.get("observations") or []
     if not observations:
