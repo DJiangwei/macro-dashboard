@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import re
+from collections import Counter
+from datetime import date
 from pathlib import Path
 
 
@@ -23,6 +25,51 @@ COUNTRY_FILES = {
 DATA_FIRST_CODES = {"CN", "JP", "ZA", "UK", "US"}
 DATA_FIRST_NAMES = ("china", "japan", "south_africa", "uk", "us")
 
+# Display names as they appear in output/freshness_audit.json's "dashboard"
+# field and in the archive index cards' <h2> headings.
+DASHBOARD_DISPLAY_NAMES = {
+    "HU": "Hungary",
+    "PL": "Poland",
+    "CZ": "Czechia",
+    "RO": "Romania",
+    "CN": "China",
+    "JP": "Japan",
+    "ZA": "South Africa",
+    "UK": "United Kingdom",
+    "US": "United States",
+}
+
+# Transforms that step back a fixed number of calendar periods from a base
+# observation (yoy/qoq/mom/pct_change/diff) -- see build_us_dashboard.py and
+# build_uk_dashboard.py. These are the transforms finding #2 broke.
+LAG_TRANSFORMS = {"yoy", "yoy_pct", "qoq_pct", "mom_pct", "pct_change", "diff"}
+# Transforms that compare against the immediately preceding period. These are
+# the ones the parity rule applies to -- see
+# _assert_lag_transform_series_are_contiguous. yoy/yoy_pct look N periods back
+# instead, so they lose one isolated point per missing source observation and
+# an even-multiple gap is honest for them.
+PERIOD_1_TRANSFORMS = {"qoq_pct", "mom_pct", "pct_change", "diff"}
+
+# Expected calendar gap between consecutive observations, keyed by declared
+# frequency: (unit, canonical gap, gaps accepted as "still this frequency").
+# Only frequencies with a genuinely fixed cadence are covered; "daily" /
+# "irregular"/etc. are deliberately not asserted on here.
+#
+# "quarterly" accepts a 6-month gap as well as 3: Japan's IMF Financial
+# Soundness Indicators series (bank_capital_ratio, bank_npl_ratio) are
+# dimensioned quarterly ("...Q") in IMF SDMX, but Japan has only ever
+# submitted them twice a year, permanently, across their full history — a
+# real cross-country reporting-cadence fact, not a mislabel. "monthly" gets
+# no such allowance: a monthly badge promises monthly data, and that
+# distinction is exactly finding #1 (UK's Monthly GDP badged verified while
+# every observation actually sat on quarter-ends).
+_NOMINAL_GAP = {
+    "weekly": ("days", 7, (7,)),
+    "monthly": ("months", 1, (1,)),
+    "quarterly": ("months", 3, (3, 6)),
+    "annual": ("months", 12, (12,)),
+}
+
 
 def _load_json(path: Path) -> dict:
     if not path.exists():
@@ -30,9 +77,186 @@ def _load_json(path: Path) -> dict:
     return json.loads(path.read_text())
 
 
+def _parse_iso_date(value: object) -> date | None:
+    try:
+        return date.fromisoformat(str(value)[:10])
+    except (TypeError, ValueError):
+        return None
+
+
+def _observation_dates(series: dict) -> list[date]:
+    """Sorted, parsed dates from a canonical series' [date, value] pairs."""
+    dates: list[date] = []
+    for observation in series.get("observations") or []:
+        raw_date = observation[0] if isinstance(observation, (list, tuple)) else observation.get("date")
+        parsed = _parse_iso_date(raw_date)
+        if parsed is not None:
+            dates.append(parsed)
+    return sorted(dates)
+
+
+def _gap(unit: str, earlier: date, later: date) -> int:
+    if unit == "days":
+        return (later - earlier).days
+    return (later.year * 12 + later.month) - (earlier.year * 12 + earlier.month)
+
+
+# How many of the most recent observation-to-observation gaps to judge a
+# series' cadence by. Some series genuinely change sampling granularity over
+# a long history without being mislabeled (e.g. China's 1Y LPR was reported
+# near-daily before the August 2019 LPR reform and monthly afterward) — using
+# the *recent* window keeps this check about "does today's badge match
+# today's data", the actual finding #1 failure mode, rather than penalizing
+# an honest historical methodology change.
+_RECENT_GAP_WINDOW = 12
+
+
+def _assert_frequency_matches_observed_spacing(name: str, canonical_series: list[dict]) -> None:
+    """Catch finding #1's defect class: a declared frequency that does not
+    match the data's actual cadence (UK YBEZ/PN2 declared "monthly" while
+    every observation sat at quarter-ends, three months apart).
+
+    Uses the *modal* gap over the most recent observations rather than
+    requiring every gap to match, so a handful of honest missing periods
+    (e.g. BLS never published October 2025 CPI) does not trip this — only a
+    systematically wrong label does.
+    """
+    for series in canonical_series:
+        nominal = _NOMINAL_GAP.get(str(series.get("frequency") or "").lower())
+        if nominal is None:
+            continue
+        unit, expected, accepted = nominal
+        dates = _observation_dates(series)
+        if len(dates) < 4:
+            continue
+        gaps = [_gap(unit, dates[i - 1], dates[i]) for i in range(1, len(dates))]
+        recent_gaps = gaps[-_RECENT_GAP_WINDOW:]
+        modal_gap, modal_count = Counter(recent_gaps).most_common(1)[0]
+        if modal_gap not in accepted:
+            raise AssertionError(
+                f"{name}:{series.get('indicator_id')} declares frequency "
+                f"{series.get('frequency')!r} (expected {expected} {unit}/observation) "
+                f"but its most common recent observation spacing is {modal_gap} {unit} "
+                f"({modal_count}/{len(recent_gaps)} of the last {len(recent_gaps)} gaps) — "
+                f"the label does not match the data."
+            )
+
+
+def _assert_lag_transform_series_are_contiguous(name: str, canonical_series: list[dict]) -> None:
+    """Catch finding #2's defect class: a lag-based transform (yoy/qoq/mom/
+    pct_change/diff) silently drifting off its declared cadence.
+
+    Tolerates a gap of up to 3x the nominal cadence. This is not "1.5 missed
+    periods" of slack picked arbitrarily -- it is the largest gap a *single*
+    genuinely missing source observation can honestly produce once the base
+    lookup is by calendar date (see shift_calendar_periods), which is the
+    whole point of the finding #2 fix:
+
+    - A period-1 transform (mom_pct/qoq_pct/diff) loses *two* output points
+      per missing source observation: the missing month itself has no item
+      to transform at all, and the very next month's own base is that same
+      missing month, so it is skipped too. Two adjacent single-period
+      losses is a 3x gap between the two surviving neighbours (confirmed
+      against real data: US core_cpi_mom shows exactly a 3-month gap,
+      2025-09 -> 2025-12, because BLS never published October 2025 CPI).
+    - A period-N transform (yoy/yoy_pct) loses at most one output point per
+      missing source observation, and it lands N periods away from the
+      missing month itself -- never adjacent to it -- so it only ever
+      produces an isolated <=2x gap, comfortably inside this same bound.
+
+    A gap wider than 3x nominal means either two or more *consecutive*
+    missing source periods (worth a human look) or a reintroduced
+    index-offset misalignment bug, so it fails the build rather than
+    shipping a `verified` badge on data nobody re-checked.
+    """
+    for series in canonical_series:
+        transform = str(series.get("transform") or "level")
+        if transform not in LAG_TRANSFORMS:
+            continue
+        nominal = _NOMINAL_GAP.get(str(series.get("frequency") or "").lower())
+        if nominal is None:
+            continue
+        unit, expected, _accepted = nominal
+        dates = _observation_dates(series)
+        gaps = [_gap(unit, earlier, later) for earlier, later in zip(dates, dates[1:])]
+        if not gaps:
+            continue
+
+        if transform in PERIOD_1_TRANSFORMS:
+            # Parity rule. A period-1 transform's honest gaps are exactly 1x its
+            # own cadence or 3x it -- never 2x. A 2x gap would mean one output
+            # point vanished while its immediate neighbour survived, which the
+            # calendar-date base lookup makes impossible: a missing source
+            # period always takes the next point down with it. So an even
+            # multiple is the fingerprint of a systematic every-other-point
+            # drop, which is exactly what the end-of-month day-rollover bug
+            # produced (every Q2 dropped from every quarterly QoQ series).
+            #
+            # The cadence is taken from the series' own tightest spacing rather
+            # than the nominal one, so a genuinely semi-annual series declared
+            # quarterly (permitted by _NOMINAL_GAP's accepted set) is judged
+            # against 6/18 months rather than 3/9. A wholly shifted cadence is
+            # not this guard's job -- _assert_frequency_matches_observed_spacing
+            # catches that upstream.
+            cadence = min(gaps)
+            honest = {cadence, cadence * 3}
+            for (earlier, later), gap in zip(zip(dates, dates[1:]), gaps):
+                if gap not in honest:
+                    raise AssertionError(
+                        f"{name}:{series.get('indicator_id')} ({transform}) has a "
+                        f"{gap}-{unit} gap between {earlier.isoformat()} and {later.isoformat()}, "
+                        f"which is neither its {cadence}-{unit} cadence nor the "
+                        f"{cadence * 3}-{unit} gap a single missing source period honestly "
+                        f"produces. An even multiple of the cadence is the signature of a "
+                        f"systematic every-other-period drop (e.g. a calendar day-rollover "
+                        f"bug), not of missing source data."
+                    )
+            continue
+
+        for (earlier, later), gap in zip(zip(dates, dates[1:]), gaps):
+            if gap > expected * 3:
+                raise AssertionError(
+                    f"{name}:{series.get('indicator_id')} ({transform}) has a "
+                    f"{gap}-{unit} gap between {earlier.isoformat()} and {later.isoformat()}, "
+                    f"wider than one missing source observation can honestly produce at its "
+                    f"declared {series.get('frequency')!r} cadence — check for a reintroduced "
+                    f"index-offset misalignment (finding #2) rather than an honest gap."
+                )
+
+
+def _first_ratio_stat_after(text: str, heading: str) -> tuple[int, int] | None:
+    """Find the first `<strong>N/N</strong>` stat after an `<h2>{heading}</h2>`
+    card heading -- the "Rendered charts"/"Rendered indicators" stat is
+    always the first stat rendered in a card (see build_dashboard_archive.py).
+    """
+    match = re.search(re.escape(f"<h2>{heading}</h2>") + r".*?<strong>(\d+)/(\d+)</strong>", text, flags=re.S)
+    if not match:
+        return None
+    return int(match.group(1)), int(match.group(2))
+
+
+def _assert_cross_checks(name: str, summary: dict) -> None:
+    """Fail the build if any declared cross-check pair has diverged.
+
+    Gates on the windowed `status` field alone (see evaluate_cross_checks) —
+    never on raw `n_breaches` / `max_abs_diff` directly, since full-history
+    breach counts include documented historical events (e.g. CPI rebasing)
+    that are real economics, not adapter defects. A country with no declared
+    cross-checks (an absent or empty list) is a no-op.
+    """
+    for check in summary.get("cross_checks") or []:
+        if check.get("status") == "diverged":
+            raise AssertionError(
+                f"{name} cross-check '{check.get('label_en')}' diverged: "
+                f"{check.get('n_breaches')} breaches beyond {check.get('tolerance')}, "
+                f"latest {check.get('last_breach_date')}"
+            )
+
+
 def validate_output_contract(root: Path = ROOT) -> list[str]:
     output = root / "output"
     messages: list[str] = []
+    chart_counts: dict[str, int] = {}
 
     for code, filename in COUNTRY_FILES.items():
         path = output / filename
@@ -52,6 +276,7 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
         )
         if chart_count and text.count("data-latest-reading") != chart_count:
             raise AssertionError(f"{filename} does not show a latest reading for every chart")
+        chart_counts[code] = chart_count
         messages.append(f"{code}: stable route and view contract ok")
 
     for name in DATA_FIRST_NAMES:
@@ -70,11 +295,23 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
             raise AssertionError(f"{name} canonical series count does not match rendered charts")
         if not all("quality" in item and "concept_id" in item for item in canonical["series"]):
             raise AssertionError(f"{name} canonical metadata is incomplete")
+        for item in canonical.get("series") or []:
+            quality = item.get("quality") or {}
+            missing = [f for f in ("source_authority", "freshness", "derivation") if not quality.get(f)]
+            if missing:
+                raise AssertionError(f"{name}:{item.get('indicator_id')} missing quality fields {missing}")
+            if quality.get("source_authority") == "public_secondary":
+                raise AssertionError(
+                    f"{name}:{item.get('indicator_id')} classified public_secondary; declare source_authority in config"
+                )
+        _assert_frequency_matches_observed_spacing(name, canonical["series"])
+        _assert_lag_transform_series_are_contiguous(name, canonical["series"])
         summary = _load_json(output / f"{name}_dashboard_summary.json")
         if summary.get("data_mode") not in {"refresh", "snapshot"}:
             raise AssertionError(f"{name} summary is missing its data mode")
         if summary.get("canonical_frame", {}).get("series_count") != cards:
             raise AssertionError(f"{name} summary canonical count does not match rendered charts")
+        _assert_cross_checks(name, summary)
 
     cee_canonical = _load_json(output / "cee_canonical_frame.json")
     if cee_canonical.get("schema_version") != "cee-canonical-v2":
@@ -116,11 +353,66 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
         raise AssertionError(f"Archive expected {len(COUNTRY_FILES)} countries, found {len(cards)}")
     if {card.get("file") for card in cards} != set(COUNTRY_FILES.values()):
         raise AssertionError("Archive country routes do not match stable output routes")
+    cards_by_code = {card.get("code"): card for card in cards}
+    for code in DATA_FIRST_CODES:
+        card = cards_by_code.get(code)
+        if card is None:
+            raise AssertionError(f"Archive is missing a card for {code}")
+        if int(card.get("charts") or -1) != chart_counts.get(code):
+            raise AssertionError(
+                f"Archive card for {code} advertises {card.get('charts')} charts but "
+                f"{COUNTRY_FILES[code]} actually renders {chart_counts.get(code)} — "
+                f"the archive was not rebuilt after the page changed (run scripts/build_dashboard_archive.py)"
+            )
+
     for index_path in (root / "index.html", output / "index.html"):
         text = index_path.read_text()
+        # For the root index, cards link to "output/<file>"; for output/index.html
+        # they link to "<file>" directly (see build_dashboard_archive.py's
+        # `prefix` argument). A count other than exactly one per country means
+        # either a missing card or a stale duplicate left behind by a partial
+        # rebuild (see finding #3: South Africa shipped with two cards after
+        # a single-page rebuild skipped the site-wide archive step).
+        href_prefix = "output/" if index_path == root / "index.html" else ""
         for filename in COUNTRY_FILES.values():
-            if filename not in text:
+            occurrences = text.count(f'href="{href_prefix}{filename}"')
+            if occurrences == 0:
                 raise AssertionError(f"{index_path} is missing {filename}")
+            if occurrences > 1:
+                raise AssertionError(
+                    f"{index_path} links to {filename} {occurrences} times — a stale "
+                    "duplicate card was left behind by a partial rebuild"
+                )
+        for code in DATA_FIRST_CODES:
+            display_name = DASHBOARD_DISPLAY_NAMES[code]
+            stat = _first_ratio_stat_after(text, display_name)
+            if stat is None:
+                raise AssertionError(f"{index_path} has no 'Rendered charts' stat for {display_name}")
+            rendered, expected = stat
+            actual = chart_counts.get(code)
+            if rendered != actual or expected != actual:
+                raise AssertionError(
+                    f"{index_path} advertises {rendered}/{expected} charts for {display_name} "
+                    f"but {COUNTRY_FILES[code]} actually renders {actual} — index card is stale"
+                )
+
+    audit = _load_json(output / "freshness_audit.json")
+    audit_counts: dict[str, int] = Counter(row.get("dashboard") for row in audit.get("records") or [])
+    if set(audit_counts) != set(DASHBOARD_DISPLAY_NAMES.values()):
+        raise AssertionError(
+            f"Freshness audit covers {sorted(audit_counts)}, expected all "
+            f"{sorted(DASHBOARD_DISPLAY_NAMES.values())} dashboards"
+        )
+    for code, display_name in DASHBOARD_DISPLAY_NAMES.items():
+        expected = chart_counts.get(code)
+        actual = audit_counts.get(display_name)
+        if actual != expected:
+            raise AssertionError(
+                f"Freshness audit has {actual} records for {display_name} ({code}) but "
+                f"{COUNTRY_FILES[code]} actually renders {expected} charts — audit is stale "
+                "(run scripts/freshness_audit.py after rebuilding the page)"
+            )
+    messages.append("pipeline outcome contract ok")
 
     return messages
 

@@ -745,12 +745,59 @@ def _chart_html(series: dict[str, Any], country_code: str) -> str:
         <span class="latest-value"><strong>{value}</strong><em>{unit}</em></span>
         <time datetime="{date_text}"><span data-lang="en">{period_en}</span><span data-lang="zh">{period_zh}</span></time>
       </div>"""
+    quality_data = series.get("data_quality") or {}
+    authority = escape(str(quality_data.get("source_authority", "")).replace("_", " "))
+    freshness = escape(str(quality_data.get("freshness", "")).replace("_", " "))
     quality = escape(series.get("quality_status", "unchecked").replace("_", " "))
+    chips = (
+        f'<span class="quality-pill">{quality}</span>'
+        f'<span class="authority-chip">{authority}</span>'
+        f'<span class="freshness-chip">{freshness}</span>'
+    )
     caveat_en = escape(series.get("caveat_en", ""))
     caveat_zh = escape(series.get("caveat_zh", ""))
     source_url = escape(series.get("source_url") or series.get("api_url") or "#")
     concept_id = concept_id_for(country_code, str(series["id"]))
     view = "deep" if ":" in concept_id else "core"
+    cross = series.get("cross_check") or {}
+    cross_html = ""
+    if cross:
+        status = cross["status"]
+        window_months = cross.get("window_months")
+        window_label = f"last {window_months} months" if window_months else "recent window"
+        if status == "insufficient":
+            # No overlapping observations in the recent window (and possibly none
+            # at all) — nothing to agree or diverge on, so say so plainly rather
+            # than formatting fields (e.g. `latest_diff`) that may be None here.
+            mark = "— No recent overlap for"
+            headline = f"{window_label}: no common periods to compare"
+            cls = "cross-check"
+        elif status in {"agree", "minor"}:
+            mark = "✓ Agrees with"
+            headline = (
+                f"{window_label}: {cross['window_n_common']} common periods, "
+                f"max gap {cross['window_max_abs_diff']:.2f} (tolerance {cross['tolerance']:.2f})"
+            )
+            cls = "cross-check"
+        else:
+            mark = "⚠ Diverges from"
+            headline = (
+                f"{window_label}: {cross['window_n_breaches']} of {cross['window_n_common']} periods "
+                f"beyond tolerance {cross['tolerance']:.2f}, latest gap {cross['latest_diff']:.2f} "
+                f"({cross['last_breach_date']})"
+            )
+            cls = "cross-check diverged"
+        if cross["n_breaches"]:
+            history = (
+                f"Full history: {cross['n_breaches']} of {cross['n_common']} periods beyond tolerance "
+                f"(most recently {cross['last_breach_date']}; max gap {cross['max_abs_diff']:.2f})."
+            )
+        else:
+            history = f"Full history: no breaches across {cross['n_common']} common periods."
+        cross_html = (
+            f'\n  <p class="{cls}">{mark} <strong>{escape(cross["label_en"])}</strong> · {escape(headline)}'
+            f'<br><span class="cross-check-history">{escape(history)}</span></p>'
+        )
     return f"""
 <article class="chart-card chart-quality-{escape(series.get('quality_status', 'unchecked'))}" data-dashboard-view="{view}" data-concept-id="{escape(concept_id)}">
   <div class="chart-head">
@@ -759,7 +806,7 @@ def _chart_html(series: dict[str, Any], country_code: str) -> str:
     </div>
     <div class="chart-status">
       {latest_reading}
-      <span class="quality-pill">{quality}</span>
+      {chips}
     </div>
   </div>
   <div id="{chart_id}" class="plotly-chart"></div>
@@ -771,7 +818,7 @@ def _chart_html(series: dict[str, Any], country_code: str) -> str:
     <span>Series: {escape(series.get('series', ''))}</span>
     <span>Frequency: {escape(series.get('frequency', ''))}</span>
     <span>Provider update: {escape(series.get('provider_updated', '') or 'n/a')}</span>
-  </footer>
+  </footer>{cross_html}
   <p class="caveat"><span data-lang="en">{caveat_en}</span><span data-lang="zh">{caveat_zh}</span></p>
 </article>
 """
@@ -1105,6 +1152,15 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
 .chart-quality-verified .quality-pill { color: #3f6f50; border-color: rgba(63,111,80,0.35); }
 .chart-quality-watch .quality-pill { color: var(--warn); border-color: rgba(157,106,46,0.35); }
 .chart-quality-low_confidence .quality-pill { color: var(--low); border-color: rgba(157,61,46,0.35); }
+.authority-chip, .freshness-chip {
+  font-size: 11px; letter-spacing: .02em; padding: 2px 7px; border-radius: 999px;
+  border: 1px solid rgba(23,19,16,0.16); color: var(--muted, #63574e); margin-left: 6px;
+}
+.authority-chip { background: rgba(63,111,80,0.10); }
+.freshness-chip { background: rgba(54,75,97,0.10); }
+.cross-check { font-size: 12px; color: #63574e; margin-top: 4px; }
+.cross-check.diverged { color: #9d3d2e; }
+.cross-check-history { color: var(--muted); }
 .plotly-chart { width: 100%; min-width: 0; height: 360px; }
 .plot-container, .svg-container { max-width: 100% !important; }
 #js-plotly-tester { width: 1px !important; max-width: 1px !important; overflow: hidden !important; }

@@ -232,6 +232,15 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
 .chart-quality-verified .quality-pill { color: #3f6f50; border-color: rgba(63,111,80,0.35); }
 .chart-quality-watch .quality-pill { color: var(--warn); border-color: rgba(157,106,46,0.35); }
 .chart-quality-low_confidence .quality-pill { color: var(--low); border-color: rgba(157,61,46,0.35); }
+.authority-chip, .freshness-chip {
+  font-size: 11px; letter-spacing: .02em; padding: 2px 7px; border-radius: 999px;
+  border: 1px solid rgba(23,19,16,0.16); color: var(--muted, #63574e); margin-left: 6px;
+}
+.authority-chip { background: rgba(63,111,80,0.10); }
+.freshness-chip { background: rgba(54,75,97,0.10); }
+.cross-check { font-size: 12px; color: #63574e; margin-top: 4px; }
+.cross-check.diverged { color: #9d3d2e; }
+.cross-check-history { color: var(--muted); }
 .plotly-chart { width: 100%; min-width: 0; height: 360px; }
 .plot-container, .svg-container { max-width: 100% !important; }
 #js-plotly-tester { width: 1px !important; max-width: 1px !important; overflow: hidden !important; }
@@ -290,10 +299,11 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h1><span data-lang="en">Japan Dashboard</span><span data-lang="zh">日本 Dashboard</span></h1>
     <p class="subtitle"><span data-lang="en">A chart-and-data-first Japan macro page built on the same nine-pillar comparable core as the other country dashboards. Because OECD discontinued several of its Japan mirrors, national CPI and bank soundness come from the IMF SDMX API rather than FRED, and Japan-native releases that need e-Stat credentials are recorded as explicit gaps.</span><span data-lang="zh">一个以图表和数据为核心的日本宏观页面，采用与其他国家看板一致的九支柱可比核心框架。由于OECD停更了部分日本镜像序列，全国CPI与银行稳健指标改用IMF SDMX接口而非FRED；需要e-Stat凭证的日本本土数据则明确列为缺口。</span></p>
     <div class="meta-row">
-      <span class="meta-chip">46 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
-      <span class="meta-chip">17 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
-      <span class="meta-chip">8 <span data-lang="en">official/vendor gaps tracked</span><span data-lang="zh">个官方/供应商缺口</span></span>
+      <span class="meta-chip">52 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
+      <span class="meta-chip">19 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
+      <span class="meta-chip">6 <span data-lang="en">official/vendor gaps tracked</span><span data-lang="zh">个官方/供应商缺口</span></span>
       <span class="meta-chip">17 <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
+      <span class="meta-chip">6 <span data-lang="en">native official</span><span data-lang="zh">原生官方</span> · 46 <span data-lang="en">mirror</span><span data-lang="zh">镜像</span></span>
     </div>
   </header>
 
@@ -395,7 +405,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.28</strong><em>% q/q</em></span>
         <time datetime="2026-04-01"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-real_gdp_growth" class="plotly-chart"></div>
@@ -424,7 +434,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.55</strong><em>% y/y</em></span>
         <time datetime="2026-04-01"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-real_gdp_yoy" class="plotly-chart"></div>
@@ -453,7 +463,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>598,288</strong><em>JPY bn</em></span>
         <time datetime="2026-04-01"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-real_gdp_level" class="plotly-chart"></div>
@@ -482,7 +492,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>3.57</strong><em>% y/y</em></span>
         <time datetime="2026-01-01"><span data-lang="en">Q1 2026</span><span data-lang="zh">2026年 Q1</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-nominal_gdp_growth" class="plotly-chart"></div>
@@ -511,7 +521,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.63</strong><em>% y/y</em></span>
         <time datetime="2026-01-01"><span data-lang="en">Q1 2026</span><span data-lang="zh">2026年 Q1</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-gfcf_growth" class="plotly-chart"></div>
@@ -540,7 +550,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.67</strong><em>% y/y</em></span>
         <time datetime="2025-01-01"><span data-lang="en">Q1 2025</span><span data-lang="zh">2025年 Q1</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-government_consumption_growth" class="plotly-chart"></div>
@@ -580,7 +590,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.69</strong><em>% y/y</em></span>
         <time datetime="2026-05-01"><span data-lang="en">May 2026</span><span data-lang="zh">2026年5月</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-industrial_production_growth" class="plotly-chart"></div>
@@ -609,7 +619,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.69</strong><em>% y/y</em></span>
         <time datetime="2026-05-01"><span data-lang="en">May 2026</span><span data-lang="zh">2026年5月</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-manufacturing_production_growth" class="plotly-chart"></div>
@@ -638,7 +648,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>2.00</strong><em>% balance</em></span>
         <time datetime="2026-04-01"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-capacity_utilisation" class="plotly-chart"></div>
@@ -667,7 +677,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>14.0</strong><em>index</em></span>
         <time datetime="2026-04-01"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-business_confidence" class="plotly-chart"></div>
@@ -696,7 +706,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>100</strong><em>index</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-composite_leading_indicator" class="plotly-chart"></div>
@@ -736,7 +746,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>3.47</strong><em>% y/y</em></span>
         <time datetime="2026-05-01"><span data-lang="en">May 2026</span><span data-lang="zh">2026年5月</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-retail_sales_growth" class="plotly-chart"></div>
@@ -776,7 +786,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>2.50</strong><em>%</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-unemployment_rate" class="plotly-chart"></div>
@@ -805,7 +815,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>64.1</strong><em>%</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-participation_rate" class="plotly-chart"></div>
@@ -834,7 +844,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>80.5</strong><em>%</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-employment_rate" class="plotly-chart"></div>
@@ -863,7 +873,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.23</strong><em>% y/y</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-employment_growth" class="plotly-chart"></div>
@@ -892,7 +902,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>5.16</strong><em>% y/y</em></span>
         <time datetime="2026-04-01"><span data-lang="en">Apr 2026</span><span data-lang="zh">2026年4月</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-manufacturing_earnings_growth" class="plotly-chart"></div>
@@ -916,9 +926,39 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   <div class="section-title">
     <p>PDF logic</p>
     <h2><span data-lang="en">Prices &amp; Costs</span><span data-lang="zh">价格与成本</span></h2>
-    <div class="logic"><span data-lang="en">IMF-compiled national CPI gives headline year-over-year and month-over-month inflation and the price level itself, which is the reproducible public path now that OECD&#x27;s Japan CPI mirror is discontinued. The COICOP division breakdown is declared by the IMF but published empty for Japan, so it is tracked as a gap.</span><span data-lang="zh">IMF汇编的日本CPI提供总体同比、环比与价格水平本身。在OECD日本CPI镜像停更后，这是可复跑的公开路径。COICOP大类分项虽由IMF声明但对日本为空值，故列为缺口。</span></div>
+    <div class="logic"><span data-lang="en">IMF-compiled national CPI gives headline year-over-year and month-over-month inflation and the price level itself, which is the reproducible public path now that OECD&#x27;s Japan CPI mirror is discontinued. The Statistics Bureau&#x27;s own e-Stat API supplies the BoJ&#x27;s actual policy reference measures natively: core CPI ex-fresh-food, core-core ex-fresh-food-and-energy, and the goods/services split, each published as year-over-year directly rather than derived on this page. The COICOP division breakdown (food, housing, transport, and the other CP01-CP12 categories) is not yet wired and remains a gap.</span><span data-lang="zh">IMF汇编的日本CPI提供总体同比、环比与价格水平本身。在OECD日本CPI镜像停更后，这是可复跑的公开路径。总务省统计局自有的e-Stat接口原生提供日银真正的政策参考口径：剔除生鲜食品的核心CPI、剔除生鲜食品与能源的核心核心CPI，以及商品/服务拆分，均由官方直接公布同比，而非本页派生。COICOP大类分项（食品、住房、交通等CP01-CP12类别）尚未接入，仍列为缺口。</span></div>
   </div>
   <div class="charts-grid">
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="jp:cpi_inflation_estat">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Headline CPI, YoY (e-Stat)</span><span data-lang="zh">总体CPI同比（e-Stat）</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-07-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>1.90</strong><em>% y/y</em></span>
+        <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-cpi_inflation_estat" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-cpi_inflation_estat", [{"name": "Headline CPI, YoY (e-Stat)", "x": ["1995-01-01", "1995-02-01", "1995-03-01", "1995-04-01", "1995-05-01", "1995-06-01", "1995-07-01", "1995-08-01", "1995-09-01", "1995-10-01", "1995-11-01", "1995-12-01", "1996-01-01", "1996-02-01", "1996-03-01", "1996-04-01", "1996-05-01", "1996-06-01", "1996-07-01", "1996-08-01", "1996-09-01", "1996-10-01", "1996-11-01", "1996-12-01", "1997-01-01", "1997-02-01", "1997-03-01", "1997-04-01", "1997-05-01", "1997-06-01", "1997-07-01", "1997-08-01", "1997-09-01", "1997-10-01", "1997-11-01", "1997-12-01", "1998-01-01", "1998-02-01", "1998-03-01", "1998-04-01", "1998-05-01", "1998-06-01", "1998-07-01", "1998-08-01", "1998-09-01", "1998-10-01", "1998-11-01", "1998-12-01", "1999-01-01", "1999-02-01", "1999-03-01", "1999-04-01", "1999-05-01", "1999-06-01", "1999-07-01", "1999-08-01", "1999-09-01", "1999-10-01", "1999-11-01", "1999-12-01", "2000-01-01", "2000-02-01", "2000-03-01", "2000-04-01", "2000-05-01", "2000-06-01", "2000-07-01", "2000-08-01", "2000-09-01", "2000-10-01", "2000-11-01", "2000-12-01", "2001-01-01", "2001-02-01", "2001-03-01", "2001-04-01", "2001-05-01", "2001-06-01", "2001-07-01", "2001-08-01", "2001-09-01", "2001-10-01", "2001-11-01", "2001-12-01", "2002-01-01", "2002-02-01", "2002-03-01", "2002-04-01", "2002-05-01", "2002-06-01", "2002-07-01", "2002-08-01", "2002-09-01", "2002-10-01", "2002-11-01", "2002-12-01", "2003-01-01", "2003-02-01", "2003-03-01", "2003-04-01", "2003-05-01", "2003-06-01", "2003-07-01", "2003-08-01", "2003-09-01", "2003-10-01", "2003-11-01", "2003-12-01", "2004-01-01", "2004-02-01", "2004-03-01", "2004-04-01", "2004-05-01", "2004-06-01", "2004-07-01", "2004-08-01", "2004-09-01", "2004-10-01", "2004-11-01", "2004-12-01", "2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01"], "y": [0.6, 0.2, -0.4, -0.2, 0.0, 0.3, 0.1, -0.2, 0.2, -0.6, -0.7, -0.3, -0.5, -0.4, -0.1, 0.2, 0.2, 0.0, 0.4, 0.2, 0.0, 0.5, 0.5, 0.6, 0.6, 0.6, 0.5, 1.9, 1.9, 2.2, 1.9, 2.1, 2.4, 2.5, 2.1, 1.8, 1.8, 1.9, 2.2, 0.4, 0.5, 0.1, -0.1, -0.3, -0.2, 0.2, 0.8, 0.6, 0.2, -0.1, -0.4, -0.1, -0.4, -0.3, -0.1, 0.3, -0.2, -0.7, -1.2, -1.1, -0.9, -0.6, -0.5, -0.8, -0.7, -0.7, -0.5, -0.8, -0.8, -0.9, -0.5, -0.2, -0.3, -0.3, -0.7, -0.7, -0.7, -0.8, -0.8, -0.7, -0.8, -0.8, -1.0, -1.2, -1.4, -1.6, -1.2, -1.1, -0.9, -0.7, -0.8, -0.9, -0.7, -0.9, -0.4, -0.3, -0.4, -0.2, -0.1, -0.1, -0.2, -0.4, -0.2, -0.3, -0.2, 0.0, -0.5, -0.4, -0.3, 0.0, -0.1, -0.4, -0.5, 0.0, -0.1, -0.2, 0.0, 0.5, 0.8, 0.2, -0.1, -0.3, -0.2, 0.0, 0.2, -0.5, -0.3, -0.3, -0.3, -0.7, -0.8, -0.1, -0.1, -0.1, -0.2, -0.1, 0.1, 0.5, 0.3, 0.9, 0.6, 0.4, 0.3, 0.3, 0.0, -0.2, -0.1, 0.0, 0.0, -0.2, 0.0, -0.2, -0.2, 0.3, 0.6, 0.7, 0.7, 1.0, 1.2, 0.8, 1.3, 2.0, 2.3, 2.1, 2.1, 1.7, 1.0, 0.4, 0.0, -0.1, -0.3, -0.1, -1.1, -1.8, -2.2, -2.2, -2.2, -2.5, -1.9, -1.7, -1.3, -1.1, -1.1, -1.2, -0.9, -0.7, -0.9, -0.9, -0.6, 0.2, 0.1, 0.0, -0.6, -0.5, -0.5, -0.4, -0.4, -0.4, 0.2, 0.2, 0.0, -0.2, -0.5, -0.2, 0.1, 0.3, 0.5, 0.4, 0.2, -0.2, -0.4, -0.4, -0.3, -0.4, -0.2, -0.1, -0.3, -0.7, -0.9, -0.7, -0.3, 0.2, 0.7, 0.9, 1.1, 1.1, 1.5, 1.6, 1.4, 1.5, 1.6, 3.4, 3.7, 3.6, 3.4, 3.3, 3.2, 2.9, 2.4, 2.4, 2.4, 2.2, 2.3, 0.6, 0.5, 0.4, 0.2, 0.2, 0.0, 0.3, 0.3, 0.2, -0.1, 0.2, 0.0, -0.3, -0.5, -0.4, -0.4, -0.5, -0.5, 0.1, 0.5, 0.3, 0.4, 0.3, 0.2, 0.4, 0.4, 0.4, 0.4, 0.7, 0.7, 0.2, 0.6, 1.0, 1.4, 1.5, 1.1, 0.6, 0.7, 0.7, 0.9, 1.3, 1.2, 1.4, 0.8, 0.3, 0.2, 0.2, 0.5, 0.9, 0.7, 0.7, 0.5, 0.3, 0.2, 0.2, 0.5, 0.8, 0.7, 0.4, 0.4, 0.1, 0.1, 0.1, 0.3, 0.2, 0.0, -0.4, -0.9, -1.2, -0.7, -0.5, -0.4, -1.1, -0.8, -0.5, -0.3, -0.4, 0.2, 0.1, 0.6, 0.8, 0.5, 0.9, 1.2, 2.5, 2.5, 2.4, 2.6, 3.0, 3.0, 3.7, 3.8, 4.0, 4.3, 3.3, 3.2, 3.5, 3.2, 3.3, 3.3, 3.2, 3.0, 3.3, 2.8, 2.6, 2.2, 2.8, 2.7, 2.5, 2.8, 2.8, 2.8, 3.0, 2.5, 2.3, 2.9, 3.6, 4.0, 3.7, 3.6, 3.6, 3.5, 3.3, 3.1, 2.7, 2.9, 3.0, 2.9, 2.1, 1.5, 1.3, 1.5, 1.4, 1.5, 1.6, 1.9], "mode": "lines", "line": {"color": "#8a593d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-07-01"], "y": [1.9], "mode": "markers", "marker": {"size": 9, "color": "#8a593d", "line": {"width": 2, "color": "#fffdf8"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "rgba(255,252,246,0.90)", "plot_bgcolor": "rgba(255,252,246,0.90)", "font": {"family": "Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, sans-serif", "size": 12, "color": "#171310"}, "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.e-stat.go.jp/en/dbview?sid=0004052037" target="_blank" rel="noreferrer">e-Stat / Statistics Bureau CPI</a></span>
+    <span>Series: 0004052037/3/0001/00000</span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-07-01</span>
+  </footer>
+  <p class="cross-check">✓ Agrees with <strong>e-Stat vs IMF headline CPI</strong> · last 24 months: 25 common periods, max gap 0.10 (tolerance 0.15)<br><span class="cross-check-history">Full history: 24 of 378 periods beyond tolerance (most recently 2020-10-01; max gap 0.41).</span></p>
+  <p class="caveat"><span data-lang="en">All-items headline CPI. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base. Charted alongside the IMF SDMX mirror below as a cross-check between the two publication paths.</span><span data-lang="zh">总体（全项目）CPI。同比由总务省统计局直接公布，非本页派生。全国口径，2025年基准。与下方IMF SDMX镜像并列展示，作为两条发布路径之间的交叉校验。</span></p>
+</article>
+
 
 <article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="headline_inflation">
   <div class="chart-head">
@@ -932,7 +972,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>1.70</strong><em>% y/y</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-cpi_inflation" class="plotly-chart"></div>
@@ -943,9 +983,10 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/CPI/JPN.CPI._T.YOY_PCH_PA_PT.M" target="_blank" rel="noreferrer">IMF SDMX / CPI (Statistics Bureau)</a></span>
     <span>Series: JPN.CPI._T.YOY_PCH_PA_PT.M</span>
     <span>Frequency: monthly</span>
-    <span>Provider update: 2026-08-28</span>
+    <span>Provider update: 2026-08-30</span>
   </footer>
-  <p class="caveat"><span data-lang="en">IMF-compiled national CPI for Japan. This is the all-items index; Japan&#x27;s headline policy reference is the ex-fresh-food &#x27;core&#x27; measure, which is tracked as a data gap.</span><span data-lang="zh">IMF汇编的日本全国CPI，为总体指数。日本政策参考的是剔除生鲜食品的核心口径，该口径列为数据缺口。</span></p>
+  <p class="cross-check">✓ Agrees with <strong>e-Stat vs IMF headline CPI</strong> · last 24 months: 25 common periods, max gap 0.10 (tolerance 0.15)<br><span class="cross-check-history">Full history: 24 of 378 periods beyond tolerance (most recently 2020-10-01; max gap 0.41).</span></p>
+  <p class="caveat"><span data-lang="en">IMF-compiled national CPI for Japan. This is the all-items index; the BoJ&#x27;s actual policy reference is the ex-fresh-food &#x27;core&#x27; measure, charted separately below as Core CPI ex-Fresh Food, YoY, published natively by the Statistics Bureau via e-Stat.</span><span data-lang="zh">IMF汇编的日本全国CPI，为总体指数。日银的实际政策参考口径为剔除生鲜食品的「核心」CPI，已在下方以「核心CPI（剔除生鲜食品）同比」单独图表原生呈现，数据来自总务省统计局e-Stat。</span></p>
 </article>
 
 
@@ -961,7 +1002,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.09</strong><em>% m/m</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-cpi_mom" class="plotly-chart"></div>
@@ -972,7 +1013,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/CPI/JPN.CPI._T.POP_PCH_PA_PT.M" target="_blank" rel="noreferrer">IMF SDMX / CPI (Statistics Bureau)</a></span>
     <span>Series: JPN.CPI._T.POP_PCH_PA_PT.M</span>
     <span>Frequency: monthly</span>
-    <span>Provider update: 2026-08-28</span>
+    <span>Provider update: 2026-08-30</span>
   </footer>
   <p class="caveat"><span data-lang="en">Not seasonally adjusted, so month-over-month prints carry a strong seasonal pattern; read against the same month a year earlier.</span><span data-lang="zh">未季调，环比读数季节性明显；应与去年同月对照阅读。</span></p>
 </article>
@@ -990,7 +1031,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>114</strong><em>index</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-cpi_index" class="plotly-chart"></div>
@@ -1001,9 +1042,154 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/CPI/JPN.CPI._T.IX.M" target="_blank" rel="noreferrer">IMF SDMX / CPI (Statistics Bureau)</a></span>
     <span>Series: JPN.CPI._T.IX.M</span>
     <span>Frequency: monthly</span>
-    <span>Provider update: 2026-08-28</span>
+    <span>Provider update: 2026-08-30</span>
   </footer>
   <p class="caveat"><span data-lang="en">Price level rather than a rate. The flat 1995-2012 stretch is the clearest single picture of Japan&#x27;s deflation era.</span><span data-lang="zh">为价格水平而非增速。1995-2012年的平坦区间是日本通缩时期最直观的单张图。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="jp:producer_price_inflation">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Corporate Goods Price Index, YoY</span><span data-lang="zh">企业物价指数同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-07-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>7.18</strong><em>% y/y</em></span>
+        <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-producer_price_inflation" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-producer_price_inflation", [{"name": "Corporate Goods Price Index, YoY", "x": ["2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01"], "y": [-1.762977473065619, -0.8849557522123908, 0.9920634920634885, 3.8306451612903247, 4.964539007092195, 5.035246727089637, 5.611222444889785, 5.705705705705699, 6.212424849699394, 8.24120603015075, 9.05432595573441, 8.617234468937895, 9.172482552342975, 9.523809523809534, 9.528487229862481, 10.194174757281548, 9.555984555984566, 9.77948226270373, 9.487666034155605, 9.75378787878789, 10.377358490566046, 9.749303621169926, 9.963099630996307, 10.60885608856088, 9.589041095890405, 8.423913043478247, 7.443946188340811, 6.079295154185016, 5.3744493392070325, 4.454148471615715, 3.726169844020788, 3.537532355478845, 2.3931623931623847, 1.1844331641285955, 0.5872483221476488, 0.2502085070892335, 0.33333333333334103, 0.7518796992481036, 1.001669449081799, 1.1627906976744207, 2.591973244147172, 2.842809364548504, 3.2581453634085156, 2.6666666666666616, 3.171953255425697, 3.8461538461538547, 3.9199332777314355, 4.0765391014975005, 4.235880398671088, 4.311774461028195, 4.297520661157028, 3.9408866995073843, 3.096984515077428, 2.764227642276418, 2.508090614886749, 2.5974025974025983, 2.7508090614886793, 2.7375201288244666, 2.7287319422151013, 2.3980815347721895, 2.39043824701195, 2.1462639109697923, 2.8526148969889142, 5.371248025276465, 6.640316205533603, 7.278481012658222, 7.182320441988965], "mode": "lines", "line": {"color": "#8a593d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-07-01"], "y": [7.182320441988965], "mode": "markers", "marker": {"size": 9, "color": "#8a593d", "line": {"width": 2, "color": "#fffdf8"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "rgba(255,252,246,0.90)", "plot_bgcolor": "rgba(255,252,246,0.90)", "font": {"family": "Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, sans-serif", "size": 12, "color": "#171310"}, "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.stat-search.boj.or.jp/info/dload_en.html" target="_blank" rel="noreferrer">Bank of Japan / Corporate Goods Price Index</a></span>
+    <span>Series: PRCG20_2200000000</span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-07-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Domestic producer prices for all commodities, 2020 base. Derived year-over-year from the published index.</span><span data-lang="zh">全部商品的国内生产者价格，2020年基准。由公布指数派生的同比增速。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="jp:core_inflation">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Core CPI ex-Fresh Food, YoY</span><span data-lang="zh">核心CPI（剔除生鲜食品）同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-07-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>1.80</strong><em>% y/y</em></span>
+        <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-core_inflation" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-core_inflation", [{"name": "Core CPI ex-Fresh Food, YoY", "x": ["1995-01-01", "1995-02-01", "1995-03-01", "1995-04-01", "1995-05-01", "1995-06-01", "1995-07-01", "1995-08-01", "1995-09-01", "1995-10-01", "1995-11-01", "1995-12-01", "1996-01-01", "1996-02-01", "1996-03-01", "1996-04-01", "1996-05-01", "1996-06-01", "1996-07-01", "1996-08-01", "1996-09-01", "1996-10-01", "1996-11-01", "1996-12-01", "1997-01-01", "1997-02-01", "1997-03-01", "1997-04-01", "1997-05-01", "1997-06-01", "1997-07-01", "1997-08-01", "1997-09-01", "1997-10-01", "1997-11-01", "1997-12-01", "1998-01-01", "1998-02-01", "1998-03-01", "1998-04-01", "1998-05-01", "1998-06-01", "1998-07-01", "1998-08-01", "1998-09-01", "1998-10-01", "1998-11-01", "1998-12-01", "1999-01-01", "1999-02-01", "1999-03-01", "1999-04-01", "1999-05-01", "1999-06-01", "1999-07-01", "1999-08-01", "1999-09-01", "1999-10-01", "1999-11-01", "1999-12-01", "2000-01-01", "2000-02-01", "2000-03-01", "2000-04-01", "2000-05-01", "2000-06-01", "2000-07-01", "2000-08-01", "2000-09-01", "2000-10-01", "2000-11-01", "2000-12-01", "2001-01-01", "2001-02-01", "2001-03-01", "2001-04-01", "2001-05-01", "2001-06-01", "2001-07-01", "2001-08-01", "2001-09-01", "2001-10-01", "2001-11-01", "2001-12-01", "2002-01-01", "2002-02-01", "2002-03-01", "2002-04-01", "2002-05-01", "2002-06-01", "2002-07-01", "2002-08-01", "2002-09-01", "2002-10-01", "2002-11-01", "2002-12-01", "2003-01-01", "2003-02-01", "2003-03-01", "2003-04-01", "2003-05-01", "2003-06-01", "2003-07-01", "2003-08-01", "2003-09-01", "2003-10-01", "2003-11-01", "2003-12-01", "2004-01-01", "2004-02-01", "2004-03-01", "2004-04-01", "2004-05-01", "2004-06-01", "2004-07-01", "2004-08-01", "2004-09-01", "2004-10-01", "2004-11-01", "2004-12-01", "2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01"], "y": [0.3, 0.2, 0.1, -0.1, -0.2, -0.2, -0.2, -0.3, 0.2, 0.1, 0.1, 0.1, -0.2, 0.0, 0.0, 0.1, 0.1, 0.2, 0.3, 0.2, 0.2, 0.2, 0.4, 0.3, 0.5, 0.4, 0.5, 2.0, 2.1, 2.0, 2.0, 2.1, 2.4, 2.4, 2.2, 2.2, 2.0, 1.8, 1.8, 0.2, 0.0, 0.0, -0.1, -0.1, -0.5, -0.4, -0.3, -0.3, -0.1, -0.1, -0.1, -0.1, 0.0, 0.0, 0.0, 0.0, 0.0, -0.1, -0.2, -0.1, -0.3, -0.1, -0.3, -0.4, -0.2, -0.3, -0.3, -0.3, -0.5, -0.6, -0.5, -0.6, -0.8, -0.8, -0.9, -0.8, -1.0, -0.9, -0.9, -0.9, -0.8, -0.7, -0.8, -0.9, -0.8, -0.8, -0.7, -0.9, -0.8, -0.8, -0.8, -0.9, -0.9, -0.9, -0.8, -0.7, -0.8, -0.7, -0.6, -0.4, -0.4, -0.4, -0.2, -0.1, -0.1, 0.1, -0.1, 0.0, -0.1, 0.0, -0.1, -0.2, -0.3, -0.1, -0.2, -0.2, 0.0, -0.1, -0.2, -0.2, -0.3, -0.4, -0.3, -0.2, 0.0, -0.2, -0.2, -0.1, -0.1, 0.0, 0.1, 0.1, -0.1, 0.0, 0.1, -0.1, 0.0, 0.2, 0.2, 0.3, 0.2, 0.1, 0.2, 0.1, 0.0, -0.1, -0.3, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1, 0.1, 0.4, 0.8, 0.8, 1.0, 1.2, 0.9, 1.5, 1.9, 2.4, 2.4, 2.3, 1.9, 1.0, 0.2, 0.0, 0.0, -0.1, -0.1, -1.1, -1.7, -2.2, -2.4, -2.3, -2.2, -1.7, -1.3, -1.3, -1.2, -1.2, -1.5, -1.2, -1.0, -1.1, -1.0, -1.1, -0.6, -0.5, -0.4, -0.8, -0.8, -0.7, -0.2, -0.1, -0.2, 0.1, 0.2, 0.2, -0.1, -0.2, -0.1, -0.1, 0.1, 0.2, 0.2, -0.1, -0.2, -0.3, -0.3, -0.1, 0.0, -0.1, -0.2, -0.2, -0.3, -0.5, -0.4, 0.0, 0.4, 0.7, 0.8, 0.7, 0.9, 1.2, 1.3, 1.3, 1.3, 1.3, 3.2, 3.4, 3.3, 3.3, 3.1, 3.0, 2.9, 2.7, 2.5, 2.2, 2.0, 2.2, 0.3, 0.1, 0.1, 0.0, -0.1, -0.1, -0.1, 0.1, 0.1, -0.1, 0.0, -0.3, -0.4, -0.4, -0.4, -0.5, -0.5, -0.5, -0.4, -0.4, -0.2, 0.1, 0.2, 0.2, 0.3, 0.4, 0.4, 0.5, 0.7, 0.7, 0.8, 0.9, 0.9, 0.9, 1.0, 0.9, 0.7, 0.7, 0.8, 0.8, 0.9, 1.0, 1.0, 0.9, 0.7, 0.8, 0.7, 0.8, 0.9, 0.8, 0.6, 0.6, 0.5, 0.3, 0.4, 0.5, 0.7, 0.8, 0.6, 0.4, -0.2, -0.2, 0.0, 0.0, -0.4, -0.3, -0.7, -0.9, -1.0, -0.7, -0.5, -0.3, -0.9, -0.6, -0.5, -0.2, 0.0, 0.1, 0.1, 0.5, 0.5, 0.2, 0.6, 0.8, 2.1, 2.1, 2.2, 2.4, 2.8, 3.0, 3.6, 3.7, 4.0, 4.2, 3.1, 3.1, 3.4, 3.2, 3.3, 3.1, 3.1, 2.8, 2.9, 2.5, 2.3, 2.0, 2.8, 2.6, 2.2, 2.5, 2.6, 2.7, 2.8, 2.4, 2.3, 2.7, 3.0, 3.2, 3.0, 3.2, 3.5, 3.7, 3.3, 3.1, 2.7, 2.9, 3.0, 3.0, 2.4, 1.9, 1.5, 1.7, 1.4, 1.4, 1.6, 1.8], "mode": "lines", "line": {"color": "#8a593d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-07-01"], "y": [1.8], "mode": "markers", "marker": {"size": 9, "color": "#8a593d", "line": {"width": 2, "color": "#fffdf8"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "rgba(255,252,246,0.90)", "plot_bgcolor": "rgba(255,252,246,0.90)", "font": {"family": "Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, sans-serif", "size": 12, "color": "#171310"}, "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.e-stat.go.jp/en/dbview?sid=0004052037" target="_blank" rel="noreferrer">e-Stat / Statistics Bureau CPI</a></span>
+    <span>Series: 0004052037/3/0161/00000</span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-07-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">The BoJ&#x27;s policy reference measure. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base.</span><span data-lang="zh">日银政策参考口径。同比由总务省统计局直接公布，非本页派生。全国口径，2025年基准。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="jp:core_core_inflation">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Core-Core CPI ex-Fresh Food &amp; Energy, YoY</span><span data-lang="zh">核心核心CPI（剔除生鲜食品与能源）同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-07-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>1.90</strong><em>% y/y</em></span>
+        <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-core_core_inflation" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-core_core_inflation", [{"name": "Core-Core CPI ex-Fresh Food & Energy, YoY", "x": ["1995-01-01", "1995-02-01", "1995-03-01", "1995-04-01", "1995-05-01", "1995-06-01", "1995-07-01", "1995-08-01", "1995-09-01", "1995-10-01", "1995-11-01", "1995-12-01", "1996-01-01", "1996-02-01", "1996-03-01", "1996-04-01", "1996-05-01", "1996-06-01", "1996-07-01", "1996-08-01", "1996-09-01", "1996-10-01", "1996-11-01", "1996-12-01", "1997-01-01", "1997-02-01", "1997-03-01", "1997-04-01", "1997-05-01", "1997-06-01", "1997-07-01", "1997-08-01", "1997-09-01", "1997-10-01", "1997-11-01", "1997-12-01", "1998-01-01", "1998-02-01", "1998-03-01", "1998-04-01", "1998-05-01", "1998-06-01", "1998-07-01", "1998-08-01", "1998-09-01", "1998-10-01", "1998-11-01", "1998-12-01", "1999-01-01", "1999-02-01", "1999-03-01", "1999-04-01", "1999-05-01", "1999-06-01", "1999-07-01", "1999-08-01", "1999-09-01", "1999-10-01", "1999-11-01", "1999-12-01", "2000-01-01", "2000-02-01", "2000-03-01", "2000-04-01", "2000-05-01", "2000-06-01", "2000-07-01", "2000-08-01", "2000-09-01", "2000-10-01", "2000-11-01", "2000-12-01", "2001-01-01", "2001-02-01", "2001-03-01", "2001-04-01", "2001-05-01", "2001-06-01", "2001-07-01", "2001-08-01", "2001-09-01", "2001-10-01", "2001-11-01", "2001-12-01", "2002-01-01", "2002-02-01", "2002-03-01", "2002-04-01", "2002-05-01", "2002-06-01", "2002-07-01", "2002-08-01", "2002-09-01", "2002-10-01", "2002-11-01", "2002-12-01", "2003-01-01", "2003-02-01", "2003-03-01", "2003-04-01", "2003-05-01", "2003-06-01", "2003-07-01", "2003-08-01", "2003-09-01", "2003-10-01", "2003-11-01", "2003-12-01", "2004-01-01", "2004-02-01", "2004-03-01", "2004-04-01", "2004-05-01", "2004-06-01", "2004-07-01", "2004-08-01", "2004-09-01", "2004-10-01", "2004-11-01", "2004-12-01", "2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01"], "y": [0.4, 0.3, 0.2, 0.1, -0.1, -0.1, -0.1, -0.2, 0.3, 0.2, 0.3, 0.3, 0.1, 0.3, 0.3, 0.3, 0.3, 0.4, 0.5, 0.4, 0.4, 0.3, 0.5, 0.4, 0.4, 0.3, 0.4, 1.9, 2.0, 1.9, 1.9, 2.0, 2.3, 2.4, 2.2, 2.2, 2.1, 2.0, 2.1, 0.6, 0.4, 0.4, 0.3, 0.3, -0.1, -0.1, 0.1, 0.0, 0.2, 0.1, 0.1, 0.0, 0.1, 0.1, 0.1, 0.1, 0.1, -0.1, -0.3, -0.1, -0.4, -0.2, -0.5, -0.6, -0.4, -0.6, -0.6, -0.6, -0.8, -0.8, -0.7, -0.8, -1.0, -1.0, -1.1, -0.9, -1.1, -1.0, -0.9, -0.9, -0.8, -0.8, -0.8, -0.9, -0.8, -0.8, -0.6, -0.8, -0.7, -0.7, -0.7, -0.8, -0.7, -0.7, -0.6, -0.5, -0.7, -0.6, -0.6, -0.5, -0.4, -0.4, -0.2, -0.1, -0.2, 0.0, -0.2, -0.1, -0.1, 0.0, -0.1, -0.1, -0.3, -0.2, -0.4, -0.4, -0.3, -0.4, -0.5, -0.5, -0.6, -0.7, -0.6, -0.6, -0.4, -0.5, -0.4, -0.4, -0.3, -0.3, -0.2, -0.2, -0.6, -0.6, -0.6, -0.6, -0.6, -0.4, -0.3, -0.3, -0.3, -0.3, -0.1, -0.2, -0.1, -0.1, -0.1, -0.1, -0.1, -0.2, -0.2, -0.1, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.7, 0.9, 1.0, 1.1, 1.2, 1.2, 1.1, 0.9, 0.7, 0.6, 0.5, 0.2, -0.1, -0.4, -0.6, -0.8, -0.9, -1.1, -1.1, -1.2, -1.3, -1.2, -1.3, -1.6, -1.7, -1.5, -1.5, -1.5, -1.5, -0.9, -0.9, -0.8, -1.3, -1.2, -1.3, -0.8, -0.6, -0.7, -0.4, -0.4, -0.4, -0.7, -0.8, -0.7, -0.6, -0.3, -0.3, -0.3, -0.5, -0.4, -0.4, -0.4, -0.5, -0.5, -0.4, -0.5, -0.6, -0.8, -0.7, -0.6, -0.3, -0.2, -0.1, 0.0, 0.0, 0.3, 0.5, 0.7, 0.7, 0.8, 0.8, 2.7, 2.7, 2.7, 2.8, 2.7, 2.7, 2.7, 2.5, 2.5, 2.5, 2.5, 2.5, 0.7, 0.7, 0.8, 0.9, 1.0, 1.2, 1.1, 1.3, 1.2, 0.9, 1.0, 0.9, 0.8, 0.7, 0.7, 0.5, 0.4, 0.2, 0.3, 0.2, 0.1, 0.2, 0.1, -0.1, 0.0, 0.0, 0.0, 0.1, 0.2, 0.2, 0.2, 0.3, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.2, 0.3, 0.4, 0.4, 0.4, 0.3, 0.3, 0.4, 0.4, 0.4, 0.6, 0.5, 0.5, 0.6, 0.6, 0.5, 0.7, 0.8, 0.9, 0.8, 0.6, 0.6, 0.2, 0.4, 0.4, 0.4, -0.1, 0.0, -0.2, -0.3, -0.4, 0.0, 0.0, 0.0, -0.9, -0.9, -0.9, -0.6, -0.5, -0.5, -0.7, -0.6, -0.7, -1.1, -1.0, -0.7, 0.8, 0.8, 1.0, 1.2, 1.6, 1.8, 2.5, 2.8, 3.0, 3.2, 3.5, 3.8, 4.1, 4.3, 4.2, 4.3, 4.3, 4.2, 4.0, 3.8, 3.7, 3.5, 3.2, 2.9, 2.4, 2.1, 2.2, 1.9, 2.0, 2.1, 2.3, 2.4, 2.4, 2.5, 2.6, 2.9, 3.0, 3.3, 3.4, 3.4, 3.3, 3.0, 3.1, 3.0, 2.9, 2.5, 2.4, 2.4, 1.9, 1.8, 1.7, 1.9], "mode": "lines", "line": {"color": "#8a593d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-07-01"], "y": [1.9], "mode": "markers", "marker": {"size": 9, "color": "#8a593d", "line": {"width": 2, "color": "#fffdf8"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "rgba(255,252,246,0.90)", "plot_bgcolor": "rgba(255,252,246,0.90)", "font": {"family": "Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, sans-serif", "size": 12, "color": "#171310"}, "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.e-stat.go.jp/en/dbview?sid=0004052037" target="_blank" rel="noreferrer">e-Stat / Statistics Bureau CPI</a></span>
+    <span>Series: 0004052037/3/0178/00000</span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-07-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">A supplementary measure the BoJ also watches, excluding both fresh food and energy. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base.</span><span data-lang="zh">日银同时关注的补充口径，剔除生鲜食品与能源。同比由总务省统计局直接公布，非本页派生。全国口径，2025年基准。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="jp:goods_inflation">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Goods CPI, YoY</span><span data-lang="zh">商品CPI同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-07-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>2.70</strong><em>% y/y</em></span>
+        <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-goods_inflation" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-goods_inflation", [{"name": "Goods CPI, YoY", "x": ["1995-01-01", "1995-02-01", "1995-03-01", "1995-04-01", "1995-05-01", "1995-06-01", "1995-07-01", "1995-08-01", "1995-09-01", "1995-10-01", "1995-11-01", "1995-12-01", "1996-01-01", "1996-02-01", "1996-03-01", "1996-04-01", "1996-05-01", "1996-06-01", "1996-07-01", "1996-08-01", "1996-09-01", "1996-10-01", "1996-11-01", "1996-12-01", "1997-01-01", "1997-02-01", "1997-03-01", "1997-04-01", "1997-05-01", "1997-06-01", "1997-07-01", "1997-08-01", "1997-09-01", "1997-10-01", "1997-11-01", "1997-12-01", "1998-01-01", "1998-02-01", "1998-03-01", "1998-04-01", "1998-05-01", "1998-06-01", "1998-07-01", "1998-08-01", "1998-09-01", "1998-10-01", "1998-11-01", "1998-12-01", "1999-01-01", "1999-02-01", "1999-03-01", "1999-04-01", "1999-05-01", "1999-06-01", "1999-07-01", "1999-08-01", "1999-09-01", "1999-10-01", "1999-11-01", "1999-12-01", "2000-01-01", "2000-02-01", "2000-03-01", "2000-04-01", "2000-05-01", "2000-06-01", "2000-07-01", "2000-08-01", "2000-09-01", "2000-10-01", "2000-11-01", "2000-12-01", "2001-01-01", "2001-02-01", "2001-03-01", "2001-04-01", "2001-05-01", "2001-06-01", "2001-07-01", "2001-08-01", "2001-09-01", "2001-10-01", "2001-11-01", "2001-12-01", "2002-01-01", "2002-02-01", "2002-03-01", "2002-04-01", "2002-05-01", "2002-06-01", "2002-07-01", "2002-08-01", "2002-09-01", "2002-10-01", "2002-11-01", "2002-12-01", "2003-01-01", "2003-02-01", "2003-03-01", "2003-04-01", "2003-05-01", "2003-06-01", "2003-07-01", "2003-08-01", "2003-09-01", "2003-10-01", "2003-11-01", "2003-12-01", "2004-01-01", "2004-02-01", "2004-03-01", "2004-04-01", "2004-05-01", "2004-06-01", "2004-07-01", "2004-08-01", "2004-09-01", "2004-10-01", "2004-11-01", "2004-12-01", "2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01"], "y": [-0.4, -1.2, -2.1, -1.5, -1.0, -0.6, -0.9, -1.5, -1.0, -2.1, -2.2, -1.5, -2.0, -1.6, -1.1, -0.6, -0.8, -1.2, -0.2, -0.6, -0.9, -0.1, 0.0, 0.5, 0.2, 0.2, 0.0, 1.8, 1.8, 2.4, 1.7, 2.1, 2.2, 2.1, 1.5, 0.7, 1.2, 1.2, 1.9, -0.5, 0.0, -0.7, -1.1, -1.5, -0.7, 0.5, 1.6, 1.3, 0.4, 0.0, -0.8, -0.3, -0.9, -0.8, -0.3, 0.5, -0.3, -1.4, -2.3, -2.4, -1.9, -1.5, -0.9, -1.2, -1.4, -1.2, -0.9, -1.4, -1.5, -1.6, -0.9, -0.2, -0.4, -0.5, -1.2, -1.4, -1.2, -1.5, -1.6, -1.3, -1.5, -1.6, -2.1, -2.6, -2.8, -3.1, -2.6, -2.1, -1.7, -1.4, -1.5, -1.6, -1.5, -1.7, -0.7, -0.5, -0.9, -0.4, -0.3, -0.4, -0.8, -1.1, -0.9, -1.2, -0.8, -0.5, -1.3, -0.9, -0.6, -0.2, -0.4, -0.8, -0.8, 0.1, -0.1, -0.2, 0.1, 1.1, 2.0, 0.7, 0.3, -0.1, 0.2, 0.3, 0.5, -0.7, -0.3, -0.3, -0.5, -1.3, -1.6, -0.6, 0.0, -0.1, -0.3, -0.1, 0.3, 1.2, 0.9, 2.0, 1.4, 1.0, 0.5, 0.5, -0.2, -0.4, -0.1, 0.0, -0.2, -0.5, -0.2, -0.6, -0.5, 0.3, 0.9, 1.3, 1.2, 1.6, 1.9, 1.4, 2.5, 3.7, 4.3, 3.9, 3.7, 3.1, 1.6, 0.3, -0.2, -0.3, -0.7, -0.4, -2.0, -3.4, -4.2, -4.1, -4.0, -4.4, -3.3, -2.7, -2.3, -1.9, -1.9, -1.1, -0.7, -0.2, -0.6, -0.6, 0.0, 1.2, 1.2, 0.8, -0.8, -0.7, -0.7, -1.1, -1.1, -1.0, 0.0, 0.0, -0.4, -0.5, -1.0, -0.4, 0.2, 0.8, 1.1, 0.8, 0.3, -0.4, -0.8, -0.9, -0.4, -0.6, -0.3, -0.1, -0.4, -1.3, -1.7, -1.4, -0.6, 0.3, 1.4, 1.8, 2.1, 1.9, 2.5, 2.6, 2.2, 2.6, 2.6, 5.2, 5.7, 5.6, 5.1, 4.9, 4.6, 4.0, 3.2, 3.1, 3.0, 2.6, 2.8, 0.8, 0.6, 0.2, 0.0, -0.1, -0.4, 0.1, 0.1, -0.1, -0.5, 0.1, -0.4, -1.0, -1.3, -1.1, -1.1, -1.2, -1.2, 0.0, 0.8, 0.5, 0.7, 0.4, 0.4, 0.8, 0.8, 0.9, 1.0, 1.4, 1.5, 0.4, 1.1, 2.0, 2.7, 2.7, 2.0, 1.0, 1.1, 1.1, 1.7, 2.1, 2.1, 2.6, 1.4, 0.2, -0.1, -0.1, 0.7, 1.2, 1.1, 1.0, 0.8, 0.3, 0.2, 0.4, 1.0, 1.5, 1.3, 1.0, 0.9, 0.7, 0.5, 0.5, 0.8, 1.4, 1.0, 0.0, -1.0, -1.5, -1.3, -0.9, -0.7, -0.4, 0.2, 0.8, 0.8, 0.5, 1.8, 1.9, 3.0, 3.4, 3.7, 4.5, 5.0, 5.3, 5.1, 4.9, 5.4, 5.7, 5.6, 6.5, 6.7, 7.1, 7.2, 5.1, 4.8, 5.1, 4.7, 4.9, 4.5, 4.2, 4.0, 4.4, 3.3, 2.8, 2.1, 3.3, 3.3, 3.1, 3.9, 3.8, 4.0, 4.5, 3.5, 2.9, 4.1, 5.4, 6.3, 5.7, 5.6, 5.6, 5.3, 4.8, 4.5, 3.7, 4.2, 4.2, 4.0, 2.7, 1.6, 1.1, 1.4, 1.6, 1.8, 2.2, 2.7], "mode": "lines", "line": {"color": "#8a593d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-07-01"], "y": [2.7], "mode": "markers", "marker": {"size": 9, "color": "#8a593d", "line": {"width": 2, "color": "#fffdf8"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "rgba(255,252,246,0.90)", "plot_bgcolor": "rgba(255,252,246,0.90)", "font": {"family": "Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, sans-serif", "size": 12, "color": "#171310"}, "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.e-stat.go.jp/en/dbview?sid=0004052037" target="_blank" rel="noreferrer">e-Stat / Statistics Bureau CPI</a></span>
+    <span>Series: 0004052037/3/0202/00000</span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-07-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">The goods component of the CPI basket, a supply-chain and import-price-sensitive counterpart to the services split below. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base.</span><span data-lang="zh">CPI篮子中的商品分项，与下方服务分项相对，对供应链与进口价格更敏感。同比由总务省统计局直接公布，非本页派生。全国口径，2025年基准。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="jp:services_inflation">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Services CPI, YoY</span><span data-lang="zh">服务CPI同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-07-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>1.20</strong><em>% y/y</em></span>
+        <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-services_inflation" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-services_inflation", [{"name": "Services CPI, YoY", "x": ["1995-01-01", "1995-02-01", "1995-03-01", "1995-04-01", "1995-05-01", "1995-06-01", "1995-07-01", "1995-08-01", "1995-09-01", "1995-10-01", "1995-11-01", "1995-12-01", "1996-01-01", "1996-02-01", "1996-03-01", "1996-04-01", "1996-05-01", "1996-06-01", "1996-07-01", "1996-08-01", "1996-09-01", "1996-10-01", "1996-11-01", "1996-12-01", "1997-01-01", "1997-02-01", "1997-03-01", "1997-04-01", "1997-05-01", "1997-06-01", "1997-07-01", "1997-08-01", "1997-09-01", "1997-10-01", "1997-11-01", "1997-12-01", "1998-01-01", "1998-02-01", "1998-03-01", "1998-04-01", "1998-05-01", "1998-06-01", "1998-07-01", "1998-08-01", "1998-09-01", "1998-10-01", "1998-11-01", "1998-12-01", "1999-01-01", "1999-02-01", "1999-03-01", "1999-04-01", "1999-05-01", "1999-06-01", "1999-07-01", "1999-08-01", "1999-09-01", "1999-10-01", "1999-11-01", "1999-12-01", "2000-01-01", "2000-02-01", "2000-03-01", "2000-04-01", "2000-05-01", "2000-06-01", "2000-07-01", "2000-08-01", "2000-09-01", "2000-10-01", "2000-11-01", "2000-12-01", "2001-01-01", "2001-02-01", "2001-03-01", "2001-04-01", "2001-05-01", "2001-06-01", "2001-07-01", "2001-08-01", "2001-09-01", "2001-10-01", "2001-11-01", "2001-12-01", "2002-01-01", "2002-02-01", "2002-03-01", "2002-04-01", "2002-05-01", "2002-06-01", "2002-07-01", "2002-08-01", "2002-09-01", "2002-10-01", "2002-11-01", "2002-12-01", "2003-01-01", "2003-02-01", "2003-03-01", "2003-04-01", "2003-05-01", "2003-06-01", "2003-07-01", "2003-08-01", "2003-09-01", "2003-10-01", "2003-11-01", "2003-12-01", "2004-01-01", "2004-02-01", "2004-03-01", "2004-04-01", "2004-05-01", "2004-06-01", "2004-07-01", "2004-08-01", "2004-09-01", "2004-10-01", "2004-11-01", "2004-12-01", "2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01"], "y": [1.7, 1.8, 1.8, 1.5, 1.4, 1.3, 1.3, 1.3, 1.6, 1.4, 1.3, 1.3, 1.1, 1.1, 1.1, 1.1, 1.2, 1.2, 1.2, 1.2, 1.1, 1.0, 1.1, 0.9, 0.9, 0.9, 0.8, 2.0, 2.0, 2.0, 2.0, 2.0, 2.6, 2.9, 2.7, 2.8, 2.7, 2.6, 2.5, 1.3, 1.1, 1.0, 0.9, 0.9, 0.2, 0.0, 0.0, -0.1, 0.0, -0.1, 0.1, 0.0, 0.1, 0.2, 0.2, 0.1, 0.1, 0.0, 0.1, 0.2, 0.1, 0.2, -0.1, -0.3, 0.1, -0.2, -0.1, -0.1, -0.2, -0.2, -0.2, -0.1, -0.1, -0.2, -0.2, 0.1, -0.3, -0.1, -0.1, -0.1, -0.1, 0.1, 0.0, 0.0, 0.0, 0.1, 0.2, 0.0, -0.1, 0.0, 0.0, 0.0, 0.0, -0.1, 0.0, 0.1, 0.1, 0.0, 0.0, 0.3, 0.4, 0.4, 0.6, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.2, 0.2, -0.1, -0.1, -0.1, -0.2, -0.3, -0.2, -0.1, -0.4, -0.3, -0.4, -0.5, -0.4, -0.4, -0.2, -0.3, -0.4, -0.3, -0.1, -0.1, 0.2, 0.2, 0.0, -0.1, -0.1, -0.1, -0.1, 0.0, -0.1, -0.1, -0.2, -0.2, 0.1, 0.0, 0.1, 0.1, -0.1, 0.1, 0.0, 0.0, 0.0, 0.2, 0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.5, 0.3, 0.3, 0.4, 0.5, 0.4, 0.4, 0.4, 0.4, 0.3, 0.2, 0.2, 0.2, 0.0, 0.0, -0.2, -0.3, -0.4, -0.4, -0.5, -0.4, -0.4, -0.5, -0.4, -0.5, -1.2, -1.3, -1.2, -1.2, -1.1, -1.1, -0.8, -0.8, -0.8, -0.3, -0.3, -0.4, 0.3, 0.3, 0.3, 0.4, 0.3, 0.4, 0.1, -0.1, 0.0, 0.0, -0.1, 0.0, 0.1, 0.0, 0.0, -0.1, 0.0, -0.2, -0.2, 0.0, -0.2, -0.2, -0.1, -0.2, 0.0, 0.0, 0.1, 0.1, 0.0, 0.1, 0.4, 0.6, 0.6, 0.5, 0.6, 0.7, 1.8, 1.8, 1.7, 1.8, 1.8, 1.9, 1.8, 1.7, 1.8, 1.7, 1.8, 1.8, 0.4, 0.4, 0.5, 0.5, 0.5, 0.5, 0.4, 0.5, 0.4, 0.3, 0.4, 0.3, 0.4, 0.4, 0.4, 0.3, 0.2, 0.3, 0.3, 0.2, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, -0.1, -0.1, 0.0, 0.0, 0.0, 0.1, 0.1, 0.1, 0.3, 0.2, 0.3, 0.2, 0.3, 0.2, 0.5, 0.2, 0.2, 0.3, 0.3, 0.5, 0.4, 0.3, 0.5, 0.3, 0.4, 0.3, 0.2, 0.3, 0.0, 0.1, 0.2, 0.0, -0.1, 0.0, -0.6, -0.4, -0.3, -0.2, -1.0, -0.9, -0.8, -0.9, -0.9, 0.0, 0.0, -0.1, -1.8, -1.8, -1.7, -1.5, -1.3, -1.4, -1.8, -1.8, -1.9, -2.7, -2.6, -2.5, -0.3, -0.3, -0.3, -0.2, 0.2, 0.2, 0.8, 0.7, 0.8, 1.2, 1.3, 1.5, 1.7, 1.7, 1.6, 2.0, 2.0, 2.0, 2.1, 2.3, 2.3, 2.2, 2.2, 2.1, 1.7, 1.6, 1.7, 1.4, 1.4, 1.3, 1.5, 1.5, 1.6, 1.4, 1.3, 1.4, 1.3, 1.4, 1.5, 1.5, 1.5, 1.4, 1.6, 1.6, 1.4, 1.5, 1.5, 1.5, 1.2, 1.2, 1.1, 1.2], "mode": "lines", "line": {"color": "#8a593d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-07-01"], "y": [1.2], "mode": "markers", "marker": {"size": 9, "color": "#8a593d", "line": {"width": 2, "color": "#fffdf8"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "rgba(255,252,246,0.90)", "plot_bgcolor": "rgba(255,252,246,0.90)", "font": {"family": "Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, sans-serif", "size": 12, "color": "#171310"}, "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.e-stat.go.jp/en/dbview?sid=0004052037" target="_blank" rel="noreferrer">e-Stat / Statistics Bureau CPI</a></span>
+    <span>Series: 0004052037/3/0220/00000</span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-07-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">The services component of the CPI basket, generally read as the more persistent, domestic-demand-driven half of inflation versus the goods split above. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base.</span><span data-lang="zh">CPI篮子中的服务分项，相对于上方商品分项，通常被视为更具粘性、由内需驱动的通胀部分。同比由总务省统计局直接公布，非本页派生。全国口径，2025年基准。</span></p>
 </article>
 
 
@@ -1030,7 +1216,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>145</strong><em>index</em></span>
         <time datetime="2025-10-01"><span data-lang="en">Q4 2025</span><span data-lang="zh">2025年 Q4</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-house_price_index" class="plotly-chart"></div>
@@ -1059,7 +1245,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>121</strong><em>index</em></span>
         <time datetime="2025-10-01"><span data-lang="en">Q4 2025</span><span data-lang="zh">2025年 Q4</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-real_house_price_index" class="plotly-chart"></div>
@@ -1088,7 +1274,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>5.04</strong><em>% y/y</em></span>
         <time datetime="2025-10-01"><span data-lang="en">Q4 2025</span><span data-lang="zh">2025年 Q4</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-house_price_growth" class="plotly-chart"></div>
@@ -1128,7 +1314,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>65.7</strong><em>USD bn</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-goods_exports" class="plotly-chart"></div>
@@ -1157,7 +1343,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>71.2</strong><em>USD bn</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-goods_imports" class="plotly-chart"></div>
@@ -1186,7 +1372,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-5.49</strong><em>USD bn</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-goods_trade_balance" class="plotly-chart"></div>
@@ -1215,7 +1401,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>5.82</strong><em>% y/y</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-goods_exports_growth" class="plotly-chart"></div>
@@ -1244,7 +1430,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>12.0</strong><em>% y/y</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-goods_imports_growth" class="plotly-chart"></div>
@@ -1273,7 +1459,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>5.30</strong><em>% of GDP</em></span>
         <time datetime="2024-10-01"><span data-lang="en">Q4 2024</span><span data-lang="zh">2024年 Q4</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-current_account_gdp" class="plotly-chart"></div>
@@ -1302,7 +1488,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>159</strong><em>JPY per USD</em></span>
         <time datetime="2026-08-21"><span data-lang="en">21 Aug 2026</span><span data-lang="zh">2026年8月21日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-usd_jpy" class="plotly-chart"></div>
@@ -1331,7 +1517,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>65.0</strong><em>index</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-reer" class="plotly-chart"></div>
@@ -1360,7 +1546,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>67.6</strong><em>index</em></span>
         <time datetime="2026-07-01"><span data-lang="en">Jul 2026</span><span data-lang="zh">2026年7月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-neer" class="plotly-chart"></div>
@@ -1400,7 +1586,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>206</strong><em>% of GDP</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">projection</span>
     </div>
   </div>
   <div id="chart-government_debt_gdp" class="plotly-chart"></div>
@@ -1411,7 +1597,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://www.imf.org/external/datamapper/GGXWDG_NGDP@WEO/JPN" target="_blank" rel="noreferrer">IMF WEO DataMapper</a></span>
     <span>Series: GGXWDG_NGDP</span>
     <span>Frequency: annual</span>
-    <span>Provider update: 2026-08-28</span>
+    <span>Provider update: 2026-08-30</span>
   </footer>
   <p class="caveat"><span data-lang="en">IMF WEO includes estimates and projections; the dashed segment marks forecast years. Gross debt overstates the net position because the government holds large financial assets.</span><span data-lang="zh">IMF WEO含估计与预测，虚线段为预测年份。由于政府持有大量金融资产，总债务高估了净债务水平。</span></p>
 </article>
@@ -1429,7 +1615,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-1.10</strong><em>% of GDP</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">projection</span>
     </div>
   </div>
   <div id="chart-fiscal_balance_gdp" class="plotly-chart"></div>
@@ -1440,7 +1626,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://www.imf.org/external/datamapper/GGXCNL_NGDP@WEO/JPN" target="_blank" rel="noreferrer">IMF WEO DataMapper</a></span>
     <span>Series: GGXCNL_NGDP</span>
     <span>Frequency: annual</span>
-    <span>Provider update: 2026-08-28</span>
+    <span>Provider update: 2026-08-30</span>
   </footer>
   <p class="caveat"><span data-lang="en">Net lending/borrowing including interest. IMF WEO includes estimates and projections.</span><span data-lang="zh">含利息的净贷出/净借入。IMF WEO含估计与预测。</span></p>
 </article>
@@ -1458,7 +1644,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>-0.85</strong><em>% of GDP</em></span>
         <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">projection</span>
     </div>
   </div>
   <div id="chart-primary_balance_gdp" class="plotly-chart"></div>
@@ -1469,7 +1655,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://www.imf.org/external/datamapper/GGXONLB_G01_GDP_PT@FM/JPN" target="_blank" rel="noreferrer">IMF Fiscal Monitor DataMapper</a></span>
     <span>Series: GGXONLB_G01_GDP_PT</span>
     <span>Frequency: annual</span>
-    <span>Provider update: 2026-08-28</span>
+    <span>Provider update: 2026-08-30</span>
   </footer>
   <p class="caveat"><span data-lang="en">Balance excluding interest payments; the government&#x27;s stated consolidation target is framed in primary-balance terms.</span><span data-lang="zh">剔除利息支出的差额；日本政府的财政整顿目标即以基本收支表述。</span></p>
 </article>
@@ -1487,7 +1673,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>2.67</strong><em>%</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-sovereign_yield_10y" class="plotly-chart"></div>
@@ -1527,7 +1713,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>0.84</strong><em>%</em></span>
         <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
     </div>
   </div>
   <div id="chart-policy_rate" class="plotly-chart"></div>
@@ -1538,7 +1724,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://fred.stlouisfed.org/series/IRSTCI01JPM156N" target="_blank" rel="noreferrer">FRED / OECD (Bank of Japan)</a></span>
     <span>Series: IRSTCI01JPM156N</span>
     <span>Frequency: monthly</span>
-    <span>Provider update: 2026-07-16</span>
+    <span>Provider update: 2026-06-01</span>
   </footer>
   <p class="caveat"><span data-lang="en">The uncollateralised overnight call rate is the BoJ&#x27;s operating target. Monthly averages smooth the exact meeting-date step changes.</span><span data-lang="zh">无担保隔夜拆借利率是日银的操作目标。月度均值会平滑议息日的阶跃变化。</span></p>
 </article>
@@ -1556,7 +1742,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>1.27</strong><em>%</em></span>
         <time datetime="2026-05-01"><span data-lang="en">May 2026</span><span data-lang="zh">2026年5月</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-interbank_3m" class="plotly-chart"></div>
@@ -1567,7 +1753,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://fred.stlouisfed.org/series/IR3TIB01JPM156N" target="_blank" rel="noreferrer">FRED / OECD</a></span>
     <span>Series: IR3TIB01JPM156N</span>
     <span>Frequency: monthly</span>
-    <span>Provider update: 2026-07-16</span>
+    <span>Provider update: 2026-05-01</span>
   </footer>
   <p class="caveat"><span data-lang="en">The spread over the overnight call rate is the cleanest public read on how much tightening the market has priced in.</span><span data-lang="zh">与隔夜拆借利率之差是观察市场已定价紧缩幅度最直接的公开读数。</span></p>
 </article>
@@ -1585,7 +1771,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>1.79</strong><em>% y/y</em></span>
         <time datetime="2026-05-01"><span data-lang="en">May 2026</span><span data-lang="zh">2026年5月</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-broad_money_growth" class="plotly-chart"></div>
@@ -1596,7 +1782,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://fred.stlouisfed.org/series/JPNMABMM301GYSAM" target="_blank" rel="noreferrer">FRED / OECD (Bank of Japan)</a></span>
     <span>Series: JPNMABMM301GYSAM</span>
     <span>Frequency: monthly</span>
-    <span>Provider update: 2026-07-16</span>
+    <span>Provider update: 2026-05-01</span>
   </footer>
   <p class="caveat"><span data-lang="en">Japanese M3 growth stayed in a narrow 2-4% band through decades of unconventional policy, which is the standard evidence that base-money expansion did not pass through to broad money.</span><span data-lang="zh">在数十年非常规政策期间，日本M3增速始终维持在2-4%的窄幅区间，这是基础货币扩张未传导至广义货币的标准证据。</span></p>
 </article>
@@ -1614,7 +1800,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>175</strong><em>% of GDP</em></span>
         <time datetime="2025-10-01"><span data-lang="en">Q4 2025</span><span data-lang="zh">2025年 Q4</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-private_credit_gdp" class="plotly-chart"></div>
@@ -1625,7 +1811,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://fred.stlouisfed.org/series/QJPPAM770A" target="_blank" rel="noreferrer">FRED / BIS</a></span>
     <span>Series: QJPPAM770A</span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-06-15</span>
+    <span>Provider update: 2025-10-01</span>
   </footer>
   <p class="caveat"><span data-lang="en">BIS total credit to the private non-financial sector, adjusted for breaks; a stock ratio rather than a flow.</span><span data-lang="zh">BIS对私人非金融部门的总信贷（已作断点调整）；为存量比率而非流量。</span></p>
 </article>
@@ -1643,7 +1829,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>61.1</strong><em>% of GDP</em></span>
         <time datetime="2025-10-01"><span data-lang="en">Q4 2025</span><span data-lang="zh">2025年 Q4</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-household_credit_gdp" class="plotly-chart"></div>
@@ -1654,7 +1840,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://fred.stlouisfed.org/series/QJPHAM770A" target="_blank" rel="noreferrer">FRED / BIS</a></span>
     <span>Series: QJPHAM770A</span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-06-15</span>
+    <span>Provider update: 2025-10-01</span>
   </footer>
   <p class="caveat"><span data-lang="en">Household and NPISH credit, adjusted for breaks. Japanese household leverage has been broadly flat since the 1990s deleveraging.</span><span data-lang="zh">居民与为居民服务的非营利机构信贷（已作断点调整）。自1990年代去杠杆后，日本居民杠杆基本持平。</span></p>
 </article>
@@ -1672,7 +1858,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>117</strong><em>% of GDP</em></span>
         <time datetime="2025-10-01"><span data-lang="en">Q4 2025</span><span data-lang="zh">2025年 Q4</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-bank_credit_gdp" class="plotly-chart"></div>
@@ -1683,7 +1869,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://fred.stlouisfed.org/series/QJPPBM770A" target="_blank" rel="noreferrer">FRED / BIS</a></span>
     <span>Series: QJPPBM770A</span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-06-15</span>
+    <span>Provider update: 2025-10-01</span>
   </footer>
   <p class="caveat"><span data-lang="en">The bank-only subset of private credit; the gap versus total private credit is non-bank and market-based funding.</span><span data-lang="zh">私人信贷中仅银行部分；与私人总信贷之差为非银与市场化融资。</span></p>
 </article>
@@ -1701,7 +1887,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>66,406</strong><em>index</em></span>
         <time datetime="2026-08-28"><span data-lang="en">28 Aug 2026</span><span data-lang="zh">2026年8月28日</span></time>
       </div>
-      <span class="quality-pill">watch</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-equity_index" class="plotly-chart"></div>
@@ -1741,7 +1927,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>17.2</strong><em>%</em></span>
         <time datetime="2025-07-01"><span data-lang="en">Q3 2025</span><span data-lang="zh">2025年 Q3</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-bank_capital_ratio" class="plotly-chart"></div>
@@ -1752,7 +1938,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/FSIC/JPN.S12CFSI.FSI688_CFSI_PT.Q" target="_blank" rel="noreferrer">IMF SDMX / Financial Soundness Indicators</a></span>
     <span>Series: JPN.S12CFSI.FSI688_CFSI_PT.Q</span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-08-28</span>
+    <span>Provider update: 2026-08-30</span>
   </footer>
   <p class="caveat"><span data-lang="en">Deposit-taker aggregate reported to the IMF; national regulatory definitions differ, so cross-country levels are indicative rather than exact.</span><span data-lang="zh">报送IMF的存款机构合计口径；各国监管定义不同，跨国水平比较仅供参考。</span></p>
 </article>
@@ -1770,7 +1956,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>1.03</strong><em>%</em></span>
         <time datetime="2025-07-01"><span data-lang="en">Q3 2025</span><span data-lang="zh">2025年 Q3</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-bank_npl_ratio" class="plotly-chart"></div>
@@ -1781,7 +1967,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/FSIC/JPN.S12CFSI.AQ12_CFSI_PT.Q" target="_blank" rel="noreferrer">IMF SDMX / Financial Soundness Indicators</a></span>
     <span>Series: JPN.S12CFSI.AQ12_CFSI_PT.Q</span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-08-28</span>
+    <span>Provider update: 2026-08-30</span>
   </footer>
   <p class="caveat"><span data-lang="en">Deposit-taker aggregate. Japan&#x27;s ratio is among the lowest in the G7, partly reflecting decades of balance-sheet cleanup after the 1990s crisis.</span><span data-lang="zh">存款机构合计口径。日本不良率在G7中处于最低之列，部分反映1990年代危机后数十年的资产负债表清理。</span></p>
 </article>
@@ -1799,7 +1985,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>354</strong><em>% of GDP</em></span>
         <time datetime="2025-10-01"><span data-lang="en">Q4 2025</span><span data-lang="zh">2025年 Q4</span></time>
       </div>
-      <span class="quality-pill">low confidence</span>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
     </div>
   </div>
   <div id="chart-total_credit_gdp" class="plotly-chart"></div>
@@ -1810,7 +1996,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://fred.stlouisfed.org/series/QJPCAM770A" target="_blank" rel="noreferrer">FRED / BIS</a></span>
     <span>Series: QJPCAM770A</span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-06-15</span>
+    <span>Provider update: 2025-10-01</span>
   </footer>
   <p class="caveat"><span data-lang="en">Includes general government, so this is the aggregate economy-wide leverage stock and the highest in the BIS reporting population.</span><span data-lang="zh">包含广义政府，因此是全经济杠杆存量，在BIS报送国中最高。</span></p>
 </article>
@@ -1830,20 +2016,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
       <tbody>
 <tr>
   <td><span data-lang="en">Prices &amp; Costs</span><span data-lang="zh">价格与成本</span></td>
-  <td><span data-lang="en">Core CPI excluding fresh food (and ex-fresh-food-and-energy)</span><span data-lang="zh">剔除生鲜食品的核心CPI（及剔除生鲜与能源口径）</span></td>
-  <td><span data-lang="en">Japan&#x27;s policy-relevant core measures are published by the Statistics Bureau via e-Stat, whose API requires a registered application ID. No key-free reproducible endpoint validated.</span><span data-lang="zh">日本政策相关的核心口径由总务省统计局通过e-Stat发布，其API需注册应用ID。尚未验证无密钥的可复跑接口。</span></td>
-</tr>
-
-<tr>
-  <td><span data-lang="en">Prices &amp; Costs</span><span data-lang="zh">价格与成本</span></td>
-  <td><span data-lang="en">CPI by COICOP division, and the services/goods split</span><span data-lang="zh">CPI的COICOP大类分项，以及服务/商品拆分</span></td>
-  <td><span data-lang="en">OECD&#x27;s Japan services/goods CPI mirror was discontinued after June 2021. The IMF CPI dataset declares Japan&#x27;s COICOP division keys (CP01-CP12) but returns them with no observations, so only the all-items aggregate is chartable from that source.</span><span data-lang="zh">OECD日本服务/商品CPI镜像在2021年6月后停更。IMF CPI数据集虽声明了日本的COICOP大类键（CP01-CP12），但返回值为空，因此该来源仅总体口径可绘图。</span></td>
-</tr>
-
-<tr>
-  <td><span data-lang="en">Prices &amp; Costs</span><span data-lang="zh">价格与成本</span></td>
-  <td><span data-lang="en">Corporate Goods Price Index (domestic PPI)</span><span data-lang="zh">企业物价指数（国内PPI）</span></td>
-  <td><span data-lang="en">Published by the Bank of Japan time-series search; no stable machine-readable download URL validated for unattended refresh.</span><span data-lang="zh">由日本银行时间序列检索发布；尚未验证可用于无人值守刷新的稳定机读下载地址。</span></td>
+  <td><span data-lang="en">CPI by COICOP division (food, housing, transport, and the other CP01-CP12 categories)</span><span data-lang="zh">CPI的COICOP大类分项（食品、住房、交通等CP01-CP12类别）</span></td>
+  <td><span data-lang="en">OECD&#x27;s Japan COICOP-division CPI mirror was discontinued after June 2021, and the IMF CPI dataset declares Japan&#x27;s COICOP division keys (CP01-CP12) but returns them with no observations. The Statistics Bureau&#x27;s e-Stat table carries these divisions too, but they are not yet wired here; only the goods/services split is chartable so far.</span><span data-lang="zh">OECD日本COICOP大类CPI镜像在2021年6月后停更，IMF CPI数据集虽声明了日本的COICOP大类键（CP01-CP12），但返回值为空。总务省统计局e-Stat表中也含这些大类，但尚未接入本页；目前仅商品/服务拆分可绘图。</span></td>
 </tr>
 
 <tr>
@@ -1879,8 +2053,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </section>
 
   <footer class="page-footer">
-    <span data-lang="en">Research artefact only, not investment advice. Generated 2026-08-28 from <code>config/japan_indicators.yaml</code>.</span>
-    <span data-lang="zh">仅为研究工具，不构成投资建议。生成日期 2026-08-28，配置来源 <code>config/japan_indicators.yaml</code>。</span>
+    <span data-lang="en">Research artefact only, not investment advice. Generated 2026-08-30 from <code>config/japan_indicators.yaml</code>.</span>
+    <span data-lang="zh">仅为研究工具，不构成投资建议。生成日期 2026-08-30，配置来源 <code>config/japan_indicators.yaml</code>。</span>
   </footer>
 </main>
 

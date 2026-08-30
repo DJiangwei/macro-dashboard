@@ -35,6 +35,7 @@ from dashboard_summary_utils import (
     canonical_frame_metadata,
     load_canonical_data_first_frame,
     retain_last_known_good_series,
+    shift_calendar_periods,
     write_canonical_data_first_frame,
 )
 from build_china_dashboard import (  # Reuse the data-first page shell.
@@ -324,11 +325,24 @@ def _apply_transform(observations: list[dict[str, Any]], spec: dict[str, Any]) -
         return observations
     frequency = str(spec.get("frequency", "")).lower()
     periods = 1 if transform in {"qoq_pct", "mom_pct"} else 12 if frequency == "monthly" else 4 if frequency == "quarterly" else 1
+    # Look up the base observation by its expected calendar date, not by a
+    # fixed array offset. Array-offset stepping (observations[index-periods])
+    # breaks permanently once one interior observation is missing: every
+    # later index shifts one slot early forever, so "YoY"/"MoM" silently
+    # keeps computing the wrong window for the rest of the series. A date
+    # lookup self-heals as soon as that exact date's observation exists.
+    by_date: dict[str, float] = {}
+    for item in observations:
+        parsed = _parse_date(str(item.get("date", "")))
+        if parsed is not None:
+            by_date[parsed.isoformat()] = float(item["value"])
     transformed: list[dict[str, Any]] = []
-    for index, item in enumerate(observations):
-        if index < periods:
+    for item in observations:
+        item_date = _parse_date(str(item.get("date", "")))
+        if item_date is None:
             continue
-        base = observations[index - periods]["value"]
+        expected_base_date = shift_calendar_periods(item_date, frequency, periods)
+        base = by_date.get(expected_base_date.isoformat())
         if base in (0, None):
             continue
         try:
@@ -383,7 +397,25 @@ def fetch_ons_timeseries(session: requests.Session, spec: dict[str, Any]) -> dic
         "quarterly": payload.get("quarters") or [],
         "annual": payload.get("years") or [],
     }
-    rows = rows_by_frequency.get(frequency) or payload.get("months") or payload.get("quarters") or payload.get("years") or []
+    if frequency not in rows_by_frequency:
+        raise ValueError(
+            f"ONS series {spec.get('series')!r} ({spec.get('id')!r}) declares unsupported "
+            f"frequency {frequency!r}; expected one of {sorted(rows_by_frequency)}."
+        )
+    rows = rows_by_frequency[frequency]
+    if not rows:
+        # Do NOT silently fall back to whatever array the payload happens to
+        # carry (e.g. "months" for a series that is actually quarterly) — that
+        # produces a chart whose label ("monthly") contradicts its data. Fail
+        # loudly so a mislabeled config gets caught at build time, not shipped
+        # with a confident "verified" badge.
+        available = sorted(key for key in ("months", "quarters", "years") if payload.get(key))
+        raise ValueError(
+            f"ONS series {spec.get('series')!r} ({spec.get('id')!r}) declares frequency "
+            f"{frequency!r} but the ONS payload has no {frequency!r} observations at {url}; "
+            f"payload only carries {available or ['none']}. Check the declared frequency "
+            f"against the ONS dataset before relabeling or repointing this indicator."
+        )
     observations: list[dict[str, Any]] = []
     provider_updated = ""
     for row in rows:

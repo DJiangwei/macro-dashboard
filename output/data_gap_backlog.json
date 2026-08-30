@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-28T15:39:43.032999+00:00",
+  "generated": "2026-08-30T13:34:42.308871+00:00",
   "items": [
     {
       "code": "CN",
@@ -68,19 +68,10 @@
       "code": "JP",
       "country": "Japan",
       "section": "prices_costs",
-      "item": "Core CPI excluding fresh food (and ex-fresh-food-and-energy)",
-      "status": "Japan's policy-relevant core measures are published by the Statistics Bureau via e-Stat, whose API requires a registered application ID. No key-free reproducible endpoint validated.",
+      "item": "CPI by COICOP division (food, housing, transport, and the other CP01-CP12 categories)",
+      "status": "OECD's Japan COICOP-division CPI mirror was discontinued after June 2021, and the IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations. The Statistics Bureau's e-Stat table carries these divisions too, but they are not yet wired here; only the goods/services split is chartable so far.",
       "priority": "high",
-      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
-    },
-    {
-      "code": "JP",
-      "country": "Japan",
-      "section": "prices_costs",
-      "item": "Corporate Goods Price Index (domestic PPI)",
-      "status": "Published by the Bank of Japan time-series search; no stable machine-readable download URL validated for unattended refresh.",
-      "priority": "high",
-      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
     },
     {
       "code": "UK",
@@ -281,15 +272,6 @@
       "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
     },
     {
-      "code": "JP",
-      "country": "Japan",
-      "section": "prices_costs",
-      "item": "CPI by COICOP division, and the services/goods split",
-      "status": "OECD's Japan services/goods CPI mirror was discontinued after June 2021. The IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations, so only the all-items aggregate is chartable from that source.",
-      "priority": "watch",
-      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
-    },
-    {
       "code": "PL",
       "country": "Poland",
       "section": "dropped_proxy_slots",
@@ -347,8 +329,8 @@
       "code": "ZA",
       "country": "South Africa",
       "section": "external_fx",
-      "item": "Gross reserves, capital-flow detail, and sovereign risk spread",
-      "status": "SARB's reserves and BoP detail are in the Quarterly Bulletin series set, which the public web API does not expose; CDS and EMBI spreads are vendor-controlled.",
+      "item": "Gross reserves level, and sovereign risk spread",
+      "status": "IMF BOP now supplies capital-flow detail (current account components, financial account and its direct/portfolio/other investment sub-categories, and the reserve-asset transaction flow); SARB's own reserves level series and BoP detail remain in the Quarterly Bulletin series set, which the public web API does not expose. The stock/level of the SARB's gross gold and foreign-exchange reserves is therefore still missing (only the quarterly transaction flow is charted); CDS and EMBI spreads remain vendor-controlled.",
       "priority": "watch",
       "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },

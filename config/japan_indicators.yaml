@@ -27,8 +27,8 @@ sections:
   prices_costs:
     title_en: "Prices & Costs"
     title_zh: "价格与成本"
-    report_logic_en: "IMF-compiled national CPI gives headline year-over-year and month-over-month inflation and the price level itself, which is the reproducible public path now that OECD's Japan CPI mirror is discontinued. The COICOP division breakdown is declared by the IMF but published empty for Japan, so it is tracked as a gap."
-    report_logic_zh: "IMF汇编的日本CPI提供总体同比、环比与价格水平本身。在OECD日本CPI镜像停更后，这是可复跑的公开路径。COICOP大类分项虽由IMF声明但对日本为空值，故列为缺口。"
+    report_logic_en: "IMF-compiled national CPI gives headline year-over-year and month-over-month inflation and the price level itself, which is the reproducible public path now that OECD's Japan CPI mirror is discontinued. The Statistics Bureau's own e-Stat API supplies the BoJ's actual policy reference measures natively: core CPI ex-fresh-food, core-core ex-fresh-food-and-energy, and the goods/services split, each published as year-over-year directly rather than derived on this page. The COICOP division breakdown (food, housing, transport, and the other CP01-CP12 categories) is not yet wired and remains a gap."
+    report_logic_zh: "IMF汇编的日本CPI提供总体同比、环比与价格水平本身。在OECD日本CPI镜像停更后，这是可复跑的公开路径。总务省统计局自有的e-Stat接口原生提供日银真正的政策参考口径：剔除生鲜食品的核心CPI、剔除生鲜食品与能源的核心核心CPI，以及商品/服务拆分，均由官方直接公布同比，而非本页派生。COICOP大类分项（食品、住房、交通等CP01-CP12类别）尚未接入，仍列为缺口。"
   housing_property:
     title_en: "Housing & Property Prices"
     title_zh: "住房与房地产价格"
@@ -55,7 +55,7 @@ sections:
     report_logic_en: "IMF Financial Soundness Indicators give the deposit-taker capital and asset-quality core, and BIS total-credit ratios show the aggregate leverage stock."
     report_logic_zh: "IMF金融稳健指标提供存款机构资本与资产质量核心指标，BIS总信贷比率反映整体杠杆存量。"
 
-min_chart_count: 34
+min_chart_count: 49
 
 indicators:
   # --- growth_accounts -----------------------------------------------------
@@ -294,6 +294,24 @@ indicators:
     caveat_zh: "仅为制造业时薪。全经济口径的春斗工资谈判结果由连合发布，不属于可再分发的公开序列。"
 
   # --- prices_costs --------------------------------------------------------
+  - id: cpi_inflation_estat
+    section: prices_costs
+    label_en: "Headline CPI, YoY (e-Stat)"
+    label_zh: "总体CPI同比（e-Stat）"
+    unit: "% y/y"
+    fetcher: estat
+    stats_data_id: "0004052037"
+    estat_tab: "3"
+    estat_cat01: "0001"
+    estat_area: "00000"
+    series: "0004052037/3/0001/00000"
+    source_name: "e-Stat / Statistics Bureau CPI"
+    source_authority: official_primary
+    source_url: "https://www.e-stat.go.jp/en/dbview?sid=0004052037"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "All-items headline CPI. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base. Charted alongside the IMF SDMX mirror below as a cross-check between the two publication paths."
+    caveat_zh: "总体（全项目）CPI。同比由总务省统计局直接公布，非本页派生。全国口径，2025年基准。与下方IMF SDMX镜像并列展示，作为两条发布路径之间的交叉校验。"
   - id: cpi_inflation
     section: prices_costs
     label_en: "Headline CPI, YoY"
@@ -306,8 +324,8 @@ indicators:
     source_url: "https://api.imf.org/external/sdmx/2.1/data/CPI/JPN.CPI._T.YOY_PCH_PA_PT.M"
     frequency: "monthly"
     start_date: "1995-01-01"
-    caveat_en: "IMF-compiled national CPI for Japan. This is the all-items index; Japan's headline policy reference is the ex-fresh-food 'core' measure, which is tracked as a data gap."
-    caveat_zh: "IMF汇编的日本全国CPI，为总体指数。日本政策参考的是剔除生鲜食品的核心口径，该口径列为数据缺口。"
+    caveat_en: "IMF-compiled national CPI for Japan. This is the all-items index; the BoJ's actual policy reference is the ex-fresh-food 'core' measure, charted separately below as Core CPI ex-Fresh Food, YoY, published natively by the Statistics Bureau via e-Stat."
+    caveat_zh: "IMF汇编的日本全国CPI，为总体指数。日银的实际政策参考口径为剔除生鲜食品的「核心」CPI，已在下方以「核心CPI（剔除生鲜食品）同比」单独图表原生呈现，数据来自总务省统计局e-Stat。"
   - id: cpi_mom
     section: prices_costs
     label_en: "Headline CPI, MoM"
@@ -336,6 +354,94 @@ indicators:
     start_date: "1995-01-01"
     caveat_en: "Price level rather than a rate. The flat 1995-2012 stretch is the clearest single picture of Japan's deflation era."
     caveat_zh: "为价格水平而非增速。1995-2012年的平坦区间是日本通缩时期最直观的单张图。"
+  - id: producer_price_inflation
+    section: prices_costs
+    label_en: "Corporate Goods Price Index, YoY"
+    label_zh: "企业物价指数同比"
+    unit: "% y/y"
+    transform: "yoy_pct"
+    fetcher: boj_flatfile
+    boj_file: "cgpi_m_en"
+    series: "PRCG20_2200000000"
+    source_name: "Bank of Japan / Corporate Goods Price Index"
+    source_authority: official_primary
+    source_url: "https://www.stat-search.boj.or.jp/info/dload_en.html"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Domestic producer prices for all commodities, 2020 base. Derived year-over-year from the published index."
+    caveat_zh: "全部商品的国内生产者价格，2020年基准。由公布指数派生的同比增速。"
+  - id: core_inflation
+    section: prices_costs
+    label_en: "Core CPI ex-Fresh Food, YoY"
+    label_zh: "核心CPI（剔除生鲜食品）同比"
+    unit: "% y/y"
+    fetcher: estat
+    stats_data_id: "0004052037"
+    estat_tab: "3"
+    estat_cat01: "0161"
+    estat_area: "00000"
+    series: "0004052037/3/0161/00000"
+    source_name: "e-Stat / Statistics Bureau CPI"
+    source_authority: official_primary
+    source_url: "https://www.e-stat.go.jp/en/dbview?sid=0004052037"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "The BoJ's policy reference measure. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base."
+    caveat_zh: "日银政策参考口径。同比由总务省统计局直接公布，非本页派生。全国口径，2025年基准。"
+  - id: core_core_inflation
+    section: prices_costs
+    label_en: "Core-Core CPI ex-Fresh Food & Energy, YoY"
+    label_zh: "核心核心CPI（剔除生鲜食品与能源）同比"
+    unit: "% y/y"
+    fetcher: estat
+    stats_data_id: "0004052037"
+    estat_tab: "3"
+    estat_cat01: "0178"
+    estat_area: "00000"
+    series: "0004052037/3/0178/00000"
+    source_name: "e-Stat / Statistics Bureau CPI"
+    source_authority: official_primary
+    source_url: "https://www.e-stat.go.jp/en/dbview?sid=0004052037"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "A supplementary measure the BoJ also watches, excluding both fresh food and energy. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base."
+    caveat_zh: "日银同时关注的补充口径，剔除生鲜食品与能源。同比由总务省统计局直接公布，非本页派生。全国口径，2025年基准。"
+  - id: goods_inflation
+    section: prices_costs
+    label_en: "Goods CPI, YoY"
+    label_zh: "商品CPI同比"
+    unit: "% y/y"
+    fetcher: estat
+    stats_data_id: "0004052037"
+    estat_tab: "3"
+    estat_cat01: "0202"
+    estat_area: "00000"
+    series: "0004052037/3/0202/00000"
+    source_name: "e-Stat / Statistics Bureau CPI"
+    source_authority: official_primary
+    source_url: "https://www.e-stat.go.jp/en/dbview?sid=0004052037"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "The goods component of the CPI basket, a supply-chain and import-price-sensitive counterpart to the services split below. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base."
+    caveat_zh: "CPI篮子中的商品分项，与下方服务分项相对，对供应链与进口价格更敏感。同比由总务省统计局直接公布，非本页派生。全国口径，2025年基准。"
+  - id: services_inflation
+    section: prices_costs
+    label_en: "Services CPI, YoY"
+    label_zh: "服务CPI同比"
+    unit: "% y/y"
+    fetcher: estat
+    stats_data_id: "0004052037"
+    estat_tab: "3"
+    estat_cat01: "0220"
+    estat_area: "00000"
+    series: "0004052037/3/0220/00000"
+    source_name: "e-Stat / Statistics Bureau CPI"
+    source_authority: official_primary
+    source_url: "https://www.e-stat.go.jp/en/dbview?sid=0004052037"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "The services component of the CPI basket, generally read as the more persistent, domestic-demand-driven half of inflation versus the goods split above. Year-over-year is published directly by the Statistics Bureau, not computed on this page. Nationwide, 2025 base."
+    caveat_zh: "CPI篮子中的服务分项，相对于上方商品分项，通常被视为更具粘性、由内需驱动的通胀部分。同比由总务省统计局直接公布，非本页派生。全国口径，2025年基准。"
 
   # --- housing_property ----------------------------------------------------
   - id: house_price_index
@@ -698,20 +804,10 @@ indicators:
 
 data_gaps:
   - section: prices_costs
-    item_en: "Core CPI excluding fresh food (and ex-fresh-food-and-energy)"
-    item_zh: "剔除生鲜食品的核心CPI（及剔除生鲜与能源口径）"
-    status_en: "Japan's policy-relevant core measures are published by the Statistics Bureau via e-Stat, whose API requires a registered application ID. No key-free reproducible endpoint validated."
-    status_zh: "日本政策相关的核心口径由总务省统计局通过e-Stat发布，其API需注册应用ID。尚未验证无密钥的可复跑接口。"
-  - section: prices_costs
-    item_en: "CPI by COICOP division, and the services/goods split"
-    item_zh: "CPI的COICOP大类分项，以及服务/商品拆分"
-    status_en: "OECD's Japan services/goods CPI mirror was discontinued after June 2021. The IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations, so only the all-items aggregate is chartable from that source."
-    status_zh: "OECD日本服务/商品CPI镜像在2021年6月后停更。IMF CPI数据集虽声明了日本的COICOP大类键（CP01-CP12），但返回值为空，因此该来源仅总体口径可绘图。"
-  - section: prices_costs
-    item_en: "Corporate Goods Price Index (domestic PPI)"
-    item_zh: "企业物价指数（国内PPI）"
-    status_en: "Published by the Bank of Japan time-series search; no stable machine-readable download URL validated for unattended refresh."
-    status_zh: "由日本银行时间序列检索发布；尚未验证可用于无人值守刷新的稳定机读下载地址。"
+    item_en: "CPI by COICOP division (food, housing, transport, and the other CP01-CP12 categories)"
+    item_zh: "CPI的COICOP大类分项（食品、住房、交通等CP01-CP12类别）"
+    status_en: "OECD's Japan COICOP-division CPI mirror was discontinued after June 2021, and the IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations. The Statistics Bureau's e-Stat table carries these divisions too, but they are not yet wired here; only the goods/services split is chartable so far."
+    status_zh: "OECD日本COICOP大类CPI镜像在2021年6月后停更，IMF CPI数据集虽声明了日本的COICOP大类键（CP01-CP12），但返回值为空。总务省统计局e-Stat表中也含这些大类，但尚未接入本页；目前仅商品/服务拆分可绘图。"
   - section: labour_wages
     item_en: "Job-to-applicant ratio and shunto wage settlements"
     item_zh: "有效求人倍率与春斗工资谈判结果"
@@ -737,3 +833,10 @@ data_gaps:
     item_zh: "通胀预期（短观价格预期、盈亏平衡通胀）"
     status_en: "Tankan price expectations are BoJ-proprietary in redistributable form and the JGBi breakeven series has no validated key-free public endpoint."
     status_zh: "短观价格预期的可再分发形式属日银专有，物价联动国债盈亏平衡序列亦无经验证的无密钥公开接口。"
+
+cross_checks:
+  - concept: headline_inflation
+    primary: cpi_inflation_estat    # e-Stat, compiling authority
+    secondary: cpi_inflation        # IMF SDMX, independent path
+    tolerance: 0.15
+    label_en: "e-Stat vs IMF headline CPI"

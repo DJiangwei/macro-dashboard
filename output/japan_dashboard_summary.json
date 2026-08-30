@@ -1,9 +1,9 @@
 {
   "file": "japan.html",
-  "generated": "2026-08-28T15:38:27.113727+00:00",
-  "charts": 46,
-  "source_groups": 17,
-  "data_gaps": 8,
+  "generated": "2026-08-30T13:33:59.178090+00:00",
+  "charts": 52,
+  "source_groups": 19,
+  "data_gaps": 6,
   "low_confidence": 17,
   "policy_rate_latest": "0.84% (2026-06-01)",
   "key_series_latest": [
@@ -214,6 +214,26 @@
   ],
   "unavailable": [],
   "data_mode": "refresh",
+  "cross_checks": [
+    {
+      "concept": "headline_inflation",
+      "primary": "cpi_inflation_estat",
+      "secondary": "cpi_inflation",
+      "label_en": "e-Stat vs IMF headline CPI",
+      "n_common": 378,
+      "latest_diff": -0.10098478066248884,
+      "max_abs_diff": 0.4120922946692388,
+      "n_breaches": 24,
+      "last_breach_date": "2020-10-01",
+      "tolerance": 0.15,
+      "window_since": "2024-06-01",
+      "window_months": 24,
+      "window_n_common": 25,
+      "window_max_abs_diff": 0.10098478066248884,
+      "window_n_breaches": 0,
+      "status": "minor"
+    }
+  ],
   "canonical_frame": {
     "schema_version": "data-first-canonical-v2",
     "observation_columns": [
@@ -221,32 +241,18 @@
       "value"
     ],
     "file": "japan_canonical_frame.json",
-    "series": 46,
-    "observations": 16452,
-    "series_count": 46,
-    "observation_count": 16452
+    "series": 52,
+    "observations": 18414,
+    "series_count": 52,
+    "observation_count": 18414
   },
   "data_gaps_detail": [
     {
       "section": "prices_costs",
-      "item_en": "Core CPI excluding fresh food (and ex-fresh-food-and-energy)",
-      "item_zh": "剔除生鲜食品的核心CPI（及剔除生鲜与能源口径）",
-      "status_en": "Japan's policy-relevant core measures are published by the Statistics Bureau via e-Stat, whose API requires a registered application ID. No key-free reproducible endpoint validated.",
-      "status_zh": "日本政策相关的核心口径由总务省统计局通过e-Stat发布，其API需注册应用ID。尚未验证无密钥的可复跑接口。"
-    },
-    {
-      "section": "prices_costs",
-      "item_en": "CPI by COICOP division, and the services/goods split",
-      "item_zh": "CPI的COICOP大类分项，以及服务/商品拆分",
-      "status_en": "OECD's Japan services/goods CPI mirror was discontinued after June 2021. The IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations, so only the all-items aggregate is chartable from that source.",
-      "status_zh": "OECD日本服务/商品CPI镜像在2021年6月后停更。IMF CPI数据集虽声明了日本的COICOP大类键（CP01-CP12），但返回值为空，因此该来源仅总体口径可绘图。"
-    },
-    {
-      "section": "prices_costs",
-      "item_en": "Corporate Goods Price Index (domestic PPI)",
-      "item_zh": "企业物价指数（国内PPI）",
-      "status_en": "Published by the Bank of Japan time-series search; no stable machine-readable download URL validated for unattended refresh.",
-      "status_zh": "由日本银行时间序列检索发布；尚未验证可用于无人值守刷新的稳定机读下载地址。"
+      "item_en": "CPI by COICOP division (food, housing, transport, and the other CP01-CP12 categories)",
+      "item_zh": "CPI的COICOP大类分项（食品、住房、交通等CP01-CP12类别）",
+      "status_en": "OECD's Japan COICOP-division CPI mirror was discontinued after June 2021, and the IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations. The Statistics Bureau's e-Stat table carries these divisions too, but they are not yet wired here; only the goods/services split is chartable so far.",
+      "status_zh": "OECD日本COICOP大类CPI镜像在2021年6月后停更，IMF CPI数据集虽声明了日本的COICOP大类键（CP01-CP12），但返回值为空。总务省统计局e-Stat表中也含这些大类，但尚未接入本页；目前仅商品/服务拆分可绘图。"
     },
     {
       "section": "labour_wages",
@@ -285,7 +291,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 17,
+    "source_groups": 19,
     "sources": [
       {
         "source_name": "FRED / BIS",
@@ -297,6 +303,10 @@
       },
       {
         "source_name": "FRED / OECD (MOF Customs)",
+        "charts": 5
+      },
+      {
+        "source_name": "e-Stat / Statistics Bureau CPI",
         "charts": 5
       },
       {
@@ -332,6 +342,10 @@
         "charts": 2
       },
       {
+        "source_name": "Bank of Japan / Corporate Goods Price Index",
+        "charts": 1
+      },
+      {
         "source_name": "FRED / Federal Reserve H.10",
         "charts": 1
       },
@@ -358,6 +372,7 @@
     ],
     "quality_counts": {
       "low_confidence": 17,
+      "verified": 6,
       "watch": 29
     },
     "unavailable_count": 0
@@ -369,10 +384,10 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-08-28",
+    "as_of_date": "2026-08-30",
     "counts": {
-      "current": 9,
-      "due": 17,
+      "current": 14,
+      "due": 18,
       "projection": 3,
       "stale": 17
     },
@@ -386,7 +401,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2024-10-01",
-        "age_days": 605,
+        "age_days": 607,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -408,7 +423,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-01-01",
-        "age_days": 515,
+        "age_days": 517,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -430,7 +445,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-07-01",
-        "age_days": 332,
+        "age_days": 334,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -452,7 +467,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-07-01",
-        "age_days": 332,
+        "age_days": 334,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -474,7 +489,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 240,
+        "age_days": 242,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -496,7 +511,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 240,
+        "age_days": 242,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -518,7 +533,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 240,
+        "age_days": 242,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -540,7 +555,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 240,
+        "age_days": 242,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -562,7 +577,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 240,
+        "age_days": 242,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -584,7 +599,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 240,
+        "age_days": 242,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -606,7 +621,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 240,
+        "age_days": 242,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -628,7 +643,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-01-01",
-        "age_days": 150,
+        "age_days": 152,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -650,7 +665,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-01-01",
-        "age_days": 150,
+        "age_days": 152,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -672,7 +687,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-04-01",
-        "age_days": 120,
+        "age_days": 122,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -694,7 +709,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-05-01",
-        "age_days": 89,
+        "age_days": 91,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -716,7 +731,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-05-01",
-        "age_days": 89,
+        "age_days": 91,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -738,7 +753,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-05-01",
-        "age_days": 89,
+        "age_days": 91,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -760,7 +775,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-05-01",
-        "age_days": 89,
+        "age_days": 91,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -782,7 +797,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-05-01",
-        "age_days": 89,
+        "age_days": 91,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -804,7 +819,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -826,7 +841,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -848,7 +863,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -870,7 +885,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -892,7 +907,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -914,7 +929,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -936,7 +951,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -958,7 +973,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -980,7 +995,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1002,7 +1017,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1024,7 +1039,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1046,7 +1061,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1068,7 +1083,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1090,7 +1105,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1112,7 +1127,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 59,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1125,14 +1140,36 @@
         "source_name": "FRED / OECD (Statistics Bureau)",
         "series": "LRHUTTTTJPM156S",
         "transform": "level"
+      },
+      {
+        "id": "usd_jpy",
+        "concept_id": "fx_spot",
+        "label_en": "USD/JPY Spot Rate",
+        "latest_date": "2026-08-21",
+        "frequency": "daily",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-21",
+        "age_days": 9,
+        "threshold_days": 10,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / Federal Reserve H.10",
+        "series": "DEXJPUS",
+        "transform": "level"
       }
     ]
   },
   "transform_audit": {
     "counts": {
-      "level": 37,
+      "level": 42,
       "pct_change": 1,
-      "yoy_pct": 8
+      "yoy_pct": 9
     },
     "non_level": [
       {
@@ -1172,6 +1209,12 @@
         "unit": "% y/y"
       },
       {
+        "id": "producer_price_inflation",
+        "label_en": "Corporate Goods Price Index, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
         "id": "house_price_growth",
         "label_en": "House Price Growth, YoY",
         "transform": "yoy_pct",
@@ -1197,6 +1240,6 @@
       "date",
       "value"
     ],
-    "charted_series": 46
+    "charted_series": 52
   }
 }

@@ -145,15 +145,15 @@ indicators:
     label_zh: "月度GDP指数"
     unit: "index"
     fetcher: ons_timeseries
-    series: "YBEZ"
-    dataset: "PN2"
-    ons_path: "/economy/grossdomesticproductgdp/timeseries/ybez/pn2/data"
+    series: "ECY2"
+    dataset: "MGDP"
+    ons_path: "/economy/grossdomesticproductgdp/timeseries/ecy2/mgdp/data"
     source_name: "ONS"
-    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ybez/pn2"
+    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ecy2/mgdp"
     frequency: "monthly"
     start_date: "1997-01-01"
-    caveat_en: "ONS monthly GDP index gives release-day activity tracking, but still feeds into later quarterly GDP revisions."
-    caveat_zh: "ONS月度GDP指数更适合发布日跟踪活动，但仍会进入后续季度GDP修订。"
+    caveat_en: "ONS Monthly GDP time series (dataset MGDP, output-based GVA, CVM SA), the genuinely monthly series behind the 'GDP monthly estimate, UK' bulletin; it gives release-day activity tracking but still feeds into later quarterly GDP revisions."
+    caveat_zh: "ONS月度GDP时间序列（数据集MGDP，产出法GVA，CVM季调），是《英国GDP月度估计》公报背后真正按月发布的序列；更适合发布日跟踪活动，但仍会进入后续季度GDP修订。"
   - id: monthly_gdp_mom
     section: national_accounts
     label_en: "Monthly GDP Growth, MoM"
@@ -161,15 +161,15 @@ indicators:
     unit: "% m/m"
     transform: "mom_pct"
     fetcher: ons_timeseries
-    series: "YBEZ"
-    dataset: "PN2"
-    ons_path: "/economy/grossdomesticproductgdp/timeseries/ybez/pn2/data"
+    series: "ECY2"
+    dataset: "MGDP"
+    ons_path: "/economy/grossdomesticproductgdp/timeseries/ecy2/mgdp/data"
     source_name: "ONS"
-    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ybez/pn2"
+    source_url: "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ecy2/mgdp"
     frequency: "monthly"
     start_date: "1997-01-01"
-    caveat_en: "Month-on-month growth derived from the ONS monthly GDP index; this is the release-day activity impulse and should be read with revision risk."
-    caveat_zh: "由ONS月度GDP指数派生的环比增速；更贴近发布日活动脉冲，但需结合修订风险阅读。"
+    caveat_en: "Month-on-month growth computed from the ONS Monthly GDP time series (dataset MGDP, output-based GVA, CVM SA); this is the release-day activity impulse and should be read with revision risk."
+    caveat_zh: "由ONS月度GDP时间序列（数据集MGDP，产出法GVA，CVM季调）计算的环比增速；更贴近发布日活动脉冲，但需结合修订风险阅读。"
   - id: industrial_production
     section: monthly_output
     label_en: "Industrial Production"
@@ -388,6 +388,7 @@ indicators:
     label_zh: "英格兰住房开工，季调"
     unit: "dwellings"
     fetcher: govuk_ods_table
+    source_authority: official_primary
     source_name: "MHCLG / GOV.UK"
     source_url: "https://www.gov.uk/government/statistical-data-sets/live-tables-on-house-building"
     distribution_name_contains: "Table 222"
@@ -404,6 +405,7 @@ indicators:
     label_zh: "英格兰住房竣工，季调"
     unit: "dwellings"
     fetcher: govuk_ods_table
+    source_authority: official_primary
     source_name: "MHCLG / GOV.UK"
     source_url: "https://www.gov.uk/government/statistical-data-sets/live-tables-on-house-building"
     distribution_name_contains: "Table 222"
@@ -1009,6 +1011,7 @@ indicators:
     label_zh: "汽油泵价"
     unit: "p/litre"
     fetcher: govuk_road_fuel
+    source_authority: official_primary
     source_name: "DESNZ / GOV.UK"
     source_url: "https://www.gov.uk/government/statistical-data-sets/oil-and-petroleum-products-weekly-statistics"
     distribution_name_contains: "weekly road fuel prices"
@@ -1024,6 +1027,7 @@ indicators:
     label_zh: "柴油泵价"
     unit: "p/litre"
     fetcher: govuk_road_fuel
+    source_authority: official_primary
     source_name: "DESNZ / GOV.UK"
     source_url: "https://www.gov.uk/government/statistical-data-sets/oil-and-petroleum-products-weekly-statistics"
     distribution_name_contains: "weekly road fuel prices"
@@ -1363,6 +1367,7 @@ indicators:
     label_zh: "OBR公共部门净借款预测"
     unit: "GBP bn"
     fetcher: obr_xlsx_row
+    source_authority: official_primary
     source_name: "OBR EFO March 2026"
     source_url: "https://obr.uk/efo/economic-and-fiscal-outlook-march-2026/"
     xlsx_url: "https://obr.uk/download/march-2026-economic-and-fiscal-outlook-detailed-forecast-tables-aggregates/"
@@ -1379,6 +1384,7 @@ indicators:
     label_zh: "OBR不含BoE净债务预测"
     unit: "% of GDP"
     fetcher: obr_xlsx_row
+    source_authority: official_primary
     source_name: "OBR EFO March 2026"
     source_url: "https://obr.uk/efo/economic-and-fiscal-outlook-march-2026/"
     xlsx_url: "https://obr.uk/download/march-2026-economic-and-fiscal-outlook-detailed-forecast-tables-aggregates/"
@@ -1395,6 +1401,7 @@ indicators:
     label_zh: "OBR中央政府债务利息预测"
     unit: "GBP bn"
     fetcher: obr_xlsx_row
+    source_authority: official_primary
     source_name: "OBR EFO March 2026"
     source_url: "https://obr.uk/efo/economic-and-fiscal-outlook-march-2026/"
     xlsx_url: "https://obr.uk/download/march-2026-economic-and-fiscal-outlook-detailed-forecast-tables-aggregates/"
@@ -1411,6 +1418,7 @@ indicators:
     label_zh: "OBR公共部门有效利率"
     unit: "%"
     fetcher: obr_xlsx_row
+    source_authority: official_primary
     source_name: "OBR EFO March 2026"
     source_url: "https://obr.uk/efo/economic-and-fiscal-outlook-march-2026/"
     xlsx_url: "https://obr.uk/download/march-2026-economic-and-fiscal-outlook-detailed-forecast-tables-aggregates/"

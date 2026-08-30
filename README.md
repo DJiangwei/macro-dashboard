@@ -166,9 +166,18 @@ observations. FRED still carries national accounts, production, labour, trade,
 rates, and BIS property/credit series, while national CPI and the deposit-taker
 soundness ratios come from the IMF SDMX 2.1 API (`api.imf.org`) and fiscal
 ratios come from the IMF WEO/Fiscal Monitor DataMapper with a dashed forecast
-segment. Japan-native releases behind the e-Stat application-ID wall — the
-ex-fresh-food core CPI, the job-to-applicant ratio, housing starts, and the BoJ
-corporate goods price index — are recorded as explicit data gaps.
+segment. The Bank of Japan's own stable flat-file download
+(`stat-search.boj.or.jp`) supplies the Corporate Goods Price Index — Japan's
+domestic producer prices — needing no credential, which makes it the page's
+first `official_primary`, `verified` series. The Statistics Bureau's own e-Stat
+API (`api.e-stat.go.jp`, requires `ESTAT_APP_ID`) now supplies the BoJ's actual
+policy reference measure — core CPI ex-fresh-food — plus core-core CPI and the
+goods/services split, each published natively as year-over-year rather than
+derived here; nationwide totals require the `cdArea=00000` parameter, since
+omitting it silently returns Tokyo-only data. Without the key those four
+indicators render as documented gaps instead of failing the build. The
+job-to-applicant ratio and housing starts remain behind the same e-Stat wall
+and are not yet wired.
 
 The South Africa page is the first to use a national central bank's own public
 JSON API. SARB Web Indicators
@@ -217,6 +226,7 @@ Supported optional sources:
 | Variable | Purpose |
 |---|---|
 | `FRED_API_KEY` | Enables the official FRED API for the US page and the remaining UK FRED/OECD/BIS/IMF mirror series. If unset, those scripts fall back to FRED's public graph CSV endpoint. UK release-sensitive series use native ONS/BoE endpoints where validated. For the US page, set this key for complete regular refreshes; the generator refuses to overwrite output if the fallback returns fewer than 55 charts. |
+| `ESTAT_APP_ID` | Enables the Japan Statistics Bureau's e-Stat API (`api.e-stat.go.jp`), which supplies core CPI ex-fresh-food (the BoJ's actual policy reference measure), core-core CPI, and the goods/services CPI split — all published natively as year-over-year, not derived. Register at https://www.e-stat.go.jp/en/api/ . If unset, those four Japan indicators render as documented data gaps rather than failing the build. |
 | `EIA_API_KEY` | Enables EIA Open Data API v2 fetches for future energy, oil, gas, and US energy macro adapters. The CE4 gas-storage path still prefers GIE/Eurostat where those sources are more country-specific. |
 | `GIE_AGSI_API_KEY` | Enables GIE AGSI+ country-level gas-storage fill data for `gas_storage_level`. |
 | `GIE_AGSI_BASE_URL` | Optional override for the AGSI+ API base URL. Defaults to `https://agsi.gie.eu/api`. |
