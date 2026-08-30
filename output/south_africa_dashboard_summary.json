@@ -1,7 +1,7 @@
 {
   "file": "south_africa.html",
-  "generated": "2026-08-30T08:11:49.931508+00:00",
-  "charts": 63,
+  "generated": "2026-08-30T08:26:42.714593+00:00",
+  "charts": 64,
   "source_groups": 15,
   "data_gaps": 7,
   "low_confidence": 14,
@@ -253,10 +253,10 @@
       "value"
     ],
     "file": "south_africa_canonical_frame.json",
-    "series": 63,
-    "observations": 29997,
-    "series_count": 63,
-    "observation_count": 29997
+    "series": 64,
+    "observations": 30102,
+    "series_count": 64,
+    "observation_count": 30102
   },
   "data_gaps_detail": [
     {
@@ -314,7 +314,7 @@
     "sources": [
       {
         "source_name": "IMF SDMX / Balance of Payments (SARB)",
-        "charts": 12
+        "charts": 13
       },
       {
         "source_name": "FRED / OECD (Stats SA)",
@@ -376,7 +376,7 @@
     "quality_counts": {
       "low_confidence": 14,
       "verified": 11,
-      "watch": 38
+      "watch": 39
     },
     "unavailable_count": 0
   },
@@ -390,7 +390,7 @@
     "as_of_date": "2026-08-30",
     "counts": {
       "current": 13,
-      "due": 33,
+      "due": 34,
       "projection": 3,
       "stale": 14
     },
@@ -636,6 +636,28 @@
         "comparability": "medium",
         "source_name": "IMF SDMX / Balance of Payments (SARB)",
         "series": "ZAF.NNAFANIL_T.FAB.USD.Q",
+        "transform": "level"
+      },
+      {
+        "id": "financial_derivatives_net",
+        "concept_id": "za:financial_derivatives_net",
+        "label_en": "Financial Derivatives, Net",
+        "latest_date": "2026-01-01",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-01-01",
+        "age_days": 152,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF SDMX / Balance of Payments (SARB)",
+        "series": "ZAF.NNAFANIL_T.F_F7.USD.Q",
         "transform": "level"
       },
       {
@@ -1253,34 +1275,12 @@
         "source_name": "IMF SDMX / CPI (Stats SA)",
         "series": "ZAF.CPI._T.IX.M",
         "transform": "level"
-      },
-      {
-        "id": "cpi_inflation_imf",
-        "concept_id": "za:cpi_inflation_imf",
-        "label_en": "Headline CPI, YoY (IMF cross-check)",
-        "latest_date": "2026-06-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-06-01",
-        "age_days": 61,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF SDMX / CPI (Stats SA)",
-        "series": "ZAF.CPI._T.YOY_PCH_PA_PT.M",
-        "transform": "level"
       }
     ]
   },
   "transform_audit": {
     "counts": {
-      "level": 55,
+      "level": 56,
       "pct_change": 1,
       "yoy_pct": 7
     },
@@ -1341,6 +1341,6 @@
       "date",
       "value"
     ],
-    "charted_series": 63
+    "charted_series": 64
   }
 }

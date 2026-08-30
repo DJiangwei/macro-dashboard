@@ -55,7 +55,7 @@ sections:
     report_logic_en: "IMF Financial Soundness Indicators give the deposit-taker capital and asset-quality core; BIS total-credit ratios show aggregate leverage, which is moderate by emerging-market standards."
     report_logic_zh: "IMF金融稳健指标提供存款机构资本与资产质量核心指标；BIS总信贷比率反映整体杠杆，按新兴市场标准处于温和水平。"
 
-min_chart_count: 60
+min_chart_count: 61
 
 indicators:
   # --- growth_accounts -----------------------------------------------------
@@ -626,8 +626,8 @@ indicators:
     source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NETCD_T.KAB.USD.Q"
     frequency: "quarterly"
     start_date: "2000-01-01"
-    caveat_en: "IMF BPM6 capital account balance (capital transfers and non-produced non-financial assets), credits less debits; a small line item for South Africa, charted mainly so the identity that the current account plus the capital account balance sums to the financial account balance is visible on this page."
-    caveat_zh: "IMF BPM6口径资本账户差额（资本转移与非生产非金融资产），贷方减借方；对南非而言金额很小，展示的主要目的是让读者能在本页看清经常账户加资本账户等于金融账户差额的会计恒等式。"
+    caveat_en: "IMF BPM6 capital account balance (capital transfers and non-produced non-financial assets), credits less debits; a small line item for South Africa, charted mainly so the identity that the current account plus the capital account balance plus net errors and omissions sums to the Financial Account Balance chart is visible on this page. Net errors and omissions can be large relative to the current and capital accounts (see that chart), so do not compare current-plus-capital account alone against the financial account."
+    caveat_zh: "IMF BPM6口径资本账户差额（资本转移与非生产非金融资产），贷方减借方；对南非而言金额很小，展示的主要目的是让读者能在本页看清经常账户加资本账户再加净误差与遗漏之和等于金融账户差额图表数值的会计恒等式。净误差与遗漏相对经常账户与资本账户可能较大（见该图表），因此不应仅以经常账户加资本账户去对比金融账户。"
   - id: net_errors_omissions
     section: external_fx
     label_en: "Net Errors and Omissions"
@@ -706,8 +706,24 @@ indicators:
     source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NNAFANIL_T.O_F.USD.Q"
     frequency: "quarterly"
     start_date: "2000-01-01"
-    caveat_en: "Net acquisition of other-investment assets (bank loans, deposits, and trade credit) less net incurrence of other-investment liabilities; the most bank- and trade-finance-driven of the three financial account sub-categories."
-    caveat_zh: "其他投资资产（银行贷款、存款与贸易信贷）净获得减其他投资负债净发生额；在金融账户三大子类中，受银行与贸易融资驱动程度最高。"
+    caveat_en: "Net acquisition of other-investment assets (bank loans, deposits, and trade credit) less net incurrence of other-investment liabilities; one of the five BPM6 financial-account functional categories charted on this page (direct investment, portfolio investment, financial derivatives, other investment, and reserve assets), and typically the most bank- and trade-finance-driven of the five."
+    caveat_zh: "其他投资资产（银行贷款、存款与贸易信贷）净获得减其他投资负债净发生额；为本页展示的BPM6金融账户五大功能类别之一（直接投资、证券投资、金融衍生工具、其他投资与储备资产），通常在五者中受银行与贸易融资驱动程度最高。"
+  - id: financial_derivatives_net
+    section: external_fx
+    label_en: "Financial Derivatives, Net"
+    label_zh: "金融衍生工具净额"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.NNAFANIL_T.F_F7.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NNAFANIL_T.F_F7.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "Net acquisition of financial-derivative and employee-stock-option assets less net incurrence of the corresponding liabilities; the fifth BPM6 financial-account functional category, alongside direct investment, portfolio investment, other investment, and reserve assets charted above. Positive means South African residents' derivative-related asset positions grew faster than the corresponding liability positions on this net basis (the same net-lending sign convention used for direct, portfolio, and other investment). At 2026-Q1 this category is larger in magnitude than direct investment, other investment, or the reserve-asset flow individually, and completes the decomposition: the five categories sum to the Financial Account Balance chart to within rounding."
+    caveat_zh: "金融衍生工具与雇员认股权资产净获得减相应负债净发生额；为BPM6金融账户五大功能类别中的第五类，与上方已展示的直接投资、证券投资、其他投资与储备资产并列。正值表示南非居民的衍生工具相关资产头寸在该净额口径下增长快于相应负债头寸（与直接、证券、其他投资采用相同的净贷出符号约定）。截至2026年第一季度，该类别的规模单项已超过直接投资、其他投资或储备资产净交易，并补全了完整分解：五类之和在四舍五入误差范围内等于金融账户差额图表数值。"
   - id: reserve_assets_flow
     section: external_fx
     label_en: "Reserve Assets, Net Transactions"
