@@ -140,10 +140,26 @@ def _assert_lag_transform_series_are_contiguous(name: str, canonical_series: lis
     """Catch finding #2's defect class: a lag-based transform (yoy/qoq/mom/
     pct_change/diff) silently drifting off its declared cadence.
 
-    Tolerates a single honestly-skipped period (a gap of up to 2x the
-    nominal cadence) since real data can have an isolated missing
-    observation. A gap any wider than that indicates either multiple
-    consecutive missing periods (worth a human look) or a reintroduced
+    Tolerates a gap of up to 3x the nominal cadence. This is not "1.5 missed
+    periods" of slack picked arbitrarily -- it is the largest gap a *single*
+    genuinely missing source observation can honestly produce once the base
+    lookup is by calendar date (see shift_calendar_periods), which is the
+    whole point of the finding #2 fix:
+
+    - A period-1 transform (mom_pct/qoq_pct/diff) loses *two* output points
+      per missing source observation: the missing month itself has no item
+      to transform at all, and the very next month's own base is that same
+      missing month, so it is skipped too. Two adjacent single-period
+      losses is a 3x gap between the two surviving neighbours (confirmed
+      against real data: US core_cpi_mom shows exactly a 3-month gap,
+      2025-09 -> 2025-12, because BLS never published October 2025 CPI).
+    - A period-N transform (yoy/yoy_pct) loses at most one output point per
+      missing source observation, and it lands N periods away from the
+      missing month itself -- never adjacent to it -- so it only ever
+      produces an isolated <=2x gap, comfortably inside this same bound.
+
+    A gap wider than 3x nominal means either two or more *consecutive*
+    missing source periods (worth a human look) or a reintroduced
     index-offset misalignment bug, so it fails the build rather than
     shipping a `verified` badge on data nobody re-checked.
     """
@@ -158,12 +174,12 @@ def _assert_lag_transform_series_are_contiguous(name: str, canonical_series: lis
         dates = _observation_dates(series)
         for earlier, later in zip(dates, dates[1:]):
             gap = _gap(unit, earlier, later)
-            if gap > expected * 2:
+            if gap > expected * 3:
                 raise AssertionError(
                     f"{name}:{series.get('indicator_id')} ({transform}) has a "
                     f"{gap}-{unit} gap between {earlier.isoformat()} and {later.isoformat()}, "
-                    f"more than one missed period at its declared "
-                    f"{series.get('frequency')!r} cadence — check for a reintroduced "
+                    f"wider than one missing source observation can honestly produce at its "
+                    f"declared {series.get('frequency')!r} cadence — check for a reintroduced "
                     f"index-offset misalignment (finding #2) rather than an honest gap."
                 )
 

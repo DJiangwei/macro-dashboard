@@ -55,12 +55,31 @@ def test_shift_calendar_periods_monthly_and_quarterly() -> None:
     assert shift_calendar_periods(date(2025, 11, 1), "monthly", 12) == date(2024, 11, 1)
     assert shift_calendar_periods(date(2026, 2, 1), "monthly", 1) == date(2026, 1, 1)
     assert shift_calendar_periods(date(2025, 6, 30), "quarterly", 4) == date(2024, 6, 30)
-    assert shift_calendar_periods(date(2025, 6, 30), "quarterly", 1) == date(2025, 3, 30)
 
 
 def test_shift_calendar_periods_weekly_and_annual() -> None:
     assert shift_calendar_periods(date(2025, 8, 8), "weekly", 52) == date(2024, 8, 9)
     assert shift_calendar_periods(date(2024, 12, 31), "annual", 1) == date(2023, 12, 31)
+
+
+def test_shift_calendar_periods_preserves_end_of_month_across_uneven_month_lengths() -> None:
+    """Regression: a naive min(value.day, target_month_length) clamp silently
+    rounds an end-of-quarter date DOWN when the source month is shorter than
+    the target month (e.g. Jun 30 -> Mar "30", when March actually ends on
+    the 31st). This broke four real UK QoQ series (exports_qoq, gfcf_qoq,
+    imports_qoq, private_consumption_qoq): their Q2 2026 reading needs Q1
+    2026 (2026-03-31) as its base, but the buggy clamp looked up
+    2026-03-30 instead, found nothing, and silently dropped the latest
+    quarter. Every quarter-end must map to the *target* month's own last
+    day, never a copy of the source month's day-of-month."""
+    # Jun (30 days) -> Mar (31 days): must land on Mar 31, not Mar 30.
+    assert shift_calendar_periods(date(2026, 6, 30), "quarterly", 1) == date(2026, 3, 31)
+    # Dec (31 days) -> Sep (30 days): must land on Sep 30, not an invalid Sep 31.
+    assert shift_calendar_periods(date(2026, 12, 31), "quarterly", 1) == date(2026, 9, 30)
+    # Mar (31 days) -> Dec of the prior year (31 days): unaffected either way.
+    assert shift_calendar_periods(date(2026, 3, 31), "quarterly", 1) == date(2025, 12, 31)
+    # Sep (30 days) -> Jun (30 days): unaffected either way.
+    assert shift_calendar_periods(date(2026, 9, 30), "quarterly", 1) == date(2026, 6, 30)
 
 
 def _monthly_series(transform: str, dates_values: list[tuple[str, float]]) -> dict:

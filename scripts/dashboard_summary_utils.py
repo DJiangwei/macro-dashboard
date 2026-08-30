@@ -62,7 +62,21 @@ def shift_calendar_periods(value: date, frequency: str, periods: int) -> date:
     total_months = value.year * 12 + (value.month - 1) - periods * months_per_period
     year, month = divmod(total_months, 12)
     month += 1
-    day = min(value.day, monthrange(year, month)[1])
+    target_month_length = monthrange(year, month)[1]
+    # This codebase's quarterly/annual dates are always the *last day* of
+    # their period (e.g. Mar 31, Jun 30, Sep 30, Dec 31 for quarter-ends),
+    # not a fixed day-of-month. min(value.day, target_month_length) is only
+    # correct when value.day exceeds the target month's length; it silently
+    # rounds down a valid end-of-period date otherwise (e.g. shifting Jun 30
+    # back one quarter must land on Mar 31, not Mar 30 -- min(30, 31) gives
+    # the wrong answer because 30 never exceeded March's own length). So an
+    # end-of-month source date always maps to the target month's own last
+    # day; any other convention (e.g. day=1 for monthly) is preserved via
+    # the min() clamp as before.
+    if value.day == monthrange(value.year, value.month)[1]:
+        day = target_month_length
+    else:
+        day = min(value.day, target_month_length)
     return date(year, month, day)
 
 

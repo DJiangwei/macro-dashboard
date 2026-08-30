@@ -59,18 +59,33 @@ def test_frequency_check_ignores_short_or_unclocked_series() -> None:
     )
 
 
-def test_contiguity_check_allows_one_missed_period_for_a_lag_transform() -> None:
+def test_contiguity_check_allows_one_missed_period_for_a_yoy_style_transform() -> None:
     dates = [f"2025-{m:02d}-01" for m in range(1, 10)] + ["2025-11-01", "2025-12-01"]
     _assert_lag_transform_series_are_contiguous(
         "us", [_series("cpi_inflation", "monthly", dates, transform="yoy_pct")]
     )
 
 
+def test_contiguity_check_allows_the_compounded_gap_a_period_1_transform_produces() -> None:
+    """A single missing source month costs a period-1 transform (mom_pct/
+    qoq_pct/diff) *two* output points, not one: the missing month itself has
+    no item to transform, and the immediately following month's own base is
+    that missing month, so it is skipped too. This is real, not
+    hypothetical: US core_cpi_mom shows exactly this pattern (2025-09 ->
+    2025-12, a 3-month gap) because BLS never published October 2025 CPI.
+    That must not fail the build."""
+    dates = [f"2025-{m:02d}-01" for m in range(1, 10)] + ["2025-12-01"]  # no Oct, no Nov
+    _assert_lag_transform_series_are_contiguous(
+        "us", [_series("core_cpi_mom", "monthly", dates, transform="pct_change")]
+    )
+
+
 def test_contiguity_check_rejects_a_wider_gap_for_a_lag_transform() -> None:
-    """Two or more consecutive missing periods (or a reintroduced
-    index-offset bug) must fail the build rather than ship a verified badge
-    on data nobody re-checked."""
-    dates = [f"2025-{m:02d}-01" for m in range(1, 6)] + ["2025-09-01"]  # 4-month gap
+    """Two or more consecutive missing *source* periods (beyond what a
+    single missing observation can honestly produce) or a reintroduced
+    index-offset misalignment bug must fail the build rather than ship a
+    verified badge on data nobody re-checked."""
+    dates = [f"2025-{m:02d}-01" for m in range(1, 6)] + ["2025-10-01"]  # 5-month gap
     with pytest.raises(AssertionError, match="cpi_inflation.*gap"):
         _assert_lag_transform_series_are_contiguous(
             "us", [_series("cpi_inflation", "monthly", dates, transform="yoy_pct")]
