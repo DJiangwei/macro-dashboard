@@ -156,7 +156,7 @@ def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
         if fetcher == "sarb":
             return _apply_transform(fetch_sarb(session, spec))
         if fetcher == "imf_sdmx":
-            return _apply_transform(fetch_imf_sdmx(session, spec))
+            return _apply_transform(apply_scale(fetch_imf_sdmx(session, spec)))
         if fetcher == "imf_datamapper":
             return _apply_transform(fetch_imf_datamapper(session, spec))
         raise ValueError(f"Unknown fetcher: {fetcher}")
