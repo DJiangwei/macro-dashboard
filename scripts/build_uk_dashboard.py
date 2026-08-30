@@ -383,7 +383,25 @@ def fetch_ons_timeseries(session: requests.Session, spec: dict[str, Any]) -> dic
         "quarterly": payload.get("quarters") or [],
         "annual": payload.get("years") or [],
     }
-    rows = rows_by_frequency.get(frequency) or payload.get("months") or payload.get("quarters") or payload.get("years") or []
+    if frequency not in rows_by_frequency:
+        raise ValueError(
+            f"ONS series {spec.get('series')!r} ({spec.get('id')!r}) declares unsupported "
+            f"frequency {frequency!r}; expected one of {sorted(rows_by_frequency)}."
+        )
+    rows = rows_by_frequency[frequency]
+    if not rows:
+        # Do NOT silently fall back to whatever array the payload happens to
+        # carry (e.g. "months" for a series that is actually quarterly) — that
+        # produces a chart whose label ("monthly") contradicts its data. Fail
+        # loudly so a mislabeled config gets caught at build time, not shipped
+        # with a confident "verified" badge.
+        available = sorted(key for key in ("months", "quarters", "years") if payload.get(key))
+        raise ValueError(
+            f"ONS series {spec.get('series')!r} ({spec.get('id')!r}) declares frequency "
+            f"{frequency!r} but the ONS payload has no {frequency!r} observations at {url}; "
+            f"payload only carries {available or ['none']}. Check the declared frequency "
+            f"against the ONS dataset before relabeling or repointing this indicator."
+        )
     observations: list[dict[str, Any]] = []
     provider_updated = ""
     for row in rows:
