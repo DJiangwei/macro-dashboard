@@ -55,7 +55,7 @@ sections:
     report_logic_en: "IMF Financial Soundness Indicators give the deposit-taker capital and asset-quality core; BIS total-credit ratios show aggregate leverage, which is moderate by emerging-market standards."
     report_logic_zh: "IMF金融稳健指标提供存款机构资本与资产质量核心指标；BIS总信贷比率反映整体杠杆，按新兴市场标准处于温和水平。"
 
-min_chart_count: 34
+min_chart_count: 60
 
 indicators:
   # --- growth_accounts -----------------------------------------------------
@@ -532,6 +532,198 @@ indicators:
     start_date: "1995-01-01"
     caveat_en: "BIS broad real effective exchange rate, 2020=100; high domestic inflation keeps the real rate far above the nominal rate."
     caveat_zh: "BIS广义实际有效汇率（2020=100）；国内高通胀使实际汇率长期高于名义汇率。"
+  - id: current_account_balance_bop
+    section: external_fx
+    label_en: "Current Account Balance (BOP)"
+    label_zh: "经常账户差额（国际收支）"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.NETCD_T.CAB.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NETCD_T.CAB.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "IMF BPM6 current account balance, credits less debits, in current US dollars; positive means a surplus. Independently compiled from South Africa's own BoP submission (SARB is the compiling authority); this dollar-denominated balance complements the current-account-to-GDP ratio charted above."
+    caveat_zh: "IMF BPM6口径经常账户差额（贷方减借方），以现价美元计；正值表示顺差。基于南非自身国际收支申报独立编制（SARB为编制机构）；该美元计价差额与上方已展示的经常账户占GDP比率互为补充。"
+  - id: goods_balance_bop
+    section: external_fx
+    label_en: "Goods Balance (BOP)"
+    label_zh: "货物差额（国际收支口径）"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.NETCD_T.G.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NETCD_T.G.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "IMF BPM6 goods balance (credits less debits) from the balance-of-payments statistical framework, distinct from the SARS customs-basis goods trade balance charted above; the two differ because BoP applies coverage, timing, and valuation adjustments to the customs data."
+    caveat_zh: "IMF BPM6口径货物差额（贷方减借方），来自国际收支统计框架，区别于上方已展示的南非税务局海关口径货物贸易差额；两者因国际收支对海关数据的覆盖范围、记账时点与计价方式调整而存在差异。"
+  - id: services_balance_bop
+    section: external_fx
+    label_en: "Services Balance (BOP)"
+    label_zh: "服务差额（国际收支）"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.NETCD_T.S.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NETCD_T.S.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "IMF BPM6 services balance, credits less debits. South Africa has no other validated public series for services trade, so this is the only services-balance view on this page."
+    caveat_zh: "IMF BPM6口径服务差额（贷方减借方）。南非目前没有其他已验证的公开服务贸易差额序列，此为本页唯一的服务差额视角。"
+  - id: primary_income_balance
+    section: external_fx
+    label_en: "Primary Income Balance"
+    label_zh: "初次收入差额"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.NETCD_T.IN1.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NETCD_T.IN1.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "IMF BPM6 primary income balance (investment income and compensation of employees), credits less debits; the persistent deficit reflects dividend and interest payments to the large foreign ownership base of JSE-listed companies and South African debt securities."
+    caveat_zh: "IMF BPM6口径初次收入差额（投资收益与雇员报酬），贷方减借方；持续逆差反映了对约翰内斯堡交易所上市公司及南非债券庞大境外持有基础支付的股息与利息。"
+  - id: secondary_income_balance
+    section: external_fx
+    label_en: "Secondary Income Balance"
+    label_zh: "二次收入差额"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.NETCD_T.IN2.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NETCD_T.IN2.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "IMF BPM6 secondary income balance (current transfers such as remittances, aid, and SACU customs-revenue transfers), credits less debits."
+    caveat_zh: "IMF BPM6口径二次收入差额（经常转移，包括侨汇、援助及南部非洲关税同盟关税转移收入），贷方减借方。"
+  - id: capital_account_balance
+    section: external_fx
+    label_en: "Capital Account Balance"
+    label_zh: "资本账户差额"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.NETCD_T.KAB.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NETCD_T.KAB.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "IMF BPM6 capital account balance (capital transfers and non-produced non-financial assets), credits less debits; a small line item for South Africa, charted mainly so the identity that the current account plus the capital account balance sums to the financial account balance is visible on this page."
+    caveat_zh: "IMF BPM6口径资本账户差额（资本转移与非生产非金融资产），贷方减借方；对南非而言金额很小，展示的主要目的是让读者能在本页看清经常账户加资本账户等于金融账户差额的会计恒等式。"
+  - id: net_errors_omissions
+    section: external_fx
+    label_en: "Net Errors and Omissions"
+    label_zh: "净误差与遗漏"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.NETCD_T.EO.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NETCD_T.EO.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "The statistical balancing item that reconciles the independently compiled current, capital, and financial accounts; it carries no economic sign meaning on its own, but large swings signal unrecorded flows (informal capital movement, valuation timing mismatches) rather than a real transaction."
+    caveat_zh: "用于协调独立编制的经常账户、资本账户与金融账户之间差异的统计平衡项；本身没有经济学意义上的正负含义，但大幅波动提示存在未记录的资金流动（如非正式资本流动、计价时点错配），而非真实交易。"
+  - id: financial_account_balance
+    section: external_fx
+    label_en: "Financial Account Balance"
+    label_zh: "金融账户差额"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.NNAFANIL_T.FAB.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NNAFANIL_T.FAB.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "Net acquisition of financial assets less net incurrence of liabilities (BPM6 net-lending convention); positive means South African residents built up net claims on the rest of the world faster than the rest of the world built up claims on South Africa. By identity this equals the current account plus capital account balance plus net errors and omissions."
+    caveat_zh: "净金融资产获得减净负债发生额（BPM6净贷出口径）；正值表示南非居民对外净债权的增加快于外部对南非的净债权增加。按恒等式，该值等于经常账户加资本账户差额再加净误差与遗漏。"
+  - id: direct_investment_net
+    section: external_fx
+    label_en: "Direct Investment, Net"
+    label_zh: "直接投资净额"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.NNAFANIL_T.D_F.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NNAFANIL_T.D_F.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "Net acquisition of direct-investment assets less net incurrence of direct-investment liabilities; positive means outward FDI by South African residents exceeded inward FDI into South Africa on this net basis for the quarter."
+    caveat_zh: "直接投资资产净获得减直接投资负债净发生额；正值表示该季度南非居民对外直接投资在净额口径上超过流入南非的直接投资。"
+  - id: portfolio_investment_net
+    section: external_fx
+    label_en: "Portfolio Investment, Net"
+    label_zh: "证券投资净额"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.NNAFANIL_T.P_F.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NNAFANIL_T.P_F.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "Net acquisition of portfolio-investment assets (bonds and equities) less net incurrence of portfolio-investment liabilities; positive means South African residents' net purchases of foreign bonds and equities exceeded foreign investors' net purchases of South African bonds and equities on this net basis. A positive reading alone does not mean foreign investors were net sellers of South African assets in gross terms, only that the net balance across both sides tilted that way."
+    caveat_zh: "证券投资资产（债券与股票）净获得减证券投资负债净发生额；正值表示南非居民对境外债券与股票的净购买超过境外投资者对南非债券与股票的净购买（净额口径）。正值本身并不意味着境外投资者在总量口径上净卖出南非资产，只表示双向净额的平衡偏向该方向。"
+  - id: other_investment_net
+    section: external_fx
+    label_en: "Other Investment, Net"
+    label_zh: "其他投资净额"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.NNAFANIL_T.O_F.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.NNAFANIL_T.O_F.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "Net acquisition of other-investment assets (bank loans, deposits, and trade credit) less net incurrence of other-investment liabilities; the most bank- and trade-finance-driven of the three financial account sub-categories."
+    caveat_zh: "其他投资资产（银行贷款、存款与贸易信贷）净获得减其他投资负债净发生额；在金融账户三大子类中，受银行与贸易融资驱动程度最高。"
+  - id: reserve_assets_flow
+    section: external_fx
+    label_en: "Reserve Assets, Net Transactions"
+    label_zh: "储备资产净交易"
+    unit: "USD bn"
+    scale: 1000000000
+    fetcher: imf_sdmx
+    dataflow: "BOP"
+    series: "ZAF.A_T.R_F.USD.Q"
+    source_name: "IMF SDMX / Balance of Payments (SARB)"
+    source_authority: official_mirror
+    source_url: "https://api.imf.org/external/sdmx/2.1/data/BOP/ZAF.A_T.R_F.USD.Q"
+    frequency: "quarterly"
+    start_date: "2000-01-01"
+    caveat_en: "Quarterly transaction flow into (positive) or out of (negative) South Africa's official reserve assets, as recorded in the balance-of-payments financial account. This is a flow, not the level of the SARB's gross gold and foreign-exchange reserves; the reserve stock/level is not available from this dataflow and remains a data gap."
+    caveat_zh: "国际收支金融账户中记录的南非官方储备资产季度交易流量，正值为增加、负值为减少。这是流量而非SARB黄金与外汇总储备的存量水平；储备存量数据在此数据流中不可得，仍为数据缺口。"
 
   # --- fiscal_sovereign ----------------------------------------------------
   - id: government_debt_gdp
@@ -798,10 +990,10 @@ data_gaps:
     status_en: "Published through Eskom's data portal and dashboards without a documented stable API contract; this is the single largest South Africa-specific supply-side variable still missing."
     status_zh: "通过Eskom数据门户与看板发布，无有文档的稳定API契约；这是南非特有供给侧变量中仍缺失的最重要一项。"
   - section: external_fx
-    item_en: "Gross reserves, capital-flow detail, and sovereign risk spread"
-    item_zh: "总储备、资本流动明细与主权风险利差"
-    status_en: "SARB's reserves and BoP detail are in the Quarterly Bulletin series set, which the public web API does not expose; CDS and EMBI spreads are vendor-controlled."
-    status_zh: "SARB的储备与国际收支明细位于季度公报序列集，公开Web API未暴露；CDS与EMBI利差由供应商控制。"
+    item_en: "Gross reserves level, and sovereign risk spread"
+    item_zh: "总储备存量与主权风险利差"
+    status_en: "IMF BOP now supplies capital-flow detail (current account components, financial account and its direct/portfolio/other investment sub-categories, and the reserve-asset transaction flow); SARB's own reserves level series and BoP detail remain in the Quarterly Bulletin series set, which the public web API does not expose. The stock/level of the SARB's gross gold and foreign-exchange reserves is therefore still missing (only the quarterly transaction flow is charted); CDS and EMBI spreads remain vendor-controlled."
+    status_zh: "IMF国际收支数据现已提供资本流动明细（经常账户各分项、金融账户及其直接/证券/其他投资子类，以及储备资产交易流量）；SARB自有储备存量序列与国际收支明细仍位于季度公报序列集，公开Web API未暴露。因此SARB黄金与外汇总储备的存量水平仍然缺失（本页仅展示季度交易流量）；CDS与EMBI利差仍由供应商控制。"
   - section: fiscal_sovereign
     item_en: "National Treasury monthly revenue and expenditure execution"
     item_zh: "国库月度收支执行"
