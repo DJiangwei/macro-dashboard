@@ -146,3 +146,41 @@ def test_frequency_check_still_rejects_quarterly_labelled_as_annual_data() -> No
     dates = [f"{y}-12-31" for y in range(2018, 2026)]
     with pytest.raises(AssertionError, match="quarterly.*12 months"):
         _assert_frequency_matches_observed_spacing("japan", [_series("x", "quarterly", dates)])
+
+
+# --- Ruling 10: parity rule for period-1 lag transforms ----------------------
+# A period-1 transform (mom_pct/qoq_pct/pct_change/diff) loses exactly TWO
+# adjacent output points per missing source observation -- the missing period
+# itself, and the next period whose own base is that missing period. So its
+# honest gaps are exactly 1x (contiguous) or 3x (one missing source period).
+# A 2x gap cannot arise from missing source data: it would mean one output
+# point vanished while its neighbour survived, which the base lookup makes
+# impossible. It is instead the fingerprint of a systematic every-other-point
+# drop -- exactly what the end-of-month day-rollover bug produced, dropping
+# every Q2 point from every quarterly QoQ series.
+
+
+def test_contiguity_rejects_a_2x_gap_for_a_period_1_transform() -> None:
+    # Quarter-end dates with every Q2 dropped: the rollover-bug fingerprint.
+    dates = ["2024-03-31", "2024-09-30", "2024-12-31", "2025-03-31", "2025-09-30"]
+    with pytest.raises(AssertionError, match="every-other-period|2x|parity|neither"):
+        _assert_lag_transform_series_are_contiguous(
+            "uk", [_series("gfcf_qoq", "quarterly", dates, transform="qoq_pct")]
+        )
+
+
+def test_contiguity_still_allows_1x_and_3x_for_a_period_1_transform() -> None:
+    # 1x throughout, then a single 3x gap from one missing source month.
+    dates = ["2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-12-01"]
+    _assert_lag_transform_series_are_contiguous(
+        "us", [_series("core_cpi_mom", "monthly", dates, transform="pct_change")]
+    )
+
+
+def test_contiguity_still_allows_a_2x_gap_for_a_period_n_transform() -> None:
+    # yoy loses one isolated output point per missing source month, so 2x is
+    # honest here and must not be rejected by the period-1 parity rule.
+    dates = ["2025-06-01", "2025-07-01", "2025-09-01", "2025-10-01"]
+    _assert_lag_transform_series_are_contiguous(
+        "us", [_series("cpi_inflation", "monthly", dates, transform="yoy_pct")]
+    )

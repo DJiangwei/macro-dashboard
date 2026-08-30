@@ -43,6 +43,12 @@ DASHBOARD_DISPLAY_NAMES = {
 # observation (yoy/qoq/mom/pct_change/diff) -- see build_us_dashboard.py and
 # build_uk_dashboard.py. These are the transforms finding #2 broke.
 LAG_TRANSFORMS = {"yoy", "yoy_pct", "qoq_pct", "mom_pct", "pct_change", "diff"}
+# Transforms that compare against the immediately preceding period. These are
+# the ones the parity rule applies to -- see
+# _assert_lag_transform_series_are_contiguous. yoy/yoy_pct look N periods back
+# instead, so they lose one isolated point per missing source observation and
+# an even-multiple gap is honest for them.
+PERIOD_1_TRANSFORMS = {"qoq_pct", "mom_pct", "pct_change", "diff"}
 
 # Expected calendar gap between consecutive observations, keyed by declared
 # frequency: (unit, canonical gap, gaps accepted as "still this frequency").
@@ -172,8 +178,42 @@ def _assert_lag_transform_series_are_contiguous(name: str, canonical_series: lis
             continue
         unit, expected, _accepted = nominal
         dates = _observation_dates(series)
-        for earlier, later in zip(dates, dates[1:]):
-            gap = _gap(unit, earlier, later)
+        gaps = [_gap(unit, earlier, later) for earlier, later in zip(dates, dates[1:])]
+        if not gaps:
+            continue
+
+        if transform in PERIOD_1_TRANSFORMS:
+            # Parity rule. A period-1 transform's honest gaps are exactly 1x its
+            # own cadence or 3x it -- never 2x. A 2x gap would mean one output
+            # point vanished while its immediate neighbour survived, which the
+            # calendar-date base lookup makes impossible: a missing source
+            # period always takes the next point down with it. So an even
+            # multiple is the fingerprint of a systematic every-other-point
+            # drop, which is exactly what the end-of-month day-rollover bug
+            # produced (every Q2 dropped from every quarterly QoQ series).
+            #
+            # The cadence is taken from the series' own tightest spacing rather
+            # than the nominal one, so a genuinely semi-annual series declared
+            # quarterly (permitted by _NOMINAL_GAP's accepted set) is judged
+            # against 6/18 months rather than 3/9. A wholly shifted cadence is
+            # not this guard's job -- _assert_frequency_matches_observed_spacing
+            # catches that upstream.
+            cadence = min(gaps)
+            honest = {cadence, cadence * 3}
+            for (earlier, later), gap in zip(zip(dates, dates[1:]), gaps):
+                if gap not in honest:
+                    raise AssertionError(
+                        f"{name}:{series.get('indicator_id')} ({transform}) has a "
+                        f"{gap}-{unit} gap between {earlier.isoformat()} and {later.isoformat()}, "
+                        f"which is neither its {cadence}-{unit} cadence nor the "
+                        f"{cadence * 3}-{unit} gap a single missing source period honestly "
+                        f"produces. An even multiple of the cadence is the signature of a "
+                        f"systematic every-other-period drop (e.g. a calendar day-rollover "
+                        f"bug), not of missing source data."
+                    )
+            continue
+
+        for (earlier, later), gap in zip(zip(dates, dates[1:]), gaps):
             if gap > expected * 3:
                 raise AssertionError(
                     f"{name}:{series.get('indicator_id')} ({transform}) has a "
