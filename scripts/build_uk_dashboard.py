@@ -32,10 +32,10 @@ import yaml
 from dashboard_summary_utils import (
     apply_quality_assessments,
     build_summary_metadata,
-    calendar_gap_matches,
     canonical_frame_metadata,
     load_canonical_data_first_frame,
     retain_last_known_good_series,
+    shift_calendar_periods,
     write_canonical_data_first_frame,
 )
 from build_china_dashboard import (  # Reuse the data-first page shell.
@@ -325,23 +325,25 @@ def _apply_transform(observations: list[dict[str, Any]], spec: dict[str, Any]) -
         return observations
     frequency = str(spec.get("frequency", "")).lower()
     periods = 1 if transform in {"qoq_pct", "mom_pct"} else 12 if frequency == "monthly" else 4 if frequency == "quarterly" else 1
+    # Look up the base observation by its expected calendar date, not by a
+    # fixed array offset. Array-offset stepping (observations[index-periods])
+    # breaks permanently once one interior observation is missing: every
+    # later index shifts one slot early forever, so "YoY"/"MoM" silently
+    # keeps computing the wrong window for the rest of the series. A date
+    # lookup self-heals as soon as that exact date's observation exists.
+    by_date: dict[str, float] = {}
+    for item in observations:
+        parsed = _parse_date(str(item.get("date", "")))
+        if parsed is not None:
+            by_date[parsed.isoformat()] = float(item["value"])
     transformed: list[dict[str, Any]] = []
-    for index, item in enumerate(observations):
-        if index < periods:
-            continue
-        base_item = observations[index - periods]
-        base = base_item["value"]
-        if base in (0, None):
-            continue
-        base_date = _parse_date(str(base_item.get("date", "")))
+    for item in observations:
         item_date = _parse_date(str(item.get("date", "")))
-        if base_date is None or item_date is None:
+        if item_date is None:
             continue
-        if not calendar_gap_matches(frequency, periods, base_date, item_date):
-            # The base observation is `periods` array slots back but not
-            # `periods` calendar periods back (an interior gap shifted it
-            # further). Skip rather than emit a mislabeled rate — an honest
-            # gap beats a wrong number with a confident badge.
+        expected_base_date = shift_calendar_periods(item_date, frequency, periods)
+        base = by_date.get(expected_base_date.isoformat())
+        if base in (0, None):
             continue
         try:
             value = (float(item["value"]) / float(base) - 1.0) * 100.0

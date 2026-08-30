@@ -27,10 +27,10 @@ import yaml
 from dashboard_summary_utils import (
     apply_quality_assessments,
     build_summary_metadata,
-    calendar_gap_matches,
     canonical_frame_metadata,
     load_canonical_data_first_frame,
     retain_last_known_good_series,
+    shift_calendar_periods,
     write_canonical_data_first_frame,
 )
 from build_china_dashboard import (  # Reuse the data-first page shell.
@@ -109,29 +109,19 @@ def _parse_obs_date(value: Any) -> date | None:
         return None
 
 
-def _aligned_base(
-    observations: list[dict[str, Any]], index: int, periods: int, frequency: str
-) -> dict[str, Any] | None:
-    """Return observations[index - periods] only if it is calendar-aligned.
+def _lookup_base(
+    by_date: dict[str, Any], frequency: str, periods: int, item_date: date
+) -> float | None:
+    """Return the value observed exactly `periods` calendar periods before
+    `item_date`, or None if that exact date has no observation.
 
-    A lag-based transform steps back `periods` array slots, which silently
-    drifts when the series has an interior gap (a suppressed or missing
-    observation): index-N-back then lands more than N calendar periods
-    behind, but the code has no way to notice unless it checks the dates.
-    Callers must skip the point outright on a mismatch rather than compute a
-    value from a miscalibrated base — a skipped point is an honest gap, a
-    wrong point is a lie about what "YoY" or "MoM" means.
+    Looks up the base by its expected calendar date rather than a fixed
+    array offset — see shift_calendar_periods for why: one interior gap
+    would otherwise misalign every later point permanently, not just the
+    one next to the gap.
     """
-    if index < periods:
-        return None
-    base = observations[index - periods]
-    base_date = _parse_obs_date(base.get("date"))
-    item_date = _parse_obs_date(observations[index].get("date"))
-    if base_date is None or item_date is None:
-        return None
-    if not calendar_gap_matches(frequency, periods, base_date, item_date):
-        return None
-    return base
+    expected_date = shift_calendar_periods(item_date, frequency, periods)
+    return by_date.get(expected_date.isoformat())
 
 
 def _apply_transform(series: dict[str, Any]) -> dict[str, Any]:
@@ -141,36 +131,42 @@ def _apply_transform(series: dict[str, Any]) -> dict[str, Any]:
         return series
 
     frequency = str(series.get("frequency", ""))
+    by_date: dict[str, float] = {}
+    for item in observations:
+        parsed = _parse_obs_date(item.get("date"))
+        if parsed is not None:
+            by_date[parsed.isoformat()] = float(item["value"])
+
     transformed: list[dict[str, Any]] = []
     if transform == "yoy_pct":
         lag = _lag_for_frequency(frequency)
-        for index, item in enumerate(observations):
-            base_item = _aligned_base(observations, index, lag, frequency)
-            if base_item is None:
+        for item in observations:
+            item_date = _parse_obs_date(item.get("date"))
+            if item_date is None:
                 continue
-            base = float(base_item["value"])
+            base = _lookup_base(by_date, frequency, lag, item_date)
+            if base is None or base == 0:
+                continue
             value = float(item["value"])
-            if base == 0:
-                continue
             transformed.append({"date": item["date"], "value": ((value / base) - 1.0) * 100.0})
     elif transform == "diff":
-        for index, item in enumerate(observations):
-            base_item = _aligned_base(observations, index, 1, frequency)
-            if base_item is None:
+        for item in observations:
+            item_date = _parse_obs_date(item.get("date"))
+            if item_date is None:
                 continue
-            transformed.append({
-                "date": item["date"],
-                "value": float(item["value"]) - float(base_item["value"]),
-            })
+            base = _lookup_base(by_date, frequency, 1, item_date)
+            if base is None:
+                continue
+            transformed.append({"date": item["date"], "value": float(item["value"]) - base})
     elif transform == "pct_change":
-        for index, item in enumerate(observations):
-            base_item = _aligned_base(observations, index, 1, frequency)
-            if base_item is None:
+        for item in observations:
+            item_date = _parse_obs_date(item.get("date"))
+            if item_date is None:
                 continue
-            base = float(base_item["value"])
+            base = _lookup_base(by_date, frequency, 1, item_date)
+            if base is None or base == 0:
+                continue
             value = float(item["value"])
-            if base == 0:
-                continue
             transformed.append({"date": item["date"], "value": ((value / base) - 1.0) * 100.0})
     else:
         return {
