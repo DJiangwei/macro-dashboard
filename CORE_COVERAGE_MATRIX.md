@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-08-29T20:39:16.864459+00:00
+Generated: 2026-08-30T13:34:25.251362+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -19,7 +19,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 11 | `labour_household` | `participation_rate` Labour Force Participation | W | W | W | W | - | W | - | L | W |
 | 12 | `labour_household` | `vacancies` Labour Demand / Vacancies | L | L | L | L | - | - | - | V | L |
 | 13 | `labour_household` | `wage_growth` Wage Growth | V | V | V | V | - | L | - | V | W |
-| 14 | `labour_household` | `real_income_growth` Real Household Income Growth | W | W | W | W | - | - | - | V | W |
+| 14 | `labour_household` | `real_income_growth` Real Household Income Growth | V | V | V | V | - | - | - | V | W |
 | 15 | `prices_costs` | `headline_inflation` Headline Inflation | V | V | V | V | W | W | V | V | W |
 | 16 | `prices_costs` | `core_inflation` Core Inflation | V | V | V | V | - | - | - | V | W |
 | 17 | `prices_costs` | `services_inflation` Services Inflation | V | V | V | V | - | - | - | V | W |
@@ -33,7 +33,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 25 | `housing_investment` | `mortgage_rate` Mortgage Rate | W | W | W | W | - | - | - | V | W |
 | 26 | `housing_investment` | `property_inventory` Property Inventory / Supply | - | - | - | - | - | - | - | - | W |
 | 27 | `external_fx` | `current_account_gdp` Current Account, % GDP | W | W | W | W | W | L | L | V | W |
-| 28 | `external_fx` | `trade_balance` Trade Balance | W | W | W | W | W | W | W | W | W |
+| 28 | `external_fx` | `trade_balance` Trade Balance | W | W | W | W | W | W | W | L | W |
 | 29 | `external_fx` | `exports_growth` Exports Growth | - | - | - | - | W | W | W | V | W |
 | 30 | `external_fx` | `imports_growth` Imports Growth | - | - | - | - | W | W | W | V | W |
 | 31 | `external_fx` | `fx_spot` Spot Exchange Rate | V | V | V | V | W | W | V | V | W |
@@ -44,7 +44,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 36 | `fiscal_sovereign` | `government_interest_cost` Government Interest Cost | W | W | W | W | - | - | - | W | W |
 | 37 | `fiscal_sovereign` | `sovereign_yield_10y` 10Y Sovereign Yield | V | V | V | V | - | W | V | V | W |
 | 38 | `monetary_financial` | `policy_rate` Policy Rate | V | V | V | V | W | W | V | V | W |
-| 39 | `monetary_financial` | `real_policy_rate` Real Policy Rate | L | L | W | W | - | - | - | - | - |
+| 39 | `monetary_financial` | `real_policy_rate` Real Policy Rate | L | L | L | L | - | - | - | - | - |
 | 40 | `monetary_financial` | `broad_money_growth` Broad Money Growth | W | W | W | W | W | L | L | W | W |
 | 41 | `monetary_financial` | `private_credit_growth` Private Credit Growth | W | W | W | W | W | L | L | W | W |
 | 42 | `monetary_financial` | `bank_lending_rate` Bank Lending Rate | W | W | L | W | - | - | V | - | - |
@@ -59,14 +59,14 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 
 | Country | Covered | Verified | Watch | Low | Substitute | Missing |
 |---|---:|---:|---:|---:|---:|---:|
-| HU | 41/48 | 20 | 17 | 4 | 0 | 7 |
-| PL | 41/48 | 20 | 17 | 4 | 0 | 7 |
-| CZ | 41/48 | 20 | 17 | 4 | 0 | 7 |
-| RO | 41/48 | 20 | 18 | 3 | 0 | 7 |
+| HU | 41/48 | 21 | 16 | 4 | 0 | 7 |
+| PL | 41/48 | 21 | 16 | 4 | 0 | 7 |
+| CZ | 41/48 | 21 | 15 | 5 | 0 | 7 |
+| RO | 41/48 | 21 | 16 | 4 | 0 | 7 |
 | CN | 25/48 | 0 | 25 | 0 | 0 | 23 |
 | JP | 29/48 | 0 | 20 | 9 | 0 | 19 |
 | ZA | 28/48 | 6 | 14 | 7 | 1 | 20 |
-| UK | 37/48 | 26 | 7 | 4 | 0 | 11 |
+| UK | 37/48 | 26 | 6 | 5 | 0 | 11 |
 | US | 40/48 | 0 | 39 | 1 | 0 | 8 |
 
 ## Priority Gaps
@@ -76,8 +76,8 @@ Priority is explicit and reproducible: pillar macro-value weight x10, plus 5 poi
 | Rank | Concept | Pillar | Score | Missing | Weak |
 |---:|---|---|---:|---|---|
 | 1 | `financial_conditions` Financial Conditions | `monetary_financial` | 90 | HU, PL, CZ, RO, CN, JP, ZA, UK | - |
-| 2 | `consumption_growth` Household Consumption Growth | `growth_demand` | 80 | HU, PL, CZ, RO, JP, ZA | - |
-| 3 | `real_policy_rate` Real Policy Rate | `monetary_financial` | 79 | CN, JP, ZA, UK, US | HU, PL |
+| 2 | `real_policy_rate` Real Policy Rate | `monetary_financial` | 83 | CN, JP, ZA, UK, US | HU, PL, CZ, RO |
+| 3 | `consumption_growth` Household Consumption Growth | `growth_demand` | 80 | HU, PL, CZ, RO, JP, ZA | - |
 | 4 | `yield_curve_slope` Yield Curve Slope | `monetary_financial` | 78 | CN, JP, ZA, UK | HU, PL, CZ, RO |
 | 5 | `bank_lending_rate` Bank Lending Rate | `monetary_financial` | 72 | CN, JP, UK, US | CZ |
 | 6 | `nominal_gdp_growth` Nominal GDP Growth | `growth_demand` | 70 | HU, PL, CZ, RO | - |

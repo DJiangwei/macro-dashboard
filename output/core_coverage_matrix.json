@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-08-29T20:39:16.864459+00:00",
+  "generated": "2026-08-30T13:34:25.251362+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -23,30 +23,30 @@
   },
   "country_summary": {
     "HU": {
-      "verified": 20,
-      "watch": 17,
+      "verified": 21,
+      "watch": 16,
       "low_confidence": 4,
       "substitute": 0,
       "missing": 7
     },
     "PL": {
-      "verified": 20,
-      "watch": 17,
+      "verified": 21,
+      "watch": 16,
       "low_confidence": 4,
       "substitute": 0,
       "missing": 7
     },
     "CZ": {
-      "verified": 20,
-      "watch": 17,
-      "low_confidence": 4,
+      "verified": 21,
+      "watch": 15,
+      "low_confidence": 5,
       "substitute": 0,
       "missing": 7
     },
     "RO": {
-      "verified": 20,
-      "watch": 18,
-      "low_confidence": 3,
+      "verified": 21,
+      "watch": 16,
+      "low_confidence": 4,
       "substitute": 0,
       "missing": 7
     },
@@ -73,8 +73,8 @@
     },
     "UK": {
       "verified": 26,
-      "watch": 7,
-      "low_confidence": 4,
+      "watch": 6,
+      "low_confidence": 5,
       "substitute": 0,
       "missing": 11
     },
@@ -459,7 +459,7 @@
           "indicator_ids": [
             "gross_fixed_capital"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "PL": {
@@ -468,7 +468,7 @@
           "indicator_ids": [
             "gross_fixed_capital"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "CZ": {
@@ -477,7 +477,7 @@
           "indicator_ids": [
             "gross_fixed_capital"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "RO": {
@@ -486,7 +486,7 @@
           "indicator_ids": [
             "gross_fixed_capital"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "CN": {
@@ -658,7 +658,7 @@
           "indicator_ids": [
             "retail_sales_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -1300,8 +1300,8 @@
       "priority_score": 55,
       "countries": {
         "HU": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "real_wage_yoy"
           ],
@@ -1309,8 +1309,8 @@
           "refresh_fallback": false
         },
         "PL": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "real_wage_yoy"
           ],
@@ -1318,8 +1318,8 @@
           "refresh_fallback": false
         },
         "CZ": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "real_wage_yoy"
           ],
@@ -1327,8 +1327,8 @@
           "refresh_fallback": false
         },
         "RO": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "real_wage_yoy"
           ],
@@ -2003,7 +2003,7 @@
             "michigan_inflation_expectation",
             "ten_year_breakeven"
           ],
-          "latest_date": "2026-08-27",
+          "latest_date": "2026-08-28",
           "refresh_fallback": false
         }
       }
@@ -2464,7 +2464,7 @@
           "indicator_ids": [
             "current_account_pct_gdp"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "PL": {
@@ -2473,7 +2473,7 @@
           "indicator_ids": [
             "current_account_pct_gdp"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "CZ": {
@@ -2482,7 +2482,7 @@
           "indicator_ids": [
             "current_account_pct_gdp"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "RO": {
@@ -2491,7 +2491,7 @@
           "indicator_ids": [
             "current_account_pct_gdp"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "CN": {
@@ -2550,8 +2550,8 @@
       "unit": "currency",
       "priority_weight": 4,
       "missing_countries": 0,
-      "weak_countries": 0,
-      "priority_score": 40,
+      "weak_countries": 1,
+      "priority_score": 42,
       "countries": {
         "HU": {
           "state": "watch",
@@ -2559,7 +2559,7 @@
           "indicator_ids": [
             "trade_balance"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "PL": {
@@ -2568,7 +2568,7 @@
           "indicator_ids": [
             "trade_balance"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "CZ": {
@@ -2577,7 +2577,7 @@
           "indicator_ids": [
             "trade_balance"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "RO": {
@@ -2586,7 +2586,7 @@
           "indicator_ids": [
             "trade_balance"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "CN": {
@@ -2617,8 +2617,8 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "total_trade_balance"
           ],
@@ -3456,7 +3456,7 @@
           "indicator_ids": [
             "treasury_10y_yield"
           ],
-          "latest_date": "2026-08-26",
+          "latest_date": "2026-08-27",
           "refresh_fallback": false
         }
       }
@@ -3551,7 +3551,7 @@
           "indicator_ids": [
             "daily_fed_funds"
           ],
-          "latest_date": "2026-08-26",
+          "latest_date": "2026-08-27",
           "refresh_fallback": false
         }
       }
@@ -3565,8 +3565,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 5,
-      "weak_countries": 2,
-      "priority_score": 79,
+      "weak_countries": 4,
+      "priority_score": 83,
       "countries": {
         "HU": {
           "state": "low_confidence",
@@ -3587,8 +3587,8 @@
           "refresh_fallback": false
         },
         "CZ": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "real_policy_rate"
           ],
@@ -3596,8 +3596,8 @@
           "refresh_fallback": false
         },
         "RO": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "real_policy_rate"
           ],
@@ -3686,7 +3686,7 @@
           "indicator_ids": [
             "m3_yoy"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "CN": {
@@ -3781,7 +3781,7 @@
           "indicator_ids": [
             "private_credit_yoy"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "CN": {
@@ -3826,7 +3826,7 @@
           "indicator_ids": [
             "bank_credit_growth"
           ],
-          "latest_date": "2026-08-12",
+          "latest_date": "2026-08-19",
           "refresh_fallback": false
         }
       }
@@ -3954,7 +3954,7 @@
           "indicator_ids": [
             "equity_yoy"
           ],
-          "latest_date": "2026-08-27",
+          "latest_date": "2026-08-28",
           "refresh_fallback": false
         },
         "RO": {
@@ -3963,7 +3963,7 @@
           "indicator_ids": [
             "equity_yoy"
           ],
-          "latest_date": "2026-05-25",
+          "latest_date": "2026-08-28",
           "refresh_fallback": false
         },
         "CN": {
@@ -4091,7 +4091,7 @@
           "indicator_ids": [
             "yield_curve_10y2y"
           ],
-          "latest_date": "2026-08-27",
+          "latest_date": "2026-08-28",
           "refresh_fallback": false
         }
       }
@@ -4220,7 +4220,7 @@
           "indicator_ids": [
             "credit_to_gdp_gap"
           ],
-          "latest_date": "2024-12-31",
+          "latest_date": "2025-12-31",
           "refresh_fallback": false
         },
         "CN": {
@@ -4458,6 +4458,25 @@
       "weak_countries": []
     },
     {
+      "concept_id": "real_policy_rate",
+      "pillar": "monetary_financial",
+      "label_en": "Real Policy Rate",
+      "priority_score": 83,
+      "missing_countries": [
+        "CN",
+        "JP",
+        "ZA",
+        "UK",
+        "US"
+      ],
+      "weak_countries": [
+        "HU",
+        "PL",
+        "CZ",
+        "RO"
+      ]
+    },
+    {
       "concept_id": "consumption_growth",
       "pillar": "growth_demand",
       "label_en": "Household Consumption Growth",
@@ -4471,23 +4490,6 @@
         "ZA"
       ],
       "weak_countries": []
-    },
-    {
-      "concept_id": "real_policy_rate",
-      "pillar": "monetary_financial",
-      "label_en": "Real Policy Rate",
-      "priority_score": 79,
-      "missing_countries": [
-        "CN",
-        "JP",
-        "ZA",
-        "UK",
-        "US"
-      ],
-      "weak_countries": [
-        "HU",
-        "PL"
-      ]
     },
     {
       "concept_id": "yield_curve_slope",
@@ -4878,6 +4880,16 @@
       "concept_id": "unemployment_rate",
       "pillar": "labour_household",
       "label_en": "Unemployment Rate",
+      "priority_score": 42,
+      "missing_countries": [],
+      "weak_countries": [
+        "UK"
+      ]
+    },
+    {
+      "concept_id": "trade_balance",
+      "pillar": "external_fx",
+      "label_en": "Trade Balance",
       "priority_score": 42,
       "missing_countries": [],
       "weak_countries": [
