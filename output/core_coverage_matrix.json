@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-08-28T15:39:22.924848+00:00",
+  "generated": "2026-10-04T20:10:27.746648+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -23,57 +23,57 @@
   },
   "country_summary": {
     "HU": {
-      "verified": 20,
-      "watch": 17,
+      "verified": 22,
+      "watch": 15,
       "low_confidence": 4,
       "substitute": 0,
       "missing": 7
     },
     "PL": {
-      "verified": 20,
-      "watch": 17,
+      "verified": 21,
+      "watch": 16,
       "low_confidence": 4,
       "substitute": 0,
       "missing": 7
     },
     "CZ": {
-      "verified": 20,
-      "watch": 17,
+      "verified": 22,
+      "watch": 15,
       "low_confidence": 4,
       "substitute": 0,
       "missing": 7
     },
     "RO": {
-      "verified": 20,
-      "watch": 18,
-      "low_confidence": 3,
+      "verified": 21,
+      "watch": 16,
+      "low_confidence": 4,
       "substitute": 0,
       "missing": 7
     },
     "CN": {
       "verified": 0,
-      "watch": 25,
-      "low_confidence": 0,
+      "watch": 24,
+      "low_confidence": 1,
       "substitute": 0,
       "missing": 23
     },
     "JP": {
       "verified": 0,
-      "watch": 20,
-      "low_confidence": 9,
+      "watch": 18,
+      "low_confidence": 11,
       "substitute": 0,
       "missing": 19
     },
     "ZA": {
       "verified": 0,
-      "watch": 20,
-      "low_confidence": 7,
+      "watch": 12,
+      "low_confidence": 15,
       "substitute": 1,
       "missing": 20
     },
     "UK": {
-      "verified": 17,
-      "watch": 16,
+      "verified": 20,
+      "watch": 13,
       "low_confidence": 4,
       "substitute": 0,
       "missing": 11
@@ -189,8 +189,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 2,
-      "weak_countries": 0,
-      "priority_score": 60,
+      "weak_countries": 1,
+      "priority_score": 62,
       "countries": {
         "HU": {
           "state": "verified",
@@ -247,8 +247,8 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "real_gdp_yoy"
           ],
@@ -280,8 +280,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 4,
-      "weak_countries": 0,
-      "priority_score": 70,
+      "weak_countries": 1,
+      "priority_score": 72,
       "countries": {
         "HU": {
           "state": "missing",
@@ -326,12 +326,12 @@
           "indicator_ids": [
             "nominal_gdp_growth"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "nominal_gdp_growth"
           ],
@@ -436,7 +436,7 @@
           "indicator_ids": [
             "real_pce_growth"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -450,8 +450,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 0,
-      "weak_countries": 0,
-      "priority_score": 50,
+      "weak_countries": 1,
+      "priority_score": 52,
       "countries": {
         "HU": {
           "state": "watch",
@@ -495,7 +495,7 @@
           "indicator_ids": [
             "fixed_asset_investment_yoy_akshare"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -504,12 +504,12 @@
           "indicator_ids": [
             "gfcf_growth"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "gfcf_growth"
           ],
@@ -554,7 +554,7 @@
           "indicator_ids": [
             "industrial_production_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -563,7 +563,7 @@
           "indicator_ids": [
             "industrial_production_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -572,7 +572,7 @@
           "indicator_ids": [
             "industrial_production_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -581,7 +581,7 @@
           "indicator_ids": [
             "industrial_production_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -590,7 +590,7 @@
           "indicator_ids": [
             "industrial_value_added_yoy_akshare"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -599,7 +599,7 @@
           "indicator_ids": [
             "industrial_production_growth"
           ],
-          "latest_date": "2026-05-01",
+          "latest_date": "2026-06-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -608,7 +608,7 @@
           "indicator_ids": [
             "manufacturing_production_growth"
           ],
-          "latest_date": "2026-05-01",
+          "latest_date": "2026-06-01",
           "refresh_fallback": false
         },
         "UK": {
@@ -617,7 +617,7 @@
           "indicator_ids": [
             "industrial_production_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "US": {
@@ -626,7 +626,7 @@
           "indicator_ids": [
             "industrial_production_growth"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -649,7 +649,7 @@
           "indicator_ids": [
             "retail_sales_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -658,7 +658,7 @@
           "indicator_ids": [
             "retail_sales_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -667,7 +667,7 @@
           "indicator_ids": [
             "retail_sales_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -676,7 +676,7 @@
           "indicator_ids": [
             "retail_sales_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -685,7 +685,7 @@
           "indicator_ids": [
             "retail_sales_yoy_akshare"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -694,7 +694,7 @@
           "indicator_ids": [
             "retail_sales_growth"
           ],
-          "latest_date": "2026-05-01",
+          "latest_date": "2026-06-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -703,7 +703,7 @@
           "indicator_ids": [
             "retail_sales_growth"
           ],
-          "latest_date": "2026-05-01",
+          "latest_date": "2026-06-01",
           "refresh_fallback": false
         },
         "UK": {
@@ -712,7 +712,7 @@
           "indicator_ids": [
             "retail_sales_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "US": {
@@ -721,7 +721,7 @@
           "indicator_ids": [
             "retail_sales_growth"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -745,7 +745,7 @@
             "economic_sentiment",
             "industry_confidence"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -755,7 +755,7 @@
             "economic_sentiment",
             "industry_confidence"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -765,7 +765,7 @@
             "economic_sentiment",
             "industry_confidence"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -775,7 +775,7 @@
             "economic_sentiment",
             "industry_confidence"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -785,7 +785,7 @@
             "enterprise_boom_index_akshare",
             "manufacturing_pmi_akshare"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -795,7 +795,7 @@
             "business_confidence",
             "composite_leading_indicator"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -804,7 +804,7 @@
           "indicator_ids": [
             "composite_leading_indicator"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "UK": {
@@ -813,7 +813,7 @@
           "indicator_ids": [
             "composite_leading_indicator"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "US": {
@@ -823,7 +823,7 @@
             "empire_state_manufacturing",
             "philly_fed_outlook"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         }
       }
@@ -837,8 +837,8 @@
       "unit": "percent",
       "priority_weight": 4,
       "missing_countries": 0,
-      "weak_countries": 1,
-      "priority_score": 42,
+      "weak_countries": 2,
+      "priority_score": 44,
       "countries": {
         "HU": {
           "state": "verified",
@@ -846,7 +846,7 @@
           "indicator_ids": [
             "unemployment_rate"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -855,7 +855,7 @@
           "indicator_ids": [
             "unemployment_rate"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -864,7 +864,7 @@
           "indicator_ids": [
             "unemployment_rate"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -873,7 +873,7 @@
           "indicator_ids": [
             "unemployment_rate"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -891,12 +891,12 @@
           "indicator_ids": [
             "unemployment_rate"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "unemployment_rate"
           ],
@@ -909,7 +909,7 @@
           "indicator_ids": [
             "unemployment_rate"
           ],
-          "latest_date": "2026-05-01",
+          "latest_date": "2026-06-01",
           "refresh_fallback": false
         },
         "US": {
@@ -918,7 +918,7 @@
           "indicator_ids": [
             "unemployment_rate"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         }
       }
@@ -932,8 +932,8 @@
       "unit": "percent",
       "priority_weight": 4,
       "missing_countries": 1,
-      "weak_countries": 0,
-      "priority_score": 45,
+      "weak_countries": 1,
+      "priority_score": 47,
       "countries": {
         "HU": {
           "state": "verified",
@@ -941,7 +941,7 @@
           "indicator_ids": [
             "employment_growth"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -968,7 +968,7 @@
           "indicator_ids": [
             "employment_growth"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -984,12 +984,12 @@
           "indicator_ids": [
             "employment_growth"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "manufacturing_employment_growth"
           ],
@@ -1002,7 +1002,7 @@
           "indicator_ids": [
             "paye_payrolled_employees_mom_change"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "US": {
@@ -1011,7 +1011,7 @@
           "indicator_ids": [
             "nonfarm_payrolls_change"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         }
       }
@@ -1077,7 +1077,7 @@
           "indicator_ids": [
             "participation_rate"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -1093,7 +1093,7 @@
           "indicator_ids": [
             "employment_rate_15_64"
           ],
-          "latest_date": "2026-05-01",
+          "latest_date": "2026-06-01",
           "refresh_fallback": false
         },
         "US": {
@@ -1102,7 +1102,7 @@
           "indicator_ids": [
             "labor_force_participation"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         }
       }
@@ -1116,8 +1116,8 @@
       "unit": "mixed",
       "priority_weight": 4,
       "missing_countries": 3,
-      "weak_countries": 5,
-      "priority_score": 65,
+      "weak_countries": 4,
+      "priority_score": 63,
       "countries": {
         "HU": {
           "state": "low_confidence",
@@ -1182,16 +1182,16 @@
           "indicator_ids": [
             "vacancies_total"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "US": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "jolts_openings"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -1214,7 +1214,7 @@
           "indicator_ids": [
             "avg_wage_yoy"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -1223,7 +1223,7 @@
           "indicator_ids": [
             "avg_wage_yoy"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -1232,7 +1232,7 @@
           "indicator_ids": [
             "avg_wage_yoy"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -1241,7 +1241,7 @@
           "indicator_ids": [
             "avg_wage_yoy"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -1257,7 +1257,7 @@
           "indicator_ids": [
             "manufacturing_earnings_growth"
           ],
-          "latest_date": "2026-04-01",
+          "latest_date": "2026-06-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -1273,7 +1273,7 @@
           "indicator_ids": [
             "awe_regular_pay_growth"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "US": {
@@ -1282,7 +1282,7 @@
           "indicator_ids": [
             "hourly_earnings_growth"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         }
       }
@@ -1305,7 +1305,7 @@
           "indicator_ids": [
             "real_wage_yoy"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -1314,7 +1314,7 @@
           "indicator_ids": [
             "real_wage_yoy"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -1323,7 +1323,7 @@
           "indicator_ids": [
             "real_wage_yoy"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -1332,7 +1332,7 @@
           "indicator_ids": [
             "real_wage_yoy"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -1362,7 +1362,7 @@
           "indicator_ids": [
             "real_household_disposable_income_per_head"
           ],
-          "latest_date": "2026-03-31",
+          "latest_date": "2026-06-30",
           "refresh_fallback": false
         },
         "US": {
@@ -1371,7 +1371,7 @@
           "indicator_ids": [
             "real_disposable_income_growth"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -1394,7 +1394,7 @@
           "indicator_ids": [
             "cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -1403,7 +1403,7 @@
           "indicator_ids": [
             "cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -1412,7 +1412,7 @@
           "indicator_ids": [
             "cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -1421,7 +1421,7 @@
           "indicator_ids": [
             "cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -1430,7 +1430,7 @@
           "indicator_ids": [
             "cpi_yoy_akshare"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -1439,7 +1439,7 @@
           "indicator_ids": [
             "cpi_inflation"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -1448,7 +1448,7 @@
           "indicator_ids": [
             "cpi_inflation"
           ],
-          "latest_date": "2026-07-31",
+          "latest_date": "2026-08-31",
           "refresh_fallback": false
         },
         "UK": {
@@ -1457,7 +1457,7 @@
           "indicator_ids": [
             "cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "US": {
@@ -1466,7 +1466,7 @@
           "indicator_ids": [
             "cpi_inflation"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -1489,7 +1489,7 @@
           "indicator_ids": [
             "core_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -1498,7 +1498,7 @@
           "indicator_ids": [
             "core_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -1507,7 +1507,7 @@
           "indicator_ids": [
             "core_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -1516,7 +1516,7 @@
           "indicator_ids": [
             "core_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -1546,7 +1546,7 @@
           "indicator_ids": [
             "core_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "US": {
@@ -1555,7 +1555,7 @@
           "indicator_ids": [
             "core_cpi_inflation"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -1578,7 +1578,7 @@
           "indicator_ids": [
             "services_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -1587,7 +1587,7 @@
           "indicator_ids": [
             "services_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -1596,7 +1596,7 @@
           "indicator_ids": [
             "services_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -1605,7 +1605,7 @@
           "indicator_ids": [
             "services_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -1635,7 +1635,7 @@
           "indicator_ids": [
             "cpi_services_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "US": {
@@ -1644,7 +1644,7 @@
           "indicator_ids": [
             "services_ex_energy_cpi_inflation"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -1667,7 +1667,7 @@
           "indicator_ids": [
             "goods_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -1676,7 +1676,7 @@
           "indicator_ids": [
             "goods_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -1685,7 +1685,7 @@
           "indicator_ids": [
             "goods_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -1694,7 +1694,7 @@
           "indicator_ids": [
             "goods_cpi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -1724,7 +1724,7 @@
           "indicator_ids": [
             "cpi_goods_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "US": {
@@ -1733,7 +1733,7 @@
           "indicator_ids": [
             "core_goods_cpi_inflation"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -1756,7 +1756,7 @@
           "indicator_ids": [
             "ppi_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -1765,7 +1765,7 @@
           "indicator_ids": [
             "ppi_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -1774,7 +1774,7 @@
           "indicator_ids": [
             "ppi_yoy"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -1783,7 +1783,7 @@
           "indicator_ids": [
             "ppi_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -1792,7 +1792,7 @@
           "indicator_ids": [
             "ppi_yoy_akshare"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -1808,7 +1808,7 @@
           "indicator_ids": [
             "ppi_inflation"
           ],
-          "latest_date": "2026-07-31",
+          "latest_date": "2026-08-31",
           "refresh_fallback": false
         },
         "UK": {
@@ -1817,7 +1817,7 @@
           "indicator_ids": [
             "producer_prices"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "US": {
@@ -1826,7 +1826,7 @@
           "indicator_ids": [
             "final_demand_ppi_inflation"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -1849,7 +1849,7 @@
           "indicator_ids": [
             "unit_labour_cost"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -1858,7 +1858,7 @@
           "indicator_ids": [
             "unit_labour_cost"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -1876,7 +1876,7 @@
           "indicator_ids": [
             "unit_labour_cost"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -1906,7 +1906,7 @@
           "indicator_ids": [
             "awe_total_pay_growth"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "US": {
@@ -1938,7 +1938,7 @@
           "indicator_ids": [
             "inflation_expectations"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -1947,7 +1947,7 @@
           "indicator_ids": [
             "inflation_expectations"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -1956,7 +1956,7 @@
           "indicator_ids": [
             "inflation_expectations"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -1965,7 +1965,7 @@
           "indicator_ids": [
             "inflation_expectations"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -2003,7 +2003,7 @@
             "michigan_inflation_expectation",
             "ten_year_breakeven"
           ],
-          "latest_date": "2026-08-27",
+          "latest_date": "2026-10-02",
           "refresh_fallback": false
         }
       }
@@ -2017,8 +2017,8 @@
       "unit": "percent",
       "priority_weight": 3,
       "missing_countries": 0,
-      "weak_countries": 1,
-      "priority_score": 32,
+      "weak_countries": 3,
+      "priority_score": 36,
       "countries": {
         "HU": {
           "state": "verified",
@@ -2026,7 +2026,7 @@
           "indicator_ids": [
             "house_price_index"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -2035,7 +2035,7 @@
           "indicator_ids": [
             "house_price_index"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -2044,7 +2044,7 @@
           "indicator_ids": [
             "house_price_index"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -2053,12 +2053,12 @@
           "indicator_ids": [
             "house_price_index"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "CN": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "nominal_residential_property_price_bis"
           ],
@@ -2075,8 +2075,8 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "house_price_growth"
           ],
@@ -2089,7 +2089,7 @@
           "indicator_ids": [
             "uk_hpi_annual_change"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "US": {
@@ -2149,7 +2149,7 @@
           "indicator_ids": [
             "commercial_housing_sales_value_yoy_eastmoney"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -2172,7 +2172,7 @@
           "indicator_ids": [
             "residential_property_transactions_sa"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "US": {
@@ -2181,7 +2181,7 @@
           "indicator_ids": [
             "housing_starts"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -2204,7 +2204,7 @@
           "indicator_ids": [
             "construction_production"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -2213,7 +2213,7 @@
           "indicator_ids": [
             "construction_production"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -2222,7 +2222,7 @@
           "indicator_ids": [
             "construction_production"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -2231,7 +2231,7 @@
           "indicator_ids": [
             "construction_production"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -2240,7 +2240,7 @@
           "indicator_ids": [
             "real_estate_development_investment_ytd_yoy_eastmoney"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -2263,7 +2263,7 @@
           "indicator_ids": [
             "construction_output_yoy"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "US": {
@@ -2272,7 +2272,7 @@
           "indicator_ids": [
             "construction_spending_growth"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -2290,12 +2290,12 @@
       "priority_score": 45,
       "countries": {
         "HU": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "mortgage_rate_new"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -2304,25 +2304,25 @@
           "indicator_ids": [
             "mortgage_rate_new"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CZ": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "mortgage_rate_new"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "RO": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "mortgage_rate_new"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -2352,7 +2352,7 @@
           "indicator_ids": [
             "quoted_mortgage_rate"
           ],
-          "latest_date": "2026-07-31",
+          "latest_date": "2026-08-31",
           "refresh_fallback": false
         },
         "US": {
@@ -2361,7 +2361,7 @@
           "indicator_ids": [
             "mortgage_30y_rate"
           ],
-          "latest_date": "2026-08-27",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         }
       }
@@ -2441,7 +2441,7 @@
             "active_listing_count",
             "new_home_months_supply"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         }
       }
@@ -2527,7 +2527,7 @@
           "indicator_ids": [
             "current_account_gdp"
           ],
-          "latest_date": "2026-03-31",
+          "latest_date": "2026-06-30",
           "refresh_fallback": false
         },
         "US": {
@@ -2536,7 +2536,7 @@
           "indicator_ids": [
             "current_account_balance"
           ],
-          "latest_date": "2026-01-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         }
       }
@@ -2550,8 +2550,8 @@
       "unit": "currency",
       "priority_weight": 4,
       "missing_countries": 0,
-      "weak_countries": 0,
-      "priority_score": 40,
+      "weak_countries": 2,
+      "priority_score": 44,
       "countries": {
         "HU": {
           "state": "watch",
@@ -2595,12 +2595,12 @@
           "indicator_ids": [
             "customs_trade_balance_akshare"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "goods_trade_balance"
           ],
@@ -2608,8 +2608,8 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "goods_trade_balance"
           ],
@@ -2617,12 +2617,12 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "total_trade_balance"
           ],
-          "latest_date": "2026-03-31",
+          "latest_date": "2026-06-30",
           "refresh_fallback": false
         },
         "US": {
@@ -2631,7 +2631,7 @@
           "indicator_ids": [
             "goods_trade_balance"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         }
       }
@@ -2645,8 +2645,8 @@
       "unit": "percent",
       "priority_weight": 4,
       "missing_countries": 4,
-      "weak_countries": 0,
-      "priority_score": 60,
+      "weak_countries": 2,
+      "priority_score": 64,
       "countries": {
         "HU": {
           "state": "missing",
@@ -2682,12 +2682,12 @@
           "indicator_ids": [
             "customs_exports_yoy_akshare"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "goods_exports_growth"
           ],
@@ -2695,8 +2695,8 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "goods_exports_growth"
           ],
@@ -2718,7 +2718,7 @@
           "indicator_ids": [
             "goods_exports_growth"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         }
       }
@@ -2732,8 +2732,8 @@
       "unit": "percent",
       "priority_weight": 4,
       "missing_countries": 4,
-      "weak_countries": 0,
-      "priority_score": 60,
+      "weak_countries": 2,
+      "priority_score": 64,
       "countries": {
         "HU": {
           "state": "missing",
@@ -2769,12 +2769,12 @@
           "indicator_ids": [
             "customs_imports_yoy_akshare"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "goods_imports_growth"
           ],
@@ -2782,8 +2782,8 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "goods_imports_growth"
           ],
@@ -2805,7 +2805,7 @@
           "indicator_ids": [
             "goods_imports_growth"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         }
       }
@@ -2828,7 +2828,7 @@
           "indicator_ids": [
             "fx_vs_eur"
           ],
-          "latest_date": "2026-08-28",
+          "latest_date": "2026-10-02",
           "refresh_fallback": false
         },
         "PL": {
@@ -2837,7 +2837,7 @@
           "indicator_ids": [
             "fx_vs_eur"
           ],
-          "latest_date": "2026-08-28",
+          "latest_date": "2026-10-02",
           "refresh_fallback": false
         },
         "CZ": {
@@ -2846,16 +2846,16 @@
           "indicator_ids": [
             "fx_vs_eur"
           ],
-          "latest_date": "2026-08-28",
+          "latest_date": "2026-10-02",
           "refresh_fallback": false
         },
         "RO": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "fx_vs_eur"
           ],
-          "latest_date": "2026-08-28",
+          "latest_date": "2026-10-02",
           "refresh_fallback": false
         },
         "CN": {
@@ -2864,7 +2864,7 @@
           "indicator_ids": [
             "usd_cny_spot"
           ],
-          "latest_date": "2026-08-21",
+          "latest_date": "2026-09-25",
           "refresh_fallback": false
         },
         "JP": {
@@ -2873,7 +2873,7 @@
           "indicator_ids": [
             "usd_jpy"
           ],
-          "latest_date": "2026-08-21",
+          "latest_date": "2026-09-25",
           "refresh_fallback": false
         },
         "ZA": {
@@ -2882,7 +2882,7 @@
           "indicator_ids": [
             "zar_usd"
           ],
-          "latest_date": "2026-08-28",
+          "latest_date": "2026-10-02",
           "refresh_fallback": false
         },
         "UK": {
@@ -2891,7 +2891,7 @@
           "indicator_ids": [
             "gbp_usd"
           ],
-          "latest_date": "2026-08-27",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "US": {
@@ -2900,7 +2900,7 @@
           "indicator_ids": [
             "nominal_broad_dollar_index"
           ],
-          "latest_date": "2026-08-21",
+          "latest_date": "2026-09-25",
           "refresh_fallback": false
         }
       }
@@ -3193,8 +3193,8 @@
       "unit": "percent_gdp",
       "priority_weight": 3,
       "missing_countries": 0,
-      "weak_countries": 1,
-      "priority_score": 32,
+      "weak_countries": 2,
+      "priority_score": 34,
       "countries": {
         "HU": {
           "state": "watch",
@@ -3269,8 +3269,8 @@
           "refresh_fallback": false
         },
         "US": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "federal_debt_gdp"
           ],
@@ -3386,7 +3386,7 @@
           "indicator_ids": [
             "sov_yield_10y"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -3395,7 +3395,7 @@
           "indicator_ids": [
             "sov_yield_10y"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -3404,7 +3404,7 @@
           "indicator_ids": [
             "sov_yield_10y"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -3413,7 +3413,7 @@
           "indicator_ids": [
             "sov_yield_10y"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -3429,7 +3429,7 @@
           "indicator_ids": [
             "sovereign_yield_10y"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -3438,7 +3438,7 @@
           "indicator_ids": [
             "sovereign_yield_10y"
           ],
-          "latest_date": "2026-08-27",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "UK": {
@@ -3447,7 +3447,7 @@
           "indicator_ids": [
             "long_rate_10y"
           ],
-          "latest_date": "2026-08-26",
+          "latest_date": "2026-09-30",
           "refresh_fallback": false
         },
         "US": {
@@ -3456,7 +3456,7 @@
           "indicator_ids": [
             "treasury_10y_yield"
           ],
-          "latest_date": "2026-08-26",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         }
       }
@@ -3515,7 +3515,7 @@
           "indicator_ids": [
             "lpr_1y_akshare"
           ],
-          "latest_date": "2026-08-20",
+          "latest_date": "2026-09-20",
           "refresh_fallback": false
         },
         "JP": {
@@ -3524,7 +3524,7 @@
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -3533,7 +3533,7 @@
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2026-08-28",
+          "latest_date": "2026-10-02",
           "refresh_fallback": false
         },
         "UK": {
@@ -3542,7 +3542,7 @@
           "indicator_ids": [
             "bank_rate"
           ],
-          "latest_date": "2026-08-27",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "US": {
@@ -3551,7 +3551,7 @@
           "indicator_ids": [
             "daily_fed_funds"
           ],
-          "latest_date": "2026-08-26",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         }
       }
@@ -3565,8 +3565,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 5,
-      "weak_countries": 2,
-      "priority_score": 79,
+      "weak_countries": 4,
+      "priority_score": 83,
       "countries": {
         "HU": {
           "state": "low_confidence",
@@ -3587,8 +3587,8 @@
           "refresh_fallback": false
         },
         "CZ": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "real_policy_rate"
           ],
@@ -3596,8 +3596,8 @@
           "refresh_fallback": false
         },
         "RO": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "real_policy_rate"
           ],
@@ -3650,8 +3650,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 0,
-      "weak_countries": 2,
-      "priority_score": 54,
+      "weak_countries": 0,
+      "priority_score": 50,
       "countries": {
         "HU": {
           "state": "watch",
@@ -3695,34 +3695,34 @@
           "indicator_ids": [
             "m2_yoy_akshare"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
-          "indicator_ids": [
-            "broad_money_growth"
-          ],
-          "latest_date": "2026-05-01",
-          "refresh_fallback": false
-        },
-        "ZA": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
-          "indicator_ids": [
-            "broad_money_growth"
-          ],
-          "latest_date": "2026-05-01",
-          "refresh_fallback": false
-        },
-        "UK": {
           "state": "watch",
           "quality_status": "watch",
           "indicator_ids": [
+            "broad_money_growth"
+          ],
+          "latest_date": "2026-07-01",
+          "refresh_fallback": false
+        },
+        "ZA": {
+          "state": "watch",
+          "quality_status": "watch",
+          "indicator_ids": [
+            "broad_money_growth"
+          ],
+          "latest_date": "2026-07-01",
+          "refresh_fallback": false
+        },
+        "UK": {
+          "state": "verified",
+          "quality_status": "verified",
+          "indicator_ids": [
             "broad_money_m3_yoy"
           ],
-          "latest_date": "2026-06-30",
+          "latest_date": "2026-08-31",
           "refresh_fallback": false
         },
         "US": {
@@ -3731,7 +3731,7 @@
           "indicator_ids": [
             "broad_money_growth"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -3790,7 +3790,7 @@
           "indicator_ids": [
             "new_rmb_loans_akshare"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -3812,12 +3812,12 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "m4_lending_growth"
           ],
-          "latest_date": "2026-06-30",
+          "latest_date": "2026-08-31",
           "refresh_fallback": false
         },
         "US": {
@@ -3826,7 +3826,7 @@
           "indicator_ids": [
             "bank_credit_growth"
           ],
-          "latest_date": "2026-08-12",
+          "latest_date": "2026-09-23",
           "refresh_fallback": false
         }
       }
@@ -3840,43 +3840,43 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 4,
-      "weak_countries": 1,
-      "priority_score": 72,
+      "weak_countries": 0,
+      "priority_score": 70,
       "countries": {
         "HU": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "lending_rate_corp"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "PL": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "lending_rate_corp"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CZ": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "lending_rate_corp"
           ],
-          "latest_date": "2026-04-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "RO": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "lending_rate_corp"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -3899,7 +3899,7 @@
           "indicator_ids": [
             "prime_lending_rate"
           ],
-          "latest_date": "2026-08-28",
+          "latest_date": "2026-10-02",
           "refresh_fallback": false
         },
         "UK": {
@@ -3936,7 +3936,7 @@
           "indicator_ids": [
             "equity_yoy"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -3945,7 +3945,7 @@
           "indicator_ids": [
             "equity_yoy"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -3954,7 +3954,7 @@
           "indicator_ids": [
             "equity_yoy"
           ],
-          "latest_date": "2026-08-27",
+          "latest_date": "2026-10-02",
           "refresh_fallback": false
         },
         "RO": {
@@ -3972,7 +3972,7 @@
           "indicator_ids": [
             "share_price_index"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -3981,7 +3981,7 @@
           "indicator_ids": [
             "equity_index"
           ],
-          "latest_date": "2026-08-28",
+          "latest_date": "2026-10-02",
           "refresh_fallback": false
         },
         "ZA": {
@@ -3997,7 +3997,7 @@
           "indicator_ids": [
             "equity_prices"
           ],
-          "latest_date": "2026-06-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "US": {
@@ -4027,7 +4027,7 @@
           "indicator_ids": [
             "yield_curve_slope"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -4036,7 +4036,7 @@
           "indicator_ids": [
             "yield_curve_slope"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -4045,7 +4045,7 @@
           "indicator_ids": [
             "yield_curve_slope"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -4054,7 +4054,7 @@
           "indicator_ids": [
             "yield_curve_slope"
           ],
-          "latest_date": "2026-07-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -4091,7 +4091,7 @@
           "indicator_ids": [
             "yield_curve_10y2y"
           ],
-          "latest_date": "2026-08-27",
+          "latest_date": "2026-10-02",
           "refresh_fallback": false
         }
       }
@@ -4170,7 +4170,7 @@
           "indicator_ids": [
             "chicago_fed_nfci"
           ],
-          "latest_date": "2026-08-21",
+          "latest_date": "2026-09-25",
           "refresh_fallback": false
         }
       }
@@ -4193,7 +4193,7 @@
           "indicator_ids": [
             "credit_to_gdp_gap"
           ],
-          "latest_date": "2025-12-31",
+          "latest_date": "2026-03-31",
           "refresh_fallback": false
         },
         "PL": {
@@ -4202,7 +4202,7 @@
           "indicator_ids": [
             "credit_to_gdp_gap"
           ],
-          "latest_date": "2025-12-31",
+          "latest_date": "2026-03-31",
           "refresh_fallback": false
         },
         "CZ": {
@@ -4211,7 +4211,7 @@
           "indicator_ids": [
             "credit_to_gdp_gap"
           ],
-          "latest_date": "2025-12-31",
+          "latest_date": "2026-03-31",
           "refresh_fallback": false
         },
         "RO": {
@@ -4458,6 +4458,25 @@
       "weak_countries": []
     },
     {
+      "concept_id": "real_policy_rate",
+      "pillar": "monetary_financial",
+      "label_en": "Real Policy Rate",
+      "priority_score": 83,
+      "missing_countries": [
+        "CN",
+        "JP",
+        "ZA",
+        "UK",
+        "US"
+      ],
+      "weak_countries": [
+        "HU",
+        "PL",
+        "CZ",
+        "RO"
+      ]
+    },
+    {
       "concept_id": "consumption_growth",
       "pillar": "growth_demand",
       "label_en": "Household Consumption Growth",
@@ -4471,23 +4490,6 @@
         "ZA"
       ],
       "weak_countries": []
-    },
-    {
-      "concept_id": "real_policy_rate",
-      "pillar": "monetary_financial",
-      "label_en": "Real Policy Rate",
-      "priority_score": 79,
-      "missing_countries": [
-        "CN",
-        "JP",
-        "ZA",
-        "UK",
-        "US"
-      ],
-      "weak_countries": [
-        "HU",
-        "PL"
-      ]
     },
     {
       "concept_id": "yield_curve_slope",
@@ -4508,32 +4510,19 @@
       ]
     },
     {
-      "concept_id": "bank_lending_rate",
-      "pillar": "monetary_financial",
-      "label_en": "Bank Lending Rate",
-      "priority_score": 72,
-      "missing_countries": [
-        "CN",
-        "JP",
-        "UK",
-        "US"
-      ],
-      "weak_countries": [
-        "CZ"
-      ]
-    },
-    {
       "concept_id": "nominal_gdp_growth",
       "pillar": "growth_demand",
       "label_en": "Nominal GDP Growth",
-      "priority_score": 70,
+      "priority_score": 72,
       "missing_countries": [
         "HU",
         "PL",
         "CZ",
         "RO"
       ],
-      "weak_countries": []
+      "weak_countries": [
+        "ZA"
+      ]
     },
     {
       "concept_id": "inflation_expectations",
@@ -4566,22 +4555,17 @@
       "weak_countries": []
     },
     {
-      "concept_id": "vacancies",
-      "pillar": "labour_household",
-      "label_en": "Labour Demand / Vacancies",
-      "priority_score": 65,
+      "concept_id": "bank_lending_rate",
+      "pillar": "monetary_financial",
+      "label_en": "Bank Lending Rate",
+      "priority_score": 70,
       "missing_countries": [
         "CN",
         "JP",
-        "ZA"
-      ],
-      "weak_countries": [
-        "HU",
-        "PL",
-        "CZ",
-        "RO",
+        "UK",
         "US"
-      ]
+      ],
+      "weak_countries": []
     },
     {
       "concept_id": "core_inflation",
@@ -4632,15 +4616,66 @@
       "weak_countries": []
     },
     {
+      "concept_id": "exports_growth",
+      "pillar": "external_fx",
+      "label_en": "Exports Growth",
+      "priority_score": 64,
+      "missing_countries": [
+        "HU",
+        "PL",
+        "CZ",
+        "RO"
+      ],
+      "weak_countries": [
+        "JP",
+        "ZA"
+      ]
+    },
+    {
+      "concept_id": "imports_growth",
+      "pillar": "external_fx",
+      "label_en": "Imports Growth",
+      "priority_score": 64,
+      "missing_countries": [
+        "HU",
+        "PL",
+        "CZ",
+        "RO"
+      ],
+      "weak_countries": [
+        "JP",
+        "ZA"
+      ]
+    },
+    {
+      "concept_id": "vacancies",
+      "pillar": "labour_household",
+      "label_en": "Labour Demand / Vacancies",
+      "priority_score": 63,
+      "missing_countries": [
+        "CN",
+        "JP",
+        "ZA"
+      ],
+      "weak_countries": [
+        "HU",
+        "PL",
+        "CZ",
+        "RO"
+      ]
+    },
+    {
       "concept_id": "real_gdp_growth_yoy",
       "pillar": "growth_demand",
       "label_en": "Real GDP Growth, YoY",
-      "priority_score": 60,
+      "priority_score": 62,
       "missing_countries": [
         "UK",
         "US"
       ],
-      "weak_countries": []
+      "weak_countries": [
+        "ZA"
+      ]
     },
     {
       "concept_id": "housing_activity",
@@ -4654,32 +4689,6 @@
         "RO",
         "JP",
         "ZA"
-      ],
-      "weak_countries": []
-    },
-    {
-      "concept_id": "exports_growth",
-      "pillar": "external_fx",
-      "label_en": "Exports Growth",
-      "priority_score": 60,
-      "missing_countries": [
-        "HU",
-        "PL",
-        "CZ",
-        "RO"
-      ],
-      "weak_countries": []
-    },
-    {
-      "concept_id": "imports_growth",
-      "pillar": "external_fx",
-      "label_en": "Imports Growth",
-      "priority_score": 60,
-      "missing_countries": [
-        "HU",
-        "PL",
-        "CZ",
-        "RO"
       ],
       "weak_countries": []
     },
@@ -4729,17 +4738,6 @@
       "weak_countries": []
     },
     {
-      "concept_id": "broad_money_growth",
-      "pillar": "monetary_financial",
-      "label_en": "Broad Money Growth",
-      "priority_score": 54,
-      "missing_countries": [],
-      "weak_countries": [
-        "JP",
-        "ZA"
-      ]
-    },
-    {
       "concept_id": "private_credit_growth",
       "pillar": "monetary_financial",
       "label_en": "Private Credit Growth",
@@ -4767,6 +4765,16 @@
         "PL",
         "CZ",
         "RO"
+      ]
+    },
+    {
+      "concept_id": "investment_growth",
+      "pillar": "growth_demand",
+      "label_en": "Investment Growth",
+      "priority_score": 52,
+      "missing_countries": [],
+      "weak_countries": [
+        "ZA"
       ]
     },
     {
@@ -4799,11 +4807,13 @@
       "concept_id": "employment_growth",
       "pillar": "labour_household",
       "label_en": "Employment Growth",
-      "priority_score": 45,
+      "priority_score": 47,
       "missing_countries": [
         "CN"
       ],
-      "weak_countries": []
+      "weak_countries": [
+        "ZA"
+      ]
     },
     {
       "concept_id": "mortgage_rate",
@@ -4864,6 +4874,17 @@
       ]
     },
     {
+      "concept_id": "unemployment_rate",
+      "pillar": "labour_household",
+      "label_en": "Unemployment Rate",
+      "priority_score": 44,
+      "missing_countries": [],
+      "weak_countries": [
+        "ZA",
+        "UK"
+      ]
+    },
+    {
       "concept_id": "current_account_gdp",
       "pillar": "external_fx",
       "label_en": "Current Account, % GDP",
@@ -4875,13 +4896,14 @@
       ]
     },
     {
-      "concept_id": "unemployment_rate",
-      "pillar": "labour_household",
-      "label_en": "Unemployment Rate",
-      "priority_score": 42,
+      "concept_id": "trade_balance",
+      "pillar": "external_fx",
+      "label_en": "Trade Balance",
+      "priority_score": 44,
       "missing_countries": [],
       "weak_countries": [
-        "UK"
+        "JP",
+        "ZA"
       ]
     },
     {
@@ -4926,6 +4948,18 @@
       ]
     },
     {
+      "concept_id": "house_price_growth",
+      "pillar": "housing_investment",
+      "label_en": "House Price Growth",
+      "priority_score": 36,
+      "missing_countries": [],
+      "weak_countries": [
+        "CN",
+        "JP",
+        "ZA"
+      ]
+    },
+    {
       "concept_id": "sovereign_yield_10y",
       "pillar": "fiscal_sovereign",
       "label_en": "10Y Sovereign Yield",
@@ -4936,29 +4970,20 @@
       "weak_countries": []
     },
     {
-      "concept_id": "house_price_growth",
-      "pillar": "housing_investment",
-      "label_en": "House Price Growth",
-      "priority_score": 32,
+      "concept_id": "government_debt_gdp",
+      "pillar": "fiscal_sovereign",
+      "label_en": "Government Debt, % GDP",
+      "priority_score": 34,
       "missing_countries": [],
       "weak_countries": [
-        "JP"
+        "UK",
+        "US"
       ]
     },
     {
       "concept_id": "fiscal_balance_gdp",
       "pillar": "fiscal_sovereign",
       "label_en": "Fiscal Balance, % GDP",
-      "priority_score": 32,
-      "missing_countries": [],
-      "weak_countries": [
-        "UK"
-      ]
-    },
-    {
-      "concept_id": "government_debt_gdp",
-      "pillar": "fiscal_sovereign",
-      "label_en": "Government Debt, % GDP",
       "priority_score": 32,
       "missing_countries": [],
       "weak_countries": [

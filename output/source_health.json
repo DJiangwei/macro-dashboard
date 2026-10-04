@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-08-28T15:39:22.726269+00:00",
+  "generated": "2026-10-04T20:10:27.523546+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -13,28 +13,30 @@
   },
   "countries": {
     "HU": {
-      "calls": 913,
-      "success": 110,
-      "empty": 803,
-      "failed": 0,
+      "calls": 950,
+      "success": 108,
+      "empty": 840,
+      "failed": 2,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "timeout": 2
+      },
       "empty_reasons": {
-        "empty_response": 803
+        "empty_response": 840
       },
       "sources": {
         "BISFetcher": {
-          "empty": 11,
+          "empty": 13,
           "success": 3
         },
         "BVBIndexProfileFetcher": {
-          "empty": 17
+          "empty": 19
         },
         "CZSOFetcher": {
-          "empty": 1
+          "empty": 3
         },
         "CredentialedStooqFetcher": {
-          "empty": 17
+          "empty": 19
         },
         "DerivedMacroFetcher": {
           "empty": 56,
@@ -42,19 +44,19 @@
         },
         "ECBExternalDebtFetcher": {
           "empty": 42,
-          "success": 1
+          "failed": 1
         },
         "ECBFetcher": {
           "empty": 102,
           "success": 1
         },
         "ECBMIRFetcher": {
-          "empty": 8,
+          "empty": 10,
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
-          "empty": 41,
-          "success": 1
+          "empty": 42,
+          "failed": 1
         },
         "EUFundsAbsorptionFetcher": {
           "empty": 43,
@@ -65,80 +67,108 @@
           "success": 38
         },
         "FREDInternationalFetcher": {
-          "empty": 41
+          "empty": 43
         },
         "GIEAGSIFetcher": {
-          "empty": 8
+          "empty": 10
         },
         "GPWBenchmarkFetcher": {
-          "empty": 17
+          "empty": 19
+        },
+        "GUSDBWFetcher": {
+          "empty": 2
         },
         "IMFDataMapperFetcher": {
           "empty": 47,
           "success": 9
         },
         "IMFFinancialSoundnessFetcher": {
-          "empty": 36,
+          "empty": 38,
           "success": 5
         },
+        "INSSETempoFetcher": {
+          "empty": 2
+        },
         "KSHFetcher": {
+          "empty": 2,
           "success": 1
         },
         "ManualIndicatorFetcher": {
-          "empty": 1,
+          "empty": 3,
           "success": 7
         },
         "NationalCBFetcher": {
-          "empty": 41
+          "empty": 43
         },
         "PolicyRateFetcher": {
           "empty": 101,
           "success": 1
         },
         "PragueExchangeFetcher": {
-          "empty": 17
+          "empty": 19
         },
         "WorldBankESGFetcher": {
           "empty": 44,
           "success": 3
         },
         "WorldBankFallbackFetcher": {
-          "empty": 11
+          "empty": 13
         },
         "WorldBankFetcher": {
-          "empty": 17,
+          "empty": 19,
           "success": 19
         },
         "YahooMarketFetcher": {
-          "empty": 14,
+          "empty": 16,
           "success": 3
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-04T19:52:13.610932+00:00",
+          "country": "HU",
+          "indicator_id": "gross_ext_debt",
+          "source_id": "ECBExternalDebtFetcher",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='data-api.ecb.europa.eu', port=443): Read timed out. (read timeout=30)"
+        },
+        {
+          "timestamp": "2026-10-04T19:53:50.021642+00:00",
+          "country": "HU",
+          "indicator_id": "portfolio_flows",
+          "source_id": "ECBPortfolioFlowsFetcher",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='data-api.ecb.europa.eu', port=443): Read timed out. (read timeout=30)"
+        }
+      ]
     },
     "PL": {
-      "calls": 920,
-      "success": 113,
-      "empty": 807,
-      "failed": 0,
+      "calls": 939,
+      "success": 112,
+      "empty": 826,
+      "failed": 1,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "timeout": 1
+      },
       "empty_reasons": {
-        "empty_response": 807
+        "empty_response": 826
       },
       "sources": {
         "BISFetcher": {
-          "empty": 9,
+          "empty": 10,
           "success": 3
         },
         "BVBIndexProfileFetcher": {
-          "empty": 13
+          "empty": 14
         },
         "CZSOFetcher": {
-          "empty": 1
+          "empty": 2
         },
         "CredentialedStooqFetcher": {
-          "empty": 13
+          "empty": 14
         },
         "DerivedMacroFetcher": {
           "empty": 58,
@@ -146,18 +176,18 @@
         },
         "ECBExternalDebtFetcher": {
           "empty": 44,
-          "success": 1
+          "failed": 1
         },
         "ECBFetcher": {
           "empty": 105,
           "success": 1
         },
         "ECBMIRFetcher": {
-          "empty": 6,
+          "empty": 7,
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
-          "empty": 43,
+          "empty": 44,
           "success": 1
         },
         "EUFundsAbsorptionFetcher": {
@@ -169,17 +199,18 @@
           "success": 39
         },
         "FREDInternationalFetcher": {
-          "empty": 42,
+          "empty": 43,
           "success": 1
         },
         "GIEAGSIFetcher": {
-          "empty": 6
+          "empty": 7
         },
         "GPWBenchmarkFetcher": {
-          "empty": 13,
+          "empty": 14,
           "success": 5
         },
         "GUSDBWFetcher": {
+          "empty": 1,
           "success": 1
         },
         "IMFDataMapperFetcher": {
@@ -187,67 +218,83 @@
           "success": 9
         },
         "IMFFinancialSoundnessFetcher": {
-          "empty": 36,
+          "empty": 37,
           "success": 6
         },
-        "KSHFetcher": {
+        "INSSETempoFetcher": {
           "empty": 1
         },
+        "KSHFetcher": {
+          "empty": 2
+        },
         "ManualIndicatorFetcher": {
-          "empty": 1,
+          "empty": 2,
           "success": 5
         },
         "NationalCBFetcher": {
-          "empty": 43
+          "empty": 44
         },
         "PolicyRateFetcher": {
           "empty": 104,
           "success": 1
         },
         "PragueExchangeFetcher": {
-          "empty": 18
+          "empty": 19
         },
         "WorldBankESGFetcher": {
           "empty": 46,
           "success": 3
         },
         "WorldBankFallbackFetcher": {
-          "empty": 9
+          "empty": 10
         },
         "WorldBankFetcher": {
-          "empty": 18,
+          "empty": 19,
           "success": 18
         },
         "YahooMarketFetcher": {
-          "empty": 12,
+          "empty": 13,
           "success": 1
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-04T19:55:39.455969+00:00",
+          "country": "PL",
+          "indicator_id": "gross_ext_debt",
+          "source_id": "ECBExternalDebtFetcher",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='data-api.ecb.europa.eu', port=443): Read timed out. (read timeout=30)"
+        }
+      ]
     },
     "CZ": {
-      "calls": 877,
-      "success": 109,
-      "empty": 768,
-      "failed": 0,
+      "calls": 914,
+      "success": 107,
+      "empty": 805,
+      "failed": 2,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "timeout": 2
+      },
       "empty_reasons": {
-        "empty_response": 768
+        "empty_response": 805
       },
       "sources": {
         "BISFetcher": {
-          "empty": 10,
+          "empty": 12,
           "success": 3
         },
         "BVBIndexProfileFetcher": {
-          "empty": 13
+          "empty": 15
         },
         "CZSOFetcher": {
+          "empty": 2,
           "success": 1
         },
         "CredentialedStooqFetcher": {
-          "empty": 13
+          "empty": 15
         },
         "DerivedMacroFetcher": {
           "empty": 54,
@@ -255,19 +302,19 @@
         },
         "ECBExternalDebtFetcher": {
           "empty": 42,
-          "success": 1
+          "failed": 1
         },
         "ECBFetcher": {
           "empty": 101,
           "success": 1
         },
         "ECBMIRFetcher": {
-          "empty": 7,
+          "empty": 9,
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
-          "empty": 41,
-          "success": 1
+          "empty": 42,
+          "failed": 1
         },
         "EUFundsAbsorptionFetcher": {
           "empty": 43,
@@ -278,28 +325,37 @@
           "success": 39
         },
         "FREDInternationalFetcher": {
-          "empty": 39
+          "empty": 41
         },
         "GIEAGSIFetcher": {
-          "empty": 7
+          "empty": 9
         },
         "GPWBenchmarkFetcher": {
-          "empty": 13
+          "empty": 15
+        },
+        "GUSDBWFetcher": {
+          "empty": 2
         },
         "IMFDataMapperFetcher": {
           "empty": 47,
           "success": 7
         },
         "IMFFinancialSoundnessFetcher": {
-          "empty": 34,
+          "empty": 36,
           "success": 5
         },
+        "INSSETempoFetcher": {
+          "empty": 2
+        },
+        "KSHFetcher": {
+          "empty": 2
+        },
         "ManualIndicatorFetcher": {
-          "empty": 1,
+          "empty": 3,
           "success": 6
         },
         "NationalCBFetcher": {
-          "empty": 39,
+          "empty": 41,
           "success": 2
         },
         "PolicyRateFetcher": {
@@ -307,7 +363,7 @@
           "success": 1
         },
         "PragueExchangeFetcher": {
-          "empty": 13,
+          "empty": 15,
           "success": 3
         },
         "WorldBankESGFetcher": {
@@ -315,42 +371,63 @@
           "success": 3
         },
         "WorldBankFallbackFetcher": {
-          "empty": 10
+          "empty": 12
         },
         "WorldBankFetcher": {
-          "empty": 16,
+          "empty": 18,
           "success": 18
         },
         "YahooMarketFetcher": {
-          "empty": 13
+          "empty": 15
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-04T19:58:41.351339+00:00",
+          "country": "CZ",
+          "indicator_id": "gross_ext_debt",
+          "source_id": "ECBExternalDebtFetcher",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='data-api.ecb.europa.eu', port=443): Read timed out. (read timeout=30)"
+        },
+        {
+          "timestamp": "2026-10-04T20:00:15.752999+00:00",
+          "country": "CZ",
+          "indicator_id": "portfolio_flows",
+          "source_id": "ECBPortfolioFlowsFetcher",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='data-api.ecb.europa.eu', port=443): Read timed out. (read timeout=30)"
+        }
+      ]
     },
     "RO": {
-      "calls": 877,
-      "success": 109,
-      "empty": 768,
-      "failed": 0,
+      "calls": 896,
+      "success": 108,
+      "empty": 787,
+      "failed": 1,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "timeout": 1
+      },
       "empty_reasons": {
-        "empty_response": 768
+        "empty_response": 787
       },
       "sources": {
         "BISFetcher": {
-          "empty": 12,
+          "empty": 13,
           "success": 1
         },
         "BVBIndexProfileFetcher": {
-          "empty": 13,
+          "empty": 14,
           "success": 2
         },
         "CZSOFetcher": {
-          "empty": 1
+          "empty": 2
         },
         "CredentialedStooqFetcher": {
-          "empty": 13
+          "empty": 14
         },
         "DerivedMacroFetcher": {
           "empty": 54,
@@ -358,18 +435,18 @@
         },
         "ECBExternalDebtFetcher": {
           "empty": 40,
-          "success": 1
+          "failed": 1
         },
         "ECBFetcher": {
           "empty": 101,
           "success": 1
         },
         "ECBMIRFetcher": {
-          "empty": 8,
+          "empty": 9,
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
-          "empty": 39,
+          "empty": 40,
           "success": 1
         },
         "EUFundsAbsorptionFetcher": {
@@ -381,62 +458,73 @@
           "success": 39
         },
         "FREDInternationalFetcher": {
-          "empty": 39
+          "empty": 40
         },
         "GIEAGSIFetcher": {
-          "empty": 8
+          "empty": 9
         },
         "GPWBenchmarkFetcher": {
-          "empty": 15
+          "empty": 16
         },
         "GUSDBWFetcher": {
-          "empty": 1
+          "empty": 2
         },
         "IMFDataMapperFetcher": {
           "empty": 45,
           "success": 9
         },
         "IMFFinancialSoundnessFetcher": {
-          "empty": 33,
+          "empty": 34,
           "success": 6
         },
         "INSSETempoFetcher": {
+          "empty": 1,
           "success": 1
         },
         "KSHFetcher": {
-          "empty": 1
+          "empty": 2
         },
         "ManualIndicatorFetcher": {
-          "empty": 1,
+          "empty": 2,
           "success": 7
         },
         "NationalCBFetcher": {
-          "empty": 39
+          "empty": 40
         },
         "PolicyRateFetcher": {
           "empty": 100,
           "success": 1
         },
         "PragueExchangeFetcher": {
-          "empty": 15
+          "empty": 16
         },
         "WorldBankESGFetcher": {
           "empty": 42,
           "success": 3
         },
         "WorldBankFallbackFetcher": {
-          "empty": 11,
+          "empty": 12,
           "success": 1
         },
         "WorldBankFetcher": {
-          "empty": 15,
+          "empty": 16,
           "success": 18
         },
         "YahooMarketFetcher": {
-          "empty": 13
+          "empty": 14
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-04T20:01:59.625849+00:00",
+          "country": "RO",
+          "indicator_id": "gross_ext_debt",
+          "source_id": "ECBExternalDebtFetcher",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='data-api.ecb.europa.eu', port=443): Read timed out. (read timeout=30)"
+        }
+      ]
     },
     "CN": {
       "calls": 108,
