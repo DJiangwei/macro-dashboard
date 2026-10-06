@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-08-30T13:34:25.048529+00:00",
+  "generated": "2026-10-06T19:05:25.273884+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -13,72 +13,72 @@
   },
   "countries": {
     "HU": {
-      "calls": 913,
-      "success": 110,
-      "empty": 803,
+      "calls": 864,
+      "success": 107,
+      "empty": 757,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {
-        "empty_response": 803
+        "empty_response": 757
       },
       "sources": {
         "BISFetcher": {
-          "empty": 11,
+          "empty": 10,
           "success": 3
         },
         "BVBIndexProfileFetcher": {
-          "empty": 17
+          "empty": 16
         },
         "CZSOFetcher": {
           "empty": 1
         },
         "CredentialedStooqFetcher": {
-          "empty": 17
+          "empty": 16
         },
         "DerivedMacroFetcher": {
-          "empty": 56,
+          "empty": 53,
           "success": 14
         },
         "ECBExternalDebtFetcher": {
-          "empty": 42,
+          "empty": 39,
           "success": 1
         },
         "ECBFetcher": {
-          "empty": 102,
+          "empty": 99,
           "success": 1
         },
         "ECBMIRFetcher": {
-          "empty": 8,
+          "empty": 7,
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
-          "empty": 41,
+          "empty": 38,
           "success": 1
         },
         "EUFundsAbsorptionFetcher": {
-          "empty": 43,
+          "empty": 40,
           "success": 1
         },
         "EurostatFetcher": {
-          "empty": 70,
+          "empty": 67,
           "success": 38
         },
         "FREDInternationalFetcher": {
-          "empty": 41
+          "empty": 38
         },
         "GIEAGSIFetcher": {
-          "empty": 8
+          "empty": 7
         },
         "GPWBenchmarkFetcher": {
-          "empty": 17
+          "empty": 16
         },
         "IMFDataMapperFetcher": {
-          "empty": 47,
+          "empty": 44,
           "success": 9
         },
         "IMFFinancialSoundnessFetcher": {
-          "empty": 36,
+          "empty": 33,
           "success": 5
         },
         "KSHFetcher": {
@@ -86,45 +86,45 @@
         },
         "ManualIndicatorFetcher": {
           "empty": 1,
-          "success": 7
+          "success": 6
         },
         "NationalCBFetcher": {
-          "empty": 41
+          "empty": 38
         },
         "PolicyRateFetcher": {
-          "empty": 101,
+          "empty": 98,
           "success": 1
         },
         "PragueExchangeFetcher": {
-          "empty": 17
+          "empty": 16
         },
         "WorldBankESGFetcher": {
-          "empty": 44,
+          "empty": 41,
           "success": 3
         },
         "WorldBankFallbackFetcher": {
-          "empty": 11
+          "empty": 10
         },
         "WorldBankFetcher": {
-          "empty": 17,
-          "success": 19
+          "empty": 16,
+          "success": 17
         },
         "YahooMarketFetcher": {
-          "empty": 14,
+          "empty": 13,
           "success": 3
         }
       },
       "events": []
     },
     "PL": {
-      "calls": 920,
-      "success": 113,
-      "empty": 807,
+      "calls": 882,
+      "success": 110,
+      "empty": 772,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {
-        "empty_response": 807
+        "empty_response": 772
       },
       "sources": {
         "BISFetcher": {
@@ -141,15 +141,15 @@
           "empty": 13
         },
         "DerivedMacroFetcher": {
-          "empty": 58,
+          "empty": 55,
           "success": 14
         },
         "ECBExternalDebtFetcher": {
-          "empty": 44,
+          "empty": 41,
           "success": 1
         },
         "ECBFetcher": {
-          "empty": 105,
+          "empty": 102,
           "success": 1
         },
         "ECBMIRFetcher": {
@@ -157,19 +157,19 @@
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
-          "empty": 43,
+          "empty": 40,
           "success": 1
         },
         "EUFundsAbsorptionFetcher": {
-          "empty": 45,
+          "empty": 42,
           "success": 1
         },
         "EurostatFetcher": {
-          "empty": 72,
+          "empty": 69,
           "success": 39
         },
         "FREDInternationalFetcher": {
-          "empty": 42,
+          "empty": 39,
           "success": 1
         },
         "GIEAGSIFetcher": {
@@ -183,12 +183,12 @@
           "success": 1
         },
         "IMFDataMapperFetcher": {
-          "empty": 49,
+          "empty": 46,
           "success": 9
         },
         "IMFFinancialSoundnessFetcher": {
-          "empty": 36,
-          "success": 6
+          "empty": 34,
+          "success": 5
         },
         "KSHFetcher": {
           "empty": 1
@@ -198,17 +198,17 @@
           "success": 5
         },
         "NationalCBFetcher": {
-          "empty": 43
+          "empty": 40
         },
         "PolicyRateFetcher": {
-          "empty": 104,
+          "empty": 101,
           "success": 1
         },
         "PragueExchangeFetcher": {
           "empty": 18
         },
         "WorldBankESGFetcher": {
-          "empty": 46,
+          "empty": 43,
           "success": 3
         },
         "WorldBankFallbackFetcher": {
@@ -216,7 +216,7 @@
         },
         "WorldBankFetcher": {
           "empty": 18,
-          "success": 18
+          "success": 16
         },
         "YahooMarketFetcher": {
           "empty": 12,
@@ -226,39 +226,142 @@
       "events": []
     },
     "CZ": {
-      "calls": 877,
-      "success": 109,
-      "empty": 768,
+      "calls": 828,
+      "success": 106,
+      "empty": 722,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {
-        "empty_response": 768
+        "empty_response": 722
       },
       "sources": {
         "BISFetcher": {
-          "empty": 10,
+          "empty": 9,
           "success": 3
         },
         "BVBIndexProfileFetcher": {
-          "empty": 13
+          "empty": 12
         },
         "CZSOFetcher": {
           "success": 1
         },
         "CredentialedStooqFetcher": {
-          "empty": 13
+          "empty": 12
         },
         "DerivedMacroFetcher": {
-          "empty": 54,
+          "empty": 51,
           "success": 14
         },
         "ECBExternalDebtFetcher": {
-          "empty": 42,
+          "empty": 39,
           "success": 1
         },
         "ECBFetcher": {
-          "empty": 101,
+          "empty": 98,
+          "success": 1
+        },
+        "ECBMIRFetcher": {
+          "empty": 6,
+          "success": 3
+        },
+        "ECBPortfolioFlowsFetcher": {
+          "empty": 38,
+          "success": 1
+        },
+        "EUFundsAbsorptionFetcher": {
+          "empty": 40,
+          "success": 1
+        },
+        "EurostatFetcher": {
+          "empty": 65,
+          "success": 39
+        },
+        "FREDInternationalFetcher": {
+          "empty": 36
+        },
+        "GIEAGSIFetcher": {
+          "empty": 6
+        },
+        "GPWBenchmarkFetcher": {
+          "empty": 12
+        },
+        "IMFDataMapperFetcher": {
+          "empty": 44,
+          "success": 7
+        },
+        "IMFFinancialSoundnessFetcher": {
+          "empty": 31,
+          "success": 5
+        },
+        "ManualIndicatorFetcher": {
+          "empty": 1,
+          "success": 5
+        },
+        "NationalCBFetcher": {
+          "empty": 36,
+          "success": 2
+        },
+        "PolicyRateFetcher": {
+          "empty": 97,
+          "success": 1
+        },
+        "PragueExchangeFetcher": {
+          "empty": 12,
+          "success": 3
+        },
+        "WorldBankESGFetcher": {
+          "empty": 41,
+          "success": 3
+        },
+        "WorldBankFallbackFetcher": {
+          "empty": 9
+        },
+        "WorldBankFetcher": {
+          "empty": 15,
+          "success": 16
+        },
+        "YahooMarketFetcher": {
+          "empty": 12
+        }
+      },
+      "events": []
+    },
+    "RO": {
+      "calls": 829,
+      "success": 106,
+      "empty": 723,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {
+        "empty_response": 723
+      },
+      "sources": {
+        "BISFetcher": {
+          "empty": 11,
+          "success": 1
+        },
+        "BVBIndexProfileFetcher": {
+          "empty": 12,
+          "success": 2
+        },
+        "CZSOFetcher": {
+          "empty": 1
+        },
+        "CredentialedStooqFetcher": {
+          "empty": 12
+        },
+        "DerivedMacroFetcher": {
+          "empty": 51,
+          "success": 14
+        },
+        "ECBExternalDebtFetcher": {
+          "empty": 37,
+          "success": 1
+        },
+        "ECBFetcher": {
+          "empty": 98,
           "success": 1
         },
         "ECBMIRFetcher": {
@@ -266,139 +369,36 @@
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
-          "empty": 41,
+          "empty": 36,
           "success": 1
         },
         "EUFundsAbsorptionFetcher": {
-          "empty": 43,
+          "empty": 38,
           "success": 1
         },
         "EurostatFetcher": {
-          "empty": 68,
+          "empty": 65,
           "success": 39
         },
         "FREDInternationalFetcher": {
-          "empty": 39
+          "empty": 36
         },
         "GIEAGSIFetcher": {
           "empty": 7
         },
         "GPWBenchmarkFetcher": {
-          "empty": 13
-        },
-        "IMFDataMapperFetcher": {
-          "empty": 47,
-          "success": 7
-        },
-        "IMFFinancialSoundnessFetcher": {
-          "empty": 34,
-          "success": 5
-        },
-        "ManualIndicatorFetcher": {
-          "empty": 1,
-          "success": 6
-        },
-        "NationalCBFetcher": {
-          "empty": 39,
-          "success": 2
-        },
-        "PolicyRateFetcher": {
-          "empty": 100,
-          "success": 1
-        },
-        "PragueExchangeFetcher": {
-          "empty": 13,
-          "success": 3
-        },
-        "WorldBankESGFetcher": {
-          "empty": 44,
-          "success": 3
-        },
-        "WorldBankFallbackFetcher": {
-          "empty": 10
-        },
-        "WorldBankFetcher": {
-          "empty": 16,
-          "success": 18
-        },
-        "YahooMarketFetcher": {
-          "empty": 13
-        }
-      },
-      "events": []
-    },
-    "RO": {
-      "calls": 877,
-      "success": 109,
-      "empty": 768,
-      "failed": 0,
-      "circuit_open": 0,
-      "failure_reasons": {},
-      "empty_reasons": {
-        "empty_response": 768
-      },
-      "sources": {
-        "BISFetcher": {
-          "empty": 12,
-          "success": 1
-        },
-        "BVBIndexProfileFetcher": {
-          "empty": 13,
-          "success": 2
-        },
-        "CZSOFetcher": {
-          "empty": 1
-        },
-        "CredentialedStooqFetcher": {
-          "empty": 13
-        },
-        "DerivedMacroFetcher": {
-          "empty": 54,
-          "success": 14
-        },
-        "ECBExternalDebtFetcher": {
-          "empty": 40,
-          "success": 1
-        },
-        "ECBFetcher": {
-          "empty": 101,
-          "success": 1
-        },
-        "ECBMIRFetcher": {
-          "empty": 8,
-          "success": 3
-        },
-        "ECBPortfolioFlowsFetcher": {
-          "empty": 39,
-          "success": 1
-        },
-        "EUFundsAbsorptionFetcher": {
-          "empty": 41,
-          "success": 1
-        },
-        "EurostatFetcher": {
-          "empty": 68,
-          "success": 39
-        },
-        "FREDInternationalFetcher": {
-          "empty": 39
-        },
-        "GIEAGSIFetcher": {
-          "empty": 8
-        },
-        "GPWBenchmarkFetcher": {
-          "empty": 15
+          "empty": 14
         },
         "GUSDBWFetcher": {
           "empty": 1
         },
         "IMFDataMapperFetcher": {
-          "empty": 45,
+          "empty": 42,
           "success": 9
         },
         "IMFFinancialSoundnessFetcher": {
-          "empty": 33,
-          "success": 6
+          "empty": 31,
+          "success": 5
         },
         "INSSETempoFetcher": {
           "success": 1
@@ -408,47 +408,50 @@
         },
         "ManualIndicatorFetcher": {
           "empty": 1,
-          "success": 7
+          "success": 6
         },
         "NationalCBFetcher": {
-          "empty": 39
+          "empty": 36
         },
         "PolicyRateFetcher": {
-          "empty": 100,
+          "empty": 97,
           "success": 1
         },
         "PragueExchangeFetcher": {
-          "empty": 15
+          "empty": 14
         },
         "WorldBankESGFetcher": {
-          "empty": 42,
+          "empty": 39,
           "success": 3
         },
         "WorldBankFallbackFetcher": {
-          "empty": 11,
+          "empty": 10,
           "success": 1
         },
         "WorldBankFetcher": {
-          "empty": 15,
-          "success": 18
+          "empty": 14,
+          "success": 17
         },
         "YahooMarketFetcher": {
-          "empty": 13
+          "empty": 12
         }
       },
       "events": []
     },
     "CN": {
       "calls": 108,
-      "success": 108,
+      "success": 107,
       "empty": 0,
-      "failed": 0,
+      "failed": 1,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "unexpected_error": 1
+      },
       "empty_reasons": {},
       "sources": {
         "akshare_table": {
-          "success": 64
+          "failed": 1,
+          "success": 63
         },
         "akshare_wide_year_month": {
           "success": 3
@@ -472,7 +475,17 @@
           "success": 22
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-06T18:06:17.338410+00:00",
+          "country": "CN",
+          "indicator_id": "baltic_dry_index_akshare",
+          "source_id": "akshare_table",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "(\"Connection broken: ConnectionResetError(54, 'Connection reset by peer')\", ConnectionResetError(54, 'Connection reset by peer'))"
+        }
+      ]
     },
     "UK": {
       "calls": 92,
