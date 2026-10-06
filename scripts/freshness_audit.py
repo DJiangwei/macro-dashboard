@@ -35,6 +35,8 @@ DATA_FIRST_PAGES = {
 }
 
 CE4_COUNTRIES = ("Hungary", "Poland", "Czechia", "Romania")
+CE4_CODES = {"HU": "Hungary", "PL": "Poland", "CZ": "Czechia", "RO": "Romania"}
+CEE_CANONICAL = OUTPUT / "cee_canonical_frame.json"
 
 THRESHOLD_DAYS = {
     "daily": 14,
@@ -191,9 +193,12 @@ def _record(
     series_id: str = "",
     provider_update: str = "",
     note: str = "",
+    projection: bool = False,
 ) -> ChartFreshness:
     latest = _parse_date(latest_observation)
     freshness_status, age_basis, age_days, threshold_days = _classify(latest, frequency, quality_status)
+    if projection and latest is not None:
+        freshness_status = "projection"
     shared_quality: dict = {}
     if latest:
         shared_quality = assess_series_quality(
@@ -279,10 +284,39 @@ def _parse_data_first_page(dashboard: str, path: Path) -> list[ChartFreshness]:
     return records
 
 
+def _ce4_projection_tails() -> set[tuple[str, str]]:
+    """Return (country, indicator_id) pairs whose latest observation is a projection.
+
+    The markdown catalog has no projection column, so the row-level
+    ``is_projection`` flag in the CE4 canonical frame is the source of truth.
+    """
+    if not CEE_CANONICAL.exists():
+        return set()
+    try:
+        payload = json.loads(CEE_CANONICAL.read_text())
+    except (OSError, json.JSONDecodeError):
+        return set()
+    columns = payload.get("observation_columns") or []
+    if "is_projection" not in columns:
+        return set()
+    flag_index = columns.index("is_projection")
+    tails: set[tuple[str, str]] = set()
+    for series in payload.get("series") or []:
+        country = CE4_CODES.get(str(series.get("country") or ""))
+        observations = series.get("observations") or []
+        if not country or not observations:
+            continue
+        latest = observations[-1]
+        if len(latest) > flag_index and bool(latest[flag_index]):
+            tails.add((country, str(series.get("indicator_id") or "")))
+    return tails
+
+
 def _parse_ce4_catalog() -> list[ChartFreshness]:
     if not CATALOG.exists():
         return []
     lines = CATALOG.read_text().splitlines()
+    projection_tails = _ce4_projection_tails()
     records: list[ChartFreshness] = []
     current_country = ""
     in_country_table = False
@@ -307,10 +341,11 @@ def _parse_ce4_catalog() -> list[ChartFreshness]:
         if len(parts) < 10:
             continue
         _, indicator_id, label, frequency, _, latest, source, series_id, quality, note = parts[:10]
+        clean_id = indicator_id.strip("`")
         records.append(
             _record(
                 dashboard=current_country,
-                indicator_id=indicator_id.strip("`"),
+                indicator_id=clean_id,
                 label=label,
                 frequency=frequency,
                 latest_observation=latest,
@@ -318,6 +353,7 @@ def _parse_ce4_catalog() -> list[ChartFreshness]:
                 source=source,
                 series_id=series_id,
                 note=note,
+                projection=(current_country, clean_id) in projection_tails,
             )
         )
     return records

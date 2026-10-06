@@ -247,13 +247,22 @@ def assess_series_quality(series: dict[str, Any], *, today: date | None = None) 
 
     age_days: int | None = None
     release_window = expected_next_release(series, latest) if latest else None
+    # Annual observations are labelled at period end (YYYY-12-31). A value for
+    # the current year (a published HICP weight, a cumulative-to-date ratio) is
+    # not future-dated; only a year beyond today's is. Forecast years are
+    # classified earlier through actual_through / is_projection.
+    future_dated = bool(
+        latest
+        and latest > today
+        and not (frequency == "annual" and latest.year <= today.year)
+    )
     if latest is None:
         freshness = "missing"
     elif derivation == "projection":
         freshness = "projection"
-    elif latest > today and scheduled_policy:
+    elif future_dated and scheduled_policy:
         freshness = "scheduled_policy"
-    elif latest > today:
+    elif future_dated:
         freshness = "future_date"
     else:
         age_days = (today - min(period_end(latest, frequency), today)).days

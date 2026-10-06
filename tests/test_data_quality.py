@@ -191,3 +191,44 @@ def test_substitute_is_still_not_verified(monkeypatch):
         today=__import__("datetime").date(2026, 8, 1),
     )
     assert result["status"] != "verified"
+
+
+def test_current_year_annual_value_is_not_future_dated() -> None:
+    # Annual observations are labelled at period end; a published current-year
+    # value (e.g. a 2026 HICP weight) must not be flagged future_date/unavailable.
+    quality = assess_series_quality(
+        {
+            "id": "administered_prices",
+            "frequency": "annual",
+            "source_name": "Eurostat",
+            "observations": [{"date": "2026-12-31", "value": 20.5}],
+        },
+        today=date(2026, 10, 4),
+    )
+    assert quality["freshness"] == "current"
+    assert quality["status"] != "unavailable"
+
+
+def test_next_year_annual_value_is_still_future_dated() -> None:
+    quality = assess_series_quality(
+        {
+            "frequency": "annual",
+            "source_name": "Eurostat",
+            "observations": [{"date": "2027-12-31", "value": 1.0}],
+        },
+        today=date(2026, 10, 4),
+    )
+    assert quality["freshness"] == "future_date"
+    assert quality["status"] == "unavailable"
+
+
+def test_future_monthly_value_is_still_future_dated() -> None:
+    quality = assess_series_quality(
+        {
+            "frequency": "monthly",
+            "source_name": "Eurostat",
+            "observations": [{"date": "2026-11-01", "value": 1.0}],
+        },
+        today=date(2026, 10, 4),
+    )
+    assert quality["freshness"] == "future_date"
