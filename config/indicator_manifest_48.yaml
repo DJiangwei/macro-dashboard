@@ -1,5 +1,5 @@
 version: 1
-expected_count: 114
+expected_count: 111
 indicators:
 - section_id: real_activity
   indicator_id: real_gdp_yoy
@@ -820,16 +820,6 @@ indicators:
   quality_status: low_confidence
   quality_note: Forward guidance is qualitative text data; this manually maintained hawk/dove score is a dated research input, not a statistical series or policy-rate forecast.
 - section_id: monetary_financial
-  indicator_id: fx_loan_share
-  label: FX Loan Share
-  unit: '%'
-  source: IMF FSI / national central banks / OeNB
-  frequency: quarterly
-  chart: line
-  peers: false
-  quality_status: watch
-  quality_note: IMF FSI deposit-taker FX-loan ratio is used where recent FSFC_PT coverage exists; otherwise the dashboard uses national-central-bank or OeNB CESEE snapshots with explicit definition notes.
-- section_id: monetary_financial
   indicator_id: mortgage_rate_new
   label: New Mortgage Lending Rate
   unit: '%'
@@ -991,16 +981,6 @@ indicators:
   quality_status: watch
   quality_note: IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries.
 - section_id: financial_stability
-  indicator_id: bank_nim
-  label: Bank Net Interest Margin
-  unit: '%'
-  source: World Bank GFDD / national CB
-  frequency: annual
-  chart: line
-  peers: false
-  quality_status: watch
-  quality_note: World Bank GFDD net interest margin is annual and lagged; compare with local supervisory releases.
-- section_id: financial_stability
   indicator_id: household_debt_pct_gdp
   label: Household Debt, % GDP
   unit: '% GDP'
@@ -1030,16 +1010,6 @@ indicators:
   peers: false
   quality_status: watch
   quality_note: Official-data pressure proxy using Eurostat residential house-price growth minus a trailing trend; not a formal ECB/BIS valuation-gap model.
-- section_id: financial_stability
-  indicator_id: foreign_bank_share
-  label: Foreign-Owned Bank Share
-  unit: '% assets'
-  source: World Bank GFDD / official banking-sector snapshots
-  frequency: annual
-  chart: line
-  peers: false
-  quality_status: watch
-  quality_note: Foreign-owned bank asset share from World Bank GFDD where available, or official banking-sector snapshots where GFDD coverage is missing; structural and slow-moving, so use mainly as ownership-history context.
 - section_id: demographics
   indicator_id: population_total
   label: Total Population

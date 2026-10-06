@@ -2878,12 +2878,6 @@ class IMFFinancialSoundnessFetcher(BaseFetcher):
             "unit": "%",
             "note": "IMF Financial Soundness Indicator: deposit-taker liquidity coverage ratio, percent.",
         },
-        "fx_loan_share": {
-            "indicator": "FSFC_PT",
-            "unit": "%",
-            "min_latest": "2020-01-01",
-            "note": "IMF Financial Soundness Indicator: deposit-taker foreign-currency-denominated loans to total loans, percent.",
-        },
     }
 
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
@@ -4363,10 +4357,8 @@ class WorldBankFetcher(BaseFetcher):
         "bank_npl_ratio": ("FB.AST.NPER.ZS", 1.0, "%"),
         "bank_roe": ("GFDD.EI.06", 1.0, "%"),
         "bank_ld_ratio": ("GFDD.SI.04", 1.0, "%"),
-        "bank_nim": ("GFDD.EI.01", 1.0, "%"),
         "household_debt_pct_gdp": ("FS.AST.PRVT.GD.ZS", 0.45, "% GDP"),
         "corp_debt_pct_gdp": ("FS.AST.PRVT.GD.ZS", 0.55, "% GDP"),
-        "foreign_bank_share": ("GFDD.OI.16", 1.0, "%"),
         "net_migration": ("SM.POP.NETM", 1.0, "people"),
         "fertility_rate": ("SP.DYN.TFRT.IN", 1.0, "children per woman"),
     }
