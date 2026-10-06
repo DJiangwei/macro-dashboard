@@ -14,6 +14,7 @@ than filled with a proxy.
 """
 from __future__ import annotations
 
+import collections
 import json
 import os
 import re
@@ -45,12 +46,13 @@ from build_china_dashboard import (  # Reuse the data-first page shell.
 )
 from build_uk_dashboard import validate_series
 from build_us_dashboard import _apply_transform, fetch_fred_us
-from build_japan_dashboard import (  # Shared adapters, first written for Japan.
+from country_primer.adapters import (
     USER_AGENT,
     apply_scale,
     fetch_imf_datamapper,
     fetch_imf_sdmx,
 )
+from country_primer.cross_checks import evaluate_cross_checks
 from country_primer.source_health import (
     SOURCE_HEALTH,
     failure_series,
@@ -115,12 +117,20 @@ def fetch_sarb(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any
     if not isinstance(payload, list):
         raise RuntimeError(f"SARB returned an unexpected payload for {code}.")
 
+    frequency = str(spec.get("frequency") or "").strip().lower()
     observations: list[dict[str, Any]] = []
     for row in payload:
         period = str(row.get("Period") or "")[:10]
         raw_value = row.get("Value")
         if not re.match(r"^\d{4}-\d{2}-\d{2}$", period) or raw_value is None:
             continue
+        if frequency == "monthly":
+            # SARB stamps monthly readings with the last calendar day of the
+            # reference month (e.g. "2026-07-31"); every other source in this
+            # repo (FRED, IMF SDMX, e-Stat) stamps the first day instead. Align
+            # to that convention so same-period observations from independent
+            # sources share a date key for cross-source comparison.
+            period = f"{period[:7]}-01"
         try:
             observations.append({"date": period, "value": float(raw_value)})
         except (TypeError, ValueError):
@@ -146,7 +156,7 @@ def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
         if fetcher == "sarb":
             return _apply_transform(fetch_sarb(session, spec))
         if fetcher == "imf_sdmx":
-            return _apply_transform(fetch_imf_sdmx(session, spec))
+            return _apply_transform(apply_scale(fetch_imf_sdmx(session, spec)))
         if fetcher == "imf_datamapper":
             return _apply_transform(fetch_imf_datamapper(session, spec))
         raise ValueError(f"Unknown fetcher: {fetcher}")
@@ -253,6 +263,12 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> st
     source_count = len({item.get("source_name") for item in series_list if item.get("observations")})
     gap_count = len(config.get("data_gaps", []))
     low_count = sum(1 for item in series_list if item.get("quality_status") == "low_confidence" and item.get("observations"))
+    authority_mix = collections.Counter(
+        (item.get("data_quality") or {}).get("source_authority")
+        for item in series_list if item.get("observations")
+    )
+    native = authority_mix.get("official_primary", 0)
+    mirror = authority_mix.get("official_mirror", 0)
     generated_date = datetime.now(UTC).date().isoformat()
     return f"""<!doctype html>
 <html lang="en">
@@ -289,6 +305,7 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> st
       <span class="meta-chip">{source_count} <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
       <span class="meta-chip">{gap_count} <span data-lang="en">official/vendor gaps tracked</span><span data-lang="zh">个官方/供应商缺口</span></span>
       <span class="meta-chip">{low_count} <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
+      <span class="meta-chip">{native} <span data-lang="en">native official</span><span data-lang="zh">原生官方</span> · {mirror} <span data-lang="en">mirror</span><span data-lang="zh">镜像</span></span>
     </div>
   </header>
 
@@ -436,6 +453,13 @@ def build(data_mode: str | None = None) -> Path:
             f"Unavailable indicators: {', '.join(unavailable[:12])}"
             f"{'...' if len(unavailable) > 12 else ''}"
         )
+    cross_checks = evaluate_cross_checks(config, series_list)
+    checks_by_id: dict[str, dict[str, Any]] = {}
+    for check in cross_checks:
+        for side in (check["primary"], check["secondary"]):
+            checks_by_id[side] = check
+    for item in series_list:
+        item["cross_check"] = checks_by_id.get(item["id"])
     _write_clean(OUT_HTML, render_html(config, series_list))
 
     policy_rate = next((item for item in charted if item["id"] == "policy_rate"), None)
@@ -454,6 +478,7 @@ def build(data_mode: str | None = None) -> Path:
         "unavailable": [item["id"] for item in series_list if not item.get("observations")],
         "data_mode": data_mode,
     }
+    summary["cross_checks"] = cross_checks
     summary["canonical_frame"] = (
         canonical_frame_metadata(CANONICAL_JSON)
         if data_mode == "snapshot"

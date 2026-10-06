@@ -7,14 +7,77 @@ transform choices without scraping HTML or refetching live sources.
 from __future__ import annotations
 
 import json
+from calendar import monthrange
 from collections import Counter, defaultdict
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 from typing import Any
 
 from country_primer.data_quality import assess_series_quality, clean as _clean
 from country_primer.framework import concept_id_for, framework_summary, load_macro_framework
 
 CANONICAL_OBSERVATION_COLUMNS = ["date", "value"]
+
+
+def month_index(value: date) -> int:
+    """A monotonic month counter (year*12 + month) for calendar-gap arithmetic."""
+    return value.year * 12 + value.month
+
+
+def calendar_gap_matches(frequency: str, periods: int, base_date: date, item_date: date) -> bool:
+    """True when ``item_date`` is exactly ``periods`` calendar periods after ``base_date``.
+
+    Used offline over already-built series (canonical frames, freshness
+    audits) to check that a declared frequency matches observed spacing, and
+    that a lag-transformed series has not drifted from its nominal cadence —
+    see validate_outputs.py. For computing a transform's own base
+    observation, use `shift_calendar_periods` plus a date lookup instead:
+    see its docstring for why index-based lag stepping is unsafe.
+    """
+    frequency = str(frequency or "").lower()
+    if frequency == "weekly":
+        return (item_date - base_date).days == periods * 7
+    months_per_period = {"quarterly": 3, "annual": 12}.get(frequency, 1)
+    return (month_index(item_date) - month_index(base_date)) == periods * months_per_period
+
+
+def shift_calendar_periods(value: date, frequency: str, periods: int) -> date:
+    """Return the date exactly ``periods`` calendar periods before ``value``.
+
+    Lag-based transforms (yoy/qoq/mom/pct_change/diff) must look up their
+    base observation by *calendar date*, not by a fixed array offset
+    (`observations[index - periods]`). Array-offset stepping breaks
+    permanently, not just at the gap: once one interior observation is
+    missing (e.g. BLS never published October 2025 CPI during the
+    government shutdown), every later index is shifted one slot early
+    forever, so "YoY" silently becomes a 13-month change for the rest of
+    the series' history — not just at the gap itself. Looking up the exact
+    expected date self-heals as soon as that date's own observation exists
+    again; only points whose exact calendar-aligned base is itself missing
+    should be skipped.
+    """
+    frequency = str(frequency or "").lower()
+    if frequency == "weekly":
+        return value - timedelta(days=periods * 7)
+    months_per_period = {"quarterly": 3, "annual": 12}.get(frequency, 1)
+    total_months = value.year * 12 + (value.month - 1) - periods * months_per_period
+    year, month = divmod(total_months, 12)
+    month += 1
+    target_month_length = monthrange(year, month)[1]
+    # This codebase's quarterly/annual dates are always the *last day* of
+    # their period (e.g. Mar 31, Jun 30, Sep 30, Dec 31 for quarter-ends),
+    # not a fixed day-of-month. min(value.day, target_month_length) is only
+    # correct when value.day exceeds the target month's length; it silently
+    # rounds down a valid end-of-period date otherwise (e.g. shifting Jun 30
+    # back one quarter must land on Mar 31, not Mar 30 -- min(30, 31) gives
+    # the wrong answer because 30 never exceeded March's own length). So an
+    # end-of-month source date always maps to the target month's own last
+    # day; any other convention (e.g. day=1 for monthly) is preserved via
+    # the min() clamp as before.
+    if value.day == monthrange(value.year, value.month)[1]:
+        day = target_month_length
+    else:
+        day = min(value.day, target_month_length)
+    return date(year, month, day)
 
 
 def _latest_observation(series: dict[str, Any]) -> dict[str, Any] | None:

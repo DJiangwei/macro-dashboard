@@ -15,7 +15,7 @@ import re
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from email.utils import parsedate_to_datetime
 from html import escape
 from pathlib import Path
@@ -30,6 +30,7 @@ from dashboard_summary_utils import (
     canonical_frame_metadata,
     load_canonical_data_first_frame,
     retain_last_known_good_series,
+    shift_calendar_periods,
     write_canonical_data_first_frame,
 )
 from build_china_dashboard import (  # Reuse the data-first page shell.
@@ -101,39 +102,71 @@ def _lag_for_frequency(frequency: str) -> int:
     return 12
 
 
+def _parse_obs_date(value: Any) -> date | None:
+    try:
+        return date.fromisoformat(str(value)[:10])
+    except (TypeError, ValueError):
+        return None
+
+
+def _lookup_base(
+    by_date: dict[str, Any], frequency: str, periods: int, item_date: date
+) -> float | None:
+    """Return the value observed exactly `periods` calendar periods before
+    `item_date`, or None if that exact date has no observation.
+
+    Looks up the base by its expected calendar date rather than a fixed
+    array offset — see shift_calendar_periods for why: one interior gap
+    would otherwise misalign every later point permanently, not just the
+    one next to the gap.
+    """
+    expected_date = shift_calendar_periods(item_date, frequency, periods)
+    return by_date.get(expected_date.isoformat())
+
+
 def _apply_transform(series: dict[str, Any]) -> dict[str, Any]:
     transform = series.get("transform")
     observations = list(series.get("observations") or [])
     if not transform or not observations:
         return series
 
+    frequency = str(series.get("frequency", ""))
+    by_date: dict[str, float] = {}
+    for item in observations:
+        parsed = _parse_obs_date(item.get("date"))
+        if parsed is not None:
+            by_date[parsed.isoformat()] = float(item["value"])
+
     transformed: list[dict[str, Any]] = []
     if transform == "yoy_pct":
-        lag = _lag_for_frequency(str(series.get("frequency", "")))
-        for index, item in enumerate(observations):
-            if index < lag:
+        lag = _lag_for_frequency(frequency)
+        for item in observations:
+            item_date = _parse_obs_date(item.get("date"))
+            if item_date is None:
                 continue
-            base = float(observations[index - lag]["value"])
+            base = _lookup_base(by_date, frequency, lag, item_date)
+            if base is None or base == 0:
+                continue
             value = float(item["value"])
-            if base == 0:
-                continue
             transformed.append({"date": item["date"], "value": ((value / base) - 1.0) * 100.0})
     elif transform == "diff":
-        for index, item in enumerate(observations):
-            if index == 0:
+        for item in observations:
+            item_date = _parse_obs_date(item.get("date"))
+            if item_date is None:
                 continue
-            transformed.append({
-                "date": item["date"],
-                "value": float(item["value"]) - float(observations[index - 1]["value"]),
-            })
+            base = _lookup_base(by_date, frequency, 1, item_date)
+            if base is None:
+                continue
+            transformed.append({"date": item["date"], "value": float(item["value"]) - base})
     elif transform == "pct_change":
-        for index, item in enumerate(observations):
-            if index == 0:
+        for item in observations:
+            item_date = _parse_obs_date(item.get("date"))
+            if item_date is None:
                 continue
-            base = float(observations[index - 1]["value"])
+            base = _lookup_base(by_date, frequency, 1, item_date)
+            if base is None or base == 0:
+                continue
             value = float(item["value"])
-            if base == 0:
-                continue
             transformed.append({"date": item["date"], "value": ((value / base) - 1.0) * 100.0})
     else:
         return {

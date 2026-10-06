@@ -159,7 +159,21 @@ def expected_next_release(series: dict[str, Any], latest: date) -> dict[str, Any
     }
 
 
-def source_authority(source_name: object, source_url: object = "") -> str:
+VALID_SOURCE_AUTHORITIES = frozenset({
+    "official_primary",
+    "official_mirror",
+    "public_wrapper",
+    "manual_curated",
+    "public_secondary",
+})
+
+
+def source_authority(source_name: object, source_url: object = "", declared: object = "") -> str:
+    # A config author who validated the source declares its tier explicitly;
+    # name matching is only the fallback for series that predate the field.
+    declared_value = clean(declared).lower().replace(" ", "_")
+    if declared_value in VALID_SOURCE_AUTHORITIES:
+        return declared_value
     source = f"{clean(source_name)} {clean(source_url)}".lower()
     if any(token in source for token in ("manual", "curated", "tracker")):
         return "manual_curated"
@@ -173,6 +187,9 @@ def source_authority(source_name: object, source_url: object = "") -> str:
         "bureau of economic analysis", "bea.gov", "bureau of labor statistics", "bls.gov",
         "federal reserve", "treasury.gov", "national bureau of statistics", "stats.gov.cn",
         "people's bank of china", "pbc.gov.cn", "pboc", "safe.gov.cn",
+        "bank of japan", "boj", "stat-search.boj", "e-stat", "estat",
+        "statistics bureau", "mhlw", "mlit", "meti",
+        "sarb", "resbank", "south african reserve bank",
     )):
         return "official_primary"
     return "public_secondary"
@@ -216,7 +233,11 @@ def assess_series_quality(series: dict[str, Any], *, today: date | None = None) 
     frequency = normalized_frequency(series.get("frequency"))
     max_age = int(series.get("max_age_days") or DEFAULT_MAX_AGE_DAYS.get(frequency, 365))
     derivation = derivation_type(series)
-    authority = source_authority(series.get("source_name") or series.get("source"), series.get("source_url"))
+    authority = source_authority(
+        series.get("source_name") or series.get("source"),
+        series.get("source_url"),
+        series.get("source_authority"),
+    )
     indicator_id = clean(series.get("id") or series.get("indicator_id"))
     scheduled_policy = indicator_id in {
         "reserve_balance_rate",
@@ -276,7 +297,15 @@ def assess_series_quality(series: dict[str, Any], *, today: date | None = None) 
         status = "unavailable"
     elif comparability == "low" or freshness == "stale":
         status = "low_confidence"
-    elif authority == "official_primary" and derivation == "observed" and freshness == "current" and validation == "passed":
+    elif (
+        # A declared transform of an official series (YoY from an official index) is
+        # normal macro practice, not a trust deduction. Substitutes standing in for a
+        # different concept remain excluded via comparability.
+        authority == "official_primary"
+        and derivation in {"observed", "derived"}
+        and freshness == "current"
+        and validation == "passed"
+    ):
         status = "verified"
     else:
         status = "watch"
