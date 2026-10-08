@@ -33,6 +33,7 @@ from dashboard_summary_utils import (
     canonical_frame_metadata,
     load_canonical_data_first_frame,
     retain_last_known_good_series,
+    track_revisions_and_vintages,
     write_canonical_data_first_frame,
 )
 from build_china_dashboard import (  # Reuse the data-first page shell.
@@ -442,6 +443,7 @@ def build(data_mode: str | None = None) -> Path:
         SOURCE_HEALTH.reset()
         series_list = fetch_all(config)
         series_list = retain_last_known_good_series(series_list, CANONICAL_JSON, config)
+        series_list = track_revisions_and_vintages(series_list, CANONICAL_JSON, config)
     apply_quality_assessments(series_list)
     charted = [item for item in series_list if item.get("observations")]
     min_chart_count = int(config.get("min_chart_count", 34))

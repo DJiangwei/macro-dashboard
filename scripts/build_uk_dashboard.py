@@ -35,6 +35,7 @@ from dashboard_summary_utils import (
     canonical_frame_metadata,
     load_canonical_data_first_frame,
     retain_last_known_good_series,
+    track_revisions_and_vintages,
     shift_calendar_periods,
     write_canonical_data_first_frame,
 )
@@ -1439,6 +1440,7 @@ def build(data_mode: str | None = None) -> Path:
         SOURCE_HEALTH.reset()
         series_list = fetch_all(config)
         series_list = retain_last_known_good_series(series_list, CANONICAL_JSON, config)
+        series_list = track_revisions_and_vintages(series_list, CANONICAL_JSON, config)
     apply_quality_assessments(series_list)
     _write_clean(OUT_HTML, render_html(config, series_list))
 

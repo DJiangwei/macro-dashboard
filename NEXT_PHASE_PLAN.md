@@ -129,7 +129,7 @@ Never place API keys in configs, generated HTML, summary JSON, tests, or docs.
 - Expand China official-native adapters where stable NBS/PBC/SAFE structured
   endpoints can replace public wrappers.
 
-### P3: Vintage and Revision Awareness
+### P3: Vintage and Revision Awareness — Completed 2026-10-07
 
 - Store release vintage and fetch timestamp separately from observation date.
 - Add revision flags for GDP, labour, CPI, fiscal, and balance-of-payments data.
