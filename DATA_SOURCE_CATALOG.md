@@ -17,7 +17,7 @@ Purpose: help future models and developers understand exactly which source is us
 
 | Country | Rendered indicators | Dropped proxy slots | Remaining rendered proxies |
 |---|---:|---:|---:|
-| Hungary | 107 | 4 | 0 |
+| Hungary | 106 | 4 | 0 |
 | Poland | 110 | 1 | 0 |
 | Czechia | 105 | 5 | 0 |
 | Romania | 106 | 5 | 0 |
@@ -78,7 +78,7 @@ Remaining rendered proxy slots: 0.
 | prices_wages | `energy_cpi_yoy` | Energy HICP, YoY | monthly | % YoY | 2026-08-01 | Eurostat | prc_hicp_minr | verified | Energy HICP is volatile and policy-sensitive; base effects can dominate near-term moves. Source validation passed. |
 | prices_wages | `food_cpi_yoy` | Food HICP, YoY | monthly | % YoY | 2026-08-01 | Eurostat | prc_hicp_minr | verified | Food aggregate can differ depending on processed/unprocessed classification; use as a broad food-price pressure gauge. Source validation passed. |
 | prices_wages | `ppi_yoy` | Producer Prices, YoY | monthly | % YoY | 2026-08-01 | Eurostat | sts_inppd_m (derived YoY) | verified | Energy weights can dominate PPI prints. Source validation passed. |
-| prices_wages | `import_prices_yoy` | Import Price Index, YoY | monthly | % YoY | 2026-08-01 | Hungarian Central Statistical Office STADAT | STADAT:ara0046:import-monthly-total | watch | Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Hungary national-statistics override; latest KSH methodology column is preferred and older-method values fill only missing early history. Source validation passed. |
+| prices_wages | `import_prices_yoy` | Import Price Index, YoY | monthly | % YoY | missing | missing | missing | missing | Missing after dropped-slot filtering; investigate adapter coverage. |
 | prices_wages | `avg_wage_yoy` | Average Gross Wage, YoY | quarterly | % YoY | 2026-04-01 | Eurostat | lc_lci_r2_q | verified | Enterprise-survey coverage differs across countries. Source validation passed. |
 | prices_wages | `real_wage_yoy` | Real Wage, YoY | quarterly | % YoY | 2026-04-01 | Derived from Eurostat labour-cost and HICP series | lc_lci_r2_q:D11 minus prc_hicp_minr:TOTAL:RCH_A | verified | Ex-post derived indicator; nominal wage/labour-cost growth minus headline HICP, so deflator choice matters. Derived from Eurostat wage and HICP adapters. Source validation passed. |
 | prices_wages | `unit_labour_cost` | Unit Labour Cost, YoY | quarterly | % YoY | 2026-04-01 | Eurostat | namq_10_lp_ulc | verified | Eurostat nominal unit labour cost based on hours worked, unadjusted YoY; productivity and compensation revisions can alter history. Source validation passed. |
@@ -541,7 +541,6 @@ Remaining rendered proxy slots: 0.
 | Czech Statistical Office open data | 1 | CZ:import_prices_yoy |
 | FRED / IMF International Financial Statistics | 1 | PL:fx_reserves |
 | Government Debt Management Agency of Hungary snapshot | 1 | HU:avg_debt_maturity |
-| Hungarian Central Statistical Office STADAT | 1 | HU:import_prices_yoy |
 | INSSE TEMPO | 1 | RO:import_prices_yoy |
 | Magyar Nemzeti Bank | 1 | HU:policy_rate |
 | Narodowy Bank Polski | 1 | PL:policy_rate |

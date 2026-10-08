@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-08T15:48:20.029139+00:00",
+  "generated": "2026-10-08T16:14:03.466905+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -449,11 +449,13 @@
     },
     "CN": {
       "calls": 108,
-      "success": 108,
+      "success": 107,
       "empty": 0,
-      "failed": 0,
+      "failed": 1,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "timeout": 1
+      },
       "empty_reasons": {},
       "sources": {
         "akshare_table": {
@@ -478,10 +480,21 @@
           "success": 2
         },
         "world_bank": {
-          "success": 22
+          "failed": 1,
+          "success": 21
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-08T15:59:10.237657+00:00",
+          "country": "CN",
+          "indicator_id": "exports_goods_services",
+          "source_id": "world_bank",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
+        }
+      ]
     },
     "JP": {
       "calls": 52,

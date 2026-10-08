@@ -284,7 +284,8 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
         regime_rows.append(f"""
       <tr>
         <td><strong>{escape(str(code))}</strong><span>{escape(str(card.get('name', '')))}</span></td>
-        <td><span class="score-pill {_status_class(regime.get('composite_score'))}">{escape(str(regime.get('composite_score', 'n/a')))}</span><em>{escape(str(regime.get('composite_label', 'n/a')))}</em></td>
+        <td><span class="score-pill {_status_class(regime.get('cyclical_score'))}">{escape(str(regime.get('cyclical_score', 'n/a')))}</span><em>{escape(str(regime.get('composite_label', 'n/a')))}</em></td>
+        <td><span class="score-pill {_status_class(regime.get('structural_score'))}">{escape(str(regime.get('structural_score', 'n/a')))}</span></td>
         <td>{escape(str((dims.get('growth') or {}).get('label', 'n/a')))}</td>
         <td>{escape(str((dims.get('inflation') or {}).get('label', 'n/a')))}</td>
         <td>{escape(str((dims.get('policy') or {}).get('label', 'n/a')))}</td>
@@ -339,7 +340,7 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
     </div>
     <div class="table-wrap">
       <table class="regime-table">
-        <thead><tr><th>Country</th><th>Composite</th><th>Growth</th><th>Inflation</th><th>Policy</th><th>Data Quality</th></tr></thead>
+        <thead><tr><th>Country</th><th>Cyclical</th><th>Structural</th><th>Growth</th><th>Inflation</th><th>Policy</th><th>Data Quality</th></tr></thead>
         <tbody>{''.join(regime_rows)}</tbody>
       </table>
     </div>

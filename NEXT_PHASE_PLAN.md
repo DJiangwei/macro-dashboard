@@ -139,9 +139,9 @@ Never place API keys in configs, generated HTML, summary JSON, tests, or docs.
 ### P4: Trading Workbench
 
 - Build release-surprise views only after consensus licensing is resolved.
-- Add transformation-aware regime signals with explicit confidence weights.
-- Separate slow structural scores from fast cyclical indicators.
-- Keep portfolio/trade conclusions outside the data-quality score.
+- [x] Add transformation-aware regime signals with explicit confidence weights.
+- [x] Separate slow structural scores from fast cyclical indicators.
+- [x] Keep portfolio/trade conclusions outside the data-quality score.
 
 ### P5: Generator Consolidation
 
