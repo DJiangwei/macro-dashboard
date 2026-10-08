@@ -1186,9 +1186,9 @@ class DerivedMacroFetcher(BaseFetcher):
             return self._foreign_ownership_bonds(country, spec)
         if spec.indicator_id == "sov_spread_vs_bund":
             return self._sov_spread_vs_bund(country, spec)
-        if spec.indicator_id == "cds_5y":
+        if spec.indicator_id == "sovereign_credit_spread_proxy":
             return self._public_sovereign_risk_spread(country, spec, "CDS substitute")
-        if spec.indicator_id == "embi_spread":
+        if spec.indicator_id == "sovereign_external_spread_proxy":
             return self._public_sovereign_risk_spread(country, spec, "EMBI substitute")
         if spec.indicator_id == "sov_yield_2y":
             return self._short_rate_market_proxy(country, spec, "2Y sovereign yield proxy")

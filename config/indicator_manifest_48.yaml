@@ -629,7 +629,7 @@ indicators:
   quality_status: low_confidence
   quality_note: Public short-rate proxy is used until a true 2Y sovereign yield feed is wired; not suitable for precise curve trades.
 - section_id: fiscal_sovereign
-  indicator_id: cds_5y
+  indicator_id: sovereign_credit_spread_proxy
   label: Sovereign Credit Spread Substitute
   unit: bp
   source: Derived from Eurostat sovereign yields
@@ -900,7 +900,7 @@ indicators:
   quality_status: watch
   quality_note: Derived monthly spread versus Germany 10Y benchmark; check maturity matching and market convention.
 - section_id: markets_valuation
-  indicator_id: embi_spread
+  indicator_id: sovereign_external_spread_proxy
   label: External Sovereign Spread Substitute
   unit: bp
   source: Derived from Eurostat sovereign yields
