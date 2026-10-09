@@ -105,11 +105,10 @@ indicators:
     label_en: "Industrial Value Added, YoY"
     label_zh: "工业增加值同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_gyzjz
-    date_column: "月份"
-    value_column: "同比增长"
-    series: "macro_china_gyzjz:同比增长"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_INDUSTRY_ADDVALUE"
+    columns: "REPORT_DATE,TIME,ADDVALUE_SAME,ADDVALUE_SEQUENTIAL,ADDVALUE_ACCUMULATE"
+    value_column: "ADDVALUE_SAME"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -120,11 +119,10 @@ indicators:
     label_en: "Manufacturing PMI"
     label_zh: "制造业PMI"
     unit: "Index"
-    fetcher: akshare_table
-    function: macro_china_pmi
-    date_column: "月份"
-    value_column: "制造业-指数"
-    series: "macro_china_pmi:制造业-指数"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_PMI"
+    columns: "REPORT_DATE,TIME,MANUFACTURING,NON_MANUFACTURING"
+    value_column: "MANUFACTURING"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -135,11 +133,10 @@ indicators:
     label_en: "Non-Manufacturing PMI"
     label_zh: "非制造业PMI"
     unit: "Index"
-    fetcher: akshare_table
-    function: macro_china_pmi
-    date_column: "月份"
-    value_column: "非制造业-指数"
-    series: "macro_china_pmi:非制造业-指数"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_PMI"
+    columns: "REPORT_DATE,TIME,MANUFACTURING,NON_MANUFACTURING"
+    value_column: "NON_MANUFACTURING"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -237,11 +234,10 @@ indicators:
     label_en: "Fixed Asset Investment, YoY"
     label_zh: "固定资产投资同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_gdzctz
-    date_column: "月份"
-    value_column: "同比增长"
-    series: "macro_china_gdzctz:同比增长"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_ASSET_INVEST"
+    columns: "REPORT_DATE,TIME,INVEST_ACCUMULATE,INVEST_SAME,PRIMARY_INDUSTRY_ACCUMULATE,PRIMARY_INDUSTRY_SAME,SECONDARY_INDUSTRY_ACCUMULATE,SECONDARY_INDUSTRY_SAME,INDUSTRY_ACCUMULATE,INDUSTRY_SAME,TERTIARY_INDUSTRY_ACCUMULATE,TERTIARY_INDUSTRY_SAME,CONSTRUCT_ACCUMULATE,CONSTRUCT_SAME,EQUIP_ACCUMULATE,EQUIP_SAME,OTHER_ACCUMULATE,OTHER_SAME"
+    value_column: "INVEST_SAME"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -471,11 +467,10 @@ indicators:
     label_en: "Retail Sales, YoY"
     label_zh: "社会消费品零售同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_consumer_goods_retail
-    date_column: "月份"
-    value_column: "同比增长"
-    series: "macro_china_consumer_goods_retail:同比增长"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_TOTAL_RETAIL"
+    columns: "REPORT_DATE,TIME,TOTAL_RETAIL,TOTAL_RETAIL_SAME,TOTAL_RETAIL_SEQUENTIAL,TOTAL_RETAIL_ACCUMULATE,ACCUMULATE_SAME"
+    value_column: "TOTAL_RETAIL_SAME"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -616,11 +611,10 @@ indicators:
     label_en: "Customs Exports, YoY"
     label_zh: "海关出口同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_hgjck
-    date_column: "月份"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_CUSTOMS"
+    columns: "REPORT_DATE,TIME,EXPORT_USD,IMPORT_USD,BALANCE_USD,EXPORT_USD_SAME,IMPORT_USD_SAME,BALANCE_USD_SAME"
     value_column: "当月出口额-同比增长"
-    series: "macro_china_hgjck:当月出口额-同比增长"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -631,11 +625,10 @@ indicators:
     label_en: "Customs Imports, YoY"
     label_zh: "海关进口同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_hgjck
-    date_column: "月份"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_CUSTOMS"
+    columns: "REPORT_DATE,TIME,EXPORT_USD,IMPORT_USD,BALANCE_USD,EXPORT_USD_SAME,IMPORT_USD_SAME,BALANCE_USD_SAME"
     value_column: "当月进口额-同比增长"
-    series: "macro_china_hgjck:当月进口额-同比增长"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -647,11 +640,10 @@ indicators:
     label_zh: "海关出口金额"
     unit: "USD bn"
     transform: "usd_thousand_to_bn"
-    fetcher: akshare_table
-    function: macro_china_hgjck
-    date_column: "月份"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_CUSTOMS"
+    columns: "REPORT_DATE,TIME,EXPORT_USD,IMPORT_USD,BALANCE_USD,EXPORT_USD_SAME,IMPORT_USD_SAME,BALANCE_USD_SAME"
     value_column: "当月出口额-金额"
-    series: "macro_china_hgjck:当月出口额-金额"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -663,11 +655,10 @@ indicators:
     label_zh: "海关进口金额"
     unit: "USD bn"
     transform: "usd_thousand_to_bn"
-    fetcher: akshare_table
-    function: macro_china_hgjck
-    date_column: "月份"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_CUSTOMS"
+    columns: "REPORT_DATE,TIME,EXPORT_USD,IMPORT_USD,BALANCE_USD,EXPORT_USD_SAME,IMPORT_USD_SAME,BALANCE_USD_SAME"
     value_column: "当月进口额-金额"
-    series: "macro_china_hgjck:当月进口额-金额"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -679,14 +670,13 @@ indicators:
     label_zh: "海关贸易差额"
     unit: "USD bn"
     transform: "usd_thousand_to_bn"
-    fetcher: akshare_table
-    function: macro_china_hgjck
-    date_column: "月份"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_CUSTOMS"
+    columns: "REPORT_DATE,TIME,EXPORT_USD,IMPORT_USD,BALANCE_USD,EXPORT_USD_SAME,IMPORT_USD_SAME,BALANCE_USD_SAME"
     value_columns:
       - "当月出口额-金额"
       - "当月进口额-金额"
     value_operation: "difference"
-    series: "macro_china_hgjck:当月出口额-金额-当月进口额-金额"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -844,11 +834,10 @@ indicators:
     label_en: "M2 Growth, YoY"
     label_zh: "M2同比增速"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_money_supply
-    date_column: "月份"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_MONEY_SUPPLY"
+    columns: "REPORT_DATE,TIME,M2,M2_SAME,M2_SEQUENTIAL,M1,M1_SAME,M1_SEQUENTIAL,M0,M0_SAME,M0_SEQUENTIAL"
     value_column: "货币和准货币(M2)-同比增长"
-    series: "macro_china_money_supply:M2同比增长"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -859,11 +848,10 @@ indicators:
     label_en: "M1 Growth, YoY"
     label_zh: "M1同比增速"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_money_supply
-    date_column: "月份"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_MONEY_SUPPLY"
+    columns: "REPORT_DATE,TIME,M2,M2_SAME,M2_SEQUENTIAL,M1,M1_SAME,M1_SEQUENTIAL,M0,M0_SAME,M0_SEQUENTIAL"
     value_column: "货币(M1)-同比增长"
-    series: "macro_china_money_supply:M1同比增长"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -907,11 +895,10 @@ indicators:
     label_zh: "新增人民币贷款"
     unit: "CNY tn"
     transform: "cny_100mn_to_trn"
-    fetcher: akshare_table
-    function: macro_china_new_financial_credit
-    date_column: "月份"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_NEW_LOAN"
+    columns: "REPORT_DATE,TIME,NEW_LOAN,NEW_LOAN_SAME,NEW_LOAN_SEQUENTIAL,NEW_LOAN_ACCUMULATE,ACCUMULATE_SAME"
     value_column: "当月"
-    series: "macro_china_new_financial_credit:当月"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -1214,11 +1201,10 @@ indicators:
     label_en: "CPI Inflation, YoY"
     label_zh: "CPI同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_cpi
-    date_column: "月份"
-    value_column: "全国-同比增长"
-    series: "macro_china_cpi:全国-同比增长"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_CPI"
+    columns: "REPORT_DATE,TIME,NATIONAL_BASE,NATIONAL_SAME,NATIONAL_SEQUENTIAL,NATIONAL_ACCUMULATE,CITY_BASE,CITY_SAME,CITY_SEQUENTIAL,CITY_ACCUMULATE,RURAL_BASE,RURAL_SAME,RURAL_SEQUENTIAL,RURAL_ACCUMULATE"
+    value_column: "NATIONAL_SAME"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -1229,11 +1215,10 @@ indicators:
     label_en: "CPI Inflation, MoM"
     label_zh: "CPI环比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_cpi
-    date_column: "月份"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_CPI"
+    columns: "REPORT_DATE,TIME,NATIONAL_BASE,NATIONAL_SAME,NATIONAL_SEQUENTIAL,NATIONAL_ACCUMULATE,CITY_BASE,CITY_SAME,CITY_SEQUENTIAL,CITY_ACCUMULATE,RURAL_BASE,RURAL_SAME,RURAL_SEQUENTIAL,RURAL_ACCUMULATE"
     value_column: "全国-环比增长"
-    series: "macro_china_cpi:全国-环比增长"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -1244,11 +1229,10 @@ indicators:
     label_en: "Urban CPI, YoY"
     label_zh: "城市CPI同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_cpi
-    date_column: "月份"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_CPI"
+    columns: "REPORT_DATE,TIME,NATIONAL_BASE,NATIONAL_SAME,NATIONAL_SEQUENTIAL,NATIONAL_ACCUMULATE,CITY_BASE,CITY_SAME,CITY_SEQUENTIAL,CITY_ACCUMULATE,RURAL_BASE,RURAL_SAME,RURAL_SEQUENTIAL,RURAL_ACCUMULATE"
     value_column: "城市-同比增长"
-    series: "macro_china_cpi:城市-同比增长"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -1259,11 +1243,10 @@ indicators:
     label_en: "Rural CPI, YoY"
     label_zh: "农村CPI同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_cpi
-    date_column: "月份"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_CPI"
+    columns: "REPORT_DATE,TIME,NATIONAL_BASE,NATIONAL_SAME,NATIONAL_SEQUENTIAL,NATIONAL_ACCUMULATE,CITY_BASE,CITY_SAME,CITY_SEQUENTIAL,CITY_ACCUMULATE,RURAL_BASE,RURAL_SAME,RURAL_SEQUENTIAL,RURAL_ACCUMULATE"
     value_column: "农村-同比增长"
-    series: "macro_china_cpi:农村-同比增长"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -1274,11 +1257,10 @@ indicators:
     label_en: "PPI Inflation, YoY"
     label_zh: "PPI同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_ppi
-    date_column: "月份"
-    value_column: "当月同比增长"
-    series: "macro_china_ppi:当月同比增长"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_PPI"
+    columns: "REPORT_DATE,TIME,BASE,BASE_SAME,BASE_SEQUENTIAL,BASE_ACCUMULATE"
+    value_column: "BASE_SAME"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -1289,11 +1271,10 @@ indicators:
     label_en: "PPI Index"
     label_zh: "PPI当月指数"
     unit: "Index"
-    fetcher: akshare_table
-    function: macro_china_ppi
-    date_column: "月份"
-    value_column: "当月"
-    series: "macro_china_ppi:当月"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_PPI"
+    columns: "REPORT_DATE,TIME,BASE,BASE_SAME,BASE_SEQUENTIAL,BASE_ACCUMULATE"
+    value_column: "BASE"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -1304,11 +1285,10 @@ indicators:
     label_en: "Enterprise Goods Prices, YoY"
     label_zh: "企业商品价格总指数同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_qyspjg
-    date_column: "月份"
-    value_column: "总指数-同比增长"
-    series: "macro_china_qyspjg:总指数-同比增长"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_GOODS_INDEX"
+    columns: "REPORT_DATE,TIME,BASE,BASE_SAME,BASE_SEQUENTIAL,FARM_BASE,FARM_BASE_SAME,FARM_BASE_SEQUENTIAL,MINERAL_BASE,MINERAL_BASE_SAME,MINERAL_BASE_SEQUENTIAL,ENERGY_BASE,ENERGY_BASE_SAME,ENERGY_BASE_SEQUENTIAL"
+    value_column: "BASE_SAME"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -1319,11 +1299,10 @@ indicators:
     label_en: "Enterprise Agri Goods Prices, YoY"
     label_zh: "企业商品农产品价格同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_qyspjg
-    date_column: "月份"
-    value_column: "农产品-同比增长"
-    series: "macro_china_qyspjg:农产品-同比增长"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_GOODS_INDEX"
+    columns: "REPORT_DATE,TIME,BASE,BASE_SAME,BASE_SEQUENTIAL,FARM_BASE,FARM_BASE_SAME,FARM_BASE_SEQUENTIAL,MINERAL_BASE,MINERAL_BASE_SAME,MINERAL_BASE_SEQUENTIAL,ENERGY_BASE,ENERGY_BASE_SAME,ENERGY_BASE_SEQUENTIAL"
+    value_column: "FARM_BASE_SAME"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -1334,11 +1313,10 @@ indicators:
     label_en: "Enterprise Mineral Goods Prices, YoY"
     label_zh: "企业商品矿产品价格同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_qyspjg
-    date_column: "月份"
-    value_column: "矿产品-同比增长"
-    series: "macro_china_qyspjg:矿产品-同比增长"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_GOODS_INDEX"
+    columns: "REPORT_DATE,TIME,BASE,BASE_SAME,BASE_SEQUENTIAL,FARM_BASE,FARM_BASE_SAME,FARM_BASE_SEQUENTIAL,MINERAL_BASE,MINERAL_BASE_SAME,MINERAL_BASE_SEQUENTIAL,ENERGY_BASE,ENERGY_BASE_SAME,ENERGY_BASE_SEQUENTIAL"
+    value_column: "MINERAL_BASE_SAME"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -1349,11 +1327,10 @@ indicators:
     label_en: "Enterprise Coal/Oil/Power Prices, YoY"
     label_zh: "企业商品煤油电价格同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_qyspjg
-    date_column: "月份"
-    value_column: "煤油电-同比增长"
-    series: "macro_china_qyspjg:煤油电-同比增长"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_GOODS_INDEX"
+    columns: "REPORT_DATE,TIME,BASE,BASE_SAME,BASE_SEQUENTIAL,FARM_BASE,FARM_BASE_SAME,FARM_BASE_SEQUENTIAL,MINERAL_BASE,MINERAL_BASE_SAME,MINERAL_BASE_SEQUENTIAL,ENERGY_BASE,ENERGY_BASE_SAME,ENERGY_BASE_SEQUENTIAL"
+    value_column: "ENERGY_BASE_SAME"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -1541,11 +1518,10 @@ indicators:
     label_en: "Fiscal Revenue YTD, YoY"
     label_zh: "财政收入累计同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_czsr
-    date_column: "月份"
-    value_column: "累计-同比增长"
-    series: "macro_china_czsr:累计-同比增长"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_INCOME"
+    columns: "REPORT_DATE,TIME,BASE,BASE_SAME,BASE_SEQUENTIAL,BASE_ACCUMULATE,ACCUMULATE_SAME"
+    value_column: "ACCUMULATE_SAME"
     source_name: "AKShare / Eastmoney Data Center"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "monthly"
@@ -1557,11 +1533,10 @@ indicators:
     label_zh: "税收收入累计"
     unit: "CNY tn"
     transform: "cny_100mn_to_trn"
-    fetcher: akshare_table
-    function: macro_china_national_tax_receipts
-    date_column: "季度"
-    value_column: "税收收入合计"
-    series: "macro_china_national_tax_receipts:税收收入合计"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_TAX"
+    columns: "REPORT_DATE,TIME,TAX_INCOME,TAX_INCOME_SAME,TAX_INCOME_SEQUENTIAL"
+    value_column: "TAX_INCOME"
     source_name: "AKShare / National Tax Receipts"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "quarterly"
@@ -1572,11 +1547,10 @@ indicators:
     label_en: "Tax Receipts YTD, YoY"
     label_zh: "税收收入累计同比"
     unit: "%"
-    fetcher: akshare_table
-    function: macro_china_national_tax_receipts
-    date_column: "季度"
-    value_column: "较上年同期"
-    series: "macro_china_national_tax_receipts:较上年同期"
+    fetcher: eastmoney_api
+    report_name: "RPT_ECONOMY_TAX"
+    columns: "REPORT_DATE,TIME,TAX_INCOME,TAX_INCOME_SAME,TAX_INCOME_SEQUENTIAL"
+    value_column: "TAX_INCOME_SAME"
     source_name: "AKShare / National Tax Receipts"
     source_url: "https://www.akshare.xyz/data/macro/macro.html"
     frequency: "quarterly"

@@ -559,6 +559,20 @@ def fetch_all(config: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[s
                 return fetch_fred_graph(spec)
             if fetcher == "akshare_table":
                 return fetch_akshare_table(spec, akshare_cache)
+            if fetcher == "eastmoney_api":
+                return fetch_eastmoney(requests.Session(), spec)
+            if fetcher == "nbs_api":
+                try:
+                    return fetch_nbs_api(requests.Session(), spec)
+                except Exception as exc:
+                    fallback = spec.get("fallback")
+                    if fallback == "eastmoney_api":
+                        print(f"Fallback triggered for {spec.get('id')}: {exc}")
+                        return fetch_eastmoney(requests.Session(), spec)
+                    elif fallback == "akshare_table":
+                        print(f"Fallback triggered for {spec.get('id')}: {exc}")
+                        return fetch_akshare_table(spec, akshare_cache)
+                    raise exc
             if fetcher == "akshare_wide_year_month":
                 return fetch_akshare_wide_year_month(spec, akshare_cache)
             if fetcher == "eastmoney_industry_indicator":

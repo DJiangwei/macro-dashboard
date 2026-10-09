@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-09T21:16:27.541950+00:00",
+  "generated": "2026-10-09T21:43:18.553641+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -449,18 +449,23 @@
     },
     "CN": {
       "calls": 108,
-      "success": 108,
+      "success": 82,
       "empty": 0,
-      "failed": 0,
+      "failed": 26,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "unexpected_error": 26
+      },
       "empty_reasons": {},
       "sources": {
         "akshare_table": {
-          "success": 64
+          "success": 38
         },
         "akshare_wide_year_month": {
           "success": 3
+        },
+        "eastmoney_api": {
+          "failed": 26
         },
         "eastmoney_industry_indicator": {
           "success": 5
@@ -481,7 +486,242 @@
           "success": 22
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-09T21:36:58.897235+00:00",
+          "country": "CN",
+          "indicator_id": "industrial_value_added_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:36:58.897259+00:00",
+          "country": "CN",
+          "indicator_id": "manufacturing_pmi_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:36:58.897269+00:00",
+          "country": "CN",
+          "indicator_id": "non_manufacturing_pmi_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:37:16.255924+00:00",
+          "country": "CN",
+          "indicator_id": "fixed_asset_investment_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:37:40.091767+00:00",
+          "country": "CN",
+          "indicator_id": "retail_sales_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:37:45.618078+00:00",
+          "country": "CN",
+          "indicator_id": "customs_exports_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:37:45.618100+00:00",
+          "country": "CN",
+          "indicator_id": "customs_imports_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:37:45.618118+00:00",
+          "country": "CN",
+          "indicator_id": "customs_exports_value_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:37:45.618128+00:00",
+          "country": "CN",
+          "indicator_id": "customs_imports_value_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:37:45.618136+00:00",
+          "country": "CN",
+          "indicator_id": "customs_trade_balance_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:38:00.752449+00:00",
+          "country": "CN",
+          "indicator_id": "m2_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:38:00.752464+00:00",
+          "country": "CN",
+          "indicator_id": "m1_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:38:01.729038+00:00",
+          "country": "CN",
+          "indicator_id": "new_rmb_loans_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:39:13.431630+00:00",
+          "country": "CN",
+          "indicator_id": "cpi_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:39:13.431645+00:00",
+          "country": "CN",
+          "indicator_id": "cpi_mom_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:39:13.431654+00:00",
+          "country": "CN",
+          "indicator_id": "urban_cpi_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:39:13.431662+00:00",
+          "country": "CN",
+          "indicator_id": "rural_cpi_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:39:13.431669+00:00",
+          "country": "CN",
+          "indicator_id": "ppi_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:39:13.431677+00:00",
+          "country": "CN",
+          "indicator_id": "ppi_index_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:39:13.431685+00:00",
+          "country": "CN",
+          "indicator_id": "enterprise_goods_price_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:39:13.431692+00:00",
+          "country": "CN",
+          "indicator_id": "enterprise_agri_goods_price_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:39:13.431700+00:00",
+          "country": "CN",
+          "indicator_id": "enterprise_mineral_goods_price_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:39:13.431707+00:00",
+          "country": "CN",
+          "indicator_id": "enterprise_energy_goods_price_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:40:33.964790+00:00",
+          "country": "CN",
+          "indicator_id": "fiscal_revenue_ytd_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:40:33.964809+00:00",
+          "country": "CN",
+          "indicator_id": "tax_receipts_ytd_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        },
+        {
+          "timestamp": "2026-10-09T21:40:33.964819+00:00",
+          "country": "CN",
+          "indicator_id": "tax_receipts_yoy_akshare",
+          "source_id": "eastmoney_api",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'fetch_eastmoney' is not defined"
+        }
+      ]
     },
     "JP": {
       "calls": 0,

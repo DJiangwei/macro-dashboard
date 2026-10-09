@@ -277,3 +277,159 @@ def fetch_estat(session: requests.Session, spec: dict[str, Any]) -> dict[str, An
         "provider_updated": observations[-1]["date"],
         "api_url": ESTAT_BASE,
     }
+
+def fetch_eastmoney(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    url = "https://datacenter-web.eastmoney.com/api/data/v1/get"
+    params = {
+        "columns": str(spec["columns"]),
+        "pageNumber": "1",
+        "pageSize": str(spec.get("page_size", 500)),
+        "sortColumns": str(spec.get("sort_columns", "REPORT_DATE")),
+        "sortTypes": "-1",
+        "source": "WEB",
+        "client": "WEB",
+        "reportName": str(spec["report_name"]),
+    }
+    if "filter" in spec:
+        params["filter"] = str(spec["filter"])
+
+    response = session.get(url, params=params, headers={"User-Agent": USER_AGENT}, timeout=(5, 45))
+    response.raise_for_status()
+    payload = response.json()
+    if payload.get("code") != 0:
+        raise RuntimeError(f"Eastmoney API error: {payload.get('message')}")
+
+    data = payload.get("result", {})
+    if data is None:
+        data = {}
+    rows = data.get("data") or []
+
+    date_column = spec.get("date_column", "REPORT_DATE")
+    value_column = spec["value_column"]
+
+    observations = []
+    for row in rows:
+        raw_date = str(row.get(date_column) or "")
+        if len(raw_date) >= 10:
+            obs_date = raw_date[:10]
+        else:
+            continue
+
+        raw_value = row.get(value_column)
+        if raw_value is None or raw_value == "":
+            continue
+        try:
+            value = float(raw_value)
+        except (TypeError, ValueError):
+            continue
+
+        observations.append({"date": obs_date, "value": value})
+
+    observations.sort(key=lambda item: item["date"])
+
+    start_date = str(spec.get("start_date") or "")
+    if start_date:
+        observations = [o for o in observations if o["date"] >= start_date]
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": url,
+    }
+import time
+import requests
+
+def fetch_nbs_api(session: requests.Session, spec: dict) -> dict:
+    url = "https://data.stats.gov.cn/easyquery.htm"
+    # Example spec:
+    # dbcode: "hgyd"
+    # indicator_id: "A010101"
+    # period: "LAST120"
+    indicator_id = spec["indicator_id"]
+    dbcode = spec.get("dbcode", "hgyd")
+    period = spec.get("period", "LAST120")
+
+    # We must provide a user-agent to avoid immediate rejection from basic filters
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "X-Requested-With": "XMLHttpRequest",
+    }
+
+    # The NBS API sometimes expects a pre-flight cookie or it will return 403 UrlACL/JS challenge.
+    # We first hit the home page to get a JSESSIONID or similar cookies.
+    session.get("https://data.stats.gov.cn/", headers=headers, verify=False, timeout=(5, 10))
+
+    k1 = str(int(time.time() * 1000))
+    params = {
+        "m": "QueryData",
+        "dbcode": dbcode,
+        "rowcode": "zb",
+        "colcode": "sj",
+        "wds": "[]",
+        "dfwds": f'[{{"wdcode":"zb","valuecode":"{indicator_id}"}},{{"wdcode":"sj","valuecode":"{period}"}}]',
+        "k1": k1,
+    }
+
+    response = session.get(url, params=params, headers=headers, verify=False, timeout=(5, 30))
+    # We don't raise immediately because 403 might happen in CI, we want a clean error message
+    if response.status_code == 403:
+        raise RuntimeError("NBS API returned 403 Forbidden. This is typically caused by geoblocking (UrlACL) for non-China IP addresses.")
+    response.raise_for_status()
+
+    payload = response.json()
+    if payload.get("returncode") != 200:
+        raise RuntimeError(f"NBS API error: {payload.get('returndata', {}).get('errormsg', 'Unknown error')}")
+
+    datanodes = payload.get("returndata", {}).get("datanodes", [])
+    if not datanodes:
+        raise RuntimeError(f"NBS API returned no data nodes for indicator {indicator_id}")
+
+    observations = []
+    for node in datanodes:
+        # node format: {"code": "zb.A020101_sj.202301", "data": {"data": 123.4, "hasdata": True}}
+        has_data = node.get("data", {}).get("hasdata", False)
+        if not has_data:
+            continue
+
+        value = node.get("data", {}).get("data")
+        if value is None:
+            continue
+
+        # extract period from code, e.g., "zb.A020101_sj.202301" -> "202301"
+        code_str = node.get("code", "")
+        # The time code is after "sj."
+        if "_sj." not in code_str:
+            continue
+        time_part = code_str.split("_sj.")[-1]
+
+        # parse time_part (YYYYMM or YYYYCQ or YYYY)
+        if len(time_part) == 6: # YYYYMM
+            year, month = time_part[:4], time_part[4:]
+            obs_date = f"{year}-{month}-01"
+        elif len(time_part) == 5 and time_part.endswith("A") or time_part.endswith("B") or time_part.endswith("C") or time_part.endswith("D"):
+            # Quarters in NBS: A=Q1, B=Q2, C=Q3, D=Q4 (wait, is it? We need to verify).
+            # Actually, NBS quarters are usually "2023A", "2023B", "2023C", "2023D".
+            year = time_part[:4]
+            q_map = {"A": "01", "B": "04", "C": "07", "D": "10"}
+            obs_date = f"{year}-{q_map.get(time_part[-1], '01')}-01"
+        elif len(time_part) == 4: # YYYY
+            obs_date = f"{time_part}-12-01"
+        else:
+            continue
+
+        observations.append({"date": obs_date, "value": float(value)})
+
+    observations.sort(key=lambda item: item["date"])
+
+    start_date = str(spec.get("start_date") or "")
+    if start_date:
+        observations = [o for o in observations if o["date"] >= start_date]
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": url,
+    }
