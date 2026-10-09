@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-10-08T16:14:03.731767+00:00
+Generated: 2026-10-09T21:16:27.763072+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -12,7 +12,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 4 | `growth_demand` | `consumption_growth` Household Consumption Growth | - | - | - | - | W | - | - | V | W |
 | 5 | `growth_demand` | `investment_growth` Investment Growth | W | W | W | W | W | W | L | V | W |
 | 6 | `production_cycle` | `industrial_production_growth` Industrial Production Growth | V | V | V | W | W | L | S | W | W |
-| 7 | `production_cycle` | `retail_sales_growth` Retail Sales Growth | V | V | W | V | W | L | L | V | W |
+| 7 | `production_cycle` | `retail_sales_growth` Retail Sales Growth | V | V | V | V | W | L | L | V | W |
 | 8 | `production_cycle` | `business_confidence` Business Confidence | V | V | V | V | W | W | W | W | W |
 | 9 | `labour_household` | `unemployment_rate` Unemployment Rate | V | V | V | V | W | W | L | L | W |
 | 10 | `labour_household` | `employment_growth` Employment Growth | V | V | V | V | - | W | L | V | W |
@@ -61,7 +61,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 |---|---:|---:|---:|---:|---:|---:|
 | HU | 41/48 | 22 | 15 | 4 | 0 | 7 |
 | PL | 41/48 | 23 | 14 | 4 | 0 | 7 |
-| CZ | 41/48 | 22 | 15 | 4 | 0 | 7 |
+| CZ | 41/48 | 23 | 14 | 4 | 0 | 7 |
 | RO | 41/48 | 21 | 16 | 4 | 0 | 7 |
 | CN | 25/48 | 0 | 24 | 1 | 0 | 23 |
 | JP | 29/48 | 0 | 18 | 11 | 0 | 19 |

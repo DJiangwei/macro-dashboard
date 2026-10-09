@@ -1,0 +1,86 @@
+Waiting for build-v4 processes to finish...
+Running make validate...
+scripts/uv_project.sh run pytest -q
+........................................................................ [ 71%]
+.............................                                            [100%]
+101 passed in 1.09s
+scripts/uv_project.sh run python scripts/validate_outputs.py
+HU: stable route and view contract ok
+PL: stable route and view contract ok
+CZ: stable route and view contract ok
+RO: stable route and view contract ok
+CN: stable route and view contract ok
+JP: stable route and view contract ok
+ZA: stable route and view contract ok
+UK: stable route and view contract ok
+US: stable route and view contract ok
+pipeline outcome contract ok
+Generated output contract passed.
+scripts/uv_project.sh run python scripts/dashboard_consistency_check.py
+Dashboard consistency check passed for CE4 headline KPIs.
+git diff --check
+Running make publish...
+scripts/publish_dashboard.sh "P5 Generator Consolidation (Fixed all pipelines)"
+Resolved 46 packages in 4ms
+Checked 43 packages in 0.99ms
+scripts/uv_project.sh run python scripts/doctor_env.py
+Python executable: /Users/jiangwei/Claude/Country_Primer/.venv/bin/python3
+Python version: 3.12.13
+jinja2: 3.1.6
+pandas: 2.3.3
+plotly: 5.24.1
+pyyaml: 6.0.3
+requests: 2.34.2
+Environment OK.
+COUNTRY_PRIMER_SKIP_ARCHIVE=1 scripts/uv_project.sh run python build_v4.py ALL
+Wrote /Users/jiangwei/Claude/Country_Primer/output/hungary.html (639,580 bytes)
+Wrote /Users/jiangwei/Claude/Country_Primer/output/poland.html (643,217 bytes)
+Wrote /Users/jiangwei/Claude/Country_Primer/output/czechia.html (641,763 bytes)
+Wrote /Users/jiangwei/Claude/Country_Primer/output/romania.html (622,016 bytes)
+Wrote /Users/jiangwei/Claude/Country_Primer/output/cee_canonical_frame.json (1,209,322 bytes)
+Wrote /Users/jiangwei/Claude/Country_Primer/output/cee_build_snapshot.json (448,249 bytes)
+Wrote /Users/jiangwei/Claude/Country_Primer/output/source_health.json (11,357 bytes)
+Wrote /Users/jiangwei/Claude/Country_Primer/output/index.html (8,286 bytes)
+COUNTRY_PRIMER_SKIP_ARCHIVE=1 scripts/uv_project.sh run python scripts/build_china_dashboard.py
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.24s/it]                                               0%|          | 0/7 [00:00<?, ?it/s] 14%|█▍        | 1/7 [00:00<00:04,  1.23it/s] 29%|██▊       | 2/7 [00:01<00:04,  1.15it/s] 43%|████▎     | 3/7 [00:02<00:03,  1.11it/s] 57%|█████▋    | 4/7 [00:03<00:02,  1.05it/s] 71%|███████▏  | 5/7 [00:04<00:01,  1.12it/s] 86%|████████▌ | 6/7 [00:05<00:00,  1.14it/s]100%|██████████| 7/7 [00:06<00:00,  1.17it/s]100%|██████████| 7/7 [00:06<00:00,  1.14it/s]
+  0%|          | 0/9 [00:00<?, ?it/s] 11%|█         | 1/9 [00:01<00:10,  1.33s/it] 22%|██▏       | 2/9 [00:02<00:10,  1.47s/it] 33%|███▎      | 3/9 [00:04<00:09,  1.57s/it] 44%|████▍     | 4/9 [00:05<00:07,  1.48s/it] 56%|█████▌    | 5/9 [00:07<00:05,  1.45s/it] 67%|██████▋   | 6/9 [00:08<00:04,  1.44s/it] 78%|███████▊  | 7/9 [00:10<00:02,  1.48s/it] 89%|████████▉ | 8/9 [00:11<00:01,  1.49s/it]100%|██████████| 9/9 [00:12<00:00,  1.36s/it]                                               0%|          | 0/13 [00:00<?, ?it/s]  8%|▊         | 1/13 [00:01<00:12,  1.02s/it] 15%|█▌        | 2/13 [00:01<00:10,  1.02it/s] 23%|██▎       | 3/13 [00:02<00:09,  1.06it/s] 31%|███       | 4/13 [00:03<00:08,  1.07it/s] 38%|███▊      | 5/13 [00:04<00:07,  1.12it/s] 46%|████▌     | 6/13 [00:05<00:05,  1.20it/s] 54%|█████▍    | 7/13 [00:06<00:05,  1.19it/s] 62%|██████▏   | 8/13 [00:06<00:04,  1.22it/s] 69%|██████▉   | 9/13 [00:07<00:03,  1.17it/s] 77%|███████▋  | 10/13 [00:08<00:02,  1.19it/s] 85%|████████▍ | 11/13 [00:09<00:01,  1.12it/s] 92%|█████████▏| 12/13 [00:10<00:00,  1.14it/s]100%|██████████| 13/13 [00:11<00:00,  1.16it/s]                                                 0%|          | 0/4 [00:00<?, ?it/s] 25%|██▌       | 1/4 [00:01<00:03,  1.30s/it] 50%|█████     | 2/4 [00:02<00:02,  1.21s/it] 75%|███████▌  | 3/4 [00:03<00:01,  1.10s/it]100%|██████████| 4/4 [00:04<00:00,  1.08it/s]                                               0%|          | 0/11 [00:00<?, ?it/s]  9%|▉         | 1/11 [00:01<00:10,  1.02s/it] 18%|█▊        | 2/11 [00:01<00:08,  1.12it/s] 27%|██▋       | 3/11 [00:02<00:07,  1.09it/s] 36%|███▋      | 4/11 [00:03<00:06,  1.09it/s] 45%|████▌     | 5/11 [00:04<00:05,  1.09it/s] 55%|█████▍    | 6/11 [00:05<00:04,  1.10it/s] 64%|██████▎   | 7/11 [00:06<00:03,  1.12it/s] 73%|███████▎  | 8/11 [00:07<00:02,  1.16it/s] 82%|████████▏ | 9/11 [00:07<00:01,  1.17it/s] 91%|█████████ | 10/11 [00:08<00:00,  1.14it/s]100%|██████████| 11/11 [00:09<00:00,  1.19it/s]100%|██████████| 11/11 [00:09<00:00,  1.14it/s]
+  0%|          | 0/12 [00:00<?, ?it/s]  8%|▊         | 1/12 [00:01<00:15,  1.44s/it] 17%|█▋        | 2/12 [00:03<00:18,  1.87s/it] 25%|██▌       | 3/12 [00:05<00:15,  1.70s/it] 33%|███▎      | 4/12 [00:06<00:12,  1.56s/it] 42%|████▏     | 5/12 [00:07<00:10,  1.47s/it] 50%|█████     | 6/12 [00:09<00:09,  1.51s/it] 58%|█████▊    | 7/12 [00:10<00:07,  1.55s/it] 67%|██████▋   | 8/12 [00:12<00:05,  1.47s/it] 75%|███████▌  | 9/12 [00:13<00:04,  1.43s/it] 83%|████████▎ | 10/12 [00:15<00:02,  1.43s/it] 92%|█████████▏| 11/12 [00:16<00:01,  1.47s/it]100%|██████████| 12/12 [00:17<00:00,  1.36s/it]                                                 0%|          | 0/12 [00:00<?, ?it/s]  8%|▊         | 1/12 [00:01<00:16,  1.49s/it] 17%|█▋        | 2/12 [00:02<00:14,  1.50s/it] 25%|██▌       | 3/12 [00:04<00:11,  1.33s/it] 33%|███▎      | 4/12 [00:05<00:10,  1.36s/it] 42%|████▏     | 5/12 [00:07<00:09,  1.40s/it] 50%|█████     | 6/12 [00:08<00:07,  1.31s/it] 58%|█████▊    | 7/12 [00:09<00:06,  1.31s/it] 67%|██████▋   | 8/12 [00:10<00:05,  1.33s/it] 75%|███████▌  | 9/12 [00:12<00:03,  1.32s/it] 83%|████████▎ | 10/12 [00:13<00:02,  1.33s/it] 92%|█████████▏| 11/12 [00:14<00:01,  1.28s/it]100%|██████████| 12/12 [00:15<00:00,  1.22s/it]                                                 0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [00:01<00:12,  1.35s/it] 20%|██        | 2/10 [00:02<00:10,  1.31s/it] 30%|███       | 3/10 [00:04<00:09,  1.34s/it] 40%|████      | 4/10 [00:05<00:08,  1.45s/it] 50%|█████     | 5/10 [00:06<00:07,  1.41s/it] 60%|██████    | 6/10 [00:08<00:05,  1.39s/it] 70%|███████   | 7/10 [00:09<00:04,  1.45s/it] 80%|████████  | 8/10 [00:11<00:02,  1.40s/it] 90%|█████████ | 9/10 [00:12<00:01,  1.40s/it]100%|██████████| 10/10 [00:13<00:00,  1.21s/it]                                                 0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [00:01<00:11,  1.33s/it] 20%|██        | 2/10 [00:02<00:11,  1.39s/it] 30%|███       | 3/10 [00:04<00:10,  1.51s/it] 40%|████      | 4/10 [00:05<00:09,  1.54s/it] 50%|█████     | 5/10 [00:07<00:07,  1.53s/it] 60%|██████    | 6/10 [00:09<00:06,  1.56s/it] 70%|███████   | 7/10 [00:10<00:04,  1.49s/it] 80%|████████  | 8/10 [00:11<00:02,  1.49s/it] 90%|█████████ | 9/10 [00:13<00:01,  1.52s/it]100%|██████████| 10/10 [00:14<00:00,  1.38s/it]                                               Wrote /Users/jiangwei/Claude/Country_Primer/output/china.html (1,784,663 bytes)
+COUNTRY_PRIMER_SKIP_ARCHIVE=1 scripts/uv_project.sh run python scripts/build_uk_dashboard.py
+Wrote /Users/jiangwei/Claude/Country_Primer/output/uk.html (1,612,818 bytes)
+COUNTRY_PRIMER_SKIP_ARCHIVE=1 scripts/uv_project.sh run python scripts/build_us_dashboard.py
+Wrote /Users/jiangwei/Claude/Country_Primer/output/us.html (3,212,530 bytes)
+COUNTRY_PRIMER_SKIP_ARCHIVE=1 scripts/uv_project.sh run python scripts/build_japan_dashboard.py
+Wrote /Users/jiangwei/Claude/Country_Primer/output/japan.html (631,448 bytes)
+COUNTRY_PRIMER_SKIP_ARCHIVE=1 scripts/uv_project.sh run python scripts/build_south_africa_dashboard.py
+Wrote /Users/jiangwei/Claude/Country_Primer/output/south_africa.html (933,399 bytes)
+scripts/uv_project.sh run python scripts/core_coverage_matrix.py
+Wrote /Users/jiangwei/Claude/Country_Primer/output/core_coverage_matrix.json
+Wrote /Users/jiangwei/Claude/Country_Primer/CORE_COVERAGE_MATRIX.md
+scripts/uv_project.sh run python scripts/data_source_catalog.py
+Wrote DATA_SOURCE_CATALOG.md
+scripts/uv_project.sh run python scripts/freshness_audit.py
+Wrote /Users/jiangwei/Claude/Country_Primer/DATA_FRESHNESS_AUDIT.md
+Wrote /Users/jiangwei/Claude/Country_Primer/output/freshness_audit.json
+scripts/uv_project.sh run python scripts/build_dashboard_archive.py
+Wrote /Users/jiangwei/Claude/Country_Primer/index.html (26,222 bytes)
+Wrote /Users/jiangwei/Claude/Country_Primer/output/index.html (26,122 bytes)
+Wrote /Users/jiangwei/Claude/Country_Primer/output/dashboard_archive_summary.json (13,464 bytes)
+scripts/uv_project.sh run pytest -q
+........................................................................ [ 71%]
+.............................                                            [100%]
+101 passed in 0.96s
+scripts/uv_project.sh run python scripts/validate_outputs.py
+HU: stable route and view contract ok
+PL: stable route and view contract ok
+CZ: stable route and view contract ok
+RO: stable route and view contract ok
+CN: stable route and view contract ok
+JP: stable route and view contract ok
+ZA: stable route and view contract ok
+UK: stable route and view contract ok
+US: stable route and view contract ok
+pipeline outcome contract ok
+Generated output contract passed.
+scripts/uv_project.sh run python scripts/dashboard_consistency_check.py
+Dashboard consistency check passed for CE4 headline KPIs.
+git diff --check

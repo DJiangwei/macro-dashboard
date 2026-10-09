@@ -1,5 +1,5 @@
 version: 1
-expected_count: 111
+expected_count: 109
 indicators:
 - section_id: real_activity
   indicator_id: real_gdp_yoy
@@ -629,17 +629,6 @@ indicators:
   quality_status: low_confidence
   quality_note: Public short-rate proxy is used until a true 2Y sovereign yield feed is wired; not suitable for precise curve trades.
 - section_id: fiscal_sovereign
-  indicator_id: sovereign_credit_spread_proxy
-  label: Sovereign Credit Spread Substitute
-  unit: bp
-  source: Derived from Eurostat sovereign yields
-  frequency: monthly
-  chart: line
-  peers: false
-  quality_status: watch
-  quality_note: |
-    Public substitute for vendor 5Y sovereign CDS: 10Y local government bond yield minus Germany 10Y Bund yield from Eurostat, in basis points. This is not a CDS quote and should not be used as executable credit protection pricing.
-- section_id: fiscal_sovereign
   indicator_id: yield_curve_slope
   label: 10Y-2Y Yield Curve Slope
   unit: bp
@@ -899,17 +888,6 @@ indicators:
   peers: true
   quality_status: watch
   quality_note: Derived monthly spread versus Germany 10Y benchmark; check maturity matching and market convention.
-- section_id: markets_valuation
-  indicator_id: sovereign_external_spread_proxy
-  label: External Sovereign Spread Substitute
-  unit: bp
-  source: Derived from Eurostat sovereign yields
-  frequency: monthly
-  chart: line
-  peers: false
-  quality_status: watch
-  quality_note: |
-    Public substitute for JPMorgan EMBI/EMBIG: 10Y local government bond yield minus Germany 10Y Bund yield from Eurostat, in basis points. This is not a hard-currency EMBI spread and overlaps conceptually with the 10Y spread-vs-Bund chart.
 - section_id: markets_valuation
   indicator_id: foreign_ownership_bonds
   label: Non-Resident Government Debt Share

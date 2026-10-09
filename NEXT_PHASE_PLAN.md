@@ -143,12 +143,12 @@ Never place API keys in configs, generated HTML, summary JSON, tests, or docs.
 - [x] Separate slow structural scores from fast cyclical indicators.
 - [x] Keep portfolio/trade conclusions outside the data-quality score.
 
-### P5: Generator Consolidation
+### P5: Generator Consolidation — Completed 2026-10-09
 
-- Migrate China, UK, and US source adapters behind a shared fetcher protocol.
-- Keep country configs declarative and move repeated HTML/summary logic into a
+- [x] Migrate China, UK, and US source adapters behind a shared fetcher protocol.
+- [x] Keep country configs declarative and move repeated HTML/summary logic into a
   single renderer.
-- Preserve country-specific sections as deep-dive modules while rendering the
+- [x] Preserve country-specific sections as deep-dive modules while rendering the
   common nine-pillar core from the shared ontology.
 
 ## Non-Negotiable Rules

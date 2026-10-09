@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-08T16:14:03.466905+00:00",
+  "generated": "2026-10-09T21:16:27.541950+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -13,14 +13,14 @@
   },
   "countries": {
     "HU": {
-      "calls": 864,
-      "success": 107,
-      "empty": 757,
+      "calls": 856,
+      "success": 105,
+      "empty": 751,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {
-        "empty_response": 757
+        "empty_response": 751
       },
       "sources": {
         "BISFetcher": {
@@ -38,14 +38,14 @@
         },
         "DerivedMacroFetcher": {
           "empty": 53,
-          "success": 14
+          "success": 12
         },
         "ECBExternalDebtFetcher": {
           "empty": 39,
           "success": 1
         },
         "ECBFetcher": {
-          "empty": 99,
+          "empty": 97,
           "success": 1
         },
         "ECBMIRFetcher": {
@@ -61,7 +61,7 @@
           "success": 1
         },
         "EurostatFetcher": {
-          "empty": 67,
+          "empty": 65,
           "success": 38
         },
         "FREDInternationalFetcher": {
@@ -92,7 +92,7 @@
           "empty": 38
         },
         "PolicyRateFetcher": {
-          "empty": 98,
+          "empty": 96,
           "success": 1
         },
         "PragueExchangeFetcher": {
@@ -117,14 +117,14 @@
       "events": []
     },
     "PL": {
-      "calls": 882,
-      "success": 110,
-      "empty": 772,
+      "calls": 874,
+      "success": 108,
+      "empty": 766,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {
-        "empty_response": 772
+        "empty_response": 766
       },
       "sources": {
         "BISFetcher": {
@@ -142,14 +142,14 @@
         },
         "DerivedMacroFetcher": {
           "empty": 55,
-          "success": 14
+          "success": 12
         },
         "ECBExternalDebtFetcher": {
           "empty": 41,
           "success": 1
         },
         "ECBFetcher": {
-          "empty": 102,
+          "empty": 100,
           "success": 1
         },
         "ECBMIRFetcher": {
@@ -165,7 +165,7 @@
           "success": 1
         },
         "EurostatFetcher": {
-          "empty": 69,
+          "empty": 67,
           "success": 39
         },
         "FREDInternationalFetcher": {
@@ -201,7 +201,7 @@
           "empty": 40
         },
         "PolicyRateFetcher": {
-          "empty": 101,
+          "empty": 99,
           "success": 1
         },
         "PragueExchangeFetcher": {
@@ -226,14 +226,14 @@
       "events": []
     },
     "CZ": {
-      "calls": 848,
-      "success": 105,
-      "empty": 743,
+      "calls": 840,
+      "success": 103,
+      "empty": 737,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {
-        "empty_response": 743
+        "empty_response": 737
       },
       "sources": {
         "BISFetcher": {
@@ -252,14 +252,14 @@
         },
         "DerivedMacroFetcher": {
           "empty": 51,
-          "success": 14
+          "success": 12
         },
         "ECBExternalDebtFetcher": {
           "empty": 39,
           "success": 1
         },
         "ECBFetcher": {
-          "empty": 98,
+          "empty": 96,
           "success": 1
         },
         "ECBMIRFetcher": {
@@ -275,7 +275,7 @@
           "success": 1
         },
         "EurostatFetcher": {
-          "empty": 65,
+          "empty": 63,
           "success": 39
         },
         "FREDInternationalFetcher": {
@@ -312,7 +312,7 @@
           "empty": 38
         },
         "PolicyRateFetcher": {
-          "empty": 97,
+          "empty": 95,
           "success": 1
         },
         "PragueExchangeFetcher": {
@@ -337,14 +337,14 @@
       "events": []
     },
     "RO": {
-      "calls": 829,
-      "success": 106,
-      "empty": 723,
+      "calls": 821,
+      "success": 104,
+      "empty": 717,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {
-        "empty_response": 723
+        "empty_response": 717
       },
       "sources": {
         "BISFetcher": {
@@ -363,14 +363,14 @@
         },
         "DerivedMacroFetcher": {
           "empty": 51,
-          "success": 14
+          "success": 12
         },
         "ECBExternalDebtFetcher": {
           "empty": 37,
           "success": 1
         },
         "ECBFetcher": {
-          "empty": 98,
+          "empty": 96,
           "success": 1
         },
         "ECBMIRFetcher": {
@@ -386,7 +386,7 @@
           "success": 1
         },
         "EurostatFetcher": {
-          "empty": 65,
+          "empty": 63,
           "success": 39
         },
         "FREDInternationalFetcher": {
@@ -423,7 +423,7 @@
           "empty": 36
         },
         "PolicyRateFetcher": {
-          "empty": 97,
+          "empty": 95,
           "success": 1
         },
         "PragueExchangeFetcher": {
@@ -449,13 +449,11 @@
     },
     "CN": {
       "calls": 108,
-      "success": 107,
+      "success": 108,
       "empty": 0,
-      "failed": 1,
+      "failed": 0,
       "circuit_open": 0,
-      "failure_reasons": {
-        "timeout": 1
-      },
+      "failure_reasons": {},
       "empty_reasons": {},
       "sources": {
         "akshare_table": {
@@ -480,128 +478,53 @@
           "success": 2
         },
         "world_bank": {
-          "failed": 1,
-          "success": 21
+          "success": 22
         }
       },
-      "events": [
-        {
-          "timestamp": "2026-10-08T15:59:10.237657+00:00",
-          "country": "CN",
-          "indicator_id": "exports_goods_services",
-          "source_id": "world_bank",
-          "outcome": "failed",
-          "reason": "timeout",
-          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
-        }
-      ]
+      "events": []
     },
     "JP": {
-      "calls": 52,
-      "success": 52,
+      "calls": 0,
+      "success": 0,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {},
-      "sources": {
-        "boj_flatfile": {
-          "success": 1
-        },
-        "estat": {
-          "success": 5
-        },
-        "fred": {
-          "success": 38
-        },
-        "imf_datamapper": {
-          "success": 3
-        },
-        "imf_sdmx": {
-          "success": 5
-        }
-      },
+      "sources": {},
       "events": []
     },
     "ZA": {
-      "calls": 64,
-      "success": 64,
+      "calls": 0,
+      "success": 0,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {},
-      "sources": {
-        "fred": {
-          "success": 32
-        },
-        "imf_datamapper": {
-          "success": 3
-        },
-        "imf_sdmx": {
-          "success": 18
-        },
-        "sarb": {
-          "success": 11
-        }
-      },
+      "sources": {},
       "events": []
     },
     "UK": {
-      "calls": 92,
-      "success": 92,
+      "calls": 0,
+      "success": 0,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {},
-      "sources": {
-        "boe_iadb": {
-          "success": 11
-        },
-        "fred": {
-          "success": 9
-        },
-        "govuk_ods_table": {
-          "success": 4
-        },
-        "govuk_road_fuel": {
-          "success": 2
-        },
-        "obr_xlsx_row": {
-          "success": 4
-        },
-        "ons_horizontal_csv_table": {
-          "success": 2
-        },
-        "ons_timeseries": {
-          "success": 51
-        },
-        "ons_xlsx_table": {
-          "success": 9
-        }
-      },
+      "sources": {},
       "events": []
     },
     "US": {
-      "calls": 164,
-      "success": 164,
+      "calls": 0,
+      "success": 0,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {},
-      "sources": {
-        "bls_api": {
-          "success": 4
-        },
-        "fred": {
-          "success": 156
-        },
-        "treasury_auctions": {
-          "success": 4
-        }
-      },
+      "sources": {},
       "events": []
     }
   }

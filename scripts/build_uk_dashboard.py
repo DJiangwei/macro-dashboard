@@ -39,17 +39,8 @@ from dashboard_summary_utils import (
     shift_calendar_periods,
     write_canonical_data_first_frame,
 )
-from build_china_dashboard import (  # Reuse the data-first page shell.
-    CSS,
-    _chart_html,
-    _format_value,
-    _gaps_html,
-    _json,
-    _latest,
-    _section_nav,
-    _sections_html,
-    _write_clean,
-)
+from country_primer.page_renderer import build_country_page
+from country_primer.data_first_pipeline import fetch_all
 from country_primer.source_health import (
     SOURCE_HEALTH,
     failure_series,
@@ -1144,272 +1135,6 @@ def validate_series(series: dict[str, Any]) -> dict[str, Any]:
     return {**series, "quality_status": status, "quality_notes": notes[:3]}
 
 
-def _fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
-    session = requests.Session()
-
-    def operation() -> dict[str, Any]:
-        fetcher = spec.get("fetcher")
-        if fetcher == "fred":
-            return fetch_fred(session, spec)
-        if fetcher == "ons_timeseries":
-            return fetch_ons_timeseries(session, spec)
-        if fetcher == "boe_iadb":
-            return fetch_boe_iadb(session, spec)
-        if fetcher == "boe_bank_rate":
-            return fetch_boe_bank_rate(session, spec)
-        if fetcher == "govuk_road_fuel":
-            return fetch_govuk_road_fuel(session, spec)
-        if fetcher == "govuk_xlsx_table":
-            return fetch_govuk_xlsx_table(session, spec)
-        if fetcher == "govuk_ods_table":
-            return fetch_govuk_ods_table(session, spec)
-        if fetcher == "ons_xlsx_table":
-            return fetch_ons_xlsx_table(session, spec)
-        if fetcher == "ons_horizontal_csv_table":
-            return fetch_ons_horizontal_csv_table(session, spec)
-        if fetcher == "obr_xlsx_row":
-            return fetch_obr_xlsx_row(session, spec)
-        raise ValueError(f"Unknown fetcher: {fetcher}")
-
-    try:
-        series = guarded_source_call(
-            country="UK",
-            indicator_id=str(spec.get("id") or "unknown"),
-            source_id=str(spec.get("fetcher") or "unknown"),
-            operation=operation,
-        )
-    except Exception as exc:  # noqa: BLE001 - structured degradation is intentional.
-        series = failure_series(spec, exc)
-    return validate_series(series)
-
-
-def fetch_all(config: dict[str, Any]) -> list[dict[str, Any]]:
-    specs = list(config.get("indicators", []))
-    series_list: list[dict[str, Any] | None] = [None] * len(specs)
-    with ThreadPoolExecutor(max_workers=4) as executor:
-        futures = {executor.submit(_fetch_one, spec): index for index, spec in enumerate(specs)}
-        for future in as_completed(futures):
-            index = futures[future]
-            spec = specs[index]
-            try:
-                series_list[index] = future.result()
-            except Exception as exc:  # noqa: BLE001 - data page should degrade instead of crashing.
-                series_list[index] = validate_series({
-                    **spec,
-                    "observations": [],
-                    "quality_status": "unavailable",
-                    "quality_notes": [f"Fetch failed: {exc}"],
-                })
-    unavailable_indexes = [
-        index
-        for index, item in enumerate(series_list)
-        if item is not None and item.get("quality_status") == "unavailable"
-    ]
-    for index in unavailable_indexes:
-        for _ in range(2):
-            retry = _fetch_one(specs[index])
-            if retry.get("quality_status") != "unavailable":
-                series_list[index] = retry
-                break
-    return [item for item in series_list if item is not None]
-
-
-def _render_cards(series_list: list[dict[str, Any]]) -> str:
-    headline_ids = [
-        "real_gdp_qoq",
-        "cpi_yoy",
-        "unemployment_rate",
-        "bank_rate",
-        "psnd_ex_banks_gdp",
-        "gbp_reer",
-    ]
-    by_id = {item["id"]: item for item in series_list}
-    cards: list[str] = []
-    for indicator_id in headline_ids:
-        series = by_id.get(indicator_id)
-        latest = _latest(series) if series else None
-        if not series or not latest:
-            continue
-        cards.append(f"""
-<div class="data-card">
-  <span><span data-lang="en">{escape(series['label_en'])}</span><span data-lang="zh">{escape(series['label_zh'])}</span></span>
-  <strong>{_format_value(float(latest['value']), series.get('unit', ''))}</strong>
-  <small>{escape(str(latest['date']))} · {escape(series.get('source_name', ''))}</small>
-</div>""")
-    return "\n".join(cards)
-
-
-def _key_series_latest(series_list: list[dict[str, Any]], indicator_ids: list[str]) -> list[dict[str, Any]]:
-    by_id = {item["id"]: item for item in series_list}
-    rows: list[dict[str, Any]] = []
-    for indicator_id in indicator_ids:
-        series = by_id.get(indicator_id)
-        latest = _latest(series) if series else None
-        if not series or not latest:
-            continue
-        unit = str(series.get("unit", ""))
-        value = float(latest["value"])
-        rows.append({
-            "id": indicator_id,
-            "label_en": series.get("label_en", indicator_id),
-            "label_zh": series.get("label_zh", indicator_id),
-            "latest_date": str(latest["date"]),
-            "latest_value": value,
-            "latest_display": f"{_format_value(value, unit)} {unit}".strip(),
-            "frequency": series.get("frequency", ""),
-            "source_name": series.get("source_name", ""),
-            "series": series.get("series", ""),
-            "quality_status": series.get("quality_status", ""),
-        })
-    return rows
-
-
-def render_html(config: dict[str, Any], series_list: list[dict[str, Any]]) -> str:
-    chart_count = sum(1 for item in series_list if item.get("observations"))
-    source_count = len({item.get("source_name") for item in series_list if item.get("observations")})
-    gap_count = len(config.get("data_gaps", []))
-    low_count = sum(1 for item in series_list if item.get("quality_status") == "low_confidence" and item.get("observations"))
-    generated_date = datetime.now(UTC).date().isoformat()
-    return f"""<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UK Dashboard</title>
-<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
-<style>{CSS}</style>
-</head>
-<body data-dashboard-view="core">
-<div class="topbar">
-  <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">East Meridian <span>/ Macro Dashboard</span></div></a>
-  <nav class="country-nav" aria-label="country dashboards">
-    <a href="hungary.html">HU</a>
-    <a href="poland.html">PL</a>
-    <a href="czechia.html">CZ</a>
-    <a href="romania.html">RO</a>
-    <a href="china.html">CN</a>
-    <a href="japan.html">JP</a>
-    <a href="south_africa.html">ZA</a>
-    <a href="uk.html" class="active">UK</a>
-    <a href="us.html">US</a>
-  </nav>
-  <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">中文</button>
-</div>
-
-<main class="container">
-  <header>
-    <h1><span data-lang="en">UK Dashboard</span><span data-lang="zh">英国 Dashboard</span></h1>
-    <p class="subtitle"><span data-lang="en">A chart-and-data-first UK macro page aligned to the GS <em>Understanding UK Economic Statistics</em> framework. The page prioritises reproducible public series from native ONS and Bank of England endpoints, while keeping FRED/OECD/BIS/IMF mirrors for broader public-data coverage and preserving vendor-controlled GS/PMI/CBI/RICS items as explicit data gaps.</span><span data-lang="zh">一个以图表和数据为核心的英国宏观页面，结构对齐GS <em>Understanding UK Economic Statistics</em> 框架。页面优先使用ONS与Bank of England原生可复跑公开接口，同时保留FRED/OECD/BIS/IMF镜像作为更广覆盖的公开数据骨架；GS、PMI、CBI、RICS等供应商控制指标则明确列为数据缺口。</span></p>
-    <div class="meta-row">
-      <span class="meta-chip">{chart_count} <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
-      <span class="meta-chip">{source_count} <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
-      <span class="meta-chip">{gap_count} <span data-lang="en">official/vendor gaps tracked</span><span data-lang="zh">个官方/供应商缺口</span></span>
-      <span class="meta-chip">{low_count} <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
-    </div>
-  </header>
-
-  <section class="data-grid" aria-label="latest data cards">
-    {_render_cards(series_list)}
-  </section>
-
-  <nav class="toc" aria-label="section navigation">
-    {_section_nav(config)}
-  </nav>
-
-  <div class="view-switch" role="group" aria-label="chart density">
-    <span><span data-lang="en">Chart view</span><span data-lang="zh">图表视图</span></span>
-    <button type="button" data-view-option="core" aria-pressed="true" onclick="setDashboardView('core')"><span data-lang="en">Core 48</span><span data-lang="zh">核心 48</span></button>
-    <button type="button" data-view-option="deep" aria-pressed="false" onclick="setDashboardView('deep')"><span data-lang="en">All deep-dive charts</span><span data-lang="zh">全部深度指标</span></button>
-  </div>
-
-  <div class="data-note">
-    <span data-lang="en">Data policy: no fabricated proxies. FRED remains the durable public backbone, while release-sensitive UK series prefer native ONS time-series JSON and Bank of England IADB CSV endpoints when validated.</span>
-    <span data-lang="zh">数据原则：不制造假proxy。FRED继续作为稳定公开骨架；对发布时效更敏感的英国序列，在验证后优先使用ONS time-series JSON与Bank of England IADB CSV原生接口。</span>
-  </div>
-
-  {_sections_html(config, series_list, "UK")}
-
-  <section class="panel" id="data-gaps">
-    <div class="section-title">
-      <p>Pipeline</p>
-      <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are GS-framework indicators that matter for UK macro trading but are not yet rendered because a reproducible public adapter or license-safe source has not been validated.</span><span data-lang="zh">这些是GS框架中对英国宏观交易重要的指标，但由于尚未验证可复跑公开adapter或授权安全数据源，当前暂不渲染为图。</span></div>
-    </div>
-    <table class="gaps-table">
-      <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>
-      <tbody>{_gaps_html(config)}</tbody>
-    </table>
-  </section>
-
-  <footer class="page-footer">
-    <span data-lang="en">Research artefact only, not investment advice. Generated {generated_date} from <code>config/uk_indicators.yaml</code>.</span>
-    <span data-lang="zh">仅为研究工具，不构成投资建议。生成日期 {generated_date}，配置来源 <code>config/uk_indicators.yaml</code>。</span>
-  </footer>
-</main>
-
-<script>
-function resizeCharts() {{
-  if (!window.Plotly) return;
-  document.querySelectorAll('.plotly-chart').forEach(function(el) {{
-    Plotly.Plots.resize(el);
-  }});
-}}
-function setDashboardView(view) {{
-  var normalized = view === 'deep' ? 'deep' : 'core';
-  document.body.dataset.dashboardView = normalized;
-  localStorage.setItem('cp-dashboard-view', normalized);
-  document.querySelectorAll('[data-view-option]').forEach(function(btn) {{
-    btn.setAttribute('aria-pressed', String(btn.dataset.viewOption === normalized));
-  }});
-  requestAnimationFrame(resizeCharts);
-}}
-(function() {{
-  var saved = localStorage.getItem('cp-lang');
-  if (saved === 'zh') {{
-    document.documentElement.lang = 'zh';
-    document.getElementById('lang-btn').textContent = 'English';
-  }}
-  setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
-  requestAnimationFrame(resizeCharts);
-}})();
-function toggleLang() {{
-  var html = document.documentElement;
-  var btn = document.getElementById('lang-btn');
-  if (html.lang === 'en') {{
-    html.lang = 'zh';
-    btn.textContent = 'English';
-    localStorage.setItem('cp-lang', 'zh');
-  }} else {{
-    html.lang = 'en';
-    btn.textContent = '中文';
-    localStorage.setItem('cp-lang', 'en');
-  }}
-  requestAnimationFrame(resizeCharts);
-}}
-window.addEventListener('resize', resizeCharts);
-</script>
-</body>
-</html>
-"""
-
-
-def _index_card(summary: dict[str, Any]) -> str:
-    return f"""
-  <!-- UK dashboard card -->
-  <a href="uk.html" class="card clean">
-    <div class="card-kicker">GBP · BoE · UK GS-statistics page</div>
-    <h2>United Kingdom</h2>
-    <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>{summary['charts']}</strong></div>
-      <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
-      <div class="stat"><span>Data gaps tracked</span><strong>{summary['data_gaps']}</strong></div>
-      <div class="stat"><span>Bank Rate</span><strong>{escape(summary.get('bank_rate_latest', 'n/a'))}</strong></div>
-      <div class="stat"><span>Source groups</span><strong>{summary['source_groups']}</strong></div>
-      <div class="stat"><span>Framework</span><strong>GS UK statistics logic</strong></div>
-    </div>
-  </a>
-  <!-- /UK dashboard card -->"""
-
 
 def inject_output_index(summary: dict[str, Any]) -> None:
     index_path = OUTPUT / "index.html"
@@ -1417,9 +1142,27 @@ def inject_output_index(summary: dict[str, Any]) -> None:
         return
     html = index_path.read_text()
     html = re.sub(r"\n\s*<!-- UK dashboard card -->.*?<!-- /UK dashboard card -->", "", html, flags=re.S)
+
+    card = f'''
+  <!-- UK dashboard card -->
+  <a href="uk.html" class="card clean">
+    <div class="card-kicker">GBP · BOE · UK data-first page</div>
+    <h2>United Kingdom</h2>
+    <div class="stats">
+      <div class="stat"><span>Rendered charts</span><strong>{summary['charts']}</strong></div>
+      <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
+      <div class="stat"><span>Data gaps tracked</span><strong>{summary['data_gaps']}</strong></div>
+      <div class="stat"><span>Bank Rate</span><strong>{summary.get('bank_rate_latest', 'n/a')}</strong></div>
+      <div class="stat"><span>Source groups</span><strong>{summary['source_groups']}</strong></div>
+      <div class="stat"><span>Framework</span><strong>GS UK statistics logic</strong></div>
+    </div>
+  </a>
+  <!-- /UK dashboard card -->'''
+
     marker = '  </section>\n  <nav class="links"'
     if marker in html:
-        html = html.replace(marker, _index_card(summary) + "\n  </section>\n  <nav class=\"links\"", 1)
+        html = html.replace(marker, card + "\n  </section>\n  <nav class=\"links\"", 1)
+
     html = re.sub(r"Macro Dashboard Archive · CEE-4 v4 \+ China[^<]*", "Macro Dashboard Archive · CEE-4 v4 + China + Japan + South Africa + UK + US", html)
     html = re.sub(
         r"Generated archive entry for the proxy-free CEE-4 dashboards plus the [^.]*\.",
@@ -1427,55 +1170,64 @@ def inject_output_index(summary: dict[str, Any]) -> None:
         html,
     )
     html = html.replace("<strong>5</strong><span>country dashboards</span>", "<strong>6</strong><span>country dashboards</span>")
-    _write_clean(index_path, html)
 
+    from country_primer.page_renderer import _write_clean
+    _write_clean(index_path, html)
 
 def build(data_mode: str | None = None) -> Path:
     OUTPUT.mkdir(parents=True, exist_ok=True)
     data_mode = (data_mode or os.environ.get("COUNTRY_PRIMER_DATA_MODE") or "refresh").strip().lower()
     config = _load_config()
+
+    registry = {
+        "fred": lambda spec, cache: fetch_fred(requests.Session(), spec),
+        "ons_timeseries": lambda spec, cache: fetch_ons_timeseries(requests.Session(), spec),
+        "boe_iadb": lambda spec, cache: fetch_boe_iadb(requests.Session(), spec),
+        "boe_bank_rate": lambda spec, cache: fetch_boe_bank_rate(requests.Session(), spec),
+        "govuk_road_fuel": lambda spec, cache: fetch_govuk_road_fuel(requests.Session(), spec),
+        "govuk_xlsx_table": lambda spec, cache: fetch_govuk_xlsx_table(requests.Session(), spec),
+        "govuk_ods_table": lambda spec, cache: fetch_govuk_ods_table(requests.Session(), spec),
+        "ons_xlsx_table": lambda spec, cache: fetch_ons_xlsx_table(requests.Session(), spec),
+        "ons_horizontal_csv_table": lambda spec, cache: fetch_ons_horizontal_csv_table(requests.Session(), spec),
+        "obr_xlsx_row": lambda spec, cache: fetch_obr_xlsx_row(requests.Session(), spec),
+    }
+
     if data_mode == "snapshot":
         series_list = load_canonical_data_first_frame(CANONICAL_JSON, config)
     else:
+        from country_primer.source_health import SOURCE_HEALTH
+        from country_primer.data_first_pipeline import fetch_all
         SOURCE_HEALTH.reset()
-        series_list = fetch_all(config)
+        series_list, _ = fetch_all(config, registry, max_workers=4)
         series_list = retain_last_known_good_series(series_list, CANONICAL_JSON, config)
         series_list = track_revisions_and_vintages(series_list, CANONICAL_JSON, config)
-    apply_quality_assessments(series_list)
-    _write_clean(OUT_HTML, render_html(config, series_list))
 
     charted = [item for item in series_list if item.get("observations")]
     bank_rate = next((item for item in charted if item["id"] == "bank_rate"), None)
+
+    from country_primer.page_renderer import _latest, build_country_page
     bank_latest = _latest(bank_rate) if bank_rate else None
-    summary = {
-        "file": OUT_HTML.name,
-        "generated": datetime.now(UTC).isoformat(),
-        "charts": len(charted),
-        "source_groups": len({item.get("source_name") for item in charted}),
-        "data_gaps": len(config.get("data_gaps", [])),
-        "low_confidence": sum(1 for item in charted if item.get("quality_status") == "low_confidence"),
-        "bank_rate_latest": (
-            f"{float(bank_latest['value']):.2f}% ({bank_latest['date']})" if bank_latest else "n/a"
-        ),
-        "key_series_latest": _key_series_latest(charted, SUMMARY_KEY_IDS),
-        "unavailable": [item["id"] for item in series_list if not item.get("observations")],
-        "data_mode": data_mode,
-    }
-    summary["canonical_frame"] = (
-        canonical_frame_metadata(CANONICAL_JSON)
-        if data_mode == "snapshot"
-        else write_canonical_data_first_frame(CANONICAL_JSON, "UK", series_list)
+    bank_latest_str = f"{float(bank_latest['value']):.2f}% ({bank_latest['date']})" if bank_latest else "n/a"
+
+    summary = build_country_page(
+        country_code="UK",
+        config=config,
+        series_list=series_list,
+        out_html=OUT_HTML,
+        summary_json=SUMMARY_JSON,
+        canonical_json=CANONICAL_JSON,
+        data_mode=data_mode,
+        summary_key_ids=SUMMARY_KEY_IDS,
+        latest_value_key="bank_rate_latest",
+        latest_value_display=bank_latest_str
     )
-    summary.update(build_summary_metadata(config, series_list, "UK"))
-    SUMMARY_JSON.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
-    if data_mode != "snapshot":
-        write_source_health_report(OUTPUT / "source_health.json", ["UK"])
+
     inject_output_index(summary)
+
     if not os.environ.get("COUNTRY_PRIMER_SKIP_ARCHIVE"):
         from build_dashboard_archive import build_archive
         build_archive()
     return OUT_HTML
-
 
 if __name__ == "__main__":
     path = build()
