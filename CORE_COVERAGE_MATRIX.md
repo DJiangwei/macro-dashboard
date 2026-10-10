@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-10-09T21:43:18.761977+00:00
+Generated: 2026-10-10T19:46:24.314723+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -17,18 +17,18 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 9 | `labour_household` | `unemployment_rate` Unemployment Rate | V | V | V | V | W | W | L | L | W |
 | 10 | `labour_household` | `employment_growth` Employment Growth | V | V | V | V | - | W | L | V | W |
 | 11 | `labour_household` | `participation_rate` Labour Force Participation | W | W | W | W | - | W | - | L | W |
-| 12 | `labour_household` | `vacancies` Labour Demand / Vacancies | L | L | L | L | - | - | - | W | W |
+| 12 | `labour_household` | `vacancies` Labour Demand / Vacancies | L | L | L | L | - | V | - | W | W |
 | 13 | `labour_household` | `wage_growth` Wage Growth | V | V | V | V | - | L | - | W | W |
 | 14 | `labour_household` | `real_income_growth` Real Household Income Growth | V | V | V | V | - | - | - | V | W |
-| 15 | `prices_costs` | `headline_inflation` Headline Inflation | V | V | V | V | W | W | V | V | W |
-| 16 | `prices_costs` | `core_inflation` Core Inflation | V | V | V | V | - | - | - | V | W |
-| 17 | `prices_costs` | `services_inflation` Services Inflation | V | V | V | V | - | - | - | V | W |
-| 18 | `prices_costs` | `goods_inflation` Goods Inflation | V | V | V | V | - | - | - | V | W |
-| 19 | `prices_costs` | `producer_price_inflation` Producer Price Inflation | V | V | V | V | W | - | V | V | W |
+| 15 | `prices_costs` | `headline_inflation` Headline Inflation | V | V | V | V | W | V | V | V | W |
+| 16 | `prices_costs` | `core_inflation` Core Inflation | V | V | V | V | - | V | - | V | W |
+| 17 | `prices_costs` | `services_inflation` Services Inflation | V | V | V | V | - | V | - | V | W |
+| 18 | `prices_costs` | `goods_inflation` Goods Inflation | V | V | V | V | - | V | - | V | W |
+| 19 | `prices_costs` | `producer_price_inflation` Producer Price Inflation | V | V | V | V | W | V | V | V | W |
 | 20 | `prices_costs` | `wage_cost_inflation` Labour Cost Inflation | V | V | V | V | - | - | - | W | W |
 | 21 | `prices_costs` | `inflation_expectations` Inflation Expectations | V | V | V | V | - | - | - | - | W |
 | 22 | `housing_investment` | `house_price_growth` House Price Growth | V | V | V | V | L | L | L | W | W |
-| 23 | `housing_investment` | `housing_activity` Housing Activity | - | - | - | - | W | - | - | V | W |
+| 23 | `housing_investment` | `housing_activity` Housing Activity | - | - | - | - | W | L | - | V | W |
 | 24 | `housing_investment` | `construction_activity` Construction Activity | W | V | V | W | W | - | - | W | W |
 | 25 | `housing_investment` | `mortgage_rate` Mortgage Rate | V | V | V | V | - | - | - | V | W |
 | 26 | `housing_investment` | `property_inventory` Property Inventory / Supply | - | - | - | - | - | - | - | - | W |
@@ -64,7 +64,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | CZ | 41/48 | 23 | 14 | 4 | 0 | 7 |
 | RO | 41/48 | 21 | 16 | 4 | 0 | 7 |
 | CN | 25/48 | 0 | 24 | 1 | 0 | 23 |
-| JP | 29/48 | 0 | 18 | 11 | 0 | 19 |
+| JP | 35/48 | 6 | 17 | 12 | 0 | 13 |
 | ZA | 28/48 | 6 | 6 | 15 | 1 | 20 |
 | UK | 37/48 | 23 | 10 | 4 | 0 | 11 |
 | US | 40/48 | 0 | 39 | 1 | 0 | 8 |
@@ -83,21 +83,21 @@ Priority is explicit and reproducible: pillar macro-value weight x10, plus 5 poi
 | 6 | `inflation_expectations` Inflation Expectations | `prices_costs` | 70 | CN, JP, ZA, UK | - |
 | 7 | `property_inventory` Property Inventory / Supply | `housing_investment` | 70 | HU, PL, CZ, RO, CN, JP, ZA, UK | - |
 | 8 | `bank_lending_rate` Bank Lending Rate | `monetary_financial` | 70 | CN, JP, UK, US | - |
-| 9 | `core_inflation` Core Inflation | `prices_costs` | 65 | CN, JP, ZA | - |
-| 10 | `services_inflation` Services Inflation | `prices_costs` | 65 | CN, JP, ZA | - |
-| 11 | `goods_inflation` Goods Inflation | `prices_costs` | 65 | CN, JP, ZA | - |
-| 12 | `wage_cost_inflation` Labour Cost Inflation | `prices_costs` | 65 | CN, JP, ZA | - |
-| 13 | `exports_growth` Exports Growth | `external_fx` | 64 | HU, PL, CZ, RO | JP, ZA |
-| 14 | `imports_growth` Imports Growth | `external_fx` | 64 | HU, PL, CZ, RO | JP, ZA |
-| 15 | `vacancies` Labour Demand / Vacancies | `labour_household` | 63 | CN, JP, ZA | HU, PL, CZ, RO |
-| 16 | `real_gdp_growth_yoy` Real GDP Growth, YoY | `growth_demand` | 62 | UK, US | ZA |
-| 17 | `housing_activity` Housing Activity | `housing_investment` | 60 | HU, PL, CZ, RO, JP, ZA | - |
-| 18 | `equity_return` Equity Market Return | `monetary_financial` | 60 | ZA, US | - |
-| 19 | `real_gdp_growth_qoq` Real GDP Growth, QoQ | `growth_demand` | 57 | CN | ZA |
+| 9 | `wage_cost_inflation` Labour Cost Inflation | `prices_costs` | 65 | CN, JP, ZA | - |
+| 10 | `exports_growth` Exports Growth | `external_fx` | 64 | HU, PL, CZ, RO | JP, ZA |
+| 11 | `imports_growth` Imports Growth | `external_fx` | 64 | HU, PL, CZ, RO | JP, ZA |
+| 12 | `real_gdp_growth_yoy` Real GDP Growth, YoY | `growth_demand` | 62 | UK, US | ZA |
+| 13 | `core_inflation` Core Inflation | `prices_costs` | 60 | CN, ZA | - |
+| 14 | `services_inflation` Services Inflation | `prices_costs` | 60 | CN, ZA | - |
+| 15 | `goods_inflation` Goods Inflation | `prices_costs` | 60 | CN, ZA | - |
+| 16 | `equity_return` Equity Market Return | `monetary_financial` | 60 | ZA, US | - |
+| 17 | `vacancies` Labour Demand / Vacancies | `labour_household` | 58 | CN, ZA | HU, PL, CZ, RO |
+| 18 | `real_gdp_growth_qoq` Real GDP Growth, QoQ | `growth_demand` | 57 | CN | ZA |
+| 19 | `housing_activity` Housing Activity | `housing_investment` | 57 | HU, PL, CZ, RO, ZA | JP |
 | 20 | `real_income_growth` Real Household Income Growth | `labour_household` | 55 | CN, JP, ZA | - |
-| 21 | `producer_price_inflation` Producer Price Inflation | `prices_costs` | 55 | JP | - |
-| 22 | `private_credit_growth` Private Credit Growth | `monetary_financial` | 54 | - | JP, ZA |
-| 23 | `credit_gap` Credit-to-GDP Gap | `stability_structural` | 53 | CN, JP, ZA, UK, US | HU, PL, CZ, RO |
-| 24 | `investment_growth` Investment Growth | `growth_demand` | 52 | - | ZA |
+| 21 | `private_credit_growth` Private Credit Growth | `monetary_financial` | 54 | - | JP, ZA |
+| 22 | `credit_gap` Credit-to-GDP Gap | `stability_structural` | 53 | CN, JP, ZA, UK, US | HU, PL, CZ, RO |
+| 23 | `investment_growth` Investment Growth | `growth_demand` | 52 | - | ZA |
+| 24 | `participation_rate` Labour Force Participation | `labour_household` | 52 | CN, ZA | UK |
 
 This matrix measures comparable concept coverage, not raw chart count. Country-specific deep-dive charts do not fill a Core 48 slot unless the framework mapping is explicit.

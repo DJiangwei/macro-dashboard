@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-10-09T21:43:18.761977+00:00",
+  "generated": "2026-10-10T19:46:24.314723+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -58,11 +58,11 @@
       "missing": 23
     },
     "JP": {
-      "verified": 0,
-      "watch": 18,
-      "low_confidence": 11,
+      "verified": 6,
+      "watch": 17,
+      "low_confidence": 12,
       "substitute": 0,
-      "missing": 19
+      "missing": 13
     },
     "ZA": {
       "verified": 6,
@@ -597,7 +597,8 @@
           "state": "low_confidence",
           "quality_status": "low_confidence",
           "indicator_ids": [
-            "industrial_production_growth"
+            "industrial_production_growth",
+            "manufacturing_production_growth"
           ],
           "latest_date": "2026-06-01",
           "refresh_fallback": false
@@ -1115,9 +1116,9 @@
       "label_zh": "劳动力需求与职位空缺",
       "unit": "mixed",
       "priority_weight": 4,
-      "missing_countries": 3,
+      "missing_countries": 2,
       "weak_countries": 4,
-      "priority_score": 63,
+      "priority_score": 58,
       "countries": {
         "HU": {
           "state": "low_confidence",
@@ -1163,10 +1164,12 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "missing",
-          "quality_status": "unavailable",
-          "indicator_ids": [],
-          "latest_date": "",
+          "state": "verified",
+          "quality_status": "verified",
+          "indicator_ids": [
+            "job_to_applicant_ratio"
+          ],
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -1434,10 +1437,11 @@
           "refresh_fallback": true
         },
         "JP": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
-            "cpi_inflation"
+            "cpi_inflation",
+            "cpi_inflation_estat"
           ],
           "latest_date": "2026-08-01",
           "refresh_fallback": false
@@ -1479,9 +1483,9 @@
       "label_zh": "核心通胀",
       "unit": "percent",
       "priority_weight": 5,
-      "missing_countries": 3,
+      "missing_countries": 2,
       "weak_countries": 0,
-      "priority_score": 65,
+      "priority_score": 60,
       "countries": {
         "HU": {
           "state": "verified",
@@ -1527,10 +1531,13 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "missing",
-          "quality_status": "unavailable",
-          "indicator_ids": [],
-          "latest_date": "",
+          "state": "verified",
+          "quality_status": "verified",
+          "indicator_ids": [
+            "core_core_inflation",
+            "core_inflation"
+          ],
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -1568,9 +1575,9 @@
       "label_zh": "服务通胀",
       "unit": "percent",
       "priority_weight": 5,
-      "missing_countries": 3,
+      "missing_countries": 2,
       "weak_countries": 0,
-      "priority_score": 65,
+      "priority_score": 60,
       "countries": {
         "HU": {
           "state": "verified",
@@ -1616,10 +1623,12 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "missing",
-          "quality_status": "unavailable",
-          "indicator_ids": [],
-          "latest_date": "",
+          "state": "verified",
+          "quality_status": "verified",
+          "indicator_ids": [
+            "services_inflation"
+          ],
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -1657,9 +1666,9 @@
       "label_zh": "商品通胀",
       "unit": "percent",
       "priority_weight": 5,
-      "missing_countries": 3,
+      "missing_countries": 2,
       "weak_countries": 0,
-      "priority_score": 65,
+      "priority_score": 60,
       "countries": {
         "HU": {
           "state": "verified",
@@ -1705,10 +1714,12 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "missing",
-          "quality_status": "unavailable",
-          "indicator_ids": [],
-          "latest_date": "",
+          "state": "verified",
+          "quality_status": "verified",
+          "indicator_ids": [
+            "goods_inflation"
+          ],
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -1746,9 +1757,9 @@
       "label_zh": "生产者价格通胀",
       "unit": "percent",
       "priority_weight": 5,
-      "missing_countries": 1,
+      "missing_countries": 0,
       "weak_countries": 0,
-      "priority_score": 55,
+      "priority_score": 50,
       "countries": {
         "HU": {
           "state": "verified",
@@ -1796,10 +1807,12 @@
           "refresh_fallback": true
         },
         "JP": {
-          "state": "missing",
-          "quality_status": "unavailable",
-          "indicator_ids": [],
-          "latest_date": "",
+          "state": "verified",
+          "quality_status": "verified",
+          "indicator_ids": [
+            "producer_price_inflation"
+          ],
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -2111,9 +2124,9 @@
       "label_zh": "房地产活动",
       "unit": "mixed",
       "priority_weight": 3,
-      "missing_countries": 6,
-      "weak_countries": 0,
-      "priority_score": 60,
+      "missing_countries": 5,
+      "weak_countries": 1,
+      "priority_score": 57,
       "countries": {
         "HU": {
           "state": "missing",
@@ -2153,10 +2166,12 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "missing",
-          "quality_status": "unavailable",
-          "indicator_ids": [],
-          "latest_date": "",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
+          "indicator_ids": [
+            "housing_starts"
+          ],
+          "latest_date": "2024-12-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -3797,6 +3812,7 @@
           "state": "low_confidence",
           "quality_status": "low_confidence",
           "indicator_ids": [
+            "bank_credit_gdp",
             "private_credit_gdp"
           ],
           "latest_date": "2025-10-01",
@@ -4568,42 +4584,6 @@
       "weak_countries": []
     },
     {
-      "concept_id": "core_inflation",
-      "pillar": "prices_costs",
-      "label_en": "Core Inflation",
-      "priority_score": 65,
-      "missing_countries": [
-        "CN",
-        "JP",
-        "ZA"
-      ],
-      "weak_countries": []
-    },
-    {
-      "concept_id": "services_inflation",
-      "pillar": "prices_costs",
-      "label_en": "Services Inflation",
-      "priority_score": 65,
-      "missing_countries": [
-        "CN",
-        "JP",
-        "ZA"
-      ],
-      "weak_countries": []
-    },
-    {
-      "concept_id": "goods_inflation",
-      "pillar": "prices_costs",
-      "label_en": "Goods Inflation",
-      "priority_score": 65,
-      "missing_countries": [
-        "CN",
-        "JP",
-        "ZA"
-      ],
-      "weak_countries": []
-    },
-    {
       "concept_id": "wage_cost_inflation",
       "pillar": "prices_costs",
       "label_en": "Labour Cost Inflation",
@@ -4648,23 +4628,6 @@
       ]
     },
     {
-      "concept_id": "vacancies",
-      "pillar": "labour_household",
-      "label_en": "Labour Demand / Vacancies",
-      "priority_score": 63,
-      "missing_countries": [
-        "CN",
-        "JP",
-        "ZA"
-      ],
-      "weak_countries": [
-        "HU",
-        "PL",
-        "CZ",
-        "RO"
-      ]
-    },
-    {
       "concept_id": "real_gdp_growth_yoy",
       "pillar": "growth_demand",
       "label_en": "Real GDP Growth, YoY",
@@ -4678,16 +4641,34 @@
       ]
     },
     {
-      "concept_id": "housing_activity",
-      "pillar": "housing_investment",
-      "label_en": "Housing Activity",
+      "concept_id": "core_inflation",
+      "pillar": "prices_costs",
+      "label_en": "Core Inflation",
       "priority_score": 60,
       "missing_countries": [
-        "HU",
-        "PL",
-        "CZ",
-        "RO",
-        "JP",
+        "CN",
+        "ZA"
+      ],
+      "weak_countries": []
+    },
+    {
+      "concept_id": "services_inflation",
+      "pillar": "prices_costs",
+      "label_en": "Services Inflation",
+      "priority_score": 60,
+      "missing_countries": [
+        "CN",
+        "ZA"
+      ],
+      "weak_countries": []
+    },
+    {
+      "concept_id": "goods_inflation",
+      "pillar": "prices_costs",
+      "label_en": "Goods Inflation",
+      "priority_score": 60,
+      "missing_countries": [
+        "CN",
         "ZA"
       ],
       "weak_countries": []
@@ -4704,6 +4685,22 @@
       "weak_countries": []
     },
     {
+      "concept_id": "vacancies",
+      "pillar": "labour_household",
+      "label_en": "Labour Demand / Vacancies",
+      "priority_score": 58,
+      "missing_countries": [
+        "CN",
+        "ZA"
+      ],
+      "weak_countries": [
+        "HU",
+        "PL",
+        "CZ",
+        "RO"
+      ]
+    },
+    {
       "concept_id": "real_gdp_growth_qoq",
       "pillar": "growth_demand",
       "label_en": "Real GDP Growth, QoQ",
@@ -4716,6 +4713,22 @@
       ]
     },
     {
+      "concept_id": "housing_activity",
+      "pillar": "housing_investment",
+      "label_en": "Housing Activity",
+      "priority_score": 57,
+      "missing_countries": [
+        "HU",
+        "PL",
+        "CZ",
+        "RO",
+        "ZA"
+      ],
+      "weak_countries": [
+        "JP"
+      ]
+    },
+    {
       "concept_id": "real_income_growth",
       "pillar": "labour_household",
       "label_en": "Real Household Income Growth",
@@ -4724,16 +4737,6 @@
         "CN",
         "JP",
         "ZA"
-      ],
-      "weak_countries": []
-    },
-    {
-      "concept_id": "producer_price_inflation",
-      "pillar": "prices_costs",
-      "label_en": "Producer Price Inflation",
-      "priority_score": 55,
-      "missing_countries": [
-        "JP"
       ],
       "weak_countries": []
     },

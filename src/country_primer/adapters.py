@@ -253,11 +253,12 @@ def fetch_estat(session: requests.Session, spec: dict[str, Any]) -> dict[str, An
     params = {
         "appId": app_id,
         "statsDataId": str(spec["stats_data_id"]),
-        "cdTab": str(spec["estat_tab"]),
-        "cdCat01": str(spec["estat_cat01"]),
-        # Nationwide. Omitting this returns the Tokyo ward area, not Japan.
-        "cdArea": str(spec.get("estat_area") or "00000"),
     }
+    for key in ["cdTab", "cdCat01", "cdCat02", "cdCat03", "cdArea"]:
+        spec_key = "estat_" + key.replace("cd", "").lower()
+        if spec_key in spec:
+            params[key] = str(spec[spec_key])
+
     # e-Stat free-text search times out; narrow id lookups still need a long read.
     response = session.get(ESTAT_BASE, params=params, timeout=(10, 240))
     response.raise_for_status()
