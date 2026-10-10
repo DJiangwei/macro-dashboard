@@ -98,7 +98,7 @@ def test_us_yoy_pct_skips_only_the_point_whose_own_base_is_missing() -> None:
     array-offset fix: a single missing month must not take out every later
     reading, only the one reading that genuinely has no year-ago comparator.
     """
-    from build_us_dashboard import _apply_transform
+    from country_primer.adapters import _apply_us_transform as _apply_transform
 
     values = [(f"2024-{m:02d}-01", 100.0 + m) for m in range(1, 13) if m != 4]  # no 2024-04
     values += [(f"2025-{m:02d}-01", 120.0 + m) for m in range(1, 6)]  # 2025-01..2025-05
@@ -117,7 +117,7 @@ def test_us_yoy_pct_self_heals_after_an_interior_gap_instead_of_drifting_forever
     up the base by calendar date, so only the specific 13-month-later point
     that needs the missing month as its base is skipped; every subsequent
     month keeps computing normally against its own real base."""
-    from build_us_dashboard import _apply_transform
+    from country_primer.adapters import _apply_us_transform as _apply_transform
 
     values = [(f"2024-{m:02d}-01", 100.0 + m) for m in range(1, 13)]
     values += [(f"2025-{m:02d}-01", 120.0 + m) for m in range(1, 13) if m != 3]  # no 2025-03
@@ -132,7 +132,7 @@ def test_us_yoy_pct_self_heals_after_an_interior_gap_instead_of_drifting_forever
 
 
 def test_us_pct_change_skips_only_the_point_whose_own_base_is_missing() -> None:
-    from build_us_dashboard import _apply_transform
+    from country_primer.adapters import _apply_us_transform as _apply_transform
 
     values = [("2025-08-01", 100.0), ("2025-09-01", 101.0), ("2025-11-01", 103.0), ("2025-12-01", 104.0)]
     result = _apply_transform(_monthly_series("pct_change", values))
@@ -142,7 +142,7 @@ def test_us_pct_change_skips_only_the_point_whose_own_base_is_missing() -> None:
 
 
 def test_us_diff_skips_only_the_point_whose_own_base_is_missing() -> None:
-    from build_us_dashboard import _apply_transform
+    from country_primer.adapters import _apply_us_transform as _apply_transform
 
     values = [("2025-08-01", 100.0), ("2025-09-01", 101.0), ("2025-11-01", 103.0), ("2025-12-01", 104.0)]
     result = _apply_transform(_monthly_series("diff", values))
@@ -152,7 +152,7 @@ def test_us_diff_skips_only_the_point_whose_own_base_is_missing() -> None:
 
 
 def test_us_yoy_pct_is_unaffected_when_the_series_is_contiguous() -> None:
-    from build_us_dashboard import _apply_transform
+    from country_primer.adapters import _apply_us_transform as _apply_transform
 
     values = [(f"2024-{m:02d}-01", 100.0 + m) for m in range(1, 13)]
     values += [(f"2025-{m:02d}-01", 120.0 + m) for m in range(1, 4)]
@@ -165,7 +165,7 @@ def test_uk_yoy_skips_only_the_point_whose_own_base_is_missing() -> None:
     """build_uk_dashboard.py has its own `_apply_transform` (different
     vocabulary: "yoy"/"qoq_pct"/"mom_pct") with the identical defect as the
     US version — it must get the same calendar-date-lookup fix."""
-    from build_uk_dashboard import _apply_transform as uk_apply_transform
+    from country_primer.adapters import _apply_uk_transform as uk_apply_transform
 
     observations = [{"date": f"2024-{m:02d}-01", "value": 100.0 + m} for m in range(1, 13) if m != 4]
     observations += [{"date": f"2025-{m:02d}-01", "value": 120.0 + m} for m in range(1, 6)]
@@ -179,7 +179,7 @@ def test_uk_mom_pct_matches_ons_monthly_gdp_growth_on_a_contiguous_series() -> N
     """Confirms the MGDP/ECY2 repoint (finding #1) produces sane MoM growth
     once fed through the shared UK transform, and that the calendar-lookup
     fix is a no-op on a genuinely contiguous monthly series."""
-    from build_uk_dashboard import _apply_transform as uk_apply_transform
+    from country_primer.adapters import _apply_uk_transform as uk_apply_transform
 
     observations = [
         {"date": "2026-01-01", "value": 102.3},
@@ -201,7 +201,7 @@ def test_japan_cgpi_yoy_skips_only_the_point_that_needs_the_suppressed_month() -
     misalign only the one future reading whose year-ago base is that exact
     suppressed month — not every reading after it (self-healing: 2025-02's
     base, 2024-02, is present, so it must compute normally)."""
-    from build_us_dashboard import _apply_transform
+    from country_primer.adapters import _apply_us_transform as _apply_transform
     from country_primer.adapters import parse_boj_wide_csv
 
     periods = ",".join(f"2023{m:02d}" for m in range(1, 13))

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-10T19:46:44.879975+00:00",
+  "generated": "2026-10-10T20:46:49.996973+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -582,8 +582,7 @@
         ],
         "quality_counts": {
           "low_confidence": 8,
-          "verified": 2,
-          "watch": 95
+          "watch": 97
         },
         "unavailable_count": 0
       },
@@ -767,7 +766,7 @@
             "quality_status": "low_confidence",
             "source_authority": "public_wrapper",
             "derivation": "observed",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "medium",
             "source_name": "AKShare / PBC RRR Announcements",
             "series": "macro_china_reserve_requirement_ratio:大型金融机构-调整后",
@@ -789,7 +788,7 @@
             "quality_status": "low_confidence",
             "source_authority": "public_wrapper",
             "derivation": "observed",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "medium",
             "source_name": "AKShare / PBC RRR Announcements",
             "series": "macro_china_reserve_requirement_ratio:中小金融机构-调整后",
@@ -877,7 +876,7 @@
             "quality_status": "low_confidence",
             "source_authority": "public_wrapper",
             "derivation": "derived",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "medium",
             "source_name": "AKShare / Eastmoney Data Center",
             "series": "macro_china_shrzgm:社会融资规模增量",
@@ -899,7 +898,7 @@
             "quality_status": "low_confidence",
             "source_authority": "public_wrapper",
             "derivation": "derived",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "medium",
             "source_name": "AKShare / Eastmoney Data Center",
             "series": "macro_china_shrzgm:其中-人民币贷款",
@@ -2883,48 +2882,12 @@
       "framework": "GS UK statistics logic",
       "status": "clean",
       "signals": {
-        "growth": {
-          "id": "monthly_gdp_mom",
-          "label": "Monthly GDP",
-          "value": 0.3868471953578201,
-          "display": "0.39 % m/m",
-          "date": "2026-07-01",
-          "source": "ONS",
-          "quality_status": "watch"
-        },
-        "inflation": {
-          "id": "cpi_yoy",
-          "label": "CPI inflation",
-          "value": 3.1,
-          "display": "3.10 %",
-          "date": "2026-08-01",
-          "source": "ONS",
-          "quality_status": "verified"
-        },
         "policy": {
           "id": "bank_rate",
           "label": "Bank Rate",
           "value": 3.75,
           "display": "3.75 %",
           "date": "2026-10-08",
-          "source": "Bank of England IADB",
-          "quality_status": "verified"
-        },
-        "fiscal": {
-          "id": "psnb_ex_banks",
-          "label": "PSNB",
-          "value": 18268.0,
-          "display": "18,268 GBP mn",
-          "date": "2026-08-01",
-          "source": "ONS",
-          "quality_status": "verified"
-        },
-        "financial": {
-          "id": "sonia_rate",
-          "label": "SONIA",
-          "value": 3.7326,
-          "display": "3.73 %",
-          "date": "2026-10-07",
           "source": "Bank of England IADB",
           "quality_status": "verified"
         }
@@ -2979,8 +2942,8 @@
         ],
         "quality_counts": {
           "low_confidence": 9,
-          "verified": 57,
-          "watch": 26
+          "verified": 47,
+          "watch": 36
         },
         "unavailable_count": 0
       },
@@ -3252,7 +3215,7 @@
             "quality_status": "watch",
             "source_authority": "official_primary",
             "derivation": "observed",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "high",
             "source_name": "ONS",
             "series": "",
@@ -3274,7 +3237,7 @@
             "quality_status": "watch",
             "source_authority": "official_primary",
             "derivation": "derived",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "medium",
             "source_name": "ONS",
             "series": "",
@@ -3428,7 +3391,7 @@
             "quality_status": "watch",
             "source_authority": "official_primary",
             "derivation": "derived",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "medium",
             "source_name": "ONS / HMRC RTI",
             "series": "ONS RTI SA:Aggregate pay",
@@ -3450,7 +3413,7 @@
             "quality_status": "watch",
             "source_authority": "official_primary",
             "derivation": "derived",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "medium",
             "source_name": "ONS / HMRC RTI",
             "series": "ONS RTI SA:Inflows",
@@ -3472,7 +3435,7 @@
             "quality_status": "watch",
             "source_authority": "official_primary",
             "derivation": "derived",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "medium",
             "source_name": "ONS / HMRC RTI",
             "series": "ONS RTI SA:Outflows",
@@ -3538,7 +3501,7 @@
             "quality_status": "watch",
             "source_authority": "official_primary",
             "derivation": "observed",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "high",
             "source_name": "ONS / HM Land Registry",
             "series": "",
@@ -3560,7 +3523,7 @@
             "quality_status": "watch",
             "source_authority": "official_primary",
             "derivation": "observed",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "high",
             "source_name": "ONS / HM Land Registry",
             "series": "",
@@ -3837,7 +3800,7 @@
             "quality_status": "low_confidence",
             "source_authority": "official_primary",
             "derivation": "observed",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "high",
             "source_name": "BLS Business Employment Dynamics",
             "series": "BDS0000000000000000110001LQ5",
@@ -3859,7 +3822,7 @@
             "quality_status": "low_confidence",
             "source_authority": "official_primary",
             "derivation": "observed",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "high",
             "source_name": "BLS Business Employment Dynamics",
             "series": "BDS0000000000000000110001RQ5",
@@ -3881,7 +3844,7 @@
             "quality_status": "low_confidence",
             "source_authority": "official_primary",
             "derivation": "observed",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "high",
             "source_name": "BLS Business Employment Dynamics",
             "series": "BDS0000000000000000110004LQ5",
@@ -3903,7 +3866,7 @@
             "quality_status": "low_confidence",
             "source_authority": "official_primary",
             "derivation": "observed",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "high",
             "source_name": "BLS Business Employment Dynamics",
             "series": "BDS0000000000000000110004RQ5",
@@ -5106,9 +5069,9 @@
       }
     },
     "UK": {
-      "composite_score": 58.4,
-      "cyclical_score": 54.3,
-      "structural_score": 62.5,
+      "composite_score": 52.5,
+      "cyclical_score": 55.0,
+      "structural_score": 50.0,
       "composite_label": "mixed",
       "quality": {
         "score": 49.4,
@@ -5120,20 +5083,20 @@
       },
       "dimensions": {
         "growth": {
-          "label": "moderate expansion",
-          "score": 65.0,
-          "confidence_weight": 0.8,
-          "value": 0.3868471953578201,
-          "display": "0.39 % m/m",
-          "source_signal": "monthly_gdp_mom"
+          "label": "insufficient data",
+          "score": 50.0,
+          "confidence_weight": 0.0,
+          "value": null,
+          "display": "n/a",
+          "source_signal": ""
         },
         "inflation": {
-          "label": "above-target inflation",
-          "score": 45.0,
-          "confidence_weight": 1.0,
-          "value": 3.1,
-          "display": "3.10 %",
-          "source_signal": "cpi_yoy"
+          "label": "insufficient data",
+          "score": 50.0,
+          "confidence_weight": 0.0,
+          "value": null,
+          "display": "n/a",
+          "source_signal": ""
         },
         "policy": {
           "label": "neutral-tight stance",
@@ -5152,20 +5115,20 @@
           "source_signal": ""
         },
         "fiscal": {
-          "label": "fiscal contained",
-          "score": 65.0,
-          "confidence_weight": 1.0,
-          "value": 18268.0,
-          "display": "18,268 GBP mn",
-          "source_signal": "psnb_ex_banks"
+          "label": "insufficient data",
+          "score": 50.0,
+          "confidence_weight": 0.0,
+          "value": null,
+          "display": "n/a",
+          "source_signal": ""
         },
         "financial": {
-          "label": "financial conditions stable",
-          "score": 60.0,
-          "confidence_weight": 1.0,
-          "value": 3.7326,
-          "display": "3.73 %",
-          "source_signal": "sonia_rate"
+          "label": "insufficient data",
+          "score": 50.0,
+          "confidence_weight": 0.0,
+          "value": null,
+          "display": "n/a",
+          "source_signal": ""
         },
         "property": {
           "label": "insufficient data",
@@ -5328,7 +5291,7 @@
       "freshness_pct": 64.1,
       "proxy_fills": 0,
       "gaps": 8,
-      "regime_score": 58.4,
+      "regime_score": 52.5,
       "quality_score": 49.4
     },
     {

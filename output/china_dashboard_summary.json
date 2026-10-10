@@ -1,11 +1,10 @@
 {
   "file": "china.html",
-  "generated": "2026-10-10T19:43:02.556833+00:00",
+  "generated": "2026-10-10T20:44:43.953968+00:00",
   "charts": 105,
   "source_groups": 28,
   "data_gaps": 8,
   "low_confidence": 8,
-  "usd_cny_latest": "6.7330 (2026-10-09)",
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -113,7 +112,7 @@
       "frequency": "daily",
       "source_name": "SAFE",
       "series": "SAFE RMBQuery USD column",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "m2_yoy_akshare",
@@ -184,7 +183,7 @@
       "latest_display": "0.80 %",
       "frequency": "monthly",
       "source_name": "AKShare / Eastmoney Data Center",
-      "series": "macro_china_cpi:全国-同比增长",
+      "series": "",
       "quality_status": "watch"
     },
     {
@@ -202,38 +201,9 @@
   ],
   "unavailable": [],
   "data_mode": "refresh",
-  "latest_cards": [
-    {
-      "id": "pbc_m2_latest",
-      "label_en": "PBC M2 YoY",
-      "label_zh": "PBC M2同比",
-      "fetcher": "pbc_indicator_card",
-      "url": "https://www.pbc.gov.cn/en/3688006/3689169/3753760/index.html",
-      "expected_title": "M2",
-      "value": "7.5%",
-      "updated": "09/28/2026"
-    },
-    {
-      "id": "pbc_afre_latest",
-      "label_en": "PBC AFRE Outstanding",
-      "label_zh": "PBC社融存量",
-      "fetcher": "pbc_indicator_card",
-      "url": "https://www.pbc.gov.cn/en/3688006/3689169/3753765/index.html",
-      "expected_title": "AFRE (Outstanding)",
-      "value": "464.8TN",
-      "updated": "09/28/2026"
-    },
-    {
-      "id": "pbc_dr007_latest",
-      "label_en": "PBC DR007",
-      "label_zh": "PBC DR007",
-      "fetcher": "pbc_indicator_card",
-      "url": "https://www.pbc.gov.cn/en/3688006/3689169/3753752/index.html",
-      "expected_title": "DR007",
-      "value": "n/a",
-      "updated": "n/a"
-    }
-  ],
+  "latest_cards": [],
+  "usd_cny_latest": "6.7330 (2026-10-09)",
+  "cross_checks": [],
   "canonical_frame": {
     "schema_version": "data-first-canonical-v2",
     "observation_columns": [
@@ -422,8 +392,7 @@
     ],
     "quality_counts": {
       "low_confidence": 8,
-      "verified": 2,
-      "watch": 95
+      "watch": 97
     },
     "unavailable_count": 0
   },
@@ -613,7 +582,7 @@
         "quality_status": "low_confidence",
         "source_authority": "public_wrapper",
         "derivation": "observed",
-        "validation": "passed",
+        "validation": "watch",
         "comparability": "medium",
         "source_name": "AKShare / PBC RRR Announcements",
         "series": "macro_china_reserve_requirement_ratio:大型金融机构-调整后",
@@ -635,7 +604,7 @@
         "quality_status": "low_confidence",
         "source_authority": "public_wrapper",
         "derivation": "observed",
-        "validation": "passed",
+        "validation": "watch",
         "comparability": "medium",
         "source_name": "AKShare / PBC RRR Announcements",
         "series": "macro_china_reserve_requirement_ratio:中小金融机构-调整后",
@@ -723,7 +692,7 @@
         "quality_status": "low_confidence",
         "source_authority": "public_wrapper",
         "derivation": "derived",
-        "validation": "passed",
+        "validation": "watch",
         "comparability": "medium",
         "source_name": "AKShare / Eastmoney Data Center",
         "series": "macro_china_shrzgm:社会融资规模增量",
@@ -745,7 +714,7 @@
         "quality_status": "low_confidence",
         "source_authority": "public_wrapper",
         "derivation": "derived",
-        "validation": "passed",
+        "validation": "watch",
         "comparability": "medium",
         "source_name": "AKShare / Eastmoney Data Center",
         "series": "macro_china_shrzgm:其中-人民币贷款",

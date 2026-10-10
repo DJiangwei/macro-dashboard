@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>China Dashboard</title>
+<title>Country Dashboard</title>
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 <style>
 :root {
@@ -285,7 +285,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <a href="poland.html">PL</a>
     <a href="czechia.html">CZ</a>
     <a href="romania.html">RO</a>
-    <a href="china.html" class="active">CN</a>
+    <a href="country.html" class="active">CN</a>
     <a href="japan.html">JP</a>
     <a href="south_africa.html">ZA</a>
     <a href="uk.html">UK</a>
@@ -296,13 +296,14 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <main class="container">
   <header>
-    <h1><span data-lang="en">China Dashboard</span><span data-lang="zh">中国 Dashboard</span></h1>
-    <p class="subtitle"><span data-lang="en">A chart-and-data-only China macro page aligned to the report logic in <em>Understanding China's Economic Statistics</em>. It uses reproducible public sources only; missing China-native monthly indicators are called out rather than proxied.</span><span data-lang="zh">一个仅聚焦图表和数据的中国宏观页面，结构对齐 <em>Understanding China's Economic Statistics</em> 的报告逻辑。页面仅使用可复跑公开来源；尚未稳定接入的中国本土月度指标会明确列为缺口，不用 proxy 替代。</span></p>
+    <h1><span data-lang="en">Country Dashboard</span><span data-lang="zh">Country Dashboard</span></h1>
+    <p class="subtitle"><span data-lang="en">A data-first macro page.</span><span data-lang="zh">一个数据优先的宏观页面。</span></p>
     <div class="meta-row">
       <span class="meta-chip">105 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
       <span class="meta-chip">28 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
       <span class="meta-chip">8 <span data-lang="en">official-data gaps tracked</span><span data-lang="zh">个官方数据缺口</span></span>
       <span class="meta-chip">8 <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
+      <span class="meta-chip">0 <span data-lang="en">native official</span><span data-lang="zh">原生官方</span> · 0 <span data-lang="en">mirror</span><span data-lang="zh">镜像</span></span>
     </div>
   </header>
 
@@ -315,39 +316,21 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </div>
 
 <div class="data-card">
-  <span><span data-lang="en">CPI Inflation</span><span data-lang="zh">CPI通胀</span></span>
-  <strong>0.06</strong>
-  <small>2025 · World Bank WDI</small>
+  <span><span data-lang="en">Industrial Value Added, YoY</span><span data-lang="zh">工业增加值同比</span></span>
+  <strong>5.20</strong>
+  <small>2026-08-01 · AKShare / Eastmoney Data Center</small>
 </div>
 
 <div class="data-card">
-  <span><span data-lang="en">USD/CNY Central Parity</span><span data-lang="zh">美元兑人民币中间价</span></span>
-  <strong>6.73</strong>
-  <small>2026-10-09 · SAFE</small>
+  <span><span data-lang="en">Fixed Asset Investment, YoY</span><span data-lang="zh">固定资产投资同比</span></span>
+  <strong>-13.5</strong>
+  <small>2026-08-01 · AKShare / Eastmoney Data Center</small>
 </div>
 
 <div class="data-card">
-  <span><span data-lang="en">General Government Gross Debt</span><span data-lang="zh">广义政府总债务</span></span>
-  <strong>90.4</strong>
-  <small>2024 · IMF WEO</small>
-</div>
-
-<div class="data-card">
-  <span><span data-lang="en">PBC M2 YoY</span><span data-lang="zh">PBC M2同比</span></span>
-  <strong>7.5%</strong>
-  <small>09/28/2026 · PBC</small>
-</div>
-
-<div class="data-card">
-  <span><span data-lang="en">PBC AFRE Outstanding</span><span data-lang="zh">PBC社融存量</span></span>
-  <strong>464.8TN</strong>
-  <small>09/28/2026 · PBC</small>
-</div>
-
-<div class="data-card">
-  <span><span data-lang="en">PBC DR007</span><span data-lang="zh">PBC DR007</span></span>
-  <strong>n/a</strong>
-  <small>n/a · PBC</small>
+  <span><span data-lang="en">Commercial Housing Sales Value</span><span data-lang="zh">商品房销售额</span></span>
+  <strong>475</strong>
+  <small>2026-08-01 · Eastmoney Data Center / NBS-style industry index</small>
 </div>
   </section>
 
@@ -1850,7 +1833,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="cn:usd_cny_midpoint">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:usd_cny_midpoint">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">USD/CNY Central Parity</span><span data-lang="zh">美元兑人民币中间价</span></h3>
@@ -1862,7 +1845,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>6.73</strong><em>CNY per USD</em></span>
         <time datetime="2026-10-09"><span data-lang="en">9 Oct 2026</span><span data-lang="zh">2026年10月9日</span></time>
       </div>
-      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-usd_cny_midpoint" class="plotly-chart"></div>
@@ -1879,7 +1862,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="cn:eur_cny_midpoint">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:eur_cny_midpoint">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">EUR/CNY Central Parity</span><span data-lang="zh">欧元兑人民币中间价</span></h3>
@@ -1891,7 +1874,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
         <span class="latest-value"><strong>7.53</strong><em>CNY per EUR</em></span>
         <time datetime="2026-10-09"><span data-lang="en">9 Oct 2026</span><span data-lang="zh">2026年10月9日</span></time>
       </div>
-      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+      <span class="quality-pill">watch</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-eur_cny_midpoint" class="plotly-chart"></div>
@@ -2774,7 +2757,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </script>
   <footer>
     <span>Source: <a href="https://www.akshare.xyz/data/macro/macro.html" target="_blank" rel="noreferrer">AKShare / Eastmoney Data Center</a></span>
-    <span>Series: macro_china_cpi:全国-同比增长</span>
+    <span>Series: </span>
     <span>Frequency: monthly</span>
     <span>Provider update: 2026-08-01</span>
   </footer>
@@ -2948,7 +2931,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </script>
   <footer>
     <span>Source: <a href="https://www.akshare.xyz/data/macro/macro.html" target="_blank" rel="noreferrer">AKShare / Eastmoney Data Center</a></span>
-    <span>Series: macro_china_qyspjg:总指数-同比增长</span>
+    <span>Series: </span>
     <span>Frequency: monthly</span>
     <span>Provider update: 2026-08-01</span>
   </footer>
@@ -2977,7 +2960,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </script>
   <footer>
     <span>Source: <a href="https://www.akshare.xyz/data/macro/macro.html" target="_blank" rel="noreferrer">AKShare / Eastmoney Data Center</a></span>
-    <span>Series: macro_china_qyspjg:农产品-同比增长</span>
+    <span>Series: </span>
     <span>Frequency: monthly</span>
     <span>Provider update: 2026-08-01</span>
   </footer>
@@ -3006,7 +2989,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </script>
   <footer>
     <span>Source: <a href="https://www.akshare.xyz/data/macro/macro.html" target="_blank" rel="noreferrer">AKShare / Eastmoney Data Center</a></span>
-    <span>Series: macro_china_qyspjg:矿产品-同比增长</span>
+    <span>Series: </span>
     <span>Frequency: monthly</span>
     <span>Provider update: 2026-08-01</span>
   </footer>
@@ -3035,7 +3018,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </script>
   <footer>
     <span>Source: <a href="https://www.akshare.xyz/data/macro/macro.html" target="_blank" rel="noreferrer">AKShare / Eastmoney Data Center</a></span>
-    <span>Series: macro_china_qyspjg:煤油电-同比增长</span>
+    <span>Series: </span>
     <span>Frequency: monthly</span>
     <span>Provider update: 2026-08-01</span>
   </footer>
@@ -3434,7 +3417,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </script>
   <footer>
     <span>Source: <a href="https://www.akshare.xyz/data/macro/macro.html" target="_blank" rel="noreferrer">AKShare / Eastmoney Data Center</a></span>
-    <span>Series: macro_china_czsr:累计-同比增长</span>
+    <span>Series: </span>
     <span>Frequency: monthly</span>
     <span>Provider update: 2026-08-01</span>
   </footer>
@@ -3449,23 +3432,23 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     </div>
     <div class="chart-status">
 
-      <div class="latest-reading" data-latest-reading data-latest-date="2026-06-30">
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-06-01">
         <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
-        <span class="latest-value"><strong>9.79</strong><em>CNY tn</em></span>
-        <time datetime="2026-06-30"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
+        <span class="latest-value"><strong>97,865</strong><em>CNY tn</em></span>
+        <time datetime="2026-06-01"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
       </div>
       <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-tax_receipts_ytd_akshare" class="plotly-chart"></div>
   <script>
-    Plotly.newPlot("chart-tax_receipts_ytd_akshare", [{"name": "Tax Receipts YTD", "x": ["2005-03-31", "2005-06-30", "2005-09-30", "2006-03-31", "2006-06-30", "2006-09-30", "2007-03-31", "2007-06-30", "2007-09-30", "2007-12-31", "2008-03-31", "2008-06-30", "2008-09-30", "2008-12-31", "2009-03-31", "2009-06-30", "2009-09-30", "2009-12-31", "2010-03-31", "2010-06-30", "2010-09-30", "2010-12-31", "2011-03-31", "2011-06-30", "2011-09-30", "2011-12-31", "2012-03-31", "2012-06-30", "2012-09-30", "2012-12-31", "2013-03-31", "2013-06-30", "2013-09-30", "2013-12-31", "2014-03-31", "2014-06-30", "2014-09-30", "2014-12-31", "2015-03-31", "2015-06-30", "2015-09-30", "2015-12-31", "2016-03-31", "2016-06-30", "2016-09-30", "2016-12-31", "2017-03-31", "2017-06-30", "2017-09-30", "2017-12-31", "2018-03-31", "2018-06-30", "2018-09-30", "2018-12-31", "2019-03-31", "2019-06-30", "2019-09-30", "2019-12-31", "2020-03-31", "2020-06-30", "2020-09-30", "2020-12-31", "2021-03-31", "2021-06-30", "2021-09-30", "2021-12-31", "2022-03-31", "2022-06-30", "2022-09-30", "2022-12-31", "2023-03-31", "2023-06-30", "2023-09-30", "2023-12-31", "2024-03-31", "2024-06-30", "2024-09-30", "2024-12-31", "2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31", "2026-03-31", "2026-06-30"], "y": [0.724916, 1.514973, 2.185535, 0.862632, 1.84848, 2.69278, 1.0717459999999999, 2.353481, 3.4973949999999996, 4.562197, 1.451968, 3.142575, 4.409312, 5.422379, 1.302358, 2.953007, 4.505756, 5.952159, 1.770255, 3.861153, 5.595737000000001, 7.3202, 2.3438849999999998, 5.002843, 7.129217999999999, 8.972031, 2.5857810000000003, 5.493163, 7.741008, 10.060088, 2.73992, 5.926061, 8.441211000000001, 11.0497, 3.018783, 6.426874, 9.069517, 11.9158, 3.05633, 6.65066, 9.463148, 12.4892, 3.2954, 7.2236, 10.0881, 13.0354, 3.7793, 8.0074, 11.3101, 14.436, 4.4332, 9.1629, 12.7486, 15.6401, 4.6706, 9.2424, 12.697, 15.7992, 3.9029, 8.199, 11.8876, 15.431, 4.8723, 10.0461, 14.0702, 17.2731, 5.2452, 8.5564, 12.4365, 16.6614, 5.1707, 9.9661, 13.9105, 18.1129, 4.9172, 9.408, 13.1715, 17.4972, 4.745, 9.2915, 13.2664, 17.6363, 4.8505, 9.7865], "mode": "lines", "line": {"color": "#8a593d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-06-30"], "y": [9.7865], "mode": "markers", "marker": {"size": 9, "color": "#8a593d", "line": {"width": 2, "color": "#fffdf8"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "rgba(255,252,246,0.90)", "plot_bgcolor": "rgba(255,252,246,0.90)", "font": {"family": "Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, sans-serif", "size": 12, "color": "#171310"}, "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "yaxis": {"title": "CNY tn", "gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+    Plotly.newPlot("chart-tax_receipts_ytd_akshare", [{"name": "Tax Receipts YTD", "x": ["2005-03-01", "2005-06-01", "2005-09-01", "2006-03-01", "2006-06-01", "2006-09-01", "2007-03-01", "2007-06-01", "2007-09-01", "2007-12-01", "2008-03-01", "2008-06-01", "2008-09-01", "2008-12-01", "2009-03-01", "2009-06-01", "2009-09-01", "2009-12-01", "2010-03-01", "2010-06-01", "2010-09-01", "2010-12-01", "2011-03-01", "2011-06-01", "2011-09-01", "2011-12-01", "2012-03-01", "2012-06-01", "2012-09-01", "2012-12-01", "2013-03-01", "2013-06-01", "2013-09-01", "2013-12-01", "2014-03-01", "2014-06-01", "2014-09-01", "2014-12-01", "2015-03-01", "2015-06-01", "2015-09-01", "2015-12-01", "2016-03-01", "2016-06-01", "2016-09-01", "2016-12-01", "2017-03-01", "2017-06-01", "2017-09-01", "2017-12-01", "2018-03-01", "2018-06-01", "2018-09-01", "2018-12-01", "2019-03-01", "2019-06-01", "2019-09-01", "2019-12-01", "2020-03-01", "2020-06-01", "2020-09-01", "2020-12-01", "2021-03-01", "2021-06-01", "2021-09-01", "2021-12-01", "2022-03-01", "2022-06-01", "2022-09-01", "2022-12-01", "2023-03-01", "2023-06-01", "2023-09-01", "2023-12-01", "2024-03-01", "2024-06-01", "2024-09-01", "2024-12-01", "2025-03-01", "2025-06-01", "2025-09-01", "2025-12-01", "2026-03-01", "2026-06-01"], "y": [7249.16, 15149.73, 21855.35, 8626.32, 18484.8, 26927.8, 10717.46, 23534.81, 34973.95, 45621.97, 14519.68, 31425.75, 44093.12, 54223.79, 13023.58, 29530.07, 45057.56, 59521.59, 17702.55, 38611.53, 55957.37, 73202.0, 23438.85, 50028.43, 71292.18, 89720.31, 25857.81, 54931.63, 77410.08, 100600.88, 27399.2, 59260.61, 84412.11, 110497.0, 30187.83, 64268.74, 90695.17, 119158.0, 30563.3, 66506.6, 94631.48, 124892.0, 32954.0, 72236.0, 100881.0, 130354.0, 37793.0, 80074.0, 113101.0, 144360.0, 44332.0, 91629.0, 127486.0, 156401.0, 46706.0, 92424.0, 126970.0, 157992.0, 39029.0, 81990.0, 118876.0, 154310.0, 48723.0, 100461.0, 140702.0, 172731.0, 52452.0, 85564.0, 124365.0, 166614.0, 51707.0, 99661.0, 139105.0, 181129.0, 49172.0, 94080.0, 131715.0, 174972.0, 47450.0, 92915.0, 132664.0, 176363.0, 48505.0, 97865.0], "mode": "lines", "line": {"color": "#8a593d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-06-01"], "y": [97865.0], "mode": "markers", "marker": {"size": 9, "color": "#8a593d", "line": {"width": 2, "color": "#fffdf8"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "rgba(255,252,246,0.90)", "plot_bgcolor": "rgba(255,252,246,0.90)", "font": {"family": "Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, sans-serif", "size": 12, "color": "#171310"}, "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "yaxis": {"title": "CNY tn", "gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
   </script>
   <footer>
     <span>Source: <a href="https://www.akshare.xyz/data/macro/macro.html" target="_blank" rel="noreferrer">AKShare / National Tax Receipts</a></span>
-    <span>Series: macro_china_national_tax_receipts:税收收入合计</span>
+    <span>Series: </span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-06-30</span>
+    <span>Provider update: 2026-06-01</span>
   </footer>
   <p class="caveat"><span data-lang="en">Cumulative national tax receipts via AKShare, converted from CNY 100mn to CNY tn; not the full general-government revenue envelope.</span><span data-lang="zh">AKShare包装的全国税收收入累计值，由亿元转换为万亿元；不是完整广义政府收入口径。</span></p>
 </article>
@@ -3478,23 +3461,23 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     </div>
     <div class="chart-status">
 
-      <div class="latest-reading" data-latest-reading data-latest-date="2026-06-30">
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-06-01">
         <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
         <span class="latest-value"><strong>5.30</strong><em>%</em></span>
-        <time datetime="2026-06-30"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
+        <time datetime="2026-06-01"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
       </div>
       <span class="quality-pill">watch</span><span class="authority-chip">public wrapper</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-tax_receipts_yoy_akshare" class="plotly-chart"></div>
   <script>
-    Plotly.newPlot("chart-tax_receipts_yoy_akshare", [{"name": "Tax Receipts YTD, YoY", "x": ["2005-03-31", "2005-06-30", "2005-09-30", "2006-03-31", "2006-06-30", "2006-09-30", "2007-03-31", "2007-06-30", "2007-09-30", "2008-03-31", "2008-06-30", "2008-09-30", "2008-12-31", "2009-03-31", "2009-06-30", "2009-09-30", "2009-12-31", "2010-03-31", "2010-06-30", "2010-09-30", "2010-12-31", "2011-03-31", "2011-06-30", "2011-09-30", "2011-12-31", "2012-03-31", "2012-06-30", "2012-09-30", "2012-12-31", "2013-03-31", "2013-06-30", "2013-09-30", "2013-12-31", "2014-03-31", "2014-06-30", "2014-09-30", "2014-12-31", "2015-03-31", "2015-06-30", "2015-09-30", "2015-12-31", "2016-03-31", "2016-06-30", "2016-09-30", "2016-12-31", "2017-03-31", "2017-06-30", "2017-09-30", "2017-12-31", "2018-03-31", "2018-06-30", "2018-09-30", "2018-12-31", "2019-03-31", "2019-06-30", "2019-09-30", "2019-12-31", "2020-03-31", "2020-06-30", "2020-09-30", "2020-12-31", "2021-03-31", "2021-06-30", "2021-09-30", "2021-12-31", "2022-03-31", "2022-06-30", "2022-09-30", "2022-12-31", "2023-03-31", "2023-06-30", "2023-09-30", "2023-12-31", "2024-03-31", "2024-06-30", "2024-09-30", "2024-12-31", "2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31", "2026-03-31", "2026-06-30"], "y": [10.7, 13.4, 15.9, 19.0, 22.0, 23.2, 26.3, 29.5, 32.2, 35.5, 33.5, 26.1, 18.8, -10.3, -6.0, 2.2, 9.8, 35.9, 30.8, 24.2, 23.0, 32.4, 29.6, 27.4045, 22.6, 10.3, 9.8, 8.6, 12.1, 6.0, 7.8807, 9.04537239, 9.8, 10.17777891, 8.5, 7.4, 7.8, 1.2, 3.5, 4.3, 4.8, 7.8, 8.6, 6.6, 4.3, 14.7, 10.9, 12.1, 10.7, 17.3, 14.4, 12.7, 8.3, 5.4, 0.9, -0.4, 1.0, -16.4, -11.3, -6.4, -2.3, 24.8, 22.5, 18.4, 11.9, 7.7, -14.8, -11.6, -3.5, -1.4, 16.5, 11.9, 8.7, -4.9, -5.6, -5.3, -3.4, -3.5, -1.2, 0.7, 0.8, 2.2, 5.3], "mode": "lines", "line": {"color": "#8a593d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-06-30"], "y": [5.3], "mode": "markers", "marker": {"size": 9, "color": "#8a593d", "line": {"width": 2, "color": "#fffdf8"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "rgba(255,252,246,0.90)", "plot_bgcolor": "rgba(255,252,246,0.90)", "font": {"family": "Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, sans-serif", "size": 12, "color": "#171310"}, "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "yaxis": {"title": "%", "gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+    Plotly.newPlot("chart-tax_receipts_yoy_akshare", [{"name": "Tax Receipts YTD, YoY", "x": ["2005-03-01", "2005-06-01", "2005-09-01", "2006-03-01", "2006-06-01", "2006-09-01", "2007-03-01", "2007-06-01", "2007-09-01", "2008-03-01", "2008-06-01", "2008-09-01", "2008-12-01", "2009-03-01", "2009-06-01", "2009-09-01", "2009-12-01", "2010-03-01", "2010-06-01", "2010-09-01", "2010-12-01", "2011-03-01", "2011-06-01", "2011-09-01", "2011-12-01", "2012-03-01", "2012-06-01", "2012-09-01", "2012-12-01", "2013-03-01", "2013-06-01", "2013-09-01", "2013-12-01", "2014-03-01", "2014-06-01", "2014-09-01", "2014-12-01", "2015-03-01", "2015-06-01", "2015-09-01", "2015-12-01", "2016-03-01", "2016-06-01", "2016-09-01", "2016-12-01", "2017-03-01", "2017-06-01", "2017-09-01", "2017-12-01", "2018-03-01", "2018-06-01", "2018-09-01", "2018-12-01", "2019-03-01", "2019-06-01", "2019-09-01", "2019-12-01", "2020-03-01", "2020-06-01", "2020-09-01", "2020-12-01", "2021-03-01", "2021-06-01", "2021-09-01", "2021-12-01", "2022-03-01", "2022-06-01", "2022-09-01", "2022-12-01", "2023-03-01", "2023-06-01", "2023-09-01", "2023-12-01", "2024-03-01", "2024-06-01", "2024-09-01", "2024-12-01", "2025-03-01", "2025-06-01", "2025-09-01", "2025-12-01", "2026-03-01", "2026-06-01"], "y": [10.7, 13.4, 15.9, 19.0, 22.0, 23.2, 26.3, 29.5, 32.2, 35.5, 33.5, 26.1, 18.8, -10.3, -6.0, 2.2, 9.8, 35.9, 30.8, 24.2, 23.0, 32.4, 29.6, 27.4045, 22.6, 10.3, 9.8, 8.6, 12.1, 6.0, 7.8807, 9.04537239, 9.8, 10.17777891, 8.5, 7.4, 7.8, 1.2, 3.5, 4.3, 4.8, 7.8, 8.6, 6.6, 4.3, 14.7, 10.9, 12.1, 10.7, 17.3, 14.4, 12.7, 8.3, 5.4, 0.9, -0.4, 1.0, -16.4, -11.3, -6.4, -2.3, 24.8, 22.5, 18.4, 11.9, 7.7, -14.8, -11.6, -3.5, -1.4, 16.5, 11.9, 8.7, -4.9, -5.6, -5.3, -3.4, -3.5, -1.2, 0.7, 0.8, 2.2, 5.3], "mode": "lines", "line": {"color": "#8a593d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-06-01"], "y": [5.3], "mode": "markers", "marker": {"size": 9, "color": "#8a593d", "line": {"width": 2, "color": "#fffdf8"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "rgba(255,252,246,0.90)", "plot_bgcolor": "rgba(255,252,246,0.90)", "font": {"family": "Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, sans-serif", "size": 12, "color": "#171310"}, "xaxis": {"gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "yaxis": {"title": "%", "gridcolor": "rgba(23,19,16,0.08)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
   </script>
   <footer>
     <span>Source: <a href="https://www.akshare.xyz/data/macro/macro.html" target="_blank" rel="noreferrer">AKShare / National Tax Receipts</a></span>
-    <span>Series: macro_china_national_tax_receipts:较上年同期</span>
+    <span>Series: </span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-06-30</span>
+    <span>Provider update: 2026-06-01</span>
   </footer>
   <p class="caveat"><span data-lang="en">Cumulative tax-receipts growth via AKShare; quarterly/YTD reporting can create mechanical jumps at year boundaries.</span><span data-lang="zh">AKShare包装的税收收入累计同比；季度/累计口径在年初切换时会产生机械跳变。</span></p>
 </article>
@@ -3536,7 +3519,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <div class="section-title">
       <p>Pipeline</p>
       <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are PDF-native indicators that matter for China but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的中国本土核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+      <div class="logic"><span data-lang="en">These are PDF-native indicators that matter for China but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的该国本土核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
     </div>
     <table class="gaps-table">
       <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>
@@ -3592,8 +3575,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </section>
 
   <footer class="page-footer">
-    <span data-lang="en">Research artefact only, not investment advice. Generated 2026-10-10 from <code>config/china_indicators.yaml</code>.</span>
-    <span data-lang="zh">仅为研究工具，不构成投资建议。生成日期 2026-10-10，配置来源 <code>config/china_indicators.yaml</code>。</span>
+    <span data-lang="en">Research artefact only, not investment advice. Generated 2026-10-10 from <code>indicators.yaml</code>.</span>
+    <span data-lang="zh">仅为研究工具，不构成投资建议。生成日期 2026-10-10，配置来源 <code>indicators.yaml</code>。</span>
   </footer>
 </main>
 

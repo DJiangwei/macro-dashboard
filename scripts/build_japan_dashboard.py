@@ -39,8 +39,7 @@ from dashboard_summary_utils import (
 )
 from country_primer.page_renderer import build_country_page
 from country_primer.data_first_pipeline import fetch_all
-from build_uk_dashboard import validate_series
-from build_us_dashboard import _apply_transform, fetch_fred_us
+from country_primer.adapters import _apply_us_transform as _apply_transform, fetch_fred_us
 from country_primer.adapters import (
     fetch_imf_datamapper,
     fetch_imf_sdmx,

@@ -1,6 +1,6 @@
 from types import SimpleNamespace
 
-from build_china_dashboard import _chart_html, _format_period, _latest
+from country_primer.page_renderer import _chart_html, _format_period, _latest
 from build_v4 import _chart_latest_reading, _format_chart_reading
 
 

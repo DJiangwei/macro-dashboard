@@ -5,7 +5,7 @@ try:
     data = res.json()
     for item in data:
         name = str(item.get("Description", "")) + " " + str(item.get("Name", ""))
-        if "CPI" in name or "Consumer" in name or "Core" in name or "Manufacturing" in name:
+        if "CDS" in name or "EMBI" in name or "Spread" in name.title() or "Risk" in name:
             print(f"{item.get('TimeseriesCode')}: {name}")
 except Exception as e:
     print(e)

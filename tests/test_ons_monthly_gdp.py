@@ -44,7 +44,7 @@ def test_ons_fetch_fails_loudly_when_declared_frequency_is_absent() -> None:
     quarterly, but the config declared frequency: monthly. The fetcher used
     to silently fall back to payload['quarters'] and ship a chart whose
     label ("monthly") contradicted its data, badged verified."""
-    from build_uk_dashboard import fetch_ons_timeseries
+    from country_primer.adapters import fetch_ons_timeseries
 
     payload = {
         "years": [{"date": "2025", "value": "100.0"}],
@@ -57,7 +57,7 @@ def test_ons_fetch_fails_loudly_when_declared_frequency_is_absent() -> None:
 
 
 def test_ons_fetch_fails_loudly_on_unsupported_frequency() -> None:
-    from build_uk_dashboard import fetch_ons_timeseries
+    from country_primer.adapters import fetch_ons_timeseries
 
     payload = {"months": [{"date": "2025 JAN", "value": "1.0"}]}
     spec = {"series": "X", "id": "x", "frequency": "weekly", "ons_path": "/x"}
@@ -68,7 +68,7 @@ def test_ons_fetch_fails_loudly_on_unsupported_frequency() -> None:
 def test_ons_fetch_succeeds_when_declared_frequency_matches_payload() -> None:
     """The new MGDP/ECY2 series genuinely carries a `months` array, so the
     fetcher must succeed without falling back to anything."""
-    from build_uk_dashboard import fetch_ons_timeseries
+    from country_primer.adapters import fetch_ons_timeseries
 
     payload = {
         "months": [
