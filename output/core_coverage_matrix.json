@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-10-10T19:46:24.314723+00:00",
+  "generated": "2026-10-10T21:09:18.826096+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -72,8 +72,8 @@
       "missing": 20
     },
     "UK": {
-      "verified": 23,
-      "watch": 10,
+      "verified": 21,
+      "watch": 12,
       "low_confidence": 4,
       "substitute": 0,
       "missing": 11
@@ -998,13 +998,13 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "paye_payrolled_employees_mom_change"
           ],
           "latest_date": "2026-08-01",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "US": {
           "state": "watch",
@@ -1434,7 +1434,7 @@
             "cpi_yoy_akshare"
           ],
           "latest_date": "2026-08-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "JP": {
           "state": "verified",
@@ -2103,7 +2103,7 @@
             "uk_hpi_annual_change"
           ],
           "latest_date": "2026-07-01",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "US": {
           "state": "watch",
@@ -2182,13 +2182,13 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "residential_property_transactions_sa"
           ],
           "latest_date": "2026-08-01",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "US": {
           "state": "watch",
@@ -2279,7 +2279,7 @@
             "construction_output_yoy"
           ],
           "latest_date": "2026-07-01",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "US": {
           "state": "watch",
@@ -3079,7 +3079,7 @@
             "fiscal_balance_gdp"
           ],
           "latest_date": "2031",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "ZA": {
           "state": "watch",
@@ -3088,7 +3088,7 @@
             "fiscal_balance_gdp"
           ],
           "latest_date": "2031",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "UK": {
           "state": "low_confidence",
@@ -3172,7 +3172,7 @@
             "primary_balance_gdp"
           ],
           "latest_date": "2031",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "ZA": {
           "state": "watch",
@@ -3181,7 +3181,7 @@
             "primary_balance_gdp"
           ],
           "latest_date": "2031",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "UK": {
           "state": "missing",
@@ -3263,7 +3263,7 @@
             "government_debt_gdp"
           ],
           "latest_date": "2031",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "ZA": {
           "state": "watch",
@@ -3272,7 +3272,7 @@
             "government_debt_gdp"
           ],
           "latest_date": "2031",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "UK": {
           "state": "low_confidence",
@@ -3370,7 +3370,7 @@
             "obr_cg_debt_interest_forecast"
           ],
           "latest_date": "2031-03-31",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "US": {
           "state": "watch",
@@ -3531,7 +3531,7 @@
             "lpr_1y_akshare"
           ],
           "latest_date": "2026-09-20",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "JP": {
           "state": "watch",

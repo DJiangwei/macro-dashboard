@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-10-10T19:46:24.314723+00:00
+Generated: 2026-10-10T21:09:18.826096+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -15,7 +15,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 7 | `production_cycle` | `retail_sales_growth` Retail Sales Growth | V | V | V | V | W | L | L | V | W |
 | 8 | `production_cycle` | `business_confidence` Business Confidence | V | V | V | V | W | W | W | W | W |
 | 9 | `labour_household` | `unemployment_rate` Unemployment Rate | V | V | V | V | W | W | L | L | W |
-| 10 | `labour_household` | `employment_growth` Employment Growth | V | V | V | V | - | W | L | V | W |
+| 10 | `labour_household` | `employment_growth` Employment Growth | V | V | V | V | - | W | L | W | W |
 | 11 | `labour_household` | `participation_rate` Labour Force Participation | W | W | W | W | - | W | - | L | W |
 | 12 | `labour_household` | `vacancies` Labour Demand / Vacancies | L | L | L | L | - | V | - | W | W |
 | 13 | `labour_household` | `wage_growth` Wage Growth | V | V | V | V | - | L | - | W | W |
@@ -28,7 +28,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 20 | `prices_costs` | `wage_cost_inflation` Labour Cost Inflation | V | V | V | V | - | - | - | W | W |
 | 21 | `prices_costs` | `inflation_expectations` Inflation Expectations | V | V | V | V | - | - | - | - | W |
 | 22 | `housing_investment` | `house_price_growth` House Price Growth | V | V | V | V | L | L | L | W | W |
-| 23 | `housing_investment` | `housing_activity` Housing Activity | - | - | - | - | W | L | - | V | W |
+| 23 | `housing_investment` | `housing_activity` Housing Activity | - | - | - | - | W | L | - | W | W |
 | 24 | `housing_investment` | `construction_activity` Construction Activity | W | V | V | W | W | - | - | W | W |
 | 25 | `housing_investment` | `mortgage_rate` Mortgage Rate | V | V | V | V | - | - | - | V | W |
 | 26 | `housing_investment` | `property_inventory` Property Inventory / Supply | - | - | - | - | - | - | - | - | W |
@@ -66,7 +66,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | CN | 25/48 | 0 | 24 | 1 | 0 | 23 |
 | JP | 35/48 | 6 | 17 | 12 | 0 | 13 |
 | ZA | 28/48 | 6 | 6 | 15 | 1 | 20 |
-| UK | 37/48 | 23 | 10 | 4 | 0 | 11 |
+| UK | 37/48 | 21 | 12 | 4 | 0 | 11 |
 | US | 40/48 | 0 | 39 | 1 | 0 | 8 |
 
 ## Priority Gaps
