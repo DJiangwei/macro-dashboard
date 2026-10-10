@@ -65,3 +65,11 @@ Proxy union: 0 rendered indicators.
 ## User Decisions Needed
 
 No immediate decision needed. The remaining proxy-only slots have been dropped from rendered pages.
+
+## Phase 4 Update: Advanced Proxy Resolution (EMBI/CDS)
+Date: 2026-10-10
+
+Investigation into replacing generic proxies (such as `sov_spread_vs_bund`, which represents the local-currency yield spread over Germany) with precise credit risk metrics like **JPMorgan EMBI** or **Sovereign CDS (5Y)** confirms that these precise metrics remain strictly vendor-controlled.
+- True sovereign CDS spreads (e.g., Markit/IHS) and EMBI spreads are not exposed via any public structural adapters (FRED, Eurostat, E-Stat, SARB, ONS, IMF).
+- While FRED mirrors some ICE BofA corporate and regional OAS indices, it does not provide country-specific sovereign EMBI or CDS for the dashboard's target countries (e.g., CE4, South Africa).
+- Therefore, the current `sov_spread_vs_bund` indicator will remain the official public substitute for sovereign credit risk until a licensed data adapter (e.g., Bloomberg B-PIPE, Refinitiv Eikon, Macrobond) is integrated.
