@@ -628,7 +628,39 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 }
 """
 
-def render_html(config: dict[str, Any], series_list: list[dict[str, Any]], cards: list[dict[str, Any]], summary_key_ids: list[str] = None) -> str:
+COUNTRY_META: dict[str, dict[str, str]] = {
+    "HU": {"name": "Hungary", "name_zh": "匈牙利", "file": "hungary.html"},
+    "PL": {"name": "Poland", "name_zh": "波兰", "file": "poland.html"},
+    "CZ": {"name": "Czechia", "name_zh": "捷克", "file": "czechia.html"},
+    "RO": {"name": "Romania", "name_zh": "罗马尼亚", "file": "romania.html"},
+    "CN": {"name": "China", "name_zh": "中国", "file": "china.html"},
+    "JP": {"name": "Japan", "name_zh": "日本", "file": "japan.html"},
+    "ZA": {"name": "South Africa", "name_zh": "南非", "file": "south_africa.html"},
+    "UK": {"name": "United Kingdom", "name_zh": "英国", "file": "uk.html"},
+    "US": {"name": "United States", "name_zh": "美国", "file": "us.html"},
+}
+
+
+def render_html(
+    config: dict[str, Any],
+    series_list: list[dict[str, Any]],
+    cards: list[dict[str, Any]],
+    summary_key_ids: list[str] | None = None,
+    country_code: str = "",
+) -> str:
+    if not country_code:
+        country_code = str(config.get("iso2") or config.get("code") or "CN")
+    code_upper = country_code.upper()
+    meta = COUNTRY_META.get(code_upper, {})
+    country_name = config.get("name") or meta.get("name", "Country")
+    country_name_zh = config.get("name_zh") or meta.get("name_zh", country_name)
+
+    nav_links = []
+    for code, item in COUNTRY_META.items():
+        active_cls = ' class="active"' if code == code_upper else ""
+        nav_links.append(f'<a href="{item["file"]}"{active_cls}>{code}</a>')
+    country_nav_html = "\n    ".join(nav_links)
+
     chart_count = sum(1 for item in series_list if item.get("observations"))
     source_count = len({item.get("source_name") for item in series_list if item.get("observations")})
     gap_count = len(config.get("data_gaps", []))
@@ -636,12 +668,31 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]], cards
     native = sum(1 for item in series_list if item.get("source_authority") == "official primary" and item.get("observations"))
     mirror = sum(1 for item in series_list if item.get("source_authority") == "official mirror" and item.get("observations"))
     generated_date = datetime.now(UTC).date().isoformat()
+
+    if code_upper == "CN":
+        data_note_en = (
+            "Data policy: no fabricated proxies. World Bank and IMF annual series provide the durable public skeleton; "
+            "SAFE provides official daily RMB fixing data; PBC cards show latest official monetary prints where history is not yet wired."
+        )
+        data_note_zh = (
+            "数据原则：不制造 proxy。World Bank 与 IMF 年度序列提供可维护的公开骨架；"
+            "SAFE 提供官方人民币日度中间价；PBC 卡片展示暂未接入历史序列的最新官方货币数据。"
+        )
+    else:
+        data_note_en = (
+            f"Data policy: no fabricated proxies. Official public sources provide the primary foundation for {country_name}; "
+            "native statistical and central bank releases are prioritized where available."
+        )
+        data_note_zh = (
+            f"数据原则：不制造 proxy。官方公开来源提供{country_name_zh}的基础数据；优先接入本国统计局与央行的原生发布序列。"
+        )
+
     return f"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{config.get('name', 'Country')} Dashboard</title>
+<title>{country_name} Dashboard</title>
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 <style>{CSS}</style>
 </head>
@@ -649,23 +700,15 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]], cards
 <div class="topbar">
   <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">East Meridian <span>/ Macro Dashboard</span></div></a>
   <nav class="country-nav" aria-label="country dashboards">
-    <a href="hungary.html">HU</a>
-    <a href="poland.html">PL</a>
-    <a href="czechia.html">CZ</a>
-    <a href="romania.html">RO</a>
-    <a href="{config.get("name", "Country").lower().replace(" ", "_")}.html" class="active">CN</a>
-    <a href="japan.html">JP</a>
-    <a href="south_africa.html">ZA</a>
-    <a href="uk.html">UK</a>
-    <a href="us.html">US</a>
+    {country_nav_html}
   </nav>
   <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">中文</button>
 </div>
 
 <main class="container">
   <header>
-    <h1><span data-lang="en">{config.get("name", "Country")} Dashboard</span><span data-lang="zh">{config.get("name_zh", "Country")} Dashboard</span></h1>
-    <p class="subtitle"><span data-lang="en">{config.get("subtitle_en", "A data-first macro page.")}</span><span data-lang="zh">{config.get("subtitle_zh", "一个数据优先的宏观页面。")}</span></p>
+    <h1><span data-lang="en">{country_name} Dashboard</span><span data-lang="zh">{country_name_zh}宏观仪表盘</span></h1>
+    <p class="subtitle"><span data-lang="en">{config.get("subtitle_en", f"A data-first macro page for {country_name}.")}</span><span data-lang="zh">{config.get("subtitle_zh", f"{country_name_zh}数据优先宏观页面。")}</span></p>
     <div class="meta-row">
       <span class="meta-chip">{chart_count} <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
       <span class="meta-chip">{source_count} <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
@@ -690,17 +733,17 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]], cards
   </div>
 
   <div class="data-note">
-    <span data-lang="en">Data policy: no fabricated proxies. World Bank and IMF annual series provide the durable public skeleton; SAFE provides official daily RMB fixing data; PBC cards show latest official monetary prints where history is not yet wired.</span>
-    <span data-lang="zh">数据原则：不制造 proxy。World Bank 与 IMF 年度序列提供可维护的公开骨架；SAFE 提供官方人民币日度中间价；PBC 卡片展示暂未接入历史序列的最新官方货币数据。</span>
+    <span data-lang="en">{data_note_en}</span>
+    <span data-lang="zh">{data_note_zh}</span>
   </div>
 
-  {_sections_html(config, series_list, config.get("iso2", "CN"))}
+  {_sections_html(config, series_list, code_upper)}
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
       <p>Pipeline</p>
       <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are PDF-native indicators that matter for China but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的{config.get("name_zh", "该国")}本土核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+      <div class="logic"><span data-lang="en">These are macro indicators that matter for {country_name} but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的{country_name_zh}核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
     </div>
     <table class="gaps-table">
       <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>
@@ -709,8 +752,8 @@ def render_html(config: dict[str, Any], series_list: list[dict[str, Any]], cards
   </section>
 
   <footer class="page-footer">
-    <span data-lang="en">Research artefact only, not investment advice. Generated {generated_date} from <code>{config.get("config_file", "indicators.yaml")}</code>.</span>
-    <span data-lang="zh">仅为研究工具，不构成投资建议。生成日期 {generated_date}，配置来源 <code>{config.get("config_file", "indicators.yaml")}</code>。</span>
+    <span data-lang="en">Research artefact only, not investment advice. Generated {generated_date} from <code>{config.get("config_file", f"{country_name.lower().replace(' ', '_')}_indicators.yaml")}</code>.</span>
+    <span data-lang="zh">仅为研究工具，不构成投资建议。生成日期 {generated_date}，配置来源 <code>{config.get("config_file", f"{country_name.lower().replace(' ', '_')}_indicators.yaml")}</code>。</span>
   </footer>
 </main>
 
@@ -842,7 +885,7 @@ def build_country_page(
     for item in series_list:
         item["cross_check"] = checks_by_id.get(item["id"])
 
-    html = render_html(config, series_list, extra_cards or [], summary_key_ids)
+    html = render_html(config, series_list, extra_cards or [], summary_key_ids, country_code=country_code)
     _write_clean(out_html, html)
 
     charted = [item for item in series_list if item.get("observations")]

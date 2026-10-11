@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Country Dashboard</title>
+<title>South Africa Dashboard</title>
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 <style>
 :root {
@@ -285,9 +285,9 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <a href="poland.html">PL</a>
     <a href="czechia.html">CZ</a>
     <a href="romania.html">RO</a>
-    <a href="country.html" class="active">CN</a>
+    <a href="china.html">CN</a>
     <a href="japan.html">JP</a>
-    <a href="south_africa.html">ZA</a>
+    <a href="south_africa.html" class="active">ZA</a>
     <a href="uk.html">UK</a>
     <a href="us.html">US</a>
   </nav>
@@ -296,8 +296,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <main class="container">
   <header>
-    <h1><span data-lang="en">Country Dashboard</span><span data-lang="zh">Country Dashboard</span></h1>
-    <p class="subtitle"><span data-lang="en">A data-first macro page.</span><span data-lang="zh">一个数据优先的宏观页面。</span></p>
+    <h1><span data-lang="en">South Africa Dashboard</span><span data-lang="zh">南非宏观仪表盘</span></h1>
+    <p class="subtitle"><span data-lang="en">A data-first macro page for South Africa.</span><span data-lang="zh">南非数据优先宏观页面。</span></p>
     <div class="meta-row">
       <span class="meta-chip">64 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
       <span class="meta-chip">15 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
@@ -356,8 +356,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
 
   <div class="data-note">
-    <span data-lang="en">Data policy: no fabricated proxies. World Bank and IMF annual series provide the durable public skeleton; SAFE provides official daily RMB fixing data; PBC cards show latest official monetary prints where history is not yet wired.</span>
-    <span data-lang="zh">数据原则：不制造 proxy。World Bank 与 IMF 年度序列提供可维护的公开骨架；SAFE 提供官方人民币日度中间价；PBC 卡片展示暂未接入历史序列的最新官方货币数据。</span>
+    <span data-lang="en">Data policy: no fabricated proxies. Official public sources provide the primary foundation for South Africa; native statistical and central bank releases are prioritized where available.</span>
+    <span data-lang="zh">数据原则：不制造 proxy。官方公开来源提供南非的基础数据；优先接入本国统计局与央行的原生发布序列。</span>
   </div>
 
 
@@ -381,7 +381,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
   <div class="charts-grid">
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="real_gdp_growth_yoy">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="real_gdp_growth_qoq">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Real GDP Growth, QoQ</span><span data-lang="zh">实际GDP环比</span></h3>
@@ -410,7 +410,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:real_gdp_yoy">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="real_gdp_growth_yoy">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Real GDP Growth, YoY</span><span data-lang="zh">实际GDP同比</span></h3>
@@ -439,7 +439,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:real_gdp_level">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:real_gdp_level">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Real GDP Level</span><span data-lang="zh">实际GDP水平</span></h3>
@@ -468,7 +468,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:nominal_gdp_growth">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="nominal_gdp_growth">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Nominal GDP Growth</span><span data-lang="zh">名义GDP同比</span></h3>
@@ -497,7 +497,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:gfcf_growth">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="investment_growth">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Gross Fixed Capital Formation Growth</span><span data-lang="zh">固定资本形成同比</span></h3>
@@ -537,7 +537,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
   <div class="charts-grid">
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:manufacturing_production_growth">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="industrial_production_growth">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Manufacturing Production, YoY</span><span data-lang="zh">制造业生产同比</span></h3>
@@ -566,7 +566,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:manufacturing_production_mom">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:manufacturing_production_mom">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Manufacturing Production, MoM</span><span data-lang="zh">制造业生产环比</span></h3>
@@ -595,7 +595,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:capacity_utilisation">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:capacity_utilisation">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Capacity Utilisation Balance</span><span data-lang="zh">产能利用率景气差</span></h3>
@@ -624,7 +624,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:composite_leading_indicator">
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="business_confidence">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">OECD Composite Leading Indicator</span><span data-lang="zh">OECD综合领先指标</span></h3>
@@ -664,7 +664,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
   <div class="charts-grid">
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:retail_sales_growth">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="retail_sales_growth">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Retail Trade Volume, YoY</span><span data-lang="zh">零售贸易量同比</span></h3>
@@ -693,7 +693,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:retail_sales_mom">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:retail_sales_mom">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Retail Trade Volume, MoM</span><span data-lang="zh">零售贸易量环比</span></h3>
@@ -733,7 +733,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
   <div class="charts-grid">
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:unemployment_rate">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="unemployment_rate">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Unemployment Rate</span><span data-lang="zh">失业率</span></h3>
@@ -762,7 +762,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:unemployment_rate_15_64">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:unemployment_rate_15_64">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Unemployment Rate, 15-64</span><span data-lang="zh">失业率（15-64岁）</span></h3>
@@ -791,7 +791,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:youth_unemployment_rate">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:youth_unemployment_rate">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Youth Unemployment Rate, 15-24</span><span data-lang="zh">青年失业率（15-24岁）</span></h3>
@@ -820,7 +820,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:long_term_unemployment">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:long_term_unemployment">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Long-Term Unemployment</span><span data-lang="zh">长期失业人数</span></h3>
@@ -849,7 +849,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:manufacturing_employment_growth">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="employment_growth">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Manufacturing Employment Growth</span><span data-lang="zh">制造业就业同比</span></h3>
@@ -889,7 +889,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
   <div class="charts-grid">
 
-<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="cn:cpi_inflation">
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="headline_inflation">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Headline CPI, YoY</span><span data-lang="zh">总体CPI同比</span></h3>
@@ -919,7 +919,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="cn:ppi_inflation">
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="producer_price_inflation">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Producer Prices, YoY</span><span data-lang="zh">生产者价格同比</span></h3>
@@ -948,7 +948,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:cpi_inflation_imf">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:cpi_inflation_imf">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Headline CPI, YoY (IMF cross-check)</span><span data-lang="zh">总体CPI同比（IMF交叉校验）</span></h3>
@@ -971,14 +971,14 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/CPI/ZAF.CPI._T.YOY_PCH_PA_PT.M" target="_blank" rel="noreferrer">IMF SDMX / CPI (Stats SA)</a></span>
     <span>Series: ZAF.CPI._T.YOY_PCH_PA_PT.M</span>
     <span>Frequency: monthly</span>
-    <span>Provider update: 2026-10-10</span>
+    <span>Provider update: 2026-10-11</span>
   </footer>
   <p class="cross-check">✓ Agrees with <strong>SARB vs IMF headline CPI</strong> · last 24 months: 25 common periods, max gap 0.12 (tolerance 0.15)<br><span class="cross-check-history">Full history: 161 of 319 periods beyond tolerance (most recently 2023-11-01; max gap 2.74).</span></p>
   <p class="caveat"><span data-lang="en">Independently compiled from the same Stats SA source. Charted deliberately alongside the SARB series so any divergence between the two publication paths is visible.</span><span data-lang="zh">由IMF依据相同的南非统计局源数据独立汇编。刻意与SARB序列并列展示，以便发现两条发布路径之间的差异。</span></p>
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:cpi_mom">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:cpi_mom">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Headline CPI, MoM</span><span data-lang="zh">总体CPI环比</span></h3>
@@ -1001,13 +1001,13 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/CPI/ZAF.CPI._T.POP_PCH_PA_PT.M" target="_blank" rel="noreferrer">IMF SDMX / CPI (Stats SA)</a></span>
     <span>Series: ZAF.CPI._T.POP_PCH_PA_PT.M</span>
     <span>Frequency: monthly</span>
-    <span>Provider update: 2026-10-10</span>
+    <span>Provider update: 2026-10-11</span>
   </footer>
   <p class="caveat"><span data-lang="en">Not seasonally adjusted; month-over-month prints carry an administered-price seasonal pattern from the annual electricity and fuel levy resets.</span><span data-lang="zh">未季调；受电价与燃油税年度调整影响，环比读数带有管制价格的季节性形态。</span></p>
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:cpi_index">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:cpi_index">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Headline CPI Index</span><span data-lang="zh">总体CPI指数</span></h3>
@@ -1030,7 +1030,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/CPI/ZAF.CPI._T.IX.M" target="_blank" rel="noreferrer">IMF SDMX / CPI (Stats SA)</a></span>
     <span>Series: ZAF.CPI._T.IX.M</span>
     <span>Frequency: monthly</span>
-    <span>Provider update: 2026-10-10</span>
+    <span>Provider update: 2026-10-11</span>
   </footer>
   <p class="caveat"><span data-lang="en">Price level rather than a rate; the cumulative slope is what erodes the real house-price and real-wage series.</span><span data-lang="zh">为价格水平而非增速；其累计斜率正是侵蚀实际房价与实际工资序列的因素。</span></p>
 </article>
@@ -1047,7 +1047,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
   <div class="charts-grid">
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:house_price_index">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:house_price_index">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Residential Property Prices</span><span data-lang="zh">住宅价格指数</span></h3>
@@ -1076,7 +1076,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:real_house_price_index">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:real_house_price_index">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Real Residential Property Prices</span><span data-lang="zh">实际住宅价格指数</span></h3>
@@ -1105,7 +1105,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:house_price_growth">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="house_price_growth">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">House Price Growth, YoY</span><span data-lang="zh">房价同比</span></h3>
@@ -1145,7 +1145,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
   <div class="charts-grid">
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:goods_exports">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:goods_exports">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Goods Exports</span><span data-lang="zh">货物出口</span></h3>
@@ -1174,7 +1174,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:goods_imports">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:goods_imports">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Goods Imports</span><span data-lang="zh">货物进口</span></h3>
@@ -1203,7 +1203,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:goods_trade_balance">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="trade_balance">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Goods Trade Balance</span><span data-lang="zh">货物贸易差额</span></h3>
@@ -1232,7 +1232,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:goods_exports_growth">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="exports_growth">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Goods Exports Growth</span><span data-lang="zh">货物出口同比</span></h3>
@@ -1261,7 +1261,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:goods_imports_growth">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="imports_growth">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Goods Imports Growth</span><span data-lang="zh">货物进口同比</span></h3>
@@ -1319,7 +1319,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="cn:zar_usd">
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="fx_spot">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">ZAR/USD Spot Rate</span><span data-lang="zh">美元兑兰特</span></h3>
@@ -1348,7 +1348,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="cn:zar_eur">
+<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="za:zar_eur">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">ZAR/EUR Spot Rate</span><span data-lang="zh">欧元兑兰特</span></h3>
@@ -1377,7 +1377,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:neer">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:neer">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Nominal Effective Exchange Rate (SARB)</span><span data-lang="zh">名义有效汇率（SARB）</span></h3>
@@ -1406,7 +1406,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:reer">
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="reer">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Real Effective Exchange Rate (BIS)</span><span data-lang="zh">实际有效汇率（BIS）</span></h3>
@@ -1435,7 +1435,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:current_account_balance_bop">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:current_account_balance_bop">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Current Account Balance (BOP)</span><span data-lang="zh">经常账户差额（国际收支）</span></h3>
@@ -1464,7 +1464,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:goods_balance_bop">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:goods_balance_bop">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Goods Balance (BOP)</span><span data-lang="zh">货物差额（国际收支口径）</span></h3>
@@ -1493,7 +1493,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:services_balance_bop">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:services_balance_bop">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Services Balance (BOP)</span><span data-lang="zh">服务差额（国际收支）</span></h3>
@@ -1522,7 +1522,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:primary_income_balance">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:primary_income_balance">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Primary Income Balance</span><span data-lang="zh">初次收入差额</span></h3>
@@ -1551,7 +1551,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:secondary_income_balance">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:secondary_income_balance">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Secondary Income Balance</span><span data-lang="zh">二次收入差额</span></h3>
@@ -1580,7 +1580,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:capital_account_balance">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:capital_account_balance">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Capital Account Balance</span><span data-lang="zh">资本账户差额</span></h3>
@@ -1609,7 +1609,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:net_errors_omissions">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:net_errors_omissions">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Net Errors and Omissions</span><span data-lang="zh">净误差与遗漏</span></h3>
@@ -1638,7 +1638,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:financial_account_balance">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:financial_account_balance">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Financial Account Balance</span><span data-lang="zh">金融账户差额</span></h3>
@@ -1667,7 +1667,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:direct_investment_net">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:direct_investment_net">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Direct Investment, Net</span><span data-lang="zh">直接投资净额</span></h3>
@@ -1696,7 +1696,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:portfolio_investment_net">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:portfolio_investment_net">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Portfolio Investment, Net</span><span data-lang="zh">证券投资净额</span></h3>
@@ -1725,7 +1725,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:other_investment_net">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:other_investment_net">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Other Investment, Net</span><span data-lang="zh">其他投资净额</span></h3>
@@ -1754,7 +1754,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:financial_derivatives_net">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:financial_derivatives_net">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Financial Derivatives, Net</span><span data-lang="zh">金融衍生工具净额</span></h3>
@@ -1783,7 +1783,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:reserve_assets_flow">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:reserve_assets_flow">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Reserve Assets, Net Transactions</span><span data-lang="zh">储备资产净交易</span></h3>
@@ -1823,7 +1823,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
   <div class="charts-grid">
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:government_debt_gdp">
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="government_debt_gdp">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">General Government Gross Debt</span><span data-lang="zh">广义政府总债务</span></h3>
@@ -1852,7 +1852,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:fiscal_balance_gdp">
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="fiscal_balance_gdp">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">General Government Balance</span><span data-lang="zh">广义政府收支差额</span></h3>
@@ -1881,7 +1881,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:primary_balance_gdp">
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="primary_balance_gdp">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">General Government Primary Balance</span><span data-lang="zh">广义政府基本差额</span></h3>
@@ -1910,7 +1910,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="cn:sovereign_yield_10y">
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="sovereign_yield_10y">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">R2030 Benchmark Bond Yield</span><span data-lang="zh">R2030基准国债收益率</span></h3>
@@ -1939,7 +1939,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="cn:sovereign_yield_long">
+<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="za:sovereign_yield_long">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">R209 Long Bond Yield</span><span data-lang="zh">R209长期国债收益率</span></h3>
@@ -1979,7 +1979,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
   <div class="charts-grid">
 
-<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="cn:policy_rate">
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="policy_rate">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">SARB Policy Rate</span><span data-lang="zh">南非央行政策利率</span></h3>
@@ -2008,7 +2008,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="cn:prime_lending_rate">
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="bank_lending_rate">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Prime Lending Rate</span><span data-lang="zh">优惠贷款利率</span></h3>
@@ -2037,7 +2037,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="cn:sabor_rate">
+<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="za:sabor_rate">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">SABOR Overnight Rate</span><span data-lang="zh">SABOR隔夜利率</span></h3>
@@ -2066,7 +2066,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="cn:zaronia_rate">
+<article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="za:zaronia_rate">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">ZARONIA Overnight Rate</span><span data-lang="zh">ZARONIA隔夜利率</span></h3>
@@ -2095,7 +2095,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:interbank_3m">
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="za:interbank_3m">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">3-Month Interbank Rate (JIBAR)</span><span data-lang="zh">3个月银行间利率（JIBAR）</span></h3>
@@ -2124,7 +2124,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="cn:broad_money_growth">
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="broad_money_growth">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Broad Money (M3) Growth</span><span data-lang="zh">广义货币M3同比</span></h3>
@@ -2153,7 +2153,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:private_credit_gdp">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="private_credit_growth">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Credit to Private Non-Financial Sector</span><span data-lang="zh">私人非金融部门信贷</span></h3>
@@ -2182,7 +2182,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:household_credit_gdp">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:household_credit_gdp">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Household Credit</span><span data-lang="zh">居民部门信贷</span></h3>
@@ -2211,7 +2211,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:bank_credit_gdp">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:bank_credit_gdp">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Bank Credit to Private Sector</span><span data-lang="zh">银行对私人部门信贷</span></h3>
@@ -2251,7 +2251,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
   <div class="charts-grid">
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:bank_capital_ratio">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="bank_capital_ratio">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Regulatory Capital to Risk-Weighted Assets</span><span data-lang="zh">监管资本充足率</span></h3>
@@ -2274,13 +2274,13 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/FSIC/ZAF.S12CFSI.FSI688_CFSI_PT.Q" target="_blank" rel="noreferrer">IMF SDMX / Financial Soundness Indicators</a></span>
     <span>Series: ZAF.S12CFSI.FSI688_CFSI_PT.Q</span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-10-10</span>
+    <span>Provider update: 2026-10-11</span>
   </footer>
   <p class="caveat"><span data-lang="en">Deposit-taker aggregate reported to the IMF; national regulatory definitions differ, so cross-country levels are indicative rather than exact.</span><span data-lang="zh">报送IMF的存款机构合计口径；各国监管定义不同，跨国水平比较仅供参考。</span></p>
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:bank_npl_ratio">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="bank_npl_ratio">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Non-Performing Loans to Total Gross Loans</span><span data-lang="zh">不良贷款率</span></h3>
@@ -2303,13 +2303,13 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/FSIC/ZAF.S12CFSI.AQ12_CFSI_PT.Q" target="_blank" rel="noreferrer">IMF SDMX / Financial Soundness Indicators</a></span>
     <span>Series: ZAF.S12CFSI.AQ12_CFSI_PT.Q</span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-10-10</span>
+    <span>Provider update: 2026-10-11</span>
   </footer>
   <p class="caveat"><span data-lang="en">Deposit-taker aggregate. The post-2020 rise reflects the interaction of high prime lending rates with stagnant household income.</span><span data-lang="zh">存款机构合计口径。2020年后的上升反映了高优惠贷款利率与停滞的居民收入之间的相互作用。</span></p>
 </article>
 
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="cn:total_credit_gdp">
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:total_credit_gdp">
   <div class="chart-head">
     <div class="chart-title">
       <h3><span data-lang="en">Total Credit to Non-Financial Sector</span><span data-lang="zh">非金融部门总信贷</span></h3>
@@ -2345,7 +2345,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <div class="section-title">
       <p>Pipeline</p>
       <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are PDF-native indicators that matter for China but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的该国本土核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+      <div class="logic"><span data-lang="en">These are macro indicators that matter for South Africa but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的南非核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
     </div>
     <table class="gaps-table">
       <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>
@@ -2395,8 +2395,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </section>
 
   <footer class="page-footer">
-    <span data-lang="en">Research artefact only, not investment advice. Generated 2026-10-10 from <code>indicators.yaml</code>.</span>
-    <span data-lang="zh">仅为研究工具，不构成投资建议。生成日期 2026-10-10，配置来源 <code>indicators.yaml</code>。</span>
+    <span data-lang="en">Research artefact only, not investment advice. Generated 2026-10-11 from <code>south_africa_indicators.yaml</code>.</span>
+    <span data-lang="zh">仅为研究工具，不构成投资建议。生成日期 2026-10-11，配置来源 <code>south_africa_indicators.yaml</code>。</span>
   </footer>
 </main>
 
