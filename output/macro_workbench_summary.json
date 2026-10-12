@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-12T19:27:31.391909+00:00",
+  "generated": "2026-10-12T20:51:18.701115+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -88,13 +88,13 @@
       "freshness_summary": {
         "dashboard": "Hungary",
         "charts": 105,
-        "current": 58,
+        "current": 57,
         "stale": 19,
         "lagged_source": 0,
         "projection": 4,
         "scheduled_policy": 0,
         "future_date": 0,
-        "missing_date": 0,
+        "missing_date": 1,
         "needs_review": 5,
         "low_confidence": 14,
         "latest_historical_date": "2026-12-31",
@@ -1004,7 +1004,8 @@
         "series": 105,
         "observations": 63220,
         "series_count": 105,
-        "observation_count": 63220
+        "observation_count": 63220,
+        "snapshot_generated": "2026-10-12T19:24:27.841815+00:00"
       },
       "freshness_summary": {
         "dashboard": "China",
@@ -1879,7 +1880,8 @@
         "series": 54,
         "observations": 19293,
         "series_count": 54,
-        "observation_count": 19293
+        "observation_count": 19293,
+        "snapshot_generated": "2026-10-12T19:26:32.981279+00:00"
       },
       "freshness_summary": {
         "dashboard": "Japan",
@@ -2844,7 +2846,8 @@
         "series": 64,
         "observations": 30390,
         "series_count": 64,
-        "observation_count": 30390
+        "observation_count": 30390,
+        "snapshot_generated": "2026-10-12T19:27:15.621794+00:00"
       },
       "freshness_summary": {
         "dashboard": "South Africa",
@@ -3563,7 +3566,8 @@
         "series": 92,
         "observations": 60159,
         "series_count": 92,
-        "observation_count": 60159
+        "observation_count": 60159,
+        "snapshot_generated": "2026-10-12T19:24:35.147174+00:00"
       },
       "freshness_summary": {
         "dashboard": "United Kingdom",
@@ -4544,7 +4548,8 @@
         "series": 164,
         "observations": 115276,
         "series_count": 164,
-        "observation_count": 115276
+        "observation_count": 115276,
+        "snapshot_generated": "2026-10-12T19:26:08.317813+00:00"
       },
       "freshness_summary": {
         "dashboard": "United States",
@@ -4570,10 +4575,10 @@
       "structural_score": 50.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 54.3,
+        "score": 54.0,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 55.2,
+        "freshness_score": 54.3,
         "proxy_penalty": 0.0,
         "gap_penalty": 10.0
       },
@@ -5218,11 +5223,11 @@
       "code": "HU",
       "name": "Hungary",
       "coverage_pct": 100.0,
-      "freshness_pct": 55.2,
+      "freshness_pct": 54.3,
       "proxy_fills": 0,
       "gaps": 4,
       "regime_score": 53.8,
-      "quality_score": 54.3
+      "quality_score": 54.0
     },
     {
       "code": "PL",
@@ -5511,7 +5516,7 @@
       "status": "stale",
       "age_days": 680,
       "severity": "high",
-      "source": "unknown",
+      "source": "",
       "note": ""
     },
     {
