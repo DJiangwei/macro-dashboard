@@ -239,6 +239,58 @@ def _chart_html(series: dict[str, Any], country_code: str) -> str:
         "hovermode": "x unified",
         "autosize": True,
     }
+    target_bands = {
+        "US": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "Fed 2.0% Inflation Target"},
+        "UK": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "BoE 2.0% Inflation Target"},
+        "JP": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "BoJ 2.0% Price Stability Target"},
+        "ZA": {"center": 4.5, "min": 3.0, "max": 6.0, "label": "SARB 3.0%–6.0% Target Band"},
+        "CN": {"center": 3.0, "min": 3.0, "max": 3.0, "label": "Official CPI Target Ceiling: 3.0%"},
+    }
+    sid = str(series.get("id", "")).lower()
+    c_band = target_bands.get(country_code.upper())
+    if c_band and any(k in sid for k in ("cpi", "inflation", "pce")):
+        shapes = []
+        annotations = []
+        if c_band["min"] != c_band["max"]:
+            shapes.append({
+                "type": "rect", "xref": "paper", "yref": "y",
+                "x0": 0, "x1": 1, "y0": c_band["min"], "y1": c_band["max"],
+                "fillcolor": "rgba(13, 118, 128, 0.10)",
+                "line": {"width": 0}, "layer": "below",
+            })
+        shapes.append({
+            "type": "line", "xref": "paper", "yref": "y",
+            "x0": 0, "x1": 1, "y0": c_band["center"], "y1": c_band["center"],
+            "line": {"color": "rgba(13, 118, 128, 0.75)", "width": 1.5, "dash": "dash"},
+        })
+        annotations.append({
+            "xref": "paper", "yref": "y", "x": 0.98, "y": c_band["center"],
+            "xanchor": "right", "yanchor": "bottom",
+            "text": c_band["label"], "showarrow": False,
+            "font": {"size": 10, "color": "#0d7680"},
+            "bgcolor": "rgba(255, 255, 255, 0.85)",
+        })
+        layout["shapes"] = shapes
+        layout["annotations"] = annotations
+
+    if "fiscal_balance" in sid or "budget_balance" in sid:
+        if "shapes" not in layout:
+            layout["shapes"] = []
+        if "annotations" not in layout:
+            layout["annotations"] = []
+        layout["shapes"].append({
+            "type": "line", "xref": "paper", "yref": "y",
+            "x0": 0, "x1": 1, "y0": -3.0, "y1": -3.0,
+            "line": {"color": "rgba(153, 15, 61, 0.65)", "width": 1.5, "dash": "dot"},
+        })
+        layout["annotations"].append({
+            "xref": "paper", "yref": "y", "x": 0.02, "y": -3.0,
+            "xanchor": "left", "yanchor": "top",
+            "text": "Fiscal Deficit Threshold: -3.0%", "showarrow": False,
+            "font": {"size": 10, "color": "#990f3d"},
+            "bgcolor": "rgba(255, 255, 255, 0.85)",
+        })
+
     latest_reading = ""
     if latest:
         value = _format_value(float(latest["value"]), series.get("unit", ""))
@@ -866,7 +918,7 @@ def render_html(
 function resizeCharts() {{
   if (!window.Plotly) return;
   document.querySelectorAll('.plotly-chart').forEach(function(el) {{
-    Plotly.Plots.resize(el);
+    if (el.offsetParent !== null) Plotly.Plots.resize(el);
   }});
 }}
 function setDashboardView(view) {{
