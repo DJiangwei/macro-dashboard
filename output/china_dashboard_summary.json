@@ -1,6 +1,6 @@
 {
   "file": "china.html",
-  "generated": "2026-10-12T20:57:34.120287+00:00",
+  "generated": "2026-10-12T20:59:46.746852+00:00",
   "charts": 105,
   "source_groups": 28,
   "data_gaps": 8,
@@ -200,39 +200,8 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "snapshot",
-  "latest_cards": [
-    {
-      "id": "pbc_m2_latest",
-      "label_en": "PBC M2 YoY",
-      "label_zh": "PBC M2同比",
-      "fetcher": "pbc_indicator_card",
-      "url": "https://www.pbc.gov.cn/en/3688006/3689169/3753760/index.html",
-      "expected_title": "M2",
-      "value": "n/a",
-      "updated": "n/a"
-    },
-    {
-      "id": "pbc_afre_latest",
-      "label_en": "PBC AFRE Outstanding",
-      "label_zh": "PBC社融存量",
-      "fetcher": "pbc_indicator_card",
-      "url": "https://www.pbc.gov.cn/en/3688006/3689169/3753765/index.html",
-      "expected_title": "AFRE (Outstanding)",
-      "value": "n/a",
-      "updated": "n/a"
-    },
-    {
-      "id": "pbc_dr007_latest",
-      "label_en": "PBC DR007",
-      "label_zh": "PBC DR007",
-      "fetcher": "pbc_indicator_card",
-      "url": "https://www.pbc.gov.cn/en/3688006/3689169/3753752/index.html",
-      "expected_title": "DR007",
-      "value": "n/a",
-      "updated": "n/a"
-    }
-  ],
+  "data_mode": "refresh",
+  "latest_cards": [],
   "usd_cny_latest": "6.7330 (2026-10-09)",
   "cross_checks": [],
   "canonical_frame": {
@@ -245,8 +214,7 @@
     "series": 105,
     "observations": 63220,
     "series_count": 105,
-    "observation_count": 63220,
-    "snapshot_generated": "2026-10-12T19:24:27.841815+00:00"
+    "observation_count": 63220
   },
   "data_gaps_detail": [
     {
@@ -858,22 +826,10 @@
     },
     "non_level": [
       {
-        "id": "a_share_market_cap_akshare",
-        "label_en": "A-share Market Capitalization",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "a_share_trading_value_akshare",
-        "label_en": "A-share Trading Value",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "beijing_existing_home_price_yoy_akshare",
-        "label_en": "Beijing Existing Home Prices, YoY",
-        "transform": "index_100_to_yoy",
-        "unit": "%"
+        "id": "nominal_gdp_usd",
+        "label_en": "Nominal GDP",
+        "transform": "usd_trn",
+        "unit": "USD"
       },
       {
         "id": "beijing_new_home_price_yoy_akshare",
@@ -882,10 +838,46 @@
         "unit": "%"
       },
       {
+        "id": "shanghai_new_home_price_yoy_akshare",
+        "label_en": "Shanghai New Home Prices, YoY",
+        "transform": "index_100_to_yoy",
+        "unit": "%"
+      },
+      {
+        "id": "beijing_existing_home_price_yoy_akshare",
+        "label_en": "Beijing Existing Home Prices, YoY",
+        "transform": "index_100_to_yoy",
+        "unit": "%"
+      },
+      {
+        "id": "shanghai_existing_home_price_yoy_akshare",
+        "label_en": "Shanghai Existing Home Prices, YoY",
+        "transform": "index_100_to_yoy",
+        "unit": "%"
+      },
+      {
         "id": "commercial_housing_sales_value_eastmoney",
         "label_en": "Commercial Housing Sales Value",
         "transform": "cny_10k_to_bn",
         "unit": "CNY bn"
+      },
+      {
+        "id": "real_estate_development_investment_ytd_eastmoney",
+        "label_en": "Real Estate Development Investment, YTD",
+        "transform": "cny_100mn_to_bn",
+        "unit": "CNY bn"
+      },
+      {
+        "id": "exports_goods_services",
+        "label_en": "Exports of Goods & Services",
+        "transform": "usd_trn",
+        "unit": "USD"
+      },
+      {
+        "id": "imports_goods_services",
+        "label_en": "Imports of Goods & Services",
+        "transform": "usd_trn",
+        "unit": "USD"
       },
       {
         "id": "customs_exports_value_akshare",
@@ -906,24 +898,6 @@
         "unit": "USD bn"
       },
       {
-        "id": "exports_goods_services",
-        "label_en": "Exports of Goods & Services",
-        "transform": "usd_trn",
-        "unit": "USD"
-      },
-      {
-        "id": "financial_institution_deposits_flow_akshare",
-        "label_en": "New Deposits, Monthly",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "financial_institution_deposits_stock_akshare",
-        "label_en": "Financial Institution Deposits",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
         "id": "fx_reserves",
         "label_en": "Foreign Exchange Reserves",
         "transform": "usd_trn",
@@ -942,88 +916,22 @@
         "unit": "USD"
       },
       {
-        "id": "imports_goods_services",
-        "label_en": "Imports of Goods & Services",
-        "transform": "usd_trn",
-        "unit": "USD"
+        "id": "financial_institution_deposits_stock_akshare",
+        "label_en": "Financial Institution Deposits",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "financial_institution_deposits_flow_akshare",
+        "label_en": "New Deposits, Monthly",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
       },
       {
         "id": "new_rmb_loans_akshare",
         "label_en": "New RMB Loans",
         "transform": "cny_100mn_to_trn",
         "unit": "CNY tn"
-      },
-      {
-        "id": "nominal_gdp_usd",
-        "label_en": "Nominal GDP",
-        "transform": "usd_trn",
-        "unit": "USD"
-      },
-      {
-        "id": "pbc_claims_on_depository_corps_akshare",
-        "label_en": "PBC Claims on Depository Corporations",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "pbc_fx_assets_akshare",
-        "label_en": "PBC Foreign-Exchange Assets",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "pbc_reserve_money_akshare",
-        "label_en": "PBC Reserve Money",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "pbc_total_assets_akshare",
-        "label_en": "PBC Total Assets",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "real_estate_development_investment_ytd_eastmoney",
-        "label_en": "Real Estate Development Investment, YTD",
-        "transform": "cny_100mn_to_bn",
-        "unit": "CNY bn"
-      },
-      {
-        "id": "sh_margin_balance_akshare",
-        "label_en": "Shanghai Margin Balance",
-        "transform": "cny_yuan_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "shanghai_existing_home_price_yoy_akshare",
-        "label_en": "Shanghai Existing Home Prices, YoY",
-        "transform": "index_100_to_yoy",
-        "unit": "%"
-      },
-      {
-        "id": "shanghai_new_home_price_yoy_akshare",
-        "label_en": "Shanghai New Home Prices, YoY",
-        "transform": "index_100_to_yoy",
-        "unit": "%"
-      },
-      {
-        "id": "sz_margin_balance_akshare",
-        "label_en": "Shenzhen Margin Balance",
-        "transform": "cny_yuan_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "tax_receipts_ytd_akshare",
-        "label_en": "Tax Receipts YTD",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "total_population",
-        "label_en": "Total Population",
-        "transform": "people_billion",
-        "unit": "people"
       },
       {
         "id": "tsf_flow_akshare",
@@ -1034,6 +942,66 @@
       {
         "id": "tsf_rmb_loans_akshare",
         "label_en": "TSF RMB Loan Component",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "pbc_total_assets_akshare",
+        "label_en": "PBC Total Assets",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "pbc_fx_assets_akshare",
+        "label_en": "PBC Foreign-Exchange Assets",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "pbc_claims_on_depository_corps_akshare",
+        "label_en": "PBC Claims on Depository Corporations",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "pbc_reserve_money_akshare",
+        "label_en": "PBC Reserve Money",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "a_share_market_cap_akshare",
+        "label_en": "A-share Market Capitalization",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "a_share_trading_value_akshare",
+        "label_en": "A-share Trading Value",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "sh_margin_balance_akshare",
+        "label_en": "Shanghai Margin Balance",
+        "transform": "cny_yuan_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "sz_margin_balance_akshare",
+        "label_en": "Shenzhen Margin Balance",
+        "transform": "cny_yuan_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "total_population",
+        "label_en": "Total Population",
+        "transform": "people_billion",
+        "unit": "people"
+      },
+      {
+        "id": "tax_receipts_ytd_akshare",
+        "label_en": "Tax Receipts YTD",
         "transform": "cny_100mn_to_trn",
         "unit": "CNY tn"
       }
