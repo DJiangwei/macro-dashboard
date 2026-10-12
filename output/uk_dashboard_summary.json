@@ -1,6 +1,6 @@
 {
   "file": "uk.html",
-  "generated": "2026-10-12T19:24:35.128188+00:00",
+  "generated": "2026-10-12T20:57:34.498671+00:00",
   "charts": 92,
   "source_groups": 11,
   "data_gaps": 8,
@@ -68,7 +68,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "bank_rate_latest": "3.75% (2026-10-09)",
   "cross_checks": [],
@@ -82,7 +82,8 @@
     "series": 92,
     "observations": 60159,
     "series_count": 92,
-    "observation_count": 60159
+    "observation_count": 60159,
+    "snapshot_generated": "2026-10-12T19:24:35.147174+00:00"
   },
   "data_gaps_detail": [
     {
@@ -822,48 +823,6 @@
     },
     "non_level": [
       {
-        "id": "private_consumption_qoq",
-        "label_en": "Real Private Consumption",
-        "transform": "qoq_pct",
-        "unit": "%"
-      },
-      {
-        "id": "gfcf_qoq",
-        "label_en": "Real Gross Fixed Capital Formation",
-        "transform": "qoq_pct",
-        "unit": "%"
-      },
-      {
-        "id": "monthly_gdp_mom",
-        "label_en": "Monthly GDP Growth, MoM",
-        "transform": "mom_pct",
-        "unit": "% m/m"
-      },
-      {
-        "id": "industrial_production_yoy",
-        "label_en": "Industrial Production Growth, YoY",
-        "transform": "yoy",
-        "unit": "% y/y"
-      },
-      {
-        "id": "services_output_yoy",
-        "label_en": "Services Output Growth, YoY",
-        "transform": "yoy",
-        "unit": "% y/y"
-      },
-      {
-        "id": "retail_sales_yoy",
-        "label_en": "Retail Sales Volume Growth, YoY",
-        "transform": "yoy",
-        "unit": "% y/y"
-      },
-      {
-        "id": "retail_sales_mom",
-        "label_en": "Retail Sales Volume Growth, MoM",
-        "transform": "mom_pct",
-        "unit": "% m/m"
-      },
-      {
         "id": "construction_output_yoy",
         "label_en": "Construction Output Growth, YoY",
         "transform": "yoy",
@@ -876,22 +835,28 @@
         "unit": "%"
       },
       {
+        "id": "gfcf_qoq",
+        "label_en": "Real Gross Fixed Capital Formation",
+        "transform": "qoq_pct",
+        "unit": "%"
+      },
+      {
         "id": "imports_qoq",
         "label_en": "Real Imports",
         "transform": "qoq_pct",
         "unit": "%"
       },
       {
-        "id": "paye_payrolled_employees",
-        "label_en": "PAYE Payrolled Employees",
-        "transform": "divide_1m",
-        "unit": "mn"
+        "id": "industrial_production_yoy",
+        "label_en": "Industrial Production Growth, YoY",
+        "transform": "yoy",
+        "unit": "% y/y"
       },
       {
-        "id": "paye_payrolled_employees_mom_change",
-        "label_en": "PAYE Employees Monthly Change",
-        "transform": "divide_1k",
-        "unit": "000s"
+        "id": "monthly_gdp_mom",
+        "label_en": "Monthly GDP Growth, MoM",
+        "transform": "mom_pct",
+        "unit": "% m/m"
       },
       {
         "id": "paye_aggregate_pay",
@@ -918,14 +883,50 @@
         "unit": "%"
       },
       {
+        "id": "paye_payrolled_employees",
+        "label_en": "PAYE Payrolled Employees",
+        "transform": "divide_1m",
+        "unit": "mn"
+      },
+      {
+        "id": "paye_payrolled_employees_mom_change",
+        "label_en": "PAYE Employees Monthly Change",
+        "transform": "divide_1k",
+        "unit": "000s"
+      },
+      {
+        "id": "private_consumption_qoq",
+        "label_en": "Real Private Consumption",
+        "transform": "qoq_pct",
+        "unit": "%"
+      },
+      {
+        "id": "producer_prices",
+        "label_en": "PPI Output Inflation",
+        "transform": "yoy",
+        "unit": "% y/y"
+      },
+      {
+        "id": "retail_sales_mom",
+        "label_en": "Retail Sales Volume Growth, MoM",
+        "transform": "mom_pct",
+        "unit": "% m/m"
+      },
+      {
+        "id": "retail_sales_yoy",
+        "label_en": "Retail Sales Volume Growth, YoY",
+        "transform": "yoy",
+        "unit": "% y/y"
+      },
+      {
         "id": "rpix_yoy",
         "label_en": "RPIX Inflation",
         "transform": "yoy",
         "unit": "%"
       },
       {
-        "id": "producer_prices",
-        "label_en": "PPI Output Inflation",
+        "id": "services_output_yoy",
+        "label_en": "Services Output Growth, YoY",
         "transform": "yoy",
         "unit": "% y/y"
       }

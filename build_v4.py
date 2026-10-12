@@ -31,12 +31,12 @@ def _make_plotly_chart(chart_id, title, traces, y_title="", height=380, extra_la
     """
     trace_js = []
     for t in traces:
-        lc = t.get("line_color", "#8a593d")
+        lc = t.get("line_color", "#990f3d")
         lw = t.get("line_width", 2.2)
         dash = t.get("dash", "solid")
         trace_js.append(f'''{{"line":{{"color":"{lc}","width":{lw}{f',"dash":"{dash}"' if dash != "solid" else ""}}},"mode":"lines","name":"{t['name']}","x":{json.dumps(t['x'])},"y":{json.dumps(t['y'])},"type":"scatter"}}''')
 
-    layout = f'''{{"title":{{"text":{json.dumps(title)},"font":{{"size":13,"color":"#171310"}}}},"height":{height},"margin":{{"l":50,"r":20,"t":40,"b":40}},"xaxis":{{"gridcolor":"rgba(23,19,16,0.08)","autorange":true}},"yaxis":{{"title":{json.dumps(y_title)},"gridcolor":"rgba(23,19,16,0.08)","autorange":true}},"legend":{{"orientation":"h","y":-0.2}},"paper_bgcolor":"rgba(255,252,246,0.90)","plot_bgcolor":"rgba(255,252,246,0.90)","font":{{"family":"Avenir Next, PingFang SC, Hiragino Sans GB, Noto Sans SC, Segoe UI, Helvetica Neue, Arial, sans-serif","size":11,"color":"#171310"}}}}'''
+    layout = f'''{{"title":{{"text":{json.dumps(title)},"font":{{"size":13,"color":"#12151a"}}}},"height":{height},"margin":{{"l":50,"r":20,"t":40,"b":40}},"xaxis":{{"gridcolor":"rgba(18,21,26,0.06)","showgrid":false,"autorange":true}},"yaxis":{{"title":{json.dumps(y_title)},"gridcolor":"rgba(18,21,26,0.06)","zeroline":true,"zerolinewidth":1.4,"zerolinecolor":"rgba(18,21,26,0.45)","autorange":true}},"legend":{{"orientation":"h","y":-0.2}},"paper_bgcolor":"#ffffff","plot_bgcolor":"#ffffff","font":{{"family":"-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif","size":11,"color":"#12151a"}}}}'''
 
     if extra_layout:
         layout = layout[:-2] + "," + json.dumps(extra_layout)[1:]
@@ -135,49 +135,43 @@ def _render_central_bank_section(country_code):
 
 CSS = """
 :root {
-  --bg: #f4efe7;
-  --bg-deep: #ece3d6;
-  --fg: #171310;
-  --muted: #63574e;
-  --primary: #171310;
-  --primary-light: #364b61;
-  --accent: #8a593d;
-  --accent-soft: rgba(138, 89, 61, 0.12);
-  --danger: #9d3d2e;
-  --success: #3f6f50;
-  --border: rgba(23, 19, 16, 0.14);
-  --card: rgba(255, 252, 246, 0.76);
-  --card-alt: rgba(236, 227, 214, 0.48);
-  --highlight: rgba(138, 89, 61, 0.12);
-  --font-display: "Iowan Old Style", "Songti SC", "Noto Serif SC", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  --font-body: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --bg-canvas: #fcfaf7;
+  --bg-surface: #ffffff;
+  --bg-deep: #f7f5f0;
+  --fg: #12151a;
+  --text-secondary: #4b525f;
+  --muted: #737c8c;
+  --primary: #12151a;
+  --primary-light: #262a33;
+  --accent: #990f3d;
+  --accent-soft: rgba(153, 15, 61, 0.08);
+  --ft-claret: #990f3d;
+  --ft-teal: #0d7680;
+  --ft-amber: #b86200;
+  --danger: #990f3d;
+  --success: #0d7680;
+  --warn: #b86200;
+  --border: rgba(18, 21, 26, 0.08);
+  --border-strong: rgba(18, 21, 26, 0.16);
+  --card: #ffffff;
+  --card-alt: #f7f5f0;
+  --highlight: rgba(153, 15, 61, 0.05);
+  --font-display: "Newsreader", "Iowan Old Style", "Songti SC", "Noto Serif SC", "Georgia", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
   padding: 0;
-  background:
-    radial-gradient(circle at top left, rgba(138, 89, 61, 0.15), transparent 24%),
-    radial-gradient(circle at top right, rgba(54, 75, 97, 0.12), transparent 22%),
-    linear-gradient(180deg, #f8f4ed 0%, #f4efe7 48%, #efe7db 100%);
+  background: var(--bg-canvas);
   color: var(--fg);
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(to right, rgba(23, 19, 16, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(23, 19, 16, 0.02) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 85%);
-}
+body::before { display: none !important; }
 html[lang="en"] [data-lang="zh"] { display: none !important; }
 html[lang="zh"] [data-lang="en"] { display: none !important; }
 html:not([lang="zh"]) [data-lang="zh"] { display: none !important; }
@@ -190,21 +184,19 @@ a { color: inherit; }
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 12px 32px;
-  background: rgba(244, 239, 231, 0.84);
+  padding: 10px 32px;
+  background: rgba(252, 250, 247, 0.95);
   color: var(--fg);
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(14px);
-  box-shadow: none;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: normal;
 }
 .topbar .brand {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 15px;
-  letter-spacing: 0.16em;
+  font-size: 16px;
+  letter-spacing: -0.01em;
   white-space: nowrap;
 }
 .topbar .brand span { color: var(--accent); }
@@ -215,25 +207,24 @@ a { color: inherit; }
 .country-nav .nav-link {
   color: var(--muted) !important;
   text-decoration: none;
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
   font-weight: 500;
   transition: all 0.15s;
-  border: 1px solid var(--border);
+  border: 1px solid transparent;
 }
 .country-nav .nav-link:hover {
-  background: var(--accent-soft);
+  background: rgba(0, 0, 0, 0.04);
   color: var(--fg) !important;
-  border-color: rgba(23,19,16,0.22);
 }
 .country-nav .nav-link.active {
   background: var(--fg);
-  color: var(--bg) !important;
+  color: #ffffff !important;
   border-color: var(--fg);
-  font-weight: 700;
+  font-weight: 600;
 }
-.nav-separator { color: rgba(23,19,16,0.26); margin: 0 2px; }
+.nav-separator { color: rgba(18,21,26,0.2); margin: 0 2px; }
 .container {
   position: relative;
   max-width: 1280px;
@@ -243,7 +234,7 @@ a { color: inherit; }
 header {
   background: transparent;
   color: var(--fg);
-  padding: 48px 0 34px;
+  padding: 36px 0 28px;
   margin-bottom: 24px;
   border-bottom: 1px solid var(--border);
   box-shadow: none;
@@ -254,29 +245,30 @@ header h1 {
   margin: 0;
   max-width: 980px;
   font-family: var(--font-display);
-  font-size: clamp(28px, 4.2vw, 48px);
-  font-weight: 500;
-  letter-spacing: -0.05em;
-  line-height: 0.96;
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
   color: var(--fg);
 }
 header .subtitle,
 header .meta,
 header p.subtitle {
-  max-width: 900px;
-  margin-top: 14px;
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 1.65;
+  max-width: 860px;
+  margin-top: 10px;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
   opacity: 1;
 }
-header .meta-row { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+header .meta-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
 header .meta-chip {
-  background: rgba(255,255,255,0.28);
+  background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 5px 14px;
+  border-radius: 4px;
+  padding: 4px 10px;
   font-size: 12px;
+  color: var(--text-secondary);
 }
 header .meta-chip strong { color: var(--accent); }
 .grid,
@@ -285,9 +277,9 @@ header .meta-chip strong { color: var(--accent); }
 .summary-grid,
 .kpi-ribbon {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 .card,
 .tile,
@@ -302,22 +294,22 @@ section.panel,
 .cb-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 0;
-  box-shadow: none;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
 }
 .card {
   display: block;
-  padding: 28px 24px;
+  padding: 24px 20px;
   text-decoration: none;
   color: var(--fg);
-  transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+  transition: border-color 0.15s ease;
 }
 .card:hover,
 .kpi-card:hover,
 .chart-cell:hover {
-  transform: translateY(-2px);
-  background: rgba(255,252,246,0.95);
-  border-color: rgba(23,19,16,0.26);
+  transform: none !important;
+  border-color: var(--border-strong);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 .card h2,
 .section-card-header h2,
@@ -329,7 +321,7 @@ h3 {
   color: var(--fg);
   letter-spacing: -0.02em;
 }
-.card h2 { margin: 0 0 8px; font-size: 32px; }
+.card h2 { margin: 0 0 8px; font-size: 28px; font-family: var(--font-display); font-weight: 600; }
 .card .meta,
 .stat-card .stat-label,
 .summary-card .label,
@@ -338,10 +330,11 @@ h3 {
 .indicator-table th,
 thead th,
 .trade-card-body th {
-  color: var(--muted);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
 }
 .card .stats { display: grid; gap: 6px; font-size: 13px; }
 .card .stats .stat {
@@ -353,26 +346,81 @@ thead th,
 }
 .card .stats .value,
 .tile .v,
-.kpi-card .kpi-value,
 .stat-card .stat-value,
 .summary-card .num {
-  font-family: var(--font-display);
-  font-weight: 500;
+  font-family: var(--font-body);
+  font-weight: 600;
   color: var(--fg);
+  font-variant-numeric: tabular-nums;
 }
 .stat-card,
 .summary-card,
 .kpi-card,
-.tile { padding: 14px 18px; }
+.tile {
+  padding: 16px 16px 14px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
 .stat-card .stat-value,
-.summary-card .num { font-size: 30px; }
-.kpi-card { border-top: 3px solid var(--primary); }
-.kpi-card.warn { border-top-color: var(--accent); }
+.summary-card .num { font-size: 26px; font-weight: 700; }
+.kpi-card {
+  border-top: 3px solid var(--border-strong);
+  display: flex;
+  flex-direction: column;
+}
+.kpi-card.warn { border-top-color: var(--warn); }
 .kpi-card.danger { border-top-color: var(--danger); }
-.kpi-card .kpi-value { font-size: 24px; }
+.kpi-card .kpi-value {
+  font-family: var(--font-body);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+  margin: 6px 0 4px;
+}
+.kpi-card .kpi-sub {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.ft-spark-range {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+.ft-spark-track {
+  position: relative;
+  height: 4px;
+  background: rgba(18, 21, 26, 0.08);
+  border-radius: 2px;
+  margin: 6px 0 4px;
+}
+.ft-spark-point {
+  position: absolute;
+  top: -3px;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.ft-spark-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--muted);
+}
+.ft-spark-pct {
+  font-weight: 600;
+  color: var(--fg);
+}
 .kpi-delta-up { color: var(--success) !important; font-weight: 600; }
 .kpi-delta-down { color: var(--danger) !important; font-weight: 600; }
-.snapshot-group { margin-bottom: 18px; }
+.snapshot-group { margin-bottom: 20px; }
 .snapshot-subtitle {
   margin: 0 0 10px;
   padding-bottom: 6px;
@@ -380,30 +428,33 @@ thead th,
   color: var(--accent);
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-transform: none;
 }
 .snapshot-panel,
 .section-card,
-section.panel { padding: 0; margin-bottom: 24px; overflow: hidden; }
-.snapshot-panel { padding: 22px 24px; }
+section.panel { padding: 0; margin-bottom: 32px; overflow: hidden; background: transparent; border: none; }
+.snapshot-panel { padding: 20px 22px; background: #ffffff; border: 1px solid var(--border); border-radius: 4px; }
 .section-card-header,
 .context-card-header,
 .trade-card-header,
 .cb-card-header,
 .narrative-header {
-  background: var(--fg);
-  color: var(--bg);
-  padding: 10px 18px;
+  background: transparent;
+  color: var(--fg);
+  border-bottom: 2px solid var(--fg);
+  padding: 10px 0 8px;
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  font-family: var(--font-display);
 }
-.section-card-header h2 { margin: 0; font-size: 22px; color: var(--bg); }
+.section-card-header h2 { margin: 0; font-size: 22px; font-weight: 600; color: var(--fg); }
 .section-card-header .badge,
 section.panel h2 .section-badge,
 .source-badge,
@@ -412,30 +463,30 @@ section.panel h2 .section-badge,
 .src-badge {
   display: inline-flex;
   align-items: center;
-  min-height: 1.5rem;
-  padding: 2px 9px;
-  border-radius: 999px;
+  min-height: 1.4rem;
+  padding: 2px 8px;
+  border-radius: 3px;
   border: 1px solid var(--border);
   background: var(--highlight);
   color: var(--accent);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: normal;
+  text-transform: none;
   font-weight: 600;
 }
 .section-card-body,
 .context-card-body,
 .trade-card-body,
-.cb-card-body { padding: 18px 22px; }
-section.panel { padding: 24px 28px; }
-section.panel h2 { margin: 0 0 6px; font-size: 28px; display: flex; align-items: center; gap: 10px; }
+.cb-card-body { padding: 0; }
+section.panel { padding: 0; }
+section.panel h2 { margin: 0 0 6px; font-size: 24px; display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 600; }
 section.panel .blurb,
 .section-card-body .blurb,
 .snapshot-panel .blurb,
 .commentary,
 .narrative-col p,
 .narrative-col li,
-p { color: var(--muted); }
+p { color: var(--text-secondary); }
 .charts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
@@ -446,10 +497,11 @@ p { color: var(--muted); }
   min-height: 400px;
   height: 400px;
   border: 1px solid var(--border);
-  border-radius: 0;
-  background: rgba(255,252,246,0.9);
+  border-radius: 4px;
+  background: #ffffff;
   overflow: hidden;
-  transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  transition: border-color 0.15s ease;
 }
 .chart-cell .plotly-graph-div { height: 100% !important; }
 .chart-shell {
@@ -458,14 +510,14 @@ p { color: var(--muted); }
   height: auto;
 }
 .chart-toolbar {
-  min-height: 62px;
+  min-height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  padding: 10px 12px;
-  border-bottom: 1px solid rgba(23,19,16,0.08);
-  background: rgba(237,223,204,0.12);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: #ffffff;
 }
 .chart-reading {
   display: grid;
@@ -478,29 +530,29 @@ p { color: var(--muted); }
 .chart-reading-label {
   grid-column: 1 / -1;
   color: var(--accent);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: normal;
   line-height: 1.2;
-  text-transform: uppercase;
+  text-transform: none;
 }
 .chart-reading-value { display: inline-flex; align-items: baseline; gap: 6px; min-width: 0; }
 .chart-reading-value strong {
   color: var(--fg);
-  font-family: var(--font-display);
-  font-size: 23px;
-  font-weight: 600;
-  letter-spacing: -0.035em;
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1;
   white-space: nowrap;
 }
 .chart-reading-value em {
   color: var(--muted);
-  font-size: 9px;
+  font-size: 10px;
   font-style: normal;
   white-space: nowrap;
 }
-.chart-reading time { color: var(--muted); font-size: 10px; white-space: nowrap; }
+.chart-reading time { color: var(--muted); font-size: 11px; white-space: nowrap; }
 .chart-canvas,
 .chart-canvas .chart-cell,
 .chart-canvas > div:first-child {
@@ -511,12 +563,12 @@ p { color: var(--muted); }
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  padding: 8px 10px 10px;
-  border-top: 1px solid rgba(23,19,16,0.08);
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
   color: var(--muted);
   font-size: 11px;
   line-height: 1.45;
-  background: rgba(237,223,204,0.18);
+  background: #fcfaf7;
 }
 .quality-chip {
   display: inline-flex;
@@ -596,19 +648,20 @@ p { color: var(--muted); }
 .quality-panel {
   position: relative;
   margin: 0 0 24px;
-  padding: 22px 24px;
-  background: linear-gradient(135deg, rgba(255,252,246,0.96), rgba(243,236,224,0.72));
-  border: 1px solid rgba(23,19,16,0.16);
-  border-left: 4px solid var(--accent);
+  padding: 20px 22px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
 }
 .quality-panel h2 {
   margin: 0 0 8px;
   font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
-.quality-panel p { margin: 0; max-width: 980px; line-height: 1.7; }
+.quality-panel p { margin: 0; max-width: 980px; line-height: 1.6; color: var(--text-secondary); }
 .quality-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -617,28 +670,28 @@ p { color: var(--muted); }
 }
 .quality-pill {
   border: 1px solid var(--border);
-  background: rgba(255,255,255,0.38);
-  padding: 10px 12px;
+  background: #fcfaf7;
+  padding: 8px 10px;
   font-size: 12px;
-  color: var(--muted);
+  color: var(--text-secondary);
+  border-radius: 3px;
 }
 .quality-pill strong {
   display: block;
   margin-bottom: 3px;
   color: var(--fg);
   font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-weight: 600;
 }
 .quality-note {
-  margin-top: 16px;
+  margin-top: 14px;
   padding: 10px 12px;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  background: rgba(237,223,204,0.25);
-  color: var(--muted);
+  background: #fcfaf7;
+  color: var(--text-secondary);
   font-size: 12.5px;
-  line-height: 1.65;
+  line-height: 1.6;
 }
 .quality-note .marker {
   display: inline-flex;
@@ -648,7 +701,7 @@ p { color: var(--muted); }
   height: 18px;
   margin-right: 6px;
   border: 1px solid var(--accent);
-  border-radius: 999px;
+  border-radius: 50%;
   color: var(--accent);
   font-size: 10px;
   font-weight: 700;
@@ -663,19 +716,19 @@ p { color: var(--muted); }
   border: 0;
 }
 .toc a {
-  background: var(--card);
+  background: #ffffff;
   border: 1px solid var(--border);
-  color: var(--muted) !important;
+  color: var(--text-secondary) !important;
   text-decoration: none;
-  padding: 6px 14px;
-  border-radius: 999px;
+  padding: 5px 12px;
+  border-radius: 4px;
   font-size: 12px;
   font-weight: 500;
   transition: all 0.15s;
 }
 .toc a:hover {
   background: var(--fg);
-  color: var(--bg) !important;
+  color: #ffffff !important;
   border-color: var(--fg);
   text-decoration: none;
 }
@@ -688,16 +741,16 @@ p { color: var(--muted); }
 }
 .view-switch > span { color: var(--muted); font-size: 12px; margin-right: 3px; }
 .view-switch button {
-  background: var(--card);
+  background: #ffffff;
   border: 1px solid var(--border);
-  color: var(--muted);
-  padding: 6px 14px;
-  border-radius: 999px;
+  color: var(--text-secondary);
+  padding: 5px 12px;
+  border-radius: 4px;
   cursor: pointer;
   font: inherit;
   font-size: 12px;
 }
-.view-switch button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.view-switch button[aria-pressed="true"] { background: var(--fg); color: #ffffff; border-color: var(--fg); }
 body[data-dashboard-view="core"] .chart-cell[data-dashboard-view="deep"],
 body[data-dashboard-view="core"] .indicator-ledger-item[data-dashboard-view="deep"] { display: none; }
 table,
@@ -706,6 +759,7 @@ table,
   width: 100%;
   border-collapse: collapse;
   font-size: 12.5px;
+  background: #ffffff;
 }
 th,
 thead th,
@@ -713,20 +767,23 @@ thead th,
 .trade-card-body th {
   text-align: left;
   padding: 8px 10px;
-  background: var(--card-alt);
+  background: #fcfaf7;
   border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 11px;
 }
 td,
 tbody td,
 .indicator-table td,
 .trade-card-body td {
   padding: 8px 10px;
-  border-bottom: 1px solid rgba(23,19,16,0.08);
+  border-bottom: 1px solid var(--border);
   vertical-align: top;
 }
 tr:hover td,
 tbody tr:hover td,
-.indicator-table tr:hover td { background: rgba(255,252,246,0.72); }
+.indicator-table tr:hover td { background: #fcfaf7; }
 .ind-id,
 .indicator-table .ind-id { color: var(--accent); font-weight: 600; font-family: "SF Mono", "Fira Code", Consolas, monospace; }
 .ind-peers,
@@ -1142,17 +1199,42 @@ def _sync_kpi_html_with_canonical_frame(
             continue
         value_text = _format_kpi_percent(value, signed=signed)
         sub_text = _format_kpi_sub(row, indicator_id, locale=locale)
+
+        rows = _indicator_frame(frame, country_code, indicator_id)
+        spark_html = ""
+        if len(rows) >= 3:
+            vals = [float(r["value"]) for r in rows if r.get("value") is not None]
+            if vals:
+                min_v = min(vals)
+                max_v = max(vals)
+                pct_pos = max(0, min(100, int(round((value - min_v) / (max_v - min_v) * 100)))) if max_v != min_v else 50
+                if locale == "zh":
+                    min_str = f"最低 {_format_kpi_percent(min_v, signed=False)}"
+                    max_str = f"最高 {_format_kpi_percent(max_v, signed=False)}"
+                    pct_str = f"第 {pct_pos} 百分位"
+                else:
+                    min_str = f"5Y Min {_format_kpi_percent(min_v, signed=False)}"
+                    max_str = f"Max {_format_kpi_percent(max_v, signed=False)}"
+                    pct_str = f"{pct_pos}th %ile"
+                spark_html = (
+                    f'\n      <div class="ft-spark-range" title="Historical Range Context">\n'
+                    f'        <div class="ft-spark-track"><div class="ft-spark-point" style="left: {pct_pos}%;"></div></div>\n'
+                    f'        <div class="ft-spark-labels"><span>{min_str}</span><span class="ft-spark-pct">{pct_str}</span><span>{max_str}</span></div>\n'
+                    f'      </div>'
+                )
+
         pattern = (
             r'(<div class="kpi-card[^"]*">\s*'
             rf'<div class="kpi-label">(?:{label_pattern})</div>\s*'
             r'<div class="kpi-value">)(.*?)(</div>\s*'
             r'<div class="kpi-sub">)(.*?)(</div>)'
+            r'(\s*<div class="ft-spark-range".*?</div>\s*</div>)?'
         )
         synced = re.sub(
             pattern,
-            lambda match, value=value_text, sub=sub_text: (
+            lambda match, value=value_text, sub=sub_text, spark=spark_html: (
                 f"{match.group(1)}{escape(value)}{match.group(3)}"
-                f"{escape(sub)}{match.group(5)}"
+                f"{escape(sub)}{match.group(5)}{spark}"
             ),
             synced,
             count=1,
@@ -3501,15 +3583,122 @@ setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
   var mainCountry = '{country_code}';
 
   function fixCharts() {{
+    var targetBands = {{
+      'PL': {{ center: 2.5, min: 1.5, max: 3.5, label: 'NBP Target: 2.5% (±1pp band)' }},
+      'CZ': {{ center: 2.0, min: 1.0, max: 3.0, label: 'CNB Target: 2.0% (±1pp band)' }},
+      'HU': {{ center: 3.0, min: 2.0, max: 4.0, label: 'MNB Target: 3.0% (±1pp band)' }},
+      'RO': {{ center: 2.5, min: 1.5, max: 3.5, label: 'NBR Target: 2.5% (±1pp band)' }}
+    }};
+    var cBand = targetBands[mainCountry];
+
     chartIds.forEach(function(cid) {{
       var el = document.getElementById(cid);
       if (!el) return;
       try {{
-        // Force full-range display on both axes
-        Plotly.relayout(cid, {{'xaxis.autorange': true, 'yaxis.autorange': true}});
+        Plotly.relayout(cid, {{
+          'xaxis.autorange': true,
+          'xaxis.showgrid': false,
+          'yaxis.autorange': true,
+          'yaxis.gridcolor': 'rgba(18, 21, 26, 0.06)',
+          'yaxis.zeroline': true,
+          'yaxis.zerolinecolor': 'rgba(18, 21, 26, 0.40)',
+          'yaxis.zerolinewidth': 1.4,
+          'paper_bgcolor': '#ffffff',
+          'plot_bgcolor': '#ffffff'
+        }});
       }} catch(e) {{}}
 
-      // The exact reading lives in the toolbar; the plot only needs a clear endpoint.
+      if (cBand && (cid.indexOf('cpi_yoy') !== -1 || cid.indexOf('core_cpi_yoy') !== -1)) {{
+        try {{
+          Plotly.relayout(cid, {{
+            shapes: [
+              {{
+                type: 'rect', xref: 'paper', yref: 'y',
+                x0: 0, x1: 1, y0: cBand.min, y1: cBand.max,
+                fillcolor: 'rgba(13, 118, 128, 0.10)',
+                line: {{ width: 0 }}, layer: 'below'
+              }},
+              {{
+                type: 'line', xref: 'paper', yref: 'y',
+                x0: 0, x1: 1, y0: cBand.center, y1: cBand.center,
+                line: {{ color: 'rgba(13, 118, 128, 0.75)', width: 1.5, dash: 'dash' }}
+              }}
+            ],
+            annotations: [{{
+              xref: 'paper', yref: 'y', x: 0.98, y: cBand.center,
+              xanchor: 'right', yanchor: 'bottom',
+              text: cBand.label, showarrow: false,
+              font: {{ size: 10, color: '#0d7680' }},
+              bgcolor: 'rgba(255, 255, 255, 0.85)'
+            }}]
+          }});
+        }} catch(e) {{}}
+      }}
+
+      if (cid.indexOf('fiscal_balance_pct_gdp') !== -1 || cid.indexOf('primary_balance') !== -1 || cid.indexOf('structural_balance') !== -1) {{
+        try {{
+          var gdFiscal = document.getElementById(cid);
+          if (gdFiscal && gdFiscal.data && gdFiscal.data[0] && gdFiscal.data[0].y) {{
+            var fColors = gdFiscal.data[0].y.map(function(v) {{ return v >= 0 ? '#0d7680' : '#990f3d'; }});
+            Plotly.restyle(cid, {{
+              type: 'bar',
+              'marker.color': [fColors],
+              'marker.line.width': 0.5,
+              'marker.line.color': '#ffffff'
+            }}, [0]);
+            Plotly.relayout(cid, {{
+              shapes: [{{
+                type: 'line', xref: 'paper', yref: 'y',
+                x0: 0, x1: 1, y0: -3.0, y1: -3.0,
+                line: {{ color: 'rgba(153, 15, 61, 0.65)', width: 1.5, dash: 'dot' }}
+              }}],
+              annotations: [{{
+                xref: 'paper', yref: 'y', x: 0.02, y: -3.0,
+                xanchor: 'left', yanchor: 'top',
+                text: 'EU Maastricht Limit: -3.0%', showarrow: false,
+                font: {{ size: 10, color: '#990f3d' }},
+                bgcolor: 'rgba(255, 255, 255, 0.85)'
+              }}]
+            }});
+          }}
+        }} catch(e) {{}}
+      }}
+
+      if (cid.indexOf('current_account_pct_gdp') !== -1 || cid.indexOf('trade_balance') !== -1) {{
+        try {{
+          var gdExt = document.getElementById(cid);
+          if (gdExt && gdExt.data && gdExt.data[0] && gdExt.data[0].y) {{
+            var extColors = gdExt.data[0].y.map(function(v) {{ return v >= 0 ? '#0d7680' : '#990f3d'; }});
+            Plotly.restyle(cid, {{
+              type: 'bar',
+              'marker.color': [extColors],
+              'marker.line.width': 0.5,
+              'marker.line.color': '#ffffff'
+            }}, [0]);
+          }}
+        }} catch(e) {{}}
+      }}
+
+      if (cid.indexOf('credit_to_gdp_gap') !== -1) {{
+        try {{
+          var gdGap = document.getElementById(cid);
+          if (gdGap && gdGap.data && gdGap.data[0] && gdGap.data[0].y) {{
+            var gapColors = gdGap.data[0].y.map(function(v) {{ return v >= 0 ? '#b86200' : '#0d7680'; }});
+            Plotly.restyle(cid, {{
+              type: 'bar',
+              'marker.color': [gapColors]
+            }}, [0]);
+            Plotly.relayout(cid, {{
+              annotations: [{{
+                xref: 'paper', yref: 'paper', x: 0.02, y: 0.95,
+                text: 'Amber: Credit Expansion | Teal: Deleveraging',
+                showarrow: false, font: {{ size: 10, color: '#737c8c' }}
+              }}]
+            }});
+          }}
+        }} catch(e) {{}}
+      }}
+
       try {{
         var gd = document.getElementById(cid);
         if (!gd || !gd.data || !gd.data.length) return;
@@ -3524,7 +3713,6 @@ setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
         if (!bestTrace || !bestTrace.x || bestTrace.x.length === 0) return;
         var lastX = bestTrace.x[bestTrace.x.length - 1];
         var lastY = bestTrace.y[bestTrace.y.length - 1];
-        // Walk back to find non-null value
         for (var j = bestTrace.y.length - 1; j >= 0 && (lastY === null || lastY === undefined); j--) {{
           lastX = bestTrace.x[j]; lastY = bestTrace.y[j];
         }}
@@ -3545,11 +3733,11 @@ setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
           }}
         }}
         var alreadyMarked = traces.some(function(trace) {{ return trace.meta === 'cp-latest-marker'; }});
-        if (!alreadyMarked) {{
+        if (!alreadyMarked && bestTrace.type !== 'bar') {{
           Plotly.addTraces(gd, {{
             x: [lastX], y: [lastY], type: 'scatter', mode: 'markers',
             name: 'Latest observation', meta: 'cp-latest-marker', showlegend: false,
-            marker: {{size: 9, color: '#8a593d', line: {{width: 2, color: '#fffdf8'}}}},
+            marker: {{size: 8, color: '#990f3d', line: {{width: 2, color: '#ffffff'}}}},
             hovertemplate: '<b>' + valStr + '</b><extra>Latest</extra>',
             cliponaxis: false
           }});
