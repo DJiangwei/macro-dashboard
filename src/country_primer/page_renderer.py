@@ -245,51 +245,94 @@ def _chart_html(series: dict[str, Any], country_code: str) -> str:
         "JP": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "BoJ 2.0% Price Stability Target"},
         "ZA": {"center": 4.5, "min": 3.0, "max": 6.0, "label": "SARB 3.0%–6.0% Target Band"},
         "CN": {"center": 3.0, "min": 3.0, "max": 3.0, "label": "Official CPI Target Ceiling: 3.0%"},
+        "EA": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "ECB 2.0% Inflation Target"},
     }
-    sid = str(series.get("id", "")).lower()
-    c_band = target_bands.get(country_code.upper())
-    if c_band and any(k in sid for k in ("cpi", "inflation", "pce")):
-        shapes = []
-        annotations = []
-        if c_band["min"] != c_band["max"]:
-            shapes.append({
-                "type": "rect", "xref": "paper", "yref": "y",
-                "x0": 0, "x1": 1, "y0": c_band["min"], "y1": c_band["max"],
-                "fillcolor": "rgba(13, 118, 128, 0.10)",
-                "line": {"width": 0}, "layer": "below",
-            })
-        shapes.append({
-            "type": "line", "xref": "paper", "yref": "y",
-            "x0": 0, "x1": 1, "y0": c_band["center"], "y1": c_band["center"],
-            "line": {"color": "rgba(13, 118, 128, 0.75)", "width": 1.5, "dash": "dash"},
-        })
-        annotations.append({
-            "xref": "paper", "yref": "y", "x": 0.98, "y": c_band["center"],
-            "xanchor": "right", "yanchor": "bottom",
-            "text": c_band["label"], "showarrow": False,
-            "font": {"size": 10, "color": "#0d7680"},
-            "bgcolor": "rgba(255, 255, 255, 0.85)",
-        })
-        layout["shapes"] = shapes
-        layout["annotations"] = annotations
+    eligible_target_indicators = {
+        "US": {"cpi_inflation", "core_cpi_inflation", "pce_inflation", "core_pce_inflation"},
+        "UK": {"cpi_yoy", "core_cpi_yoy", "cpih_yoy"},
+        "JP": {"cpi_inflation", "cpi_inflation_estat", "core_inflation", "core_core_inflation"},
+        "ZA": {"cpi_inflation", "cpi_inflation_imf"},
+        "CN": {"cpi_inflation", "cpi_yoy_akshare"},
+        "EA": {"hicp_inflation", "hicp_core_inflation", "spf_inflation_expectations_lt"},
+    }
 
-    if "fiscal_balance" in sid or "budget_balance" in sid:
-        if "shapes" not in layout:
-            layout["shapes"] = []
-        if "annotations" not in layout:
-            layout["annotations"] = []
-        layout["shapes"].append({
-            "type": "line", "xref": "paper", "yref": "y",
-            "x0": 0, "x1": 1, "y0": -3.0, "y1": -3.0,
-            "line": {"color": "rgba(153, 15, 61, 0.65)", "width": 1.5, "dash": "dot"},
-        })
-        layout["annotations"].append({
-            "xref": "paper", "yref": "y", "x": 0.02, "y": -3.0,
-            "xanchor": "left", "yanchor": "top",
-            "text": "Fiscal Deficit Threshold: -3.0%", "showarrow": False,
-            "font": {"size": 10, "color": "#990f3d"},
-            "bgcolor": "rgba(255, 255, 255, 0.85)",
-        })
+    sid = str(series.get("id", "")).strip()
+    cc_upper = country_code.upper()
+
+    # 1. Check for custom reference lines declared on the series
+    custom_ref_lines = series.get("reference_lines") or []
+    if custom_ref_lines:
+        shapes = layout.setdefault("shapes", [])
+        annotations = layout.setdefault("annotations", [])
+        for ref in custom_ref_lines:
+            val = ref.get("value")
+            label = ref.get("label", "")
+            color = ref.get("color", "rgba(13, 118, 128, 0.75)")
+            dash = ref.get("dash", "dash")
+            if "min" in ref and "max" in ref:
+                shapes.append({
+                    "type": "rect", "xref": "paper", "yref": "y",
+                    "x0": 0, "x1": 1, "y0": ref["min"], "y1": ref["max"],
+                    "fillcolor": ref.get("fillcolor", "rgba(13, 118, 128, 0.10)"),
+                    "line": {"width": 0}, "layer": "below",
+                })
+            if val is not None:
+                shapes.append({
+                    "type": "line", "xref": "paper", "yref": "y",
+                    "x0": 0, "x1": 1, "y0": val, "y1": val,
+                    "line": {"color": color, "width": 1.5, "dash": dash},
+                })
+            if label and val is not None:
+                annotations.append({
+                    "xref": "paper", "yref": "y", "x": ref.get("x", 0.98), "y": val,
+                    "xanchor": ref.get("xanchor", "right"), "yanchor": ref.get("yanchor", "bottom"),
+                    "text": label, "showarrow": False,
+                    "font": {"size": 10, "color": ref.get("font_color", "#0d7680")},
+                    "bgcolor": "rgba(255, 255, 255, 0.85)",
+                })
+    else:
+        # 2. Check for policy inflation target overlays
+        c_band = target_bands.get(cc_upper)
+        if c_band and sid in eligible_target_indicators.get(cc_upper, set()):
+            shapes = layout.setdefault("shapes", [])
+            annotations = layout.setdefault("annotations", [])
+            if c_band["min"] != c_band["max"]:
+                shapes.append({
+                    "type": "rect", "xref": "paper", "yref": "y",
+                    "x0": 0, "x1": 1, "y0": c_band["min"], "y1": c_band["max"],
+                    "fillcolor": "rgba(13, 118, 128, 0.10)",
+                    "line": {"width": 0}, "layer": "below",
+                })
+            shapes.append({
+                "type": "line", "xref": "paper", "yref": "y",
+                "x0": 0, "x1": 1, "y0": c_band["center"], "y1": c_band["center"],
+                "line": {"color": "rgba(13, 118, 128, 0.75)", "width": 1.5, "dash": "dash"},
+            })
+            annotations.append({
+                "xref": "paper", "yref": "y", "x": 0.98, "y": c_band["center"],
+                "xanchor": "right", "yanchor": "bottom",
+                "text": c_band["label"], "showarrow": False,
+                "font": {"size": 10, "color": "#0d7680"},
+                "bgcolor": "rgba(255, 255, 255, 0.85)",
+            })
+
+        # 3. EU Maastricht fiscal deficit threshold (legally binding only for EU / Euro Area member states)
+        if cc_upper in {"HU", "PL", "CZ", "RO", "EA"} and ("fiscal_balance" in sid or "budget_balance" in sid):
+            shapes = layout.setdefault("shapes", [])
+            annotations = layout.setdefault("annotations", [])
+            shapes.append({
+                "type": "line", "xref": "paper", "yref": "y",
+                "x0": 0, "x1": 1, "y0": -3.0, "y1": -3.0,
+                "line": {"color": "rgba(153, 15, 61, 0.65)", "width": 1.5, "dash": "dot"},
+            })
+            annotations.append({
+                "xref": "paper", "yref": "y", "x": 0.02, "y": -3.0,
+                "xanchor": "left", "yanchor": "top",
+                "text": "EU Maastricht Deficit Limit: -3.0%", "showarrow": False,
+                "font": {"size": 10, "color": "#990f3d"},
+                "bgcolor": "rgba(255, 255, 255, 0.85)",
+            })
+
 
     latest_reading = ""
     if latest:
