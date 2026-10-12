@@ -258,6 +258,22 @@ def _append_us_sources(lines: list[str]) -> None:
 
 DATA_FIRST_PAGES = (
     {
+        "name": "Euro Area",
+        "config": ROOT / "config" / "euro_area_indicators.yaml",
+        "summary": ROOT / "output" / "euro_area_dashboard_summary.json",
+        "config_ref": "config/euro_area_indicators.yaml",
+        "summary_ref": "output/euro_area_dashboard_summary.json",
+        "note": (
+            "The Euro Area page is generated from `config/euro_area_indicators.yaml`. Official ECB Data Portal "
+            "SDMX 2.1 API and Eurostat Dissemination JSON-stat 2.0 API are the primary data backbones. "
+            "Eurostat supplies national accounts, industrial and construction production, retail sales, "
+            "HICP items (prc_hicp_manr), labour market, house price index, extra-EA trade balance, "
+            "quarterly BoP current account, and government deficit and debt ratios; ECB SDMX supplies "
+            "policy rates (DFR), €STR, negotiated wages, yield curves, sovereign yields, Target2 balances, CISS, "
+            "monetary and credit aggregates, and bank supervisory ratios; sovereign spreads are derived directly."
+        ),
+    },
+    {
         "name": "Japan",
         "config": ROOT / "config" / "japan_indicators.yaml",
         "summary": ROOT / "output" / "japan_dashboard_summary.json",

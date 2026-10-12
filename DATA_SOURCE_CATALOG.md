@@ -679,6 +679,95 @@ Configured charts: 105. Latest rendered chart count: 105. Source groups: 28.
 | prices | NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices | Headline CPI/PPI, CPI MoM, urban/rural CPI, enterprise-goods prices, and high-frequency agricultural, vegetable-basket, commodity, and energy indexes are charted through AKShare; core CPI, services CPI, detailed food categories, retail-price index, and trade-price indices remain open. |
 | government_finance | Detailed fiscal expenditure, central/local split, land-sales revenue, LGFV and quasi-fiscal debt | Fiscal revenue growth, quarterly tax receipts, IMF general-government balance, and debt are charted; expenditure detail, land finance, and quasi-fiscal perimeter remain open. |
 
+## Euro Area Data-First Dashboard Sources
+
+The Euro Area page is generated from `config/euro_area_indicators.yaml`. Official ECB Data Portal SDMX 2.1 API and Eurostat Dissemination JSON-stat 2.0 API are the primary data backbones. Eurostat supplies national accounts, industrial and construction production, retail sales, HICP items (prc_hicp_manr), labour market, house price index, extra-EA trade balance, quarterly BoP current account, and government deficit and debt ratios; ECB SDMX supplies policy rates (DFR), €STR, negotiated wages, yield curves, sovereign yields, Target2 balances, CISS, monetary and credit aggregates, and bank supervisory ratios; sovereign spreads are derived directly.
+
+Generated from `config/euro_area_indicators.yaml`; latest dates are tracked in `output/euro_area_dashboard_summary.json` and the generated HTML rather than fetched again here.
+
+Configured charts: 68. Latest rendered chart count: 68. Source groups: 6.
+
+| Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
+|---|---|---|---|---|---|---|---|---|
+| growth_accounts | `real_gdp_growth` | Real GDP Growth, QoQ | quarterly | % q/q | eurostat_jsonstat | Eurostat |  | Quarter-on-quarter real GDP growth in volumes; seasonally and calendar adjusted. |
+| growth_accounts | `real_gdp_yoy` | Real GDP Growth, YoY | quarterly | % y/y | eurostat_jsonstat | Eurostat |  | Year-on-year real GDP growth in volumes; seasonally and calendar adjusted. |
+| growth_accounts | `household_consumption_yoy` | Household Consumption Growth, YoY | quarterly | % y/y | eurostat_jsonstat | Eurostat |  | Household and NPISH final consumption expenditure volume growth y/y; seasonally and calendar adjusted. |
+| growth_accounts | `gfcf_yoy` | Gross Fixed Capital Formation Growth, YoY | quarterly | % y/y | eurostat_jsonstat | Eurostat |  | Gross fixed capital formation (total investment) volume growth y/y; seasonally and calendar adjusted. |
+| growth_accounts | `government_consumption_yoy` | Government Consumption Growth, YoY | quarterly | % y/y | eurostat_jsonstat | Eurostat |  | General government final consumption expenditure volume growth y/y. |
+| growth_accounts | `exports_volume_yoy` | Exports Volume Growth, YoY | quarterly | % y/y | eurostat_jsonstat | Eurostat |  | Exports of goods and services volume growth y/y; seasonally and calendar adjusted. |
+| growth_accounts | `imports_volume_yoy` | Imports Volume Growth, YoY | quarterly | % y/y | eurostat_jsonstat | Eurostat |  | Imports of goods and services volume growth y/y; seasonally and calendar adjusted. |
+| production_cycle | `industrial_production_yoy` | Industrial Production, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | Industrial production excluding construction (NACE B-D) y/y; calendar adjusted. |
+| production_cycle | `manufacturing_production_yoy` | Manufacturing Production, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | Manufacturing production (NACE C) y/y; calendar adjusted. |
+| production_cycle | `retail_sales_volume_yoy` | Retail Sales Volume, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | Volume of retail trade sales (NACE G47) y/y; calendar adjusted. |
+| production_cycle | `construction_output_yoy` | Construction Production, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | Production in construction (NACE F) y/y; calendar adjusted. |
+| production_cycle | `capacity_utilisation` | Manufacturing Capacity Utilisation | quarterly | % | eurostat_jsonstat | Eurostat / DG ECFIN |  | Current level of capacity utilisation in manufacturing (%); seasonally adjusted. |
+| production_cycle | `economic_sentiment` | Economic Sentiment Indicator (ESI) | monthly | index | eurostat_jsonstat | Eurostat / DG ECFIN |  | Headline Economic Sentiment Indicator (long-term average = 100); seasonally adjusted. |
+| production_cycle | `industry_confidence` | Industrial Confidence Indicator | monthly | balance | eurostat_jsonstat | Eurostat / DG ECFIN |  | Industrial confidence indicator (net balance %); seasonally adjusted. |
+| production_cycle | `services_confidence` | Services Confidence Indicator | monthly | balance | eurostat_jsonstat | Eurostat / DG ECFIN |  | Services sector confidence indicator (net balance %); seasonally adjusted. |
+| production_cycle | `consumer_confidence` | Consumer Confidence Indicator | monthly | balance | eurostat_jsonstat | Eurostat / DG ECFIN |  | Consumer confidence indicator (net balance %); seasonally adjusted. |
+| production_cycle | `employment_expectations` | Employment Expectations Indicator (EEI) | monthly | index | eurostat_jsonstat | Eurostat / DG ECFIN |  | Employment Expectations Indicator across sectors (long-term average = 100); seasonally adjusted. |
+| labour_wages | `unemployment_rate` | Harmonised Unemployment Rate | monthly | % | eurostat_jsonstat | Eurostat |  | Harmonised unemployment rate, % of active population; seasonally adjusted. |
+| labour_wages | `youth_unemployment_rate` | Youth Unemployment Rate (<25) | monthly | % | eurostat_jsonstat | Eurostat |  | Youth (<25) unemployment rate, % of active population; seasonally adjusted. |
+| labour_wages | `employment_growth` | Total Employment Growth, YoY | quarterly | % y/y | eurostat_jsonstat | Eurostat |  | Total employment (domestic concept, persons) percentage change y/y. |
+| labour_wages | `job_vacancy_rate` | Job Vacancy Rate | quarterly | % | eurostat_jsonstat | Eurostat |  | Job vacancy rate in industry, construction and services (NACE B-S); seasonally adjusted. |
+| labour_wages | `labour_cost_index_yoy` | Labour Cost Index Growth, YoY | quarterly | % y/y | eurostat_jsonstat | Eurostat |  | Labour Cost Index (nominal wages and non-wage costs) y/y percentage change; NACE B-S. |
+| labour_wages | `negotiated_wages_yoy` | ECB Negotiated Wages Growth, YoY | quarterly | % y/y | ecb_sdmx | ECB | Q.I9.N.INWR.000000.3.ANR | ECB indicator of negotiated wage rates annual growth in the euro area (I9). |
+| prices_costs | `hicp_inflation` | HICP Headline Inflation, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | Harmonised Index of Consumer Prices headline annual inflation (all items). |
+| prices_costs | `hicp_core_inflation` | HICP Core Inflation (Ex Energy & Food), YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | HICP all items excluding energy, food, alcohol and tobacco annual rate. |
+| prices_costs | `hicp_services_inflation` | HICP Services Inflation, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | HICP services component annual rate of change. |
+| prices_costs | `hicp_energy_inflation` | HICP Energy Inflation, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | HICP energy component annual rate of change. |
+| prices_costs | `hicp_food_inflation` | HICP Food, Alcohol & Tobacco Inflation, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | HICP food, alcohol and tobacco component annual rate of change. |
+| prices_costs | `ppi_yoy` | Producer Price Index (PPI), YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | Industrial producer prices domestic market y/y (total industry excluding construction). |
+| prices_costs | `spf_inflation_expectations_lt` | SPF Longer-Term Inflation Expectations | quarterly | % | ecb_sdmx | ECB | Q.U2.HICP.POINT.LT.Q.AVG | ECB Survey of Professional Forecasters: average longer-term HICP inflation point forecast. |
+| prices_costs | `consumer_inflation_expectations_12m` | CES Consumer 12M Inflation Expectations | monthly | % | ecb_sdmx | ECB | M.Z18.ALL.T.C1120.NUM_VAR.WM | ECB Consumer Expectations Survey (CES): weighted median 12-month ahead perceived inflation expectation. |
+| housing_investment | `house_price_yoy` | House Price Index Growth, YoY | quarterly | % y/y | eurostat_jsonstat | Eurostat |  | Harmonised house price index annual rate of change; all dwellings. |
+| housing_investment | `mortgage_rate` | Cost of Borrowing for House Purchase | monthly | % | ecb_sdmx | ECB | M.U2.B.A2C.AM.R.A.2250.EUR.N | Composite cost of borrowing for households for house purchase (annualised agreed rate %). |
+| housing_investment | `building_permits_yoy` | Residential Building Permits Growth, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | Building permits for residential buildings (useful floor area sqm) percentage change y/y. |
+| external_fx | `goods_trade_balance` | Extra-Euro Area Goods Trade Balance | monthly | EUR mn | eurostat_jsonstat | Eurostat |  | Euro area international trade in goods balance with rest of world; seasonally adjusted (million EUR). |
+| external_fx | `current_account_gdp` | Current Account Balance | quarterly | % of GDP | eurostat_jsonstat | Eurostat |  | Current account balance as percentage of GDP; seasonally and calendar adjusted (BPM6). |
+| external_fx | `eur_usd` | EUR / USD Reference Rate | daily | USD | ecb_sdmx | ECB | D.USD.EUR.SP00.A | Euro / US dollar ECB daily reference exchange rate. |
+| external_fx | `neer_eer41` | Euro Nominal Effective Exchange Rate (EER-40) | monthly | index | ecb_sdmx | ECB | M.E03.EUR.EN00.A | Euro nominal effective exchange rate index against 40 trading partners (monthly average, 1999Q1=100). |
+| external_fx | `reer` | Euro Real Effective Exchange Rate (BIS) | monthly | index | fred | FRED / BIS | RBXMBIS | Real effective exchange rate for the euro area (broad basket, CPI-based; 2020=100). |
+| fiscal_sovereign | `fiscal_balance_gdp` | General Government Deficit (-) / Surplus (+) | annual | % of GDP | eurostat_jsonstat | Eurostat |  | General government net lending (+) / net borrowing (-) as % of GDP (EDP notification). |
+| fiscal_sovereign | `government_debt_gdp` | General Government Consolidated Gross Debt | quarterly | % of GDP | eurostat_jsonstat | Eurostat |  | Government consolidated gross debt as % of GDP (Maastricht definition). |
+| fiscal_sovereign | `structural_balance_gdp` | Structural Fiscal Balance | annual | % of potential GDP | imf_datamapper | IMF DataMapper | GGCB_G01_PGDP_PT/EURO | Cyclically adjusted government balance as % of potential GDP (IMF WEO estimate & projection). |
+| fiscal_sovereign | `aaa_yield_10y` | Euro Area AAA Benchmark 10Y Yield | daily | % | ecb_sdmx | ECB | B.U2.EUR.4F.G_N_A.SV_C_YM.SR_10Y | Euro area central government AAA 10-year spot rate yield. |
+| fiscal_sovereign | `aaa_yield_2y` | Euro Area AAA Benchmark 2Y Yield | daily | % | ecb_sdmx | ECB | B.U2.EUR.4F.G_N_A.SV_C_YM.SR_2Y | Euro area central government AAA 2-year spot rate yield. |
+| fiscal_sovereign | `yield_curve_slope` | AAA Yield Curve Slope (10Y - 2Y) | daily | bps | spread | ECB |  | Difference between AAA 10-year and 2-year spot rates in basis points (10Y minus 2Y). |
+| fiscal_sovereign | `irs_10y_de` | Germany 10Y Benchmark Sovereign Yield (Bund) | monthly | % | ecb_sdmx | ECB | M.DE.L.L40.CI.0000.EUR.N.Z | Germany 10-year benchmark government bond yield for Maastricht convergence purposes. |
+| fragmentation | `irs_10y_it` | Italy 10Y Benchmark Sovereign Yield (BTP) | monthly | % | ecb_sdmx | ECB | M.IT.L.L40.CI.0000.EUR.N.Z | Italy 10-year benchmark government bond yield for Maastricht convergence purposes. |
+| fragmentation | `irs_10y_fr` | France 10Y Benchmark Sovereign Yield (OAT) | monthly | % | ecb_sdmx | ECB | M.FR.L.L40.CI.0000.EUR.N.Z | France 10-year benchmark government bond yield for Maastricht convergence purposes. |
+| fragmentation | `irs_10y_es` | Spain 10Y Benchmark Sovereign Yield (Bonos) | monthly | % | ecb_sdmx | ECB | M.ES.L.L40.CI.0000.EUR.N.Z | Spain 10-year benchmark government bond yield for Maastricht convergence purposes. |
+| fragmentation | `irs_10y_gr` | Greece 10Y Benchmark Sovereign Yield (GGB) | monthly | % | ecb_sdmx | ECB | M.GR.L.L40.CI.0000.EUR.N.Z | Greece 10-year benchmark government bond yield for Maastricht convergence purposes. |
+| fragmentation | `it_de_spread_10y` | Italy-Germany 10Y Sovereign Spread (BTP-Bund) | monthly | bps | spread | ECB |  | 10-year Italian government bond yield minus German Bund yield, in basis points. |
+| fragmentation | `fr_de_spread_10y` | France-Germany 10Y Sovereign Spread (OAT-Bund) | monthly | bps | spread | ECB |  | 10-year French government bond yield minus German Bund yield, in basis points. |
+| fragmentation | `es_de_spread_10y` | Spain-Germany 10Y Sovereign Spread (Bonos-Bund) | monthly | bps | spread | ECB |  | 10-year Spanish government bond yield minus German Bund yield, in basis points. |
+| fragmentation | `gr_de_spread_10y` | Greece-Germany 10Y Sovereign Spread (GGB-Bund) | monthly | bps | spread | ECB |  | 10-year Greek government bond yield minus German Bund yield, in basis points. |
+| fragmentation | `ciss` | Composite Indicator of Systemic Stress (CISS) | daily | index [0,1] | ecb_sdmx | ECB | D.U2.Z0Z.4F.EC.SS_CIN.IDX | ECB Composite Indicator of Systemic Stress across equity, bond, money, and FX markets. |
+| fragmentation | `target2_balances_de` | Bundesbank TARGET2 Net Balance | monthly | EUR mn | ecb_sdmx | ECB | M.DE.N.A094T.U2.EUR.A | Deutsche Bundesbank TARGET2 net claims on the Eurosystem (average of period, million EUR). |
+| fragmentation | `target2_balances_it` | Banca d'Italia TARGET2 Net Balance | monthly | EUR mn | ecb_sdmx | ECB | M.IT.N.A094T.U2.EUR.A | Banca d'Italia TARGET2 net liabilities to the Eurosystem (average of period, million EUR). |
+| monetary_financial | `policy_rate` | ECB Deposit Facility Rate (DFR) | daily | % | ecb_sdmx | ECB | D.U2.EUR.4F.KR.DFR.LEV | ECB Deposit Facility Rate (DFR); primary operational target rate for monetary policy. |
+| monetary_financial | `estr` | Euro Short-Term Rate (€STR) | daily | % | ecb_sdmx | ECB | B.EU000A2X2A25.WT | Euro short-term rate (€STR) volume-weighted trimmed mean; daily business day. |
+| monetary_financial | `m3_growth` | Broad Monetary Aggregate M3 Growth, YoY | monthly | % y/y | ecb_sdmx | ECB | M.U2.Y.V.M30.X.I.U2.2300.Z01.A | Broad monetary aggregate M3 annual growth rate (%). |
+| monetary_financial | `nfc_loan_growth` | Adjusted Loans to NFCs Growth, YoY | monthly | % y/y | ecb_sdmx | ECB | M.U2.Y.U.A20T.A.I.U2.2240.Z01.A | Adjusted loans to non-financial corporations annual growth rate (%). |
+| monetary_financial | `household_loan_growth` | Adjusted Loans to Households Growth, YoY | monthly | % y/y | ecb_sdmx | ECB | M.U2.Y.U.A20T.A.I.U2.2250.Z01.A | Adjusted loans to households annual growth rate (%). |
+| monetary_financial | `nfc_cost_of_borrowing` | NFC Cost of Borrowing | monthly | % | ecb_sdmx | ECB | M.U2.B.A2I.AM.R.A.2240.EUR.N | Composite cost of borrowing for non-financial corporations (annualised agreed rate %). |
+| monetary_financial | `eurosystem_total_assets` | Eurosystem Total Assets | weekly | EUR mn | ecb_sdmx | ECB | W.U2.C.T000000.Z5.Z01 | Eurosystem consolidated balance sheet total assets/liabilities (million EUR, weekly). |
+| monetary_financial | `bls_credit_standards_nfc` | BLS Bank Credit Standards (NFC Loans) | quarterly | net % | ecb_sdmx | ECB | Q.U2.ALL.O.E.Z.B3.ST.S.WFNET | ECB Bank Lending Survey: net percentage of banks tightening credit standards for loans to enterprises. |
+| stability_structural | `bank_cet1_ratio` | Significant Institutions CET1 Ratio | quarterly | % | ecb_sdmx | ECB Banking Supervision | Q.B01.W0._Z.I4008._T.SII._Z._Z._Z.PCT.C | ECB Supervisory Banking Statistics: CET1 ratio for Significant Institutions under Single Supervisory Mechanism. |
+| stability_structural | `bank_npl_ratio` | Significant Institutions NPL Ratio | quarterly | % | ecb_sdmx | ECB Banking Supervision | Q.B01.W0._Z.I7000._T.SII._Z._Z._Z.PCT.C | ECB Supervisory Banking Statistics: Non-performing loans ratio (including cash balances) for Significant Institutions. |
+| stability_structural | `household_debt_gdp` | Household Debt to GDP | quarterly | % of GDP | fred | FRED / BIS | QXMHAM770A | Credit to households and NPISHs from all sectors at market value as percentage of GDP. |
+
+## Euro Area Official / Vendor Data Gaps
+
+| Section | Indicator family | Current status |
+|---|---|---|
+| production_cycle | HCOB Eurozone Manufacturing and Services Flash PMIs | Compiled by S&P Global under commercial license; proprietary data vendor series with no key-free redistributable API. |
+| production_cycle | Sentix Economic Index and ZEW Financial Market Survey for Euro Area | Proprietary investor sentiment surveys published by Sentix GmbH and ZEW Mannheim without a key-free machine-readable public API. |
+| prices_costs | 5y5y forward inflation-linked swap rate (5y5y ILS) | Market-based inflation expectation gauge referenced by the ECB Governing Council; traded OTC and vendor-controlled (Bloomberg/LSEG), not disseminated via ECB SDMX. |
+| prices_costs | Dutch TTF natural gas front-month benchmark futures | ICE Endex exchange traded energy benchmark; critical European energy cost variable but exchange-licensed without a redistributable public API. |
+| monetary_financial | Euro Stoxx 50 equity index and equity market valuation | STOXX Ltd benchmark index licensed through data vendors; no redistributable public timeseries endpoint available. |
+
 ## Japan Data-First Dashboard Sources
 
 The Japan page is generated from `config/japan_indicators.yaml`. FRED (official API when `FRED_API_KEY` is set) carries national accounts, production, labour, trade, rates, and BIS series. Because OECD discontinued its Japan CPI, retail-value, and money-stock mirrors between 2021 and 2024, national CPI and bank soundness come from the IMF SDMX 2.1 API instead, and IMF WEO DataMapper carries fiscal ratios with an explicit forecast split. Japan-native releases behind the e-Stat application-ID wall are recorded as gaps rather than proxied.

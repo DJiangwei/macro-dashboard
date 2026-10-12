@@ -1,0 +1,1324 @@
+name: "Euro Area"
+name_zh: "欧元区"
+code: "EA"
+iso2: "EA"
+subtitle_en: "A data-first macro page for the Euro Area built from official ECB Data Portal and Eurostat Dissemination public endpoints."
+subtitle_zh: "基于欧洲央行(ECB)与欧盟统计局(Eurostat)官方公开接口构建的欧元区数据优先宏观页面。"
+min_chart_count: 55
+
+sections:
+  growth_accounts:
+    title_en: "GDP & National Accounts"
+    title_zh: "GDP与国民账户"
+    report_logic_en: "Eurostat quarterly national accounts anchor the euro area macro story: real GDP sequential QoQ and annual YoY growth, household consumption, gross fixed capital formation, government consumption, and trade volumes."
+    report_logic_zh: "欧盟统计局(Eurostat)季度国民账户构成欧元区宏观叙事基准：实际GDP环比与同比增速、居民消费、固定资本形成总额、政府消费及进出口贸易量。"
+  production_cycle:
+    title_en: "Production & Business Cycle"
+    title_zh: "生产与商业周期"
+    report_logic_en: "Eurostat monthly short-term business statistics (STS) track industrial and manufacturing production, retail trade volume, and construction output. DG ECFIN business and consumer surveys (BCS) supply capacity utilisation, the headline Economic Sentiment Indicator (ESI), sector confidence balances, and employment expectations."
+    report_logic_zh: "欧盟统计局月度短期商业统计(STS)追踪工业与制造业生产、零售销售量与建筑业产出。欧盟委员会经济金融总司(DG ECFIN)商业与消费者调查提供产能利用率、综合经济景气指数(ESI)、分行业信心差值及就业预期。"
+  labour_wages:
+    title_en: "Labour Market & Wages"
+    title_zh: "劳动力市场与工资"
+    report_logic_en: "Harmonised unemployment and youth unemployment rates track labour slack; national accounts employment growth, Eurostat job vacancy rates, and the Labour Cost Index (LCI) capture labour demand and cost pressures. The ECB indicator of negotiated wages is the key metric for underlying domestic inflationary persistence."
+    report_logic_zh: "调和失业率与青年失业率衡量劳动力闲置程度；国民账户就业增长、职位空缺率与劳动力成本指数(LCI)捕捉劳动力需求与成本压力。欧洲央行协议工资指标是评估潜在本土通胀粘性的核心变量。"
+  prices_costs:
+    title_en: "Prices & Costs"
+    title_zh: "价格与成本"
+    report_logic_en: "Eurostat monthly HICP (prc_hicp_manr) provides headline, core (excluding energy and food), services, energy, and food annual inflation. Industrial producer prices (PPI) capture pipeline pressures. The ECB Survey of Professional Forecasters (SPF) and Consumer Expectations Survey (CES) anchor long-term and 12-month forward expectations."
+    report_logic_zh: "欧盟统计局月度调和消费者物价指数(HICP)提供总体、核心（剔除能源与食品）、服务、能源与食品通胀年率。工业生产者出厂价格(PPI)捕捉生产端管道压力。欧洲央行专业预测机构调查(SPF)与消费者预期调查(CES)锚定长期与未来12个月的通胀预期。"
+  housing_investment:
+    title_en: "Housing & Property"
+    title_zh: "住房与房地产"
+    report_logic_en: "Eurostat quarterly house price index (HPI) tracks residential property valuations across the euro area. The ECB MFI interest rate statistics (MIR) track composite household borrowing costs for house purchase, while building permits provide a leading indicator of residential construction activity."
+    report_logic_zh: "欧盟统计局季度房价指数(HPI)跟踪欧元区住宅估值。欧洲央行MFI利率统计(MIR)衡量居民购房综合借贷成本，建筑许可则提供住宅建筑活动的前瞻信号。"
+  external_fx:
+    title_en: "External Balance & FX"
+    title_zh: "外部平衡与汇率"
+    report_logic_en: "Eurostat monthly international trade in goods and quarterly balance of payments (BoP) current account ratio capture the external surplus. ECB daily EUR/USD reference rates and monthly nominal effective exchange rates (EER-40) alongside BIS real effective exchange rates (REER) track the common currency's external valuation."
+    report_logic_zh: "欧盟统计局月度国际货物贸易与季度国际收支(BoP)经常账户比率刻画外部盈余。欧洲央行日度EUR/USD参考汇率、月度名义有效汇率(EER-40)及BIS实际有效汇率(REER)跟踪欧元的外部估值。"
+  fiscal_sovereign:
+    title_en: "Fiscal & Sovereign"
+    title_zh: "财政与主权"
+    report_logic_en: "Eurostat annual EDP notifications and quarterly government debt statistics track aggregate Maastricht deficit and debt ratios. IMF DataMapper structural balances capture cyclically adjusted fiscal stance. The ECB daily AAA euro area central government yield curve (2Y, 10Y, and 10Y-2Y slope) provides the risk-free term structure benchmark."
+    report_logic_zh: "欧盟统计局年度EDP通报与季度政府债务统计跟踪马斯特里赫特赤字与债务比率。IMF DataMapper结构性平衡衡量经周期调整的财政立场。欧洲央行日度AAA级欧元区中央政府收益率曲线（2年、10年及10Y-2Y期限利差）提供无风险期限结构基准。"
+  fragmentation:
+    title_en: "Sovereign Spreads & Fragmentation"
+    title_zh: "主权利差与碎片化风险"
+    report_logic_en: "Sovereign spreads against the German 10Y Bund benchmark (Italy BTP, France OAT, Spain Bonos, Greece GGB) measure financial fragmentation and sovereign credit risk within the currency union. The ECB Composite Indicator of Systemic Stress (CISS) and national central bank TARGET2 balances (Bundesbank and Banca d'Italia) track systemic stress and inter-country settlement imbalances."
+    report_logic_zh: "对德国10年期国债基准(Bund)的主权利差（意大利BTP、法国OAT、西班牙Bonos、希腊GGB）衡量货币联盟内的金融碎片化与主权信用风险。欧洲央行系统性压力综合指标(CISS)与各国央行TARGET2净余额（德国央行与意大利央行）跟踪系统性压力与跨境清算不平衡。"
+  monetary_financial:
+    title_en: "Monetary & Financial Conditions"
+    title_zh: "货币与金融条件"
+    report_logic_en: "The ECB Deposit Facility Rate (DFR) is the primary policy rate anchor; €STR is the benchmark overnight unsecured rate. M3 broad money growth and adjusted bank loan growth to NFCs and households reflect credit creation. NFC borrowing costs, the Eurosystem consolidated balance sheet, and Bank Lending Survey (BLS) credit standards complete the transmission mechanism."
+    report_logic_zh: "欧洲央行存款便利利率(DFR)为核心政策利率锚；€STR为无担保隔夜基准利率。广义货币M3增速与经调整的企业及居民贷款增速反映信用创造。非金融企业借贷成本、欧元系统资产负债表总规模及银行借贷调查(BLS)信贷标准完整刻画货币政策传导。"
+  stability_structural:
+    title_en: "Financial Stability & Structural Risk"
+    title_zh: "金融稳定与结构性风险"
+    report_logic_en: "ECB Supervisory Banking Statistics provide Common Equity Tier 1 (CET1) capital ratios and non-performing loan (NPL) ratios for Significant Institutions under the Single Supervisory Mechanism (SSM). BIS credit to households tracks aggregate private leverage relative to GDP."
+    report_logic_zh: "欧洲央行单一监管机制(SSM)下的主要银行监管统计提供核心一级资本充足率(CET1)与不良贷款率(NPL)。BIS居民部门信贷数据跟踪相对于GDP的私人部门杠杆存量。"
+
+indicators:
+  # --- growth_accounts -----------------------------------------------------
+  - id: real_gdp_growth
+    section: growth_accounts
+    label_en: "Real GDP Growth, QoQ"
+    label_zh: "实际GDP环比"
+    unit: "% q/q"
+    fetcher: eurostat_jsonstat
+    dataset: "namq_10_gdp"
+    filters:
+      freq: "Q"
+      geo: "EA"
+      s_adj: "SCA"
+      na_item: "B1GQ"
+      unit: "CLV_PCH_PRE"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp"
+    frequency: "quarterly"
+    start_date: "1995"
+    caveat_en: "Quarter-on-quarter real GDP growth in volumes; seasonally and calendar adjusted."
+    caveat_zh: "以数量计的季调实际GDP环比增速；经季节与工作日调整。"
+
+  - id: real_gdp_yoy
+    section: growth_accounts
+    label_en: "Real GDP Growth, YoY"
+    label_zh: "实际GDP同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "namq_10_gdp"
+    filters:
+      freq: "Q"
+      geo: "EA"
+      s_adj: "SCA"
+      na_item: "B1GQ"
+      unit: "CLV_PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp"
+    frequency: "quarterly"
+    start_date: "1996"
+    caveat_en: "Year-on-year real GDP growth in volumes; seasonally and calendar adjusted."
+    caveat_zh: "以数量计的季调实际GDP同比增速；经季节与工作日调整。"
+
+  - id: household_consumption_yoy
+    section: growth_accounts
+    label_en: "Household Consumption Growth, YoY"
+    label_zh: "居民消费支出同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "namq_10_gdp"
+    filters:
+      freq: "Q"
+      geo: "EA"
+      s_adj: "SCA"
+      na_item: "P31_S14_S15"
+      unit: "CLV_PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp"
+    frequency: "quarterly"
+    start_date: "1996"
+    caveat_en: "Household and NPISH final consumption expenditure volume growth y/y; seasonally and calendar adjusted."
+    caveat_zh: "居民与为住户服务的非营利机构最终消费支出同比增速；季调口径。"
+
+  - id: gfcf_yoy
+    section: growth_accounts
+    label_en: "Gross Fixed Capital Formation Growth, YoY"
+    label_zh: "固定资本形成总额同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "namq_10_gdp"
+    filters:
+      freq: "Q"
+      geo: "EA"
+      s_adj: "SCA"
+      na_item: "P51G"
+      unit: "CLV_PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp"
+    frequency: "quarterly"
+    start_date: "1996"
+    caveat_en: "Gross fixed capital formation (total investment) volume growth y/y; seasonally and calendar adjusted."
+    caveat_zh: "固定资本形成总额（总投资）同比增速；季调口径。"
+
+  - id: government_consumption_yoy
+    section: growth_accounts
+    label_en: "Government Consumption Growth, YoY"
+    label_zh: "政府消费支出同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "namq_10_gdp"
+    filters:
+      freq: "Q"
+      geo: "EA"
+      s_adj: "SCA"
+      na_item: "P3_S13"
+      unit: "CLV_PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp"
+    frequency: "quarterly"
+    start_date: "1996"
+    caveat_en: "General government final consumption expenditure volume growth y/y."
+    caveat_zh: "广义政府最终消费支出同比增速。"
+
+  - id: exports_volume_yoy
+    section: growth_accounts
+    label_en: "Exports Volume Growth, YoY"
+    label_zh: "出口量同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "namq_10_gdp"
+    filters:
+      freq: "Q"
+      geo: "EA"
+      s_adj: "SCA"
+      na_item: "P6"
+      unit: "CLV_PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp"
+    frequency: "quarterly"
+    start_date: "1996"
+    caveat_en: "Exports of goods and services volume growth y/y; seasonally and calendar adjusted."
+    caveat_zh: "商品与服务出口量同比增速；季调口径。"
+
+  - id: imports_volume_yoy
+    section: growth_accounts
+    label_en: "Imports Volume Growth, YoY"
+    label_zh: "进口量同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "namq_10_gdp"
+    filters:
+      freq: "Q"
+      geo: "EA"
+      s_adj: "SCA"
+      na_item: "P7"
+      unit: "CLV_PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp"
+    frequency: "quarterly"
+    start_date: "1996"
+    caveat_en: "Imports of goods and services volume growth y/y; seasonally and calendar adjusted."
+    caveat_zh: "商品与服务进口量同比增速；季调口径。"
+
+  # --- production_cycle ----------------------------------------------------
+  - id: industrial_production_yoy
+    section: production_cycle
+    label_en: "Industrial Production, YoY"
+    label_zh: "工业生产同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "sts_inpr_m"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      indic_bt: "PRD"
+      nace_r2: "B-D"
+      s_adj: "CA"
+      unit: "PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/sts_inpr_m"
+    frequency: "monthly"
+    start_date: "1995"
+    caveat_en: "Industrial production excluding construction (NACE B-D) y/y; calendar adjusted."
+    caveat_zh: "剔除建筑业的工业生产同比；工作日调整口径。"
+
+  - id: manufacturing_production_yoy
+    section: production_cycle
+    label_en: "Manufacturing Production, YoY"
+    label_zh: "制造业生产同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "sts_inpr_m"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      indic_bt: "PRD"
+      nace_r2: "C"
+      s_adj: "CA"
+      unit: "PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/sts_inpr_m"
+    frequency: "monthly"
+    start_date: "1995"
+    caveat_en: "Manufacturing production (NACE C) y/y; calendar adjusted."
+    caveat_zh: "制造业生产同比；工作日调整口径。"
+
+  - id: retail_sales_volume_yoy
+    section: production_cycle
+    label_en: "Retail Sales Volume, YoY"
+    label_zh: "零售销售量同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "sts_trtu_m"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      indic_bt: "VOL_SLS"
+      nace_r2: "G47"
+      s_adj: "CA"
+      unit: "PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/sts_trtu_m"
+    frequency: "monthly"
+    start_date: "2001"
+    caveat_en: "Volume of retail trade sales (NACE G47) y/y; calendar adjusted."
+    caveat_zh: "零售贸易销售量同比；工作日调整口径。"
+
+  - id: construction_output_yoy
+    section: production_cycle
+    label_en: "Construction Production, YoY"
+    label_zh: "建筑业生产同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "sts_copr_m"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      indic_bt: "PRD"
+      nace_r2: "F"
+      s_adj: "CA"
+      unit: "PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/sts_copr_m"
+    frequency: "monthly"
+    start_date: "1996"
+    caveat_en: "Production in construction (NACE F) y/y; calendar adjusted."
+    caveat_zh: "建筑业产出同比；工作日调整口径。"
+
+  - id: capacity_utilisation
+    section: production_cycle
+    label_en: "Manufacturing Capacity Utilisation"
+    label_zh: "制造业产能利用率"
+    unit: "%"
+    fetcher: eurostat_jsonstat
+    dataset: "ei_bsin_q_r2"
+    filters:
+      freq: "Q"
+      geo: "EA20"
+      indic: "BS-ICU-PC"
+      s_adj: "SA"
+    source_name: "Eurostat / DG ECFIN"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bsin_q_r2"
+    frequency: "quarterly"
+    start_date: "1995"
+    caveat_en: "Current level of capacity utilisation in manufacturing (%); seasonally adjusted."
+    caveat_zh: "制造业当前产能利用率百分比；季调口径。"
+
+  - id: economic_sentiment
+    section: production_cycle
+    label_en: "Economic Sentiment Indicator (ESI)"
+    label_zh: "经济景气指数 (ESI)"
+    unit: "index"
+    fetcher: eurostat_jsonstat
+    dataset: "ei_bssi_m_r2"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      indic: "BS-ESI-I"
+      s_adj: "SA"
+    source_name: "Eurostat / DG ECFIN"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bssi_m_r2"
+    frequency: "monthly"
+    start_date: "1995"
+    caveat_en: "Headline Economic Sentiment Indicator (long-term average = 100); seasonally adjusted."
+    caveat_zh: "综合经济景气指数（长期均值=100）；季调口径。"
+
+  - id: industry_confidence
+    section: production_cycle
+    label_en: "Industrial Confidence Indicator"
+    label_zh: "工业信心指数"
+    unit: "balance"
+    fetcher: eurostat_jsonstat
+    dataset: "ei_bssi_m_r2"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      indic: "BS-ICI-BAL"
+      s_adj: "SA"
+    source_name: "Eurostat / DG ECFIN"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bssi_m_r2"
+    frequency: "monthly"
+    start_date: "1995"
+    caveat_en: "Industrial confidence indicator (net balance %); seasonally adjusted."
+    caveat_zh: "工业信心指标净差值；季调口径。"
+
+  - id: services_confidence
+    section: production_cycle
+    label_en: "Services Confidence Indicator"
+    label_zh: "服务业信心指数"
+    unit: "balance"
+    fetcher: eurostat_jsonstat
+    dataset: "ei_bssi_m_r2"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      indic: "BS-SCI-BAL"
+      s_adj: "SA"
+    source_name: "Eurostat / DG ECFIN"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bssi_m_r2"
+    frequency: "monthly"
+    start_date: "1995"
+    caveat_en: "Services sector confidence indicator (net balance %); seasonally adjusted."
+    caveat_zh: "服务业信心指标净差值；季调口径。"
+
+  - id: consumer_confidence
+    section: production_cycle
+    label_en: "Consumer Confidence Indicator"
+    label_zh: "消费者信心指数"
+    unit: "balance"
+    fetcher: eurostat_jsonstat
+    dataset: "ei_bssi_m_r2"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      indic: "BS-CSMCI-BAL"
+      s_adj: "SA"
+    source_name: "Eurostat / DG ECFIN"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bssi_m_r2"
+    frequency: "monthly"
+    start_date: "1995"
+    caveat_en: "Consumer confidence indicator (net balance %); seasonally adjusted."
+    caveat_zh: "消费者信心指标净差值；季调口径。"
+
+  - id: employment_expectations
+    section: production_cycle
+    label_en: "Employment Expectations Indicator (EEI)"
+    label_zh: "就业预期指数 (EEI)"
+    unit: "index"
+    fetcher: eurostat_jsonstat
+    dataset: "ei_bsee_m_r2"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      indic: "BS-EEI-I"
+      s_adj: "SA"
+    source_name: "Eurostat / DG ECFIN"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bsee_m_r2"
+    frequency: "monthly"
+    start_date: "1995"
+    caveat_en: "Employment Expectations Indicator across sectors (long-term average = 100); seasonally adjusted."
+    caveat_zh: "全行业就业预期指数（长期均值=100）；季调口径。"
+
+  # --- labour_wages --------------------------------------------------------
+  - id: unemployment_rate
+    section: labour_wages
+    label_en: "Harmonised Unemployment Rate"
+    label_zh: "调和失业率"
+    unit: "%"
+    fetcher: eurostat_jsonstat
+    dataset: "une_rt_m"
+    filters:
+      freq: "M"
+      geo: "EA21"
+      age: "TOTAL"
+      sex: "T"
+      s_adj: "SA"
+      unit: "PC_ACT"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/une_rt_m"
+    frequency: "monthly"
+    start_date: "2000"
+    caveat_en: "Harmonised unemployment rate, % of active population; seasonally adjusted."
+    caveat_zh: "调和失业率，占经济活动人口百分比；季调口径。"
+
+  - id: youth_unemployment_rate
+    section: labour_wages
+    label_en: "Youth Unemployment Rate (<25)"
+    label_zh: "青年失业率 (25岁以下)"
+    unit: "%"
+    fetcher: eurostat_jsonstat
+    dataset: "une_rt_m"
+    filters:
+      freq: "M"
+      geo: "EA21"
+      age: "Y_LT25"
+      sex: "T"
+      s_adj: "SA"
+      unit: "PC_ACT"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/une_rt_m"
+    frequency: "monthly"
+    start_date: "2000"
+    caveat_en: "Youth (<25) unemployment rate, % of active population; seasonally adjusted."
+    caveat_zh: "青年（25岁以下）失业率，占青年经济活动人口百分比；季调口径。"
+
+  - id: employment_growth
+    section: labour_wages
+    label_en: "Total Employment Growth, YoY"
+    label_zh: "总就业人数同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "namq_10_pe"
+    filters:
+      freq: "Q"
+      geo: "EA"
+      na_item: "EMP_DC"
+      s_adj: "SCA"
+      unit: "PCH_SM_PER"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/namq_10_pe"
+    frequency: "quarterly"
+    start_date: "1996"
+    caveat_en: "Total employment (domestic concept, persons) percentage change y/y."
+    caveat_zh: "总就业人数同比增速（国内概念，人数）；工作日与季调口径。"
+
+  - id: job_vacancy_rate
+    section: labour_wages
+    label_en: "Job Vacancy Rate"
+    label_zh: "职位空缺率"
+    unit: "%"
+    fetcher: eurostat_jsonstat
+    dataset: "jvs_q_nace2"
+    filters:
+      freq: "Q"
+      geo: "EA20"
+      indic_em: "JVR"
+      nace_r2: "B-S"
+      s_adj: "SA"
+      sizeclas: "TOTAL"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/jvs_q_nace2"
+    frequency: "quarterly"
+    start_date: "2006"
+    caveat_en: "Job vacancy rate in industry, construction and services (NACE B-S); seasonally adjusted."
+    caveat_zh: "工业、建筑业与服务业职位空缺率；季调口径。"
+
+  - id: labour_cost_index_yoy
+    section: labour_wages
+    label_en: "Labour Cost Index Growth, YoY"
+    label_zh: "劳动力成本指数同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "lc_lci_r2_q"
+    filters:
+      freq: "Q"
+      geo: "EA"
+      lcstruct: "D1_D4_MD5"
+      nace_r2: "B-S"
+      s_adj: "SCA"
+      unit: "PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/lc_lci_r2_q"
+    frequency: "quarterly"
+    start_date: "2009"
+    caveat_en: "Labour Cost Index (nominal wages and non-wage costs) y/y percentage change; NACE B-S."
+    caveat_zh: "名义劳动力成本指数（工资与非工资成本）同比；工作日与季调口径。"
+
+  - id: negotiated_wages_yoy
+    section: labour_wages
+    label_en: "ECB Negotiated Wages Growth, YoY"
+    label_zh: "欧央行协议工资同比"
+    unit: "% y/y"
+    fetcher: ecb_sdmx
+    flow: "STS"
+    series: "Q.I9.N.INWR.000000.3.ANR"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/STS"
+    frequency: "quarterly"
+    start_date: "1995-01-01"
+    caveat_en: "ECB indicator of negotiated wage rates annual growth in the euro area (I9)."
+    caveat_zh: "欧洲央行编制的欧元区协议工资增长率年率。"
+
+  # --- prices_costs --------------------------------------------------------
+  - id: hicp_inflation
+    section: prices_costs
+    label_en: "HICP Headline Inflation, YoY"
+    label_zh: "调和CPI总体通胀同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "prc_hicp_manr"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      coicop: "CP00"
+      unit: "RCH_A"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr"
+    frequency: "monthly"
+    start_date: "2000"
+    caveat_en: "Harmonised Index of Consumer Prices headline annual inflation (all items)."
+    caveat_zh: "调和消费者物价指数(HICP)全部项目年通胀率。"
+
+  - id: hicp_core_inflation
+    section: prices_costs
+    label_en: "HICP Core Inflation (Ex Energy & Food), YoY"
+    label_zh: "核心HICP通胀（剔除能源与食品）同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "prc_hicp_manr"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      coicop: "TOT_X_NRG_FOOD"
+      unit: "RCH_A"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr"
+    frequency: "monthly"
+    start_date: "2000"
+    caveat_en: "HICP all items excluding energy, food, alcohol and tobacco annual rate."
+    caveat_zh: "剔除能源、食品、烟酒的核心HICP年通胀率。"
+
+  - id: hicp_services_inflation
+    section: prices_costs
+    label_en: "HICP Services Inflation, YoY"
+    label_zh: "服务业HICP通胀同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "prc_hicp_manr"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      coicop: "SERV"
+      unit: "RCH_A"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr"
+    frequency: "monthly"
+    start_date: "2000"
+    caveat_en: "HICP services component annual rate of change."
+    caveat_zh: "服务业HICP分项年通胀率。"
+
+  - id: hicp_energy_inflation
+    section: prices_costs
+    label_en: "HICP Energy Inflation, YoY"
+    label_zh: "能源HICP通胀同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "prc_hicp_manr"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      coicop: "NRG"
+      unit: "RCH_A"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr"
+    frequency: "monthly"
+    start_date: "2000"
+    caveat_en: "HICP energy component annual rate of change."
+    caveat_zh: "能源HICP分项年通胀率。"
+
+  - id: hicp_food_inflation
+    section: prices_costs
+    label_en: "HICP Food, Alcohol & Tobacco Inflation, YoY"
+    label_zh: "食品烟酒HICP通胀同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "prc_hicp_manr"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      coicop: "FOOD"
+      unit: "RCH_A"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr"
+    frequency: "monthly"
+    start_date: "2000"
+    caveat_en: "HICP food, alcohol and tobacco component annual rate of change."
+    caveat_zh: "食品、烟酒HICP分项年通胀率。"
+
+  - id: ppi_yoy
+    section: prices_costs
+    label_en: "Producer Price Index (PPI), YoY"
+    label_zh: "工业生产者出厂价格(PPI)同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "sts_inpp_m"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      indic_bt: "PRC_PRR"
+      nace_r2: "B-E36"
+      s_adj: "NSA"
+      unit: "PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/sts_inpp_m"
+    frequency: "monthly"
+    start_date: "2001"
+    caveat_en: "Industrial producer prices domestic market y/y (total industry excluding construction)."
+    caveat_zh: "工业生产者出厂价格国内市场同比（工业总体剔除建筑业）。"
+
+  - id: spf_inflation_expectations_lt
+    section: prices_costs
+    label_en: "SPF Longer-Term Inflation Expectations"
+    label_zh: "SPF长期通胀预期均值"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "SPF"
+    series: "Q.U2.HICP.POINT.LT.Q.AVG"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/SPF"
+    frequency: "quarterly"
+    start_date: "1999-01-01"
+    caveat_en: "ECB Survey of Professional Forecasters: average longer-term HICP inflation point forecast."
+    caveat_zh: "欧洲央行专业预测机构调查(SPF)：长期HICP通胀点预测均值。"
+
+  - id: consumer_inflation_expectations_12m
+    section: prices_costs
+    label_en: "CES Consumer 12M Inflation Expectations"
+    label_zh: "CES消费者未来12个月通胀预期中位数"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "CES"
+    series: "M.Z18.ALL.T.C1120.NUM_VAR.WM"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/CES"
+    frequency: "monthly"
+    start_date: "2022-04-01"
+    caveat_en: "ECB Consumer Expectations Survey (CES): weighted median 12-month ahead perceived inflation expectation."
+    caveat_zh: "欧洲央行消费者预期调查(CES)：加权中位数未来12个月预期通胀率。"
+
+  # --- housing_investment --------------------------------------------------
+  - id: house_price_yoy
+    section: housing_investment
+    label_en: "House Price Index Growth, YoY"
+    label_zh: "房价指数同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "prc_hpi_q"
+    filters:
+      freq: "Q"
+      geo: "EA"
+      purchase: "TOTAL"
+      unit: "RCH_A"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hpi_q"
+    frequency: "quarterly"
+    start_date: "2006"
+    caveat_en: "Harmonised house price index annual rate of change; all dwellings."
+    caveat_zh: "调和房价指数年变动率；全部住宅口径。"
+
+  - id: mortgage_rate
+    section: housing_investment
+    label_en: "Cost of Borrowing for House Purchase"
+    label_zh: "居民住房抵押贷款综合成本"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "MIR"
+    series: "M.U2.B.A2C.AM.R.A.2250.EUR.N"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/MIR"
+    frequency: "monthly"
+    start_date: "2003-01-01"
+    caveat_en: "Composite cost of borrowing for households for house purchase (annualised agreed rate %)."
+    caveat_zh: "居民购房借贷综合成本（年化协议利率百分比）。"
+
+  - id: building_permits_yoy
+    section: housing_investment
+    label_en: "Residential Building Permits Growth, YoY"
+    label_zh: "住宅建筑许可面积同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "sts_cobp_m"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      cpa2_1: "CPA_F41001_41002"
+      indic_bt: "BPRM_SQM"
+      s_adj: "NSA"
+      unit: "PCH_SM"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/sts_cobp_m"
+    frequency: "monthly"
+    start_date: "2005"
+    caveat_en: "Building permits for residential buildings (useful floor area sqm) percentage change y/y."
+    caveat_zh: "住宅建筑许可使用面积同比变动百分比。"
+
+  # --- external_fx ---------------------------------------------------------
+  - id: goods_trade_balance
+    section: external_fx
+    label_en: "Extra-Euro Area Goods Trade Balance"
+    label_zh: "欧元区对外货物贸易差额"
+    unit: "EUR mn"
+    fetcher: eurostat_jsonstat
+    dataset: "ei_etea_m"
+    filters:
+      freq: "M"
+      geo: "EA21"
+      partner: "EXT_EA21"
+      stk_flow: "BAL_RT"
+      indic: "ET-T"
+      unit: "MIO-EUR-SA"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_etea_m"
+    frequency: "monthly"
+    start_date: "2002"
+    caveat_en: "Euro area international trade in goods balance with rest of world; seasonally adjusted (million EUR)."
+    caveat_zh: "欧元区对外部世界货物贸易差额；季调口径（百万欧元）。"
+
+  - id: current_account_gdp
+    section: external_fx
+    label_en: "Current Account Balance"
+    label_zh: "经常账户差额占GDP比重"
+    unit: "% of GDP"
+    fetcher: eurostat_jsonstat
+    dataset: "bop_gdp6_q"
+    filters:
+      freq: "Q"
+      geo: "EA20"
+      partner: "EXT_EA20"
+      bop_item: "CA"
+      stk_flow: "BAL"
+      unit: "PC_GDP"
+      s_adj: "SCA"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/bop_gdp6_q"
+    frequency: "quarterly"
+    start_date: "2013"
+    caveat_en: "Current account balance as percentage of GDP; seasonally and calendar adjusted (BPM6)."
+    caveat_zh: "经常账户差额占GDP比重；经季节与工作日调整 (BPM6口径)。"
+
+  - id: eur_usd
+    section: external_fx
+    label_en: "EUR / USD Reference Rate"
+    label_zh: "欧元兑美元官方参考汇率"
+    unit: "USD"
+    fetcher: ecb_sdmx
+    flow: "EXR"
+    series: "D.USD.EUR.SP00.A"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/EXR"
+    frequency: "daily"
+    start_date: "1999-01-01"
+    caveat_en: "Euro / US dollar ECB daily reference exchange rate."
+    caveat_zh: "欧洲央行每日公布的欧元兑美元官方参考汇率。"
+
+  - id: neer_eer41
+    section: external_fx
+    label_en: "Euro Nominal Effective Exchange Rate (EER-40)"
+    label_zh: "欧元名义有效汇率 (EER-40)"
+    unit: "index"
+    fetcher: ecb_sdmx
+    flow: "EXR"
+    series: "M.E03.EUR.EN00.A"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/EXR"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Euro nominal effective exchange rate index against 40 trading partners (monthly average, 1999Q1=100)."
+    caveat_zh: "对40个主要贸易伙伴的欧元名义有效汇率指数（月度均值，1999Q1=100）。"
+
+  - id: reer
+    section: external_fx
+    label_en: "Euro Real Effective Exchange Rate (BIS)"
+    label_zh: "欧元实际有效汇率 (BIS)"
+    unit: "index"
+    fetcher: fred
+    series: "RBXMBIS"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/RBXMBIS"
+    frequency: "monthly"
+    start_date: "1994-01-01"
+    caveat_en: "Real effective exchange rate for the euro area (broad basket, CPI-based; 2020=100)."
+    caveat_zh: "欧元区实际有效汇率（BIS广义一篮子，基于CPI；2020=100）。"
+
+  # --- fiscal_sovereign ----------------------------------------------------
+  - id: fiscal_balance_gdp
+    section: fiscal_sovereign
+    label_en: "General Government Deficit (-) / Surplus (+)"
+    label_zh: "广义政府财政赤字/盈余占GDP比重"
+    unit: "% of GDP"
+    fetcher: eurostat_jsonstat
+    dataset: "gov_10dd_edpt1"
+    filters:
+      freq: "A"
+      geo: "EA20"
+      sector: "S13"
+      na_item: "B9"
+      unit: "PC_GDP"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/gov_10dd_edpt1"
+    frequency: "annual"
+    start_date: "1995"
+    caveat_en: "General government net lending (+) / net borrowing (-) as % of GDP (EDP notification)."
+    caveat_zh: "广义政府净借出(+)/净借入(-)占GDP比重（过度赤字程序EDP通报口径）。"
+
+  - id: government_debt_gdp
+    section: fiscal_sovereign
+    label_en: "General Government Consolidated Gross Debt"
+    label_zh: "广义政府合并总债务占GDP比重"
+    unit: "% of GDP"
+    fetcher: eurostat_jsonstat
+    dataset: "gov_10q_ggdebt"
+    filters:
+      freq: "Q"
+      geo: "EA20"
+      sector: "S13"
+      na_item: "GD"
+      unit: "PC_GDP"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/gov_10q_ggdebt"
+    frequency: "quarterly"
+    start_date: "2000"
+    caveat_en: "Government consolidated gross debt as % of GDP (Maastricht definition)."
+    caveat_zh: "广义政府合并总债务占GDP比重（马斯特里赫特定义口径）。"
+
+  - id: structural_balance_gdp
+    section: fiscal_sovereign
+    label_en: "Structural Fiscal Balance"
+    label_zh: "结构性财政余额占潜在GDP比重"
+    unit: "% of potential GDP"
+    fetcher: imf_datamapper
+    series: "GGCB_G01_PGDP_PT/EURO"
+    source_name: "IMF DataMapper"
+    source_url: "https://www.imf.org/external/datamapper/GGCB_G01_PGDP_PT/EURO"
+    frequency: "annual"
+    start_date: "1995"
+    caveat_en: "Cyclically adjusted government balance as % of potential GDP (IMF WEO estimate & projection)."
+    caveat_zh: "经周期调整的政府财政余额占潜在GDP比重（IMF WEO估算与预测）。"
+
+  - id: aaa_yield_10y
+    section: fiscal_sovereign
+    label_en: "Euro Area AAA Benchmark 10Y Yield"
+    label_zh: "欧元区AAA级基准10年期国债收益率"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "YC"
+    series: "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_10Y"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/YC"
+    frequency: "daily"
+    start_date: "2004-09-01"
+    caveat_en: "Euro area central government AAA 10-year spot rate yield."
+    caveat_zh: "欧元区中央政府AAA级10年期即期收益率。"
+
+  - id: aaa_yield_2y
+    section: fiscal_sovereign
+    label_en: "Euro Area AAA Benchmark 2Y Yield"
+    label_zh: "欧元区AAA级基准2年期国债收益率"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "YC"
+    series: "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_2Y"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/YC"
+    frequency: "daily"
+    start_date: "2004-09-01"
+    caveat_en: "Euro area central government AAA 2-year spot rate yield."
+    caveat_zh: "欧元区中央政府AAA级2年期即期收益率。"
+
+  - id: yield_curve_slope
+    section: fiscal_sovereign
+    label_en: "AAA Yield Curve Slope (10Y - 2Y)"
+    label_zh: "AAA级收益率曲线斜率 (10年 - 2年)"
+    unit: "bps"
+    fetcher: spread
+    factor: 100
+    primary:
+      fetcher: ecb_sdmx
+      flow: YC
+      series: "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_10Y"
+    secondary:
+      fetcher: ecb_sdmx
+      flow: YC
+      series: "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_2Y"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/YC"
+    frequency: "daily"
+    start_date: "2004-09-01"
+    caveat_en: "Difference between AAA 10-year and 2-year spot rates in basis points (10Y minus 2Y)."
+    caveat_zh: "AAA级10年期与2年期即期收益率利差，以基点(bps)计。"
+
+  - id: irs_10y_de
+    section: fiscal_sovereign
+    label_en: "Germany 10Y Benchmark Sovereign Yield (Bund)"
+    label_zh: "德国10年期基准国债收益率 (Bund)"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "IRS"
+    series: "M.DE.L.L40.CI.0000.EUR.N.Z"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/IRS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Germany 10-year benchmark government bond yield for Maastricht convergence purposes."
+    caveat_zh: "用于马斯特里赫特趋同标准的德国10年期基准国债收益率。"
+
+  # --- fragmentation -------------------------------------------------------
+  - id: irs_10y_it
+    section: fragmentation
+    label_en: "Italy 10Y Benchmark Sovereign Yield (BTP)"
+    label_zh: "意大利10年期基准国债收益率 (BTP)"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "IRS"
+    series: "M.IT.L.L40.CI.0000.EUR.N.Z"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/IRS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Italy 10-year benchmark government bond yield for Maastricht convergence purposes."
+    caveat_zh: "用于马斯特里赫特趋同标准的意大利10年期基准国债收益率。"
+
+  - id: irs_10y_fr
+    section: fragmentation
+    label_en: "France 10Y Benchmark Sovereign Yield (OAT)"
+    label_zh: "法国10年期基准国债收益率 (OAT)"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "IRS"
+    series: "M.FR.L.L40.CI.0000.EUR.N.Z"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/IRS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "France 10-year benchmark government bond yield for Maastricht convergence purposes."
+    caveat_zh: "用于马斯特里赫特趋同标准的法国10年期基准国债收益率。"
+
+  - id: irs_10y_es
+    section: fragmentation
+    label_en: "Spain 10Y Benchmark Sovereign Yield (Bonos)"
+    label_zh: "西班牙10年期基准国债收益率 (Bonos)"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "IRS"
+    series: "M.ES.L.L40.CI.0000.EUR.N.Z"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/IRS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Spain 10-year benchmark government bond yield for Maastricht convergence purposes."
+    caveat_zh: "用于马斯特里赫特趋同标准的西班牙10年期基准国债收益率。"
+
+  - id: irs_10y_gr
+    section: fragmentation
+    label_en: "Greece 10Y Benchmark Sovereign Yield (GGB)"
+    label_zh: "希腊10年期基准国债收益率 (GGB)"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "IRS"
+    series: "M.GR.L.L40.CI.0000.EUR.N.Z"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/IRS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Greece 10-year benchmark government bond yield for Maastricht convergence purposes."
+    caveat_zh: "用于马斯特里赫特趋同标准的希腊10年期基准国债收益率。"
+
+  - id: it_de_spread_10y
+    section: fragmentation
+    label_en: "Italy-Germany 10Y Sovereign Spread (BTP-Bund)"
+    label_zh: "意大利-德国10年期国债利差 (BTP-Bund)"
+    unit: "bps"
+    fetcher: spread
+    factor: 100
+    primary:
+      fetcher: ecb_sdmx
+      flow: IRS
+      series: "M.IT.L.L40.CI.0000.EUR.N.Z"
+    secondary:
+      fetcher: ecb_sdmx
+      flow: IRS
+      series: "M.DE.L.L40.CI.0000.EUR.N.Z"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/IRS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "10-year Italian government bond yield minus German Bund yield, in basis points."
+    caveat_zh: "意大利10年期国债收益率减德国国债收益率之差，以基点(bps)计。"
+
+  - id: fr_de_spread_10y
+    section: fragmentation
+    label_en: "France-Germany 10Y Sovereign Spread (OAT-Bund)"
+    label_zh: "法国-德国10年期国债利差 (OAT-Bund)"
+    unit: "bps"
+    fetcher: spread
+    factor: 100
+    primary:
+      fetcher: ecb_sdmx
+      flow: IRS
+      series: "M.FR.L.L40.CI.0000.EUR.N.Z"
+    secondary:
+      fetcher: ecb_sdmx
+      flow: IRS
+      series: "M.DE.L.L40.CI.0000.EUR.N.Z"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/IRS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "10-year French government bond yield minus German Bund yield, in basis points."
+    caveat_zh: "法国10年期国债收益率减德国国债收益率之差，以基点(bps)计。"
+
+  - id: es_de_spread_10y
+    section: fragmentation
+    label_en: "Spain-Germany 10Y Sovereign Spread (Bonos-Bund)"
+    label_zh: "西班牙-德国10年期国债利差 (Bonos-Bund)"
+    unit: "bps"
+    fetcher: spread
+    factor: 100
+    primary:
+      fetcher: ecb_sdmx
+      flow: IRS
+      series: "M.ES.L.L40.CI.0000.EUR.N.Z"
+    secondary:
+      fetcher: ecb_sdmx
+      flow: IRS
+      series: "M.DE.L.L40.CI.0000.EUR.N.Z"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/IRS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "10-year Spanish government bond yield minus German Bund yield, in basis points."
+    caveat_zh: "西班牙10年期国债收益率减德国国债收益率之差，以基点(bps)计。"
+
+  - id: gr_de_spread_10y
+    section: fragmentation
+    label_en: "Greece-Germany 10Y Sovereign Spread (GGB-Bund)"
+    label_zh: "希腊-德国10年期国债利差 (GGB-Bund)"
+    unit: "bps"
+    fetcher: spread
+    factor: 100
+    primary:
+      fetcher: ecb_sdmx
+      flow: IRS
+      series: "M.GR.L.L40.CI.0000.EUR.N.Z"
+    secondary:
+      fetcher: ecb_sdmx
+      flow: IRS
+      series: "M.DE.L.L40.CI.0000.EUR.N.Z"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/IRS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "10-year Greek government bond yield minus German Bund yield, in basis points."
+    caveat_zh: "希腊10年期国债收益率减德国国债收益率之差，以基点(bps)计。"
+
+  - id: ciss
+    section: fragmentation
+    label_en: "Composite Indicator of Systemic Stress (CISS)"
+    label_zh: "系统性压力综合指标 (CISS)"
+    unit: "index [0,1]"
+    fetcher: ecb_sdmx
+    flow: "CISS"
+    series: "D.U2.Z0Z.4F.EC.SS_CIN.IDX"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/CISS"
+    frequency: "daily"
+    start_date: "1999-01-01"
+    caveat_en: "ECB Composite Indicator of Systemic Stress across equity, bond, money, and FX markets."
+    caveat_zh: "欧洲央行跨股票、债券、货币与外汇市场的系统性金融压力综合指标。"
+
+  - id: target2_balances_de
+    section: fragmentation
+    label_en: "Bundesbank TARGET2 Net Balance"
+    label_zh: "德国央行TARGET2净余额"
+    unit: "EUR mn"
+    fetcher: ecb_sdmx
+    flow: "TGB"
+    series: "M.DE.N.A094T.U2.EUR.A"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/TGB"
+    frequency: "monthly"
+    start_date: "2001-01-01"
+    caveat_en: "Deutsche Bundesbank TARGET2 net claims on the Eurosystem (average of period, million EUR)."
+    caveat_zh: "德国联邦银行对欧元系统的TARGET2净债权（期均值，百万欧元）。"
+
+  - id: target2_balances_it
+    section: fragmentation
+    label_en: "Banca d'Italia TARGET2 Net Balance"
+    label_zh: "意大利央行TARGET2净余额"
+    unit: "EUR mn"
+    fetcher: ecb_sdmx
+    flow: "TGB"
+    series: "M.IT.N.A094T.U2.EUR.A"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/TGB"
+    frequency: "monthly"
+    start_date: "2001-01-01"
+    caveat_en: "Banca d'Italia TARGET2 net liabilities to the Eurosystem (average of period, million EUR)."
+    caveat_zh: "意大利央行对欧元系统的TARGET2净负债（期均值，百万欧元）。"
+
+  # --- monetary_financial --------------------------------------------------
+  - id: policy_rate
+    section: monetary_financial
+    label_en: "ECB Deposit Facility Rate (DFR)"
+    label_zh: "欧洲央行存款便利利率 (DFR)"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "FM"
+    series: "D.U2.EUR.4F.KR.DFR.LEV"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/FM"
+    frequency: "daily"
+    start_date: "1999-01-01"
+    caveat_en: "ECB Deposit Facility Rate (DFR); primary operational target rate for monetary policy."
+    caveat_zh: "欧洲央行存款便利利率(DFR)；货币政策的核心操作目标利率。"
+
+  - id: estr
+    section: monetary_financial
+    label_en: "Euro Short-Term Rate (€STR)"
+    label_zh: "欧元短期基准利率 (€STR)"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "EST"
+    series: "B.EU000A2X2A25.WT"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/EST"
+    frequency: "daily"
+    start_date: "2019-10-01"
+    caveat_en: "Euro short-term rate (€STR) volume-weighted trimmed mean; daily business day."
+    caveat_zh: "欧元短期利率(€STR)成交量加权截尾均值；每日公布。"
+
+  - id: m3_growth
+    section: monetary_financial
+    label_en: "Broad Monetary Aggregate M3 Growth, YoY"
+    label_zh: "广义货币M3同比增速"
+    unit: "% y/y"
+    fetcher: ecb_sdmx
+    flow: "BSI"
+    series: "M.U2.Y.V.M30.X.I.U2.2300.Z01.A"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/BSI"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Broad monetary aggregate M3 annual growth rate (%)."
+    caveat_zh: "广义货币总计数M3年增长率(%)。"
+
+  - id: nfc_loan_growth
+    section: monetary_financial
+    label_en: "Adjusted Loans to NFCs Growth, YoY"
+    label_zh: "经调整非金融企业贷款同比增速"
+    unit: "% y/y"
+    fetcher: ecb_sdmx
+    flow: "BSI"
+    series: "M.U2.Y.U.A20T.A.I.U2.2240.Z01.A"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/BSI"
+    frequency: "monthly"
+    start_date: "2004-01-01"
+    caveat_en: "Adjusted loans to non-financial corporations annual growth rate (%)."
+    caveat_zh: "经贷款销售与证券化调整的非金融企业贷款年增长率(%)。"
+
+  - id: household_loan_growth
+    section: monetary_financial
+    label_en: "Adjusted Loans to Households Growth, YoY"
+    label_zh: "经调整居民部门贷款同比增速"
+    unit: "% y/y"
+    fetcher: ecb_sdmx
+    flow: "BSI"
+    series: "M.U2.Y.U.A20T.A.I.U2.2250.Z01.A"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/BSI"
+    frequency: "monthly"
+    start_date: "2004-01-01"
+    caveat_en: "Adjusted loans to households annual growth rate (%)."
+    caveat_zh: "经贷款销售与证券化调整的居民部门贷款年增长率(%)。"
+
+  - id: nfc_cost_of_borrowing
+    section: monetary_financial
+    label_en: "NFC Cost of Borrowing"
+    label_zh: "非金融企业综合借贷成本"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "MIR"
+    series: "M.U2.B.A2I.AM.R.A.2240.EUR.N"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/MIR"
+    frequency: "monthly"
+    start_date: "2003-01-01"
+    caveat_en: "Composite cost of borrowing for non-financial corporations (annualised agreed rate %)."
+    caveat_zh: "非金融企业综合借贷成本（年化协议利率百分比）。"
+
+  - id: eurosystem_total_assets
+    section: monetary_financial
+    label_en: "Eurosystem Total Assets"
+    label_zh: "欧元系统资产负债表总规模"
+    unit: "EUR mn"
+    fetcher: ecb_sdmx
+    flow: "ILM"
+    series: "W.U2.C.T000000.Z5.Z01"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/ILM"
+    frequency: "weekly"
+    start_date: "2000-01-01"
+    caveat_en: "Eurosystem consolidated balance sheet total assets/liabilities (million EUR, weekly)."
+    caveat_zh: "欧元系统合并资产负债表总规模（百万欧元，周度口径）。"
+
+  - id: bls_credit_standards_nfc
+    section: monetary_financial
+    label_en: "BLS Bank Credit Standards (NFC Loans)"
+    label_zh: "银行信贷调查(BLS)企业贷款审批标准"
+    unit: "net %"
+    fetcher: ecb_sdmx
+    flow: "BLS"
+    series: "Q.U2.ALL.O.E.Z.B3.ST.S.WFNET"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/BLS"
+    frequency: "quarterly"
+    start_date: "2003-01-01"
+    caveat_en: "ECB Bank Lending Survey: net percentage of banks tightening credit standards for loans to enterprises."
+    caveat_zh: "欧洲央行银行借贷调查(BLS)：收紧企业贷款审批标准的银行净百分比。"
+
+  # --- stability_structural ------------------------------------------------
+  - id: bank_cet1_ratio
+    section: stability_structural
+    label_en: "Significant Institutions CET1 Ratio"
+    label_zh: "主要监管银行核心一级资本充足率 (CET1)"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "SUP"
+    series: "Q.B01.W0._Z.I4008._T.SII._Z._Z._Z.PCT.C"
+    source_name: "ECB Banking Supervision"
+    source_url: "https://data.ecb.europa.eu/data/datasets/SUP"
+    frequency: "quarterly"
+    start_date: "2015-01-01"
+    caveat_en: "ECB Supervisory Banking Statistics: CET1 ratio for Significant Institutions under Single Supervisory Mechanism."
+    caveat_zh: "欧洲央行银行业监管统计：单一监管机制(SSM)下主要机构核心一级资本充足率。"
+
+  - id: bank_npl_ratio
+    section: stability_structural
+    label_en: "Significant Institutions NPL Ratio"
+    label_zh: "主要监管银行不良贷款率 (NPL)"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "SUP"
+    series: "Q.B01.W0._Z.I7000._T.SII._Z._Z._Z.PCT.C"
+    source_name: "ECB Banking Supervision"
+    source_url: "https://data.ecb.europa.eu/data/datasets/SUP"
+    frequency: "quarterly"
+    start_date: "2015-01-01"
+    caveat_en: "ECB Supervisory Banking Statistics: Non-performing loans ratio (including cash balances) for Significant Institutions."
+    caveat_zh: "欧洲央行银行业监管统计：单一监管机制(SSM)下主要机构不良贷款率（含现金余额）。"
+
+  - id: household_debt_gdp
+    section: stability_structural
+    label_en: "Household Debt to GDP"
+    label_zh: "居民部门债务占GDP比重"
+    unit: "% of GDP"
+    fetcher: fred
+    series: "QXMHAM770A"
+    source_name: "FRED / BIS"
+    source_url: "https://fred.stlouisfed.org/series/QXMHAM770A"
+    frequency: "quarterly"
+    start_date: "1999-01-01"
+    caveat_en: "Credit to households and NPISHs from all sectors at market value as percentage of GDP."
+    caveat_zh: "来自所有部门的住户及为住户服务的非营利机构信贷占GDP比重（按市值计）。"
+
+data_gaps:
+  - section: production_cycle
+    item_en: "HCOB Eurozone Manufacturing and Services Flash PMIs"
+    item_zh: "HCOB欧元区制造业与服务业初值PMI"
+    status_en: "Compiled by S&P Global under commercial license; proprietary data vendor series with no key-free redistributable API."
+    status_zh: "由标普全球(S&P Global)商业授权编制；属于专有数据供应商序列，无免密钥可再分发API。"
+
+  - section: production_cycle
+    item_en: "Sentix Economic Index and ZEW Financial Market Survey for Euro Area"
+    item_zh: "Sentix经济指数与ZEW欧元区金融市场调查"
+    status_en: "Proprietary investor sentiment surveys published by Sentix GmbH and ZEW Mannheim without a key-free machine-readable public API."
+    status_zh: "由Sentix与曼海姆ZEW编制的专有投资者情绪调查，无免密钥机读公开API。"
+
+  - section: prices_costs
+    item_en: "5y5y forward inflation-linked swap rate (5y5y ILS)"
+    item_zh: "5年/5年期远期通胀互换利率 (5y5y ILS)"
+    status_en: "Market-based inflation expectation gauge referenced by the ECB Governing Council; traded OTC and vendor-controlled (Bloomberg/LSEG), not disseminated via ECB SDMX."
+    status_zh: "欧央行管委会密切关注的市场化通胀预期指标；在场外市场(OTC)交易并由彭博/路孚特等专有终端控制，未在ECB SDMX公开分发。"
+
+  - section: prices_costs
+    item_en: "Dutch TTF natural gas front-month benchmark futures"
+    item_zh: "荷兰TTF天然气近月基准期货"
+    status_en: "ICE Endex exchange traded energy benchmark; critical European energy cost variable but exchange-licensed without a redistributable public API."
+    status_zh: "ICE Endex交易所上市的欧洲基准天然气期货；为欧洲关键能源成本变量，但属交易所专有数据，无公开再分发接口。"
+
+  - section: monetary_financial
+    item_en: "Euro Stoxx 50 equity index and equity market valuation"
+    item_zh: "Euro Stoxx 50股票指数与股市估值"
+    status_en: "STOXX Ltd benchmark index licensed through data vendors; no redistributable public timeseries endpoint available."
+    status_zh: "由STOXX Ltd授权的基准指数，需商业数据供应商接口；无公开可再分发的时间序列接口。"

@@ -5,47 +5,47 @@ pillars:
     order: 1
     priority_weight: 5
     title_en: Growth & Domestic Demand
-    title_zh: "\u589E\u957F\u4E0E\u5185\u9700"
+    title_zh: 增长与内需
   production_cycle:
     order: 2
     priority_weight: 4
     title_en: Production & Business Cycle
-    title_zh: "\u751F\u4EA7\u4E0E\u5546\u4E1A\u5468\u671F"
+    title_zh: 生产与商业周期
   labour_household:
     order: 3
     priority_weight: 4
     title_en: Labour & Household Income
-    title_zh: "\u52B3\u52A8\u529B\u4E0E\u5C45\u6C11\u6536\u5165"
+    title_zh: 劳动力与居民收入
   prices_costs:
     order: 4
     priority_weight: 5
     title_en: Prices, Wages & Costs
-    title_zh: "\u4EF7\u683C\u3001\u5DE5\u8D44\u4E0E\u6210\u672C"
+    title_zh: 价格、工资与成本
   housing_investment:
     order: 5
     priority_weight: 3
     title_en: Housing & Investment
-    title_zh: "\u623F\u5730\u4EA7\u4E0E\u6295\u8D44"
+    title_zh: 房地产与投资
   external_fx:
     order: 6
     priority_weight: 4
     title_en: External Balance & FX
-    title_zh: "\u5916\u90E8\u5E73\u8861\u4E0E\u6C47\u7387"
+    title_zh: 外部平衡与汇率
   fiscal_sovereign:
     order: 7
     priority_weight: 3
     title_en: Fiscal & Sovereign
-    title_zh: "\u8D22\u653F\u4E0E\u4E3B\u6743"
+    title_zh: 财政与主权
   monetary_financial:
     order: 8
     priority_weight: 5
     title_en: Monetary, Credit & Financial Conditions
-    title_zh: "\u8D27\u5E01\u3001\u4FE1\u7528\u4E0E\u91D1\u878D\u6761\u4EF6"
+    title_zh: 货币、信用与金融条件
   stability_structural:
     order: 9
     priority_weight: 2
     title_en: Financial Stability & Structural Risk
-    title_zh: "\u91D1\u878D\u7A33\u5B9A\u4E0E\u7ED3\u6784\u6027\u98CE\u9669"
+    title_zh: 金融稳定与结构性风险
 legacy_aliases:
   manufacturing_pmi: industry_confidence
   oecd_cli: employment_expectations
@@ -58,7 +58,7 @@ concepts:
 - id: real_gdp_growth_qoq
   pillar: growth_demand
   label_en: Real GDP Growth, QoQ
-  label_zh: "\u5B9E\u9645GDP\u73AF\u6BD4"
+  label_zh: 实际GDP环比
   unit: percent
   mappings:
     CEE:
@@ -72,10 +72,12 @@ concepts:
     - real_gdp_growth
     ZA:
     - real_gdp_growth
+    EA:
+    - real_gdp_growth
 - id: real_gdp_growth_yoy
   pillar: growth_demand
   label_en: Real GDP Growth, YoY
-  label_zh: "\u5B9E\u9645GDP\u540C\u6BD4"
+  label_zh: 实际GDP同比
   unit: percent
   mappings:
     CEE:
@@ -88,10 +90,12 @@ concepts:
     - real_gdp_yoy
     ZA:
     - real_gdp_yoy
+    EA:
+    - real_gdp_yoy
 - id: nominal_gdp_growth
   pillar: growth_demand
   label_en: Nominal GDP Growth
-  label_zh: "\u540D\u4E49GDP\u589E\u901F"
+  label_zh: 名义GDP增速
   unit: percent
   mappings:
     CN:
@@ -104,10 +108,11 @@ concepts:
     - nominal_gdp_growth
     ZA:
     - nominal_gdp_growth
+    EA: []
 - id: consumption_growth
   pillar: growth_demand
   label_en: Household Consumption Growth
-  label_zh: "\u5C45\u6C11\u6D88\u8D39\u589E\u901F"
+  label_zh: 居民消费增速
   unit: percent
   mappings:
     CN:
@@ -118,10 +123,12 @@ concepts:
     - real_pce_growth
     JP: []
     ZA: []
+    EA:
+    - household_consumption_yoy
 - id: investment_growth
   pillar: growth_demand
   label_en: Investment Growth
-  label_zh: "\u6295\u8D44\u589E\u901F"
+  label_zh: 投资增速
   unit: percent
   mappings:
     CEE:
@@ -136,10 +143,12 @@ concepts:
     - gfcf_growth
     ZA:
     - gfcf_growth
+    EA:
+    - gfcf_yoy
 - id: industrial_production_growth
   pillar: production_cycle
   label_en: Industrial Production Growth
-  label_zh: "\u5DE5\u4E1A\u751F\u4EA7\u589E\u901F"
+  label_zh: 工业生产增速
   unit: percent
   mappings:
     CEE:
@@ -155,10 +164,12 @@ concepts:
     - manufacturing_production_growth
     ZA:
     - manufacturing_production_growth
+    EA:
+    - industrial_production_yoy
 - id: retail_sales_growth
   pillar: production_cycle
   label_en: Retail Sales Growth
-  label_zh: "\u96F6\u552E\u9500\u552E\u589E\u901F"
+  label_zh: 零售销售增速
   unit: percent
   mappings:
     CEE:
@@ -173,10 +184,12 @@ concepts:
     - retail_sales_growth
     ZA:
     - retail_sales_growth
+    EA:
+    - retail_sales_volume_yoy
 - id: business_confidence
   pillar: production_cycle
   label_en: Business Confidence
-  label_zh: "\u4F01\u4E1A\u4FE1\u5FC3"
+  label_zh: 企业信心
   unit: index
   mappings:
     CEE:
@@ -195,10 +208,13 @@ concepts:
     - composite_leading_indicator
     ZA:
     - composite_leading_indicator
+    EA:
+    - economic_sentiment
+    - industry_confidence
 - id: unemployment_rate
   pillar: labour_household
   label_en: Unemployment Rate
-  label_zh: "\u5931\u4E1A\u7387"
+  label_zh: 失业率
   unit: percent
   mappings:
     CEE:
@@ -213,10 +229,12 @@ concepts:
     - unemployment_rate
     ZA:
     - unemployment_rate
+    EA:
+    - unemployment_rate
 - id: employment_growth
   pillar: labour_household
   label_en: Employment Growth
-  label_zh: "\u5C31\u4E1A\u589E\u901F"
+  label_zh: 就业增速
   unit: percent
   mappings:
     CEE:
@@ -229,10 +247,12 @@ concepts:
     - employment_growth
     ZA:
     - manufacturing_employment_growth
+    EA:
+    - employment_growth
 - id: participation_rate
   pillar: labour_household
   label_en: Labour Force Participation
-  label_zh: "\u52B3\u52A8\u53C2\u4E0E\u7387"
+  label_zh: 劳动参与率
   unit: percent
   mappings:
     CEE:
@@ -244,10 +264,11 @@ concepts:
     JP:
     - participation_rate
     ZA: []
+    EA: []
 - id: vacancies
   pillar: labour_household
   label_en: Labour Demand / Vacancies
-  label_zh: "\u52B3\u52A8\u529B\u9700\u6C42\u4E0E\u804C\u4F4D\u7A7A\u7F3A"
+  label_zh: 劳动力需求与职位空缺
   unit: mixed
   mappings:
     CEE:
@@ -259,10 +280,12 @@ concepts:
     JP:
     - job_to_applicant_ratio
     ZA: []
+    EA:
+    - job_vacancy_rate
 - id: wage_growth
   pillar: labour_household
   label_en: Wage Growth
-  label_zh: "\u5DE5\u8D44\u589E\u901F"
+  label_zh: 工资增速
   unit: percent
   mappings:
     CEE:
@@ -274,10 +297,12 @@ concepts:
     JP:
     - manufacturing_earnings_growth
     ZA: []
+    EA:
+    - negotiated_wages_yoy
 - id: real_income_growth
   pillar: labour_household
   label_en: Real Household Income Growth
-  label_zh: "\u5C45\u6C11\u5B9E\u9645\u6536\u5165\u589E\u901F"
+  label_zh: 居民实际收入增速
   unit: percent
   mappings:
     CEE:
@@ -288,10 +313,11 @@ concepts:
     - real_disposable_income_growth
     JP: []
     ZA: []
+    EA: []
 - id: headline_inflation
   pillar: prices_costs
   label_en: Headline Inflation
-  label_zh: "\u6574\u4F53\u901A\u80C0"
+  label_zh: 整体通胀
   unit: percent
   mappings:
     CEE:
@@ -307,10 +333,12 @@ concepts:
     - cpi_inflation_estat
     ZA:
     - cpi_inflation
+    EA:
+    - hicp_inflation
 - id: core_inflation
   pillar: prices_costs
   label_en: Core Inflation
-  label_zh: "\u6838\u5FC3\u901A\u80C0"
+  label_zh: 核心通胀
   unit: percent
   mappings:
     CEE:
@@ -323,10 +351,12 @@ concepts:
     - core_inflation
     - core_core_inflation
     ZA: []
+    EA:
+    - hicp_core_inflation
 - id: services_inflation
   pillar: prices_costs
   label_en: Services Inflation
-  label_zh: "\u670D\u52A1\u901A\u80C0"
+  label_zh: 服务通胀
   unit: percent
   mappings:
     CEE:
@@ -338,10 +368,12 @@ concepts:
     JP:
     - services_inflation
     ZA: []
+    EA:
+    - hicp_services_inflation
 - id: goods_inflation
   pillar: prices_costs
   label_en: Goods Inflation
-  label_zh: "\u5546\u54C1\u901A\u80C0"
+  label_zh: 商品通胀
   unit: percent
   mappings:
     CEE:
@@ -353,10 +385,11 @@ concepts:
     JP:
     - goods_inflation
     ZA: []
+    EA: []
 - id: producer_price_inflation
   pillar: prices_costs
   label_en: Producer Price Inflation
-  label_zh: "\u751F\u4EA7\u8005\u4EF7\u683C\u901A\u80C0"
+  label_zh: 生产者价格通胀
   unit: percent
   mappings:
     CEE:
@@ -371,10 +404,12 @@ concepts:
     - producer_price_inflation
     ZA:
     - ppi_inflation
+    EA:
+    - ppi_yoy
 - id: wage_cost_inflation
   pillar: prices_costs
   label_en: Labour Cost Inflation
-  label_zh: "\u52B3\u52A8\u529B\u6210\u672C\u901A\u80C0"
+  label_zh: 劳动力成本通胀
   unit: percent
   mappings:
     CEE:
@@ -385,10 +420,12 @@ concepts:
     - unit_labor_cost_growth
     JP: []
     ZA: []
+    EA:
+    - labour_cost_index_yoy
 - id: inflation_expectations
   pillar: prices_costs
   label_en: Inflation Expectations
-  label_zh: "\u901A\u80C0\u9884\u671F"
+  label_zh: 通胀预期
   unit: percent
   mappings:
     CEE:
@@ -398,10 +435,13 @@ concepts:
     - ten_year_breakeven
     JP: []
     ZA: []
+    EA:
+    - spf_inflation_expectations_lt
+    - consumer_inflation_expectations_12m
 - id: house_price_growth
   pillar: housing_investment
   label_en: House Price Growth
-  label_zh: "\u623F\u4EF7\u589E\u901F"
+  label_zh: 房价增速
   unit: percent
   mappings:
     CEE:
@@ -416,10 +456,12 @@ concepts:
     - house_price_growth
     ZA:
     - house_price_growth
+    EA:
+    - house_price_yoy
 - id: housing_activity
   pillar: housing_investment
   label_en: Housing Activity
-  label_zh: "\u623F\u5730\u4EA7\u6D3B\u52A8"
+  label_zh: 房地产活动
   unit: mixed
   mappings:
     CN:
@@ -431,10 +473,12 @@ concepts:
     JP:
     - housing_starts
     ZA: []
+    EA:
+    - building_permits_yoy
 - id: construction_activity
   pillar: housing_investment
   label_en: Construction Activity
-  label_zh: "\u5EFA\u7B51\u6D3B\u52A8"
+  label_zh: 建筑活动
   unit: percent
   mappings:
     CEE:
@@ -447,10 +491,12 @@ concepts:
     - construction_spending_growth
     JP: []
     ZA: []
+    EA:
+    - construction_output_yoy
 - id: mortgage_rate
   pillar: housing_investment
   label_en: Mortgage Rate
-  label_zh: "\u6309\u63ED\u5229\u7387"
+  label_zh: 按揭利率
   unit: percent
   mappings:
     CEE:
@@ -461,10 +507,12 @@ concepts:
     - mortgage_30y_rate
     JP: []
     ZA: []
+    EA:
+    - mortgage_rate
 - id: property_inventory
   pillar: housing_investment
   label_en: Property Inventory / Supply
-  label_zh: "\u623F\u5730\u4EA7\u5E93\u5B58\u4E0E\u4F9B\u7ED9"
+  label_zh: 房地产库存与供给
   unit: mixed
   mappings:
     US:
@@ -472,10 +520,11 @@ concepts:
     - new_home_months_supply
     JP: []
     ZA: []
+    EA: []
 - id: current_account_gdp
   pillar: external_fx
   label_en: Current Account, % GDP
-  label_zh: "\u7ECF\u5E38\u8D26\u6237\u5360GDP"
+  label_zh: 经常账户占GDP
   unit: percent_gdp
   mappings:
     CEE:
@@ -490,10 +539,12 @@ concepts:
     - current_account_gdp
     ZA:
     - current_account_gdp
+    EA:
+    - current_account_gdp
 - id: trade_balance
   pillar: external_fx
   label_en: Trade Balance
-  label_zh: "\u8D38\u6613\u5DEE\u989D"
+  label_zh: 贸易差额
   unit: currency
   mappings:
     CEE:
@@ -508,10 +559,12 @@ concepts:
     - goods_trade_balance
     ZA:
     - goods_trade_balance
+    EA:
+    - goods_trade_balance
 - id: exports_growth
   pillar: external_fx
   label_en: Exports Growth
-  label_zh: "\u51FA\u53E3\u589E\u901F"
+  label_zh: 出口增速
   unit: percent
   mappings:
     CN:
@@ -524,10 +577,12 @@ concepts:
     - goods_exports_growth
     ZA:
     - goods_exports_growth
+    EA:
+    - exports_volume_yoy
 - id: imports_growth
   pillar: external_fx
   label_en: Imports Growth
-  label_zh: "\u8FDB\u53E3\u589E\u901F"
+  label_zh: 进口增速
   unit: percent
   mappings:
     CN:
@@ -540,10 +595,12 @@ concepts:
     - goods_imports_growth
     ZA:
     - goods_imports_growth
+    EA:
+    - imports_volume_yoy
 - id: fx_spot
   pillar: external_fx
   label_en: Spot Exchange Rate
-  label_zh: "\u5373\u671F\u6C47\u7387"
+  label_zh: 即期汇率
   unit: fx
   mappings:
     CEE:
@@ -558,10 +615,12 @@ concepts:
     - usd_jpy
     ZA:
     - zar_usd
+    EA:
+    - eur_usd
 - id: reer
   pillar: external_fx
   label_en: Real Effective Exchange Rate
-  label_zh: "\u5B9E\u9645\u6709\u6548\u6C47\u7387"
+  label_zh: 实际有效汇率
   unit: index
   mappings:
     CEE:
@@ -576,10 +635,13 @@ concepts:
     - reer
     ZA:
     - reer
+    EA:
+    - reer
+    - neer_eer41
 - id: fiscal_balance_gdp
   pillar: fiscal_sovereign
   label_en: Fiscal Balance, % GDP
-  label_zh: "\u8D22\u653F\u4F59\u989D\u5360GDP"
+  label_zh: 财政余额占GDP
   unit: percent_gdp
   mappings:
     CEE:
@@ -594,10 +656,12 @@ concepts:
     - fiscal_balance_gdp
     ZA:
     - fiscal_balance_gdp
+    EA:
+    - fiscal_balance_gdp
 - id: primary_balance_gdp
   pillar: fiscal_sovereign
   label_en: Primary Balance, % GDP
-  label_zh: "\u521D\u7EA7\u8D22\u653F\u4F59\u989D\u5360GDP"
+  label_zh: 初级财政余额占GDP
   unit: percent_gdp
   mappings:
     CEE:
@@ -606,10 +670,12 @@ concepts:
     - primary_balance_gdp
     ZA:
     - primary_balance_gdp
+    EA:
+    - structural_balance_gdp
 - id: government_debt_gdp
   pillar: fiscal_sovereign
   label_en: Government Debt, % GDP
-  label_zh: "\u653F\u5E9C\u503A\u52A1\u5360GDP"
+  label_zh: 政府债务占GDP
   unit: percent_gdp
   mappings:
     CEE:
@@ -624,10 +690,12 @@ concepts:
     - government_debt_gdp
     ZA:
     - government_debt_gdp
+    EA:
+    - government_debt_gdp
 - id: government_interest_cost
   pillar: fiscal_sovereign
   label_en: Government Interest Cost
-  label_zh: "\u653F\u5E9C\u5229\u606F\u6210\u672C"
+  label_zh: 政府利息成本
   unit: mixed
   mappings:
     CEE:
@@ -638,10 +706,11 @@ concepts:
     - federal_interest_outlays_gdp
     JP: []
     ZA: []
+    EA: []
 - id: sovereign_yield_10y
   pillar: fiscal_sovereign
   label_en: 10Y Sovereign Yield
-  label_zh: "10\u5E74\u4E3B\u6743\u503A\u6536\u76CA\u7387"
+  label_zh: 10年主权债收益率
   unit: percent
   mappings:
     CEE:
@@ -654,10 +723,13 @@ concepts:
     - sovereign_yield_10y
     ZA:
     - sovereign_yield_10y
+    EA:
+    - aaa_yield_10y
+    - irs_10y_de
 - id: policy_rate
   pillar: monetary_financial
   label_en: Policy Rate
-  label_zh: "\u653F\u7B56\u5229\u7387"
+  label_zh: 政策利率
   unit: percent
   mappings:
     CEE:
@@ -672,20 +744,24 @@ concepts:
     - policy_rate
     ZA:
     - policy_rate
+    EA:
+    - policy_rate
+    - estr
 - id: real_policy_rate
   pillar: monetary_financial
   label_en: Real Policy Rate
-  label_zh: "\u5B9E\u9645\u653F\u7B56\u5229\u7387"
+  label_zh: 实际政策利率
   unit: percent
   mappings:
     CEE:
     - real_policy_rate
     JP: []
     ZA: []
+    EA: []
 - id: broad_money_growth
   pillar: monetary_financial
   label_en: Broad Money Growth
-  label_zh: "\u5E7F\u4E49\u8D27\u5E01\u589E\u901F"
+  label_zh: 广义货币增速
   unit: percent
   mappings:
     CEE:
@@ -700,10 +776,12 @@ concepts:
     - broad_money_growth
     ZA:
     - broad_money_growth
+    EA:
+    - m3_growth
 - id: private_credit_growth
   pillar: monetary_financial
   label_en: Private Credit Growth
-  label_zh: "\u79C1\u8425\u90E8\u95E8\u4FE1\u7528\u589E\u901F"
+  label_zh: 私营部门信用增速
   unit: percent
   mappings:
     CEE:
@@ -719,10 +797,13 @@ concepts:
     - bank_credit_gdp
     ZA:
     - private_credit_gdp
+    EA:
+    - nfc_loan_growth
+    - household_loan_growth
 - id: bank_lending_rate
   pillar: monetary_financial
   label_en: Bank Lending Rate
-  label_zh: "\u94F6\u884C\u8D37\u6B3E\u5229\u7387"
+  label_zh: 银行贷款利率
   unit: percent
   mappings:
     CEE:
@@ -734,10 +815,12 @@ concepts:
     JP: []
     ZA:
     - prime_lending_rate
+    EA:
+    - nfc_cost_of_borrowing
 - id: equity_return
   pillar: monetary_financial
   label_en: Equity Market Return
-  label_zh: "\u80A1\u7968\u5E02\u573A\u56DE\u62A5"
+  label_zh: 股票市场回报
   unit: percent
   mappings:
     CEE:
@@ -750,10 +833,11 @@ concepts:
     JP:
     - equity_index
     ZA: []
+    EA: []
 - id: yield_curve_slope
   pillar: monetary_financial
   label_en: Yield Curve Slope
-  label_zh: "\u6536\u76CA\u7387\u66F2\u7EBF\u659C\u7387"
+  label_zh: 收益率曲线斜率
   unit: basis_points
   mappings:
     CEE:
@@ -762,30 +846,35 @@ concepts:
     - yield_curve_10y2y
     JP: []
     ZA: []
+    EA:
+    - yield_curve_slope
 - id: financial_conditions
   pillar: monetary_financial
   label_en: Financial Conditions
-  label_zh: "\u91D1\u878D\u6761\u4EF6"
+  label_zh: 金融条件
   unit: index
   mappings:
     US:
     - chicago_fed_nfci
     JP: []
     ZA: []
+    EA:
+    - ciss
 - id: credit_gap
   pillar: stability_structural
   label_en: Credit-to-GDP Gap
-  label_zh: "\u4FE1\u8D37\u4E0EGDP\u7F3A\u53E3"
+  label_zh: 信贷与GDP缺口
   unit: percentage_points
   mappings:
     CEE:
     - credit_to_gdp_gap
     JP: []
     ZA: []
+    EA: []
 - id: bank_capital_ratio
   pillar: stability_structural
   label_en: Bank Capital Ratio
-  label_zh: "\u94F6\u884C\u8D44\u672C\u5145\u8DB3\u7387"
+  label_zh: 银行资本充足率
   unit: percent
   mappings:
     CEE:
@@ -794,10 +883,12 @@ concepts:
     - bank_capital_ratio
     ZA:
     - bank_capital_ratio
+    EA:
+    - bank_cet1_ratio
 - id: bank_npl_ratio
   pillar: stability_structural
   label_en: Bank NPL Ratio
-  label_zh: "\u94F6\u884C\u4E0D\u826F\u8D37\u6B3E\u7387"
+  label_zh: 银行不良贷款率
   unit: percent
   mappings:
     CEE:
@@ -805,4 +896,6 @@ concepts:
     JP:
     - bank_npl_ratio
     ZA:
+    - bank_npl_ratio
+    EA:
     - bank_npl_ratio

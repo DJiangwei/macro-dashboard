@@ -138,12 +138,18 @@ IMF_SDMX_CACHE: dict[tuple[str, str], list[dict[str, str]]] = {}
 def sdmx_period_to_date(value: str) -> str | None:
     """Normalise SDMX period notation (2026-M06, 2025-Q3, 2024) to ISO dates."""
     text = str(value or "").strip()
-    match = re.match(r"^(\d{4})-M(\d{1,2})$", text)
+    match = re.match(r"^(\d{4})-?M(\d{1,2})$", text, re.IGNORECASE)
     if match:
         return f"{int(match.group(1)):04d}-{int(match.group(2)):02d}-01"
-    match = re.match(r"^(\d{4})-Q([1-4])$", text)
+    match = re.match(r"^(\d{4})-?Q([1-4])$", text, re.IGNORECASE)
     if match:
         return f"{int(match.group(1)):04d}-{(int(match.group(2)) - 1) * 3 + 1:02d}-01"
+    match = re.match(r"^(\d{4})-?W(\d{1,2})$", text, re.IGNORECASE)
+    if match:
+        try:
+            return date.fromisocalendar(int(match.group(1)), int(match.group(2)), 1).isoformat()
+        except ValueError:
+            return date.fromisocalendar(int(match.group(1)), 52, 7).isoformat()
     match = re.match(r"^(\d{4})-(\d{2})$", text)
     if match:
         return f"{match.group(1)}-{match.group(2)}-01"
@@ -218,17 +224,31 @@ def fetch_imf_sdmx(session: requests.Session, spec: dict[str, Any]) -> dict[str,
     }
 
 
-def fetch_imf_datamapper(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
-    """Fetch one IMF WEO DataMapper indicator for a single ISO3 country."""
-    code = str(spec["series"])
-    iso3 = str(spec.get("country_iso3") or "JPN")
-    url = f"{IMF_DATAMAPPER_BASE}/{code}/{iso3}"
+def fetch_imf_datamapper(session_or_spec: Any, spec: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Fetch one IMF WEO DataMapper indicator for a country or group."""
+    if spec is None:
+        session = requests.Session()
+        spec = session_or_spec
+    else:
+        session = session_or_spec
+
+    raw_series = str(spec["series"])
+    if "/" in raw_series:
+        code, country_key = raw_series.split("/", 1)
+    else:
+        code = raw_series
+        if "CHN" in str(spec.get("source_url") or "") or spec.get("country_iso3") == "CHN":
+            country_key = "CHN"
+        else:
+            country_key = str(spec.get("country_iso3") or "JPN")
+
+    url = f"{IMF_DATAMAPPER_BASE}/{code}/{country_key}"
     # imf.org answers 403 to the browser User-Agent the other endpoints require,
     # so this call deliberately sends the default requests headers.
     response = session.get(url, timeout=(5, 45))
     response.raise_for_status()
     payload = response.json()
-    country_values = ((payload.get("values") or {}).get(code) or {}).get(iso3) or {}
+    country_values = ((payload.get("values") or {}).get(code) or {}).get(country_key) or {}
     observations = [
         {"date": str(year), "value": float(value)}
         for year, value in country_values.items()
@@ -236,7 +256,7 @@ def fetch_imf_datamapper(session: requests.Session, spec: dict[str, Any]) -> dic
     ]
     observations.sort(key=lambda item: int(item["date"]))
     if not observations:
-        raise RuntimeError(f"IMF DataMapper returned no observations for {code}/{iso3}.")
+        raise RuntimeError(f"IMF DataMapper returned no observations for {code}/{country_key}.")
     return {
         **spec,
         "observations": observations,
@@ -1694,16 +1714,6 @@ def fetch_world_bank(spec: dict[str, Any]) -> dict[str, Any]:
     observations.sort(key=lambda item: item['date'])
     return {**spec, 'observations': observations, 'provider_updated': meta.get('lastupdated', ''), 'api_url': url}
 
-def fetch_imf_datamapper(spec: dict[str, Any]) -> dict[str, Any]:
-    code = spec['series']
-    url = f'https://www.imf.org/external/datamapper/api/v1/{code}/CHN'
-    response = requests.get(url, timeout=45)
-    response.raise_for_status()
-    payload = response.json()
-    country_values = ((payload.get('values') or {}).get(code) or {}).get('CHN') or {}
-    observations = [{'date': str(year), 'value': _apply_china_transform(float(value), spec.get('transform'))} for year, value in country_values.items() if value is not None and str(year).isdigit()]
-    observations.sort(key=lambda item: int(item['date']))
-    return {**spec, 'observations': observations, 'provider_updated': datetime.now(UTC).date().isoformat(), 'api_url': url}
 
 def fetch_fred_graph(spec: dict[str, Any]) -> dict[str, Any]:
     """Fetch a public FRED graph CSV without requiring a runtime API key."""
@@ -1959,3 +1969,173 @@ def fetch_sarb(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any
     if not observations:
         raise RuntimeError(f'SARB returned no observations for {code}.')
     return {**spec, 'observations': observations, 'provider_updated': observations[-1]['date'], 'api_url': url}
+
+
+ECB_SDMX_BASE = "https://data-api.ecb.europa.eu/service/data"
+EUROSTAT_DATA_BASE = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data"
+
+
+def fetch_ecb_sdmx(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch one ECB SDMX 2.1 series key from the official ECB Data Portal API."""
+    flow = str(spec.get("dataflow") or spec.get("flow") or "")
+    key = str(spec.get("series") or "")
+    start_date = str(spec.get("start_date") or "2000-01-01")
+    url = f"{ECB_SDMX_BASE}/{flow}/{key}?format=csvdata&startPeriod={start_date}"
+    response = session.get(
+        url,
+        headers={"User-Agent": USER_AGENT, "Accept": "text/csv"},
+        timeout=(5, 60),
+    )
+    response.raise_for_status()
+    reader = csv.DictReader(io.StringIO(response.text))
+    observations: list[dict[str, Any]] = []
+
+    for row in reader:
+        raw_val = row.get("OBS_VALUE")
+        if raw_val in (None, "", "NaN", ".", "nan"):
+            continue
+        period = row.get("TIME_PERIOD", "")
+        obs_date = sdmx_period_to_date(period)
+        if not obs_date:
+            continue
+        try:
+            val = float(raw_val)
+        except (TypeError, ValueError):
+            continue
+        observations.append({"date": obs_date, "value": val})
+
+    by_date: dict[str, float] = {}
+    for obs in observations:
+        by_date[obs["date"]] = obs["value"]
+    clean_obs = [{"date": d, "value": v} for d, v in sorted(by_date.items())]
+
+    if not clean_obs:
+        raise RuntimeError(f"ECB SDMX returned no observations for {flow}/{key}.")
+
+    return {
+        **spec,
+        "observations": clean_obs,
+        "provider_updated": clean_obs[-1]["date"],
+        "api_url": url,
+    }
+
+
+def fetch_eurostat_jsonstat(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch one Eurostat timeseries from the Dissemination API 1.0 using JSON-stat 2.0."""
+    dataset = str(spec.get("dataset") or spec.get("series") or "")
+    filters = dict(spec.get("filters") or {})
+    start_date = str(spec.get("start_date") or "2000")
+    since = start_date[:4] if ("-" in start_date and len(start_date) > 4) else start_date
+
+    params = {"format": "JSON", "lang": "EN", "sinceTimePeriod": since}
+    params.update(filters)
+    query_str = "&".join(f"{k}={v}" for k, v in params.items())
+    url = f"{EUROSTAT_DATA_BASE}/{dataset}?{query_str}"
+
+    response = session.get(
+        url,
+        headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+        timeout=(5, 60),
+    )
+    response.raise_for_status()
+    data = response.json()
+
+    dims = data.get("id", [])
+    sizes = data.get("size", [])
+    dim_meta = data.get("dimension", {})
+    if "time" not in dim_meta or not dims:
+        raise RuntimeError(f"Eurostat JSON-stat payload has no time dimension for {dataset}.")
+
+    strides: dict[str, int] = {}
+    acc = 1
+    for d, s in zip(reversed(dims), reversed(sizes)):
+        strides[d] = acc
+        acc *= s
+
+    base_offset = 0
+    for d, s in zip(dims, sizes):
+        if d == "time":
+            continue
+        cat_index = dim_meta.get(d, {}).get("category", {}).get("index", {})
+        filter_val = filters.get(d)
+        c_idx = 0
+        if filter_val is not None:
+            if isinstance(cat_index, dict) and filter_val in cat_index:
+                c_idx = cat_index[filter_val]
+            elif isinstance(cat_index, list) and filter_val in cat_index:
+                c_idx = cat_index.index(filter_val)
+        base_offset += c_idx * strides[d]
+
+    time_stride = strides.get("time", 1)
+    time_cat = dim_meta["time"]["category"]["index"]
+    if isinstance(time_cat, dict):
+        time_items = sorted(time_cat.items(), key=lambda x: x[1])
+    else:
+        time_items = [(t, i) for i, t in enumerate(time_cat)]
+
+    values = data.get("value", {})
+    observations: list[dict[str, Any]] = []
+
+    for time_label, t_idx in time_items:
+        flat_idx = str(base_offset + t_idx * time_stride)
+        val = values.get(flat_idx)
+        if val is None or val in ("", "NaN", "nan", ":"):
+            continue
+        obs_date = sdmx_period_to_date(time_label)
+        if not obs_date:
+            continue
+        try:
+            fval = float(val)
+        except (TypeError, ValueError):
+            continue
+        observations.append({"date": obs_date, "value": fval})
+
+    observations.sort(key=lambda item: item["date"])
+    if not observations:
+        raise RuntimeError(f"Eurostat returned no observations for {dataset} with filters {filters}.")
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"],
+        "api_url": url,
+    }
+
+
+def fetch_spread(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    """Calculate the difference between two series (primary minus secondary)."""
+    primary_spec = spec["primary"]
+    secondary_spec = spec["secondary"]
+    factor = float(spec.get("factor", 1.0))
+
+    def _fetch_sub(sub_spec: dict[str, Any]) -> dict[str, Any]:
+        fetcher = str(sub_spec.get("fetcher", "ecb_sdmx")).strip().lower()
+        if fetcher in ("ecb_sdmx", "ecb"):
+            return fetch_ecb_sdmx(session, sub_spec)
+        elif fetcher in ("eurostat_jsonstat", "eurostat"):
+            return fetch_eurostat_jsonstat(session, sub_spec)
+        elif fetcher in ("fred", "fred_us"):
+            return fetch_fred_us(session, sub_spec)
+        raise ValueError(f"Unknown sub-fetcher for spread: {fetcher}")
+
+    primary_res = _fetch_sub(primary_spec)
+    secondary_res = _fetch_sub(secondary_spec)
+
+    obs_sec = {item["date"]: item["value"] for item in secondary_res.get("observations", [])}
+    observations: list[dict[str, Any]] = []
+
+    for item in primary_res.get("observations", []):
+        dt = item["date"]
+        if dt in obs_sec:
+            diff = (item["value"] - obs_sec[dt]) * factor
+            observations.append({"date": dt, "value": round(diff, 4)})
+
+    observations.sort(key=lambda item: item["date"])
+    if not observations:
+        raise RuntimeError(f"fetch_spread produced no common dates for {spec.get('id')}.")
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"],
+    }

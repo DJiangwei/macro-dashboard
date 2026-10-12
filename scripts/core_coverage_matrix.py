@@ -14,9 +14,10 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
 OUT_JSON = OUTPUT / "core_coverage_matrix.json"
 OUT_MD = ROOT / "CORE_COVERAGE_MATRIX.md"
-COUNTRIES = ("HU", "PL", "CZ", "RO", "CN", "JP", "ZA", "UK", "US")
+COUNTRIES = ("HU", "PL", "CZ", "RO", "CN", "EA", "JP", "ZA", "UK", "US")
 DATA_FIRST_FILES = {
     "CN": OUTPUT / "china_canonical_frame.json",
+    "EA": OUTPUT / "euro_area_canonical_frame.json",
     "JP": OUTPUT / "japan_canonical_frame.json",
     "ZA": OUTPUT / "south_africa_canonical_frame.json",
     "UK": OUTPUT / "uk_canonical_frame.json",

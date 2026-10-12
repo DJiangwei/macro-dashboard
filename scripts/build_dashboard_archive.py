@@ -74,6 +74,17 @@ DATA_FIRST_COUNTRIES = [
         "framework": "GS China statistics logic",
     },
     {
+        "code": "EA",
+        "name": "Euro Area",
+        "file": "euro_area.html",
+        "currency": "EUR",
+        "institution": "ECB",
+        "summary": "euro_area_dashboard_summary.json",
+        "headline_label": "Deposit Facility Rate",
+        "headline_key": "policy_rate_latest",
+        "framework": "Nine-pillar comparable core",
+    },
+    {
         "code": "JP",
         "name": "Japan",
         "file": "japan.html",
@@ -531,12 +542,12 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
 <body>
 <div class="topbar">
   <div class="brand">East Meridian <span>/ Country Primer</span></div>
-  <div>Macro Dashboard Archive · CEE-4 v4 + China + Japan + South Africa + UK + US</div>
+  <div>Macro Dashboard Archive · CEE-4 v4 + China + Euro Area + Japan + South Africa + UK + US</div>
 </div>
 <main class="container">
   <header>
     <h1>Macro Dashboard Archive</h1>
-    <p class="subtitle">Generated archive for the CEE-4 public dashboards and the China, UK, and US data-first pages. Cards are rebuilt from the latest country summaries and the CE4 canonical pipeline, then exported to <code>{escape(archive_json_href)}</code> so homepage data stays linked to dashboard builds.</p>
+    <p class="subtitle">Generated archive for the CEE-4 public dashboards and the China, Euro Area, Japan, South Africa, UK, and US data-first pages. Cards are rebuilt from the latest country summaries and the CE4 canonical pipeline, then exported to <code>{escape(archive_json_href)}</code> so homepage data stays linked to dashboard builds.</p>
   </header>
   <section class="meta-grid" aria-label="coverage summary">
     <div class="meta-chip"><strong>{total_charts}</strong><span>rendered chart slots</span></div>

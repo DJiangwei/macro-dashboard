@@ -3414,6 +3414,7 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
         ("CZ", "Czechia", "czechia.html"),
         ("RO", "Romania", "romania.html"),
         ("CN", "China", "china.html"),
+        ("EA", "Euro Area", "euro_area.html"),
         ("JP", "Japan", "japan.html"),
         ("ZA", "South Africa", "south_africa.html"),
         ("UK", "United Kingdom", "uk.html"),

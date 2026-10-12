@@ -28,6 +28,7 @@ TODAY = datetime.now(UTC).date()
 
 DATA_FIRST_PAGES = {
     "China": OUTPUT / "china.html",
+    "Euro Area": OUTPUT / "euro_area.html",
     "Japan": OUTPUT / "japan.html",
     "South Africa": OUTPUT / "south_africa.html",
     "United Kingdom": OUTPUT / "uk.html",
