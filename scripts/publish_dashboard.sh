@@ -46,7 +46,16 @@ if command -v gh >/dev/null 2>&1; then
     sleep 5
   done
 else
-  echo "gh not found; skipping Pages build polling."
+  echo "gh not found; waiting for GitHub Pages deployment for $COMMIT..."
+  ATTEMPT=0
+  while [ "$ATTEMPT" -lt 30 ]; do
+    if curl -sL "https://djiangwei.github.io/macro-dashboard/output/poland_new.html?v=$COMMIT" | rg -q "Institutional Prototype Edition|Visual Vocabulary"; then
+      echo "Pages build live for $COMMIT."
+      break
+    fi
+    ATTEMPT=$((ATTEMPT + 1))
+    sleep 5
+  done
 fi
 
 echo "Running online smoke tests..."
