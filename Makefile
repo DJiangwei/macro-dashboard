@@ -17,6 +17,7 @@ refresh-data:
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_us_dashboard.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_japan_dashboard.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_south_africa_dashboard.py
+	$(UV) run python scripts/build_poland_ft_optimized.py
 	$(UV) run python scripts/core_coverage_matrix.py
 	$(UV) run python scripts/data_source_catalog.py
 	$(UV) run python scripts/freshness_audit.py
@@ -29,6 +30,7 @@ rebuild-ui:
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_us_dashboard.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_japan_dashboard.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_south_africa_dashboard.py
+	$(UV) run python scripts/build_poland_ft_optimized.py
 	$(UV) run python scripts/core_coverage_matrix.py
 	$(UV) run python scripts/data_source_catalog.py
 	$(UV) run python scripts/freshness_audit.py

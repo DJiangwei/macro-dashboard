@@ -64,6 +64,7 @@ curl -L "https://djiangwei.github.io/macro-dashboard/output/japan_canonical_fram
 curl -L "https://djiangwei.github.io/macro-dashboard/output/south_africa_canonical_frame.json?v=$COMMIT" | rg -n "data-first-canonical-v2|series"
 curl -L "https://djiangwei.github.io/macro-dashboard/output/hungary.html?v=$COMMIT" | rg -n "Hungary Dashboard|Core 48|chart-financial_stability-bank_car"
 curl -L "https://djiangwei.github.io/macro-dashboard/output/poland.html?v=$COMMIT" | rg -n "Poland Dashboard|Core 48|chart-financial_stability-bank_car"
+curl -L "https://djiangwei.github.io/macro-dashboard/output/poland_new.html?v=$COMMIT" | rg -n "Visual Vocabulary|Poland Dashboard"
 curl -L "https://djiangwei.github.io/macro-dashboard/output/czechia.html?v=$COMMIT" | rg -n "Czechia Dashboard|Core 48|chart-financial_stability-bank_car"
 curl -L "https://djiangwei.github.io/macro-dashboard/output/romania.html?v=$COMMIT" | rg -n "Romania Dashboard|Core 48|chart-financial_stability-bank_car"
 curl -L "https://djiangwei.github.io/macro-dashboard/output/china.html?v=$COMMIT" | rg -n "China Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
