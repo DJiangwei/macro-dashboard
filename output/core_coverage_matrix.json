@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-10-12T22:29:05.785883+00:00",
+  "generated": "2026-10-13T08:49:18.847627+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -53,8 +53,8 @@
     },
     "CN": {
       "verified": 0,
-      "watch": 24,
-      "low_confidence": 1,
+      "watch": 23,
+      "low_confidence": 2,
       "substitute": 0,
       "missing": 23
     },
@@ -67,8 +67,8 @@
     },
     "JP": {
       "verified": 6,
-      "watch": 17,
-      "low_confidence": 12,
+      "watch": 16,
+      "low_confidence": 13,
       "substitute": 0,
       "missing": 13
     },
@@ -80,16 +80,16 @@
       "missing": 20
     },
     "UK": {
-      "verified": 21,
-      "watch": 12,
+      "verified": 18,
+      "watch": 15,
       "low_confidence": 4,
       "substitute": 0,
       "missing": 11
     },
     "US": {
       "verified": 0,
-      "watch": 39,
-      "low_confidence": 1,
+      "watch": 38,
+      "low_confidence": 2,
       "substitute": 0,
       "missing": 8
     }
@@ -777,8 +777,8 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "retail_sales_yoy"
           ],
@@ -1594,8 +1594,8 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "cpi_yoy"
           ],
@@ -1695,8 +1695,8 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "core_cpi_yoy"
           ],
@@ -1984,7 +1984,7 @@
           "indicator_ids": [
             "producer_price_inflation"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "ZA": {
@@ -3104,8 +3104,8 @@
       "unit": "fx",
       "priority_weight": 4,
       "missing_countries": 0,
-      "weak_countries": 0,
-      "priority_score": 40,
+      "weak_countries": 3,
+      "priority_score": 46,
       "countries": {
         "HU": {
           "state": "verified",
@@ -3113,7 +3113,7 @@
           "indicator_ids": [
             "fx_vs_eur"
           ],
-          "latest_date": "2026-10-09",
+          "latest_date": "2026-10-12",
           "refresh_fallback": false
         },
         "PL": {
@@ -3122,7 +3122,7 @@
           "indicator_ids": [
             "fx_vs_eur"
           ],
-          "latest_date": "2026-10-09",
+          "latest_date": "2026-10-12",
           "refresh_fallback": false
         },
         "CZ": {
@@ -3131,7 +3131,7 @@
           "indicator_ids": [
             "fx_vs_eur"
           ],
-          "latest_date": "2026-10-09",
+          "latest_date": "2026-10-12",
           "refresh_fallback": false
         },
         "RO": {
@@ -3140,12 +3140,12 @@
           "indicator_ids": [
             "fx_vs_eur"
           ],
-          "latest_date": "2026-10-09",
+          "latest_date": "2026-10-12",
           "refresh_fallback": false
         },
         "CN": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "usd_cny_spot"
           ],
@@ -3162,8 +3162,8 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "usd_jpy"
           ],
@@ -3185,12 +3185,12 @@
           "indicator_ids": [
             "gbp_usd"
           ],
-          "latest_date": "2026-10-09",
+          "latest_date": "2026-10-12",
           "refresh_fallback": false
         },
         "US": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "nominal_broad_dollar_index"
           ],
@@ -3377,7 +3377,7 @@
             "fiscal_balance_gdp"
           ],
           "latest_date": "2031",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "ZA": {
           "state": "watch",
@@ -3386,7 +3386,7 @@
             "fiscal_balance_gdp"
           ],
           "latest_date": "2031",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "UK": {
           "state": "low_confidence",
@@ -3479,7 +3479,7 @@
             "primary_balance_gdp"
           ],
           "latest_date": "2031",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "ZA": {
           "state": "watch",
@@ -3488,7 +3488,7 @@
             "primary_balance_gdp"
           ],
           "latest_date": "2031",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "UK": {
           "state": "missing",
@@ -3579,7 +3579,7 @@
             "government_debt_gdp"
           ],
           "latest_date": "2031",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "ZA": {
           "state": "watch",
@@ -3588,7 +3588,7 @@
             "government_debt_gdp"
           ],
           "latest_date": "2031",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "UK": {
           "state": "low_confidence",
@@ -3795,7 +3795,7 @@
           "indicator_ids": [
             "long_rate_10y"
           ],
-          "latest_date": "2026-10-08",
+          "latest_date": "2026-10-09",
           "refresh_fallback": false
         },
         "US": {
@@ -3873,7 +3873,7 @@
             "estr",
             "policy_rate"
           ],
-          "latest_date": "2026-10-12",
+          "latest_date": "2026-10-13",
           "refresh_fallback": false
         },
         "JP": {
@@ -3900,7 +3900,7 @@
           "indicator_ids": [
             "bank_rate"
           ],
-          "latest_date": "2026-10-09",
+          "latest_date": "2026-10-12",
           "refresh_fallback": false
         },
         "US": {
@@ -5294,6 +5294,18 @@
         "EA",
         "JP",
         "ZA"
+      ]
+    },
+    {
+      "concept_id": "fx_spot",
+      "pillar": "external_fx",
+      "label_en": "Spot Exchange Rate",
+      "priority_score": 46,
+      "missing_countries": [],
+      "weak_countries": [
+        "CN",
+        "JP",
+        "US"
       ]
     },
     {

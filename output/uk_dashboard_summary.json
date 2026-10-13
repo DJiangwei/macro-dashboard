@@ -1,6 +1,6 @@
 {
   "file": "uk.html",
-  "generated": "2026-10-12T22:29:04.547993+00:00",
+  "generated": "2026-10-13T08:46:12.766563+00:00",
   "charts": 92,
   "source_groups": 11,
   "data_gaps": 8,
@@ -34,8 +34,8 @@
       "id": "gbp_usd",
       "label_en": "GBP/USD Spot",
       "label_zh": "英镑兑美元现汇",
-      "latest_date": "2026-10-09",
-      "latest_value": 1.3225,
+      "latest_date": "2026-10-12",
+      "latest_value": 1.322,
       "latest_display": "1.32 USD per GBP",
       "frequency": "daily",
       "source_name": "Bank of England IADB",
@@ -58,7 +58,7 @@
       "id": "bank_rate",
       "label_en": "Bank Rate",
       "label_zh": "英国央行Bank Rate",
-      "latest_date": "2026-10-09",
+      "latest_date": "2026-10-12",
       "latest_value": 3.75,
       "latest_display": "3.75 %",
       "frequency": "daily",
@@ -68,9 +68,9 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "snapshot",
+  "data_mode": "refresh",
   "latest_cards": [],
-  "bank_rate_latest": "3.75% (2026-10-09)",
+  "bank_rate_latest": "3.75% (2026-10-12)",
   "cross_checks": [],
   "canonical_frame": {
     "schema_version": "data-first-canonical-v2",
@@ -80,10 +80,9 @@
     ],
     "file": "uk_canonical_frame.json",
     "series": 92,
-    "observations": 60159,
+    "observations": 60164,
     "series_count": 92,
-    "observation_count": 60159,
-    "snapshot_generated": "2026-10-12T20:59:53.607421+00:00"
+    "observation_count": 60164
   },
   "data_gaps_detail": [
     {
@@ -193,8 +192,8 @@
     ],
     "quality_counts": {
       "low_confidence": 9,
-      "verified": 47,
-      "watch": 36
+      "verified": 43,
+      "watch": 40
     },
     "unavailable_count": 0
   },
@@ -205,14 +204,14 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-10-12",
+    "as_of_date": "2026-10-13",
     "counts": {
-      "current": 61,
-      "due": 18,
+      "current": 57,
+      "due": 22,
       "projection": 4,
       "stale": 9
     },
-    "latest_historical_date": "2026-10-09",
+    "latest_historical_date": "2026-10-12",
     "attention": [
       {
         "id": "government_balance_gdp",
@@ -222,7 +221,7 @@
         "frequency": "annual",
         "freshness_status": "stale",
         "age_basis_date": "2024-01-01",
-        "age_days": 1015,
+        "age_days": 1016,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -244,7 +243,7 @@
         "frequency": "annual",
         "freshness_status": "stale",
         "age_basis_date": "2024-01-01",
-        "age_days": 1015,
+        "age_days": 1016,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -266,7 +265,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 195,
+        "age_days": 196,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -288,7 +287,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 195,
+        "age_days": 196,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -310,7 +309,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 104,
+        "age_days": 105,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-09-14",
@@ -332,7 +331,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 104,
+        "age_days": 105,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-09-14",
@@ -354,7 +353,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 104,
+        "age_days": 105,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-09-14",
@@ -376,7 +375,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 104,
+        "age_days": 105,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-09-14",
@@ -398,7 +397,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 104,
+        "age_days": 105,
         "threshold_days": 58,
         "release_calendar_id": "ons_fast_monthly",
         "expected_release_date": "2026-08-20",
@@ -420,7 +419,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -442,7 +441,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -464,7 +463,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -486,7 +485,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -508,7 +507,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -530,7 +529,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -552,7 +551,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -574,7 +573,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -596,7 +595,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -618,7 +617,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -640,7 +639,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 80,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -662,7 +661,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 80,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -684,7 +683,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 80,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -706,7 +705,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -728,7 +727,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -750,7 +749,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -772,7 +771,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -794,7 +793,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 73,
+        "age_days": 74,
         "threshold_days": 86,
         "release_calendar_id": "ons_monthly_activity",
         "expected_release_date": "2026-10-15",
@@ -807,6 +806,94 @@
         "source_name": "ONS",
         "series": "AP2Y",
         "transform": "level"
+      },
+      {
+        "id": "core_cpi_yoy",
+        "concept_id": "core_inflation",
+        "label_en": "Core CPI Inflation",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 43,
+        "threshold_days": 57,
+        "release_calendar_id": "ons_fast_monthly",
+        "expected_release_date": "2026-10-20",
+        "due_date": "2026-10-27",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "ONS",
+        "series": "DKO8",
+        "transform": "level"
+      },
+      {
+        "id": "cpi_yoy",
+        "concept_id": "headline_inflation",
+        "label_en": "Headline CPI Inflation",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 43,
+        "threshold_days": 57,
+        "release_calendar_id": "ons_fast_monthly",
+        "expected_release_date": "2026-10-20",
+        "due_date": "2026-10-27",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "ONS",
+        "series": "D7G7",
+        "transform": "level"
+      },
+      {
+        "id": "retail_sales_mom",
+        "concept_id": "uk:retail_sales_mom",
+        "label_en": "Retail Sales Volume Growth, MoM",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 43,
+        "threshold_days": 57,
+        "release_calendar_id": "ons_fast_monthly",
+        "expected_release_date": "2026-10-20",
+        "due_date": "2026-10-27",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "ONS",
+        "series": "J5EK",
+        "transform": "mom_pct"
+      },
+      {
+        "id": "retail_sales_yoy",
+        "concept_id": "retail_sales_growth",
+        "label_en": "Retail Sales Volume Growth, YoY",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 43,
+        "threshold_days": 57,
+        "release_calendar_id": "ons_fast_monthly",
+        "expected_release_date": "2026-10-20",
+        "due_date": "2026-10-27",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "ONS",
+        "series": "J5EK",
+        "transform": "yoy"
       }
     ]
   },
@@ -823,6 +910,48 @@
     },
     "non_level": [
       {
+        "id": "private_consumption_qoq",
+        "label_en": "Real Private Consumption",
+        "transform": "qoq_pct",
+        "unit": "%"
+      },
+      {
+        "id": "gfcf_qoq",
+        "label_en": "Real Gross Fixed Capital Formation",
+        "transform": "qoq_pct",
+        "unit": "%"
+      },
+      {
+        "id": "monthly_gdp_mom",
+        "label_en": "Monthly GDP Growth, MoM",
+        "transform": "mom_pct",
+        "unit": "% m/m"
+      },
+      {
+        "id": "industrial_production_yoy",
+        "label_en": "Industrial Production Growth, YoY",
+        "transform": "yoy",
+        "unit": "% y/y"
+      },
+      {
+        "id": "services_output_yoy",
+        "label_en": "Services Output Growth, YoY",
+        "transform": "yoy",
+        "unit": "% y/y"
+      },
+      {
+        "id": "retail_sales_yoy",
+        "label_en": "Retail Sales Volume Growth, YoY",
+        "transform": "yoy",
+        "unit": "% y/y"
+      },
+      {
+        "id": "retail_sales_mom",
+        "label_en": "Retail Sales Volume Growth, MoM",
+        "transform": "mom_pct",
+        "unit": "% m/m"
+      },
+      {
         "id": "construction_output_yoy",
         "label_en": "Construction Output Growth, YoY",
         "transform": "yoy",
@@ -835,28 +964,22 @@
         "unit": "%"
       },
       {
-        "id": "gfcf_qoq",
-        "label_en": "Real Gross Fixed Capital Formation",
-        "transform": "qoq_pct",
-        "unit": "%"
-      },
-      {
         "id": "imports_qoq",
         "label_en": "Real Imports",
         "transform": "qoq_pct",
         "unit": "%"
       },
       {
-        "id": "industrial_production_yoy",
-        "label_en": "Industrial Production Growth, YoY",
-        "transform": "yoy",
-        "unit": "% y/y"
+        "id": "paye_payrolled_employees",
+        "label_en": "PAYE Payrolled Employees",
+        "transform": "divide_1m",
+        "unit": "mn"
       },
       {
-        "id": "monthly_gdp_mom",
-        "label_en": "Monthly GDP Growth, MoM",
-        "transform": "mom_pct",
-        "unit": "% m/m"
+        "id": "paye_payrolled_employees_mom_change",
+        "label_en": "PAYE Employees Monthly Change",
+        "transform": "divide_1k",
+        "unit": "000s"
       },
       {
         "id": "paye_aggregate_pay",
@@ -883,50 +1006,14 @@
         "unit": "%"
       },
       {
-        "id": "paye_payrolled_employees",
-        "label_en": "PAYE Payrolled Employees",
-        "transform": "divide_1m",
-        "unit": "mn"
-      },
-      {
-        "id": "paye_payrolled_employees_mom_change",
-        "label_en": "PAYE Employees Monthly Change",
-        "transform": "divide_1k",
-        "unit": "000s"
-      },
-      {
-        "id": "private_consumption_qoq",
-        "label_en": "Real Private Consumption",
-        "transform": "qoq_pct",
-        "unit": "%"
-      },
-      {
-        "id": "producer_prices",
-        "label_en": "PPI Output Inflation",
-        "transform": "yoy",
-        "unit": "% y/y"
-      },
-      {
-        "id": "retail_sales_mom",
-        "label_en": "Retail Sales Volume Growth, MoM",
-        "transform": "mom_pct",
-        "unit": "% m/m"
-      },
-      {
-        "id": "retail_sales_yoy",
-        "label_en": "Retail Sales Volume Growth, YoY",
-        "transform": "yoy",
-        "unit": "% y/y"
-      },
-      {
         "id": "rpix_yoy",
         "label_en": "RPIX Inflation",
         "transform": "yoy",
         "unit": "%"
       },
       {
-        "id": "services_output_yoy",
-        "label_en": "Services Output Growth, YoY",
+        "id": "producer_prices",
+        "label_en": "PPI Output Inflation",
         "transform": "yoy",
         "unit": "% y/y"
       }

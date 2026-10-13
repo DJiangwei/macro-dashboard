@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-10-12T22:29:05.785883+00:00
+Generated: 2026-10-13T08:49:18.847627+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -12,7 +12,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 4 | `growth_demand` | `consumption_growth` Household Consumption Growth | - | - | - | - | W | V | - | - | V | W |
 | 5 | `growth_demand` | `investment_growth` Investment Growth | W | W | W | W | W | V | W | L | V | W |
 | 6 | `production_cycle` | `industrial_production_growth` Industrial Production Growth | V | V | V | W | W | W | L | S | W | W |
-| 7 | `production_cycle` | `retail_sales_growth` Retail Sales Growth | V | V | V | V | W | V | L | L | V | W |
+| 7 | `production_cycle` | `retail_sales_growth` Retail Sales Growth | V | V | V | V | W | V | L | L | W | W |
 | 8 | `production_cycle` | `business_confidence` Business Confidence | V | V | V | V | W | L | W | W | W | W |
 | 9 | `labour_household` | `unemployment_rate` Unemployment Rate | V | V | V | V | W | V | W | L | L | W |
 | 10 | `labour_household` | `employment_growth` Employment Growth | V | V | V | V | - | V | W | L | W | W |
@@ -20,8 +20,8 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 12 | `labour_household` | `vacancies` Labour Demand / Vacancies | L | L | L | L | - | L | V | - | W | W |
 | 13 | `labour_household` | `wage_growth` Wage Growth | V | V | V | V | - | L | L | - | W | W |
 | 14 | `labour_household` | `real_income_growth` Real Household Income Growth | V | V | V | V | - | - | - | - | V | W |
-| 15 | `prices_costs` | `headline_inflation` Headline Inflation | V | V | V | V | W | L | V | V | V | W |
-| 16 | `prices_costs` | `core_inflation` Core Inflation | V | V | V | V | - | L | V | - | V | W |
+| 15 | `prices_costs` | `headline_inflation` Headline Inflation | V | V | V | V | W | L | V | V | W | W |
+| 16 | `prices_costs` | `core_inflation` Core Inflation | V | V | V | V | - | L | V | - | W | W |
 | 17 | `prices_costs` | `services_inflation` Services Inflation | V | V | V | V | - | L | V | - | V | W |
 | 18 | `prices_costs` | `goods_inflation` Goods Inflation | V | V | V | V | - | - | V | - | V | W |
 | 19 | `prices_costs` | `producer_price_inflation` Producer Price Inflation | V | V | V | V | W | V | V | V | V | W |
@@ -36,7 +36,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 28 | `external_fx` | `trade_balance` Trade Balance | W | W | W | W | W | W | L | L | V | W |
 | 29 | `external_fx` | `exports_growth` Exports Growth | - | - | - | - | W | V | L | L | V | W |
 | 30 | `external_fx` | `imports_growth` Imports Growth | - | - | - | - | W | V | L | L | V | W |
-| 31 | `external_fx` | `fx_spot` Spot Exchange Rate | V | V | V | V | W | V | W | V | V | W |
+| 31 | `external_fx` | `fx_spot` Spot Exchange Rate | V | V | V | V | L | V | L | V | V | L |
 | 32 | `external_fx` | `reer` Real Effective Exchange Rate | W | W | W | W | W | V | W | W | W | W |
 | 33 | `fiscal_sovereign` | `fiscal_balance_gdp` Fiscal Balance, % GDP | W | W | W | W | W | V | W | W | L | W |
 | 34 | `fiscal_sovereign` | `primary_balance_gdp` Primary Balance, % GDP | W | W | W | W | - | W | W | W | - | - |
@@ -63,12 +63,12 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | PL | 41/48 | 23 | 14 | 4 | 0 | 7 |
 | CZ | 41/48 | 23 | 14 | 4 | 0 | 7 |
 | RO | 41/48 | 21 | 16 | 4 | 0 | 7 |
-| CN | 25/48 | 0 | 24 | 1 | 0 | 23 |
+| CN | 25/48 | 0 | 23 | 2 | 0 | 23 |
 | EA | 39/48 | 26 | 4 | 9 | 0 | 9 |
-| JP | 35/48 | 6 | 17 | 12 | 0 | 13 |
+| JP | 35/48 | 6 | 16 | 13 | 0 | 13 |
 | ZA | 28/48 | 6 | 6 | 15 | 1 | 20 |
-| UK | 37/48 | 21 | 12 | 4 | 0 | 11 |
-| US | 40/48 | 0 | 39 | 1 | 0 | 8 |
+| UK | 37/48 | 18 | 15 | 4 | 0 | 11 |
+| US | 40/48 | 0 | 38 | 2 | 0 | 8 |
 
 ## Priority Gaps
 

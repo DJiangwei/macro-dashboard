@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-12T22:26:52.796088+00:00",
+  "generated": "2026-10-13T08:49:18.599590+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -13,14 +13,14 @@
   },
   "countries": {
     "HU": {
-      "calls": 856,
-      "success": 105,
-      "empty": 751,
+      "calls": 858,
+      "success": 104,
+      "empty": 754,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {
-        "empty_response": 751
+        "empty_response": 754
       },
       "sources": {
         "BISFetcher": {
@@ -73,6 +73,9 @@
         "GPWBenchmarkFetcher": {
           "empty": 16
         },
+        "GUSDBWFetcher": {
+          "empty": 1
+        },
         "IMFDataMapperFetcher": {
           "empty": 44,
           "success": 9
@@ -81,8 +84,11 @@
           "empty": 33,
           "success": 5
         },
+        "INSSETempoFetcher": {
+          "empty": 1
+        },
         "KSHFetcher": {
-          "success": 1
+          "empty": 1
         },
         "ManualIndicatorFetcher": {
           "empty": 1,
