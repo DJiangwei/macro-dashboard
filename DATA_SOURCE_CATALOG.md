@@ -937,7 +937,7 @@ Configured charts: 64. Latest rendered chart count: 64. Source groups: 15.
 
 The UK page is generated from `config/uk_indicators.yaml`. Native ONS time-series JSON and Bank of England IADB CSV endpoints are preferred where validated; FRED/OECD/BIS/IMF mirror series remain for broader public-data coverage.
 
-Configured charts: 92. Latest rendered chart count: 92. Source groups: 11.
+Configured charts: 93. Latest rendered chart count: 93. Source groups: 11.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1008,6 +1008,7 @@ Configured charts: 92. Latest rendered chart count: 92. Source groups: 11.
 | monetary_financial | `sonia_rate` | SONIA | daily | % | boe_iadb | Bank of England IADB | IUDSOIA | Daily Sterling Overnight Index Average; a modern UK money-market benchmark for the overnight rate complex. |
 | monetary_financial | `long_rate_10y` | 10Y Nominal Gilt Par Yield | daily | % | boe_iadb | Bank of England IADB | IUDMNPY | BoE daily yield from British government securities, 10-year nominal par yield; a cleaner UK-native long-rate channel than the lagged FRED/OECD monthly mirror. |
 | monetary_financial | `gilt_5y_nominal_par_yield` | 5Y Nominal Gilt Par Yield | daily | % | boe_iadb | Bank of England IADB | IUDSNPY | BoE daily yield from British government securities, 5-year nominal par yield; useful for reading the belly of the gilt curve alongside Bank Rate, SONIA, and the 10-year yield. |
+| monetary_financial | `yield_curve_slope_10y5y` | 10Y-5Y Gilt Par Yield Slope | daily | bps | spread | Bank of England IADB |  | Spread between Bank of England 10-year and 5-year nominal par gilt yields in basis points (10Y minus 5Y); reflects the slope of the UK gilt curve. |
 | monetary_financial | `gbp_usd` | GBP/USD Spot | daily | USD per GBP | boe_iadb | Bank of England IADB | XUDLUSS | BoE daily spot exchange-rate series; useful for release-day sterling impulse, not a real effective exchange rate. |
 | monetary_financial | `sterling_eri_boe` | Broad Sterling ERI | monthly | index | boe_iadb | Bank of England IADB | XUMABK82 | BoE monthly average broad sterling exchange-rate index; complements the BIS real exchange-rate series. |
 | monetary_financial | `equity_prices` | UK Share Prices | monthly | index | fred | FRED / OECD | SPASTT01GBM661N | Equity-price channel for a public FCI dashboard; the GS UK FCI used FTSE All-Share and proprietary weights. |

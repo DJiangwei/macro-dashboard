@@ -2116,6 +2116,10 @@ def fetch_spread(session: requests.Session, spec: dict[str, Any]) -> dict[str, A
             return fetch_eurostat_jsonstat(session, sub_spec)
         elif fetcher in ("fred", "fred_us"):
             return fetch_fred_us(session, sub_spec)
+        elif fetcher in ("boe_iadb", "boe"):
+            return fetch_boe_iadb(session, sub_spec)
+        elif fetcher in ("boe_bank_rate",):
+            return fetch_boe_bank_rate(session, sub_spec)
         raise ValueError(f"Unknown sub-fetcher for spread: {fetcher}")
 
     primary_res = _fetch_sub(primary_spec)

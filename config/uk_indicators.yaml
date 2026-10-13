@@ -1089,6 +1089,25 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "BoE daily yield from British government securities, 5-year nominal par yield; useful for reading the belly of the gilt curve alongside Bank Rate, SONIA, and the 10-year yield."
     caveat_zh: "BoE日频英国政府证券5年期名义平价收益率；可与Bank Rate、SONIA和10年期收益率共同观察英国国债曲线中段。"
+  - id: yield_curve_slope_10y5y
+    section: monetary_financial
+    label_en: "10Y-5Y Gilt Par Yield Slope"
+    label_zh: "10年-5年期英国国债收益率曲线斜率"
+    unit: "bps"
+    fetcher: spread
+    factor: 100
+    primary:
+      fetcher: boe_iadb
+      series: "IUDMNPY"
+    secondary:
+      fetcher: boe_iadb
+      series: "IUDSNPY"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
+    frequency: "daily"
+    start_date: "1997-01-01"
+    caveat_en: "Spread between Bank of England 10-year and 5-year nominal par gilt yields in basis points (10Y minus 5Y); reflects the slope of the UK gilt curve."
+    caveat_zh: "英国央行10年期与5年期名义平价国债收益率利差（基点，10Y减5Y）；反映英国国债收益率曲线斜率。"
   - id: gbp_usd
     section: monetary_financial
     label_en: "GBP/USD Spot"

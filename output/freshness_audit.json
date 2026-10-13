@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T12:33:44.607343+00:00",
+  "generated": "2026-10-13T12:46:46.587574+00:00",
   "as_of_date": "2026-10-13",
   "thresholds": {
     "daily": "14 days",
@@ -131,8 +131,8 @@
     },
     {
       "dashboard": "United Kingdom",
-      "charts": 92,
-      "current": 55,
+      "charts": 93,
+      "current": 56,
       "stale": 11,
       "lagged_source": 0,
       "projection": 4,
@@ -15783,6 +15783,26 @@
     },
     {
       "dashboard": "United Kingdom",
+      "indicator_id": "yield_curve_slope_10y5y",
+      "label": "10Y-5Y Gilt Par Yield Slope",
+      "frequency": "daily",
+      "latest_observation": "2026-10-09",
+      "latest_date": "2026-10-09",
+      "age_basis_date": "2026-10-09",
+      "age_days": 4,
+      "threshold_days": 10,
+      "release_calendar_id": "",
+      "expected_release_date": "",
+      "due_date": "",
+      "freshness_status": "current",
+      "quality_status": "verified",
+      "source": "Bank of England IADB",
+      "series_id": "",
+      "provider_update": "2026-10-09",
+      "note": "Spread between Bank of England 10-year and 5-year nominal par gilt yields in basis points (10Y minus 5Y); reflects the slope of the UK gilt curve."
+    },
+    {
+      "dashboard": "United Kingdom",
       "indicator_id": "gbp_usd",
       "label": "GBP/USD Spot",
       "frequency": "daily",
@@ -17238,7 +17258,7 @@
       "quality_status": "watch",
       "source": "FRED / Realtor.com",
       "series_id": "ACTLISCOUUS",
-      "provider_update": "2026-10-01",
+      "provider_update": "2026-10-02",
       "note": "Year-over-year growth derived from Realtor.com active listings; better for market-slack direction than raw counts, though methodology changes still require caution."
     },
     {
@@ -17278,7 +17298,7 @@
       "quality_status": "watch",
       "source": "FRED / Realtor.com",
       "series_id": "PENLISCOUUS",
-      "provider_update": "2026-10-01",
+      "provider_update": "2026-10-02",
       "note": "Year-over-year growth derived from Realtor.com pending listings; a cleaner transaction-pipeline signal than the raw level when seasonality is material."
     },
     {

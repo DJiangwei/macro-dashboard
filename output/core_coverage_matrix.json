@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-10-13T12:33:28.514922+00:00",
+  "generated": "2026-10-13T12:46:30.456661+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -80,11 +80,11 @@
       "missing": 20
     },
     "UK": {
-      "verified": 18,
+      "verified": 19,
       "watch": 15,
       "low_confidence": 4,
       "substitute": 0,
-      "missing": 11
+      "missing": 10
     },
     "US": {
       "verified": 0,
@@ -4424,9 +4424,9 @@
       "label_zh": "收益率曲线斜率",
       "unit": "basis_points",
       "priority_weight": 5,
-      "missing_countries": 4,
+      "missing_countries": 3,
       "weak_countries": 4,
-      "priority_score": 78,
+      "priority_score": 73,
       "countries": {
         "HU": {
           "state": "low_confidence",
@@ -4495,10 +4495,12 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "missing",
-          "quality_status": "unavailable",
-          "indicator_ids": [],
-          "latest_date": "",
+          "state": "verified",
+          "quality_status": "verified",
+          "indicator_ids": [
+            "yield_curve_slope_10y5y"
+          ],
+          "latest_date": "2026-10-09",
           "refresh_fallback": false
         },
         "US": {
@@ -4944,24 +4946,6 @@
       "weak_countries": []
     },
     {
-      "concept_id": "yield_curve_slope",
-      "pillar": "monetary_financial",
-      "label_en": "Yield Curve Slope",
-      "priority_score": 78,
-      "missing_countries": [
-        "CN",
-        "JP",
-        "ZA",
-        "UK"
-      ],
-      "weak_countries": [
-        "HU",
-        "PL",
-        "CZ",
-        "RO"
-      ]
-    },
-    {
       "concept_id": "nominal_gdp_growth",
       "pillar": "growth_demand",
       "label_en": "Nominal GDP Growth",
@@ -4994,6 +4978,23 @@
         "UK"
       ],
       "weak_countries": []
+    },
+    {
+      "concept_id": "yield_curve_slope",
+      "pillar": "monetary_financial",
+      "label_en": "Yield Curve Slope",
+      "priority_score": 73,
+      "missing_countries": [
+        "CN",
+        "JP",
+        "ZA"
+      ],
+      "weak_countries": [
+        "HU",
+        "PL",
+        "CZ",
+        "RO"
+      ]
     },
     {
       "concept_id": "inflation_expectations",

@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-10-13T12:33:28.514922+00:00
+Generated: 2026-10-13T12:46:30.456661+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -49,7 +49,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 41 | `monetary_financial` | `private_credit_growth` Private Credit Growth | W | W | W | W | W | V | L | L | V | W |
 | 42 | `monetary_financial` | `bank_lending_rate` Bank Lending Rate | V | V | V | V | W | V | - | V | - | - |
 | 43 | `monetary_financial` | `equity_return` Equity Market Return | W | W | W | W | W | - | W | - | W | - |
-| 44 | `monetary_financial` | `yield_curve_slope` Yield Curve Slope | L | L | L | L | - | V | - | - | - | W |
+| 44 | `monetary_financial` | `yield_curve_slope` Yield Curve Slope | L | L | L | L | - | V | - | - | V | W |
 | 45 | `monetary_financial` | `financial_conditions` Financial Conditions | - | - | - | - | - | V | - | - | - | W |
 | 46 | `stability_structural` | `credit_gap` Credit-to-GDP Gap | L | L | L | L | - | - | - | - | - | - |
 | 47 | `stability_structural` | `bank_capital_ratio` Bank Capital Ratio | W | W | W | W | - | V | L | L | - | - |
@@ -67,7 +67,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | EA | 41/48 | 27 | 4 | 10 | 0 | 7 |
 | JP | 35/48 | 6 | 16 | 13 | 0 | 13 |
 | ZA | 28/48 | 6 | 6 | 15 | 1 | 20 |
-| UK | 37/48 | 18 | 15 | 4 | 0 | 11 |
+| UK | 38/48 | 19 | 15 | 4 | 0 | 10 |
 | US | 40/48 | 0 | 38 | 2 | 0 | 8 |
 
 ## Priority Gaps
@@ -79,9 +79,9 @@ Priority is explicit and reproducible: pillar macro-value weight x10, plus 5 poi
 | 1 | `financial_conditions` Financial Conditions | `monetary_financial` | 90 | HU, PL, CZ, RO, CN, JP, ZA, UK | - |
 | 2 | `real_policy_rate` Real Policy Rate | `monetary_financial` | 88 | CN, EA, JP, ZA, UK, US | HU, PL, CZ, RO |
 | 3 | `consumption_growth` Household Consumption Growth | `growth_demand` | 80 | HU, PL, CZ, RO, JP, ZA | - |
-| 4 | `yield_curve_slope` Yield Curve Slope | `monetary_financial` | 78 | CN, JP, ZA, UK | HU, PL, CZ, RO |
-| 5 | `nominal_gdp_growth` Nominal GDP Growth | `growth_demand` | 77 | HU, PL, CZ, RO, EA | ZA |
-| 6 | `property_inventory` Property Inventory / Supply | `housing_investment` | 75 | HU, PL, CZ, RO, CN, EA, JP, ZA, UK | - |
+| 4 | `nominal_gdp_growth` Nominal GDP Growth | `growth_demand` | 77 | HU, PL, CZ, RO, EA | ZA |
+| 5 | `property_inventory` Property Inventory / Supply | `housing_investment` | 75 | HU, PL, CZ, RO, CN, EA, JP, ZA, UK | - |
+| 6 | `yield_curve_slope` Yield Curve Slope | `monetary_financial` | 73 | CN, JP, ZA | HU, PL, CZ, RO |
 | 7 | `inflation_expectations` Inflation Expectations | `prices_costs` | 70 | CN, JP, ZA, UK | - |
 | 8 | `wage_cost_inflation` Labour Cost Inflation | `prices_costs` | 65 | CN, JP, ZA | - |
 | 9 | `bank_lending_rate` Bank Lending Rate | `monetary_financial` | 65 | JP, UK, US | - |

@@ -108,7 +108,8 @@ def build(data_mode: str | None = None) -> Path:
     from country_primer.adapters import (
         fetch_fred, fetch_ons_timeseries, fetch_boe_iadb, fetch_boe_bank_rate,
         fetch_govuk_road_fuel, fetch_govuk_xlsx_table, fetch_govuk_ods_table,
-        fetch_ons_xlsx_table, fetch_ons_horizontal_csv_table, fetch_obr_xlsx_row
+        fetch_ons_xlsx_table, fetch_ons_horizontal_csv_table, fetch_obr_xlsx_row,
+        fetch_spread
     )
     registry = {
         "fred": lambda spec, cache: fetch_fred(requests.Session(), spec),
@@ -121,6 +122,7 @@ def build(data_mode: str | None = None) -> Path:
         "ons_xlsx_table": lambda spec, cache: fetch_ons_xlsx_table(requests.Session(), spec),
         "ons_horizontal_csv_table": lambda spec, cache: fetch_ons_horizontal_csv_table(requests.Session(), spec),
         "obr_xlsx_row": lambda spec, cache: fetch_obr_xlsx_row(requests.Session(), spec),
+        "spread": lambda spec, cache: fetch_spread(requests.Session(), spec),
     }
 
     if data_mode == "snapshot":
