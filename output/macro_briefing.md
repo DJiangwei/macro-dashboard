@@ -50,10 +50,10 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | **JP** | 10Y JGB | **2.94%** | 2026-08-01 | **-228.0 bps** | Official Observed |
 | **CN** | CN 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **ZA** | 10Y Sovereign | **8.20%** | 2026-10-12 | **+298.0 bps** | Official Observed |
-| **PL** | PL 10Y Benchmark | **5.81%** | 2026-08-01 | **+59.0 bps** | Official Observed |
-| **CZ** | CZ 10Y Benchmark | **4.91%** | 2026-08-01 | **-31.0 bps** | Official Observed |
-| **HU** | HU 10Y Benchmark | **5.46%** | 2026-08-01 | **+24.0 bps** | Official Observed |
-| **RO** | RO 10Y Benchmark | **6.43%** | 2026-08-01 | **+121.0 bps** | Official Observed |
+| **PL** | PL 10Y Benchmark | **6.23%** | 2026-09-01 | **+101.0 bps** | Official Observed |
+| **CZ** | CZ 10Y Benchmark | **5.24%** | 2026-09-01 | **+2.0 bps** | Official Observed |
+| **HU** | HU 10Y Benchmark | **5.68%** | 2026-09-01 | **+46.0 bps** | Official Observed |
+| **RO** | RO 10Y Benchmark | **6.71%** | 2026-09-01 | **+149.0 bps** | Official Observed |
 
 ---
 
@@ -69,10 +69,34 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
   - European sovereign rates coupling: Euro Area Bund vs. UK Gilt (**0.83**).
   - Global dollar anchor linkage: US vs. UK (**0.61**), US vs. Euro Area (**0.5**).
   - Divergent duration / yield curve regimes: US vs. Japan (**0.26**), US vs. South Africa (**0.22**).
+- **External Trade & Currency Couplings (Bruegel REER 36M Rolling)**:
+  - European monetary union & close trading partners: Euro Area vs. UK (**0.34**), Euro Area vs. Poland (**0.47**), Euro Area vs. Czechia (**0.85**).
+  - Transatlantic relative price competitiveness: US vs. Euro Area (**-0.82**), US vs. UK (**-0.05**).
+  - Asian currency divergence: Japan vs. US (**0.29**), China vs. US (**0.19**).
 
 ---
 
-## 5. Priority Data Quality & Maintenance Backlog
+## 5. Global Currency Valuation & REER Misalignment Monitor (Bruegel Database)
+
+Benchmark source: Bruegel Real Effective Exchange Rate Database (Zsolt Darvas, 120 trading partners, CPI-deflated, 2020=100, updated through September 2026).
+Misalignment evaluated against 5-Year and 10-Year historical moving averages. Inflation Wedge = REER - NEER (a positive wedge indicates domestic cumulative inflation has outpaced trading partners, eroding trade competitiveness despite nominal movements).
+
+| Economy | Code | Latest REER | Latest NEER | 10Y MA | Dev vs 10Y MA | Dev vs 5Y MA | Inflation Wedge | Valuation Stance |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **US** | `US` | **134.46** | 139.82 | 127.98 | **+5.1%** | -0.4% | -5.36 | *moderately overvalued* |
+| **EA** | `EA` | **90.97** | 112.71 | 88.53 | **+2.8%** | +2.6% | -21.75 | *neutral / fair value* |
+| **UK** | `UK` | **92.67** | 85.88 | 85.75 | **+8.1%** | +4.1% | +6.79 | *moderately overvalued* |
+| **JP** | `JP` | **63.71** | 85.34 | 83.70 | **-23.9%** | -10.3% | -21.63 | *substantially undervalued (export cost tailwind)* |
+| **CN** | `CN` | **127.81** | 142.59 | 132.20 | **-3.3%** | -1.8% | -14.78 | *neutral / fair value* |
+| **ZA** | `ZA` | **89.09** | 57.81 | 85.05 | **+4.7%** | +8.0% | +31.28 | *neutral / fair value* |
+| **PL** | `PL` | **105.92** | 87.70 | 93.04 | **+13.8%** | +5.8% | +18.22 | *substantially overvalued (export cost headwind)* |
+| **CZ** | `CZ` | **129.06** | 113.58 | 115.21 | **+12.0%** | +2.2% | +15.48 | *substantially overvalued (export cost headwind)* |
+| **HU** | `HU` | **99.59** | 71.76 | 88.27 | **+12.8%** | +10.2% | +27.83 | *substantially overvalued (export cost headwind)* |
+| **RO** | `RO` | **107.94** | 75.65 | 95.99 | **+12.4%** | +5.4% | +32.29 | *substantially overvalued (export cost headwind)* |
+
+---
+
+## 6. Priority Data Quality & Maintenance Backlog
 
 | Code | Section | Item | Priority | Action Hint |
 | :---: | :--- | :--- | :---: | :--- |

@@ -62,7 +62,7 @@ fi
 echo "Running online smoke tests..."
 curl -L "https://djiangwei.github.io/macro-dashboard/?v=$COMMIT" | rg -n "Macro Dashboard Archive|Macro Workbench|dashboard_archive_summary.json"
 curl -L "https://djiangwei.github.io/macro-dashboard/output/index.html?v=$COMMIT" | rg -n "Macro Dashboard Archive|Macro Workbench|china.html|euro_area.html|japan.html|south_africa.html|uk.html|us.html"
-curl -L "https://djiangwei.github.io/macro-dashboard/output/macro_workbench_summary.json?v=$COMMIT" | rg -n "macro-workbench-v1|phase_coverage|heatmap"
+curl -L "https://djiangwei.github.io/macro-dashboard/output/macro_workbench_summary.json?v=$COMMIT" | rg -n "macro-workbench-v1|phase_coverage|heatmap|reer_valuation_monitor"
 curl -L "https://djiangwei.github.io/macro-dashboard/output/release_monitor.json?v=$COMMIT" | rg -n "items"
 curl -L "https://djiangwei.github.io/macro-dashboard/output/core_coverage_matrix.json?v=$COMMIT" | rg -n "core-coverage-v1|concept_count|priorities"
 curl -L "https://djiangwei.github.io/macro-dashboard/output/source_health.json?v=$COMMIT" | rg -n "source-health-v1|circuit_breaker|countries"

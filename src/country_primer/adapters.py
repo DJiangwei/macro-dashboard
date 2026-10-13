@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import csv
 import io
+import json
 import os
 import re
 import threading
@@ -2120,6 +2121,8 @@ def fetch_spread(session: requests.Session, spec: dict[str, Any]) -> dict[str, A
             return fetch_boe_iadb(session, sub_spec)
         elif fetcher in ("boe_bank_rate",):
             return fetch_boe_bank_rate(session, sub_spec)
+        elif fetcher in ("bruegel_reer", "bruegel"):
+            return fetch_bruegel_reer(session, sub_spec)
         raise ValueError(f"Unknown sub-fetcher for spread: {fetcher}")
 
     primary_res = _fetch_sub(primary_spec)
@@ -2137,6 +2140,56 @@ def fetch_spread(session: requests.Session, spec: dict[str, Any]) -> dict[str, A
     observations.sort(key=lambda item: item["date"])
     if not observations:
         raise RuntimeError(f"fetch_spread produced no common dates for {spec.get('id')}.")
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"],
+    }
+
+
+BRUEGEL_CACHE_PATH = ROOT / "data" / "bruegel_reer_monthly.json"
+
+
+def fetch_bruegel_reer(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch monthly Real Effective Exchange Rate (REER) or NEER from Bruegel database."""
+    country = str(spec.get("country") or spec.get("country_code") or "").strip().upper()
+    if not country:
+        spec_id = str(spec.get("id", "")).upper()
+        for c in ("US", "EA", "UK", "JP", "CN", "ZA", "PL", "CZ", "HU", "RO"):
+            if f"_{c}" in spec_id or spec_id.startswith(f"{c}_") or spec_id.endswith(f"_{c}"):
+                country = c
+                break
+    if not country:
+        raise ValueError(f"fetch_bruegel_reer requires 'country' in spec for indicator {spec.get('id')}")
+
+    series_type = str(spec.get("series_type") or "reer_120").strip().lower()
+
+    if not BRUEGEL_CACHE_PATH.exists():
+        from scripts.fetch_bruegel_reer import fetch_bruegel
+        payload = fetch_bruegel()
+        BRUEGEL_CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        BRUEGEL_CACHE_PATH.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    else:
+        payload = json.loads(BRUEGEL_CACHE_PATH.read_text(encoding="utf-8"))
+
+    c_data = payload.get("countries", {}).get(country)
+    if not c_data:
+        raise ValueError(f"Country {country} not found in Bruegel REER dataset")
+
+    raw_obs = c_data.get(series_type) or c_data.get("reer_120") or []
+    start_date = str(spec.get("start_date") or "").strip()
+
+    observations = []
+    for item in raw_obs:
+        dt = item.get("date")
+        if start_date and dt < start_date:
+            continue
+        observations.append({"date": dt, "value": item.get("value")})
+
+    observations.sort(key=lambda x: x["date"])
+    if not observations:
+        raise RuntimeError(f"fetch_bruegel_reer produced no observations for {spec.get('id')}")
 
     return {
         **spec,

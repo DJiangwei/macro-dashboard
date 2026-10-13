@@ -837,16 +837,88 @@ def _compute_cross_country_sync() -> dict[str, Any]:
                 else:
                     yield_matrix[c1][c2] = None
 
+    reer_cache_path = ROOT / "data" / "bruegel_reer_monthly.json"
+    reer_matrix: dict[str, dict[str, float | None]] = {}
+    reer_common: list[str] = []
+    if reer_cache_path.exists():
+        r_payload = _read_json(reer_cache_path)
+        r_countries = r_payload.get("countries", {})
+        reer_series_map: dict[str, dict[str, float]] = {}
+        for c in countries:
+            c_info = r_countries.get(c, {})
+            obs_list = c_info.get("reer_120", [])
+            reer_series_map[c] = {x["date"]: float(x["value"]) for x in obs_list if "date" in x and "value" in x}
+        reer_common = sorted(list(set.intersection(*[set(reer_series_map[c].keys()) for c in countries if c in reer_series_map])))
+        if len(reer_common) >= 36:
+            r_window = reer_common[-36:]
+            for c1 in countries:
+                reer_matrix[c1] = {}
+                for c2 in countries:
+                    x = [reer_series_map[c1][m] for m in r_window]
+                    y = [reer_series_map[c2][m] for m in r_window]
+                    reer_matrix[c1][c2] = _pearson(x, y)
+
     return {
         "countries": countries,
         "sample_period_cpi": f"{cpi_common[-36]} to {cpi_common[-1]}" if len(cpi_common) >= 36 else "",
         "sample_period_ip": f"{ip_common[-36]} to {ip_common[-1]}" if len(ip_common) >= 36 else "",
         "sample_period_yield": f"{yield_common[-36]} to {yield_common[-1]}" if len(yield_common) >= 36 else "",
+        "sample_period_reer": f"{reer_common[-36]} to {reer_common[-1]}" if len(reer_common) >= 36 else "",
         "inflation_correlation": cpi_matrix,
         "industrial_production_correlation": ip_matrix,
         "sovereign_yield_correlation": yield_matrix,
         "sovereign_spreads_to_us": sovereign_spreads,
+        "reer_correlation": reer_matrix,
     }
+
+
+def _compute_reer_valuation_monitor(countries: list[str]) -> dict[str, Any]:
+    reer_cache_path = ROOT / "data" / "bruegel_reer_monthly.json"
+    if not reer_cache_path.exists():
+        return {}
+    r_payload = _read_json(reer_cache_path)
+    r_countries = r_payload.get("countries", {})
+    monitor: dict[str, Any] = {}
+    for c in countries:
+        c_info = r_countries.get(c, {})
+        reer_obs = [float(x["value"]) for x in c_info.get("reer_120", [])]
+        neer_obs = [float(x["value"]) for x in c_info.get("neer_120", [])]
+        if not reer_obs or len(reer_obs) < 120:
+            continue
+        latest_reer = reer_obs[-1]
+        latest_neer = neer_obs[-1] if neer_obs else latest_reer
+        latest_date = c_info.get("latest_reer", {}).get("date", "2026-09-01")
+
+        ma60 = round(sum(reer_obs[-60:]) / 60, 2)
+        ma120 = round(sum(reer_obs[-120:]) / 120, 2)
+        dev5y = round((latest_reer / ma60 - 1) * 100, 1)
+        dev10y = round((latest_reer / ma120 - 1) * 100, 1)
+        wedge = round(latest_reer - latest_neer, 2)
+
+        if dev10y >= 10.0:
+            stance = "substantially overvalued (export cost headwind)"
+        elif dev10y >= 5.0:
+            stance = "moderately overvalued"
+        elif dev10y <= -10.0:
+            stance = "substantially undervalued (export cost tailwind)"
+        elif dev10y <= -5.0:
+            stance = "moderately undervalued"
+        else:
+            stance = "neutral / fair value"
+
+        monitor[c] = {
+            "country_code": c,
+            "latest_date": latest_date,
+            "reer_latest": round(latest_reer, 2),
+            "neer_latest": round(latest_neer, 2),
+            "ma_5y": ma60,
+            "ma_10y": ma120,
+            "dev_5y_pct": dev5y,
+            "dev_10y_pct": dev10y,
+            "inflation_wedge": wedge,
+            "valuation_stance": stance,
+        }
+    return monitor
 
 
 def _generate_briefing(payload: dict[str, Any]) -> str:
@@ -954,10 +1026,41 @@ def _generate_briefing(payload: dict[str, Any]) -> str:
         f"  - European sovereign rates coupling: Euro Area Bund vs. UK Gilt (**{yield_matrix.get('EA', {}).get('UK', 'n/a')}**).",
         f"  - Global dollar anchor linkage: US vs. UK (**{yield_matrix.get('US', {}).get('UK', 'n/a')}**), US vs. Euro Area (**{yield_matrix.get('US', {}).get('EA', 'n/a')}**).",
         f"  - Divergent duration / yield curve regimes: US vs. Japan (**{yield_matrix.get('US', {}).get('JP', 'n/a')}**), US vs. South Africa (**{yield_matrix.get('US', {}).get('ZA', 'n/a')}**).",
+        "- **External Trade & Currency Couplings (Bruegel REER 36M Rolling)**:",
+        f"  - European monetary union & close trading partners: Euro Area vs. UK (**{sync.get('reer_correlation', {}).get('EA', {}).get('UK', 'n/a')}**), Euro Area vs. Poland (**{sync.get('reer_correlation', {}).get('EA', {}).get('PL', 'n/a')}**), Euro Area vs. Czechia (**{sync.get('reer_correlation', {}).get('EA', {}).get('CZ', 'n/a')}**).",
+        f"  - Transatlantic relative price competitiveness: US vs. Euro Area (**{sync.get('reer_correlation', {}).get('US', {}).get('EA', 'n/a')}**), US vs. UK (**{sync.get('reer_correlation', {}).get('US', {}).get('UK', 'n/a')}**).",
+        f"  - Asian currency divergence: Japan vs. US (**{sync.get('reer_correlation', {}).get('JP', {}).get('US', 'n/a')}**), China vs. US (**{sync.get('reer_correlation', {}).get('CN', {}).get('US', 'n/a')}**).",
         "",
         "---",
         "",
-        "## 5. Priority Data Quality & Maintenance Backlog",
+        "## 5. Global Currency Valuation & REER Misalignment Monitor (Bruegel Database)",
+        "",
+        "Benchmark source: Bruegel Real Effective Exchange Rate Database (Zsolt Darvas, 120 trading partners, CPI-deflated, 2020=100, updated through September 2026).",
+        "Misalignment evaluated against 5-Year and 10-Year historical moving averages. Inflation Wedge = REER - NEER (a positive wedge indicates domestic cumulative inflation has outpaced trading partners, eroding trade competitiveness despite nominal movements).",
+        "",
+        "| Economy | Code | Latest REER | Latest NEER | 10Y MA | Dev vs 10Y MA | Dev vs 5Y MA | Inflation Wedge | Valuation Stance |",
+        "| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |",
+    ])
+    reer_monitor = payload.get("reer_valuation_monitor", {})
+    for code in sync.get("countries", []):
+        r = reer_monitor.get(code)
+        if not r:
+            continue
+        dev10 = r.get("dev_10y_pct", 0)
+        dev5 = r.get("dev_5y_pct", 0)
+        sign10 = "+" if dev10 > 0 else ""
+        sign5 = "+" if dev5 > 0 else ""
+        wedge = r.get("inflation_wedge", 0)
+        sign_w = "+" if wedge > 0 else ""
+        lines.append(
+            f"| **{code}** | `{code}` | **{r.get('reer_latest'):.2f}** | {r.get('neer_latest'):.2f} | {r.get('ma_10y'):.2f} | **{sign10}{dev10:.1f}%** | {sign5}{dev5:.1f}% | {sign_w}{wedge:.2f} | *{r.get('valuation_stance')}* |"
+        )
+
+    lines.extend([
+        "",
+        "---",
+        "",
+        "## 6. Priority Data Quality & Maintenance Backlog",
         "",
         "| Code | Section | Item | Priority | Action Hint |",
         "| :---: | :--- | :--- | :---: | :--- |",
@@ -992,6 +1095,7 @@ def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
         if r.get("taylor_stance")
     }
     cross_country_sync = _compute_cross_country_sync()
+    reer_valuation_monitor = _compute_reer_valuation_monitor(cross_country_sync.get("countries", []))
 
     payload = {
         "generated": datetime.now(UTC).isoformat(),
@@ -1000,6 +1104,7 @@ def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
         "regimes": regimes,
         "monetary_stance_monitor": monetary_stance_monitor,
         "cross_country_sync": cross_country_sync,
+        "reer_valuation_monitor": reer_valuation_monitor,
         "heatmap": heatmap,
         "release_monitor": release_monitor,
         "gap_backlog": gap_backlog,

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T13:08:36.575268+00:00",
+  "generated": "2026-10-13T14:40:50.629039+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -17,7 +17,7 @@
       "headline_label": "Policy rate",
       "headline": "6.25%",
       "secondary_label": "10Y yield",
-      "secondary": "5.46%",
+      "secondary": "5.68%",
       "quality": "41 verified · 50 watch · 14 low",
       "status": "clean",
       "signals": {
@@ -116,7 +116,7 @@
       "headline_label": "Policy rate",
       "headline": "3.75%",
       "secondary_label": "10Y yield",
-      "secondary": "5.81%",
+      "secondary": "6.23%",
       "quality": "43 verified · 51 watch · 14 low",
       "status": "clean",
       "signals": {
@@ -215,7 +215,7 @@
       "headline_label": "Policy rate",
       "headline": "3.50%",
       "secondary_label": "10Y yield",
-      "secondary": "4.91%",
+      "secondary": "5.24%",
       "quality": "43 verified · 47 watch · 14 low",
       "status": "clean",
       "signals": {
@@ -314,7 +314,7 @@
       "headline_label": "Policy rate",
       "headline": "6.50%",
       "secondary_label": "10Y yield",
-      "secondary": "6.43%",
+      "secondary": "6.71%",
       "quality": "41 verified · 49 watch · 14 low",
       "status": "clean",
       "signals": {
@@ -2192,9 +2192,9 @@
         ],
         "file": "euro_area_canonical_frame.json",
         "series": 70,
-        "observations": 59508,
+        "observations": 59510,
         "series_count": 70,
-        "observation_count": 59508
+        "observation_count": 59510
       },
       "freshness_summary": {
         "dashboard": "Euro Area",
@@ -5953,9 +5953,9 @@
         ],
         "file": "us_canonical_frame.json",
         "series": 165,
-        "observations": 116991,
+        "observations": 116992,
         "series_count": 165,
-        "observation_count": 116991
+        "observation_count": 116992
       },
       "freshness_summary": {
         "dashboard": "United States",
@@ -7094,6 +7094,7 @@
     "sample_period_cpi": "2022-12 to 2025-12",
     "sample_period_ip": "2022-11 to 2026-06",
     "sample_period_yield": "2023-09 to 2026-08",
+    "sample_period_reer": "2023-10-01 to 2026-09-01",
     "inflation_correlation": {
       "US": {
         "US": 1.0,
@@ -7505,32 +7506,276 @@
       },
       "PL": {
         "benchmark": "PL 10Y Benchmark",
-        "date": "2026-08-01",
-        "yield": 5.81,
-        "spread_bps": 59.0,
+        "date": "2026-09-01",
+        "yield": 6.23,
+        "spread_bps": 101.0,
         "status": "observed"
       },
       "CZ": {
         "benchmark": "CZ 10Y Benchmark",
-        "date": "2026-08-01",
-        "yield": 4.91,
-        "spread_bps": -31.0,
+        "date": "2026-09-01",
+        "yield": 5.24,
+        "spread_bps": 2.0,
         "status": "observed"
       },
       "HU": {
         "benchmark": "HU 10Y Benchmark",
-        "date": "2026-08-01",
-        "yield": 5.46,
-        "spread_bps": 24.0,
+        "date": "2026-09-01",
+        "yield": 5.68,
+        "spread_bps": 46.0,
         "status": "observed"
       },
       "RO": {
         "benchmark": "RO 10Y Benchmark",
-        "date": "2026-08-01",
-        "yield": 6.43,
-        "spread_bps": 121.0,
+        "date": "2026-09-01",
+        "yield": 6.71,
+        "spread_bps": 149.0,
         "status": "observed"
       }
+    },
+    "reer_correlation": {
+      "US": {
+        "US": 1.0,
+        "EA": -0.82,
+        "UK": -0.05,
+        "JP": 0.29,
+        "CN": 0.19,
+        "ZA": -0.21,
+        "PL": -0.12,
+        "CZ": -0.65,
+        "HU": -0.59,
+        "RO": -0.49
+      },
+      "EA": {
+        "US": -0.82,
+        "EA": 1.0,
+        "UK": 0.34,
+        "JP": -0.51,
+        "CN": -0.36,
+        "ZA": 0.45,
+        "PL": 0.47,
+        "CZ": 0.85,
+        "HU": 0.71,
+        "RO": 0.83
+      },
+      "UK": {
+        "US": -0.05,
+        "EA": 0.34,
+        "UK": 1.0,
+        "JP": -0.24,
+        "CN": -0.42,
+        "ZA": 0.59,
+        "PL": 0.84,
+        "CZ": 0.24,
+        "HU": 0.25,
+        "RO": 0.61
+      },
+      "JP": {
+        "US": 0.29,
+        "EA": -0.51,
+        "UK": -0.24,
+        "JP": 1.0,
+        "CN": -0.46,
+        "ZA": -0.82,
+        "PL": -0.25,
+        "CZ": -0.45,
+        "HU": -0.78,
+        "RO": -0.61
+      },
+      "CN": {
+        "US": 0.19,
+        "EA": -0.36,
+        "UK": -0.42,
+        "JP": -0.46,
+        "CN": 1.0,
+        "ZA": 0.25,
+        "PL": -0.54,
+        "CZ": -0.33,
+        "HU": 0.18,
+        "RO": -0.33
+      },
+      "ZA": {
+        "US": -0.21,
+        "EA": 0.45,
+        "UK": 0.59,
+        "JP": -0.82,
+        "CN": 0.25,
+        "ZA": 1.0,
+        "PL": 0.52,
+        "CZ": 0.48,
+        "HU": 0.74,
+        "RO": 0.7
+      },
+      "PL": {
+        "US": -0.12,
+        "EA": 0.47,
+        "UK": 0.84,
+        "JP": -0.25,
+        "CN": -0.54,
+        "ZA": 0.52,
+        "PL": 1.0,
+        "CZ": 0.39,
+        "HU": 0.3,
+        "RO": 0.76
+      },
+      "CZ": {
+        "US": -0.65,
+        "EA": 0.85,
+        "UK": 0.24,
+        "JP": -0.45,
+        "CN": -0.33,
+        "ZA": 0.48,
+        "PL": 0.39,
+        "CZ": 1.0,
+        "HU": 0.73,
+        "RO": 0.79
+      },
+      "HU": {
+        "US": -0.59,
+        "EA": 0.71,
+        "UK": 0.25,
+        "JP": -0.78,
+        "CN": 0.18,
+        "ZA": 0.74,
+        "PL": 0.3,
+        "CZ": 0.73,
+        "HU": 1.0,
+        "RO": 0.7
+      },
+      "RO": {
+        "US": -0.49,
+        "EA": 0.83,
+        "UK": 0.61,
+        "JP": -0.61,
+        "CN": -0.33,
+        "ZA": 0.7,
+        "PL": 0.76,
+        "CZ": 0.79,
+        "HU": 0.7,
+        "RO": 1.0
+      }
+    }
+  },
+  "reer_valuation_monitor": {
+    "US": {
+      "country_code": "US",
+      "latest_date": "2026-09-01",
+      "reer_latest": 134.46,
+      "neer_latest": 139.82,
+      "ma_5y": 135.01,
+      "ma_10y": 127.98,
+      "dev_5y_pct": -0.4,
+      "dev_10y_pct": 5.1,
+      "inflation_wedge": -5.36,
+      "valuation_stance": "moderately overvalued"
+    },
+    "EA": {
+      "country_code": "EA",
+      "latest_date": "2026-09-01",
+      "reer_latest": 90.97,
+      "neer_latest": 112.71,
+      "ma_5y": 88.7,
+      "ma_10y": 88.53,
+      "dev_5y_pct": 2.6,
+      "dev_10y_pct": 2.8,
+      "inflation_wedge": -21.75,
+      "valuation_stance": "neutral / fair value"
+    },
+    "UK": {
+      "country_code": "UK",
+      "latest_date": "2026-09-01",
+      "reer_latest": 92.67,
+      "neer_latest": 85.88,
+      "ma_5y": 88.99,
+      "ma_10y": 85.75,
+      "dev_5y_pct": 4.1,
+      "dev_10y_pct": 8.1,
+      "inflation_wedge": 6.79,
+      "valuation_stance": "moderately overvalued"
+    },
+    "JP": {
+      "country_code": "JP",
+      "latest_date": "2026-09-01",
+      "reer_latest": 63.71,
+      "neer_latest": 85.34,
+      "ma_5y": 71.03,
+      "ma_10y": 83.7,
+      "dev_5y_pct": -10.3,
+      "dev_10y_pct": -23.9,
+      "inflation_wedge": -21.63,
+      "valuation_stance": "substantially undervalued (export cost tailwind)"
+    },
+    "CN": {
+      "country_code": "CN",
+      "latest_date": "2026-09-01",
+      "reer_latest": 127.81,
+      "neer_latest": 142.59,
+      "ma_5y": 130.19,
+      "ma_10y": 132.2,
+      "dev_5y_pct": -1.8,
+      "dev_10y_pct": -3.3,
+      "inflation_wedge": -14.78,
+      "valuation_stance": "neutral / fair value"
+    },
+    "ZA": {
+      "country_code": "ZA",
+      "latest_date": "2026-09-01",
+      "reer_latest": 89.09,
+      "neer_latest": 57.81,
+      "ma_5y": 82.48,
+      "ma_10y": 85.05,
+      "dev_5y_pct": 8.0,
+      "dev_10y_pct": 4.7,
+      "inflation_wedge": 31.28,
+      "valuation_stance": "neutral / fair value"
+    },
+    "PL": {
+      "country_code": "PL",
+      "latest_date": "2026-09-01",
+      "reer_latest": 105.92,
+      "neer_latest": 87.7,
+      "ma_5y": 100.1,
+      "ma_10y": 93.04,
+      "dev_5y_pct": 5.8,
+      "dev_10y_pct": 13.8,
+      "inflation_wedge": 18.22,
+      "valuation_stance": "substantially overvalued (export cost headwind)"
+    },
+    "CZ": {
+      "country_code": "CZ",
+      "latest_date": "2026-09-01",
+      "reer_latest": 129.06,
+      "neer_latest": 113.58,
+      "ma_5y": 126.31,
+      "ma_10y": 115.21,
+      "dev_5y_pct": 2.2,
+      "dev_10y_pct": 12.0,
+      "inflation_wedge": 15.48,
+      "valuation_stance": "substantially overvalued (export cost headwind)"
+    },
+    "HU": {
+      "country_code": "HU",
+      "latest_date": "2026-09-01",
+      "reer_latest": 99.59,
+      "neer_latest": 71.76,
+      "ma_5y": 90.39,
+      "ma_10y": 88.27,
+      "dev_5y_pct": 10.2,
+      "dev_10y_pct": 12.8,
+      "inflation_wedge": 27.83,
+      "valuation_stance": "substantially overvalued (export cost headwind)"
+    },
+    "RO": {
+      "country_code": "RO",
+      "latest_date": "2026-09-01",
+      "reer_latest": 107.94,
+      "neer_latest": 75.65,
+      "ma_5y": 102.38,
+      "ma_10y": 95.99,
+      "dev_5y_pct": 5.4,
+      "dev_10y_pct": 12.4,
+      "inflation_wedge": 32.29,
+      "valuation_stance": "substantially overvalued (export cost headwind)"
     }
   },
   "heatmap": [

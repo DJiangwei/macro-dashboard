@@ -66,3 +66,16 @@ def test_estat_without_credential_raises_a_typed_error(monkeypatch: pytest.Monke
     monkeypatch.delenv("ESTAT_APP_ID", raising=False)
     with pytest.raises(EstatCredentialMissing):
         fetch_estat(None, {"stats_data_id": "0004052037", "estat_tab": "3", "estat_cat01": "0161"})
+
+
+def test_fetch_bruegel_reer_returns_sorted_observations() -> None:
+    import requests
+    from country_primer.adapters import fetch_bruegel_reer
+    res = fetch_bruegel_reer(requests.Session(), {"id": "reer_us", "country": "US"})
+    assert "observations" in res
+    obs = res["observations"]
+    assert len(obs) >= 300
+    assert obs[-1]["date"] >= "2026-08-01"
+    assert all("date" in o and "value" in o for o in obs)
+    assert obs == sorted(obs, key=lambda x: x["date"])
+    assert res.get("provider_updated") == obs[-1]["date"]

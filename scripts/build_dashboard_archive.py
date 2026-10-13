@@ -414,14 +414,53 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
         <td><em style="color: var(--warn);">Tracked in Data Gap Backlog</em></td>
       </tr>""")
 
+    reer_monitor = workbench.get("reer_valuation_monitor", {}) or {}
+    reer_rows = []
+    for code in sync_countries:
+        r = reer_monitor.get(code, {})
+        if not r:
+            continue
+        dev10 = float(r.get("dev_10y_pct", 0.0))
+        dev5 = float(r.get("dev_5y_pct", 0.0))
+        wedge = float(r.get("inflation_wedge", 0.0))
+        stance = str(r.get("valuation_stance", "n/a"))
+
+        if dev10 >= 10.0:
+            pill_cls = "bad"
+        elif dev10 <= -10.0:
+            pill_cls = "good"
+        elif abs(dev10) >= 5.0:
+            pill_cls = "neutral"
+        else:
+            pill_cls = "good"
+
+        sign10 = "+" if dev10 > 0 else ""
+        sign5 = "+" if dev5 > 0 else ""
+        sign_w = "+" if wedge > 0 else ""
+
+        reer_rows.append(f"""
+      <tr>
+        <td><strong>{escape(str(code))}</strong></td>
+        <td><strong>{r.get('reer_latest', 0.0):.2f}</strong></td>
+        <td>{r.get('neer_latest', 0.0):.2f}</td>
+        <td>{r.get('ma_10y', 0.0):.2f}</td>
+        <td><span class="score-pill {pill_cls}">{sign10}{dev10:.1f}%</span></td>
+        <td>{sign5}{dev5:.1f}%</td>
+        <td><strong>{sign_w}{wedge:.2f}</strong></td>
+        <td><em>{escape(stance)}</em></td>
+      </tr>""")
+
+    reer_matrix = sync_data.get("reer_correlation", {}) or {}
     sync_th = "".join(f"<th style='text-align: center; padding: 6px 4px; font-size: 11px;'>{c}</th>" for c in sync_countries)
     sync_rows = []
     sync_ip_rows = []
     sync_yield_rows = []
+    sync_reer_rows = []
     for c1 in sync_countries:
         cells = [f"<td style='padding: 6px 8px;'><strong>{c1}</strong></td>"]
         cells_ip = [f"<td style='padding: 6px 8px;'><strong>{c1}</strong></td>"]
         cells_yd = [f"<td style='padding: 6px 8px;'><strong>{c1}</strong></td>"]
+        cells_reer = [f"<td style='padding: 6px 8px;'><strong>{c1}</strong></td>"]
         for c2 in sync_countries:
             val = cpi_matrix.get(c1, {}).get(c2)
             if val is None:
@@ -465,9 +504,24 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
                     style_yd = "color: #737c8c;"
                 cells_yd.append(f"<td style='text-align: center; padding: 6px 4px; font-size: 11px; {style_yd}'>{val_yd:.2f}</td>")
 
+            val_reer = reer_matrix.get(c1, {}).get(c2)
+            if val_reer is None:
+                cells_reer.append("<td style='text-align: center; padding: 6px 4px;'>-</td>")
+            else:
+                if val_reer >= 0.8:
+                    style_reer = "background: rgba(13, 118, 128, 0.14); color: #0d7680; font-weight: 600;"
+                elif val_reer >= 0.5:
+                    style_reer = "background: rgba(13, 118, 128, 0.06); color: #0d7680;"
+                elif val_reer <= -0.2:
+                    style_reer = "background: rgba(153, 15, 61, 0.08); color: #990f3d;"
+                else:
+                    style_reer = "color: #737c8c;"
+                cells_reer.append(f"<td style='text-align: center; padding: 6px 4px; font-size: 11px; {style_reer}'>{val_reer:.2f}</td>")
+
         sync_rows.append(f"<tr>{''.join(cells)}</tr>")
         sync_ip_rows.append(f"<tr>{''.join(cells_ip)}</tr>")
         sync_yield_rows.append(f"<tr>{''.join(cells_yd)}</tr>")
+        sync_reer_rows.append(f"<tr>{''.join(cells_reer)}</tr>")
 
     return f"""
   <section class="workbench" aria-label="macro workbench">
@@ -502,6 +556,16 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
         <tbody>{''.join(sovereign_rows)}</tbody>
       </table>
     </div>
+    <div class="table-wrap" style="margin-top: 16px;">
+      <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
+        <strong style="font-size: 13px; color: var(--fg);">Global Currency Valuation & REER Misalignment Monitor (Bruegel Database)</strong>
+        <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Real Effective Exchange Rate (REER, 120 trading partners, CPI-deflated, 2020=100) vs. historical moving averages and Nominal EER (NEER). Inflation Wedge = REER − NEER (higher domestic inflation erodes cost competitiveness).</span>
+      </div>
+      <table class="regime-table">
+        <thead><tr><th>Country</th><th>Latest REER</th><th>Latest NEER</th><th>10Y MA</th><th>Dev vs 10Y MA</th><th>Dev vs 5Y MA</th><th>Inflation Wedge</th><th>Valuation Stance</th></tr></thead>
+        <tbody>{''.join(reer_rows)}</tbody>
+      </table>
+    </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 16px; margin-top: 16px;">
       <div class="table-wrap">
         <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
@@ -531,6 +595,16 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
         <table class="regime-table" style="min-width: 360px;">
           <thead><tr><th style="padding: 6px 8px;">Country</th>{sync_th}</tr></thead>
           <tbody>{''.join(sync_yield_rows)}</tbody>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
+          <strong style="font-size: 13px; color: var(--fg);">Real Effective Exchange Rate Synchronization (36M)</strong>
+          <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Monthly Bruegel REER co-movement ({escape(str(sync_data.get('sample_period_reer', '')))}).</span>
+        </div>
+        <table class="regime-table" style="min-width: 360px;">
+          <thead><tr><th style="padding: 6px 8px;">Country</th>{sync_th}</tr></thead>
+          <tbody>{''.join(sync_reer_rows)}</tbody>
         </table>
       </div>
     </div>

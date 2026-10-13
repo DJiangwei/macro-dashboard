@@ -482,8 +482,28 @@ def build_catalog() -> str:
         _append_data_first_sources(lines, page)
     _append_uk_sources(lines)
     _append_us_sources(lines)
+    _append_bruegel_sources(lines)
 
     return "\n".join(lines) + "\n"
+
+
+def _append_bruegel_sources(lines: list[str]) -> None:
+    lines.extend([
+        "",
+        "## Multilateral & External Benchmark: Bruegel REER Database",
+        "",
+        "The cross-country currency valuation monitor and 4D synchronization matrix consume the Bruegel Real Effective Exchange Rate Database for 178 Countries.",
+        "",
+        "- **Citation**: Darvas, Zsolt (2012, updated 2021, 2026), *Real effective exchange rates for 178 countries: a new database*, Bruegel Working Paper 2012/06. DOI: 10.64153/SZCG6180.",
+        "- **Dataset Version**: `REER_database_ver11Oct2026.zip` (11 October 2026 release; monthly observations through September 2026).",
+        "- **Methodology**: Trade-weighted against 120 trading partners (`REER_120` and `NEER_120`), CPI-deflated, base year 2020 = 100. Weights capture both bilateral imports and third-market export competition.",
+        "- **Coverage in Workbench**: US (`REER_120_US`), Euro Area (`REER_120_EA12`), UK (`REER_120_GB`), Japan (`REER_120_JP`), China (`REER_120_CN`), South Africa (`REER_120_ZA`), Poland (`REER_120_PL`), Czechia (`REER_120_CZ`), Hungary (`REER_120_HU`), and Romania (`REER_120_RO`).",
+        "- **Workbench Applications**:",
+        "  1. **Valuation Stance**: Percentage deviation of latest REER against 10-year and 5-year rolling moving averages.",
+        "  2. **Inflation Wedge**: `REER - NEER`. A persistent positive wedge demonstrates domestic cumulative inflation exceeding trade partner inflation, eroding price competitiveness despite nominal currency depreciation.",
+        "  3. **Real FX Synchronization**: 36-month rolling Pearson correlation matrix of monthly REER co-movements across all 10 economies.",
+        "- **Local Cache**: Cached in `data/bruegel_reer_monthly.json` via `scripts/fetch_bruegel_reer.py`; accessed at runtime via `country_primer.adapters.fetch_bruegel_reer`.",
+    ])
 
 
 def main() -> None:
