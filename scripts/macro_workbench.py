@@ -703,6 +703,8 @@ def _compute_cross_country_sync() -> dict[str, Any]:
     countries = ["US", "EA", "UK", "JP", "CN", "ZA", "PL", "CZ", "HU", "RO"]
     cpi_data: dict[str, dict[str, float]] = {}
     ip_data: dict[str, dict[str, float]] = {}
+    yield_data: dict[str, dict[str, float]] = {}
+    yield_latest: dict[str, dict[str, Any]] = {}
 
     canonical_specs = {
         "CN": ("china_canonical_frame.json", "cpi_yoy_akshare", "industrial_value_added_yoy_akshare"),
@@ -711,6 +713,14 @@ def _compute_cross_country_sync() -> dict[str, Any]:
         "ZA": ("south_africa_canonical_frame.json", "cpi_inflation", "manufacturing_production_growth"),
         "UK": ("uk_canonical_frame.json", "cpi_yoy", "industrial_production_yoy"),
         "US": ("us_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
+    }
+
+    yield_specs = {
+        "US": ("us_canonical_frame.json", "treasury_10y_yield", "10Y Treasury"),
+        "EA": ("euro_area_canonical_frame.json", "irs_10y_de", "10Y Bund"),
+        "UK": ("uk_canonical_frame.json", "long_rate_10y", "10Y Gilt"),
+        "JP": ("japan_canonical_frame.json", "sovereign_yield_10y", "10Y JGB"),
+        "ZA": ("south_africa_canonical_frame.json", "sovereign_yield_10y", "10Y Sovereign"),
     }
 
     for code, (fname, cpi_k, ip_k) in canonical_specs.items():
@@ -724,6 +734,26 @@ def _compute_cross_country_sync() -> dict[str, Any]:
                 elif ind_id == ip_k:
                     ip_data[code] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
 
+    for code, (fname, yld_k, bmk_name) in yield_specs.items():
+        p = OUTPUT / fname
+        if p.exists():
+            d = _read_json(p)
+            for s in d.get("series", []) or []:
+                if s.get("indicator_id") == yld_k:
+                    obs = s.get("observations", [])
+                    if obs:
+                        m_dict = {}
+                        for r in obs:
+                            if len(r) >= 2 and r[1] is not None:
+                                m_dict[str(r[0])[:7]] = float(r[1])
+                        yield_data[code] = m_dict
+                        last_r = obs[-1]
+                        yield_latest[code] = {
+                            "benchmark": bmk_name,
+                            "date": str(last_r[0]),
+                            "yield": round(float(last_r[1]), 2),
+                        }
+
     cee_path = OUTPUT / "cee_canonical_frame.json"
     if cee_path.exists():
         cee = _read_json(cee_path)
@@ -735,6 +765,16 @@ def _compute_cross_country_sync() -> dict[str, Any]:
                     cpi_data[country] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
                 elif ind_id == "industrial_production_yoy":
                     ip_data[country] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
+                elif ind_id == "sov_yield_10y":
+                    obs = s.get("observations", [])
+                    if obs:
+                        yield_data[country] = {str(r[0])[:7]: float(r[1]) for r in obs if len(r) >= 2 and r[1] is not None}
+                        last_r = obs[-1]
+                        yield_latest[country] = {
+                            "benchmark": f"{country} 10Y Benchmark",
+                            "date": str(last_r[0]),
+                            "yield": round(float(last_r[1]), 2),
+                        }
 
     cpi_common = sorted(list(set.intersection(*[set(cpi_data[c].keys()) for c in countries if c in cpi_data]))) if len(cpi_data) >= len(countries) else []
     ip_common = sorted(list(set.intersection(*[set(ip_data[c].keys()) for c in countries if c in ip_data]))) if len(ip_data) >= len(countries) else []
@@ -759,12 +799,53 @@ def _compute_cross_country_sync() -> dict[str, Any]:
                 y = [ip_data[c2][m] for m in ip_window]
                 ip_matrix[c1][c2] = _pearson(x, y)
 
+    us_yld = yield_latest.get("US", {}).get("yield")
+    sovereign_spreads: dict[str, dict[str, Any]] = {}
+    for c in countries:
+        y_info = yield_latest.get(c)
+        if not y_info or y_info.get("yield") is None or us_yld is None:
+            sovereign_spreads[c] = {
+                "benchmark": y_info.get("benchmark", f"{c} 10Y") if y_info else f"{c} 10Y",
+                "date": y_info.get("date", "n/a") if y_info else "n/a",
+                "yield": None,
+                "spread_bps": None,
+                "status": "data_gap",
+            }
+        else:
+            y_val = y_info["yield"]
+            spread_bps = round((y_val - us_yld) * 100, 1)
+            sovereign_spreads[c] = {
+                "benchmark": y_info["benchmark"],
+                "date": y_info["date"],
+                "yield": y_val,
+                "spread_bps": spread_bps,
+                "status": "observed",
+            }
+
+    yield_countries = [c for c in countries if c in yield_data and len(yield_data[c]) >= 12]
+    yield_common = sorted(list(set.intersection(*[set(yield_data[c].keys()) for c in yield_countries]))) if yield_countries else []
+    yield_matrix: dict[str, dict[str, float | None]] = {}
+    if len(yield_common) >= 12:
+        yield_window = yield_common[-36:]
+        for c1 in countries:
+            yield_matrix[c1] = {}
+            for c2 in countries:
+                if c1 in yield_data and c2 in yield_data and all(m in yield_data[c1] and m in yield_data[c2] for m in yield_window):
+                    x = [yield_data[c1][m] for m in yield_window]
+                    y = [yield_data[c2][m] for m in yield_window]
+                    yield_matrix[c1][c2] = _pearson(x, y)
+                else:
+                    yield_matrix[c1][c2] = None
+
     return {
         "countries": countries,
         "sample_period_cpi": f"{cpi_common[-36]} to {cpi_common[-1]}" if len(cpi_common) >= 36 else "",
         "sample_period_ip": f"{ip_common[-36]} to {ip_common[-1]}" if len(ip_common) >= 36 else "",
+        "sample_period_yield": f"{yield_common[-36]} to {yield_common[-1]}" if len(yield_common) >= 36 else "",
         "inflation_correlation": cpi_matrix,
         "industrial_production_correlation": ip_matrix,
+        "sovereign_yield_correlation": yield_matrix,
+        "sovereign_spreads_to_us": sovereign_spreads,
     }
 
 
@@ -829,11 +910,39 @@ def _generate_briefing(payload: dict[str, Any]) -> str:
             f"| **{code}** ({inst}) | **{pr:.2f}%** | {inf:.2f}% ({tgt:.1f}%) | {r_star:.2f}% | **{tb:.2f}%** ({tb_rng[0]:.2f}% ~ {tb_rng[1]:.2f}%) | **{sign}{gap:.2f}%** | *{m.get('stance_label', 'n/a')}* |"
         )
 
+    yield_matrix = sync.get("sovereign_yield_correlation", {})
+    spreads = sync.get("sovereign_spreads_to_us", {})
+
     lines.extend([
         "",
         "---",
         "",
-        "## 3. Cross-Country Synchronization (36-Month Rolling Correlation)",
+        "## 3. Global Sovereign 10Y Benchmark Yields & Spreads to US Treasury",
+        "",
+        "| Economy | Benchmark Asset | Latest Yield | Latest Date | Spread to US 10Y (bps) | Status |",
+        "| :--- | :--- | :---: | :---: | :---: | :--- |",
+    ])
+    for code in sync.get("countries", []):
+        sp = spreads.get(code, {})
+        bmk = sp.get("benchmark", f"{code} 10Y")
+        dt = sp.get("date", "n/a")
+        y_val = sp.get("yield")
+        sp_bps = sp.get("spread_bps")
+        if y_val is not None:
+            sign = "+" if sp_bps > 0 else ""
+            lines.append(
+                f"| **{code}** | {bmk} | **{y_val:.2f}%** | {dt} | **{sign}{sp_bps:.1f} bps** | Official Observed |"
+            )
+        else:
+            lines.append(
+                f"| **{code}** | {bmk} | *n/a* | {dt} | *n/a* | Data Gap Backlog |"
+            )
+
+    lines.extend([
+        "",
+        "---",
+        "",
+        "## 4. Cross-Country Synchronization (36-Month Rolling Correlation)",
         "",
         "- **Nominal Cycle (Headline CPI Inflation)**:",
         f"  - Highly coupled core: US vs. Euro Area (**{inf_matrix.get('US', {}).get('EA', 'n/a')}**), US vs. UK (**{inf_matrix.get('US', {}).get('UK', 'n/a')}**), Euro Area vs. UK (**{inf_matrix.get('EA', {}).get('UK', 'n/a')}**).",
@@ -841,10 +950,14 @@ def _generate_briefing(payload: dict[str, Any]) -> str:
         "- **Real Business Cycle (Industrial Production)**:",
         f"  - Transatlantic industrial linkage: US vs. Euro Area (**{ip_matrix.get('US', {}).get('EA', 'n/a')}**), US vs. UK (**{ip_matrix.get('US', {}).get('UK', 'n/a')}**).",
         f"  - Manufacturing divergence: China vs. US (**{ip_matrix.get('CN', {}).get('US', 'n/a')}**), Japan vs. US (**{ip_matrix.get('JP', {}).get('US', 'n/a')}**).",
+        "- **Financial & Capital Flows (10Y Sovereign Yields 36M Rolling)**:",
+        f"  - European sovereign rates coupling: Euro Area Bund vs. UK Gilt (**{yield_matrix.get('EA', {}).get('UK', 'n/a')}**).",
+        f"  - Global dollar anchor linkage: US vs. UK (**{yield_matrix.get('US', {}).get('UK', 'n/a')}**), US vs. Euro Area (**{yield_matrix.get('US', {}).get('EA', 'n/a')}**).",
+        f"  - Divergent duration / yield curve regimes: US vs. Japan (**{yield_matrix.get('US', {}).get('JP', 'n/a')}**), US vs. South Africa (**{yield_matrix.get('US', {}).get('ZA', 'n/a')}**).",
         "",
         "---",
         "",
-        "## 4. Priority Data Quality & Maintenance Backlog",
+        "## 5. Priority Data Quality & Maintenance Backlog",
         "",
         "| Code | Section | Item | Priority | Action Hint |",
         "| :---: | :--- | :--- | :---: | :--- |",

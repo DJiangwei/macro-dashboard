@@ -40,7 +40,24 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 
 ---
 
-## 3. Cross-Country Synchronization (36-Month Rolling Correlation)
+## 3. Global Sovereign 10Y Benchmark Yields & Spreads to US Treasury
+
+| Economy | Benchmark Asset | Latest Yield | Latest Date | Spread to US 10Y (bps) | Status |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| **US** | 10Y Treasury | **5.22%** | 2026-10-08 | **0.0 bps** | Official Observed |
+| **EA** | 10Y Bund | **3.47%** | 2026-09-01 | **-175.0 bps** | Official Observed |
+| **UK** | 10Y Gilt | **5.40%** | 2026-10-09 | **+18.0 bps** | Official Observed |
+| **JP** | 10Y JGB | **2.94%** | 2026-08-01 | **-228.0 bps** | Official Observed |
+| **CN** | CN 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
+| **ZA** | 10Y Sovereign | **8.20%** | 2026-10-12 | **+298.0 bps** | Official Observed |
+| **PL** | PL 10Y Benchmark | **5.81%** | 2026-08-01 | **+59.0 bps** | Official Observed |
+| **CZ** | CZ 10Y Benchmark | **4.91%** | 2026-08-01 | **-31.0 bps** | Official Observed |
+| **HU** | HU 10Y Benchmark | **5.46%** | 2026-08-01 | **+24.0 bps** | Official Observed |
+| **RO** | RO 10Y Benchmark | **6.43%** | 2026-08-01 | **+121.0 bps** | Official Observed |
+
+---
+
+## 4. Cross-Country Synchronization (36-Month Rolling Correlation)
 
 - **Nominal Cycle (Headline CPI Inflation)**:
   - Highly coupled core: US vs. Euro Area (**0.94**), US vs. UK (**0.87**), Euro Area vs. UK (**0.96**).
@@ -48,10 +65,14 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 - **Real Business Cycle (Industrial Production)**:
   - Transatlantic industrial linkage: US vs. Euro Area (**0.49**), US vs. UK (**0.5**).
   - Manufacturing divergence: China vs. US (**0.21**), Japan vs. US (**0.44**).
+- **Financial & Capital Flows (10Y Sovereign Yields 36M Rolling)**:
+  - European sovereign rates coupling: Euro Area Bund vs. UK Gilt (**0.83**).
+  - Global dollar anchor linkage: US vs. UK (**0.61**), US vs. Euro Area (**0.5**).
+  - Divergent duration / yield curve regimes: US vs. Japan (**0.26**), US vs. South Africa (**0.22**).
 
 ---
 
-## 4. Priority Data Quality & Maintenance Backlog
+## 5. Priority Data Quality & Maintenance Backlog
 
 | Code | Section | Item | Priority | Action Hint |
 | :---: | :--- | :--- | :---: | :--- |

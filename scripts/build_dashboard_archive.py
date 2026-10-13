@@ -379,14 +379,49 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
     sync_data = workbench.get("cross_country_sync", {}) or {}
     cpi_matrix = sync_data.get("inflation_correlation", {}) or {}
     ip_matrix = sync_data.get("industrial_production_correlation", {}) or {}
+    yield_matrix = sync_data.get("sovereign_yield_correlation", {}) or {}
+    spreads = sync_data.get("sovereign_spreads_to_us", {}) or {}
     sync_countries = sync_data.get("countries", []) or []
+
+    sovereign_rows = []
+    for code in sync_countries:
+        sp = spreads.get(code, {})
+        bmk = sp.get("benchmark", f"{code} 10Y")
+        dt = sp.get("date", "n/a")
+        y_val = sp.get("yield")
+        sp_bps = sp.get("spread_bps")
+        if y_val is not None:
+            sign = "+" if sp_bps > 0 else ""
+            sp_str = f"{sign}{sp_bps:.1f} bps" if code != "US" else "Benchmark (0.0)"
+            pill_cls = "neutral" if code == "US" or abs(sp_bps) <= 100 else ("bad" if sp_bps > 200 else "good")
+            sovereign_rows.append(f"""
+      <tr>
+        <td><strong>{escape(str(code))}</strong></td>
+        <td>{escape(str(bmk))}</td>
+        <td><strong>{y_val:.2f}%</strong></td>
+        <td>{escape(str(dt))}</td>
+        <td><span class="score-pill {pill_cls}">{escape(sp_str)}</span></td>
+        <td><em>Official Observed</em></td>
+      </tr>""")
+        else:
+            sovereign_rows.append(f"""
+      <tr>
+        <td><strong>{escape(str(code))}</strong></td>
+        <td>{escape(str(bmk))}</td>
+        <td><em>n/a</em></td>
+        <td>{escape(str(dt))}</td>
+        <td><span class="score-pill neutral">-</span></td>
+        <td><em style="color: var(--warn);">Tracked in Data Gap Backlog</em></td>
+      </tr>""")
 
     sync_th = "".join(f"<th style='text-align: center; padding: 6px 4px; font-size: 11px;'>{c}</th>" for c in sync_countries)
     sync_rows = []
     sync_ip_rows = []
+    sync_yield_rows = []
     for c1 in sync_countries:
         cells = [f"<td style='padding: 6px 8px;'><strong>{c1}</strong></td>"]
         cells_ip = [f"<td style='padding: 6px 8px;'><strong>{c1}</strong></td>"]
+        cells_yd = [f"<td style='padding: 6px 8px;'><strong>{c1}</strong></td>"]
         for c2 in sync_countries:
             val = cpi_matrix.get(c1, {}).get(c2)
             if val is None:
@@ -416,8 +451,23 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
                     style_ip = "color: #737c8c;"
                 cells_ip.append(f"<td style='text-align: center; padding: 6px 4px; font-size: 11px; {style_ip}'>{val_ip:.2f}</td>")
 
+            val_yd = yield_matrix.get(c1, {}).get(c2)
+            if val_yd is None:
+                cells_yd.append("<td style='text-align: center; padding: 6px 4px;'>-</td>")
+            else:
+                if val_yd >= 0.8:
+                    style_yd = "background: rgba(13, 118, 128, 0.14); color: #0d7680; font-weight: 600;"
+                elif val_yd >= 0.5:
+                    style_yd = "background: rgba(13, 118, 128, 0.06); color: #0d7680;"
+                elif val_yd <= -0.2:
+                    style_yd = "background: rgba(153, 15, 61, 0.08); color: #990f3d;"
+                else:
+                    style_yd = "color: #737c8c;"
+                cells_yd.append(f"<td style='text-align: center; padding: 6px 4px; font-size: 11px; {style_yd}'>{val_yd:.2f}</td>")
+
         sync_rows.append(f"<tr>{''.join(cells)}</tr>")
         sync_ip_rows.append(f"<tr>{''.join(cells_ip)}</tr>")
+        sync_yield_rows.append(f"<tr>{''.join(cells_yd)}</tr>")
 
     return f"""
   <section class="workbench" aria-label="macro workbench">
@@ -442,25 +492,45 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
         <tbody>{''.join(monetary_rows)}</tbody>
       </table>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 16px; margin-top: 16px;">
+    <div class="table-wrap" style="margin-top: 16px;">
+      <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
+        <strong style="font-size: 13px; color: var(--fg);">Global Sovereign 10Y Benchmark Yields & Spreads to US Treasury</strong>
+        <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Official 10-year sovereign bond benchmark yields and basis point spreads relative to the US 10-year Treasury benchmark ({escape(str(sync_data.get('sample_period_yield', '')))}).</span>
+      </div>
+      <table class="regime-table">
+        <thead><tr><th>Country</th><th>Benchmark Instrument</th><th>Latest Yield</th><th>Observation Date</th><th>Spread to US 10Y (bps)</th><th>Data Reliability</th></tr></thead>
+        <tbody>{''.join(sovereign_rows)}</tbody>
+      </table>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 16px; margin-top: 16px;">
       <div class="table-wrap">
         <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
-          <strong style="font-size: 13px; color: var(--fg);">Cross-Country Inflation Synchronization Matrix</strong>
-          <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Pairwise Pearson correlation on monthly headline CPI ({escape(str(sync_data.get('sample_period_cpi', '')))}). Teal denotes strong co-movement.</span>
+          <strong style="font-size: 13px; color: var(--fg);">Headline Inflation Synchronization (36M)</strong>
+          <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Monthly headline CPI correlation ({escape(str(sync_data.get('sample_period_cpi', '')))}).</span>
         </div>
-        <table class="regime-table" style="min-width: 480px;">
+        <table class="regime-table" style="min-width: 360px;">
           <thead><tr><th style="padding: 6px 8px;">Country</th>{sync_th}</tr></thead>
           <tbody>{''.join(sync_rows)}</tbody>
         </table>
       </div>
       <div class="table-wrap">
         <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
-          <strong style="font-size: 13px; color: var(--fg);">Cross-Country Industrial Production Synchronization Matrix</strong>
-          <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Pairwise Pearson correlation on monthly Industrial Production ({escape(str(sync_data.get('sample_period_ip', '')))}). Teal denotes real-cycle co-movement.</span>
+          <strong style="font-size: 13px; color: var(--fg);">Industrial Production Synchronization (36M)</strong>
+          <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Monthly Industrial Production correlation ({escape(str(sync_data.get('sample_period_ip', '')))}).</span>
         </div>
-        <table class="regime-table" style="min-width: 480px;">
+        <table class="regime-table" style="min-width: 360px;">
           <thead><tr><th style="padding: 6px 8px;">Country</th>{sync_th}</tr></thead>
           <tbody>{''.join(sync_ip_rows)}</tbody>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
+          <strong style="font-size: 13px; color: var(--fg);">10Y Sovereign Yield Synchronization (36M)</strong>
+          <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Monthly 10Y Sovereign Yield co-movement ({escape(str(sync_data.get('sample_period_yield', '')))}).</span>
+        </div>
+        <table class="regime-table" style="min-width: 360px;">
+          <thead><tr><th style="padding: 6px 8px;">Country</th>{sync_th}</tr></thead>
+          <tbody>{''.join(sync_yield_rows)}</tbody>
         </table>
       </div>
     </div>

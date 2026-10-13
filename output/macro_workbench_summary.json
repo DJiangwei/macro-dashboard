@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T12:56:25.011922+00:00",
+  "generated": "2026-10-13T13:08:36.575268+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -5953,9 +5953,9 @@
         ],
         "file": "us_canonical_frame.json",
         "series": 165,
-        "observations": 116989,
+        "observations": 116991,
         "series_count": 165,
-        "observation_count": 116989
+        "observation_count": 116991
       },
       "freshness_summary": {
         "dashboard": "United States",
@@ -7093,6 +7093,7 @@
     ],
     "sample_period_cpi": "2022-12 to 2025-12",
     "sample_period_ip": "2022-11 to 2026-06",
+    "sample_period_yield": "2023-09 to 2026-08",
     "inflation_correlation": {
       "US": {
         "US": 1.0,
@@ -7335,6 +7336,200 @@
         "CZ": 0.04,
         "HU": -0.11,
         "RO": 1.0
+      }
+    },
+    "sovereign_yield_correlation": {
+      "US": {
+        "US": 1.0,
+        "EA": 0.5,
+        "UK": 0.61,
+        "JP": 0.26,
+        "CN": null,
+        "ZA": 0.22,
+        "PL": 0.65,
+        "CZ": 0.53,
+        "HU": -0.02,
+        "RO": 0.09
+      },
+      "EA": {
+        "US": 0.5,
+        "EA": 1.0,
+        "UK": 0.83,
+        "JP": 0.86,
+        "CN": null,
+        "ZA": -0.52,
+        "PL": 0.16,
+        "CZ": 0.92,
+        "HU": -0.18,
+        "RO": -0.01
+      },
+      "UK": {
+        "US": 0.61,
+        "EA": 0.83,
+        "UK": 1.0,
+        "JP": 0.8,
+        "CN": null,
+        "ZA": -0.52,
+        "PL": 0.36,
+        "CZ": 0.8,
+        "HU": -0.11,
+        "RO": 0.19
+      },
+      "JP": {
+        "US": 0.26,
+        "EA": 0.86,
+        "UK": 0.8,
+        "JP": 1.0,
+        "CN": null,
+        "ZA": -0.79,
+        "PL": -0.02,
+        "CZ": 0.8,
+        "HU": -0.43,
+        "RO": -0.13
+      },
+      "CN": {
+        "US": null,
+        "EA": null,
+        "UK": null,
+        "JP": null,
+        "CN": null,
+        "ZA": null,
+        "PL": null,
+        "CZ": null,
+        "HU": null,
+        "RO": null
+      },
+      "ZA": {
+        "US": 0.22,
+        "EA": -0.52,
+        "UK": -0.52,
+        "JP": -0.79,
+        "CN": null,
+        "ZA": 1.0,
+        "PL": 0.38,
+        "CZ": -0.5,
+        "HU": 0.25,
+        "RO": -0.11
+      },
+      "PL": {
+        "US": 0.65,
+        "EA": 0.16,
+        "UK": 0.36,
+        "JP": -0.02,
+        "CN": null,
+        "ZA": 0.38,
+        "PL": 1.0,
+        "CZ": 0.2,
+        "HU": 0.08,
+        "RO": 0.13
+      },
+      "CZ": {
+        "US": 0.53,
+        "EA": 0.92,
+        "UK": 0.8,
+        "JP": 0.8,
+        "CN": null,
+        "ZA": -0.5,
+        "PL": 0.2,
+        "CZ": 1.0,
+        "HU": -0.12,
+        "RO": 0.1
+      },
+      "HU": {
+        "US": -0.02,
+        "EA": -0.18,
+        "UK": -0.11,
+        "JP": -0.43,
+        "CN": null,
+        "ZA": 0.25,
+        "PL": 0.08,
+        "CZ": -0.12,
+        "HU": 1.0,
+        "RO": 0.59
+      },
+      "RO": {
+        "US": 0.09,
+        "EA": -0.01,
+        "UK": 0.19,
+        "JP": -0.13,
+        "CN": null,
+        "ZA": -0.11,
+        "PL": 0.13,
+        "CZ": 0.1,
+        "HU": 0.59,
+        "RO": 1.0
+      }
+    },
+    "sovereign_spreads_to_us": {
+      "US": {
+        "benchmark": "10Y Treasury",
+        "date": "2026-10-08",
+        "yield": 5.22,
+        "spread_bps": 0.0,
+        "status": "observed"
+      },
+      "EA": {
+        "benchmark": "10Y Bund",
+        "date": "2026-09-01",
+        "yield": 3.47,
+        "spread_bps": -175.0,
+        "status": "observed"
+      },
+      "UK": {
+        "benchmark": "10Y Gilt",
+        "date": "2026-10-09",
+        "yield": 5.4,
+        "spread_bps": 18.0,
+        "status": "observed"
+      },
+      "JP": {
+        "benchmark": "10Y JGB",
+        "date": "2026-08-01",
+        "yield": 2.94,
+        "spread_bps": -228.0,
+        "status": "observed"
+      },
+      "CN": {
+        "benchmark": "CN 10Y",
+        "date": "n/a",
+        "yield": null,
+        "spread_bps": null,
+        "status": "data_gap"
+      },
+      "ZA": {
+        "benchmark": "10Y Sovereign",
+        "date": "2026-10-12",
+        "yield": 8.2,
+        "spread_bps": 298.0,
+        "status": "observed"
+      },
+      "PL": {
+        "benchmark": "PL 10Y Benchmark",
+        "date": "2026-08-01",
+        "yield": 5.81,
+        "spread_bps": 59.0,
+        "status": "observed"
+      },
+      "CZ": {
+        "benchmark": "CZ 10Y Benchmark",
+        "date": "2026-08-01",
+        "yield": 4.91,
+        "spread_bps": -31.0,
+        "status": "observed"
+      },
+      "HU": {
+        "benchmark": "HU 10Y Benchmark",
+        "date": "2026-08-01",
+        "yield": 5.46,
+        "spread_bps": 24.0,
+        "status": "observed"
+      },
+      "RO": {
+        "benchmark": "RO 10Y Benchmark",
+        "date": "2026-08-01",
+        "yield": 6.43,
+        "spread_bps": 121.0,
+        "status": "observed"
       }
     }
   },
