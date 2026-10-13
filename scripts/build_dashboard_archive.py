@@ -342,6 +342,61 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
         <span>{escape(str(detail))}</span>
       </li>""")
 
+    monetary_rows = []
+    monetary_stance = workbench.get("monetary_stance_monitor", {}) or {}
+    for code, stance in monetary_stance.items():
+        if not stance:
+            continue
+        dev = float(stance.get("policy_gap_deviation") or 0.0)
+        if dev >= 0.5:
+            pill_cls = "bad"
+        elif dev <= -0.5:
+            pill_cls = "good"
+        else:
+            pill_cls = "neutral"
+
+        sign = "+" if dev > 0 else ""
+        dev_str = f"{sign}{dev:.2f}%"
+
+        real_val = float(stance.get("real_policy_rate") or 0.0)
+        real_sign = "+" if real_val > 0 else ""
+        real_str = f"{real_sign}{real_val:.2f}%"
+
+        monetary_rows.append(f"""
+      <tr>
+        <td><strong>{escape(str(code))}</strong><span>{escape(str(stance.get('institution', '')))}</span></td>
+        <td><strong>{escape(str(stance.get('policy_rate', 'n/a')))}%</strong></td>
+        <td>{escape(str(stance.get('inflation_rate', 'n/a')))}% <em>tgt {escape(str(stance.get('inflation_target', 'n/a')))}%</em></td>
+        <td>{escape(str(stance.get('taylor_implied_rate', 'n/a')))}%</td>
+        <td><span class="score-pill {pill_cls}">{escape(dev_str)}</span></td>
+        <td><strong>{escape(real_str)}</strong></td>
+        <td><em>{escape(str(stance.get('stance_label', 'n/a')))}</em></td>
+      </tr>""")
+
+    sync_data = workbench.get("cross_country_sync", {}) or {}
+    cpi_matrix = sync_data.get("inflation_correlation", {}) or {}
+    sync_countries = sync_data.get("countries", []) or []
+
+    sync_th = "".join(f"<th style='text-align: center; padding: 6px 4px; font-size: 11px;'>{c}</th>" for c in sync_countries)
+    sync_rows = []
+    for c1 in sync_countries:
+        cells = [f"<td style='padding: 6px 8px;'><strong>{c1}</strong></td>"]
+        for c2 in sync_countries:
+            val = cpi_matrix.get(c1, {}).get(c2)
+            if val is None:
+                cells.append("<td style='text-align: center; padding: 6px 4px;'>-</td>")
+            else:
+                if val >= 0.8:
+                    style = "background: rgba(13, 118, 128, 0.14); color: #0d7680; font-weight: 600;"
+                elif val >= 0.5:
+                    style = "background: rgba(13, 118, 128, 0.06); color: #0d7680;"
+                elif val <= -0.2:
+                    style = "background: rgba(153, 15, 61, 0.08); color: #990f3d;"
+                else:
+                    style = "color: #737c8c;"
+                cells.append(f"<td style='text-align: center; padding: 6px 4px; font-size: 11px; {style}'>{val:.2f}</td>")
+        sync_rows.append(f"<tr>{''.join(cells)}</tr>")
+
     return f"""
   <section class="workbench" aria-label="macro workbench">
     <div class="section-head">
@@ -353,6 +408,26 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
       <table class="regime-table">
         <thead><tr><th>Country</th><th>Cyclical</th><th>Structural</th><th>Growth</th><th>Inflation</th><th>Policy</th><th>Data Quality</th></tr></thead>
         <tbody>{''.join(regime_rows)}</tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="margin-top: 16px;">
+      <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
+        <strong style="font-size: 13px; color: var(--fg);">Taylor Rule & Monetary Stance Monitor</strong>
+        <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Theoretical policy rate benchmark based on core inflation target, neutral real rate (r*), and output gap. Policy gap = Actual rate − Taylor benchmark.</span>
+      </div>
+      <table class="regime-table">
+        <thead><tr><th>Central Bank</th><th>Policy Rate</th><th>Inflation (Target)</th><th>Taylor Benchmark</th><th>Policy Gap</th><th>Real Rate</th><th>Stance Assessment</th></tr></thead>
+        <tbody>{''.join(monetary_rows)}</tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="margin-top: 16px;">
+      <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
+        <strong style="font-size: 13px; color: var(--fg);">Cross-Country Inflation Synchronization Matrix (36-Month Rolling Correlation)</strong>
+        <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Pairwise Pearson correlation coefficients on monthly headline CPI inflation across all 10 economies ({escape(str(sync_data.get('sample_period_cpi', '')))}). Darker teal denotes strong co-movement; red denotes counter-cyclical divergence.</span>
+      </div>
+      <table class="regime-table" style="min-width: 600px;">
+        <thead><tr><th style="padding: 6px 8px;">Country</th>{sync_th}</tr></thead>
+        <tbody>{''.join(sync_rows)}</tbody>
       </table>
     </div>
     <div class="workbench-grid">

@@ -677,6 +677,88 @@ def _degradation_alerts(previous: dict[str, Any], current_cards: list[dict[str, 
     return alerts
 
 
+def _pearson(x: list[float], y: list[float]) -> float:
+    n = len(x)
+    if n < 3:
+        return 0.0
+    mx, my = sum(x) / n, sum(y) / n
+    vx = sum((xi - mx) ** 2 for xi in x)
+    vy = sum((yi - my) ** 2 for yi in y)
+    if vx <= 1e-9 or vy <= 1e-9:
+        return 0.0
+    cov = sum((xi - mx) * (yi - my) for xi, yi in zip(x, y))
+    return round(cov / math.sqrt(vx * vy), 2)
+
+
+def _compute_cross_country_sync() -> dict[str, Any]:
+    countries = ["US", "EA", "UK", "JP", "CN", "ZA", "PL", "CZ", "HU", "RO"]
+    cpi_data: dict[str, dict[str, float]] = {}
+    ip_data: dict[str, dict[str, float]] = {}
+
+    canonical_specs = {
+        "CN": ("china_canonical_frame.json", "cpi_yoy_akshare", "industrial_value_added_yoy_akshare"),
+        "EA": ("euro_area_canonical_frame.json", "hicp_inflation", "industrial_production_yoy"),
+        "JP": ("japan_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
+        "ZA": ("south_africa_canonical_frame.json", "cpi_inflation", "manufacturing_production_growth"),
+        "UK": ("uk_canonical_frame.json", "cpi_yoy", "industrial_production_yoy"),
+        "US": ("us_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
+    }
+
+    for code, (fname, cpi_k, ip_k) in canonical_specs.items():
+        p = OUTPUT / fname
+        if p.exists():
+            d = _read_json(p)
+            for s in d.get("series", []) or []:
+                ind_id = s.get("indicator_id")
+                if ind_id == cpi_k:
+                    cpi_data[code] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
+                elif ind_id == ip_k:
+                    ip_data[code] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
+
+    cee_path = OUTPUT / "cee_canonical_frame.json"
+    if cee_path.exists():
+        cee = _read_json(cee_path)
+        for s in cee.get("series", []) or []:
+            ind_id = s.get("indicator_id")
+            country = str(s.get("country") or "").upper()
+            if country in countries:
+                if ind_id == "cpi_yoy":
+                    cpi_data[country] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
+                elif ind_id == "industrial_production_yoy":
+                    ip_data[country] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
+
+    cpi_common = sorted(list(set.intersection(*[set(cpi_data[c].keys()) for c in countries if c in cpi_data]))) if len(cpi_data) >= len(countries) else []
+    ip_common = sorted(list(set.intersection(*[set(ip_data[c].keys()) for c in countries if c in ip_data]))) if len(ip_data) >= len(countries) else []
+
+    cpi_matrix: dict[str, dict[str, float]] = {}
+    if len(cpi_common) >= 12:
+        cpi_window = cpi_common[-36:]
+        for c1 in countries:
+            cpi_matrix[c1] = {}
+            for c2 in countries:
+                x = [cpi_data[c1][m] for m in cpi_window]
+                y = [cpi_data[c2][m] for m in cpi_window]
+                cpi_matrix[c1][c2] = _pearson(x, y)
+
+    ip_matrix: dict[str, dict[str, float]] = {}
+    if len(ip_common) >= 12:
+        ip_window = ip_common[-36:]
+        for c1 in countries:
+            ip_matrix[c1] = {}
+            for c2 in countries:
+                x = [ip_data[c1][m] for m in ip_window]
+                y = [ip_data[c2][m] for m in ip_window]
+                ip_matrix[c1][c2] = _pearson(x, y)
+
+    return {
+        "countries": countries,
+        "sample_period_cpi": f"{cpi_common[-36]} to {cpi_common[-1]}" if len(cpi_common) >= 36 else "",
+        "sample_period_ip": f"{ip_common[-36]} to {ip_common[-1]}" if len(ip_common) >= 36 else "",
+        "inflation_correlation": cpi_matrix,
+        "industrial_production_correlation": ip_matrix,
+    }
+
+
 def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
     """Build and write macro workbench JSON artifacts."""
     OUTPUT.mkdir(parents=True, exist_ok=True)
@@ -696,6 +778,7 @@ def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
         for code, r in regimes.items()
         if r.get("taylor_stance")
     }
+    cross_country_sync = _compute_cross_country_sync()
 
     payload = {
         "generated": datetime.now(UTC).isoformat(),
@@ -703,6 +786,7 @@ def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
         "cards": enriched_cards,
         "regimes": regimes,
         "monetary_stance_monitor": monetary_stance_monitor,
+        "cross_country_sync": cross_country_sync,
         "heatmap": heatmap,
         "release_monitor": release_monitor,
         "gap_backlog": gap_backlog,
