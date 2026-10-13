@@ -1777,6 +1777,19 @@ indicators:
     start_date: "1990-01-01"
     caveat_en: "Positive values indicate tighter-than-average financial conditions."
     caveat_zh: "正值表示金融条件较历史均值更紧。"
+  - id: st_louis_fed_financial_stress_index
+    section: monetary_financial
+    label_en: "St. Louis Fed Financial Stress Index"
+    label_zh: "圣路易斯联储金融压力指数"
+    unit: "index"
+    fetcher: fred
+    series: "STLFSI4"
+    source_name: "FRED / Federal Reserve Bank of St. Louis"
+    source_url: "https://fred.stlouisfed.org/series/STLFSI4"
+    frequency: "weekly"
+    start_date: "1993-12-31"
+    caveat_en: "STLFSI4 measures financial market stress across 18 weekly variables; values above zero reflect above-average financial stress."
+    caveat_zh: "STLFSI4综合18个周频变量量化金融市场压力；大于零表示市场压力高于历史平均水平。"
   - id: vix
     section: monetary_financial
     label_en: "VIX"

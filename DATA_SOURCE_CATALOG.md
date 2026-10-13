@@ -1051,7 +1051,7 @@ Configured charts: 92. Latest rendered chart count: 92. Source groups: 11.
 
 The US page is generated from `config/us_indicators.yaml`. This table records configured sources for each rendered chart slot; latest dates are tracked in `output/us_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 164. Latest rendered chart count: 164. Source groups: 27.
+Configured charts: 165. Latest rendered chart count: 165. Source groups: 28.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1182,6 +1182,7 @@ Configured charts: 164. Latest rendered chart count: 164. Source groups: 27.
 | monetary_financial | `high_yield_spread` | High-Yield Corporate Spread | daily | % | fred | FRED / ICE BofA | BAMLH0A0HYM2 | FRED mirror of ICE BofA high-yield OAS; history available through FRED starts in 2023. |
 | monetary_financial | `investment_grade_spread` | Investment-Grade Corporate Spread | daily | % | fred | FRED / ICE BofA | BAMLC0A0CM | FRED mirror of ICE BofA corporate OAS; check ICE/BofA source for release-day work. |
 | monetary_financial | `chicago_fed_nfci` | Chicago Fed NFCI | weekly | index | fred | FRED / Chicago Fed | NFCI | Positive values indicate tighter-than-average financial conditions. |
+| monetary_financial | `st_louis_fed_financial_stress_index` | St. Louis Fed Financial Stress Index | weekly | index | fred | FRED / Federal Reserve Bank of St. Louis | STLFSI4 | STLFSI4 measures financial market stress across 18 weekly variables; values above zero reflect above-average financial stress. |
 | monetary_financial | `vix` | VIX | daily | index | fred | FRED / CBOE | VIXCLS | Equity volatility is not in the original GS statistics guide, but is central to modern financial conditions. |
 | monetary_financial | `mortgage_30y_rate` | 30Y Fixed Mortgage Rate | weekly | % | fred | FRED / Freddie Mac | MORTGAGE30US | Mortgage rates connect monetary tightening to housing affordability and demand. |
 | monetary_financial | `ci_loans_growth` | Commercial & Industrial Loans Growth | monthly | % y/y | fred | FRED / Federal Reserve | BUSLOANS | C&I loan growth captures bank credit impulse to firms. |

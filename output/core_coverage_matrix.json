@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-10-13T09:57:20.486360+00:00",
+  "generated": "2026-10-13T10:42:21.798867+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -53,10 +53,10 @@
     },
     "CN": {
       "verified": 0,
-      "watch": 23,
+      "watch": 24,
       "low_confidence": 2,
       "substitute": 0,
-      "missing": 23
+      "missing": 22
     },
     "EA": {
       "verified": 27,
@@ -3772,7 +3772,7 @@
             "aaa_yield_10y",
             "irs_10y_de"
           ],
-          "latest_date": "2026-10-09",
+          "latest_date": "2026-10-12",
           "refresh_fallback": false
         },
         "JP": {
@@ -3790,7 +3790,7 @@
           "indicator_ids": [
             "sovereign_yield_10y"
           ],
-          "latest_date": "2026-10-09",
+          "latest_date": "2026-10-12",
           "refresh_fallback": false
         },
         "UK": {
@@ -3895,7 +3895,7 @@
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2026-10-12",
+          "latest_date": "2026-10-13",
           "refresh_fallback": false
         },
         "UK": {
@@ -4228,9 +4228,9 @@
       "label_zh": "银行贷款利率",
       "unit": "percent",
       "priority_weight": 5,
-      "missing_countries": 4,
+      "missing_countries": 3,
       "weak_countries": 0,
-      "priority_score": 70,
+      "priority_score": 65,
       "countries": {
         "HU": {
           "state": "verified",
@@ -4269,11 +4269,13 @@
           "refresh_fallback": false
         },
         "CN": {
-          "state": "missing",
-          "quality_status": "unavailable",
-          "indicator_ids": [],
-          "latest_date": "",
-          "refresh_fallback": false
+          "state": "watch",
+          "quality_status": "watch",
+          "indicator_ids": [
+            "lpr_5y_akshare"
+          ],
+          "latest_date": "2026-09-20",
+          "refresh_fallback": true
         },
         "EA": {
           "state": "verified",
@@ -4297,7 +4299,7 @@
           "indicator_ids": [
             "prime_lending_rate"
           ],
-          "latest_date": "2026-10-12",
+          "latest_date": "2026-10-13",
           "refresh_fallback": false
         },
         "UK": {
@@ -4475,7 +4477,7 @@
           "indicator_ids": [
             "yield_curve_slope"
           ],
-          "latest_date": "2026-10-09",
+          "latest_date": "2026-10-12",
           "refresh_fallback": false
         },
         "JP": {
@@ -4591,7 +4593,8 @@
           "state": "watch",
           "quality_status": "watch",
           "indicator_ids": [
-            "chicago_fed_nfci"
+            "chicago_fed_nfci",
+            "st_louis_fed_financial_stress_index"
           ],
           "latest_date": "2026-10-02",
           "refresh_fallback": false
@@ -5006,19 +5009,6 @@
       "weak_countries": []
     },
     {
-      "concept_id": "bank_lending_rate",
-      "pillar": "monetary_financial",
-      "label_en": "Bank Lending Rate",
-      "priority_score": 70,
-      "missing_countries": [
-        "CN",
-        "JP",
-        "UK",
-        "US"
-      ],
-      "weak_countries": []
-    },
-    {
       "concept_id": "wage_cost_inflation",
       "pillar": "prices_costs",
       "label_en": "Labour Cost Inflation",
@@ -5027,6 +5017,18 @@
         "CN",
         "JP",
         "ZA"
+      ],
+      "weak_countries": []
+    },
+    {
+      "concept_id": "bank_lending_rate",
+      "pillar": "monetary_financial",
+      "label_en": "Bank Lending Rate",
+      "priority_score": 65,
+      "missing_countries": [
+        "JP",
+        "UK",
+        "US"
       ],
       "weak_countries": []
     },

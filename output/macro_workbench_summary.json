@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T09:57:36.824788+00:00",
+  "generated": "2026-10-13T10:42:38.060581+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -2192,9 +2192,9 @@
         ],
         "file": "euro_area_canonical_frame.json",
         "series": 70,
-        "observations": 59505,
+        "observations": 59508,
         "series_count": 70,
-        "observation_count": 59505
+        "observation_count": 59508
       },
       "freshness_summary": {
         "dashboard": "Euro Area",
@@ -3152,7 +3152,7 @@
           "label": "SARB repo rate",
           "value": 7.25,
           "display": "7.25 %",
-          "date": "2026-10-12",
+          "date": "2026-10-13",
           "source": "SARB Web API",
           "quality_status": "verified"
         },
@@ -3179,7 +3179,7 @@
           "label": "Prime lending rate",
           "value": 10.75,
           "display": "10.8 %",
-          "date": "2026-10-12",
+          "date": "2026-10-13",
           "source": "SARB Web API",
           "quality_status": "verified"
         },
@@ -4054,9 +4054,9 @@
         ],
         "file": "south_africa_canonical_frame.json",
         "series": 64,
-        "observations": 30392,
+        "observations": 30398,
         "series_count": 64,
-        "observation_count": 30392
+        "observation_count": 30398
       },
       "freshness_summary": {
         "dashboard": "South Africa",
@@ -4942,16 +4942,16 @@
       "currency": "USD",
       "institution": "Fed",
       "category": "data-first country page",
-      "charts": 164,
-      "expected": 164,
+      "charts": 165,
+      "expected": 165,
       "proxy_fills": 0,
       "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
       "headline_label": "Fed funds",
       "headline": "3.88% (2026-10-08)",
       "secondary_label": "Source groups",
-      "secondary": "27",
-      "quality": "27 source groups · 8 low-confidence charts",
+      "secondary": "28",
+      "quality": "28 source groups · 8 low-confidence charts",
       "framework": "GS US statistics logic",
       "status": "clean",
       "signals": {
@@ -5020,7 +5020,7 @@
         }
       },
       "source_health": {
-        "source_groups": 27,
+        "source_groups": 28,
         "sources": [
           {
             "source_name": "FRED / BLS",
@@ -5115,6 +5115,10 @@
             "charts": 1
           },
           {
+            "source_name": "FRED / Federal Reserve Bank of St. Louis",
+            "charts": 1
+          },
+          {
             "source_name": "FRED / Freddie Mac",
             "charts": 1
           },
@@ -5134,14 +5138,14 @@
         "quality_counts": {
           "low_confidence": 8,
           "verified": 4,
-          "watch": 152
+          "watch": 153
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-13",
         "counts": {
-          "current": 128,
+          "current": 129,
           "due": 29,
           "stale": 7
         },
@@ -5948,15 +5952,15 @@
           "value"
         ],
         "file": "us_canonical_frame.json",
-        "series": 164,
-        "observations": 115276,
-        "series_count": 164,
-        "observation_count": 115276
+        "series": 165,
+        "observations": 116986,
+        "series_count": 165,
+        "observation_count": 116986
       },
       "freshness_summary": {
         "dashboard": "United States",
-        "charts": 164,
-        "current": 127,
+        "charts": 165,
+        "current": 128,
         "stale": 7,
         "lagged_source": 0,
         "projection": 0,
@@ -6041,6 +6045,17 @@
           "display": "10.20 % YoY",
           "source_signal": "house_price_index"
         }
+      },
+      "taylor_stance": {
+        "institution": "MNB",
+        "policy_rate": 6.25,
+        "inflation_rate": 1.8,
+        "inflation_target": 3.0,
+        "neutral_real_rate_r_star": 1.8,
+        "taylor_implied_rate": 2.75,
+        "policy_gap_deviation": 3.5,
+        "real_policy_rate": 4.45,
+        "stance_label": "substantially restrictive"
       }
     },
     "PL": {
@@ -6113,6 +6128,17 @@
           "display": "6.30 % YoY",
           "source_signal": "house_price_index"
         }
+      },
+      "taylor_stance": {
+        "institution": "NBP",
+        "policy_rate": 3.75,
+        "inflation_rate": 3.5,
+        "inflation_target": 2.5,
+        "neutral_real_rate_r_star": 1.5,
+        "taylor_implied_rate": 5.9,
+        "policy_gap_deviation": -2.15,
+        "real_policy_rate": 0.25,
+        "stance_label": "substantially accommodative"
       }
     },
     "CZ": {
@@ -6185,6 +6211,17 @@
           "display": "8.60 % YoY",
           "source_signal": "house_price_index"
         }
+      },
+      "taylor_stance": {
+        "institution": "CNB",
+        "policy_rate": 3.5,
+        "inflation_rate": 1.5,
+        "inflation_target": 2.0,
+        "neutral_real_rate_r_star": 1.2,
+        "taylor_implied_rate": 2.35,
+        "policy_gap_deviation": 1.15,
+        "real_policy_rate": 2.0,
+        "stance_label": "moderately restrictive"
       }
     },
     "RO": {
@@ -6257,6 +6294,17 @@
           "display": "12.10 % YoY",
           "source_signal": "house_price_index"
         }
+      },
+      "taylor_stance": {
+        "institution": "BNR",
+        "policy_rate": 6.5,
+        "inflation_rate": 6.3,
+        "inflation_target": 2.5,
+        "neutral_real_rate_r_star": 2.0,
+        "taylor_implied_rate": 8.7,
+        "policy_gap_deviation": -2.2,
+        "real_policy_rate": 0.2,
+        "stance_label": "substantially accommodative"
       }
     },
     "CN": {
@@ -6329,6 +6377,17 @@
           "display": "-12.80 %",
           "source_signal": "commercial_housing_sales_value_yoy_eastmoney"
         }
+      },
+      "taylor_stance": {
+        "institution": "PBC",
+        "policy_rate": 3.0,
+        "inflation_rate": 0.8,
+        "inflation_target": 3.0,
+        "neutral_real_rate_r_star": 1.5,
+        "taylor_implied_rate": 1.55,
+        "policy_gap_deviation": 1.45,
+        "real_policy_rate": 2.2,
+        "stance_label": "moderately restrictive"
       }
     },
     "EA": {
@@ -6401,6 +6460,17 @@
           "display": "4.00 % y/y",
           "source_signal": "house_price_yoy"
         }
+      },
+      "taylor_stance": {
+        "institution": "ECB",
+        "policy_rate": 2.5,
+        "inflation_rate": 2.0,
+        "inflation_target": 2.0,
+        "neutral_real_rate_r_star": 0.5,
+        "taylor_implied_rate": 2.5,
+        "policy_gap_deviation": 0.0,
+        "real_policy_rate": 0.5,
+        "stance_label": "calibrated / neutral"
       }
     },
     "JP": {
@@ -6473,6 +6543,17 @@
           "display": "5.04 % y/y",
           "source_signal": "house_price_growth"
         }
+      },
+      "taylor_stance": {
+        "institution": "Bank of Japan",
+        "policy_rate": 0.98,
+        "inflation_rate": 1.96,
+        "inflation_target": 2.0,
+        "neutral_real_rate_r_star": 0.0,
+        "taylor_implied_rate": 1.91,
+        "policy_gap_deviation": -0.93,
+        "real_policy_rate": -0.99,
+        "stance_label": "moderately accommodative"
       }
     },
     "ZA": {
@@ -6545,6 +6626,17 @@
           "display": "5.99 % y/y",
           "source_signal": "house_price_growth"
         }
+      },
+      "taylor_stance": {
+        "institution": "SARB",
+        "policy_rate": 7.25,
+        "inflation_rate": 4.4,
+        "inflation_target": 4.5,
+        "neutral_real_rate_r_star": 2.5,
+        "taylor_implied_rate": 7.12,
+        "policy_gap_deviation": 0.13,
+        "real_policy_rate": 2.85,
+        "stance_label": "calibrated / neutral"
       }
     },
     "UK": {
@@ -6617,6 +6709,17 @@
           "display": "1.40 %",
           "source_signal": "uk_hpi_annual_change"
         }
+      },
+      "taylor_stance": {
+        "institution": "Bank of England",
+        "policy_rate": 3.75,
+        "inflation_rate": 3.1,
+        "inflation_target": 2.0,
+        "neutral_real_rate_r_star": 1.25,
+        "taylor_implied_rate": 4.49,
+        "policy_gap_deviation": -0.74,
+        "real_policy_rate": 0.65,
+        "stance_label": "moderately accommodative"
       }
     },
     "US": {
@@ -6625,10 +6728,10 @@
       "structural_score": 43.3,
       "composite_label": "defensive",
       "quality": {
-        "score": 58.6,
+        "score": 58.7,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 77.4,
+        "freshness_score": 77.6,
         "proxy_penalty": 0.0,
         "gap_penalty": 17.5
       },
@@ -6689,7 +6792,130 @@
           "display": "2.46 % y/y",
           "source_signal": "case_shiller_20_city_growth"
         }
+      },
+      "taylor_stance": {
+        "institution": "Federal Reserve",
+        "policy_rate": 3.88,
+        "inflation_rate": 3.01,
+        "inflation_target": 2.0,
+        "neutral_real_rate_r_star": 1.0,
+        "taylor_implied_rate": 4.61,
+        "policy_gap_deviation": -0.73,
+        "real_policy_rate": 0.87,
+        "stance_label": "moderately accommodative"
       }
+    }
+  },
+  "monetary_stance_monitor": {
+    "HU": {
+      "institution": "MNB",
+      "policy_rate": 6.25,
+      "inflation_rate": 1.8,
+      "inflation_target": 3.0,
+      "neutral_real_rate_r_star": 1.8,
+      "taylor_implied_rate": 2.75,
+      "policy_gap_deviation": 3.5,
+      "real_policy_rate": 4.45,
+      "stance_label": "substantially restrictive"
+    },
+    "PL": {
+      "institution": "NBP",
+      "policy_rate": 3.75,
+      "inflation_rate": 3.5,
+      "inflation_target": 2.5,
+      "neutral_real_rate_r_star": 1.5,
+      "taylor_implied_rate": 5.9,
+      "policy_gap_deviation": -2.15,
+      "real_policy_rate": 0.25,
+      "stance_label": "substantially accommodative"
+    },
+    "CZ": {
+      "institution": "CNB",
+      "policy_rate": 3.5,
+      "inflation_rate": 1.5,
+      "inflation_target": 2.0,
+      "neutral_real_rate_r_star": 1.2,
+      "taylor_implied_rate": 2.35,
+      "policy_gap_deviation": 1.15,
+      "real_policy_rate": 2.0,
+      "stance_label": "moderately restrictive"
+    },
+    "RO": {
+      "institution": "BNR",
+      "policy_rate": 6.5,
+      "inflation_rate": 6.3,
+      "inflation_target": 2.5,
+      "neutral_real_rate_r_star": 2.0,
+      "taylor_implied_rate": 8.7,
+      "policy_gap_deviation": -2.2,
+      "real_policy_rate": 0.2,
+      "stance_label": "substantially accommodative"
+    },
+    "CN": {
+      "institution": "PBC",
+      "policy_rate": 3.0,
+      "inflation_rate": 0.8,
+      "inflation_target": 3.0,
+      "neutral_real_rate_r_star": 1.5,
+      "taylor_implied_rate": 1.55,
+      "policy_gap_deviation": 1.45,
+      "real_policy_rate": 2.2,
+      "stance_label": "moderately restrictive"
+    },
+    "EA": {
+      "institution": "ECB",
+      "policy_rate": 2.5,
+      "inflation_rate": 2.0,
+      "inflation_target": 2.0,
+      "neutral_real_rate_r_star": 0.5,
+      "taylor_implied_rate": 2.5,
+      "policy_gap_deviation": 0.0,
+      "real_policy_rate": 0.5,
+      "stance_label": "calibrated / neutral"
+    },
+    "JP": {
+      "institution": "Bank of Japan",
+      "policy_rate": 0.98,
+      "inflation_rate": 1.96,
+      "inflation_target": 2.0,
+      "neutral_real_rate_r_star": 0.0,
+      "taylor_implied_rate": 1.91,
+      "policy_gap_deviation": -0.93,
+      "real_policy_rate": -0.99,
+      "stance_label": "moderately accommodative"
+    },
+    "ZA": {
+      "institution": "SARB",
+      "policy_rate": 7.25,
+      "inflation_rate": 4.4,
+      "inflation_target": 4.5,
+      "neutral_real_rate_r_star": 2.5,
+      "taylor_implied_rate": 7.12,
+      "policy_gap_deviation": 0.13,
+      "real_policy_rate": 2.85,
+      "stance_label": "calibrated / neutral"
+    },
+    "UK": {
+      "institution": "Bank of England",
+      "policy_rate": 3.75,
+      "inflation_rate": 3.1,
+      "inflation_target": 2.0,
+      "neutral_real_rate_r_star": 1.25,
+      "taylor_implied_rate": 4.49,
+      "policy_gap_deviation": -0.74,
+      "real_policy_rate": 0.65,
+      "stance_label": "moderately accommodative"
+    },
+    "US": {
+      "institution": "Federal Reserve",
+      "policy_rate": 3.88,
+      "inflation_rate": 3.01,
+      "inflation_target": 2.0,
+      "neutral_real_rate_r_star": 1.0,
+      "taylor_implied_rate": 4.61,
+      "policy_gap_deviation": -0.73,
+      "real_policy_rate": 0.87,
+      "stance_label": "moderately accommodative"
     }
   },
   "heatmap": [
@@ -6787,11 +7013,11 @@
       "code": "US",
       "name": "United States",
       "coverage_pct": 100.0,
-      "freshness_pct": 77.4,
+      "freshness_pct": 77.6,
       "proxy_fills": 0,
       "gaps": 7,
       "regime_score": 47.3,
-      "quality_score": 58.6
+      "quality_score": 58.7
     }
   ],
   "release_monitor": [

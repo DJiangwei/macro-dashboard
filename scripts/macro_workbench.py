@@ -362,7 +362,73 @@ def _country_quality_score(card: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+TAYLOR_PARAMETERS = {
+    "US": {"target": 2.0, "r_star": 1.0, "trend_growth": 2.0, "name": "Federal Reserve"},
+    "EA": {"target": 2.0, "r_star": 0.5, "trend_growth": 1.2, "name": "ECB"},
+    "UK": {"target": 2.0, "r_star": 1.25, "trend_growth": 1.2, "name": "Bank of England"},
+    "JP": {"target": 2.0, "r_star": 0.0, "trend_growth": 0.8, "name": "Bank of Japan"},
+    "CN": {"target": 3.0, "r_star": 1.5, "trend_growth": 4.5, "name": "PBC"},
+    "ZA": {"target": 4.5, "r_star": 2.5, "trend_growth": 1.5, "name": "SARB"},
+    "PL": {"target": 2.5, "r_star": 1.5, "trend_growth": 3.0, "name": "NBP"},
+    "CZ": {"target": 2.0, "r_star": 1.2, "trend_growth": 2.0, "name": "CNB"},
+    "HU": {"target": 3.0, "r_star": 1.8, "trend_growth": 2.2, "name": "MNB"},
+    "RO": {"target": 2.5, "r_star": 2.0, "trend_growth": 2.5, "name": "BNR"},
+}
+
+
+def _compute_taylor_stance(code: str, signals: dict[str, Any]) -> dict[str, Any] | None:
+    param = TAYLOR_PARAMETERS.get(code)
+    if not param:
+        return None
+    policy_sig = signals.get("policy") or {}
+    infl_sig = signals.get("inflation") or {}
+    growth_sig = signals.get("growth") or {}
+
+    policy_val = _number(policy_sig.get("value"))
+    infl_val = _number(infl_sig.get("value"))
+    growth_val = _number(growth_sig.get("value"))
+
+    if policy_val is None or infl_val is None:
+        return None
+
+    target = param["target"]
+    r_star = param["r_star"]
+    trend_growth = param["trend_growth"]
+
+    g_val = growth_val if growth_val is not None else trend_growth
+    output_gap = max(-3.0, min(3.0, g_val - trend_growth))
+    infl_gap = infl_val - target
+
+    taylor_rate = r_star + infl_val + 0.5 * infl_gap + 0.5 * output_gap
+    deviation = policy_val - taylor_rate
+    real_rate = policy_val - infl_val
+
+    if deviation >= 1.5:
+        stance_label = "substantially restrictive"
+    elif deviation >= 0.5:
+        stance_label = "moderately restrictive"
+    elif deviation >= -0.5:
+        stance_label = "calibrated / neutral"
+    elif deviation >= -1.5:
+        stance_label = "moderately accommodative"
+    else:
+        stance_label = "substantially accommodative"
+
+    return {
+        "institution": param["name"],
+        "policy_rate": round(policy_val, 2),
+        "inflation_rate": round(infl_val, 2),
+        "inflation_target": target,
+        "neutral_real_rate_r_star": r_star,
+        "taylor_implied_rate": round(taylor_rate, 2),
+        "policy_gap_deviation": round(deviation, 2),
+        "real_policy_rate": round(real_rate, 2),
+        "stance_label": stance_label,
+    }
+
+
 def _regime_for_card(card: dict[str, Any]) -> dict[str, Any]:
+    code = str(card.get("code") or "")
     signals = card.get("signals") or {}
     dimensions: dict[str, dict[str, Any]] = {}
 
@@ -412,6 +478,8 @@ def _regime_for_card(card: dict[str, Any]) -> dict[str, Any]:
     else:
         composite_label = "defensive"
 
+    taylor_stance = _compute_taylor_stance(code, signals)
+
     return {
         "composite_score": round(composite, 1),
         "cyclical_score": round(cyclical_score, 1),
@@ -419,7 +487,7 @@ def _regime_for_card(card: dict[str, Any]) -> dict[str, Any]:
         "composite_label": composite_label,
         "quality": quality,
         "dimensions": dimensions,
-
+        "taylor_stance": taylor_stance,
     }
 
 def _heatmap(cards: list[dict[str, Any]], regimes: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
@@ -623,12 +691,18 @@ def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
     gap_backlog = _gap_backlog(enriched_cards)
     what_changed = _what_changed(previous, enriched_cards, regimes)
     degradation_alerts = _degradation_alerts(previous, enriched_cards, heatmap)
+    monetary_stance_monitor = {
+        code: r.get("taylor_stance")
+        for code, r in regimes.items()
+        if r.get("taylor_stance")
+    }
 
     payload = {
         "generated": datetime.now(UTC).isoformat(),
         "schema_version": "macro-workbench-v1",
         "cards": enriched_cards,
         "regimes": regimes,
+        "monetary_stance_monitor": monetary_stance_monitor,
         "heatmap": heatmap,
         "release_monitor": release_monitor,
         "gap_backlog": gap_backlog,

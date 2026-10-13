@@ -1,8 +1,8 @@
 {
   "file": "us.html",
-  "generated": "2026-10-13T09:56:07.417356+00:00",
-  "charts": 164,
-  "source_groups": 27,
+  "generated": "2026-10-13T10:41:07.627846+00:00",
+  "charts": 165,
+  "source_groups": 28,
   "data_gaps": 7,
   "low_confidence": 8,
   "key_series_latest": [
@@ -79,10 +79,10 @@
       "value"
     ],
     "file": "us_canonical_frame.json",
-    "series": 164,
-    "observations": 115276,
-    "series_count": 164,
-    "observation_count": 115276
+    "series": 165,
+    "observations": 116986,
+    "series_count": 165,
+    "observation_count": 116986
   },
   "data_gaps_detail": [
     {
@@ -136,7 +136,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 27,
+    "source_groups": 28,
     "sources": [
       {
         "source_name": "FRED / BLS",
@@ -231,6 +231,10 @@
         "charts": 1
       },
       {
+        "source_name": "FRED / Federal Reserve Bank of St. Louis",
+        "charts": 1
+      },
+      {
         "source_name": "FRED / Freddie Mac",
         "charts": 1
       },
@@ -250,7 +254,7 @@
     "quality_counts": {
       "low_confidence": 8,
       "verified": 4,
-      "watch": 152
+      "watch": 153
     },
     "unavailable_count": 0
   },
@@ -263,7 +267,7 @@
   "freshness": {
     "as_of_date": "2026-10-13",
     "counts": {
-      "current": 128,
+      "current": 129,
       "due": 29,
       "stale": 7
     },
@@ -1066,7 +1070,7 @@
   "transform_audit": {
     "counts": {
       "diff": 2,
-      "level": 93,
+      "level": 94,
       "pct_change": 7,
       "yoy_pct": 62
     },
@@ -1505,6 +1509,6 @@
       "date",
       "value"
     ],
-    "charted_series": 164
+    "charted_series": 165
   }
 }

@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-10-13T09:57:20.486360+00:00
+Generated: 2026-10-13T10:42:21.798867+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -47,7 +47,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 39 | `monetary_financial` | `real_policy_rate` Real Policy Rate | L | L | L | L | - | - | - | - | - | - |
 | 40 | `monetary_financial` | `broad_money_growth` Broad Money Growth | W | W | W | W | W | V | W | W | V | W |
 | 41 | `monetary_financial` | `private_credit_growth` Private Credit Growth | W | W | W | W | W | V | L | L | V | W |
-| 42 | `monetary_financial` | `bank_lending_rate` Bank Lending Rate | V | V | V | V | - | V | - | V | - | - |
+| 42 | `monetary_financial` | `bank_lending_rate` Bank Lending Rate | V | V | V | V | W | V | - | V | - | - |
 | 43 | `monetary_financial` | `equity_return` Equity Market Return | W | W | W | W | W | - | W | - | W | - |
 | 44 | `monetary_financial` | `yield_curve_slope` Yield Curve Slope | L | L | L | L | - | V | - | - | - | W |
 | 45 | `monetary_financial` | `financial_conditions` Financial Conditions | - | - | - | - | - | V | - | - | - | W |
@@ -63,7 +63,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | PL | 41/48 | 23 | 14 | 4 | 0 | 7 |
 | CZ | 41/48 | 23 | 14 | 4 | 0 | 7 |
 | RO | 41/48 | 21 | 16 | 4 | 0 | 7 |
-| CN | 25/48 | 0 | 23 | 2 | 0 | 23 |
+| CN | 26/48 | 0 | 24 | 2 | 0 | 22 |
 | EA | 41/48 | 27 | 4 | 10 | 0 | 7 |
 | JP | 35/48 | 6 | 16 | 13 | 0 | 13 |
 | ZA | 28/48 | 6 | 6 | 15 | 1 | 20 |
@@ -83,8 +83,8 @@ Priority is explicit and reproducible: pillar macro-value weight x10, plus 5 poi
 | 5 | `nominal_gdp_growth` Nominal GDP Growth | `growth_demand` | 77 | HU, PL, CZ, RO, EA | ZA |
 | 6 | `property_inventory` Property Inventory / Supply | `housing_investment` | 75 | HU, PL, CZ, RO, CN, EA, JP, ZA, UK | - |
 | 7 | `inflation_expectations` Inflation Expectations | `prices_costs` | 70 | CN, JP, ZA, UK | - |
-| 8 | `bank_lending_rate` Bank Lending Rate | `monetary_financial` | 70 | CN, JP, UK, US | - |
-| 9 | `wage_cost_inflation` Labour Cost Inflation | `prices_costs` | 65 | CN, JP, ZA | - |
+| 8 | `wage_cost_inflation` Labour Cost Inflation | `prices_costs` | 65 | CN, JP, ZA | - |
+| 9 | `bank_lending_rate` Bank Lending Rate | `monetary_financial` | 65 | JP, UK, US | - |
 | 10 | `equity_return` Equity Market Return | `monetary_financial` | 65 | EA, ZA, US | - |
 | 11 | `exports_growth` Exports Growth | `external_fx` | 64 | HU, PL, CZ, RO | JP, ZA |
 | 12 | `imports_growth` Imports Growth | `external_fx` | 64 | HU, PL, CZ, RO | JP, ZA |
