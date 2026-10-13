@@ -362,12 +362,15 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
         real_sign = "+" if real_val > 0 else ""
         real_str = f"{real_sign}{real_val:.2f}%"
 
+        rng = stance.get("taylor_rate_range")
+        rng_html = f"<span style='font-size: 11px; color: var(--text-secondary); display: block;'>({rng[0]:.2f}% ~ {rng[1]:.2f}%)</span>" if rng and len(rng) == 2 else ""
+
         monetary_rows.append(f"""
       <tr>
         <td><strong>{escape(str(code))}</strong><span>{escape(str(stance.get('institution', '')))}</span></td>
         <td><strong>{escape(str(stance.get('policy_rate', 'n/a')))}%</strong></td>
         <td>{escape(str(stance.get('inflation_rate', 'n/a')))}% <em>tgt {escape(str(stance.get('inflation_target', 'n/a')))}%</em></td>
-        <td>{escape(str(stance.get('taylor_implied_rate', 'n/a')))}%</td>
+        <td><strong>{escape(str(stance.get('taylor_implied_rate', 'n/a')))}%</strong>{rng_html}</td>
         <td><span class="score-pill {pill_cls}">{escape(dev_str)}</span></td>
         <td><strong>{escape(real_str)}</strong></td>
         <td><em>{escape(str(stance.get('stance_label', 'n/a')))}</em></td>
@@ -421,7 +424,7 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
     <div class="section-head">
       <p class="eyebrow">Macro Workbench</p>
       <h2>Regime, Data Quality, And Maintenance Queue</h2>
-      <p>Generated from <code>{escape(prefix)}macro_workbench_summary.json</code>. Scores are directional research aids: they combine public data coverage, freshness, proxy status, and selected macro signals.</p>
+      <p>Generated from <code>{escape(prefix)}macro_workbench_summary.json</code>. Scores are directional research aids: they combine public data coverage, freshness, proxy status, and selected macro signals. View text briefing in <a href="macro_briefing.md" target="_blank" style="color: var(--accent); text-decoration: underline;"><code>macro_briefing.md</code></a>.</p>
     </div>
     <div class="table-wrap">
       <table class="regime-table">
@@ -432,10 +435,10 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
     <div class="table-wrap" style="margin-top: 16px;">
       <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
         <strong style="font-size: 13px; color: var(--fg);">Taylor Rule & Monetary Stance Monitor</strong>
-        <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Theoretical policy rate benchmark based on core inflation target, neutral real rate (r*), and output gap. Policy gap = Actual rate − Taylor benchmark.</span>
+        <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Theoretical policy rate benchmark based on core inflation target, neutral real rate (r*), and output gap with r* ± 50 bps sensitivity band. Policy gap = Actual rate − Taylor benchmark.</span>
       </div>
       <table class="regime-table">
-        <thead><tr><th>Central Bank</th><th>Policy Rate</th><th>Inflation (Target)</th><th>Taylor Benchmark</th><th>Policy Gap</th><th>Real Rate</th><th>Stance Assessment</th></tr></thead>
+        <thead><tr><th>Central Bank</th><th>Policy Rate</th><th>Inflation (Target)</th><th>Taylor Benchmark (Range)</th><th>Policy Gap</th><th>Real Rate</th><th>Stance Assessment</th></tr></thead>
         <tbody>{''.join(monetary_rows)}</tbody>
       </table>
     </div>

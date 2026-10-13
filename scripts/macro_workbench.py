@@ -21,6 +21,8 @@ RELEASE_MONITOR_JSON = OUTPUT / "release_monitor.json"
 WHAT_CHANGED_JSON = OUTPUT / "what_changed.json"
 DATA_GAP_BACKLOG_JSON = OUTPUT / "data_gap_backlog.json"
 FRESHNESS_JSON = OUTPUT / "freshness_audit.json"
+BRIEFING_MD = ROOT / "MACRO_WORKBENCH_BRIEFING.md"
+BRIEFING_OUTPUT_MD = OUTPUT / "macro_briefing.md"
 
 DASHBOARD_TO_CODE = {
     "Hungary": "HU",
@@ -403,6 +405,11 @@ def _compute_taylor_stance(code: str, signals: dict[str, Any]) -> dict[str, Any]
     deviation = policy_val - taylor_rate
     real_rate = policy_val - infl_val
 
+    taylor_low = round(taylor_rate - 0.5, 2)
+    taylor_high = round(taylor_rate + 0.5, 2)
+    dev_low = round(deviation - 0.5, 2)
+    dev_high = round(deviation + 0.5, 2)
+
     if deviation >= 1.5:
         stance_label = "substantially restrictive"
     elif deviation >= 0.5:
@@ -421,7 +428,9 @@ def _compute_taylor_stance(code: str, signals: dict[str, Any]) -> dict[str, Any]
         "inflation_target": target,
         "neutral_real_rate_r_star": r_star,
         "taylor_implied_rate": round(taylor_rate, 2),
+        "taylor_rate_range": [taylor_low, taylor_high],
         "policy_gap_deviation": round(deviation, 2),
+        "policy_gap_range": [dev_low, dev_high],
         "real_policy_rate": round(real_rate, 2),
         "stance_label": stance_label,
     }
@@ -759,6 +768,97 @@ def _compute_cross_country_sync() -> dict[str, Any]:
     }
 
 
+def _generate_briefing(payload: dict[str, Any]) -> str:
+    generated = payload.get("generated", "")[:10]
+    cards = payload.get("cards", [])
+    regimes = payload.get("regimes", {})
+    monetary = payload.get("monetary_stance_monitor", {})
+    sync = payload.get("cross_country_sync", {})
+    inf_matrix = sync.get("inflation_correlation", {})
+    ip_matrix = sync.get("industrial_production_correlation", {})
+
+    lines = [
+        "# Global Macro Workbench Intelligence Briefing",
+        "",
+        f"**Generated**: {generated} | **Coverage**: 10 Economies (US, EA, UK, JP, CN, ZA, PL, CZ, HU, RO)",
+        "",
+        "---",
+        "",
+        "## 1. Global Macro Regime Board",
+        "",
+        "| Country | Cyclical | Structural | Composite | Growth Assessment | Inflation Assessment | Policy Stance | Data Quality |",
+        "| :--- | :---: | :---: | :---: | :--- | :--- | :--- | :---: |",
+    ]
+    for c in cards:
+        code = str(c.get("code"))
+        name = c.get("name")
+        r = regimes.get(code, {})
+        dims = r.get("dimensions", {})
+        q = r.get("quality", {})
+        g_lbl = dims.get("growth", {}).get("label", "n/a")
+        i_lbl = dims.get("inflation", {}).get("label", "n/a")
+        p_lbl = dims.get("policy", {}).get("label", "n/a")
+        lines.append(
+            f"| **{name} ({code})** | {r.get('cyclical_score', 0):.1f} | {r.get('structural_score', 0):.1f} | **{r.get('composite_label', 'mixed')}** | {g_lbl} | {i_lbl} | {p_lbl} | {q.get('score', 0):.1f} ({q.get('label', 'n/a')}) |"
+        )
+
+    lines.extend([
+        "",
+        "---",
+        "",
+        "## 2. Central Bank Policy Stance & Taylor Rule Monitor",
+        "",
+        "Theoretical rate benchmark calculated as $i^* = r^* + \\pi + 0.5(\\pi - \\pi^*) + 0.5(y - y^*)$ with $r^* \\pm 50\\text{ bps}$ sensitivity band.",
+        "",
+        "| Economy / Institution | Policy Rate | Inflation (Target) | Neutral $r^*$ | Taylor Benchmark (Range) | Policy Gap | Stance Label |",
+        "| :--- | :---: | :---: | :---: | :---: | :---: | :--- |",
+    ])
+    for code, m in monetary.items():
+        if not m:
+            continue
+        inst = m.get("institution", code)
+        pr = m.get("policy_rate")
+        inf = m.get("inflation_rate")
+        tgt = m.get("inflation_target")
+        r_star = m.get("neutral_real_rate_r_star")
+        tb = m.get("taylor_implied_rate")
+        tb_rng = m.get("taylor_rate_range", [tb, tb])
+        gap = m.get("policy_gap_deviation")
+        sign = "+" if gap > 0 else ""
+        lines.append(
+            f"| **{code}** ({inst}) | **{pr:.2f}%** | {inf:.2f}% ({tgt:.1f}%) | {r_star:.2f}% | **{tb:.2f}%** ({tb_rng[0]:.2f}% ~ {tb_rng[1]:.2f}%) | **{sign}{gap:.2f}%** | *{m.get('stance_label', 'n/a')}* |"
+        )
+
+    lines.extend([
+        "",
+        "---",
+        "",
+        "## 3. Cross-Country Synchronization (36-Month Rolling Correlation)",
+        "",
+        "- **Nominal Cycle (Headline CPI Inflation)**:",
+        f"  - Highly coupled core: US vs. Euro Area (**{inf_matrix.get('US', {}).get('EA', 'n/a')}**), US vs. UK (**{inf_matrix.get('US', {}).get('UK', 'n/a')}**), Euro Area vs. UK (**{inf_matrix.get('EA', {}).get('UK', 'n/a')}**).",
+        f"  - Independent domestic price cycle: China vs. US (**{inf_matrix.get('CN', {}).get('US', 'n/a')}**), China vs. Euro Area (**{inf_matrix.get('CN', {}).get('EA', 'n/a')}**).",
+        "- **Real Business Cycle (Industrial Production)**:",
+        f"  - Transatlantic industrial linkage: US vs. Euro Area (**{ip_matrix.get('US', {}).get('EA', 'n/a')}**), US vs. UK (**{ip_matrix.get('US', {}).get('UK', 'n/a')}**).",
+        f"  - Manufacturing divergence: China vs. US (**{ip_matrix.get('CN', {}).get('US', 'n/a')}**), Japan vs. US (**{ip_matrix.get('JP', {}).get('US', 'n/a')}**).",
+        "",
+        "---",
+        "",
+        "## 4. Priority Data Quality & Maintenance Backlog",
+        "",
+        "| Code | Section | Item | Priority | Action Hint |",
+        "| :---: | :--- | :--- | :---: | :--- |",
+    ])
+    backlog = payload.get("gap_backlog", [])
+    for b in backlog[:10]:
+        lines.append(
+            f"| **{b.get('code')}** | `{b.get('section')}` | {b.get('item')} | **{str(b.get('priority')).upper()}** | {b.get('source_hint')} |"
+        )
+
+    lines.append("")
+    return "\n".join(lines)
+
+
 def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
     """Build and write macro workbench JSON artifacts."""
     OUTPUT.mkdir(parents=True, exist_ok=True)
@@ -813,6 +913,9 @@ def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
         "generated": payload["generated"],
         "items": gap_backlog,
     }, indent=2, ensure_ascii=False))
+    briefing_text = _generate_briefing(payload)
+    BRIEFING_MD.write_text(briefing_text, encoding="utf-8")
+    BRIEFING_OUTPUT_MD.write_text(briefing_text, encoding="utf-8")
     return payload
 
 
