@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T08:49:34.975769+00:00",
+  "generated": "2026-10-13T09:13:38.621424+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -8079,28 +8079,12 @@
   ],
   "what_changed": [
     {
-      "scope": "EA",
-      "change": "headline",
-      "from": "2.50% (2026-10-12)",
-      "to": "2.50% (2026-10-13)"
-    },
-    {
-      "scope": "UK",
-      "change": "headline",
-      "from": "3.75% (2026-10-09)",
-      "to": "3.75% (2026-10-12)"
+      "scope": "workbench",
+      "change": "no_material_change",
+      "detail": "Coverage, proxy, headline, and regime metrics are unchanged versus the previous workbench build."
     }
   ],
-  "degradation_alerts": [
-    {
-      "code": "CN",
-      "severity": "medium",
-      "metric": "freshness_pct",
-      "from": 81.0,
-      "to": 32.4,
-      "message": "Freshness share fell by more than 10 percentage points."
-    }
-  ],
+  "degradation_alerts": [],
   "phase_coverage": {
     "phase_2_unified_data": "data-first canonical frame JSONs and shared summary metadata are generated for CN/UK/US; CE4 remains canonical DataPipeline-backed.",
     "phase_3_quality": "freshness, source health, transform audit, proxy-free checks, and degradation deltas are machine-readable.",

@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-13T08:49:18.599590+00:00",
+  "generated": "2026-10-13T09:13:22.585416+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -13,14 +13,14 @@
   },
   "countries": {
     "HU": {
-      "calls": 858,
-      "success": 104,
-      "empty": 754,
+      "calls": 856,
+      "success": 105,
+      "empty": 751,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {
-        "empty_response": 754
+        "empty_response": 751
       },
       "sources": {
         "BISFetcher": {
@@ -73,9 +73,6 @@
         "GPWBenchmarkFetcher": {
           "empty": 16
         },
-        "GUSDBWFetcher": {
-          "empty": 1
-        },
         "IMFDataMapperFetcher": {
           "empty": 44,
           "success": 9
@@ -84,11 +81,8 @@
           "empty": 33,
           "success": 5
         },
-        "INSSETempoFetcher": {
-          "empty": 1
-        },
         "KSHFetcher": {
-          "empty": 1
+          "success": 1
         },
         "ManualIndicatorFetcher": {
           "empty": 1,
@@ -509,15 +503,18 @@
       "events": []
     },
     "EA": {
-      "calls": 68,
+      "calls": 69,
       "success": 68,
       "empty": 0,
-      "failed": 0,
+      "failed": 1,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "timeout": 1
+      },
       "empty_reasons": {},
       "sources": {
         "ecb_sdmx": {
+          "failed": 1,
           "success": 26
         },
         "eurostat_jsonstat": {
@@ -533,7 +530,17 @@
           "success": 5
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-13T09:10:35.982758+00:00",
+          "country": "EA",
+          "indicator_id": "eur_usd",
+          "source_id": "ecb_sdmx",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='data-api.ecb.europa.eu', port=443): Read timed out. (read timeout=60)"
+        }
+      ]
     }
   }
 }

@@ -436,13 +436,21 @@ def _section_nav(config: dict[str, Any]) -> str:
     return "\n".join(links)
 
 def _sections_html(config: dict[str, Any], series_list: list[dict[str, Any]], country_code: str) -> str:
+    order_map = {
+        str(ind.get("id")): i
+        for i, ind in enumerate(config.get("indicators") or [])
+        if ind.get("id")
+    }
     by_section: dict[str, list[dict[str, Any]]] = {}
     for item in series_list:
         if item.get("observations"):
             by_section.setdefault(item["section"], []).append(item)
     html_parts: list[str] = []
     for section_id, section in config.get("sections", {}).items():
-        charts = "\n".join(_chart_html(item, country_code) for item in by_section.get(section_id, []))
+        items = by_section.get(section_id, [])
+        if order_map:
+            items = sorted(items, key=lambda it: order_map.get(str(it.get("id")), 9999))
+        charts = "\n".join(_chart_html(item, country_code) for item in items)
         empty = ""
         if not charts:
             empty = '<div class="empty-note"><span data-lang="en">No reproducible public chart wired yet for this section.</span><span data-lang="zh">本节暂未接入可复跑的公开图表数据。</span></div>'

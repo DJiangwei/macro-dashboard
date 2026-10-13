@@ -1,6 +1,6 @@
 {
   "schema_version": "cee-build-snapshot-v1",
-  "generated": "2026-10-13T09:44:57.268766+01:00",
+  "generated": "2026-10-13T10:08:51.630524+01:00",
   "countries": {
     "HU": {
       "coverage": {
@@ -1744,16 +1744,16 @@
           "source": "Hungarian Central Statistical Office STADAT",
           "source_url": "https://www.ksh.hu/stadat_files/ara/en/ara0046.csv",
           "quality_status": "watch",
-          "quality_note": "Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Hungary national-statistics override; latest KSH methodology column is preferred and older-method values fill only missing early history.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot.",
+          "quality_note": "Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Hungary national-statistics override; latest KSH methodology column is preferred and older-method values fill only missing early history.  Source validation passed.",
           "source_authority": "public_secondary",
           "derivation": "observed",
           "freshness_status": "current",
-          "validation_status": "watch",
+          "validation_status": "passed",
           "comparability": "high",
           "observation_type": "historical",
           "is_projection": false,
           "is_proxy": false,
-          "refresh_fallback": true
+          "refresh_fallback": null
         },
         "inflation_expectations": {
           "country": "HU",
@@ -5166,7 +5166,7 @@
           "source": "CNB external debt / CNB international reserves",
           "source_url": "https://www.cnb.cz/en/statistics/bop_stat/external_debt/zz_usd_en.htm",
           "quality_status": "watch",
-          "quality_note": "Uses IMF ARA ratio where available; Czechia uses a quarterly CNB short-term external debt position over matched CNB quarter-end international reserves. Read as a structural external-liquidity gauge. National-CB override for Czechia where IMF ARA ratio coverage is missing; external debt is quarterly while reserve denominator is matched to quarter-end.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot.",
+          "quality_note": "Uses IMF ARA ratio where available; Czechia uses a quarterly CNB short-term external debt position over matched CNB quarter-end international reserves. Read as a structural external-liquidity gauge. National-CB override for Czechia where IMF ARA ratio coverage is missing; external debt is quarterly while reserve denominator is matched to quarter-end.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot.",
           "source_authority": "official_primary",
           "derivation": "observed",
           "freshness_status": "current",

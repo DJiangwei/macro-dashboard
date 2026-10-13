@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T08:49:34.716793+00:00",
+  "generated": "2026-10-13T09:13:38.383234+00:00",
   "as_of_date": "2026-10-13",
   "thresholds": {
     "daily": "14 days",
@@ -11599,27 +11599,7 @@
       "source": "ECB",
       "series_id": "M.DE.L.L40.CI.0000.EUR.N.Z",
       "provider_update": "2026-09-01",
-      "note": "Germany 10-year benchmark government bond yield for Maastricht convergence purposes."
-    },
-    {
-      "dashboard": "Euro Area",
-      "indicator_id": "irs_10y_it",
-      "label": "Italy 10Y Benchmark Sovereign Yield (BTP)",
-      "frequency": "monthly",
-      "latest_observation": "2026-09-01",
-      "latest_date": "2026-09-01",
-      "age_basis_date": "2026-09-30",
-      "age_days": 13,
-      "threshold_days": 75,
-      "release_calendar_id": "",
-      "expected_release_date": "",
-      "due_date": "",
-      "freshness_status": "current",
-      "quality_status": "verified",
-      "source": "ECB",
-      "series_id": "M.IT.L.L40.CI.0000.EUR.N.Z",
-      "provider_update": "2026-09-01",
-      "note": "Italy 10-year benchmark government bond yield for Maastricht convergence purposes."
+      "note": "Germany 10-year benchmark government bond yield for Maastricht convergence purposes (Bund reference benchmark)."
     },
     {
       "dashboard": "Euro Area",
@@ -11640,6 +11620,26 @@
       "series_id": "M.FR.L.L40.CI.0000.EUR.N.Z",
       "provider_update": "2026-09-01",
       "note": "France 10-year benchmark government bond yield for Maastricht convergence purposes."
+    },
+    {
+      "dashboard": "Euro Area",
+      "indicator_id": "irs_10y_it",
+      "label": "Italy 10Y Benchmark Sovereign Yield (BTP)",
+      "frequency": "monthly",
+      "latest_observation": "2026-09-01",
+      "latest_date": "2026-09-01",
+      "age_basis_date": "2026-09-30",
+      "age_days": 13,
+      "threshold_days": 75,
+      "release_calendar_id": "",
+      "expected_release_date": "",
+      "due_date": "",
+      "freshness_status": "current",
+      "quality_status": "verified",
+      "source": "ECB",
+      "series_id": "M.IT.L.L40.CI.0000.EUR.N.Z",
+      "provider_update": "2026-09-01",
+      "note": "Italy 10-year benchmark government bond yield for Maastricht convergence purposes."
     },
     {
       "dashboard": "Euro Area",
@@ -17238,7 +17238,7 @@
       "quality_status": "watch",
       "source": "FRED / Realtor.com",
       "series_id": "PENLISCOUUS",
-      "provider_update": "2026-10-02",
+      "provider_update": "2026-10-01",
       "note": "Year-over-year growth derived from Realtor.com pending listings; a cleaner transaction-pipeline signal than the raw level when seasonality is material."
     },
     {

@@ -915,10 +915,9 @@ indicators:
     frequency: "daily"
     start_date: "2004-09-01"
     caveat_en: "Difference between AAA 10-year and 2-year spot rates in basis points (10Y minus 2Y)."
-    caveat_zh: "AAA级10年期与2年期即期收益率利差，以基点(bps)计。"
-
+  # --- fragmentation -------------------------------------------------------
   - id: irs_10y_de
-    section: fiscal_sovereign
+    section: fragmentation
     label_en: "Germany 10Y Benchmark Sovereign Yield (Bund)"
     label_zh: "德国10年期基准国债收益率 (Bund)"
     unit: "%"
@@ -929,24 +928,8 @@ indicators:
     source_url: "https://data.ecb.europa.eu/data/datasets/IRS"
     frequency: "monthly"
     start_date: "1995-01-01"
-    caveat_en: "Germany 10-year benchmark government bond yield for Maastricht convergence purposes."
-    caveat_zh: "用于马斯特里赫特趋同标准的德国10年期基准国债收益率。"
-
-  # --- fragmentation -------------------------------------------------------
-  - id: irs_10y_it
-    section: fragmentation
-    label_en: "Italy 10Y Benchmark Sovereign Yield (BTP)"
-    label_zh: "意大利10年期基准国债收益率 (BTP)"
-    unit: "%"
-    fetcher: ecb_sdmx
-    flow: "IRS"
-    series: "M.IT.L.L40.CI.0000.EUR.N.Z"
-    source_name: "ECB"
-    source_url: "https://data.ecb.europa.eu/data/datasets/IRS"
-    frequency: "monthly"
-    start_date: "1995-01-01"
-    caveat_en: "Italy 10-year benchmark government bond yield for Maastricht convergence purposes."
-    caveat_zh: "用于马斯特里赫特趋同标准的意大利10年期基准国债收益率。"
+    caveat_en: "Germany 10-year benchmark government bond yield for Maastricht convergence purposes (Bund reference benchmark)."
+    caveat_zh: "用于马斯特里赫特趋同标准的德国10年期基准国债收益率（Bund 基准）。"
 
   - id: irs_10y_fr
     section: fragmentation
@@ -962,6 +945,21 @@ indicators:
     start_date: "1995-01-01"
     caveat_en: "France 10-year benchmark government bond yield for Maastricht convergence purposes."
     caveat_zh: "用于马斯特里赫特趋同标准的法国10年期基准国债收益率。"
+
+  - id: irs_10y_it
+    section: fragmentation
+    label_en: "Italy 10Y Benchmark Sovereign Yield (BTP)"
+    label_zh: "意大利10年期基准国债收益率 (BTP)"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "IRS"
+    series: "M.IT.L.L40.CI.0000.EUR.N.Z"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/IRS"
+    frequency: "monthly"
+    start_date: "1995-01-01"
+    caveat_en: "Italy 10-year benchmark government bond yield for Maastricht convergence purposes."
+    caveat_zh: "用于马斯特里赫特趋同标准的意大利10年期基准国债收益率。"
 
   - id: irs_10y_es
     section: fragmentation
