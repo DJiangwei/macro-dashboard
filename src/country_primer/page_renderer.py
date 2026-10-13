@@ -834,6 +834,7 @@ COUNTRY_META: dict[str, dict[str, str]] = {
     "CZ": {"name": "Czechia", "name_zh": "捷克", "file": "czechia.html"},
     "RO": {"name": "Romania", "name_zh": "罗马尼亚", "file": "romania.html"},
     "CN": {"name": "China", "name_zh": "中国", "file": "china.html"},
+    "EA": {"name": "Euro Area", "name_zh": "欧元区", "file": "euro_area.html"},
     "JP": {"name": "Japan", "name_zh": "日本", "file": "japan.html"},
     "ZA": {"name": "South Africa", "name_zh": "南非", "file": "south_africa.html"},
     "UK": {"name": "United Kingdom", "name_zh": "英国", "file": "uk.html"},

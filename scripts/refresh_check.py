@@ -70,6 +70,7 @@ def run_checks() -> list[dict[str, Any]]:
     os.environ["COUNTRY_PRIMER_CACHE_DIR"] = tempfile.mkdtemp(prefix="country-primer-refresh-check-")
 
     import build_china_dashboard as china
+    import build_euro_area_dashboard as euro_area
     import build_japan_dashboard as japan
     import build_south_africa_dashboard as south_africa
     import build_uk_dashboard as uk
@@ -144,6 +145,17 @@ def run_checks() -> list[dict[str, Any]]:
         "US:daily_fed_funds",
         _latest_data_first(OUTPUT / "us_canonical_frame.json", "daily_fed_funds"),
         live_us,
+    ))
+
+    ea_spec = _selected(euro_area._load_config(), "policy_rate")
+    try:
+        live_ea = _latest_live(euro_area._fetch_one(ea_spec))
+    except Exception:
+        live_ea = {}
+    results.append(_compare(
+        "EA:policy_rate",
+        _latest_data_first(OUTPUT / "euro_area_canonical_frame.json", "policy_rate"),
+        live_ea,
     ))
     return results
 

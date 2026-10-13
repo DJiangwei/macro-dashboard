@@ -28,6 +28,7 @@ DASHBOARD_TO_CODE = {
     "Czechia": "CZ",
     "Romania": "RO",
     "China": "CN",
+    "Euro Area": "EA",
     "Japan": "JP",
     "South Africa": "ZA",
     "United Kingdom": "UK",
@@ -37,6 +38,7 @@ CODE_TO_DASHBOARD = {code: name for name, code in DASHBOARD_TO_CODE.items()}
 
 DATA_FIRST_SUMMARIES = {
     "CN": "china_dashboard_summary.json",
+    "EA": "euro_area_dashboard_summary.json",
     "JP": "japan_dashboard_summary.json",
     "ZA": "south_africa_dashboard_summary.json",
     "UK": "uk_dashboard_summary.json",
@@ -50,6 +52,15 @@ DATA_FIRST_SIGNAL_MAP = {
         "policy": ("m2_yoy_akshare", "Broad-money impulse"),
         "external": ("customs_exports_yoy_akshare", "Exports"),
         "property": ("real_estate_development_investment_ytd_eastmoney", "Property investment"),
+    },
+    "EA": {
+        "growth": ("real_gdp_yoy", "Real GDP"),
+        "inflation": ("hicp_inflation", "HICP headline"),
+        "policy": ("policy_rate", "ECB DFR"),
+        "external": ("goods_trade_balance", "Goods trade balance"),
+        "fiscal": ("government_debt_gdp", "Government debt/GDP"),
+        "financial": ("it_de_spread_10y", "BTP-Bund 10Y spread"),
+        "property": ("house_price_yoy", "House prices"),
     },
     "JP": {
         "growth": ("real_gdp_yoy", "Real GDP"),

@@ -17,13 +17,14 @@ COUNTRY_FILES = {
     "CZ": "czechia.html",
     "RO": "romania.html",
     "CN": "china.html",
+    "EA": "euro_area.html",
     "JP": "japan.html",
     "ZA": "south_africa.html",
     "UK": "uk.html",
     "US": "us.html",
 }
-DATA_FIRST_CODES = {"CN", "JP", "ZA", "UK", "US"}
-DATA_FIRST_NAMES = ("china", "japan", "south_africa", "uk", "us")
+DATA_FIRST_CODES = {"CN", "EA", "JP", "ZA", "UK", "US"}
+DATA_FIRST_NAMES = ("china", "euro_area", "japan", "south_africa", "uk", "us")
 
 # Display names as they appear in output/freshness_audit.json's "dashboard"
 # field and in the archive index cards' <h2> headings.
@@ -33,6 +34,7 @@ DASHBOARD_DISPLAY_NAMES = {
     "CZ": "Czechia",
     "RO": "Romania",
     "CN": "China",
+    "EA": "Euro Area",
     "JP": "Japan",
     "ZA": "South Africa",
     "UK": "United Kingdom",

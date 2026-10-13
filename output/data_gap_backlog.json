@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-12T21:59:10.142367+00:00",
+  "generated": "2026-10-12T22:29:25.044060+00:00",
   "items": [
     {
       "code": "CN",
@@ -45,6 +45,24 @@
       "status": "BIS residential property aggregates, Beijing/Shanghai AKShare city price samples, Eastmoney structured commercial-housing sales value, development-investment YTD, and the real-estate climate index are charted. AKShare/Eastmoney were traversed for inventory, sales-area, floor-space starts/completions, and land-sale series; no reusable API-backed indicator was found yet, and NBS EasyQuery is currently blocked by DNS/WAF in this environment.",
       "priority": "high",
       "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
+    },
+    {
+      "code": "EA",
+      "country": "Euro Area",
+      "section": "prices_costs",
+      "item": "Dutch TTF natural gas front-month benchmark futures",
+      "status": "ICE Endex exchange traded energy benchmark; critical European energy cost variable but exchange-licensed without a redistributable public API.",
+      "priority": "high",
+      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
+    },
+    {
+      "code": "EA",
+      "country": "Euro Area",
+      "section": "production_cycle",
+      "item": "HCOB Eurozone Manufacturing and Services Flash PMIs",
+      "status": "Compiled by S&P Global under commercial license; proprietary data vendor series with no key-free redistributable API.",
+      "priority": "high",
+      "source_hint": "Check licensing before rendering; vendor surveys should stay as official gaps unless source-safe."
     },
     {
       "code": "JP",
@@ -200,6 +218,15 @@
       "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
     },
     {
+      "code": "EA",
+      "country": "Euro Area",
+      "section": "production_cycle",
+      "item": "Sentix Economic Index and ZEW Financial Market Survey for Euro Area",
+      "status": "Proprietary investor sentiment surveys published by Sentix GmbH and ZEW Mannheim without a key-free machine-readable public API.",
+      "priority": "medium",
+      "source_hint": "Check licensing before rendering; vendor surveys should stay as official gaps unless source-safe."
+    },
+    {
       "code": "JP",
       "country": "Japan",
       "section": "prices_costs",
@@ -243,6 +270,24 @@
       "status": "Restore only with reusable public or licensed non-proxy sources.",
       "priority": "watch",
       "source_hint": "Review PROXY_REVIEW.md and DATA_SOURCE_CATALOG.md before restoring."
+    },
+    {
+      "code": "EA",
+      "country": "Euro Area",
+      "section": "monetary_financial",
+      "item": "Euro Stoxx 50 equity index and equity market valuation",
+      "status": "STOXX Ltd benchmark index licensed through data vendors; no redistributable public timeseries endpoint available.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "EA",
+      "country": "Euro Area",
+      "section": "prices_costs",
+      "item": "5y5y forward inflation-linked swap rate (5y5y ILS)",
+      "status": "Market-based inflation expectation gauge referenced by the ECB Governing Council; traded OTC and vendor-controlled (Bloomberg/LSEG), not disseminated via ECB SDMX.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },
     {
       "code": "HU",

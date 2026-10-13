@@ -13,6 +13,7 @@ build-v4: refresh-data
 refresh-data:
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python build_v4.py ALL
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_china_dashboard.py
+	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_euro_area_dashboard.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_uk_dashboard.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_us_dashboard.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_japan_dashboard.py
@@ -25,6 +26,7 @@ refresh-data:
 rebuild-ui:
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python build_v4.py ALL
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_china_dashboard.py
+	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_euro_area_dashboard.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_uk_dashboard.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_us_dashboard.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_japan_dashboard.py
@@ -59,9 +61,10 @@ proxy-report-live:
 
 publish-check:
 	curl -L https://djiangwei.github.io/macro-dashboard/ | rg -n "Macro Dashboard Archive|Hungary|dashboard_archive_summary.json"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/index.html | rg -n "Macro Dashboard Archive|china.html|japan.html|south_africa.html|uk.html|us.html"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/index.html | rg -n "Macro Dashboard Archive|china.html|euro_area.html|japan.html|south_africa.html|uk.html|us.html"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/hungary.html | rg -n "Hungary Dashboard|Core 48|chart-financial_stability-bank_car"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/china.html | rg -n "China Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/euro_area.html | rg -n "Euro Area Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/uk.html | rg -n "UK Dashboard|Core 48|Official Data Gaps|chart-real_gdp_qoq"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/us.html | rg -n "US Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/japan.html | rg -n "Japan Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"

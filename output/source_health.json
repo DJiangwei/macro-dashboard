@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-12T21:03:23.490284+00:00",
+  "generated": "2026-10-12T22:26:52.796088+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -500,6 +500,33 @@
       "failure_reasons": {},
       "empty_reasons": {},
       "sources": {},
+      "events": []
+    },
+    "EA": {
+      "calls": 68,
+      "success": 68,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "ecb_sdmx": {
+          "success": 26
+        },
+        "eurostat_jsonstat": {
+          "success": 34
+        },
+        "fred": {
+          "success": 2
+        },
+        "imf_datamapper": {
+          "success": 1
+        },
+        "spread": {
+          "success": 5
+        }
+      },
       "events": []
     }
   }
