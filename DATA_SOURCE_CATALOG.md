@@ -685,7 +685,7 @@ The Euro Area page is generated from `config/euro_area_indicators.yaml`. Officia
 
 Generated from `config/euro_area_indicators.yaml`; latest dates are tracked in `output/euro_area_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 68. Latest rendered chart count: 68. Source groups: 6.
+Configured charts: 70. Latest rendered chart count: 70. Source groups: 6.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -710,11 +710,13 @@ Configured charts: 68. Latest rendered chart count: 68. Source groups: 6.
 | labour_wages | `youth_unemployment_rate` | Youth Unemployment Rate (<25) | monthly | % | eurostat_jsonstat | Eurostat |  | Youth (<25) unemployment rate, % of active population; seasonally adjusted. |
 | labour_wages | `employment_growth` | Total Employment Growth, YoY | quarterly | % y/y | eurostat_jsonstat | Eurostat |  | Total employment (domestic concept, persons) percentage change y/y. |
 | labour_wages | `job_vacancy_rate` | Job Vacancy Rate | quarterly | % | eurostat_jsonstat | Eurostat |  | Job vacancy rate in industry, construction and services (NACE B-S); seasonally adjusted. |
+| labour_wages | `labour_force_participation_rate` | Labour Force Participation Rate (15-64) | quarterly | % | eurostat_jsonstat | Eurostat |  | Labour market participation rate for active population aged 15-64; unadjusted quarterly series. |
 | labour_wages | `labour_cost_index_yoy` | Labour Cost Index Growth, YoY | quarterly | % y/y | eurostat_jsonstat | Eurostat |  | Labour Cost Index (nominal wages and non-wage costs) y/y percentage change; NACE B-S. |
 | labour_wages | `negotiated_wages_yoy` | ECB Negotiated Wages Growth, YoY | quarterly | % y/y | ecb_sdmx | ECB | Q.I9.N.INWR.000000.3.ANR | ECB indicator of negotiated wage rates annual growth in the euro area (I9). |
 | prices_costs | `hicp_inflation` | HICP Headline Inflation, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | Harmonised Index of Consumer Prices headline annual inflation (all items). |
 | prices_costs | `hicp_core_inflation` | HICP Core Inflation (Ex Energy & Food), YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | HICP all items excluding energy, food, alcohol and tobacco annual rate. |
 | prices_costs | `hicp_services_inflation` | HICP Services Inflation, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | HICP services component annual rate of change. |
+| prices_costs | `hicp_goods_inflation` | HICP Goods Inflation, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | Harmonised Index of Consumer Prices goods component annual rate of change. |
 | prices_costs | `hicp_energy_inflation` | HICP Energy Inflation, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | HICP energy component annual rate of change. |
 | prices_costs | `hicp_food_inflation` | HICP Food, Alcohol & Tobacco Inflation, YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | HICP food, alcohol and tobacco component annual rate of change. |
 | prices_costs | `ppi_yoy` | Producer Price Index (PPI), YoY | monthly | % y/y | eurostat_jsonstat | Eurostat |  | Industrial producer prices domestic market y/y (total industry excluding construction). |

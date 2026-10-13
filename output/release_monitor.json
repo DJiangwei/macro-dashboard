@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T09:13:38.621424+00:00",
+  "generated": "2026-10-13T09:57:36.824788+00:00",
   "items": [
     {
       "code": "CZ",
@@ -1018,6 +1018,19 @@
     {
       "code": "EA",
       "dashboard": "Euro Area",
+      "indicator_id": "hicp_goods_inflation",
+      "label": "HICP Goods Inflation, YoY",
+      "latest": "2025-12-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 286,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Harmonised Index of Consumer Prices goods component annual rate of change."
+    },
+    {
+      "code": "EA",
+      "dashboard": "Euro Area",
       "indicator_id": "hicp_inflation",
       "label": "HICP Headline Inflation, YoY",
       "latest": "2025-12-01",
@@ -1027,19 +1040,6 @@
       "severity": "medium",
       "source": "Eurostat",
       "note": "Harmonised Index of Consumer Prices headline annual inflation (all items)."
-    },
-    {
-      "code": "EA",
-      "dashboard": "Euro Area",
-      "indicator_id": "hicp_services_inflation",
-      "label": "HICP Services Inflation, YoY",
-      "latest": "2025-12-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 286,
-      "severity": "medium",
-      "source": "Eurostat",
-      "note": "HICP services component annual rate of change."
     }
   ]
 }

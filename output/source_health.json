@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-13T09:13:22.585416+00:00",
+  "generated": "2026-10-13T09:57:20.241661+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -503,22 +503,19 @@
       "events": []
     },
     "EA": {
-      "calls": 69,
-      "success": 68,
+      "calls": 70,
+      "success": 70,
       "empty": 0,
-      "failed": 1,
+      "failed": 0,
       "circuit_open": 0,
-      "failure_reasons": {
-        "timeout": 1
-      },
+      "failure_reasons": {},
       "empty_reasons": {},
       "sources": {
         "ecb_sdmx": {
-          "failed": 1,
           "success": 26
         },
         "eurostat_jsonstat": {
-          "success": 34
+          "success": 36
         },
         "fred": {
           "success": 2
@@ -530,17 +527,7 @@
           "success": 5
         }
       },
-      "events": [
-        {
-          "timestamp": "2026-10-13T09:10:35.982758+00:00",
-          "country": "EA",
-          "indicator_id": "eur_usd",
-          "source_id": "ecb_sdmx",
-          "outcome": "failed",
-          "reason": "timeout",
-          "message": "HTTPSConnectionPool(host='data-api.ecb.europa.eu', port=443): Read timed out. (read timeout=60)"
-        }
-      ]
+      "events": []
     }
   }
 }

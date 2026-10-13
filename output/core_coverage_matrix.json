@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-10-13T09:13:22.827847+00:00",
+  "generated": "2026-10-13T09:57:20.486360+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -59,11 +59,11 @@
       "missing": 23
     },
     "EA": {
-      "verified": 26,
+      "verified": 27,
       "watch": 4,
-      "low_confidence": 9,
+      "low_confidence": 10,
       "substitute": 0,
-      "missing": 9
+      "missing": 7
     },
     "JP": {
       "verified": 6,
@@ -1122,9 +1122,9 @@
       "label_zh": "劳动参与率",
       "unit": "percent",
       "priority_weight": 4,
-      "missing_countries": 3,
+      "missing_countries": 2,
       "weak_countries": 1,
-      "priority_score": 57,
+      "priority_score": 52,
       "countries": {
         "HU": {
           "state": "watch",
@@ -1170,10 +1170,12 @@
           "refresh_fallback": false
         },
         "EA": {
-          "state": "missing",
-          "quality_status": "unavailable",
-          "indicator_ids": [],
-          "latest_date": "",
+          "state": "verified",
+          "quality_status": "verified",
+          "indicator_ids": [
+            "labour_force_participation_rate"
+          ],
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -1822,9 +1824,9 @@
       "label_zh": "商品通胀",
       "unit": "percent",
       "priority_weight": 5,
-      "missing_countries": 3,
-      "weak_countries": 0,
-      "priority_score": 65,
+      "missing_countries": 2,
+      "weak_countries": 1,
+      "priority_score": 62,
       "countries": {
         "HU": {
           "state": "verified",
@@ -1870,10 +1872,12 @@
           "refresh_fallback": false
         },
         "EA": {
-          "state": "missing",
-          "quality_status": "unavailable",
-          "indicator_ids": [],
-          "latest_date": "",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
+          "indicator_ids": [
+            "hicp_goods_inflation"
+          ],
+          "latest_date": "2025-12-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -3176,7 +3180,7 @@
           "indicator_ids": [
             "zar_usd"
           ],
-          "latest_date": "2026-10-12",
+          "latest_date": "2026-10-13",
           "refresh_fallback": false
         },
         "UK": {
@@ -5015,18 +5019,6 @@
       "weak_countries": []
     },
     {
-      "concept_id": "goods_inflation",
-      "pillar": "prices_costs",
-      "label_en": "Goods Inflation",
-      "priority_score": 65,
-      "missing_countries": [
-        "CN",
-        "EA",
-        "ZA"
-      ],
-      "weak_countries": []
-    },
-    {
       "concept_id": "wage_cost_inflation",
       "pillar": "prices_costs",
       "label_en": "Labour Cost Inflation",
@@ -5122,6 +5114,19 @@
       ]
     },
     {
+      "concept_id": "goods_inflation",
+      "pillar": "prices_costs",
+      "label_en": "Goods Inflation",
+      "priority_score": 62,
+      "missing_countries": [
+        "CN",
+        "ZA"
+      ],
+      "weak_countries": [
+        "EA"
+      ]
+    },
+    {
       "concept_id": "vacancies",
       "pillar": "labour_household",
       "label_en": "Labour Demand / Vacancies",
@@ -5201,20 +5206,6 @@
       ]
     },
     {
-      "concept_id": "participation_rate",
-      "pillar": "labour_household",
-      "label_en": "Labour Force Participation",
-      "priority_score": 57,
-      "missing_countries": [
-        "CN",
-        "EA",
-        "ZA"
-      ],
-      "weak_countries": [
-        "UK"
-      ]
-    },
-    {
       "concept_id": "wage_growth",
       "pillar": "labour_household",
       "label_en": "Wage Growth",
@@ -5247,6 +5238,19 @@
       "missing_countries": [],
       "weak_countries": [
         "ZA"
+      ]
+    },
+    {
+      "concept_id": "participation_rate",
+      "pillar": "labour_household",
+      "label_en": "Labour Force Participation",
+      "priority_score": 52,
+      "missing_countries": [
+        "CN",
+        "ZA"
+      ],
+      "weak_countries": [
+        "UK"
       ]
     },
     {

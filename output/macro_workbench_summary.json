@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T09:13:38.621424+00:00",
+  "generated": "2026-10-13T09:57:36.824788+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -437,11 +437,11 @@
           "quality_status": "watch"
         },
         "policy": {
-          "id": "m2_yoy_akshare",
-          "label": "Broad-money impulse",
-          "value": 7.5,
-          "display": "7.50 %",
-          "date": "2026-08-01",
+          "id": "lpr_1y_akshare",
+          "label": "1Y LPR",
+          "value": 3.0,
+          "display": "3.00 %",
+          "date": "2026-09-20",
           "source": "AKShare / Eastmoney Data Center",
           "quality_status": "watch"
         },
@@ -454,11 +454,29 @@
           "source": "AKShare / Eastmoney Data Center",
           "quality_status": "watch"
         },
+        "fiscal": {
+          "id": "general_gov_debt",
+          "label": "Government debt/GDP",
+          "value": 122.1,
+          "display": "122.10 % of GDP",
+          "date": "2031",
+          "source": "IMF WEO",
+          "quality_status": "watch"
+        },
+        "financial": {
+          "id": "shibor_3m_akshare",
+          "label": "3M Shibor",
+          "value": 1.43,
+          "display": "1.43 %",
+          "date": "2026-10-09",
+          "source": "AKShare / SHIBOR",
+          "quality_status": "watch"
+        },
         "property": {
-          "id": "real_estate_development_investment_ytd_eastmoney",
-          "label": "Property investment",
-          "value": 4797.885,
-          "display": "4,798 CNY bn",
+          "id": "commercial_housing_sales_value_yoy_eastmoney",
+          "label": "Housing sales YoY",
+          "value": -12.79854526,
+          "display": "-12.80 %",
           "date": "2026-08-01",
           "source": "Eastmoney Data Center / NBS-style industry index",
           "quality_status": "watch"
@@ -1513,8 +1531,8 @@
       "currency": "EUR",
       "institution": "ECB",
       "category": "data-first country page",
-      "charts": 68,
-      "expected": 68,
+      "charts": 70,
+      "expected": 70,
       "proxy_fills": 0,
       "gaps_or_dropped": 5,
       "gaps_label": "Official data gaps",
@@ -1522,7 +1540,7 @@
       "headline": "2.50% (2026-10-13)",
       "secondary_label": "Source groups",
       "secondary": "6",
-      "quality": "6 source groups · 17 low-confidence charts",
+      "quality": "6 source groups · 18 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -1554,13 +1572,22 @@
           "quality_status": "verified"
         },
         "external": {
-          "id": "goods_trade_balance",
-          "label": "Goods trade balance",
-          "value": 5030.9,
-          "display": "5,031 EUR mn",
-          "date": "2026-07-01",
+          "id": "current_account_gdp",
+          "label": "Current account/GDP",
+          "value": 1.2,
+          "display": "1.20 % of GDP",
+          "date": "2025-07-01",
           "source": "Eurostat",
-          "quality_status": "watch"
+          "quality_status": "low_confidence"
+        },
+        "fiscal": {
+          "id": "government_debt_gdp",
+          "label": "Government debt/GDP",
+          "value": 89.4,
+          "display": "89.40 % of GDP",
+          "date": "2026-01-01",
+          "source": "Eurostat",
+          "quality_status": "low_confidence"
         },
         "financial": {
           "id": "it_de_spread_10y",
@@ -1570,18 +1597,27 @@
           "date": "2026-09-01",
           "source": "ECB",
           "quality_status": "verified"
+        },
+        "property": {
+          "id": "house_price_yoy",
+          "label": "House prices",
+          "value": 4.0,
+          "display": "4.00 % y/y",
+          "date": "2026-04-01",
+          "source": "Eurostat",
+          "quality_status": "verified"
         }
       },
       "source_health": {
         "source_groups": 6,
         "sources": [
           {
-            "source_name": "ECB",
-            "charts": 29
+            "source_name": "Eurostat",
+            "charts": 30
           },
           {
-            "source_name": "Eurostat",
-            "charts": 28
+            "source_name": "ECB",
+            "charts": 29
           },
           {
             "source_name": "Eurostat / DG ECFIN",
@@ -1601,9 +1637,9 @@
           }
         ],
         "quality_counts": {
-          "low_confidence": 17,
+          "low_confidence": 18,
           "unavailable": 1,
-          "verified": 45,
+          "verified": 46,
           "watch": 5
         },
         "unavailable_count": 0
@@ -1611,10 +1647,10 @@
       "freshness": {
         "as_of_date": "2026-10-13",
         "counts": {
-          "current": 45,
+          "current": 46,
           "due": 5,
           "future_date": 1,
-          "stale": 17
+          "stale": 18
         },
         "latest_historical_date": "2026-10-13",
         "attention": [
@@ -1798,6 +1834,28 @@
             "id": "hicp_food_inflation",
             "concept_id": "ea:hicp_food_inflation",
             "label_en": "HICP Food, Alcohol & Tobacco Inflation, YoY",
+            "latest_date": "2025-12-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2025-12-01",
+            "age_days": 286,
+            "threshold_days": 91,
+            "release_calendar_id": "eurostat_monthly",
+            "expected_release_date": "2026-03-17",
+            "due_date": "2026-04-01",
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "Eurostat",
+            "series": "",
+            "transform": "level"
+          },
+          {
+            "id": "hicp_goods_inflation",
+            "concept_id": "goods_inflation",
+            "label_en": "HICP Goods Inflation, YoY",
             "latest_date": "2025-12-01",
             "frequency": "monthly",
             "freshness_status": "stale",
@@ -2133,23 +2191,23 @@
           "value"
         ],
         "file": "euro_area_canonical_frame.json",
-        "series": 68,
-        "observations": 59130,
-        "series_count": 68,
-        "observation_count": 59130
+        "series": 70,
+        "observations": 59505,
+        "series_count": 70,
+        "observation_count": 59505
       },
       "freshness_summary": {
         "dashboard": "Euro Area",
-        "charts": 68,
-        "current": 45,
-        "stale": 17,
+        "charts": 70,
+        "current": 46,
+        "stale": 18,
         "lagged_source": 0,
         "projection": 1,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 17,
+        "low_confidence": 18,
         "latest_historical_date": "2026-10-13",
         "headline_latest": ""
       }
@@ -3214,7 +3272,7 @@
           "projection": 3,
           "stale": 30
         },
-        "latest_historical_date": "2026-10-12",
+        "latest_historical_date": "2026-10-13",
         "attention": [
           {
             "id": "current_account_gdp",
@@ -3996,9 +4054,9 @@
         ],
         "file": "south_africa_canonical_frame.json",
         "series": 64,
-        "observations": 30390,
+        "observations": 30392,
         "series_count": 64,
-        "observation_count": 30390
+        "observation_count": 30392
       },
       "freshness_summary": {
         "dashboard": "South Africa",
@@ -4012,7 +4070,7 @@
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 30,
-        "latest_historical_date": "2026-10-12",
+        "latest_historical_date": "2026-10-13",
         "headline_latest": ""
       }
     },
@@ -4036,6 +4094,24 @@
       "framework": "GS UK statistics logic",
       "status": "clean",
       "signals": {
+        "growth": {
+          "id": "monthly_gdp_mom",
+          "label": "Monthly GDP",
+          "value": 0.3868471953578201,
+          "display": "0.39 % m/m",
+          "date": "2026-07-01",
+          "source": "ONS",
+          "quality_status": "watch"
+        },
+        "inflation": {
+          "id": "cpi_yoy",
+          "label": "CPI inflation",
+          "value": 3.1,
+          "display": "3.10 %",
+          "date": "2026-08-01",
+          "source": "ONS",
+          "quality_status": "watch"
+        },
         "policy": {
           "id": "bank_rate",
           "label": "Bank Rate",
@@ -4044,6 +4120,42 @@
           "date": "2026-10-12",
           "source": "Bank of England IADB",
           "quality_status": "verified"
+        },
+        "external": {
+          "id": "current_account_gdp",
+          "label": "Current account/GDP",
+          "value": -2.5,
+          "display": "-2.50 % of GDP",
+          "date": "2026-06-30",
+          "source": "ONS",
+          "quality_status": "verified"
+        },
+        "fiscal": {
+          "id": "psnd_ex_banks_gdp",
+          "label": "PSND/GDP",
+          "value": 93.8,
+          "display": "93.80 % of GDP",
+          "date": "2026-08-01",
+          "source": "ONS",
+          "quality_status": "verified"
+        },
+        "financial": {
+          "id": "sonia_rate",
+          "label": "SONIA",
+          "value": 3.7331,
+          "display": "3.73 %",
+          "date": "2026-10-09",
+          "source": "Bank of England IADB",
+          "quality_status": "verified"
+        },
+        "property": {
+          "id": "uk_hpi_annual_change",
+          "label": "UK HPI",
+          "value": 1.4,
+          "display": "1.40 %",
+          "date": "2026-07-01",
+          "source": "ONS / HM Land Registry",
+          "quality_status": "watch"
         }
       },
       "source_health": {
@@ -4850,6 +4962,60 @@
           "display": "2.20 %",
           "date": "2026-04-01",
           "source": "FRED / BEA",
+          "quality_status": "watch"
+        },
+        "inflation": {
+          "id": "core_pce_inflation",
+          "label": "Core PCE",
+          "value": 3.0075959761856064,
+          "display": "3.01 % y/y",
+          "date": "2026-08-01",
+          "source": "FRED / BEA",
+          "quality_status": "watch"
+        },
+        "policy": {
+          "id": "daily_fed_funds",
+          "label": "Fed funds",
+          "value": 3.88,
+          "display": "3.88 %",
+          "date": "2026-10-08",
+          "source": "FRED / Federal Reserve",
+          "quality_status": "watch"
+        },
+        "external": {
+          "id": "goods_trade_balance",
+          "label": "Goods trade balance",
+          "value": -105572.0,
+          "display": "-105572.00 USD mn",
+          "date": "2026-08-01",
+          "source": "FRED / Census-BEA",
+          "quality_status": "watch"
+        },
+        "fiscal": {
+          "id": "federal_debt_gdp",
+          "label": "Federal debt/GDP",
+          "value": 122.59387,
+          "display": "122.59 % of GDP",
+          "date": "2026-01-01",
+          "source": "FRED / US Treasury",
+          "quality_status": "low_confidence"
+        },
+        "financial": {
+          "id": "mortgage_30y_rate",
+          "label": "Mortgage rate",
+          "value": 7.4,
+          "display": "7.40 %",
+          "date": "2026-10-08",
+          "source": "FRED / Freddie Mac",
+          "quality_status": "watch"
+        },
+        "property": {
+          "id": "case_shiller_20_city_growth",
+          "label": "Case-Shiller 20-City",
+          "value": 2.457073085656547,
+          "display": "2.46 % y/y",
+          "date": "2026-07-01",
+          "source": "FRED / S&P CoreLogic Case-Shiller",
           "quality_status": "watch"
         }
       },
@@ -5806,9 +5972,9 @@
   ],
   "regimes": {
     "HU": {
-      "composite_score": 53.8,
-      "cyclical_score": 57.5,
-      "structural_score": 50.0,
+      "composite_score": 51.0,
+      "cyclical_score": 58.8,
+      "structural_score": 43.3,
       "composite_label": "mixed",
       "quality": {
         "score": 54.3,
@@ -5829,7 +5995,7 @@
         },
         "inflation": {
           "label": "near-target inflation",
-          "score": 70.0,
+          "score": 75.0,
           "confidence_weight": 1.0,
           "value": 1.8,
           "display": "1.80 % YoY",
@@ -5869,7 +6035,7 @@
         },
         "property": {
           "label": "property hot",
-          "score": 65.0,
+          "score": 45.0,
           "confidence_weight": 1.0,
           "value": 10.2,
           "display": "10.20 % YoY",
@@ -5878,8 +6044,8 @@
       }
     },
     "PL": {
-      "composite_score": 52.5,
-      "cyclical_score": 60.0,
+      "composite_score": 53.1,
+      "cyclical_score": 61.2,
       "structural_score": 45.0,
       "composite_label": "mixed",
       "quality": {
@@ -5908,8 +6074,8 @@
           "source_signal": "cpi_yoy"
         },
         "policy": {
-          "label": "neutral-tight stance",
-          "score": 55.0,
+          "label": "neutral-moderate stance",
+          "score": 60.0,
           "confidence_weight": 1.0,
           "value": 3.75,
           "display": "3.75 %",
@@ -5940,7 +6106,7 @@
           "source_signal": "credit_to_gdp_gap"
         },
         "property": {
-          "label": "property hot",
+          "label": "healthy property expansion",
           "score": 65.0,
           "confidence_weight": 1.0,
           "value": 6.3,
@@ -5950,9 +6116,9 @@
       }
     },
     "CZ": {
-      "composite_score": 62.9,
-      "cyclical_score": 62.5,
-      "structural_score": 63.3,
+      "composite_score": 61.7,
+      "cyclical_score": 65.0,
+      "structural_score": 58.3,
       "composite_label": "mixed",
       "quality": {
         "score": 52.0,
@@ -5973,15 +6139,15 @@
         },
         "inflation": {
           "label": "near-target inflation",
-          "score": 70.0,
+          "score": 75.0,
           "confidence_weight": 1.0,
           "value": 1.5,
           "display": "1.50 % YoY",
           "source_signal": "cpi_yoy"
         },
         "policy": {
-          "label": "neutral-tight stance",
-          "score": 55.0,
+          "label": "neutral-moderate stance",
+          "score": 60.0,
           "confidence_weight": 1.0,
           "value": 3.5,
           "display": "3.50 %",
@@ -6005,7 +6171,7 @@
         },
         "financial": {
           "label": "financial conditions stable",
-          "score": 60.0,
+          "score": 65.0,
           "confidence_weight": 1.0,
           "value": -3.5315,
           "display": "-3.53 pp",
@@ -6013,7 +6179,7 @@
         },
         "property": {
           "label": "property hot",
-          "score": 65.0,
+          "score": 45.0,
           "confidence_weight": 1.0,
           "value": 8.6,
           "display": "8.60 % YoY",
@@ -6022,9 +6188,9 @@
       }
     },
     "RO": {
-      "composite_score": 40.8,
+      "composite_score": 38.3,
       "cyclical_score": 30.0,
-      "structural_score": 51.7,
+      "structural_score": 46.7,
       "composite_label": "defensive",
       "quality": {
         "score": 50.7,
@@ -6077,7 +6243,7 @@
         },
         "financial": {
           "label": "financial conditions stable",
-          "score": 60.0,
+          "score": 65.0,
           "confidence_weight": 1.0,
           "value": -3.1801147087634867,
           "display": "-3.18 pp",
@@ -6085,7 +6251,7 @@
         },
         "property": {
           "label": "property hot",
-          "score": 65.0,
+          "score": 45.0,
           "confidence_weight": 1.0,
           "value": 12.1,
           "display": "12.10 % YoY",
@@ -6094,9 +6260,9 @@
       }
     },
     "CN": {
-      "composite_score": 63.1,
-      "cyclical_score": 61.2,
-      "structural_score": 65.0,
+      "composite_score": 57.1,
+      "cyclical_score": 67.5,
+      "structural_score": 46.7,
       "composite_label": "mixed",
       "quality": {
         "score": 38.3,
@@ -6124,12 +6290,12 @@
           "source_signal": "cpi_yoy_akshare"
         },
         "policy": {
-          "label": "restrictive stance",
-          "score": 35.0,
+          "label": "neutral-moderate stance",
+          "score": 60.0,
           "confidence_weight": 1.0,
-          "value": 7.5,
-          "display": "7.50 %",
-          "source_signal": "m2_yoy_akshare"
+          "value": 3.0,
+          "display": "3.00 %",
+          "source_signal": "lpr_1y_akshare"
         },
         "external": {
           "label": "external strength",
@@ -6140,48 +6306,48 @@
           "source_signal": "customs_exports_yoy_akshare"
         },
         "fiscal": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "heavy debt overhang",
+          "score": 30.0,
+          "confidence_weight": 1.0,
+          "value": 122.1,
+          "display": "122.10 % of GDP",
+          "source_signal": "general_gov_debt"
         },
         "financial": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "easy financial conditions",
+          "score": 75.0,
+          "confidence_weight": 1.0,
+          "value": 1.43,
+          "display": "1.43 %",
+          "source_signal": "shibor_3m_akshare"
         },
         "property": {
-          "label": "property hot",
-          "score": 65.0,
+          "label": "property drag",
+          "score": 35.0,
           "confidence_weight": 1.0,
-          "value": 4797.885,
-          "display": "4,798 CNY bn",
-          "source_signal": "real_estate_development_investment_ytd_eastmoney"
+          "value": -12.79854526,
+          "display": "-12.80 %",
+          "source_signal": "commercial_housing_sales_value_yoy_eastmoney"
         }
       }
     },
     "EA": {
-      "composite_score": 51.9,
-      "cyclical_score": 68.8,
-      "structural_score": 35.0,
+      "composite_score": 60.8,
+      "cyclical_score": 60.0,
+      "structural_score": 61.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 55.7,
+        "score": 55.5,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 66.2,
+        "freshness_score": 65.7,
         "proxy_penalty": 0.0,
         "gap_penalty": 12.5
       },
       "dimensions": {
         "growth": {
-          "label": "moderate expansion",
-          "score": 65.0,
+          "label": "stall-speed growth",
+          "score": 45.0,
           "confidence_weight": 1.0,
           "value": 1.2,
           "display": "1.20 % y/y",
@@ -6189,58 +6355,58 @@
         },
         "inflation": {
           "label": "near-target inflation",
-          "score": 70.0,
+          "score": 75.0,
           "confidence_weight": 1.0,
           "value": 2.0,
           "display": "2.00 % y/y",
           "source_signal": "hicp_inflation"
         },
         "policy": {
-          "label": "easy stance",
-          "score": 65.0,
+          "label": "neutral-moderate stance",
+          "score": 60.0,
           "confidence_weight": 1.0,
           "value": 2.5,
           "display": "2.50 %",
           "source_signal": "policy_rate"
         },
         "external": {
-          "label": "external strength",
-          "score": 75.0,
+          "label": "balanced external impulse",
+          "score": 60.0,
           "confidence_weight": 1.0,
-          "value": 5030.9,
-          "display": "5,031 EUR mn",
-          "source_signal": "goods_trade_balance"
+          "value": 1.2,
+          "display": "1.20 % of GDP",
+          "source_signal": "current_account_gdp"
         },
         "fiscal": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "elevated debt",
+          "score": 45.0,
+          "confidence_weight": 1.0,
+          "value": 89.4,
+          "display": "89.40 % of GDP",
+          "source_signal": "government_debt_gdp"
         },
         "financial": {
-          "label": "tight financial conditions",
-          "score": 35.0,
+          "label": "loose / minimal fragmentation",
+          "score": 75.0,
           "confidence_weight": 1.0,
           "value": 88.9,
           "display": "88.9 bps",
           "source_signal": "it_de_spread_10y"
         },
         "property": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "healthy property expansion",
+          "score": 65.0,
+          "confidence_weight": 1.0,
+          "value": 4.0,
+          "display": "4.00 % y/y",
+          "source_signal": "house_price_yoy"
         }
       }
     },
     "JP": {
-      "composite_score": 58.5,
-      "cyclical_score": 53.8,
-      "structural_score": 63.3,
+      "composite_score": 56.5,
+      "cyclical_score": 56.2,
+      "structural_score": 56.7,
       "composite_label": "mixed",
       "quality": {
         "score": 45.6,
@@ -6261,15 +6427,15 @@
         },
         "inflation": {
           "label": "near-target inflation",
-          "score": 70.0,
+          "score": 75.0,
           "confidence_weight": 1.0,
           "value": 1.962533452274755,
           "display": "1.96 % y/y",
           "source_signal": "cpi_inflation"
         },
         "policy": {
-          "label": "easy stance",
-          "score": 65.0,
+          "label": "accommodative stance",
+          "score": 70.0,
           "confidence_weight": 1.0,
           "value": 0.977,
           "display": "0.98 %",
@@ -6284,23 +6450,23 @@
           "source_signal": "goods_trade_balance"
         },
         "fiscal": {
-          "label": "fiscal contained",
-          "score": 65.0,
+          "label": "heavy debt overhang",
+          "score": 30.0,
           "confidence_weight": 1.0,
           "value": 204.8,
           "display": "205 % of GDP",
           "source_signal": "government_debt_gdp"
         },
         "financial": {
-          "label": "financial conditions stable",
-          "score": 60.0,
+          "label": "easy financial conditions",
+          "score": 75.0,
           "confidence_weight": 1.0,
           "value": 2.94,
           "display": "2.94 %",
           "source_signal": "sovereign_yield_10y"
         },
         "property": {
-          "label": "property hot",
+          "label": "healthy property expansion",
           "score": 65.0,
           "confidence_weight": 1.0,
           "value": 5.035091477472831,
@@ -6310,9 +6476,9 @@
       }
     },
     "ZA": {
-      "composite_score": 55.0,
+      "composite_score": 54.2,
       "cyclical_score": 55.0,
-      "structural_score": 55.0,
+      "structural_score": 53.3,
       "composite_label": "mixed",
       "quality": {
         "score": 43.4,
@@ -6356,8 +6522,8 @@
           "source_signal": "goods_trade_balance"
         },
         "fiscal": {
-          "label": "fiscal contained",
-          "score": 65.0,
+          "label": "moderate debt",
+          "score": 60.0,
           "confidence_weight": 1.0,
           "value": 78.4,
           "display": "78.4 % of GDP",
@@ -6372,7 +6538,7 @@
           "source_signal": "prime_lending_rate"
         },
         "property": {
-          "label": "property hot",
+          "label": "healthy property expansion",
           "score": 65.0,
           "confidence_weight": 1.0,
           "value": 5.989089982269014,
@@ -6382,9 +6548,9 @@
       }
     },
     "UK": {
-      "composite_score": 52.5,
-      "cyclical_score": 55.0,
-      "structural_score": 50.0,
+      "composite_score": 55.2,
+      "cyclical_score": 57.1,
+      "structural_score": 53.3,
       "composite_label": "mixed",
       "quality": {
         "score": 47.9,
@@ -6396,67 +6562,67 @@
       },
       "dimensions": {
         "growth": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "moderate expansion",
+          "score": 65.0,
+          "confidence_weight": 0.8,
+          "value": 0.3868471953578201,
+          "display": "0.39 % m/m",
+          "source_signal": "monthly_gdp_mom"
         },
         "inflation": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "above-target inflation",
+          "score": 45.0,
+          "confidence_weight": 1.0,
+          "value": 3.1,
+          "display": "3.10 %",
+          "source_signal": "cpi_yoy"
         },
         "policy": {
-          "label": "neutral-tight stance",
-          "score": 55.0,
+          "label": "neutral-moderate stance",
+          "score": 60.0,
           "confidence_weight": 1.0,
           "value": 3.75,
           "display": "3.75 %",
           "source_signal": "bank_rate"
         },
         "external": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "balanced external impulse",
+          "score": 60.0,
+          "confidence_weight": 1.0,
+          "value": -2.5,
+          "display": "-2.50 % of GDP",
+          "source_signal": "current_account_gdp"
         },
         "fiscal": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "elevated debt",
+          "score": 45.0,
+          "confidence_weight": 1.0,
+          "value": 93.8,
+          "display": "93.80 % of GDP",
+          "source_signal": "psnd_ex_banks_gdp"
         },
         "financial": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "neutral financial conditions",
+          "score": 60.0,
+          "confidence_weight": 1.0,
+          "value": 3.7331,
+          "display": "3.73 %",
+          "source_signal": "sonia_rate"
         },
         "property": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "property stable",
+          "score": 55.0,
+          "confidence_weight": 1.0,
+          "value": 1.4,
+          "display": "1.40 %",
+          "source_signal": "uk_hpi_annual_change"
         }
       }
     },
     "US": {
-      "composite_score": 37.5,
-      "cyclical_score": 25.0,
-      "structural_score": 50.0,
+      "composite_score": 47.3,
+      "cyclical_score": 51.2,
+      "structural_score": 43.3,
       "composite_label": "defensive",
       "quality": {
         "score": 58.6,
@@ -6468,60 +6634,60 @@
       },
       "dimensions": {
         "growth": {
-          "label": "contraction",
-          "score": 25.0,
+          "label": "moderate expansion",
+          "score": 65.0,
           "confidence_weight": 1.0,
           "value": 2.2,
           "display": "2.20 %",
           "source_signal": "real_gdp_growth"
         },
         "inflation": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "above-target inflation",
+          "score": 45.0,
+          "confidence_weight": 1.0,
+          "value": 3.0075959761856064,
+          "display": "3.01 % y/y",
+          "source_signal": "core_pce_inflation"
         },
         "policy": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "neutral-moderate stance",
+          "score": 60.0,
+          "confidence_weight": 1.0,
+          "value": 3.88,
+          "display": "3.88 %",
+          "source_signal": "daily_fed_funds"
         },
         "external": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "external drag",
+          "score": 35.0,
+          "confidence_weight": 1.0,
+          "value": -105572.0,
+          "display": "-105572.00 USD mn",
+          "source_signal": "goods_trade_balance"
         },
         "fiscal": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "heavy debt overhang",
+          "score": 30.0,
+          "confidence_weight": 1.0,
+          "value": 122.59387,
+          "display": "122.59 % of GDP",
+          "source_signal": "federal_debt_gdp"
         },
         "financial": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "tight financial conditions",
+          "score": 35.0,
+          "confidence_weight": 1.0,
+          "value": 7.4,
+          "display": "7.40 %",
+          "source_signal": "mortgage_30y_rate"
         },
         "property": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "healthy property expansion",
+          "score": 65.0,
+          "confidence_weight": 1.0,
+          "value": 2.457073085656547,
+          "display": "2.46 % y/y",
+          "source_signal": "case_shiller_20_city_growth"
         }
       }
     }
@@ -6534,7 +6700,7 @@
       "freshness_pct": 55.2,
       "proxy_fills": 0,
       "gaps": 4,
-      "regime_score": 53.8,
+      "regime_score": 51.0,
       "quality_score": 54.3
     },
     {
@@ -6544,7 +6710,7 @@
       "freshness_pct": 53.7,
       "proxy_fills": 0,
       "gaps": 1,
-      "regime_score": 52.5,
+      "regime_score": 53.1,
       "quality_score": 61.3
     },
     {
@@ -6554,7 +6720,7 @@
       "freshness_pct": 55.8,
       "proxy_fills": 0,
       "gaps": 5,
-      "regime_score": 62.9,
+      "regime_score": 61.7,
       "quality_score": 52.0
     },
     {
@@ -6564,7 +6730,7 @@
       "freshness_pct": 51.9,
       "proxy_fills": 0,
       "gaps": 5,
-      "regime_score": 40.8,
+      "regime_score": 38.3,
       "quality_score": 50.7
     },
     {
@@ -6574,18 +6740,18 @@
       "freshness_pct": 32.4,
       "proxy_fills": 0,
       "gaps": 8,
-      "regime_score": 63.1,
+      "regime_score": 57.1,
       "quality_score": 38.3
     },
     {
       "code": "EA",
       "name": "Euro Area",
       "coverage_pct": 100.0,
-      "freshness_pct": 66.2,
+      "freshness_pct": 65.7,
       "proxy_fills": 0,
       "gaps": 5,
-      "regime_score": 51.9,
-      "quality_score": 55.7
+      "regime_score": 60.8,
+      "quality_score": 55.5
     },
     {
       "code": "JP",
@@ -6594,7 +6760,7 @@
       "freshness_pct": 44.4,
       "proxy_fills": 0,
       "gaps": 6,
-      "regime_score": 58.5,
+      "regime_score": 56.5,
       "quality_score": 45.6
     },
     {
@@ -6604,7 +6770,7 @@
       "freshness_pct": 45.3,
       "proxy_fills": 0,
       "gaps": 7,
-      "regime_score": 55.0,
+      "regime_score": 54.2,
       "quality_score": 43.4
     },
     {
@@ -6614,7 +6780,7 @@
       "freshness_pct": 59.8,
       "proxy_fills": 0,
       "gaps": 8,
-      "regime_score": 52.5,
+      "regime_score": 55.2,
       "quality_score": 47.9
     },
     {
@@ -6624,7 +6790,7 @@
       "freshness_pct": 77.4,
       "proxy_fills": 0,
       "gaps": 7,
-      "regime_score": 37.5,
+      "regime_score": 47.3,
       "quality_score": 58.6
     }
   ],
@@ -7646,6 +7812,19 @@
     {
       "code": "EA",
       "dashboard": "Euro Area",
+      "indicator_id": "hicp_goods_inflation",
+      "label": "HICP Goods Inflation, YoY",
+      "latest": "2025-12-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 286,
+      "severity": "medium",
+      "source": "Eurostat",
+      "note": "Harmonised Index of Consumer Prices goods component annual rate of change."
+    },
+    {
+      "code": "EA",
+      "dashboard": "Euro Area",
       "indicator_id": "hicp_inflation",
       "label": "HICP Headline Inflation, YoY",
       "latest": "2025-12-01",
@@ -7655,19 +7834,6 @@
       "severity": "medium",
       "source": "Eurostat",
       "note": "Harmonised Index of Consumer Prices headline annual inflation (all items)."
-    },
-    {
-      "code": "EA",
-      "dashboard": "Euro Area",
-      "indicator_id": "hicp_services_inflation",
-      "label": "HICP Services Inflation, YoY",
-      "latest": "2025-12-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 286,
-      "severity": "medium",
-      "source": "Eurostat",
-      "note": "HICP services component annual rate of change."
     }
   ],
   "gap_backlog": [

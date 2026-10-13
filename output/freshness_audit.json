@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T09:13:38.383234+00:00",
+  "generated": "2026-10-13T09:57:36.477359+00:00",
   "as_of_date": "2026-10-13",
   "thresholds": {
     "daily": "14 days",
@@ -41,16 +41,16 @@
     },
     {
       "dashboard": "Euro Area",
-      "charts": 68,
-      "current": 45,
-      "stale": 17,
+      "charts": 70,
+      "current": 46,
+      "stale": 18,
       "lagged_source": 0,
       "projection": 1,
       "scheduled_policy": 0,
       "future_date": 0,
       "missing_date": 0,
       "needs_review": 0,
-      "low_confidence": 17,
+      "low_confidence": 18,
       "latest_historical_date": "2026-10-13",
       "headline_latest": ""
     },
@@ -126,7 +126,7 @@
       "missing_date": 0,
       "needs_review": 0,
       "low_confidence": 30,
-      "latest_historical_date": "2026-10-12",
+      "latest_historical_date": "2026-10-13",
       "headline_latest": ""
     },
     {
@@ -11103,6 +11103,26 @@
     },
     {
       "dashboard": "Euro Area",
+      "indicator_id": "labour_force_participation_rate",
+      "label": "Labour Force Participation Rate (15-64)",
+      "frequency": "quarterly",
+      "latest_observation": "2026-04-01",
+      "latest_date": "2026-04-01",
+      "age_basis_date": "2026-06-30",
+      "age_days": 105,
+      "threshold_days": 187,
+      "release_calendar_id": "eurostat_quarterly",
+      "expected_release_date": "2026-12-14",
+      "due_date": "2027-01-03",
+      "freshness_status": "current",
+      "quality_status": "verified",
+      "source": "Eurostat",
+      "series_id": "",
+      "provider_update": "2026-04-01",
+      "note": "Labour market participation rate for active population aged 15-64; unadjusted quarterly series."
+    },
+    {
+      "dashboard": "Euro Area",
       "indicator_id": "labour_cost_index_yoy",
       "label": "Labour Cost Index Growth, YoY",
       "frequency": "quarterly",
@@ -11200,6 +11220,26 @@
       "series_id": "",
       "provider_update": "2025-12-01",
       "note": "HICP services component annual rate of change."
+    },
+    {
+      "dashboard": "Euro Area",
+      "indicator_id": "hicp_goods_inflation",
+      "label": "HICP Goods Inflation, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2025-12-01",
+      "latest_date": "2025-12-01",
+      "age_basis_date": "2025-12-31",
+      "age_days": 286,
+      "threshold_days": 91,
+      "release_calendar_id": "eurostat_monthly",
+      "expected_release_date": "2026-03-17",
+      "due_date": "2026-04-01",
+      "freshness_status": "stale",
+      "quality_status": "low_confidence",
+      "source": "Eurostat",
+      "series_id": "",
+      "provider_update": "2025-12-01",
+      "note": "Harmonised Index of Consumer Prices goods component annual rate of change."
     },
     {
       "dashboard": "Euro Area",
@@ -13726,10 +13766,10 @@
       "indicator_id": "zar_usd",
       "label": "ZAR/USD Spot Rate",
       "frequency": "daily",
-      "latest_observation": "2026-10-12",
-      "latest_date": "2026-10-12",
-      "age_basis_date": "2026-10-12",
-      "age_days": 1,
+      "latest_observation": "2026-10-13",
+      "latest_date": "2026-10-13",
+      "age_basis_date": "2026-10-13",
+      "age_days": 0,
       "threshold_days": 10,
       "release_calendar_id": "",
       "expected_release_date": "",
@@ -13738,7 +13778,7 @@
       "quality_status": "verified",
       "source": "SARB Web API",
       "series_id": "EXCX135D",
-      "provider_update": "2026-10-12",
+      "provider_update": "2026-10-13",
       "note": "SARB published daily rate; a higher value means a weaker rand."
     },
     {
@@ -13746,10 +13786,10 @@
       "indicator_id": "zar_eur",
       "label": "ZAR/EUR Spot Rate",
       "frequency": "daily",
-      "latest_observation": "2026-10-12",
-      "latest_date": "2026-10-12",
-      "age_basis_date": "2026-10-12",
-      "age_days": 1,
+      "latest_observation": "2026-10-13",
+      "latest_date": "2026-10-13",
+      "age_basis_date": "2026-10-13",
+      "age_days": 0,
       "threshold_days": 10,
       "release_calendar_id": "",
       "expected_release_date": "",
@@ -13758,7 +13798,7 @@
       "quality_status": "verified",
       "source": "SARB Web API",
       "series_id": "EXCZ002D",
-      "provider_update": "2026-10-12",
+      "provider_update": "2026-10-13",
       "note": "The euro cross matters for the import basket; the dollar cross matters for the commodity export basket."
     },
     {
@@ -17218,7 +17258,7 @@
       "quality_status": "watch",
       "source": "FRED / Realtor.com",
       "series_id": "PENLISCOUUS",
-      "provider_update": "2026-10-01",
+      "provider_update": "2026-10-02",
       "note": "Realtor.com pending-listing count via FRED; related to transaction pipeline, but it is not the NAR Pending Home Sales Index."
     },
     {
@@ -17238,7 +17278,7 @@
       "quality_status": "watch",
       "source": "FRED / Realtor.com",
       "series_id": "PENLISCOUUS",
-      "provider_update": "2026-10-01",
+      "provider_update": "2026-10-02",
       "note": "Year-over-year growth derived from Realtor.com pending listings; a cleaner transaction-pipeline signal than the raw level when seasonality is material."
     },
     {
@@ -21082,6 +21122,26 @@
       "series_id": "",
       "provider_update": "2025-12-01",
       "note": "HICP food, alcohol and tobacco component annual rate of change."
+    },
+    {
+      "dashboard": "Euro Area",
+      "indicator_id": "hicp_goods_inflation",
+      "label": "HICP Goods Inflation, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2025-12-01",
+      "latest_date": "2025-12-01",
+      "age_basis_date": "2025-12-31",
+      "age_days": 286,
+      "threshold_days": 91,
+      "release_calendar_id": "eurostat_monthly",
+      "expected_release_date": "2026-03-17",
+      "due_date": "2026-04-01",
+      "freshness_status": "stale",
+      "quality_status": "low_confidence",
+      "source": "Eurostat",
+      "series_id": "",
+      "provider_update": "2025-12-01",
+      "note": "Harmonised Index of Consumer Prices goods component annual rate of change."
     },
     {
       "dashboard": "Euro Area",

@@ -45,19 +45,30 @@ DATA_FIRST_SUMMARIES = {
     "US": "us_dashboard_summary.json",
 }
 
+DATA_FIRST_CANONICAL = {
+    "CN": "china_canonical_frame.json",
+    "EA": "euro_area_canonical_frame.json",
+    "JP": "japan_canonical_frame.json",
+    "ZA": "south_africa_canonical_frame.json",
+    "UK": "uk_canonical_frame.json",
+    "US": "us_canonical_frame.json",
+}
+
 DATA_FIRST_SIGNAL_MAP = {
     "CN": {
         "growth": ("industrial_value_added_yoy_akshare", "Industrial production"),
         "inflation": ("cpi_yoy_akshare", "CPI inflation"),
-        "policy": ("m2_yoy_akshare", "Broad-money impulse"),
+        "policy": ("lpr_1y_akshare", "1Y LPR"),
         "external": ("customs_exports_yoy_akshare", "Exports"),
-        "property": ("real_estate_development_investment_ytd_eastmoney", "Property investment"),
+        "fiscal": ("general_gov_debt", "Government debt/GDP"),
+        "financial": ("shibor_3m_akshare", "3M Shibor"),
+        "property": ("commercial_housing_sales_value_yoy_eastmoney", "Housing sales YoY"),
     },
     "EA": {
         "growth": ("real_gdp_yoy", "Real GDP"),
         "inflation": ("hicp_inflation", "HICP headline"),
         "policy": ("policy_rate", "ECB DFR"),
-        "external": ("goods_trade_balance", "Goods trade balance"),
+        "external": ("current_account_gdp", "Current account/GDP"),
         "fiscal": ("government_debt_gdp", "Government debt/GDP"),
         "financial": ("it_de_spread_10y", "BTP-Bund 10Y spread"),
         "property": ("house_price_yoy", "House prices"),
@@ -84,16 +95,19 @@ DATA_FIRST_SIGNAL_MAP = {
         "growth": ("monthly_gdp_mom", "Monthly GDP"),
         "inflation": ("cpi_yoy", "CPI inflation"),
         "policy": ("bank_rate", "Bank Rate"),
-        "fiscal": ("psnb_ex_banks", "PSNB"),
+        "external": ("current_account_gdp", "Current account/GDP"),
+        "fiscal": ("psnd_ex_banks_gdp", "PSND/GDP"),
         "financial": ("sonia_rate", "SONIA"),
+        "property": ("uk_hpi_annual_change", "UK HPI"),
     },
     "US": {
         "growth": ("real_gdp_growth", "Real GDP"),
-        "inflation": ("core_cpi_inflation", "Core CPI"),
+        "inflation": ("core_pce_inflation", "Core PCE"),
         "policy": ("daily_fed_funds", "Fed funds"),
+        "external": ("goods_trade_balance", "Goods trade balance"),
         "fiscal": ("federal_debt_gdp", "Federal debt/GDP"),
         "financial": ("mortgage_30y_rate", "Mortgage rate"),
-        "property": ("housing_starts", "Housing starts"),
+        "property": ("case_shiller_20_city_growth", "Case-Shiller 20-City"),
     },
 }
 
@@ -140,16 +154,44 @@ def _freshness_by_code() -> dict[str, dict[str, Any]]:
     return output
 
 
-def _key_series(summary: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    return {
+def _key_series(code: str, summary: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    series_map: dict[str, dict[str, Any]] = {
         str(item.get("id")): item
         for item in summary.get("key_series_latest", []) or []
         if item.get("id")
     }
+    canonical_file = DATA_FIRST_CANONICAL.get(code)
+    if canonical_file:
+        c_path = OUTPUT / canonical_file
+        if c_path.exists():
+            try:
+                frame_data = json.loads(c_path.read_text())
+                for s in frame_data.get("series", []):
+                    ind_id = s.get("indicator_id")
+                    if ind_id and ind_id not in series_map:
+                        obs = s.get("observations", [])
+                        if obs:
+                            latest_obs = obs[-1]
+                            val = float(latest_obs[1])
+                            dt = str(latest_obs[0])
+                            unit = s.get("unit", "")
+                            series_map[ind_id] = {
+                                "id": ind_id,
+                                "latest_value": val,
+                                "latest_display": f"{val:.2f} {unit}".strip(),
+                                "latest_date": dt,
+                                "source_name": s.get("source", {}).get("name", ""),
+                                "quality_status": s.get("quality", {}).get("status", ""),
+                                "unit": unit,
+                                "label": s.get("label_en", ind_id),
+                            }
+            except Exception:
+                pass
+    return series_map
 
 
 def _data_first_signals(code: str, summary: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    key_series = _key_series(summary)
+    key_series = _key_series(code, summary)
     signals: dict[str, dict[str, Any]] = {}
     for dimension, (series_id, label) in DATA_FIRST_SIGNAL_MAP.get(code, {}).items():
         item = key_series.get(series_id)
@@ -202,28 +244,29 @@ def _regime_label(dimension: str, value: float | None, display: str, signal_id: 
 
     confidence = 1.0
     if transform in {"mom", "qoq"}:
-        confidence = 0.8  # Noisier fast frequency
+        confidence = 0.8  # Fast frequency
 
     if dimension == "growth":
         if transform == "mom":
             if value >= 0.4: return "above-trend expansion", 80.0, confidence
             if value >= 0.1: return "moderate expansion", 65.0, confidence
-            if value >= 0: return "stall-speed growth", 45.0, confidence
+            if value >= 0.0: return "stall-speed growth", 45.0, confidence
             return "contraction", 25.0, confidence
         elif transform == "qoq":
-            if value >= 1.0: return "above-trend expansion", 80.0, confidence
+            if value >= 0.8: return "above-trend expansion", 80.0, confidence
             if value >= 0.3: return "moderate expansion", 65.0, confidence
-            if value >= 0: return "stall-speed growth", 45.0, confidence
+            if value >= 0.0: return "stall-speed growth", 45.0, confidence
             return "contraction", 25.0, confidence
-        elif transform == "level":
-            # e.g., PMI
-            if value >= 52: return "above-trend expansion", 80.0, confidence
-            if value >= 50: return "moderate expansion", 65.0, confidence
+        elif transform == "level" and value > 30.0:
+            # e.g., PMI level
+            if value >= 52.0: return "above-trend expansion", 80.0, confidence
+            if value >= 50.0: return "moderate expansion", 65.0, confidence
             return "contraction", 25.0, confidence
-        else: # yoy
-            if value >= 3: return "above-trend expansion", 80.0, confidence
-            if value >= 1: return "moderate expansion", 65.0, confidence
-            if value >= 0: return "stall-speed growth", 45.0, confidence
+        else:
+            # YoY or annualized rate
+            if value >= 3.0: return "above-trend expansion", 80.0, confidence
+            if value >= 1.5: return "moderate expansion", 65.0, confidence
+            if value >= 0.0: return "stall-speed growth", 45.0, confidence
             return "contraction", 25.0, confidence
 
     if dimension == "inflation":
@@ -233,40 +276,59 @@ def _regime_label(dimension: str, value: float | None, display: str, signal_id: 
             if value >= 0.1: return "near-target inflation", 70.0, confidence
             return "disinflation risk", 55.0, confidence
         else:
-            if value >= 5: return "inflation pressure", 25.0, confidence
-            if value >= 3: return "above-target inflation", 45.0, confidence
-            if value >= 1: return "near-target inflation", 70.0, confidence
-            return "disinflation risk", 55.0, confidence
+            if value >= 4.5: return "inflation pressure", 25.0, confidence
+            if value >= 2.8: return "above-target inflation", 45.0, confidence
+            if value >= 1.5: return "near-target inflation", 75.0, confidence
+            if value >= 0.0: return "disinflation risk", 55.0, confidence
+            return "deflation risk", 30.0, confidence
 
     if dimension == "policy":
-        if value >= 5: return "restrictive stance", 35.0, confidence
-        if value >= 3: return "neutral-tight stance", 55.0, confidence
-        return "easy stance", 65.0, confidence
+        if value >= 5.0: return "restrictive stance", 35.0, confidence
+        if value >= 2.5: return "neutral-moderate stance", 60.0, confidence
+        return "accommodative stance", 70.0, confidence
 
     if dimension == "external":
-        if transform == "level" and "balance" in sid_l:
-            # Often nominal balance; a simple sign check
-            if value >= 0: return "external strength", 75.0, confidence
+        if "balance" in sid_l:
+            if value >= 0.0: return "external strength", 75.0, confidence
             return "external drag", 35.0, confidence
         else:
-            if value >= 3: return "external strength", 75.0, confidence
-            if value <= -3: return "external drag", 35.0, confidence
+            if value >= 3.0: return "external strength", 75.0, confidence
+            if value <= -3.0: return "external drag", 35.0, confidence
             return "balanced external impulse", 60.0, confidence
 
     if dimension == "fiscal":
-        if value <= -6: return "fiscal stress", 30.0, confidence
-        if value <= -3: return "watch fiscal slippage", 45.0, confidence
-        return "fiscal contained", 65.0, confidence
+        if "debt" in sid_l or (value > 20.0 and "balance" not in sid_l):
+            if value >= 120.0: return "heavy debt overhang", 30.0, confidence
+            if value >= 80.0: return "elevated debt", 45.0, confidence
+            if value >= 60.0: return "moderate debt", 60.0, confidence
+            return "debt contained", 75.0, confidence
+        else:
+            if value <= -6.0: return "fiscal stress", 30.0, confidence
+            if value <= -3.0: return "watch fiscal slippage", 45.0, confidence
+            return "fiscal contained", 65.0, confidence
 
     if dimension == "financial":
-        if value >= 8: return "tight financial conditions", 35.0, confidence
-        if value <= -5: return "credit deleveraging", 40.0, confidence
-        return "financial conditions stable", 60.0, confidence
+        if "spread" in sid_l or "bps" in display_l:
+            if value <= 100.0: return "loose / minimal fragmentation", 75.0, confidence
+            if value <= 175.0: return "moderate spread / stable", 60.0, confidence
+            if value <= 250.0: return "elevated sovereign spread", 40.0, confidence
+            return "severe fragmentation stress", 25.0, confidence
+        elif "gap" in sid_l or "pp" in display_l:
+            if value >= 10.0: return "credit bubble risk", 35.0, confidence
+            if value <= -5.0: return "credit deleveraging", 40.0, confidence
+            return "financial conditions stable", 65.0, confidence
+        else:
+            if value >= 7.0: return "tight financial conditions", 35.0, confidence
+            if value >= 3.5: return "neutral financial conditions", 60.0, confidence
+            return "easy financial conditions", 75.0, confidence
 
     if dimension == "property":
-        if value >= 5: return "property hot", 65.0, confidence
-        if value < 0: return "property drag", 35.0, confidence
-        return "property stable", 58.0, confidence
+        if "yoy" in sid_l or "growth" in sid_l or "change" in sid_l or "%" in display_l:
+            if value >= 7.0: return "property hot", 45.0, confidence
+            if value >= 2.0: return "healthy property expansion", 65.0, confidence
+            if value >= -1.0: return "property stable", 55.0, confidence
+            return "property drag", 35.0, confidence
+        return "property tracked", 55.0, confidence
 
     return "tracked", 50.0, confidence
 

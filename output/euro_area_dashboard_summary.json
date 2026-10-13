@@ -1,10 +1,10 @@
 {
   "file": "euro_area.html",
-  "generated": "2026-10-13T09:10:36.460209+00:00",
-  "charts": 68,
+  "generated": "2026-10-13T09:54:21.916101+00:00",
+  "charts": 70,
   "source_groups": 6,
   "data_gaps": 5,
-  "low_confidence": 17,
+  "low_confidence": 18,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -127,10 +127,10 @@
       "value"
     ],
     "file": "euro_area_canonical_frame.json",
-    "series": 68,
-    "observations": 59130,
-    "series_count": 68,
-    "observation_count": 59130
+    "series": 70,
+    "observations": 59505,
+    "series_count": 70,
+    "observation_count": 59505
   },
   "data_gaps_detail": [
     {
@@ -173,12 +173,12 @@
     "source_groups": 6,
     "sources": [
       {
-        "source_name": "ECB",
-        "charts": 29
+        "source_name": "Eurostat",
+        "charts": 30
       },
       {
-        "source_name": "Eurostat",
-        "charts": 28
+        "source_name": "ECB",
+        "charts": 29
       },
       {
         "source_name": "Eurostat / DG ECFIN",
@@ -198,9 +198,9 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 17,
+      "low_confidence": 18,
       "unavailable": 1,
-      "verified": 45,
+      "verified": 46,
       "watch": 5
     },
     "unavailable_count": 0
@@ -214,10 +214,10 @@
   "freshness": {
     "as_of_date": "2026-10-13",
     "counts": {
-      "current": 45,
+      "current": 46,
       "due": 5,
       "future_date": 1,
-      "stale": 17
+      "stale": 18
     },
     "latest_historical_date": "2026-10-13",
     "attention": [
@@ -401,6 +401,28 @@
         "id": "hicp_food_inflation",
         "concept_id": "ea:hicp_food_inflation",
         "label_en": "HICP Food, Alcohol & Tobacco Inflation, YoY",
+        "latest_date": "2025-12-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2025-12-01",
+        "age_days": 286,
+        "threshold_days": 91,
+        "release_calendar_id": "eurostat_monthly",
+        "expected_release_date": "2026-03-17",
+        "due_date": "2026-04-01",
+        "quality_status": "low_confidence",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Eurostat",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "hicp_goods_inflation",
+        "concept_id": "goods_inflation",
+        "label_en": "HICP Goods Inflation, YoY",
         "latest_date": "2025-12-01",
         "frequency": "monthly",
         "freshness_status": "stale",
@@ -731,7 +753,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 68
+      "level": 70
     },
     "non_level": []
   },
@@ -741,6 +763,6 @@
       "date",
       "value"
     ],
-    "charted_series": 68
+    "charted_series": 70
   }
 }

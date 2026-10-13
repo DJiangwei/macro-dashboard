@@ -483,6 +483,27 @@ indicators:
     caveat_en: "Job vacancy rate in industry, construction and services (NACE B-S); seasonally adjusted."
     caveat_zh: "工业、建筑业与服务业职位空缺率；季调口径。"
 
+  - id: labour_force_participation_rate
+    section: labour_wages
+    label_en: "Labour Force Participation Rate (15-64)"
+    label_zh: "劳动参与率 (15-64岁)"
+    unit: "%"
+    fetcher: eurostat_jsonstat
+    dataset: "lfsq_argan"
+    filters:
+      freq: "Q"
+      geo: "EA21"
+      sex: "T"
+      age: "Y15-64"
+      citizen: "TOTAL"
+      unit: "PC"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/lfsq_argan"
+    frequency: "quarterly"
+    start_date: "2005"
+    caveat_en: "Labour market participation rate for active population aged 15-64; unadjusted quarterly series."
+    caveat_zh: "15-64岁经济活动人口的劳动力市场参与率；季度未经季调序列。"
+
   - id: labour_cost_index_yoy
     section: labour_wages
     label_en: "Labour Cost Index Growth, YoY"
@@ -576,6 +597,25 @@ indicators:
     start_date: "2000"
     caveat_en: "HICP services component annual rate of change."
     caveat_zh: "服务业HICP分项年通胀率。"
+
+  - id: hicp_goods_inflation
+    section: prices_costs
+    label_en: "HICP Goods Inflation, YoY"
+    label_zh: "商品类HICP通胀同比"
+    unit: "% y/y"
+    fetcher: eurostat_jsonstat
+    dataset: "prc_hicp_manr"
+    filters:
+      freq: "M"
+      geo: "EA20"
+      coicop: "GD"
+      unit: "RCH_A"
+    source_name: "Eurostat"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr"
+    frequency: "monthly"
+    start_date: "2000"
+    caveat_en: "Harmonised Index of Consumer Prices goods component annual rate of change."
+    caveat_zh: "调和消费者物价指数(HICP)商品类分项年通胀率。"
 
   - id: hicp_energy_inflation
     section: prices_costs
