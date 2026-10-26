@@ -700,9 +700,49 @@ def _fred_graph_observations_us(session: requests.Session, spec: dict[str, Any],
     updated = response.headers.get('Last-Modified', '')
     return (observations, updated)
 
+FRED_CACHE_LOCK = threading.Lock()
+FRED_OBS_CACHE: dict[tuple[str, str], tuple[list[dict[str, Any]], str]] = {}
+FRED_UPDATED_CACHE: dict[str, str] = {}
+
+
+def _redact_fred_key(text: Any) -> str:
+    return re.sub(r"api_key=[^&\s'\"]+", "api_key=REDACTED", str(text))
+
+
+def _get_fred_api_key() -> str:
+    env_key = os.environ.get("FRED_API_KEY", "").strip()
+    if env_key:
+        return env_key
+    if "PYTEST_CURRENT_TEST" in os.environ:
+        return ""
+    for fname in (".env.local", ".env"):
+        env_path = ROOT / fname
+        if not env_path.exists():
+            continue
+        try:
+            for raw_line in env_path.read_text(encoding="utf-8", errors="ignore").splitlines():
+                line = raw_line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                k, v = line.split("=", 1)
+                if k.strip() == "FRED_API_KEY":
+                    val = v.strip().strip('"').strip("'")
+                    if val:
+                        return val
+        except OSError:
+            continue
+    return ""
+
+
 def fetch_fred_us(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
-    if os.environ.get('FRED_API_KEY', '').strip():
+    if _get_fred_api_key():
         return fetch_fred(session, spec)
+    cache_key = (str(spec.get("series") or ""), str(spec.get("start_date") or ""))
+    with FRED_CACHE_LOCK:
+        cached = FRED_OBS_CACHE.get(cache_key)
+    if cached is not None:
+        obs_copy = [dict(item) for item in cached[0]]
+        return {**spec, "observations": obs_copy, "provider_updated": cached[1], "api_url": FRED_GRAPH_URL}
     last_error: Exception | None = None
     for read_timeout in (8, 16):
         try:
@@ -714,7 +754,10 @@ def fetch_fred_us(session: requests.Session, spec: dict[str, Any]) -> dict[str, 
                     provider_updated = parsedate_to_datetime(provider_updated).date().isoformat()
                 except (TypeError, ValueError):
                     provider_updated = str(provider_updated)
-            return {**spec, 'observations': observations, 'provider_updated': provider_updated or (observations[-1]['date'] if observations else ''), 'api_url': FRED_GRAPH_URL}
+            resolved_updated = provider_updated or (observations[-1]['date'] if observations else '')
+            with FRED_CACHE_LOCK:
+                FRED_OBS_CACHE[cache_key] = ([dict(item) for item in observations], resolved_updated)
+            return {**spec, 'observations': observations, 'provider_updated': resolved_updated, 'api_url': FRED_GRAPH_URL}
         except Exception as exc:
             last_error = exc
     raise last_error or RuntimeError('FRED graph fetch failed.')
@@ -961,12 +1004,19 @@ def _start_filter(observations: list[dict[str, Any]], start_date: str | None) ->
     return [item for item in observations if (_parse_date(str(item['date'])) or date.min) >= start]
 
 def _fred_api_observations(session: requests.Session, spec: dict[str, Any]) -> tuple[list[dict[str, Any]], str]:
-    api_key = os.environ.get('FRED_API_KEY', '').strip()
+    api_key = _get_fred_api_key()
     if not api_key:
         return ([], '')
-    params = {'series_id': spec['series'], 'api_key': api_key, 'file_type': 'json'}
-    if spec.get('start_date'):
-        params['observation_start'] = spec['start_date']
+    series_id = str(spec['series'])
+    start_date = str(spec.get('start_date') or '')
+    cache_key = (series_id, start_date)
+    with FRED_CACHE_LOCK:
+        cached = FRED_OBS_CACHE.get(cache_key)
+    if cached is not None:
+        return ([dict(item) for item in cached[0]], cached[1])
+    params = {'series_id': series_id, 'api_key': api_key, 'file_type': 'json'}
+    if start_date:
+        params['observation_start'] = start_date
     last_error: Exception | None = None
     for attempt in range(5):
         try:
@@ -974,7 +1024,7 @@ def _fred_api_observations(session: requests.Session, spec: dict[str, Any]) -> t
             response.raise_for_status()
             break
         except Exception as exc:
-            last_error = exc
+            last_error = RuntimeError(_redact_fred_key(exc))
             if attempt < 4:
                 time.sleep(0.7 * 2 ** attempt)
     else:
@@ -990,13 +1040,18 @@ def _fred_api_observations(session: requests.Session, spec: dict[str, Any]) -> t
         except (TypeError, ValueError):
             continue
         observations.append({'date': str(row.get('date')), 'value': value})
-    updated = response.headers.get('Last-Modified', '')
+    updated = response.headers.get('Last-Modified', '') or str(payload.get('realtime_end') or '')
+    with FRED_CACHE_LOCK:
+        FRED_OBS_CACHE[cache_key] = ([dict(item) for item in observations], updated)
     return (observations, updated)
 
 def _fred_api_series_updated(session: requests.Session, series_id: str) -> str:
-    api_key = os.environ.get('FRED_API_KEY', '').strip()
+    api_key = _get_fred_api_key()
     if not api_key:
         return ''
+    with FRED_CACHE_LOCK:
+        if series_id in FRED_UPDATED_CACHE:
+            return FRED_UPDATED_CACHE[series_id]
     params = {'series_id': series_id, 'api_key': api_key, 'file_type': 'json'}
     try:
         response = session.get(FRED_SERIES_URL, params=params, timeout=(4, 12))
@@ -1007,7 +1062,10 @@ def _fred_api_series_updated(session: requests.Session, series_id: str) -> str:
     series = payload.get('seriess') or []
     if not series:
         return ''
-    return str(series[0].get('last_updated') or '')
+    updated = str(series[0].get('last_updated') or '')
+    with FRED_CACHE_LOCK:
+        FRED_UPDATED_CACHE[series_id] = updated
+    return updated
 
 def _fred_graph_observations(session: requests.Session, spec: dict[str, Any]) -> tuple[list[dict[str, Any]], str]:
     params = {'id': spec['series']}
@@ -1086,7 +1144,7 @@ def fetch_fred(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any
         provider_updated = _fred_api_series_updated(session, str(spec['series'])) or provider_updated
     observations = _apply_uk_transform(_start_filter(observations, spec.get('start_date')), spec)
     provider_updated = _provider_updated_date(provider_updated)
-    return {**spec, 'observations': observations, 'provider_updated': provider_updated or (observations[-1]['date'] if observations else ''), 'api_url': FRED_API_URL if os.environ.get('FRED_API_KEY') else FRED_GRAPH_URL}
+    return {**spec, 'observations': observations, 'provider_updated': provider_updated or (observations[-1]['date'] if observations else ''), 'api_url': FRED_API_URL if _get_fred_api_key() else FRED_GRAPH_URL}
 
 def _ons_path(spec: dict[str, Any]) -> str:
     path = str(spec.get('ons_path') or '').strip()

@@ -36,6 +36,8 @@ def fetch_all(config: dict[str, Any], registry: dict[str, Any], max_workers: int
                 source_id=str(fetcher_name or "unknown"),
                 operation=operation,
             )
+            if isinstance(series, dict):
+                series = {**spec, **series}
         except Exception as exc:
             series = failure_series(spec, exc)
         return validate_series(series)

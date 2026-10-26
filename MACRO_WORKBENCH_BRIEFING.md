@@ -1,6 +1,6 @@
 # Global Macro Workbench Intelligence Briefing
 
-**Generated**: 2026-10-13 | **Coverage**: 10 Economies (US, EA, UK, JP, CN, ZA, PL, CZ, HU, RO)
+**Generated**: 2026-10-26 | **Coverage**: 10 Economies (US, EA, UK, JP, CN, ZA, PL, CZ, HU, RO)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Country | Cyclical | Structural | Composite | Growth Assessment | Inflation Assessment | Policy Stance | Data Quality |
 | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :---: |
-| **Hungary (HU)** | 58.8 | 43.3 | **mixed** | moderate expansion | near-target inflation | restrictive stance | 54.3 (needs data review) |
-| **Poland (PL)** | 61.2 | 45.0 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 61.3 (usable with watch-list) |
-| **Czechia (CZ)** | 65.0 | 58.3 | **mixed** | moderate expansion | near-target inflation | neutral-moderate stance | 52.0 (needs data review) |
-| **Romania (RO)** | 30.0 | 46.7 | **defensive** | contraction | inflation pressure | restrictive stance | 50.7 (needs data review) |
-| **China (CN)** | 67.5 | 46.7 | **mixed** | above-trend expansion | disinflation risk | neutral-moderate stance | 38.3 (needs data review) |
-| **Euro Area (EA)** | 60.0 | 61.7 | **mixed** | stall-speed growth | near-target inflation | neutral-moderate stance | 55.5 (needs data review) |
-| **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 45.6 (needs data review) |
-| **South Africa (ZA)** | 55.0 | 53.3 | **mixed** | moderate expansion | above-target inflation | restrictive stance | 43.4 (needs data review) |
-| **United Kingdom (UK)** | 57.1 | 53.3 | **mixed** | moderate expansion | above-target inflation | neutral-moderate stance | 48.1 (needs data review) |
-| **United States (US)** | 51.2 | 43.3 | **defensive** | moderate expansion | above-target inflation | neutral-moderate stance | 58.7 (needs data review) |
+| **Hungary (HU)** | 58.8 | 43.3 | **mixed** | moderate expansion | near-target inflation | restrictive stance | 37.0 (needs data review) |
+| **Poland (PL)** | 61.2 | 45.0 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 44.1 (needs data review) |
+| **Czechia (CZ)** | 65.0 | 58.3 | **mixed** | moderate expansion | near-target inflation | neutral-moderate stance | 34.9 (needs data review) |
+| **Romania (RO)** | 30.0 | 46.7 | **defensive** | contraction | inflation pressure | restrictive stance | 34.2 (needs data review) |
+| **China (CN)** | 67.5 | 46.7 | **mixed** | above-trend expansion | disinflation risk | neutral-moderate stance | 34.3 (needs data review) |
+| **Euro Area (EA)** | 60.0 | 61.7 | **mixed** | stall-speed growth | near-target inflation | neutral-moderate stance | 52.0 (needs data review) |
+| **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 44.9 (needs data review) |
+| **South Africa (ZA)** | 55.0 | 53.3 | **mixed** | moderate expansion | above-target inflation | restrictive stance | 39.0 (needs data review) |
+| **United Kingdom (UK)** | 57.1 | 53.3 | **mixed** | moderate expansion | above-target inflation | neutral-moderate stance | 44.3 (needs data review) |
+| **United States (US)** | 51.2 | 43.3 | **defensive** | moderate expansion | above-target inflation | neutral-moderate stance | 80.8 (high-confidence dashboard) |
 
 ---
 
@@ -44,16 +44,16 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 
 | Economy | Benchmark Asset | Latest Yield | Latest Date | Spread to US 10Y (bps) | Status |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **US** | 10Y Treasury | **5.22%** | 2026-10-08 | **0.0 bps** | Official Observed |
-| **EA** | 10Y Bund | **3.47%** | 2026-09-01 | **-175.0 bps** | Official Observed |
-| **UK** | 10Y Gilt | **5.40%** | 2026-10-09 | **+18.0 bps** | Official Observed |
-| **JP** | 10Y JGB | **2.94%** | 2026-08-01 | **-228.0 bps** | Official Observed |
+| **US** | 10Y Treasury | **5.00%** | 2026-10-23 | **0.0 bps** | Official Observed |
+| **EA** | 10Y Bund | **3.47%** | 2026-09-01 | **-153.0 bps** | Official Observed |
+| **UK** | 10Y Gilt | **5.40%** | 2026-10-09 | **+40.0 bps** | Official Observed |
+| **JP** | 10Y JGB | **2.94%** | 2026-08-01 | **-206.0 bps** | Official Observed |
 | **CN** | CN 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
-| **ZA** | 10Y Sovereign | **8.20%** | 2026-10-12 | **+298.0 bps** | Official Observed |
-| **PL** | PL 10Y Benchmark | **6.23%** | 2026-09-01 | **+101.0 bps** | Official Observed |
-| **CZ** | CZ 10Y Benchmark | **5.24%** | 2026-09-01 | **+2.0 bps** | Official Observed |
-| **HU** | HU 10Y Benchmark | **5.68%** | 2026-09-01 | **+46.0 bps** | Official Observed |
-| **RO** | RO 10Y Benchmark | **6.71%** | 2026-09-01 | **+149.0 bps** | Official Observed |
+| **ZA** | 10Y Sovereign | **8.20%** | 2026-10-12 | **+320.0 bps** | Official Observed |
+| **PL** | PL 10Y Benchmark | **6.23%** | 2026-09-01 | **+123.0 bps** | Official Observed |
+| **CZ** | CZ 10Y Benchmark | **5.24%** | 2026-09-01 | **+24.0 bps** | Official Observed |
+| **HU** | HU 10Y Benchmark | **5.68%** | 2026-09-01 | **+68.0 bps** | Official Observed |
+| **RO** | RO 10Y Benchmark | **6.71%** | 2026-09-01 | **+171.0 bps** | Official Observed |
 
 ---
 
@@ -64,7 +64,7 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
   - Independent domestic price cycle: China vs. US (**0.64**), China vs. Euro Area (**0.56**).
 - **Real Business Cycle (Industrial Production)**:
   - Transatlantic industrial linkage: US vs. Euro Area (**0.49**), US vs. UK (**0.5**).
-  - Manufacturing divergence: China vs. US (**0.21**), Japan vs. US (**0.44**).
+  - Manufacturing divergence: China vs. US (**0.21**), Japan vs. US (**0.45**).
 - **Financial & Capital Flows (10Y Sovereign Yields 36M Rolling)**:
   - European sovereign rates coupling: Euro Area Bund vs. UK Gilt (**0.83**).
   - Global dollar anchor linkage: US vs. UK (**0.61**), US vs. Euro Area (**0.5**).

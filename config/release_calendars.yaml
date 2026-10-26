@@ -40,6 +40,17 @@ rules:
     publication_lag_days: 30
     grace_days: 10
 
+  - id: bls_jolts_monthly
+    source_contains: ["bureau of labor statistics", "bls", "bls.gov"]
+    indicator_ids:
+      - jolts_openings
+      - jolts_quits
+      - jolts_layoffs
+      - jolts_hires_rate
+    frequencies: [monthly]
+    publication_lag_days: 35
+    grace_days: 7
+
   - id: bls_monthly
     source_contains: ["bureau of labor statistics", "bls", "bls.gov"]
     frequencies: [monthly]
@@ -57,7 +68,7 @@ rules:
       - pce_inflation
       - core_pce_inflation
     frequencies: [monthly]
-    publication_lag_days: 30
+    publication_lag_days: 34
     grace_days: 7
 
   - id: bea_quarterly

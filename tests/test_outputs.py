@@ -21,7 +21,7 @@ def test_every_dashboard_produces_freshness_records():
 
 
 def test_cross_checks_are_present_and_within_tolerance() -> None:
-    for name in ("japan", "south_africa"):
+    for name in ("japan", "south_africa", "us"):
         summary = json.loads(open(f"output/{name}_dashboard_summary.json").read())
         checks = summary.get("cross_checks")
         assert checks, f"{name} declares no cross-checks"

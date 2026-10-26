@@ -79,3 +79,42 @@ def test_fetch_bruegel_reer_returns_sorted_observations() -> None:
     assert all("date" in o and "value" in o for o in obs)
     assert obs == sorted(obs, key=lambda x: x["date"])
     assert res.get("provider_updated") == obs[-1]["date"]
+
+
+def test_fred_api_observations_caches_duplicate_series_and_redacts_keys(monkeypatch: pytest.MonkeyPatch) -> None:
+    from country_primer import adapters
+
+    monkeypatch.setenv("FRED_API_KEY", "supersecretkey123")
+    adapters.FRED_OBS_CACHE.clear()
+    calls = []
+
+    class DummyResp:
+        headers = {"Last-Modified": "Mon, 26 Oct 2026 12:00:00 GMT"}
+
+        def raise_for_status(self) -> None:
+            pass
+
+        def json(self) -> dict:
+            return {
+                "realtime_end": "2026-10-26",
+                "observations": [
+                    {"date": "2026-08-01", "value": "100.0"},
+                    {"date": "2026-09-01", "value": "101.5"},
+                ],
+            }
+
+    class DummySession:
+        def get(self, url: str, params: dict | None = None, timeout: tuple | int | None = None) -> DummyResp:
+            calls.append((url, dict(params or {})))
+            return DummyResp()
+
+    sess = DummySession()
+    obs1, upd1 = adapters._fred_api_observations(sess, {"series": "CPIAUCSL", "start_date": "1990-01-01"})
+    obs2, upd2 = adapters._fred_api_observations(sess, {"series": "CPIAUCSL", "start_date": "1990-01-01"})
+    assert len(calls) == 1
+    assert obs1 == obs2
+    assert upd1 == upd2
+    assert adapters._redact_fred_key("url?series_id=GDP&api_key=supersecretkey123&file_type=json") == (
+        "url?series_id=GDP&api_key=REDACTED&file_type=json"
+    )
+    adapters.FRED_OBS_CACHE.clear()

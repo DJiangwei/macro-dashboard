@@ -73,6 +73,8 @@ def normalized_frequency(value: object) -> str:
 
 def period_end(value: date, frequency: object) -> date:
     normalized = normalized_frequency(frequency)
+    if normalized == "annual" and value.day == 1 and value.month == 1:
+        return date(value.year, 12, 31)
     if normalized == "quarterly" and value.day == 1 and value.month in {1, 4, 7, 10}:
         month = value.month + 2
         return date(value.year, month, monthrange(value.year, month)[1])
