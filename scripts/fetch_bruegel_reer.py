@@ -38,6 +38,14 @@ COUNTRY_MAPPING = {
     "CZ": "CZ",
     "HU": "HU",
     "RO": "RO",
+    "HK": "HK",
+    "TW": "TW",
+    "KR": "KR",
+    "TR": "TR",
+    "EG": "EG",
+    "NG": "NG",
+    "KZ": "KZ",
+    "UZ": "UZ",
 }
 
 

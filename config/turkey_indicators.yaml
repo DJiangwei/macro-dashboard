@@ -1,0 +1,781 @@
+# Turkey Macroeconomic Indicator Manifest (Data-First v4)
+# Sources: Eurostat (TurkStat harmonized series), TCMB XML/EVDS, IMF SDMX / DataMapper / DBnomics, BIS / OECD via FRED, Bruegel REER
+name: "Turkey"
+name_zh: "土耳其"
+code: "TR"
+iso2: "TR"
+subtitle_en: "A data-first macro page for Turkey built from official TurkStat harmonized series transmitted to Eurostat, TCMB XML, IMF SDMX / DataMapper, and Bruegel REER."
+subtitle_zh: "基于土耳其统计局向欧盟统计局报送的调和序列、土耳其央行(TCMB)官方汇率、IMF与Bruegel实际有效汇率构建的土耳其数据优先宏观页面。"
+min_chart_count: 30
+
+sections:
+  growth_accounts:
+    title_en: "GDP & National Accounts"
+    title_zh: "GDP与国民账户"
+    report_logic_en: "Eurostat quarterly national accounts anchor Turkey's growth story: real GDP sequential QoQ SA and annual YoY growth, household consumption, gross fixed capital formation, government consumption, and trade volumes."
+    report_logic_zh: "欧盟统计局(Eurostat)季度国民账户构成土耳其增长叙事基准：实际GDP季调环比与同比增速、居民消费、固定资本形成总额、政府消费及进出口贸易量。"
+  production_cycle:
+    title_en: "Production & Business Cycle"
+    title_zh: "生产与商业周期"
+    report_logic_en: "Eurostat monthly short-term business statistics (STS) track industrial and manufacturing production, retail trade volume, and construction output. DG ECFIN business and consumer surveys supply capacity utilisation and the headline Economic Sentiment Indicator (ESI)."
+    report_logic_zh: "欧盟统计局月度短期商业统计(STS)追踪工业与制造业生产、零售销售量与建筑业产出。商业与消费者调查提供产能利用率与综合经济景气指数(ESI)。"
+  labour_wages:
+    title_en: "Labour Market & Wages"
+    title_zh: "劳动力市场与工资"
+    report_logic_en: "Harmonised unemployment and youth unemployment rates track labour slack and employment conditions conforming to ILO standards."
+    report_logic_zh: "调和失业率与青年失业率衡量符合国际劳工组织(ILO)标准的劳动力闲置与就业状况。"
+  prices_costs:
+    title_en: "Prices & Costs"
+    title_zh: "价格与成本"
+    report_logic_en: "Eurostat monthly HICP provides headline, core (excluding energy and food), services, energy, and food annual inflation. Industrial producer prices (PPI) capture pipeline production pressures, with independent IMF CPI cross-check."
+    report_logic_zh: "欧盟统计局月度调和消费者物价指数(HICP)提供总体、核心（剔除能源与食品）、服务、能源与食品通胀年率。工业生产者出厂价格(PPI)捕捉生产端管道压力，配合IMF总体CPI交叉核对。"
+  housing_property:
+    title_en: "Housing & Property"
+    title_zh: "住房与房地产"
+    report_logic_en: "Eurostat quarterly residential property price index (HPI) tracks residential property valuations across Turkey, cross-checked with the BIS long-term index."
+    report_logic_zh: "欧盟统计局季度住宅价格指数(HPI)跟踪土耳其全国住宅房地产估值，配合国际清算银行(BIS)长期指数核对。"
+  external_fx:
+    title_en: "External Balance & FX"
+    title_zh: "外部平衡与汇率"
+    report_logic_en: "BPM6 balance of payments current account, goods balance, and tourism service revenues capture external dynamics, alongside daily TCMB USD/TRY fixing and Bruegel 120-trading-partner REER/NEER."
+    report_logic_zh: "BPM6国际收支经常账户、货物贸易差额及旅游业外汇收入刻画外部动态，配合土耳其央行官方USD/TRY汇率及Bruegel对120个贸易伙伴的实际有效汇率(REER)。"
+  fiscal_sovereign:
+    title_en: "Fiscal & Sovereign Debt"
+    title_zh: "财政与主权债务"
+    report_logic_en: "IMF World Economic Outlook and Fiscal Monitor supply general government gross debt, net lending/borrowing, and primary balance ratios."
+    report_logic_zh: "IMF《世界经济展望》与《财政监测报告》提供广义政府总债务、净借贷（赤字率）及初级财政收支占GDP比重。"
+  monetary_financial:
+    title_en: "Monetary Policy & Financial Conditions"
+    title_zh: "货币政策与金融条件"
+    report_logic_en: "Overnight interbank market rates and BIS credit-to-GDP aggregates (total private, household, bank credit) measure financial conditions."
+    report_logic_zh: "隔夜银行间拆借利率与国际清算银行(BIS)信贷占GDP比率（私营部门总信贷、住户信贷、银行信贷）衡量金融环境。"
+  stability_structural:
+    title_en: "Financial Stability & Structure"
+    title_zh: "金融稳定与结构"
+    report_logic_en: "IMF Financial Soundness Indicators (FSI) via DBnomics track banking sector regulatory capital adequacy (CAR) and non-performing loans (NPL)."
+    report_logic_zh: "国际货币基金组织金融稳健性指标(FSI)追踪土耳其银行体系监管资本充足率(CAR)与不良贷款率(NPL)。"
+
+indicators:
+  # ==========================================
+  # 1. Growth & Demand
+  # ==========================================
+  - id: real_gdp_growth
+    section: growth_accounts
+    label_en: Real GDP Growth, QoQ SA
+    label_zh: 实际GDP季调环比
+    unit: "% q/q"
+    fetcher: eurostat
+    dataset: namq_10_gdp
+    filters:
+      geo: TR
+      na_item: B1GQ
+      s_adj: SCA
+      unit: CLV_PCH_PRE
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table?lang=en
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Chain-linked volumes, seasonally and calendar adjusted quarter-on-quarter growth reported by TurkStat to Eurostat.
+    caveat_zh: 土耳其统计局向欧盟统计局报送的季调与工作日调整后实际GDP环比增速。
+
+  - id: real_gdp_yoy
+    section: growth_accounts
+    label_en: Real GDP Growth, YoY
+    label_zh: 实际GDP同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: namq_10_gdp
+    filters:
+      geo: TR
+      na_item: B1GQ
+      s_adj: SCA
+      unit: CLV_PCH_SM
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table?lang=en
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Year-on-year growth rate from the same quarter in the previous year.
+    caveat_zh: 较上年同季的同比增速。
+
+  - id: household_consumption
+    section: growth_accounts
+    label_en: Household Consumption Expenditure YoY
+    label_zh: 居民消费支出同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: namq_10_gdp
+    filters:
+      geo: TR
+      na_item: P31_S14_S15
+      s_adj: SCA
+      unit: CLV_PCH_SM
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table?lang=en
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Final consumption expenditure of households and NPISH, real year-on-year change.
+    caveat_zh: 住户部门及为住户服务的非营利机构最终消费支出同比实际增速。
+
+  - id: gross_fixed_capital_formation
+    section: growth_accounts
+    label_en: Gross Fixed Capital Formation YoY
+    label_zh: 固定资本形成总额同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: namq_10_gdp
+    filters:
+      geo: TR
+      na_item: P51G
+      s_adj: SCA
+      unit: CLV_PCH_SM
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table?lang=en
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Real year-on-year investment growth in infrastructure, equipment, and construction.
+    caveat_zh: 基础设施、设备和建筑的同比实际投资增速。
+
+  - id: government_consumption
+    section: growth_accounts
+    label_en: Government Final Consumption YoY
+    label_zh: 政府消费支出同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: namq_10_gdp
+    filters:
+      geo: TR
+      na_item: P3_S13
+      s_adj: SCA
+      unit: CLV_PCH_SM
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table?lang=en
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Real general government final consumption expenditure year-on-year change.
+    caveat_zh: 广义政府最终消费支出的实际同比增速。
+
+  - id: exports_goods_services
+    section: growth_accounts
+    label_en: Exports of Goods & Services YoY
+    label_zh: 货物与服务出口同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: namq_10_gdp
+    filters:
+      geo: TR
+      na_item: P6
+      s_adj: SCA
+      unit: CLV_PCH_SM
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table?lang=en
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Real exports volume year-on-year change.
+    caveat_zh: 货物与服务出口实际物量同比增速。
+
+  - id: imports_goods_services
+    section: growth_accounts
+    label_en: Imports of Goods & Services YoY
+    label_zh: 货物与服务进口同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: namq_10_gdp
+    filters:
+      geo: TR
+      na_item: P7
+      s_adj: SCA
+      unit: CLV_PCH_SM
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table?lang=en
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Real imports volume year-on-year change.
+    caveat_zh: 货物与服务进口实际物量同比增速。
+
+  # ==========================================
+  # 2. Production & Cycle
+  # ==========================================
+  - id: industrial_production_growth
+    section: production_cycle
+    label_en: Industrial Production YoY
+    label_zh: 工业产出同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: sts_inpr_m
+    filters:
+      geo: TR
+      nace_r2: B-D
+      s_adj: CA
+      unit: PCH_SM
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/sts_inpr_m/default/table?lang=en
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Working-day adjusted industrial production index (mining, manufacturing, utilities) year-on-year change.
+    caveat_zh: 工作日调整后的工业生产指数（采矿业、制造业、公用事业）同比增速。
+
+  - id: manufacturing_production_growth
+    section: production_cycle
+    label_en: Manufacturing Output YoY
+    label_zh: 制造业产出同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: sts_inpr_m
+    filters:
+      geo: TR
+      nace_r2: C
+      s_adj: CA
+      unit: PCH_SM
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/sts_inpr_m/default/table?lang=en
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Working-day adjusted manufacturing production index year-on-year change.
+    caveat_zh: 工作日调整后的制造业产出指数同比增速。
+
+  - id: retail_sales_growth
+    section: production_cycle
+    label_en: Retail Sales Volume YoY
+    label_zh: 零售销售量同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: sts_trtu_m
+    filters:
+      geo: TR
+      nace_r2: G47
+      s_adj: CA
+      unit: PCH_SM
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/sts_trtu_m/default/table?lang=en
+    frequency: monthly
+    start_date: 2010-01-01
+    caveat_en: Deflated retail trade turnover (excluding motor vehicles) year-on-year change.
+    caveat_zh: 剔除机动车的实际零售销售额同比增速。
+
+  - id: construction_production_growth
+    section: production_cycle
+    label_en: Construction Production YoY
+    label_zh: 建筑业产出同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: sts_copr_m
+    filters:
+      geo: TR
+      nace_r2: F
+      s_adj: CA
+      unit: PCH_SM
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/sts_copr_m/default/table?lang=en
+    frequency: monthly
+    start_date: 2015-01-01
+    caveat_en: Calendar-adjusted volume index of production in construction year-on-year change.
+    caveat_zh: 工作日调整后的建筑业生产指数同比增速。
+
+  - id: economic_sentiment_indicator
+    section: production_cycle
+    label_en: Economic Sentiment Indicator (ESI)
+    label_zh: 经济景气指数 (ESI)
+    unit: "Index (100 = Neutral)"
+    fetcher: eurostat
+    dataset: ei_bssi_m_r2
+    filters:
+      geo: TR
+      indic: BS-ESI-I
+      s_adj: SA
+    source_name: Eurostat / DG ECFIN
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/ei_bssi_m_r2/default/table?lang=en
+    frequency: monthly
+    start_date: 2007-01-01
+    caveat_en: Composite sentiment indicator tracking business and consumer confidence across the Turkish economy.
+    caveat_zh: 追踪土耳其企业与消费者综合景气度的综合指标，基准100为长期均值。
+
+  - id: capacity_utilization
+    section: production_cycle
+    label_en: Manufacturing Capacity Utilization
+    label_zh: 制造业产能利用率
+    unit: "%"
+    fetcher: eurostat
+    dataset: ei_bsin_q_r2
+    filters:
+      geo: TR
+      indic: BS-ICU-PC
+      s_adj: SA
+    source_name: Eurostat / CBRT
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/ei_bsin_q_r2/default/table?lang=en
+    frequency: quarterly
+    start_date: 2007-01-01
+    caveat_en: Seasonally adjusted manufacturing sector capacity utilization rate.
+    caveat_zh: 季调后制造业产能利用率。
+
+  # ==========================================
+  # 3. Labour & Wages
+  # ==========================================
+  - id: unemployment_rate
+    section: labour_wages
+    label_en: Harmonised Unemployment Rate SA
+    label_zh: 季调失业率
+    unit: "% of labour force"
+    fetcher: eurostat
+    dataset: une_rt_m
+    filters:
+      geo: TR
+      s_adj: SA
+      age: TOTAL
+      sex: T
+      unit: PC_ACT
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/une_rt_m/default/table?lang=en
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Seasonally adjusted unemployment rate conforming to ILO standards.
+    caveat_zh: 符合国际劳工组织（ILO）标准的季调失业率。
+
+  - id: youth_unemployment_rate
+    section: labour_wages
+    label_en: Youth Unemployment Rate (<25) SA
+    label_zh: 青年失业率 (25岁以下)
+    unit: "% of labour force"
+    fetcher: eurostat
+    dataset: une_rt_m
+    filters:
+      geo: TR
+      s_adj: SA
+      age: Y_LT25
+      sex: T
+      unit: PC_ACT
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/une_rt_m/default/table?lang=en
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Unemployment rate for persons aged 15-24.
+    caveat_zh: 15至24岁青年劳动力的季调失业率。
+
+  # ==========================================
+  # 4. Prices & Costs
+  # ==========================================
+  - id: cpi_inflation
+    section: prices_costs
+    label_en: Headline HICP Inflation YoY
+    label_zh: 调和CPI通胀率同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: prc_hicp_manr
+    filters:
+      geo: TR
+      coicop: CP00
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=en
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Harmonised Index of Consumer Prices headline annual rate of change.
+    caveat_zh: 欧盟调和消费者价格指数（HICP）同比变动率。
+
+  - id: core_hicp_inflation
+    section: prices_costs
+    label_en: Core HICP Inflation (ex-Energy & Food) YoY
+    label_zh: 核心HICP通胀率 (剔除能源与食品)
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: prc_hicp_manr
+    filters:
+      geo: TR
+      coicop: TOT_X_NRG_FOOD
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=en
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: HICP excluding energy, food, alcohol and tobacco.
+    caveat_zh: 剔除能源、食品、烟酒的核心HICP同比变动率。
+
+  - id: services_hicp_inflation
+    section: prices_costs
+    label_en: Services HICP Inflation YoY
+    label_zh: 服务业HICP通胀率同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: prc_hicp_manr
+    filters:
+      geo: TR
+      coicop: SERV
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=en
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Services component of the Harmonised Index of Consumer Prices.
+    caveat_zh: 调和消费者价格指数中的服务业分项同比变动率。
+
+  - id: food_hicp_inflation
+    section: prices_costs
+    label_en: Food HICP Inflation YoY
+    label_zh: 食品HICP通胀率同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: prc_hicp_manr
+    filters:
+      geo: TR
+      coicop: FOOD
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=en
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Food component of the Harmonised Index of Consumer Prices.
+    caveat_zh: 调和消费者价格指数中的食品分项同比变动率。
+
+  - id: energy_hicp_inflation
+    section: prices_costs
+    label_en: Energy HICP Inflation YoY
+    label_zh: 能源HICP通胀率同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: prc_hicp_manr
+    filters:
+      geo: TR
+      coicop: NRG
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=en
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Energy component of the Harmonised Index of Consumer Prices.
+    caveat_zh: 调和消费者价格指数中的能源分项同比变动率。
+
+  - id: ppi_inflation
+    section: prices_costs
+    label_en: Domestic Producer Price Index (PPI) YoY
+    label_zh: 工业生产者出厂价格 (PPI) 同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: sts_inppd_m
+    filters:
+      geo: TR
+      nace_r2: B-E36
+      unit: PCH_SM
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/sts_inppd_m/default/table?lang=en
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Domestic industrial producer price index annual rate of change.
+    caveat_zh: 工业生产者出厂价格指数同比变动率。
+
+  - id: cpi_inflation_imf
+    section: prices_costs
+    label_en: Headline CPI YoY (IMF Cross-Check)
+    label_zh: 总体CPI同比 (IMF交叉核对)
+    unit: "% y/y"
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: TUR.CPI._T.YOY_PCH_PA_PT.M
+    source_name: IMF SDMX / TurkStat
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/TUR.CPI._T.YOY_PCH_PA_PT.M
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Official CPI series transmitted to the IMF Consumer Price Index database.
+    caveat_zh: 土耳其统计局报送IMF的消费者价格指数同比。
+
+  # ==========================================
+  # 5. Housing & Property
+  # ==========================================
+  - id: house_price_growth
+    section: housing_property
+    label_en: Residential Property Price Index YoY
+    label_zh: 住宅价格指数同比
+    unit: "% y/y"
+    fetcher: eurostat
+    dataset: prc_hpi_q
+    filters:
+      geo: TR
+      purchase: TOTAL
+      unit: RCH_A
+    source_name: Eurostat / CBRT
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hpi_q/default/table?lang=en
+    frequency: quarterly
+    start_date: 2011-01-01
+    caveat_en: Residential property price index annual change for all dwellings.
+    caveat_zh: 住宅房地产价格指数全部住宅年变动率。
+
+  - id: bis_nominal_house_prices
+    section: housing_property
+    label_en: BIS Nominal Residential Property Prices
+    label_zh: BIS名义住宅价格指数
+    unit: "Index (2010 = 100)"
+    fetcher: fred
+    series: QTRN628BIS
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QTRN628BIS
+    frequency: quarterly
+    start_date: 2010-01-01
+    caveat_en: BIS long-term residential property price index for Turkey.
+    caveat_zh: 国际清算银行（BIS）编制的土耳其名义住宅价格指数。
+
+  # ==========================================
+  # 6. External, FX & Reserves
+  # ==========================================
+  - id: try_usd
+    section: external_fx
+    label_en: USD/TRY Official Exchange Rate
+    label_zh: 美元兑土耳其里拉官方汇率
+    unit: "TRY per USD"
+    fetcher: tcmb_xml
+    currency: USD
+    rate_type: ForexBuying
+    source_authority: official_primary
+    source_name: Central Bank of the Republic of Turkey (TCMB)
+    source_url: https://www.tcmb.gov.tr/kurlar/today.xml
+    frequency: daily
+    start_date: 2026-01-01
+    caveat_en: Official daily fixing rate published by TCMB.
+    caveat_zh: 土耳其央行每日公布的官方买入汇率。
+
+  - id: reer
+    section: external_fx
+    label_en: Real Effective Exchange Rate (REER)
+    label_zh: 实际有效汇率 (REER)
+    unit: "Index (2007 = 100)"
+    fetcher: bruegel_reer
+    country: TR
+    series_type: reer_120
+    source_name: Bruegel (Darvas 120-Trading-Partner Basket)
+    source_url: https://www.bruegel.org/publications/datasets/real-effective-exchange-rates-for-178-countries-a-new-database
+    frequency: monthly
+    start_date: 1995-01-01
+    caveat_en: CPI-based monthly real effective exchange rate calculated against 120 trading partners.
+    caveat_zh: 基于CPI计算的对120个贸易伙伴的月度实际有效汇率。
+
+  - id: neer
+    section: external_fx
+    label_en: Nominal Effective Exchange Rate (NEER)
+    label_zh: 名义有效汇率 (NEER)
+    unit: "Index (2007 = 100)"
+    fetcher: bruegel_reer
+    country: TR
+    series_type: neer_120
+    source_name: Bruegel (Darvas 120-Trading-Partner Basket)
+    source_url: https://www.bruegel.org/publications/datasets/real-effective-exchange-rates-for-178-countries-a-new-database
+    frequency: monthly
+    start_date: 1995-01-01
+    caveat_en: Monthly nominal effective exchange rate calculated against 120 trading partners.
+    caveat_zh: 对120个贸易伙伴的月度名义有效汇率。
+
+  - id: current_account_usd
+    section: external_fx
+    label_en: Current Account Balance (USD)
+    label_zh: 经常账户差额 (美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: TUR.NETCD_T.CAB.USD.Q
+    scale: 0.000001
+    source_name: IMF SDMX / CBRT
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/TUR.NETCD_T.CAB.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 current account balance in millions of US dollars.
+    caveat_zh: BPM6标准编制的季度经常账户差额（百万美元）。
+
+  - id: goods_trade_balance
+    section: external_fx
+    label_en: Goods Trade Balance (USD)
+    label_zh: 货物贸易差额 (美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: TUR.NETCD_T.G.USD.Q
+    scale: 0.000001
+    source_name: IMF SDMX / CBRT
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/TUR.NETCD_T.G.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly goods balance in millions of US dollars.
+    caveat_zh: 季度货物贸易净额（百万美元）。
+
+  - id: services_balance
+    section: external_fx
+    label_en: Services Balance (Tourism & Services, USD)
+    label_zh: 服务贸易差额 (含旅游业，美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: TUR.NETCD_T.S.USD.Q
+    scale: 0.000001
+    source_name: IMF SDMX / CBRT
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/TUR.NETCD_T.S.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly services balance in millions of US dollars (crucial tourism FX revenue).
+    caveat_zh: 季度服务贸易净额（百万美元，包含关键的旅游业外汇收入）。
+
+  - id: current_account_gdp
+    section: external_fx
+    label_en: Current Account Balance (% of GDP)
+    label_zh: 经常账户占GDP比重
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    indicator: BCA_NGDPD
+    country_iso3: TUR
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/BCA_NGDPD@WEO/TUR
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: IMF World Economic Outlook historical series and projections.
+    caveat_zh: IMF《世界经济展望》历史序列与预测值。
+
+  # ==========================================
+  # 7. Fiscal & Sovereign
+  # ==========================================
+  - id: government_debt_gdp
+    section: fiscal_sovereign
+    label_en: General Government Gross Debt (% of GDP)
+    label_zh: 广义政府总债务占GDP比重
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    indicator: GGXWDG_NGDP
+    country_iso3: TUR
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/GGXWDG_NGDP@WEO/TUR
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government gross debt as a percentage of GDP.
+    caveat_zh: 广义政府总债务占GDP比重。
+
+  - id: fiscal_balance_gdp
+    section: fiscal_sovereign
+    label_en: General Government Net Lending / Borrowing (% of GDP)
+    label_zh: 广义政府净借贷占GDP比重 (财政赤字率)
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    indicator: GGXCNL_NGDP
+    country_iso3: TUR
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/GGXCNL_NGDP@WEO/TUR
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government net lending/borrowing as a percentage of GDP.
+    caveat_zh: 广义政府净借贷占GDP比重。
+
+  - id: primary_balance_gdp
+    section: fiscal_sovereign
+    label_en: Primary Net Lending / Borrowing (% of GDP)
+    label_zh: 基本财政收支占GDP比重 (初级平衡)
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    indicator: GGXONLB_G01_GDP_PT
+    country_iso3: TUR
+    actual_through: 2025
+    source_name: IMF Fiscal Monitor
+    source_url: https://www.imf.org/external/datamapper/GGXONLB_G01_GDP_PT@FM/TUR
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government primary balance excluding net interest payments.
+    caveat_zh: 剔除利息净支出的广义政府初级财政收支占GDP比重。
+
+  # ==========================================
+  # 8. Monetary & Financial
+  # ==========================================
+  - id: policy_rate
+    section: monetary_financial
+    label_en: Overnight Interbank Rate (Immediate Rates)
+    label_zh: 隔夜银行间利率 (市场基准)
+    unit: "%"
+    fetcher: fred
+    series: IRSTCI01TRM156N
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/IRSTCI01TRM156N
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Immediate interest rate / overnight interbank lending rate for Turkey.
+    caveat_zh: 土耳其隔夜银行间拆借利率。
+
+  - id: private_credit_gdp
+    section: monetary_financial
+    label_en: Total Credit to Private Non-Financial Sector (% of GDP)
+    label_zh: 私营非金融部门总信贷占GDP比重
+    unit: "% of GDP"
+    fetcher: fred
+    series: QTRPAM770A
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QTRPAM770A
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: BIS credit to the private non-financial sector as a percentage of GDP.
+    caveat_zh: 国际清算银行（BIS）统计的私营非金融部门信贷占GDP比重。
+
+  - id: household_credit_gdp
+    section: monetary_financial
+    label_en: Household Credit (% of GDP)
+    label_zh: 住户部门信贷占GDP比重
+    unit: "% of GDP"
+    fetcher: fred
+    series: QTRHAM770A
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QTRHAM770A
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: BIS total credit to households and NPISH as a percentage of GDP.
+    caveat_zh: 国际清算银行（BIS）统计的住户部门总信贷占GDP比重。
+
+  - id: bank_credit_gdp
+    section: monetary_financial
+    label_en: Bank Credit to Private Sector (% of GDP)
+    label_zh: 银行对私营部门信贷占GDP比重
+    unit: "% of GDP"
+    fetcher: fred
+    series: QTRPBM770A
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QTRPBM770A
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: BIS domestic bank credit to the private non-financial sector as a percentage of GDP.
+    caveat_zh: 国际清算银行（BIS）统计的国内银行对私营非金融部门信贷占GDP比重。
+
+  # ==========================================
+  # 9. Financial Stability
+  # ==========================================
+  - id: bank_capital_ratio
+    section: stability_structural
+    label_en: Bank Regulatory Capital to Risk-Weighted Assets
+    label_zh: 银行监管资本充足率
+    unit: "%"
+    fetcher: dbnomics
+    series: IMF/FSI/Q.TR.FSKRC_PT
+    source_name: IMF / DBnomics (Financial Soundness Indicators)
+    source_url: https://db.nomics.world/IMF/FSI/Q.TR.FSKRC_PT
+    frequency: quarterly
+    start_date: 2008-01-01
+    caveat_en: Deposit-taker regulatory capital to risk-weighted assets reported to the IMF.
+    caveat_zh: 报送国际货币基金组织（IMF）的银行体系资本充足率（CAR）。
+
+  - id: bank_npl_ratio
+    section: stability_structural
+    label_en: Bank Non-Performing Loans (% of Gross Loans)
+    label_zh: 银行不良贷款率
+    unit: "%"
+    fetcher: dbnomics
+    series: IMF/FSI/Q.TR.FSANL_PT
+    source_name: IMF / DBnomics (Financial Soundness Indicators)
+    source_url: https://db.nomics.world/IMF/FSI/Q.TR.FSANL_PT
+    frequency: quarterly
+    start_date: 2008-01-01
+    caveat_en: Non-performing loans to total gross loans for deposit-takers.
+    caveat_zh: 银行体系不良贷款占贷款总额比重。
+
+data_gaps:
+  - section: monetary_financial
+    item_en: Weekly TRY Commercial, Mortgage, and Consumer Loan Flow Rates
+    item_zh: 每周土耳其里拉商业、房贷及消费贷加权平均发生额利率
+    status_en: Published by CBRT on EVDS API under series TP.KTF10/12/17. Requires free TCMB_EVDS_API_KEY to fetch automatically.
+    status_zh: 由土耳其央行在EVDS API（序列TP.KTF10/12/17）发布。需配置免费申请的TCMB_EVDS_API_KEY即可自动升级获取。
+
+  - section: production_cycle
+    item_en: Istanbul Chamber of Industry / S&P Global Turkey Manufacturing PMI
+    item_zh: 伊斯坦布尔工业商会 / 标普全球土耳其制造业PMI
+    status_en: Proprietary private commercial survey data published under paid subscription by S&P Global; not available via free public machine-readable API.
+    status_zh: 标普全球商业付费版权数据，无免费官方机读开放API。
+
+cross_checks:
+  - concept: headline_inflation
+    primary: cpi_inflation
+    secondary: cpi_inflation_imf
+    tolerance: 0.25
+    label_en: Eurostat HICP vs IMF CPI

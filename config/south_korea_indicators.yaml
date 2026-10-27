@@ -1,0 +1,630 @@
+name: "South Korea"
+name_zh: "韩国"
+code: "KR"
+iso2: "KR"
+subtitle_en: "A data-first macro page for South Korea built from official OECD national accounts via FRED, Bank of Korea mirrors, IMF SDMX / DataMapper, BIS, and Bruegel REER."
+subtitle_zh: "基于经合组织(OECD)国民账户、韩国银行镜像数据、IMF、国际清算银行(BIS)与Bruegel实际有效汇率构建的韩国数据优先宏观页面。"
+min_chart_count: 28
+
+sections:
+  growth_accounts:
+    title_en: "GDP & National Accounts"
+    title_zh: "GDP与国民账户"
+    report_logic_en: "OECD quarterly national accounts via FRED track South Korea's real GDP sequential QoQ and annual YoY growth, gross fixed capital formation, and government consumption in constant national currency."
+    report_logic_zh: "通过FRED获取的经合组织(OECD)季度国民账户跟踪韩国实际GDP环比与同比增速、固定资本形成总额及政府消费。"
+  production_cycle:
+    title_en: "Production, Retail & Sentiment"
+    title_zh: "生产、零售与景气"
+    report_logic_en: "OECD monthly indicators track industrial and manufacturing production YoY, retail sales volume growth, and the Composite Leading Indicator (CLI)."
+    report_logic_zh: "OECD月度指标追踪工业与制造业生产同比增速、零售销售量增速及综合先行指标(CLI)。"
+  labour_wages:
+    title_en: "Labour Market & Employment"
+    title_zh: "劳动力市场与就业"
+    report_logic_en: "Harmonised unemployment rate (SA), labour force participation rate, and employment rate (15-64) measure labour supply and slack."
+    report_logic_zh: "调和失业率(季调)、劳动力参与率及15-64岁就业率衡量劳动力供给与闲置程度。"
+  prices_costs:
+    title_en: "Prices & Inflation"
+    title_zh: "价格与通胀"
+    report_logic_en: "IMF SDMX monthly CPI provides headline YoY and MoM inflation, cross-checked against OECD consumer price index mirrors on FRED."
+    report_logic_zh: "IMF SDMX月度消费者价格指数(CPI)提供总体同比与环比通胀，配合FRED上的OECD消费者价格镜像核对。"
+  housing_property:
+    title_en: "Housing & Property"
+    title_zh: "住宅与房地产"
+    report_logic_en: "BIS long-term nominal and consumer price-deflated real residential property prices track property market cycles."
+    report_logic_zh: "国际清算银行(BIS)长期名义与经CPI平减后的实际住宅物业价格指数跟踪房地产周期。"
+  external_fx:
+    title_en: "External Balance, Trade & FX"
+    title_zh: "外部平衡、贸易与汇率"
+    report_logic_en: "Federal Reserve Board daily USD/KRW spot exchange rate (H.10), Bruegel 120-partner REER/NEER, quarterly BPM6 current account balance, and monthly merchandise trade."
+    report_logic_zh: "美联储H.10日度美元兑韩元汇率、Bruegel实际与名义有效汇率、季度经常账户差额及月度商品进出口总额。"
+  fiscal_sovereign:
+    title_en: "Fiscal & Sovereign Debt"
+    title_zh: "财政与主权债务"
+    report_logic_en: "IMF World Economic Outlook and Fiscal Monitor supply general government gross debt, net lending/borrowing, and primary balance ratios, alongside 10Y Korea Treasury Bond (KTB) yields."
+    report_logic_zh: "IMF《世界经济展望》与《财政监测报告》提供广义政府总债务、净借贷（赤字率）及初级财政收支占GDP比重，配合10年期韩国国债(KTB)基准收益率。"
+  monetary_financial:
+    title_en: "Monetary Policy & Financial Conditions"
+    title_zh: "货币政策与金融条件"
+    report_logic_en: "Overnight call money market rates, 3-month interbank rates, and BIS credit-to-GDP aggregates (total private, household, bank credit) measure financial conditions."
+    report_logic_zh: "隔夜拆借市场利率、3个月银行同业拆借利率及国际清算银行(BIS)信贷占GDP比率（私营部门总信贷、住户信贷、银行信贷）衡量金融环境。"
+  stability_structural:
+    title_en: "Financial Stability & Soundness"
+    title_zh: "金融稳定与稳健性"
+    report_logic_en: "IMF Financial Soundness Indicators (FSI) via DBnomics track banking sector regulatory capital adequacy (CAR) and non-performing loans (NPL)."
+    report_logic_zh: "国际货币基金组织金融稳健性指标(FSI)追踪韩国银行体系监管资本充足率(CAR)与不良贷款率(NPL)。"
+
+indicators:
+  # ==========================================
+  # 1. Growth & National Accounts
+  # ==========================================
+  - id: real_gdp_growth
+    section: growth_accounts
+    label_en: Real GDP Growth, QoQ SA
+    label_zh: 实际GDP季调环比
+    unit: "% q/q"
+    transform: pct_change
+    fetcher: fred
+    series: NGDPRSAXDCKRQ
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/NGDPRSAXDCKRQ
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Quarter-on-quarter growth from the seasonally adjusted real GDP level in constant Korean won.
+    caveat_zh: 以韩元计价的季调实际GDP水平派生的环比增速。
+
+  - id: real_gdp_yoy
+    section: growth_accounts
+    label_en: Real GDP Growth, YoY
+    label_zh: 实际GDP同比
+    unit: "% y/y"
+    transform: yoy_pct
+    fetcher: fred
+    series: NGDPRSAXDCKRQ
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/NGDPRSAXDCKRQ
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Year-on-year growth rate from the same quarter in the previous year.
+    caveat_zh: 较上年同季的同比增速。
+
+  - id: gross_fixed_capital_formation
+    section: growth_accounts
+    label_en: Gross Fixed Capital Formation YoY
+    label_zh: 固定资本形成总额同比
+    unit: "% y/y"
+    transform: yoy_pct
+    fetcher: fred
+    series: NFIRSAXDCKRQ
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/NFIRSAXDCKRQ
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Real year-on-year investment growth in infrastructure, equipment, and facilities.
+    caveat_zh: 基础设施与设备投资的实际同比增速。
+
+  - id: government_consumption
+    section: growth_accounts
+    label_en: Government Final Consumption YoY
+    label_zh: 政府消费支出同比
+    unit: "% y/y"
+    transform: yoy_pct
+    fetcher: fred
+    series: NCGGRSAXDCKRQ
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/NCGGRSAXDCKRQ
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Real general government final consumption expenditure year-on-year change.
+    caveat_zh: 广义政府最终消费支出的实际同比增速。
+
+  # ==========================================
+  # 2. Production, Retail & Cycle
+  # ==========================================
+  - id: industrial_production_growth
+    section: production_cycle
+    label_en: Industrial Production YoY
+    label_zh: 工业产出同比
+    unit: "% y/y"
+    fetcher: fred
+    series: KORPRINTO01GYSAM
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/KORPRINTO01GYSAM
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: OECD industrial production index year-on-year percentage change.
+    caveat_zh: 经合组织(OECD)统计的韩国工业生产指数同比增速。
+
+  - id: manufacturing_production_growth
+    section: production_cycle
+    label_en: Manufacturing Output YoY
+    label_zh: 制造业产出同比
+    unit: "% y/y"
+    fetcher: fred
+    series: KORPRMNTO01GYSAM
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/KORPRMNTO01GYSAM
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Manufacturing production index year-on-year change.
+    caveat_zh: 制造业产出指数同比增速。
+
+  - id: retail_sales_growth
+    section: production_cycle
+    label_en: Retail Trade Volume YoY
+    label_zh: 零售销售量同比
+    unit: "% y/y"
+    fetcher: fred
+    series: KORSLRTTO01GYSAM
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/KORSLRTTO01GYSAM
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Total retail trade volume year-on-year percentage change.
+    caveat_zh: 零售销售总量同比变动率。
+
+  - id: composite_leading_indicator
+    section: production_cycle
+    label_en: Composite Leading Indicator (CLI)
+    label_zh: 综合先行指标 (CLI)
+    unit: "Amplitude adjusted (100 = Trend)"
+    fetcher: fred
+    series: KORLOLITOAASTSAM
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/KORLOLITOAASTSAM
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: OECD composite leading indicator designed to anticipate turning points in economic activity.
+    caveat_zh: 经合组织(OECD)设计的综合先行指标，用于前瞻经济周期的拐点（100为长期趋势）。
+
+  # ==========================================
+  # 3. Labour Market & Wages
+  # ==========================================
+  - id: unemployment_rate
+    section: labour_wages
+    label_en: Harmonised Unemployment Rate SA
+    label_zh: 调和失业率 (季调)
+    unit: "% of labour force"
+    fetcher: fred
+    series: LRHUTTTTKRM156S
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/LRHUTTTTKRM156S
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Seasonally adjusted harmonised unemployment rate for all persons.
+    caveat_zh: 全体人员的季调调和失业率。
+
+  - id: participation_rate
+    section: labour_wages
+    label_en: Labour Force Participation Rate SA
+    label_zh: 劳动力参与率 (季调)
+    unit: "% of working-age population"
+    fetcher: fred
+    series: LRACTTTTKRM156S
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/LRACTTTTKRM156S
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Active labour force as a percentage of the population aged 15 and over.
+    caveat_zh: 15岁及以上人口的劳动力参与率。
+
+  - id: employment_rate
+    section: labour_wages
+    label_en: Employment Rate (15-64) SA
+    label_zh: 就业率 (15-64岁, 季调)
+    unit: "% of population"
+    fetcher: fred
+    series: LREM64TTKRM156S
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/LREM64TTKRM156S
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Proportion of the population aged 15 to 64 that is currently employed.
+    caveat_zh: 15至64岁人口的就业比率。
+
+  # ==========================================
+  # 4. Prices & Costs
+  # ==========================================
+  - id: cpi_inflation
+    section: prices_costs
+    label_en: Headline CPI Inflation YoY
+    label_zh: 消费者价格指数 (CPI) 同比
+    unit: "% y/y"
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: KOR.CPI._T.YOY_PCH_PA_PT.M
+    source_name: IMF SDMX / Statistics Korea
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/KOR.CPI._T.YOY_PCH_PA_PT.M
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Headline CPI year-on-year rate of change transmitted to the IMF.
+    caveat_zh: 报送国际货币基金组织(IMF)的韩国总体CPI同比变动率。
+
+  - id: cpi_inflation_mom
+    section: prices_costs
+    label_en: Headline CPI Inflation MoM
+    label_zh: 消费者价格指数 (CPI) 环比
+    unit: "% m/m"
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: KOR.CPI._T.POP_PCH_PA_PT.M
+    source_name: IMF SDMX / Statistics Korea
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/KOR.CPI._T.POP_PCH_PA_PT.M
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Month-on-month headline CPI percentage change.
+    caveat_zh: 韩国总体CPI月度环比变动率。
+
+  - id: cpi_inflation_fred
+    section: prices_costs
+    label_en: Headline CPI YoY (OECD Mirror Cross-Check)
+    label_zh: 总体CPI同比 (OECD镜像交叉核对)
+    unit: "% y/y"
+    fetcher: fred
+    series: KORCPALTT01CTGYM
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/KORCPALTT01CTGYM
+    frequency: monthly
+    start_date: 2010-01-01
+    caveat_en: OECD consumer price index growth rate series mirrored on FRED.
+    caveat_zh: FRED镜像收录的OECD韩国CPI增长率序列。
+
+  # ==========================================
+  # 5. Housing & Property
+  # ==========================================
+  - id: bis_nominal_house_prices
+    section: housing_property
+    label_en: BIS Nominal Residential Property Prices
+    label_zh: BIS名义住宅价格指数
+    unit: "Index (2010 = 100)"
+    fetcher: fred
+    series: QKRN628BIS
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QKRN628BIS
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: BIS long-term nominal residential property price index for Korea.
+    caveat_zh: 国际清算银行（BIS）编制的韩国名义住宅物业价格指数。
+
+  - id: bis_real_house_prices
+    section: housing_property
+    label_en: BIS Real Residential Property Prices
+    label_zh: BIS实际住宅价格指数
+    unit: "Index (2010 = 100)"
+    fetcher: fred
+    series: QKRR628BIS
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QKRR628BIS
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: BIS consumer price-deflated real residential property prices.
+    caveat_zh: 经CPI平减后的实际住宅物业价格指数。
+
+  # ==========================================
+  # 6. External Balance, Trade & FX
+  # ==========================================
+  - id: krw_usd
+    section: external_fx
+    label_en: USD/KRW Exchange Rate (Fed H.10)
+    label_zh: 美元兑韩元汇率 (美联储H.10)
+    unit: "KRW per USD"
+    fetcher: fred
+    series: DEXKOUS
+    source_name: FRED / Federal Reserve Board
+    source_url: https://fred.stlouisfed.org/series/DEXKOUS
+    frequency: daily
+    start_date: 2020-01-01
+    caveat_en: Daily noon buying rates in New York City for cable transfers in Korean won.
+    caveat_zh: 纽约联邦储备银行每日公布的官方美元兑韩元中午即期汇率。
+
+  - id: reer
+    section: external_fx
+    label_en: Real Effective Exchange Rate (REER)
+    label_zh: 实际有效汇率 (REER)
+    unit: "Index (2007 = 100)"
+    fetcher: bruegel_reer
+    country: KR
+    series_type: reer_120
+    source_name: Bruegel (Darvas 120-Trading-Partner Basket)
+    source_url: https://www.bruegel.org/publications/datasets/real-effective-exchange-rates-for-178-countries-a-new-database
+    frequency: monthly
+    start_date: 1995-01-01
+    caveat_en: CPI-based monthly real effective exchange rate calculated against 120 trading partners.
+    caveat_zh: 基于CPI计算的对120个贸易伙伴的月度实际有效汇率。
+
+  - id: neer
+    section: external_fx
+    label_en: Nominal Effective Exchange Rate (NEER)
+    label_zh: 名义有效汇率 (NEER)
+    unit: "Index (2007 = 100)"
+    fetcher: bruegel_reer
+    country: KR
+    series_type: neer_120
+    source_name: Bruegel (Darvas 120-Trading-Partner Basket)
+    source_url: https://www.bruegel.org/publications/datasets/real-effective-exchange-rates-for-178-countries-a-new-database
+    frequency: monthly
+    start_date: 1995-01-01
+    caveat_en: Monthly nominal effective exchange rate calculated against 120 trading partners.
+    caveat_zh: 对120个贸易伙伴的月度名义有效汇率。
+
+  - id: goods_exports
+    section: external_fx
+    label_en: Exports of Goods (USD)
+    label_zh: 商品出口总值 (美元)
+    unit: "USD mn"
+    fetcher: fred
+    series: XTEXVA01KRM667S
+    scale: 0.000001
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/XTEXVA01KRM667S
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Monthly value of goods exports in millions of US dollars (semiconductor and tech bellwether).
+    caveat_zh: 月度商品出口总值（百万美元，包含关键的半导体与科技硬件出口）。
+
+  - id: goods_imports
+    section: external_fx
+    label_en: Imports of Goods (USD)
+    label_zh: 商品进口总值 (美元)
+    unit: "USD mn"
+    fetcher: fred
+    series: XTIMVA01KRM667S
+    scale: 0.000001
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/XTIMVA01KRM667S
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Monthly value of goods imports in millions of US dollars.
+    caveat_zh: 月度商品进口总值（百万美元）。
+
+  - id: current_account_usd
+    section: external_fx
+    label_en: Current Account Balance (USD)
+    label_zh: 经常账户差额 (美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: KOR.NETCD_T.CAB.USD.Q
+    scale: 0.000001
+    source_name: IMF SDMX / Bank of Korea
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KOR.NETCD_T.CAB.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 current account balance in millions of US dollars.
+    caveat_zh: BPM6标准编制的季度经常账户差额（百万美元）。
+
+  - id: goods_trade_balance
+    section: external_fx
+    label_en: Goods Trade Balance (BOP Basis, USD)
+    label_zh: 货物贸易差额 (BOP口径, 美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: KOR.NETCD_T.G.USD.Q
+    scale: 0.000001
+    source_name: IMF SDMX / Bank of Korea
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KOR.NETCD_T.G.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly goods balance in millions of US dollars.
+    caveat_zh: 季度货物贸易净额（百万美元）。
+
+  - id: services_balance
+    section: external_fx
+    label_en: Services Balance (USD)
+    label_zh: 服务贸易差额 (美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: KOR.NETCD_T.S.USD.Q
+    scale: 0.000001
+    source_name: IMF SDMX / Bank of Korea
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KOR.NETCD_T.S.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly services balance in millions of US dollars.
+    caveat_zh: 季度服务贸易净额（百万美元）。
+
+  - id: current_account_gdp
+    section: external_fx
+    label_en: Current Account Balance (% of GDP)
+    label_zh: 经常账户占GDP比重
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: BCA_NGDPD
+    country_iso3: KOR
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/BCA_NGDPD@WEO/KOR
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: IMF World Economic Outlook historical series and projections.
+    caveat_zh: IMF《世界经济展望》历史序列与预测值。
+
+  # ==========================================
+  # 7. Fiscal & Sovereign
+  # ==========================================
+  - id: government_debt_gdp
+    section: fiscal_sovereign
+    label_en: General Government Gross Debt (% of GDP)
+    label_zh: 广义政府总债务占GDP比重
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: GGXWDG_NGDP
+    country_iso3: KOR
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/GGXWDG_NGDP@WEO/KOR
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government gross debt as a percentage of GDP.
+    caveat_zh: 广义政府总债务占GDP比重。
+
+  - id: fiscal_balance_gdp
+    section: fiscal_sovereign
+    label_en: General Government Net Lending / Borrowing (% of GDP)
+    label_zh: 广义政府净借贷占GDP比重 (财政赤字率)
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: GGXCNL_NGDP
+    country_iso3: KOR
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/GGXCNL_NGDP@WEO/KOR
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government net lending/borrowing as a percentage of GDP.
+    caveat_zh: 广义政府净借贷占GDP比重。
+
+  - id: primary_balance_gdp
+    section: fiscal_sovereign
+    label_en: Primary Net Lending / Borrowing (% of GDP)
+    label_zh: 基本财政收支占GDP比重 (初级平衡)
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: GGXONLB_G01_GDP_PT
+    country_iso3: KOR
+    actual_through: 2025
+    source_name: IMF Fiscal Monitor
+    source_url: https://www.imf.org/external/datamapper/GGXONLB_G01_GDP_PT@FM/KOR
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government primary balance excluding net interest payments.
+    caveat_zh: 剔除利息净支出的广义政府初级财政收支占GDP比重。
+
+  - id: sovereign_yield_10y
+    section: fiscal_sovereign
+    label_en: 10-Year Korea Treasury Bond (KTB) Benchmark Yield
+    label_zh: 10年期韩国国债(KTB)基准收益率
+    unit: "%"
+    fetcher: fred
+    series: IRLTLT01KRM156N
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/IRLTLT01KRM156N
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Long-term government bond yields for 10-year maturity KTB benchmark.
+    caveat_zh: 10年期韩国基准国债月度长期政府债券收益率。
+
+  # ==========================================
+  # 8. Monetary Policy & Financial Conditions
+  # ==========================================
+  - id: policy_rate
+    section: monetary_financial
+    label_en: Overnight Interbank Rate (Immediate Rates / Call Rate)
+    label_zh: 隔夜拆借利率 (市场基准)
+    unit: "%"
+    fetcher: fred
+    series: IRSTCI01KRM156N
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/IRSTCI01KRM156N
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Immediate interest rate / overnight interbank lending rate for South Korea.
+    caveat_zh: 韩国隔夜银行同业拆借利率。
+
+  - id: interbank_rate_3m
+    section: monetary_financial
+    label_en: 3-Month Interbank Rate
+    label_zh: 3个月银行同业拆借利率
+    unit: "%"
+    fetcher: fred
+    series: IR3TIB01KRM156N
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/IR3TIB01KRM156N
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: 3-month interbank borrowing rate.
+    caveat_zh: 3个月期银行同业拆借利率。
+
+  - id: private_credit_gdp
+    section: monetary_financial
+    label_en: Total Credit to Private Non-Financial Sector (% of GDP)
+    label_zh: 私营非金融部门总信贷占GDP比重
+    unit: "% of GDP"
+    fetcher: fred
+    series: QKRPAM770A
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QKRPAM770A
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: BIS credit to the private non-financial sector as a percentage of GDP.
+    caveat_zh: 国际清算银行（BIS）统计的私营非金融部门信贷占GDP比重。
+
+  - id: household_credit_gdp
+    section: monetary_financial
+    label_en: Household Credit (% of GDP)
+    label_zh: 住户部门信贷占GDP比重
+    unit: "% of GDP"
+    fetcher: fred
+    series: QKRHAM770A
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QKRHAM770A
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: BIS total credit to households and NPISH as a percentage of GDP (key Korea financial vulnerability indicator).
+    caveat_zh: 国际清算银行（BIS）统计的住户部门总信贷占GDP比重（韩国核心金融脆弱性监控指标）。
+
+  - id: bank_credit_gdp
+    section: monetary_financial
+    label_en: Bank Credit to Private Sector (% of GDP)
+    label_zh: 银行对私营部门信贷占GDP比重
+    unit: "% of GDP"
+    fetcher: fred
+    series: QKRPBM770A
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QKRPBM770A
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: BIS domestic bank credit to the private non-financial sector as a percentage of GDP.
+    caveat_zh: 国际清算银行（BIS）统计的国内银行对私营非金融部门信贷占GDP比重。
+
+  # ==========================================
+  # 9. Financial Stability
+  # ==========================================
+  - id: bank_capital_ratio
+    section: stability_structural
+    label_en: Bank Regulatory Capital to Risk-Weighted Assets
+    label_zh: 银行监管资本充足率 (CAR)
+    unit: "%"
+    fetcher: dbnomics
+    series: IMF/FSI/Q.KR.FSKRC_PT
+    source_name: IMF / DBnomics (Financial Soundness Indicators)
+    source_url: https://db.nomics.world/IMF/FSI/Q.KR.FSKRC_PT
+    frequency: quarterly
+    start_date: 2008-01-01
+    caveat_en: Deposit-taker regulatory capital to risk-weighted assets reported to the IMF.
+    caveat_zh: 报送国际货币基金组织（IMF）的银行体系资本充足率。
+
+  - id: bank_npl_ratio
+    section: stability_structural
+    label_en: Bank Non-Performing Loans (% of Gross Loans)
+    label_zh: 银行不良贷款率 (NPL)
+    unit: "%"
+    fetcher: dbnomics
+    series: IMF/FSI/Q.KR.FSANL_PT
+    source_name: IMF / DBnomics (Financial Soundness Indicators)
+    source_url: https://db.nomics.world/IMF/FSI/Q.KR.FSANL_PT
+    frequency: quarterly
+    start_date: 2008-01-01
+    caveat_en: Non-performing loans to total gross loans for deposit-takers.
+    caveat_zh: 银行体系不良贷款占贷款总额比重。
+
+data_gaps:
+  - section: monetary_financial
+    item_en: Daily BOK Base Rate Target Decisions and KTB 3Y Benchmark
+    item_zh: 韩国央行基准利率目标决策与3年期国债基准收益率
+    status_en: Maintained by Bank of Korea ECOS API under tables 722Y001 and 817Y002. Requires free BOK_ECOS_API_KEY in .env.local to enable automatically.
+    status_zh: 由韩国银行ECOS API（表722Y001与817Y002）维护。在.env.local中配置免费申请的BOK_ECOS_API_KEY即可自动升级获取。
+
+  - section: housing_property
+    item_en: KB Kookmin Bank / KREB Jeonse Rental Price Index
+    item_zh: 国民银行 / 韩国房地产院全租房(Jeonse)租金价格指数
+    status_en: Korea's unique Jeonse deposit leasing contract index published by KB Financial and Korea Real Estate Board; available via ECOS table 901Y062.
+    status_zh: 韩国特有的全租房(Jeonse)押金租赁价格指数，由国民银行与房地产院编制，可通过ECOS表901Y062获取。
+
+cross_checks:
+  - concept: headline_inflation
+    primary: cpi_inflation
+    secondary: cpi_inflation_fred
+    tolerance: 0.20
+    label_en: IMF CPI vs OECD CPI Mirror

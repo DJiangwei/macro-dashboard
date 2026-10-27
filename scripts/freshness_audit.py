@@ -33,6 +33,10 @@ DATA_FIRST_PAGES = {
     "South Africa": OUTPUT / "south_africa.html",
     "United Kingdom": OUTPUT / "uk.html",
     "United States": OUTPUT / "us.html",
+    "Turkey": OUTPUT / "turkey.html",
+    "Hong Kong": OUTPUT / "hong_kong.html",
+    "South Korea": OUTPUT / "south_korea.html",
+    "Taiwan": OUTPUT / "taiwan.html",
 }
 
 CE4_COUNTRIES = ("Hungary", "Poland", "Czechia", "Romania")

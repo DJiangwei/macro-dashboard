@@ -10,7 +10,9 @@ import io
 import json
 import os
 import re
+import socket
 import threading
+import xml.etree.ElementTree as ET
 import zipfile
 from datetime import UTC, datetime
 from typing import Any
@@ -646,7 +648,7 @@ def _apply_us_transform(series: dict[str, Any]) -> dict[str, Any]:
         if parsed is not None:
             by_date[parsed.isoformat()] = float(item['value'])
     transformed: list[dict[str, Any]] = []
-    if transform == 'yoy_pct':
+    if transform in ('yoy_pct', 'yoy'):
         lag = _lag_for_frequency(frequency)
         for item in observations:
             item_date = _parse_obs_date(item.get('date'))
@@ -1754,7 +1756,8 @@ def _parse_period_date(value: Any) -> str | None:
 
 def fetch_world_bank(spec: dict[str, Any]) -> dict[str, Any]:
     code = spec['series']
-    url = f'https://api.worldbank.org/v2/country/CHN/indicator/{code}'
+    country = str(spec.get('country_iso3') or spec.get('country') or 'CHN').upper()
+    url = f'https://api.worldbank.org/v2/country/{country}/indicator/{code}'
     response = requests.get(url, params={'format': 'json', 'per_page': 20000}, timeout=30)
     response.raise_for_status()
     payload = response.json()
@@ -2253,4 +2256,531 @@ def fetch_bruegel_reer(session: requests.Session, spec: dict[str, Any]) -> dict[
         **spec,
         "observations": observations,
         "provider_updated": observations[-1]["date"],
+    }
+
+
+# ---------------------------------------------------------------------------
+# Taiwan (.gov.tw) DNS-over-HTTPS fallback resolution
+# ---------------------------------------------------------------------------
+_DOH_CACHE: dict[str, list[str]] = {}
+
+
+def _resolve_tw_doh(host: str) -> list[str]:
+    if host in _DOH_CACHE:
+        return _DOH_CACHE[host]
+    try:
+        resp = requests.get(f"https://dns.google/resolve?name={host}&type=A", timeout=5)
+        if resp.status_code == 200:
+            data = resp.json()
+            ips = [a["data"] for a in data.get("Answer", []) if a.get("type") == 1]
+            if ips:
+                _DOH_CACHE[host] = ips
+                return ips
+    except Exception:
+        pass
+    return []
+
+
+_orig_getaddrinfo = socket.getaddrinfo
+
+
+def _safe_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
+    if isinstance(host, str) and host.endswith(".gov.tw"):
+        ips = _resolve_tw_doh(host)
+        if ips:
+            return _orig_getaddrinfo(ips[0], port, family, type, proto, flags)
+    return _orig_getaddrinfo(host, port, family, type, proto, flags)
+
+
+socket.getaddrinfo = _safe_getaddrinfo
+
+
+# ---------------------------------------------------------------------------
+# Stage 1 Official Adapters: HKMA, HK C&SD, Taiwan CBC, TCMB XML, BOK ECOS
+# ---------------------------------------------------------------------------
+
+def fetch_hkma(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch time series from Hong Kong Monetary Authority (HKMA) Open API."""
+    endpoint = str(spec.get("endpoint") or spec.get("series") or "")
+    url = f"https://api.hkma.gov.hk/public/market-data-and-statistics/{endpoint.lstrip('/')}"
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+    params: dict[str, Any] = {"offset": 0, "limit": 5000}
+    segment = spec.get("segment")
+    if segment:
+        params["segment"] = segment
+
+    response = requests.get(url, headers=headers, params=params, timeout=30)
+    response.raise_for_status()
+    payload = response.json()
+    records = (payload.get("result") or {}).get("records") or []
+
+    field = spec.get("field") or spec.get("metric")
+    observations: list[dict[str, Any]] = []
+    start_date = str(spec.get("start_date") or "").strip()
+
+    for item in records:
+        raw_date = str(
+            item.get("end_of_date")
+            or item.get("end_of_month")
+            or item.get("date")
+            or item.get("period")
+            or ""
+        ).strip()
+        if not raw_date:
+            continue
+        dt = raw_date
+        if len(dt) == 7 and dt[4] == "-":
+            dt = f"{dt}-01"
+        elif len(dt) == 6 and dt.isdigit():
+            dt = f"{dt[:4]}-{dt[4:6]}-01"
+        elif len(dt) == 8 and dt.isdigit():
+            dt = f"{dt[:4]}-{dt[4:6]}-{dt[6:8]}"
+
+        raw_val = item.get(field) if field else None
+        if raw_val is None:
+            continue
+        try:
+            val = float(str(raw_val).replace(",", "").replace("+", "").replace("%", ""))
+        except (ValueError, TypeError):
+            continue
+
+        if start_date and dt < start_date:
+            continue
+
+        transform = spec.get("transform")
+        if transform:
+            val = _apply_china_transform(val, transform)
+
+        observations.append({"date": dt, "value": val})
+
+    observations.sort(key=lambda x: x["date"])
+    if not observations:
+        raise RuntimeError(f"fetch_hkma returned no observations for {spec.get('id')}")
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": url,
+    }
+
+
+def fetch_hk_csd(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch time series from Hong Kong Census and Statistics Department (C&SD) API."""
+    table_id = str(spec.get("table_id") or spec.get("series") or "")
+    url = f"https://www.censtatd.gov.hk/api/get.php?id={table_id}&lang=en&full_series=1"
+    headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
+    response = requests.get(url, headers=headers, timeout=30)
+    response.raise_for_status()
+    payload = response.json()
+    dataset = payload.get("dataSet") or []
+
+    filters = dict(spec.get("filters") or {})
+    observations: list[dict[str, Any]] = []
+    start_date = str(spec.get("start_date") or "").strip()
+
+    for item in dataset:
+        matched = True
+        for fk, fv in filters.items():
+            if str(item.get(fk) or "").strip().lower() != str(fv).strip().lower():
+                matched = False
+                break
+        if not matched:
+            continue
+
+        raw_val = item.get("figure")
+        if raw_val is None or str(raw_val).strip() in {"", "N.A.", "-", "NaN"}:
+            continue
+        try:
+            val = float(str(raw_val).replace(",", ""))
+        except (ValueError, TypeError):
+            continue
+
+        raw_period = str(item.get("period") or "").strip()
+        freq = str(item.get("freq") or "").strip().upper()
+        dt = ""
+        if freq.startswith("M") or (len(raw_period) == 6 and raw_period.isdigit() and not freq.startswith("Q")):
+            dt = f"{raw_period[:4]}-{raw_period[4:6]}-01"
+        elif freq.startswith("Q"):
+            y = raw_period[:4]
+            if len(raw_period) == 6 and raw_period[4:].isdigit():
+                m = int(raw_period[4:6])
+            elif len(raw_period) >= 5 and raw_period[-1].isdigit():
+                m = int(raw_period[-1]) * 3
+            else:
+                m = 3
+            day = 31 if m in {3, 12} else 30
+            dt = f"{y}-{m:02d}-{day:02d}"
+        elif freq.startswith("Y") or (len(raw_period) == 4 and raw_period.isdigit()):
+            dt = f"{raw_period}-12-31"
+
+        if not dt:
+            continue
+        if start_date and dt < start_date:
+            continue
+
+        transform = spec.get("transform")
+        if transform:
+            val = _apply_china_transform(val, transform)
+
+        observations.append({"date": dt, "value": val})
+
+    observations.sort(key=lambda x: x["date"])
+    if not observations:
+        raise RuntimeError(f"fetch_hk_csd returned no observations for {spec.get('id')}")
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": url,
+    }
+
+
+def fetch_tw_cbc(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch time series from Central Bank of the Republic of China (Taiwan) DataAPI."""
+    filename = str(spec.get("filename") or spec.get("series") or "")
+    url = f"https://cpx.cbc.gov.tw/API/DataAPI/Get?FileName={filename}"
+    headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
+    response = requests.get(url, headers=headers, timeout=30)
+    response.raise_for_status()
+    payload = response.json()
+    data = payload.get("data") or {}
+    meta = payload.get("meta") or {}
+    structure = (data.get("structure") or {}).get("Table1") or []
+    datasets = data.get("dataSets") or []
+
+    target_col = spec.get("col_idx")
+    target_name = spec.get("col_name")
+    if target_col is None and target_name:
+        for idx, col in enumerate(structure):
+            if str(col.get("data") or "").strip().lower() == target_name.strip().lower():
+                target_col = idx
+                break
+    if target_col is None:
+        target_col = 0
+
+    observations: list[dict[str, Any]] = []
+    start_date = str(spec.get("start_date") or "").strip()
+
+    for row in datasets:
+        if not row or len(row) <= target_col + 1:
+            continue
+        raw_period = str(row[0]).strip()
+        raw_val = str(row[target_col + 1]).strip()
+        if not raw_val or raw_val in {"-", "...", "N.A.", "null"}:
+            continue
+
+        try:
+            val = float(raw_val.replace(",", ""))
+        except ValueError:
+            continue
+
+        dt = ""
+        if len(raw_period) == 8 and raw_period.isdigit():
+            dt = f"{raw_period[:4]}-{raw_period[4:6]}-{raw_period[6:8]}"
+        elif "M" in raw_period:
+            parts = raw_period.split("M")
+            if len(parts) == 2 and parts[0].isdigit() and parts[1].isdigit():
+                dt = f"{parts[0]}-{int(parts[1]):02d}-01"
+        elif len(raw_period) == 6 and raw_period.isdigit():
+            dt = f"{raw_period[:4]}-{raw_period[4:6]}-01"
+        elif "Q" in raw_period:
+            parts = raw_period.split("Q")
+            if len(parts) == 2 and parts[0].isdigit() and parts[1].isdigit():
+                q = int(parts[1])
+                m = q * 3
+                day = 31 if m in {3, 12} else 30
+                dt = f"{parts[0]}-{m:02d}-{day:02d}"
+        elif len(raw_period) == 4 and raw_period.isdigit():
+            dt = f"{raw_period}-12-31"
+
+        if not dt:
+            continue
+        if start_date and dt < start_date:
+            continue
+
+        transform = spec.get("transform")
+        if transform:
+            val = _apply_china_transform(val, transform)
+
+        observations.append({"date": dt, "value": val})
+
+    observations.sort(key=lambda x: x["date"])
+    if not observations:
+        raise RuntimeError(f"fetch_tw_cbc returned no observations for {spec.get('id')}")
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": meta.get("last_updated") or (observations[-1]["date"] if observations else ""),
+        "api_url": url,
+    }
+
+
+_DGBAS_CACHE: dict[str, bytes] = {}
+
+
+def fetch_tw_dgbas(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch official economic time series from Taiwan DGBAS releases."""
+    import openpyxl
+    import xlrd
+    import urllib3
+    urllib3.disable_warnings()
+
+    dataset = str(spec.get("dataset") or spec.get("series") or "").strip().lower()
+    start_date = str(spec.get("start_date") or "").strip()
+    observations: list[dict[str, Any]] = []
+    api_url = ""
+
+    if dataset in {"gdp_yoy", "gdp_growth"}:
+        url = spec.get("url") or "https://ws.dgbas.gov.tw/001/Upload/463/relfile/10315/2687/webdata2008yoy(059).xlsx"
+        api_url = url
+        if url not in _DGBAS_CACHE:
+            resp = requests.get(url, headers={"User-Agent": USER_AGENT}, verify=False, timeout=20)
+            resp.raise_for_status()
+            _DGBAS_CACHE[url] = resp.content
+        wb = openpyxl.load_workbook(io.BytesIO(_DGBAS_CACHE[url]), data_only=True)
+        sheet = wb["Growth rates"]
+        col_idx = int(spec.get("col_idx") or 43)  # Col 43 is GDP
+        for r_idx in range(9, sheet.max_row + 1):
+            period = str(sheet.cell(r_idx, 3).value or "").strip()
+            if "(f)" in period:
+                continue
+            m = re.search(r"(\d{4})Q(\d)", period)
+            if m:
+                yr, q = int(m.group(1)), int(m.group(2))
+                month = q * 3
+                day = 31 if month in (3, 12) else 30
+                dt = f"{yr}-{month:02d}-{day:02d}"
+                val = sheet.cell(r_idx, col_idx).value
+                if isinstance(val, (int, float)):
+                    if not start_date or dt >= start_date:
+                        observations.append({"date": dt, "value": float(val)})
+
+    elif dataset in {"gdp_saqr", "gdp_qoq_sa"}:
+        url = spec.get("url") or "https://ws.dgbas.gov.tw/001/Upload/463/relfile/10315/2687/webdata2008saar(059).xlsx"
+        api_url = url
+        if url not in _DGBAS_CACHE:
+            resp = requests.get(url, headers={"User-Agent": USER_AGENT}, verify=False, timeout=20)
+            resp.raise_for_status()
+            _DGBAS_CACHE[url] = resp.content
+        wb = openpyxl.load_workbook(io.BytesIO(_DGBAS_CACHE[url]), data_only=True)
+        sheet = wb["連鎖實質增率saqr(realGDP)"]
+        col_idx = int(spec.get("col_idx") or 4)  # Col 4 is GDP
+        for r_idx in range(9, sheet.max_row + 1):
+            period = str(sheet.cell(r_idx, 3).value or "").strip()
+            if "(f)" in period:
+                continue
+            m = re.search(r"(\d{4})Q(\d)", period)
+            if m:
+                yr, q = int(m.group(1)), int(m.group(2))
+                month = q * 3
+                day = 31 if month in (3, 12) else 30
+                dt = f"{yr}-{month:02d}-{day:02d}"
+                val = sheet.cell(r_idx, col_idx).value
+                if isinstance(val, (int, float)):
+                    if not start_date or dt >= start_date:
+                        observations.append({"date": dt, "value": float(val)})
+
+    elif dataset in {"cpi", "ppi", "rent"}:
+        filename = spec.get("filename") or ("cpispl.xls" if dataset == "cpi" else "ppispl.xls")
+        url = spec.get("url") or f"https://ws.dgbas.gov.tw/001/Upload/463/relfile/10315/2703/{filename}"
+        api_url = url
+        if url not in _DGBAS_CACHE:
+            resp = requests.get(url, headers={"User-Agent": USER_AGENT}, verify=False, timeout=20)
+            resp.raise_for_status()
+            _DGBAS_CACHE[url] = resp.content
+        book = xlrd.open_workbook(file_contents=_DGBAS_CACHE[url])
+        sheet = book.sheet_by_index(0)
+        by_date: dict[str, float] = {}
+        for r_idx in range(3, sheet.nrows):
+            yr_val = sheet.cell_value(r_idx, 0)
+            if isinstance(yr_val, (int, float)):
+                year = int(yr_val) + 1911
+                for m in range(1, 13):
+                    val = sheet.cell_value(r_idx, m)
+                    if isinstance(val, (int, float)):
+                        by_date[f"{year}-{m:02d}-01"] = float(val)
+
+        calc_yoy = spec.get("calc_yoy") or spec.get("metric") == "yoy" or spec.get("transform") == "yoy_pct"
+        sorted_dates = sorted(by_date.keys())
+        for dt in sorted_dates:
+            if calc_yoy:
+                parts = dt.split("-")
+                prev_dt = f"{int(parts[0])-1}-{parts[1]}-{parts[2]}"
+                if prev_dt in by_date and by_date[prev_dt] > 0:
+                    val = (by_date[dt] / by_date[prev_dt] - 1.0) * 100.0
+                    if not start_date or dt >= start_date:
+                        observations.append({"date": dt, "value": val})
+            else:
+                if not start_date or dt >= start_date:
+                    observations.append({"date": dt, "value": by_date[dt]})
+    else:
+        raise ValueError(f"Unknown DGBAS dataset: {dataset}")
+
+    observations.sort(key=lambda x: x["date"])
+    if not observations:
+        raise RuntimeError(f"fetch_tw_dgbas returned no observations for {spec.get('id')}")
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": api_url,
+    }
+
+
+def fetch_tcmb_xml(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch official exchange rates from Central Bank of Turkey (TCMB) daily XML."""
+    url = "https://www.tcmb.gov.tr/kurlar/today.xml"
+    headers = {"User-Agent": USER_AGENT}
+    response = requests.get(url, headers=headers, timeout=20)
+    response.raise_for_status()
+    root = ET.fromstring(response.content)
+
+    raw_date = root.attrib.get("Date") or ""
+    dt = ""
+    if "/" in raw_date:
+        parts = raw_date.split("/")
+        if len(parts) == 3:
+            dt = f"{parts[2]}-{int(parts[0]):02d}-{int(parts[1]):02d}"
+
+    currency = str(spec.get("currency") or spec.get("series") or "USD").upper()
+    rate_type = str(spec.get("rate_type") or "ForexBuying")
+
+    val = None
+    for cur in root.findall("Currency"):
+        if cur.attrib.get("CurrencyCode") == currency:
+            elem = cur.findtext(rate_type)
+            if elem:
+                try:
+                    val = float(elem.replace(",", ""))
+                except ValueError:
+                    pass
+            break
+
+    if val is None or not dt:
+        raise RuntimeError(f"fetch_tcmb_xml could not parse rate for {currency}")
+
+    return {
+        **spec,
+        "observations": [{"date": dt, "value": val}],
+        "provider_updated": dt,
+        "api_url": url,
+    }
+
+
+def fetch_bok_ecos(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch time series from Bank of Korea (BOK) ECOS OpenAPI."""
+    api_key = os.getenv("BOK_ECOS_API_KEY")
+    if not api_key:
+        fallback = spec.get("fallback")
+        if fallback and callable(fallback):
+            return fallback(spec)
+        raise RuntimeError("BOK_ECOS_API_KEY not configured in environment")
+
+    stat_code = spec["stat_code"]
+    cycle = spec.get("cycle", "M")
+    start_date = spec.get("start_date", "200001")
+    end_date = spec.get("end_date", "203012")
+    item1 = spec.get("item_code1", "")
+
+    url = f"https://ecos.bok.or.kr/api/StatisticSearch/{api_key}/json/en/1/10000/{stat_code}/{cycle}/{start_date}/{end_date}/{item1}"
+    headers = {"User-Agent": USER_AGENT}
+    response = requests.get(url, headers=headers, timeout=30)
+    response.raise_for_status()
+    data = response.json()
+    rows = (data.get("StatisticSearch") or {}).get("row") or []
+
+    observations: list[dict[str, Any]] = []
+    for r in rows:
+        raw_val = r.get("DATA_VALUE")
+        if raw_val is None or raw_val == "":
+            continue
+        try:
+            val = float(str(raw_val).replace(",", ""))
+        except ValueError:
+            continue
+        raw_time = str(r.get("TIME", "")).strip()
+        dt = ""
+        if len(raw_time) == 8:
+            dt = f"{raw_time[:4]}-{raw_time[4:6]}-{raw_time[6:8]}"
+        elif len(raw_time) == 6:
+            if cycle == "Q":
+                y = raw_time[:4]
+                q = int(raw_time[5])
+                m = q * 3
+                day = 31 if m in {3, 12} else 30
+                dt = f"{y}-{m:02d}-{day:02d}"
+            else:
+                dt = f"{raw_time[:4]}-{raw_time[4:6]}-01"
+        elif len(raw_time) == 4:
+            dt = f"{raw_time}-12-31"
+
+        if dt:
+            observations.append({"date": dt, "value": val})
+
+    observations.sort(key=lambda x: x["date"])
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": url,
+    }
+
+
+def fetch_dbnomics(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch time series from DBnomics public API."""
+    series_code = str(spec.get("series") or "")
+    url = f"https://api.db.nomics.world/v22/series/{series_code.lstrip('/')}?observations=1"
+    headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
+    response = requests.get(url, headers=headers, timeout=30)
+    response.raise_for_status()
+    payload = response.json()
+    docs = (payload.get("series") or {}).get("docs") or []
+    if not docs:
+        raise RuntimeError(f"DBnomics returned no series docs for {series_code}")
+    doc = docs[0]
+    periods = doc.get("period") or []
+    values = doc.get("value") or []
+    observations: list[dict[str, Any]] = []
+    start_date = str(spec.get("start_date") or "").strip()
+    for p, v in zip(periods, values):
+        if v is None:
+            continue
+        try:
+            val = float(v)
+        except (ValueError, TypeError):
+            continue
+        dt = str(p).strip()
+        if "-Q" in dt:
+            parts = dt.split("-Q")
+            if len(parts) == 2 and parts[0].isdigit() and parts[1].isdigit():
+                q = int(parts[1])
+                m = q * 3
+                day = 31 if m in {3, 12} else 30
+                dt = f"{parts[0]}-{m:02d}-{day:02d}"
+        elif len(dt) == 7 and dt[4] == "-":
+            dt = f"{dt}-01"
+        elif len(dt) == 4 and dt.isdigit():
+            dt = f"{dt}-12-31"
+
+        if start_date and dt < start_date:
+            continue
+        observations.append({"date": dt, "value": val})
+
+    observations.sort(key=lambda x: x["date"])
+    if not observations:
+        raise RuntimeError(f"fetch_dbnomics returned no observations for {spec.get('id')}")
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": url,
     }

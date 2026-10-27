@@ -1,6 +1,6 @@
 # Global Macro Workbench Intelligence Briefing
 
-**Generated**: 2026-10-26 | **Coverage**: 10 Economies (US, EA, UK, JP, CN, ZA, PL, CZ, HU, RO)
+**Generated**: 2026-10-27 | **Coverage**: 14 Economies (US, EA, UK, JP, CN, ZA, TR, HK, KR, TW, PL, CZ, HU, RO)
 
 ---
 
@@ -8,16 +8,20 @@
 
 | Country | Cyclical | Structural | Composite | Growth Assessment | Inflation Assessment | Policy Stance | Data Quality |
 | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :---: |
-| **Hungary (HU)** | 58.8 | 43.3 | **mixed** | moderate expansion | near-target inflation | restrictive stance | 37.0 (needs data review) |
-| **Poland (PL)** | 61.2 | 45.0 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 44.1 (needs data review) |
-| **Czechia (CZ)** | 65.0 | 58.3 | **mixed** | moderate expansion | near-target inflation | neutral-moderate stance | 34.9 (needs data review) |
-| **Romania (RO)** | 30.0 | 46.7 | **defensive** | contraction | inflation pressure | restrictive stance | 34.2 (needs data review) |
-| **China (CN)** | 67.5 | 46.7 | **mixed** | above-trend expansion | disinflation risk | neutral-moderate stance | 34.3 (needs data review) |
-| **Euro Area (EA)** | 60.0 | 61.7 | **mixed** | stall-speed growth | near-target inflation | neutral-moderate stance | 52.0 (needs data review) |
-| **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 44.9 (needs data review) |
-| **South Africa (ZA)** | 55.0 | 53.3 | **mixed** | moderate expansion | above-target inflation | restrictive stance | 39.0 (needs data review) |
-| **United Kingdom (UK)** | 57.1 | 53.3 | **mixed** | moderate expansion | above-target inflation | neutral-moderate stance | 44.3 (needs data review) |
-| **United States (US)** | 51.2 | 43.3 | **defensive** | moderate expansion | above-target inflation | neutral-moderate stance | 80.8 (high-confidence dashboard) |
+| **Hungary (HU)** | 58.8 | 38.3 | **defensive** | moderate expansion | near-target inflation | restrictive stance | 53.0 (needs data review) |
+| **Poland (PL)** | 61.2 | 45.0 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 60.0 (usable with watch-list) |
+| **Czechia (CZ)** | 65.0 | 58.3 | **mixed** | moderate expansion | near-target inflation | neutral-moderate stance | 50.3 (needs data review) |
+| **Romania (RO)** | 30.0 | 46.7 | **defensive** | contraction | inflation pressure | restrictive stance | 50.0 (needs data review) |
+| **China (CN)** | 67.5 | 46.7 | **mixed** | above-trend expansion | disinflation risk | neutral-moderate stance | 36.7 (needs data review) |
+| **Euro Area (EA)** | 60.0 | 61.7 | **mixed** | stall-speed growth | near-target inflation | neutral-moderate stance | 56.0 (needs data review) |
+| **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 44.3 (needs data review) |
+| **South Africa (ZA)** | 50.0 | 53.3 | **mixed** | moderate expansion | inflation pressure | restrictive stance | 47.2 (needs data review) |
+| **United Kingdom (UK)** | 52.9 | 53.3 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 48.3 (needs data review) |
+| **United States (US)** | 51.2 | 43.3 | **defensive** | moderate expansion | above-target inflation | neutral-moderate stance | 75.8 (usable with watch-list) |
+| **Turkey (TR)** | 50.0 | 50.0 | **mixed** | moderate expansion | insufficient data | restrictive stance | 59.6 (needs data review) |
+| **Hong Kong (HK)** | 63.3 | 55.0 | **mixed** | above-trend expansion | near-target inflation | insufficient data | 71.5 (usable with watch-list) |
+| **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 60.5 (usable with watch-list) |
+| **Taiwan (TW)** | 75.0 | 65.0 | **constructive** | above-trend expansion | near-target inflation | accommodative stance | 82.3 (high-confidence dashboard) |
 
 ---
 
@@ -27,16 +31,18 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 
 | Economy / Institution | Policy Rate | Inflation (Target) | Neutral $r^*$ | Taylor Benchmark (Range) | Policy Gap | Stance Label |
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **HU** (MNB) | **6.25%** | 1.80% (3.0%) | 1.80% | **2.75%** (2.25% ~ 3.25%) | **+3.50%** | *substantially restrictive* |
-| **PL** (NBP) | **3.75%** | 3.50% (2.5%) | 1.50% | **5.90%** (5.40% ~ 6.40%) | **-2.15%** | *substantially accommodative* |
-| **CZ** (CNB) | **3.50%** | 1.50% (2.0%) | 1.20% | **2.35%** (1.85% ~ 2.85%) | **+1.15%** | *moderately restrictive* |
-| **RO** (BNR) | **6.50%** | 6.30% (2.5%) | 2.00% | **8.70%** (8.20% ~ 9.20%) | **-2.20%** | *substantially accommodative* |
-| **CN** (PBC) | **3.00%** | 0.80% (3.0%) | 1.50% | **1.55%** (1.05% ~ 2.05%) | **+1.45%** | *moderately restrictive* |
+| **HU** (MNB) | **6.25%** | 2.10% (3.0%) | 1.80% | **3.20%** (2.70% ~ 3.70%) | **+3.05%** | *substantially restrictive* |
+| **PL** (NBP) | **3.75%** | 4.00% (2.5%) | 1.50% | **6.75%** (6.25% ~ 7.25%) | **-3.00%** | *substantially accommodative* |
+| **CZ** (CNB) | **3.50%** | 2.20% (2.0%) | 1.20% | **3.40%** (2.90% ~ 3.90%) | **+0.10%** | *calibrated / neutral* |
+| **RO** (BNR) | **6.50%** | 6.50% (2.5%) | 2.00% | **9.00%** (8.50% ~ 9.50%) | **-2.50%** | *substantially accommodative* |
+| **CN** (PBC) | **3.00%** | 0.90% (3.0%) | 1.50% | **1.70%** (1.20% ~ 2.20%) | **+1.30%** | *moderately restrictive* |
 | **EA** (ECB) | **2.50%** | 2.00% (2.0%) | 0.50% | **2.50%** (2.00% ~ 3.00%) | **0.00%** | *calibrated / neutral* |
-| **JP** (Bank of Japan) | **0.98%** | 1.96% (2.0%) | 0.00% | **1.91%** (1.41% ~ 2.41%) | **-0.93%** | *moderately accommodative* |
-| **ZA** (SARB) | **7.25%** | 4.40% (4.5%) | 2.50% | **7.12%** (6.62% ~ 7.62%) | **+0.13%** | *calibrated / neutral* |
-| **UK** (Bank of England) | **3.75%** | 3.10% (2.0%) | 1.25% | **4.49%** (3.99% ~ 4.99%) | **-0.74%** | *moderately accommodative* |
+| **JP** (Bank of Japan) | **1.04%** | 1.96% (2.0%) | 0.00% | **1.91%** (1.41% ~ 2.41%) | **-0.86%** | *moderately accommodative* |
+| **ZA** (SARB) | **7.25%** | 4.50% (4.5%) | 2.50% | **7.27%** (6.77% ~ 7.77%) | **-0.02%** | *calibrated / neutral* |
+| **UK** (Bank of England) | **3.75%** | 3.50% (2.0%) | 1.25% | **4.95%** (4.45% ~ 5.45%) | **-1.20%** | *moderately accommodative* |
 | **US** (Federal Reserve) | **3.88%** | 3.01% (2.0%) | 1.00% | **4.61%** (4.11% ~ 5.11%) | **-0.73%** | *moderately accommodative* |
+| **KR** (BOK) | **3.04%** | 2.88% (2.0%) | 1.00% | **5.09%** (4.59% ~ 5.59%) | **-2.05%** | *substantially accommodative* |
+| **TW** (CBC) | **2.00%** | 2.73% (2.0%) | 1.00% | **5.60%** (5.10% ~ 6.10%) | **-3.60%** | *substantially accommodative* |
 
 ---
 
@@ -44,12 +50,16 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 
 | Economy | Benchmark Asset | Latest Yield | Latest Date | Spread to US 10Y (bps) | Status |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **US** | 10Y Treasury | **5.00%** | 2026-10-23 | **0.0 bps** | Official Observed |
+| **US** | 10Y Treasury | **5.00%** | 2026-10-26 | **0.0 bps** | Official Observed |
 | **EA** | 10Y Bund | **3.47%** | 2026-09-01 | **-153.0 bps** | Official Observed |
-| **UK** | 10Y Gilt | **5.40%** | 2026-10-09 | **+40.0 bps** | Official Observed |
-| **JP** | 10Y JGB | **2.94%** | 2026-08-01 | **-206.0 bps** | Official Observed |
+| **UK** | 10Y Gilt | **5.32%** | 2026-10-23 | **+32.0 bps** | Official Observed |
+| **JP** | 10Y JGB | **3.05%** | 2026-09-01 | **-195.0 bps** | Official Observed |
 | **CN** | CN 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
-| **ZA** | 10Y Sovereign | **8.20%** | 2026-10-12 | **+320.0 bps** | Official Observed |
+| **ZA** | 10Y Sovereign | **8.04%** | 2026-10-26 | **+304.0 bps** | Official Observed |
+| **TR** | TR 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
+| **HK** | HK 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
+| **KR** | 10Y KTB | **4.45%** | 2026-09-01 | **-55.0 bps** | Official Observed |
+| **TW** | 10Y Gov Bond | **1.97%** | 2026-08-01 | **-303.0 bps** | Official Observed |
 | **PL** | PL 10Y Benchmark | **6.23%** | 2026-09-01 | **+123.0 bps** | Official Observed |
 | **CZ** | CZ 10Y Benchmark | **5.24%** | 2026-09-01 | **+24.0 bps** | Official Observed |
 | **HU** | HU 10Y Benchmark | **5.68%** | 2026-09-01 | **+68.0 bps** | Official Observed |
@@ -60,15 +70,15 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 ## 4. Cross-Country Synchronization (36-Month Rolling Correlation)
 
 - **Nominal Cycle (Headline CPI Inflation)**:
-  - Highly coupled core: US vs. Euro Area (**0.94**), US vs. UK (**0.87**), Euro Area vs. UK (**0.96**).
-  - Independent domestic price cycle: China vs. US (**0.64**), China vs. Euro Area (**0.56**).
+  - Highly coupled core: US vs. Euro Area (**n/a**), US vs. UK (**n/a**), Euro Area vs. UK (**n/a**).
+  - Independent domestic price cycle: China vs. US (**n/a**), China vs. Euro Area (**n/a**).
 - **Real Business Cycle (Industrial Production)**:
-  - Transatlantic industrial linkage: US vs. Euro Area (**0.49**), US vs. UK (**0.5**).
-  - Manufacturing divergence: China vs. US (**0.21**), Japan vs. US (**0.45**).
+  - Transatlantic industrial linkage: US vs. Euro Area (**0.74**), US vs. UK (**0.05**).
+  - Manufacturing divergence: China vs. US (**0.24**), Japan vs. US (**0.89**).
 - **Financial & Capital Flows (10Y Sovereign Yields 36M Rolling)**:
-  - European sovereign rates coupling: Euro Area Bund vs. UK Gilt (**0.83**).
-  - Global dollar anchor linkage: US vs. UK (**0.61**), US vs. Euro Area (**0.5**).
-  - Divergent duration / yield curve regimes: US vs. Japan (**0.26**), US vs. South Africa (**0.22**).
+  - European sovereign rates coupling: Euro Area Bund vs. UK Gilt (**0.74**).
+  - Global dollar anchor linkage: US vs. UK (**0.66**), US vs. Euro Area (**0.45**).
+  - Divergent duration / yield curve regimes: US vs. Japan (**0.37**), US vs. South Africa (**0.04**).
 - **External Trade & Currency Couplings (Bruegel REER 36M Rolling)**:
   - European monetary union & close trading partners: Euro Area vs. UK (**0.34**), Euro Area vs. Poland (**0.47**), Euro Area vs. Czechia (**0.85**).
   - Transatlantic relative price competitiveness: US vs. Euro Area (**-0.82**), US vs. UK (**-0.05**).
@@ -89,6 +99,10 @@ Misalignment evaluated against 5-Year and 10-Year historical moving averages. In
 | **JP** | `JP` | **63.71** | 85.34 | 83.70 | **-23.9%** | -10.3% | -21.63 | *substantially undervalued (export cost tailwind)* |
 | **CN** | `CN` | **127.81** | 142.59 | 132.20 | **-3.3%** | -1.8% | -14.78 | *neutral / fair value* |
 | **ZA** | `ZA` | **89.09** | 57.81 | 85.05 | **+4.7%** | +8.0% | +31.28 | *neutral / fair value* |
+| **TR** | `TR` | **59.96** | 3.19 | 57.27 | **+4.7%** | +15.5% | +56.77 | *neutral / fair value* |
+| **HK** | `HK` | **119.91** | 118.26 | 124.88 | **-4.0%** | -3.8% | +1.65 | *neutral / fair value* |
+| **KR** | `KR` | **82.34** | 84.89 | 87.90 | **-6.3%** | -1.0% | -2.54 | *moderately undervalued* |
+| **TW** | `TW` | **104.27** | 125.82 | 108.89 | **-4.2%** | -4.0% | -21.54 | *neutral / fair value* |
 | **PL** | `PL` | **105.92** | 87.70 | 93.04 | **+13.8%** | +5.8% | +18.22 | *substantially overvalued (export cost headwind)* |
 | **CZ** | `CZ` | **129.06** | 113.58 | 115.21 | **+12.0%** | +2.2% | +15.48 | *substantially overvalued (export cost headwind)* |
 | **HU** | `HU` | **99.59** | 71.76 | 88.27 | **+12.8%** | +10.2% | +27.83 | *substantially overvalued (export cost headwind)* |

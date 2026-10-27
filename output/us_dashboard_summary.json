@@ -1,6 +1,6 @@
 {
   "file": "us.html",
-  "generated": "2026-10-26T22:36:29.398533+00:00",
+  "generated": "2026-10-27T23:57:09.324713+00:00",
   "charts": 168,
   "source_groups": 27,
   "data_gaps": 7,
@@ -28,7 +28,7 @@
       "frequency": "monthly",
       "source_name": "FRED / BEA",
       "series": "PCEPILFE",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "unemployment_rate",
@@ -68,24 +68,24 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "snapshot",
+  "data_mode": "refresh",
   "latest_cards": [],
-  "fed_funds_latest": "3.88% (2026-10-23)",
+  "fed_funds_latest": "3.88% (2026-10-26)",
   "cross_checks": [
     {
       "concept": "overnight_policy_rate",
       "primary": "daily_fed_funds",
       "secondary": "overnight_bank_funding_rate",
       "label_en": "Daily Effective Fed Funds (DFF) vs Overnight Bank Funding Rate (OBFR)",
-      "n_common": 2213,
+      "n_common": 2214,
       "latest_diff": 0.0,
       "max_abs_diff": 0.1,
       "n_breaches": 4,
       "last_breach_date": "2020-03-19",
       "tolerance": 0.05,
-      "window_since": "2024-10-23",
+      "window_since": "2024-10-26",
       "window_months": 24,
-      "window_n_common": 502,
+      "window_n_common": 500,
       "window_max_abs_diff": 0.010000000000000231,
       "window_n_breaches": 0,
       "status": "agree"
@@ -95,13 +95,13 @@
       "primary": "daily_fed_funds",
       "secondary": "reserve_balance_rate",
       "label_en": "Daily Effective Fed Funds (DFF) vs Interest on Reserve Balances (IORB)",
-      "n_common": 1913,
+      "n_common": 1916,
       "latest_diff": -0.020000000000000018,
       "max_abs_diff": 0.09,
       "n_breaches": 0,
       "last_breach_date": "",
       "tolerance": 0.15,
-      "window_since": "2024-10-23",
+      "window_since": "2024-10-26",
       "window_months": 24,
       "window_n_common": 731,
       "window_max_abs_diff": 0.07000000000000028,
@@ -135,10 +135,9 @@
     ],
     "file": "us_canonical_frame.json",
     "series": 168,
-    "observations": 118140,
+    "observations": 118167,
     "series_count": 168,
-    "observation_count": 118140,
-    "snapshot_generated": "2026-10-26T22:36:28.781038+00:00"
+    "observation_count": 118167
   },
   "data_gaps_detail": [
     {
@@ -304,8 +303,8 @@
       }
     ],
     "quality_counts": {
-      "verified": 149,
-      "watch": 19
+      "verified": 126,
+      "watch": 42
     },
     "unavailable_count": 0
   },
@@ -316,13 +315,521 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-10-26",
+    "as_of_date": "2026-10-27",
     "counts": {
-      "current": 167,
+      "current": 144,
+      "due": 23,
       "scheduled_policy": 1
     },
-    "latest_historical_date": "2026-10-26",
-    "attention": []
+    "latest_historical_date": "2026-10-27",
+    "attention": [
+      {
+        "id": "business_inventories_growth",
+        "concept_id": "us:business_inventories_growth",
+        "label_en": "Business Inventories Growth",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / Census",
+        "series": "BUSINV",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "consumer_credit_growth",
+        "concept_id": "us:consumer_credit_growth",
+        "label_en": "Consumer Credit Growth",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / Federal Reserve",
+        "series": "TOTALSL",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "core_pce_inflation",
+        "concept_id": "us:core_pce_inflation",
+        "label_en": "Core PCE Inflation",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 71,
+        "release_calendar_id": "bea_monthly",
+        "expected_release_date": "2026-11-03",
+        "due_date": "2026-11-10",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BEA",
+        "series": "PCEPILFE",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "core_pce_mom",
+        "concept_id": "us:core_pce_mom",
+        "label_en": "Core PCE Inflation, MoM",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BEA",
+        "series": "PCEPILFE",
+        "transform": "pct_change"
+      },
+      {
+        "id": "factory_orders_growth",
+        "concept_id": "us:factory_orders_growth",
+        "label_en": "Manufacturers' New Orders Growth",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / Census",
+        "series": "AMTMNO",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "goods_exports_growth",
+        "concept_id": "exports_growth",
+        "label_en": "Goods Exports Growth",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / Census",
+        "series": "BOPGEXP",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "goods_imports_growth",
+        "concept_id": "imports_growth",
+        "label_en": "Goods Imports Growth",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / Census",
+        "series": "BOPGIMP",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "goods_trade_balance",
+        "concept_id": "trade_balance",
+        "label_en": "Goods Trade Balance",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "FRED / Census-BEA",
+        "series": "BOPGSTB",
+        "transform": "level"
+      },
+      {
+        "id": "inventory_sales_ratio",
+        "concept_id": "us:inventory_sales_ratio",
+        "label_en": "Inventory-to-Sales Ratio",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "FRED / Census",
+        "series": "ISRATIO",
+        "transform": "level"
+      },
+      {
+        "id": "nominal_pce_growth",
+        "concept_id": "us:nominal_pce_growth",
+        "label_en": "Nominal PCE Growth",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BEA",
+        "series": "PCE",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "pce_inflation",
+        "concept_id": "us:pce_inflation",
+        "label_en": "Headline PCE Inflation",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 71,
+        "release_calendar_id": "bea_monthly",
+        "expected_release_date": "2026-11-03",
+        "due_date": "2026-11-10",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BEA",
+        "series": "PCEPI",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "personal_income_growth",
+        "concept_id": "us:personal_income_growth",
+        "label_en": "Personal Income Growth",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BEA",
+        "series": "PI",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "personal_saving_rate",
+        "concept_id": "us:personal_saving_rate",
+        "label_en": "Personal Saving Rate",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "FRED / BEA",
+        "series": "PSAVERT",
+        "transform": "level"
+      },
+      {
+        "id": "real_disposable_income_growth",
+        "concept_id": "real_income_growth",
+        "label_en": "Real Disposable Income Growth",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BEA",
+        "series": "DSPIC96",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "real_pce_growth",
+        "concept_id": "consumption_growth",
+        "label_en": "Real PCE Growth",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BEA",
+        "series": "PCEC96",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "real_pce_mom",
+        "concept_id": "us:real_pce_mom",
+        "label_en": "Real PCE Growth, MoM",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 71,
+        "release_calendar_id": "bea_monthly",
+        "expected_release_date": "2026-11-03",
+        "due_date": "2026-11-10",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BEA",
+        "series": "PCEC96",
+        "transform": "pct_change"
+      },
+      {
+        "id": "real_personal_income_ex_transfers_growth",
+        "concept_id": "us:real_personal_income_ex_transfers_growth",
+        "label_en": "Real Personal Income ex Transfers Growth",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BEA",
+        "series": "W875RX1",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "revolving_credit_growth",
+        "concept_id": "us:revolving_credit_growth",
+        "label_en": "Revolving Consumer Credit Growth",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / Federal Reserve",
+        "series": "REVOLSL",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "tic_china_treasury_holdings",
+        "concept_id": "us:tic_china_treasury_holdings",
+        "label_en": "TIC China Treasury Holdings",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "FRED / Treasury International Capital",
+        "series": "FORTREASPOS41408",
+        "transform": "level"
+      },
+      {
+        "id": "tic_foreign_treasury_holdings",
+        "concept_id": "us:tic_foreign_treasury_holdings",
+        "label_en": "TIC Foreign Treasury Holdings",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "FRED / Treasury International Capital",
+        "series": "FORTREASPOS99996",
+        "transform": "level"
+      },
+      {
+        "id": "tic_foreign_treasury_net_transactions",
+        "concept_id": "us:tic_foreign_treasury_net_transactions",
+        "label_en": "TIC Foreign Net Treasury Transactions",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "FRED / Treasury International Capital",
+        "series": "FORTREASNET99996",
+        "transform": "level"
+      },
+      {
+        "id": "tic_japan_treasury_holdings",
+        "concept_id": "us:tic_japan_treasury_holdings",
+        "label_en": "TIC Japan Treasury Holdings",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "FRED / Treasury International Capital",
+        "series": "FORTREASPOS42609",
+        "transform": "level"
+      },
+      {
+        "id": "trimmed_mean_pce",
+        "concept_id": "us:trimmed_mean_pce",
+        "label_en": "Trimmed Mean PCE Inflation",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 57,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "FRED / Dallas Fed",
+        "series": "PCETRIM12M159SFRBDAL",
+        "transform": "level"
+      }
+    ]
   },
   "transform_audit": {
     "counts": {
@@ -333,100 +840,22 @@
     },
     "non_level": [
       {
-        "id": "active_listing_count_yoy",
-        "label_en": "Active Listing Count Growth, YoY",
+        "id": "nominal_gdp_growth",
+        "label_en": "Nominal GDP Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
       {
-        "id": "adp_private_payrolls_change",
-        "label_en": "ADP Private Payrolls Change",
-        "transform": "diff",
-        "unit": "persons m/m"
-      },
-      {
-        "id": "bank_credit_growth",
-        "label_en": "Bank Loans & Leases Growth",
+        "id": "personal_income_growth",
+        "label_en": "Personal Income Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
       {
-        "id": "bank_deposits_growth",
-        "label_en": "Commercial Bank Deposits Growth",
+        "id": "real_disposable_income_growth",
+        "label_en": "Real Disposable Income Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
-      },
-      {
-        "id": "broad_money_growth",
-        "label_en": "M2 Money Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "business_inventories_growth",
-        "label_en": "Business Inventories Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "case_shiller_20_city_growth",
-        "label_en": "Case-Shiller 20-City Home Prices",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "ci_loans_growth",
-        "label_en": "Commercial & Industrial Loans Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "construction_payrolls_growth",
-        "label_en": "Construction Payrolls Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "construction_spending_growth",
-        "label_en": "Construction Spending Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "consumer_credit_growth",
-        "label_en": "Consumer Credit Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "core_cpi_inflation",
-        "label_en": "Core CPI Inflation",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "core_cpi_mom",
-        "label_en": "Core CPI Inflation, MoM",
-        "transform": "pct_change",
-        "unit": "% m/m"
-      },
-      {
-        "id": "core_goods_cpi_inflation",
-        "label_en": "Core Goods CPI Inflation",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "core_pce_inflation",
-        "label_en": "Core PCE Inflation",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "core_pce_mom",
-        "label_en": "Core PCE Inflation, MoM",
-        "transform": "pct_change",
-        "unit": "% m/m"
       },
       {
         "id": "corporate_profits_growth",
@@ -435,110 +864,14 @@
         "unit": "% y/y"
       },
       {
-        "id": "cpi_ex_shelter_inflation",
-        "label_en": "CPI ex Shelter Inflation",
+        "id": "real_pce_component_growth",
+        "label_en": "Real PCE Component Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
       {
-        "id": "cpi_inflation",
-        "label_en": "Headline CPI Inflation",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "cpi_mom",
-        "label_en": "Headline CPI Inflation, MoM",
-        "transform": "pct_change",
-        "unit": "% m/m"
-      },
-      {
-        "id": "durable_goods_orders_growth",
-        "label_en": "Durable Goods Orders Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "eci_wages_growth",
-        "label_en": "Employment Cost Index Wages",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "energy_cpi_inflation",
-        "label_en": "Energy CPI Inflation",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "export_price_inflation",
-        "label_en": "Export Price Inflation",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "factory_orders_growth",
-        "label_en": "Manufacturers' New Orders Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "fed_balance_sheet_growth",
-        "label_en": "Fed Balance Sheet Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "federal_current_expenditures_growth",
-        "label_en": "Federal Current Expenditures Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "federal_debt_growth",
-        "label_en": "Federal Debt Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "federal_outlays_growth",
-        "label_en": "Federal Outlays Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "federal_receipts_growth",
-        "label_en": "Federal Receipts Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "fhfa_house_price_growth",
-        "label_en": "FHFA House Price Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "final_demand_ppi_inflation",
-        "label_en": "Final Demand PPI Inflation",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "gdp_deflator_inflation",
-        "label_en": "GDP Deflator Inflation",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "goods_exports_growth",
-        "label_en": "Goods Exports Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "goods_imports_growth",
-        "label_en": "Goods Imports Growth",
+        "id": "private_investment_growth",
+        "label_en": "Real Private Domestic Investment Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
@@ -549,20 +882,14 @@
         "unit": "% y/y"
       },
       {
-        "id": "hourly_earnings_growth",
-        "label_en": "Average Hourly Earnings Growth",
+        "id": "real_gdp_per_capita_growth",
+        "label_en": "Real GDP per Capita Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
       {
-        "id": "household_net_worth_growth",
-        "label_en": "Household Net Worth Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "import_price_inflation",
-        "label_en": "Import Price Inflation",
+        "id": "real_personal_income_ex_transfers_growth",
+        "label_en": "Real Personal Income ex Transfers Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
@@ -579,98 +906,50 @@
         "unit": "% m/m"
       },
       {
-        "id": "manufacturing_payrolls_growth",
-        "label_en": "Manufacturing Payrolls Growth",
+        "id": "durable_goods_orders_growth",
+        "label_en": "Durable Goods Orders Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
       {
-        "id": "median_new_home_price_growth",
-        "label_en": "Median New Home Price Growth",
+        "id": "factory_orders_growth",
+        "label_en": "Manufacturers' New Orders Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
       {
-        "id": "monetary_base_growth",
-        "label_en": "Monetary Base Growth",
+        "id": "business_inventories_growth",
+        "label_en": "Business Inventories Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
       {
-        "id": "nominal_gdp_growth",
-        "label_en": "Nominal GDP Growth",
+        "id": "retail_sales_growth",
+        "label_en": "Retail Sales Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
+      },
+      {
+        "id": "retail_sales_mom",
+        "label_en": "Retail Sales Growth, MoM",
+        "transform": "pct_change",
+        "unit": "% m/m"
+      },
+      {
+        "id": "retail_ex_auto_growth",
+        "label_en": "Retail Sales ex Autos Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "retail_ex_auto_mom",
+        "label_en": "Retail Sales ex Autos Growth, MoM",
+        "transform": "pct_change",
+        "unit": "% m/m"
       },
       {
         "id": "nominal_pce_growth",
         "label_en": "Nominal PCE Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "nonfarm_payrolls_change",
-        "label_en": "Nonfarm Payrolls Change",
-        "transform": "diff",
-        "unit": "k m/m"
-      },
-      {
-        "id": "owners_equivalent_rent_inflation",
-        "label_en": "Owners' Equivalent Rent Inflation",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "pce_inflation",
-        "label_en": "Headline PCE Inflation",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "pending_listing_count_yoy",
-        "label_en": "Pending Listing Count Growth, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "personal_income_growth",
-        "label_en": "Personal Income Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "ppi_inflation",
-        "label_en": "PPI All Commodities Inflation",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "private_investment_growth",
-        "label_en": "Real Private Domestic Investment Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "productivity_growth",
-        "label_en": "Nonfarm Productivity Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "real_disposable_income_growth",
-        "label_en": "Real Disposable Income Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "real_gdp_per_capita_growth",
-        "label_en": "Real GDP per Capita Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "real_pce_component_growth",
-        "label_en": "Real PCE Component Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
@@ -687,46 +966,10 @@
         "unit": "% m/m"
       },
       {
-        "id": "real_personal_income_ex_transfers_growth",
-        "label_en": "Real Personal Income ex Transfers Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
         "id": "real_retail_sales_growth",
         "label_en": "Real Retail Sales Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
-      },
-      {
-        "id": "rent_inflation",
-        "label_en": "Rent of Primary Residence Inflation",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "retail_ex_auto_growth",
-        "label_en": "Retail Sales ex Autos Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "retail_ex_auto_mom",
-        "label_en": "Retail Sales ex Autos Growth, MoM",
-        "transform": "pct_change",
-        "unit": "% m/m"
-      },
-      {
-        "id": "retail_sales_growth",
-        "label_en": "Retail Sales Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "retail_sales_mom",
-        "label_en": "Retail Sales Growth, MoM",
-        "transform": "pct_change",
-        "unit": "% m/m"
       },
       {
         "id": "revolving_credit_growth",
@@ -735,14 +978,80 @@
         "unit": "% y/y"
       },
       {
-        "id": "services_ex_energy_cpi_inflation",
-        "label_en": "Services ex Energy CPI Inflation",
+        "id": "construction_spending_growth",
+        "label_en": "Construction Spending Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
       {
-        "id": "shelter_cpi_inflation",
-        "label_en": "Shelter CPI Inflation",
+        "id": "case_shiller_20_city_growth",
+        "label_en": "Case-Shiller 20-City Home Prices",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "active_listing_count_yoy",
+        "label_en": "Active Listing Count Growth, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "pending_listing_count_yoy",
+        "label_en": "Pending Listing Count Growth, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "median_new_home_price_growth",
+        "label_en": "Median New Home Price Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "fhfa_house_price_growth",
+        "label_en": "FHFA House Price Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "goods_exports_growth",
+        "label_en": "Goods Exports Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "goods_imports_growth",
+        "label_en": "Goods Imports Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "nonfarm_payrolls_change",
+        "label_en": "Nonfarm Payrolls Change",
+        "transform": "diff",
+        "unit": "k m/m"
+      },
+      {
+        "id": "adp_private_payrolls_change",
+        "label_en": "ADP Private Payrolls Change",
+        "transform": "diff",
+        "unit": "persons m/m"
+      },
+      {
+        "id": "hourly_earnings_growth",
+        "label_en": "Average Hourly Earnings Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "manufacturing_payrolls_growth",
+        "label_en": "Manufacturing Payrolls Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "construction_payrolls_growth",
+        "label_en": "Construction Payrolls Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
@@ -753,8 +1062,206 @@
         "unit": "% y/y"
       },
       {
+        "id": "cpi_inflation",
+        "label_en": "Headline CPI Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "cpi_mom",
+        "label_en": "Headline CPI Inflation, MoM",
+        "transform": "pct_change",
+        "unit": "% m/m"
+      },
+      {
+        "id": "core_cpi_inflation",
+        "label_en": "Core CPI Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "core_cpi_mom",
+        "label_en": "Core CPI Inflation, MoM",
+        "transform": "pct_change",
+        "unit": "% m/m"
+      },
+      {
+        "id": "cpi_ex_shelter_inflation",
+        "label_en": "CPI ex Shelter Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "rent_inflation",
+        "label_en": "Rent of Primary Residence Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "owners_equivalent_rent_inflation",
+        "label_en": "Owners' Equivalent Rent Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "pce_inflation",
+        "label_en": "Headline PCE Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "core_pce_inflation",
+        "label_en": "Core PCE Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "core_pce_mom",
+        "label_en": "Core PCE Inflation, MoM",
+        "transform": "pct_change",
+        "unit": "% m/m"
+      },
+      {
+        "id": "gdp_deflator_inflation",
+        "label_en": "GDP Deflator Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "eci_wages_growth",
+        "label_en": "Employment Cost Index Wages",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "productivity_growth",
+        "label_en": "Nonfarm Productivity Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
         "id": "unit_labor_cost_growth",
         "label_en": "Unit Labor Cost Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "ppi_inflation",
+        "label_en": "PPI All Commodities Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "final_demand_ppi_inflation",
+        "label_en": "Final Demand PPI Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "import_price_inflation",
+        "label_en": "Import Price Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "export_price_inflation",
+        "label_en": "Export Price Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "services_ex_energy_cpi_inflation",
+        "label_en": "Services ex Energy CPI Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "core_goods_cpi_inflation",
+        "label_en": "Core Goods CPI Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "shelter_cpi_inflation",
+        "label_en": "Shelter CPI Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "energy_cpi_inflation",
+        "label_en": "Energy CPI Inflation",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "broad_money_growth",
+        "label_en": "M2 Money Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "monetary_base_growth",
+        "label_en": "Monetary Base Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "consumer_credit_growth",
+        "label_en": "Consumer Credit Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "household_net_worth_growth",
+        "label_en": "Household Net Worth Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "ci_loans_growth",
+        "label_en": "Commercial & Industrial Loans Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "bank_credit_growth",
+        "label_en": "Bank Loans & Leases Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "bank_deposits_growth",
+        "label_en": "Commercial Bank Deposits Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "fed_balance_sheet_growth",
+        "label_en": "Fed Balance Sheet Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "federal_receipts_growth",
+        "label_en": "Federal Receipts Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "federal_outlays_growth",
+        "label_en": "Federal Outlays Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "federal_debt_growth",
+        "label_en": "Federal Debt Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "federal_current_expenditures_growth",
+        "label_en": "Federal Current Expenditures Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       }

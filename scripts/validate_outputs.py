@@ -22,9 +22,13 @@ COUNTRY_FILES = {
     "ZA": "south_africa.html",
     "UK": "uk.html",
     "US": "us.html",
+    "TR": "turkey.html",
+    "HK": "hong_kong.html",
+    "KR": "south_korea.html",
+    "TW": "taiwan.html",
 }
-DATA_FIRST_CODES = {"CN", "EA", "JP", "ZA", "UK", "US"}
-DATA_FIRST_NAMES = ("china", "euro_area", "japan", "south_africa", "uk", "us")
+DATA_FIRST_CODES = {"CN", "EA", "JP", "ZA", "UK", "US", "TR", "HK", "KR", "TW"}
+DATA_FIRST_NAMES = ("china", "euro_area", "japan", "south_africa", "uk", "us", "turkey", "hong_kong", "south_korea", "taiwan")
 
 # Display names as they appear in output/freshness_audit.json's "dashboard"
 # field and in the archive index cards' <h2> headings.
@@ -39,6 +43,10 @@ DASHBOARD_DISPLAY_NAMES = {
     "ZA": "South Africa",
     "UK": "United Kingdom",
     "US": "United States",
+    "TR": "Turkey",
+    "HK": "Hong Kong",
+    "KR": "South Korea",
+    "TW": "Taiwan",
 }
 
 # Transforms that step back a fixed number of calendar periods from a base
@@ -68,6 +76,7 @@ PERIOD_1_TRANSFORMS = {"qoq_pct", "mom_pct", "pct_change", "diff"}
 _NOMINAL_GAP = {
     "weekly": ("days", 7, (7,)),
     "monthly": ("months", 1, (1,)),
+    "bimonthly": ("months", 2, (2,)),
     "quarterly": ("months", 3, (3, 6)),
     "annual": ("months", 12, (12,)),
 }

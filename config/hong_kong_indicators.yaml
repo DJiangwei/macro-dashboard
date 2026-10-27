@@ -1,0 +1,488 @@
+name: "Hong Kong"
+name_zh: "中国香港"
+code: "HK"
+iso2: "HK"
+subtitle_en: "A data-first macro page for Hong Kong built from official Census and Statistics Department (C&SD), IMF SDMX / DataMapper, BIS via FRED, and Bruegel REER."
+subtitle_zh: "基于香港政府统计处(C&SD)、IMF数据、国际清算银行(BIS)与Bruegel实际有效汇率构建的香港数据优先宏观页面。"
+min_chart_count: 20
+
+sections:
+  growth_accounts:
+    title_en: "GDP & National Accounts"
+    title_zh: "GDP与国民账户"
+    report_logic_en: "C&SD quarterly national accounts track Hong Kong's real GDP sequential QoQ SA and annual YoY growth, providing the primary anchor for economic momentum."
+    report_logic_zh: "政府统计处季度国民账户跟踪香港实际GDP季调环比与同比增速，提供经济增长动力的核心基准。"
+  production_cycle:
+    title_en: "Production, Retail & Construction"
+    title_zh: "生产、零售与建筑"
+    report_logic_en: "C&SD monthly and quarterly series cover manufacturing industrial production, retail sales value index, and gross construction works output."
+    report_logic_zh: "政府统计处月度与季度序列覆盖制造业生产指数、零售业销货价值指数，以及主要承建商完成建筑工程名义总值。"
+  labour_wages:
+    title_en: "Labour Market & Wages"
+    title_zh: "劳动力市场与工资"
+    report_logic_en: "Seasonally adjusted unemployment rate (SAUR) from the General Household Survey measures labour slack, alongside quarterly nominal wage indices across major industries."
+    report_logic_zh: "综合住户统计调查公布的季调失业率衡量劳动力闲置程度，配合主要行业名义工资指数。"
+  prices_costs:
+    title_en: "Prices & Inflation"
+    title_zh: "价格与通胀"
+    report_logic_en: "Composite Consumer Price Index (headline) and the Underlying CPI (netting out one-off government relief measures to capture fundamental inflation), with independent IMF CPI cross-check."
+    report_logic_zh: "综合消费物价指数(总体通胀)与剔除政府一次性纾困措施影响的基本消费物价指数(核心通胀)，配合IMF总体CPI交叉核对。"
+  housing_property:
+    title_en: "Housing & Property"
+    title_zh: "住宅与房地产"
+    report_logic_en: "BIS long-term nominal and real residential property prices track residential real estate valuations across cycles."
+    report_logic_zh: "国际清算银行(BIS)长期名义与实际住宅价格指数跟踪房地产跨周期估值。"
+  external_fx:
+    title_en: "External Balance, Trade & FX"
+    title_zh: "外部平衡、贸易与汇率"
+    report_logic_en: "Daily USD/HKD spot exchange rate (Federal Reserve H.10), Bruegel 120-partner REER/NEER, quarterly BPM6 current account balance, and monthly merchandise trade."
+    report_logic_zh: "美联储H.10日度美元兑港元汇率、Bruegel实际与名义有效汇率、季度经常账户差额及月度商品进出口总值与贸易差额。"
+  fiscal_sovereign:
+    title_en: "Fiscal & Public Finance"
+    title_zh: "财政与公共收支"
+    report_logic_en: "General government gross debt and net lending/borrowing ratios from IMF WEO DataMapper."
+    report_logic_zh: "IMF《世界经济展望》提供的广义政府总债务与净借贷（赤字率）占GDP比重。"
+  monetary_financial:
+    title_en: "Credit & Financial Conditions"
+    title_zh: "信贷与金融环境"
+    report_logic_en: "BIS total credit to the private non-financial sector as a percentage of GDP measures domestic leverage."
+    report_logic_zh: "国际清算银行(BIS)私营非金融部门信贷占GDP比率衡量本地杠杆水平。"
+  stability_structural:
+    title_en: "Financial Stability & Soundness"
+    title_zh: "金融稳定与稳健性"
+    report_logic_en: "IMF Financial Soundness Indicators (FSI) via DBnomics track banking sector consolidated capital adequacy ratio (CAR) and non-performing loans (NPL)."
+    report_logic_zh: "国际货币基金组织金融稳健性指标(FSI)追踪香港银行体系综合资本充足率(CAR)与不良贷款率(NPL)。"
+
+indicators:
+  # ==========================================
+  # 1. Growth & National Accounts
+  # ==========================================
+  - id: real_gdp_growth
+    section: growth_accounts
+    label_en: Real GDP Growth, QoQ SA
+    label_zh: 实际GDP季调环比
+    unit: "% q/q"
+    fetcher: hk_csd
+    table_id: "310-30001"
+    filters:
+      freq: Q
+      sv: SA1
+    source_name: HK C&SD (National Accounts)
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=310-30001
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Seasonally adjusted quarter-to-quarter rate of change in real GDP in chained (2022) dollars.
+    caveat_zh: 以链式(2022年)美元计算的实际GDP季调环比变动率。
+
+  - id: real_gdp_yoy
+    section: growth_accounts
+    label_en: Real GDP Growth, YoY
+    label_zh: 实际GDP同比
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "310-30001"
+    filters:
+      GDP_COMPONENTDesc: Total
+      freq: Q
+      sv: CON
+    source_name: HK C&SD (National Accounts)
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=310-30001
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Year-on-year rate of change in real GDP.
+    caveat_zh: 实际GDP较上年同季同比变动率。
+
+  # ==========================================
+  # 2. Production, Retail & Construction
+  # ==========================================
+  - id: industrial_production_growth
+    section: production_cycle
+    label_en: Industrial Production YoY (Manufacturing)
+    label_zh: 制造业工业生产指数同比
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "610-65001"
+    filters:
+      IND: ind_QSIP_C
+      freq: Q
+      sv: IP_INDEX
+      svDesc: "Year-on-year % change"
+    source_name: HK C&SD
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=610-65001
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Index of industrial production for the manufacturing sector year-on-year change.
+    caveat_zh: 制造业工业生产指数同比变动率。
+
+  - id: retail_sales_growth
+    section: production_cycle
+    label_en: Retail Sales Value Index YoY
+    label_zh: 零售业总销货价值指数同比
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "620-67001"
+    filters:
+      freq: M
+      sv: VAL_IDX_RS
+      svDesc: "Year-on-year % change"
+    source_name: HK C&SD
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=620-67001
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Total retail sales value index year-on-year change.
+    caveat_zh: 零售业总销货价值指数同比变动率。
+
+  - id: construction_works_growth
+    section: production_cycle
+    label_en: Construction Works Performed YoY
+    label_zh: 主要承建商完成建筑工程名义总值同比
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "615-66001"
+    filters:
+      freq: Q
+      sv: GVCW_NOM
+      svDesc: "Year-on-year % change"
+    source_name: HK C&SD
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=615-66001
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Gross value of construction works performed by main contractors year-on-year change.
+    caveat_zh: 主要承建商完成建筑工程名义总值同比变动率。
+
+  # ==========================================
+  # 3. Labour Market & Wages
+  # ==========================================
+  - id: unemployment_rate
+    section: labour_wages
+    label_en: Unemployment Rate (Seasonally Adjusted)
+    label_zh: 经季节性调整的失业率
+    unit: "% of labour force"
+    fetcher: hk_csd
+    table_id: "210-06101"
+    filters:
+      freq: M3M
+      sv: SAUR
+    source_name: HK C&SD (General Household Survey)
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=210-06101
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: 3-month moving average seasonally adjusted unemployment rate.
+    caveat_zh: 综合住户统计调查公布的3个月移动平均经季节性调整失业率。
+
+  - id: nominal_wage_index_growth
+    section: labour_wages
+    label_en: Nominal Wage Index YoY
+    label_zh: 名义工资指数同比
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "220-19001"
+    filters:
+      INDDesc: Total
+      freq: M
+      sv: TNIN
+      svDesc: "Year-on-year % change"
+    source_name: HK C&SD
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=220-19001
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Nominal wage index for employees up to supervisory level year-on-year change.
+    caveat_zh: 督导级别及以下雇员名义工资指数同比变动率。
+
+  # ==========================================
+  # 4. Prices & Costs
+  # ==========================================
+  - id: cpi_inflation
+    section: prices_costs
+    label_en: Composite CPI Inflation YoY
+    label_zh: 综合消费物价指数同比
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "510-60001"
+    filters:
+      freq: M
+      sv: C_CM_1920
+      svDesc: "Year-on-year % change"
+    source_name: HK C&SD
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=510-60001
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Headline Composite Consumer Price Index annual rate of change.
+    caveat_zh: 综合消费物价指数同比变动率。
+
+  - id: core_cpi_inflation
+    section: prices_costs
+    label_en: Underlying CPI Inflation YoY
+    label_zh: 基本消费物价指数同比 (核心通胀)
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "510-60002"
+    filters:
+      freq: M
+      sv: UC_CM_1920
+      svDesc: "Year-on-year % change"
+    source_name: HK C&SD
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=510-60002
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Underlying Composite CPI netting out the effects of all Government's one-off relief measures.
+    caveat_zh: 剔除所有政府一次性纾困措施影响后的基本综合消费物价指数同比。
+
+  - id: cpi_inflation_imf
+    section: prices_costs
+    label_en: Headline CPI YoY (IMF Cross-Check)
+    label_zh: 总体CPI同比 (IMF交叉核对)
+    unit: "% y/y"
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: HKG.CPI._T.YOY_PCH_PA_PT.M
+    source_name: IMF SDMX / HK C&SD
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/HKG.CPI._T.YOY_PCH_PA_PT.M
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Official CPI series transmitted to the IMF Consumer Price Index database.
+    caveat_zh: 香港政府统计处向IMF报送的总体消费者价格指数同比。
+
+  # ==========================================
+  # 5. Housing & Property
+  # ==========================================
+  - id: bis_nominal_house_prices
+    section: housing_property
+    label_en: BIS Nominal Residential Property Prices
+    label_zh: BIS名义住宅价格指数
+    unit: "Index (2010 = 100)"
+    fetcher: fred
+    series: QHKN628BIS
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QHKN628BIS
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: BIS long-term residential property price index for Hong Kong.
+    caveat_zh: 国际清算银行（BIS）编制的香港名义住宅价格指数。
+
+  - id: bis_real_house_prices
+    section: housing_property
+    label_en: BIS Real Residential Property Prices
+    label_zh: BIS实际住宅价格指数
+    unit: "Index (2010 = 100)"
+    fetcher: fred
+    series: QHKR628BIS
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QHKR628BIS
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: BIS consumer price-deflated real residential property prices.
+    caveat_zh: 经CPI平减后的实际住宅物业价格指数。
+
+  # ==========================================
+  # 6. External Balance, Trade & FX
+  # ==========================================
+  - id: usd_hkd
+    section: external_fx
+    label_en: USD/HKD Exchange Rate (Fed H.10)
+    label_zh: 美元兑港元汇率 (美联储H.10)
+    unit: "HKD per USD"
+    fetcher: fred
+    series: DEXHKUS
+    source_name: FRED / Federal Reserve Board
+    source_url: https://fred.stlouisfed.org/series/DEXHKUS
+    frequency: daily
+    start_date: 2026-01-01
+    caveat_en: Daily noon buying rates in New York City for cable transfers in foreign currencies.
+    caveat_zh: 纽约联邦储备银行每日公布的官方美元兑港元中午即期汇率。
+
+  - id: reer
+    section: external_fx
+    label_en: Real Effective Exchange Rate (REER)
+    label_zh: 实际有效汇率 (REER)
+    unit: "Index (2007 = 100)"
+    fetcher: bruegel_reer
+    country: HK
+    series_type: reer_120
+    source_name: Bruegel (Darvas 120-Trading-Partner Basket)
+    source_url: https://www.bruegel.org/publications/datasets/real-effective-exchange-rates-for-178-countries-a-new-database
+    frequency: monthly
+    start_date: 1995-01-01
+    caveat_en: CPI-based monthly real effective exchange rate calculated against 120 trading partners.
+    caveat_zh: 基于CPI计算的对120个贸易伙伴的月度实际有效汇率。
+
+  - id: neer
+    section: external_fx
+    label_en: Nominal Effective Exchange Rate (NEER)
+    label_zh: 名义有效汇率 (NEER)
+    unit: "Index (2007 = 100)"
+    fetcher: bruegel_reer
+    country: HK
+    series_type: neer_120
+    source_name: Bruegel (Darvas 120-Trading-Partner Basket)
+    source_url: https://www.bruegel.org/publications/datasets/real-effective-exchange-rates-for-178-countries-a-new-database
+    frequency: monthly
+    start_date: 1995-01-01
+    caveat_en: Monthly nominal effective exchange rate calculated against 120 trading partners.
+    caveat_zh: 对120个贸易伙伴的月度名义有效汇率。
+
+  - id: merchandise_exports_growth
+    section: external_fx
+    label_en: Merchandise Exports YoY
+    label_zh: 商品出口总值同比
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "410-50001"
+    filters:
+      freq: M
+      sv: VAL_TX
+      svDesc: "Year-on-year % change"
+    source_name: HK C&SD
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=410-50001
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Total merchandise exports value year-on-year percentage change.
+    caveat_zh: 整体商品出口总值同比变动率。
+
+  - id: merchandise_imports_growth
+    section: external_fx
+    label_en: Merchandise Imports YoY
+    label_zh: 商品进口总值同比
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "410-50001"
+    filters:
+      freq: M
+      sv: VAL_IM
+      svDesc: "Year-on-year % change"
+    source_name: HK C&SD
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=410-50001
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Total merchandise imports value year-on-year percentage change.
+    caveat_zh: 商品进口总值同比变动率。
+
+  - id: merchandise_trade_balance
+    section: external_fx
+    label_en: Merchandise Trade Balance
+    label_zh: 商品贸易差额
+    unit: "HK$ mn"
+    fetcher: hk_csd
+    table_id: "410-50001"
+    filters:
+      freq: M
+      sv: BAL
+    source_name: HK C&SD
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=410-50001
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Visible merchandise trade balance in millions of Hong Kong dollars.
+    caveat_zh: 有形商品贸易差额（百万港元）。
+
+  - id: current_account_usd
+    section: external_fx
+    label_en: Current Account Balance (USD)
+    label_zh: 经常账户差额 (美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: HKG.NETCD_T.CAB.USD.Q
+    scale: 0.000001
+    source_name: IMF SDMX / HK C&SD
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/HKG.NETCD_T.CAB.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 current account balance in millions of US dollars.
+    caveat_zh: BPM6标准编制的季度经常账户差额（百万美元）。
+
+  # ==========================================
+  # 7. Fiscal & Public Finance
+  # ==========================================
+  - id: government_debt_gdp
+    section: fiscal_sovereign
+    label_en: General Government Gross Debt (% of GDP)
+    label_zh: 广义政府总债务占GDP比重
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: GGXWDG_NGDP
+    country_iso3: HKG
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/GGXWDG_NGDP@WEO/HKG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government gross debt as a percentage of GDP.
+    caveat_zh: 广义政府总债务占GDP比重。
+
+  - id: fiscal_balance_gdp
+    section: fiscal_sovereign
+    label_en: General Government Net Lending / Borrowing (% of GDP)
+    label_zh: 广义政府净借贷占GDP比重 (财政盈余/赤字率)
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: GGXCNL_NGDP
+    country_iso3: HKG
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/GGXCNL_NGDP@WEO/HKG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government net lending/borrowing as a percentage of GDP.
+    caveat_zh: 广义政府净借贷占GDP比重。
+
+  # ==========================================
+  # 8. Credit & Financial Conditions
+  # ==========================================
+  - id: private_credit_gdp
+    section: monetary_financial
+    label_en: Total Credit to Private Non-Financial Sector (% of GDP)
+    label_zh: 私营非金融部门总信贷占GDP比重
+    unit: "% of GDP"
+    fetcher: fred
+    series: QHKPAM770A
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QHKPAM770A
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: BIS total credit to the private non-financial sector as a percentage of GDP.
+    caveat_zh: 国际清算银行（BIS）统计的私营非金融部门信贷占GDP比重。
+
+  # ==========================================
+  # 9. Financial Stability
+  # ==========================================
+  - id: bank_capital_ratio
+    section: stability_structural
+    label_en: Locally Incorporated AIs Capital Adequacy Ratio
+    label_zh: 本地注册认可机构资本充足率 (CAR)
+    unit: "%"
+    fetcher: dbnomics
+    series: IMF/FSI/Q.HK.FSKRC_PT
+    source_name: IMF / DBnomics (Financial Soundness Indicators)
+    source_url: https://db.nomics.world/IMF/FSI/Q.HK.FSKRC_PT
+    frequency: quarterly
+    start_date: 2008-01-01
+    caveat_en: Consolidated regulatory capital to risk-weighted assets for locally incorporated banks in Hong Kong.
+    caveat_zh: 香港本地注册认可机构合并监管资本与风险加权资产比率。
+
+  - id: bank_npl_ratio
+    section: stability_structural
+    label_en: Bank Classified / Non-Performing Loan Ratio
+    label_zh: 银行分类/不良贷款比率 (NPL)
+    unit: "%"
+    fetcher: dbnomics
+    series: IMF/FSI/Q.HK.FSANL_PT
+    source_name: IMF / DBnomics (Financial Soundness Indicators)
+    source_url: https://db.nomics.world/IMF/FSI/Q.HK.FSANL_PT
+    frequency: quarterly
+    start_date: 2008-01-01
+    caveat_en: Non-performing loans to total gross loans reported to the IMF.
+    caveat_zh: 报送IMF的银行不良贷款占总贷款比重。
+
+data_gaps:
+  - section: monetary_financial
+    item_en: Daily HKMA Base Rate, Overnight/1M HIBOR & Aggregate Balance
+    item_zh: 香港金管局贴现窗基本利率、隔夜/1个月HIBOR及银行体系总结余
+    status_en: Published by HKMA Open API (api.hkma.gov.hk). The API endpoint is currently protected by an Aliyun WAF returning HTTP 405 on cloud IPs; monitored via web portal.
+    status_zh: 由香港金管局开放API发布。该接口目前受到阿里云WAF防护，对云服务器IP返回HTTP 405错误；通过网页端人工跟踪。
+
+cross_checks:
+  - concept: headline_inflation
+    primary: cpi_inflation
+    secondary: cpi_inflation_imf
+    tolerance: 0.75
+    label_en: C&SD Composite CPI vs IMF CPI

@@ -303,6 +303,67 @@ DATA_FIRST_PAGES = (
             "ratios. Eskom supply data and vendor-controlled BER/PMI surveys remain explicit gaps."
         ),
     },
+    {
+        "name": "Turkey",
+        "config": ROOT / "config" / "turkey_indicators.yaml",
+        "summary": ROOT / "output" / "turkey_dashboard_summary.json",
+        "config_ref": "config/turkey_indicators.yaml",
+        "summary_ref": "output/turkey_dashboard_summary.json",
+        "note": (
+            "The Turkey page is generated from `config/turkey_indicators.yaml`. TurkStat officially transmits "
+            "harmonized time series into Eurostat Dissemination JSON-stat 2.0 (geo=TR) for national accounts, "
+            "industrial and construction production, retail trade turnover, domestic PPI, HICP inflation, "
+            "unemployment, house prices, and economic sentiment. TCMB daily XML supplies spot USD/TRY rates; "
+            "IMF SDMX supplies balance of payments and headline CPI; FRED carries BIS credit and OECD leading "
+            "indicators; Bruegel supplies 120-partner REER/NEER; and DBnomics supplies IMF Financial Soundness Indicators."
+        ),
+    },
+    {
+        "name": "Hong Kong",
+        "config": ROOT / "config" / "hong_kong_indicators.yaml",
+        "summary": ROOT / "output" / "hong_kong_dashboard_summary.json",
+        "config_ref": "config/hong_kong_indicators.yaml",
+        "summary_ref": "output/hong_kong_dashboard_summary.json",
+        "note": (
+            "The Hong Kong page is generated from `config/hong_kong_indicators.yaml`. Census and Statistics "
+            "Department (C&SD) Open API provides the primary official statistical backbone for chained real "
+            "GDP accounts, industrial and construction production, retail sales volume, composite and underlying "
+            "CPI, unemployment, nominal wage indices, and merchandise trade balances. FRED supplies Federal Reserve "
+            "H.10 spot USD/HKD and BIS residential property and credit aggregates; Bruegel supplies 120-partner REER/NEER; "
+            "and DBnomics supplies IMF Financial Soundness Indicators for banking capital adequacy and non-performing loans."
+        ),
+    },
+    {
+        "name": "South Korea",
+        "config": ROOT / "config" / "south_korea_indicators.yaml",
+        "summary": ROOT / "output" / "south_korea_dashboard_summary.json",
+        "config_ref": "config/south_korea_indicators.yaml",
+        "summary_ref": "output/south_korea_dashboard_summary.json",
+        "note": (
+            "The South Korea page is generated from `config/south_korea_indicators.yaml`. FRED carries the "
+            "OECD official mirrors for quarterly national accounts, industrial and manufacturing production, "
+            "retail trade, harmonised unemployment, 10Y KTB benchmark yields, call rates, and goods trade, "
+            "alongside BIS property and household credit indicators. IMF SDMX supplies headline CPI YoY/MoM "
+            "and quarterly BPM6 balance of payments; IMF WEO DataMapper supplies fiscal ratios; Bruegel supplies "
+            "120-partner REER/NEER; and DBnomics supplies IMF Financial Soundness Indicators."
+        ),
+    },
+    {
+        "name": "Taiwan",
+        "config": ROOT / "config" / "taiwan_indicators.yaml",
+        "summary": ROOT / "output" / "taiwan_dashboard_summary.json",
+        "config_ref": "config/taiwan_indicators.yaml",
+        "summary_ref": "output/taiwan_dashboard_summary.json",
+        "note": (
+            "The Taiwan page is generated from `config/taiwan_indicators.yaml`. Central Bank of the Republic "
+            "of China (Taiwan) DataAPI provides official time series for policy discount rates, interbank "
+            "call-loan rates, prime lending rates, deposit rates, monetary aggregates (M1B, M2, reserve money), "
+            "mortgage and consumer credit, and quarterly BPM6 balance of payments. DGBAS official releases supply "
+            "chained real GDP accounts (YoY & QoQ SA) and consumer/producer price indices; Federal Reserve Board "
+            "(H.10) supplies daily USD/TWD spot rates; BIS supplies broad real effective exchange rates; Bruegel "
+            "supplies 120-partner REER/NEER; and IMF WEO DataMapper supplies fiscal and government debt ratios."
+        ),
+    },
 )
 
 

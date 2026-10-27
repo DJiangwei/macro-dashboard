@@ -1,0 +1,646 @@
+name: "Taiwan"
+name_zh: "中国台湾"
+code: "TW"
+iso2: "TW"
+subtitle_en: "A data-first macro page for Taiwan built directly from official endpoints: Central Bank of the Republic of China (CBC) DataAPI, Directorate-General of Budget, Accounting and Statistics (DGBAS), Federal Reserve Board (H.10), BIS, Bruegel REER, and IMF WEO DataMapper."
+subtitle_zh: "基于台湾“中央银行”(CBC) DataAPI、台“主计总处”(DGBAS)、美联储(H.10)、国际清算银行(BIS)、Bruegel与IMF WEO构建的数据优先宏观页面。"
+min_chart_count: 28
+
+sections:
+  growth_accounts:
+    title_en: "GDP & National Accounts"
+    title_zh: "GDP与国民账户"
+    report_logic_en: "DGBAS chained real quarterly GDP tracks sequential QoQ SA and annual YoY economic expansion, gross fixed capital formation, private consumption, and domestic demand."
+    report_logic_zh: "主计总处连锁实质季度GDP跟踪台湾经济环比季调与同比增速、固定资本形成总额、民间消费及国内需求。"
+  prices_costs:
+    title_en: "Prices & Inflation"
+    title_zh: "价格与通胀"
+    report_logic_en: "DGBAS monthly consumer price indices track headline CPI, core CPI (ex-fruits, vegetables & energy), PPI, and residential rent inflation."
+    report_logic_zh: "主计总处月度价格指数跟踪总体CPI、剔除蔬果能源的核心CPI、生产者物价指数(PPI)与住宅租金变动率。"
+  monetary_financial:
+    title_en: "Monetary Policy & Liquidity"
+    title_zh: "货币政策与流动性"
+    report_logic_en: "Central Bank of the Republic of China (CBC) discount rate, interbank call-loan rates, prime lending rates, and monetary aggregates (M1B, M2, reserve money)."
+    report_logic_zh: "中央银行贴放利率（重贴现率）、金融业隔夜拆款利率、五大银行基本放款利率以及货币总计数（M1B、M2、准备货币）。"
+  credit_property:
+    title_en: "Credit & Property Market"
+    title_zh: "信贷与房地产市场"
+    report_logic_en: "CBC monthly statistics track consumer loans, house-purchasing loans (mortgages), and money/bond market outstanding growth."
+    report_logic_zh: "央行月度统计跟踪消费者贷款、购屋贷款（房贷余额）以及货币市场与债券市场规模变动率。"
+  external_trade_fx:
+    title_en: "External Balance, Trade & FX"
+    title_zh: "外部平衡、贸易与汇率"
+    report_logic_en: "Federal Reserve Board daily USD/TWD spot exchange rate (H.10), Bruegel 120-partner REER/NEER, BIS real broad effective exchange rate, and quarterly BPM6 balance of payments."
+    report_logic_zh: "美联储H.10日度美元兑新台币即期汇率、Bruegel实际与名义有效汇率、BIS广义实际有效汇率以及BPM6口径季度国际收支。"
+  fiscal_sovereign:
+    title_en: "Fiscal, Sovereign Debt & Yields"
+    title_zh: "财政、主权债务与基准收益率"
+    report_logic_en: "Taipei capital market 10-year and 5-year benchmark government bond yields alongside IMF WEO general government debt and net lending ratios."
+    report_logic_zh: "台北资本市场10年期与5年期基准政府公债收益率，配合IMF WEO广义政府债务与净借贷（赤字率）序列。"
+  labour_structural:
+    title_en: "Labour Market & Structure"
+    title_zh: "劳动力市场与结构"
+    report_logic_en: "Official unemployment rate and labour market slack indicators."
+    report_logic_zh: "官方失业率与劳动力市场闲置指标。"
+
+indicators:
+  # ==========================================
+  # 1. GDP & National Accounts
+  # ==========================================
+  - id: real_gdp_yoy
+    section: growth_accounts
+    label_en: Real GDP Growth, YoY
+    label_zh: 实际GDP同比增速
+    unit: "% y/y"
+    fetcher: tw_dgbas
+    dataset: gdp_yoy
+    col_idx: 43
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2674
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Chained real quarterly GDP growth rate from the same quarter of the previous year.
+    caveat_zh: 较上年同季的连锁实质季度GDP同比成长率。
+
+  - id: real_gdp_growth
+    section: growth_accounts
+    label_en: Real GDP Growth, QoQ SA
+    label_zh: 实际GDP季调环比增速
+    unit: "% q/q"
+    fetcher: tw_dgbas
+    dataset: gdp_saqr
+    col_idx: 4
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2674
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Seasonally adjusted sequential quarterly real GDP growth rate.
+    caveat_zh: 经季节调整后的连锁实质季度GDP环比增速。
+
+  - id: gross_fixed_capital_formation
+    section: growth_accounts
+    label_en: Gross Fixed Capital Formation YoY
+    label_zh: 固定资本形成总额同比
+    unit: "% y/y"
+    fetcher: tw_dgbas
+    dataset: gdp_yoy
+    col_idx: 24
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2674
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Real annual change rate of gross fixed capital formation (semiconductor and tech capex driver).
+    caveat_zh: 实质固定资本形成总额同比增速（包含半导体先进制程及科技业资本开支）。
+
+  - id: private_consumption
+    section: growth_accounts
+    label_en: Private Final Consumption YoY
+    label_zh: 民间最终消费支出同比
+    unit: "% y/y"
+    fetcher: tw_dgbas
+    dataset: gdp_yoy
+    col_idx: 4
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2674
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Real annual change rate of private household consumption expenditure.
+    caveat_zh: 实质民间家庭最终消费支出同比增速。
+
+  - id: government_consumption
+    section: growth_accounts
+    label_en: Government Final Consumption YoY
+    label_zh: 政府最终消费支出同比
+    unit: "% y/y"
+    fetcher: tw_dgbas
+    dataset: gdp_yoy
+    col_idx: 22
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2674
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Real annual change rate of government consumption expenditure.
+    caveat_zh: 实质政府消费支出同比增速。
+
+  - id: domestic_demand
+    section: growth_accounts
+    label_en: Domestic Demand YoY
+    label_zh: 国内总需求同比
+    unit: "% y/y"
+    fetcher: tw_dgbas
+    dataset: gdp_yoy
+    col_idx: 41
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2674
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Real year-on-year change rate of total domestic demand.
+    caveat_zh: 实质国内需求总额同比变动率。
+
+  # ==========================================
+  # 2. Prices & Inflation
+  # ==========================================
+  - id: cpi_inflation
+    section: prices_costs
+    label_en: Headline CPI Inflation YoY
+    label_zh: 消费者物价指数 (CPI) 同比
+    unit: "% y/y"
+    fetcher: tw_dgbas
+    dataset: cpi
+    filename: cpispl.xls
+    calc_yoy: true
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2665
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Year-on-year rate of change derived from the official linked CPI index.
+    caveat_zh: 由主计总处官方消费者物价衔接指数计算的同比变动率。
+
+  - id: core_cpi_inflation
+    section: prices_costs
+    label_en: Core CPI Inflation YoY (Excl. Fruit, Veg & Energy)
+    label_zh: 核心CPI同比 (剔除蔬果及能源)
+    unit: "% y/y"
+    fetcher: tw_dgbas
+    dataset: cpi
+    filename: cpisplexvfe.xls
+    calc_yoy: true
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2665
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Core CPI excluding volatile fresh fruits, vegetables, and energy.
+    caveat_zh: 剔除变动较大的生鲜蔬果及能源后的核心CPI同比变动率。
+
+  - id: ppi_inflation
+    section: prices_costs
+    label_en: Producer Price Index (PPI) YoY
+    label_zh: 生产者物价指数 (PPI) 同比
+    unit: "% y/y"
+    fetcher: tw_dgbas
+    dataset: cpi
+    filename: ppispl.xls
+    calc_yoy: true
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2665
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Year-on-year change rate of domestic producer prices.
+    caveat_zh: 生产者物价指数(PPI)同比变动率。
+
+  - id: rent_inflation
+    section: prices_costs
+    label_en: Residential Rent Index YoY
+    label_zh: 住宅租金指数同比
+    unit: "% y/y"
+    fetcher: tw_dgbas
+    dataset: cpi
+    filename: cpisplrent.xls
+    calc_yoy: true
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2665
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Year-on-year change rate of residential housing rent component of CPI.
+    caveat_zh: CPI中住宅房租类指数同比变动率。
+
+  # ==========================================
+  # 3. Monetary Policy & Liquidity
+  # ==========================================
+  - id: policy_rate
+    section: monetary_financial
+    label_en: CBC Discount Rate (Policy Benchmark Rate)
+    label_zh: 央行重贴现率 (政策基准利率)
+    unit: "%"
+    fetcher: tw_cbc
+    filename: EG2AM01en
+    col_idx: 0
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: CBC official discount rate for commercial bank rediscounts.
+    caveat_zh: 台湾中央银行对银行贴现的重贴现率（核心政策基准利率）。
+
+  - id: collateral_rate
+    section: monetary_financial
+    label_en: Accommodations with Collateral Rate
+    label_zh: 担保放款融通利率
+    unit: "%"
+    fetcher: tw_cbc
+    filename: EG2AM01en
+    col_idx: 1
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Interest rate on accommodations with collateral from the CBC.
+    caveat_zh: 台湾中央银行担保放款融通利率。
+
+  - id: interbank_call_rate
+    section: monetary_financial
+    label_en: Interbank Call-Loan Overnight Weighted Rate
+    label_zh: 金融业隔夜拆款加权平均利率
+    unit: "%"
+    fetcher: tw_cbc
+    filename: EG37M01en
+    col_idx: 0
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Weighted average overnight rate in the Taipei interbank call-loan market.
+    caveat_zh: 金融业隔夜拆款市场加权平均利率。
+
+  - id: prime_lending_rate
+    section: monetary_financial
+    label_en: Five Major Banks Base Lending Rate
+    label_zh: 五大银行基本放款利率
+    unit: "%"
+    fetcher: tw_cbc
+    filename: EG2BM01en
+    col_idx: 2
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Average base lending rate of five major domestic commercial banks.
+    caveat_zh: 台湾银行、合作金库、土地银行、华南银行及第一银行五大银行基本放款平均利率。
+
+  - id: deposit_rate_1y
+    section: monetary_financial
+    label_en: Five Major Banks 1-Year Time Deposit Rate
+    label_zh: 五大银行一年期定期存款利率
+    unit: "%"
+    fetcher: tw_cbc
+    filename: EG2BM01en
+    col_idx: 1
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Average 1-year time deposit interest rate of five major commercial banks.
+    caveat_zh: 五大主要银行一年期定期存款平均牌告利率。
+
+  - id: m1b_growth
+    section: monetary_financial
+    label_en: M1B Monetary Aggregate YoY Growth
+    label_zh: M1B货币总计数年增率
+    unit: "% y/y"
+    fetcher: tw_cbc
+    filename: EF01M01en
+    col_idx: 13
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Annual percentage change in M1B (currency in circulation plus checking accounts and passbook deposits).
+    caveat_zh: M1B货币总计数（通货净额加活期性存款）年增率。
+
+  - id: m2_growth
+    section: monetary_financial
+    label_en: M2 Monetary Aggregate YoY Growth
+    label_zh: M2货币总计数年增率
+    unit: "% y/y"
+    fetcher: tw_cbc
+    filename: EF01M01en
+    col_idx: 18
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Annual percentage change in broad money M2.
+    caveat_zh: 广义货币总计数M2年增率。
+
+  - id: reserve_money_growth
+    section: monetary_financial
+    label_en: Reserve Money YoY Growth
+    label_zh: 准备货币年增率
+    unit: "% y/y"
+    fetcher: tw_cbc
+    filename: EF01M01en
+    col_idx: 1
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Annual percentage change in central bank reserve money (averages of daily figures).
+    caveat_zh: 准备货币（日平均数）年增率。
+
+  # ==========================================
+  # 4. Credit & Property Market
+  # ==========================================
+  - id: consumer_loans_growth
+    section: credit_property
+    label_en: Consumer Loans YoY Growth
+    label_zh: 消费者贷款总余额年增率
+    unit: "% y/y"
+    fetcher: tw_cbc
+    filename: EF99M01en
+    col_idx: 2
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Annual growth rate of total consumer loans by domestic banks.
+    caveat_zh: 全体银行消费者贷款总余额年增率。
+
+  - id: mortgage_loans_growth
+    section: credit_property
+    label_en: House-Purchasing Loans (Mortgages) YoY Growth
+    label_zh: 购屋贷款(房贷)余额年增率
+    unit: "% y/y"
+    fetcher: tw_cbc
+    filename: EF99M01en
+    col_idx: 4
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Annual growth rate of outstanding residential house-purchasing loans (key property credit indicator).
+    caveat_zh: 全体银行购屋贷款余额年增率（核心房地产信贷指标）。
+
+  - id: commercial_paper_growth
+    section: credit_property
+    label_en: Short-Term Bills Market Outstanding Growth
+    label_zh: 短期票券市场发行余额年增率
+    unit: "% y/y"
+    fetcher: tw_cbc
+    filename: EF05M01en
+    col_idx: 5
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Annual percentage change in short-term commercial bills market outstanding amount.
+    caveat_zh: 短期票券市场发行流通余额年增率。
+
+  - id: bond_market_growth
+    section: credit_property
+    label_en: Bond Market Outstanding Amount Growth
+    label_zh: 债券市场发行余额年增率
+    unit: "% y/y"
+    fetcher: tw_cbc
+    filename: EF05M01en
+    col_idx: 9
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Annual percentage change in total bond market outstanding volume.
+    caveat_zh: 债券市场发行流通余额年增率。
+
+  # ==========================================
+  # 5. External Balance, Trade & FX
+  # ==========================================
+  - id: usd_twd
+    section: external_trade_fx
+    label_en: USD/TWD Spot Exchange Rate (Fed H.10)
+    label_zh: 美元兑新台币汇率 (美联储H.10)
+    unit: "TWD per USD"
+    fetcher: fred
+    series: DEXTAUS
+    source_name: FRED / Federal Reserve Board
+    source_url: https://fred.stlouisfed.org/series/DEXTAUS
+    frequency: daily
+    start_date: 2020-01-01
+    caveat_en: Daily noon buying rates in New York City for cable transfers in Taiwan dollars.
+    caveat_zh: 纽约联邦储备银行每日公布的官方美元兑新台币中午即期汇率。
+
+  - id: reer
+    section: external_trade_fx
+    label_en: Real Effective Exchange Rate (REER)
+    label_zh: 实际有效汇率 (REER)
+    unit: "Index (2007 = 100)"
+    fetcher: bruegel_reer
+    country: TW
+    series_type: reer_120
+    source_name: Bruegel (Darvas 120-Trading-Partner Basket)
+    source_url: https://www.bruegel.org/publications/datasets/real-effective-exchange-rates-for-178-countries-a-new-database
+    frequency: monthly
+    start_date: 1995-01-01
+    caveat_en: CPI-based monthly real effective exchange rate calculated against 120 trading partners.
+    caveat_zh: 基于CPI计算的对120个贸易伙伴的月度实际有效汇率。
+
+  - id: neer
+    section: external_trade_fx
+    label_en: Nominal Effective Exchange Rate (NEER)
+    label_zh: 名义有效汇率 (NEER)
+    unit: "Index (2007 = 100)"
+    fetcher: bruegel_reer
+    country: TW
+    series_type: neer_120
+    source_name: Bruegel (Darvas 120-Trading-Partner Basket)
+    source_url: https://www.bruegel.org/publications/datasets/real-effective-exchange-rates-for-178-countries-a-new-database
+    frequency: monthly
+    start_date: 1995-01-01
+    caveat_en: Monthly nominal effective exchange rate calculated against 120 trading partners.
+    caveat_zh: 对120个贸易伙伴的月度名义有效汇率。
+
+  - id: bis_reer
+    section: external_trade_fx
+    label_en: BIS Real Broad Effective Exchange Rate (Cross-Check)
+    label_zh: BIS广义实际有效汇率 (交叉核对)
+    unit: "Index (2020 = 100)"
+    fetcher: fred
+    series: RBTWBIS
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/RBTWBIS
+    frequency: monthly
+    start_date: 2010-01-01
+    caveat_en: BIS broad monthly real effective exchange rate index for Taiwan.
+    caveat_zh: 国际清算银行(BIS)编制的台湾广义月度实际有效汇率指数。
+
+  - id: current_account_usd
+    section: external_trade_fx
+    label_en: Current Account Balance (USD)
+    label_zh: 经常账户差额 (美元)
+    unit: "USD mn"
+    fetcher: tw_cbc
+    filename: BPP2Q01en
+    col_idx: 0
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 current account balance in millions of US dollars.
+    caveat_zh: BPM6标准编制的季度经常账户差额（百万美元）。
+
+  - id: goods_trade_balance
+    section: external_trade_fx
+    label_en: Goods Trade Balance (BOP Basis, USD)
+    label_zh: 货物贸易差额 (BOP口径, 美元)
+    unit: "USD mn"
+    fetcher: tw_cbc
+    filename: BPP2Q01en
+    col_idx: 3
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly goods balance in millions of US dollars.
+    caveat_zh: 季度货物贸易净额（百万美元）。
+
+  - id: goods_exports
+    section: external_trade_fx
+    label_en: Exports of Goods (BOP Basis, USD)
+    label_zh: 货物出口总额 (BOP口径, 美元)
+    unit: "USD mn"
+    fetcher: tw_cbc
+    filename: BPP2Q01en
+    col_idx: 4
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly goods export credit in millions of US dollars.
+    caveat_zh: 季度货物出口贷方总额（百万美元）。
+
+  - id: goods_imports
+    section: external_trade_fx
+    label_en: Imports of Goods (BOP Basis, USD)
+    label_zh: 货物进口总额 (BOP口径, 美元)
+    unit: "USD mn"
+    fetcher: tw_cbc
+    filename: BPP2Q01en
+    col_idx: 5
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly goods import debit in millions of US dollars.
+    caveat_zh: 季度货物进口借方总额（百万美元）。
+
+  - id: services_balance
+    section: external_trade_fx
+    label_en: Services Trade Balance (USD)
+    label_zh: 服务贸易差额 (美元)
+    unit: "USD mn"
+    fetcher: tw_cbc
+    filename: BPP2Q01en
+    col_idx: 6
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly services trade balance in millions of US dollars.
+    caveat_zh: 季度服务贸易净差额（百万美元）。
+
+  - id: current_account_gdp
+    section: external_trade_fx
+    label_en: Current Account Balance (% of GDP)
+    label_zh: 经常账户占GDP比重
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: BCA_NGDPD
+    country_iso3: TWN
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/BCA_NGDPD@WEO/TWN
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: IMF World Economic Outlook historical series and projections.
+    caveat_zh: IMF《世界经济展望》历史序列与预测值。
+
+  # ==========================================
+  # 6. Fiscal, Sovereign Debt & Yields
+  # ==========================================
+  - id: sovereign_yield_10y
+    section: fiscal_sovereign
+    label_en: 10-Year Government Benchmark Bond Yield
+    label_zh: 10年期基准公债收益率
+    unit: "%"
+    fetcher: tw_cbc
+    filename: EG43M01en
+    col_idx: 3
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: bimonthly
+    start_date: 2000-01-01
+    caveat_en: Secondary market 10-year central government benchmark bond yield.
+    caveat_zh: 次级市场10年期中央政府基准公债收益率。
+
+  - id: sovereign_yield_5y
+    section: fiscal_sovereign
+    label_en: 5-Year Government Bond Yield
+    label_zh: 5年期政府公债收益率
+    unit: "%"
+    fetcher: tw_cbc
+    filename: EG43M01en
+    col_idx: 1
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: irregular
+    start_date: 2000-01-01
+    caveat_en: Secondary market 5-year government bond yield.
+    caveat_zh: 次级市场5年期政府公债收益率。
+
+  - id: government_debt_gdp
+    section: fiscal_sovereign
+    label_en: General Government Gross Debt (% of GDP)
+    label_zh: 广义政府总债务占GDP比重
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: GGXWDG_NGDP
+    country_iso3: TWN
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/GGXWDG_NGDP@WEO/TWN
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government gross debt as a percentage of GDP.
+    caveat_zh: 广义政府总债务占GDP比重。
+
+  - id: fiscal_balance_gdp
+    section: fiscal_sovereign
+    label_en: General Government Net Lending / Borrowing (% of GDP)
+    label_zh: 广义政府净借贷占GDP比重 (财政赤字率)
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: GGXCNL_NGDP
+    country_iso3: TWN
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/GGXCNL_NGDP@WEO/TWN
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government net lending/borrowing as a percentage of GDP.
+    caveat_zh: 广义政府净借贷占GDP比重。
+
+  # ==========================================
+  # 7. Labour Market & Structure
+  # ==========================================
+  - id: unemployment_rate_weo
+    section: labour_structural
+    label_en: Unemployment Rate (IMF WEO)
+    label_zh: 失业率 (IMF WEO口径)
+    unit: "% of labour force"
+    fetcher: imf_datamapper
+    series: LUR
+    country_iso3: TWN
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/LUR@WEO/TWN
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Unemployment rate as percentage of the total labour force from the IMF WEO database.
+    caveat_zh: 国际货币基金组织《世界经济展望》统计的失业率（占劳动力比重）。
+
+data_gaps:
+  - section: labour_structural
+    item_en: High-Frequency Monthly Seasonally Adjusted Unemployment Rate Time Series
+    item_zh: 高频月度季节调整后失业率历史序列
+    status_en: DGBAS publishes monthly unemployment and participation rates via dynamic web queries (nstatdb) and press releases; automated API ingestion can be expanded once DGBAS open data API tokens are provisioned.
+    status_zh: 主计总处通过nstatdb动态查询及新闻稿发布月度季调失业率与劳动参与率；待开放API接口进一步对接后可自动升级。
+
+cross_checks:
+  - concept: headline_inflation
+    primary: cpi_inflation
+    secondary: core_cpi_inflation
+    tolerance: 1.50
+    label_en: DGBAS Headline CPI vs Core CPI
+  - concept: real_effective_exchange_rate
+    primary: reer
+    secondary: bis_reer
+    tolerance: 15.0
+    label_en: Bruegel REER vs BIS REER Mirror

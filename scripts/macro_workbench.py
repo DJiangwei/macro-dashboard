@@ -35,6 +35,10 @@ DASHBOARD_TO_CODE = {
     "South Africa": "ZA",
     "United Kingdom": "UK",
     "United States": "US",
+    "Turkey": "TR",
+    "Hong Kong": "HK",
+    "South Korea": "KR",
+    "Taiwan": "TW",
 }
 CODE_TO_DASHBOARD = {code: name for name, code in DASHBOARD_TO_CODE.items()}
 
@@ -45,6 +49,10 @@ DATA_FIRST_SUMMARIES = {
     "ZA": "south_africa_dashboard_summary.json",
     "UK": "uk_dashboard_summary.json",
     "US": "us_dashboard_summary.json",
+    "TR": "turkey_dashboard_summary.json",
+    "HK": "hong_kong_dashboard_summary.json",
+    "KR": "south_korea_dashboard_summary.json",
+    "TW": "taiwan_dashboard_summary.json",
 }
 
 DATA_FIRST_CANONICAL = {
@@ -54,6 +62,10 @@ DATA_FIRST_CANONICAL = {
     "ZA": "south_africa_canonical_frame.json",
     "UK": "uk_canonical_frame.json",
     "US": "us_canonical_frame.json",
+    "TR": "turkey_canonical_frame.json",
+    "HK": "hong_kong_canonical_frame.json",
+    "KR": "south_korea_canonical_frame.json",
+    "TW": "taiwan_canonical_frame.json",
 }
 
 DATA_FIRST_SIGNAL_MAP = {
@@ -110,6 +122,42 @@ DATA_FIRST_SIGNAL_MAP = {
         "fiscal": ("federal_debt_gdp", "Federal debt/GDP"),
         "financial": ("mortgage_30y_rate", "Mortgage rate"),
         "property": ("case_shiller_20_city_growth", "Case-Shiller 20-City"),
+    },
+    "TR": {
+        "growth": ("real_gdp_yoy", "Real GDP"),
+        "inflation": ("hicp_inflation", "HICP headline"),
+        "policy": ("policy_rate", "1W Repo"),
+        "external": ("current_account_gdp", "Current account/GDP"),
+        "fiscal": ("government_debt_gdp", "Government debt/GDP"),
+        "financial": ("usd_try", "USD/TRY"),
+        "property": ("house_price_index", "House prices"),
+    },
+    "HK": {
+        "growth": ("real_gdp_yoy", "Real GDP"),
+        "inflation": ("cpi_inflation", "Composite CPI"),
+        "policy": ("policy_rate", "Base rate"),
+        "external": ("merchandise_trade_balance", "Trade balance"),
+        "fiscal": ("government_debt_gdp", "Government debt/GDP"),
+        "financial": ("usd_hkd", "USD/HKD"),
+        "property": ("bis_nominal_house_prices", "BIS house prices"),
+    },
+    "KR": {
+        "growth": ("real_gdp_yoy", "Real GDP"),
+        "inflation": ("cpi_inflation", "CPI inflation"),
+        "policy": ("policy_rate", "Call rate"),
+        "external": ("current_account_usd", "Current account"),
+        "fiscal": ("government_debt_gdp", "Government debt/GDP"),
+        "financial": ("sovereign_yield_10y", "10Y KTB"),
+        "property": ("bis_nominal_house_prices", "BIS house prices"),
+    },
+    "TW": {
+        "growth": ("real_gdp_yoy", "Real GDP"),
+        "inflation": ("cpi_inflation", "Headline CPI"),
+        "policy": ("policy_rate", "CBC discount rate"),
+        "external": ("current_account_usd", "Current account"),
+        "fiscal": ("government_debt_gdp", "Government debt/GDP"),
+        "financial": ("sovereign_yield_10y", "10Y bond yield"),
+        "property": ("mortgage_loans_growth", "Mortgage growth"),
     },
 }
 
@@ -375,6 +423,10 @@ TAYLOR_PARAMETERS = {
     "CZ": {"target": 2.0, "r_star": 1.2, "trend_growth": 2.0, "name": "CNB"},
     "HU": {"target": 3.0, "r_star": 1.8, "trend_growth": 2.2, "name": "MNB"},
     "RO": {"target": 2.5, "r_star": 2.0, "trend_growth": 2.5, "name": "BNR"},
+    "TR": {"target": 5.0, "r_star": 3.0, "trend_growth": 3.5, "name": "TCMB"},
+    "HK": {"target": 2.0, "r_star": 1.0, "trend_growth": 2.5, "name": "HKMA"},
+    "KR": {"target": 2.0, "r_star": 1.0, "trend_growth": 2.2, "name": "BOK"},
+    "TW": {"target": 2.0, "r_star": 1.0, "trend_growth": 2.5, "name": "CBC"},
 }
 
 
@@ -700,7 +752,7 @@ def _pearson(x: list[float], y: list[float]) -> float:
 
 
 def _compute_cross_country_sync() -> dict[str, Any]:
-    countries = ["US", "EA", "UK", "JP", "CN", "ZA", "PL", "CZ", "HU", "RO"]
+    countries = ["US", "EA", "UK", "JP", "CN", "ZA", "TR", "HK", "KR", "TW", "PL", "CZ", "HU", "RO"]
     cpi_data: dict[str, dict[str, float]] = {}
     ip_data: dict[str, dict[str, float]] = {}
     yield_data: dict[str, dict[str, float]] = {}
@@ -713,6 +765,10 @@ def _compute_cross_country_sync() -> dict[str, Any]:
         "ZA": ("south_africa_canonical_frame.json", "cpi_inflation", "manufacturing_production_growth"),
         "UK": ("uk_canonical_frame.json", "cpi_yoy", "industrial_production_yoy"),
         "US": ("us_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
+        "TR": ("turkey_canonical_frame.json", "hicp_inflation", "industrial_production_growth"),
+        "HK": ("hong_kong_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
+        "KR": ("south_korea_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
+        "TW": ("taiwan_canonical_frame.json", "cpi_inflation", "real_gdp_growth"),
     }
 
     yield_specs = {
@@ -721,6 +777,8 @@ def _compute_cross_country_sync() -> dict[str, Any]:
         "UK": ("uk_canonical_frame.json", "long_rate_10y", "10Y Gilt"),
         "JP": ("japan_canonical_frame.json", "sovereign_yield_10y", "10Y JGB"),
         "ZA": ("south_africa_canonical_frame.json", "sovereign_yield_10y", "10Y Sovereign"),
+        "KR": ("south_korea_canonical_frame.json", "sovereign_yield_10y", "10Y KTB"),
+        "TW": ("taiwan_canonical_frame.json", "sovereign_yield_10y", "10Y Gov Bond"),
     }
 
     for code, (fname, cpi_k, ip_k) in canonical_specs.items():
@@ -933,7 +991,7 @@ def _generate_briefing(payload: dict[str, Any]) -> str:
     lines = [
         "# Global Macro Workbench Intelligence Briefing",
         "",
-        f"**Generated**: {generated} | **Coverage**: 10 Economies (US, EA, UK, JP, CN, ZA, PL, CZ, HU, RO)",
+        f"**Generated**: {generated} | **Coverage**: 14 Economies (US, EA, UK, JP, CN, ZA, TR, HK, KR, TW, PL, CZ, HU, RO)",
         "",
         "---",
         "",

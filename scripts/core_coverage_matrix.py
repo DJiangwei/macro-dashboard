@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
 OUT_JSON = OUTPUT / "core_coverage_matrix.json"
 OUT_MD = ROOT / "CORE_COVERAGE_MATRIX.md"
-COUNTRIES = ("HU", "PL", "CZ", "RO", "CN", "EA", "JP", "ZA", "UK", "US")
+COUNTRIES = ("HU", "PL", "CZ", "RO", "CN", "EA", "JP", "ZA", "UK", "US", "TR", "HK", "KR", "TW")
 DATA_FIRST_FILES = {
     "CN": OUTPUT / "china_canonical_frame.json",
     "EA": OUTPUT / "euro_area_canonical_frame.json",
@@ -22,6 +22,10 @@ DATA_FIRST_FILES = {
     "ZA": OUTPUT / "south_africa_canonical_frame.json",
     "UK": OUTPUT / "uk_canonical_frame.json",
     "US": OUTPUT / "us_canonical_frame.json",
+    "TR": OUTPUT / "turkey_canonical_frame.json",
+    "HK": OUTPUT / "hong_kong_canonical_frame.json",
+    "KR": OUTPUT / "south_korea_canonical_frame.json",
+    "TW": OUTPUT / "taiwan_canonical_frame.json",
 }
 QUALITY_RANK = {"verified": 4, "watch": 3, "low_confidence": 2, "unavailable": 1}
 

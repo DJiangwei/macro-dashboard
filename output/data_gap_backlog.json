@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-26T22:37:09.386249+00:00",
+  "generated": "2026-10-27T23:59:14.556020+00:00",
   "items": [
     {
       "code": "CN",
@@ -90,6 +90,51 @@
       "status": "OECD's Japan COICOP-division CPI mirror was discontinued after June 2021, and the IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations. The Statistics Bureau's e-Stat table carries these divisions too, but they are not yet wired here; only the goods/services split is chartable so far.",
       "priority": "high",
       "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "KR",
+      "country": "South Korea",
+      "section": "housing_property",
+      "item": "KB Kookmin Bank / KREB Jeonse Rental Price Index",
+      "status": "Korea's unique Jeonse deposit leasing contract index published by KB Financial and Korea Real Estate Board; available via ECOS table 901Y062.",
+      "priority": "high",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "KR",
+      "country": "South Korea",
+      "section": "monetary_financial",
+      "item": "Daily BOK Base Rate Target Decisions and KTB 3Y Benchmark",
+      "status": "Maintained by Bank of Korea ECOS API under tables 722Y001 and 817Y002. Requires free BOK_ECOS_API_KEY in .env.local to enable automatically.",
+      "priority": "high",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "TR",
+      "country": "Turkey",
+      "section": "monetary_financial",
+      "item": "Weekly TRY Commercial, Mortgage, and Consumer Loan Flow Rates",
+      "status": "Published by CBRT on EVDS API under series TP.KTF10/12/17. Requires free TCMB_EVDS_API_KEY to fetch automatically.",
+      "priority": "high",
+      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "TR",
+      "country": "Turkey",
+      "section": "production_cycle",
+      "item": "Istanbul Chamber of Industry / S&P Global Turkey Manufacturing PMI",
+      "status": "Proprietary private commercial survey data published under paid subscription by S&P Global; not available via free public machine-readable API.",
+      "priority": "high",
+      "source_hint": "Check licensing before rendering; vendor surveys should stay as official gaps unless source-safe."
+    },
+    {
+      "code": "TW",
+      "country": "Taiwan",
+      "section": "labour_structural",
+      "item": "High-Frequency Monthly Seasonally Adjusted Unemployment Rate Time Series",
+      "status": "DGBAS publishes monthly unemployment and participation rates via dynamic web queries (nstatdb) and press releases; automated API ingestion can be expanded once DGBAS open data API tokens are provisioned.",
+      "priority": "high",
+      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
     },
     {
       "code": "UK",
@@ -286,6 +331,15 @@
       "section": "prices_costs",
       "item": "5y5y forward inflation-linked swap rate (5y5y ILS)",
       "status": "Market-based inflation expectation gauge referenced by the ECB Governing Council; traded OTC and vendor-controlled (Bloomberg/LSEG), not disseminated via ECB SDMX.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "HK",
+      "country": "Hong Kong",
+      "section": "monetary_financial",
+      "item": "Daily HKMA Base Rate, Overnight/1M HIBOR & Aggregate Balance",
+      "status": "Published by HKMA Open API (api.hkma.gov.hk). The API endpoint is currently protected by an Aliyun WAF returning HTTP 405 on cloud IPs; monitored via web portal.",
       "priority": "watch",
       "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },

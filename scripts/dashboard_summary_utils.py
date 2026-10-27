@@ -12,7 +12,7 @@ from collections import Counter, defaultdict
 from datetime import UTC, date, datetime, timedelta
 from typing import Any
 
-from country_primer.data_quality import assess_series_quality, clean as _clean
+from country_primer.data_quality import assess_series_quality, clean as _clean, source_authority as _source_authority
 from country_primer.framework import concept_id_for, framework_summary, load_macro_framework
 
 CANONICAL_OBSERVATION_COLUMNS = ["date", "value"]
@@ -214,6 +214,13 @@ def load_canonical_data_first_frame(path: Any, config: dict[str, Any]) -> list[d
             except (TypeError, ValueError):
                 continue
         spec = dict(specs.get(indicator_id) or {})
+        auth = _source_authority(
+            _clean(source.get("name") or spec.get("source_name")),
+            _clean(source.get("url") or spec.get("source_url")),
+            spec.get("source_authority"),
+        )
+        if quality:
+            quality["source_authority"] = auth
         restored.append({
             **spec,
             "id": indicator_id,

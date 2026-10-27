@@ -18,6 +18,7 @@ DEFAULT_MAX_AGE_DAYS = {
     "business daily": 10,
     "weekly": 28,
     "monthly": 75,
+    "bimonthly": 120,
     "quarterly": 165,
     "annual": 730,
     "irregular": 365,
@@ -181,7 +182,7 @@ def source_authority(source_name: object, source_url: object = "", declared: obj
         return "manual_curated"
     if any(token in source for token in ("akshare", "eastmoney", "sina", "yahoo", "stooq")):
         return "public_wrapper"
-    if any(token in source for token in ("fred", "world bank", "imf", "bis", "oecd", "db.nomics")):
+    if any(token in source for token in ("fred", "world bank", "imf", "bis", "oecd", "db.nomics", "bruegel")):
         return "official_mirror"
     if any(token in source for token in (
         "ons", "bank of england", "boe", "safe", "fiscaldata", "us treasury",
@@ -192,6 +193,9 @@ def source_authority(source_name: object, source_url: object = "", declared: obj
         "bank of japan", "boj", "stat-search.boj", "e-stat", "estat",
         "statistics bureau", "mhlw", "mlit", "meti",
         "sarb", "resbank", "south african reserve bank",
+        "tcmb", "turkstat", "censtatd", "census and statistics", "hkma",
+        "bank of korea", "bok", "central bank of the republic of china", "cpx.cbc",
+        "cbc.gov.tw", "dgbas", "stat.gov.tw",
     )):
         return "official_primary"
     return "public_secondary"

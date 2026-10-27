@@ -1,0 +1,1324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hong Kong Dashboard</title>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<style>
+:root {
+  --bg-canvas: #fcfaf7;
+  --bg-surface: #ffffff;
+  --bg-deep: #f7f5f0;
+  --fg: #12151a;
+  --text-secondary: #4b525f;
+  --muted: #737c8c;
+  --accent: #990f3d;
+  --accent-soft: rgba(153, 15, 61, 0.08);
+  --border: rgba(18, 21, 26, 0.08);
+  --border-strong: rgba(18, 21, 26, 0.16);
+  --card: #ffffff;
+  --blue: #262a33;
+  --warn: #b86200;
+  --low: #990f3d;
+  --font-display: "Newsreader", "Iowan Old Style", "Songti SC", "Noto Serif SC", Georgia, serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html[lang="en"] [data-lang="zh"] { display: none !important; }
+html[lang="zh"] [data-lang="en"] { display: none !important; }
+html:not([lang="zh"]) [data-lang="zh"] { display: none !important; }
+body {
+  margin: 0;
+  background: var(--bg-canvas);
+  color: var(--fg);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { display: none !important; }
+a { color: inherit; }
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 32px;
+  background: rgba(252, 250, 247, 0.94);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  font-size: 12px;
+  letter-spacing: normal;
+}
+.brand { font-family: var(--font-display); font-size: 16px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
+.brand span { color: var(--accent); }
+.country-nav { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+.country-nav a {
+  text-decoration: none;
+  color: var(--muted);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+.country-nav a:hover { background: rgba(0,0,0,0.04); color: var(--fg); }
+.country-nav a.active { background: var(--fg); color: #ffffff; border-color: var(--fg); font-weight: 600; }
+.lang-toggle {
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: var(--fg);
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+.container { position: relative; max-width: 1320px; margin: 0 auto; padding: 32px 24px 56px; }
+header { border-bottom: 1px solid var(--border); padding: 32px 0 24px; margin-bottom: 24px; }
+h1 {
+  margin: 0;
+  max-width: 980px;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+.subtitle { max-width: 860px; color: var(--text-secondary); font-size: 15px; margin-top: 12px; line-height: 1.6; }
+.meta-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+.meta-chip {
+  border: 1px solid var(--border);
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 4px 10px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.toc {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 18px 0 24px;
+}
+.toc a {
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 5px 12px;
+  background: #ffffff;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.toc a:hover {
+  background: var(--fg);
+  color: #ffffff;
+  border-color: var(--fg);
+}
+.view-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: -10px 0 24px;
+}
+.view-switch > span { color: var(--muted); font-size: 12px; margin-right: 3px; }
+.view-switch button {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 5px 12px;
+  background: #ffffff;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+.view-switch button[aria-pressed="true"] { background: var(--fg); color: #ffffff; border-color: var(--fg); font-weight: 600; }
+body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { display: none; }
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.data-card, .chart-card, .panel, .data-note, .gaps-table {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+.data-card {
+  padding: 14px 16px;
+  border-top: 3px solid var(--border-strong);
+}
+.data-card span {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.data-card strong {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 26px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  margin: 6px 0 4px;
+  color: var(--fg);
+}
+.data-card small { color: var(--muted); font-size: 11px; }
+
+/* Spark-Range component */
+.ft-spark-range {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+.ft-spark-track {
+  position: relative;
+  height: 4px;
+  background: rgba(18, 21, 26, 0.08);
+  border-radius: 2px;
+  margin: 6px 0 4px;
+}
+.ft-spark-point {
+  position: absolute;
+  top: -3px;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.ft-spark-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--muted);
+}
+.ft-spark-pct {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.panel {
+  padding: 0;
+  margin-bottom: 36px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.section-title {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 16px;
+  align-items: baseline;
+  border-bottom: 2px solid var(--fg);
+  padding-bottom: 10px;
+  margin-bottom: 18px;
+}
+.section-title p {
+  margin: 0;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.section-title h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.8vw, 36px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--fg);
+}
+.logic { grid-column: 2; color: var(--text-secondary); max-width: 860px; font-size: 13.5px; }
+.charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px; margin-bottom: 20px; }
+.chart-card {
+  padding: 14px 16px 12px;
+  min-width: 0;
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+.chart-card:hover { border-color: var(--border-strong); }
+.chart-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+}
+.chart-title { min-width: 0; flex: 1 1 auto; padding-top: 2px; }
+.chart-head h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+.chart-status { display: flex; align-items: flex-start; gap: 8px; flex: 0 0 auto; }
+.latest-reading {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 8px;
+  align-items: baseline;
+  min-width: 140px;
+  padding-left: 12px;
+  border-left: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+}
+.latest-label {
+  grid-column: 1 / -1;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: normal;
+  line-height: 1.2;
+  text-transform: none;
+}
+.latest-value { display: inline-flex; align-items: baseline; gap: 5px; min-width: 0; }
+.latest-value strong {
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  white-space: nowrap;
+}
+.latest-value em { color: var(--muted); font-size: 10px; font-style: normal; white-space: nowrap; }
+.latest-reading time { color: var(--muted); font-size: 11px; white-space: nowrap; }
+.quality-pill {
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 3px 7px;
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.chart-quality-verified .quality-pill { color: #0d7680; border-color: rgba(13,118,128,0.3); background: rgba(13,118,128,0.06); }
+.chart-quality-watch .quality-pill { color: var(--warn); border-color: rgba(184,98,0,0.3); background: rgba(184,98,0,0.06); }
+.chart-quality-low_confidence .quality-pill { color: var(--low); border-color: rgba(153,15,61,0.3); background: rgba(153,15,61,0.06); }
+.authority-chip, .freshness-chip {
+  font-size: 11px; letter-spacing: normal; padding: 2px 7px; border-radius: 3px;
+  border: 1px solid var(--border); color: var(--text-secondary); margin-left: 4px;
+}
+.authority-chip { background: #fcfaf7; }
+.freshness-chip { background: #fcfaf7; }
+.cross-check { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+.cross-check.diverged { color: var(--low); font-weight: 600; }
+.cross-check-history { color: var(--muted); }
+.plotly-chart { width: 100%; min-width: 0; height: 360px; }
+.plot-container, .svg-container { max-width: 100% !important; }
+#js-plotly-tester { width: 1px !important; max-width: 1px !important; overflow: hidden !important; }
+.chart-card footer {
+  display: grid;
+  gap: 3px;
+  color: var(--muted);
+  font-size: 11px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+.chart-card footer a { color: var(--accent); }
+.caveat { color: var(--muted); font-size: 12px; margin: 10px 0 0; }
+.empty-note { padding: 20px; color: var(--muted); border: 1px dashed var(--border); border-radius: 4px; }
+.data-note { padding: 14px 18px; margin-bottom: 24px; color: var(--text-secondary); background: #ffffff; font-size: 13px; line-height: 1.6; }
+.gaps-table { width: 100%; border-collapse: collapse; font-size: 13px; background: #ffffff; }
+.gaps-table th, .gaps-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; text-align: left; }
+.gaps-table th { color: var(--text-secondary); font-size: 11px; font-weight: 600; letter-spacing: normal; text-transform: none; background: #fcfaf7; }
+footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); padding-top: 20px; font-size: 12px; }
+@media (max-width: 760px) {
+  .topbar { align-items: flex-start; flex-direction: column; padding: 12px 18px; }
+  .container { padding: 24px 16px 42px; }
+  .section-title { grid-template-columns: 1fr; }
+  .logic { grid-column: 1; }
+  .charts-grid { grid-template-columns: 1fr; }
+  .panel { overflow-x: auto; }
+  .chart-card { padding: 13px; }
+  .chart-head { flex-direction: column; gap: 8px; }
+  .chart-head h3 { font-size: 16px; }
+  .chart-status { width: 100%; justify-content: space-between; align-items: center; }
+  .latest-reading { flex: 1 1 auto; min-width: 0; border-left: 0; border-top: 1px solid var(--border); padding: 8px 0 0; }
+  .latest-value strong { font-size: 21px; }
+  .plotly-chart { height: 320px; }
+}
+</style>
+</head>
+<body data-dashboard-view="core">
+<div class="topbar">
+  <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">East Meridian <span>/ Macro Dashboard</span></div></a>
+  <nav class="country-nav" aria-label="country dashboards">
+    <a href="hungary.html">HU</a>
+    <a href="poland.html">PL</a>
+    <a href="czechia.html">CZ</a>
+    <a href="romania.html">RO</a>
+    <a href="china.html">CN</a>
+    <a href="euro_area.html">EA</a>
+    <a href="japan.html">JP</a>
+    <a href="south_africa.html">ZA</a>
+    <a href="uk.html">UK</a>
+    <a href="us.html">US</a>
+  </nav>
+  <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">中文</button>
+</div>
+
+<main class="container">
+  <header>
+    <h1><span data-lang="en">Hong Kong Dashboard</span><span data-lang="zh">中国香港宏观仪表盘</span></h1>
+    <p class="subtitle"><span data-lang="en">A data-first macro page for Hong Kong built from official Census and Statistics Department (C&SD), IMF SDMX / DataMapper, BIS via FRED, and Bruegel REER.</span><span data-lang="zh">基于香港政府统计处(C&SD)、IMF数据、国际清算银行(BIS)与Bruegel实际有效汇率构建的香港数据优先宏观页面。</span></p>
+    <div class="meta-row">
+      <span class="meta-chip">24 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
+      <span class="meta-chip">9 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
+      <span class="meta-chip">1 <span data-lang="en">official-data gaps tracked</span><span data-lang="zh">个官方数据缺口</span></span>
+      <span class="meta-chip">5 <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
+      <span class="meta-chip">0 <span data-lang="en">native official</span><span data-lang="zh">原生官方</span> · 0 <span data-lang="en">mirror</span><span data-lang="zh">镜像</span></span>
+    </div>
+  </header>
+
+  <section class="data-grid" aria-label="latest data cards">
+
+<div class="data-card">
+  <span><span data-lang="en">Real GDP Growth, QoQ SA</span><span data-lang="zh">实际GDP季调环比</span></span>
+  <strong>-0.60</strong>
+  <small>2026-06-30 · HK C&amp;SD (National Accounts)</small>
+  <div class="ft-spark-range" title="Historical Range Context">
+    <div class="ft-spark-track"><div class="ft-spark-point" style="left: 37%;"></div></div>
+    <div class="ft-spark-labels"><span>-4.80</span><span class="ft-spark-pct">37%</span><span>6.60</span></div>
+  </div>
+</div>
+
+<div class="data-card">
+  <span><span data-lang="en">Real GDP Growth, YoY</span><span data-lang="zh">实际GDP同比</span></span>
+  <strong>4.30</strong>
+  <small>2026-06-30 · HK C&amp;SD (National Accounts)</small>
+  <div class="ft-spark-range" title="Historical Range Context">
+    <div class="ft-spark-track"><div class="ft-spark-point" style="left: 64%;"></div></div>
+    <div class="ft-spark-labels"><span>-9.40</span><span class="ft-spark-pct">64%</span><span>12.1</span></div>
+  </div>
+</div>
+
+<div class="data-card">
+  <span><span data-lang="en">Industrial Production YoY (Manufacturing)</span><span data-lang="zh">制造业工业生产指数同比</span></span>
+  <strong>2.30</strong>
+  <small>2026-06-30 · HK C&amp;SD</small>
+  <div class="ft-spark-range" title="Historical Range Context">
+    <div class="ft-spark-track"><div class="ft-spark-point" style="left: 71%;"></div></div>
+    <div class="ft-spark-labels"><span>-10.6</span><span class="ft-spark-pct">71%</span><span>7.60</span></div>
+  </div>
+</div>
+
+<div class="data-card">
+  <span><span data-lang="en">Retail Sales Value Index YoY</span><span data-lang="zh">零售业总销货价值指数同比</span></span>
+  <strong>5.60</strong>
+  <small>2026-08-01 · HK C&amp;SD</small>
+  <div class="ft-spark-range" title="Historical Range Context">
+    <div class="ft-spark-track"><div class="ft-spark-point" style="left: 58%;"></div></div>
+    <div class="ft-spark-labels"><span>-44.0</span><span class="ft-spark-pct">58%</span><span>40.8</span></div>
+  </div>
+</div>
+  </section>
+
+  <nav class="toc" aria-label="section navigation">
+    <a href="#growth_accounts"><span data-lang="en">GDP &amp; National Accounts</span><span data-lang="zh">GDP与国民账户</span></a>
+<a href="#production_cycle"><span data-lang="en">Production, Retail &amp; Construction</span><span data-lang="zh">生产、零售与建筑</span></a>
+<a href="#labour_wages"><span data-lang="en">Labour Market &amp; Wages</span><span data-lang="zh">劳动力市场与工资</span></a>
+<a href="#prices_costs"><span data-lang="en">Prices &amp; Inflation</span><span data-lang="zh">价格与通胀</span></a>
+<a href="#housing_property"><span data-lang="en">Housing &amp; Property</span><span data-lang="zh">住宅与房地产</span></a>
+<a href="#external_fx"><span data-lang="en">External Balance, Trade &amp; FX</span><span data-lang="zh">外部平衡、贸易与汇率</span></a>
+<a href="#fiscal_sovereign"><span data-lang="en">Fiscal &amp; Public Finance</span><span data-lang="zh">财政与公共收支</span></a>
+<a href="#monetary_financial"><span data-lang="en">Credit &amp; Financial Conditions</span><span data-lang="zh">信贷与金融环境</span></a>
+<a href="#stability_structural"><span data-lang="en">Financial Stability &amp; Soundness</span><span data-lang="zh">金融稳定与稳健性</span></a>
+<a href="#data-gaps"><span data-lang="en">Data Gaps</span><span data-lang="zh">数据缺口</span></a>
+  </nav>
+
+  <div class="view-switch" role="group" aria-label="chart density">
+    <span><span data-lang="en">Chart view</span><span data-lang="zh">图表视图</span></span>
+    <button type="button" data-view-option="core" aria-pressed="true" onclick="setDashboardView('core')"><span data-lang="en">Core 48</span><span data-lang="zh">核心 48</span></button>
+    <button type="button" data-view-option="deep" aria-pressed="false" onclick="setDashboardView('deep')"><span data-lang="en">All deep-dive charts</span><span data-lang="zh">全部深度指标</span></button>
+  </div>
+
+  <div class="data-note">
+    <span data-lang="en">Data policy: no fabricated proxies. Official public sources provide the primary foundation for Hong Kong; native statistical and central bank releases are prioritized where available.</span>
+    <span data-lang="zh">数据原则：不制造 proxy。官方公开来源提供中国香港的基础数据；优先接入本国统计局与央行的原生发布序列。</span>
+  </div>
+
+
+<section class="panel" id="growth_accounts">
+  <div class="section-title">
+    <p>PDF logic</p>
+    <h2><span data-lang="en">GDP &amp; National Accounts</span><span data-lang="zh">GDP与国民账户</span></h2>
+    <div class="logic"><span data-lang="en">C&amp;SD quarterly national accounts track Hong Kong&#x27;s real GDP sequential QoQ SA and annual YoY growth, providing the primary anchor for economic momentum.</span><span data-lang="zh">政府统计处季度国民账户跟踪香港实际GDP季调环比与同比增速，提供经济增长动力的核心基准。</span></div>
+  </div>
+  <div class="charts-grid">
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="real_gdp_growth_qoq">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Real GDP Growth, QoQ SA</span><span data-lang="zh">实际GDP季调环比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-06-30">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>-0.60</strong><em>% q/q</em></span>
+        <time datetime="2026-06-30"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-real_gdp_growth" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-real_gdp_growth", [{"name": "Real GDP Growth, QoQ SA", "x": ["2000-03-31", "2000-06-30", "2000-09-30", "2000-12-31", "2001-03-31", "2001-06-30", "2001-09-30", "2001-12-31", "2002-03-31", "2002-06-30", "2002-09-30", "2002-12-31", "2003-03-31", "2003-06-30", "2003-09-30", "2003-12-31", "2004-03-31", "2004-06-30", "2004-09-30", "2004-12-31", "2005-03-31", "2005-06-30", "2005-09-30", "2005-12-31", "2006-03-31", "2006-06-30", "2006-09-30", "2006-12-31", "2007-03-31", "2007-06-30", "2007-09-30", "2007-12-31", "2008-03-31", "2008-06-30", "2008-09-30", "2008-12-31", "2009-03-31", "2009-06-30", "2009-09-30", "2009-12-31", "2010-03-31", "2010-06-30", "2010-09-30", "2010-12-31", "2011-03-31", "2011-06-30", "2011-09-30", "2011-12-31", "2012-03-31", "2012-06-30", "2012-09-30", "2012-12-31", "2013-03-31", "2013-06-30", "2013-09-30", "2013-12-31", "2014-03-31", "2014-06-30", "2014-09-30", "2014-12-31", "2015-03-31", "2015-06-30", "2015-09-30", "2015-12-31", "2016-03-31", "2016-06-30", "2016-09-30", "2016-12-31", "2017-03-31", "2017-06-30", "2017-09-30", "2017-12-31", "2018-03-31", "2018-06-30", "2018-09-30", "2018-12-31", "2019-03-31", "2019-06-30", "2019-09-30", "2019-12-31", "2020-03-31", "2020-06-30", "2020-09-30", "2020-12-31", "2021-03-31", "2021-06-30", "2021-09-30", "2021-12-31", "2022-03-31", "2022-06-30", "2022-09-30", "2022-12-31", "2023-03-31", "2023-06-30", "2023-09-30", "2023-12-31", "2024-03-31", "2024-06-30", "2024-09-30", "2024-12-31", "2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31", "2026-03-31", "2026-06-30"], "y": [3.0, 0.1, 1.2, 0.7, -0.3, -0.1, -0.1, -0.6, 0.1, 1.5, 1.6, 0.7, -0.1, -2.4, 6.1, 1.1, 2.9, 1.8, 1.1, 2.0, 1.1, 3.1, 1.9, 1.2, 2.2, 1.0, 1.8, 1.6, 1.4, 1.6, 1.9, 1.8, 1.4, -1.2, -1.1, -2.0, -3.4, 3.6, 0.5, 2.0, 1.9, 1.7, 0.9, 1.6, 2.7, -0.4, 0.2, 0.5, 0.2, 0.6, 0.8, 1.1, 0.8, 0.4, 0.6, 0.9, 0.9, -0.2, 1.5, 0.4, 0.6, 0.6, 0.5, 0.1, -0.3, 1.5, 1.1, 1.1, 0.6, 0.9, 0.8, 1.1, 1.4, -0.1, 0.2, -0.3, 0.7, -0.6, -3.3, -0.4, -4.8, -1.3, 2.6, 0.3, 6.6, -2.1, 0.7, -0.2, -3.7, 1.4, -1.7, 0.6, 2.2, 0.5, 1.1, 0.6, 0.6, 0.6, 0.4, 0.9, 1.1, 0.8, 0.9, 1.1, 2.9, -0.6], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-06-30"], "y": [-0.6], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% q/q", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.censtatd.gov.hk/en/web_table.html?id=310-30001" target="_blank" rel="noreferrer">HK C&amp;SD (National Accounts)</a></span>
+    <span>Series: </span>
+    <span>Frequency: quarterly</span>
+    <span>Provider update: 2026-06-30</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Seasonally adjusted quarter-to-quarter rate of change in real GDP in chained (2022) dollars.</span><span data-lang="zh">以链式(2022年)美元计算的实际GDP季调环比变动率。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="real_gdp_growth_yoy">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Real GDP Growth, YoY</span><span data-lang="zh">实际GDP同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-06-30">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>4.30</strong><em>% y/y</em></span>
+        <time datetime="2026-06-30"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-real_gdp_yoy" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-real_gdp_yoy", [{"name": "Real GDP Growth, YoY", "x": ["2000-03-31", "2000-06-30", "2000-09-30", "2000-12-31", "2001-03-31", "2001-06-30", "2001-09-30", "2001-12-31", "2002-03-31", "2002-06-30", "2002-09-30", "2002-12-31", "2003-03-31", "2003-06-30", "2003-09-30", "2003-12-31", "2004-03-31", "2004-06-30", "2004-09-30", "2004-12-31", "2005-03-31", "2005-06-30", "2005-09-30", "2005-12-31", "2006-03-31", "2006-06-30", "2006-09-30", "2006-12-31", "2007-03-31", "2007-06-30", "2007-09-30", "2007-12-31", "2008-03-31", "2008-06-30", "2008-09-30", "2008-12-31", "2009-03-31", "2009-06-30", "2009-09-30", "2009-12-31", "2010-03-31", "2010-06-30", "2010-09-30", "2010-12-31", "2011-03-31", "2011-06-30", "2011-09-30", "2011-12-31", "2012-03-31", "2012-06-30", "2012-09-30", "2012-12-31", "2013-03-31", "2013-06-30", "2013-09-30", "2013-12-31", "2014-03-31", "2014-06-30", "2014-09-30", "2014-12-31", "2015-03-31", "2015-06-30", "2015-09-30", "2015-12-31", "2016-03-31", "2016-06-30", "2016-09-30", "2016-12-31", "2017-03-31", "2017-06-30", "2017-09-30", "2017-12-31", "2018-03-31", "2018-06-30", "2018-09-30", "2018-12-31", "2019-03-31", "2019-06-30", "2019-09-30", "2019-12-31", "2020-03-31", "2020-06-30", "2020-09-30", "2020-12-31", "2021-03-31", "2021-06-30", "2021-09-30", "2021-12-31", "2022-03-31", "2022-06-30", "2022-09-30", "2022-12-31", "2023-03-31", "2023-06-30", "2023-09-30", "2023-12-31", "2024-03-31", "2024-06-30", "2024-09-30", "2024-12-31", "2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31", "2026-03-31", "2026-06-30"], "y": [10.7, 7.4, 7.2, 5.7, 2.0, 1.1, 0.1, -0.8, -0.6, 0.5, 2.4, 4.1, 3.9, -0.6, 4.0, 4.7, 7.9, 12.1, 6.9, 8.2, 6.4, 7.3, 8.3, 7.4, 9.0, 6.1, 6.4, 6.8, 5.9, 6.2, 6.7, 7.0, 7.0, 4.0, 0.9, -2.7, -7.8, -3.1, -1.7, 2.5, 7.9, 6.4, 6.5, 6.3, 7.6, 5.1, 3.9, 3.0, 0.8, 1.0, 1.8, 3.1, 3.4, 3.1, 3.1, 2.9, 3.0, 2.2, 3.2, 2.6, 2.4, 3.1, 2.3, 1.9, 1.1, 1.8, 2.3, 3.4, 4.5, 3.9, 3.5, 3.4, 4.5, 3.3, 2.6, 1.1, 0.3, 0.1, -3.2, -3.6, -9.4, -9.4, -4.0, -3.5, 8.2, 7.6, 5.6, 4.7, -4.0, -1.5, -4.9, -4.3, 2.7, 1.5, 4.1, 4.2, 2.9, 3.0, 2.1, 2.5, 3.2, 3.3, 3.8, 4.0, 5.9, 4.3], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-06-30"], "y": [4.3], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.censtatd.gov.hk/en/web_table.html?id=310-30001" target="_blank" rel="noreferrer">HK C&amp;SD (National Accounts)</a></span>
+    <span>Series: </span>
+    <span>Frequency: quarterly</span>
+    <span>Provider update: 2026-06-30</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Year-on-year rate of change in real GDP.</span><span data-lang="zh">实际GDP较上年同季同比变动率。</span></p>
+</article>
+
+
+  </div>
+</section>
+
+<section class="panel" id="production_cycle">
+  <div class="section-title">
+    <p>PDF logic</p>
+    <h2><span data-lang="en">Production, Retail &amp; Construction</span><span data-lang="zh">生产、零售与建筑</span></h2>
+    <div class="logic"><span data-lang="en">C&amp;SD monthly and quarterly series cover manufacturing industrial production, retail sales value index, and gross construction works output.</span><span data-lang="zh">政府统计处月度与季度序列覆盖制造业生产指数、零售业销货价值指数，以及主要承建商完成建筑工程名义总值。</span></div>
+  </div>
+  <div class="charts-grid">
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="industrial_production_growth">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Industrial Production YoY (Manufacturing)</span><span data-lang="zh">制造业工业生产指数同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-06-30">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>2.30</strong><em>% y/y</em></span>
+        <time datetime="2026-06-30"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-industrial_production_growth" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-industrial_production_growth", [{"name": "Industrial Production YoY (Manufacturing)", "x": ["2006-03-31", "2006-06-30", "2006-09-30", "2006-12-31", "2007-03-31", "2007-06-30", "2007-09-30", "2007-12-31", "2008-03-31", "2008-06-30", "2008-09-30", "2008-12-31", "2009-03-31", "2009-06-30", "2009-09-30", "2009-12-31", "2010-03-31", "2010-06-30", "2010-09-30", "2010-12-31", "2011-03-31", "2011-06-30", "2011-09-30", "2011-12-31", "2012-03-31", "2012-06-30", "2012-09-30", "2012-12-31", "2013-03-31", "2013-06-30", "2013-09-30", "2013-12-31", "2014-03-31", "2014-06-30", "2014-09-30", "2014-12-31", "2015-03-31", "2015-06-30", "2015-09-30", "2015-12-31", "2016-03-31", "2016-06-30", "2016-09-30", "2016-12-31", "2017-03-31", "2017-06-30", "2017-09-30", "2017-12-31", "2018-03-31", "2018-06-30", "2018-09-30", "2018-12-31", "2019-03-31", "2019-06-30", "2019-09-30", "2019-12-31", "2020-03-31", "2020-06-30", "2020-09-30", "2020-12-31", "2021-03-31", "2021-06-30", "2021-09-30", "2021-12-31", "2022-03-31", "2022-06-30", "2022-09-30", "2022-12-31", "2023-03-31", "2023-06-30", "2023-09-30", "2023-12-31", "2024-03-31", "2024-06-30", "2024-09-30", "2024-12-31", "2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31", "2026-03-31", "2026-06-30"], "y": [7.1, 5.5, -0.8, -1.6, -1.3, -2.2, -2.0, -0.2, -4.5, -4.2, -7.0, -10.6, -10.1, -9.5, -8.6, -4.9, 0.4, 2.2, 5.4, 5.7, 3.5, 2.0, 0.2, -2.2, -1.6, -2.9, -0.1, 1.3, 0.5, 0.3, -0.9, 0.5, 2.1, 2.2, -1.7, -3.6, -1.5, -1.2, -2.1, -1.3, -0.3, -0.4, -0.1, -1.0, 0.2, 0.4, 0.3, 0.8, 1.1, 1.6, 1.2, 1.2, 1.4, 0.4, 0.5, -0.5, -4.6, -5.1, -7.4, -6.1, 2.6, 5.6, 7.6, 5.8, -1.3, 2.7, -0.5, -0.1, 3.8, 2.7, 4.3, 4.1, 1.8, 0.7, -0.1, 1.0, 0.7, 0.9, 5.3, 5.8, 3.1, 2.3], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-06-30"], "y": [2.3], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.censtatd.gov.hk/en/web_table.html?id=610-65001" target="_blank" rel="noreferrer">HK C&amp;SD</a></span>
+    <span>Series: </span>
+    <span>Frequency: quarterly</span>
+    <span>Provider update: 2026-06-30</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Index of industrial production for the manufacturing sector year-on-year change.</span><span data-lang="zh">制造业工业生产指数同比变动率。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="retail_sales_growth">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Retail Sales Value Index YoY</span><span data-lang="zh">零售业总销货价值指数同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-08-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>5.60</strong><em>% y/y</em></span>
+        <time datetime="2026-08-01"><span data-lang="en">Aug 2026</span><span data-lang="zh">2026年8月</span></time>
+      </div>
+      <span class="quality-pill">watch</span><span class="authority-chip">official primary</span><span class="freshness-chip">due</span>
+    </div>
+  </div>
+  <div id="chart-retail_sales_growth" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-retail_sales_growth", [{"name": "Retail Sales Value Index YoY", "x": ["2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01"], "y": [4.8, 4.1, 6.8, 11.5, -3.3, 8.8, 9.3, 5.2, 5.1, 7.0, 8.2, 7.5, 6.8, 7.3, 11.4, -1.6, 28.5, 4.9, 3.1, 10.2, 14.3, 14.3, 15.2, 15.8, 16.8, 19.6, 16.8, 23.3, 9.6, 20.0, 18.5, 13.0, 11.6, 13.6, 10.3, 7.1, 0.4, 1.3, 1.1, 7.4, -12.7, -7.7, -4.3, -6.2, -4.7, -5.3, -0.1, 2.6, 9.8, 11.9, 16.1, 6.5, 35.8, 19.0, 15.5, 19.7, 15.3, 19.2, 17.1, 17.2, 21.8, 18.1, 18.6, 28.1, 8.5, 26.2, 27.8, 27.8, 28.8, 29.1, 29.0, 24.0, 23.0, 23.4, 23.5, 14.9, 15.6, 17.1, 11.4, 8.7, 11.0, 3.9, 4.6, 9.4, 3.9, 9.4, 9.1, 10.5, 22.7, 9.8, 20.7, 12.9, 14.7, 9.3, 8.1, 5.0, 6.3, 8.5, 5.7, 14.4, -2.2, -1.5, -9.9, -3.9, -6.9, -3.2, 3.5, 4.8, 1.4, 4.2, -4.0, -14.5, 14.8, -2.9, -2.1, -0.1, -0.4, -2.9, -5.3, -6.3, -3.0, -7.8, -8.5, -6.6, -20.6, -9.8, -7.5, -8.3, -8.9, -7.7, -10.5, -4.0, -2.9, -5.4, -2.9, -1.0, -5.8, 3.0, 0.1, 0.4, 0.1, 4.0, 2.7, 5.7, 3.9, 7.6, 5.8, 4.2, 29.9, 11.5, 12.2, 12.9, 11.9, 7.8, 9.4, 2.4, 6.0, 1.4, 0.1, 7.0, -10.2, -0.2, -4.5, -1.4, -6.7, -11.5, -22.9, -18.2, -24.4, -23.7, -19.4, -21.5, -44.0, -42.1, -36.1, -32.9, -24.7, -23.1, -13.1, -12.8, -8.7, -4.1, -13.3, -13.7, 30.0, 20.2, 12.1, 10.4, 5.8, 2.8, 11.9, 7.4, 12.1, 7.1, 6.1, 4.0, -14.6, -13.8, 11.7, -1.6, -1.3, 4.1, -0.2, 0.3, 4.0, -4.1, 1.2, 6.9, 31.3, 40.8, 14.9, 18.5, 19.5, 16.7, 13.7, 13.0, 5.8, 15.9, 7.8, 0.9, 1.9, -7.0, -14.7, -11.4, -9.7, -11.7, -10.0, -6.9, -2.8, -7.3, -9.6, -3.1, -13.0, -3.5, -2.3, 2.4, 0.7, 1.8, 3.9, 6.0, 6.9, 6.5, 6.6, 5.5, 19.3, 12.8, 8.7, 7.9, 4.6, 4.5, 5.6], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-08-01"], "y": [5.6], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.censtatd.gov.hk/en/web_table.html?id=620-67001" target="_blank" rel="noreferrer">HK C&amp;SD</a></span>
+    <span>Series: </span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-08-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Total retail sales value index year-on-year change.</span><span data-lang="zh">零售业总销货价值指数同比变动率。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="construction_activity">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Construction Works Performed YoY</span><span data-lang="zh">主要承建商完成建筑工程名义总值同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-06-30">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>4.10</strong><em>% y/y</em></span>
+        <time datetime="2026-06-30"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-construction_works_growth" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-construction_works_growth", [{"name": "Construction Works Performed YoY", "x": ["2005-03-31", "2005-06-30", "2005-09-30", "2005-12-31", "2006-03-31", "2006-06-30", "2006-09-30", "2006-12-31", "2007-03-31", "2007-06-30", "2007-09-30", "2007-12-31", "2008-03-31", "2008-06-30", "2008-09-30", "2008-12-31", "2009-03-31", "2009-06-30", "2009-09-30", "2009-12-31", "2010-03-31", "2010-06-30", "2010-09-30", "2010-12-31", "2011-03-31", "2011-06-30", "2011-09-30", "2011-12-31", "2012-03-31", "2012-06-30", "2012-09-30", "2012-12-31", "2013-03-31", "2013-06-30", "2013-09-30", "2013-12-31", "2014-03-31", "2014-06-30", "2014-09-30", "2014-12-31", "2015-03-31", "2015-06-30", "2015-09-30", "2015-12-31", "2016-03-31", "2016-06-30", "2016-09-30", "2016-12-31", "2017-03-31", "2017-06-30", "2017-09-30", "2017-12-31", "2018-03-31", "2018-06-30", "2018-09-30", "2018-12-31", "2019-03-31", "2019-06-30", "2019-09-30", "2019-12-31", "2020-03-31", "2020-06-30", "2020-09-30", "2020-12-31", "2021-03-31", "2021-06-30", "2021-09-30", "2021-12-31", "2022-03-31", "2022-06-30", "2022-09-30", "2022-12-31", "2023-03-31", "2023-06-30", "2023-09-30", "2023-12-31", "2024-03-31", "2024-06-30", "2024-09-30", "2024-12-31", "2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31", "2026-03-31", "2026-06-30"], "y": [0.7, -2.5, -2.4, -5.7, -5.4, 0.5, -1.4, 3.6, 1.2, 2.3, 2.0, 6.0, 8.3, 9.2, 6.2, 5.5, 1.0, 4.1, 2.7, -2.1, 1.9, 8.4, 15.4, 14.9, 19.3, 3.6, 15.1, 24.1, 27.5, 27.9, 18.3, 28.8, 15.7, 14.0, 6.9, 2.7, 13.6, 12.7, 14.4, 11.9, 8.2, 14.0, 14.4, 12.1, 4.2, 0.7, 10.8, 6.7, 5.1, 13.0, 0.9, 4.3, 9.5, -0.9, -1.1, -3.1, -13.0, -9.3, -1.7, -0.8, -0.2, -5.2, -3.4, -2.4, 1.3, 3.3, 2.6, -0.1, 2.9, 11.6, 3.9, 7.9, 8.6, 8.6, 14.4, 4.0, 9.4, 3.3, 6.9, 9.5, 2.2, 0.9, -1.9, -4.9, 2.9, 4.1], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-06-30"], "y": [4.1], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.censtatd.gov.hk/en/web_table.html?id=615-66001" target="_blank" rel="noreferrer">HK C&amp;SD</a></span>
+    <span>Series: </span>
+    <span>Frequency: quarterly</span>
+    <span>Provider update: 2026-06-30</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Gross value of construction works performed by main contractors year-on-year change.</span><span data-lang="zh">主要承建商完成建筑工程名义总值同比变动率。</span></p>
+</article>
+
+
+  </div>
+</section>
+
+<section class="panel" id="labour_wages">
+  <div class="section-title">
+    <p>PDF logic</p>
+    <h2><span data-lang="en">Labour Market &amp; Wages</span><span data-lang="zh">劳动力市场与工资</span></h2>
+    <div class="logic"><span data-lang="en">Seasonally adjusted unemployment rate (SAUR) from the General Household Survey measures labour slack, alongside quarterly nominal wage indices across major industries.</span><span data-lang="zh">综合住户统计调查公布的季调失业率衡量劳动力闲置程度，配合主要行业名义工资指数。</span></div>
+  </div>
+  <div class="charts-grid">
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="unemployment_rate">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Unemployment Rate (Seasonally Adjusted)</span><span data-lang="zh">经季节性调整的失业率</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-09-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>3.90</strong><em>% of labour force</em></span>
+        <time datetime="2026-09-01"><span data-lang="en">Sep 2026</span><span data-lang="zh">2026年9月</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-unemployment_rate" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-unemployment_rate", [{"name": "Unemployment Rate (Seasonally Adjusted)", "x": ["2000-01-01", "2000-02-01", "2000-03-01", "2000-04-01", "2000-05-01", "2000-06-01", "2000-07-01", "2000-08-01", "2000-09-01", "2000-10-01", "2000-11-01", "2000-12-01", "2001-01-01", "2001-02-01", "2001-03-01", "2001-04-01", "2001-05-01", "2001-06-01", "2001-07-01", "2001-08-01", "2001-09-01", "2001-10-01", "2001-11-01", "2001-12-01", "2002-01-01", "2002-02-01", "2002-03-01", "2002-04-01", "2002-05-01", "2002-06-01", "2002-07-01", "2002-08-01", "2002-09-01", "2002-10-01", "2002-11-01", "2002-12-01", "2003-01-01", "2003-02-01", "2003-03-01", "2003-04-01", "2003-05-01", "2003-06-01", "2003-07-01", "2003-08-01", "2003-09-01", "2003-10-01", "2003-11-01", "2003-12-01", "2004-01-01", "2004-02-01", "2004-03-01", "2004-04-01", "2004-05-01", "2004-06-01", "2004-07-01", "2004-08-01", "2004-09-01", "2004-10-01", "2004-11-01", "2004-12-01", "2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01", "2026-09-01"], "y": [6.0, 5.9, 5.6, 5.3, 5.1, 5.1, 5.0, 4.9, 4.8, 4.7, 4.5, 4.4, 4.4, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.8, 5.2, 5.5, 6.0, 6.3, 6.7, 6.8, 7.0, 7.1, 7.3, 7.5, 7.5, 7.4, 7.3, 7.3, 7.3, 7.4, 7.4, 7.6, 7.5, 7.8, 8.2, 8.5, 8.4, 8.4, 8.2, 8.0, 7.6, 7.5, 7.5, 7.3, 7.2, 7.1, 6.9, 6.7, 6.6, 6.6, 6.7, 6.7, 6.7, 6.6, 6.4, 6.1, 6.0, 5.9, 5.7, 5.7, 5.7, 5.6, 5.4, 5.3, 5.4, 5.2, 5.2, 5.1, 5.1, 5.0, 4.9, 4.9, 4.9, 4.8, 4.6, 4.6, 4.5, 4.5, 4.5, 4.3, 4.3, 4.3, 4.3, 4.2, 4.1, 4.2, 4.1, 4.0, 3.7, 3.4, 3.4, 3.3, 3.3, 3.3, 3.3, 3.2, 3.2, 3.3, 3.5, 3.6, 3.9, 4.1, 4.6, 5.1, 5.2, 5.3, 5.3, 5.3, 5.4, 5.5, 5.4, 5.2, 5.1, 5.0, 4.9, 4.7, 4.6, 4.5, 4.6, 4.6, 4.3, 4.3, 4.2, 4.2, 4.0, 3.9, 3.8, 3.6, 3.5, 3.6, 3.6, 3.6, 3.5, 3.3, 3.3, 3.3, 3.3, 3.3, 3.2, 3.4, 3.3, 3.3, 3.2, 3.3, 3.2, 3.3, 3.4, 3.4, 3.4, 3.2, 3.5, 3.5, 3.5, 3.5, 3.5, 3.4, 3.3, 3.3, 3.3, 3.3, 3.3, 3.2, 3.2, 3.1, 3.2, 3.2, 3.2, 3.2, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.4, 3.4, 3.4, 3.4, 3.4, 3.4, 3.4, 3.4, 3.4, 3.4, 3.3, 3.3, 3.3, 3.3, 3.3, 3.2, 3.2, 3.1, 3.2, 3.1, 3.1, 3.0, 3.0, 2.9, 2.9, 2.9, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.9, 2.9, 3.0, 3.1, 3.3, 3.4, 3.8, 4.3, 5.2, 5.9, 6.1, 6.0, 6.1, 6.2, 6.3, 6.2, 6.6, 7.0, 7.2, 6.8, 6.4, 6.0, 5.4, 4.9, 4.6, 4.5, 4.3, 4.2, 4.0, 3.9, 4.5, 5.1, 5.5, 5.1, 4.7, 4.3, 4.1, 4.0, 3.8, 3.6, 3.5, 3.4, 3.3, 3.1, 3.0, 3.0, 3.0, 2.8, 2.8, 2.8, 2.9, 2.9, 2.9, 2.9, 2.9, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.1, 3.1, 3.1, 3.1, 3.2, 3.3, 3.4, 3.5, 3.5, 3.7, 3.7, 3.9, 3.8, 3.8, 3.9, 3.9, 3.8, 3.7, 3.7, 3.7, 3.7, 3.7, 3.8, 3.9], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-09-01"], "y": [3.9], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% of labour force", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.censtatd.gov.hk/en/web_table.html?id=210-06101" target="_blank" rel="noreferrer">HK C&amp;SD (General Household Survey)</a></span>
+    <span>Series: </span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-09-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">3-month moving average seasonally adjusted unemployment rate.</span><span data-lang="zh">综合住户统计调查公布的3个月移动平均经季节性调整失业率。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="wage_growth">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Nominal Wage Index YoY</span><span data-lang="zh">名义工资指数同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-06-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>3.40</strong><em>% y/y</em></span>
+        <time datetime="2026-06-01"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
+      </div>
+      <span class="quality-pill">watch</span><span class="authority-chip">official primary</span><span class="freshness-chip">due</span>
+    </div>
+  </div>
+  <div id="chart-nominal_wage_index_growth" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-nominal_wage_index_growth", [{"name": "Nominal Wage Index YoY", "x": ["2005-03-01", "2005-06-01", "2005-09-01", "2005-12-01", "2006-03-01", "2006-06-01", "2006-09-01", "2006-12-01", "2007-03-01", "2007-06-01", "2007-09-01", "2007-12-01", "2008-03-01", "2008-06-01", "2008-09-01", "2008-12-01", "2009-03-01", "2009-06-01", "2009-09-01", "2009-12-01", "2010-03-01", "2010-06-01", "2010-09-01", "2010-12-01", "2011-03-01", "2011-06-01", "2011-09-01", "2011-12-01", "2012-03-01", "2012-06-01", "2012-09-01", "2012-12-01", "2013-03-01", "2013-06-01", "2013-09-01", "2013-12-01", "2014-03-01", "2014-06-01", "2014-09-01", "2014-12-01", "2015-03-01", "2015-06-01", "2015-09-01", "2015-12-01", "2016-03-01", "2016-06-01", "2016-09-01", "2016-12-01", "2017-03-01", "2017-06-01", "2017-09-01", "2017-12-01", "2018-03-01", "2018-06-01", "2018-09-01", "2018-12-01", "2019-03-01", "2019-06-01", "2019-09-01", "2019-12-01", "2020-03-01", "2020-06-01", "2020-09-01", "2020-12-01", "2021-03-01", "2021-06-01", "2021-09-01", "2021-12-01", "2022-03-01", "2022-06-01", "2022-09-01", "2022-12-01", "2023-03-01", "2023-06-01", "2023-09-01", "2023-12-01", "2024-03-01", "2024-06-01", "2024-09-01", "2024-12-01", "2025-03-01", "2025-06-01", "2025-09-01", "2025-12-01", "2026-03-01", "2026-06-01"], "y": [1.0, 0.6, 1.1, 1.6, 0.9, 1.4, 2.3, 2.2, 2.1, 2.8, 2.5, 2.8, 4.0, 4.1, 4.6, 0.9, -0.9, -1.9, -1.8, 0.8, 1.9, 2.2, 2.4, 3.3, 4.9, 8.0, 9.9, 9.4, 8.0, 5.1, 4.8, 5.1, 4.7, 5.2, 4.8, 4.1, 4.1, 4.5, 4.0, 4.2, 4.1, 4.6, 4.4, 4.2, 3.9, 3.8, 3.7, 3.6, 3.6, 3.8, 3.7, 3.8, 4.0, 3.8, 4.1, 4.1, 3.9, 3.8, 3.4, 2.8, 2.2, 1.3, 1.0, 1.0, 0.9, 1.1, 1.3, 1.8, 1.8, 1.9, 2.3, 2.6, 3.2, 3.5, 3.8, 3.8, 3.9, 3.7, 3.6, 3.5, 3.5, 3.5, 3.3, 3.4, 3.4, 3.4], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-06-01"], "y": [3.4], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.censtatd.gov.hk/en/web_table.html?id=220-19001" target="_blank" rel="noreferrer">HK C&amp;SD</a></span>
+    <span>Series: </span>
+    <span>Frequency: quarterly</span>
+    <span>Provider update: 2026-06-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Nominal wage index for employees up to supervisory level year-on-year change.</span><span data-lang="zh">督导级别及以下雇员名义工资指数同比变动率。</span></p>
+</article>
+
+
+  </div>
+</section>
+
+<section class="panel" id="prices_costs">
+  <div class="section-title">
+    <p>PDF logic</p>
+    <h2><span data-lang="en">Prices &amp; Inflation</span><span data-lang="zh">价格与通胀</span></h2>
+    <div class="logic"><span data-lang="en">Composite Consumer Price Index (headline) and the Underlying CPI (netting out one-off government relief measures to capture fundamental inflation), with independent IMF CPI cross-check.</span><span data-lang="zh">综合消费物价指数(总体通胀)与剔除政府一次性纾困措施影响的基本消费物价指数(核心通胀)，配合IMF总体CPI交叉核对。</span></div>
+  </div>
+  <div class="charts-grid">
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="headline_inflation">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Composite CPI Inflation YoY</span><span data-lang="zh">综合消费物价指数同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-09-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>2.30</strong><em>% y/y</em></span>
+        <time datetime="2026-09-01"><span data-lang="en">Sep 2026</span><span data-lang="zh">2026年9月</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-cpi_inflation" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-cpi_inflation", [{"name": "Composite CPI Inflation YoY", "x": ["2000-01-01", "2000-02-01", "2000-03-01", "2000-04-01", "2000-05-01", "2000-06-01", "2000-07-01", "2000-08-01", "2000-09-01", "2000-10-01", "2000-11-01", "2000-12-01", "2001-01-01", "2001-02-01", "2001-03-01", "2001-04-01", "2001-05-01", "2001-06-01", "2001-07-01", "2001-08-01", "2001-09-01", "2001-10-01", "2001-11-01", "2001-12-01", "2002-01-01", "2002-02-01", "2002-03-01", "2002-04-01", "2002-05-01", "2002-06-01", "2002-07-01", "2002-08-01", "2002-09-01", "2002-10-01", "2002-11-01", "2002-12-01", "2003-01-01", "2003-02-01", "2003-03-01", "2003-04-01", "2003-05-01", "2003-06-01", "2003-07-01", "2003-08-01", "2003-09-01", "2003-10-01", "2003-11-01", "2003-12-01", "2004-01-01", "2004-02-01", "2004-03-01", "2004-04-01", "2004-05-01", "2004-06-01", "2004-07-01", "2004-08-01", "2004-09-01", "2004-10-01", "2004-11-01", "2004-12-01", "2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01", "2026-09-01"], "y": [-6.2, -5.8, -5.7, -5.2, -5.6, -5.7, -4.3, -3.6, -3.3, -3.4, -2.5, -2.3, -1.4, -2.3, -1.5, -1.4, -1.6, -1.3, -1.2, -1.2, -1.4, -1.3, -1.6, -1.7, -3.2, -2.0, -2.5, -2.9, -2.9, -2.8, -2.7, -2.8, -3.0, -3.2, -3.1, -2.8, -1.4, -1.9, -1.9, -2.1, -3.0, -3.7, -4.5, -4.1, -3.8, -3.3, -2.8, -2.5, -2.1, -2.8, -2.5, -1.6, -1.1, -0.3, 0.4, 0.1, 0.3, -0.1, -0.2, -0.1, -1.0, 0.5, 0.3, 0.2, 0.8, 1.0, 1.3, 1.5, 1.7, 1.3, 1.2, 1.3, 2.0, 1.4, 1.8, 2.0, 2.4, 2.5, 2.5, 2.6, 2.3, 2.1, 2.6, 2.7, 2.3, 3.6, 2.7, 1.9, 1.7, 1.9, 2.1, 2.4, 2.2, 3.5, 3.6, 4.0, 3.5, 3.9, 4.4, 5.2, 5.5, 5.8, 6.1, 6.0, 5.4, 4.3, 3.8, 2.7, 3.7, 1.4, 1.7, 1.2, 0.5, -0.3, -0.9, -1.0, 0.1, 0.1, 0.1, 0.9, 0.5, 2.2, 1.5, 2.0, 2.2, 2.4, 2.6, 2.5, 2.0, 2.1, 2.5, 2.8, 3.5, 3.5, 4.2, 4.2, 4.9, 5.4, 5.4, 6.0, 6.3, 6.2, 5.9, 5.9, 6.4, 4.7, 5.1, 4.9, 4.3, 3.7, 3.7, 3.2, 3.3, 3.2, 3.3, 3.3, 2.4, 4.2, 3.4, 3.5, 3.6, 3.7, 4.0, 4.3, 4.2, 4.1, 4.2, 4.1, 4.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.2, 3.1, 3.6, 3.4, 3.2, 2.2, 3.0, 2.8, 1.9, 2.0, 2.0, 1.8, 1.8, 1.8, 1.9, 2.0, 2.1, 2.3, 2.6, 2.8, 2.4, 2.4, 2.2, 2.2, 2.3, 2.2, 1.4, 1.3, 1.3, 1.7, 0.3, 0.8, 2.0, 1.9, 1.8, 1.7, 1.8, 1.4, 1.5, 1.7, 1.9, 1.5, 3.2, 2.5, 1.7, 1.9, 2.2, 2.3, 2.0, 2.4, 2.3, 2.3, 2.2, 2.3, 1.8, 1.9, 3.0, 2.7, 2.9, 2.8, 3.0, 3.0, 2.9, 2.5, 2.5, 3.4, 1.8, 2.1, 1.5, 1.2, 0.7, -0.1, -0.1, 0.0, -0.1, -0.1, -0.6, -0.2, 0.0, 0.1, 0.4, 0.5, 0.5, 1.1, 1.4, 1.3, 1.5, 1.5, 2.0, 1.4, 1.7, 1.8, 1.6, 1.6, 2.0, 2.0, 1.9, 1.9, 1.8, 1.8, 2.0, 2.4, 1.8, 1.9, 2.1, 2.0, 1.8, 1.8, 1.8, 2.1, 2.4, 2.4, 2.3, 1.5, 2.0, 1.7, 1.1, 1.2, 1.3, 2.0, 1.9, 1.6, 1.2, 1.1, 1.2, 1.7, 1.0, 1.0, 1.6, 1.2, 0.9, 0.6, 0.9, 0.8, 1.0, 1.1, 1.4, 0.9, 1.9, 1.8, 1.7, 2.2, 2.2, 2.0, 1.9, 2.3], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-09-01"], "y": [2.3], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.censtatd.gov.hk/en/web_table.html?id=510-60001" target="_blank" rel="noreferrer">HK C&amp;SD</a></span>
+    <span>Series: </span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-09-01</span>
+  </footer>
+  <p class="cross-check">✓ Agrees with <strong>C&amp;SD Composite CPI vs IMF CPI</strong> · last 24 months: 25 common periods, max gap 0.68 (tolerance 0.75)<br><span class="cross-check-history">Full history: 32 of 251 periods beyond tolerance (most recently 2022-09-01; max gap 3.48).</span></p>
+  <p class="caveat"><span data-lang="en">Headline Composite Consumer Price Index annual rate of change.</span><span data-lang="zh">综合消费物价指数同比变动率。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="core_inflation">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Underlying CPI Inflation YoY</span><span data-lang="zh">基本消费物价指数同比 (核心通胀)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-09-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>2.40</strong><em>% y/y</em></span>
+        <time datetime="2026-09-01"><span data-lang="en">Sep 2026</span><span data-lang="zh">2026年9月</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-core_cpi_inflation" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-core_cpi_inflation", [{"name": "Underlying CPI Inflation YoY", "x": ["2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01", "2026-09-01"], "y": [2.3, 3.6, 2.7, 2.8, 2.6, 2.7, 2.9, 3.3, 3.0, 3.5, 3.6, 4.0, 4.3, 4.8, 5.3, 5.3, 5.6, 5.8, 6.1, 6.1, 6.1, 5.9, 5.5, 4.4, 4.5, 2.3, 2.5, 1.9, 1.2, 0.4, -0.3, -0.4, -0.5, -0.4, -0.5, 0.2, -0.2, 1.5, 0.8, 1.5, 1.6, 1.9, 2.0, 1.9, 1.9, 2.0, 2.5, 2.8, 3.5, 3.5, 4.2, 4.1, 4.8, 5.4, 5.7, 6.3, 6.5, 6.5, 6.2, 6.2, 6.7, 5.0, 5.4, 5.3, 4.8, 4.2, 3.8, 3.3, 3.4, 3.3, 3.4, 3.4, 2.5, 4.3, 3.5, 3.4, 3.4, 3.6, 3.9, 3.8, 3.7, 3.6, 3.7, 3.5, 4.0, 3.0, 3.0, 3.1, 3.1, 3.1, 2.9, 2.9, 2.8, 2.7, 2.6, 2.4, 1.4, 2.2, 1.9, 1.7, 1.9, 1.9, 1.9, 2.0, 1.9, 1.9, 2.0, 2.1, 2.2, 2.6, 2.8, 2.1, 2.1, 1.9, 1.9, 2.0, 1.9, 1.7, 1.7, 1.6, 2.1, 0.6, 1.1, 2.0, 1.9, 1.8, 1.7, 1.8, 1.4, 1.5, 1.7, 1.9, 1.5, 3.2, 2.5, 2.0, 2.2, 2.5, 2.6, 2.3, 2.7, 2.6, 2.6, 2.5, 2.6, 2.1, 2.3, 2.9, 2.6, 2.8, 2.7, 2.9, 2.9, 2.8, 2.4, 2.4, 3.4, 1.8, 2.1, 1.7, 1.4, 1.0, 0.1, 0.1, 0.2, 0.2, 0.2, -0.1, -0.5, -0.3, -0.2, 0.1, 0.2, 0.3, 1.0, 1.2, 1.2, 1.2, 1.2, 1.4, 1.4, 1.6, 1.7, 1.7, 1.8, 2.0, 2.0, 1.9, 1.9, 1.8, 1.8, 2.0, 2.4, 1.8, 1.9, 1.8, 1.8, 1.6, 1.6, 1.6, 1.9, 1.9, 1.9, 1.8, 1.0, 1.6, 1.3, 1.1, 1.2, 1.2, 1.4, 1.3, 1.0, 1.1, 1.0, 1.1, 1.5, 0.9, 0.8, 1.2, 0.8, 0.7, 0.6, 0.9, 0.8, 1.0, 1.1, 1.4, 0.9, 1.8, 1.7, 1.6, 2.1, 2.1, 2.1, 2.0, 2.4], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-09-01"], "y": [2.4], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.censtatd.gov.hk/en/web_table.html?id=510-60002" target="_blank" rel="noreferrer">HK C&amp;SD</a></span>
+    <span>Series: </span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-09-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Underlying Composite CPI netting out the effects of all Government&#x27;s one-off relief measures.</span><span data-lang="zh">剔除所有政府一次性纾困措施影响后的基本综合消费物价指数同比。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="hk:cpi_inflation_imf">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Headline CPI YoY (IMF Cross-Check)</span><span data-lang="zh">总体CPI同比 (IMF交叉核对)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-08-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>1.65</strong><em>% y/y</em></span>
+        <time datetime="2026-08-01"><span data-lang="en">Aug 2026</span><span data-lang="zh">2026年8月</span></time>
+      </div>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">due</span>
+    </div>
+  </div>
+  <div id="chart-cpi_inflation_imf" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-cpi_inflation_imf", [{"name": "Headline CPI YoY (IMF Cross-Check)", "x": ["2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01"], "y": [1.21580547112462, 1.213960546282246, 1.365705614567527, 1.82648401826484, 1.213960546282246, 1.669195751138088, 1.815431164901664, 2.121212121212121, 2.114803625377644, 2.262443438914027, 2.416918429003021, 2.105263157894737, 2.102102102102102, 2.098950524737631, 2.245508982035928, 1.943198804185351, 0.8995502248875562, 2.388059701492537, 1.337295690936107, 1.186943620178042, 1.331360946745562, 1.622418879056047, 1.622418879056047, 1.620029455081001, 3.088235294117647, 3.524229074889868, 3.806734992679356, 3.225806451612903, 6.240713224368499, 4.227405247813411, 5.425219941348974, 5.718475073313783, 6.131386861313869, 6.240928882438316, 4.644412191582003, 3.043478260869565, 1.854493580599144, 2.978723404255319, 2.115655853314528, 3.125, 0.8391608391608392, 1.118881118881119, 0.5563282336578581, 0.1386962552011096, -0.8253094910591472, -1.502732240437158, -1.664355062413315, 0.4219409282700422, 2.521008403361345, 0.8264462809917354, 1.519337016574586, 1.239669421487603, 2.912621359223301, 2.213001383125864, 2.627939142461964, 2.631578947368421, 2.912621359223301, 0.5547850208044383, 2.256699576868829, 1.96078431372549, 2.459016393442623, 2.73224043715847, 2.993197278911565, 3.537414965986395, 3.638814016172507, 4.330175913396482, 4.582210242587601, 5.263157894736842, 5.660377358490566, 8.0, 5.793103448275862, 5.769230769230769, 5.733333333333333, 5.718085106382979, 5.680317040951123, 6.044678055190539, 4.681404421326398, 4.928664072632944, 4.768041237113402, 4.230769230769231, 3.698979591836735, 1.660280970625798, 3.78096479791395, 3.766233766233766, 3.783102143757881, 3.773584905660377, 3.625, 2.973977695167286, 4.347826086956522, 3.584672435105068, 4.059040590405904, 3.936039360393604, 4.059040590405904, 6.909547738693467, 4.522613065326633, 4.630788485607009, 4.374240583232078, 4.363636363636364, 4.342581423401689, 4.57280385078219, 3.928571428571429, 3.937947494033413, 3.664302600472813, 3.668639053254438, 3.664302600472813, 3.995299647473561, 3.966346153846154, 6.578947368421053, 5.122235157159488, 5.110336817653891, 4.855491329479769, 4.027617951668585, 4.467353951890034, 4.362801377726751, 2.850627137970353, 2.968036529680365, 2.964652223489168, 2.598870056497175, 3.005780346820809, 2.02020202020202, 2.21483942414175, 2.209944751381215, 2.315325248070562, 2.544247787610619, 2.960526315789474, 2.86028602860286, 2.660753880266075, 2.549889135254989, 2.436323366555925, 2.312775330396476, 4.377104377104377, 2.64026402640264, 1.191765980498375, 1.297297297297297, 1.185344827586207, 1.294498381877023, -0.1064962726304579, 0.5347593582887701, 2.051835853131749, 2.054054054054054, 1.945945945945946, 1.93756727664155, 1.935483870967742, 1.393354769560557, 1.605995717344754, 1.6008537886873, 1.703940362087327, 1.703940362087327, 3.091684434968017, 2.553191489361702, 1.904761904761905, 2.11864406779661, 2.439024390243902, 2.323125659978881, 2.320675105485232, 2.748414376321353, 2.634351949420443, 2.521008403361345, 2.513089005235602, 2.408376963350785, 2.068252326783868, 2.074688796680498, 2.907580477673936, 2.697095435684647, 3.209109730848861, 3.302373581011352, 3.402061855670103, 3.189300411522634, 3.285420944558522, 3.176229508196721, 2.860061287027579, 0.7157464212678937, 2.330293819655522, 2.540650406504065, 1.917255297679112, 1.717171717171717, 0.9027081243731194, -2.397602397602398, -0.3988035892323031, -2.492522432701894, -0.3976143141153082, -0.3972194637537239, -0.8937437934458788, 2.639593908629442, 0.396039603960396, 0.5946481665014866, 0.7920792079207921, 0.8937437934458788, 0.6958250497017893, 3.787103377686796, 1.601601601601602, 1.431492842535787, 1.796407185628743, 1.89431704885344, 2.404809619238477, 1.186943620178042, 1.676528599605523, 1.773399014778325, 1.277013752455796, 1.279527559055118, 1.875616979269497, 1.873767258382643, 1.87192118226601, 4.334677419354839, 1.764705882352941, 1.761252446183953, 1.956947162426614, 2.443792766373412, 1.745877788554801, 1.645692158760891, 2.036857419980601, 2.040816326530612, 1.937984496124031, 1.839303000968054, 1.740812379110251, 2.028985507246377, 2.79383429672447, 2.5, 2.399232245681382, 1.717557251908397, 2.097235462345091, 2.0, 1.140684410646388, 1.142857142857143, 1.425855513307985, 2.47148288973384, 2.47148288973384, 2.178030303030303, 1.312089971883786, 1.407129455909944, 1.4058106841612, 1.969981238273921, 1.400560224089636, 1.400560224089636, 1.973684210526316, 1.883239171374765, 1.499531396438613, 1.020408163265306, 1.11317254174397, 1.112140871177016, 1.20259019426457, 1.20259019426457, 1.478743068391867, 1.195952161913523, 1.749539594843462, 1.749539594843462, 1.751152073732719, 2.033271719038817, 1.939058171745152, 1.652892561983471, 1.651376146788991], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-08-01"], "y": [1.651376146788991], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/CPI/HKG.CPI._T.YOY_PCH_PA_PT.M" target="_blank" rel="noreferrer">IMF SDMX / HK C&amp;SD</a></span>
+    <span>Series: HKG.CPI._T.YOY_PCH_PA_PT.M</span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-10-27</span>
+  </footer>
+  <p class="cross-check">✓ Agrees with <strong>C&amp;SD Composite CPI vs IMF CPI</strong> · last 24 months: 25 common periods, max gap 0.68 (tolerance 0.75)<br><span class="cross-check-history">Full history: 32 of 251 periods beyond tolerance (most recently 2022-09-01; max gap 3.48).</span></p>
+  <p class="caveat"><span data-lang="en">Official CPI series transmitted to the IMF Consumer Price Index database.</span><span data-lang="zh">香港政府统计处向IMF报送的总体消费者价格指数同比。</span></p>
+</article>
+
+
+  </div>
+</section>
+
+<section class="panel" id="housing_property">
+  <div class="section-title">
+    <p>PDF logic</p>
+    <h2><span data-lang="en">Housing &amp; Property</span><span data-lang="zh">住宅与房地产</span></h2>
+    <div class="logic"><span data-lang="en">BIS long-term nominal and real residential property prices track residential real estate valuations across cycles.</span><span data-lang="zh">国际清算银行(BIS)长期名义与实际住宅价格指数跟踪房地产跨周期估值。</span></div>
+  </div>
+  <div class="charts-grid">
+
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="house_price_growth">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">BIS Nominal Residential Property Prices</span><span data-lang="zh">BIS名义住宅价格指数</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-01-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>204</strong><em>Index (2010 = 100)</em></span>
+        <time datetime="2026-01-01"><span data-lang="en">Q1 2026</span><span data-lang="zh">2026年 Q1</span></time>
+      </div>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
+    </div>
+  </div>
+  <div id="chart-bis_nominal_house_prices" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-bis_nominal_house_prices", [{"name": "BIS Nominal Residential Property Prices", "x": ["2000-01-01", "2000-04-01", "2000-07-01", "2000-10-01", "2001-01-01", "2001-04-01", "2001-07-01", "2001-10-01", "2002-01-01", "2002-04-01", "2002-07-01", "2002-10-01", "2003-01-01", "2003-04-01", "2003-07-01", "2003-10-01", "2004-01-01", "2004-04-01", "2004-07-01", "2004-10-01", "2005-01-01", "2005-04-01", "2005-07-01", "2005-10-01", "2006-01-01", "2006-04-01", "2006-07-01", "2006-10-01", "2007-01-01", "2007-04-01", "2007-07-01", "2007-10-01", "2008-01-01", "2008-04-01", "2008-07-01", "2008-10-01", "2009-01-01", "2009-04-01", "2009-07-01", "2009-10-01", "2010-01-01", "2010-04-01", "2010-07-01", "2010-10-01", "2011-01-01", "2011-04-01", "2011-07-01", "2011-10-01", "2012-01-01", "2012-04-01", "2012-07-01", "2012-10-01", "2013-01-01", "2013-04-01", "2013-07-01", "2013-10-01", "2014-01-01", "2014-04-01", "2014-07-01", "2014-10-01", "2015-01-01", "2015-04-01", "2015-07-01", "2015-10-01", "2016-01-01", "2016-04-01", "2016-07-01", "2016-10-01", "2017-01-01", "2017-04-01", "2017-07-01", "2017-10-01", "2018-01-01", "2018-04-01", "2018-07-01", "2018-10-01", "2019-01-01", "2019-04-01", "2019-07-01", "2019-10-01", "2020-01-01", "2020-04-01", "2020-07-01", "2020-10-01", "2021-01-01", "2021-04-01", "2021-07-01", "2021-10-01", "2022-01-01", "2022-04-01", "2022-07-01", "2022-10-01", "2023-01-01", "2023-04-01", "2023-07-01", "2023-10-01", "2024-01-01", "2024-04-01", "2024-07-01", "2024-10-01", "2025-01-01", "2025-04-01", "2025-07-01", "2025-10-01", "2026-01-01"], "y": [64.1228, 59.683, 57.8718, 55.7734, 53.675, 53.8075, 52.1067, 48.9259, 48.8818, 47.8436, 45.4801, 43.1388, 41.5705, 39.6488, 39.2954, 42.6528, 48.7713, 51.1569, 51.5545, 55.2432, 59.5726, 62.6429, 62.0023, 59.7272, 60.6328, 61.7814, 61.4501, 61.8256, 63.9903, 66.4421, 68.9381, 75.0345, 82.8538, 83.4281, 81.6611, 71.5666, 71.5887, 77.5747, 84.2454, 88.0667, 93.3017, 97.0346, 102.115, 107.5487, 116.0528, 123.099, 122.7235, 120.6693, 122.7677, 134.0328, 140.1955, 149.5831, 157.3582, 159.81, 162.7699, 162.4607, 161.8422, 164.051, 173.1515, 181.7881, 191.6395, 198.244, 202.2199, 194.5331, 182.031, 182.3403, 191.1315, 202.8605, 208.7139, 220.8184, 224.8606, 230.6257, 241.4048, 254.3487, 260.3788, 244.0554, 244.453, 261.2844, 256.9109, 252.4049, 249.931, 254.0836, 254.1278, 252.2061, 255.431, 260.4009, 263.6479, 261.417, 255.2985, 254.5254, 244.0775, 225.9871, 229.1457, 232.3486, 223.1156, 209.5974, 202.7279, 202.6837, 193.8263, 192.5451, 189.4528, 189.8945, 192.2359, 197.2942, 204.3404], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-01-01"], "y": [204.3404], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "Index (2010 = 100)", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://fred.stlouisfed.org/series/QHKN628BIS" target="_blank" rel="noreferrer">FRED / BIS</a></span>
+    <span>Series: QHKN628BIS</span>
+    <span>Frequency: quarterly</span>
+    <span>Provider update: 2026-07-31</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">BIS long-term residential property price index for Hong Kong.</span><span data-lang="zh">国际清算银行（BIS）编制的香港名义住宅价格指数。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="hk:bis_real_house_prices">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">BIS Real Residential Property Prices</span><span data-lang="zh">BIS实际住宅价格指数</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-01-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>137</strong><em>Index (2010 = 100)</em></span>
+        <time datetime="2026-01-01"><span data-lang="en">Q1 2026</span><span data-lang="zh">2026年 Q1</span></time>
+      </div>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
+    </div>
+  </div>
+  <div id="chart-bis_real_house_prices" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-bis_real_house_prices", [{"name": "BIS Real Residential Property Prices", "x": ["2000-01-01", "2000-04-01", "2000-07-01", "2000-10-01", "2001-01-01", "2001-04-01", "2001-07-01", "2001-10-01", "2002-01-01", "2002-04-01", "2002-07-01", "2002-10-01", "2003-01-01", "2003-04-01", "2003-07-01", "2003-10-01", "2004-01-01", "2004-04-01", "2004-07-01", "2004-10-01", "2005-01-01", "2005-04-01", "2005-07-01", "2005-10-01", "2006-01-01", "2006-04-01", "2006-07-01", "2006-10-01", "2007-01-01", "2007-04-01", "2007-07-01", "2007-10-01", "2008-01-01", "2008-04-01", "2008-07-01", "2008-10-01", "2009-01-01", "2009-04-01", "2009-07-01", "2009-10-01", "2010-01-01", "2010-04-01", "2010-07-01", "2010-10-01", "2011-01-01", "2011-04-01", "2011-07-01", "2011-10-01", "2012-01-01", "2012-04-01", "2012-07-01", "2012-10-01", "2013-01-01", "2013-04-01", "2013-07-01", "2013-10-01", "2014-01-01", "2014-04-01", "2014-07-01", "2014-10-01", "2015-01-01", "2015-04-01", "2015-07-01", "2015-10-01", "2016-01-01", "2016-04-01", "2016-07-01", "2016-10-01", "2017-01-01", "2017-04-01", "2017-07-01", "2017-10-01", "2018-01-01", "2018-04-01", "2018-07-01", "2018-10-01", "2019-01-01", "2019-04-01", "2019-07-01", "2019-10-01", "2020-01-01", "2020-04-01", "2020-07-01", "2020-10-01", "2021-01-01", "2021-04-01", "2021-07-01", "2021-10-01", "2022-01-01", "2022-04-01", "2022-07-01", "2022-10-01", "2023-01-01", "2023-04-01", "2023-07-01", "2023-10-01", "2024-01-01", "2024-04-01", "2024-07-01", "2024-10-01", "2025-01-01", "2025-04-01", "2025-07-01", "2025-10-01", "2026-01-01"], "y": [66.4739, 62.1616, 60.6452, 58.4462, 56.7564, 56.8153, 55.1769, 52.3583, 53.0788, 52.1556, 49.8731, 47.5878, 46.0408, 44.2881, 44.7492, 48.1525, 55.004, 57.6652, 58.2613, 62.0508, 66.9475, 70.1139, 69.1528, 66.2491, 67.086, 67.7824, 67.0214, 67.134, 69.5867, 71.9708, 73.9884, 78.7419, 86.1734, 85.4493, 83.7555, 73.4021, 73.2217, 79.4908, 87.2121, 88.8877, 93.4491, 96.7947, 104.0607, 105.6681, 111.9423, 116.7599, 117.4072, 112.1547, 112.5497, 121.9704, 130.1397, 134.033, 139.2015, 139.8101, 143.4171, 139.49, 137.4699, 138.4453, 145.5168, 148.6109, 156.0895, 162.5425, 165.7412, 155.5354, 144.2406, 145.7869, 151.94, 160.2309, 164.4446, 173.0602, 175.6699, 179.2275, 185.6542, 195.1355, 198.5265, 184.9372, 183.9822, 194.735, 189.6288, 185.5009, 184.6611, 186.5493, 190.94, 186.4041, 186.4898, 189.6816, 193.6996, 189.3652, 183.5552, 182.7035, 174.6389, 160.7623, 161.6107, 163.5059, 156.7105, 145.3754, 140.2602, 140.8883, 132.9822, 131.7367, 129.0244, 129.6833, 130.4794, 133.2606, 137.0192], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-01-01"], "y": [137.0192], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "Index (2010 = 100)", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://fred.stlouisfed.org/series/QHKR628BIS" target="_blank" rel="noreferrer">FRED / BIS</a></span>
+    <span>Series: QHKR628BIS</span>
+    <span>Frequency: quarterly</span>
+    <span>Provider update: 2026-07-31</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">BIS consumer price-deflated real residential property prices.</span><span data-lang="zh">经CPI平减后的实际住宅物业价格指数。</span></p>
+</article>
+
+
+  </div>
+</section>
+
+<section class="panel" id="external_fx">
+  <div class="section-title">
+    <p>PDF logic</p>
+    <h2><span data-lang="en">External Balance, Trade &amp; FX</span><span data-lang="zh">外部平衡、贸易与汇率</span></h2>
+    <div class="logic"><span data-lang="en">Daily USD/HKD spot exchange rate (Federal Reserve H.10), Bruegel 120-partner REER/NEER, quarterly BPM6 current account balance, and monthly merchandise trade.</span><span data-lang="zh">美联储H.10日度美元兑港元汇率、Bruegel实际与名义有效汇率、季度经常账户差额及月度商品进出口总值与贸易差额。</span></div>
+  </div>
+  <div class="charts-grid">
+
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="fx_spot">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">USD/HKD Exchange Rate (Fed H.10)</span><span data-lang="zh">美元兑港元汇率 (美联储H.10)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-10-23">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>7.84</strong><em>HKD per USD</em></span>
+        <time datetime="2026-10-23"><span data-lang="en">23 Oct 2026</span><span data-lang="zh">2026年10月23日</span></time>
+      </div>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-usd_hkd" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-usd_hkd", [{"name": "USD/HKD Exchange Rate (Fed H.10)", "x": ["2026-01-02", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-27", "2026-03-30", "2026-03-31", "2026-04-01", "2026-04-02", "2026-04-03", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-01", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-11", "2026-05-12", "2026-05-13", "2026-05-14", "2026-05-15", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21", "2026-05-22", "2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-22", "2026-06-23", "2026-06-24", "2026-06-25", "2026-06-26", "2026-06-29", "2026-06-30", "2026-07-01", "2026-07-02", "2026-07-06", "2026-07-07", "2026-07-08", "2026-07-09", "2026-07-10", "2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-17", "2026-08-18", "2026-08-19", "2026-08-20", "2026-08-21", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-27", "2026-08-28", "2026-08-31", "2026-09-01", "2026-09-02", "2026-09-03", "2026-09-04", "2026-09-08", "2026-09-09", "2026-09-10", "2026-09-11", "2026-09-14", "2026-09-15", "2026-09-16", "2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-28", "2026-09-29", "2026-09-30", "2026-10-01", "2026-10-02", "2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-10-19", "2026-10-20", "2026-10-21", "2026-10-22", "2026-10-23"], "y": [7.7911, 7.7844, 7.7867, 7.7863, 7.7924, 7.7945, 7.7964, 7.8015, 7.7973, 7.7967, 7.799, 7.7987, 7.7968, 7.7968, 7.7981, 7.7978, 7.7993, 7.8014, 7.8051, 7.8096, 7.8097, 7.8118, 7.8123, 7.8135, 7.8134, 7.8141, 7.8175, 7.8172, 7.8169, 7.8177, 7.8153, 7.8144, 7.8143, 7.8148, 7.8191, 7.8225, 7.8197, 7.8232, 7.8221, 7.8219, 7.8053, 7.8167, 7.8181, 7.821, 7.8198, 7.8236, 7.825, 7.827, 7.827, 7.8298, 7.836, 7.8361, 7.8335, 7.8327, 7.8352, 7.8278, 7.8187, 7.8248, 7.8326, 7.8367, 7.84, 7.837, 7.8369, 7.8372, 7.8364, 7.8362, 7.8315, 7.8343, 7.8318, 7.8322, 7.8323, 7.8341, 7.8239, 7.8297, 7.8302, 7.8301, 7.8329, 7.8323, 7.8337, 7.8369, 7.8363, 7.8364, 7.8334, 7.8348, 7.8334, 7.8363, 7.8352, 7.8309, 7.8282, 7.8287, 7.8282, 7.8304, 7.8325, 7.8303, 7.8311, 7.833, 7.8331, 7.8345, 7.8355, 7.8362, 7.8339, 7.8352, 7.8366, 7.8379, 7.837, 7.8375, 7.8346, 7.8347, 7.8369, 7.8373, 7.8369, 7.8368, 7.8359, 7.8345, 7.8335, 7.8346, 7.8375, 7.84, 7.8406, 7.8396, 7.8405, 7.8417, 7.8425, 7.842, 7.8435, 7.8425, 7.8427, 7.8425, 7.8391, 7.8368, 7.8394, 7.8384, 7.8378, 7.8387, 7.8395, 7.8398, 7.8407, 7.8417, 7.8407, 7.8404, 7.8419, 7.8419, 7.8405, 7.843, 7.8428, 7.8414, 7.8417, 7.8428, 7.8437, 7.8449, 7.8455, 7.8455, 7.8466, 7.8472, 7.8468, 7.8472, 7.8444, 7.8437, 7.8403, 7.8425, 7.8397, 7.8358, 7.8382, 7.8384, 7.8388, 7.84, 7.8387, 7.8408, 7.842, 7.8401, 7.8407, 7.8412, 7.8418, 7.8411, 7.8427, 7.8435, 7.8443, 7.8447, 7.8456, 7.8456, 7.8456, 7.8437, 7.8431, 7.8423, 7.8439, 7.8447, 7.8463, 7.8467, 7.8453, 7.847, 7.8469, 7.8475, 7.8478, 7.8484, 7.8476, 7.848, 7.8482, 7.847, 7.8478, 7.8483, 7.8486, 7.8465, 7.8364, 7.8423], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-10-23"], "y": [7.8423], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "HKD per USD", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://fred.stlouisfed.org/series/DEXHKUS" target="_blank" rel="noreferrer">FRED / Federal Reserve Board</a></span>
+    <span>Series: DEXHKUS</span>
+    <span>Frequency: daily</span>
+    <span>Provider update: 2026-10-26</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Daily noon buying rates in New York City for cable transfers in foreign currencies.</span><span data-lang="zh">纽约联邦储备银行每日公布的官方美元兑港元中午即期汇率。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="reer">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Real Effective Exchange Rate (REER)</span><span data-lang="zh">实际有效汇率 (REER)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-09-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>120</strong><em>Index (2007 = 100)</em></span>
+        <time datetime="2026-09-01"><span data-lang="en">Sep 2026</span><span data-lang="zh">2026年9月</span></time>
+      </div>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-reer" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-reer", [{"name": "Real Effective Exchange Rate (REER)", "x": ["1995-01-01", "1995-02-01", "1995-03-01", "1995-04-01", "1995-05-01", "1995-06-01", "1995-07-01", "1995-08-01", "1995-09-01", "1995-10-01", "1995-11-01", "1995-12-01", "1996-01-01", "1996-02-01", "1996-03-01", "1996-04-01", "1996-05-01", "1996-06-01", "1996-07-01", "1996-08-01", "1996-09-01", "1996-10-01", "1996-11-01", "1996-12-01", "1997-01-01", "1997-02-01", "1997-03-01", "1997-04-01", "1997-05-01", "1997-06-01", "1997-07-01", "1997-08-01", "1997-09-01", "1997-10-01", "1997-11-01", "1997-12-01", "1998-01-01", "1998-02-01", "1998-03-01", "1998-04-01", "1998-05-01", "1998-06-01", "1998-07-01", "1998-08-01", "1998-09-01", "1998-10-01", "1998-11-01", "1998-12-01", "1999-01-01", "1999-02-01", "1999-03-01", "1999-04-01", "1999-05-01", "1999-06-01", "1999-07-01", "1999-08-01", "1999-09-01", "1999-10-01", "1999-11-01", "1999-12-01", "2000-01-01", "2000-02-01", "2000-03-01", "2000-04-01", "2000-05-01", "2000-06-01", "2000-07-01", "2000-08-01", "2000-09-01", "2000-10-01", "2000-11-01", "2000-12-01", "2001-01-01", "2001-02-01", "2001-03-01", "2001-04-01", "2001-05-01", "2001-06-01", "2001-07-01", "2001-08-01", "2001-09-01", "2001-10-01", "2001-11-01", "2001-12-01", "2002-01-01", "2002-02-01", "2002-03-01", "2002-04-01", "2002-05-01", "2002-06-01", "2002-07-01", "2002-08-01", "2002-09-01", "2002-10-01", "2002-11-01", "2002-12-01", "2003-01-01", "2003-02-01", "2003-03-01", "2003-04-01", "2003-05-01", "2003-06-01", "2003-07-01", "2003-08-01", "2003-09-01", "2003-10-01", "2003-11-01", "2003-12-01", "2004-01-01", "2004-02-01", "2004-03-01", "2004-04-01", "2004-05-01", "2004-06-01", "2004-07-01", "2004-08-01", "2004-09-01", "2004-10-01", "2004-11-01", "2004-12-01", "2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01", "2026-09-01"], "y": [126.3638, 126.1575, 124.5461, 122.9441, 123.3291, 123.3619, 123.5459, 126.4037, 127.8042, 127.2694, 127.8487, 128.0937, 129.1265, 129.4087, 129.9034, 130.6928, 130.7901, 131.3004, 131.1457, 130.5686, 131.8557, 132.6656, 132.503, 133.7469, 135.0117, 137.5102, 138.6389, 139.2316, 138.8852, 139.0369, 141.2715, 143.8838, 144.1869, 145.3234, 146.9898, 151.6553, 155.7827, 153.6361, 153.1738, 153.1556, 153.6542, 155.6246, 155.6351, 156.1065, 153.1548, 146.369, 146.0862, 144.4934, 145.889, 146.7602, 147.6744, 146.4389, 146.3802, 146.5807, 144.2022, 141.5866, 141.1594, 139.755, 139.9836, 139.4673, 138.1661, 138.9202, 138.8741, 138.7876, 140.9004, 138.7064, 138.7837, 139.7945, 140.7462, 141.3947, 142.0511, 140.5811, 139.5529, 138.6616, 140.2348, 141.514, 141.2082, 142.4746, 142.752, 140.1614, 139.4374, 139.7367, 140.3804, 137.3747, 138.3826, 138.9061, 138.6786, 136.8067, 134.7475, 132.783, 130.3355, 131.1562, 130.6185, 130.589, 129.2105, 127.989, 125.6968, 125.1247, 124.9888, 124.4579, 120.9148, 119.5903, 119.1518, 119.8987, 119.342, 117.7748, 117.2941, 115.5053, 114.2395, 113.1078, 113.613, 113.9794, 114.6103, 113.4907, 112.9081, 113.2557, 113.194, 111.9386, 109.9253, 108.3886, 108.4775, 108.4567, 107.5859, 108.458, 109.1411, 111.0039, 111.6585, 110.3852, 111.0201, 111.3148, 112.3567, 111.871, 110.3187, 110.4748, 110.6264, 109.7056, 107.8406, 108.7916, 108.6349, 108.4087, 109.2328, 108.5213, 107.2323, 105.8251, 106.0166, 104.0718, 105.1857, 103.2654, 102.8789, 103.1378, 102.1383, 102.7963, 102.7821, 101.6692, 99.7994, 100.0, 98.1812, 98.5833, 96.3718, 96.0586, 96.5084, 96.6157, 96.3656, 97.722, 99.2268, 101.8862, 106.6381, 105.3216, 106.0346, 107.07, 107.9055, 106.2894, 103.8668, 102.3166, 102.105, 100.6743, 100.9603, 100.4013, 99.6485, 100.2185, 100.1897, 102.1092, 101.834, 101.8302, 103.6185, 104.6519, 100.4883, 100.8881, 100.8271, 98.8107, 99.0082, 99.8137, 99.0078, 98.5582, 97.9091, 97.1463, 97.405, 97.6243, 97.2008, 96.1948, 98.4481, 99.5865, 99.9883, 101.2408, 101.9358, 100.4475, 101.2991, 101.3784, 102.618, 104.0533, 101.9406, 102.834, 101.8778, 102.0975, 102.8095, 102.7825, 102.7137, 103.7973, 105.0872, 105.7425, 106.3946, 106.4446, 107.5177, 106.1681, 105.9684, 105.5035, 106.2404, 106.3622, 107.1479, 107.0682, 106.677, 106.9678, 107.0785, 107.507, 108.263, 107.8093, 112.2501, 112.8555, 114.6919, 116.1106, 118.1372, 118.9864, 120.8834, 119.5018, 118.6241, 119.3195, 120.3821, 120.6651, 123.4885, 123.5064, 125.1329, 125.7799, 126.9765, 126.2586, 125.5002, 122.6264, 123.3876, 123.5513, 124.7687, 124.7797, 124.8622, 125.5166, 127.3897, 129.3131, 128.9106, 126.7768, 127.4936, 127.1002, 126.3245, 125.1361, 124.2759, 123.121, 121.3979, 122.43, 122.4485, 121.6576, 119.2111, 118.4976, 118.4361, 118.2385, 120.8974, 122.324, 123.833, 125.1801, 125.1999, 125.7188, 126.4637, 126.8155, 125.4251, 125.1965, 125.0543, 125.8674, 127.008, 128.039, 128.5101, 129.913, 130.1084, 129.0047, 128.4222, 128.0692, 125.1605, 128.874, 130.8608, 132.9728, 132.9216, 130.7763, 125.8459, 126.7358, 123.6978, 125.5852, 124.4142, 121.7179, 122.2611, 121.9149, 123.0025, 122.9449, 121.6172, 121.4544, 122.5181, 122.409, 119.4403, 122.1459, 122.0, 122.0587, 121.488, 121.1905, 121.651, 122.1639, 124.3853, 124.6494, 126.4377, 126.549, 129.688, 130.7159, 128.4925, 125.9664, 123.696, 123.5587, 124.1254, 123.3143, 124.5307, 125.5261, 124.6745, 125.6995, 127.2545, 128.9134, 127.5704, 125.9186, 125.8133, 126.2869, 126.069, 126.687, 126.7054, 127.5828, 128.0813, 126.0441, 124.8729, 126.2196, 128.0493, 128.7497, 130.1084, 128.7019, 127.2057, 126.1155, 123.6535, 121.6705, 121.4608, 122.3378, 122.4596, 123.0058, 123.5335, 122.7887, 122.1482, 120.9568, 121.7505, 120.8337, 120.6044, 121.3677, 121.6149, 120.1421, 119.9086], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-09-01"], "y": [119.9086], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "Index (2007 = 100)", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.bruegel.org/publications/datasets/real-effective-exchange-rates-for-178-countries-a-new-database" target="_blank" rel="noreferrer">Bruegel (Darvas 120-Trading-Partner Basket)</a></span>
+    <span>Series: </span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-09-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">CPI-based monthly real effective exchange rate calculated against 120 trading partners.</span><span data-lang="zh">基于CPI计算的对120个贸易伙伴的月度实际有效汇率。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="hk:neer">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Nominal Effective Exchange Rate (NEER)</span><span data-lang="zh">名义有效汇率 (NEER)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-09-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>118</strong><em>Index (2007 = 100)</em></span>
+        <time datetime="2026-09-01"><span data-lang="en">Sep 2026</span><span data-lang="zh">2026年9月</span></time>
+      </div>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-neer" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-neer", [{"name": "Nominal Effective Exchange Rate (NEER)", "x": ["1995-01-01", "1995-02-01", "1995-03-01", "1995-04-01", "1995-05-01", "1995-06-01", "1995-07-01", "1995-08-01", "1995-09-01", "1995-10-01", "1995-11-01", "1995-12-01", "1996-01-01", "1996-02-01", "1996-03-01", "1996-04-01", "1996-05-01", "1996-06-01", "1996-07-01", "1996-08-01", "1996-09-01", "1996-10-01", "1996-11-01", "1996-12-01", "1997-01-01", "1997-02-01", "1997-03-01", "1997-04-01", "1997-05-01", "1997-06-01", "1997-07-01", "1997-08-01", "1997-09-01", "1997-10-01", "1997-11-01", "1997-12-01", "1998-01-01", "1998-02-01", "1998-03-01", "1998-04-01", "1998-05-01", "1998-06-01", "1998-07-01", "1998-08-01", "1998-09-01", "1998-10-01", "1998-11-01", "1998-12-01", "1999-01-01", "1999-02-01", "1999-03-01", "1999-04-01", "1999-05-01", "1999-06-01", "1999-07-01", "1999-08-01", "1999-09-01", "1999-10-01", "1999-11-01", "1999-12-01", "2000-01-01", "2000-02-01", "2000-03-01", "2000-04-01", "2000-05-01", "2000-06-01", "2000-07-01", "2000-08-01", "2000-09-01", "2000-10-01", "2000-11-01", "2000-12-01", "2001-01-01", "2001-02-01", "2001-03-01", "2001-04-01", "2001-05-01", "2001-06-01", "2001-07-01", "2001-08-01", "2001-09-01", "2001-10-01", "2001-11-01", "2001-12-01", "2002-01-01", "2002-02-01", "2002-03-01", "2002-04-01", "2002-05-01", "2002-06-01", "2002-07-01", "2002-08-01", "2002-09-01", "2002-10-01", "2002-11-01", "2002-12-01", "2003-01-01", "2003-02-01", "2003-03-01", "2003-04-01", "2003-05-01", "2003-06-01", "2003-07-01", "2003-08-01", "2003-09-01", "2003-10-01", "2003-11-01", "2003-12-01", "2004-01-01", "2004-02-01", "2004-03-01", "2004-04-01", "2004-05-01", "2004-06-01", "2004-07-01", "2004-08-01", "2004-09-01", "2004-10-01", "2004-11-01", "2004-12-01", "2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01", "2026-09-01"], "y": [99.2478, 99.1465, 97.6271, 96.259, 96.3914, 96.2085, 96.2565, 97.8174, 98.9045, 98.3494, 98.7028, 99.2036, 99.949, 100.028, 100.128, 100.5304, 100.8414, 100.9014, 100.6902, 100.427, 100.8154, 101.1819, 100.6585, 101.3201, 102.3429, 103.8419, 104.3993, 104.7526, 104.3173, 104.2684, 105.3478, 107.1841, 107.4518, 107.7666, 108.6265, 111.826, 114.9103, 113.5247, 113.1091, 112.7146, 113.169, 114.7877, 114.9223, 115.5177, 113.7245, 111.1309, 111.4279, 110.8843, 111.0472, 112.493, 113.8284, 113.9628, 114.0205, 114.4097, 114.4714, 113.4145, 113.234, 112.3961, 113.0891, 113.2931, 112.9777, 114.3286, 114.6526, 114.938, 117.0371, 115.8279, 116.3385, 117.3266, 118.7535, 119.8198, 120.3741, 119.4756, 118.8782, 119.341, 120.7042, 122.0139, 122.3198, 123.3605, 123.54, 121.6456, 121.2302, 121.9463, 122.4956, 122.8239, 123.7658, 124.3327, 123.8948, 123.3947, 121.7777, 120.1877, 118.307, 119.1643, 119.3705, 119.9634, 119.0502, 118.3754, 116.6897, 116.5514, 116.6444, 116.4823, 113.9225, 113.518, 114.3666, 115.1697, 114.545, 113.1717, 112.8188, 111.2164, 109.9156, 109.4643, 110.3387, 110.681, 111.7229, 110.9925, 110.511, 110.9735, 110.8369, 110.0861, 108.155, 106.7229, 107.0355, 107.0526, 106.5573, 107.4534, 108.0593, 109.654, 110.6406, 109.391, 109.6574, 110.9259, 111.8324, 111.4022, 109.9634, 110.3118, 110.1952, 109.3527, 107.3515, 108.2253, 107.9832, 107.3844, 107.4714, 107.6947, 106.6405, 105.583, 105.8513, 105.4688, 104.9102, 103.9948, 103.7229, 103.9214, 102.695, 102.9785, 102.4827, 101.6241, 99.8837, 100.0, 99.1136, 98.6134, 96.7098, 96.2424, 96.7319, 96.7131, 96.1756, 97.9694, 100.3391, 104.1984, 106.624, 105.2818, 105.7271, 107.51, 108.0913, 106.6032, 104.2549, 103.028, 102.7526, 102.0385, 101.1806, 100.2609, 99.7576, 100.3572, 100.5895, 101.8423, 101.9486, 101.8752, 103.7208, 104.4525, 102.6798, 101.7138, 101.0795, 98.767, 99.0931, 99.7791, 98.9332, 97.9439, 97.1744, 96.2951, 96.0798, 95.7595, 95.5726, 95.0858, 96.9312, 97.6785, 97.8945, 98.8064, 99.0953, 98.0712, 98.517, 98.4956, 99.3678, 100.3947, 100.5107, 100.0513, 98.9148, 98.6407, 99.0659, 98.9739, 98.8666, 99.5184, 100.5211, 100.349, 100.7027, 100.5454, 101.2705, 100.8595, 100.5685, 99.5345, 100.1441, 100.1289, 100.5158, 100.4789, 100.0185, 99.8972, 99.7877, 99.9731, 100.1041, 100.6735, 102.0485, 102.9277, 104.3534, 105.516, 107.1889, 107.8668, 109.5325, 109.2675, 108.1284, 108.6026, 109.4714, 110.7889, 111.3911, 111.0152, 112.3945, 112.8006, 113.6298, 112.6258, 111.9172, 110.521, 110.8895, 111.1362, 112.1727, 111.273, 111.529, 113.0782, 114.7136, 116.4955, 116.2183, 115.2008, 115.0839, 114.2594, 113.3086, 112.3547, 111.4071, 110.0292, 109.2385, 110.3827, 110.4548, 109.7304, 107.4591, 106.5159, 106.258, 106.3535, 108.5061, 109.6052, 110.9796, 112.04, 112.1816, 112.9854, 113.4326, 113.4341, 112.0246, 111.8534, 111.9453, 112.3362, 113.334, 113.3468, 113.5408, 114.5578, 114.9146, 114.3216, 114.0156, 113.982, 114.0221, 115.24, 116.4735, 117.7546, 117.5407, 115.9503, 114.9569, 113.4504, 113.1122, 112.5679, 111.4733, 110.0334, 109.4549, 109.6057, 110.5701, 110.3688, 109.4248, 109.7495, 110.8432, 110.8135, 110.8121, 111.3879, 111.7895, 112.1967, 112.024, 111.8975, 113.0793, 114.3048, 116.9067, 117.4845, 119.5115, 119.6878, 123.0482, 124.9586, 122.9335, 120.4619, 118.0986, 118.3607, 119.0525, 118.0919, 119.2919, 120.2479, 119.8245, 121.2513, 122.6438, 123.6187, 122.4693, 121.0727, 121.2542, 122.0017, 121.8745, 123.12, 123.2543, 123.6876, 123.4798, 121.7197, 120.5305, 122.2375, 124.1778, 125.1336, 126.2014, 125.2641, 123.8746, 122.6495, 120.3679, 118.6461, 118.3721, 119.2302, 119.421, 120.2892, 120.98, 120.0982, 119.2506, 118.0945, 119.2776, 118.5558, 118.3404, 119.1305, 119.5995, 118.308, 118.2554], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-09-01"], "y": [118.2554], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "Index (2007 = 100)", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.bruegel.org/publications/datasets/real-effective-exchange-rates-for-178-countries-a-new-database" target="_blank" rel="noreferrer">Bruegel (Darvas 120-Trading-Partner Basket)</a></span>
+    <span>Series: </span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-09-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Monthly nominal effective exchange rate calculated against 120 trading partners.</span><span data-lang="zh">对120个贸易伙伴的月度名义有效汇率。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="exports_growth">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Merchandise Exports YoY</span><span data-lang="zh">商品出口总值同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-08-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>53.0</strong><em>% y/y</em></span>
+        <time datetime="2026-08-01"><span data-lang="en">Aug 2026</span><span data-lang="zh">2026年8月</span></time>
+      </div>
+      <span class="quality-pill">watch</span><span class="authority-chip">official primary</span><span class="freshness-chip">due</span>
+    </div>
+  </div>
+  <div id="chart-merchandise_exports_growth" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-merchandise_exports_growth", [{"name": "Merchandise Exports YoY", "x": ["2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01"], "y": [34.8, -5.4, 3.5, 7.8, 16.9, 12.6, 8.1, 12.7, 17.0, 11.6, 11.5, 6.7, 4.2, 20.5, 14.7, 9.4, -0.1, 6.7, 10.7, 9.9, 4.7, 7.9, 14.2, 13.7, 9.2, 11.6, 6.9, 12.6, 12.1, 11.1, 8.6, 7.5, 8.5, 9.8, 6.6, 8.2, 15.8, 7.6, 7.6, 14.5, 10.3, -0.6, 11.1, 1.9, 3.6, 9.4, -5.3, -11.4, -21.8, -23.0, -21.1, -18.2, -14.5, -5.4, -19.9, -13.9, -8.6, -13.1, 1.3, 9.2, 18.4, 28.5, 32.1, 21.7, 24.4, 26.7, 23.3, 36.0, 24.1, 13.9, 16.6, 12.5, 27.6, 24.9, 21.5, 4.1, 10.1, 9.2, 9.3, 6.8, -3.0, 11.5, 2.0, 7.4, -8.6, 14.0, -6.8, 5.6, 5.2, -4.8, -3.5, 0.6, 15.2, -2.8, 10.5, 14.4, 17.6, -16.9, 11.2, 9.0, -1.0, -0.2, 10.6, -1.3, 1.5, 8.8, 5.8, -0.4, -1.3, 3.4, -1.6, 4.9, 11.4, 6.8, 6.4, 4.5, 2.7, 0.4, 0.6, 2.8, 7.2, -1.8, 2.2, -4.6, -3.1, -1.6, -6.1, -4.6, -3.7, -3.5, -1.1, -3.8, -10.4, -7.0, -2.3, -0.1, -1.0, -5.1, 0.8, 3.6, -1.8, 8.1, 10.1, -1.2, 18.2, 16.9, 7.1, 4.0, 11.1, 7.3, 7.4, 9.4, 6.7, 7.8, 6.0, 18.1, 1.7, 8.0, 8.1, 15.9, 3.3, 10.0, 13.1, 4.5, 14.6, -0.8, -5.8, -0.4, -6.9, -1.2, -2.6, -2.4, -9.0, -5.7, -6.3, -7.3, -9.2, -1.4, 3.3, -22.7, 4.3, -5.8, -3.7, -7.4, -1.3, -3.0, -2.3, 9.1, -1.1, 5.6, 11.7, 44.0, 30.4, 26.4, 24.4, 24.0, 33.0, 26.9, 25.9, 16.5, 21.4, 25.0, 24.8, 18.4, 0.9, -8.9, 1.1, -1.4, -6.4, -8.9, -14.3, -9.1, -10.4, -24.1, -28.9, -36.7, -8.8, -1.5, -13.0, -15.6, -11.4, -9.1, -3.7, -5.3, 1.4, 7.4, 11.0, 33.6, -0.8, 4.7, 11.9, 14.8, 10.7, 13.1, 6.4, 4.7, 3.5, 2.1, 5.2, 0.1, 15.4, 18.5, 14.7, 15.5, 11.9, 14.3, 14.5, 16.1, 17.5, 18.8, 26.1, 33.8, 24.7, 35.8, 42.9, 40.8, 53.4, 50.7, 53.0], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-08-01"], "y": [53.0], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.censtatd.gov.hk/en/web_table.html?id=410-50001" target="_blank" rel="noreferrer">HK C&amp;SD</a></span>
+    <span>Series: </span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-08-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Total merchandise exports value year-on-year percentage change.</span><span data-lang="zh">整体商品出口总值同比变动率。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="imports_growth">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Merchandise Imports YoY</span><span data-lang="zh">商品进口总值同比</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-08-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>60.0</strong><em>% y/y</em></span>
+        <time datetime="2026-08-01"><span data-lang="en">Aug 2026</span><span data-lang="zh">2026年8月</span></time>
+      </div>
+      <span class="quality-pill">watch</span><span class="authority-chip">official primary</span><span class="freshness-chip">due</span>
+    </div>
+  </div>
+  <div id="chart-merchandise_imports_growth" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-merchandise_imports_growth", [{"name": "Merchandise Imports YoY", "x": ["2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01"], "y": [37.2, -10.9, 2.5, 3.8, 16.0, 10.5, 6.5, 12.9, 15.1, 9.7, 13.6, 10.6, 0.6, 28.3, 16.0, 11.2, 2.5, 9.9, 11.4, 12.3, 8.2, 11.2, 16.3, 14.5, 14.1, 1.3, 11.1, 14.7, 11.1, 13.0, 9.8, 9.0, 9.3, 12.1, 9.3, 10.3, 16.9, 11.9, 6.6, 11.3, 15.4, 1.3, 15.4, 1.5, 3.9, 11.3, -7.9, -16.2, -27.1, -17.5, -22.7, -17.0, -19.2, -7.9, -17.8, -9.8, -3.1, -10.7, 6.5, 18.7, 39.5, 22.4, 39.8, 28.8, 29.7, 31.0, 24.9, 28.4, 19.5, 14.0, 16.4, 14.8, 19.0, 25.2, 18.8, 6.1, 13.0, 11.5, 10.2, 14.1, 2.3, 10.9, 8.8, 8.1, -10.5, 20.8, -4.7, 5.0, 4.6, -2.9, -1.8, 0.9, 14.9, 3.3, 9.0, 11.9, 23.9, -18.3, 11.3, 7.7, 1.7, 1.4, 8.3, -0.2, 0.4, 6.3, 5.2, 1.8, -2.7, 6.8, 3.2, 2.4, 3.7, 7.6, 7.5, 3.4, 6.3, 5.6, 2.4, 1.9, 7.9, -0.9, -2.7, -2.9, -4.7, -2.0, -5.2, -7.4, -7.6, -8.5, -8.1, -4.6, -9.0, -10.1, -5.8, -4.5, -4.3, -0.9, -3.3, 2.8, 4.1, 0.5, 7.6, 8.7, -2.7, 25.4, 13.0, 7.3, 6.6, 10.4, 5.5, 7.7, 9.7, 7.9, 8.6, 9.0, 23.8, -3.2, 10.7, 11.1, 16.5, 4.4, 14.0, 16.4, 4.8, 13.1, 0.5, -7.0, -6.0, -3.8, -0.1, -5.5, -4.3, -7.5, -8.7, -11.1, -10.3, -11.5, -5.8, -1.9, -16.4, -0.1, -11.1, -6.7, -12.3, -7.1, -3.4, -5.7, 3.4, 0.6, 5.1, 14.1, 37.7, 17.6, 21.7, 25.2, 26.5, 31.9, 26.1, 28.1, 23.5, 17.7, 20.0, 19.3, 9.6, 6.2, -6.0, 2.1, 1.3, 0.5, -9.9, -16.3, -7.8, -11.9, -20.3, -23.5, -30.2, -4.1, -0.6, -11.9, -16.7, -12.3, -7.9, -0.3, -0.4, 2.6, 7.1, 11.6, 21.7, -1.8, 5.3, 3.7, 9.6, 9.0, 9.9, 7.9, 1.4, 4.5, 5.7, -1.1, 0.5, 11.8, 16.6, 15.8, 18.9, 11.1, 16.5, 11.5, 13.6, 18.3, 18.1, 30.6, 38.1, 29.9, 41.2, 44.4, 42.0, 45.4, 41.0, 60.0], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-08-01"], "y": [60.0], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% y/y", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.censtatd.gov.hk/en/web_table.html?id=410-50001" target="_blank" rel="noreferrer">HK C&amp;SD</a></span>
+    <span>Series: </span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-08-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Total merchandise imports value year-on-year percentage change.</span><span data-lang="zh">商品进口总值同比变动率。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="trade_balance">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Merchandise Trade Balance</span><span data-lang="zh">商品贸易差额</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-08-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>-71,243</strong><em>HK$ mn</em></span>
+        <time datetime="2026-08-01"><span data-lang="en">Aug 2026</span><span data-lang="zh">2026年8月</span></time>
+      </div>
+      <span class="quality-pill">watch</span><span class="authority-chip">official primary</span><span class="freshness-chip">due</span>
+    </div>
+  </div>
+  <div id="chart-merchandise_trade_balance" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-merchandise_trade_balance", [{"name": "Merchandise Trade Balance", "x": ["2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01"], "y": [-2044.0, -10202.0, -13809.0, -10222.0, -9312.0, -7059.0, -3210.0, -3933.0, -4185.0, 3476.0, -4021.0, -16857.0, 4367.0, -23032.0, -18236.0, -14460.0, -14570.0, -13808.0, -5154.0, -9392.0, -11749.0, -3108.0, -8874.0, -20809.0, -4410.0, -7547.0, -28321.0, -20598.0, -14277.0, -19429.0, -8185.0, -13676.0, -14761.0, -8656.0, -15951.0, -27396.0, -7456.0, -15823.0, -28123.0, -16221.0, -27455.0, -23973.0, -19480.0, -12881.0, -16027.0, -14291.0, -8151.0, -11764.0, 7228.0, -23211.0, -18184.0, -16355.0, -10986.0, -16484.0, -21668.0, -21849.0, -29141.0, -19190.0, -20726.0, -33445.0, -29509.0, -19650.0, -38886.0, -35235.0, -25087.0, -30600.0, -30507.0, -11918.0, -24448.0, -22267.0, -23508.0, -43543.0, -15963.0, -25114.0, -40083.0, -42437.0, -35693.0, -40261.0, -35925.0, -34776.0, -39961.0, -23138.0, -44105.0, -48910.0, -8856.0, -45786.0, -43875.0, -42873.0, -35566.0, -44705.0, -40130.0, -36032.0, -45152.0, -42672.0, -44070.0, -47951.0, -27463.0, -33988.0, -49146.0, -42696.0, -44267.0, -49673.0, -37152.0, -39570.0, -42010.0, -38052.0, -44581.0, -54351.0, -19979.0, -53673.0, -50365.0, -55290.0, -42350.0, -43105.0, -42132.0, -31525.0, -50369.0, -49842.0, -52163.0, -59253.0, -37015.0, -35884.0, -46206.0, -39164.0, -40110.0, -45783.0, -28434.0, -25074.0, -36381.0, -29650.0, -33093.0, -45706.0, -17482.0, -33149.0, -47028.0, -31027.0, -26228.0, -45595.0, -33307.0, -32096.0, -39705.0, -37223.0, -34053.0, -45477.0, -12345.0, -56271.0, -42268.0, -34131.0, -35648.0, -48278.0, -29601.0, -35527.0, -44707.0, -43959.0, -39706.0, -59898.0, -31924.0, -42732.0, -55505.0, -46949.0, -43250.0, -54137.0, -47109.0, -52149.0, -47715.0, -44490.0, -44964.0, -51249.0, -10299.0, -48834.0, -59241.0, -35091.0, -34709.0, -55187.0, -32172.0, -28049.0, -31639.0, -30590.0, -26168.0, -32497.0, -30595.0, -38551.0, -34707.0, -23337.0, -13730.0, -33341.0, -29816.0, -14626.0, -12694.0, -36756.0, -25609.0, -45731.0, -25228.0, -14699.0, -26967.0, -31776.0, -25464.0, -40455.0, -34981.0, -26298.0, -42391.0, -30464.0, -11606.0, -32753.0, 6648.0, -32108.0, -37262.0, -36582.0, -36675.0, -68533.0, -27554.0, -13264.0, -44920.0, -20869.0, -27089.0, -51646.0, -25373.0, -45365.0, -40595.0, -36575.0, -26399.0, -56574.0, -29988.0, -25592.0, -64580.0, -25752.0, -27917.0, -59862.0, 3643.0, -41651.0, -45012.0, -10194.0, -12144.0, -55740.0, -21842.0, -33131.0, -53204.0, -31006.0, -43383.0, -34497.0, 2078.0, -36315.0, -45357.0, -16007.0, -27325.0, -58925.0, -34120.0, -25415.0, -50171.0, -39947.0, -48515.0, -63253.0, -14094.0, -64150.0, -89084.0, -29483.0, -44179.0, -51952.0, -4888.0, -71243.0], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-08-01"], "y": [-71243.0], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "HK$ mn", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.censtatd.gov.hk/en/web_table.html?id=410-50001" target="_blank" rel="noreferrer">HK C&amp;SD</a></span>
+    <span>Series: </span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-08-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Visible merchandise trade balance in millions of Hong Kong dollars.</span><span data-lang="zh">有形商品贸易差额（百万港元）。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-watch" data-dashboard-view="deep" data-concept-id="hk:current_account_usd">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Current Account Balance (USD)</span><span data-lang="zh">经常账户差额 (美元)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-04-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>12,255,625,983,749,520</strong><em>USD mn</em></span>
+        <time datetime="2026-04-01"><span data-lang="en">Q2 2026</span><span data-lang="zh">2026年 Q2</span></time>
+      </div>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-current_account_usd" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-current_account_usd", [{"name": "Current Account Balance (USD)", "x": ["2005-01-01", "2005-04-01", "2005-07-01", "2005-10-01", "2006-01-01", "2006-04-01", "2006-07-01", "2006-10-01", "2007-01-01", "2007-04-01", "2007-07-01", "2007-10-01", "2008-01-01", "2008-04-01", "2008-07-01", "2008-10-01", "2009-01-01", "2009-04-01", "2009-07-01", "2009-10-01", "2010-01-01", "2010-04-01", "2010-07-01", "2010-10-01", "2011-01-01", "2011-04-01", "2011-07-01", "2011-10-01", "2012-01-01", "2012-04-01", "2012-07-01", "2012-10-01", "2013-01-01", "2013-04-01", "2013-07-01", "2013-10-01", "2014-01-01", "2014-04-01", "2014-07-01", "2014-10-01", "2015-01-01", "2015-04-01", "2015-07-01", "2015-10-01", "2016-01-01", "2016-04-01", "2016-07-01", "2016-10-01", "2017-01-01", "2017-04-01", "2017-07-01", "2017-10-01", "2018-01-01", "2018-04-01", "2018-07-01", "2018-10-01", "2019-01-01", "2019-04-01", "2019-07-01", "2019-10-01", "2020-01-01", "2020-04-01", "2020-07-01", "2020-10-01", "2021-01-01", "2021-04-01", "2021-07-01", "2021-10-01", "2022-01-01", "2022-04-01", "2022-07-01", "2022-10-01", "2023-01-01", "2023-04-01", "2023-07-01", "2023-10-01", "2024-01-01", "2024-04-01", "2024-07-01", "2024-10-01", "2025-01-01", "2025-04-01", "2025-07-01", "2025-10-01", "2026-01-01", "2026-04-01"], "y": [5588723122301543.0, 4808680020544427.0, 4928865625536297.0, 6248377251429309.0, 5996519272914788.0, 2793752416963864.0, 8165802220412363.0, 7599160275909344.0, 8831319643085856.0, 3614534908517081.0, 8296310530361262.0, 6812465172103391.0, 6731397536777283.0, 3838240950467969.0, 1.043448157962219e+16, 1.186793345084046e+16, 7432102480333577.0, 6380079989678751.0, 2660674350593497.0, 4682750612824152.0, 3680606242754712.5, 232292068389253.12, 7411083469160162.0, 4688208519409138.0, 5916402705247839.0, 1219698268472484.2, 3764018991402541.5, 2908335118920077.0, 354525538038575.5, -969890902843398.4, 3101096067053514.0, 1661605952432154.0, -874366027679876.4, -2652106687282567.0, 4062411347517730.5, 3654742454209304.0, -5542427497314.716, -3748419830588640.5, 4665147084121796.0, 3145970341715023.0, 210582874828060.53, 62053840199535.57, 6451812669332989.0, 3539612903225806.5, 3318782161234992.0, 1484472316481251.0, 4872244424390873.0, 3012631578947369.0, 2690001717917884.0, 2877621778957281.0, 7358227416190396.0, 2695223460110129.0, 1471066638279753.0, 1565040132500956.2, 5841072263052806.0, 4637222766165766.0, 3083977571998981.0, 3823469387755102.5, 8717357060751841.0, 5628321976149915.0, -902123096718850.5, 7955798254289032.0, 1.275245098039216e+16, 4319618212304914.5, 8670662541892241.0, 1.065967035797064e+16, 1.253297338989587e+16, 1.179525032092426e+16, 9418524212144504.0, 4919632996346956.0, 1.504344502484393e+16, 7137494674051982.0, 5271749298409729.0, 4895327579609711.0, 1.4101009670685472e+16, 7791323636053406.0, 1.301845301512891e+16, 1.2180856960136432e+16, 1.4184836958844392e+16, 1.426231405667252e+16, 1.6024246058944482e+16, 1.192890995260664e+16, 1.215905216501875e+16, 1.221301851217004e+16, 4921643064323494.0, 1.225562598374952e+16], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-04-01"], "y": [1.225562598374952e+16], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "USD mn", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/BOP/HKG.NETCD_T.CAB.USD.Q" target="_blank" rel="noreferrer">IMF SDMX / HK C&amp;SD</a></span>
+    <span>Series: HKG.NETCD_T.CAB.USD.Q</span>
+    <span>Frequency: quarterly</span>
+    <span>Provider update: 2026-10-27</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Quarterly BPM6 current account balance in millions of US dollars.</span><span data-lang="zh">BPM6标准编制的季度经常账户差额（百万美元）。</span></p>
+</article>
+
+
+  </div>
+</section>
+
+<section class="panel" id="fiscal_sovereign">
+  <div class="section-title">
+    <p>PDF logic</p>
+    <h2><span data-lang="en">Fiscal &amp; Public Finance</span><span data-lang="zh">财政与公共收支</span></h2>
+    <div class="logic"><span data-lang="en">General government gross debt and net lending/borrowing ratios from IMF WEO DataMapper.</span><span data-lang="zh">IMF《世界经济展望》提供的广义政府总债务与净借贷（赤字率）占GDP比重。</span></div>
+  </div>
+  <div class="charts-grid">
+
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="government_debt_gdp">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">General Government Gross Debt (% of GDP)</span><span data-lang="zh">广义政府总债务占GDP比重</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2025">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>12.1</strong><em>% of GDP</em></span>
+        <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
+      </div>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">projection</span>
+    </div>
+  </div>
+  <div id="chart-government_debt_gdp" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-government_debt_gdp", [{"name": "Actual / history", "x": ["2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"], "y": [1.9, 1.7, 1.4, 1.2, 1.0, 0.7, 0.6, 0.6, 0.5, 0.5, 0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 1.0, 1.9, 4.3, 6.3, 9.2, 12.1], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "IMF WEO estimate / forecast", "x": ["2025", "2026", "2027", "2028", "2029", "2030", "2031"], "y": [12.1, 14.1, 15.6, 17.4, 18.4, 19.3, 20.0], "mode": "lines", "line": {"color": "#364b61", "width": 2.2, "dash": "dash"}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2025"], "y": [12.1], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% of GDP", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.imf.org/external/datamapper/GGXWDG_NGDP@WEO/HKG" target="_blank" rel="noreferrer">IMF WEO DataMapper</a></span>
+    <span>Series: GGXWDG_NGDP</span>
+    <span>Frequency: annual</span>
+    <span>Provider update: 2026-10-27</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">General government gross debt as a percentage of GDP.</span><span data-lang="zh">广义政府总债务占GDP比重。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="fiscal_balance_gdp">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">General Government Net Lending / Borrowing (% of GDP)</span><span data-lang="zh">广义政府净借贷占GDP比重 (财政盈余/赤字率)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2025">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>-4.50</strong><em>% of GDP</em></span>
+        <time datetime="2025"><span data-lang="en">2025</span><span data-lang="zh">2025年</span></time>
+      </div>
+      <span class="quality-pill">watch</span><span class="authority-chip">official mirror</span><span class="freshness-chip">projection</span>
+    </div>
+  </div>
+  <div id="chart-fiscal_balance_gdp" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-fiscal_balance_gdp", [{"name": "Actual / history", "x": ["1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"], "y": [2.8, -0.4, -1.1, 0.9, 1.0, 1.8, 3.0, 3.3, 2.0, 0.6, 3.1, 2.6, 2.0, 1.0, -0.3, 2.0, 6.3, -1.8, 0.8, -0.6, -4.8, -4.8, -3.2, -0.3, 1.0, 4.0, 7.3, 0.2, 1.5, 4.1, 3.8, 3.1, 1.0, 3.6, 0.6, 4.4, 5.5, 2.3, -0.6, -9.2, 0.0, -6.6, -5.7, -5.8, -4.5], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "IMF WEO estimate / forecast", "x": ["2025", "2026", "2027", "2028", "2029", "2030", "2031"], "y": [-4.5, -4.4, -3.2, -1.3, -0.7, -0.7, -0.7], "mode": "lines", "line": {"color": "#364b61", "width": 2.2, "dash": "dash"}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2025"], "y": [-4.5], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% of GDP", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.imf.org/external/datamapper/GGXCNL_NGDP@WEO/HKG" target="_blank" rel="noreferrer">IMF WEO DataMapper</a></span>
+    <span>Series: GGXCNL_NGDP</span>
+    <span>Frequency: annual</span>
+    <span>Provider update: 2026-10-27</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">General government net lending/borrowing as a percentage of GDP.</span><span data-lang="zh">广义政府净借贷占GDP比重。</span></p>
+</article>
+
+
+  </div>
+</section>
+
+<section class="panel" id="monetary_financial">
+  <div class="section-title">
+    <p>PDF logic</p>
+    <h2><span data-lang="en">Credit &amp; Financial Conditions</span><span data-lang="zh">信贷与金融环境</span></h2>
+    <div class="logic"><span data-lang="en">BIS total credit to the private non-financial sector as a percentage of GDP measures domestic leverage.</span><span data-lang="zh">国际清算银行(BIS)私营非金融部门信贷占GDP比率衡量本地杠杆水平。</span></div>
+  </div>
+  <div class="charts-grid">
+
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="private_credit_growth">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Total Credit to Private Non-Financial Sector (% of GDP)</span><span data-lang="zh">私营非金融部门总信贷占GDP比重</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2025-10-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>328</strong><em>% of GDP</em></span>
+        <time datetime="2025-10-01"><span data-lang="en">Q4 2025</span><span data-lang="zh">2025年 Q4</span></time>
+      </div>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
+    </div>
+  </div>
+  <div id="chart-private_credit_gdp" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-private_credit_gdp", [{"name": "Total Credit to Private Non-Financial Sector (% of GDP)", "x": ["2005-01-01", "2005-04-01", "2005-07-01", "2005-10-01", "2006-01-01", "2006-04-01", "2006-07-01", "2006-10-01", "2007-01-01", "2007-04-01", "2007-07-01", "2007-10-01", "2008-01-01", "2008-04-01", "2008-07-01", "2008-10-01", "2009-01-01", "2009-04-01", "2009-07-01", "2009-10-01", "2010-01-01", "2010-04-01", "2010-07-01", "2010-10-01", "2011-01-01", "2011-04-01", "2011-07-01", "2011-10-01", "2012-01-01", "2012-04-01", "2012-07-01", "2012-10-01", "2013-01-01", "2013-04-01", "2013-07-01", "2013-10-01", "2014-01-01", "2014-04-01", "2014-07-01", "2014-10-01", "2015-01-01", "2015-04-01", "2015-07-01", "2015-10-01", "2016-01-01", "2016-04-01", "2016-07-01", "2016-10-01", "2017-01-01", "2017-04-01", "2017-07-01", "2017-10-01", "2018-01-01", "2018-04-01", "2018-07-01", "2018-10-01", "2019-01-01", "2019-04-01", "2019-07-01", "2019-10-01", "2020-01-01", "2020-04-01", "2020-07-01", "2020-10-01", "2021-01-01", "2021-04-01", "2021-07-01", "2021-10-01", "2022-01-01", "2022-04-01", "2022-07-01", "2022-10-01", "2023-01-01", "2023-04-01", "2023-07-01", "2023-10-01", "2024-01-01", "2024-04-01", "2024-07-01", "2024-10-01", "2025-01-01", "2025-04-01", "2025-07-01", "2025-10-01"], "y": [171.6, 176.6, 173.2, 173.9, 172.7, 175.1, 175.0, 176.2, 178.6, 188.1, 194.1, 187.4, 190.9, 196.3, 198.0, 191.8, 186.5, 194.9, 198.2, 194.6, 200.3, 211.7, 224.6, 225.2, 237.2, 242.9, 244.9, 237.7, 239.0, 239.6, 239.9, 239.0, 246.7, 261.4, 265.8, 264.6, 278.6, 288.0, 292.9, 284.0, 293.2, 292.8, 286.2, 297.5, 295.8, 300.9, 301.8, 306.5, 316.9, 331.1, 335.1, 343.4, 349.5, 345.4, 332.9, 335.4, 335.9, 341.6, 346.3, 349.3, 367.9, 372.8, 392.3, 383.9, 388.6, 396.6, 380.8, 368.5, 381.1, 383.5, 374.0, 373.0, 375.8, 373.9, 364.7, 362.9, 358.1, 339.5, 334.7, 326.9, 330.4, 335.1, 332.4, 328.5], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2025-10-01"], "y": [328.5], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "% of GDP", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://fred.stlouisfed.org/series/QHKPAM770A" target="_blank" rel="noreferrer">FRED / BIS</a></span>
+    <span>Series: QHKPAM770A</span>
+    <span>Frequency: quarterly</span>
+    <span>Provider update: 2026-06-15</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">BIS total credit to the private non-financial sector as a percentage of GDP.</span><span data-lang="zh">国际清算银行（BIS）统计的私营非金融部门信贷占GDP比重。</span></p>
+</article>
+
+
+  </div>
+</section>
+
+<section class="panel" id="stability_structural">
+  <div class="section-title">
+    <p>PDF logic</p>
+    <h2><span data-lang="en">Financial Stability &amp; Soundness</span><span data-lang="zh">金融稳定与稳健性</span></h2>
+    <div class="logic"><span data-lang="en">IMF Financial Soundness Indicators (FSI) via DBnomics track banking sector consolidated capital adequacy ratio (CAR) and non-performing loans (NPL).</span><span data-lang="zh">国际货币基金组织金融稳健性指标(FSI)追踪香港银行体系综合资本充足率(CAR)与不良贷款率(NPL)。</span></div>
+  </div>
+  <div class="charts-grid">
+
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="bank_capital_ratio">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Locally Incorporated AIs Capital Adequacy Ratio</span><span data-lang="zh">本地注册认可机构资本充足率 (CAR)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2025-03-31">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>24.2</strong><em>%</em></span>
+        <time datetime="2025-03-31"><span data-lang="en">Q1 2025</span><span data-lang="zh">2025年 Q1</span></time>
+      </div>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
+    </div>
+  </div>
+  <div id="chart-bank_capital_ratio" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-bank_capital_ratio", [{"name": "Locally Incorporated AIs Capital Adequacy Ratio", "x": ["2008-12-31", "2009-03-31", "2009-06-30", "2009-09-30", "2009-12-31", "2010-03-31", "2010-06-30", "2010-09-30", "2010-12-31", "2011-03-31", "2011-06-30", "2011-09-30", "2011-12-31", "2012-03-31", "2012-06-30", "2012-09-30", "2012-12-31", "2013-03-31", "2013-06-30", "2013-09-30", "2013-12-31", "2014-03-31", "2014-06-30", "2014-09-30", "2014-12-31", "2015-03-31", "2015-06-30", "2015-09-30", "2015-12-31", "2016-03-31", "2016-06-30", "2016-09-30", "2016-12-31", "2017-03-31", "2017-06-30", "2017-09-30", "2017-12-31", "2018-03-31", "2018-06-30", "2018-09-30", "2018-12-31", "2019-03-31", "2019-06-30", "2019-09-30", "2019-12-31", "2020-03-31", "2020-06-30", "2020-09-30", "2020-12-31", "2021-03-31", "2021-06-30", "2021-09-30", "2021-12-31", "2022-03-31", "2022-06-30", "2022-09-30", "2022-12-31", "2023-03-31", "2023-06-30", "2023-09-30", "2023-12-31", "2024-03-31", "2024-06-30", "2024-09-30", "2024-12-31", "2025-03-31"], "y": [14.77, 15.76, 16.47, 16.62, 16.88, 17.03, 16.2, 16.07, 15.88, 15.96, 15.9, 15.746, 15.82, 15.86, 15.91, 16.1, 15.7, 16.6, 15.9, 16.1, 15.91, 15.92, 16.06, 16.41, 16.83, 16.97, 17.51, 18.06, 18.33, 18.16, 19.37, 19.64, 19.1611619787541, 18.8127711208939, 18.74, 18.6914642682564, 19.1308856466343, 19.1215605904935, 19.4435351860982, 20.1708919617961, 20.2771860664696, 20.4015959357908, 20.5843945103897, 20.5724540004439, 20.7439709562414, 20.1244468990759, 20.7046601741389, 20.3026441660488, 20.6899124043809, 20.456007113138, 19.8217452190691, 20.3965164177605, 20.1687131087703, 19.6633851729231, 19.7698253699751, 19.8694636482422, 20.0811295485363, 20.8120027031365, 20.9779544347981, 20.8902561628944, 21.060447247654, 21.1222318591418, 21.1325486857763, 21.7927215578125, 21.8168066674924, 24.1713669432753], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2025-03-31"], "y": [24.1713669432753], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "%", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://db.nomics.world/IMF/FSI/Q.HK.FSKRC_PT" target="_blank" rel="noreferrer">IMF / DBnomics (Financial Soundness Indicators)</a></span>
+    <span>Series: IMF/FSI/Q.HK.FSKRC_PT</span>
+    <span>Frequency: quarterly</span>
+    <span>Provider update: 2025-03-31</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Consolidated regulatory capital to risk-weighted assets for locally incorporated banks in Hong Kong.</span><span data-lang="zh">香港本地注册认可机构合并监管资本与风险加权资产比率。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="bank_npl_ratio">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Bank Classified / Non-Performing Loan Ratio</span><span data-lang="zh">银行分类/不良贷款比率 (NPL)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2025-03-31">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>1.56</strong><em>%</em></span>
+        <time datetime="2025-03-31"><span data-lang="en">Q1 2025</span><span data-lang="zh">2025年 Q1</span></time>
+      </div>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
+    </div>
+  </div>
+  <div id="chart-bank_npl_ratio" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-bank_npl_ratio", [{"name": "Bank Classified / Non-Performing Loan Ratio", "x": ["2008-12-31", "2009-03-31", "2009-06-30", "2009-09-30", "2009-12-31", "2010-03-31", "2010-06-30", "2010-09-30", "2010-12-31", "2011-03-31", "2011-06-30", "2011-09-30", "2011-12-31", "2012-03-31", "2012-06-30", "2012-09-30", "2012-12-31", "2013-03-31", "2013-06-30", "2013-09-30", "2013-12-31", "2014-03-31", "2014-06-30", "2014-09-30", "2014-12-31", "2015-03-31", "2015-06-30", "2015-09-30", "2015-12-31", "2016-03-31", "2016-06-30", "2016-09-30", "2016-12-31", "2017-03-31", "2017-06-30", "2017-09-30", "2017-12-31", "2018-03-31", "2018-06-30", "2018-09-30", "2018-12-31", "2019-03-31", "2019-06-30", "2019-09-30", "2019-12-31", "2020-03-31", "2020-06-30", "2020-09-30", "2020-12-31", "2021-03-31", "2021-06-30", "2021-09-30", "2021-12-31", "2022-03-31", "2022-06-30", "2022-09-30", "2022-12-31", "2023-03-31", "2023-06-30", "2023-09-30", "2023-12-31", "2024-03-31", "2024-06-30", "2024-09-30", "2024-12-31", "2025-03-31"], "y": [1.23, 1.53, 1.58, 1.48, 1.58, 1.47, 1.22, 1.15, 0.83, 0.74, 0.68, 0.649, 0.69, 0.67, 0.6, 0.59, 0.6, 0.6, 0.5, 0.5, 0.54, 0.51, 0.56, 0.53, 0.51, 0.51, 0.52, 0.56, 0.73, 0.86, 0.9, 0.92, 0.854318088546397, 0.831046583333065, 0.834587661739568, 0.792442142584334, 0.668925745235763, 0.648107838706827, 0.612187327527676, 0.600943881315801, 0.546970804225276, 0.555309083889519, 0.559616495837133, 0.557877415504004, 0.568032237016265, 0.615189216216094, 0.792106351417675, 0.837018490308844, 0.902373530647949, 0.893243735560473, 0.858458439890428, 0.81273407240391, 0.878169345365409, 0.976526504954538, 1.10110565574068, 1.18524924377041, 1.01785430019981, 1.0560288604789, 1.13317747495084, 1.21250313238646, 1.20273871538593, 1.39948936053288, 1.51837979879701, 1.57496266822633, 1.55962294621642, 1.56049691661105], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2025-03-31"], "y": [1.56049691661105], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "%", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://db.nomics.world/IMF/FSI/Q.HK.FSANL_PT" target="_blank" rel="noreferrer">IMF / DBnomics (Financial Soundness Indicators)</a></span>
+    <span>Series: IMF/FSI/Q.HK.FSANL_PT</span>
+    <span>Frequency: quarterly</span>
+    <span>Provider update: 2025-03-31</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Non-performing loans to total gross loans reported to the IMF.</span><span data-lang="zh">报送IMF的银行不良贷款占总贷款比重。</span></p>
+</article>
+
+
+  </div>
+</section>
+
+  <section class="panel" id="data-gaps">
+    <div class="section-title">
+      <p>Pipeline</p>
+      <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
+      <div class="logic"><span data-lang="en">These are macro indicators that matter for Hong Kong but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的中国香港核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+    </div>
+    <table class="gaps-table">
+      <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>
+      <tbody>
+<tr>
+  <td><span data-lang="en">Credit &amp; Financial Conditions</span><span data-lang="zh">信贷与金融环境</span></td>
+  <td><span data-lang="en">Daily HKMA Base Rate, Overnight/1M HIBOR &amp; Aggregate Balance</span><span data-lang="zh">香港金管局贴现窗基本利率、隔夜/1个月HIBOR及银行体系总结余</span></td>
+  <td><span data-lang="en">Published by HKMA Open API (api.hkma.gov.hk). The API endpoint is currently protected by an Aliyun WAF returning HTTP 405 on cloud IPs; monitored via web portal.</span><span data-lang="zh">由香港金管局开放API发布。该接口目前受到阿里云WAF防护，对云服务器IP返回HTTP 405错误；通过网页端人工跟踪。</span></td>
+</tr></tbody>
+    </table>
+  </section>
+
+  <footer class="page-footer">
+    <span data-lang="en">Research artefact only, not investment advice. Generated 2026-10-27 from <code>hong_kong_indicators.yaml</code>.</span>
+    <span data-lang="zh">仅为研究工具，不构成投资建议。生成日期 2026-10-27，配置来源 <code>hong_kong_indicators.yaml</code>。</span>
+  </footer>
+</main>
+
+<script>
+function resizeCharts() {
+  if (!window.Plotly) return;
+  document.querySelectorAll('.plotly-chart').forEach(function(el) {
+    if (el.offsetParent !== null) Plotly.Plots.resize(el);
+  });
+}
+function setDashboardView(view) {
+  var normalized = view === 'deep' ? 'deep' : 'core';
+  document.body.dataset.dashboardView = normalized;
+  localStorage.setItem('cp-dashboard-view', normalized);
+  document.querySelectorAll('[data-view-option]').forEach(function(btn) {
+    btn.setAttribute('aria-pressed', String(btn.dataset.viewOption === normalized));
+  });
+  requestAnimationFrame(resizeCharts);
+}
+(function() {
+  var saved = localStorage.getItem('cp-lang');
+  if (saved === 'zh') {
+    document.documentElement.lang = 'zh';
+    document.getElementById('lang-btn').textContent = 'English';
+  }
+  setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
+  requestAnimationFrame(resizeCharts);
+})();
+function toggleLang() {
+  var html = document.documentElement;
+  var btn = document.getElementById('lang-btn');
+  if (html.lang === 'en') {
+    html.lang = 'zh';
+    btn.textContent = 'English';
+    localStorage.setItem('cp-lang', 'zh');
+  } else {
+    html.lang = 'en';
+    btn.textContent = '中文';
+    localStorage.setItem('cp-lang', 'en');
+  }
+  requestAnimationFrame(resizeCharts);
+}
+window.addEventListener('resize', resizeCharts);
+</script>
+</body>
+</html>
