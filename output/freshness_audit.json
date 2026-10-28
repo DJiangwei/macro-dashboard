@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-28T23:34:03.952391+00:00",
+  "generated": "2026-10-28T23:57:04.093572+00:00",
   "as_of_date": "2026-10-28",
   "thresholds": {
     "daily": "14 days",
@@ -206,8 +206,8 @@
     },
     {
       "dashboard": "Taiwan",
-      "charts": 46,
-      "current": 25,
+      "charts": 48,
+      "current": 27,
       "stale": 2,
       "lagged_source": 0,
       "projection": 0,
@@ -216,7 +216,7 @@
       "missing_date": 0,
       "needs_review": 0,
       "low_confidence": 2,
-      "latest_historical_date": "2026-10-23",
+      "latest_historical_date": "2026-10-28",
       "headline_latest": ""
     },
     {
@@ -17418,7 +17418,7 @@
       "quality_status": "watch",
       "source": "FRED / Realtor.com",
       "series_id": "ACTLISCOUUS",
-      "provider_update": "2026-10-02",
+      "provider_update": "2026-10-01",
       "note": "Year-over-year growth derived from Realtor.com active listings; better for market-slack direction than raw counts, though methodology changes still require caution."
     },
     {
@@ -17438,7 +17438,7 @@
       "quality_status": "watch",
       "source": "FRED / Realtor.com",
       "series_id": "PENLISCOUUS",
-      "provider_update": "2026-10-02",
+      "provider_update": "2026-10-01",
       "note": "Realtor.com pending-listing count via FRED; related to transaction pipeline, but it is not the NAR Pending Home Sales Index."
     },
     {
@@ -17458,7 +17458,7 @@
       "quality_status": "watch",
       "source": "FRED / Realtor.com",
       "series_id": "PENLISCOUUS",
-      "provider_update": "2026-10-02",
+      "provider_update": "2026-10-01",
       "note": "Year-over-year growth derived from Realtor.com pending listings; a cleaner transaction-pipeline signal than the raw level when seasonality is material."
     },
     {
@@ -17478,7 +17478,7 @@
       "quality_status": "watch",
       "source": "FRED / Realtor.com",
       "series_id": "MEDDAYONMARUS",
-      "provider_update": "2026-10-02",
+      "provider_update": "2026-10-01",
       "note": "Realtor.com median days on market via FRED; methodology changes in 2021/2022 mean it is best used for broad market-slack direction, not precise historical level comparison."
     },
     {
@@ -22620,6 +22620,46 @@
       "series_id": "",
       "provider_update": "2026-09-24",
       "note": "Annual percentage change in central bank reserve money (averages of daily figures)."
+    },
+    {
+      "dashboard": "Taiwan",
+      "indicator_id": "taiex_index",
+      "label": "Taiwan Capitalization Weighted Stock Index (TAIEX)",
+      "frequency": "daily",
+      "latest_observation": "2026-10-28",
+      "latest_date": "2026-10-28",
+      "age_basis_date": "2026-10-28",
+      "age_days": 0,
+      "threshold_days": 10,
+      "release_calendar_id": "",
+      "expected_release_date": "",
+      "due_date": "",
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "Taiwan Stock Exchange (TWSE) via FinMind",
+      "series_id": "",
+      "provider_update": "2026-10-28",
+      "note": "Daily closing level of the Taiwan Capitalization Weighted Stock Index (TAIEX) published by TWSE."
+    },
+    {
+      "dashboard": "Taiwan",
+      "indicator_id": "tpex_index",
+      "label": "Taipei Exchange Index (TPEx / GTSM)",
+      "frequency": "daily",
+      "latest_observation": "2026-10-28",
+      "latest_date": "2026-10-28",
+      "age_basis_date": "2026-10-28",
+      "age_days": 0,
+      "threshold_days": 10,
+      "release_calendar_id": "",
+      "expected_release_date": "",
+      "due_date": "",
+      "freshness_status": "current",
+      "quality_status": "watch",
+      "source": "Taipei Exchange (TPEx) via FinMind",
+      "series_id": "",
+      "provider_update": "2026-10-28",
+      "note": "Daily closing level of the Taipei Exchange (TPEx) index tracking Taiwanese small- and mid-cap tech innovators."
     },
     {
       "dashboard": "Taiwan",

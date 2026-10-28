@@ -180,7 +180,7 @@ def source_authority(source_name: object, source_url: object = "", declared: obj
     source = f"{clean(source_name)} {clean(source_url)}".lower()
     if any(token in source for token in ("manual", "curated", "tracker")):
         return "manual_curated"
-    if any(token in source for token in ("akshare", "eastmoney", "sina", "yahoo", "stooq")):
+    if any(token in source for token in ("akshare", "eastmoney", "sina", "yahoo", "stooq", "finmind")):
         return "public_wrapper"
     if any(token in source for token in ("fred", "world bank", "imf", "bis", "oecd", "db.nomics", "dbnomics", "bruegel", "eia", "energy information administration")):
         return "official_mirror"

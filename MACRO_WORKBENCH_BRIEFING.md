@@ -21,7 +21,7 @@
 | **Turkey (TR)** | 46.2 | 51.7 | **defensive** | moderate expansion | inflation pressure | restrictive stance | 61.0 (usable with watch-list) |
 | **Hong Kong (HK)** | 63.3 | 55.0 | **mixed** | above-trend expansion | near-target inflation | insufficient data | 73.1 (usable with watch-list) |
 | **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 60.8 (usable with watch-list) |
-| **Taiwan (TW)** | 75.0 | 71.7 | **constructive** | above-trend expansion | near-target inflation | accommodative stance | 77.5 (usable with watch-list) |
+| **Taiwan (TW)** | 75.0 | 71.7 | **constructive** | above-trend expansion | near-target inflation | accommodative stance | 78.2 (usable with watch-list) |
 | **Kazakhstan (KZ)** | 43.8 | 55.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 77.8 (usable with watch-list) |
 | **Uzbekistan (UZ)** | 53.8 | 51.7 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 73.2 (usable with watch-list) |
 | **Egypt (EG)** | 53.8 | 45.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 58.0 (needs data review) |

@@ -3254,3 +3254,61 @@ def fetch_eia(spec: dict[str, Any]) -> dict[str, Any]:
         "provider_updated": observations[-1]["date"] if observations else "",
         "api_url": f"https://api.eia.gov/v2/{route}/",
     }
+
+
+def fetch_finmind(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch financial and equity market time series from FinMind API.
+
+    Reads FINMIND_API_TOKEN from environment or .env.local.
+    Spec options:
+      dataset: defaults to "TaiwanStockPrice"
+      data_id: e.g. "TAIEX", "TPEx", or stock id "2330"
+      metric: column to extract, defaults to "close"
+      start_date: e.g. "2015-01-01"
+    """
+    token = _get_env_key("FINMIND_API_TOKEN")
+    if not token:
+        return {
+            **spec,
+            "observations": [],
+            "quality_notes": ["FINMIND_API_TOKEN is not configured in environment or .env.local."],
+        }
+    dataset = str(spec.get("dataset") or "TaiwanStockPrice").strip()
+    data_id = str(spec.get("data_id") or spec.get("series") or "TAIEX").strip()
+    metric = str(spec.get("metric") or "close").strip()
+    start_date = str(spec.get("start_date") or "2015-01-01").strip()
+
+    url = "https://api.finmindtrade.com/api/v4/data"
+    params = {
+        "dataset": dataset,
+        "data_id": data_id,
+        "start_date": start_date,
+        "token": token,
+    }
+    headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
+    response = requests.get(url, headers=headers, params=params, timeout=30)
+    response.raise_for_status()
+    payload = response.json()
+    records = payload.get("data") or []
+
+    today_iso = datetime.now(UTC).strftime("%Y-%m-%d")
+    observations: list[dict[str, Any]] = []
+    for item in records:
+        dt = str(item.get("date") or "").strip()[:10]
+        if not dt or dt > today_iso:
+            continue
+        raw_val = item.get(metric)
+        if raw_val in (None, "", "null", "NaN"):
+            continue
+        try:
+            val = float(raw_val)
+        except (ValueError, TypeError):
+            continue
+        observations.append({"date": dt, "value": val})
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": f"https://api.finmindtrade.com/api/v4/data?dataset={dataset}&data_id={data_id}",
+    }

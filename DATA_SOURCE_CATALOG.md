@@ -1116,7 +1116,7 @@ The Taiwan page is generated from `config/taiwan_indicators.yaml`. Central Bank 
 
 Generated from `config/taiwan_indicators.yaml`; latest dates are tracked in `output/taiwan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 46. Latest rendered chart count: 46. Source groups: 7.
+Configured charts: 48. Latest rendered chart count: 48. Source groups: 9.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1141,6 +1141,8 @@ Configured charts: 46. Latest rendered chart count: 46. Source groups: 7.
 | monetary_financial | `m1b_growth` | M1B Monetary Aggregate YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual percentage change in M1B (currency in circulation plus checking accounts and passbook deposits). |
 | monetary_financial | `m2_growth` | M2 Monetary Aggregate YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual percentage change in broad money M2 (averages of daily figures). |
 | monetary_financial | `reserve_money_growth` | Reserve Money YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual percentage change in central bank reserve money (averages of daily figures). |
+| monetary_financial | `taiex_index` | Taiwan Capitalization Weighted Stock Index (TAIEX) | daily | Index | finmind | Taiwan Stock Exchange (TWSE) via FinMind |  | Daily closing level of the Taiwan Capitalization Weighted Stock Index (TAIEX) published by TWSE. |
+| monetary_financial | `tpex_index` | Taipei Exchange Index (TPEx / GTSM) | daily | Index | finmind | Taipei Exchange (TPEx) via FinMind |  | Daily closing level of the Taipei Exchange (TPEx) index tracking Taiwanese small- and mid-cap tech innovators. |
 | credit_property | `consumer_loans_growth` | Consumer Loans YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual growth rate of total consumer loans by domestic banks. |
 | credit_property | `mortgage_loans_growth` | House-Purchasing Loans (Mortgages) YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual growth rate of outstanding residential house-purchasing loans (key property credit indicator). |
 | credit_property | `construction_loans_growth` | Construction Loans YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual growth rate of domestic bank loans for construction (developer credit cycle gauge). |

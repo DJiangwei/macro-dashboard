@@ -1,8 +1,8 @@
 {
   "file": "taiwan.html",
-  "generated": "2026-10-28T23:32:54.633677+00:00",
-  "charts": 46,
-  "source_groups": 7,
+  "generated": "2026-10-28T23:55:52.335460+00:00",
+  "charts": 48,
+  "source_groups": 9,
   "data_gaps": 1,
   "low_confidence": 2,
   "key_series_latest": [
@@ -255,6 +255,30 @@
       "latest_display": "7.03 % y/y",
       "frequency": "monthly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
+      "series": "",
+      "quality_status": "watch"
+    },
+    {
+      "id": "taiex_index",
+      "label_en": "Taiwan Capitalization Weighted Stock Index (TAIEX)",
+      "label_zh": "台湾加权股价指数 (TAIEX)",
+      "latest_date": "2026-10-28",
+      "latest_value": 47035.58,
+      "latest_display": "47,036 Index",
+      "frequency": "daily",
+      "source_name": "Taiwan Stock Exchange (TWSE) via FinMind",
+      "series": "",
+      "quality_status": "watch"
+    },
+    {
+      "id": "tpex_index",
+      "label_en": "Taipei Exchange Index (TPEx / GTSM)",
+      "label_zh": "柜买指数 (TPEx)",
+      "latest_date": "2026-10-28",
+      "latest_value": 394.61,
+      "latest_display": "395 Index",
+      "frequency": "daily",
+      "source_name": "Taipei Exchange (TPEx) via FinMind",
       "series": "",
       "quality_status": "watch"
     },
@@ -608,10 +632,10 @@
       "value"
     ],
     "file": "taiwan_canonical_frame.json",
-    "series": 46,
-    "observations": 10009,
-    "series_count": 46,
-    "observation_count": 10009
+    "series": 48,
+    "observations": 13319,
+    "series_count": 48,
+    "observation_count": 13319
   },
   "data_gaps_detail": [
     {
@@ -623,7 +647,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 7,
+    "source_groups": 9,
     "sources": [
       {
         "source_name": "Central Bank of the Republic of China (Taiwan)",
@@ -652,12 +676,20 @@
       {
         "source_name": "FRED / Federal Reserve Board",
         "charts": 1
+      },
+      {
+        "source_name": "Taipei Exchange (TPEx) via FinMind",
+        "charts": 1
+      },
+      {
+        "source_name": "Taiwan Stock Exchange (TWSE) via FinMind",
+        "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 2,
       "verified": 18,
-      "watch": 26
+      "watch": 28
     },
     "unavailable_count": 0
   },
@@ -670,12 +702,12 @@
   "freshness": {
     "as_of_date": "2026-10-28",
     "counts": {
-      "current": 21,
+      "current": 23,
       "due": 19,
       "projection": 4,
       "stale": 2
     },
-    "latest_historical_date": "2026-10-23",
+    "latest_historical_date": "2026-10-28",
     "attention": [
       {
         "id": "real_gdp_growth",
@@ -1143,7 +1175,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 44,
+      "level": 46,
       "yoy_pct": 2
     },
     "non_level": [
@@ -1167,6 +1199,6 @@
       "date",
       "value"
     ],
-    "charted_series": 46
+    "charted_series": 48
   }
 }

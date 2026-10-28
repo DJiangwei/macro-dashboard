@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-28T23:34:05.233658+00:00",
+  "generated": "2026-10-28T23:57:05.376360+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -7044,16 +7044,16 @@
       "currency": "TWD",
       "institution": "CBC",
       "category": "data-first country page",
-      "charts": 46,
-      "expected": 46,
+      "charts": 48,
+      "expected": 48,
       "proxy_fills": 0,
       "gaps_or_dropped": 1,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/TWD spot",
       "headline": "32.54 (2026-10-23)",
       "secondary_label": "Source groups",
-      "secondary": "7",
-      "quality": "7 source groups · 2 low-confidence charts",
+      "secondary": "9",
+      "quality": "9 source groups · 2 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -7122,7 +7122,7 @@
         }
       },
       "source_health": {
-        "source_groups": 7,
+        "source_groups": 9,
         "sources": [
           {
             "source_name": "Central Bank of the Republic of China (Taiwan)",
@@ -7151,24 +7151,32 @@
           {
             "source_name": "FRED / Federal Reserve Board",
             "charts": 1
+          },
+          {
+            "source_name": "Taipei Exchange (TPEx) via FinMind",
+            "charts": 1
+          },
+          {
+            "source_name": "Taiwan Stock Exchange (TWSE) via FinMind",
+            "charts": 1
           }
         ],
         "quality_counts": {
           "low_confidence": 2,
           "verified": 18,
-          "watch": 26
+          "watch": 28
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-28",
         "counts": {
-          "current": 21,
+          "current": 23,
           "due": 19,
           "projection": 4,
           "stale": 2
         },
-        "latest_historical_date": "2026-10-23",
+        "latest_historical_date": "2026-10-28",
         "attention": [
           {
             "id": "real_gdp_growth",
@@ -7641,15 +7649,15 @@
           "value"
         ],
         "file": "taiwan_canonical_frame.json",
-        "series": 46,
-        "observations": 10009,
-        "series_count": 46,
-        "observation_count": 10009
+        "series": 48,
+        "observations": 13319,
+        "series_count": 48,
+        "observation_count": 13319
       },
       "freshness_summary": {
         "dashboard": "Taiwan",
-        "charts": 46,
-        "current": 25,
+        "charts": 48,
+        "current": 27,
         "stale": 2,
         "lagged_source": 0,
         "projection": 0,
@@ -7658,7 +7666,7 @@
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 2,
-        "latest_historical_date": "2026-10-23",
+        "latest_historical_date": "2026-10-28",
         "headline_latest": ""
       }
     },
@@ -7983,9 +7991,9 @@
         ],
         "file": "kazakhstan_canonical_frame.json",
         "series": 34,
-        "observations": 9878,
+        "observations": 9874,
         "series_count": 34,
-        "observation_count": 9878
+        "observation_count": 9874
       },
       "freshness_summary": {
         "dashboard": "Kazakhstan",
@@ -10525,10 +10533,10 @@
       "structural_score": 71.7,
       "composite_label": "constructive",
       "quality": {
-        "score": 77.5,
+        "score": 78.2,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 54.3,
+        "freshness_score": 56.2,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -12533,11 +12541,11 @@
       "code": "TW",
       "name": "Taiwan",
       "coverage_pct": 100.0,
-      "freshness_pct": 54.3,
+      "freshness_pct": 56.2,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 73.3,
-      "quality_score": 77.5
+      "quality_score": 78.2
     },
     {
       "code": "KZ",

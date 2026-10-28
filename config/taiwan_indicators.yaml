@@ -372,6 +372,38 @@ indicators:
     caveat_en: Annual percentage change in central bank reserve money (averages of daily figures).
     caveat_zh: 准备货币（日平均数）年增率。
 
+  - id: taiex_index
+    section: monetary_financial
+    label_en: Taiwan Capitalization Weighted Stock Index (TAIEX)
+    label_zh: 台湾加权股价指数 (TAIEX)
+    unit: "Index"
+    fetcher: finmind
+    data_id: TAIEX
+    metric: close
+    source_authority: public_wrapper
+    source_name: Taiwan Stock Exchange (TWSE) via FinMind
+    source_url: https://api.finmindtrade.com/
+    frequency: daily
+    start_date: 2020-01-01
+    caveat_en: Daily closing level of the Taiwan Capitalization Weighted Stock Index (TAIEX) published by TWSE.
+    caveat_zh: 台湾证券交易所编制的加权股价指数（TAIEX）每日收盘点数，反映台湾科技与半导体资本市场核心估值与景气动能。
+
+  - id: tpex_index
+    section: monetary_financial
+    label_en: Taipei Exchange Index (TPEx / GTSM)
+    label_zh: 柜买指数 (TPEx)
+    unit: "Index"
+    fetcher: finmind
+    data_id: TPEx
+    metric: close
+    source_authority: public_wrapper
+    source_name: Taipei Exchange (TPEx) via FinMind
+    source_url: https://api.finmindtrade.com/
+    frequency: daily
+    start_date: 2020-01-01
+    caveat_en: Daily closing level of the Taipei Exchange (TPEx) index tracking Taiwanese small- and mid-cap tech innovators.
+    caveat_zh: 证券柜台买卖中心编制的柜买指数（TPEx）每日收盘点数，追踪台湾中小型科技与电子设计研发企业风险偏好。
+
   # ==========================================
   # 4. Credit & Property Market
   # ==========================================

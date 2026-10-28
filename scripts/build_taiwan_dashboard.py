@@ -41,6 +41,7 @@ from country_primer.adapters import (
     _apply_us_transform as _apply_transform,
     apply_scale,
     fetch_bruegel_reer,
+    fetch_finmind,
     fetch_fred_us,
     fetch_imf_datamapper,
     fetch_tw_cbc,
@@ -79,6 +80,8 @@ SUMMARY_KEY_IDS = [
     "m1b_growth",
     "m2_growth",
     "reserve_money_growth",
+    "taiex_index",
+    "tpex_index",
     "consumer_loans_growth",
     "mortgage_loans_growth",
     "construction_loans_growth",
@@ -125,6 +128,7 @@ def build(data_mode: str | None = None) -> Path:
         "fred": lambda spec, cache: _apply_transform(apply_scale(fetch_fred_us(requests.Session(), spec))),
         "bruegel_reer": lambda spec, cache: _apply_transform(fetch_bruegel_reer(requests.Session(), spec)),
         "imf_datamapper": lambda spec, cache: _apply_transform(fetch_imf_datamapper(requests.Session(), spec)),
+        "finmind": lambda spec, cache: _apply_transform(apply_scale(fetch_finmind(spec))),
     }
 
     if data_mode == "snapshot":
