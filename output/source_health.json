@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-28T15:22:12.192463+00:00",
+  "generated": "2026-10-28T23:03:57.849527+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -503,19 +503,22 @@
       "events": []
     },
     "EA": {
-      "calls": 70,
-      "success": 70,
+      "calls": 72,
+      "success": 69,
       "empty": 0,
-      "failed": 0,
+      "failed": 3,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "unexpected_error": 3
+      },
       "empty_reasons": {},
       "sources": {
         "ecb_sdmx": {
           "success": 26
         },
         "eurostat_jsonstat": {
-          "success": 36
+          "failed": 3,
+          "success": 35
         },
         "fred": {
           "success": 2
@@ -527,16 +530,44 @@
           "success": 5
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-28T22:57:31.116838+00:00",
+          "country": "EA",
+          "indicator_id": "employment_expectations",
+          "source_id": "eurostat_jsonstat",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
+        },
+        {
+          "timestamp": "2026-10-28T22:57:37.940863+00:00",
+          "country": "EA",
+          "indicator_id": "employment_expectations",
+          "source_id": "eurostat_jsonstat",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
+        },
+        {
+          "timestamp": "2026-10-28T22:57:38.191638+00:00",
+          "country": "EA",
+          "indicator_id": "employment_expectations",
+          "source_id": "eurostat_jsonstat",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
+        }
+      ]
     },
     "TR": {
       "calls": 48,
-      "success": 36,
+      "success": 45,
       "empty": 0,
-      "failed": 12,
+      "failed": 3,
       "circuit_open": 0,
       "failure_reasons": {
-        "schema_error": 12
+        "unexpected_error": 3
       },
       "empty_reasons": {},
       "sources": {
@@ -550,13 +581,14 @@
           "success": 22
         },
         "fred": {
-          "success": 5
+          "success": 8
         },
         "imf_datamapper": {
-          "failed": 12
+          "success": 4
         },
         "imf_sdmx": {
-          "success": 4
+          "failed": 3,
+          "success": 6
         },
         "tcmb_xml": {
           "success": 1
@@ -564,118 +596,37 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-28T15:21:23.940080+00:00",
+          "timestamp": "2026-10-28T23:01:14.221754+00:00",
           "country": "TR",
-          "indicator_id": "current_account_gdp",
-          "source_id": "imf_datamapper",
+          "indicator_id": "food_cpi_inflation",
+          "source_id": "imf_sdmx",
           "outcome": "failed",
-          "reason": "schema_error",
-          "message": "'series'"
+          "reason": "unexpected_error",
+          "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         },
         {
-          "timestamp": "2026-10-28T15:21:23.940114+00:00",
+          "timestamp": "2026-10-28T23:01:35.679413+00:00",
           "country": "TR",
-          "indicator_id": "government_debt_gdp",
-          "source_id": "imf_datamapper",
+          "indicator_id": "food_cpi_inflation",
+          "source_id": "imf_sdmx",
           "outcome": "failed",
-          "reason": "schema_error",
-          "message": "'series'"
+          "reason": "unexpected_error",
+          "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         },
         {
-          "timestamp": "2026-10-28T15:21:23.940137+00:00",
+          "timestamp": "2026-10-28T23:01:35.679461+00:00",
           "country": "TR",
-          "indicator_id": "fiscal_balance_gdp",
-          "source_id": "imf_datamapper",
+          "indicator_id": "food_cpi_inflation",
+          "source_id": "imf_sdmx",
           "outcome": "failed",
-          "reason": "schema_error",
-          "message": "'series'"
-        },
-        {
-          "timestamp": "2026-10-28T15:21:23.940158+00:00",
-          "country": "TR",
-          "indicator_id": "primary_balance_gdp",
-          "source_id": "imf_datamapper",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "'series'"
-        },
-        {
-          "timestamp": "2026-10-28T15:21:26.825508+00:00",
-          "country": "TR",
-          "indicator_id": "current_account_gdp",
-          "source_id": "imf_datamapper",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "'series'"
-        },
-        {
-          "timestamp": "2026-10-28T15:21:26.825577+00:00",
-          "country": "TR",
-          "indicator_id": "current_account_gdp",
-          "source_id": "imf_datamapper",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "'series'"
-        },
-        {
-          "timestamp": "2026-10-28T15:21:26.825607+00:00",
-          "country": "TR",
-          "indicator_id": "government_debt_gdp",
-          "source_id": "imf_datamapper",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "'series'"
-        },
-        {
-          "timestamp": "2026-10-28T15:21:26.825628+00:00",
-          "country": "TR",
-          "indicator_id": "government_debt_gdp",
-          "source_id": "imf_datamapper",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "'series'"
-        },
-        {
-          "timestamp": "2026-10-28T15:21:26.825649+00:00",
-          "country": "TR",
-          "indicator_id": "fiscal_balance_gdp",
-          "source_id": "imf_datamapper",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "'series'"
-        },
-        {
-          "timestamp": "2026-10-28T15:21:26.825668+00:00",
-          "country": "TR",
-          "indicator_id": "fiscal_balance_gdp",
-          "source_id": "imf_datamapper",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "'series'"
-        },
-        {
-          "timestamp": "2026-10-28T15:21:26.825689+00:00",
-          "country": "TR",
-          "indicator_id": "primary_balance_gdp",
-          "source_id": "imf_datamapper",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "'series'"
-        },
-        {
-          "timestamp": "2026-10-28T15:21:26.825709+00:00",
-          "country": "TR",
-          "indicator_id": "primary_balance_gdp",
-          "source_id": "imf_datamapper",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "'series'"
+          "reason": "unexpected_error",
+          "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         }
       ]
     },
     "HK": {
-      "calls": 24,
-      "success": 24,
+      "calls": 37,
+      "success": 37,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -689,27 +640,29 @@
           "success": 2
         },
         "fred": {
-          "success": 4
+          "success": 7
         },
         "hk_csd": {
-          "success": 12
+          "success": 18
         },
         "imf_datamapper": {
-          "success": 2
+          "success": 4
         },
         "imf_sdmx": {
-          "success": 2
+          "success": 4
         }
       },
       "events": []
     },
     "KR": {
-      "calls": 36,
-      "success": 36,
+      "calls": 48,
+      "success": 39,
       "empty": 0,
-      "failed": 0,
+      "failed": 9,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "http_error": 9
+      },
       "empty_reasons": {},
       "sources": {
         "bruegel_reer": {
@@ -719,20 +672,103 @@
           "success": 2
         },
         "fred": {
+          "failed": 9,
           "success": 23
         },
         "imf_datamapper": {
           "success": 4
         },
         "imf_sdmx": {
-          "success": 5
+          "success": 8
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-28T23:02:01.890166+00:00",
+          "country": "KR",
+          "indicator_id": "business_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-28T23:02:03.280899+00:00",
+          "country": "KR",
+          "indicator_id": "manufacturing_wage_growth",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-28T23:02:03.516103+00:00",
+          "country": "KR",
+          "indicator_id": "consumer_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-28T23:02:17.096205+00:00",
+          "country": "KR",
+          "indicator_id": "business_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-28T23:02:30.021693+00:00",
+          "country": "KR",
+          "indicator_id": "business_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-28T23:02:42.814073+00:00",
+          "country": "KR",
+          "indicator_id": "consumer_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-28T23:02:55.710084+00:00",
+          "country": "KR",
+          "indicator_id": "consumer_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-28T23:03:08.289266+00:00",
+          "country": "KR",
+          "indicator_id": "manufacturing_wage_growth",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-28T23:03:21.698773+00:00",
+          "country": "KR",
+          "indicator_id": "manufacturing_wage_growth",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
+        }
+      ]
     },
     "TW": {
-      "calls": 37,
-      "success": 37,
+      "calls": 46,
+      "success": 46,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -749,17 +785,20 @@
           "success": 4
         },
         "tw_cbc": {
-          "success": 19
+          "success": 22
         },
         "tw_dgbas": {
-          "success": 10
+          "success": 13
+        },
+        "tw_mof_customs": {
+          "success": 3
         }
       },
       "events": []
     },
     "KZ": {
-      "calls": 28,
-      "success": 28,
+      "calls": 33,
+      "success": 33,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -770,13 +809,16 @@
           "success": 2
         },
         "dbnomics": {
-          "success": 8
+          "success": 4
         },
         "fred_graph": {
           "success": 2
         },
         "imf_datamapper": {
           "success": 6
+        },
+        "imf_sdmx": {
+          "success": 9
         },
         "nbk_xml": {
           "success": 4
@@ -788,8 +830,8 @@
       "events": []
     },
     "UZ": {
-      "calls": 26,
-      "success": 26,
+      "calls": 32,
+      "success": 32,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -800,13 +842,16 @@
           "success": 2
         },
         "dbnomics": {
-          "success": 10
+          "success": 6
         },
         "fred_graph": {
           "success": 1
         },
         "imf_datamapper": {
           "success": 6
+        },
+        "imf_sdmx": {
+          "success": 10
         },
         "world_bank": {
           "success": 7
@@ -815,8 +860,8 @@
       "events": []
     },
     "EG": {
-      "calls": 25,
-      "success": 25,
+      "calls": 32,
+      "success": 32,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -827,13 +872,16 @@
           "success": 2
         },
         "dbnomics": {
-          "success": 8
+          "success": 4
         },
         "fred_graph": {
           "success": 2
         },
         "imf_datamapper": {
           "success": 6
+        },
+        "imf_sdmx": {
+          "success": 11
         },
         "world_bank": {
           "success": 7
@@ -842,8 +890,8 @@
       "events": []
     },
     "NG": {
-      "calls": 28,
-      "success": 28,
+      "calls": 35,
+      "success": 35,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -853,14 +901,20 @@
         "bruegel_reer": {
           "success": 2
         },
+        "cbn_fx": {
+          "success": 1
+        },
         "dbnomics": {
-          "success": 11
+          "success": 7
         },
         "fred_graph": {
           "success": 1
         },
         "imf_datamapper": {
           "success": 6
+        },
+        "imf_sdmx": {
+          "success": 10
         },
         "world_bank": {
           "success": 8

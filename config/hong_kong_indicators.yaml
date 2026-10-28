@@ -92,6 +92,82 @@ indicators:
     caveat_en: Year-on-year rate of change in real GDP.
     caveat_zh: 实际GDP较上年同季同比变动率。
 
+  - id: private_consumption_yoy
+    section: growth_accounts
+    label_en: Private Consumption Expenditure Growth YoY
+    label_zh: 私人消费开支同比
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "310-31002"
+    filters:
+      GDP_COMPONENT: PCE
+      freq: Q
+      sv: CUR
+      svDesc: "Year-on-year % change"
+    source_name: HK C&SD (National Accounts)
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=310-31002
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Quarterly year-on-year change in private consumption expenditure.
+    caveat_zh: 季度私人消费开支同比变动率。
+
+  - id: investment_growth_yoy
+    section: growth_accounts
+    label_en: Gross Domestic Fixed Capital Formation Growth YoY
+    label_zh: 本地固定资本形成总额同比
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "310-31002"
+    filters:
+      GDP_COMPONENT: GDFCF
+      freq: Q
+      sv: CUR
+      svDesc: "Year-on-year % change"
+    source_name: HK C&SD (National Accounts)
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=310-31002
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Quarterly year-on-year change in gross domestic fixed capital formation.
+    caveat_zh: 季度本地固定资本形成总额同比变动率。
+
+  - id: government_consumption_yoy
+    section: growth_accounts
+    label_en: Government Consumption Expenditure Growth YoY
+    label_zh: 政府消费开支同比
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "310-31002"
+    filters:
+      GDP_COMPONENT: GCE
+      freq: Q
+      sv: CUR
+      svDesc: "Year-on-year % change"
+    source_name: HK C&SD (National Accounts)
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=310-31002
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Quarterly year-on-year change in government consumption expenditure.
+    caveat_zh: 季度政府消费开支同比变动率。
+
+  - id: services_exports_yoy
+    section: growth_accounts
+    label_en: Exports of Services Growth YoY
+    label_zh: 服务输出同比 (金融与旅游枢纽)
+    unit: "% y/y"
+    fetcher: hk_csd
+    table_id: "310-31002"
+    filters:
+      GDP_COMPONENT: XS
+      freq: Q
+      sv: CUR
+      svDesc: "Year-on-year % change"
+    source_name: HK C&SD (National Accounts)
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=310-31002
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Quarterly year-on-year change in exports of services (financial services, travel, and logistics).
+    caveat_zh: 季度服务输出同比变动率（涵盖金融服务、旅游及航运贸易）。
+
   # ==========================================
   # 2. Production, Retail & Construction
   # ==========================================
@@ -161,6 +237,7 @@ indicators:
     fetcher: hk_csd
     table_id: "210-06101"
     filters:
+      SEX: ""
       freq: M3M
       sv: SAUR
     source_name: HK C&SD (General Household Survey)
@@ -169,6 +246,42 @@ indicators:
     start_date: 2000-01-01
     caveat_en: 3-month moving average seasonally adjusted unemployment rate.
     caveat_zh: 综合住户统计调查公布的3个月移动平均经季节性调整失业率。
+
+  - id: underemployment_rate
+    section: labour_wages
+    label_en: Underemployment Rate
+    label_zh: 就业不足率
+    unit: "% of labour force"
+    fetcher: hk_csd
+    table_id: "210-06101"
+    filters:
+      SEX: ""
+      freq: M3M
+      sv: UDR
+    source_name: HK C&SD (General Household Survey)
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=210-06101
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: 3-month moving average underemployment rate.
+    caveat_zh: 综合住户统计调查公布的3个月移动平均就业不足率。
+
+  - id: participation_rate
+    section: labour_wages
+    label_en: Labour Force Participation Rate
+    label_zh: 劳动人口参与率
+    unit: "% of population aged 15+"
+    fetcher: hk_csd
+    table_id: "210-06101"
+    filters:
+      SEX: ""
+      freq: M3M
+      sv: LFPR
+    source_name: HK C&SD (General Household Survey)
+    source_url: https://www.censtatd.gov.hk/en/web_table.html?id=210-06101
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: 3-month moving average labour force participation rate.
+    caveat_zh: 综合住户统计调查公布的3个月移动平均劳动人口参与率。
 
   - id: nominal_wage_index_growth
     section: labour_wages
@@ -279,17 +392,17 @@ indicators:
   # ==========================================
   - id: usd_hkd
     section: external_fx
-    label_en: USD/HKD Exchange Rate (Fed H.10)
-    label_zh: 美元兑港元汇率 (美联储H.10)
+    label_en: USD/HKD Exchange Rate (Fed H.10, Linked Band 7.75-7.85)
+    label_zh: 美元兑港元汇率 (联系汇率区间 7.75-7.85)
     unit: "HKD per USD"
     fetcher: fred
     series: DEXHKUS
     source_name: FRED / Federal Reserve Board
     source_url: https://fred.stlouisfed.org/series/DEXHKUS
     frequency: daily
-    start_date: 2026-01-01
-    caveat_en: Daily noon buying rates in New York City for cable transfers in foreign currencies.
-    caveat_zh: 纽约联邦储备银行每日公布的官方美元兑港元中午即期汇率。
+    start_date: 2005-01-01
+    caveat_en: Daily noon buying rates in New York City within HKMA's 7.75-7.85 Convertibility Undertaking band.
+    caveat_zh: 纽约联邦储备银行每日即期汇率（运行于金管局7.75-7.85强弱方兑换保证区间内）。
 
   - id: reer
     section: external_fx
@@ -382,13 +495,61 @@ indicators:
     fetcher: imf_sdmx
     dataflow: BOP
     series: HKG.NETCD_T.CAB.USD.Q
-    scale: 0.000001
+    scale: 1000000
     source_name: IMF SDMX / HK C&SD
     source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/HKG.NETCD_T.CAB.USD.Q
     frequency: quarterly
     start_date: 2005-01-01
     caveat_en: Quarterly BPM6 current account balance in millions of US dollars.
     caveat_zh: BPM6标准编制的季度经常账户差额（百万美元）。
+
+  - id: services_balance_usd
+    section: external_fx
+    label_en: Services Trade Balance (BOP Basis, USD)
+    label_zh: 服务贸易差额 (BOP口径，美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: HKG.NETCD_T.S.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / HK C&SD
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/HKG.NETCD_T.S.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 services trade balance in millions of US dollars.
+    caveat_zh: BPM6季度服务贸易净差额（百万美元）。
+
+  - id: fdi_net_usd
+    section: external_fx
+    label_en: Direct Investment Net Balance (FDI, USD)
+    label_zh: 直接投资净额 (FDI，美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: HKG.NNAFANIL_T.D_F.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / HK C&SD
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/HKG.NNAFANIL_T.D_F.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 direct investment net acquisition of financial assets less incurrence of liabilities.
+    caveat_zh: BPM6金融账户季度直接投资净额（百万美元）。
+
+  - id: current_account_gdp
+    section: external_fx
+    label_en: Current Account Balance (% of GDP)
+    label_zh: 经常账户占GDP比重
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: BCA_NGDPD
+    country_iso3: HKG
+    actual_through: 2025
+    source_name: IMF WEO DataMapper
+    source_url: https://www.imf.org/external/datamapper/BCA_NGDPD@WEO/HKG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: IMF World Economic Outlook historical series and projections.
+    caveat_zh: IMF《世界经济展望》历史序列与预测值。
 
   # ==========================================
   # 7. Fiscal & Public Finance
@@ -425,9 +586,39 @@ indicators:
     caveat_en: General government net lending/borrowing as a percentage of GDP.
     caveat_zh: 广义政府净借贷占GDP比重。
 
+  - id: primary_balance_gdp
+    section: fiscal_sovereign
+    label_en: Primary Net Lending / Borrowing (% of GDP)
+    label_zh: 基本财政收支占GDP比重 (初级平衡)
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: GGXONLB_G01_GDP_PT
+    country_iso3: HKG
+    actual_through: 2025
+    source_name: IMF Fiscal Monitor
+    source_url: https://www.imf.org/external/datamapper/GGXONLB_G01_GDP_PT@FM/HKG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government primary balance excluding net interest payments.
+    caveat_zh: 剔除利息净支出的广义政府初级财政收支占GDP比重。
+
   # ==========================================
   # 8. Credit & Financial Conditions
   # ==========================================
+  - id: fed_funds_anchor
+    section: monetary_financial
+    label_en: US Effective Federal Funds Rate (LERS Currency Board Anchor)
+    label_zh: 美联储有效联邦基金利率 (联系汇率制政策锚)
+    unit: "%"
+    fetcher: fred
+    series: FEDFUNDS
+    source_name: FRED / Federal Reserve Board
+    source_url: https://fred.stlouisfed.org/series/FEDFUNDS
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Under Hong Kong's Linked Exchange Rate System (LERS), the HKMA Base Rate is mechanically anchored to the US Federal Funds Target Rate (+50 bps).
+    caveat_zh: 在联系汇率制度下，香港金管局贴现窗基本利率机械锚定美联储联邦基金目标利率（加50个基点）。
+
   - id: private_credit_gdp
     section: monetary_financial
     label_en: Total Credit to Private Non-Financial Sector (% of GDP)
@@ -441,6 +632,34 @@ indicators:
     start_date: 2005-01-01
     caveat_en: BIS total credit to the private non-financial sector as a percentage of GDP.
     caveat_zh: 国际清算银行（BIS）统计的私营非金融部门信贷占GDP比重。
+
+  - id: bank_credit_gdp
+    section: monetary_financial
+    label_en: Bank Credit to Private Non-Financial Sector (% of GDP)
+    label_zh: 银行对私营非金融部门信贷占GDP比重
+    unit: "% of GDP"
+    fetcher: fred
+    series: QHKPBM770A
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QHKPBM770A
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Domestic bank credit to the private non-financial sector as a percentage of GDP.
+    caveat_zh: 银行体系向私营非金融部门提供的信贷占GDP比重。
+
+  - id: household_credit_gdp
+    section: monetary_financial
+    label_en: Credit to Households & NPISHs (% of GDP)
+    label_zh: 住户部门信贷占GDP比重 (家庭杠杆率)
+    unit: "% of GDP"
+    fetcher: fred
+    series: QHKHAM770A
+    source_name: FRED / BIS
+    source_url: https://fred.stlouisfed.org/series/QHKHAM770A
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Total credit to households and non-profit institutions serving households as a percentage of GDP.
+    caveat_zh: 住户及为住户服务的非营利机构信贷总额占GDP比重。
 
   # ==========================================
   # 9. Financial Stability

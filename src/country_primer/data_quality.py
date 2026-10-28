@@ -195,7 +195,7 @@ def source_authority(source_name: object, source_url: object = "", declared: obj
         "sarb", "resbank", "south african reserve bank",
         "tcmb", "turkstat", "censtatd", "census and statistics", "hkma",
         "bank of korea", "bok", "central bank of the republic of china", "cpx.cbc",
-        "cbc.gov.tw", "dgbas", "stat.gov.tw",
+        "cbc.gov.tw", "dgbas", "stat.gov.tw", "customs.gov.tw", "mof.gov.tw", "ministry of finance",
         "nbk", "nationalbank", "national bank of kazakhstan", "taldau", "stat.gov.kz",
         "cbu", "cbu.uz", "central bank of uzbekistan", "stat.uz", "siat",
         "cbe", "cbe.org.eg", "central bank of egypt", "capmas", "mped",

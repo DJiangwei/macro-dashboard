@@ -1,22 +1,22 @@
 {
   "file": "uzbekistan.html",
-  "generated": "2026-10-28T15:22:09.099392+00:00",
-  "charts": 26,
-  "source_groups": 8,
+  "generated": "2026-10-28T23:03:48.452709+00:00",
+  "charts": 32,
+  "source_groups": 10,
   "data_gaps": 2,
-  "low_confidence": 10,
+  "low_confidence": 6,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
       "label_en": "Real GDP Growth (IMF WEO)",
       "label_zh": "实际GDP增速 (IMF)",
-      "latest_date": "2031",
-      "latest_value": 5.7,
-      "latest_display": "5.70 %",
+      "latest_date": "2025",
+      "latest_value": 7.7,
+      "latest_display": "7.70 %",
       "frequency": "annual",
       "source_name": "IMF DataMapper (WEO)",
       "series": "NGDP_RPCH/UZB",
-      "quality_status": "unavailable"
+      "quality_status": "watch"
     },
     {
       "id": "real_gdp_growth_wb",
@@ -70,25 +70,37 @@
       "id": "cpi_inflation",
       "label_en": "Headline CPI Inflation YoY",
       "label_zh": "总体CPI通胀同比",
-      "latest_date": "2025-06-01",
-      "latest_value": 8.71469473362344,
-      "latest_display": "8.71 % y/y",
+      "latest_date": "2026-08-01",
+      "latest_value": 6.226301479299238,
+      "latest_display": "6.23 % y/y",
       "frequency": "monthly",
-      "source_name": "IMF / DBnomics (IFS)",
-      "series": "IMF/IFS/M.UZ.PCPI_PC_CP_A_PT",
-      "quality_status": "low_confidence"
+      "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
+      "series": "UZB.CPI._T.YOY_PCH_PA_PT.M",
+      "quality_status": "watch"
+    },
+    {
+      "id": "cpi_inflation_mom",
+      "label_en": "Headline CPI Inflation MoM",
+      "label_zh": "总体CPI通胀环比",
+      "latest_date": "2026-08-01",
+      "latest_value": 0.2399999999995666,
+      "latest_display": "0.24 % m/m",
+      "frequency": "monthly",
+      "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
+      "series": "UZB.CPI._T.POP_PCH_PA_PT.M",
+      "quality_status": "watch"
     },
     {
       "id": "cpi_index",
-      "label_en": "Headline Consumer Price Index (2020=100)",
-      "label_zh": "总体消费价格指数基数 (2020=100)",
-      "latest_date": "2025-06-01",
-      "latest_value": 519.617525299562,
-      "latest_display": "520 Index",
+      "label_en": "Headline Consumer Price Index",
+      "label_zh": "总体消费价格指数基数",
+      "latest_date": "2026-08-01",
+      "latest_value": 172.808947246524,
+      "latest_display": "173 Index",
       "frequency": "monthly",
-      "source_name": "IMF / DBnomics (IFS)",
-      "series": "IMF/IFS/M.UZ.PCPI_IX",
-      "quality_status": "low_confidence"
+      "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
+      "series": "UZB.CPI._T.IX.M",
+      "quality_status": "watch"
     },
     {
       "id": "usd_uzs",
@@ -139,76 +151,136 @@
       "quality_status": "watch"
     },
     {
+      "id": "remittances_usd",
+      "label_en": "Secondary Income / Remittances Balance (USD Millions)",
+      "label_zh": "二次收入(侨汇转移)净额 (百万美元)",
+      "latest_date": "2026-04-01",
+      "latest_value": 3453.55487215254,
+      "latest_display": "3,454 USD mn",
+      "frequency": "quarterly",
+      "source_name": "IMF SDMX / CBU",
+      "series": "UZB.NETCD_T.IN2.USD.Q",
+      "quality_status": "watch"
+    },
+    {
       "id": "current_account_usd",
       "label_en": "Current Account Balance (USD Millions)",
       "label_zh": "经常账户差额 (百万美元)",
-      "latest_date": "2025-03-31",
-      "latest_value": -160.739221529363,
-      "latest_display": "-161 USD mn",
+      "latest_date": "2026-04-01",
+      "latest_value": -640.5311145621131,
+      "latest_display": "-641 USD mn",
       "frequency": "quarterly",
-      "source_name": "IMF / DBnomics (IFS)",
-      "series": "IMF/IFS/Q.UZ.BCAXF_BP6_USD",
-      "quality_status": "low_confidence"
+      "source_name": "IMF SDMX / CBU",
+      "series": "UZB.NETCD_T.CAB.USD.Q",
+      "quality_status": "watch"
     },
     {
       "id": "goods_trade_balance",
       "label_en": "Goods Trade Balance (USD Millions)",
       "label_zh": "货物贸易差额 (百万美元)",
-      "latest_date": "2025-03-31",
-      "latest_value": -1385.4343636084,
-      "latest_display": "-1,385 USD mn",
+      "latest_date": "2026-04-01",
+      "latest_value": -4677.5066275299105,
+      "latest_display": "-4,678 USD mn",
       "frequency": "quarterly",
-      "source_name": "IMF / DBnomics (IFS)",
-      "series": "IMF/IFS/Q.UZ.BG_BP6_USD",
-      "quality_status": "low_confidence"
+      "source_name": "IMF SDMX / CBU",
+      "series": "UZB.NETCD_T.G.USD.Q",
+      "quality_status": "watch"
+    },
+    {
+      "id": "goods_exports",
+      "label_en": "Goods Exports (BOP Basis, USD Millions)",
+      "label_zh": "货物出口总额 (BOP口径，百万美元)",
+      "latest_date": "2026-04-01",
+      "latest_value": 5906.07175918418,
+      "latest_display": "5,906 USD mn",
+      "frequency": "quarterly",
+      "source_name": "IMF SDMX / CBU",
+      "series": "UZB.CD_T.G.USD.Q",
+      "quality_status": "watch"
+    },
+    {
+      "id": "goods_imports",
+      "label_en": "Goods Imports (BOP Basis, USD Millions)",
+      "label_zh": "货物进口总额 (BOP口径，百万美元)",
+      "latest_date": "2026-04-01",
+      "latest_value": 10583.5783867141,
+      "latest_display": "10,584 USD mn",
+      "frequency": "quarterly",
+      "source_name": "IMF SDMX / CBU",
+      "series": "UZB.DB_T.G.USD.Q",
+      "quality_status": "watch"
+    },
+    {
+      "id": "services_balance",
+      "label_en": "Services Trade Balance (USD Millions)",
+      "label_zh": "服务贸易差额 (百万美元)",
+      "latest_date": "2026-04-01",
+      "latest_value": -532.946901021569,
+      "latest_display": "-533 USD mn",
+      "frequency": "quarterly",
+      "source_name": "IMF SDMX / CBU",
+      "series": "UZB.NETCD_T.S.USD.Q",
+      "quality_status": "watch"
+    },
+    {
+      "id": "fdi_net_usd",
+      "label_en": "Direct Investment Net Balance (FDI, USD Millions)",
+      "label_zh": "直接投资净额 (FDI，百万美元)",
+      "latest_date": "2026-04-01",
+      "latest_value": -1551.27008995863,
+      "latest_display": "-1,551 USD mn",
+      "frequency": "quarterly",
+      "source_name": "IMF SDMX / CBU",
+      "series": "UZB.NNAFANIL_T.D_F.USD.Q",
+      "quality_status": "watch"
     },
     {
       "id": "current_account_gdp",
       "label_en": "Current Account Balance (% of GDP)",
       "label_zh": "经常账户占GDP比重",
-      "latest_date": "2031",
-      "latest_value": -4.8,
-      "latest_display": "-4.80 % of GDP",
+      "latest_date": "2025",
+      "latest_value": -3.9,
+      "latest_display": "-3.90 % of GDP",
       "frequency": "annual",
       "source_name": "IMF DataMapper (WEO)",
       "series": "BCA_NGDPD/UZB",
-      "quality_status": "unavailable"
+      "quality_status": "watch"
     },
     {
       "id": "government_debt_gdp",
       "label_en": "General Government Gross Debt (% of GDP)",
       "label_zh": "广义政府总债务占GDP比重",
-      "latest_date": "2031",
-      "latest_value": 25.0,
-      "latest_display": "25.0 % of GDP",
+      "latest_date": "2025",
+      "latest_value": 28.6,
+      "latest_display": "28.6 % of GDP",
       "frequency": "annual",
       "source_name": "IMF DataMapper (WEO)",
       "series": "GGXWDG_NGDP/UZB",
-      "quality_status": "unavailable"
+      "quality_status": "watch"
     },
     {
       "id": "fiscal_balance_gdp",
       "label_en": "Fiscal Balance (% of GDP)",
       "label_zh": "财政净借贷(赤字率)占GDP比重",
-      "latest_date": "2031",
-      "latest_value": -1.9,
-      "latest_display": "-1.90 % of GDP",
+      "latest_date": "2025",
+      "latest_value": -1.6,
+      "latest_display": "-1.60 % of GDP",
       "frequency": "annual",
       "source_name": "IMF DataMapper (WEO)",
       "series": "GGXCNL_NGDP/UZB",
-      "quality_status": "unavailable"
+      "quality_status": "watch"
     },
     {
       "id": "primary_balance_gdp",
       "label_en": "Primary Net Lending/Borrowing (% of GDP)",
       "label_zh": "初级财政收支占GDP比重",
-      "latest_date": "2031",
-      "latest_value": -1.242012132207,
-      "latest_display": "-1.24 % of GDP",
+      "latest_date": "2025",
+      "latest_value": -0.92467337504679,
+      "latest_display": "-0.92 % of GDP",
       "frequency": "annual",
       "source_name": "IMF DataMapper (Fiscal Monitor)",
       "series": "GGXONLB_G01_GDP_PT/UZB",
-      "quality_status": "unavailable"
+      "quality_status": "watch"
     },
     {
       "id": "fx_reserves",
@@ -338,10 +410,10 @@
       "value"
     ],
     "file": "uzbekistan_canonical_frame.json",
-    "series": 26,
-    "observations": 2011,
-    "series_count": 26,
-    "observation_count": 2011
+    "series": 32,
+    "observations": 2538,
+    "series_count": 32,
+    "observation_count": 2538
   },
   "data_gaps_detail": [
     {
@@ -360,11 +432,11 @@
     }
   ],
   "source_health": {
-    "source_groups": 8,
+    "source_groups": 10,
     "sources": [
       {
-        "source_name": "IMF / DBnomics (IFS)",
-        "charts": 8
+        "source_name": "IMF SDMX / CBU",
+        "charts": 7
       },
       {
         "source_name": "World Bank WDI",
@@ -373,6 +445,14 @@
       {
         "source_name": "IMF DataMapper (WEO)",
         "charts": 5
+      },
+      {
+        "source_name": "IMF / DBnomics (IFS)",
+        "charts": 4
+      },
+      {
+        "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
+        "charts": 3
       },
       {
         "source_name": "Bruegel (Darvas REER Dataset)",
@@ -396,9 +476,8 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 10,
-      "unavailable": 6,
-      "watch": 10
+      "low_confidence": 6,
+      "watch": 26
     },
     "unavailable_count": 0
   },
@@ -411,9 +490,10 @@
   "freshness": {
     "as_of_date": "2026-10-28",
     "counts": {
-      "current": 10,
-      "future_date": 6,
-      "stale": 10
+      "current": 17,
+      "due": 3,
+      "projection": 6,
+      "stale": 6
     },
     "latest_historical_date": "2026-09-01",
     "attention": [
@@ -484,50 +564,6 @@
         "transform": "level"
       },
       {
-        "id": "current_account_usd",
-        "concept_id": "uz:current_account_usd",
-        "label_en": "Current Account Balance (USD Millions)",
-        "latest_date": "2025-03-31",
-        "frequency": "quarterly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-03-31",
-        "age_days": 576,
-        "threshold_days": 165,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF / DBnomics (IFS)",
-        "series": "IMF/IFS/Q.UZ.BCAXF_BP6_USD",
-        "transform": "level"
-      },
-      {
-        "id": "goods_trade_balance",
-        "concept_id": "trade_balance",
-        "label_en": "Goods Trade Balance (USD Millions)",
-        "latest_date": "2025-03-31",
-        "frequency": "quarterly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-03-31",
-        "age_days": 576,
-        "threshold_days": 165,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF / DBnomics (IFS)",
-        "series": "IMF/IFS/Q.UZ.BG_BP6_USD",
-        "transform": "level"
-      },
-      {
         "id": "bank_capital_ratio",
         "concept_id": "bank_capital_ratio",
         "label_en": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
@@ -572,50 +608,6 @@
         "transform": "level"
       },
       {
-        "id": "cpi_index",
-        "concept_id": "uz:cpi_index",
-        "label_en": "Headline Consumer Price Index (2020=100)",
-        "latest_date": "2025-06-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-06-01",
-        "age_days": 485,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF / DBnomics (IFS)",
-        "series": "IMF/IFS/M.UZ.PCPI_IX",
-        "transform": "level"
-      },
-      {
-        "id": "cpi_inflation",
-        "concept_id": "headline_inflation",
-        "label_en": "Headline CPI Inflation YoY",
-        "latest_date": "2025-06-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-06-01",
-        "age_days": 485,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF / DBnomics (IFS)",
-        "series": "IMF/IFS/M.UZ.PCPI_PC_CP_A_PT",
-        "transform": "level"
-      },
-      {
         "id": "usd_uzs",
         "concept_id": "fx_spot",
         "label_en": "USD/UZS End-of-Period Official Rate",
@@ -638,142 +630,76 @@
         "transform": "level"
       },
       {
-        "id": "cpi_inflation_weo",
-        "concept_id": "uz:cpi_inflation_weo",
-        "label_en": "Headline Inflation (IMF WEO Cross-Check)",
-        "latest_date": "2031-12-31",
-        "frequency": "annual",
-        "freshness_status": "future_date",
-        "age_basis_date": "2031-12-31",
-        "age_days": null,
-        "threshold_days": 730,
+        "id": "cpi_index",
+        "concept_id": "uz:cpi_index",
+        "label_en": "Headline Consumer Price Index",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 58,
+        "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
         "due_date": "",
-        "quality_status": "unavailable",
+        "quality_status": "watch",
         "source_authority": "official_mirror",
         "derivation": "observed",
         "validation": "passed",
         "comparability": "medium",
-        "source_name": "IMF DataMapper (WEO)",
-        "series": "PCPIPCH/UZB",
+        "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
+        "series": "UZB.CPI._T.IX.M",
         "transform": "level"
       },
       {
-        "id": "current_account_gdp",
-        "concept_id": "current_account_gdp",
-        "label_en": "Current Account Balance (% of GDP)",
-        "latest_date": "2031-12-31",
-        "frequency": "annual",
-        "freshness_status": "future_date",
-        "age_basis_date": "2031-12-31",
-        "age_days": null,
-        "threshold_days": 730,
+        "id": "cpi_inflation",
+        "concept_id": "headline_inflation",
+        "label_en": "Headline CPI Inflation YoY",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 58,
+        "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
         "due_date": "",
-        "quality_status": "unavailable",
+        "quality_status": "watch",
         "source_authority": "official_mirror",
         "derivation": "observed",
         "validation": "passed",
         "comparability": "medium",
-        "source_name": "IMF DataMapper (WEO)",
-        "series": "BCA_NGDPD/UZB",
+        "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
+        "series": "UZB.CPI._T.YOY_PCH_PA_PT.M",
         "transform": "level"
       },
       {
-        "id": "fiscal_balance_gdp",
-        "concept_id": "fiscal_balance_gdp",
-        "label_en": "Fiscal Balance (% of GDP)",
-        "latest_date": "2031-12-31",
-        "frequency": "annual",
-        "freshness_status": "future_date",
-        "age_basis_date": "2031-12-31",
-        "age_days": null,
-        "threshold_days": 730,
+        "id": "cpi_inflation_mom",
+        "concept_id": "uz:cpi_inflation_mom",
+        "label_en": "Headline CPI Inflation MoM",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 58,
+        "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
         "due_date": "",
-        "quality_status": "unavailable",
+        "quality_status": "watch",
         "source_authority": "official_mirror",
         "derivation": "observed",
         "validation": "passed",
         "comparability": "medium",
-        "source_name": "IMF DataMapper (WEO)",
-        "series": "GGXCNL_NGDP/UZB",
-        "transform": "level"
-      },
-      {
-        "id": "government_debt_gdp",
-        "concept_id": "government_debt_gdp",
-        "label_en": "General Government Gross Debt (% of GDP)",
-        "latest_date": "2031-12-31",
-        "frequency": "annual",
-        "freshness_status": "future_date",
-        "age_basis_date": "2031-12-31",
-        "age_days": null,
-        "threshold_days": 730,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "unavailable",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF DataMapper (WEO)",
-        "series": "GGXWDG_NGDP/UZB",
-        "transform": "level"
-      },
-      {
-        "id": "primary_balance_gdp",
-        "concept_id": "primary_balance_gdp",
-        "label_en": "Primary Net Lending/Borrowing (% of GDP)",
-        "latest_date": "2031-12-31",
-        "frequency": "annual",
-        "freshness_status": "future_date",
-        "age_basis_date": "2031-12-31",
-        "age_days": null,
-        "threshold_days": 730,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "unavailable",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF DataMapper (Fiscal Monitor)",
-        "series": "GGXONLB_G01_GDP_PT/UZB",
-        "transform": "level"
-      },
-      {
-        "id": "real_gdp_growth",
-        "concept_id": "real_gdp_growth_yoy",
-        "label_en": "Real GDP Growth (IMF WEO)",
-        "latest_date": "2031-12-31",
-        "frequency": "annual",
-        "freshness_status": "future_date",
-        "age_basis_date": "2031-12-31",
-        "age_days": null,
-        "threshold_days": 730,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "unavailable",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF DataMapper (WEO)",
-        "series": "NGDP_RPCH/UZB",
+        "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
+        "series": "UZB.CPI._T.POP_PCH_PA_PT.M",
         "transform": "level"
       }
     ]
   },
   "transform_audit": {
     "counts": {
-      "level": 26
+      "level": 32
     },
     "non_level": []
   },
@@ -783,6 +709,6 @@
       "date",
       "value"
     ],
-    "charted_series": 26
+    "charted_series": 32
   }
 }

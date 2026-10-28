@@ -45,6 +45,7 @@ from country_primer.adapters import (
     fetch_dbnomics,
     fetch_fred_graph,
     fetch_imf_datamapper,
+    fetch_imf_sdmx,
     fetch_world_bank,
 )
 from country_primer.cross_checks import evaluate_cross_checks
@@ -64,13 +65,19 @@ SUMMARY_KEY_IDS = [
     "investment_growth",
     "unemployment_rate",
     "cpi_inflation",
+    "cpi_inflation_mom",
     "cpi_index",
     "usd_uzs",
     "reer",
     "neer",
     "remittances_gdp",
+    "remittances_usd",
     "current_account_usd",
     "goods_trade_balance",
+    "goods_exports",
+    "goods_imports",
+    "services_balance",
+    "fdi_net_usd",
     "current_account_gdp",
     "government_debt_gdp",
     "fiscal_balance_gdp",
@@ -98,6 +105,7 @@ def build(data_mode: str | None = None) -> Path:
     config = _load_config()
 
     registry = {
+        "imf_sdmx": lambda spec, cache: _apply_transform(apply_scale(fetch_imf_sdmx(requests.Session(), spec))),
         "imf_datamapper": lambda spec, cache: _apply_transform(fetch_imf_datamapper(requests.Session(), spec)),
         "world_bank": lambda spec, cache: _apply_transform(fetch_world_bank(spec)),
         "bruegel_reer": lambda spec, cache: _apply_transform(fetch_bruegel_reer(spec)),

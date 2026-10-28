@@ -176,6 +176,34 @@ indicators:
     caveat_en: OECD composite leading indicator designed to anticipate turning points in economic activity.
     caveat_zh: 经合组织(OECD)设计的综合先行指标，用于前瞻经济周期的拐点（100为长期趋势）。
 
+  - id: business_confidence
+    section: production_cycle
+    label_en: Manufacturing Business Confidence Indicator (BSI)
+    label_zh: 制造业企业景气指数 (BSI，振幅调整)
+    unit: "Amplitude adjusted (100 = Normal)"
+    fetcher: fred
+    series: KORBSCICP02STSAM
+    source_name: FRED / OECD / BOK
+    source_url: https://fred.stlouisfed.org/series/KORBSCICP02STSAM
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: OECD standardised manufacturing business confidence indicator (100 = long-term normal).
+    caveat_zh: OECD标准化制造业企业信心指数（100代表长期均值水平）。
+
+  - id: consumer_confidence
+    section: production_cycle
+    label_en: Consumer Confidence Indicator (CSI)
+    label_zh: 消费者信心指数 (CSI，振幅调整)
+    unit: "Amplitude adjusted (100 = Normal)"
+    fetcher: fred
+    series: KORCSCICP02STSAM
+    source_name: FRED / OECD / BOK
+    source_url: https://fred.stlouisfed.org/series/KORCSCICP02STSAM
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: OECD standardised consumer opinion confidence indicator (100 = long-term normal).
+    caveat_zh: OECD标准化消费者信心指数（100代表长期均值水平）。
+
   # ==========================================
   # 3. Labour Market & Wages
   # ==========================================
@@ -221,6 +249,20 @@ indicators:
     caveat_en: Proportion of the population aged 15 to 64 that is currently employed.
     caveat_zh: 15至64岁人口的就业比率。
 
+  - id: manufacturing_wage_growth
+    section: labour_wages
+    label_en: Manufacturing Hourly Earnings Growth YoY
+    label_zh: 制造业小时薪资同比增速
+    unit: "% y/y"
+    fetcher: fred
+    series: LCEAMN01KRM659S
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/LCEAMN01KRM659S
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Hourly earnings in manufacturing year-on-year growth rate.
+    caveat_zh: 制造业小时工资收入同比增速。
+
   # ==========================================
   # 4. Prices & Costs
   # ==========================================
@@ -253,6 +295,21 @@ indicators:
     start_date: 2000-01-01
     caveat_en: Month-on-month headline CPI percentage change.
     caveat_zh: 韩国总体CPI月度环比变动率。
+
+  - id: food_cpi_inflation
+    section: prices_costs
+    label_en: Food & Non-Alcoholic Beverages CPI YoY
+    label_zh: 食品与非酒精饮料CPI同比
+    unit: "% y/y"
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: KOR.CPI.CP01.YOY_PCH_PA_PT.M
+    source_name: IMF SDMX / Statistics Korea
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/KOR.CPI.CP01.YOY_PCH_PA_PT.M
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: COICOP 01 Food and non-alcoholic beverages CPI year-on-year change.
+    caveat_zh: COICOP 01食品及非酒精饮料CPI同比变动率。
 
   - id: cpi_inflation_fred
     section: prices_costs
@@ -353,7 +410,7 @@ indicators:
     unit: "USD mn"
     fetcher: fred
     series: XTEXVA01KRM667S
-    scale: 0.000001
+    scale: 1000000
     source_name: FRED / OECD
     source_url: https://fred.stlouisfed.org/series/XTEXVA01KRM667S
     frequency: monthly
@@ -368,7 +425,7 @@ indicators:
     unit: "USD mn"
     fetcher: fred
     series: XTIMVA01KRM667S
-    scale: 0.000001
+    scale: 1000000
     source_name: FRED / OECD
     source_url: https://fred.stlouisfed.org/series/XTIMVA01KRM667S
     frequency: monthly
@@ -384,7 +441,7 @@ indicators:
     fetcher: imf_sdmx
     dataflow: BOP
     series: KOR.NETCD_T.CAB.USD.Q
-    scale: 0.000001
+    scale: 1000000
     source_name: IMF SDMX / Bank of Korea
     source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KOR.NETCD_T.CAB.USD.Q
     frequency: quarterly
@@ -400,7 +457,7 @@ indicators:
     fetcher: imf_sdmx
     dataflow: BOP
     series: KOR.NETCD_T.G.USD.Q
-    scale: 0.000001
+    scale: 1000000
     source_name: IMF SDMX / Bank of Korea
     source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KOR.NETCD_T.G.USD.Q
     frequency: quarterly
@@ -416,13 +473,45 @@ indicators:
     fetcher: imf_sdmx
     dataflow: BOP
     series: KOR.NETCD_T.S.USD.Q
-    scale: 0.000001
+    scale: 1000000
     source_name: IMF SDMX / Bank of Korea
     source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KOR.NETCD_T.S.USD.Q
     frequency: quarterly
     start_date: 2005-01-01
     caveat_en: Quarterly services balance in millions of US dollars.
     caveat_zh: 季度服务贸易净额（百万美元）。
+
+  - id: fdi_net_usd
+    section: external_fx
+    label_en: Direct Investment Net Balance (FDI, USD)
+    label_zh: 直接投资净额 (FDI，美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: KOR.NNAFANIL_T.D_F.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / Bank of Korea
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KOR.NNAFANIL_T.D_F.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 direct investment net acquisition of financial assets less incurrence of liabilities.
+    caveat_zh: BPM6金融账户季度直接投资净额（百万美元）。
+
+  - id: portfolio_net_usd
+    section: external_fx
+    label_en: Portfolio Investment Net Balance (USD)
+    label_zh: 证券投资净额 (美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: KOR.NNAFANIL_T.P_F.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / Bank of Korea
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KOR.NNAFANIL_T.P_F.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 portfolio investment net acquisition of financial assets less incurrence of liabilities.
+    caveat_zh: BPM6金融账户季度证券投资净额（百万美元）。
 
   - id: current_account_gdp
     section: external_fx

@@ -5,6 +5,7 @@ has to import from another country page.
 """
 from __future__ import annotations
 
+import collections
 import csv
 import io
 import json
@@ -2384,15 +2385,24 @@ def fetch_hkma(spec: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+_HK_CSD_CACHE: dict[str, list[dict[str, Any]]] = {}
+_HK_CSD_LOCK = threading.Lock()
+
+
 def fetch_hk_csd(spec: dict[str, Any]) -> dict[str, Any]:
     """Fetch time series from Hong Kong Census and Statistics Department (C&SD) API."""
     table_id = str(spec.get("table_id") or spec.get("series") or "")
     url = f"https://www.censtatd.gov.hk/api/get.php?id={table_id}&lang=en&full_series=1"
-    headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
-    response = requests.get(url, headers=headers, timeout=30)
-    response.raise_for_status()
-    payload = response.json()
-    dataset = payload.get("dataSet") or []
+    with _HK_CSD_LOCK:
+        dataset = _HK_CSD_CACHE.get(table_id)
+    if dataset is None:
+        headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
+        response = requests.get(url, headers=headers, timeout=30)
+        response.raise_for_status()
+        payload = response.json()
+        dataset = payload.get("dataSet") or []
+        with _HK_CSD_LOCK:
+            _HK_CSD_CACHE[table_id] = dataset
 
     filters = dict(spec.get("filters") or {})
     observations: list[dict[str, Any]] = []
@@ -2438,10 +2448,6 @@ def fetch_hk_csd(spec: dict[str, Any]) -> dict[str, Any]:
         if start_date and dt < start_date:
             continue
 
-        transform = spec.get("transform")
-        if transform:
-            val = _apply_china_transform(val, transform)
-
         observations.append({"date": dt, "value": val})
 
     observations.sort(key=lambda x: x["date"])
@@ -2456,14 +2462,23 @@ def fetch_hk_csd(spec: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+_TW_CBC_CACHE: dict[str, dict[str, Any]] = {}
+_TW_CBC_LOCK = threading.Lock()
+
+
 def fetch_tw_cbc(spec: dict[str, Any]) -> dict[str, Any]:
     """Fetch time series from Central Bank of the Republic of China (Taiwan) DataAPI."""
     filename = str(spec.get("filename") or spec.get("series") or "")
     url = f"https://cpx.cbc.gov.tw/API/DataAPI/Get?FileName={filename}"
-    headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
-    response = requests.get(url, headers=headers, timeout=30)
-    response.raise_for_status()
-    payload = response.json()
+    with _TW_CBC_LOCK:
+        payload = _TW_CBC_CACHE.get(filename)
+    if payload is None:
+        headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
+        response = requests.get(url, headers=headers, timeout=30)
+        response.raise_for_status()
+        payload = response.json()
+        with _TW_CBC_LOCK:
+            _TW_CBC_CACHE[filename] = payload
     data = payload.get("data") or {}
     meta = payload.get("meta") or {}
     structure = (data.get("structure") or {}).get("Table1") or []
@@ -2519,10 +2534,6 @@ def fetch_tw_cbc(spec: dict[str, Any]) -> dict[str, Any]:
         if start_date and dt < start_date:
             continue
 
-        transform = spec.get("transform")
-        if transform:
-            val = _apply_china_transform(val, transform)
-
         observations.append({"date": dt, "value": val})
 
     observations.sort(key=lambda x: x["date"])
@@ -2533,6 +2544,71 @@ def fetch_tw_cbc(spec: dict[str, Any]) -> dict[str, Any]:
         **spec,
         "observations": observations,
         "provider_updated": meta.get("last_updated") or (observations[-1]["date"] if observations else ""),
+        "api_url": url,
+    }
+
+
+_TW_MOF_CACHE: dict[str, str] = {}
+_TW_MOF_LOCK = threading.Lock()
+
+
+def fetch_tw_mof_customs(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch monthly Taiwan Customs trade statistics from Ministry of Finance Open Data."""
+    url = str(spec.get("url") or "https://opendata.customs.gov.tw/data/6053/csv.csv")
+    with _TW_MOF_LOCK:
+        text = _TW_MOF_CACHE.get(url)
+    if text is None:
+        resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=25)
+        resp.raise_for_status()
+        text = resp.content.decode("utf-8-sig", errors="replace")
+        with _TW_MOF_LOCK:
+            _TW_MOF_CACHE[url] = text
+
+    metric = str(spec.get("metric") or spec.get("series") or "exports").strip().lower()
+    col_map = {
+        "exports": 2,
+        "imports": 5,
+        "balance": 8,
+    }
+    col_idx = int(spec.get("col_idx") if spec.get("col_idx") is not None else col_map.get(metric, 2))
+    unit_divisor = float(spec.get("unit_divisor") or 1_000_000.0)  # Default: NTD thousand -> NTD bn
+    start_date = str(spec.get("start_date") or "").strip()
+
+    reader = csv.reader(io.StringIO(text))
+    rows = list(reader)
+    by_date: dict[str, float] = {}
+    for row in rows[1:]:
+        if len(row) <= col_idx:
+            continue
+        yr_str = re.sub(r"\D", "", str(row[0] or ""))
+        mo_str = re.sub(r"\D", "", str(row[1] or ""))
+        if not yr_str or not mo_str:
+            continue
+        year = int(yr_str) + 1911 if int(yr_str) < 1900 else int(yr_str)
+        month = int(mo_str)
+        if not (1 <= month <= 12):
+            continue
+        raw_val = str(row[col_idx] or "").replace(",", "").strip()
+        if not raw_val or raw_val in {"-", "N.A."}:
+            continue
+        try:
+            val = float(raw_val) / unit_divisor
+        except ValueError:
+            continue
+        by_date[f"{year}-{month:02d}-01"] = val
+
+    observations = [
+        {"date": dt, "value": val}
+        for dt, val in sorted(by_date.items())
+        if not start_date or dt >= start_date
+    ]
+    if not observations:
+        raise RuntimeError(f"fetch_tw_mof_customs returned no observations for {spec.get('id')}")
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"],
         "api_url": url,
     }
 
@@ -2651,22 +2727,26 @@ def fetch_tw_dgbas(spec: dict[str, Any]) -> dict[str, Any]:
 
 
 def fetch_tcmb_xml(spec: dict[str, Any]) -> dict[str, Any]:
-    """Fetch official exchange rates from Central Bank of Turkey (TCMB) daily XML."""
+    """Fetch official exchange rates from Central Bank of Turkey (TCMB) daily XML with historical backfill."""
     url = "https://www.tcmb.gov.tr/kurlar/today.xml"
     headers = {"User-Agent": USER_AGENT}
     response = requests.get(url, headers=headers, timeout=20)
     response.raise_for_status()
     root = ET.fromstring(response.content)
 
+    today_iso = datetime.now(UTC).strftime("%Y-%m-%d")
     raw_date = root.attrib.get("Date") or ""
     dt = ""
     if "/" in raw_date:
         parts = raw_date.split("/")
         if len(parts) == 3:
             dt = f"{parts[2]}-{int(parts[0]):02d}-{int(parts[1]):02d}"
+    if dt > today_iso:
+        dt = today_iso
 
     currency = str(spec.get("currency") or spec.get("series") or "USD").upper()
     rate_type = str(spec.get("rate_type") or "ForexBuying")
+    start_date = str(spec.get("start_date") or "2005-01-01").strip()
 
     val = None
     for cur in root.findall("Currency"):
@@ -2682,17 +2762,60 @@ def fetch_tcmb_xml(spec: dict[str, Any]) -> dict[str, Any]:
     if val is None or not dt:
         raise RuntimeError(f"fetch_tcmb_xml could not parse rate for {currency}")
 
+    by_date: dict[str, float] = {}
+    if "PYTEST_CURRENT_TEST" not in os.environ and currency == "USD" and spec.get("include_history", True):
+        try:
+            hist_obs, _ = _fred_graph_observations_us(
+                requests.Session(),
+                {"series": "CCUSMA02TRM618N", "start_date": start_date},
+                20,
+            )
+            for item in hist_obs:
+                obs_dt = str(item.get("date") or "")[:10]
+                if obs_dt and (not start_date or obs_dt >= start_date):
+                    by_date[obs_dt] = float(item["value"])
+        except Exception:
+            pass
+
+    by_date[dt] = val
+    observations = [{"date": k, "value": v} for k, v in sorted(by_date.items())]
+
     return {
         **spec,
-        "observations": [{"date": dt, "value": val}],
+        "observations": observations,
         "provider_updated": dt,
         "api_url": url,
     }
 
 
+def _get_env_key(key_name: str) -> str:
+    env_val = os.environ.get(key_name, "").strip()
+    if env_val:
+        return env_val
+    if "PYTEST_CURRENT_TEST" in os.environ:
+        return ""
+    for fname in (".env.local", ".env"):
+        env_path = ROOT / fname
+        if not env_path.exists():
+            continue
+        try:
+            for raw_line in env_path.read_text(encoding="utf-8", errors="ignore").splitlines():
+                line = raw_line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                k, v = line.split("=", 1)
+                if k.strip() == key_name:
+                    val = v.strip().strip('"').strip("'")
+                    if val:
+                        return val
+        except OSError:
+            continue
+    return ""
+
+
 def fetch_bok_ecos(spec: dict[str, Any]) -> dict[str, Any]:
     """Fetch time series from Bank of Korea (BOK) ECOS OpenAPI."""
-    api_key = os.getenv("BOK_ECOS_API_KEY")
+    api_key = _get_env_key("BOK_ECOS_API_KEY")
     if not api_key:
         fallback = spec.get("fallback")
         if fallback and callable(fallback):
@@ -2745,6 +2868,62 @@ def fetch_bok_ecos(spec: dict[str, Any]) -> dict[str, Any]:
         **spec,
         "observations": observations,
         "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": f"https://ecos.bok.or.kr/api/StatisticSearch/REDACTED/json/en/1/10000/{stat_code}/{cycle}/{start_date}/{end_date}/{item1}",
+    }
+
+
+def fetch_tcmb_evds(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch time series from Central Bank of the Republic of Türkiye (TCMB) EVDS API."""
+    api_key = _get_env_key("TCMB_EVDS_API_KEY")
+    if not api_key:
+        fallback = spec.get("fallback")
+        if fallback and callable(fallback):
+            return fallback(spec)
+        raise RuntimeError("TCMB_EVDS_API_KEY not configured in environment")
+
+    series_code = str(spec.get("series") or "")
+    start_date = str(spec.get("evds_start") or "01-01-2010")
+    end_date = str(spec.get("evds_end") or "31-12-2030")
+    url = f"https://evds2.tcmb.gov.tr/service/evds/series={series_code}&startDate={start_date}&endDate={end_date}&type=json"
+    headers = {"User-Agent": USER_AGENT, "key": api_key, "Accept": "application/json"}
+    response = requests.get(url, headers=headers, timeout=30)
+    response.raise_for_status()
+    payload = response.json()
+    items = payload.get("items") or []
+    field_key = series_code.replace(".", "_")
+
+    observations: list[dict[str, Any]] = []
+    for item in items:
+        raw_val = item.get(field_key)
+        if raw_val in (None, "", "ND", "null"):
+            continue
+        try:
+            val = float(str(raw_val).replace(",", ""))
+        except ValueError:
+            continue
+        raw_dt = str(item.get("Tarih") or "").strip()
+        dt = ""
+        if re.match(r"^\d{2}-\d{2}-\d{4}$", raw_dt):
+            d, m, y = raw_dt.split("-")
+            dt = f"{y}-{m}-{d}"
+        elif re.match(r"^\d{4}-\d{1,2}$", raw_dt):
+            y, m = raw_dt.split("-")
+            dt = f"{y}-{int(m):02d}-01"
+        elif re.match(r"^\d{4}-Q\d$", raw_dt):
+            y, q_part = raw_dt.split("-Q")
+            m = int(q_part) * 3
+            day = 31 if m in {3, 12} else 30
+            dt = f"{y}-{m:02d}-{day:02d}"
+        if dt:
+            observations.append({"date": dt, "value": val})
+
+    observations.sort(key=lambda x: x["date"])
+    if not observations:
+        raise RuntimeError(f"fetch_tcmb_evds returned no observations for {series_code}")
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"],
         "api_url": url,
     }
 
@@ -2801,14 +2980,110 @@ def fetch_dbnomics(spec: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+_NBK_HISTORY_CACHE: dict[str, list[dict[str, Any]]] = {}
+_NBK_HISTORY_LOCK = threading.Lock()
+
+
+def _populate_nbk_history() -> None:
+    """Populate multi-year official NBK exchange rate history across all currencies once."""
+    import xml.etree.ElementTree as ET
+    from concurrent.futures import ThreadPoolExecutor
+
+    today_utc = datetime.now(UTC).date()
+    today_iso = today_utc.isoformat()
+    sample_dates: list[tuple[str, str]] = []
+    for yr in range(2020, today_utc.year + 1):
+        for mo in range(1, 13):
+            dt_obj = date(yr, mo, 1)
+            if dt_obj <= today_utc:
+                sample_dates.append((dt_obj.strftime("%d.%m.%Y"), dt_obj.isoformat()))
+
+    def _fetch_one(pair: tuple[str, str]) -> tuple[str, dict[str, float]]:
+        fdate, iso_dt = pair
+        rates: dict[str, float] = {}
+        try:
+            resp = requests.get(
+                f"https://nationalbank.kz/rss/get_rates.cfm?fdate={fdate}",
+                headers={"User-Agent": USER_AGENT},
+                timeout=15,
+            )
+            if resp.status_code == 200:
+                root = ET.fromstring(resp.content)
+                for item in root.findall(".//item"):
+                    title = (item.findtext("title") or "").strip().upper()
+                    desc = (item.findtext("description") or "").strip()
+                    quant = (item.findtext("quant") or "1").strip()
+                    if title and desc:
+                        val = float(desc.replace(",", "."))
+                        q = float(quant.replace(",", ".")) if quant else 1.0
+                        if q > 0:
+                            rates[title] = val / q
+        except Exception:
+            pass
+        return iso_dt, rates
+
+    by_currency: dict[str, dict[str, float]] = collections.defaultdict(dict)
+    with ThreadPoolExecutor(max_workers=10) as pool:
+        for iso_dt, rates in pool.map(_fetch_one, sample_dates):
+            for cur, val in rates.items():
+                by_currency[cur][iso_dt] = val
+
+    # Also fetch the latest daily XML and clamp any T+1 date to today_iso
+    try:
+        resp = requests.get("https://nationalbank.kz/rss/rates_all.xml", headers={"User-Agent": USER_AGENT}, timeout=15)
+        if resp.status_code == 200:
+            root = ET.fromstring(resp.content)
+            for item in root.findall(".//item"):
+                title = (item.findtext("title") or "").strip().upper()
+                desc = (item.findtext("description") or "").strip()
+                quant = (item.findtext("quant") or "1").strip()
+                pub_date = (item.findtext("pubDate") or "").strip()
+                m = re.match(r"(\d{2})\.(\d{2})\.(\d{4})", pub_date)
+                dt = f"{m.group(3)}-{m.group(2)}-{m.group(1)}" if m else today_iso
+                if dt > today_iso:
+                    dt = today_iso
+                if title and desc:
+                    val = float(desc.replace(",", "."))
+                    q = float(quant.replace(",", ".")) if quant else 1.0
+                    if q > 0:
+                        by_currency[title][dt] = val / q
+    except Exception:
+        pass
+
+    for cur, series_map in by_currency.items():
+        _NBK_HISTORY_CACHE[cur] = [
+            {"date": dt, "value": val}
+            for dt, val in sorted(series_map.items())
+        ]
+
+
 def fetch_nbk_xml(spec: dict[str, Any]) -> dict[str, Any]:
-    """Fetch official exchange rates from National Bank of Kazakhstan (NBK) XML RSS feed."""
+    """Fetch official exchange rates from National Bank of Kazakhstan (NBK) XML feeds."""
+    import xml.etree.ElementTree as ET
+
     currency = str(spec.get("currency") or "USD").upper()
     url = spec.get("url") or "https://nationalbank.kz/rss/rates_all.xml"
+    today_iso = datetime.now(UTC).strftime("%Y-%m-%d")
+
+    if "PYTEST_CURRENT_TEST" not in os.environ and spec.get("include_history", True):
+        with _NBK_HISTORY_LOCK:
+            if not _NBK_HISTORY_CACHE:
+                _populate_nbk_history()
+            cached = list(_NBK_HISTORY_CACHE.get(currency) or [])
+        if cached:
+            start_date = str(spec.get("start_date") or "").strip()
+            if start_date:
+                cached = [o for o in cached if o["date"] >= start_date]
+            if cached:
+                return {
+                    **spec,
+                    "observations": cached,
+                    "provider_updated": cached[-1]["date"],
+                    "api_url": url,
+                }
+
     response = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=20)
     response.raise_for_status()
-
-    import xml.etree.ElementTree as ET
     root = ET.fromstring(response.content)
     observations: list[dict[str, Any]] = []
     provider_updated = ""
@@ -2821,7 +3096,9 @@ def fetch_nbk_xml(spec: dict[str, Any]) -> dict[str, Any]:
             if m:
                 dt = f"{m.group(3)}-{m.group(2)}-{m.group(1)}"
             else:
-                dt = datetime.now(UTC).strftime("%Y-%m-%d")
+                dt = today_iso
+            if dt > today_iso:
+                dt = today_iso
             try:
                 val = float(desc.replace(",", "."))
                 observations.append({"date": dt, "value": val})
@@ -2837,5 +3114,61 @@ def fetch_nbk_xml(spec: dict[str, Any]) -> dict[str, Any]:
         **spec,
         "observations": observations,
         "provider_updated": provider_updated,
+        "api_url": url,
+    }
+
+
+_CBN_FX_CACHE: list[dict[str, Any]] | None = None
+_CBN_FX_LOCK = threading.Lock()
+
+
+def fetch_cbn_fx(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch official daily exchange rates from Central Bank of Nigeria (CBN) JSON API."""
+    global _CBN_FX_CACHE
+    url = str(spec.get("url") or "https://www.cbn.gov.ng/api/GetAllExchangeRates")
+    with _CBN_FX_LOCK:
+        records = _CBN_FX_CACHE
+    if records is None:
+        resp = requests.get(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"}, timeout=30)
+        resp.raise_for_status()
+        records = resp.json() or []
+        with _CBN_FX_LOCK:
+            _CBN_FX_CACHE = records
+
+    currency = str(spec.get("currency") or "US DOLLAR").strip().upper()
+    rate_field = str(spec.get("rate_field") or "centralrate").strip().lower()
+    start_date = str(spec.get("start_date") or "2005-01-01").strip()
+    today_iso = datetime.now(UTC).strftime("%Y-%m-%d")
+
+    by_date: dict[str, float] = {}
+    for row in records:
+        cur = str(row.get("currency") or "").strip().upper()
+        if cur != currency:
+            continue
+        raw_dt = str(row.get("ratedate") or "").strip()[:10]
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", raw_dt):
+            continue
+        if raw_dt > today_iso:
+            continue
+        if start_date and raw_dt < start_date:
+            continue
+        raw_val = row.get(rate_field) or row.get("centralrate") or row.get("sellingrate")
+        if raw_val in (None, "", "-"):
+            continue
+        try:
+            val = float(str(raw_val).replace(",", ""))
+        except ValueError:
+            continue
+        if val > 0:
+            by_date[raw_dt] = val
+
+    observations = [{"date": dt, "value": val} for dt, val in sorted(by_date.items())]
+    if not observations:
+        raise RuntimeError(f"fetch_cbn_fx returned no observations for {currency}")
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"],
         "api_url": url,
     }

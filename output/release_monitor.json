@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-28T15:22:59.184774+00:00",
+  "generated": "2026-10-28T23:04:46.767662+00:00",
   "items": [
     {
       "code": "KZ",
@@ -340,32 +340,6 @@
       "note": "Eurostat old-age pension expenditure, % GDP; historical social-protection series, not a forward projection. Source validation passed."
     },
     {
-      "code": "EG",
-      "dashboard": "Egypt",
-      "indicator_id": "current_account_usd",
-      "label": "Current Account Balance (USD Millions)",
-      "latest": "2024-12-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 666,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Quarterly balance on current account excluding exceptional financing."
-    },
-    {
-      "code": "EG",
-      "dashboard": "Egypt",
-      "indicator_id": "goods_trade_balance",
-      "label": "Goods Trade Balance (USD Millions)",
-      "latest": "2024-12-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 666,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Net balance of merchandise exports minus imports (BPM6)."
-    },
-    {
       "code": "HU",
       "dashboard": "Hungary",
       "indicator_id": "bank_car",
@@ -455,32 +429,6 @@
       "severity": "high",
       "source": "FRED / OECD (MOF-BoJ BoP)",
       "note": "Publishes with a long lag. Japan's surplus is now dominated by primary income on overseas assets rather than the goods balance."
-    },
-    {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "cpi_index",
-      "label": "Headline Consumer Price Index (2020=100)",
-      "latest": "2024-12-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 666,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Consumer Price Index (All items) rebased index."
-    },
-    {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "cpi_inflation",
-      "label": "Headline CPI Inflation YoY",
-      "latest": "2024-12-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 666,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Year-on-year percentage change in official Consumer Price Index reported in IMF IFS."
     },
     {
       "code": "PL",
@@ -899,32 +847,6 @@
       "note": "Non-performing loans to total gross loans reported to the IMF."
     },
     {
-      "code": "KZ",
-      "dashboard": "Kazakhstan",
-      "indicator_id": "current_account_usd",
-      "label": "Current Account Balance (USD Millions)",
-      "latest": "2025-03-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 576,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Quarterly balance on current account excluding exceptional financing."
-    },
-    {
-      "code": "KZ",
-      "dashboard": "Kazakhstan",
-      "indicator_id": "goods_trade_balance",
-      "label": "Goods Trade Balance (USD Millions)",
-      "latest": "2025-03-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 576,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Net balance of merchandise exports minus imports (BPM6)."
-    },
-    {
       "code": "NG",
       "dashboard": "Nigeria",
       "indicator_id": "bank_capital_ratio",
@@ -949,32 +871,6 @@
       "severity": "high",
       "source": "IMF / DBnomics (FSI)",
       "note": "Non-performing loans to total gross loans reported to the IMF."
-    },
-    {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "current_account_usd",
-      "label": "Current Account Balance (USD Millions)",
-      "latest": "2025-03-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 576,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Quarterly balance on current account excluding exceptional financing."
-    },
-    {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "goods_trade_balance",
-      "label": "Goods Trade Balance (USD Millions)",
-      "latest": "2025-03-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 576,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Net balance of merchandise exports minus imports (BPM6)."
     },
     {
       "code": "PL",
@@ -1040,6 +936,110 @@
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
       "note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 576 days old for quarterly data."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "bank_ld_ratio",
+      "label": "Bank Loan-to-Deposit Ratio",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 576,
+      "severity": "high",
+      "source": "IMF FSI via DB.nomics",
+      "note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 576 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "bank_liquidity_coverage",
+      "label": "Bank Liquidity Coverage Ratio",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 576,
+      "severity": "high",
+      "source": "IMF FSI via DB.nomics",
+      "note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 576 days old for quarterly data."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "bank_npl_ratio",
+      "label": "Bank NPL Ratio",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 576,
+      "severity": "high",
+      "source": "IMF FSI via DB.nomics",
+      "note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 576 days old for quarterly data."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "bank_roe",
+      "label": "Bank Return on Equity",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 576,
+      "severity": "high",
+      "source": "IMF FSI via DB.nomics",
+      "note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 576 days old for quarterly data."
+    },
+    {
+      "code": "TR",
+      "dashboard": "Turkey",
+      "indicator_id": "bank_capital_ratio",
+      "label": "Bank Regulatory Capital to Risk-Weighted Assets",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 576,
+      "severity": "high",
+      "source": "IMF / DBnomics (Financial Soundness Indicators)",
+      "note": "Deposit-taker regulatory capital to risk-weighted assets reported to the IMF."
+    },
+    {
+      "code": "TR",
+      "dashboard": "Turkey",
+      "indicator_id": "bank_npl_ratio",
+      "label": "Bank Non-Performing Loans (% of Gross Loans)",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 576,
+      "severity": "high",
+      "source": "IMF / DBnomics (Financial Soundness Indicators)",
+      "note": "Non-performing loans to total gross loans for deposit-takers."
+    },
+    {
+      "code": "KR",
+      "dashboard": "South Korea",
+      "indicator_id": "cpi_inflation_fred",
+      "label": "Headline CPI YoY (OECD Mirror Cross-Check)",
+      "latest": "2025-04-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 546,
+      "severity": "high",
+      "source": "FRED / OECD",
+      "note": "OECD consumer price index growth rate series mirrored on FRED."
+    },
+    {
+      "code": "CN",
+      "dashboard": "China",
+      "indicator_id": "large_bank_rrr_akshare",
+      "label": "Large Bank RRR",
+      "latest": "2025-05-15",
+      "frequency": "irregular",
+      "status": "stale",
+      "age_days": 531,
+      "severity": "high",
+      "source": "AKShare / PBC RRR Announcements",
+      "note": "Event-based required reserve ratio history via AKShare; effective dates and institution buckets should be cross-checked against PBC announcements."
     }
   ]
 }

@@ -161,7 +161,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
     <p class="subtitle">Generated archive for 18 national and regional macro dashboards (CEE-4, China, Euro Area, Japan, South Africa, UK, US, Turkey, Hong Kong, South Korea, Taiwan, Kazakhstan, Uzbekistan, Egypt, Nigeria). Cards are rebuilt from the latest country summaries and canonical data-first pipelines, then exported to <code>output/dashboard_archive_summary.json</code> so homepage data stays synchronized with dashboard builds.</p>
   </header>
   <section class="meta-grid" aria-label="coverage summary">
-    <div class="meta-chip"><strong>1215</strong><span>rendered chart slots</span></div>
+    <div class="meta-chip"><strong>1274</strong><span>rendered chart slots</span></div>
     <div class="meta-chip"><strong>0</strong><span>remaining proxy fills</span></div>
     <div class="meta-chip"><strong>70</strong><span>gaps or dropped slots</span></div>
     <div class="meta-chip"><strong>18</strong><span>country dashboards</span></div>
@@ -265,16 +265,16 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>moderate expansion</td>
         <td>above-target inflation</td>
         <td>neutral-moderate stance</td>
-        <td><span class="score-pill neutral">74.8</span></td>
+        <td><span class="score-pill neutral">74.6</span></td>
       </tr>
       <tr>
         <td><strong>TR</strong><span>Turkey</span></td>
-        <td><span class="score-pill bad">50.0</span><em>mixed</em></td>
-        <td><span class="score-pill bad">50.0</span></td>
+        <td><span class="score-pill bad">46.2</span><em>defensive</em></td>
+        <td><span class="score-pill bad">51.7</span></td>
         <td>moderate expansion</td>
-        <td>insufficient data</td>
+        <td>inflation pressure</td>
         <td>restrictive stance</td>
-        <td><span class="score-pill bad">59.4</span></td>
+        <td><span class="score-pill neutral">61.0</span></td>
       </tr>
       <tr>
         <td><strong>HK</strong><span>Hong Kong</span></td>
@@ -283,7 +283,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>above-trend expansion</td>
         <td>near-target inflation</td>
         <td>insufficient data</td>
-        <td><span class="score-pill neutral">74.4</span></td>
+        <td><span class="score-pill neutral">73.1</span></td>
       </tr>
       <tr>
         <td><strong>KR</strong><span>South Korea</span></td>
@@ -292,25 +292,25 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>above-trend expansion</td>
         <td>above-target inflation</td>
         <td>neutral-moderate stance</td>
-        <td><span class="score-pill bad">59.5</span></td>
+        <td><span class="score-pill neutral">60.8</span></td>
       </tr>
       <tr>
         <td><strong>TW</strong><span>Taiwan</span></td>
         <td><span class="score-pill neutral">75.0</span><em>constructive</em></td>
-        <td><span class="score-pill neutral">65.0</span></td>
+        <td><span class="score-pill neutral">71.7</span></td>
         <td>above-trend expansion</td>
         <td>near-target inflation</td>
         <td>accommodative stance</td>
-        <td><span class="score-pill good">81.3</span></td>
+        <td><span class="score-pill neutral">77.5</span></td>
       </tr>
       <tr>
         <td><strong>KZ</strong><span>Kazakhstan</span></td>
-        <td><span class="score-pill bad">50.0</span><em>mixed</em></td>
+        <td><span class="score-pill bad">43.8</span><em>defensive</em></td>
         <td><span class="score-pill bad">55.0</span></td>
         <td>above-trend expansion</td>
         <td>inflation pressure</td>
         <td>restrictive stance</td>
-        <td><span class="score-pill bad">52.8</span></td>
+        <td><span class="score-pill good">80.6</span></td>
       </tr>
       <tr>
         <td><strong>UZ</strong><span>Uzbekistan</span></td>
@@ -319,16 +319,16 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>above-trend expansion</td>
         <td>inflation pressure</td>
         <td>restrictive stance</td>
-        <td><span class="score-pill bad">53.5</span></td>
+        <td><span class="score-pill neutral">73.2</span></td>
       </tr>
       <tr>
         <td><strong>EG</strong><span>Egypt</span></td>
-        <td><span class="score-pill bad">53.8</span><em>mixed</em></td>
-        <td><span class="score-pill bad">50.0</span></td>
+        <td><span class="score-pill bad">53.8</span><em>defensive</em></td>
+        <td><span class="score-pill bad">45.0</span></td>
         <td>above-trend expansion</td>
         <td>inflation pressure</td>
         <td>restrictive stance</td>
-        <td><span class="score-pill bad">58.0</span></td>
+        <td><span class="score-pill bad">58.6</span></td>
       </tr>
       <tr>
         <td><strong>NG</strong><span>Nigeria</span></td>
@@ -337,7 +337,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>above-trend expansion</td>
         <td>inflation pressure</td>
         <td>restrictive stance</td>
-        <td><span class="score-pill bad">51.2</span></td>
+        <td><span class="score-pill neutral">68.0</span></td>
       </tr></tbody>
       </table>
     </div>
@@ -440,6 +440,15 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td><em>moderately accommodative</em></td>
       </tr>
       <tr>
+        <td><strong>TR</strong><span>TCMB</span></td>
+        <td><strong>35.5%</strong></td>
+        <td>29.73% <em>tgt 5.0%</em></td>
+        <td><strong>44.65%</strong><span style='font-size: 11px; color: var(--text-secondary); display: block;'>(44.15% ~ 45.15%)</span></td>
+        <td><span class="score-pill good">-9.15%</span></td>
+        <td><strong>+5.77%</strong></td>
+        <td><em>substantially accommodative</em></td>
+      </tr>
+      <tr>
         <td><strong>KR</strong><span>BOK</span></td>
         <td><strong>3.04%</strong></td>
         <td>2.88% <em>tgt 2.0%</em></td>
@@ -460,38 +469,38 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>KZ</strong><span>NBK</span></td>
         <td><strong>9.0%</strong></td>
-        <td>11.34% <em>tgt 5.0%</em></td>
-        <td><strong>16.82%</strong><span style='font-size: 11px; color: var(--text-secondary); display: block;'>(16.32% ~ 17.32%)</span></td>
-        <td><span class="score-pill good">-7.82%</span></td>
-        <td><strong>-2.34%</strong></td>
+        <td>9.24% <em>tgt 5.0%</em></td>
+        <td><strong>15.11%</strong><span style='font-size: 11px; color: var(--text-secondary); display: block;'>(14.61% ~ 15.61%)</span></td>
+        <td><span class="score-pill good">-6.11%</span></td>
+        <td><strong>-0.24%</strong></td>
         <td><em>substantially accommodative</em></td>
       </tr>
       <tr>
         <td><strong>UZ</strong><span>CBU</span></td>
         <td><strong>13.5%</strong></td>
-        <td>8.71% <em>tgt 5.0%</em></td>
-        <td><strong>13.67%</strong><span style='font-size: 11px; color: var(--text-secondary); display: block;'>(13.17% ~ 14.17%)</span></td>
-        <td><span class="score-pill neutral">-0.17%</span></td>
-        <td><strong>+4.79%</strong></td>
-        <td><em>calibrated / neutral</em></td>
+        <td>6.23% <em>tgt 5.0%</em></td>
+        <td><strong>10.94%</strong><span style='font-size: 11px; color: var(--text-secondary); display: block;'>(10.44% ~ 11.44%)</span></td>
+        <td><span class="score-pill bad">+2.56%</span></td>
+        <td><strong>+7.27%</strong></td>
+        <td><em>substantially restrictive</em></td>
       </tr>
       <tr>
         <td><strong>EG</strong><span>CBE</span></td>
         <td><strong>24.5%</strong></td>
-        <td>14.87% <em>tgt 7.0%</em></td>
-        <td><strong>20.96%</strong><span style='font-size: 11px; color: var(--text-secondary); display: block;'>(20.46% ~ 21.46%)</span></td>
-        <td><span class="score-pill bad">+3.54%</span></td>
-        <td><strong>+9.63%</strong></td>
+        <td>14.54% <em>tgt 7.0%</em></td>
+        <td><strong>20.26%</strong><span style='font-size: 11px; color: var(--text-secondary); display: block;'>(19.76% ~ 20.76%)</span></td>
+        <td><span class="score-pill bad">+4.24%</span></td>
+        <td><strong>+9.96%</strong></td>
         <td><em>substantially restrictive</em></td>
       </tr>
       <tr>
         <td><strong>NG</strong><span>CBN</span></td>
         <td><strong>26.75%</strong></td>
-        <td>34.8% <em>tgt 9.0%</em></td>
-        <td><strong>50.05%</strong><span style='font-size: 11px; color: var(--text-secondary); display: block;'>(49.55% ~ 50.55%)</span></td>
-        <td><span class="score-pill good">-23.30%</span></td>
-        <td><strong>-8.05%</strong></td>
-        <td><em>substantially accommodative</em></td>
+        <td>15.39% <em>tgt 9.0%</em></td>
+        <td><strong>20.84%</strong><span style='font-size: 11px; color: var(--text-secondary); display: block;'>(20.34% ~ 21.34%)</span></td>
+        <td><span class="score-pill bad">+5.91%</span></td>
+        <td><strong>+11.36%</strong></td>
+        <td><em>substantially restrictive</em></td>
       </tr></tbody>
       </table>
     </div>
@@ -506,8 +515,8 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>US</strong></td>
         <td>10Y Treasury</td>
-        <td><strong>5.00%</strong></td>
-        <td>2026-10-26</td>
+        <td><strong>4.99%</strong></td>
+        <td>2026-10-27</td>
         <td><span class="score-pill neutral">Benchmark (0.0)</span></td>
         <td><em>Official Observed</em></td>
       </tr>
@@ -516,7 +525,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>10Y Bund</td>
         <td><strong>3.47%</strong></td>
         <td>2026-09-01</td>
-        <td><span class="score-pill good">-153.0 bps</span></td>
+        <td><span class="score-pill good">-152.0 bps</span></td>
         <td><em>Official Observed</em></td>
       </tr>
       <tr>
@@ -524,7 +533,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>10Y Gilt</td>
         <td><strong>5.30%</strong></td>
         <td>2026-10-26</td>
-        <td><span class="score-pill neutral">+30.0 bps</span></td>
+        <td><span class="score-pill neutral">+31.0 bps</span></td>
         <td><em>Official Observed</em></td>
       </tr>
       <tr>
@@ -532,7 +541,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>10Y JGB</td>
         <td><strong>3.05%</strong></td>
         <td>2026-09-01</td>
-        <td><span class="score-pill good">-195.0 bps</span></td>
+        <td><span class="score-pill good">-194.0 bps</span></td>
         <td><em>Official Observed</em></td>
       </tr>
       <tr>
@@ -548,7 +557,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>10Y Sovereign</td>
         <td><strong>8.02%</strong></td>
         <td>2026-10-27</td>
-        <td><span class="score-pill bad">+302.0 bps</span></td>
+        <td><span class="score-pill bad">+303.0 bps</span></td>
         <td><em>Official Observed</em></td>
       </tr>
       <tr>
@@ -572,7 +581,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>10Y KTB</td>
         <td><strong>4.45%</strong></td>
         <td>2026-09-01</td>
-        <td><span class="score-pill neutral">-55.0 bps</span></td>
+        <td><span class="score-pill neutral">-54.0 bps</span></td>
         <td><em>Official Observed</em></td>
       </tr>
       <tr>
@@ -580,7 +589,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>10Y Gov Bond</td>
         <td><strong>1.97%</strong></td>
         <td>2026-08-01</td>
-        <td><span class="score-pill good">-303.0 bps</span></td>
+        <td><span class="score-pill good">-302.0 bps</span></td>
         <td><em>Official Observed</em></td>
       </tr>
       <tr>
@@ -620,7 +629,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>PL 10Y Benchmark</td>
         <td><strong>6.23%</strong></td>
         <td>2026-09-01</td>
-        <td><span class="score-pill good">+123.0 bps</span></td>
+        <td><span class="score-pill good">+124.0 bps</span></td>
         <td><em>Official Observed</em></td>
       </tr>
       <tr>
@@ -628,7 +637,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>CZ 10Y Benchmark</td>
         <td><strong>5.24%</strong></td>
         <td>2026-09-01</td>
-        <td><span class="score-pill neutral">+24.0 bps</span></td>
+        <td><span class="score-pill neutral">+25.0 bps</span></td>
         <td><em>Official Observed</em></td>
       </tr>
       <tr>
@@ -636,7 +645,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>HU 10Y Benchmark</td>
         <td><strong>5.68%</strong></td>
         <td>2026-09-01</td>
-        <td><span class="score-pill neutral">+68.0 bps</span></td>
+        <td><span class="score-pill neutral">+69.0 bps</span></td>
         <td><em>Official Observed</em></td>
       </tr>
       <tr>
@@ -644,7 +653,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>RO 10Y Benchmark</td>
         <td><strong>6.71%</strong></td>
         <td>2026-09-01</td>
-        <td><span class="score-pill good">+171.0 bps</span></td>
+        <td><span class="score-pill good">+172.0 bps</span></td>
         <td><em>Official Observed</em></td>
       </tr></tbody>
       </table>
@@ -962,7 +971,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>US</strong></td>
         <td class="good">100.0%</td>
-        <td class="neutral">78.0%</td>
+        <td class="neutral">77.4%</td>
         <td class="good">0</td>
         <td class="bad">7</td>
         <td class="bad">47.3</td>
@@ -970,15 +979,15 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>TR</strong></td>
         <td class="good">100.0%</td>
-        <td class="bad">55.6%</td>
+        <td class="neutral">60.0%</td>
         <td class="good">0</td>
         <td class="neutral">2</td>
-        <td class="bad">50.0</td>
+        <td class="bad">49.0</td>
       </tr>
       <tr>
         <td><strong>HK</strong></td>
         <td class="good">100.0%</td>
-        <td class="neutral">62.5%</td>
+        <td class="neutral">70.3%</td>
         <td class="good">0</td>
         <td class="neutral">1</td>
         <td class="bad">59.2</td>
@@ -986,7 +995,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>KR</strong></td>
         <td class="good">100.0%</td>
-        <td class="bad">50.0%</td>
+        <td class="bad">53.8%</td>
         <td class="good">0</td>
         <td class="neutral">2</td>
         <td class="neutral">64.2</td>
@@ -994,23 +1003,23 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>TW</strong></td>
         <td class="good">100.0%</td>
-        <td class="bad">59.5%</td>
+        <td class="bad">54.3%</td>
         <td class="good">0</td>
         <td class="neutral">1</td>
-        <td class="neutral">70.0</td>
+        <td class="neutral">73.3</td>
       </tr>
       <tr>
         <td><strong>KZ</strong></td>
         <td class="good">100.0%</td>
-        <td class="bad">25.0%</td>
+        <td class="good">81.8%</td>
         <td class="good">0</td>
         <td class="neutral">2</td>
-        <td class="bad">52.5</td>
+        <td class="bad">49.4</td>
       </tr>
       <tr>
         <td><strong>UZ</strong></td>
         <td class="good">100.0%</td>
-        <td class="bad">38.5%</td>
+        <td class="neutral">71.9%</td>
         <td class="good">0</td>
         <td class="neutral">2</td>
         <td class="bad">52.7</td>
@@ -1018,15 +1027,15 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>EG</strong></td>
         <td class="good">100.0%</td>
-        <td class="bad">40.0%</td>
+        <td class="bad">53.1%</td>
         <td class="good">0</td>
         <td class="neutral">2</td>
-        <td class="bad">51.9</td>
+        <td class="bad">49.4</td>
       </tr>
       <tr>
         <td><strong>NG</strong></td>
         <td class="good">100.0%</td>
-        <td class="bad">32.1%</td>
+        <td class="neutral">68.6%</td>
         <td class="good">0</td>
         <td class="neutral">2</td>
         <td class="bad">54.4</td>
@@ -1109,20 +1118,8 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <h3>What Changed</h3>
         <ul class="signal-list">
       <li>
-        <strong>EA</strong>
-        <span>headline: 2.50% (2026-10-27) -&gt; 2.50% (2026-10-28)</span>
-      </li>
-      <li>
-        <strong>UK</strong>
-        <span>headline: 3.75% (2026-10-26) -&gt; 3.75% (2026-10-27)</span>
-      </li>
-      <li>
-        <strong>TR</strong>
-        <span>charts: 34 -&gt; 36</span>
-      </li>
-      <li>
-        <strong>KZ</strong>
-        <span>headline: 455.63 (2026-10-28) -&gt; 457.09 (2026-10-29)</span>
+        <strong>US</strong>
+        <span>headline: 3.88% (2026-10-26) -&gt; 3.88% (2026-10-27)</span>
       </li></ul>
       </div>
     </div>
@@ -1250,7 +1247,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <div class="stat"><span>Rendered charts</span><strong>168/168</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>7</strong></div>
-      <div class="stat"><span>Fed funds</span><strong>3.88% (2026-10-26)</strong></div>
+      <div class="stat"><span>Fed funds</span><strong>3.88% (2026-10-27)</strong></div>
       <div class="stat"><span>Source groups</span><strong>27</strong></div>
       <div class="stat"><span>Source quality</span><strong>27 source groups · 0 low-confidence charts</strong></div>
     </div>
@@ -1259,31 +1256,31 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
     <div class="card-kicker">TRY · TCMB · data-first country page</div>
     <h2>Turkey</h2>
     <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>36/36</strong></div>
+      <div class="stat"><span>Rendered charts</span><strong>45/45</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>2</strong></div>
       <div class="stat"><span>USD/TRY spot</span><strong>49.6997 (2026-10-27)</strong></div>
-      <div class="stat"><span>Source groups</span><strong>10</strong></div>
-      <div class="stat"><span>Source quality</span><strong>10 source groups · 12 low-confidence charts</strong></div>
+      <div class="stat"><span>Source groups</span><strong>12</strong></div>
+      <div class="stat"><span>Source quality</span><strong>12 source groups · 12 low-confidence charts</strong></div>
     </div>
   </a>
   <a href="output/hong_kong.html" class="card clean" data-country="HK">
     <div class="card-kicker">HKD · HKMA · data-first country page</div>
     <h2>Hong Kong</h2>
     <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>24/24</strong></div>
+      <div class="stat"><span>Rendered charts</span><strong>37/37</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>1</strong></div>
       <div class="stat"><span>USD/HKD spot</span><strong>7.8423 (2026-10-23)</strong></div>
-      <div class="stat"><span>Source groups</span><strong>9</strong></div>
-      <div class="stat"><span>Source quality</span><strong>9 source groups · 5 low-confidence charts</strong></div>
+      <div class="stat"><span>Source groups</span><strong>10</strong></div>
+      <div class="stat"><span>Source quality</span><strong>10 source groups · 7 low-confidence charts</strong></div>
     </div>
   </a>
   <a href="output/south_korea.html" class="card clean" data-country="KR">
     <div class="card-kicker">KRW · BOK · data-first country page</div>
     <h2>South Korea</h2>
     <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>36/36</strong></div>
+      <div class="stat"><span>Rendered charts</span><strong>39/39</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>2</strong></div>
       <div class="stat"><span>USD/KRW spot</span><strong>1325.06 (2026-10-23)</strong></div>
@@ -1295,60 +1292,60 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
     <div class="card-kicker">TWD · CBC · data-first country page</div>
     <h2>Taiwan</h2>
     <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>37/37</strong></div>
+      <div class="stat"><span>Rendered charts</span><strong>46/46</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>1</strong></div>
       <div class="stat"><span>USD/TWD spot</span><strong>32.54 (2026-10-23)</strong></div>
-      <div class="stat"><span>Source groups</span><strong>6</strong></div>
-      <div class="stat"><span>Source quality</span><strong>6 source groups · 1 low-confidence charts</strong></div>
+      <div class="stat"><span>Source groups</span><strong>7</strong></div>
+      <div class="stat"><span>Source quality</span><strong>7 source groups · 2 low-confidence charts</strong></div>
     </div>
   </a>
   <a href="output/kazakhstan.html" class="card clean" data-country="KZ">
     <div class="card-kicker">KZT · NBK · data-first country page</div>
     <h2>Kazakhstan</h2>
     <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>28/28</strong></div>
+      <div class="stat"><span>Rendered charts</span><strong>33/33</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>2</strong></div>
-      <div class="stat"><span>USD/KZT official rate</span><strong>457.09 (2026-10-29)</strong></div>
-      <div class="stat"><span>Source groups</span><strong>10</strong></div>
-      <div class="stat"><span>Source quality</span><strong>10 source groups · 8 low-confidence charts</strong></div>
+      <div class="stat"><span>USD/KZT official rate</span><strong>457.09 (2026-10-28)</strong></div>
+      <div class="stat"><span>Source groups</span><strong>12</strong></div>
+      <div class="stat"><span>Source quality</span><strong>12 source groups · 4 low-confidence charts</strong></div>
     </div>
   </a>
   <a href="output/uzbekistan.html" class="card clean" data-country="UZ">
     <div class="card-kicker">UZS · CBU · data-first country page</div>
     <h2>Uzbekistan</h2>
     <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>26/26</strong></div>
+      <div class="stat"><span>Rendered charts</span><strong>32/32</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>2</strong></div>
       <div class="stat"><span>USD/UZS official rate</span><strong>12,591.57 (2025-07-01)</strong></div>
-      <div class="stat"><span>Source groups</span><strong>8</strong></div>
-      <div class="stat"><span>Source quality</span><strong>8 source groups · 10 low-confidence charts</strong></div>
+      <div class="stat"><span>Source groups</span><strong>10</strong></div>
+      <div class="stat"><span>Source quality</span><strong>10 source groups · 6 low-confidence charts</strong></div>
     </div>
   </a>
   <a href="output/egypt.html" class="card clean" data-country="EG">
     <div class="card-kicker">EGP · CBE · data-first country page</div>
     <h2>Egypt</h2>
     <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>25/25</strong></div>
+      <div class="stat"><span>Rendered charts</span><strong>32/32</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>2</strong></div>
       <div class="stat"><span>USD/EGP official rate</span><strong>49.70 (2025-05-01)</strong></div>
-      <div class="stat"><span>Source groups</span><strong>8</strong></div>
-      <div class="stat"><span>Source quality</span><strong>8 source groups · 8 low-confidence charts</strong></div>
+      <div class="stat"><span>Source groups</span><strong>10</strong></div>
+      <div class="stat"><span>Source quality</span><strong>10 source groups · 12 low-confidence charts</strong></div>
     </div>
   </a>
   <a href="output/nigeria.html" class="card clean" data-country="NG">
     <div class="card-kicker">NGN · CBN · data-first country page</div>
     <h2>Nigeria</h2>
     <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>28/28</strong></div>
+      <div class="stat"><span>Rendered charts</span><strong>35/35</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>2</strong></div>
-      <div class="stat"><span>USD/NGN official rate</span><strong>1,529.71 (2025-06-01)</strong></div>
-      <div class="stat"><span>Source groups</span><strong>8</strong></div>
-      <div class="stat"><span>Source quality</span><strong>8 source groups · 12 low-confidence charts</strong></div>
+      <div class="stat"><span>USD/NGN official rate</span><strong>1,347.03 (2026-10-28)</strong></div>
+      <div class="stat"><span>Source groups</span><strong>11</strong></div>
+      <div class="stat"><span>Source quality</span><strong>11 source groups · 8 low-confidence charts</strong></div>
     </div>
   </a>
   </section>
@@ -1364,7 +1361,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
     <a href="output/what_changed.json">What Changed</a>
   </nav>
   <footer>
-    Generated 2026-10-28 15:22 UTC from country dashboard summaries and canonical CE4 data. Research artefact only, not investment advice.
+    Generated 2026-10-28 23:04 UTC from country dashboard summaries and canonical CE4 data. Research artefact only, not investment advice.
   </footer>
 </main>
 <script>

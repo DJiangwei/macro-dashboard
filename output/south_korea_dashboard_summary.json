@@ -1,7 +1,7 @@
 {
   "file": "south_korea.html",
-  "generated": "2026-10-28T15:21:51.171084+00:00",
-  "charts": 36,
+  "generated": "2026-10-28T23:03:21.785303+00:00",
+  "charts": 39,
   "source_groups": 9,
   "data_gaps": 2,
   "low_confidence": 9,
@@ -163,6 +163,18 @@
       "quality_status": "watch"
     },
     {
+      "id": "food_cpi_inflation",
+      "label_en": "Food & Non-Alcoholic Beverages CPI YoY",
+      "label_zh": "食品与非酒精饮料CPI同比",
+      "latest_date": "2026-09-01",
+      "latest_value": 0.9858717590436268,
+      "latest_display": "0.99 % y/y",
+      "frequency": "monthly",
+      "source_name": "IMF SDMX / Statistics Korea",
+      "series": "KOR.CPI.CP01.YOY_PCH_PA_PT.M",
+      "quality_status": "watch"
+    },
+    {
       "id": "bis_nominal_house_prices",
       "label_en": "BIS Nominal Residential Property Prices",
       "label_zh": "BIS名义住宅价格指数",
@@ -227,8 +239,8 @@
       "label_en": "Exports of Goods (USD)",
       "label_zh": "商品出口总值 (美元)",
       "latest_date": "2026-08-01",
-      "latest_value": 1.004188e+17,
-      "latest_display": "100,418,800,000,000,000 USD mn",
+      "latest_value": 100418.8,
+      "latest_display": "100,419 USD mn",
       "frequency": "monthly",
       "source_name": "FRED / OECD",
       "series": "XTEXVA01KRM667S",
@@ -239,8 +251,8 @@
       "label_en": "Imports of Goods (USD)",
       "label_zh": "商品进口总值 (美元)",
       "latest_date": "2026-08-01",
-      "latest_value": 6.517870999999999e+16,
-      "latest_display": "65,178,709,999,999,992 USD mn",
+      "latest_value": 65178.70999999999,
+      "latest_display": "65,179 USD mn",
       "frequency": "monthly",
       "source_name": "FRED / OECD",
       "series": "XTIMVA01KRM667S",
@@ -251,8 +263,8 @@
       "label_en": "Current Account Balance (USD)",
       "label_zh": "经常账户差额 (美元)",
       "latest_date": "2026-04-01",
-      "latest_value": 1.166301e+17,
-      "latest_display": "116,630,100,000,000,000 USD mn",
+      "latest_value": 116630.1,
+      "latest_display": "116,630 USD mn",
       "frequency": "quarterly",
       "source_name": "IMF SDMX / Bank of Korea",
       "series": "KOR.NETCD_T.CAB.USD.Q",
@@ -263,8 +275,8 @@
       "label_en": "Goods Trade Balance (BOP Basis, USD)",
       "label_zh": "货物贸易差额 (BOP口径, 美元)",
       "latest_date": "2026-04-01",
-      "latest_value": 1.196357e+17,
-      "latest_display": "119,635,700,000,000,000 USD mn",
+      "latest_value": 119635.7,
+      "latest_display": "119,636 USD mn",
       "frequency": "quarterly",
       "source_name": "IMF SDMX / Bank of Korea",
       "series": "KOR.NETCD_T.G.USD.Q",
@@ -275,11 +287,35 @@
       "label_en": "Services Balance (USD)",
       "label_zh": "服务贸易差额 (美元)",
       "latest_date": "2026-04-01",
-      "latest_value": -4802800000000000.0,
-      "latest_display": "-4,802,800,000,000,000 USD mn",
+      "latest_value": -4802.8,
+      "latest_display": "-4,803 USD mn",
       "frequency": "quarterly",
       "source_name": "IMF SDMX / Bank of Korea",
       "series": "KOR.NETCD_T.S.USD.Q",
+      "quality_status": "watch"
+    },
+    {
+      "id": "fdi_net_usd",
+      "label_en": "Direct Investment Net Balance (FDI, USD)",
+      "label_zh": "直接投资净额 (FDI，美元)",
+      "latest_date": "2026-04-01",
+      "latest_value": 12846.2,
+      "latest_display": "12,846 USD mn",
+      "frequency": "quarterly",
+      "source_name": "IMF SDMX / Bank of Korea",
+      "series": "KOR.NNAFANIL_T.D_F.USD.Q",
+      "quality_status": "watch"
+    },
+    {
+      "id": "portfolio_net_usd",
+      "label_en": "Portfolio Investment Net Balance (USD)",
+      "label_zh": "证券投资净额 (美元)",
+      "latest_date": "2026-04-01",
+      "latest_value": 65482.3,
+      "latest_display": "65,482 USD mn",
+      "frequency": "quarterly",
+      "source_name": "IMF SDMX / Bank of Korea",
+      "series": "KOR.NNAFANIL_T.P_F.USD.Q",
       "quality_status": "watch"
     },
     {
@@ -427,7 +463,11 @@
       "quality_status": "low_confidence"
     }
   ],
-  "unavailable": [],
+  "unavailable": [
+    "business_confidence",
+    "consumer_confidence",
+    "manufacturing_wage_growth"
+  ],
   "data_mode": "refresh",
   "latest_cards": [],
   "krw_usd_latest": "1325.06 (2026-10-23)",
@@ -458,10 +498,10 @@
       "value"
     ],
     "file": "south_korea_canonical_frame.json",
-    "series": 36,
-    "observations": 8369,
-    "series_count": 36,
-    "observation_count": 8369
+    "series": 39,
+    "observations": 8862,
+    "series_count": 39,
+    "observation_count": 8862
   },
   "data_gaps_detail": [
     {
@@ -492,6 +532,10 @@
       },
       {
         "source_name": "IMF SDMX / Bank of Korea",
+        "charts": 5
+      },
+      {
+        "source_name": "IMF SDMX / Statistics Korea",
         "charts": 3
       },
       {
@@ -507,10 +551,6 @@
         "charts": 2
       },
       {
-        "source_name": "IMF SDMX / Statistics Korea",
-        "charts": 2
-      },
-      {
         "source_name": "FRED / Federal Reserve Board",
         "charts": 1
       },
@@ -521,9 +561,9 @@
     ],
     "quality_counts": {
       "low_confidence": 9,
-      "watch": 27
+      "watch": 30
     },
-    "unavailable_count": 0
+    "unavailable_count": 3
   },
   "framework": {
     "version": 2,
@@ -534,7 +574,7 @@
   "freshness": {
     "as_of_date": "2026-10-28",
     "counts": {
-      "current": 14,
+      "current": 17,
       "due": 9,
       "projection": 4,
       "stale": 9
@@ -941,7 +981,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 32,
+      "level": 35,
       "pct_change": 1,
       "yoy_pct": 3
     },
@@ -978,6 +1018,6 @@
       "date",
       "value"
     ],
-    "charted_series": 36
+    "charted_series": 39
   }
 }

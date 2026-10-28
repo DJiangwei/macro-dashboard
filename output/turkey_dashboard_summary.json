@@ -1,8 +1,8 @@
 {
   "file": "turkey.html",
-  "generated": "2026-10-28T15:21:26.895949+00:00",
-  "charts": 36,
-  "source_groups": 10,
+  "generated": "2026-10-28T23:01:35.747641+00:00",
+  "charts": 45,
+  "source_groups": 12,
   "data_gaps": 2,
   "low_confidence": 12,
   "key_series_latest": [
@@ -127,6 +127,18 @@
       "quality_status": "verified"
     },
     {
+      "id": "composite_leading_indicator",
+      "label_en": "OECD Composite Leading Indicator (Amplitude Adjusted)",
+      "label_zh": "OECD综合领先指标 (振幅调整)",
+      "latest_date": "2026-09-01",
+      "latest_value": 100.726479939679,
+      "latest_display": "101 Index (Long-term trend = 100)",
+      "frequency": "monthly",
+      "source_name": "FRED / OECD",
+      "series": "TURLOLITOAASTSAM",
+      "quality_status": "watch"
+    },
+    {
       "id": "unemployment_rate",
       "label_en": "Harmonised Unemployment Rate SA",
       "label_zh": "季调失业率",
@@ -152,15 +164,27 @@
     },
     {
       "id": "cpi_inflation",
-      "label_en": "Headline HICP Inflation YoY",
-      "label_zh": "调和CPI通胀率同比",
-      "latest_date": "2025-12-01",
-      "latest_value": 30.9,
-      "latest_display": "30.9 % y/y",
+      "label_en": "Headline CPI Inflation YoY",
+      "label_zh": "总体CPI通胀率同比",
+      "latest_date": "2026-09-01",
+      "latest_value": 29.73151824541501,
+      "latest_display": "29.7 % y/y",
       "frequency": "monthly",
-      "source_name": "Eurostat / TurkStat",
-      "series": "",
-      "quality_status": "low_confidence"
+      "source_name": "IMF SDMX / TurkStat",
+      "series": "TUR.CPI._T.YOY_PCH_PA_PT.M",
+      "quality_status": "watch"
+    },
+    {
+      "id": "cpi_inflation_mom",
+      "label_en": "Headline CPI Inflation MoM",
+      "label_zh": "总体CPI通胀率环比",
+      "latest_date": "2026-09-01",
+      "latest_value": 1.840445269016698,
+      "latest_display": "1.84 % m/m",
+      "frequency": "monthly",
+      "source_name": "IMF SDMX / TurkStat",
+      "series": "TUR.CPI._T.POP_PCH_PA_PT.M",
+      "quality_status": "watch"
     },
     {
       "id": "core_hicp_inflation",
@@ -259,12 +283,36 @@
       "quality_status": "watch"
     },
     {
+      "id": "goods_exports",
+      "label_en": "Exports of Goods SA (USD)",
+      "label_zh": "季调货物出口额 (美元)",
+      "latest_date": "2026-08-01",
+      "latest_value": 24648.91,
+      "latest_display": "24,649 USD mn",
+      "frequency": "monthly",
+      "source_name": "FRED / OECD",
+      "series": "XTEXVA01TRM667S",
+      "quality_status": "watch"
+    },
+    {
+      "id": "goods_imports",
+      "label_en": "Imports of Goods SA (USD)",
+      "label_zh": "季调货物进口额 (美元)",
+      "latest_date": "2026-08-01",
+      "latest_value": 30205.98,
+      "latest_display": "30,206 USD mn",
+      "frequency": "monthly",
+      "source_name": "FRED / OECD",
+      "series": "XTIMVA01TRM667S",
+      "quality_status": "watch"
+    },
+    {
       "id": "current_account_usd",
       "label_en": "Current Account Balance (USD)",
       "label_zh": "经常账户差额 (美元)",
       "latest_date": "2026-04-01",
-      "latest_value": -1.0915e+16,
-      "latest_display": "-10,915,000,000,000,000 USD mn",
+      "latest_value": -10915.0,
+      "latest_display": "-10,915 USD mn",
       "frequency": "quarterly",
       "source_name": "IMF SDMX / CBRT",
       "series": "TUR.NETCD_T.CAB.USD.Q",
@@ -275,11 +323,83 @@
       "label_en": "Goods Trade Balance (USD)",
       "label_zh": "货物贸易差额 (美元)",
       "latest_date": "2026-04-01",
-      "latest_value": -1.9857e+16,
-      "latest_display": "-19,857,000,000,000,000 USD mn",
+      "latest_value": -19857.0,
+      "latest_display": "-19,857 USD mn",
       "frequency": "quarterly",
       "source_name": "IMF SDMX / CBRT",
       "series": "TUR.NETCD_T.G.USD.Q",
+      "quality_status": "watch"
+    },
+    {
+      "id": "services_balance",
+      "label_en": "Services Balance (Tourism & Services, USD)",
+      "label_zh": "服务贸易差额 (含旅游业，美元)",
+      "latest_date": "2026-04-01",
+      "latest_value": 16252.0,
+      "latest_display": "16,252 USD mn",
+      "frequency": "quarterly",
+      "source_name": "IMF SDMX / CBRT",
+      "series": "TUR.NETCD_T.S.USD.Q",
+      "quality_status": "watch"
+    },
+    {
+      "id": "fdi_net_usd",
+      "label_en": "Direct Investment Net Acquisition of Assets vs Liabilities (USD)",
+      "label_zh": "直接投资净额 (FDI，美元)",
+      "latest_date": "2026-04-01",
+      "latest_value": 866.0,
+      "latest_display": "866 USD mn",
+      "frequency": "quarterly",
+      "source_name": "IMF SDMX / CBRT",
+      "series": "TUR.NNAFANIL_T.D_F.USD.Q",
+      "quality_status": "watch"
+    },
+    {
+      "id": "current_account_gdp",
+      "label_en": "Current Account Balance (% of GDP)",
+      "label_zh": "经常账户占GDP比重",
+      "latest_date": "2025",
+      "latest_value": -1.9,
+      "latest_display": "-1.90 % of GDP",
+      "frequency": "annual",
+      "source_name": "IMF WEO DataMapper",
+      "series": "BCA_NGDPD",
+      "quality_status": "watch"
+    },
+    {
+      "id": "government_debt_gdp",
+      "label_en": "General Government Gross Debt (% of GDP)",
+      "label_zh": "广义政府总债务占GDP比重",
+      "latest_date": "2025",
+      "latest_value": 23.7,
+      "latest_display": "23.7 % of GDP",
+      "frequency": "annual",
+      "source_name": "IMF WEO DataMapper",
+      "series": "GGXWDG_NGDP",
+      "quality_status": "watch"
+    },
+    {
+      "id": "fiscal_balance_gdp",
+      "label_en": "General Government Net Lending / Borrowing (% of GDP)",
+      "label_zh": "广义政府净借贷占GDP比重 (财政赤字率)",
+      "latest_date": "2025",
+      "latest_value": -2.8,
+      "latest_display": "-2.80 % of GDP",
+      "frequency": "annual",
+      "source_name": "IMF WEO DataMapper",
+      "series": "GGXCNL_NGDP",
+      "quality_status": "watch"
+    },
+    {
+      "id": "primary_balance_gdp",
+      "label_en": "Primary Net Lending / Borrowing (% of GDP)",
+      "label_zh": "基本财政收支占GDP比重 (初级平衡)",
+      "latest_date": "2025",
+      "latest_value": -0.14977008584652,
+      "latest_display": "-0.15 % of GDP",
+      "frequency": "annual",
+      "source_name": "IMF Fiscal Monitor",
+      "series": "GGXONLB_G01_GDP_PT",
       "quality_status": "watch"
     },
     {
@@ -332,10 +452,7 @@
     }
   ],
   "unavailable": [
-    "current_account_gdp",
-    "government_debt_gdp",
-    "fiscal_balance_gdp",
-    "primary_balance_gdp"
+    "food_cpi_inflation"
   ],
   "data_mode": "refresh",
   "latest_cards": [],
@@ -347,7 +464,7 @@
       "secondary": "cpi_inflation_imf",
       "label_en": "Eurostat HICP vs IMF CPI",
       "n_common": 252,
-      "latest_diff": 0.007638207900999561,
+      "latest_diff": -0.007638207900999561,
       "max_abs_diff": 0.6613046775251163,
       "n_breaches": 20,
       "last_breach_date": "2017-06-01",
@@ -367,10 +484,10 @@
       "value"
     ],
     "file": "turkey_canonical_frame.json",
-    "series": 36,
-    "observations": 5813,
-    "series_count": 36,
-    "observation_count": 5813
+    "series": 45,
+    "observations": 7089,
+    "series_count": 45,
+    "observation_count": 7089
   },
   "data_gaps_detail": [
     {
@@ -389,7 +506,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 10,
+    "source_groups": 12,
     "sources": [
       {
         "source_name": "Eurostat / TurkStat",
@@ -400,7 +517,15 @@
         "charts": 4
       },
       {
+        "source_name": "FRED / OECD",
+        "charts": 4
+      },
+      {
         "source_name": "IMF SDMX / CBRT",
+        "charts": 4
+      },
+      {
+        "source_name": "IMF WEO DataMapper",
         "charts": 3
       },
       {
@@ -416,6 +541,10 @@
         "charts": 2
       },
       {
+        "source_name": "IMF SDMX / TurkStat",
+        "charts": 2
+      },
+      {
         "source_name": "Central Bank of the Republic of Turkey (TCMB)",
         "charts": 1
       },
@@ -424,20 +553,16 @@
         "charts": 1
       },
       {
-        "source_name": "FRED / OECD",
-        "charts": 1
-      },
-      {
-        "source_name": "IMF SDMX / TurkStat",
+        "source_name": "IMF Fiscal Monitor",
         "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 12,
       "verified": 14,
-      "watch": 10
+      "watch": 19
     },
-    "unavailable_count": 4
+    "unavailable_count": 1
   },
   "framework": {
     "version": 2,
@@ -448,8 +573,9 @@
   "freshness": {
     "as_of_date": "2026-10-28",
     "counts": {
-      "current": 20,
-      "due": 4,
+      "current": 23,
+      "due": 6,
+      "projection": 4,
       "stale": 12
     },
     "latest_historical_date": "2026-10-27",
@@ -565,9 +691,9 @@
         "transform": "level"
       },
       {
-        "id": "cpi_inflation",
-        "concept_id": "headline_inflation",
-        "label_en": "Headline HICP Inflation YoY",
+        "id": "cpi_inflation_imf",
+        "concept_id": "tr:cpi_inflation_imf",
+        "label_en": "Headline HICP Inflation YoY (Eurostat Cross-Check)",
         "latest_date": "2025-12-01",
         "frequency": "monthly",
         "freshness_status": "stale",
@@ -785,6 +911,50 @@
         "transform": "level"
       },
       {
+        "id": "goods_exports",
+        "concept_id": "tr:goods_exports",
+        "label_en": "Exports of Goods SA (USD)",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 58,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / OECD",
+        "series": "XTEXVA01TRM667S",
+        "transform": "level"
+      },
+      {
+        "id": "goods_imports",
+        "concept_id": "tr:goods_imports",
+        "label_en": "Imports of Goods SA (USD)",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 58,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / OECD",
+        "series": "XTIMVA01TRM667S",
+        "transform": "level"
+      },
+      {
         "id": "policy_rate",
         "concept_id": "policy_rate",
         "label_en": "Overnight Interbank Rate (Immediate Rates)",
@@ -810,7 +980,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 36
+      "level": 45
     },
     "non_level": []
   },
@@ -820,6 +990,6 @@
       "date",
       "value"
     ],
-    "charted_series": 36
+    "charted_series": 45
   }
 }

@@ -176,7 +176,7 @@ Remaining rendered proxy slots: 0.
 | real_activity | `participation_rate` | Labour Force Participation Rate | quarterly | % | 2025-12-31 | World Bank | SL.TLF.CACT.ZS | watch | Participation definitions differ across Eurostat LFS and World Bank annual series; compare levels cautiously. World Bank indicator SL.TLF.CACT.ZS. Source validation: Latest observation is 301 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence. |
 | real_activity | `vacancy_rate` | Job Vacancy Rate | quarterly | % | 2025-10-01 | Eurostat | jvs_q_nace2 | low_confidence | Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy. Source validation: Latest observation is 392 days old for quarterly data. |
 | real_activity | `gross_fixed_capital` | Gross Fixed Capital Formation | annual | % GDP | 2024-12-31 | World Bank | NE.GDI.FTOT.ZS | watch | Investment share of GDP is annual in the current public adapter; pair with quarterly GFCF growth when timing matters. World Bank indicator NE.GDI.FTOT.ZS. Source validation passed. |
-| real_activity | `construction_production` | Construction Production, YoY | monthly | % YoY | 2026-08-01 | Eurostat | sts_copr_m | verified | Eurostat construction production, calendar and seasonally adjusted; country coverage and rebasing should be checked. Source validation passed. |
+| real_activity | `construction_production` | Construction Production, YoY | monthly | % YoY | 2026-09-01 | Eurostat | sts_copr_m | verified | Eurostat construction production, calendar and seasonally adjusted; country coverage and rebasing should be checked. Source validation passed. |
 | real_activity | `fdi_inflows` | FDI Inflows, % GDP | annual | % GDP | 2024-12-31 | World Bank | BX.KLT.DINV.WD.GD.ZS | watch | Annual FDI inflows can be volatile and revised; use as structural financing context rather than high-frequency flow timing. World Bank indicator BX.KLT.DINV.WD.GD.ZS. Source validation passed. |
 | real_activity | `employment_expectations` | Employment Expectations Indicator | monthly | Index | 2026-09-01 | Eurostat | ei_bsee_m_r2 | verified | European Commission Employment Expectations Indicator from harmonised business surveys; it is not an OECD composite leading indicator. European Commission Employment Expectations Indicator from harmonised business surveys; not an OECD CLI. Source validation passed. |
 | real_activity | `german_industry_confidence` | German Industry Confidence Spillover | monthly | Balance | 2026-09-01 | Eurostat | ei_bsin_m_r2 | watch | Germany industrial confidence from the harmonised European Commission business survey; use as an external-demand spillover signal, not a domestic survey. Germany industrial confidence from the harmonised European Commission business survey; used as a transparent external-demand spillover signal for CEE, not as a domestic country survey. Source validation passed. |
@@ -938,7 +938,7 @@ The Turkey page is generated from `config/turkey_indicators.yaml`. TurkStat offi
 
 Generated from `config/turkey_indicators.yaml`; latest dates are tracked in `output/turkey_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 40. Latest rendered chart count: 36. Source groups: 10.
+Configured charts: 46. Latest rendered chart count: 45. Source groups: 12.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -955,27 +955,33 @@ Configured charts: 40. Latest rendered chart count: 36. Source groups: 10.
 | production_cycle | `construction_production_growth` | Construction Production YoY | monthly | % y/y | eurostat | Eurostat / TurkStat |  | Calendar-adjusted volume index of production in construction year-on-year change. |
 | production_cycle | `economic_sentiment_indicator` | Economic Sentiment Indicator (ESI) | monthly | Index (100 = Neutral) | eurostat | Eurostat / DG ECFIN |  | Composite sentiment indicator tracking business and consumer confidence across the Turkish economy. |
 | production_cycle | `capacity_utilization` | Manufacturing Capacity Utilization | quarterly | % | eurostat | Eurostat / CBRT |  | Seasonally adjusted manufacturing sector capacity utilization rate. |
+| production_cycle | `composite_leading_indicator` | OECD Composite Leading Indicator (Amplitude Adjusted) | monthly | Index (Long-term trend = 100) | fred | FRED / OECD | TURLOLITOAASTSAM | OECD amplitude-adjusted Composite Leading Indicator (CLI) for Turkey. |
 | labour_wages | `unemployment_rate` | Harmonised Unemployment Rate SA | monthly | % of labour force | eurostat | Eurostat / TurkStat |  | Seasonally adjusted unemployment rate conforming to ILO standards. |
 | labour_wages | `youth_unemployment_rate` | Youth Unemployment Rate (<25) SA | monthly | % of labour force | eurostat | Eurostat / TurkStat |  | Unemployment rate for persons aged 15-24. |
-| prices_costs | `cpi_inflation` | Headline HICP Inflation YoY | monthly | % y/y | eurostat | Eurostat / TurkStat |  | Harmonised Index of Consumer Prices headline annual rate of change. |
+| prices_costs | `cpi_inflation` | Headline CPI Inflation YoY | monthly | % y/y | imf_sdmx | IMF SDMX / TurkStat | TUR.CPI._T.YOY_PCH_PA_PT.M | Official monthly Consumer Price Index annual rate of change reported by TurkStat via IMF CPI. |
+| prices_costs | `cpi_inflation_mom` | Headline CPI Inflation MoM | monthly | % m/m | imf_sdmx | IMF SDMX / TurkStat | TUR.CPI._T.POP_PCH_PA_PT.M | Monthly sequential percentage change in headline CPI (key disinflation momentum gauge). |
+| prices_costs | `food_cpi_inflation` | Food & Non-Alcoholic Beverages CPI YoY | monthly | % y/y | imf_sdmx | IMF SDMX / TurkStat | TUR.CPI.CP01.YOY_PCH_PA_PT.M | COICOP 01 Food and non-alcoholic beverages CPI annual rate of change. |
 | prices_costs | `core_hicp_inflation` | Core HICP Inflation (ex-Energy & Food) YoY | monthly | % y/y | eurostat | Eurostat / TurkStat |  | HICP excluding energy, food, alcohol and tobacco. |
 | prices_costs | `services_hicp_inflation` | Services HICP Inflation YoY | monthly | % y/y | eurostat | Eurostat / TurkStat |  | Services component of the Harmonised Index of Consumer Prices. |
 | prices_costs | `food_hicp_inflation` | Food HICP Inflation YoY | monthly | % y/y | eurostat | Eurostat / TurkStat |  | Food component of the Harmonised Index of Consumer Prices. |
 | prices_costs | `energy_hicp_inflation` | Energy HICP Inflation YoY | monthly | % y/y | eurostat | Eurostat / TurkStat |  | Energy component of the Harmonised Index of Consumer Prices. |
 | prices_costs | `ppi_inflation` | Domestic Producer Price Index (PPI) YoY | monthly | % y/y | eurostat | Eurostat / TurkStat |  | Domestic industrial producer price index annual rate of change. |
-| prices_costs | `cpi_inflation_imf` | Headline CPI YoY (IMF Cross-Check) | monthly | % y/y | imf_sdmx | IMF SDMX / TurkStat | TUR.CPI._T.YOY_PCH_PA_PT.M | Official CPI series transmitted to the IMF Consumer Price Index database. |
+| prices_costs | `cpi_inflation_imf` | Headline HICP Inflation YoY (Eurostat Cross-Check) | monthly | % y/y | eurostat | Eurostat / TurkStat |  | Harmonised Index of Consumer Prices headline annual rate of change. |
 | housing_property | `house_price_growth` | Residential Property Price Index YoY | quarterly | % y/y | eurostat | Eurostat / CBRT |  | Residential property price index annual change for all dwellings. |
 | housing_property | `bis_nominal_house_prices` | BIS Nominal Residential Property Prices | quarterly | Index (2010 = 100) | fred | FRED / BIS | QTRN628BIS | BIS long-term residential property price index for Turkey. |
-| external_fx | `try_usd` | USD/TRY Official Exchange Rate | daily | TRY per USD | tcmb_xml | Central Bank of the Republic of Turkey (TCMB) |  | Official daily fixing rate published by TCMB. |
+| external_fx | `try_usd` | USD/TRY Official Exchange Rate | daily | TRY per USD | tcmb_xml | Central Bank of the Republic of Turkey (TCMB) |  | Official TCMB daily fixing rate merged with OECD/FRED historical monthly spot series. |
 | external_fx | `reer` | Real Effective Exchange Rate (REER) | monthly | Index (2007 = 100) | bruegel_reer | Bruegel (Darvas 120-Trading-Partner Basket) |  | CPI-based monthly real effective exchange rate calculated against 120 trading partners. |
 | external_fx | `neer` | Nominal Effective Exchange Rate (NEER) | monthly | Index (2007 = 100) | bruegel_reer | Bruegel (Darvas 120-Trading-Partner Basket) |  | Monthly nominal effective exchange rate calculated against 120 trading partners. |
+| external_fx | `goods_exports` | Exports of Goods SA (USD) | monthly | USD mn | fred | FRED / OECD | XTEXVA01TRM667S | Seasonally adjusted monthly merchandise exports in millions of US dollars. |
+| external_fx | `goods_imports` | Imports of Goods SA (USD) | monthly | USD mn | fred | FRED / OECD | XTIMVA01TRM667S | Seasonally adjusted monthly merchandise imports in millions of US dollars. |
 | external_fx | `current_account_usd` | Current Account Balance (USD) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBRT | TUR.NETCD_T.CAB.USD.Q | Quarterly BPM6 current account balance in millions of US dollars. |
 | external_fx | `goods_trade_balance` | Goods Trade Balance (USD) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBRT | TUR.NETCD_T.G.USD.Q | Quarterly goods balance in millions of US dollars. |
 | external_fx | `services_balance` | Services Balance (Tourism & Services, USD) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBRT | TUR.NETCD_T.S.USD.Q | Quarterly services balance in millions of US dollars (crucial tourism FX revenue). |
-| external_fx | `current_account_gdp` | Current Account Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper |  | IMF World Economic Outlook historical series and projections. |
-| fiscal_sovereign | `government_debt_gdp` | General Government Gross Debt (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper |  | General government gross debt as a percentage of GDP. |
-| fiscal_sovereign | `fiscal_balance_gdp` | General Government Net Lending / Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper |  | General government net lending/borrowing as a percentage of GDP. |
-| fiscal_sovereign | `primary_balance_gdp` | Primary Net Lending / Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF Fiscal Monitor |  | General government primary balance excluding net interest payments. |
+| external_fx | `fdi_net_usd` | Direct Investment Net Acquisition of Assets vs Liabilities (USD) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBRT | TUR.NNAFANIL_T.D_F.USD.Q | Quarterly BPM6 financial account direct investment net balance in millions of US dollars. |
+| external_fx | `current_account_gdp` | Current Account Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper | BCA_NGDPD | IMF World Economic Outlook historical series and projections. |
+| fiscal_sovereign | `government_debt_gdp` | General Government Gross Debt (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper | GGXWDG_NGDP | General government gross debt as a percentage of GDP. |
+| fiscal_sovereign | `fiscal_balance_gdp` | General Government Net Lending / Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper | GGXCNL_NGDP | General government net lending/borrowing as a percentage of GDP. |
+| fiscal_sovereign | `primary_balance_gdp` | Primary Net Lending / Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF Fiscal Monitor | GGXONLB_G01_GDP_PT | General government primary balance excluding net interest payments. |
 | monetary_financial | `policy_rate` | Overnight Interbank Rate (Immediate Rates) | monthly | % | fred | FRED / OECD | IRSTCI01TRM156N | Immediate interest rate / overnight interbank lending rate for Turkey. |
 | monetary_financial | `private_credit_gdp` | Total Credit to Private Non-Financial Sector (% of GDP) | quarterly | % of GDP | fred | FRED / BIS | QTRPAM770A | BIS credit to the private non-financial sector as a percentage of GDP. |
 | monetary_financial | `household_credit_gdp` | Household Credit (% of GDP) | quarterly | % of GDP | fred | FRED / BIS | QTRHAM770A | BIS total credit to households and NPISH as a percentage of GDP. |
@@ -996,32 +1002,45 @@ The Hong Kong page is generated from `config/hong_kong_indicators.yaml`. Census 
 
 Generated from `config/hong_kong_indicators.yaml`; latest dates are tracked in `output/hong_kong_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 24. Latest rendered chart count: 24. Source groups: 9.
+Configured charts: 37. Latest rendered chart count: 37. Source groups: 10.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
 | growth_accounts | `real_gdp_growth` | Real GDP Growth, QoQ SA | quarterly | % q/q | hk_csd | HK C&SD (National Accounts) |  | Seasonally adjusted quarter-to-quarter rate of change in real GDP in chained (2022) dollars. |
 | growth_accounts | `real_gdp_yoy` | Real GDP Growth, YoY | quarterly | % y/y | hk_csd | HK C&SD (National Accounts) |  | Year-on-year rate of change in real GDP. |
+| growth_accounts | `private_consumption_yoy` | Private Consumption Expenditure Growth YoY | quarterly | % y/y | hk_csd | HK C&SD (National Accounts) |  | Quarterly year-on-year change in private consumption expenditure. |
+| growth_accounts | `investment_growth_yoy` | Gross Domestic Fixed Capital Formation Growth YoY | quarterly | % y/y | hk_csd | HK C&SD (National Accounts) |  | Quarterly year-on-year change in gross domestic fixed capital formation. |
+| growth_accounts | `government_consumption_yoy` | Government Consumption Expenditure Growth YoY | quarterly | % y/y | hk_csd | HK C&SD (National Accounts) |  | Quarterly year-on-year change in government consumption expenditure. |
+| growth_accounts | `services_exports_yoy` | Exports of Services Growth YoY | quarterly | % y/y | hk_csd | HK C&SD (National Accounts) |  | Quarterly year-on-year change in exports of services (financial services, travel, and logistics). |
 | production_cycle | `industrial_production_growth` | Industrial Production YoY (Manufacturing) | quarterly | % y/y | hk_csd | HK C&SD |  | Index of industrial production for the manufacturing sector year-on-year change. |
 | production_cycle | `retail_sales_growth` | Retail Sales Value Index YoY | monthly | % y/y | hk_csd | HK C&SD |  | Total retail sales value index year-on-year change. |
 | production_cycle | `construction_works_growth` | Construction Works Performed YoY | quarterly | % y/y | hk_csd | HK C&SD |  | Gross value of construction works performed by main contractors year-on-year change. |
 | labour_wages | `unemployment_rate` | Unemployment Rate (Seasonally Adjusted) | monthly | % of labour force | hk_csd | HK C&SD (General Household Survey) |  | 3-month moving average seasonally adjusted unemployment rate. |
+| labour_wages | `underemployment_rate` | Underemployment Rate | monthly | % of labour force | hk_csd | HK C&SD (General Household Survey) |  | 3-month moving average underemployment rate. |
+| labour_wages | `participation_rate` | Labour Force Participation Rate | monthly | % of population aged 15+ | hk_csd | HK C&SD (General Household Survey) |  | 3-month moving average labour force participation rate. |
 | labour_wages | `nominal_wage_index_growth` | Nominal Wage Index YoY | quarterly | % y/y | hk_csd | HK C&SD |  | Nominal wage index for employees up to supervisory level year-on-year change. |
 | prices_costs | `cpi_inflation` | Composite CPI Inflation YoY | monthly | % y/y | hk_csd | HK C&SD |  | Headline Composite Consumer Price Index annual rate of change. |
 | prices_costs | `core_cpi_inflation` | Underlying CPI Inflation YoY | monthly | % y/y | hk_csd | HK C&SD |  | Underlying Composite CPI netting out the effects of all Government's one-off relief measures. |
 | prices_costs | `cpi_inflation_imf` | Headline CPI YoY (IMF Cross-Check) | monthly | % y/y | imf_sdmx | IMF SDMX / HK C&SD | HKG.CPI._T.YOY_PCH_PA_PT.M | Official CPI series transmitted to the IMF Consumer Price Index database. |
 | housing_property | `bis_nominal_house_prices` | BIS Nominal Residential Property Prices | quarterly | Index (2010 = 100) | fred | FRED / BIS | QHKN628BIS | BIS long-term residential property price index for Hong Kong. |
 | housing_property | `bis_real_house_prices` | BIS Real Residential Property Prices | quarterly | Index (2010 = 100) | fred | FRED / BIS | QHKR628BIS | BIS consumer price-deflated real residential property prices. |
-| external_fx | `usd_hkd` | USD/HKD Exchange Rate (Fed H.10) | daily | HKD per USD | fred | FRED / Federal Reserve Board | DEXHKUS | Daily noon buying rates in New York City for cable transfers in foreign currencies. |
+| external_fx | `usd_hkd` | USD/HKD Exchange Rate (Fed H.10, Linked Band 7.75-7.85) | daily | HKD per USD | fred | FRED / Federal Reserve Board | DEXHKUS | Daily noon buying rates in New York City within HKMA's 7.75-7.85 Convertibility Undertaking band. |
 | external_fx | `reer` | Real Effective Exchange Rate (REER) | monthly | Index (2007 = 100) | bruegel_reer | Bruegel (Darvas 120-Trading-Partner Basket) |  | CPI-based monthly real effective exchange rate calculated against 120 trading partners. |
 | external_fx | `neer` | Nominal Effective Exchange Rate (NEER) | monthly | Index (2007 = 100) | bruegel_reer | Bruegel (Darvas 120-Trading-Partner Basket) |  | Monthly nominal effective exchange rate calculated against 120 trading partners. |
 | external_fx | `merchandise_exports_growth` | Merchandise Exports YoY | monthly | % y/y | hk_csd | HK C&SD |  | Total merchandise exports value year-on-year percentage change. |
 | external_fx | `merchandise_imports_growth` | Merchandise Imports YoY | monthly | % y/y | hk_csd | HK C&SD |  | Total merchandise imports value year-on-year percentage change. |
 | external_fx | `merchandise_trade_balance` | Merchandise Trade Balance | monthly | HK$ mn | hk_csd | HK C&SD |  | Visible merchandise trade balance in millions of Hong Kong dollars. |
 | external_fx | `current_account_usd` | Current Account Balance (USD) | quarterly | USD mn | imf_sdmx | IMF SDMX / HK C&SD | HKG.NETCD_T.CAB.USD.Q | Quarterly BPM6 current account balance in millions of US dollars. |
+| external_fx | `services_balance_usd` | Services Trade Balance (BOP Basis, USD) | quarterly | USD mn | imf_sdmx | IMF SDMX / HK C&SD | HKG.NETCD_T.S.USD.Q | Quarterly BPM6 services trade balance in millions of US dollars. |
+| external_fx | `fdi_net_usd` | Direct Investment Net Balance (FDI, USD) | quarterly | USD mn | imf_sdmx | IMF SDMX / HK C&SD | HKG.NNAFANIL_T.D_F.USD.Q | Quarterly BPM6 direct investment net acquisition of financial assets less incurrence of liabilities. |
+| external_fx | `current_account_gdp` | Current Account Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper | BCA_NGDPD | IMF World Economic Outlook historical series and projections. |
 | fiscal_sovereign | `government_debt_gdp` | General Government Gross Debt (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper | GGXWDG_NGDP | General government gross debt as a percentage of GDP. |
 | fiscal_sovereign | `fiscal_balance_gdp` | General Government Net Lending / Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper | GGXCNL_NGDP | General government net lending/borrowing as a percentage of GDP. |
+| fiscal_sovereign | `primary_balance_gdp` | Primary Net Lending / Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF Fiscal Monitor | GGXONLB_G01_GDP_PT | General government primary balance excluding net interest payments. |
+| monetary_financial | `fed_funds_anchor` | US Effective Federal Funds Rate (LERS Currency Board Anchor) | monthly | % | fred | FRED / Federal Reserve Board | FEDFUNDS | Under Hong Kong's Linked Exchange Rate System (LERS), the HKMA Base Rate is mechanically anchored to the US Federal Funds Target Rate (+50 bps). |
 | monetary_financial | `private_credit_gdp` | Total Credit to Private Non-Financial Sector (% of GDP) | quarterly | % of GDP | fred | FRED / BIS | QHKPAM770A | BIS total credit to the private non-financial sector as a percentage of GDP. |
+| monetary_financial | `bank_credit_gdp` | Bank Credit to Private Non-Financial Sector (% of GDP) | quarterly | % of GDP | fred | FRED / BIS | QHKPBM770A | Domestic bank credit to the private non-financial sector as a percentage of GDP. |
+| monetary_financial | `household_credit_gdp` | Credit to Households & NPISHs (% of GDP) | quarterly | % of GDP | fred | FRED / BIS | QHKHAM770A | Total credit to households and non-profit institutions serving households as a percentage of GDP. |
 | stability_structural | `bank_capital_ratio` | Locally Incorporated AIs Capital Adequacy Ratio | quarterly | % | dbnomics | IMF / DBnomics (Financial Soundness Indicators) | IMF/FSI/Q.HK.FSKRC_PT | Consolidated regulatory capital to risk-weighted assets for locally incorporated banks in Hong Kong. |
 | stability_structural | `bank_npl_ratio` | Bank Classified / Non-Performing Loan Ratio | quarterly | % | dbnomics | IMF / DBnomics (Financial Soundness Indicators) | IMF/FSI/Q.HK.FSANL_PT | Non-performing loans to total gross loans reported to the IMF. |
 
@@ -1037,7 +1056,7 @@ The South Korea page is generated from `config/south_korea_indicators.yaml`. FRE
 
 Generated from `config/south_korea_indicators.yaml`; latest dates are tracked in `output/south_korea_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 36. Latest rendered chart count: 36. Source groups: 9.
+Configured charts: 42. Latest rendered chart count: 39. Source groups: 9.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1049,11 +1068,15 @@ Configured charts: 36. Latest rendered chart count: 36. Source groups: 9.
 | production_cycle | `manufacturing_production_growth` | Manufacturing Output YoY | monthly | % y/y | fred | FRED / OECD | KORPRMNTO01GYSAM | Manufacturing production index year-on-year change. |
 | production_cycle | `retail_sales_growth` | Retail Trade Volume YoY | monthly | % y/y | fred | FRED / OECD | KORSLRTTO01GYSAM | Total retail trade volume year-on-year percentage change. |
 | production_cycle | `composite_leading_indicator` | Composite Leading Indicator (CLI) | monthly | Amplitude adjusted (100 = Trend) | fred | FRED / OECD | KORLOLITOAASTSAM | OECD composite leading indicator designed to anticipate turning points in economic activity. |
+| production_cycle | `business_confidence` | Manufacturing Business Confidence Indicator (BSI) | monthly | Amplitude adjusted (100 = Normal) | fred | FRED / OECD / BOK | KORBSCICP02STSAM | OECD standardised manufacturing business confidence indicator (100 = long-term normal). |
+| production_cycle | `consumer_confidence` | Consumer Confidence Indicator (CSI) | monthly | Amplitude adjusted (100 = Normal) | fred | FRED / OECD / BOK | KORCSCICP02STSAM | OECD standardised consumer opinion confidence indicator (100 = long-term normal). |
 | labour_wages | `unemployment_rate` | Harmonised Unemployment Rate SA | monthly | % of labour force | fred | FRED / OECD | LRHUTTTTKRM156S | Seasonally adjusted harmonised unemployment rate for all persons. |
 | labour_wages | `participation_rate` | Labour Force Participation Rate SA | monthly | % of working-age population | fred | FRED / OECD | LRACTTTTKRM156S | Active labour force as a percentage of the population aged 15 and over. |
 | labour_wages | `employment_rate` | Employment Rate (15-64) SA | monthly | % of population | fred | FRED / OECD | LREM64TTKRM156S | Proportion of the population aged 15 to 64 that is currently employed. |
+| labour_wages | `manufacturing_wage_growth` | Manufacturing Hourly Earnings Growth YoY | monthly | % y/y | fred | FRED / OECD | LCEAMN01KRM659S | Hourly earnings in manufacturing year-on-year growth rate. |
 | prices_costs | `cpi_inflation` | Headline CPI Inflation YoY | monthly | % y/y | imf_sdmx | IMF SDMX / Statistics Korea | KOR.CPI._T.YOY_PCH_PA_PT.M | Headline CPI year-on-year rate of change transmitted to the IMF. |
 | prices_costs | `cpi_inflation_mom` | Headline CPI Inflation MoM | monthly | % m/m | imf_sdmx | IMF SDMX / Statistics Korea | KOR.CPI._T.POP_PCH_PA_PT.M | Month-on-month headline CPI percentage change. |
+| prices_costs | `food_cpi_inflation` | Food & Non-Alcoholic Beverages CPI YoY | monthly | % y/y | imf_sdmx | IMF SDMX / Statistics Korea | KOR.CPI.CP01.YOY_PCH_PA_PT.M | COICOP 01 Food and non-alcoholic beverages CPI year-on-year change. |
 | prices_costs | `cpi_inflation_fred` | Headline CPI YoY (OECD Mirror Cross-Check) | monthly | % y/y | fred | FRED / OECD | KORCPALTT01CTGYM | OECD consumer price index growth rate series mirrored on FRED. |
 | housing_property | `bis_nominal_house_prices` | BIS Nominal Residential Property Prices | quarterly | Index (2010 = 100) | fred | FRED / BIS | QKRN628BIS | BIS long-term nominal residential property price index for Korea. |
 | housing_property | `bis_real_house_prices` | BIS Real Residential Property Prices | quarterly | Index (2010 = 100) | fred | FRED / BIS | QKRR628BIS | BIS consumer price-deflated real residential property prices. |
@@ -1065,6 +1088,8 @@ Configured charts: 36. Latest rendered chart count: 36. Source groups: 9.
 | external_fx | `current_account_usd` | Current Account Balance (USD) | quarterly | USD mn | imf_sdmx | IMF SDMX / Bank of Korea | KOR.NETCD_T.CAB.USD.Q | Quarterly BPM6 current account balance in millions of US dollars. |
 | external_fx | `goods_trade_balance` | Goods Trade Balance (BOP Basis, USD) | quarterly | USD mn | imf_sdmx | IMF SDMX / Bank of Korea | KOR.NETCD_T.G.USD.Q | Quarterly goods balance in millions of US dollars. |
 | external_fx | `services_balance` | Services Balance (USD) | quarterly | USD mn | imf_sdmx | IMF SDMX / Bank of Korea | KOR.NETCD_T.S.USD.Q | Quarterly services balance in millions of US dollars. |
+| external_fx | `fdi_net_usd` | Direct Investment Net Balance (FDI, USD) | quarterly | USD mn | imf_sdmx | IMF SDMX / Bank of Korea | KOR.NNAFANIL_T.D_F.USD.Q | Quarterly BPM6 direct investment net acquisition of financial assets less incurrence of liabilities. |
+| external_fx | `portfolio_net_usd` | Portfolio Investment Net Balance (USD) | quarterly | USD mn | imf_sdmx | IMF SDMX / Bank of Korea | KOR.NNAFANIL_T.P_F.USD.Q | Quarterly BPM6 portfolio investment net acquisition of financial assets less incurrence of liabilities. |
 | external_fx | `current_account_gdp` | Current Account Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper | BCA_NGDPD | IMF World Economic Outlook historical series and projections. |
 | fiscal_sovereign | `government_debt_gdp` | General Government Gross Debt (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper | GGXWDG_NGDP | General government gross debt as a percentage of GDP. |
 | fiscal_sovereign | `fiscal_balance_gdp` | General Government Net Lending / Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper | GGXCNL_NGDP | General government net lending/borrowing as a percentage of GDP. |
@@ -1091,7 +1116,7 @@ The Taiwan page is generated from `config/taiwan_indicators.yaml`. Central Bank 
 
 Generated from `config/taiwan_indicators.yaml`; latest dates are tracked in `output/taiwan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 37. Latest rendered chart count: 37. Source groups: 6.
+Configured charts: 46. Latest rendered chart count: 46. Source groups: 7.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1101,6 +1126,9 @@ Configured charts: 37. Latest rendered chart count: 37. Source groups: 6.
 | growth_accounts | `private_consumption` | Private Final Consumption YoY | quarterly | % y/y | tw_dgbas | Taiwan DGBAS |  | Real annual change rate of private household consumption expenditure. |
 | growth_accounts | `government_consumption` | Government Final Consumption YoY | quarterly | % y/y | tw_dgbas | Taiwan DGBAS |  | Real annual change rate of government consumption expenditure. |
 | growth_accounts | `domestic_demand` | Domestic Demand YoY | quarterly | % y/y | tw_dgbas | Taiwan DGBAS |  | Real year-on-year change rate of total domestic demand. |
+| growth_accounts | `machinery_investment_yoy` | Machinery & Equipment Investment YoY (AI / Semiconductor Capex) | quarterly | % y/y | tw_dgbas | Taiwan DGBAS |  | Real annual growth of machinery and equipment investment within GFCF (foundry & AI server capex driver). |
+| growth_accounts | `real_exports_yoy` | Real Exports of Goods & Services YoY | quarterly | % y/y | tw_dgbas | Taiwan DGBAS |  | Chained real year-on-year growth rate of exports of goods and services. |
+| growth_accounts | `real_imports_yoy` | Real Imports of Goods & Services YoY | quarterly | % y/y | tw_dgbas | Taiwan DGBAS |  | Chained real year-on-year growth rate of imports of goods and services. |
 | prices_costs | `cpi_inflation` | Headline CPI Inflation YoY | monthly | % y/y | tw_dgbas | Taiwan DGBAS |  | Year-on-year rate of change derived from the official linked CPI index. |
 | prices_costs | `core_cpi_inflation` | Core CPI Inflation YoY (Excl. Fruit, Veg & Energy) | monthly | % y/y | tw_dgbas | Taiwan DGBAS |  | Core CPI excluding volatile fresh fruits, vegetables, and energy. |
 | prices_costs | `ppi_inflation` | Producer Price Index (PPI) YoY | monthly | % y/y | tw_dgbas | Taiwan DGBAS |  | Year-on-year change rate of domestic producer prices. |
@@ -1111,16 +1139,22 @@ Configured charts: 37. Latest rendered chart count: 37. Source groups: 6.
 | monetary_financial | `prime_lending_rate` | Five Major Banks Base Lending Rate | monthly | % | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Average base lending rate of five major domestic commercial banks. |
 | monetary_financial | `deposit_rate_1y` | Five Major Banks 1-Year Time Deposit Rate | monthly | % | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Average 1-year time deposit interest rate of five major commercial banks. |
 | monetary_financial | `m1b_growth` | M1B Monetary Aggregate YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual percentage change in M1B (currency in circulation plus checking accounts and passbook deposits). |
-| monetary_financial | `m2_growth` | M2 Monetary Aggregate YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual percentage change in broad money M2. |
+| monetary_financial | `m2_growth` | M2 Monetary Aggregate YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual percentage change in broad money M2 (averages of daily figures). |
 | monetary_financial | `reserve_money_growth` | Reserve Money YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual percentage change in central bank reserve money (averages of daily figures). |
 | credit_property | `consumer_loans_growth` | Consumer Loans YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual growth rate of total consumer loans by domestic banks. |
 | credit_property | `mortgage_loans_growth` | House-Purchasing Loans (Mortgages) YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual growth rate of outstanding residential house-purchasing loans (key property credit indicator). |
+| credit_property | `construction_loans_growth` | Construction Loans YoY Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual growth rate of domestic bank loans for construction (developer credit cycle gauge). |
+| credit_property | `bank_npl_ratio` | Domestic Banks Non-Performing Loan (NPL) Ratio | monthly | % | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Non-performing loan ratio of domestic commercial banks. |
 | credit_property | `commercial_paper_growth` | Short-Term Bills Market Outstanding Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual percentage change in short-term commercial bills market outstanding amount. |
 | credit_property | `bond_market_growth` | Bond Market Outstanding Amount Growth | monthly | % y/y | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Annual percentage change in total bond market outstanding volume. |
 | external_trade_fx | `usd_twd` | USD/TWD Spot Exchange Rate (Fed H.10) | daily | TWD per USD | fred | FRED / Federal Reserve Board | DEXTAUS | Daily noon buying rates in New York City for cable transfers in Taiwan dollars. |
 | external_trade_fx | `reer` | Real Effective Exchange Rate (REER) | monthly | Index (2007 = 100) | bruegel_reer | Bruegel (Darvas 120-Trading-Partner Basket) |  | CPI-based monthly real effective exchange rate calculated against 120 trading partners. |
 | external_trade_fx | `neer` | Nominal Effective Exchange Rate (NEER) | monthly | Index (2007 = 100) | bruegel_reer | Bruegel (Darvas 120-Trading-Partner Basket) |  | Monthly nominal effective exchange rate calculated against 120 trading partners. |
 | external_trade_fx | `bis_reer` | BIS Real Broad Effective Exchange Rate (Cross-Check) | monthly | Index (2020 = 100) | fred | FRED / BIS | RBTWBIS | BIS broad monthly real effective exchange rate index for Taiwan. |
+| external_trade_fx | `fx_reserves` | Official Foreign Exchange Reserves (USD) | monthly | USD mn | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Official monthly foreign exchange reserves held by the CBC in millions of US dollars. |
+| external_trade_fx | `customs_exports_yoy` | Monthly Customs Merchandise Exports YoY (NTD Basis) | monthly | % y/y | tw_mof_customs | Taiwan Ministry of Finance (Customs Administration) |  | Monthly Customs merchandise exports year-on-year growth rate calculated from official MOF Customs releases. |
+| external_trade_fx | `customs_imports_yoy` | Monthly Customs Merchandise Imports YoY (NTD Basis) | monthly | % y/y | tw_mof_customs | Taiwan Ministry of Finance (Customs Administration) |  | Monthly Customs merchandise imports year-on-year growth rate calculated from official MOF Customs releases. |
+| external_trade_fx | `customs_trade_balance` | Monthly Customs Merchandise Trade Balance (NTD) | monthly | NTD bn | tw_mof_customs | Taiwan Ministry of Finance (Customs Administration) |  | Monthly Customs merchandise trade surplus/deficit in billions of New Taiwan Dollars. |
 | external_trade_fx | `current_account_usd` | Current Account Balance (USD) | quarterly | USD mn | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Quarterly BPM6 current account balance in millions of US dollars. |
 | external_trade_fx | `goods_trade_balance` | Goods Trade Balance (BOP Basis, USD) | quarterly | USD mn | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Quarterly goods balance in millions of US dollars. |
 | external_trade_fx | `goods_exports` | Exports of Goods (BOP Basis, USD) | quarterly | USD mn | tw_cbc | Central Bank of the Republic of China (Taiwan) |  | Quarterly goods export credit in millions of US dollars. |
@@ -1145,7 +1179,7 @@ The Kazakhstan page is generated from `config/kazakhstan_indicators.yaml`. Natio
 
 Generated from `config/kazakhstan_indicators.yaml`; latest dates are tracked in `output/kazakhstan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 28. Latest rendered chart count: 28. Source groups: 10.
+Configured charts: 33. Latest rendered chart count: 33. Source groups: 12.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1154,18 +1188,23 @@ Configured charts: 28. Latest rendered chart count: 28. Source groups: 10.
 | growth_accounts | `consumption_growth` | Household Consumption Growth | annual | % | world_bank | World Bank WDI | NE.CON.PRVT.KD.ZG | Annual percentage growth of households and NPISHs final consumption expenditure. |
 | growth_accounts | `investment_growth` | Gross Capital Formation Growth | annual | % | world_bank | World Bank WDI | NE.GDI.FTOT.KD.ZG | Annual percentage growth of gross fixed capital formation. |
 | labour_wages | `unemployment_rate` | Unemployment Rate | annual | % | world_bank | World Bank / ILO | SL.UEM.TOTL.ZS | Total unemployment as a percentage of the total labor force (ILO modeled estimate). |
-| prices_costs | `cpi_inflation` | Headline CPI Inflation YoY | monthly | % y/y | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.KZ.PCPI_PC_CP_A_PT | Year-on-year percentage change in official Consumer Price Index reported in IMF IFS. |
-| prices_costs | `cpi_index` | Headline Consumer Price Index (2020=100) | monthly | Index | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.KZ.PCPI_IX | Consumer Price Index (All items) rebased index. |
+| prices_costs | `cpi_inflation` | Headline CPI Inflation YoY | monthly | % y/y | imf_sdmx | IMF SDMX / Kazakhstan BNS | KAZ.CPI._T.YOY_PCH_PA_PT.M | Year-on-year percentage change in official Consumer Price Index reported via IMF CPI. |
+| prices_costs | `cpi_inflation_mom` | Headline CPI Inflation MoM | monthly | % m/m | imf_sdmx | IMF SDMX / Kazakhstan BNS | KAZ.CPI._T.POP_PCH_PA_PT.M | Month-on-month percentage change in official Consumer Price Index. |
+| prices_costs | `cpi_index` | Headline Consumer Price Index | monthly | Index | imf_sdmx | IMF SDMX / Kazakhstan BNS | KAZ.CPI._T.IX.M | Consumer Price Index (All items) monthly index level. |
 | prices_costs | `cpi_inflation_weo` | Headline Inflation (IMF WEO Cross-Check) | annual | % | imf_datamapper | IMF DataMapper (WEO) | PCPIPCH/KAZ | Annual average consumer price inflation rate from IMF World Economic Outlook. |
-| external_fx | `usd_kzt` | USD/KZT Official Exchange Rate | daily | KZT | nbk_xml | National Bank of Kazakhstan (NBK) |  | Daily official market exchange rate set by the National Bank of Kazakhstan. |
+| external_fx | `usd_kzt` | USD/KZT Official Exchange Rate | daily | KZT | nbk_xml | National Bank of Kazakhstan (NBK) |  | Official market exchange rate set by the National Bank of Kazakhstan. |
 | external_fx | `usd_kzt_ifs` | USD/KZT End-of-Period (IMF IFS) | monthly | KZT | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.KZ.ENDE_XDC_USD_RATE | Monthly end-of-period national currency units per US dollar. |
 | external_fx | `eur_kzt` | EUR/KZT Official Exchange Rate | daily | KZT | nbk_xml | National Bank of Kazakhstan (NBK) |  | Official EUR/KZT exchange rate. |
 | external_fx | `rub_kzt` | RUB/KZT Official Exchange Rate | daily | KZT | nbk_xml | National Bank of Kazakhstan (NBK) |  | Official Russian ruble to tenge rate (critical regional trade linkage). |
 | external_fx | `cny_kzt` | CNY/KZT Official Exchange Rate | daily | KZT | nbk_xml | National Bank of Kazakhstan (NBK) |  | Official Chinese yuan to tenge rate. |
 | external_fx | `reer` | Real Effective Exchange Rate (120 Partners) | monthly | 2007=100 | bruegel_reer | Bruegel (Darvas REER Dataset) |  | CPI-deflated real effective exchange rate against 120 trading partners. |
 | external_fx | `neer` | Nominal Effective Exchange Rate (120 Partners) | monthly | 2007=100 | bruegel_reer | Bruegel (Darvas REER Dataset) |  | Trade-weighted nominal effective exchange rate against 120 trading partners. |
-| external_fx | `current_account_usd` | Current Account Balance (USD Millions) | quarterly | USD mn | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/Q.KZ.BCAXF_BP6_USD | Quarterly balance on current account excluding exceptional financing. |
-| external_fx | `goods_trade_balance` | Goods Trade Balance (USD Millions) | quarterly | USD mn | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/Q.KZ.BG_BP6_USD | Net balance of merchandise exports minus imports (BPM6). |
+| external_fx | `current_account_usd` | Current Account Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / NBK | KAZ.NETCD_T.CAB.USD.Q | Quarterly BPM6 current account balance in millions of US dollars. |
+| external_fx | `goods_trade_balance` | Goods Trade Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / NBK | KAZ.NETCD_T.G.USD.Q | Net balance of merchandise exports minus imports (BPM6, USD millions). |
+| external_fx | `goods_exports` | Goods Exports (BOP Basis, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / NBK | KAZ.CD_T.G.USD.Q | Quarterly BPM6 merchandise exports credit in millions of US dollars. |
+| external_fx | `goods_imports` | Goods Imports (BOP Basis, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / NBK | KAZ.DB_T.G.USD.Q | Quarterly BPM6 merchandise imports debit in millions of US dollars. |
+| external_fx | `services_balance` | Services Trade Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / NBK | KAZ.NETCD_T.S.USD.Q | Quarterly BPM6 services trade balance in millions of US dollars. |
+| external_fx | `fdi_net_usd` | Direct Investment Net Balance (FDI, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / NBK | KAZ.NNAFANIL_T.D_F.USD.Q | Quarterly BPM6 direct investment net acquisition of financial assets less incurrence of liabilities. |
 | external_fx | `current_account_gdp` | Current Account Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | BCA_NGDPD/KAZ | Current account balance expressed as a percentage of gross domestic product. |
 | fiscal_sovereign | `government_debt_gdp` | General Government Gross Debt (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | GGXWDG_NGDP/KAZ | General government gross debt as a percentage of GDP. |
 | fiscal_sovereign | `fiscal_balance_gdp` | Fiscal Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | GGXCNL_NGDP/KAZ | General government net lending/borrowing as a percentage of GDP. |
@@ -1191,7 +1230,7 @@ The Uzbekistan page is generated from `config/uzbekistan_indicators.yaml`. DBnom
 
 Generated from `config/uzbekistan_indicators.yaml`; latest dates are tracked in `output/uzbekistan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 26. Latest rendered chart count: 26. Source groups: 8.
+Configured charts: 32. Latest rendered chart count: 32. Source groups: 10.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1200,15 +1239,21 @@ Configured charts: 26. Latest rendered chart count: 26. Source groups: 8.
 | growth_accounts | `consumption_growth` | Household Consumption Growth | annual | % | world_bank | World Bank WDI | NE.CON.PRVT.KD.ZG | Annual percentage growth of households and NPISHs final consumption expenditure. |
 | growth_accounts | `investment_growth` | Gross Capital Formation Growth | annual | % | world_bank | World Bank WDI | NE.GDI.FTOT.KD.ZG | Annual percentage growth of gross fixed capital formation. |
 | labour_wages | `unemployment_rate` | Unemployment Rate | annual | % | world_bank | World Bank / ILO | SL.UEM.TOTL.ZS | Total unemployment as a percentage of the total labor force (ILO modeled estimate). |
-| prices_costs | `cpi_inflation` | Headline CPI Inflation YoY | monthly | % y/y | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.UZ.PCPI_PC_CP_A_PT | Year-on-year percentage change in Consumer Price Index reported in IMF IFS. |
-| prices_costs | `cpi_index` | Headline Consumer Price Index (2020=100) | monthly | Index | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.UZ.PCPI_IX | Consumer Price Index (All items) rebased index. |
+| prices_costs | `cpi_inflation` | Headline CPI Inflation YoY | monthly | % y/y | imf_sdmx | IMF SDMX / Statistics Agency of Uzbekistan | UZB.CPI._T.YOY_PCH_PA_PT.M | Year-on-year percentage change in Consumer Price Index reported via IMF CPI. |
+| prices_costs | `cpi_inflation_mom` | Headline CPI Inflation MoM | monthly | % m/m | imf_sdmx | IMF SDMX / Statistics Agency of Uzbekistan | UZB.CPI._T.POP_PCH_PA_PT.M | Month-on-month percentage change in Consumer Price Index. |
+| prices_costs | `cpi_index` | Headline Consumer Price Index | monthly | Index | imf_sdmx | IMF SDMX / Statistics Agency of Uzbekistan | UZB.CPI._T.IX.M | Consumer Price Index (All items) monthly index level. |
 | prices_costs | `cpi_inflation_weo` | Headline Inflation (IMF WEO Cross-Check) | annual | % | imf_datamapper | IMF DataMapper (WEO) | PCPIPCH/UZB | Annual average consumer price inflation rate from IMF World Economic Outlook. |
 | external_fx | `usd_uzs` | USD/UZS End-of-Period Official Rate | monthly | UZS | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.UZ.ENDE_XDC_USD_RATE | Monthly end-of-period national currency units per US dollar. |
 | external_fx | `reer` | Real Effective Exchange Rate (120 Partners) | monthly | 2007=100 | bruegel_reer | Bruegel (Darvas REER Dataset) |  | CPI-deflated real effective exchange rate against 120 trading partners. |
 | external_fx | `neer` | Nominal Effective Exchange Rate (120 Partners) | monthly | 2007=100 | bruegel_reer | Bruegel (Darvas REER Dataset) |  | Trade-weighted nominal effective exchange rate against 120 trading partners. |
 | external_fx | `remittances_gdp` | Personal Remittances Received (% of GDP) | annual | % of GDP | world_bank | World Bank WDI | BX.TRF.PWKR.DT.GD.ZS | Personal transfers received comprised of all current transfers from nonresident households. Critical macro stabilizer. |
-| external_fx | `current_account_usd` | Current Account Balance (USD Millions) | quarterly | USD mn | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/Q.UZ.BCAXF_BP6_USD | Quarterly balance on current account excluding exceptional financing. |
-| external_fx | `goods_trade_balance` | Goods Trade Balance (USD Millions) | quarterly | USD mn | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/Q.UZ.BG_BP6_USD | Net balance of merchandise exports minus imports (BPM6). |
+| external_fx | `remittances_usd` | Secondary Income / Remittances Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBU | UZB.NETCD_T.IN2.USD.Q | Quarterly BPM6 secondary income net balance (primarily cross-border worker remittances) in millions of US dollars. |
+| external_fx | `current_account_usd` | Current Account Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBU | UZB.NETCD_T.CAB.USD.Q | Quarterly BPM6 current account balance in millions of US dollars. |
+| external_fx | `goods_trade_balance` | Goods Trade Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBU | UZB.NETCD_T.G.USD.Q | Net balance of merchandise exports minus imports (BPM6, USD millions). |
+| external_fx | `goods_exports` | Goods Exports (BOP Basis, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBU | UZB.CD_T.G.USD.Q | Quarterly BPM6 merchandise exports credit in millions of US dollars (including non-monetary gold exports). |
+| external_fx | `goods_imports` | Goods Imports (BOP Basis, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBU | UZB.DB_T.G.USD.Q | Quarterly BPM6 merchandise imports debit in millions of US dollars. |
+| external_fx | `services_balance` | Services Trade Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBU | UZB.NETCD_T.S.USD.Q | Quarterly BPM6 services trade balance in millions of US dollars. |
+| external_fx | `fdi_net_usd` | Direct Investment Net Balance (FDI, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBU | UZB.NNAFANIL_T.D_F.USD.Q | Quarterly BPM6 direct investment net acquisition of financial assets less incurrence of liabilities. |
 | external_fx | `current_account_gdp` | Current Account Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | BCA_NGDPD/UZB | Current account balance expressed as a percentage of gross domestic product. |
 | fiscal_sovereign | `government_debt_gdp` | General Government Gross Debt (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | GGXWDG_NGDP/UZB | General government gross debt as a percentage of GDP. |
 | fiscal_sovereign | `fiscal_balance_gdp` | Fiscal Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | GGXCNL_NGDP/UZB | General government net lending/borrowing as a percentage of GDP. |
@@ -1235,7 +1280,7 @@ The Egypt page is generated from `config/egypt_indicators.yaml`. DBnomics (IMF I
 
 Generated from `config/egypt_indicators.yaml`; latest dates are tracked in `output/egypt_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 25. Latest rendered chart count: 25. Source groups: 8.
+Configured charts: 32. Latest rendered chart count: 32. Source groups: 10.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1244,15 +1289,22 @@ Configured charts: 25. Latest rendered chart count: 25. Source groups: 8.
 | growth_accounts | `consumption_growth` | Household Consumption Growth | annual | % | world_bank | World Bank WDI | NE.CON.PRVT.KD.ZG | Annual percentage growth of households and NPISHs final consumption expenditure. |
 | growth_accounts | `investment_growth` | Gross Capital Formation Growth | annual | % | world_bank | World Bank WDI | NE.GDI.FTOT.KD.ZG | Annual percentage growth of gross fixed capital formation. |
 | labour_wages | `unemployment_rate` | Unemployment Rate | annual | % | world_bank | World Bank / ILO | SL.UEM.TOTL.ZS | Total unemployment as a percentage of the total labor force (ILO modeled estimate). |
-| prices_costs | `cpi_inflation` | Headline CPI Inflation YoY | monthly | % y/y | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.EG.PCPI_PC_CP_A_PT | Year-on-year percentage change in official Consumer Price Index reported in IMF IFS. |
-| prices_costs | `cpi_index` | Headline Consumer Price Index (2020=100) | monthly | Index | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.EG.PCPI_IX | Consumer Price Index (All items) rebased index. |
+| prices_costs | `cpi_inflation` | Headline CPI Inflation YoY | monthly | % y/y | imf_sdmx | IMF SDMX / CAPMAS | EGY.CPI._T.YOY_PCH_PA_PT.M | Year-on-year percentage change in official Consumer Price Index reported via IMF CPI. |
+| prices_costs | `cpi_inflation_mom` | Headline CPI Inflation MoM | monthly | % m/m | imf_sdmx | IMF SDMX / CAPMAS | EGY.CPI._T.POP_PCH_PA_PT.M | Month-on-month percentage change in official Consumer Price Index. |
+| prices_costs | `food_cpi_inflation` | Food & Non-Alcoholic Beverages CPI YoY | monthly | % y/y | imf_sdmx | IMF SDMX / CAPMAS | EGY.CPI.CP01.YOY_PCH_PA_PT.M | COICOP 01 Food and non-alcoholic beverages CPI annual rate of change. |
+| prices_costs | `cpi_index` | Headline Consumer Price Index | monthly | Index | imf_sdmx | IMF SDMX / CAPMAS | EGY.CPI._T.IX.M | Consumer Price Index (All items) monthly index level. |
 | prices_costs | `cpi_inflation_weo` | Headline Inflation (IMF WEO Cross-Check) | annual | % | imf_datamapper | IMF DataMapper (WEO) | PCPIPCH/EGY | Annual average consumer price inflation rate from IMF World Economic Outlook. |
 | external_fx | `usd_egp` | USD/EGP End-of-Period Official Rate | monthly | EGP | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.EG.ENDE_XDC_USD_RATE | Monthly end-of-period national currency units per US dollar. |
 | external_fx | `reer` | Real Effective Exchange Rate (120 Partners) | monthly | 2007=100 | bruegel_reer | Bruegel (Darvas REER Dataset) |  | CPI-deflated real effective exchange rate against 120 trading partners. |
 | external_fx | `neer` | Nominal Effective Exchange Rate (120 Partners) | monthly | 2007=100 | bruegel_reer | Bruegel (Darvas REER Dataset) |  | Trade-weighted nominal effective exchange rate against 120 trading partners. |
 | external_fx | `remittances_gdp` | Personal Remittances Received (% of GDP) | annual | % of GDP | world_bank | World Bank WDI | BX.TRF.PWKR.DT.GD.ZS | Personal transfers received comprised of all current transfers from nonresident households. Core Egyptian external cushion. |
-| external_fx | `current_account_usd` | Current Account Balance (USD Millions) | quarterly | USD mn | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/Q.EG.BCAXF_BP6_USD | Quarterly balance on current account excluding exceptional financing. |
-| external_fx | `goods_trade_balance` | Goods Trade Balance (USD Millions) | quarterly | USD mn | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/Q.EG.BG_BP6_USD | Net balance of merchandise exports minus imports (BPM6). |
+| external_fx | `remittances_usd` | Secondary Income / Remittances Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBE | EGY.NETCD_T.IN2.USD.Q | Quarterly BPM6 secondary income net balance (dominated by Egyptian expatriate remittances) in millions of US dollars. |
+| external_fx | `current_account_usd` | Current Account Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBE | EGY.NETCD_T.CAB.USD.Q | Quarterly BPM6 current account balance in millions of US dollars. |
+| external_fx | `goods_trade_balance` | Goods Trade Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBE | EGY.NETCD_T.G.USD.Q | Net balance of merchandise exports minus imports (BPM6, USD millions). |
+| external_fx | `goods_exports` | Goods Exports (BOP Basis, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBE | EGY.CD_T.G.USD.Q | Quarterly BPM6 merchandise exports credit in millions of US dollars. |
+| external_fx | `goods_imports` | Goods Imports (BOP Basis, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBE | EGY.DB_T.G.USD.Q | Quarterly BPM6 merchandise imports debit in millions of US dollars. |
+| external_fx | `services_balance` | Services Trade Balance (Suez Canal & Tourism, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBE | EGY.NETCD_T.S.USD.Q | Quarterly BPM6 services trade balance (driven by Suez Canal transit fees and tourism receipts) in millions of US dollars. |
+| external_fx | `fdi_net_usd` | Direct Investment Net Balance (FDI, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBE | EGY.NNAFANIL_T.D_F.USD.Q | Quarterly BPM6 direct investment net acquisition of financial assets less incurrence of liabilities. |
 | external_fx | `current_account_gdp` | Current Account Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | BCA_NGDPD/EGY | Current account balance expressed as a percentage of gross domestic product. |
 | fiscal_sovereign | `government_debt_gdp` | General Government Gross Debt (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | GGXWDG_NGDP/EGY | General government gross debt as a percentage of GDP. |
 | fiscal_sovereign | `fiscal_balance_gdp` | Fiscal Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | GGXCNL_NGDP/EGY | General government net lending/borrowing as a percentage of GDP. |
@@ -1278,7 +1330,7 @@ The Nigeria page is generated from `config/nigeria_indicators.yaml`. DBnomics (I
 
 Generated from `config/nigeria_indicators.yaml`; latest dates are tracked in `output/nigeria_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 28. Latest rendered chart count: 28. Source groups: 8.
+Configured charts: 35. Latest rendered chart count: 35. Source groups: 11.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1288,15 +1340,22 @@ Configured charts: 28. Latest rendered chart count: 28. Source groups: 8.
 | growth_accounts | `agriculture_growth` | Agriculture Value Added Growth | annual | % | world_bank | World Bank WDI | NV.AGR.TOTL.KD.ZG | Annual growth rate for agricultural value added. |
 | growth_accounts | `services_growth` | Services Value Added Growth | annual | % | world_bank | World Bank WDI | NV.SRV.TOTL.KD.ZG | Annual growth rate for services value added. |
 | labour_wages | `unemployment_rate` | Unemployment Rate | annual | % | world_bank | World Bank / ILO | SL.UEM.TOTL.ZS | Total unemployment as a percentage of the total labor force (ILO modeled estimate). |
-| prices_costs | `cpi_inflation` | Headline CPI Inflation YoY | monthly | % y/y | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.NG.PCPI_PC_CP_A_PT | Year-on-year percentage change in official Consumer Price Index reported in IMF IFS. |
-| prices_costs | `cpi_index` | Headline Consumer Price Index (2020=100) | monthly | Index | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.NG.PCPI_IX | Consumer Price Index (All items) rebased index. |
+| prices_costs | `cpi_inflation` | Headline CPI Inflation YoY | monthly | % y/y | imf_sdmx | IMF SDMX / Nigeria NBS | NGA.CPI._T.YOY_PCH_PA_PT.M | Year-on-year percentage change in official Consumer Price Index reported via IMF CPI. |
+| prices_costs | `cpi_inflation_mom` | Headline CPI Inflation MoM | monthly | % m/m | imf_sdmx | IMF SDMX / Nigeria NBS | NGA.CPI._T.POP_PCH_PA_PT.M | Month-on-month percentage change in official Consumer Price Index. |
+| prices_costs | `cpi_index` | Headline Consumer Price Index | monthly | Index | imf_sdmx | IMF SDMX / Nigeria NBS | NGA.CPI._T.IX.M | Consumer Price Index (All items) monthly index level. |
 | prices_costs | `cpi_inflation_weo` | Headline Inflation (IMF WEO Cross-Check) | annual | % | imf_datamapper | IMF DataMapper (WEO) | PCPIPCH/NGA | Annual average consumer price inflation rate from IMF World Economic Outlook. |
-| external_fx | `usd_ngn` | USD/NGN End-of-Period Official Rate | monthly | NGN | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.NG.ENDE_XDC_USD_RATE | Monthly end-of-period national currency units per US dollar. |
+| external_fx | `usd_ngn` | USD/NGN Official Daily Central Rate (CBN NFEM) | daily | NGN | cbn_fx | Central Bank of Nigeria (CBN) |  | Official daily central exchange rate published directly by the Central Bank of Nigeria. |
+| external_fx | `usd_ngn_ifs` | USD/NGN End-of-Period (IMF IFS Cross-Check) | monthly | NGN | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.NG.ENDE_XDC_USD_RATE | Monthly end-of-period national currency units per US dollar. |
 | external_fx | `reer` | Real Effective Exchange Rate (120 Partners) | monthly | 2007=100 | bruegel_reer | Bruegel (Darvas REER Dataset) |  | CPI-deflated real effective exchange rate against 120 trading partners. |
 | external_fx | `neer` | Nominal Effective Exchange Rate (120 Partners) | monthly | 2007=100 | bruegel_reer | Bruegel (Darvas REER Dataset) |  | Trade-weighted nominal effective exchange rate against 120 trading partners. |
 | external_fx | `remittances_gdp` | Personal Remittances Received (% of GDP) | annual | % of GDP | world_bank | World Bank WDI | BX.TRF.PWKR.DT.GD.ZS | Personal transfers received comprised of all current transfers from nonresident households. |
-| external_fx | `current_account_usd` | Current Account Balance (USD Millions) | quarterly | USD mn | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/Q.NG.BCAXF_BP6_USD | Quarterly balance on current account excluding exceptional financing. |
-| external_fx | `goods_trade_balance` | Goods Trade Balance (USD Millions) | quarterly | USD mn | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/Q.NG.BG_BP6_USD | Net balance of merchandise exports minus imports (BPM6). |
+| external_fx | `remittances_usd` | Secondary Income / Remittances Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBN | NGA.NETCD_T.IN2.USD.Q | Quarterly BPM6 secondary income net balance (primarily diaspora remittances) in millions of US dollars. |
+| external_fx | `current_account_usd` | Current Account Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBN | NGA.NETCD_T.CAB.USD.Q | Quarterly BPM6 current account balance in millions of US dollars. |
+| external_fx | `goods_trade_balance` | Goods Trade Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBN | NGA.NETCD_T.G.USD.Q | Net balance of merchandise exports minus imports (BPM6, USD millions). |
+| external_fx | `goods_exports` | Goods Exports (BOP Basis, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBN | NGA.CD_T.G.USD.Q | Quarterly BPM6 merchandise exports credit in millions of US dollars (dominated by crude oil and LNG). |
+| external_fx | `goods_imports` | Goods Imports (BOP Basis, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBN | NGA.DB_T.G.USD.Q | Quarterly BPM6 merchandise imports debit in millions of US dollars. |
+| external_fx | `services_balance` | Services Trade Balance (USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBN | NGA.NETCD_T.S.USD.Q | Quarterly BPM6 services trade balance in millions of US dollars. |
+| external_fx | `fdi_net_usd` | Direct Investment Net Balance (FDI, USD Millions) | quarterly | USD mn | imf_sdmx | IMF SDMX / CBN | NGA.NNAFANIL_T.D_F.USD.Q | Quarterly BPM6 direct investment net acquisition of financial assets less incurrence of liabilities. |
 | external_fx | `current_account_gdp` | Current Account Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | BCA_NGDPD/NGA | Current account balance expressed as a percentage of gross domestic product. |
 | fiscal_sovereign | `government_debt_gdp` | General Government Gross Debt (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | GGXWDG_NGDP/NGA | General government gross debt as a percentage of GDP. |
 | fiscal_sovereign | `fiscal_balance_gdp` | Fiscal Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | GGXCNL_NGDP/NGA | General government net lending/borrowing as a percentage of GDP. |

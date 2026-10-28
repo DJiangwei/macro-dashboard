@@ -54,6 +54,7 @@ indicators:
     unit: "%"
     fetcher: imf_datamapper
     series: NGDP_RPCH/NGA
+    actual_through: 2025
     source_name: IMF DataMapper (WEO)
     source_url: https://www.imf.org/external/datamapper/NGDP_RPCH/NGA
     frequency: annual
@@ -147,28 +148,45 @@ indicators:
     label_en: Headline CPI Inflation YoY
     label_zh: 总体CPI通胀同比
     unit: "% y/y"
-    fetcher: dbnomics
-    series: IMF/IFS/M.NG.PCPI_PC_CP_A_PT
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/M.NG.PCPI_PC_CP_A_PT
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: NGA.CPI._T.YOY_PCH_PA_PT.M
+    source_name: IMF SDMX / Nigeria NBS
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/NGA.CPI._T.YOY_PCH_PA_PT.M
     frequency: monthly
     start_date: 2010-01-01
-    caveat_en: Year-on-year percentage change in official Consumer Price Index reported in IMF IFS.
-    caveat_zh: 报送IMF国际金融统计的消费者价格指数同比变动百分比。
+    caveat_en: Year-on-year percentage change in official Consumer Price Index reported via IMF CPI.
+    caveat_zh: 尼日利亚国家统计局(NBS)向IMF报送的月度消费者物价指数同比变动率。
+
+  - id: cpi_inflation_mom
+    section: prices_costs
+    label_en: Headline CPI Inflation MoM
+    label_zh: 总体CPI通胀环比
+    unit: "% m/m"
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: NGA.CPI._T.POP_PCH_PA_PT.M
+    source_name: IMF SDMX / Nigeria NBS
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/NGA.CPI._T.POP_PCH_PA_PT.M
+    frequency: monthly
+    start_date: 2010-01-01
+    caveat_en: Month-on-month percentage change in official Consumer Price Index.
+    caveat_zh: 月度消费者物价指数环比变动率。
 
   - id: cpi_index
     section: prices_costs
-    label_en: Headline Consumer Price Index (2020=100)
-    label_zh: 总体消费价格指数基数 (2020=100)
+    label_en: Headline Consumer Price Index
+    label_zh: 总体消费价格指数基数
     unit: "Index"
-    fetcher: dbnomics
-    series: IMF/IFS/M.NG.PCPI_IX
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/M.NG.PCPI_IX
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: NGA.CPI._T.IX.M
+    source_name: IMF SDMX / Nigeria NBS
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/NGA.CPI._T.IX.M
     frequency: monthly
     start_date: 2010-01-01
-    caveat_en: Consumer Price Index (All items) rebased index.
-    caveat_zh: 总体消费者物价指数基数。
+    caveat_en: Consumer Price Index (All items) monthly index level.
+    caveat_zh: 总体消费者物价指数月度定基指数。
 
   - id: cpi_inflation_weo
     section: prices_costs
@@ -177,6 +195,7 @@ indicators:
     unit: "%"
     fetcher: imf_datamapper
     series: PCPIPCH/NGA
+    actual_through: 2025
     source_name: IMF DataMapper (WEO)
     source_url: https://www.imf.org/external/datamapper/PCPIPCH/NGA
     frequency: annual
@@ -189,8 +208,24 @@ indicators:
   # ==========================================
   - id: usd_ngn
     section: external_fx
-    label_en: USD/NGN End-of-Period Official Rate
-    label_zh: 美元兑尼日利亚奈拉期末官方汇率
+    label_en: USD/NGN Official Daily Central Rate (CBN NFEM)
+    label_zh: 美元兑尼日利亚奈拉官方日度中间价 (CBN)
+    unit: "NGN"
+    fetcher: cbn_fx
+    currency: "US DOLLAR"
+    rate_field: centralrate
+    source_authority: official_primary
+    source_name: Central Bank of Nigeria (CBN)
+    source_url: https://www.cbn.gov.ng/rates/ExchRateByCurrency.asp
+    frequency: daily
+    start_date: 2010-01-01
+    caveat_en: Official daily central exchange rate published directly by the Central Bank of Nigeria.
+    caveat_zh: 尼日利亚中央银行(CBN)直接发布的美元兑奈拉官方日度中间汇率。
+
+  - id: usd_ngn_ifs
+    section: external_fx
+    label_en: USD/NGN End-of-Period (IMF IFS Cross-Check)
+    label_zh: 美元兑奈拉期末官方汇率 (IMF IFS核对)
     unit: "NGN"
     fetcher: dbnomics
     series: IMF/IFS/M.NG.ENDE_XDC_USD_RATE
@@ -246,33 +281,117 @@ indicators:
     caveat_en: Personal transfers received comprised of all current transfers from nonresident households.
     caveat_zh: 尼日利亚海外侨民汇回本国的个人侨汇占GDP比重。
 
+  - id: remittances_usd
+    section: external_fx
+    label_en: Secondary Income / Remittances Balance (USD Millions)
+    label_zh: 二次收入(海外侨汇)净额 (百万美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: NGA.NETCD_T.IN2.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / CBN
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/NGA.NETCD_T.IN2.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 secondary income net balance (primarily diaspora remittances) in millions of US dollars.
+    caveat_zh: BPM6季度二次收入（主要由海外侨民汇款构成）净差额（百万美元）。
+
   - id: current_account_usd
     section: external_fx
     label_en: Current Account Balance (USD Millions)
     label_zh: 经常账户差额 (百万美元)
     unit: "USD mn"
-    fetcher: dbnomics
-    series: IMF/IFS/Q.NG.BCAXF_BP6_USD
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/Q.NG.BCAXF_BP6_USD
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: NGA.NETCD_T.CAB.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / CBN
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/NGA.NETCD_T.CAB.USD.Q
     frequency: quarterly
     start_date: 2005-01-01
-    caveat_en: Quarterly balance on current account excluding exceptional financing.
-    caveat_zh: 季度经常账户净差额（百万美元）。
+    caveat_en: Quarterly BPM6 current account balance in millions of US dollars.
+    caveat_zh: BPM6季度经常账户净差额（百万美元）。
 
   - id: goods_trade_balance
     section: external_fx
     label_en: Goods Trade Balance (USD Millions)
     label_zh: 货物贸易差额 (百万美元)
     unit: "USD mn"
-    fetcher: dbnomics
-    series: IMF/IFS/Q.NG.BG_BP6_USD
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/Q.NG.BG_BP6_USD
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: NGA.NETCD_T.G.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / CBN
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/NGA.NETCD_T.G.USD.Q
     frequency: quarterly
     start_date: 2005-01-01
-    caveat_en: Net balance of merchandise exports minus imports (BPM6).
+    caveat_en: Net balance of merchandise exports minus imports (BPM6, USD millions).
     caveat_zh: 货物出口减去进口净额（BPM6标准，百万美元）。
+
+  - id: goods_exports
+    section: external_fx
+    label_en: Goods Exports (BOP Basis, USD Millions)
+    label_zh: 货物出口总额 (BOP口径，百万美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: NGA.CD_T.G.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / CBN
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/NGA.CD_T.G.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 merchandise exports credit in millions of US dollars (dominated by crude oil and LNG).
+    caveat_zh: BPM6季度货物出口总额（主要由原油及液化天然气构成，百万美元）。
+
+  - id: goods_imports
+    section: external_fx
+    label_en: Goods Imports (BOP Basis, USD Millions)
+    label_zh: 货物进口总额 (BOP口径，百万美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: NGA.DB_T.G.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / CBN
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/NGA.DB_T.G.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 merchandise imports debit in millions of US dollars.
+    caveat_zh: BPM6季度货物进口总额（百万美元）。
+
+  - id: services_balance
+    section: external_fx
+    label_en: Services Trade Balance (USD Millions)
+    label_zh: 服务贸易差额 (百万美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: NGA.NETCD_T.S.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / CBN
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/NGA.NETCD_T.S.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 services trade balance in millions of US dollars.
+    caveat_zh: BPM6季度服务贸易净差额（百万美元）。
+
+  - id: fdi_net_usd
+    section: external_fx
+    label_en: Direct Investment Net Balance (FDI, USD Millions)
+    label_zh: 直接投资净额 (FDI，百万美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: NGA.NNAFANIL_T.D_F.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / CBN
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/NGA.NNAFANIL_T.D_F.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 direct investment net acquisition of financial assets less incurrence of liabilities.
+    caveat_zh: BPM6金融账户季度直接投资净额（百万美元）。
 
   - id: current_account_gdp
     section: external_fx
@@ -281,6 +400,7 @@ indicators:
     unit: "% of GDP"
     fetcher: imf_datamapper
     series: BCA_NGDPD/NGA
+    actual_through: 2025
     source_name: IMF DataMapper (WEO)
     source_url: https://www.imf.org/external/datamapper/BCA_NGDPD/NGA
     frequency: annual
@@ -298,6 +418,7 @@ indicators:
     unit: "% of GDP"
     fetcher: imf_datamapper
     series: GGXWDG_NGDP/NGA
+    actual_through: 2025
     source_name: IMF DataMapper (WEO)
     source_url: https://www.imf.org/external/datamapper/GGXWDG_NGDP/NGA
     frequency: annual
@@ -312,6 +433,7 @@ indicators:
     unit: "% of GDP"
     fetcher: imf_datamapper
     series: GGXCNL_NGDP/NGA
+    actual_through: 2025
     source_name: IMF DataMapper (WEO)
     source_url: https://www.imf.org/external/datamapper/GGXCNL_NGDP/NGA
     frequency: annual
@@ -326,6 +448,7 @@ indicators:
     unit: "% of GDP"
     fetcher: imf_datamapper
     series: GGXONLB_G01_GDP_PT/NGA
+    actual_through: 2025
     source_name: IMF DataMapper (Fiscal Monitor)
     source_url: https://www.imf.org/external/datamapper/GGXONLB_G01_GDP_PT/NGA
     frequency: annual

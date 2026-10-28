@@ -137,12 +137,12 @@ DATA_FIRST_SIGNAL_MAP = {
     },
     "TR": {
         "growth": ("real_gdp_yoy", "Real GDP"),
-        "inflation": ("hicp_inflation", "HICP headline"),
+        "inflation": ("cpi_inflation", "CPI inflation"),
         "policy": ("policy_rate", "1W Repo"),
         "external": ("current_account_gdp", "Current account/GDP"),
         "fiscal": ("government_debt_gdp", "Government debt/GDP"),
-        "financial": ("usd_try", "USD/TRY"),
-        "property": ("house_price_index", "House prices"),
+        "financial": ("try_usd", "USD/TRY"),
+        "property": ("house_price_growth", "House prices"),
     },
     "HK": {
         "growth": ("real_gdp_yoy", "Real GDP"),
@@ -267,7 +267,11 @@ def _key_series(code: str, summary: dict[str, Any]) -> dict[str, dict[str, Any]]
                 for s in frame_data.get("series", []):
                     ind_id = s.get("indicator_id")
                     if ind_id and ind_id not in series_map:
-                        obs = s.get("observations", [])
+                        raw_obs = s.get("observations", [])
+                        obs = [
+                            o for o in raw_obs
+                            if not (isinstance(o, list) and len(o) >= 3 and o[2])
+                        ] or raw_obs
                         if obs:
                             latest_obs = obs[-1]
                             val = float(latest_obs[1])

@@ -1,10 +1,10 @@
 {
   "file": "hong_kong.html",
-  "generated": "2026-10-28T15:21:33.990139+00:00",
-  "charts": 24,
-  "source_groups": 9,
+  "generated": "2026-10-28T23:01:45.021104+00:00",
+  "charts": 37,
+  "source_groups": 10,
   "data_gaps": 1,
-  "low_confidence": 5,
+  "low_confidence": 7,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -25,6 +25,54 @@
       "latest_date": "2026-06-30",
       "latest_value": 4.3,
       "latest_display": "4.30 % y/y",
+      "frequency": "quarterly",
+      "source_name": "HK C&SD (National Accounts)",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "private_consumption_yoy",
+      "label_en": "Private Consumption Expenditure Growth YoY",
+      "label_zh": "私人消费开支同比",
+      "latest_date": "2026-06-30",
+      "latest_value": 4.9,
+      "latest_display": "4.90 % y/y",
+      "frequency": "quarterly",
+      "source_name": "HK C&SD (National Accounts)",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "investment_growth_yoy",
+      "label_en": "Gross Domestic Fixed Capital Formation Growth YoY",
+      "label_zh": "本地固定资本形成总额同比",
+      "latest_date": "2026-06-30",
+      "latest_value": 7.9,
+      "latest_display": "7.90 % y/y",
+      "frequency": "quarterly",
+      "source_name": "HK C&SD (National Accounts)",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "government_consumption_yoy",
+      "label_en": "Government Consumption Expenditure Growth YoY",
+      "label_zh": "政府消费开支同比",
+      "latest_date": "2026-06-30",
+      "latest_value": 1.9,
+      "latest_display": "1.90 % y/y",
+      "frequency": "quarterly",
+      "source_name": "HK C&SD (National Accounts)",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "services_exports_yoy",
+      "label_en": "Exports of Services Growth YoY",
+      "label_zh": "服务输出同比 (金融与旅游枢纽)",
+      "latest_date": "2026-06-30",
+      "latest_value": 10.2,
+      "latest_display": "10.2 % y/y",
       "frequency": "quarterly",
       "source_name": "HK C&SD (National Accounts)",
       "series": "",
@@ -73,6 +121,30 @@
       "latest_date": "2026-09-01",
       "latest_value": 3.9,
       "latest_display": "3.90 % of labour force",
+      "frequency": "monthly",
+      "source_name": "HK C&SD (General Household Survey)",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "underemployment_rate",
+      "label_en": "Underemployment Rate",
+      "label_zh": "就业不足率",
+      "latest_date": "2026-09-01",
+      "latest_value": 2.0,
+      "latest_display": "2.00 % of labour force",
+      "frequency": "monthly",
+      "source_name": "HK C&SD (General Household Survey)",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "participation_rate",
+      "label_en": "Labour Force Participation Rate",
+      "label_zh": "劳动人口参与率",
+      "latest_date": "2026-09-01",
+      "latest_value": 56.6,
+      "latest_display": "56.6 % of population aged 15+",
       "frequency": "monthly",
       "source_name": "HK C&SD (General Household Survey)",
       "series": "",
@@ -140,8 +212,8 @@
     },
     {
       "id": "usd_hkd",
-      "label_en": "USD/HKD Exchange Rate (Fed H.10)",
-      "label_zh": "美元兑港元汇率 (美联储H.10)",
+      "label_en": "USD/HKD Exchange Rate (Fed H.10, Linked Band 7.75-7.85)",
+      "label_zh": "美元兑港元汇率 (联系汇率区间 7.75-7.85)",
       "latest_date": "2026-10-23",
       "latest_value": 7.8423,
       "latest_display": "7.84 HKD per USD",
@@ -215,11 +287,47 @@
       "label_en": "Current Account Balance (USD)",
       "label_zh": "经常账户差额 (美元)",
       "latest_date": "2026-04-01",
-      "latest_value": 1.225562598374952e+16,
-      "latest_display": "12,255,625,983,749,520 USD mn",
+      "latest_value": 12255.62598374952,
+      "latest_display": "12,256 USD mn",
       "frequency": "quarterly",
       "source_name": "IMF SDMX / HK C&SD",
       "series": "HKG.NETCD_T.CAB.USD.Q",
+      "quality_status": "watch"
+    },
+    {
+      "id": "services_balance_usd",
+      "label_en": "Services Trade Balance (BOP Basis, USD)",
+      "label_zh": "服务贸易差额 (BOP口径，美元)",
+      "latest_date": "2026-04-01",
+      "latest_value": 4915.982473305824,
+      "latest_display": "4,916 USD mn",
+      "frequency": "quarterly",
+      "source_name": "IMF SDMX / HK C&SD",
+      "series": "HKG.NETCD_T.S.USD.Q",
+      "quality_status": "watch"
+    },
+    {
+      "id": "fdi_net_usd",
+      "label_en": "Direct Investment Net Balance (FDI, USD)",
+      "label_zh": "直接投资净额 (FDI，美元)",
+      "latest_date": "2026-04-01",
+      "latest_value": -3713.532139362743,
+      "latest_display": "-3,714 USD mn",
+      "frequency": "quarterly",
+      "source_name": "IMF SDMX / HK C&SD",
+      "series": "HKG.NNAFANIL_T.D_F.USD.Q",
+      "quality_status": "watch"
+    },
+    {
+      "id": "current_account_gdp",
+      "label_en": "Current Account Balance (% of GDP)",
+      "label_zh": "经常账户占GDP比重",
+      "latest_date": "2025",
+      "latest_value": 12.3,
+      "latest_display": "12.3 % of GDP",
+      "frequency": "annual",
+      "source_name": "IMF WEO DataMapper",
+      "series": "BCA_NGDPD",
       "quality_status": "watch"
     },
     {
@@ -247,6 +355,30 @@
       "quality_status": "watch"
     },
     {
+      "id": "primary_balance_gdp",
+      "label_en": "Primary Net Lending / Borrowing (% of GDP)",
+      "label_zh": "基本财政收支占GDP比重 (初级平衡)",
+      "latest_date": "2025",
+      "latest_value": -5.2873884829838,
+      "latest_display": "-5.29 % of GDP",
+      "frequency": "annual",
+      "source_name": "IMF Fiscal Monitor",
+      "series": "GGXONLB_G01_GDP_PT",
+      "quality_status": "watch"
+    },
+    {
+      "id": "fed_funds_anchor",
+      "label_en": "US Effective Federal Funds Rate (LERS Currency Board Anchor)",
+      "label_zh": "美联储有效联邦基金利率 (联系汇率制政策锚)",
+      "latest_date": "2026-09-01",
+      "latest_value": 3.75,
+      "latest_display": "3.75 %",
+      "frequency": "monthly",
+      "source_name": "FRED / Federal Reserve Board",
+      "series": "FEDFUNDS",
+      "quality_status": "watch"
+    },
+    {
       "id": "private_credit_gdp",
       "label_en": "Total Credit to Private Non-Financial Sector (% of GDP)",
       "label_zh": "私营非金融部门总信贷占GDP比重",
@@ -256,6 +388,30 @@
       "frequency": "quarterly",
       "source_name": "FRED / BIS",
       "series": "QHKPAM770A",
+      "quality_status": "low_confidence"
+    },
+    {
+      "id": "bank_credit_gdp",
+      "label_en": "Bank Credit to Private Non-Financial Sector (% of GDP)",
+      "label_zh": "银行对私营非金融部门信贷占GDP比重",
+      "latest_date": "2025-10-01",
+      "latest_value": 229.5,
+      "latest_display": "230 % of GDP",
+      "frequency": "quarterly",
+      "source_name": "FRED / BIS",
+      "series": "QHKPBM770A",
+      "quality_status": "low_confidence"
+    },
+    {
+      "id": "household_credit_gdp",
+      "label_en": "Credit to Households & NPISHs (% of GDP)",
+      "label_zh": "住户部门信贷占GDP比重 (家庭杠杆率)",
+      "latest_date": "2025-10-01",
+      "latest_value": 87.8,
+      "latest_display": "87.8 % of GDP",
+      "frequency": "quarterly",
+      "source_name": "FRED / BIS",
+      "series": "QHKHAM770A",
       "quality_status": "low_confidence"
     },
     {
@@ -314,10 +470,10 @@
       "value"
     ],
     "file": "hong_kong_canonical_frame.json",
-    "series": 24,
-    "observations": 4186,
-    "series_count": 24,
-    "observation_count": 4186
+    "series": 37,
+    "observations": 11253,
+    "series_count": 37,
+    "observation_count": 11253
   },
   "data_gaps_detail": [
     {
@@ -329,14 +485,30 @@
     }
   ],
   "source_health": {
-    "source_groups": 9,
+    "source_groups": 10,
     "sources": [
       {
         "source_name": "HK C&SD",
         "charts": 9
       },
       {
+        "source_name": "HK C&SD (National Accounts)",
+        "charts": 6
+      },
+      {
         "source_name": "FRED / BIS",
+        "charts": 5
+      },
+      {
+        "source_name": "IMF SDMX / HK C&SD",
+        "charts": 4
+      },
+      {
+        "source_name": "HK C&SD (General Household Survey)",
+        "charts": 3
+      },
+      {
+        "source_name": "IMF WEO DataMapper",
         "charts": 3
       },
       {
@@ -344,7 +516,7 @@
         "charts": 2
       },
       {
-        "source_name": "HK C&SD (National Accounts)",
+        "source_name": "FRED / Federal Reserve Board",
         "charts": 2
       },
       {
@@ -352,26 +524,14 @@
         "charts": 2
       },
       {
-        "source_name": "IMF SDMX / HK C&SD",
-        "charts": 2
-      },
-      {
-        "source_name": "IMF WEO DataMapper",
-        "charts": 2
-      },
-      {
-        "source_name": "FRED / Federal Reserve Board",
-        "charts": 1
-      },
-      {
-        "source_name": "HK C&SD (General Household Survey)",
+        "source_name": "IMF Fiscal Monitor",
         "charts": 1
       }
     ],
     "quality_counts": {
-      "low_confidence": 5,
-      "verified": 9,
-      "watch": 10
+      "low_confidence": 7,
+      "verified": 15,
+      "watch": 15
     },
     "unavailable_count": 0
   },
@@ -384,10 +544,10 @@
   "freshness": {
     "as_of_date": "2026-10-28",
     "counts": {
-      "current": 13,
+      "current": 22,
       "due": 4,
-      "projection": 2,
-      "stale": 5
+      "projection": 4,
+      "stale": 7
     },
     "latest_historical_date": "2026-10-23",
     "attention": [
@@ -433,6 +593,50 @@
         "comparability": "medium",
         "source_name": "IMF / DBnomics (Financial Soundness Indicators)",
         "series": "IMF/FSI/Q.HK.FSANL_PT",
+        "transform": "level"
+      },
+      {
+        "id": "bank_credit_gdp",
+        "concept_id": "hk:bank_credit_gdp",
+        "label_en": "Bank Credit to Private Non-Financial Sector (% of GDP)",
+        "latest_date": "2025-10-01",
+        "frequency": "quarterly",
+        "freshness_status": "stale",
+        "age_basis_date": "2025-10-01",
+        "age_days": 301,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BIS",
+        "series": "QHKPBM770A",
+        "transform": "level"
+      },
+      {
+        "id": "household_credit_gdp",
+        "concept_id": "hk:household_credit_gdp",
+        "label_en": "Credit to Households & NPISHs (% of GDP)",
+        "latest_date": "2025-10-01",
+        "frequency": "quarterly",
+        "freshness_status": "stale",
+        "age_basis_date": "2025-10-01",
+        "age_days": 301,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BIS",
+        "series": "QHKHAM770A",
         "transform": "level"
       },
       {
@@ -593,7 +797,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 24
+      "level": 37
     },
     "non_level": []
   },
@@ -603,6 +807,6 @@
       "date",
       "value"
     ],
-    "charted_series": 24
+    "charted_series": 37
   }
 }

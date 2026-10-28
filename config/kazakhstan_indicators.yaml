@@ -54,6 +54,7 @@ indicators:
     unit: "%"
     fetcher: imf_datamapper
     series: NGDP_RPCH/KAZ
+    actual_through: 2025
     source_name: IMF DataMapper (WEO)
     source_url: https://www.imf.org/external/datamapper/NGDP_RPCH/KAZ
     frequency: annual
@@ -132,28 +133,45 @@ indicators:
     label_en: Headline CPI Inflation YoY
     label_zh: 总体CPI通胀同比
     unit: "% y/y"
-    fetcher: dbnomics
-    series: IMF/IFS/M.KZ.PCPI_PC_CP_A_PT
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/M.KZ.PCPI_PC_CP_A_PT
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: KAZ.CPI._T.YOY_PCH_PA_PT.M
+    source_name: IMF SDMX / Kazakhstan BNS
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/KAZ.CPI._T.YOY_PCH_PA_PT.M
     frequency: monthly
     start_date: 2005-01-01
-    caveat_en: Year-on-year percentage change in official Consumer Price Index reported in IMF IFS.
-    caveat_zh: 报送IMF国际金融统计的消费者价格指数同比变动百分比。
+    caveat_en: Year-on-year percentage change in official Consumer Price Index reported via IMF CPI.
+    caveat_zh: 哈萨克斯坦国家统计局向IMF报送的月度消费者物价指数同比变动率。
+
+  - id: cpi_inflation_mom
+    section: prices_costs
+    label_en: Headline CPI Inflation MoM
+    label_zh: 总体CPI通胀环比
+    unit: "% m/m"
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: KAZ.CPI._T.POP_PCH_PA_PT.M
+    source_name: IMF SDMX / Kazakhstan BNS
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/KAZ.CPI._T.POP_PCH_PA_PT.M
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Month-on-month percentage change in official Consumer Price Index.
+    caveat_zh: 月度消费者物价指数环比变动率。
 
   - id: cpi_index
     section: prices_costs
-    label_en: Headline Consumer Price Index (2020=100)
-    label_zh: 总体消费价格指数基数 (2020=100)
+    label_en: Headline Consumer Price Index
+    label_zh: 总体消费价格指数基数
     unit: "Index"
-    fetcher: dbnomics
-    series: IMF/IFS/M.KZ.PCPI_IX
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/M.KZ.PCPI_IX
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: KAZ.CPI._T.IX.M
+    source_name: IMF SDMX / Kazakhstan BNS
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/KAZ.CPI._T.IX.M
     frequency: monthly
     start_date: 2005-01-01
-    caveat_en: Consumer Price Index (All items) rebased index.
-    caveat_zh: 总体消费者物价指数基数。
+    caveat_en: Consumer Price Index (All items) monthly index level.
+    caveat_zh: 总体消费者物价指数月度定基指数。
 
   - id: cpi_inflation_weo
     section: prices_costs
@@ -162,6 +180,7 @@ indicators:
     unit: "%"
     fetcher: imf_datamapper
     series: PCPIPCH/KAZ
+    actual_through: 2025
     source_name: IMF DataMapper (WEO)
     source_url: https://www.imf.org/external/datamapper/PCPIPCH/KAZ
     frequency: annual
@@ -182,8 +201,8 @@ indicators:
     source_name: National Bank of Kazakhstan (NBK)
     source_url: https://nationalbank.kz/rss/rates_all.xml
     frequency: daily
-    start_date: 2026-01-01
-    caveat_en: Daily official market exchange rate set by the National Bank of Kazakhstan.
+    start_date: 2020-01-01
+    caveat_en: Official market exchange rate set by the National Bank of Kazakhstan.
     caveat_zh: 哈萨克斯坦国家银行公布的官方市场基准汇率。
 
   - id: usd_kzt_ifs
@@ -210,7 +229,7 @@ indicators:
     source_name: National Bank of Kazakhstan (NBK)
     source_url: https://nationalbank.kz/rss/rates_all.xml
     frequency: daily
-    start_date: 2026-01-01
+    start_date: 2020-01-01
     caveat_en: Official EUR/KZT exchange rate.
     caveat_zh: 官方欧元兑坚戈汇率。
 
@@ -224,7 +243,7 @@ indicators:
     source_name: National Bank of Kazakhstan (NBK)
     source_url: https://nationalbank.kz/rss/rates_all.xml
     frequency: daily
-    start_date: 2026-01-01
+    start_date: 2020-01-01
     caveat_en: Official Russian ruble to tenge rate (critical regional trade linkage).
     caveat_zh: 官方卢布兑坚戈汇率（核心区域贸易货币）。
 
@@ -238,7 +257,7 @@ indicators:
     source_name: National Bank of Kazakhstan (NBK)
     source_url: https://nationalbank.kz/rss/rates_all.xml
     frequency: daily
-    start_date: 2026-01-01
+    start_date: 2020-01-01
     caveat_en: Official Chinese yuan to tenge rate.
     caveat_zh: 官方人民币兑坚戈汇率。
 
@@ -277,28 +296,96 @@ indicators:
     label_en: Current Account Balance (USD Millions)
     label_zh: 经常账户差额 (百万美元)
     unit: "USD mn"
-    fetcher: dbnomics
-    series: IMF/IFS/Q.KZ.BCAXF_BP6_USD
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/Q.KZ.BCAXF_BP6_USD
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: KAZ.NETCD_T.CAB.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / NBK
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KAZ.NETCD_T.CAB.USD.Q
     frequency: quarterly
     start_date: 2005-01-01
-    caveat_en: Quarterly balance on current account excluding exceptional financing.
-    caveat_zh: 季度经常账户净差额（百万美元）。
+    caveat_en: Quarterly BPM6 current account balance in millions of US dollars.
+    caveat_zh: BPM6季度经常账户净差额（百万美元）。
 
   - id: goods_trade_balance
     section: external_fx
     label_en: Goods Trade Balance (USD Millions)
     label_zh: 货物贸易差额 (百万美元)
     unit: "USD mn"
-    fetcher: dbnomics
-    series: IMF/IFS/Q.KZ.BG_BP6_USD
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/Q.KZ.BG_BP6_USD
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: KAZ.NETCD_T.G.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / NBK
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KAZ.NETCD_T.G.USD.Q
     frequency: quarterly
     start_date: 2005-01-01
-    caveat_en: Net balance of merchandise exports minus imports (BPM6).
+    caveat_en: Net balance of merchandise exports minus imports (BPM6, USD millions).
     caveat_zh: 货物出口减去进口净额（BPM6标准，百万美元）。
+
+  - id: goods_exports
+    section: external_fx
+    label_en: Goods Exports (BOP Basis, USD Millions)
+    label_zh: 货物出口总额 (BOP口径，百万美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: KAZ.CD_T.G.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / NBK
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KAZ.CD_T.G.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 merchandise exports credit in millions of US dollars.
+    caveat_zh: BPM6季度货物出口总额（百万美元）。
+
+  - id: goods_imports
+    section: external_fx
+    label_en: Goods Imports (BOP Basis, USD Millions)
+    label_zh: 货物进口总额 (BOP口径，百万美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: KAZ.DB_T.G.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / NBK
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KAZ.DB_T.G.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 merchandise imports debit in millions of US dollars.
+    caveat_zh: BPM6季度货物进口总额（百万美元）。
+
+  - id: services_balance
+    section: external_fx
+    label_en: Services Trade Balance (USD Millions)
+    label_zh: 服务贸易差额 (百万美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: KAZ.NETCD_T.S.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / NBK
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KAZ.NETCD_T.S.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 services trade balance in millions of US dollars.
+    caveat_zh: BPM6季度服务贸易净差额（百万美元）。
+
+  - id: fdi_net_usd
+    section: external_fx
+    label_en: Direct Investment Net Balance (FDI, USD Millions)
+    label_zh: 直接投资净额 (FDI，百万美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: KAZ.NNAFANIL_T.D_F.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / NBK
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/KAZ.NNAFANIL_T.D_F.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 direct investment net acquisition of financial assets less incurrence of liabilities.
+    caveat_zh: BPM6金融账户季度直接投资净额（百万美元）。
 
   - id: current_account_gdp
     section: external_fx
@@ -307,6 +394,7 @@ indicators:
     unit: "% of GDP"
     fetcher: imf_datamapper
     series: BCA_NGDPD/KAZ
+    actual_through: 2025
     source_name: IMF DataMapper (WEO)
     source_url: https://www.imf.org/external/datamapper/BCA_NGDPD/KAZ
     frequency: annual
@@ -324,6 +412,7 @@ indicators:
     unit: "% of GDP"
     fetcher: imf_datamapper
     series: GGXWDG_NGDP/KAZ
+    actual_through: 2025
     source_name: IMF DataMapper (WEO)
     source_url: https://www.imf.org/external/datamapper/GGXWDG_NGDP/KAZ
     frequency: annual
@@ -338,6 +427,7 @@ indicators:
     unit: "% of GDP"
     fetcher: imf_datamapper
     series: GGXCNL_NGDP/KAZ
+    actual_through: 2025
     source_name: IMF DataMapper (WEO)
     source_url: https://www.imf.org/external/datamapper/GGXCNL_NGDP/KAZ
     frequency: annual
@@ -352,6 +442,7 @@ indicators:
     unit: "% of GDP"
     fetcher: imf_datamapper
     series: GGXONLB_G01_GDP_PT/KAZ
+    actual_through: 2025
     source_name: IMF DataMapper (Fiscal Monitor)
     source_url: https://www.imf.org/external/datamapper/GGXONLB_G01_GDP_PT/KAZ
     frequency: annual

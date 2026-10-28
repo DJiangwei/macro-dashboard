@@ -137,6 +137,51 @@ indicators:
     caveat_en: Real year-on-year change rate of total domestic demand.
     caveat_zh: 实质国内需求总额同比变动率。
 
+  - id: machinery_investment_yoy
+    section: growth_accounts
+    label_en: Machinery & Equipment Investment YoY (AI / Semiconductor Capex)
+    label_zh: 机器及设备投资同比 (AI与半导体资本开支)
+    unit: "% y/y"
+    fetcher: tw_dgbas
+    dataset: gdp_yoy
+    col_idx: 27
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2674
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Real annual growth of machinery and equipment investment within GFCF (foundry & AI server capex driver).
+    caveat_zh: 固定资本形成中实质机器及设备投资同比增速（反映晶圆代工与AI服务器扩产周期）。
+
+  - id: real_exports_yoy
+    section: growth_accounts
+    label_en: Real Exports of Goods & Services YoY
+    label_zh: 实质商品及服务输出同比
+    unit: "% y/y"
+    fetcher: tw_dgbas
+    dataset: gdp_yoy
+    col_idx: 35
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2674
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Chained real year-on-year growth rate of exports of goods and services.
+    caveat_zh: 国民所得统计实质商品及服务输出同比成长率。
+
+  - id: real_imports_yoy
+    section: growth_accounts
+    label_en: Real Imports of Goods & Services YoY
+    label_zh: 实质商品及服务输入同比
+    unit: "% y/y"
+    fetcher: tw_dgbas
+    dataset: gdp_yoy
+    col_idx: 38
+    source_name: Taiwan DGBAS
+    source_url: https://www.stat.gov.tw/cp.aspx?n=2674
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Chained real year-on-year growth rate of imports of goods and services.
+    caveat_zh: 国民所得统计实质商品及服务输入同比成长率。
+
   # ==========================================
   # 2. Prices & Inflation
   # ==========================================
@@ -304,13 +349,13 @@ indicators:
     unit: "% y/y"
     fetcher: tw_cbc
     filename: EF01M01en
-    col_idx: 18
+    col_idx: 17
     source_name: Central Bank of the Republic of China (Taiwan)
     source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
     frequency: monthly
     start_date: 2000-01-01
-    caveat_en: Annual percentage change in broad money M2.
-    caveat_zh: 广义货币总计数M2年增率。
+    caveat_en: Annual percentage change in broad money M2 (averages of daily figures).
+    caveat_zh: 广义货币总计数M2（日平均数）年增率。
 
   - id: reserve_money_growth
     section: monetary_financial
@@ -337,7 +382,7 @@ indicators:
     unit: "% y/y"
     fetcher: tw_cbc
     filename: EF99M01en
-    col_idx: 2
+    col_idx: 1
     source_name: Central Bank of the Republic of China (Taiwan)
     source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
     frequency: monthly
@@ -352,13 +397,43 @@ indicators:
     unit: "% y/y"
     fetcher: tw_cbc
     filename: EF99M01en
-    col_idx: 4
+    col_idx: 3
     source_name: Central Bank of the Republic of China (Taiwan)
     source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
     frequency: monthly
     start_date: 2005-01-01
     caveat_en: Annual growth rate of outstanding residential house-purchasing loans (key property credit indicator).
     caveat_zh: 全体银行购屋贷款余额年增率（核心房地产信贷指标）。
+
+  - id: construction_loans_growth
+    section: credit_property
+    label_en: Construction Loans YoY Growth
+    label_zh: 建筑贷款余额年增率
+    unit: "% y/y"
+    fetcher: tw_cbc
+    filename: EF99M01en
+    col_idx: 15
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Annual growth rate of domestic bank loans for construction (developer credit cycle gauge).
+    caveat_zh: 全体银行建筑贷款余额年增率（衡量建商推案与不动产开发周期的核心指标）。
+
+  - id: bank_npl_ratio
+    section: credit_property
+    label_en: Domestic Banks Non-Performing Loan (NPL) Ratio
+    label_zh: 本国银行逾放比率 (NPL)
+    unit: "%"
+    fetcher: tw_cbc
+    filename: EF07M01en
+    col_idx: 4
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Non-performing loan ratio of domestic commercial banks.
+    caveat_zh: 本国银行逾期放款比率。
 
   - id: commercial_paper_growth
     section: credit_property
@@ -450,6 +525,68 @@ indicators:
     start_date: 2010-01-01
     caveat_en: BIS broad monthly real effective exchange rate index for Taiwan.
     caveat_zh: 国际清算银行(BIS)编制的台湾广义月度实际有效汇率指数。
+
+  - id: fx_reserves
+    section: external_trade_fx
+    label_en: Official Foreign Exchange Reserves (USD)
+    label_zh: 外汇存底总额 (美元)
+    unit: "USD mn"
+    fetcher: tw_cbc
+    filename: EF07M01en
+    col_idx: 3
+    source_name: Central Bank of the Republic of China (Taiwan)
+    source_url: https://cpx.cbc.gov.tw/Tree/TreeSelect
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Official monthly foreign exchange reserves held by the CBC in millions of US dollars.
+    caveat_zh: 台湾中央银行持有的月度官方外汇存底总额（百万美元）。
+
+  - id: customs_exports_yoy
+    section: external_trade_fx
+    label_en: Monthly Customs Merchandise Exports YoY (NTD Basis)
+    label_zh: 海关月度商品出口总值同比 (新台币计价)
+    unit: "% y/y"
+    fetcher: tw_mof_customs
+    metric: exports
+    transform: yoy_pct
+    source_authority: official_primary
+    source_name: Taiwan Ministry of Finance (Customs Administration)
+    source_url: https://opendata.customs.gov.tw/data/6053/csv.csv
+    frequency: monthly
+    start_date: 2014-01-01
+    caveat_en: Monthly Customs merchandise exports year-on-year growth rate calculated from official MOF Customs releases.
+    caveat_zh: 财政部关务署月度海关商品出口总值同比成长率。
+
+  - id: customs_imports_yoy
+    section: external_trade_fx
+    label_en: Monthly Customs Merchandise Imports YoY (NTD Basis)
+    label_zh: 海关月度商品进口总值同比 (新台币计价)
+    unit: "% y/y"
+    fetcher: tw_mof_customs
+    metric: imports
+    transform: yoy_pct
+    source_authority: official_primary
+    source_name: Taiwan Ministry of Finance (Customs Administration)
+    source_url: https://opendata.customs.gov.tw/data/6053/csv.csv
+    frequency: monthly
+    start_date: 2014-01-01
+    caveat_en: Monthly Customs merchandise imports year-on-year growth rate calculated from official MOF Customs releases.
+    caveat_zh: 财政部关务署月度海关商品进口总值同比成长率。
+
+  - id: customs_trade_balance
+    section: external_trade_fx
+    label_en: Monthly Customs Merchandise Trade Balance (NTD)
+    label_zh: 海关月度商品贸易出入超 (新台币)
+    unit: "NTD bn"
+    fetcher: tw_mof_customs
+    metric: balance
+    source_authority: official_primary
+    source_name: Taiwan Ministry of Finance (Customs Administration)
+    source_url: https://opendata.customs.gov.tw/data/6053/csv.csv
+    frequency: monthly
+    start_date: 2014-01-01
+    caveat_en: Monthly Customs merchandise trade surplus/deficit in billions of New Taiwan Dollars.
+    caveat_zh: 财政部关务署月度海关商品贸易出超/入超（十亿新台币）。
 
   - id: current_account_usd
     section: external_trade_fx

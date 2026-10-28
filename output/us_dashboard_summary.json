@@ -1,6 +1,6 @@
 {
   "file": "us.html",
-  "generated": "2026-10-28T15:20:13.375421+00:00",
+  "generated": "2026-10-28T22:59:11.009278+00:00",
   "charts": 168,
   "source_groups": 27,
   "data_gaps": 7,
@@ -70,22 +70,22 @@
   "unavailable": [],
   "data_mode": "refresh",
   "latest_cards": [],
-  "fed_funds_latest": "3.88% (2026-10-26)",
+  "fed_funds_latest": "3.88% (2026-10-27)",
   "cross_checks": [
     {
       "concept": "overnight_policy_rate",
       "primary": "daily_fed_funds",
       "secondary": "overnight_bank_funding_rate",
       "label_en": "Daily Effective Fed Funds (DFF) vs Overnight Bank Funding Rate (OBFR)",
-      "n_common": 2214,
+      "n_common": 2215,
       "latest_diff": 0.0,
       "max_abs_diff": 0.1,
       "n_breaches": 4,
       "last_breach_date": "2020-03-19",
       "tolerance": 0.05,
-      "window_since": "2024-10-26",
+      "window_since": "2024-10-27",
       "window_months": 24,
-      "window_n_common": 500,
+      "window_n_common": 501,
       "window_max_abs_diff": 0.010000000000000231,
       "window_n_breaches": 0,
       "status": "agree"
@@ -95,13 +95,13 @@
       "primary": "daily_fed_funds",
       "secondary": "reserve_balance_rate",
       "label_en": "Daily Effective Fed Funds (DFF) vs Interest on Reserve Balances (IORB)",
-      "n_common": 1916,
+      "n_common": 1917,
       "latest_diff": -0.020000000000000018,
       "max_abs_diff": 0.09,
       "n_breaches": 0,
       "last_breach_date": "",
       "tolerance": 0.15,
-      "window_since": "2024-10-26",
+      "window_since": "2024-10-27",
       "window_months": 24,
       "window_n_common": 731,
       "window_max_abs_diff": 0.07000000000000028,
@@ -135,9 +135,9 @@
     ],
     "file": "us_canonical_frame.json",
     "series": 168,
-    "observations": 118177,
+    "observations": 118190,
     "series_count": 168,
-    "observation_count": 118177
+    "observation_count": 118190
   },
   "data_gaps_detail": [
     {
@@ -303,8 +303,8 @@
       }
     ],
     "quality_counts": {
-      "verified": 121,
-      "watch": 47
+      "verified": 120,
+      "watch": 48
     },
     "unavailable_count": 0
   },
@@ -317,8 +317,9 @@
   "freshness": {
     "as_of_date": "2026-10-28",
     "counts": {
-      "current": 139,
-      "due": 29
+      "current": 138,
+      "due": 29,
+      "scheduled_policy": 1
     },
     "latest_historical_date": "2026-10-28",
     "attention": [

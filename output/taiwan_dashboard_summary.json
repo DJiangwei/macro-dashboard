@@ -1,10 +1,10 @@
 {
   "file": "taiwan.html",
-  "generated": "2026-10-28T15:22:02.704434+00:00",
-  "charts": 37,
-  "source_groups": 6,
+  "generated": "2026-10-28T23:03:36.497777+00:00",
+  "charts": 46,
+  "source_groups": 7,
   "data_gaps": 1,
-  "low_confidence": 1,
+  "low_confidence": 2,
   "key_series_latest": [
     {
       "id": "real_gdp_yoy",
@@ -73,6 +73,42 @@
       "latest_date": "2026-06-30",
       "latest_value": 8.83,
       "latest_display": "8.83 % y/y",
+      "frequency": "quarterly",
+      "source_name": "Taiwan DGBAS",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "machinery_investment_yoy",
+      "label_en": "Machinery & Equipment Investment YoY (AI / Semiconductor Capex)",
+      "label_zh": "机器及设备投资同比 (AI与半导体资本开支)",
+      "latest_date": "2026-06-30",
+      "latest_value": 30.74,
+      "latest_display": "30.7 % y/y",
+      "frequency": "quarterly",
+      "source_name": "Taiwan DGBAS",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "real_exports_yoy",
+      "label_en": "Real Exports of Goods & Services YoY",
+      "label_zh": "实质商品及服务输出同比",
+      "latest_date": "2026-06-30",
+      "latest_value": 21.24,
+      "latest_display": "21.2 % y/y",
+      "frequency": "quarterly",
+      "source_name": "Taiwan DGBAS",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "real_imports_yoy",
+      "label_en": "Real Imports of Goods & Services YoY",
+      "label_zh": "实质商品及服务输入同比",
+      "latest_date": "2026-06-30",
+      "latest_value": 18.25,
+      "latest_display": "18.2 % y/y",
       "frequency": "quarterly",
       "source_name": "Taiwan DGBAS",
       "series": "",
@@ -203,8 +239,8 @@
       "label_en": "M2 Monetary Aggregate YoY Growth",
       "label_zh": "M2货币总计数年增率",
       "latest_date": "2026-08-01",
-      "latest_value": 709110.0,
-      "latest_display": "709,110 % y/y",
+      "latest_value": 6.79,
+      "latest_display": "6.79 % y/y",
       "frequency": "monthly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
@@ -227,8 +263,8 @@
       "label_en": "Consumer Loans YoY Growth",
       "label_zh": "消费者贷款总余额年增率",
       "latest_date": "2026-08-01",
-      "latest_value": 11946435.0,
-      "latest_display": "11,946,435 % y/y",
+      "latest_value": 5.22,
+      "latest_display": "5.22 % y/y",
       "frequency": "monthly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
@@ -239,12 +275,36 @@
       "label_en": "House-Purchasing Loans (Mortgages) YoY Growth",
       "label_zh": "购屋贷款(房贷)余额年增率",
       "latest_date": "2026-08-01",
-      "latest_value": 30522.0,
-      "latest_display": "30,522 % y/y",
+      "latest_value": 4.58,
+      "latest_display": "4.58 % y/y",
       "frequency": "monthly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
       "quality_status": "watch"
+    },
+    {
+      "id": "construction_loans_growth",
+      "label_en": "Construction Loans YoY Growth",
+      "label_zh": "建筑贷款余额年增率",
+      "latest_date": "2026-08-01",
+      "latest_value": -0.59,
+      "latest_display": "-0.59 % y/y",
+      "frequency": "monthly",
+      "source_name": "Central Bank of the Republic of China (Taiwan)",
+      "series": "",
+      "quality_status": "watch"
+    },
+    {
+      "id": "bank_npl_ratio",
+      "label_en": "Domestic Banks Non-Performing Loan (NPL) Ratio",
+      "label_zh": "本国银行逾放比率 (NPL)",
+      "latest_date": "2026-07-01",
+      "latest_value": 0.14,
+      "latest_display": "0.14 %",
+      "frequency": "monthly",
+      "source_name": "Central Bank of the Republic of China (Taiwan)",
+      "series": "",
+      "quality_status": "low_confidence"
     },
     {
       "id": "commercial_paper_growth",
@@ -317,6 +377,54 @@
       "source_name": "FRED / BIS",
       "series": "RBTWBIS",
       "quality_status": "low_confidence"
+    },
+    {
+      "id": "fx_reserves",
+      "label_en": "Official Foreign Exchange Reserves (USD)",
+      "label_zh": "外汇存底总额 (美元)",
+      "latest_date": "2026-08-01",
+      "latest_value": 601904.0,
+      "latest_display": "601,904 USD mn",
+      "frequency": "monthly",
+      "source_name": "Central Bank of the Republic of China (Taiwan)",
+      "series": "",
+      "quality_status": "watch"
+    },
+    {
+      "id": "customs_exports_yoy",
+      "label_en": "Monthly Customs Merchandise Exports YoY (NTD Basis)",
+      "label_zh": "海关月度商品出口总值同比 (新台币计价)",
+      "latest_date": "2026-08-01",
+      "latest_value": 52.590836402328954,
+      "latest_display": "52.6 % y/y",
+      "frequency": "monthly",
+      "source_name": "Taiwan Ministry of Finance (Customs Administration)",
+      "series": "",
+      "quality_status": "watch"
+    },
+    {
+      "id": "customs_imports_yoy",
+      "label_en": "Monthly Customs Merchandise Imports YoY (NTD Basis)",
+      "label_zh": "海关月度商品进口总值同比 (新台币计价)",
+      "latest_date": "2026-08-01",
+      "latest_value": 55.653466700168686,
+      "latest_display": "55.7 % y/y",
+      "frequency": "monthly",
+      "source_name": "Taiwan Ministry of Finance (Customs Administration)",
+      "series": "",
+      "quality_status": "watch"
+    },
+    {
+      "id": "customs_trade_balance",
+      "label_en": "Monthly Customs Merchandise Trade Balance (NTD)",
+      "label_zh": "海关月度商品贸易出入超 (新台币)",
+      "latest_date": "2026-08-01",
+      "latest_value": 722.075537,
+      "latest_display": "722 NTD bn",
+      "frequency": "monthly",
+      "source_name": "Taiwan Ministry of Finance (Customs Administration)",
+      "series": "",
+      "quality_status": "watch"
     },
     {
       "id": "current_account_usd",
@@ -500,10 +608,10 @@
       "value"
     ],
     "file": "taiwan_canonical_frame.json",
-    "series": 37,
-    "observations": 8480,
-    "series_count": 37,
-    "observation_count": 8480
+    "series": 46,
+    "observations": 10009,
+    "series_count": 46,
+    "observation_count": 10009
   },
   "data_gaps_detail": [
     {
@@ -515,19 +623,23 @@
     }
   ],
   "source_health": {
-    "source_groups": 6,
+    "source_groups": 7,
     "sources": [
       {
         "source_name": "Central Bank of the Republic of China (Taiwan)",
-        "charts": 19
+        "charts": 22
       },
       {
         "source_name": "Taiwan DGBAS",
-        "charts": 10
+        "charts": 13
       },
       {
         "source_name": "IMF WEO DataMapper",
         "charts": 4
+      },
+      {
+        "source_name": "Taiwan Ministry of Finance (Customs Administration)",
+        "charts": 3
       },
       {
         "source_name": "Bruegel (Darvas 120-Trading-Partner Basket)",
@@ -543,9 +655,9 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 1,
-      "verified": 15,
-      "watch": 21
+      "low_confidence": 2,
+      "verified": 18,
+      "watch": 26
     },
     "unavailable_count": 0
   },
@@ -558,10 +670,10 @@
   "freshness": {
     "as_of_date": "2026-10-28",
     "counts": {
-      "current": 18,
-      "due": 14,
+      "current": 21,
+      "due": 19,
       "projection": 4,
-      "stale": 1
+      "stale": 2
     },
     "latest_historical_date": "2026-10-23",
     "attention": [
@@ -584,6 +696,28 @@
         "validation": "passed",
         "comparability": "high",
         "source_name": "Taiwan DGBAS",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "bank_npl_ratio",
+        "concept_id": "tw:bank_npl_ratio",
+        "label_en": "Domestic Banks Non-Performing Loan (NPL) Ratio",
+        "latest_date": "2026-07-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-07-01",
+        "age_days": 89,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Central Bank of the Republic of China (Taiwan)",
         "series": "",
         "transform": "level"
       },
@@ -676,6 +810,28 @@
         "transform": "level"
       },
       {
+        "id": "construction_loans_growth",
+        "concept_id": "tw:construction_loans_growth",
+        "label_en": "Construction Loans YoY Growth",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 58,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Central Bank of the Republic of China (Taiwan)",
+        "series": "",
+        "transform": "level"
+      },
+      {
         "id": "consumer_loans_growth",
         "concept_id": "private_credit_growth",
         "label_en": "Consumer Loans YoY Growth",
@@ -698,9 +854,97 @@
         "transform": "level"
       },
       {
+        "id": "customs_exports_yoy",
+        "concept_id": "tw:customs_exports_yoy",
+        "label_en": "Monthly Customs Merchandise Exports YoY (NTD Basis)",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 58,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "Taiwan Ministry of Finance (Customs Administration)",
+        "series": "",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "customs_imports_yoy",
+        "concept_id": "tw:customs_imports_yoy",
+        "label_en": "Monthly Customs Merchandise Imports YoY (NTD Basis)",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 58,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "Taiwan Ministry of Finance (Customs Administration)",
+        "series": "",
+        "transform": "yoy_pct"
+      },
+      {
+        "id": "customs_trade_balance",
+        "concept_id": "tw:customs_trade_balance",
+        "label_en": "Monthly Customs Merchandise Trade Balance (NTD)",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 58,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Taiwan Ministry of Finance (Customs Administration)",
+        "series": "",
+        "transform": "level"
+      },
+      {
         "id": "deposit_rate_1y",
         "concept_id": "tw:deposit_rate_1y",
         "label_en": "Five Major Banks 1-Year Time Deposit Rate",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 58,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Central Bank of the Republic of China (Taiwan)",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "fx_reserves",
+        "concept_id": "tw:fx_reserves",
+        "label_en": "Official Foreign Exchange Reserves (USD)",
         "latest_date": "2026-08-01",
         "frequency": "monthly",
         "freshness_status": "due",
@@ -899,9 +1143,23 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 37
+      "level": 44,
+      "yoy_pct": 2
     },
-    "non_level": []
+    "non_level": [
+      {
+        "id": "customs_exports_yoy",
+        "label_en": "Monthly Customs Merchandise Exports YoY (NTD Basis)",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "customs_imports_yoy",
+        "label_en": "Monthly Customs Merchandise Imports YoY (NTD Basis)",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      }
+    ]
   },
   "canonical_schema": {
     "schema_version": "data-first-canonical-v2",
@@ -909,6 +1167,6 @@
       "date",
       "value"
     ],
-    "charted_series": 37
+    "charted_series": 46
   }
 }

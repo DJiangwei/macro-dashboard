@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-10-28T15:22:12.461500+00:00
+Generated: 2026-10-28T23:03:58.158548+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -20,7 +20,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 12 | `labour_household` | `vacancies` Labour Demand / Vacancies | L | L | L | L | - | L | V | - | V | W | - | - | - | - | - | - | - | - |
 | 13 | `labour_household` | `wage_growth` Wage Growth | V | V | V | V | - | L | L | - | V | V | - | W | - | - | - | - | - | - |
 | 14 | `labour_household` | `real_income_growth` Real Household Income Growth | V | V | V | V | - | - | - | - | V | W | - | - | - | - | - | - | - | - |
-| 15 | `prices_costs` | `headline_inflation` Headline Inflation | V | V | V | V | W | L | V | V | V | V | L | V | W | V | L | L | L | L |
+| 15 | `prices_costs` | `headline_inflation` Headline Inflation | V | V | V | V | W | L | V | V | V | V | W | V | W | V | W | W | W | W |
 | 16 | `prices_costs` | `core_inflation` Core Inflation | V | V | V | V | - | L | V | - | V | V | L | V | - | V | - | - | - | - |
 | 17 | `prices_costs` | `services_inflation` Services Inflation | V | V | V | V | - | L | V | - | V | V | L | - | - | - | - | - | - | - |
 | 18 | `prices_costs` | `goods_inflation` Goods Inflation | V | V | V | V | - | L | V | - | V | V | - | - | - | - | - | - | - | - |
@@ -32,15 +32,15 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 24 | `housing_investment` | `construction_activity` Construction Activity | V | V | V | V | W | V | - | - | L | V | V | V | - | - | - | - | - | - |
 | 25 | `housing_investment` | `mortgage_rate` Mortgage Rate | W | W | W | W | - | W | - | - | V | W | - | - | - | - | - | - | - | - |
 | 26 | `housing_investment` | `property_inventory` Property Inventory / Supply | - | - | - | - | - | - | - | - | - | V | - | - | - | - | - | - | - | - |
-| 27 | `external_fx` | `current_account_gdp` Current Account, % GDP | W | W | W | W | W | L | L | L | V | V | - | - | W | W | W | W | W | W |
-| 28 | `external_fx` | `trade_balance` Trade Balance | W | W | W | W | W | V | W | W | V | W | W | V | W | V | L | L | L | L |
+| 27 | `external_fx` | `current_account_gdp` Current Account, % GDP | W | W | W | W | W | L | L | L | V | V | W | - | W | W | W | W | W | W |
+| 28 | `external_fx` | `trade_balance` Trade Balance | W | W | W | W | W | V | W | W | V | W | W | V | W | V | W | W | L | W |
 | 29 | `external_fx` | `exports_growth` Exports Growth | - | - | - | - | W | V | W | W | V | W | V | V | W | V | - | - | - | - |
 | 30 | `external_fx` | `imports_growth` Imports Growth | - | - | - | - | W | V | W | W | V | W | V | V | W | V | - | - | - | - |
-| 31 | `external_fx` | `fx_spot` Spot Exchange Rate | V | V | V | V | W | V | W | V | V | V | V | W | W | W | L | L | L | L |
+| 31 | `external_fx` | `fx_spot` Spot Exchange Rate | V | V | V | V | W | V | W | V | V | V | V | W | W | W | V | L | L | V |
 | 32 | `external_fx` | `reer` Real Effective Exchange Rate | W | W | W | W | L | V | L | L | L | V | W | W | W | W | W | W | W | W |
-| 33 | `fiscal_sovereign` | `fiscal_balance_gdp` Fiscal Balance, % GDP | W | W | W | W | W | V | W | W | W | V | - | W | W | W | W | W | W | W |
-| 34 | `fiscal_sovereign` | `primary_balance_gdp` Primary Balance, % GDP | W | W | W | W | - | W | W | W | - | - | - | - | W | - | W | W | W | W |
-| 35 | `fiscal_sovereign` | `government_debt_gdp` Government Debt, % GDP | W | W | W | W | W | V | W | W | W | V | - | W | W | W | W | W | W | W |
+| 33 | `fiscal_sovereign` | `fiscal_balance_gdp` Fiscal Balance, % GDP | W | W | W | W | W | V | W | W | W | V | W | W | W | W | W | W | W | W |
+| 34 | `fiscal_sovereign` | `primary_balance_gdp` Primary Balance, % GDP | W | W | W | W | - | W | W | W | - | - | W | - | W | - | W | W | W | W |
+| 35 | `fiscal_sovereign` | `government_debt_gdp` Government Debt, % GDP | W | W | W | W | W | V | W | W | W | V | W | W | W | W | W | W | W | W |
 | 36 | `fiscal_sovereign` | `government_interest_cost` Government Interest Cost | W | W | W | W | - | - | - | - | W | V | - | - | - | - | - | - | - | - |
 | 37 | `fiscal_sovereign` | `sovereign_yield_10y` 10Y Sovereign Yield | V | V | V | V | - | V | W | V | V | V | - | - | W | W | - | - | - | - |
 | 38 | `monetary_financial` | `policy_rate` Policy Rate | V | V | V | V | W | V | W | V | V | V | W | - | W | W | L | L | L | L |
@@ -69,14 +69,14 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | ZA | 28/48 | 5 | 10 | 12 | 1 | 20 |
 | UK | 38/48 | 24 | 9 | 5 | 0 | 10 |
 | US | 40/48 | 32 | 8 | 0 | 0 | 8 |
-| TR | 23/48 | 11 | 5 | 7 | 0 | 25 |
+| TR | 27/48 | 11 | 10 | 6 | 0 | 21 |
 | HK | 20/48 | 9 | 7 | 4 | 0 | 28 |
 | KR | 25/48 | 0 | 21 | 4 | 0 | 23 |
 | TW | 21/48 | 9 | 12 | 0 | 0 | 27 |
-| KZ | 17/48 | 0 | 11 | 6 | 0 | 31 |
-| UZ | 18/48 | 0 | 11 | 7 | 0 | 30 |
-| EG | 16/48 | 0 | 11 | 5 | 0 | 32 |
-| NG | 17/48 | 0 | 9 | 8 | 0 | 31 |
+| KZ | 17/48 | 1 | 13 | 3 | 0 | 31 |
+| UZ | 18/48 | 0 | 13 | 5 | 0 | 30 |
+| EG | 16/48 | 0 | 12 | 4 | 0 | 32 |
+| NG | 17/48 | 1 | 11 | 5 | 0 | 31 |
 
 ## Priority Gaps
 

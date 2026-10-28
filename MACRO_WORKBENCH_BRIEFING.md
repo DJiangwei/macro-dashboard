@@ -17,15 +17,15 @@
 | **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 44.9 (needs data review) |
 | **South Africa (ZA)** | 50.0 | 53.3 | **mixed** | moderate expansion | inflation pressure | restrictive stance | 47.2 (needs data review) |
 | **United Kingdom (UK)** | 52.9 | 53.3 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 48.3 (needs data review) |
-| **United States (US)** | 51.2 | 43.3 | **defensive** | moderate expansion | above-target inflation | neutral-moderate stance | 74.8 (usable with watch-list) |
-| **Turkey (TR)** | 50.0 | 50.0 | **mixed** | moderate expansion | insufficient data | restrictive stance | 59.4 (needs data review) |
-| **Hong Kong (HK)** | 63.3 | 55.0 | **mixed** | above-trend expansion | near-target inflation | insufficient data | 74.4 (usable with watch-list) |
-| **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 59.5 (needs data review) |
-| **Taiwan (TW)** | 75.0 | 65.0 | **constructive** | above-trend expansion | near-target inflation | accommodative stance | 81.3 (high-confidence dashboard) |
-| **Kazakhstan (KZ)** | 50.0 | 55.0 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 52.8 (needs data review) |
-| **Uzbekistan (UZ)** | 53.8 | 51.7 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 53.5 (needs data review) |
-| **Egypt (EG)** | 53.8 | 50.0 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 58.0 (needs data review) |
-| **Nigeria (NG)** | 53.8 | 55.0 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 51.2 (needs data review) |
+| **United States (US)** | 51.2 | 43.3 | **defensive** | moderate expansion | above-target inflation | neutral-moderate stance | 74.6 (usable with watch-list) |
+| **Turkey (TR)** | 46.2 | 51.7 | **defensive** | moderate expansion | inflation pressure | restrictive stance | 61.0 (usable with watch-list) |
+| **Hong Kong (HK)** | 63.3 | 55.0 | **mixed** | above-trend expansion | near-target inflation | insufficient data | 73.1 (usable with watch-list) |
+| **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 60.8 (usable with watch-list) |
+| **Taiwan (TW)** | 75.0 | 71.7 | **constructive** | above-trend expansion | near-target inflation | accommodative stance | 77.5 (usable with watch-list) |
+| **Kazakhstan (KZ)** | 43.8 | 55.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 80.6 (high-confidence dashboard) |
+| **Uzbekistan (UZ)** | 53.8 | 51.7 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 73.2 (usable with watch-list) |
+| **Egypt (EG)** | 53.8 | 45.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 58.6 (needs data review) |
+| **Nigeria (NG)** | 53.8 | 55.0 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 68.0 (usable with watch-list) |
 
 ---
 
@@ -45,12 +45,13 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | **ZA** (SARB) | **7.25%** | 4.50% (4.5%) | 2.50% | **7.27%** (6.77% ~ 7.77%) | **-0.02%** | *calibrated / neutral* |
 | **UK** (Bank of England) | **3.75%** | 3.50% (2.0%) | 1.25% | **4.95%** (4.45% ~ 5.45%) | **-1.20%** | *moderately accommodative* |
 | **US** (Federal Reserve) | **3.88%** | 3.01% (2.0%) | 1.00% | **4.61%** (4.11% ~ 5.11%) | **-0.73%** | *moderately accommodative* |
+| **TR** (TCMB) | **35.50%** | 29.73% (5.0%) | 3.00% | **44.65%** (44.15% ~ 45.15%) | **-9.15%** | *substantially accommodative* |
 | **KR** (BOK) | **3.04%** | 2.88% (2.0%) | 1.00% | **5.09%** (4.59% ~ 5.59%) | **-2.05%** | *substantially accommodative* |
 | **TW** (CBC) | **2.00%** | 2.73% (2.0%) | 1.00% | **5.60%** (5.10% ~ 6.10%) | **-3.60%** | *substantially accommodative* |
-| **KZ** (NBK) | **9.00%** | 11.34% (5.0%) | 2.50% | **16.82%** (16.32% ~ 17.32%) | **-7.82%** | *substantially accommodative* |
-| **UZ** (CBU) | **13.50%** | 8.71% (5.0%) | 3.00% | **13.67%** (13.17% ~ 14.17%) | **-0.17%** | *calibrated / neutral* |
-| **EG** (CBE) | **24.50%** | 14.87% (7.0%) | 2.00% | **20.96%** (20.46% ~ 21.46%) | **+3.54%** | *substantially restrictive* |
-| **NG** (CBN) | **26.75%** | 34.80% (9.0%) | 2.00% | **50.05%** (49.55% ~ 50.55%) | **-23.30%** | *substantially accommodative* |
+| **KZ** (NBK) | **9.00%** | 9.24% (5.0%) | 2.50% | **15.11%** (14.61% ~ 15.61%) | **-6.11%** | *substantially accommodative* |
+| **UZ** (CBU) | **13.50%** | 6.23% (5.0%) | 3.00% | **10.94%** (10.44% ~ 11.44%) | **+2.56%** | *substantially restrictive* |
+| **EG** (CBE) | **24.50%** | 14.54% (7.0%) | 2.00% | **20.26%** (19.76% ~ 20.76%) | **+4.24%** | *substantially restrictive* |
+| **NG** (CBN) | **26.75%** | 15.39% (9.0%) | 2.00% | **20.84%** (20.34% ~ 21.34%) | **+5.91%** | *substantially restrictive* |
 
 ---
 
@@ -58,24 +59,24 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 
 | Economy | Benchmark Asset | Latest Yield | Latest Date | Spread to US 10Y (bps) | Status |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **US** | 10Y Treasury | **5.00%** | 2026-10-26 | **0.0 bps** | Official Observed |
-| **EA** | 10Y Bund | **3.47%** | 2026-09-01 | **-153.0 bps** | Official Observed |
-| **UK** | 10Y Gilt | **5.30%** | 2026-10-26 | **+30.0 bps** | Official Observed |
-| **JP** | 10Y JGB | **3.05%** | 2026-09-01 | **-195.0 bps** | Official Observed |
+| **US** | 10Y Treasury | **4.99%** | 2026-10-27 | **0.0 bps** | Official Observed |
+| **EA** | 10Y Bund | **3.47%** | 2026-09-01 | **-152.0 bps** | Official Observed |
+| **UK** | 10Y Gilt | **5.30%** | 2026-10-26 | **+31.0 bps** | Official Observed |
+| **JP** | 10Y JGB | **3.05%** | 2026-09-01 | **-194.0 bps** | Official Observed |
 | **CN** | CN 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
-| **ZA** | 10Y Sovereign | **8.02%** | 2026-10-27 | **+302.0 bps** | Official Observed |
+| **ZA** | 10Y Sovereign | **8.02%** | 2026-10-27 | **+303.0 bps** | Official Observed |
 | **TR** | TR 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **HK** | HK 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
-| **KR** | 10Y KTB | **4.45%** | 2026-09-01 | **-55.0 bps** | Official Observed |
-| **TW** | 10Y Gov Bond | **1.97%** | 2026-08-01 | **-303.0 bps** | Official Observed |
+| **KR** | 10Y KTB | **4.45%** | 2026-09-01 | **-54.0 bps** | Official Observed |
+| **TW** | 10Y Gov Bond | **1.97%** | 2026-08-01 | **-302.0 bps** | Official Observed |
 | **KZ** | KZ 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **UZ** | UZ 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **EG** | EG 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **NG** | NG 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
-| **PL** | PL 10Y Benchmark | **6.23%** | 2026-09-01 | **+123.0 bps** | Official Observed |
-| **CZ** | CZ 10Y Benchmark | **5.24%** | 2026-09-01 | **+24.0 bps** | Official Observed |
-| **HU** | HU 10Y Benchmark | **5.68%** | 2026-09-01 | **+68.0 bps** | Official Observed |
-| **RO** | RO 10Y Benchmark | **6.71%** | 2026-09-01 | **+171.0 bps** | Official Observed |
+| **PL** | PL 10Y Benchmark | **6.23%** | 2026-09-01 | **+124.0 bps** | Official Observed |
+| **CZ** | CZ 10Y Benchmark | **5.24%** | 2026-09-01 | **+25.0 bps** | Official Observed |
+| **HU** | HU 10Y Benchmark | **5.68%** | 2026-09-01 | **+69.0 bps** | Official Observed |
+| **RO** | RO 10Y Benchmark | **6.71%** | 2026-09-01 | **+172.0 bps** | Official Observed |
 
 ---
 

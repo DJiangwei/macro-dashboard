@@ -307,6 +307,20 @@ indicators:
     caveat_en: Seasonally adjusted manufacturing sector capacity utilization rate.
     caveat_zh: 季调后制造业产能利用率。
 
+  - id: composite_leading_indicator
+    section: production_cycle
+    label_en: OECD Composite Leading Indicator (Amplitude Adjusted)
+    label_zh: OECD综合领先指标 (振幅调整)
+    unit: "Index (Long-term trend = 100)"
+    fetcher: fred
+    series: TURLOLITOAASTSAM
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/TURLOLITOAASTSAM
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: OECD amplitude-adjusted Composite Leading Indicator (CLI) for Turkey.
+    caveat_zh: OECD编制的土耳其振幅调整综合领先指标（CLI）。
+
   # ==========================================
   # 3. Labour & Wages
   # ==========================================
@@ -355,20 +369,48 @@ indicators:
   # ==========================================
   - id: cpi_inflation
     section: prices_costs
-    label_en: Headline HICP Inflation YoY
-    label_zh: 调和CPI通胀率同比
+    label_en: Headline CPI Inflation YoY
+    label_zh: 总体CPI通胀率同比
     unit: "% y/y"
-    fetcher: eurostat
-    dataset: prc_hicp_manr
-    filters:
-      geo: TR
-      coicop: CP00
-    source_name: Eurostat / TurkStat
-    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=en
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: TUR.CPI._T.YOY_PCH_PA_PT.M
+    source_name: IMF SDMX / TurkStat
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/TUR.CPI._T.YOY_PCH_PA_PT.M
     frequency: monthly
     start_date: 2005-01-01
-    caveat_en: Harmonised Index of Consumer Prices headline annual rate of change.
-    caveat_zh: 欧盟调和消费者价格指数（HICP）同比变动率。
+    caveat_en: Official monthly Consumer Price Index annual rate of change reported by TurkStat via IMF CPI.
+    caveat_zh: 土耳其统计局发布的官方月度消费者价格指数（CPI）同比变动率。
+
+  - id: cpi_inflation_mom
+    section: prices_costs
+    label_en: Headline CPI Inflation MoM
+    label_zh: 总体CPI通胀率环比
+    unit: "% m/m"
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: TUR.CPI._T.POP_PCH_PA_PT.M
+    source_name: IMF SDMX / TurkStat
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/TUR.CPI._T.POP_PCH_PA_PT.M
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Monthly sequential percentage change in headline CPI (key disinflation momentum gauge).
+    caveat_zh: 总体CPI月度环比变动率（衡量通胀动能的月频核心指标）。
+
+  - id: food_cpi_inflation
+    section: prices_costs
+    label_en: Food & Non-Alcoholic Beverages CPI YoY
+    label_zh: 食品与非酒精饮料CPI同比
+    unit: "% y/y"
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: TUR.CPI.CP01.YOY_PCH_PA_PT.M
+    source_name: IMF SDMX / TurkStat
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: COICOP 01 Food and non-alcoholic beverages CPI annual rate of change.
+    caveat_zh: COICOP 01食品及非酒精饮料CPI同比变动率。
 
   - id: core_hicp_inflation
     section: prices_costs
@@ -458,18 +500,20 @@ indicators:
 
   - id: cpi_inflation_imf
     section: prices_costs
-    label_en: Headline CPI YoY (IMF Cross-Check)
-    label_zh: 总体CPI同比 (IMF交叉核对)
+    label_en: Headline HICP Inflation YoY (Eurostat Cross-Check)
+    label_zh: 欧盟调和HICP通胀率同比 (交叉核对)
     unit: "% y/y"
-    fetcher: imf_sdmx
-    dataflow: CPI
-    series: TUR.CPI._T.YOY_PCH_PA_PT.M
-    source_name: IMF SDMX / TurkStat
-    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/TUR.CPI._T.YOY_PCH_PA_PT.M
+    fetcher: eurostat
+    dataset: prc_hicp_manr
+    filters:
+      geo: TR
+      coicop: CP00
+    source_name: Eurostat / TurkStat
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=en
     frequency: monthly
     start_date: 2005-01-01
-    caveat_en: Official CPI series transmitted to the IMF Consumer Price Index database.
-    caveat_zh: 土耳其统计局报送IMF的消费者价格指数同比。
+    caveat_en: Harmonised Index of Consumer Prices headline annual rate of change.
+    caveat_zh: 欧盟调和消费者价格指数（HICP）同比变动率。
 
   # ==========================================
   # 5. Housing & Property
@@ -521,9 +565,9 @@ indicators:
     source_name: Central Bank of the Republic of Turkey (TCMB)
     source_url: https://www.tcmb.gov.tr/kurlar/today.xml
     frequency: daily
-    start_date: 2026-01-01
-    caveat_en: Official daily fixing rate published by TCMB.
-    caveat_zh: 土耳其央行每日公布的官方买入汇率。
+    start_date: 2005-01-01
+    caveat_en: Official TCMB daily fixing rate merged with OECD/FRED historical monthly spot series.
+    caveat_zh: 土耳其央行每日官方买入汇率（合并OECD/FRED历史序列）。
 
   - id: reer
     section: external_fx
@@ -555,6 +599,36 @@ indicators:
     caveat_en: Monthly nominal effective exchange rate calculated against 120 trading partners.
     caveat_zh: 对120个贸易伙伴的月度名义有效汇率。
 
+  - id: goods_exports
+    section: external_fx
+    label_en: Exports of Goods SA (USD)
+    label_zh: 季调货物出口额 (美元)
+    unit: "USD mn"
+    fetcher: fred
+    series: XTEXVA01TRM667S
+    scale: 1000000
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/XTEXVA01TRM667S
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Seasonally adjusted monthly merchandise exports in millions of US dollars.
+    caveat_zh: 季调月度货物出口总额（百万美元）。
+
+  - id: goods_imports
+    section: external_fx
+    label_en: Imports of Goods SA (USD)
+    label_zh: 季调货物进口额 (美元)
+    unit: "USD mn"
+    fetcher: fred
+    series: XTIMVA01TRM667S
+    scale: 1000000
+    source_name: FRED / OECD
+    source_url: https://fred.stlouisfed.org/series/XTIMVA01TRM667S
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Seasonally adjusted monthly merchandise imports in millions of US dollars.
+    caveat_zh: 季调月度货物进口总额（百万美元）。
+
   - id: current_account_usd
     section: external_fx
     label_en: Current Account Balance (USD)
@@ -563,7 +637,7 @@ indicators:
     fetcher: imf_sdmx
     dataflow: BOP
     series: TUR.NETCD_T.CAB.USD.Q
-    scale: 0.000001
+    scale: 1000000
     source_name: IMF SDMX / CBRT
     source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/TUR.NETCD_T.CAB.USD.Q
     frequency: quarterly
@@ -579,7 +653,7 @@ indicators:
     fetcher: imf_sdmx
     dataflow: BOP
     series: TUR.NETCD_T.G.USD.Q
-    scale: 0.000001
+    scale: 1000000
     source_name: IMF SDMX / CBRT
     source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/TUR.NETCD_T.G.USD.Q
     frequency: quarterly
@@ -595,7 +669,7 @@ indicators:
     fetcher: imf_sdmx
     dataflow: BOP
     series: TUR.NETCD_T.S.USD.Q
-    scale: 0.000001
+    scale: 1000000
     source_name: IMF SDMX / CBRT
     source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/TUR.NETCD_T.S.USD.Q
     frequency: quarterly
@@ -603,13 +677,29 @@ indicators:
     caveat_en: Quarterly services balance in millions of US dollars (crucial tourism FX revenue).
     caveat_zh: 季度服务贸易净额（百万美元，包含关键的旅游业外汇收入）。
 
+  - id: fdi_net_usd
+    section: external_fx
+    label_en: Direct Investment Net Acquisition of Assets vs Liabilities (USD)
+    label_zh: 直接投资净额 (FDI，美元)
+    unit: "USD mn"
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: TUR.NNAFANIL_T.D_F.USD.Q
+    scale: 1000000
+    source_name: IMF SDMX / CBRT
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/TUR.NNAFANIL_T.D_F.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 financial account direct investment net balance in millions of US dollars.
+    caveat_zh: BPM6金融账户季度直接投资净额（百万美元）。
+
   - id: current_account_gdp
     section: external_fx
     label_en: Current Account Balance (% of GDP)
     label_zh: 经常账户占GDP比重
     unit: "% of GDP"
     fetcher: imf_datamapper
-    indicator: BCA_NGDPD
+    series: BCA_NGDPD
     country_iso3: TUR
     actual_through: 2025
     source_name: IMF WEO DataMapper
@@ -628,7 +718,7 @@ indicators:
     label_zh: 广义政府总债务占GDP比重
     unit: "% of GDP"
     fetcher: imf_datamapper
-    indicator: GGXWDG_NGDP
+    series: GGXWDG_NGDP
     country_iso3: TUR
     actual_through: 2025
     source_name: IMF WEO DataMapper
@@ -644,7 +734,7 @@ indicators:
     label_zh: 广义政府净借贷占GDP比重 (财政赤字率)
     unit: "% of GDP"
     fetcher: imf_datamapper
-    indicator: GGXCNL_NGDP
+    series: GGXCNL_NGDP
     country_iso3: TUR
     actual_through: 2025
     source_name: IMF WEO DataMapper
@@ -660,7 +750,7 @@ indicators:
     label_zh: 基本财政收支占GDP比重 (初级平衡)
     unit: "% of GDP"
     fetcher: imf_datamapper
-    indicator: GGXONLB_G01_GDP_PT
+    series: GGXONLB_G01_GDP_PT
     country_iso3: TUR
     actual_through: 2025
     source_name: IMF Fiscal Monitor

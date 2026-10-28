@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-28T15:22:59.184774+00:00",
+  "generated": "2026-10-28T23:04:46.767662+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -1780,7 +1780,7 @@
             "quality_status": "low_confidence",
             "source_authority": "official_primary",
             "derivation": "observed",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "high",
             "source_name": "Eurostat / DG ECFIN",
             "series": "",
@@ -4618,7 +4618,7 @@
       "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
       "headline_label": "Fed funds",
-      "headline": "3.88% (2026-10-26)",
+      "headline": "3.88% (2026-10-27)",
       "secondary_label": "Source groups",
       "secondary": "27",
       "quality": "27 source groups · 0 low-confidence charts",
@@ -4648,7 +4648,7 @@
           "label": "Fed funds",
           "value": 3.88,
           "display": "3.88 %",
-          "date": "2026-10-26",
+          "date": "2026-10-27",
           "source": "FRED / Federal Reserve",
           "quality_status": "verified"
         },
@@ -4802,16 +4802,17 @@
           }
         ],
         "quality_counts": {
-          "verified": 121,
-          "watch": 47
+          "verified": 120,
+          "watch": 48
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-28",
         "counts": {
-          "current": 139,
-          "due": 29
+          "current": 138,
+          "due": 29,
+          "scheduled_policy": 1
         },
         "latest_historical_date": "2026-10-28",
         "attention": [
@@ -5463,24 +5464,24 @@
         ],
         "file": "us_canonical_frame.json",
         "series": 168,
-        "observations": 118177,
+        "observations": 118190,
         "series_count": 168,
-        "observation_count": 118177
+        "observation_count": 118190
       },
       "freshness_summary": {
         "dashboard": "United States",
         "charts": 168,
-        "current": 131,
+        "current": 130,
         "stale": 6,
         "lagged_source": 0,
         "projection": 0,
-        "scheduled_policy": 0,
+        "scheduled_policy": 1,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 0,
         "latest_historical_date": "2026-10-28",
-        "headline_latest": "3.88% (2026-10-26)"
+        "headline_latest": "3.88% (2026-10-27)"
       }
     },
     {
@@ -5490,16 +5491,16 @@
       "currency": "TRY",
       "institution": "TCMB",
       "category": "data-first country page",
-      "charts": 36,
-      "expected": 36,
+      "charts": 45,
+      "expected": 45,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/TRY spot",
       "headline": "49.6997 (2026-10-27)",
       "secondary_label": "Source groups",
-      "secondary": "10",
-      "quality": "10 source groups · 12 low-confidence charts",
+      "secondary": "12",
+      "quality": "12 source groups · 12 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -5512,6 +5513,15 @@
           "source": "Eurostat / TurkStat",
           "quality_status": "verified"
         },
+        "inflation": {
+          "id": "cpi_inflation",
+          "label": "CPI inflation",
+          "value": 29.73151824541501,
+          "display": "29.7 % y/y",
+          "date": "2026-09-01",
+          "source": "IMF SDMX / TurkStat",
+          "quality_status": "watch"
+        },
         "policy": {
           "id": "policy_rate",
           "label": "1W Repo",
@@ -5520,10 +5530,46 @@
           "date": "2026-08-01",
           "source": "FRED / OECD",
           "quality_status": "watch"
+        },
+        "external": {
+          "id": "current_account_gdp",
+          "label": "Current account/GDP",
+          "value": -1.9,
+          "display": "-1.90 % of GDP",
+          "date": "2025",
+          "source": "IMF WEO DataMapper",
+          "quality_status": "watch"
+        },
+        "fiscal": {
+          "id": "government_debt_gdp",
+          "label": "Government debt/GDP",
+          "value": 23.7,
+          "display": "23.7 % of GDP",
+          "date": "2025",
+          "source": "IMF WEO DataMapper",
+          "quality_status": "watch"
+        },
+        "financial": {
+          "id": "try_usd",
+          "label": "USD/TRY",
+          "value": 49.6997,
+          "display": "49.7 TRY per USD",
+          "date": "2026-10-27",
+          "source": "Central Bank of the Republic of Turkey (TCMB)",
+          "quality_status": "verified"
+        },
+        "property": {
+          "id": "house_price_growth",
+          "label": "House prices",
+          "value": 28.5,
+          "display": "28.5 % y/y",
+          "date": "2024-10-01",
+          "source": "Eurostat / CBRT",
+          "quality_status": "low_confidence"
         }
       },
       "source_health": {
-        "source_groups": 10,
+        "source_groups": 12,
         "sources": [
           {
             "source_name": "Eurostat / TurkStat",
@@ -5534,7 +5580,15 @@
             "charts": 4
           },
           {
+            "source_name": "FRED / OECD",
+            "charts": 4
+          },
+          {
             "source_name": "IMF SDMX / CBRT",
+            "charts": 4
+          },
+          {
+            "source_name": "IMF WEO DataMapper",
             "charts": 3
           },
           {
@@ -5550,6 +5604,10 @@
             "charts": 2
           },
           {
+            "source_name": "IMF SDMX / TurkStat",
+            "charts": 2
+          },
+          {
             "source_name": "Central Bank of the Republic of Turkey (TCMB)",
             "charts": 1
           },
@@ -5558,26 +5616,23 @@
             "charts": 1
           },
           {
-            "source_name": "FRED / OECD",
-            "charts": 1
-          },
-          {
-            "source_name": "IMF SDMX / TurkStat",
+            "source_name": "IMF Fiscal Monitor",
             "charts": 1
           }
         ],
         "quality_counts": {
           "low_confidence": 12,
           "verified": 14,
-          "watch": 10
+          "watch": 19
         },
-        "unavailable_count": 4
+        "unavailable_count": 1
       },
       "freshness": {
         "as_of_date": "2026-10-28",
         "counts": {
-          "current": 20,
-          "due": 4,
+          "current": 23,
+          "due": 6,
+          "projection": 4,
           "stale": 12
         },
         "latest_historical_date": "2026-10-27",
@@ -5693,9 +5748,9 @@
             "transform": "level"
           },
           {
-            "id": "cpi_inflation",
-            "concept_id": "headline_inflation",
-            "label_en": "Headline HICP Inflation YoY",
+            "id": "cpi_inflation_imf",
+            "concept_id": "tr:cpi_inflation_imf",
+            "label_en": "Headline HICP Inflation YoY (Eurostat Cross-Check)",
             "latest_date": "2025-12-01",
             "frequency": "monthly",
             "freshness_status": "stale",
@@ -5913,6 +5968,50 @@
             "transform": "level"
           },
           {
+            "id": "goods_exports",
+            "concept_id": "tr:goods_exports",
+            "label_en": "Exports of Goods SA (USD)",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / OECD",
+            "series": "XTEXVA01TRM667S",
+            "transform": "level"
+          },
+          {
+            "id": "goods_imports",
+            "concept_id": "tr:goods_imports",
+            "label_en": "Imports of Goods SA (USD)",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / OECD",
+            "series": "XTIMVA01TRM667S",
+            "transform": "level"
+          },
+          {
             "id": "policy_rate",
             "concept_id": "policy_rate",
             "label_en": "Overnight Interbank Rate (Immediate Rates)",
@@ -5943,15 +6042,15 @@
           "value"
         ],
         "file": "turkey_canonical_frame.json",
-        "series": 36,
-        "observations": 5813,
-        "series_count": 36,
-        "observation_count": 5813
+        "series": 45,
+        "observations": 7089,
+        "series_count": 45,
+        "observation_count": 7089
       },
       "freshness_summary": {
         "dashboard": "Turkey",
-        "charts": 36,
-        "current": 20,
+        "charts": 45,
+        "current": 27,
         "stale": 12,
         "lagged_source": 0,
         "projection": 0,
@@ -5971,16 +6070,16 @@
       "currency": "HKD",
       "institution": "HKMA",
       "category": "data-first country page",
-      "charts": 24,
-      "expected": 24,
+      "charts": 37,
+      "expected": 37,
       "proxy_fills": 0,
       "gaps_or_dropped": 1,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/HKD spot",
       "headline": "7.8423 (2026-10-23)",
       "secondary_label": "Source groups",
-      "secondary": "9",
-      "quality": "9 source groups · 5 low-confidence charts",
+      "secondary": "10",
+      "quality": "10 source groups · 7 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -6040,14 +6139,30 @@
         }
       },
       "source_health": {
-        "source_groups": 9,
+        "source_groups": 10,
         "sources": [
           {
             "source_name": "HK C&SD",
             "charts": 9
           },
           {
+            "source_name": "HK C&SD (National Accounts)",
+            "charts": 6
+          },
+          {
             "source_name": "FRED / BIS",
+            "charts": 5
+          },
+          {
+            "source_name": "IMF SDMX / HK C&SD",
+            "charts": 4
+          },
+          {
+            "source_name": "HK C&SD (General Household Survey)",
+            "charts": 3
+          },
+          {
+            "source_name": "IMF WEO DataMapper",
             "charts": 3
           },
           {
@@ -6055,7 +6170,7 @@
             "charts": 2
           },
           {
-            "source_name": "HK C&SD (National Accounts)",
+            "source_name": "FRED / Federal Reserve Board",
             "charts": 2
           },
           {
@@ -6063,36 +6178,24 @@
             "charts": 2
           },
           {
-            "source_name": "IMF SDMX / HK C&SD",
-            "charts": 2
-          },
-          {
-            "source_name": "IMF WEO DataMapper",
-            "charts": 2
-          },
-          {
-            "source_name": "FRED / Federal Reserve Board",
-            "charts": 1
-          },
-          {
-            "source_name": "HK C&SD (General Household Survey)",
+            "source_name": "IMF Fiscal Monitor",
             "charts": 1
           }
         ],
         "quality_counts": {
-          "low_confidence": 5,
-          "verified": 9,
-          "watch": 10
+          "low_confidence": 7,
+          "verified": 15,
+          "watch": 15
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-28",
         "counts": {
-          "current": 13,
+          "current": 22,
           "due": 4,
-          "projection": 2,
-          "stale": 5
+          "projection": 4,
+          "stale": 7
         },
         "latest_historical_date": "2026-10-23",
         "attention": [
@@ -6138,6 +6241,50 @@
             "comparability": "medium",
             "source_name": "IMF / DBnomics (Financial Soundness Indicators)",
             "series": "IMF/FSI/Q.HK.FSANL_PT",
+            "transform": "level"
+          },
+          {
+            "id": "bank_credit_gdp",
+            "concept_id": "hk:bank_credit_gdp",
+            "label_en": "Bank Credit to Private Non-Financial Sector (% of GDP)",
+            "latest_date": "2025-10-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2025-10-01",
+            "age_days": 301,
+            "threshold_days": 165,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / BIS",
+            "series": "QHKPBM770A",
+            "transform": "level"
+          },
+          {
+            "id": "household_credit_gdp",
+            "concept_id": "hk:household_credit_gdp",
+            "label_en": "Credit to Households & NPISHs (% of GDP)",
+            "latest_date": "2025-10-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2025-10-01",
+            "age_days": 301,
+            "threshold_days": 165,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "FRED / BIS",
+            "series": "QHKHAM770A",
             "transform": "level"
           },
           {
@@ -6303,23 +6450,23 @@
           "value"
         ],
         "file": "hong_kong_canonical_frame.json",
-        "series": 24,
-        "observations": 4186,
-        "series_count": 24,
-        "observation_count": 4186
+        "series": 37,
+        "observations": 11253,
+        "series_count": 37,
+        "observation_count": 11253
       },
       "freshness_summary": {
         "dashboard": "Hong Kong",
-        "charts": 24,
-        "current": 15,
-        "stale": 5,
+        "charts": 37,
+        "current": 26,
+        "stale": 7,
         "lagged_source": 0,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 5,
+        "low_confidence": 7,
         "latest_historical_date": "2026-10-23",
         "headline_latest": ""
       }
@@ -6331,8 +6478,8 @@
       "currency": "KRW",
       "institution": "BOK",
       "category": "data-first country page",
-      "charts": 36,
-      "expected": 36,
+      "charts": 39,
+      "expected": 39,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
@@ -6374,8 +6521,8 @@
         "external": {
           "id": "current_account_usd",
           "label": "Current account",
-          "value": 1.166301e+17,
-          "display": "116,630,100,000,000,000 USD mn",
+          "value": 116630.1,
+          "display": "116,630 USD mn",
           "date": "2026-04-01",
           "source": "IMF SDMX / Bank of Korea",
           "quality_status": "watch"
@@ -6421,6 +6568,10 @@
           },
           {
             "source_name": "IMF SDMX / Bank of Korea",
+            "charts": 5
+          },
+          {
+            "source_name": "IMF SDMX / Statistics Korea",
             "charts": 3
           },
           {
@@ -6436,10 +6587,6 @@
             "charts": 2
           },
           {
-            "source_name": "IMF SDMX / Statistics Korea",
-            "charts": 2
-          },
-          {
             "source_name": "FRED / Federal Reserve Board",
             "charts": 1
           },
@@ -6450,14 +6597,14 @@
         ],
         "quality_counts": {
           "low_confidence": 9,
-          "watch": 27
+          "watch": 30
         },
-        "unavailable_count": 0
+        "unavailable_count": 3
       },
       "freshness": {
         "as_of_date": "2026-10-28",
         "counts": {
-          "current": 14,
+          "current": 17,
           "due": 9,
           "projection": 4,
           "stale": 9
@@ -6869,15 +7016,15 @@
           "value"
         ],
         "file": "south_korea_canonical_frame.json",
-        "series": 36,
-        "observations": 8369,
-        "series_count": 36,
-        "observation_count": 8369
+        "series": 39,
+        "observations": 8862,
+        "series_count": 39,
+        "observation_count": 8862
       },
       "freshness_summary": {
         "dashboard": "South Korea",
-        "charts": 36,
-        "current": 18,
+        "charts": 39,
+        "current": 21,
         "stale": 9,
         "lagged_source": 0,
         "projection": 0,
@@ -6897,16 +7044,16 @@
       "currency": "TWD",
       "institution": "CBC",
       "category": "data-first country page",
-      "charts": 37,
-      "expected": 37,
+      "charts": 46,
+      "expected": 46,
       "proxy_fills": 0,
       "gaps_or_dropped": 1,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/TWD spot",
       "headline": "32.54 (2026-10-23)",
       "secondary_label": "Source groups",
-      "secondary": "6",
-      "quality": "6 source groups · 1 low-confidence charts",
+      "secondary": "7",
+      "quality": "7 source groups · 2 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -6967,27 +7114,31 @@
         "property": {
           "id": "mortgage_loans_growth",
           "label": "Mortgage growth",
-          "value": 30522.0,
-          "display": "30,522 % y/y",
+          "value": 4.58,
+          "display": "4.58 % y/y",
           "date": "2026-08-01",
           "source": "Central Bank of the Republic of China (Taiwan)",
           "quality_status": "watch"
         }
       },
       "source_health": {
-        "source_groups": 6,
+        "source_groups": 7,
         "sources": [
           {
             "source_name": "Central Bank of the Republic of China (Taiwan)",
-            "charts": 19
+            "charts": 22
           },
           {
             "source_name": "Taiwan DGBAS",
-            "charts": 10
+            "charts": 13
           },
           {
             "source_name": "IMF WEO DataMapper",
             "charts": 4
+          },
+          {
+            "source_name": "Taiwan Ministry of Finance (Customs Administration)",
+            "charts": 3
           },
           {
             "source_name": "Bruegel (Darvas 120-Trading-Partner Basket)",
@@ -7003,19 +7154,19 @@
           }
         ],
         "quality_counts": {
-          "low_confidence": 1,
-          "verified": 15,
-          "watch": 21
+          "low_confidence": 2,
+          "verified": 18,
+          "watch": 26
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-28",
         "counts": {
-          "current": 18,
-          "due": 14,
+          "current": 21,
+          "due": 19,
           "projection": 4,
-          "stale": 1
+          "stale": 2
         },
         "latest_historical_date": "2026-10-23",
         "attention": [
@@ -7038,6 +7189,28 @@
             "validation": "passed",
             "comparability": "high",
             "source_name": "Taiwan DGBAS",
+            "series": "",
+            "transform": "level"
+          },
+          {
+            "id": "bank_npl_ratio",
+            "concept_id": "tw:bank_npl_ratio",
+            "label_en": "Domestic Banks Non-Performing Loan (NPL) Ratio",
+            "latest_date": "2026-07-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-07-01",
+            "age_days": 89,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "Central Bank of the Republic of China (Taiwan)",
             "series": "",
             "transform": "level"
           },
@@ -7130,6 +7303,28 @@
             "transform": "level"
           },
           {
+            "id": "construction_loans_growth",
+            "concept_id": "tw:construction_loans_growth",
+            "label_en": "Construction Loans YoY Growth",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "Central Bank of the Republic of China (Taiwan)",
+            "series": "",
+            "transform": "level"
+          },
+          {
             "id": "consumer_loans_growth",
             "concept_id": "private_credit_growth",
             "label_en": "Consumer Loans YoY Growth",
@@ -7152,9 +7347,97 @@
             "transform": "level"
           },
           {
+            "id": "customs_exports_yoy",
+            "concept_id": "tw:customs_exports_yoy",
+            "label_en": "Monthly Customs Merchandise Exports YoY (NTD Basis)",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "Taiwan Ministry of Finance (Customs Administration)",
+            "series": "",
+            "transform": "yoy_pct"
+          },
+          {
+            "id": "customs_imports_yoy",
+            "concept_id": "tw:customs_imports_yoy",
+            "label_en": "Monthly Customs Merchandise Imports YoY (NTD Basis)",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "Taiwan Ministry of Finance (Customs Administration)",
+            "series": "",
+            "transform": "yoy_pct"
+          },
+          {
+            "id": "customs_trade_balance",
+            "concept_id": "tw:customs_trade_balance",
+            "label_en": "Monthly Customs Merchandise Trade Balance (NTD)",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "Taiwan Ministry of Finance (Customs Administration)",
+            "series": "",
+            "transform": "level"
+          },
+          {
             "id": "deposit_rate_1y",
             "concept_id": "tw:deposit_rate_1y",
             "label_en": "Five Major Banks 1-Year Time Deposit Rate",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "Central Bank of the Republic of China (Taiwan)",
+            "series": "",
+            "transform": "level"
+          },
+          {
+            "id": "fx_reserves",
+            "concept_id": "tw:fx_reserves",
+            "label_en": "Official Foreign Exchange Reserves (USD)",
             "latest_date": "2026-08-01",
             "frequency": "monthly",
             "freshness_status": "due",
@@ -7358,23 +7641,23 @@
           "value"
         ],
         "file": "taiwan_canonical_frame.json",
-        "series": 37,
-        "observations": 8480,
-        "series_count": 37,
-        "observation_count": 8480
+        "series": 46,
+        "observations": 10009,
+        "series_count": 46,
+        "observation_count": 10009
       },
       "freshness_summary": {
         "dashboard": "Taiwan",
-        "charts": 37,
-        "current": 22,
-        "stale": 1,
+        "charts": 46,
+        "current": 25,
+        "stale": 2,
         "lagged_source": 0,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 1,
+        "low_confidence": 2,
         "latest_historical_date": "2026-10-23",
         "headline_latest": ""
       }
@@ -7386,36 +7669,36 @@
       "currency": "KZT",
       "institution": "NBK",
       "category": "data-first country page",
-      "charts": 28,
-      "expected": 28,
+      "charts": 33,
+      "expected": 33,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/KZT official rate",
-      "headline": "457.09 (2026-10-29)",
+      "headline": "457.09 (2026-10-28)",
       "secondary_label": "Source groups",
-      "secondary": "10",
-      "quality": "10 source groups · 8 low-confidence charts",
+      "secondary": "12",
+      "quality": "12 source groups · 4 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
         "growth": {
           "id": "real_gdp_growth",
           "label": "Real GDP",
-          "value": 3.6,
-          "display": "3.60 %",
-          "date": "2031",
+          "value": 6.5,
+          "display": "6.50 %",
+          "date": "2025",
           "source": "IMF DataMapper (WEO)",
-          "quality_status": "unavailable"
+          "quality_status": "watch"
         },
         "inflation": {
           "id": "cpi_inflation",
           "label": "CPI inflation",
-          "value": 11.343968822397,
-          "display": "11.3 % y/y",
-          "date": "2025-05-01",
-          "source": "IMF / DBnomics (IFS)",
-          "quality_status": "low_confidence"
+          "value": 9.239766081871345,
+          "display": "9.24 % y/y",
+          "date": "2026-09-01",
+          "source": "IMF SDMX / Kazakhstan BNS",
+          "quality_status": "watch"
         },
         "policy": {
           "id": "policy_rate",
@@ -7429,45 +7712,45 @@
         "external": {
           "id": "current_account_gdp",
           "label": "Current account/GDP",
-          "value": -2.9,
-          "display": "-2.90 % of GDP",
-          "date": "2031",
+          "value": -4.1,
+          "display": "-4.10 % of GDP",
+          "date": "2025",
           "source": "IMF DataMapper (WEO)",
-          "quality_status": "unavailable"
+          "quality_status": "watch"
         },
         "fiscal": {
           "id": "government_debt_gdp",
           "label": "Government debt/GDP",
-          "value": 29.8,
-          "display": "29.8 % of GDP",
-          "date": "2031",
+          "value": 24.3,
+          "display": "24.3 % of GDP",
+          "date": "2025",
           "source": "IMF DataMapper (WEO)",
-          "quality_status": "unavailable"
+          "quality_status": "watch"
         },
         "financial": {
           "id": "usd_kzt",
           "label": "USD/KZT",
           "value": 457.09,
           "display": "457 KZT",
-          "date": "2026-10-29",
+          "date": "2026-10-28",
           "source": "National Bank of Kazakhstan (NBK)",
-          "quality_status": "unavailable"
+          "quality_status": "verified"
         },
         "property": {
           "id": "brent_crude_oil",
           "label": "Brent crude oil",
-          "value": 115.22,
-          "display": "115 USD/bbl",
-          "date": "2026-10-20",
+          "value": 123.1,
+          "display": "123 USD/bbl",
+          "date": "2026-10-27",
           "source": "EIA / FRED",
           "quality_status": "watch"
         }
       },
       "source_health": {
-        "source_groups": 10,
+        "source_groups": 12,
         "sources": [
           {
-            "source_name": "IMF / DBnomics (IFS)",
+            "source_name": "IMF SDMX / NBK",
             "charts": 6
           },
           {
@@ -7483,11 +7766,19 @@
             "charts": 4
           },
           {
+            "source_name": "IMF SDMX / Kazakhstan BNS",
+            "charts": 3
+          },
+          {
             "source_name": "Bruegel (Darvas REER Dataset)",
             "charts": 2
           },
           {
             "source_name": "IMF / DBnomics (FSI)",
+            "charts": 2
+          },
+          {
+            "source_name": "IMF / DBnomics (IFS)",
             "charts": 2
           },
           {
@@ -7508,21 +7799,21 @@
           }
         ],
         "quality_counts": {
-          "low_confidence": 8,
-          "unavailable": 10,
-          "watch": 10
+          "low_confidence": 4,
+          "verified": 4,
+          "watch": 25
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-28",
         "counts": {
-          "current": 7,
-          "due": 3,
-          "future_date": 10,
-          "stale": 8
+          "current": 21,
+          "due": 2,
+          "projection": 6,
+          "stale": 4
         },
-        "latest_historical_date": "2026-10-20",
+        "latest_historical_date": "2026-10-28",
         "attention": [
           {
             "id": "policy_rate",
@@ -7635,94 +7926,6 @@
             "transform": "level"
           },
           {
-            "id": "current_account_usd",
-            "concept_id": "kz:current_account_usd",
-            "label_en": "Current Account Balance (USD Millions)",
-            "latest_date": "2025-03-31",
-            "frequency": "quarterly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-03-31",
-            "age_days": 576,
-            "threshold_days": 165,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/Q.KZ.BCAXF_BP6_USD",
-            "transform": "level"
-          },
-          {
-            "id": "goods_trade_balance",
-            "concept_id": "trade_balance",
-            "label_en": "Goods Trade Balance (USD Millions)",
-            "latest_date": "2025-03-31",
-            "frequency": "quarterly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-03-31",
-            "age_days": 576,
-            "threshold_days": 165,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/Q.KZ.BG_BP6_USD",
-            "transform": "level"
-          },
-          {
-            "id": "cpi_index",
-            "concept_id": "kz:cpi_index",
-            "label_en": "Headline Consumer Price Index (2020=100)",
-            "latest_date": "2025-05-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-05-01",
-            "age_days": 515,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/M.KZ.PCPI_IX",
-            "transform": "level"
-          },
-          {
-            "id": "cpi_inflation",
-            "concept_id": "headline_inflation",
-            "label_en": "Headline CPI Inflation YoY",
-            "latest_date": "2025-05-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-05-01",
-            "age_days": 515,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/M.KZ.PCPI_PC_CP_A_PT",
-            "transform": "level"
-          },
-          {
             "id": "usd_kzt_ifs",
             "concept_id": "fx_spot",
             "label_en": "USD/KZT End-of-Period (IMF IFS)",
@@ -7743,248 +7946,6 @@
             "source_name": "IMF / DBnomics (IFS)",
             "series": "IMF/IFS/M.KZ.ENDE_XDC_USD_RATE",
             "transform": "level"
-          },
-          {
-            "id": "brent_crude_oil",
-            "concept_id": "kz:brent_crude_oil",
-            "label_en": "Crude Oil Prices: Brent - Europe",
-            "latest_date": "2026-10-20",
-            "frequency": "daily",
-            "freshness_status": "due",
-            "age_basis_date": "2026-10-20",
-            "age_days": 8,
-            "threshold_days": 10,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "EIA / FRED",
-            "series": "DCOILBRENTEU",
-            "transform": "level"
-          },
-          {
-            "id": "cny_kzt",
-            "concept_id": "kz:cny_kzt",
-            "label_en": "CNY/KZT Official Exchange Rate",
-            "latest_date": "2026-10-29",
-            "frequency": "daily",
-            "freshness_status": "future_date",
-            "age_basis_date": "2026-10-29",
-            "age_days": null,
-            "threshold_days": 10,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "National Bank of Kazakhstan (NBK)",
-            "series": "",
-            "transform": "level"
-          },
-          {
-            "id": "cpi_inflation_weo",
-            "concept_id": "kz:cpi_inflation_weo",
-            "label_en": "Headline Inflation (IMF WEO Cross-Check)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "PCPIPCH/KAZ",
-            "transform": "level"
-          },
-          {
-            "id": "current_account_gdp",
-            "concept_id": "current_account_gdp",
-            "label_en": "Current Account Balance (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "BCA_NGDPD/KAZ",
-            "transform": "level"
-          },
-          {
-            "id": "eur_kzt",
-            "concept_id": "kz:eur_kzt",
-            "label_en": "EUR/KZT Official Exchange Rate",
-            "latest_date": "2026-10-29",
-            "frequency": "daily",
-            "freshness_status": "future_date",
-            "age_basis_date": "2026-10-29",
-            "age_days": null,
-            "threshold_days": 10,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "National Bank of Kazakhstan (NBK)",
-            "series": "",
-            "transform": "level"
-          },
-          {
-            "id": "fiscal_balance_gdp",
-            "concept_id": "fiscal_balance_gdp",
-            "label_en": "Fiscal Balance (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "GGXCNL_NGDP/KAZ",
-            "transform": "level"
-          },
-          {
-            "id": "government_debt_gdp",
-            "concept_id": "government_debt_gdp",
-            "label_en": "General Government Gross Debt (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "GGXWDG_NGDP/KAZ",
-            "transform": "level"
-          },
-          {
-            "id": "primary_balance_gdp",
-            "concept_id": "primary_balance_gdp",
-            "label_en": "Primary Net Lending/Borrowing (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (Fiscal Monitor)",
-            "series": "GGXONLB_G01_GDP_PT/KAZ",
-            "transform": "level"
-          },
-          {
-            "id": "real_gdp_growth",
-            "concept_id": "real_gdp_growth_yoy",
-            "label_en": "Real GDP Growth",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "NGDP_RPCH/KAZ",
-            "transform": "level"
-          },
-          {
-            "id": "rub_kzt",
-            "concept_id": "kz:rub_kzt",
-            "label_en": "RUB/KZT Official Exchange Rate",
-            "latest_date": "2026-10-29",
-            "frequency": "daily",
-            "freshness_status": "future_date",
-            "age_basis_date": "2026-10-29",
-            "age_days": null,
-            "threshold_days": 10,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "National Bank of Kazakhstan (NBK)",
-            "series": "",
-            "transform": "level"
-          },
-          {
-            "id": "usd_kzt",
-            "concept_id": "fx_spot",
-            "label_en": "USD/KZT Official Exchange Rate",
-            "latest_date": "2026-10-29",
-            "frequency": "daily",
-            "freshness_status": "future_date",
-            "age_basis_date": "2026-10-29",
-            "age_days": null,
-            "threshold_days": 10,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "National Bank of Kazakhstan (NBK)",
-            "series": "",
-            "transform": "level"
           }
         ]
       },
@@ -7995,24 +7956,24 @@
           "value"
         ],
         "file": "kazakhstan_canonical_frame.json",
-        "series": 28,
-        "observations": 8717,
-        "series_count": 28,
-        "observation_count": 8717
+        "series": 33,
+        "observations": 9680,
+        "series_count": 33,
+        "observation_count": 9680
       },
       "freshness_summary": {
         "dashboard": "Kazakhstan",
-        "charts": 28,
-        "current": 7,
-        "stale": 8,
+        "charts": 33,
+        "current": 27,
+        "stale": 4,
         "lagged_source": 0,
-        "projection": 6,
+        "projection": 0,
         "scheduled_policy": 0,
-        "future_date": 4,
+        "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 8,
-        "latest_historical_date": "2026-10-20",
+        "low_confidence": 4,
+        "latest_historical_date": "2026-10-28",
         "headline_latest": ""
       }
     },
@@ -8023,36 +7984,36 @@
       "currency": "UZS",
       "institution": "CBU",
       "category": "data-first country page",
-      "charts": 26,
-      "expected": 26,
+      "charts": 32,
+      "expected": 32,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/UZS official rate",
       "headline": "12,591.57 (2025-07-01)",
       "secondary_label": "Source groups",
-      "secondary": "8",
-      "quality": "8 source groups · 10 low-confidence charts",
+      "secondary": "10",
+      "quality": "10 source groups · 6 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
         "growth": {
           "id": "real_gdp_growth",
           "label": "Real GDP",
-          "value": 5.7,
-          "display": "5.70 %",
-          "date": "2031",
+          "value": 7.7,
+          "display": "7.70 %",
+          "date": "2025",
           "source": "IMF DataMapper (WEO)",
-          "quality_status": "unavailable"
+          "quality_status": "watch"
         },
         "inflation": {
           "id": "cpi_inflation",
           "label": "CPI inflation",
-          "value": 8.71469473362344,
-          "display": "8.71 % y/y",
-          "date": "2025-06-01",
-          "source": "IMF / DBnomics (IFS)",
-          "quality_status": "low_confidence"
+          "value": 6.226301479299238,
+          "display": "6.23 % y/y",
+          "date": "2026-08-01",
+          "source": "IMF SDMX / Statistics Agency of Uzbekistan",
+          "quality_status": "watch"
         },
         "policy": {
           "id": "policy_rate",
@@ -8075,11 +8036,11 @@
         "fiscal": {
           "id": "government_debt_gdp",
           "label": "Government debt/GDP",
-          "value": 25.0,
-          "display": "25.0 % of GDP",
-          "date": "2031",
+          "value": 28.6,
+          "display": "28.6 % of GDP",
+          "date": "2025",
           "source": "IMF DataMapper (WEO)",
-          "quality_status": "unavailable"
+          "quality_status": "watch"
         },
         "financial": {
           "id": "usd_uzs",
@@ -8101,11 +8062,11 @@
         }
       },
       "source_health": {
-        "source_groups": 8,
+        "source_groups": 10,
         "sources": [
           {
-            "source_name": "IMF / DBnomics (IFS)",
-            "charts": 8
+            "source_name": "IMF SDMX / CBU",
+            "charts": 7
           },
           {
             "source_name": "World Bank WDI",
@@ -8114,6 +8075,14 @@
           {
             "source_name": "IMF DataMapper (WEO)",
             "charts": 5
+          },
+          {
+            "source_name": "IMF / DBnomics (IFS)",
+            "charts": 4
+          },
+          {
+            "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
+            "charts": 3
           },
           {
             "source_name": "Bruegel (Darvas REER Dataset)",
@@ -8137,18 +8106,18 @@
           }
         ],
         "quality_counts": {
-          "low_confidence": 10,
-          "unavailable": 6,
-          "watch": 10
+          "low_confidence": 6,
+          "watch": 26
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-28",
         "counts": {
-          "current": 10,
-          "future_date": 6,
-          "stale": 10
+          "current": 17,
+          "due": 3,
+          "projection": 6,
+          "stale": 6
         },
         "latest_historical_date": "2026-09-01",
         "attention": [
@@ -8219,50 +8188,6 @@
             "transform": "level"
           },
           {
-            "id": "current_account_usd",
-            "concept_id": "uz:current_account_usd",
-            "label_en": "Current Account Balance (USD Millions)",
-            "latest_date": "2025-03-31",
-            "frequency": "quarterly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-03-31",
-            "age_days": 576,
-            "threshold_days": 165,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/Q.UZ.BCAXF_BP6_USD",
-            "transform": "level"
-          },
-          {
-            "id": "goods_trade_balance",
-            "concept_id": "trade_balance",
-            "label_en": "Goods Trade Balance (USD Millions)",
-            "latest_date": "2025-03-31",
-            "frequency": "quarterly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-03-31",
-            "age_days": 576,
-            "threshold_days": 165,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/Q.UZ.BG_BP6_USD",
-            "transform": "level"
-          },
-          {
             "id": "bank_capital_ratio",
             "concept_id": "bank_capital_ratio",
             "label_en": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
@@ -8307,50 +8232,6 @@
             "transform": "level"
           },
           {
-            "id": "cpi_index",
-            "concept_id": "uz:cpi_index",
-            "label_en": "Headline Consumer Price Index (2020=100)",
-            "latest_date": "2025-06-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-06-01",
-            "age_days": 485,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/M.UZ.PCPI_IX",
-            "transform": "level"
-          },
-          {
-            "id": "cpi_inflation",
-            "concept_id": "headline_inflation",
-            "label_en": "Headline CPI Inflation YoY",
-            "latest_date": "2025-06-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-06-01",
-            "age_days": 485,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/M.UZ.PCPI_PC_CP_A_PT",
-            "transform": "level"
-          },
-          {
             "id": "usd_uzs",
             "concept_id": "fx_spot",
             "label_en": "USD/UZS End-of-Period Official Rate",
@@ -8373,135 +8254,69 @@
             "transform": "level"
           },
           {
-            "id": "cpi_inflation_weo",
-            "concept_id": "uz:cpi_inflation_weo",
-            "label_en": "Headline Inflation (IMF WEO Cross-Check)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
+            "id": "cpi_index",
+            "concept_id": "uz:cpi_index",
+            "label_en": "Headline Consumer Price Index",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
             "due_date": "",
-            "quality_status": "unavailable",
+            "quality_status": "watch",
             "source_authority": "official_mirror",
             "derivation": "observed",
             "validation": "passed",
             "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "PCPIPCH/UZB",
+            "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
+            "series": "UZB.CPI._T.IX.M",
             "transform": "level"
           },
           {
-            "id": "current_account_gdp",
-            "concept_id": "current_account_gdp",
-            "label_en": "Current Account Balance (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
+            "id": "cpi_inflation",
+            "concept_id": "headline_inflation",
+            "label_en": "Headline CPI Inflation YoY",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
             "due_date": "",
-            "quality_status": "unavailable",
+            "quality_status": "watch",
             "source_authority": "official_mirror",
             "derivation": "observed",
             "validation": "passed",
             "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "BCA_NGDPD/UZB",
+            "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
+            "series": "UZB.CPI._T.YOY_PCH_PA_PT.M",
             "transform": "level"
           },
           {
-            "id": "fiscal_balance_gdp",
-            "concept_id": "fiscal_balance_gdp",
-            "label_en": "Fiscal Balance (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
+            "id": "cpi_inflation_mom",
+            "concept_id": "uz:cpi_inflation_mom",
+            "label_en": "Headline CPI Inflation MoM",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
             "due_date": "",
-            "quality_status": "unavailable",
+            "quality_status": "watch",
             "source_authority": "official_mirror",
             "derivation": "observed",
             "validation": "passed",
             "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "GGXCNL_NGDP/UZB",
-            "transform": "level"
-          },
-          {
-            "id": "government_debt_gdp",
-            "concept_id": "government_debt_gdp",
-            "label_en": "General Government Gross Debt (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "GGXWDG_NGDP/UZB",
-            "transform": "level"
-          },
-          {
-            "id": "primary_balance_gdp",
-            "concept_id": "primary_balance_gdp",
-            "label_en": "Primary Net Lending/Borrowing (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (Fiscal Monitor)",
-            "series": "GGXONLB_G01_GDP_PT/UZB",
-            "transform": "level"
-          },
-          {
-            "id": "real_gdp_growth",
-            "concept_id": "real_gdp_growth_yoy",
-            "label_en": "Real GDP Growth (IMF WEO)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "NGDP_RPCH/UZB",
+            "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
+            "series": "UZB.CPI._T.POP_PCH_PA_PT.M",
             "transform": "level"
           }
         ]
@@ -8513,23 +8328,23 @@
           "value"
         ],
         "file": "uzbekistan_canonical_frame.json",
-        "series": 26,
-        "observations": 2011,
-        "series_count": 26,
-        "observation_count": 2011
+        "series": 32,
+        "observations": 2538,
+        "series_count": 32,
+        "observation_count": 2538
       },
       "freshness_summary": {
         "dashboard": "Uzbekistan",
-        "charts": 26,
-        "current": 10,
-        "stale": 10,
+        "charts": 32,
+        "current": 23,
+        "stale": 6,
         "lagged_source": 0,
-        "projection": 6,
+        "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 10,
+        "low_confidence": 6,
         "latest_historical_date": "2026-09-30",
         "headline_latest": ""
       }
@@ -8541,36 +8356,36 @@
       "currency": "EGP",
       "institution": "CBE",
       "category": "data-first country page",
-      "charts": 25,
-      "expected": 25,
+      "charts": 32,
+      "expected": 32,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/EGP official rate",
       "headline": "49.70 (2025-05-01)",
       "secondary_label": "Source groups",
-      "secondary": "8",
-      "quality": "8 source groups · 8 low-confidence charts",
+      "secondary": "10",
+      "quality": "10 source groups · 12 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
         "growth": {
           "id": "real_gdp_growth",
           "label": "Real GDP",
-          "value": 4.8,
-          "display": "4.80 %",
-          "date": "2031",
+          "value": 4.4,
+          "display": "4.40 %",
+          "date": "2025",
           "source": "IMF DataMapper (WEO)",
-          "quality_status": "unavailable"
+          "quality_status": "watch"
         },
         "inflation": {
           "id": "cpi_inflation",
           "label": "CPI inflation",
-          "value": 14.873417721519,
-          "display": "14.9 % y/y",
-          "date": "2025-06-01",
-          "source": "IMF / DBnomics (IFS)",
-          "quality_status": "low_confidence"
+          "value": 14.53900709219858,
+          "display": "14.5 % y/y",
+          "date": "2026-08-01",
+          "source": "IMF SDMX / CAPMAS",
+          "quality_status": "watch"
         },
         "policy": {
           "id": "policy_rate",
@@ -8593,11 +8408,11 @@
         "fiscal": {
           "id": "government_debt_gdp",
           "label": "Government debt/GDP",
-          "value": 71.5,
-          "display": "71.5 % of GDP",
-          "date": "2031",
+          "value": 86.8,
+          "display": "86.8 % of GDP",
+          "date": "2025",
           "source": "IMF DataMapper (WEO)",
-          "quality_status": "unavailable"
+          "quality_status": "watch"
         },
         "financial": {
           "id": "usd_egp",
@@ -8611,19 +8426,19 @@
         "property": {
           "id": "brent_crude_oil",
           "label": "Brent crude oil",
-          "value": 115.22,
-          "display": "115 USD/bbl",
-          "date": "2026-10-20",
+          "value": 123.1,
+          "display": "123 USD/bbl",
+          "date": "2026-10-27",
           "source": "EIA / FRED",
           "quality_status": "watch"
         }
       },
       "source_health": {
-        "source_groups": 8,
+        "source_groups": 10,
         "sources": [
           {
-            "source_name": "IMF / DBnomics (IFS)",
-            "charts": 8
+            "source_name": "IMF SDMX / CBE",
+            "charts": 7
           },
           {
             "source_name": "World Bank WDI",
@@ -8632,6 +8447,14 @@
           {
             "source_name": "IMF DataMapper (WEO)",
             "charts": 5
+          },
+          {
+            "source_name": "IMF / DBnomics (IFS)",
+            "charts": 4
+          },
+          {
+            "source_name": "IMF SDMX / CAPMAS",
+            "charts": 4
           },
           {
             "source_name": "Bruegel (Darvas REER Dataset)",
@@ -8655,66 +8478,21 @@
           }
         ],
         "quality_counts": {
-          "low_confidence": 8,
-          "unavailable": 6,
-          "watch": 11
+          "low_confidence": 12,
+          "watch": 20
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-28",
         "counts": {
-          "current": 10,
-          "due": 1,
-          "future_date": 6,
-          "stale": 8
+          "current": 11,
+          "due": 3,
+          "projection": 6,
+          "stale": 12
         },
-        "latest_historical_date": "2026-10-20",
+        "latest_historical_date": "2026-10-27",
         "attention": [
-          {
-            "id": "current_account_usd",
-            "concept_id": "eg:current_account_usd",
-            "label_en": "Current Account Balance (USD Millions)",
-            "latest_date": "2024-12-31",
-            "frequency": "quarterly",
-            "freshness_status": "stale",
-            "age_basis_date": "2024-12-31",
-            "age_days": 666,
-            "threshold_days": 165,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/Q.EG.BCAXF_BP6_USD",
-            "transform": "level"
-          },
-          {
-            "id": "goods_trade_balance",
-            "concept_id": "trade_balance",
-            "label_en": "Goods Trade Balance (USD Millions)",
-            "latest_date": "2024-12-31",
-            "frequency": "quarterly",
-            "freshness_status": "stale",
-            "age_basis_date": "2024-12-31",
-            "age_days": 666,
-            "threshold_days": 165,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/Q.EG.BG_BP6_USD",
-            "transform": "level"
-          },
           {
             "id": "deposit_rate",
             "concept_id": "eg:deposit_rate",
@@ -8804,59 +8582,191 @@
             "transform": "level"
           },
           {
+            "id": "food_cpi_inflation",
+            "concept_id": "eg:food_cpi_inflation",
+            "label_en": "Food & Non-Alcoholic Beverages CPI YoY",
+            "latest_date": "2025-10-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2025-10-01",
+            "age_days": 362,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "IMF SDMX / CAPMAS",
+            "series": "EGY.CPI.CP01.YOY_PCH_PA_PT.M",
+            "transform": "level"
+          },
+          {
+            "id": "current_account_usd",
+            "concept_id": "eg:current_account_usd",
+            "label_en": "Current Account Balance (USD Millions)",
+            "latest_date": "2026-01-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-01-01",
+            "age_days": 211,
+            "threshold_days": 165,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "IMF SDMX / CBE",
+            "series": "EGY.NETCD_T.CAB.USD.Q",
+            "transform": "level"
+          },
+          {
+            "id": "fdi_net_usd",
+            "concept_id": "eg:fdi_net_usd",
+            "label_en": "Direct Investment Net Balance (FDI, USD Millions)",
+            "latest_date": "2026-01-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-01-01",
+            "age_days": 211,
+            "threshold_days": 165,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "IMF SDMX / CBE",
+            "series": "EGY.NNAFANIL_T.D_F.USD.Q",
+            "transform": "level"
+          },
+          {
+            "id": "goods_exports",
+            "concept_id": "eg:goods_exports",
+            "label_en": "Goods Exports (BOP Basis, USD Millions)",
+            "latest_date": "2026-01-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-01-01",
+            "age_days": 211,
+            "threshold_days": 165,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "IMF SDMX / CBE",
+            "series": "EGY.CD_T.G.USD.Q",
+            "transform": "level"
+          },
+          {
+            "id": "goods_imports",
+            "concept_id": "eg:goods_imports",
+            "label_en": "Goods Imports (BOP Basis, USD Millions)",
+            "latest_date": "2026-01-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-01-01",
+            "age_days": 211,
+            "threshold_days": 165,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "IMF SDMX / CBE",
+            "series": "EGY.DB_T.G.USD.Q",
+            "transform": "level"
+          },
+          {
+            "id": "goods_trade_balance",
+            "concept_id": "trade_balance",
+            "label_en": "Goods Trade Balance (USD Millions)",
+            "latest_date": "2026-01-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-01-01",
+            "age_days": 211,
+            "threshold_days": 165,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "IMF SDMX / CBE",
+            "series": "EGY.NETCD_T.G.USD.Q",
+            "transform": "level"
+          },
+          {
+            "id": "remittances_usd",
+            "concept_id": "eg:remittances_usd",
+            "label_en": "Secondary Income / Remittances Balance (USD Millions)",
+            "latest_date": "2026-01-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-01-01",
+            "age_days": 211,
+            "threshold_days": 165,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "IMF SDMX / CBE",
+            "series": "EGY.NETCD_T.IN2.USD.Q",
+            "transform": "level"
+          },
+          {
+            "id": "services_balance",
+            "concept_id": "eg:services_balance",
+            "label_en": "Services Trade Balance (Suez Canal & Tourism, USD Millions)",
+            "latest_date": "2026-01-01",
+            "frequency": "quarterly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-01-01",
+            "age_days": 211,
+            "threshold_days": 165,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "IMF SDMX / CBE",
+            "series": "EGY.NETCD_T.S.USD.Q",
+            "transform": "level"
+          },
+          {
             "id": "cpi_index",
             "concept_id": "eg:cpi_index",
-            "label_en": "Headline Consumer Price Index (2020=100)",
-            "latest_date": "2025-06-01",
+            "label_en": "Headline Consumer Price Index",
+            "latest_date": "2026-08-01",
             "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-06-01",
-            "age_days": 485,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/M.EG.PCPI_IX",
-            "transform": "level"
-          },
-          {
-            "id": "cpi_inflation",
-            "concept_id": "headline_inflation",
-            "label_en": "Headline CPI Inflation YoY",
-            "latest_date": "2025-06-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-06-01",
-            "age_days": 485,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/M.EG.PCPI_PC_CP_A_PT",
-            "transform": "level"
-          },
-          {
-            "id": "brent_crude_oil",
-            "concept_id": "eg:brent_crude_oil",
-            "label_en": "Crude Oil Prices: Brent - Europe",
-            "latest_date": "2026-10-20",
-            "frequency": "daily",
             "freshness_status": "due",
-            "age_basis_date": "2026-10-20",
-            "age_days": 8,
-            "threshold_days": 10,
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
             "due_date": "",
@@ -8865,140 +8775,52 @@
             "derivation": "observed",
             "validation": "passed",
             "comparability": "medium",
-            "source_name": "EIA / FRED",
-            "series": "DCOILBRENTEU",
+            "source_name": "IMF SDMX / CAPMAS",
+            "series": "EGY.CPI._T.IX.M",
             "transform": "level"
           },
           {
-            "id": "cpi_inflation_weo",
-            "concept_id": "eg:cpi_inflation_weo",
-            "label_en": "Headline Inflation (IMF WEO Cross-Check)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
+            "id": "cpi_inflation",
+            "concept_id": "headline_inflation",
+            "label_en": "Headline CPI Inflation YoY",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
             "due_date": "",
-            "quality_status": "unavailable",
+            "quality_status": "watch",
             "source_authority": "official_mirror",
             "derivation": "observed",
             "validation": "passed",
             "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "PCPIPCH/EGY",
+            "source_name": "IMF SDMX / CAPMAS",
+            "series": "EGY.CPI._T.YOY_PCH_PA_PT.M",
             "transform": "level"
           },
           {
-            "id": "current_account_gdp",
-            "concept_id": "current_account_gdp",
-            "label_en": "Current Account Balance (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
+            "id": "cpi_inflation_mom",
+            "concept_id": "eg:cpi_inflation_mom",
+            "label_en": "Headline CPI Inflation MoM",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
             "due_date": "",
-            "quality_status": "unavailable",
+            "quality_status": "watch",
             "source_authority": "official_mirror",
             "derivation": "observed",
             "validation": "passed",
             "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "BCA_NGDPD/EGY",
-            "transform": "level"
-          },
-          {
-            "id": "fiscal_balance_gdp",
-            "concept_id": "fiscal_balance_gdp",
-            "label_en": "Fiscal Balance (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "GGXCNL_NGDP/EGY",
-            "transform": "level"
-          },
-          {
-            "id": "government_debt_gdp",
-            "concept_id": "government_debt_gdp",
-            "label_en": "General Government Gross Debt (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "GGXWDG_NGDP/EGY",
-            "transform": "level"
-          },
-          {
-            "id": "primary_balance_gdp",
-            "concept_id": "primary_balance_gdp",
-            "label_en": "Primary Net Lending/Borrowing (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (Fiscal Monitor)",
-            "series": "GGXONLB_G01_GDP_PT/EGY",
-            "transform": "level"
-          },
-          {
-            "id": "real_gdp_growth",
-            "concept_id": "real_gdp_growth_yoy",
-            "label_en": "Real GDP Growth (IMF WEO)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "NGDP_RPCH/EGY",
+            "source_name": "IMF SDMX / CAPMAS",
+            "series": "EGY.CPI._T.POP_PCH_PA_PT.M",
             "transform": "level"
           }
         ]
@@ -9010,24 +8832,24 @@
           "value"
         ],
         "file": "egypt_canonical_frame.json",
-        "series": 25,
-        "observations": 8708,
-        "series_count": 25,
-        "observation_count": 8708
+        "series": 32,
+        "observations": 9421,
+        "series_count": 32,
+        "observation_count": 9421
       },
       "freshness_summary": {
         "dashboard": "Egypt",
-        "charts": 25,
-        "current": 10,
-        "stale": 8,
+        "charts": 32,
+        "current": 17,
+        "stale": 12,
         "lagged_source": 0,
-        "projection": 6,
+        "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 8,
-        "latest_historical_date": "2026-10-20",
+        "low_confidence": 12,
+        "latest_historical_date": "2026-10-27",
         "headline_latest": ""
       }
     },
@@ -9038,36 +8860,36 @@
       "currency": "NGN",
       "institution": "CBN",
       "category": "data-first country page",
-      "charts": 28,
-      "expected": 28,
+      "charts": 35,
+      "expected": 35,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/NGN official rate",
-      "headline": "1,529.71 (2025-06-01)",
+      "headline": "1,347.03 (2026-10-28)",
       "secondary_label": "Source groups",
-      "secondary": "8",
-      "quality": "8 source groups · 12 low-confidence charts",
+      "secondary": "11",
+      "quality": "11 source groups · 8 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
         "growth": {
           "id": "real_gdp_growth",
           "label": "Real GDP",
-          "value": 4.2,
-          "display": "4.20 %",
-          "date": "2031",
+          "value": 4.0,
+          "display": "4.00 %",
+          "date": "2025",
           "source": "IMF DataMapper (WEO)",
-          "quality_status": "unavailable"
+          "quality_status": "watch"
         },
         "inflation": {
           "id": "cpi_inflation",
           "label": "CPI inflation",
-          "value": 34.7973403409811,
-          "display": "34.8 % y/y",
-          "date": "2024-12-01",
-          "source": "IMF / DBnomics (IFS)",
-          "quality_status": "low_confidence"
+          "value": 15.39084329884044,
+          "display": "15.4 % y/y",
+          "date": "2026-08-01",
+          "source": "IMF SDMX / Nigeria NBS",
+          "quality_status": "watch"
         },
         "policy": {
           "id": "policy_rate",
@@ -9081,54 +8903,62 @@
         "external": {
           "id": "current_account_gdp",
           "label": "Current account/GDP",
-          "value": 3.8,
-          "display": "3.80 % of GDP",
-          "date": "2031",
+          "value": 4.8,
+          "display": "4.80 % of GDP",
+          "date": "2025",
           "source": "IMF DataMapper (WEO)",
-          "quality_status": "unavailable"
+          "quality_status": "watch"
         },
         "fiscal": {
           "id": "government_debt_gdp",
           "label": "Government debt/GDP",
-          "value": 31.9,
-          "display": "31.9 % of GDP",
-          "date": "2031",
+          "value": 36.1,
+          "display": "36.1 % of GDP",
+          "date": "2025",
           "source": "IMF DataMapper (WEO)",
-          "quality_status": "unavailable"
+          "quality_status": "watch"
         },
         "financial": {
           "id": "usd_ngn",
           "label": "USD/NGN",
-          "value": 1529.7105,
-          "display": "1,530 NGN",
-          "date": "2025-06-01",
-          "source": "IMF / DBnomics (IFS)",
-          "quality_status": "low_confidence"
+          "value": 1347.0259,
+          "display": "1,347 NGN",
+          "date": "2026-10-28",
+          "source": "Central Bank of Nigeria (CBN)",
+          "quality_status": "verified"
         },
         "property": {
           "id": "brent_crude_oil",
           "label": "Brent crude oil",
-          "value": 115.22,
-          "display": "115 USD/bbl",
-          "date": "2026-10-20",
+          "value": 123.1,
+          "display": "123 USD/bbl",
+          "date": "2026-10-27",
           "source": "EIA / FRED",
           "quality_status": "watch"
         }
       },
       "source_health": {
-        "source_groups": 8,
+        "source_groups": 11,
         "sources": [
           {
-            "source_name": "IMF / DBnomics (IFS)",
-            "charts": 9
+            "source_name": "IMF SDMX / CBN",
+            "charts": 7
           },
           {
             "source_name": "World Bank WDI",
             "charts": 7
           },
           {
+            "source_name": "IMF / DBnomics (IFS)",
+            "charts": 5
+          },
+          {
             "source_name": "IMF DataMapper (WEO)",
             "charts": 5
+          },
+          {
+            "source_name": "IMF SDMX / Nigeria NBS",
+            "charts": 3
           },
           {
             "source_name": "Bruegel (Darvas REER Dataset)",
@@ -9137,6 +8967,10 @@
           {
             "source_name": "IMF / DBnomics (FSI)",
             "charts": 2
+          },
+          {
+            "source_name": "Central Bank of Nigeria (CBN)",
+            "charts": 1
           },
           {
             "source_name": "EIA / FRED",
@@ -9152,21 +8986,21 @@
           }
         ],
         "quality_counts": {
-          "low_confidence": 12,
-          "unavailable": 6,
-          "watch": 10
+          "low_confidence": 8,
+          "verified": 1,
+          "watch": 26
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-28",
         "counts": {
-          "current": 9,
-          "due": 1,
-          "future_date": 6,
-          "stale": 12
+          "current": 18,
+          "due": 3,
+          "projection": 6,
+          "stale": 8
         },
-        "latest_historical_date": "2026-10-20",
+        "latest_historical_date": "2026-10-28",
         "attention": [
           {
             "id": "private_credit_gdp",
@@ -9257,50 +9091,6 @@
             "transform": "level"
           },
           {
-            "id": "cpi_index",
-            "concept_id": "ng:cpi_index",
-            "label_en": "Headline Consumer Price Index (2020=100)",
-            "latest_date": "2024-12-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2024-12-01",
-            "age_days": 666,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/M.NG.PCPI_IX",
-            "transform": "level"
-          },
-          {
-            "id": "cpi_inflation",
-            "concept_id": "headline_inflation",
-            "label_en": "Headline CPI Inflation YoY",
-            "latest_date": "2024-12-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2024-12-01",
-            "age_days": 666,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/M.NG.PCPI_PC_CP_A_PT",
-            "transform": "level"
-          },
-          {
             "id": "bank_capital_ratio",
             "concept_id": "bank_capital_ratio",
             "label_en": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
@@ -9345,50 +9135,6 @@
             "transform": "level"
           },
           {
-            "id": "current_account_usd",
-            "concept_id": "ng:current_account_usd",
-            "label_en": "Current Account Balance (USD Millions)",
-            "latest_date": "2025-03-31",
-            "frequency": "quarterly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-03-31",
-            "age_days": 576,
-            "threshold_days": 165,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/Q.NG.BCAXF_BP6_USD",
-            "transform": "level"
-          },
-          {
-            "id": "goods_trade_balance",
-            "concept_id": "trade_balance",
-            "label_en": "Goods Trade Balance (USD Millions)",
-            "latest_date": "2025-03-31",
-            "frequency": "quarterly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-03-31",
-            "age_days": 576,
-            "threshold_days": 165,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/Q.NG.BG_BP6_USD",
-            "transform": "level"
-          },
-          {
             "id": "fx_reserves",
             "concept_id": "ng:fx_reserves",
             "label_en": "Official Reserve Assets (USD Millions)",
@@ -9411,9 +9157,9 @@
             "transform": "level"
           },
           {
-            "id": "usd_ngn",
-            "concept_id": "fx_spot",
-            "label_en": "USD/NGN End-of-Period Official Rate",
+            "id": "usd_ngn_ifs",
+            "concept_id": "ng:usd_ngn_ifs",
+            "label_en": "USD/NGN End-of-Period (IMF IFS Cross-Check)",
             "latest_date": "2025-06-01",
             "frequency": "monthly",
             "freshness_status": "stale",
@@ -9433,157 +9179,69 @@
             "transform": "level"
           },
           {
-            "id": "brent_crude_oil",
-            "concept_id": "ng:brent_crude_oil",
-            "label_en": "Crude Oil Prices: Brent - Europe",
-            "latest_date": "2026-10-20",
-            "frequency": "daily",
+            "id": "cpi_index",
+            "concept_id": "ng:cpi_index",
+            "label_en": "Headline Consumer Price Index",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
             "freshness_status": "due",
-            "age_basis_date": "2026-10-20",
-            "age_days": 8,
-            "threshold_days": 10,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 60,
+            "release_calendar_id": "nbs_monthly",
+            "expected_release_date": "2026-10-20",
+            "due_date": "2026-10-30",
             "quality_status": "watch",
             "source_authority": "official_mirror",
             "derivation": "observed",
             "validation": "passed",
             "comparability": "medium",
-            "source_name": "EIA / FRED",
-            "series": "DCOILBRENTEU",
+            "source_name": "IMF SDMX / Nigeria NBS",
+            "series": "NGA.CPI._T.IX.M",
             "transform": "level"
           },
           {
-            "id": "cpi_inflation_weo",
-            "concept_id": "ng:cpi_inflation_weo",
-            "label_en": "Headline Inflation (IMF WEO Cross-Check)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
+            "id": "cpi_inflation",
+            "concept_id": "headline_inflation",
+            "label_en": "Headline CPI Inflation YoY",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 60,
+            "release_calendar_id": "nbs_monthly",
+            "expected_release_date": "2026-10-20",
+            "due_date": "2026-10-30",
+            "quality_status": "watch",
             "source_authority": "official_mirror",
             "derivation": "observed",
             "validation": "passed",
             "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "PCPIPCH/NGA",
+            "source_name": "IMF SDMX / Nigeria NBS",
+            "series": "NGA.CPI._T.YOY_PCH_PA_PT.M",
             "transform": "level"
           },
           {
-            "id": "current_account_gdp",
-            "concept_id": "current_account_gdp",
-            "label_en": "Current Account Balance (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
+            "id": "cpi_inflation_mom",
+            "concept_id": "ng:cpi_inflation_mom",
+            "label_en": "Headline CPI Inflation MoM",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 58,
+            "threshold_days": 60,
+            "release_calendar_id": "nbs_monthly",
+            "expected_release_date": "2026-10-20",
+            "due_date": "2026-10-30",
+            "quality_status": "watch",
             "source_authority": "official_mirror",
             "derivation": "observed",
             "validation": "passed",
             "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "BCA_NGDPD/NGA",
-            "transform": "level"
-          },
-          {
-            "id": "fiscal_balance_gdp",
-            "concept_id": "fiscal_balance_gdp",
-            "label_en": "Fiscal Balance (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "GGXCNL_NGDP/NGA",
-            "transform": "level"
-          },
-          {
-            "id": "government_debt_gdp",
-            "concept_id": "government_debt_gdp",
-            "label_en": "General Government Gross Debt (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "GGXWDG_NGDP/NGA",
-            "transform": "level"
-          },
-          {
-            "id": "primary_balance_gdp",
-            "concept_id": "primary_balance_gdp",
-            "label_en": "Primary Net Lending/Borrowing (% of GDP)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (Fiscal Monitor)",
-            "series": "GGXONLB_G01_GDP_PT/NGA",
-            "transform": "level"
-          },
-          {
-            "id": "real_gdp_growth",
-            "concept_id": "real_gdp_growth_yoy",
-            "label_en": "Real GDP Growth (IMF WEO)",
-            "latest_date": "2031-12-31",
-            "frequency": "annual",
-            "freshness_status": "future_date",
-            "age_basis_date": "2031-12-31",
-            "age_days": null,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "unavailable",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF DataMapper (WEO)",
-            "series": "NGDP_RPCH/NGA",
+            "source_name": "IMF SDMX / Nigeria NBS",
+            "series": "NGA.CPI._T.POP_PCH_PA_PT.M",
             "transform": "level"
           }
         ]
@@ -9595,24 +9253,24 @@
           "value"
         ],
         "file": "nigeria_canonical_frame.json",
-        "series": 28,
-        "observations": 8960,
-        "series_count": 28,
-        "observation_count": 8960
+        "series": 35,
+        "observations": 13589,
+        "series_count": 35,
+        "observation_count": 13589
       },
       "freshness_summary": {
         "dashboard": "Nigeria",
-        "charts": 28,
-        "current": 9,
-        "stale": 12,
+        "charts": 35,
+        "current": 24,
+        "stale": 8,
         "lagged_source": 0,
-        "projection": 6,
+        "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 12,
-        "latest_historical_date": "2026-10-20",
+        "low_confidence": 8,
+        "latest_historical_date": "2026-10-28",
         "headline_latest": ""
       }
     }
@@ -10443,10 +10101,10 @@
       "structural_score": 43.3,
       "composite_label": "defensive",
       "quality": {
-        "score": 74.8,
+        "score": 74.6,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 78.0,
+        "freshness_score": 77.4,
         "proxy_penalty": 0.0,
         "gap_penalty": 17.5
       },
@@ -10529,15 +10187,15 @@
       }
     },
     "TR": {
-      "composite_score": 50.0,
-      "cyclical_score": 50.0,
-      "structural_score": 50.0,
-      "composite_label": "mixed",
+      "composite_score": 49.0,
+      "cyclical_score": 46.2,
+      "structural_score": 51.7,
+      "composite_label": "defensive",
       "quality": {
-        "score": 59.4,
-        "label": "needs data review",
+        "score": 61.0,
+        "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 55.6,
+        "freshness_score": 60.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10551,12 +10209,12 @@
           "source_signal": "real_gdp_yoy"
         },
         "inflation": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "inflation pressure",
+          "score": 25.0,
+          "confidence_weight": 1.0,
+          "value": 29.73151824541501,
+          "display": "29.7 % y/y",
+          "source_signal": "cpi_inflation"
         },
         "policy": {
           "label": "restrictive stance",
@@ -10567,39 +10225,57 @@
           "source_signal": "policy_rate"
         },
         "external": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "balanced external impulse",
+          "score": 60.0,
+          "confidence_weight": 1.0,
+          "value": -1.9,
+          "display": "-1.90 % of GDP",
+          "source_signal": "current_account_gdp"
         },
         "fiscal": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "debt contained",
+          "score": 75.0,
+          "confidence_weight": 1.0,
+          "value": 23.7,
+          "display": "23.7 % of GDP",
+          "source_signal": "government_debt_gdp"
         },
         "financial": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "tight financial conditions",
+          "score": 35.0,
+          "confidence_weight": 1.0,
+          "value": 49.6997,
+          "display": "49.7 TRY per USD",
+          "source_signal": "try_usd"
         },
         "property": {
-          "label": "insufficient data",
-          "score": 50.0,
-          "confidence_weight": 0.0,
-          "value": null,
-          "display": "n/a",
-          "source_signal": ""
+          "label": "property hot",
+          "score": 45.0,
+          "confidence_weight": 1.0,
+          "value": 28.5,
+          "display": "28.5 % y/y",
+          "source_signal": "house_price_growth"
         }
       },
-      "taylor_stance": null
+      "taylor_stance": {
+        "institution": "TCMB",
+        "policy_rate": 35.5,
+        "inflation_rate": 29.73,
+        "inflation_target": 5.0,
+        "neutral_real_rate_r_star": 3.0,
+        "taylor_implied_rate": 44.65,
+        "taylor_rate_range": [
+          44.15,
+          45.15
+        ],
+        "policy_gap_deviation": -9.15,
+        "policy_gap_range": [
+          -9.65,
+          -8.65
+        ],
+        "real_policy_rate": 5.77,
+        "stance_label": "substantially accommodative"
+      }
     },
     "HK": {
       "composite_score": 59.2,
@@ -10607,10 +10283,10 @@
       "structural_score": 55.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 74.4,
+        "score": 73.1,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 62.5,
+        "freshness_score": 70.3,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -10680,10 +10356,10 @@
       "structural_score": 63.3,
       "composite_label": "mixed",
       "quality": {
-        "score": 59.5,
-        "label": "needs data review",
+        "score": 60.8,
+        "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 50.0,
+        "freshness_score": 53.8,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10716,8 +10392,8 @@
           "label": "external strength",
           "score": 75.0,
           "confidence_weight": 1.0,
-          "value": 1.166301e+17,
-          "display": "116,630,100,000,000,000 USD mn",
+          "value": 116630.1,
+          "display": "116,630 USD mn",
           "source_signal": "current_account_usd"
         },
         "fiscal": {
@@ -10766,15 +10442,15 @@
       }
     },
     "TW": {
-      "composite_score": 70.0,
+      "composite_score": 73.3,
       "cyclical_score": 75.0,
-      "structural_score": 65.0,
+      "structural_score": 71.7,
       "composite_label": "constructive",
       "quality": {
-        "score": 81.3,
-        "label": "high-confidence dashboard",
+        "score": 77.5,
+        "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 59.5,
+        "freshness_score": 54.3,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -10828,11 +10504,11 @@
           "source_signal": "sovereign_yield_10y"
         },
         "property": {
-          "label": "property hot",
-          "score": 45.0,
+          "label": "healthy property expansion",
+          "score": 65.0,
           "confidence_weight": 1.0,
-          "value": 30522.0,
-          "display": "30,522 % y/y",
+          "value": 4.58,
+          "display": "4.58 % y/y",
           "source_signal": "mortgage_loans_growth"
         }
       },
@@ -10857,15 +10533,15 @@
       }
     },
     "KZ": {
-      "composite_score": 52.5,
-      "cyclical_score": 50.0,
+      "composite_score": 49.4,
+      "cyclical_score": 43.8,
       "structural_score": 55.0,
-      "composite_label": "mixed",
+      "composite_label": "defensive",
       "quality": {
-        "score": 52.8,
-        "label": "needs data review",
+        "score": 80.6,
+        "label": "high-confidence dashboard",
         "coverage_score": 100.0,
-        "freshness_score": 25.0,
+        "freshness_score": 81.8,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10874,16 +10550,16 @@
           "label": "above-trend expansion",
           "score": 80.0,
           "confidence_weight": 1.0,
-          "value": 3.6,
-          "display": "3.60 %",
+          "value": 6.5,
+          "display": "6.50 %",
           "source_signal": "real_gdp_growth"
         },
         "inflation": {
           "label": "inflation pressure",
           "score": 25.0,
           "confidence_weight": 1.0,
-          "value": 11.343968822397,
-          "display": "11.3 % y/y",
+          "value": 9.239766081871345,
+          "display": "9.24 % y/y",
           "source_signal": "cpi_inflation"
         },
         "policy": {
@@ -10895,19 +10571,19 @@
           "source_signal": "policy_rate"
         },
         "external": {
-          "label": "balanced external impulse",
-          "score": 60.0,
+          "label": "external drag",
+          "score": 35.0,
           "confidence_weight": 1.0,
-          "value": -2.9,
-          "display": "-2.90 % of GDP",
+          "value": -4.1,
+          "display": "-4.10 % of GDP",
           "source_signal": "current_account_gdp"
         },
         "fiscal": {
           "label": "debt contained",
           "score": 75.0,
           "confidence_weight": 1.0,
-          "value": 29.8,
-          "display": "29.8 % of GDP",
+          "value": 24.3,
+          "display": "24.3 % of GDP",
           "source_signal": "government_debt_gdp"
         },
         "financial": {
@@ -10922,28 +10598,28 @@
           "label": "property tracked",
           "score": 55.0,
           "confidence_weight": 1.0,
-          "value": 115.22,
-          "display": "115 USD/bbl",
+          "value": 123.1,
+          "display": "123 USD/bbl",
           "source_signal": "brent_crude_oil"
         }
       },
       "taylor_stance": {
         "institution": "NBK",
         "policy_rate": 9.0,
-        "inflation_rate": 11.34,
+        "inflation_rate": 9.24,
         "inflation_target": 5.0,
         "neutral_real_rate_r_star": 2.5,
-        "taylor_implied_rate": 16.82,
+        "taylor_implied_rate": 15.11,
         "taylor_rate_range": [
-          16.32,
-          17.32
+          14.61,
+          15.61
         ],
-        "policy_gap_deviation": -7.82,
+        "policy_gap_deviation": -6.11,
         "policy_gap_range": [
-          -8.32,
-          -7.32
+          -6.61,
+          -5.61
         ],
-        "real_policy_rate": -2.34,
+        "real_policy_rate": -0.24,
         "stance_label": "substantially accommodative"
       }
     },
@@ -10953,10 +10629,10 @@
       "structural_score": 51.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 53.5,
-        "label": "needs data review",
+        "score": 73.2,
+        "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 38.5,
+        "freshness_score": 71.9,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10965,16 +10641,16 @@
           "label": "above-trend expansion",
           "score": 80.0,
           "confidence_weight": 1.0,
-          "value": 5.7,
-          "display": "5.70 %",
+          "value": 7.7,
+          "display": "7.70 %",
           "source_signal": "real_gdp_growth"
         },
         "inflation": {
           "label": "inflation pressure",
           "score": 25.0,
           "confidence_weight": 1.0,
-          "value": 8.71469473362344,
-          "display": "8.71 % y/y",
+          "value": 6.226301479299238,
+          "display": "6.23 % y/y",
           "source_signal": "cpi_inflation"
         },
         "policy": {
@@ -10997,8 +10673,8 @@
           "label": "debt contained",
           "score": 75.0,
           "confidence_weight": 1.0,
-          "value": 25.0,
-          "display": "25.0 % of GDP",
+          "value": 28.6,
+          "display": "28.6 % of GDP",
           "source_signal": "government_debt_gdp"
         },
         "financial": {
@@ -11021,33 +10697,33 @@
       "taylor_stance": {
         "institution": "CBU",
         "policy_rate": 13.5,
-        "inflation_rate": 8.71,
+        "inflation_rate": 6.23,
         "inflation_target": 5.0,
         "neutral_real_rate_r_star": 3.0,
-        "taylor_implied_rate": 13.67,
+        "taylor_implied_rate": 10.94,
         "taylor_rate_range": [
-          13.17,
-          14.17
+          10.44,
+          11.44
         ],
-        "policy_gap_deviation": -0.17,
+        "policy_gap_deviation": 2.56,
         "policy_gap_range": [
-          -0.67,
-          0.33
+          2.06,
+          3.06
         ],
-        "real_policy_rate": 4.79,
-        "stance_label": "calibrated / neutral"
+        "real_policy_rate": 7.27,
+        "stance_label": "substantially restrictive"
       }
     },
     "EG": {
-      "composite_score": 51.9,
+      "composite_score": 49.4,
       "cyclical_score": 53.8,
-      "structural_score": 50.0,
-      "composite_label": "mixed",
+      "structural_score": 45.0,
+      "composite_label": "defensive",
       "quality": {
-        "score": 58.0,
+        "score": 58.6,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 40.0,
+        "freshness_score": 53.1,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -11056,16 +10732,16 @@
           "label": "above-trend expansion",
           "score": 80.0,
           "confidence_weight": 1.0,
-          "value": 4.8,
-          "display": "4.80 %",
+          "value": 4.4,
+          "display": "4.40 %",
           "source_signal": "real_gdp_growth"
         },
         "inflation": {
           "label": "inflation pressure",
           "score": 25.0,
           "confidence_weight": 1.0,
-          "value": 14.873417721519,
-          "display": "14.9 % y/y",
+          "value": 14.53900709219858,
+          "display": "14.5 % y/y",
           "source_signal": "cpi_inflation"
         },
         "policy": {
@@ -11085,11 +10761,11 @@
           "source_signal": "remittances_gdp"
         },
         "fiscal": {
-          "label": "moderate debt",
-          "score": 60.0,
+          "label": "elevated debt",
+          "score": 45.0,
           "confidence_weight": 1.0,
-          "value": 71.5,
-          "display": "71.5 % of GDP",
+          "value": 86.8,
+          "display": "86.8 % of GDP",
           "source_signal": "government_debt_gdp"
         },
         "financial": {
@@ -11104,28 +10780,28 @@
           "label": "property tracked",
           "score": 55.0,
           "confidence_weight": 1.0,
-          "value": 115.22,
-          "display": "115 USD/bbl",
+          "value": 123.1,
+          "display": "123 USD/bbl",
           "source_signal": "brent_crude_oil"
         }
       },
       "taylor_stance": {
         "institution": "CBE",
         "policy_rate": 24.5,
-        "inflation_rate": 14.87,
+        "inflation_rate": 14.54,
         "inflation_target": 7.0,
         "neutral_real_rate_r_star": 2.0,
-        "taylor_implied_rate": 20.96,
+        "taylor_implied_rate": 20.26,
         "taylor_rate_range": [
-          20.46,
-          21.46
+          19.76,
+          20.76
         ],
-        "policy_gap_deviation": 3.54,
+        "policy_gap_deviation": 4.24,
         "policy_gap_range": [
-          3.04,
-          4.04
+          3.74,
+          4.74
         ],
-        "real_policy_rate": 9.63,
+        "real_policy_rate": 9.96,
         "stance_label": "substantially restrictive"
       }
     },
@@ -11135,10 +10811,10 @@
       "structural_score": 55.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 51.2,
-        "label": "needs data review",
+        "score": 68.0,
+        "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 32.1,
+        "freshness_score": 68.6,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -11147,16 +10823,16 @@
           "label": "above-trend expansion",
           "score": 80.0,
           "confidence_weight": 1.0,
-          "value": 4.2,
-          "display": "4.20 %",
+          "value": 4.0,
+          "display": "4.00 %",
           "source_signal": "real_gdp_growth"
         },
         "inflation": {
           "label": "inflation pressure",
           "score": 25.0,
           "confidence_weight": 1.0,
-          "value": 34.7973403409811,
-          "display": "34.8 % y/y",
+          "value": 15.39084329884044,
+          "display": "15.4 % y/y",
           "source_signal": "cpi_inflation"
         },
         "policy": {
@@ -11171,53 +10847,53 @@
           "label": "external strength",
           "score": 75.0,
           "confidence_weight": 1.0,
-          "value": 3.8,
-          "display": "3.80 % of GDP",
+          "value": 4.8,
+          "display": "4.80 % of GDP",
           "source_signal": "current_account_gdp"
         },
         "fiscal": {
           "label": "debt contained",
           "score": 75.0,
           "confidence_weight": 1.0,
-          "value": 31.9,
-          "display": "31.9 % of GDP",
+          "value": 36.1,
+          "display": "36.1 % of GDP",
           "source_signal": "government_debt_gdp"
         },
         "financial": {
           "label": "tight financial conditions",
           "score": 35.0,
           "confidence_weight": 1.0,
-          "value": 1529.7105,
-          "display": "1,530 NGN",
+          "value": 1347.0259,
+          "display": "1,347 NGN",
           "source_signal": "usd_ngn"
         },
         "property": {
           "label": "property tracked",
           "score": 55.0,
           "confidence_weight": 1.0,
-          "value": 115.22,
-          "display": "115 USD/bbl",
+          "value": 123.1,
+          "display": "123 USD/bbl",
           "source_signal": "brent_crude_oil"
         }
       },
       "taylor_stance": {
         "institution": "CBN",
         "policy_rate": 26.75,
-        "inflation_rate": 34.8,
+        "inflation_rate": 15.39,
         "inflation_target": 9.0,
         "neutral_real_rate_r_star": 2.0,
-        "taylor_implied_rate": 50.05,
+        "taylor_implied_rate": 20.84,
         "taylor_rate_range": [
-          49.55,
-          50.55
+          20.34,
+          21.34
         ],
-        "policy_gap_deviation": -23.3,
+        "policy_gap_deviation": 5.91,
         "policy_gap_range": [
-          -23.8,
-          -22.8
+          5.41,
+          6.41
         ],
-        "real_policy_rate": -8.05,
-        "stance_label": "substantially accommodative"
+        "real_policy_rate": 11.36,
+        "stance_label": "substantially restrictive"
       }
     }
   },
@@ -11412,6 +11088,25 @@
       "real_policy_rate": 0.87,
       "stance_label": "moderately accommodative"
     },
+    "TR": {
+      "institution": "TCMB",
+      "policy_rate": 35.5,
+      "inflation_rate": 29.73,
+      "inflation_target": 5.0,
+      "neutral_real_rate_r_star": 3.0,
+      "taylor_implied_rate": 44.65,
+      "taylor_rate_range": [
+        44.15,
+        45.15
+      ],
+      "policy_gap_deviation": -9.15,
+      "policy_gap_range": [
+        -9.65,
+        -8.65
+      ],
+      "real_policy_rate": 5.77,
+      "stance_label": "substantially accommodative"
+    },
     "KR": {
       "institution": "BOK",
       "policy_rate": 3.04,
@@ -11453,78 +11148,78 @@
     "KZ": {
       "institution": "NBK",
       "policy_rate": 9.0,
-      "inflation_rate": 11.34,
+      "inflation_rate": 9.24,
       "inflation_target": 5.0,
       "neutral_real_rate_r_star": 2.5,
-      "taylor_implied_rate": 16.82,
+      "taylor_implied_rate": 15.11,
       "taylor_rate_range": [
-        16.32,
-        17.32
+        14.61,
+        15.61
       ],
-      "policy_gap_deviation": -7.82,
+      "policy_gap_deviation": -6.11,
       "policy_gap_range": [
-        -8.32,
-        -7.32
+        -6.61,
+        -5.61
       ],
-      "real_policy_rate": -2.34,
+      "real_policy_rate": -0.24,
       "stance_label": "substantially accommodative"
     },
     "UZ": {
       "institution": "CBU",
       "policy_rate": 13.5,
-      "inflation_rate": 8.71,
+      "inflation_rate": 6.23,
       "inflation_target": 5.0,
       "neutral_real_rate_r_star": 3.0,
-      "taylor_implied_rate": 13.67,
+      "taylor_implied_rate": 10.94,
       "taylor_rate_range": [
-        13.17,
-        14.17
+        10.44,
+        11.44
       ],
-      "policy_gap_deviation": -0.17,
+      "policy_gap_deviation": 2.56,
       "policy_gap_range": [
-        -0.67,
-        0.33
+        2.06,
+        3.06
       ],
-      "real_policy_rate": 4.79,
-      "stance_label": "calibrated / neutral"
+      "real_policy_rate": 7.27,
+      "stance_label": "substantially restrictive"
     },
     "EG": {
       "institution": "CBE",
       "policy_rate": 24.5,
-      "inflation_rate": 14.87,
+      "inflation_rate": 14.54,
       "inflation_target": 7.0,
       "neutral_real_rate_r_star": 2.0,
-      "taylor_implied_rate": 20.96,
+      "taylor_implied_rate": 20.26,
       "taylor_rate_range": [
-        20.46,
-        21.46
+        19.76,
+        20.76
       ],
-      "policy_gap_deviation": 3.54,
+      "policy_gap_deviation": 4.24,
       "policy_gap_range": [
-        3.04,
-        4.04
+        3.74,
+        4.74
       ],
-      "real_policy_rate": 9.63,
+      "real_policy_rate": 9.96,
       "stance_label": "substantially restrictive"
     },
     "NG": {
       "institution": "CBN",
       "policy_rate": 26.75,
-      "inflation_rate": 34.8,
+      "inflation_rate": 15.39,
       "inflation_target": 9.0,
       "neutral_real_rate_r_star": 2.0,
-      "taylor_implied_rate": 50.05,
+      "taylor_implied_rate": 20.84,
       "taylor_rate_range": [
-        49.55,
-        50.55
+        20.34,
+        21.34
       ],
-      "policy_gap_deviation": -23.3,
+      "policy_gap_deviation": 5.91,
       "policy_gap_range": [
-        -23.8,
-        -22.8
+        5.41,
+        6.41
       ],
-      "real_policy_rate": -8.05,
-      "stance_label": "substantially accommodative"
+      "real_policy_rate": 11.36,
+      "stance_label": "substantially restrictive"
     }
   },
   "cross_country_sync": {
@@ -11919,8 +11614,8 @@
     "sovereign_spreads_to_us": {
       "US": {
         "benchmark": "10Y Treasury",
-        "date": "2026-10-26",
-        "yield": 5.0,
+        "date": "2026-10-27",
+        "yield": 4.99,
         "spread_bps": 0.0,
         "status": "observed"
       },
@@ -11928,21 +11623,21 @@
         "benchmark": "10Y Bund",
         "date": "2026-09-01",
         "yield": 3.47,
-        "spread_bps": -153.0,
+        "spread_bps": -152.0,
         "status": "observed"
       },
       "UK": {
         "benchmark": "10Y Gilt",
         "date": "2026-10-26",
         "yield": 5.3,
-        "spread_bps": 30.0,
+        "spread_bps": 31.0,
         "status": "observed"
       },
       "JP": {
         "benchmark": "10Y JGB",
         "date": "2026-09-01",
         "yield": 3.05,
-        "spread_bps": -195.0,
+        "spread_bps": -194.0,
         "status": "observed"
       },
       "CN": {
@@ -11956,7 +11651,7 @@
         "benchmark": "10Y Sovereign",
         "date": "2026-10-27",
         "yield": 8.02,
-        "spread_bps": 302.0,
+        "spread_bps": 303.0,
         "status": "observed"
       },
       "TR": {
@@ -11977,14 +11672,14 @@
         "benchmark": "10Y KTB",
         "date": "2026-09-01",
         "yield": 4.45,
-        "spread_bps": -55.0,
+        "spread_bps": -54.0,
         "status": "observed"
       },
       "TW": {
         "benchmark": "10Y Gov Bond",
         "date": "2026-08-01",
         "yield": 1.97,
-        "spread_bps": -303.0,
+        "spread_bps": -302.0,
         "status": "observed"
       },
       "KZ": {
@@ -12019,28 +11714,28 @@
         "benchmark": "PL 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 6.23,
-        "spread_bps": 123.0,
+        "spread_bps": 124.0,
         "status": "observed"
       },
       "CZ": {
         "benchmark": "CZ 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 5.24,
-        "spread_bps": 24.0,
+        "spread_bps": 25.0,
         "status": "observed"
       },
       "HU": {
         "benchmark": "HU 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 5.68,
-        "spread_bps": 68.0,
+        "spread_bps": 69.0,
         "status": "observed"
       },
       "RO": {
         "benchmark": "RO 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 6.71,
-        "spread_bps": 171.0,
+        "spread_bps": 172.0,
         "status": "observed"
       }
     },
@@ -12720,91 +12415,91 @@
       "code": "US",
       "name": "United States",
       "coverage_pct": 100.0,
-      "freshness_pct": 78.0,
+      "freshness_pct": 77.4,
       "proxy_fills": 0,
       "gaps": 7,
       "regime_score": 47.3,
-      "quality_score": 74.8
+      "quality_score": 74.6
     },
     {
       "code": "TR",
       "name": "Turkey",
       "coverage_pct": 100.0,
-      "freshness_pct": 55.6,
+      "freshness_pct": 60.0,
       "proxy_fills": 0,
       "gaps": 2,
-      "regime_score": 50.0,
-      "quality_score": 59.4
+      "regime_score": 49.0,
+      "quality_score": 61.0
     },
     {
       "code": "HK",
       "name": "Hong Kong",
       "coverage_pct": 100.0,
-      "freshness_pct": 62.5,
+      "freshness_pct": 70.3,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 59.2,
-      "quality_score": 74.4
+      "quality_score": 73.1
     },
     {
       "code": "KR",
       "name": "South Korea",
       "coverage_pct": 100.0,
-      "freshness_pct": 50.0,
+      "freshness_pct": 53.8,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 64.2,
-      "quality_score": 59.5
+      "quality_score": 60.8
     },
     {
       "code": "TW",
       "name": "Taiwan",
       "coverage_pct": 100.0,
-      "freshness_pct": 59.5,
+      "freshness_pct": 54.3,
       "proxy_fills": 0,
       "gaps": 1,
-      "regime_score": 70.0,
-      "quality_score": 81.3
+      "regime_score": 73.3,
+      "quality_score": 77.5
     },
     {
       "code": "KZ",
       "name": "Kazakhstan",
       "coverage_pct": 100.0,
-      "freshness_pct": 25.0,
+      "freshness_pct": 81.8,
       "proxy_fills": 0,
       "gaps": 2,
-      "regime_score": 52.5,
-      "quality_score": 52.8
+      "regime_score": 49.4,
+      "quality_score": 80.6
     },
     {
       "code": "UZ",
       "name": "Uzbekistan",
       "coverage_pct": 100.0,
-      "freshness_pct": 38.5,
+      "freshness_pct": 71.9,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 52.7,
-      "quality_score": 53.5
+      "quality_score": 73.2
     },
     {
       "code": "EG",
       "name": "Egypt",
       "coverage_pct": 100.0,
-      "freshness_pct": 40.0,
+      "freshness_pct": 53.1,
       "proxy_fills": 0,
       "gaps": 2,
-      "regime_score": 51.9,
-      "quality_score": 58.0
+      "regime_score": 49.4,
+      "quality_score": 58.6
     },
     {
       "code": "NG",
       "name": "Nigeria",
       "coverage_pct": 100.0,
-      "freshness_pct": 32.1,
+      "freshness_pct": 68.6,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 54.4,
-      "quality_score": 51.2
+      "quality_score": 68.0
     }
   ],
   "release_monitor": [
@@ -13147,32 +12842,6 @@
       "note": "Eurostat old-age pension expenditure, % GDP; historical social-protection series, not a forward projection. Source validation passed."
     },
     {
-      "code": "EG",
-      "dashboard": "Egypt",
-      "indicator_id": "current_account_usd",
-      "label": "Current Account Balance (USD Millions)",
-      "latest": "2024-12-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 666,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Quarterly balance on current account excluding exceptional financing."
-    },
-    {
-      "code": "EG",
-      "dashboard": "Egypt",
-      "indicator_id": "goods_trade_balance",
-      "label": "Goods Trade Balance (USD Millions)",
-      "latest": "2024-12-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 666,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Net balance of merchandise exports minus imports (BPM6)."
-    },
-    {
       "code": "HU",
       "dashboard": "Hungary",
       "indicator_id": "bank_car",
@@ -13262,32 +12931,6 @@
       "severity": "high",
       "source": "FRED / OECD (MOF-BoJ BoP)",
       "note": "Publishes with a long lag. Japan's surplus is now dominated by primary income on overseas assets rather than the goods balance."
-    },
-    {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "cpi_index",
-      "label": "Headline Consumer Price Index (2020=100)",
-      "latest": "2024-12-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 666,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Consumer Price Index (All items) rebased index."
-    },
-    {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "cpi_inflation",
-      "label": "Headline CPI Inflation YoY",
-      "latest": "2024-12-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 666,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Year-on-year percentage change in official Consumer Price Index reported in IMF IFS."
     },
     {
       "code": "PL",
@@ -13706,32 +13349,6 @@
       "note": "Non-performing loans to total gross loans reported to the IMF."
     },
     {
-      "code": "KZ",
-      "dashboard": "Kazakhstan",
-      "indicator_id": "current_account_usd",
-      "label": "Current Account Balance (USD Millions)",
-      "latest": "2025-03-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 576,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Quarterly balance on current account excluding exceptional financing."
-    },
-    {
-      "code": "KZ",
-      "dashboard": "Kazakhstan",
-      "indicator_id": "goods_trade_balance",
-      "label": "Goods Trade Balance (USD Millions)",
-      "latest": "2025-03-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 576,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Net balance of merchandise exports minus imports (BPM6)."
-    },
-    {
       "code": "NG",
       "dashboard": "Nigeria",
       "indicator_id": "bank_capital_ratio",
@@ -13756,32 +13373,6 @@
       "severity": "high",
       "source": "IMF / DBnomics (FSI)",
       "note": "Non-performing loans to total gross loans reported to the IMF."
-    },
-    {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "current_account_usd",
-      "label": "Current Account Balance (USD Millions)",
-      "latest": "2025-03-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 576,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Quarterly balance on current account excluding exceptional financing."
-    },
-    {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "goods_trade_balance",
-      "label": "Goods Trade Balance (USD Millions)",
-      "latest": "2025-03-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 576,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Net balance of merchandise exports minus imports (BPM6)."
     },
     {
       "code": "PL",
@@ -13847,6 +13438,110 @@
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
       "note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 576 days old for quarterly data."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "bank_ld_ratio",
+      "label": "Bank Loan-to-Deposit Ratio",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 576,
+      "severity": "high",
+      "source": "IMF FSI via DB.nomics",
+      "note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 576 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "bank_liquidity_coverage",
+      "label": "Bank Liquidity Coverage Ratio",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 576,
+      "severity": "high",
+      "source": "IMF FSI via DB.nomics",
+      "note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 576 days old for quarterly data."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "bank_npl_ratio",
+      "label": "Bank NPL Ratio",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 576,
+      "severity": "high",
+      "source": "IMF FSI via DB.nomics",
+      "note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 576 days old for quarterly data."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "bank_roe",
+      "label": "Bank Return on Equity",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 576,
+      "severity": "high",
+      "source": "IMF FSI via DB.nomics",
+      "note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 576 days old for quarterly data."
+    },
+    {
+      "code": "TR",
+      "dashboard": "Turkey",
+      "indicator_id": "bank_capital_ratio",
+      "label": "Bank Regulatory Capital to Risk-Weighted Assets",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 576,
+      "severity": "high",
+      "source": "IMF / DBnomics (Financial Soundness Indicators)",
+      "note": "Deposit-taker regulatory capital to risk-weighted assets reported to the IMF."
+    },
+    {
+      "code": "TR",
+      "dashboard": "Turkey",
+      "indicator_id": "bank_npl_ratio",
+      "label": "Bank Non-Performing Loans (% of Gross Loans)",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 576,
+      "severity": "high",
+      "source": "IMF / DBnomics (Financial Soundness Indicators)",
+      "note": "Non-performing loans to total gross loans for deposit-takers."
+    },
+    {
+      "code": "KR",
+      "dashboard": "South Korea",
+      "indicator_id": "cpi_inflation_fred",
+      "label": "Headline CPI YoY (OECD Mirror Cross-Check)",
+      "latest": "2025-04-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 546,
+      "severity": "high",
+      "source": "FRED / OECD",
+      "note": "OECD consumer price index growth rate series mirrored on FRED."
+    },
+    {
+      "code": "CN",
+      "dashboard": "China",
+      "indicator_id": "large_bank_rrr_akshare",
+      "label": "Large Bank RRR",
+      "latest": "2025-05-15",
+      "frequency": "irregular",
+      "status": "stale",
+      "age_days": 531,
+      "severity": "high",
+      "source": "AKShare / PBC RRR Announcements",
+      "note": "Event-based required reserve ratio history via AKShare; effective dates and institution buckets should be cross-checked against PBC announcements."
     }
   ],
   "gap_backlog": [
