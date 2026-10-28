@@ -3419,11 +3419,19 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
         ("ZA", "South Africa", "south_africa.html"),
         ("UK", "United Kingdom", "uk.html"),
         ("US", "United States", "us.html"),
+        ("TR", "Turkey", "turkey.html"),
+        ("HK", "Hong Kong", "hong_kong.html"),
+        ("KR", "South Korea", "south_korea.html"),
+        ("TW", "Taiwan", "taiwan.html"),
+        ("KZ", "Kazakhstan", "kazakhstan.html"),
+        ("UZ", "Uzbekistan", "uzbekistan.html"),
+        ("EG", "Egypt", "egypt.html"),
+        ("NG", "Nigeria", "nigeria.html"),
     ]
     nav_links = []
     for cc, cname, cfile in all_countries:
         cls = 'nav-link active' if cc == country_code else 'nav-link'
-        nav_links.append(f'<a href="{cfile}" class="{cls}">{cc}</a>')
+        nav_links.append(f'<a href="{cfile}" class="{cls}" title="{cname}">{cc}</a>')
     country_nav = "\n    " + "\n    ".join(nav_links)
 
     # Chart IDs for JS fix script

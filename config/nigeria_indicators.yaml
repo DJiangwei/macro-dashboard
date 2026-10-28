@@ -1,0 +1,488 @@
+name: "Nigeria"
+name_zh: "尼日利亚"
+code: "NG"
+iso2: "NG"
+subtitle_en: "A data-first macro page for Nigeria built from DBnomics (IMF IFS & FSI), IMF DataMapper, World Bank WDI, FRED, and Bruegel REER."
+subtitle_zh: "基于DBnomics (IMF IFS与FSI)、IMF DataMapper、世界银行WDI、FRED与Bruegel实际有效汇率构建的尼日利亚数据优先宏观页面。"
+min_chart_count: 20
+
+sections:
+  growth_accounts:
+    title_en: "GDP & Sector Value Added"
+    title_zh: "GDP与行业增加值"
+    report_logic_en: "Official real GDP growth trajectories and sector value added dynamics (industry, agriculture, services) from IMF DataMapper and World Bank WDI."
+    report_logic_zh: "基于IMF DataMapper与世界银行WDI的实际GDP增速及行业增加值动态（工业、农业、服务业）。"
+  labour_wages:
+    title_en: "Labour Market"
+    title_zh: "劳动力市场"
+    report_logic_en: "National modeled unemployment rate tracking labor force utilization."
+    report_logic_zh: "国际劳工组织/世界银行模型估算的全国失业率。"
+  prices_costs:
+    title_en: "Prices & Inflation"
+    title_zh: "价格与通胀"
+    report_logic_en: "Official headline CPI inflation rate and index base from IMF International Financial Statistics."
+    report_logic_zh: "IMF国际金融统计(IFS)公布的尼日利亚官方总体CPI通胀同比率与价格基数。"
+  external_fx:
+    title_en: "External Sector, FX & Remittances"
+    title_zh: "外部部门、汇率与侨汇"
+    report_logic_en: "USD/NGN official exchange rate, Bruegel REER/NEER, workers' personal remittances (% of GDP), and quarterly BPM6 Current Account Balance."
+    report_logic_zh: "美元兑尼日利亚奈拉官方汇率、Bruegel实际与名义有效汇率、海外劳工侨汇占GDP比重以及季度BPM6经常账户差额。"
+  fiscal_sovereign:
+    title_en: "Fiscal & Public Debt"
+    title_zh: "财政与主权债务"
+    report_logic_en: "General government gross debt, fiscal deficit, and primary balance ratios from IMF DataMapper, alongside gross foreign exchange reserves."
+    report_logic_zh: "IMF DataMapper提供的广义政府总债务、财政赤字与初级收支比率，配合官方外汇储备总额。"
+  monetary_financial:
+    title_en: "Monetary, Credit & Commodities"
+    title_zh: "货币、利率与大宗商品"
+    report_logic_en: "Central Bank of Nigeria Monetary Policy Rate (MPR), commercial lending and deposit rates, broad money growth, domestic private credit, and Brent crude benchmark pricing."
+    report_logic_zh: "尼日利亚央行货币政策利率(MPR)、商业存贷款利率、广义货币增速、国内私营部门信贷与布伦特原油基准价格。"
+  stability_structural:
+    title_en: "Financial Stability"
+    title_zh: "金融稳定与银行体系"
+    report_logic_en: "Banking sector regulatory capital adequacy ratio (CAR) and non-performing loan ratio (NPL) from IMF Financial Soundness Indicators."
+    report_logic_zh: "IMF金融稳健指标(FSI)提供的银行体系监管资本充足率(CAR)与不良贷款率(NPL)。"
+
+indicators:
+  # ==========================================
+  # 1. Growth & National Accounts
+  # ==========================================
+  - id: real_gdp_growth
+    section: growth_accounts
+    label_en: Real GDP Growth (IMF WEO)
+    label_zh: 实际GDP增速 (IMF)
+    unit: "%"
+    fetcher: imf_datamapper
+    series: NGDP_RPCH/NGA
+    source_name: IMF DataMapper (WEO)
+    source_url: https://www.imf.org/external/datamapper/NGDP_RPCH/NGA
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Annual percentage change in constant-price gross domestic product.
+    caveat_zh: 按不变价格计算的国内生产总值年度变动百分比。
+
+  - id: real_gdp_growth_wb
+    section: growth_accounts
+    label_en: Real GDP Growth (World Bank)
+    label_zh: 实际GDP增速 (世行)
+    unit: "%"
+    fetcher: world_bank
+    series: NY.GDP.MKTP.KD.ZG
+    country_iso3: NGA
+    source_name: World Bank WDI
+    source_url: https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG?locations=NG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Annual percentage growth rate of GDP at market prices based on constant local currency.
+    caveat_zh: 基于不变本币市场价格计算的GDP年度增长率。
+
+  - id: industry_growth
+    section: growth_accounts
+    label_en: Industry Value Added Growth
+    label_zh: 工业增加值年度增速 (含采掘与能源)
+    unit: "%"
+    fetcher: world_bank
+    series: NV.IND.TOTL.KD.ZG
+    country_iso3: NGA
+    source_name: World Bank WDI
+    source_url: https://data.worldbank.org/indicator/NV.IND.TOTL.KD.ZG?locations=NG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Annual growth rate for industrial value added including mining and quarrying.
+    caveat_zh: 包含采矿业与油气开采的工业增加值实际年增长率。
+
+  - id: agriculture_growth
+    section: growth_accounts
+    label_en: Agriculture Value Added Growth
+    label_zh: 农业增加值年度增速
+    unit: "%"
+    fetcher: world_bank
+    series: NV.AGR.TOTL.KD.ZG
+    country_iso3: NGA
+    source_name: World Bank WDI
+    source_url: https://data.worldbank.org/indicator/NV.AGR.TOTL.KD.ZG?locations=NG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Annual growth rate for agricultural value added.
+    caveat_zh: 农业林业与渔业增加值实际年增长率。
+
+  - id: services_growth
+    section: growth_accounts
+    label_en: Services Value Added Growth
+    label_zh: 服务业增加值年度增速
+    unit: "%"
+    fetcher: world_bank
+    series: NV.SRV.TOTL.KD.ZG
+    country_iso3: NGA
+    source_name: World Bank WDI
+    source_url: https://data.worldbank.org/indicator/NV.SRV.TOTL.KD.ZG?locations=NG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Annual growth rate for services value added.
+    caveat_zh: 服务业增加值实际年增长率。
+
+  # ==========================================
+  # 2. Labour Market
+  # ==========================================
+  - id: unemployment_rate
+    section: labour_wages
+    label_en: Unemployment Rate
+    label_zh: 失业率
+    unit: "%"
+    fetcher: world_bank
+    series: SL.UEM.TOTL.ZS
+    country_iso3: NGA
+    source_name: World Bank / ILO
+    source_url: https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?locations=NG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Total unemployment as a percentage of the total labor force (ILO modeled estimate).
+    caveat_zh: 占总劳动力百分比的总失业率（国际劳工组织模型估算值）。
+
+  # ==========================================
+  # 3. Prices & Inflation
+  # ==========================================
+  - id: cpi_inflation
+    section: prices_costs
+    label_en: Headline CPI Inflation YoY
+    label_zh: 总体CPI通胀同比
+    unit: "% y/y"
+    fetcher: dbnomics
+    series: IMF/IFS/M.NG.PCPI_PC_CP_A_PT
+    source_name: IMF / DBnomics (IFS)
+    source_url: https://db.nomics.world/IMF/IFS/M.NG.PCPI_PC_CP_A_PT
+    frequency: monthly
+    start_date: 2010-01-01
+    caveat_en: Year-on-year percentage change in official Consumer Price Index reported in IMF IFS.
+    caveat_zh: 报送IMF国际金融统计的消费者价格指数同比变动百分比。
+
+  - id: cpi_index
+    section: prices_costs
+    label_en: Headline Consumer Price Index (2020=100)
+    label_zh: 总体消费价格指数基数 (2020=100)
+    unit: "Index"
+    fetcher: dbnomics
+    series: IMF/IFS/M.NG.PCPI_IX
+    source_name: IMF / DBnomics (IFS)
+    source_url: https://db.nomics.world/IMF/IFS/M.NG.PCPI_IX
+    frequency: monthly
+    start_date: 2010-01-01
+    caveat_en: Consumer Price Index (All items) rebased index.
+    caveat_zh: 总体消费者物价指数基数。
+
+  - id: cpi_inflation_weo
+    section: prices_costs
+    label_en: Headline Inflation (IMF WEO Cross-Check)
+    label_zh: 总体通胀率 (IMF WEO交叉核对)
+    unit: "%"
+    fetcher: imf_datamapper
+    series: PCPIPCH/NGA
+    source_name: IMF DataMapper (WEO)
+    source_url: https://www.imf.org/external/datamapper/PCPIPCH/NGA
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Annual average consumer price inflation rate from IMF World Economic Outlook.
+    caveat_zh: IMF《世界经济展望》提供的年均消费者物价通胀率。
+
+  # ==========================================
+  # 4. External Sector, FX & Remittances
+  # ==========================================
+  - id: usd_ngn
+    section: external_fx
+    label_en: USD/NGN End-of-Period Official Rate
+    label_zh: 美元兑尼日利亚奈拉期末官方汇率
+    unit: "NGN"
+    fetcher: dbnomics
+    series: IMF/IFS/M.NG.ENDE_XDC_USD_RATE
+    source_name: IMF / DBnomics (IFS)
+    source_url: https://db.nomics.world/IMF/IFS/M.NG.ENDE_XDC_USD_RATE
+    frequency: monthly
+    start_date: 2010-01-01
+    caveat_en: Monthly end-of-period national currency units per US dollar.
+    caveat_zh: IMF国际金融统计公布的月末每美元兑奈拉官方汇率。
+
+  - id: reer
+    section: external_fx
+    label_en: Real Effective Exchange Rate (120 Partners)
+    label_zh: 实际有效汇率 (REER 120国)
+    unit: "2007=100"
+    fetcher: bruegel_reer
+    country: NG
+    series_type: reer_120
+    source_name: Bruegel (Darvas REER Dataset)
+    source_url: https://www.bruegel.org/publications/datasets/real-effective-exchange-rates-for-178-countries-a-new-database
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: CPI-deflated real effective exchange rate against 120 trading partners.
+    caveat_zh: 基于CPI平减的对120个贸易伙伴的实际有效汇率。
+
+  - id: neer
+    section: external_fx
+    label_en: Nominal Effective Exchange Rate (120 Partners)
+    label_zh: 名义有效汇率 (NEER 120国)
+    unit: "2007=100"
+    fetcher: bruegel_reer
+    country: NG
+    series_type: neer_120
+    source_name: Bruegel (Darvas REER Dataset)
+    source_url: https://www.bruegel.org/publications/datasets/real-effective-exchange-rates-for-178-countries-a-new-database
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Trade-weighted nominal effective exchange rate against 120 trading partners.
+    caveat_zh: 贸易加权名义有效汇率。
+
+  - id: remittances_gdp
+    section: external_fx
+    label_en: Personal Remittances Received (% of GDP)
+    label_zh: 个人侨汇收入占GDP比重
+    unit: "% of GDP"
+    fetcher: world_bank
+    series: BX.TRF.PWKR.DT.GD.ZS
+    country_iso3: NGA
+    source_name: World Bank WDI
+    source_url: https://data.worldbank.org/indicator/BX.TRF.PWKR.DT.GD.ZS?locations=NG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Personal transfers received comprised of all current transfers from nonresident households.
+    caveat_zh: 尼日利亚海外侨民汇回本国的个人侨汇占GDP比重。
+
+  - id: current_account_usd
+    section: external_fx
+    label_en: Current Account Balance (USD Millions)
+    label_zh: 经常账户差额 (百万美元)
+    unit: "USD mn"
+    fetcher: dbnomics
+    series: IMF/IFS/Q.NG.BCAXF_BP6_USD
+    source_name: IMF / DBnomics (IFS)
+    source_url: https://db.nomics.world/IMF/IFS/Q.NG.BCAXF_BP6_USD
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly balance on current account excluding exceptional financing.
+    caveat_zh: 季度经常账户净差额（百万美元）。
+
+  - id: goods_trade_balance
+    section: external_fx
+    label_en: Goods Trade Balance (USD Millions)
+    label_zh: 货物贸易差额 (百万美元)
+    unit: "USD mn"
+    fetcher: dbnomics
+    series: IMF/IFS/Q.NG.BG_BP6_USD
+    source_name: IMF / DBnomics (IFS)
+    source_url: https://db.nomics.world/IMF/IFS/Q.NG.BG_BP6_USD
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Net balance of merchandise exports minus imports (BPM6).
+    caveat_zh: 货物出口减去进口净额（BPM6标准，百万美元）。
+
+  - id: current_account_gdp
+    section: external_fx
+    label_en: Current Account Balance (% of GDP)
+    label_zh: 经常账户占GDP比重
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: BCA_NGDPD/NGA
+    source_name: IMF DataMapper (WEO)
+    source_url: https://www.imf.org/external/datamapper/BCA_NGDPD/NGA
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Current account balance expressed as a percentage of gross domestic product.
+    caveat_zh: 经常账户差额占GDP比重。
+
+  # ==========================================
+  # 5. Fiscal & Sovereign
+  # ==========================================
+  - id: government_debt_gdp
+    section: fiscal_sovereign
+    label_en: General Government Gross Debt (% of GDP)
+    label_zh: 广义政府总债务占GDP比重
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: GGXWDG_NGDP/NGA
+    source_name: IMF DataMapper (WEO)
+    source_url: https://www.imf.org/external/datamapper/GGXWDG_NGDP/NGA
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government gross debt as a percentage of GDP.
+    caveat_zh: 广义政府总债务占GDP比重。
+
+  - id: fiscal_balance_gdp
+    section: fiscal_sovereign
+    label_en: Fiscal Balance (% of GDP)
+    label_zh: 财政净借贷(赤字率)占GDP比重
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: GGXCNL_NGDP/NGA
+    source_name: IMF DataMapper (WEO)
+    source_url: https://www.imf.org/external/datamapper/GGXCNL_NGDP/NGA
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: General government net lending/borrowing as a percentage of GDP.
+    caveat_zh: 广义政府净借贷（赤字率）占GDP比重。
+
+  - id: primary_balance_gdp
+    section: fiscal_sovereign
+    label_en: Primary Net Lending/Borrowing (% of GDP)
+    label_zh: 初级财政收支占GDP比重
+    unit: "% of GDP"
+    fetcher: imf_datamapper
+    series: GGXONLB_G01_GDP_PT/NGA
+    source_name: IMF DataMapper (Fiscal Monitor)
+    source_url: https://www.imf.org/external/datamapper/GGXONLB_G01_GDP_PT/NGA
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Primary net lending/borrowing excluding net interest outlays.
+    caveat_zh: 剔除净利息支出的初级财政收支占GDP比重。
+
+  - id: fx_reserves
+    section: fiscal_sovereign
+    label_en: Official Reserve Assets (USD Millions)
+    label_zh: 官方储备资产总额 (百万美元)
+    unit: "USD mn"
+    fetcher: dbnomics
+    series: IMF/IFS/M.NG.RAFA_USD
+    source_name: IMF / DBnomics (IFS)
+    source_url: https://db.nomics.world/IMF/IFS/M.NG.RAFA_USD
+    frequency: monthly
+    start_date: 2010-01-01
+    caveat_en: Official reserve assets in US dollars reported in IMF IFS.
+    caveat_zh: 报送IMF国际金融统计的官方储备资产总额（百万美元）。
+
+  # ==========================================
+  # 6. Monetary, Credit & Commodities
+  # ==========================================
+  - id: policy_rate
+    section: monetary_financial
+    label_en: Central Bank Monetary Policy Rate (MPR)
+    label_zh: 央行货币政策利率 (CBN MPR)
+    unit: "%"
+    fetcher: dbnomics
+    series: IMF/IFS/M.NG.FPOLM_PA
+    source_name: IMF / DBnomics (IFS)
+    source_url: https://db.nomics.world/IMF/IFS/M.NG.FPOLM_PA
+    frequency: monthly
+    start_date: 2015-01-01
+    caveat_en: Central Bank of Nigeria Monetary Policy Rate reported in IFS.
+    caveat_zh: 尼日利亚中央银行向IMF报送的货币政策基准利率。
+
+  - id: lending_rate
+    section: monetary_financial
+    label_en: Commercial Bank Prime Lending Rate
+    label_zh: 商业银行优惠贷款利率
+    unit: "%"
+    fetcher: dbnomics
+    series: IMF/IFS/M.NG.FILR_PA
+    source_name: IMF / DBnomics (IFS)
+    source_url: https://db.nomics.world/IMF/IFS/M.NG.FILR_PA
+    frequency: monthly
+    start_date: 2015-01-01
+    caveat_en: Commercial bank prime lending rate on local currency loans.
+    caveat_zh: 尼日利亚商业银行本币最优惠贷款利率。
+
+  - id: deposit_rate
+    section: monetary_financial
+    label_en: Commercial Bank Time Deposit Rate
+    label_zh: 商业银行定期存款利率
+    unit: "%"
+    fetcher: dbnomics
+    series: IMF/IFS/M.NG.FIDR_PA
+    source_name: IMF / DBnomics (IFS)
+    source_url: https://db.nomics.world/IMF/IFS/M.NG.FIDR_PA
+    frequency: monthly
+    start_date: 2015-01-01
+    caveat_en: Commercial bank weighted average time deposit rate.
+    caveat_zh: 商业银行加权平均定期存款利率。
+
+  - id: broad_money_growth
+    section: monetary_financial
+    label_en: Broad Money Growth (Annual %)
+    label_zh: 广义货币供应量(M2/M3)增速
+    unit: "%"
+    fetcher: world_bank
+    series: FM.LBL.BMNY.ZG
+    country_iso3: NGA
+    source_name: World Bank WDI
+    source_url: https://data.worldbank.org/indicator/FM.LBL.BMNY.ZG?locations=NG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Annual growth rate of broad money liabilities.
+    caveat_zh: 广义货币负债年度增长率。
+
+  - id: private_credit_gdp
+    section: monetary_financial
+    label_en: Domestic Private Credit (% of GDP)
+    label_zh: 国内私营部门信贷占GDP比重
+    unit: "% of GDP"
+    fetcher: world_bank
+    series: FS.AST.PRVT.GD.ZS
+    country_iso3: NGA
+    source_name: World Bank WDI
+    source_url: https://data.worldbank.org/indicator/FS.AST.PRVT.GD.ZS?locations=NG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Domestic credit to private sector refers to financial resources provided to the private sector.
+    caveat_zh: 金融机构向私营部门提供的信贷总额占GDP比重。
+
+  - id: brent_crude_oil
+    section: monetary_financial
+    label_en: "Crude Oil Prices: Brent - Europe"
+    label_zh: 布伦特原油现货价格 (美元/桶)
+    unit: "USD/bbl"
+    fetcher: fred_graph
+    series: DCOILBRENTEU
+    source_name: EIA / FRED
+    source_url: https://fred.stlouisfed.org/series/DCOILBRENTEU
+    frequency: daily
+    start_date: 2000-01-01
+    caveat_en: Daily spot price for Brent crude, the primary benchmark for Nigerian Bonny Light crude pricing and government revenues.
+    caveat_zh: 欧洲布伦特原油现货价格，尼日利亚邦尼轻质原油出口定价与财政收入的核心基准。
+
+  # ==========================================
+  # 7. Financial Stability
+  # ==========================================
+  - id: bank_capital_ratio
+    section: stability_structural
+    label_en: Bank Regulatory Capital to Risk-Weighted Assets (CAR)
+    label_zh: 银行监管资本充足率 (CAR)
+    unit: "%"
+    fetcher: dbnomics
+    series: IMF/FSI/Q.NG.FSKRC_PT
+    source_name: IMF / DBnomics (FSI)
+    source_url: https://db.nomics.world/IMF/FSI/Q.NG.FSKRC_PT
+    frequency: quarterly
+    start_date: 2010-01-01
+    caveat_en: Regulatory capital to risk-weighted assets for commercial banks in Nigeria.
+    caveat_zh: 尼日利亚商业银行监管资本充足率。
+
+  - id: bank_npl_ratio
+    section: stability_structural
+    label_en: Bank Non-Performing Loans Ratio (NPL)
+    label_zh: 银行不良贷款率 (NPL)
+    unit: "%"
+    fetcher: dbnomics
+    series: IMF/FSI/Q.NG.FSANL_PT
+    source_name: IMF / DBnomics (FSI)
+    source_url: https://db.nomics.world/IMF/FSI/Q.NG.FSANL_PT
+    frequency: quarterly
+    start_date: 2010-01-01
+    caveat_en: Non-performing loans to total gross loans reported to the IMF.
+    caveat_zh: 报送IMF的银行不良贷款占总贷款比重。
+
+data_gaps:
+  - section: external_fx
+    item_en: Daily NAFEM Official Exchange Rate & Autonomous FX Window Turnover
+    item_zh: 尼日利亚自治外汇市场(NAFEM)官方即期汇率与外汇成交额
+    status_en: Published daily by FMDQ and Central Bank of Nigeria (cbn.gov.ng); machine-readable mirror under development.
+    status_zh: 由FMDQ集团与尼日利亚央行每日发布；目前通过官方市场简报跟踪。
+  - section: monetary_financial
+    item_en: Monthly NBS Bonny Light Crude Oil Production (mbpd)
+    item_zh: 尼日利亚国家统计局(NBS)月度原油日均产量 (百万桶/日)
+    status_en: Monitored via National Bureau of Statistics (nigerianstat.gov.ng) and NUPRC official bulletins.
+    status_zh: 通过尼日利亚国家统计局与上游石油监管委员会(NUPRC)月度公报跟踪监控。
+
+cross_checks:
+  - concept: real_gdp_growth
+    primary: real_gdp_growth
+    secondary: real_gdp_growth_wb
+    tolerance: 0.50
+    since: "2015"
+    label_en: IMF WEO vs World Bank WDI Real GDP Growth

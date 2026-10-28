@@ -1,8 +1,8 @@
 {
   "file": "turkey.html",
-  "generated": "2026-10-27T23:58:23.783131+00:00",
-  "charts": 34,
-  "source_groups": 9,
+  "generated": "2026-10-28T15:21:26.895949+00:00",
+  "charts": 36,
+  "source_groups": 10,
   "data_gaps": 2,
   "low_confidence": 12,
   "key_series_latest": [
@@ -16,7 +16,7 @@
       "frequency": "quarterly",
       "source_name": "Eurostat / TurkStat",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "real_gdp_yoy",
@@ -247,6 +247,18 @@
       "quality_status": "verified"
     },
     {
+      "id": "reer",
+      "label_en": "Real Effective Exchange Rate (REER)",
+      "label_zh": "实际有效汇率 (REER)",
+      "latest_date": "2026-09-01",
+      "latest_value": 59.9573,
+      "latest_display": "60.0 Index (2007 = 100)",
+      "frequency": "monthly",
+      "source_name": "Bruegel (Darvas 120-Trading-Partner Basket)",
+      "series": "",
+      "quality_status": "watch"
+    },
+    {
       "id": "current_account_usd",
       "label_en": "Current Account Balance (USD)",
       "label_zh": "经常账户差额 (美元)",
@@ -320,8 +332,6 @@
     }
   ],
   "unavailable": [
-    "reer",
-    "neer",
     "current_account_gdp",
     "government_debt_gdp",
     "fiscal_balance_gdp",
@@ -357,10 +367,10 @@
       "value"
     ],
     "file": "turkey_canonical_frame.json",
-    "series": 34,
-    "observations": 5051,
-    "series_count": 34,
-    "observation_count": 5051
+    "series": 36,
+    "observations": 5813,
+    "series_count": 36,
+    "observation_count": 5813
   },
   "data_gaps_detail": [
     {
@@ -379,7 +389,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 9,
+    "source_groups": 10,
     "sources": [
       {
         "source_name": "Eurostat / TurkStat",
@@ -392,6 +402,10 @@
       {
         "source_name": "IMF SDMX / CBRT",
         "charts": 3
+      },
+      {
+        "source_name": "Bruegel (Darvas 120-Trading-Partner Basket)",
+        "charts": 2
       },
       {
         "source_name": "Eurostat / CBRT",
@@ -420,10 +434,10 @@
     ],
     "quality_counts": {
       "low_confidence": 12,
-      "verified": 15,
-      "watch": 7
+      "verified": 14,
+      "watch": 10
     },
-    "unavailable_count": 6
+    "unavailable_count": 4
   },
   "framework": {
     "version": 2,
@@ -432,10 +446,10 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-10-27",
+    "as_of_date": "2026-10-28",
     "counts": {
-      "current": 19,
-      "due": 3,
+      "current": 20,
+      "due": 4,
       "stale": 12
     },
     "latest_historical_date": "2026-10-27",
@@ -448,7 +462,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2024-10-01",
-        "age_days": 665,
+        "age_days": 666,
         "threshold_days": 185,
         "release_calendar_id": "eurostat_quarterly",
         "expected_release_date": "2025-06-14",
@@ -470,7 +484,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 575,
+        "age_days": 576,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -492,7 +506,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 575,
+        "age_days": 576,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -514,7 +528,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 300,
+        "age_days": 301,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -536,7 +550,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-12-01",
-        "age_days": 300,
+        "age_days": 301,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-03-17",
@@ -558,7 +572,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-12-01",
-        "age_days": 300,
+        "age_days": 301,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-03-17",
@@ -580,7 +594,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-12-01",
-        "age_days": 300,
+        "age_days": 301,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-03-17",
@@ -602,7 +616,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-12-01",
-        "age_days": 300,
+        "age_days": 301,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-03-17",
@@ -624,7 +638,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 300,
+        "age_days": 301,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -646,7 +660,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 300,
+        "age_days": 301,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -668,7 +682,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-12-01",
-        "age_days": 300,
+        "age_days": 301,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-03-17",
@@ -690,7 +704,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 210,
+        "age_days": 211,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -705,6 +719,28 @@
         "transform": "level"
       },
       {
+        "id": "real_gdp_growth",
+        "concept_id": "real_gdp_growth_qoq",
+        "label_en": "Real GDP Growth, QoQ SA",
+        "latest_date": "2026-04-01",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-04-01",
+        "age_days": 120,
+        "threshold_days": 137,
+        "release_calendar_id": "bea_quarterly",
+        "expected_release_date": "2026-11-04",
+        "due_date": "2026-11-14",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Eurostat / TurkStat",
+        "series": "",
+        "transform": "level"
+      },
+      {
         "id": "unemployment_rate",
         "concept_id": "unemployment_rate",
         "label_en": "Harmonised Unemployment Rate SA",
@@ -712,7 +748,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 88,
+        "age_days": 89,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-10-15",
@@ -734,7 +770,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-07-01",
-        "age_days": 88,
+        "age_days": 89,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-10-15",
@@ -756,7 +792,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 57,
+        "age_days": 58,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -774,7 +810,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 34
+      "level": 36
     },
     "non_level": []
   },
@@ -784,6 +820,6 @@
       "date",
       "value"
     ],
-    "charted_series": 34
+    "charted_series": 36
   }
 }

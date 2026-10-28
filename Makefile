@@ -22,6 +22,10 @@ refresh-data:
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_hong_kong_dashboard.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_south_korea_dashboard.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_taiwan_dashboard.py
+	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_kazakhstan_dashboard.py
+	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_uzbekistan_dashboard.py
+	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_egypt_dashboard.py
+	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_nigeria_dashboard.py
 	$(UV) run python scripts/core_coverage_matrix.py
 	$(UV) run python scripts/data_source_catalog.py
 	$(UV) run python scripts/freshness_audit.py
@@ -40,6 +44,10 @@ rebuild-ui:
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_hong_kong_dashboard.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_south_korea_dashboard.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_taiwan_dashboard.py
+	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_kazakhstan_dashboard.py
+	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_uzbekistan_dashboard.py
+	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_egypt_dashboard.py
+	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_nigeria_dashboard.py
 	$(UV) run python scripts/core_coverage_matrix.py
 	$(UV) run python scripts/data_source_catalog.py
 	$(UV) run python scripts/freshness_audit.py
@@ -71,7 +79,7 @@ proxy-report-live:
 
 publish-check:
 	curl -L https://djiangwei.github.io/macro-dashboard/ | rg -n "Macro Dashboard Archive|Hungary|dashboard_archive_summary.json"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/index.html | rg -n "Macro Dashboard Archive|china.html|euro_area.html|japan.html|south_africa.html|uk.html|us.html|turkey.html|hong_kong.html|south_korea.html|taiwan.html"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/index.html | rg -n "Macro Dashboard Archive|china.html|euro_area.html|japan.html|south_africa.html|uk.html|us.html|turkey.html|hong_kong.html|south_korea.html|taiwan.html|kazakhstan.html|uzbekistan.html|egypt.html|nigeria.html"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/hungary.html | rg -n "Hungary Dashboard|Core 48|chart-financial_stability-bank_car"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/china.html | rg -n "China Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/euro_area.html | rg -n "Euro Area Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
@@ -83,6 +91,10 @@ publish-check:
 	curl -L https://djiangwei.github.io/macro-dashboard/output/hong_kong.html | rg -n "Hong Kong Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/south_korea.html | rg -n "South Korea Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/taiwan.html | rg -n "Taiwan Dashboard|Core 48|Official Data Gaps|chart-real_gdp_yoy"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/kazakhstan.html | rg -n "Kazakhstan Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/uzbekistan.html | rg -n "Uzbekistan Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/egypt.html | rg -n "Egypt Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/nigeria.html | rg -n "Nigeria Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/core_coverage_matrix.json | rg -n "core-coverage-v1|concept_count|priorities"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/source_health.json | rg -n "source-health-v1|circuit_breaker|countries"
 

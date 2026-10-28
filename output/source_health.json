@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-27T23:58:57.568864+00:00",
+  "generated": "2026-10-28T15:22:12.192463+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -226,29 +226,29 @@
       "events": []
     },
     "CZ": {
-      "calls": 840,
-      "success": 103,
-      "empty": 737,
+      "calls": 853,
+      "success": 102,
+      "empty": 751,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {
-        "empty_response": 737
+        "empty_response": 751
       },
       "sources": {
         "BISFetcher": {
-          "empty": 10,
+          "empty": 11,
           "success": 3
         },
         "BVBIndexProfileFetcher": {
-          "empty": 13
+          "empty": 14
         },
         "CZSOFetcher": {
-          "empty": 1,
+          "empty": 2,
           "success": 1
         },
         "CredentialedStooqFetcher": {
-          "empty": 13
+          "empty": 14
         },
         "DerivedMacroFetcher": {
           "empty": 51,
@@ -263,7 +263,7 @@
           "success": 1
         },
         "ECBMIRFetcher": {
-          "empty": 7,
+          "empty": 8,
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
@@ -282,13 +282,13 @@
           "empty": 38
         },
         "GIEAGSIFetcher": {
-          "empty": 7
+          "empty": 8
         },
         "GPWBenchmarkFetcher": {
-          "empty": 13
+          "empty": 14
         },
         "GUSDBWFetcher": {
-          "empty": 1
+          "empty": 2
         },
         "IMFDataMapperFetcher": {
           "empty": 44,
@@ -299,13 +299,13 @@
           "success": 5
         },
         "INSSETempoFetcher": {
-          "empty": 1
+          "empty": 2
         },
         "KSHFetcher": {
-          "empty": 1
+          "empty": 2
         },
         "ManualIndicatorFetcher": {
-          "empty": 2,
+          "empty": 3,
           "success": 5
         },
         "NationalCBFetcher": {
@@ -316,22 +316,22 @@
           "success": 1
         },
         "PragueExchangeFetcher": {
-          "empty": 13,
-          "success": 3
+          "empty": 14,
+          "success": 2
         },
         "WorldBankESGFetcher": {
           "empty": 41,
           "success": 3
         },
         "WorldBankFallbackFetcher": {
-          "empty": 10
+          "empty": 11
         },
         "WorldBankFetcher": {
           "empty": 16,
           "success": 17
         },
         "YahooMarketFetcher": {
-          "empty": 13
+          "empty": 14
         }
       },
       "events": []
@@ -530,18 +530,18 @@
       "events": []
     },
     "TR": {
-      "calls": 52,
-      "success": 34,
+      "calls": 48,
+      "success": 36,
       "empty": 0,
-      "failed": 18,
+      "failed": 12,
       "circuit_open": 0,
       "failure_reasons": {
-        "schema_error": 18
+        "schema_error": 12
       },
       "empty_reasons": {},
       "sources": {
         "bruegel_reer": {
-          "failed": 6
+          "success": 2
         },
         "dbnomics": {
           "success": 2
@@ -564,25 +564,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-27T23:58:20.395213+00:00",
-          "country": "TR",
-          "indicator_id": "reer",
-          "source_id": "bruegel_reer",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "fetch_bruegel_reer() missing 1 required positional argument: 'spec'"
-        },
-        {
-          "timestamp": "2026-10-27T23:58:20.395235+00:00",
-          "country": "TR",
-          "indicator_id": "neer",
-          "source_id": "bruegel_reer",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "fetch_bruegel_reer() missing 1 required positional argument: 'spec'"
-        },
-        {
-          "timestamp": "2026-10-27T23:58:21.002628+00:00",
+          "timestamp": "2026-10-28T15:21:23.940080+00:00",
           "country": "TR",
           "indicator_id": "current_account_gdp",
           "source_id": "imf_datamapper",
@@ -591,7 +573,7 @@
           "message": "'series'"
         },
         {
-          "timestamp": "2026-10-27T23:58:21.002668+00:00",
+          "timestamp": "2026-10-28T15:21:23.940114+00:00",
           "country": "TR",
           "indicator_id": "government_debt_gdp",
           "source_id": "imf_datamapper",
@@ -600,7 +582,7 @@
           "message": "'series'"
         },
         {
-          "timestamp": "2026-10-27T23:58:21.002697+00:00",
+          "timestamp": "2026-10-28T15:21:23.940137+00:00",
           "country": "TR",
           "indicator_id": "fiscal_balance_gdp",
           "source_id": "imf_datamapper",
@@ -609,7 +591,7 @@
           "message": "'series'"
         },
         {
-          "timestamp": "2026-10-27T23:58:21.002721+00:00",
+          "timestamp": "2026-10-28T15:21:23.940158+00:00",
           "country": "TR",
           "indicator_id": "primary_balance_gdp",
           "source_id": "imf_datamapper",
@@ -618,43 +600,7 @@
           "message": "'series'"
         },
         {
-          "timestamp": "2026-10-27T23:58:23.715517+00:00",
-          "country": "TR",
-          "indicator_id": "reer",
-          "source_id": "bruegel_reer",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "fetch_bruegel_reer() missing 1 required positional argument: 'spec'"
-        },
-        {
-          "timestamp": "2026-10-27T23:58:23.715586+00:00",
-          "country": "TR",
-          "indicator_id": "reer",
-          "source_id": "bruegel_reer",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "fetch_bruegel_reer() missing 1 required positional argument: 'spec'"
-        },
-        {
-          "timestamp": "2026-10-27T23:58:23.715626+00:00",
-          "country": "TR",
-          "indicator_id": "neer",
-          "source_id": "bruegel_reer",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "fetch_bruegel_reer() missing 1 required positional argument: 'spec'"
-        },
-        {
-          "timestamp": "2026-10-27T23:58:23.715660+00:00",
-          "country": "TR",
-          "indicator_id": "neer",
-          "source_id": "bruegel_reer",
-          "outcome": "failed",
-          "reason": "schema_error",
-          "message": "fetch_bruegel_reer() missing 1 required positional argument: 'spec'"
-        },
-        {
-          "timestamp": "2026-10-27T23:58:23.715809+00:00",
+          "timestamp": "2026-10-28T15:21:26.825508+00:00",
           "country": "TR",
           "indicator_id": "current_account_gdp",
           "source_id": "imf_datamapper",
@@ -663,7 +609,7 @@
           "message": "'series'"
         },
         {
-          "timestamp": "2026-10-27T23:58:23.715876+00:00",
+          "timestamp": "2026-10-28T15:21:26.825577+00:00",
           "country": "TR",
           "indicator_id": "current_account_gdp",
           "source_id": "imf_datamapper",
@@ -672,7 +618,7 @@
           "message": "'series'"
         },
         {
-          "timestamp": "2026-10-27T23:58:23.715926+00:00",
+          "timestamp": "2026-10-28T15:21:26.825607+00:00",
           "country": "TR",
           "indicator_id": "government_debt_gdp",
           "source_id": "imf_datamapper",
@@ -681,7 +627,7 @@
           "message": "'series'"
         },
         {
-          "timestamp": "2026-10-27T23:58:23.715969+00:00",
+          "timestamp": "2026-10-28T15:21:26.825628+00:00",
           "country": "TR",
           "indicator_id": "government_debt_gdp",
           "source_id": "imf_datamapper",
@@ -690,7 +636,7 @@
           "message": "'series'"
         },
         {
-          "timestamp": "2026-10-27T23:58:23.716012+00:00",
+          "timestamp": "2026-10-28T15:21:26.825649+00:00",
           "country": "TR",
           "indicator_id": "fiscal_balance_gdp",
           "source_id": "imf_datamapper",
@@ -699,7 +645,7 @@
           "message": "'series'"
         },
         {
-          "timestamp": "2026-10-27T23:58:23.716054+00:00",
+          "timestamp": "2026-10-28T15:21:26.825668+00:00",
           "country": "TR",
           "indicator_id": "fiscal_balance_gdp",
           "source_id": "imf_datamapper",
@@ -708,7 +654,7 @@
           "message": "'series'"
         },
         {
-          "timestamp": "2026-10-27T23:58:23.716091+00:00",
+          "timestamp": "2026-10-28T15:21:26.825689+00:00",
           "country": "TR",
           "indicator_id": "primary_balance_gdp",
           "source_id": "imf_datamapper",
@@ -717,7 +663,7 @@
           "message": "'series'"
         },
         {
-          "timestamp": "2026-10-27T23:58:23.716125+00:00",
+          "timestamp": "2026-10-28T15:21:26.825709+00:00",
           "country": "TR",
           "indicator_id": "primary_balance_gdp",
           "source_id": "imf_datamapper",
@@ -807,6 +753,117 @@
         },
         "tw_dgbas": {
           "success": 10
+        }
+      },
+      "events": []
+    },
+    "KZ": {
+      "calls": 28,
+      "success": 28,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bruegel_reer": {
+          "success": 2
+        },
+        "dbnomics": {
+          "success": 8
+        },
+        "fred_graph": {
+          "success": 2
+        },
+        "imf_datamapper": {
+          "success": 6
+        },
+        "nbk_xml": {
+          "success": 4
+        },
+        "world_bank": {
+          "success": 6
+        }
+      },
+      "events": []
+    },
+    "UZ": {
+      "calls": 26,
+      "success": 26,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bruegel_reer": {
+          "success": 2
+        },
+        "dbnomics": {
+          "success": 10
+        },
+        "fred_graph": {
+          "success": 1
+        },
+        "imf_datamapper": {
+          "success": 6
+        },
+        "world_bank": {
+          "success": 7
+        }
+      },
+      "events": []
+    },
+    "EG": {
+      "calls": 25,
+      "success": 25,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bruegel_reer": {
+          "success": 2
+        },
+        "dbnomics": {
+          "success": 8
+        },
+        "fred_graph": {
+          "success": 2
+        },
+        "imf_datamapper": {
+          "success": 6
+        },
+        "world_bank": {
+          "success": 7
+        }
+      },
+      "events": []
+    },
+    "NG": {
+      "calls": 28,
+      "success": 28,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bruegel_reer": {
+          "success": 2
+        },
+        "dbnomics": {
+          "success": 11
+        },
+        "fred_graph": {
+          "success": 1
+        },
+        "imf_datamapper": {
+          "success": 6
+        },
+        "world_bank": {
+          "success": 8
         }
       },
       "events": []

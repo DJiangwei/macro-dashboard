@@ -26,9 +26,13 @@ COUNTRY_FILES = {
     "HK": "hong_kong.html",
     "KR": "south_korea.html",
     "TW": "taiwan.html",
+    "KZ": "kazakhstan.html",
+    "UZ": "uzbekistan.html",
+    "EG": "egypt.html",
+    "NG": "nigeria.html",
 }
-DATA_FIRST_CODES = {"CN", "EA", "JP", "ZA", "UK", "US", "TR", "HK", "KR", "TW"}
-DATA_FIRST_NAMES = ("china", "euro_area", "japan", "south_africa", "uk", "us", "turkey", "hong_kong", "south_korea", "taiwan")
+DATA_FIRST_CODES = {"CN", "EA", "JP", "ZA", "UK", "US", "TR", "HK", "KR", "TW", "KZ", "UZ", "EG", "NG"}
+DATA_FIRST_NAMES = ("china", "euro_area", "japan", "south_africa", "uk", "us", "turkey", "hong_kong", "south_korea", "taiwan", "kazakhstan", "uzbekistan", "egypt", "nigeria")
 
 # Display names as they appear in output/freshness_audit.json's "dashboard"
 # field and in the archive index cards' <h2> headings.
@@ -47,6 +51,10 @@ DASHBOARD_DISPLAY_NAMES = {
     "HK": "Hong Kong",
     "KR": "South Korea",
     "TW": "Taiwan",
+    "KZ": "Kazakhstan",
+    "UZ": "Uzbekistan",
+    "EG": "Egypt",
+    "NG": "Nigeria",
 }
 
 # Transforms that step back a fixed number of calendar periods from a base

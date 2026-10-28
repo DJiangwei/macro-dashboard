@@ -172,15 +172,24 @@ def _imf_sdmx_rows(session: requests.Session, dataflow: str, series_key: str) ->
     if cached is not None:
         return cached
 
-    response = session.get(
-        f"{IMF_SDMX_BASE}/{dataflow}/{series_key}",
-        headers={
-            "User-Agent": USER_AGENT,
-            "Accept": "application/vnd.sdmx.data+csv;version=1.0.0",
-        },
-        timeout=(5, 120),
-    )
-    response.raise_for_status()
+    attempts = 3
+    response: requests.Response | None = None
+    for attempt in range(attempts):
+        response = session.get(
+            f"{IMF_SDMX_BASE}/{dataflow}/{series_key}",
+            headers={
+                "User-Agent": USER_AGENT,
+                "Accept": "application/vnd.sdmx.data+csv;version=1.0.0",
+            },
+            timeout=(5, 120),
+        )
+        if response.status_code in (401, 429, 500, 502, 503, 504) and attempt < attempts - 1:
+            time.sleep(1.0 + attempt * 1.5)
+            continue
+        response.raise_for_status()
+        break
+    if response is None:
+        raise RuntimeError(f"Failed to fetch IMF SDMX {dataflow}/{series_key}")
     rows = list(csv.DictReader(io.StringIO(response.text)))
     with IMF_SDMX_LOCK:
         IMF_SDMX_CACHE[cache_key] = rows
@@ -2212,19 +2221,25 @@ def fetch_spread(session: requests.Session, spec: dict[str, Any]) -> dict[str, A
 BRUEGEL_CACHE_PATH = ROOT / "data" / "bruegel_reer_monthly.json"
 
 
-def fetch_bruegel_reer(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
+def fetch_bruegel_reer(session_or_spec: Any, spec: dict[str, Any] | None = None) -> dict[str, Any]:
     """Fetch monthly Real Effective Exchange Rate (REER) or NEER from Bruegel database."""
-    country = str(spec.get("country") or spec.get("country_code") or "").strip().upper()
+    if spec is None:
+        spec = session_or_spec
+    country = str(spec.get("country") or spec.get("country_code") or spec.get("code") or "").strip().upper()
     if not country:
         spec_id = str(spec.get("id", "")).upper()
-        for c in ("US", "EA", "UK", "JP", "CN", "ZA", "PL", "CZ", "HU", "RO"):
+        for c in ("US", "EA", "UK", "JP", "CN", "ZA", "PL", "CZ", "HU", "RO", "HK", "TW", "KR", "TR", "KZ", "UZ", "EG", "NG"):
             if f"_{c}" in spec_id or spec_id.startswith(f"{c}_") or spec_id.endswith(f"_{c}"):
                 country = c
                 break
     if not country:
         raise ValueError(f"fetch_bruegel_reer requires 'country' in spec for indicator {spec.get('id')}")
 
-    series_type = str(spec.get("series_type") or "reer_120").strip().lower()
+    series_type = str(spec.get("series_type") or spec.get("metric") or "reer_120").strip().lower()
+    if series_type == "reer":
+        series_type = "reer_120"
+    elif series_type == "neer":
+        series_type = "neer_120"
 
     if not BRUEGEL_CACHE_PATH.exists():
         from scripts.fetch_bruegel_reer import fetch_bruegel
@@ -2782,5 +2797,45 @@ def fetch_dbnomics(spec: dict[str, Any]) -> dict[str, Any]:
         **spec,
         "observations": observations,
         "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": url,
+    }
+
+
+def fetch_nbk_xml(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch official exchange rates from National Bank of Kazakhstan (NBK) XML RSS feed."""
+    currency = str(spec.get("currency") or "USD").upper()
+    url = spec.get("url") or "https://nationalbank.kz/rss/rates_all.xml"
+    response = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=20)
+    response.raise_for_status()
+
+    import xml.etree.ElementTree as ET
+    root = ET.fromstring(response.content)
+    observations: list[dict[str, Any]] = []
+    provider_updated = ""
+    for item in root.findall(".//item"):
+        title = (item.find("title").text or "").strip().upper()
+        if title == currency:
+            desc = (item.find("description").text or "").strip()
+            pub_date = (item.find("pubDate").text or "").strip()
+            m = re.match(r"(\d{2})\.(\d{2})\.(\d{4})", pub_date)
+            if m:
+                dt = f"{m.group(3)}-{m.group(2)}-{m.group(1)}"
+            else:
+                dt = datetime.now(UTC).strftime("%Y-%m-%d")
+            try:
+                val = float(desc.replace(",", "."))
+                observations.append({"date": dt, "value": val})
+                provider_updated = dt
+            except (ValueError, TypeError):
+                pass
+            break
+
+    if not observations:
+        raise RuntimeError(f"fetch_nbk_xml returned no observations for {currency}")
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": provider_updated,
         "api_url": url,
     }

@@ -172,6 +172,50 @@ DATA_FIRST_COUNTRIES = [
         "headline_key": "usd_twd_latest",
         "framework": "Nine-pillar comparable core",
     },
+    {
+        "code": "KZ",
+        "name": "Kazakhstan",
+        "file": "kazakhstan.html",
+        "currency": "KZT",
+        "institution": "NBK",
+        "summary": "kazakhstan_dashboard_summary.json",
+        "headline_label": "USD/KZT official rate",
+        "headline_key": "usd_kzt_latest",
+        "framework": "Nine-pillar comparable core",
+    },
+    {
+        "code": "UZ",
+        "name": "Uzbekistan",
+        "file": "uzbekistan.html",
+        "currency": "UZS",
+        "institution": "CBU",
+        "summary": "uzbekistan_dashboard_summary.json",
+        "headline_label": "USD/UZS official rate",
+        "headline_key": "usd_uzs_latest",
+        "framework": "Nine-pillar comparable core",
+    },
+    {
+        "code": "EG",
+        "name": "Egypt",
+        "file": "egypt.html",
+        "currency": "EGP",
+        "institution": "CBE",
+        "summary": "egypt_dashboard_summary.json",
+        "headline_label": "USD/EGP official rate",
+        "headline_key": "usd_egp_latest",
+        "framework": "Nine-pillar comparable core",
+    },
+    {
+        "code": "NG",
+        "name": "Nigeria",
+        "file": "nigeria.html",
+        "currency": "NGN",
+        "institution": "CBN",
+        "summary": "nigeria_dashboard_summary.json",
+        "headline_label": "USD/NGN official rate",
+        "headline_key": "usd_ngn_latest",
+        "framework": "Nine-pillar comparable core",
+    },
 ]
 
 
@@ -839,12 +883,12 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
 <body>
 <div class="topbar">
   <div class="brand">East Meridian <span>/ Country Primer</span></div>
-  <div>Macro Dashboard Archive · CEE-4 v4 + China + Euro Area + Japan + South Africa + UK + US</div>
+  <div>Macro Dashboard Archive · 18 Economies (CEE-4, G10 & Asia-Pacific Hubs, Frontier & Emerging Markets)</div>
 </div>
 <main class="container">
   <header>
     <h1>Macro Dashboard Archive</h1>
-    <p class="subtitle">Generated archive for the CEE-4 public dashboards and the China, Euro Area, Japan, South Africa, UK, and US data-first pages. Cards are rebuilt from the latest country summaries and the CE4 canonical pipeline, then exported to <code>{escape(archive_json_href)}</code> so homepage data stays linked to dashboard builds.</p>
+    <p class="subtitle">Generated archive for 18 national and regional macro dashboards (CEE-4, China, Euro Area, Japan, South Africa, UK, US, Turkey, Hong Kong, South Korea, Taiwan, Kazakhstan, Uzbekistan, Egypt, Nigeria). Cards are rebuilt from the latest country summaries and canonical data-first pipelines, then exported to <code>{escape(archive_json_href)}</code> so homepage data stays synchronized with dashboard builds.</p>
   </header>
   <section class="meta-grid" aria-label="coverage summary">
     <div class="meta-chip"><strong>{total_charts}</strong><span>rendered chart slots</span></div>

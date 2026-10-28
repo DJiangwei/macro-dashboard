@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-27T23:59:14.556020+00:00",
+  "generated": "2026-10-28T15:22:59.184774+00:00",
   "items": [
     {
       "code": "CN",
@@ -65,6 +65,15 @@
       "source_hint": "Check licensing before rendering; vendor surveys should stay as official gaps unless source-safe."
     },
     {
+      "code": "EG",
+      "country": "Egypt",
+      "section": "monetary_financial",
+      "item": "Central Bank of Egypt Banking Sector Capital Adequacy & Non-Performing Loans",
+      "status": "Published in CBE Financial Stability Reports and Quarterly Statistical Bulletins (cbe.org.eg); machine-readable API endpoint not provided.",
+      "priority": "high",
+      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
+    },
+    {
       "code": "JP",
       "country": "Japan",
       "section": "housing_property",
@@ -108,6 +117,24 @@
       "status": "Maintained by Bank of Korea ECOS API under tables 722Y001 and 817Y002. Requires free BOK_ECOS_API_KEY in .env.local to enable automatically.",
       "priority": "high",
       "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "KZ",
+      "country": "Kazakhstan",
+      "section": "stability_structural",
+      "item": "Monthly Primary & Secondary Residential Property Price Index",
+      "status": "Published by Bureau of National Statistics (stat.gov.kz); machine-readable national aggregate monitored.",
+      "priority": "high",
+      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
+    },
+    {
+      "code": "NG",
+      "country": "Nigeria",
+      "section": "monetary_financial",
+      "item": "Monthly NBS Bonny Light Crude Oil Production (mbpd)",
+      "status": "Monitored via National Bureau of Statistics (nigerianstat.gov.ng) and NUPRC official bulletins.",
+      "priority": "high",
+      "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
     },
     {
       "code": "TR",
@@ -205,6 +232,15 @@
       "section": "production_orders",
       "item": "ISM manufacturing/non-manufacturing, Chicago PMI, and Beige Book text",
       "status": "National ISM/PMI and Beige Book remain adapter gaps; public regional Fed survey gauges are charted separately, and industrial production now includes both YoY and MoM release-style momentum.",
+      "priority": "high",
+      "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
+    },
+    {
+      "code": "UZ",
+      "country": "Uzbekistan",
+      "section": "prices_costs",
+      "item": "Detailed Monthly COICOP Food & Energy CPI Breakdown",
+      "status": "Published by the Statistics Agency of Uzbekistan (stat.uz); tracked via official bulletins.",
       "priority": "high",
       "source_hint": "Prefer FRED, Federal Reserve, BLS/Census/BEA, FiscalData, or Treasury source APIs."
     },
@@ -335,6 +371,15 @@
       "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },
     {
+      "code": "EG",
+      "country": "Egypt",
+      "section": "external_fx",
+      "item": "Suez Canal Authority Monthly Vessel Transits & Toll Revenues",
+      "status": "Monitored via Suez Canal Authority (suezcanal.gov.eg) and Ministry of Planning official bulletins.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
       "code": "HK",
       "country": "Hong Kong",
       "section": "monetary_financial",
@@ -369,6 +414,24 @@
       "status": "BoJ balance-sheet accounts are published as flat files without a documented stable API; composite financial-conditions indices are vendor-proprietary.",
       "priority": "watch",
       "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
+    },
+    {
+      "code": "KZ",
+      "country": "Kazakhstan",
+      "section": "monetary_financial",
+      "item": "Daily NBK Base Rate & TONIA Interbank Money Market Benchmark",
+      "status": "Monitored via National Bank of Kazakhstan official portal (nationalbank.kz); currently maintained at 15.75% corridor.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "NG",
+      "country": "Nigeria",
+      "section": "external_fx",
+      "item": "Daily NAFEM Official Exchange Rate & Autonomous FX Window Turnover",
+      "status": "Published daily by FMDQ and Central Bank of Nigeria (cbn.gov.ng); machine-readable mirror under development.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },
     {
       "code": "PL",
@@ -421,6 +484,15 @@
       "section": "gs_market_indexes",
       "item": "GSFCI, GSAI, GSSI, GSRI",
       "status": "Proprietary Goldman Sachs indicators; chart public components only.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "UZ",
+      "country": "Uzbekistan",
+      "section": "monetary_financial",
+      "item": "Daily CBU Interbank Currency Exchange (UZCE) Fixing",
+      "status": "Monitored via Central Bank of Uzbekistan (cbu.uz) official portal; machine-readable daily mirror under development.",
       "priority": "watch",
       "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },

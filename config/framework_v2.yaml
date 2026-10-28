@@ -82,6 +82,10 @@ concepts:
     - real_gdp_growth
     TW:
     - real_gdp_growth
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: real_gdp_growth_yoy
   pillar: growth_demand
   label_en: Real GDP Growth, YoY
@@ -108,6 +112,18 @@ concepts:
     - real_gdp_yoy
     TW:
     - real_gdp_yoy
+    KZ:
+    - real_gdp_growth
+    - real_gdp_growth_wb
+    UZ:
+    - real_gdp_growth
+    - real_gdp_growth_wb
+    EG:
+    - real_gdp_growth
+    - real_gdp_growth_wb
+    NG:
+    - real_gdp_growth
+    - real_gdp_growth_wb
 - id: nominal_gdp_growth
   pillar: growth_demand
   label_en: Nominal GDP Growth
@@ -125,6 +141,10 @@ concepts:
     ZA:
     - nominal_gdp_growth
     EA: []
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: consumption_growth
   pillar: growth_demand
   label_en: Household Consumption Growth
@@ -145,6 +165,13 @@ concepts:
     - household_consumption
     TW:
     - private_consumption
+    KZ:
+    - consumption_growth
+    UZ:
+    - consumption_growth
+    EG:
+    - consumption_growth
+    NG: []
 - id: investment_growth
   pillar: growth_demand
   label_en: Investment Growth
@@ -171,6 +198,13 @@ concepts:
     - gross_fixed_capital_formation
     TW:
     - gross_fixed_capital_formation
+    KZ:
+    - investment_growth
+    UZ:
+    - investment_growth
+    EG:
+    - investment_growth
+    NG: []
 - id: industrial_production_growth
   pillar: production_cycle
   label_en: Industrial Production Growth
@@ -198,6 +232,11 @@ concepts:
     - industrial_production_growth
     KR:
     - industrial_production_growth
+    KZ: []
+    UZ: []
+    EG: []
+    NG:
+    - industry_growth
 - id: retail_sales_growth
   pillar: production_cycle
   label_en: Retail Sales Growth
@@ -224,6 +263,10 @@ concepts:
     - retail_sales_growth
     KR:
     - retail_sales_growth
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: business_confidence
   pillar: production_cycle
   label_en: Business Confidence
@@ -253,6 +296,10 @@ concepts:
     - economic_sentiment_indicator
     KR:
     - composite_leading_indicator
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: unemployment_rate
   pillar: labour_household
   label_en: Unemployment Rate
@@ -281,6 +328,14 @@ concepts:
     - unemployment_rate
     TW:
     - unemployment_rate_weo
+    KZ:
+    - unemployment_rate
+    UZ:
+    - unemployment_rate
+    EG:
+    - unemployment_rate
+    NG:
+    - unemployment_rate
 - id: employment_growth
   pillar: labour_household
   label_en: Employment Growth
@@ -301,6 +356,10 @@ concepts:
     - employment_growth
     KR:
     - employment_rate
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: participation_rate
   pillar: labour_household
   label_en: Labour Force Participation
@@ -320,6 +379,10 @@ concepts:
     - labour_force_participation_rate
     KR:
     - participation_rate
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: vacancies
   pillar: labour_household
   label_en: Labour Demand / Vacancies
@@ -337,6 +400,10 @@ concepts:
     ZA: []
     EA:
     - job_vacancy_rate
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: wage_growth
   pillar: labour_household
   label_en: Wage Growth
@@ -356,6 +423,10 @@ concepts:
     - negotiated_wages_yoy
     HK:
     - nominal_wage_index_growth
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: real_income_growth
   pillar: labour_household
   label_en: Real Household Income Growth
@@ -371,6 +442,10 @@ concepts:
     JP: []
     ZA: []
     EA: []
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: headline_inflation
   pillar: prices_costs
   label_en: Headline Inflation
@@ -400,6 +475,14 @@ concepts:
     - cpi_inflation
     TW:
     - cpi_inflation
+    KZ:
+    - cpi_inflation
+    UZ:
+    - cpi_inflation
+    EG:
+    - cpi_inflation
+    NG:
+    - cpi_inflation
 - id: core_inflation
   pillar: prices_costs
   label_en: Core Inflation
@@ -424,6 +507,10 @@ concepts:
     - core_cpi_inflation
     TW:
     - core_cpi_inflation
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: services_inflation
   pillar: prices_costs
   label_en: Services Inflation
@@ -443,6 +530,10 @@ concepts:
     - hicp_services_inflation
     TR:
     - services_hicp_inflation
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: goods_inflation
   pillar: prices_costs
   label_en: Goods Inflation
@@ -460,6 +551,10 @@ concepts:
     ZA: []
     EA:
     - hicp_goods_inflation
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: producer_price_inflation
   pillar: prices_costs
   label_en: Producer Price Inflation
@@ -484,6 +579,10 @@ concepts:
     - ppi_inflation
     TW:
     - ppi_inflation
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: wage_cost_inflation
   pillar: prices_costs
   label_en: Labour Cost Inflation
@@ -500,6 +599,10 @@ concepts:
     ZA: []
     EA:
     - labour_cost_index_yoy
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: inflation_expectations
   pillar: prices_costs
   label_en: Inflation Expectations
@@ -516,6 +619,10 @@ concepts:
     EA:
     - spf_inflation_expectations_lt
     - consumer_inflation_expectations_12m
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: house_price_growth
   pillar: housing_investment
   label_en: House Price Growth
@@ -542,6 +649,10 @@ concepts:
     - bis_nominal_house_prices
     KR:
     - bis_nominal_house_prices
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: housing_activity
   pillar: housing_investment
   label_en: Housing Activity
@@ -559,6 +670,10 @@ concepts:
     ZA: []
     EA:
     - building_permits_yoy
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: construction_activity
   pillar: housing_investment
   label_en: Construction Activity
@@ -581,6 +696,10 @@ concepts:
     - construction_production_growth
     HK:
     - construction_works_growth
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: mortgage_rate
   pillar: housing_investment
   label_en: Mortgage Rate
@@ -597,6 +716,10 @@ concepts:
     ZA: []
     EA:
     - mortgage_rate
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: property_inventory
   pillar: housing_investment
   label_en: Property Inventory / Supply
@@ -609,6 +732,10 @@ concepts:
     JP: []
     ZA: []
     EA: []
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: current_account_gdp
   pillar: external_fx
   label_en: Current Account, % GDP
@@ -634,6 +761,14 @@ concepts:
     KR:
     - current_account_gdp
     TW:
+    - current_account_gdp
+    KZ:
+    - current_account_gdp
+    UZ:
+    - current_account_gdp
+    EG:
+    - current_account_gdp
+    NG:
     - current_account_gdp
 - id: trade_balance
   pillar: external_fx
@@ -663,6 +798,14 @@ concepts:
     - goods_trade_balance
     TW:
     - goods_trade_balance
+    KZ:
+    - goods_trade_balance
+    UZ:
+    - goods_trade_balance
+    EG:
+    - goods_trade_balance
+    NG:
+    - goods_trade_balance
 - id: exports_growth
   pillar: external_fx
   label_en: Exports Growth
@@ -689,6 +832,10 @@ concepts:
     - goods_exports
     TW:
     - goods_exports
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: imports_growth
   pillar: external_fx
   label_en: Imports Growth
@@ -715,6 +862,10 @@ concepts:
     - goods_imports
     TW:
     - goods_imports
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: fx_spot
   pillar: external_fx
   label_en: Spot Exchange Rate
@@ -743,6 +894,15 @@ concepts:
     - krw_usd
     TW:
     - usd_twd
+    KZ:
+    - usd_kzt
+    - usd_kzt_ifs
+    UZ:
+    - usd_uzs
+    EG:
+    - usd_egp
+    NG:
+    - usd_ngn
 - id: reer
   pillar: external_fx
   label_en: Real Effective Exchange Rate
@@ -772,6 +932,14 @@ concepts:
     - reer
     TW:
     - reer
+    KZ:
+    - reer
+    UZ:
+    - reer
+    EG:
+    - reer
+    NG:
+    - reer
 - id: fiscal_balance_gdp
   pillar: fiscal_sovereign
   label_en: Fiscal Balance, % GDP
@@ -800,6 +968,14 @@ concepts:
     - fiscal_balance_gdp
     TW:
     - fiscal_balance_gdp
+    KZ:
+    - fiscal_balance_gdp
+    UZ:
+    - fiscal_balance_gdp
+    EG:
+    - fiscal_balance_gdp
+    NG:
+    - fiscal_balance_gdp
 - id: primary_balance_gdp
   pillar: fiscal_sovereign
   label_en: Primary Balance, % GDP
@@ -817,6 +993,14 @@ concepts:
     TR:
     - primary_balance_gdp
     KR:
+    - primary_balance_gdp
+    KZ:
+    - primary_balance_gdp
+    UZ:
+    - primary_balance_gdp
+    EG:
+    - primary_balance_gdp
+    NG:
     - primary_balance_gdp
 - id: government_debt_gdp
   pillar: fiscal_sovereign
@@ -846,6 +1030,14 @@ concepts:
     - government_debt_gdp
     TW:
     - government_debt_gdp
+    KZ:
+    - government_debt_gdp
+    UZ:
+    - government_debt_gdp
+    EG:
+    - government_debt_gdp
+    NG:
+    - government_debt_gdp
 - id: government_interest_cost
   pillar: fiscal_sovereign
   label_en: Government Interest Cost
@@ -861,6 +1053,10 @@ concepts:
     JP: []
     ZA: []
     EA: []
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: sovereign_yield_10y
   pillar: fiscal_sovereign
   label_en: 10Y Sovereign Yield
@@ -884,6 +1080,10 @@ concepts:
     - sovereign_yield_10y
     TW:
     - sovereign_yield_10y
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: policy_rate
   pillar: monetary_financial
   label_en: Policy Rate
@@ -913,6 +1113,14 @@ concepts:
     - policy_rate
     TW:
     - policy_rate
+    KZ:
+    - policy_rate
+    UZ:
+    - policy_rate
+    EG:
+    - policy_rate
+    NG:
+    - policy_rate
 - id: real_policy_rate
   pillar: monetary_financial
   label_en: Real Policy Rate
@@ -924,6 +1132,10 @@ concepts:
     JP: []
     ZA: []
     EA: []
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: broad_money_growth
   pillar: monetary_financial
   label_en: Broad Money Growth
@@ -946,6 +1158,14 @@ concepts:
     - m3_growth
     TW:
     - m2_growth
+    KZ:
+    - broad_money_growth
+    UZ:
+    - broad_money_growth
+    EG:
+    - broad_money_growth
+    NG:
+    - broad_money_growth
 - id: private_credit_growth
   pillar: monetary_financial
   label_en: Private Credit Growth
@@ -977,6 +1197,14 @@ concepts:
     TW:
     - consumer_loans_growth
     - mortgage_loans_growth
+    KZ:
+    - private_credit_gdp
+    UZ:
+    - private_credit_gdp
+    EG:
+    - private_credit_gdp
+    NG:
+    - private_credit_gdp
 - id: bank_lending_rate
   pillar: monetary_financial
   label_en: Bank Lending Rate
@@ -999,6 +1227,13 @@ concepts:
     - nfc_cost_of_borrowing
     TW:
     - prime_lending_rate
+    KZ: []
+    UZ:
+    - lending_rate
+    EG:
+    - lending_rate
+    NG:
+    - lending_rate
 - id: equity_return
   pillar: monetary_financial
   label_en: Equity Market Return
@@ -1016,6 +1251,10 @@ concepts:
     - equity_index
     ZA: []
     EA: []
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: yield_curve_slope
   pillar: monetary_financial
   label_en: Yield Curve Slope
@@ -1032,6 +1271,10 @@ concepts:
     - yield_curve_slope
     UK:
     - yield_curve_slope_10y5y
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: financial_conditions
   pillar: monetary_financial
   label_en: Financial Conditions
@@ -1045,6 +1288,10 @@ concepts:
     ZA: []
     EA:
     - ciss
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: credit_gap
   pillar: stability_structural
   label_en: Credit-to-GDP Gap
@@ -1056,6 +1303,10 @@ concepts:
     JP: []
     ZA: []
     EA: []
+    KZ: []
+    UZ: []
+    EG: []
+    NG: []
 - id: bank_capital_ratio
   pillar: stability_structural
   label_en: Bank Capital Ratio
@@ -1076,6 +1327,13 @@ concepts:
     - bank_capital_ratio
     KR:
     - bank_capital_ratio
+    KZ:
+    - bank_capital_ratio
+    UZ:
+    - bank_capital_ratio
+    EG: []
+    NG:
+    - bank_capital_ratio
 - id: bank_npl_ratio
   pillar: stability_structural
   label_en: Bank NPL Ratio
@@ -1095,4 +1353,11 @@ concepts:
     HK:
     - bank_npl_ratio
     KR:
+    - bank_npl_ratio
+    KZ:
+    - bank_npl_ratio
+    UZ:
+    - bank_npl_ratio
+    EG: []
+    NG:
     - bank_npl_ratio

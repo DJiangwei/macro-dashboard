@@ -364,6 +364,70 @@ DATA_FIRST_PAGES = (
             "supplies 120-partner REER/NEER; and IMF WEO DataMapper supplies fiscal and government debt ratios."
         ),
     },
+    {
+        "name": "Kazakhstan",
+        "config": ROOT / "config" / "kazakhstan_indicators.yaml",
+        "summary": ROOT / "output" / "kazakhstan_dashboard_summary.json",
+        "config_ref": "config/kazakhstan_indicators.yaml",
+        "summary_ref": "output/kazakhstan_dashboard_summary.json",
+        "note": (
+            "The Kazakhstan page is generated from `config/kazakhstan_indicators.yaml`. National Bank of "
+            "Kazakhstan (NBK) daily XML RSS feed provides official market exchange rates (USD, EUR, RUB, CNY); "
+            "DBnomics (IMF IFS) supplies policy rates, headline CPI YoY and index base, and quarterly BPM6 balance "
+            "of payments; World Bank WDI supplies real GDP, household consumption, gross capital formation, broad money, "
+            "and domestic private credit; IMF DataMapper supplies WEO growth, external debt, and Fiscal Monitor ratios; "
+            "DBnomics (IMF FSI) supplies banking regulatory CAR and NPL ratios; FRED supplies gross FX reserves and Brent crude; "
+            "and Bruegel supplies 120-partner REER/NEER."
+        ),
+    },
+    {
+        "name": "Uzbekistan",
+        "config": ROOT / "config" / "uzbekistan_indicators.yaml",
+        "summary": ROOT / "output" / "uzbekistan_dashboard_summary.json",
+        "config_ref": "config/uzbekistan_indicators.yaml",
+        "summary_ref": "output/uzbekistan_dashboard_summary.json",
+        "note": (
+            "The Uzbekistan page is generated from `config/uzbekistan_indicators.yaml`. DBnomics (IMF IFS) provides "
+            "official Central Bank of Uzbekistan policy refinancing rates, commercial lending and deposit rates, "
+            "end-of-period USD/UZS exchange rates, headline CPI YoY and index base, and quarterly BPM6 current account and "
+            "goods trade balances; World Bank WDI supplies national accounts growth, unemployment, broad money, private credit, "
+            "and workers' personal remittances (% of GDP); IMF DataMapper supplies WEO and Fiscal Monitor trajectories; "
+            "DBnomics (IMF FSI) supplies banking capital adequacy and non-performing loan ratios; FRED supplies gross FX reserves; "
+            "and Bruegel supplies 120-partner REER/NEER."
+        ),
+    },
+    {
+        "name": "Egypt",
+        "config": ROOT / "config" / "egypt_indicators.yaml",
+        "summary": ROOT / "output" / "egypt_dashboard_summary.json",
+        "config_ref": "config/egypt_indicators.yaml",
+        "summary_ref": "output/egypt_dashboard_summary.json",
+        "note": (
+            "The Egypt page is generated from `config/egypt_indicators.yaml`. DBnomics (IMF IFS) provides "
+            "Central Bank of Egypt corridor policy rates, commercial bank lending and deposit rates, USD/EGP exchange rates, "
+            "headline CPI YoY and index base, and quarterly BPM6 balance of payments; World Bank WDI supplies real GDP, "
+            "household consumption, gross investment, modeled unemployment, broad money, domestic private credit, and "
+            "workers' personal remittances (% of GDP); IMF DataMapper supplies WEO growth and Fiscal Monitor debt and "
+            "deficit ratios; FRED supplies gross foreign exchange reserves and Brent crude oil pricing; and Bruegel supplies "
+            "120-partner REER/NEER."
+        ),
+    },
+    {
+        "name": "Nigeria",
+        "config": ROOT / "config" / "nigeria_indicators.yaml",
+        "summary": ROOT / "output" / "nigeria_dashboard_summary.json",
+        "config_ref": "config/nigeria_indicators.yaml",
+        "summary_ref": "output/nigeria_dashboard_summary.json",
+        "note": (
+            "The Nigeria page is generated from `config/nigeria_indicators.yaml`. DBnomics (IMF IFS) provides "
+            "Central Bank of Nigeria Monetary Policy Rates (MPR), commercial prime lending and time deposit rates, "
+            "USD/NGN official exchange rates, headline CPI YoY and index base, quarterly BPM6 current account and goods balances, "
+            "and official reserve assets (USD); World Bank WDI supplies real GDP, sector value-added growth (industry, "
+            "agriculture, services), modeled unemployment, broad money, private credit, and workers' personal remittances; "
+            "IMF DataMapper supplies WEO and Fiscal Monitor ratios; DBnomics (IMF FSI) supplies banking CAR and NPL ratios; "
+            "FRED supplies Brent crude oil benchmark pricing; and Bruegel supplies 120-partner REER/NEER."
+        ),
+    },
 )
 
 

@@ -847,6 +847,14 @@ COUNTRY_META: dict[str, dict[str, str]] = {
     "ZA": {"name": "South Africa", "name_zh": "南非", "file": "south_africa.html"},
     "UK": {"name": "United Kingdom", "name_zh": "英国", "file": "uk.html"},
     "US": {"name": "United States", "name_zh": "美国", "file": "us.html"},
+    "TR": {"name": "Turkey", "name_zh": "土耳其", "file": "turkey.html"},
+    "HK": {"name": "Hong Kong", "name_zh": "中国香港", "file": "hong_kong.html"},
+    "KR": {"name": "South Korea", "name_zh": "韩国", "file": "south_korea.html"},
+    "TW": {"name": "Taiwan", "name_zh": "中国台湾", "file": "taiwan.html"},
+    "KZ": {"name": "Kazakhstan", "name_zh": "哈萨克斯坦", "file": "kazakhstan.html"},
+    "UZ": {"name": "Uzbekistan", "name_zh": "乌兹别克斯坦", "file": "uzbekistan.html"},
+    "EG": {"name": "Egypt", "name_zh": "埃及", "file": "egypt.html"},
+    "NG": {"name": "Nigeria", "name_zh": "尼日利亚", "file": "nigeria.html"},
 }
 
 
@@ -867,7 +875,7 @@ def render_html(
     nav_links = []
     for code, item in COUNTRY_META.items():
         active_cls = ' class="active"' if code == code_upper else ""
-        nav_links.append(f'<a href="{item["file"]}"{active_cls}>{code}</a>')
+        nav_links.append(f'<a href="{item["file"]}"{active_cls} title="{item.get("name", code)}">{code}</a>')
     country_nav_html = "\n    ".join(nav_links)
 
     chart_count = sum(1 for item in series_list if item.get("observations"))
