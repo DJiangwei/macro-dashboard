@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-28T23:03:57.849527+00:00",
+  "generated": "2026-10-28T23:33:13.501019+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -15,12 +15,14 @@
     "HU": {
       "calls": 856,
       "success": 105,
-      "empty": 751,
-      "failed": 0,
+      "empty": 750,
+      "failed": 1,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "unexpected_error": 1
+      },
       "empty_reasons": {
-        "empty_response": 751
+        "empty_response": 750
       },
       "sources": {
         "BISFetcher": {
@@ -68,7 +70,8 @@
           "empty": 38
         },
         "GIEAGSIFetcher": {
-          "empty": 7
+          "empty": 6,
+          "failed": 1
         },
         "GPWBenchmarkFetcher": {
           "empty": 16
@@ -114,17 +117,29 @@
           "success": 3
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-28T23:22:40.373677+00:00",
+          "country": "HU",
+          "indicator_id": "gas_storage_level",
+          "source_id": "GIEAGSIFetcher",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'ROOT' is not defined"
+        }
+      ]
     },
     "PL": {
       "calls": 874,
       "success": 108,
-      "empty": 766,
-      "failed": 0,
+      "empty": 764,
+      "failed": 2,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "unexpected_error": 2
+      },
       "empty_reasons": {
-        "empty_response": 766
+        "empty_response": 764
       },
       "sources": {
         "BISFetcher": {
@@ -138,7 +153,8 @@
           "empty": 1
         },
         "CredentialedStooqFetcher": {
-          "empty": 13
+          "empty": 12,
+          "failed": 1
         },
         "DerivedMacroFetcher": {
           "empty": 55,
@@ -173,7 +189,8 @@
           "success": 1
         },
         "GIEAGSIFetcher": {
-          "empty": 6
+          "empty": 5,
+          "failed": 1
         },
         "GPWBenchmarkFetcher": {
           "empty": 13,
@@ -223,17 +240,38 @@
           "success": 1
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-28T23:22:49.445439+00:00",
+          "country": "PL",
+          "indicator_id": "gas_storage_level",
+          "source_id": "GIEAGSIFetcher",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'ROOT' is not defined"
+        },
+        {
+          "timestamp": "2026-10-28T23:22:49.932362+00:00",
+          "country": "PL",
+          "indicator_id": "equity_yoy",
+          "source_id": "CredentialedStooqFetcher",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'ROOT' is not defined"
+        }
+      ]
     },
     "CZ": {
       "calls": 853,
       "success": 102,
-      "empty": 751,
-      "failed": 0,
+      "empty": 750,
+      "failed": 1,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "unexpected_error": 1
+      },
       "empty_reasons": {
-        "empty_response": 751
+        "empty_response": 750
       },
       "sources": {
         "BISFetcher": {
@@ -282,7 +320,8 @@
           "empty": 38
         },
         "GIEAGSIFetcher": {
-          "empty": 8
+          "empty": 7,
+          "failed": 1
         },
         "GPWBenchmarkFetcher": {
           "empty": 14
@@ -334,17 +373,29 @@
           "empty": 14
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-28T23:22:52.915151+00:00",
+          "country": "CZ",
+          "indicator_id": "gas_storage_level",
+          "source_id": "GIEAGSIFetcher",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'ROOT' is not defined"
+        }
+      ]
     },
     "RO": {
       "calls": 821,
       "success": 104,
-      "empty": 717,
-      "failed": 0,
+      "empty": 716,
+      "failed": 1,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "unexpected_error": 1
+      },
       "empty_reasons": {
-        "empty_response": 717
+        "empty_response": 716
       },
       "sources": {
         "BISFetcher": {
@@ -393,7 +444,8 @@
           "empty": 36
         },
         "GIEAGSIFetcher": {
-          "empty": 7
+          "empty": 6,
+          "failed": 1
         },
         "GPWBenchmarkFetcher": {
           "empty": 14
@@ -445,7 +497,17 @@
           "empty": 12
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-28T23:23:24.833136+00:00",
+          "country": "RO",
+          "indicator_id": "gas_storage_level",
+          "source_id": "GIEAGSIFetcher",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'ROOT' is not defined"
+        }
+      ]
     },
     "CN": {
       "calls": 0,
@@ -532,7 +594,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-28T22:57:31.116838+00:00",
+          "timestamp": "2026-10-28T23:27:16.458544+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -541,7 +603,7 @@
           "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
         },
         {
-          "timestamp": "2026-10-28T22:57:37.940863+00:00",
+          "timestamp": "2026-10-28T23:27:22.400492+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -550,7 +612,7 @@
           "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
         },
         {
-          "timestamp": "2026-10-28T22:57:38.191638+00:00",
+          "timestamp": "2026-10-28T23:27:22.565925+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -596,7 +658,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-28T23:01:14.221754+00:00",
+          "timestamp": "2026-10-28T23:30:38.220609+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -605,7 +667,7 @@
           "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         },
         {
-          "timestamp": "2026-10-28T23:01:35.679413+00:00",
+          "timestamp": "2026-10-28T23:31:01.544997+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -614,7 +676,7 @@
           "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         },
         {
-          "timestamp": "2026-10-28T23:01:35.679461+00:00",
+          "timestamp": "2026-10-28T23:31:01.545079+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -684,7 +746,16 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-28T23:02:01.890166+00:00",
+          "timestamp": "2026-10-28T23:31:23.454107+00:00",
+          "country": "KR",
+          "indicator_id": "consumer_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-28T23:31:23.598672+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -693,7 +764,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-28T23:02:03.280899+00:00",
+          "timestamp": "2026-10-28T23:31:24.025376+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
@@ -702,16 +773,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-28T23:02:03.516103+00:00",
-          "country": "KR",
-          "indicator_id": "consumer_confidence",
-          "source_id": "fred",
-          "outcome": "failed",
-          "reason": "http_error",
-          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
-        },
-        {
-          "timestamp": "2026-10-28T23:02:17.096205+00:00",
+          "timestamp": "2026-10-28T23:31:36.656109+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -720,7 +782,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-28T23:02:30.021693+00:00",
+          "timestamp": "2026-10-28T23:31:49.164921+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -729,7 +791,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-28T23:02:42.814073+00:00",
+          "timestamp": "2026-10-28T23:32:01.789695+00:00",
           "country": "KR",
           "indicator_id": "consumer_confidence",
           "source_id": "fred",
@@ -738,7 +800,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-28T23:02:55.710084+00:00",
+          "timestamp": "2026-10-28T23:32:14.903927+00:00",
           "country": "KR",
           "indicator_id": "consumer_confidence",
           "source_id": "fred",
@@ -747,7 +809,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-28T23:03:08.289266+00:00",
+          "timestamp": "2026-10-28T23:32:27.631915+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
@@ -756,7 +818,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-28T23:03:21.698773+00:00",
+          "timestamp": "2026-10-28T23:32:40.233886+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
@@ -797,8 +859,8 @@
       "events": []
     },
     "KZ": {
-      "calls": 33,
-      "success": 33,
+      "calls": 34,
+      "success": 34,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -810,6 +872,9 @@
         },
         "dbnomics": {
           "success": 4
+        },
+        "eia": {
+          "success": 1
         },
         "fred_graph": {
           "success": 2
@@ -860,8 +925,8 @@
       "events": []
     },
     "EG": {
-      "calls": 32,
-      "success": 32,
+      "calls": 33,
+      "success": 33,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -873,6 +938,9 @@
         },
         "dbnomics": {
           "success": 4
+        },
+        "eia": {
+          "success": 1
         },
         "fred_graph": {
           "success": 2
@@ -890,8 +958,8 @@
       "events": []
     },
     "NG": {
-      "calls": 35,
-      "success": 35,
+      "calls": 36,
+      "success": 36,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -906,6 +974,9 @@
         },
         "dbnomics": {
           "success": 7
+        },
+        "eia": {
+          "success": 1
         },
         "fred_graph": {
           "success": 1

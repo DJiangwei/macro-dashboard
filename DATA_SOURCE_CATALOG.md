@@ -1179,7 +1179,7 @@ The Kazakhstan page is generated from `config/kazakhstan_indicators.yaml`. Natio
 
 Generated from `config/kazakhstan_indicators.yaml`; latest dates are tracked in `output/kazakhstan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 33. Latest rendered chart count: 33. Source groups: 12.
+Configured charts: 34. Latest rendered chart count: 34. Source groups: 13.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1214,6 +1214,7 @@ Configured charts: 33. Latest rendered chart count: 33. Source groups: 12.
 | monetary_financial | `broad_money_growth` | Broad Money Growth (Annual %) | annual | % | world_bank | World Bank WDI | FM.LBL.BMNY.ZG | Annual growth rate of broad money liabilities. |
 | monetary_financial | `private_credit_gdp` | Domestic Private Credit (% of GDP) | annual | % of GDP | world_bank | World Bank WDI | FS.AST.PRVT.GD.ZS | Domestic credit to private sector refers to financial resources provided to the private sector. |
 | monetary_financial | `brent_crude_oil` | Crude Oil Prices: Brent - Europe | daily | USD/bbl | fred_graph | EIA / FRED | DCOILBRENTEU | Daily spot price for Brent crude, the primary benchmark for Kazakh crude export pricing. |
+| monetary_financial | `crude_oil_production` | Crude Oil & Lease Condensate Production | monthly | TBPD | eia | US Energy Information Administration (EIA) |  | Monthly crude oil production including lease condensate for Kazakhstan reported by US EIA. |
 | stability_structural | `bank_capital_ratio` | Bank Regulatory Capital to Risk-Weighted Assets (CAR) | quarterly | % | dbnomics | IMF / DBnomics (FSI) | IMF/FSI/Q.KZ.FSKRC_PT | Regulatory capital to risk-weighted assets for deposit-takers in Kazakhstan. |
 | stability_structural | `bank_npl_ratio` | Bank Non-Performing Loans Ratio (NPL) | quarterly | % | dbnomics | IMF / DBnomics (FSI) | IMF/FSI/Q.KZ.FSANL_PT | Non-performing loans to total gross loans reported to the IMF. |
 
@@ -1280,7 +1281,7 @@ The Egypt page is generated from `config/egypt_indicators.yaml`. DBnomics (IMF I
 
 Generated from `config/egypt_indicators.yaml`; latest dates are tracked in `output/egypt_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 32. Latest rendered chart count: 32. Source groups: 10.
+Configured charts: 33. Latest rendered chart count: 33. Source groups: 11.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1316,6 +1317,7 @@ Configured charts: 32. Latest rendered chart count: 32. Source groups: 10.
 | monetary_financial | `broad_money_growth` | Broad Money Growth (Annual %) | annual | % | world_bank | World Bank WDI | FM.LBL.BMNY.ZG | Annual growth rate of broad money liabilities. |
 | monetary_financial | `private_credit_gdp` | Domestic Private Credit (% of GDP) | annual | % of GDP | world_bank | World Bank WDI | FS.AST.PRVT.GD.ZS | Domestic credit to private sector refers to financial resources provided to the private sector. |
 | monetary_financial | `brent_crude_oil` | Crude Oil Prices: Brent - Europe | daily | USD/bbl | fred_graph | EIA / FRED | DCOILBRENTEU | Daily spot price for Brent crude, external terms-of-trade driver for Egyptian hydrocarbons. |
+| monetary_financial | `crude_oil_production` | Crude Oil & Lease Condensate Production | monthly | TBPD | eia | US Energy Information Administration (EIA) |  | Monthly crude oil production including lease condensate for Egypt reported by US EIA. |
 
 ## Egypt Official / Vendor Data Gaps
 
@@ -1330,7 +1332,7 @@ The Nigeria page is generated from `config/nigeria_indicators.yaml`. DBnomics (I
 
 Generated from `config/nigeria_indicators.yaml`; latest dates are tracked in `output/nigeria_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 35. Latest rendered chart count: 35. Source groups: 11.
+Configured charts: 36. Latest rendered chart count: 36. Source groups: 12.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1367,6 +1369,7 @@ Configured charts: 35. Latest rendered chart count: 35. Source groups: 11.
 | monetary_financial | `broad_money_growth` | Broad Money Growth (Annual %) | annual | % | world_bank | World Bank WDI | FM.LBL.BMNY.ZG | Annual growth rate of broad money liabilities. |
 | monetary_financial | `private_credit_gdp` | Domestic Private Credit (% of GDP) | annual | % of GDP | world_bank | World Bank WDI | FS.AST.PRVT.GD.ZS | Domestic credit to private sector refers to financial resources provided to the private sector. |
 | monetary_financial | `brent_crude_oil` | Crude Oil Prices: Brent - Europe | daily | USD/bbl | fred_graph | EIA / FRED | DCOILBRENTEU | Daily spot price for Brent crude, the primary benchmark for Nigerian Bonny Light crude pricing and government revenues. |
+| monetary_financial | `crude_oil_production` | Crude Oil & Lease Condensate Production | monthly | TBPD | eia | US Energy Information Administration (EIA) |  | Monthly crude oil production including lease condensate reported by US EIA international energy statistics. |
 | stability_structural | `bank_capital_ratio` | Bank Regulatory Capital to Risk-Weighted Assets (CAR) | quarterly | % | dbnomics | IMF / DBnomics (FSI) | IMF/FSI/Q.NG.FSKRC_PT | Regulatory capital to risk-weighted assets for commercial banks in Nigeria. |
 | stability_structural | `bank_npl_ratio` | Bank Non-Performing Loans Ratio (NPL) | quarterly | % | dbnomics | IMF / DBnomics (FSI) | IMF/FSI/Q.NG.FSANL_PT | Non-performing loans to total gross loans reported to the IMF. |
 
@@ -1375,7 +1378,7 @@ Configured charts: 35. Latest rendered chart count: 35. Source groups: 11.
 | Section | Indicator family | Current status |
 |---|---|---|
 | external_fx | Daily NAFEM Official Exchange Rate & Autonomous FX Window Turnover | Published daily by FMDQ and Central Bank of Nigeria (cbn.gov.ng); machine-readable mirror under development. |
-| monetary_financial | Monthly NBS Bonny Light Crude Oil Production (mbpd) | Monitored via National Bureau of Statistics (nigerianstat.gov.ng) and NUPRC official bulletins. |
+| monetary_financial | Monthly NBS Bonny Light Crude Oil Production (mbpd) | Official monthly crude oil production is now charted via US EIA Open Data API v2 (international energy statistics). |
 
 ## United Kingdom Data-First Dashboard Sources
 

@@ -525,6 +525,25 @@ indicators:
     caveat_en: Daily spot price for Brent crude, the primary benchmark for Kazakh crude export pricing.
     caveat_zh: 欧洲布伦特原油现货价格，哈萨克斯坦原油出口的核心定价基准。
 
+  - id: crude_oil_production
+    section: monetary_financial
+    label_en: Crude Oil & Lease Condensate Production
+    label_zh: 原油及凝析油日均产量 (EIA)
+    unit: "TBPD"
+    fetcher: eia
+    route: international/data
+    frequency: monthly
+    facets:
+      countryRegionId: KAZ
+      activityId: "1"
+      productId: "57"
+    source_authority: official_primary
+    source_name: US Energy Information Administration (EIA)
+    source_url: https://www.eia.gov/international/data/country/KAZ
+    start_date: 2010-01-01
+    caveat_en: Monthly crude oil production including lease condensate for Kazakhstan reported by US EIA.
+    caveat_zh: 美国能源信息署(EIA)国际能源数据库发布的哈萨克斯坦月度原油及凝析油日均产量（千桶/日）。
+
   # ==========================================
   # 7. Financial Stability
   # ==========================================

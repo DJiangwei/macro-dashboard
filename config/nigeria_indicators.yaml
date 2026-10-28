@@ -559,6 +559,25 @@ indicators:
     caveat_en: Daily spot price for Brent crude, the primary benchmark for Nigerian Bonny Light crude pricing and government revenues.
     caveat_zh: 欧洲布伦特原油现货价格，尼日利亚邦尼轻质原油出口定价与财政收入的核心基准。
 
+  - id: crude_oil_production
+    section: monetary_financial
+    label_en: Crude Oil & Lease Condensate Production
+    label_zh: 原油及凝析油日均产量 (EIA)
+    unit: "TBPD"
+    fetcher: eia
+    route: international/data
+    frequency: monthly
+    facets:
+      countryRegionId: NGA
+      activityId: "1"
+      productId: "57"
+    source_authority: official_primary
+    source_name: US Energy Information Administration (EIA)
+    source_url: https://www.eia.gov/international/data/country/NGA
+    start_date: 2010-01-01
+    caveat_en: Monthly crude oil production including lease condensate reported by US EIA international energy statistics.
+    caveat_zh: 美国能源信息署(EIA)国际能源数据库发布的尼日利亚月度原油及凝析油日均产量（千桶/日）。
+
   # ==========================================
   # 7. Financial Stability
   # ==========================================
@@ -599,8 +618,8 @@ data_gaps:
   - section: monetary_financial
     item_en: Monthly NBS Bonny Light Crude Oil Production (mbpd)
     item_zh: 尼日利亚国家统计局(NBS)月度原油日均产量 (百万桶/日)
-    status_en: Monitored via National Bureau of Statistics (nigerianstat.gov.ng) and NUPRC official bulletins.
-    status_zh: 通过尼日利亚国家统计局与上游石油监管委员会(NUPRC)月度公报跟踪监控。
+    status_en: Official monthly crude oil production is now charted via US EIA Open Data API v2 (international energy statistics).
+    status_zh: 已通过美国能源信息署(EIA) Open Data API v2接入并绘制月度原油日均产量。
 
 cross_checks:
   - concept: real_gdp_growth

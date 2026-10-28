@@ -3172,3 +3172,85 @@ def fetch_cbn_fx(spec: dict[str, Any]) -> dict[str, Any]:
         "provider_updated": observations[-1]["date"],
         "api_url": url,
     }
+
+
+def fetch_eia(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch time series from US Energy Information Administration (EIA) Open Data API v2.
+
+    Reads EIA_API_KEY from environment or .env.local.
+    Route and parameters are specified in spec:
+      route: e.g. "petroleum/pri/spt/data" or "international/data"
+      frequency: e.g. "daily", "weekly", "monthly"
+      series: e.g. "RBRTE" or "WCRSTUS1"
+      facets: optional dict of facet filters, e.g. {"countryRegionId": "NGA", "productId": "57", "activityId": "1"}
+      data_column: value column, defaults to "value"
+    """
+    api_key = _get_env_key("EIA_API_KEY")
+    if not api_key:
+        return {
+            **spec,
+            "observations": [],
+            "quality_notes": ["EIA_API_KEY is not configured in environment or .env.local."],
+        }
+    route = str(spec.get("route") or spec.get("endpoint") or "").strip().strip("/")
+    frequency = str(spec.get("frequency") or "monthly").lower()
+    series_code = str(spec.get("series") or "").strip()
+    data_col = str(spec.get("data_column") or "value").strip()
+    start_date = str(spec.get("start_date") or "").strip()
+
+    params: dict[str, Any] = {
+        "api_key": api_key,
+        "frequency": frequency,
+        "data[0]": data_col,
+        "sort[0][column]": "period",
+        "sort[0][direction]": "asc",
+        "length": 5000,
+    }
+    if series_code:
+        params["facets[series][]"] = series_code
+    facets = dict(spec.get("facets") or {})
+    for fk, fv in facets.items():
+        if isinstance(fv, list):
+            for item in fv:
+                params[f"facets[{fk}][]"] = item
+        else:
+            params[f"facets[{fk}][]"] = fv
+
+    url = f"https://api.eia.gov/v2/{route}/"
+    headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
+    response = requests.get(url, headers=headers, params=params, timeout=30)
+    response.raise_for_status()
+    payload = response.json()
+    data = (payload.get("response") or {}).get("data") or []
+
+    today_iso = datetime.now(UTC).strftime("%Y-%m-%d")
+    observations: list[dict[str, Any]] = []
+    for item in data:
+        period = str(item.get("period") or "").strip()
+        if not period or period > today_iso:
+            continue
+        if len(period) == 7 and period[4] == "-":
+            dt = f"{period}-01"
+        elif len(period) == 4 and period.isdigit():
+            dt = f"{period}-12-31"
+        elif len(period) == 10:
+            dt = period
+        else:
+            dt = period
+        if start_date and dt < start_date:
+            continue
+        raw_val = item.get(data_col)
+        if raw_val in (None, "", "NA", "NaN"):
+            continue
+        try:
+            val = float(str(raw_val).replace(",", ""))
+        except ValueError:
+            continue
+        observations.append({"date": dt, "value": val})
+
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"] if observations else "",
+        "api_url": f"https://api.eia.gov/v2/{route}/",
+    }

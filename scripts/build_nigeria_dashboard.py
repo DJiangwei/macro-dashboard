@@ -45,6 +45,7 @@ from country_primer.adapters import (
     fetch_bruegel_reer,
     fetch_cbn_fx,
     fetch_dbnomics,
+    fetch_eia,
     fetch_fred_graph,
     fetch_imf_datamapper,
     fetch_imf_sdmx,
@@ -93,6 +94,7 @@ SUMMARY_KEY_IDS = [
     "broad_money_growth",
     "private_credit_gdp",
     "brent_crude_oil",
+    "crude_oil_production",
     "bank_capital_ratio",
     "bank_npl_ratio",
 ]
@@ -117,6 +119,7 @@ def build(data_mode: str | None = None) -> Path:
         "bruegel_reer": lambda spec, cache: _apply_transform(fetch_bruegel_reer(spec)),
         "dbnomics": lambda spec, cache: _apply_transform(fetch_dbnomics(spec)),
         "fred_graph": lambda spec, cache: _apply_transform(fetch_fred_graph(spec)),
+        "eia": lambda spec, cache: _apply_transform(fetch_eia(spec)),
     }
 
     if data_mode == "snapshot":

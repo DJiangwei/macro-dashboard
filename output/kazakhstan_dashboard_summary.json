@@ -1,10 +1,10 @@
 {
   "file": "kazakhstan.html",
-  "generated": "2026-10-28T23:03:43.439177+00:00",
-  "charts": 33,
-  "source_groups": 12,
+  "generated": "2026-10-28T23:33:01.024551+00:00",
+  "charts": 34,
+  "source_groups": 13,
   "data_gaps": 2,
-  "low_confidence": 4,
+  "low_confidence": 5,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -367,6 +367,18 @@
       "quality_status": "watch"
     },
     {
+      "id": "crude_oil_production",
+      "label_en": "Crude Oil & Lease Condensate Production",
+      "label_zh": "原油及凝析油日均产量 (EIA)",
+      "latest_date": "2026-06-01",
+      "latest_value": 2147.1020637555903,
+      "latest_display": "2,147 TBPD",
+      "frequency": "monthly",
+      "source_name": "US Energy Information Administration (EIA)",
+      "series": "",
+      "quality_status": "low_confidence"
+    },
+    {
       "id": "bank_capital_ratio",
       "label_en": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
       "label_zh": "银行监管资本充足率 (CAR)",
@@ -422,10 +434,10 @@
       "value"
     ],
     "file": "kazakhstan_canonical_frame.json",
-    "series": 33,
-    "observations": 9680,
-    "series_count": 33,
-    "observation_count": 9680
+    "series": 34,
+    "observations": 9878,
+    "series_count": 34,
+    "observation_count": 9878
   },
   "data_gaps_detail": [
     {
@@ -444,7 +456,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 12,
+    "source_groups": 13,
     "sources": [
       {
         "source_name": "IMF SDMX / NBK",
@@ -491,12 +503,16 @@
         "charts": 1
       },
       {
+        "source_name": "US Energy Information Administration (EIA)",
+        "charts": 1
+      },
+      {
         "source_name": "World Bank / ILO",
         "charts": 1
       }
     ],
     "quality_counts": {
-      "low_confidence": 4,
+      "low_confidence": 5,
       "verified": 4,
       "watch": 25
     },
@@ -514,7 +530,7 @@
       "current": 21,
       "due": 2,
       "projection": 6,
-      "stale": 4
+      "stale": 5
     },
     "latest_historical_date": "2026-10-28",
     "attention": [
@@ -649,12 +665,34 @@
         "source_name": "IMF / DBnomics (IFS)",
         "series": "IMF/IFS/M.KZ.ENDE_XDC_USD_RATE",
         "transform": "level"
+      },
+      {
+        "id": "crude_oil_production",
+        "concept_id": "kz:crude_oil_production",
+        "label_en": "Crude Oil & Lease Condensate Production",
+        "latest_date": "2026-06-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-06-01",
+        "age_days": 120,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "US Energy Information Administration (EIA)",
+        "series": "",
+        "transform": "level"
       }
     ]
   },
   "transform_audit": {
     "counts": {
-      "level": 33
+      "level": 34
     },
     "non_level": []
   },
@@ -664,6 +702,6 @@
       "date",
       "value"
     ],
-    "charted_series": 33
+    "charted_series": 34
   }
 }

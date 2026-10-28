@@ -564,7 +564,28 @@ def _parse_jsonstat_observations(payload: dict) -> list[tuple[str, float]]:
 
 def _secret_env(name: str) -> str:
     """Read optional source credentials without hard-coding secrets in config."""
-    return os.environ.get(name, "").strip()
+    val = os.environ.get(name, "").strip()
+    if val:
+        return val
+    if "PYTEST_CURRENT_TEST" in os.environ:
+        return ""
+    for fname in (".env.local", ".env"):
+        env_path = ROOT / fname
+        if not env_path.exists():
+            continue
+        try:
+            for raw_line in env_path.read_text(encoding="utf-8", errors="ignore").splitlines():
+                line = raw_line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                k, v = line.split("=", 1)
+                if k.strip() == name:
+                    v_clean = v.strip().strip('"').strip("'")
+                    if v_clean:
+                        return v_clean
+        except Exception:
+            continue
+    return ""
 
 
 def _fetch_fred_observations(series_id: str, *, start: str = "2010-01-01") -> list[tuple[str, float]]:

@@ -538,6 +538,25 @@ indicators:
     caveat_en: Daily spot price for Brent crude, external terms-of-trade driver for Egyptian hydrocarbons.
     caveat_zh: 欧洲布伦特原油现货价格，埃及能源进出口与贸易条件的核心外生基准。
 
+  - id: crude_oil_production
+    section: monetary_financial
+    label_en: Crude Oil & Lease Condensate Production
+    label_zh: 原油及凝析油日均产量 (EIA)
+    unit: "TBPD"
+    fetcher: eia
+    route: international/data
+    frequency: monthly
+    facets:
+      countryRegionId: EGY
+      activityId: "1"
+      productId: "57"
+    source_authority: official_primary
+    source_name: US Energy Information Administration (EIA)
+    source_url: https://www.eia.gov/international/data/country/EGY
+    start_date: 2010-01-01
+    caveat_en: Monthly crude oil production including lease condensate for Egypt reported by US EIA.
+    caveat_zh: 美国能源信息署(EIA)国际能源数据库发布的埃及月度原油及凝析油日均产量（千桶/日）。
+
 data_gaps:
   - section: monetary_financial
     item_en: Central Bank of Egypt Banking Sector Capital Adequacy & Non-Performing Loans

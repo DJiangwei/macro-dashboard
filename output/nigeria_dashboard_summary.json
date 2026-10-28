@@ -1,10 +1,10 @@
 {
   "file": "nigeria.html",
-  "generated": "2026-10-28T23:03:57.835610+00:00",
-  "charts": 35,
-  "source_groups": 11,
+  "generated": "2026-10-28T23:33:13.489348+00:00",
+  "charts": 36,
+  "source_groups": 12,
   "data_gaps": 2,
-  "low_confidence": 8,
+  "low_confidence": 9,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -391,6 +391,18 @@
       "quality_status": "watch"
     },
     {
+      "id": "crude_oil_production",
+      "label_en": "Crude Oil & Lease Condensate Production",
+      "label_zh": "原油及凝析油日均产量 (EIA)",
+      "latest_date": "2026-06-01",
+      "latest_value": 1691.1053421463002,
+      "latest_display": "1,691 TBPD",
+      "frequency": "monthly",
+      "source_name": "US Energy Information Administration (EIA)",
+      "series": "",
+      "quality_status": "low_confidence"
+    },
+    {
       "id": "bank_capital_ratio",
       "label_en": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
       "label_zh": "银行监管资本充足率 (CAR)",
@@ -446,10 +458,10 @@
       "value"
     ],
     "file": "nigeria_canonical_frame.json",
-    "series": 35,
-    "observations": 13589,
-    "series_count": 35,
-    "observation_count": 13589
+    "series": 36,
+    "observations": 13787,
+    "series_count": 36,
+    "observation_count": 13787
   },
   "data_gaps_detail": [
     {
@@ -463,12 +475,12 @@
       "section": "monetary_financial",
       "item_en": "Monthly NBS Bonny Light Crude Oil Production (mbpd)",
       "item_zh": "尼日利亚国家统计局(NBS)月度原油日均产量 (百万桶/日)",
-      "status_en": "Monitored via National Bureau of Statistics (nigerianstat.gov.ng) and NUPRC official bulletins.",
-      "status_zh": "通过尼日利亚国家统计局与上游石油监管委员会(NUPRC)月度公报跟踪监控。"
+      "status_en": "Official monthly crude oil production is now charted via US EIA Open Data API v2 (international energy statistics).",
+      "status_zh": "已通过美国能源信息署(EIA) Open Data API v2接入并绘制月度原油日均产量。"
     }
   ],
   "source_health": {
-    "source_groups": 11,
+    "source_groups": 12,
     "sources": [
       {
         "source_name": "IMF SDMX / CBN",
@@ -511,12 +523,16 @@
         "charts": 1
       },
       {
+        "source_name": "US Energy Information Administration (EIA)",
+        "charts": 1
+      },
+      {
         "source_name": "World Bank / ILO",
         "charts": 1
       }
     ],
     "quality_counts": {
-      "low_confidence": 8,
+      "low_confidence": 9,
       "verified": 1,
       "watch": 26
     },
@@ -534,7 +550,7 @@
       "current": 18,
       "due": 3,
       "projection": 6,
-      "stale": 8
+      "stale": 9
     },
     "latest_historical_date": "2026-10-28",
     "attention": [
@@ -715,6 +731,28 @@
         "transform": "level"
       },
       {
+        "id": "crude_oil_production",
+        "concept_id": "ng:crude_oil_production",
+        "label_en": "Crude Oil & Lease Condensate Production",
+        "latest_date": "2026-06-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-06-01",
+        "age_days": 120,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "US Energy Information Administration (EIA)",
+        "series": "",
+        "transform": "level"
+      },
+      {
         "id": "cpi_index",
         "concept_id": "ng:cpi_index",
         "label_en": "Headline Consumer Price Index",
@@ -784,7 +822,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 35
+      "level": 36
     },
     "non_level": []
   },
@@ -794,6 +832,6 @@
       "date",
       "value"
     ],
-    "charted_series": 35
+    "charted_series": 36
   }
 }

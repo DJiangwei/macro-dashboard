@@ -391,10 +391,10 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h1><span data-lang="en">Nigeria Dashboard</span><span data-lang="zh">尼日利亚宏观仪表盘</span></h1>
     <p class="subtitle"><span data-lang="en">A data-first macro page for Nigeria built from DBnomics (IMF IFS & FSI), IMF DataMapper, World Bank WDI, FRED, and Bruegel REER.</span><span data-lang="zh">基于DBnomics (IMF IFS与FSI)、IMF DataMapper、世界银行WDI、FRED与Bruegel实际有效汇率构建的尼日利亚数据优先宏观页面。</span></p>
     <div class="meta-row">
-      <span class="meta-chip">35 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
-      <span class="meta-chip">11 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
+      <span class="meta-chip">36 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
+      <span class="meta-chip">12 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
       <span class="meta-chip">2 <span data-lang="en">official-data gaps tracked</span><span data-lang="zh">个官方数据缺口</span></span>
-      <span class="meta-chip">8 <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
+      <span class="meta-chip">9 <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
       <span class="meta-chip">0 <span data-lang="en">native official</span><span data-lang="zh">原生官方</span> · 0 <span data-lang="en">mirror</span><span data-lang="zh">镜像</span></span>
     </div>
   </header>
@@ -1487,6 +1487,35 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 </article>
 
 
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="ng:crude_oil_production">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">Crude Oil &amp; Lease Condensate Production</span><span data-lang="zh">原油及凝析油日均产量 (EIA)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-06-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>1,691</strong><em>TBPD</em></span>
+        <time datetime="2026-06-01"><span data-lang="en">Jun 2026</span><span data-lang="zh">2026年6月</span></time>
+      </div>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official primary</span><span class="freshness-chip">stale</span>
+    </div>
+  </div>
+  <div id="chart-crude_oil_production" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-crude_oil_production", [{"name": "Crude Oil & Lease Condensate Production", "x": ["2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01"], "y": [2404.0, 2430.0, 2399.0, 2298.0, 2253.0, 2373.0, 2349.0, 2449.0, 2516.0, 2533.0, 2462.0, 2433.0, 2547.0, 2508.0, 2387.0, 2408.0, 2536.0, 2539.0, 2557.0, 2563.0, 2529.0, 2348.0, 2440.0, 2327.0, 2432.0, 2458.0, 2438.0, 2595.0, 2530.0, 2527.0, 2533.0, 2556.0, 2426.0, 2293.0, 2269.0, 2428.0, 2362.0, 2266.0, 2358.0, 2346.0, 2251.0, 2210.0, 2338.0, 2344.0, 2366.0, 2320.0, 2220.0, 2300.0, 2420.0, 2370.0, 2320.0, 2325.0, 2334.0, 2370.0, 2291.0, 2341.0, 2296.0, 2384.0, 2325.0, 2390.0, 2294.0, 2269.0, 2152.0, 2165.0, 2139.0, 2025.0, 2122.0, 2088.0, 2225.0, 2198.0, 2226.0, 2159.0, 2159.0, 2120.0, 1993.0, 2010.0, 1673.0, 1811.0, 1764.0, 1694.0, 1726.0, 1854.0, 1984.0, 1684.0, 1849.0, 1869.0, 1730.0, 1780.0, 1900.0, 1945.0, 2022.0, 2027.07, 2038.07, 2021.2, 2064.95, 2098.5, 2060.4023512941394, 2030.4023512941394, 2000.4023512941394, 1980.4023512941394, 1800.4023512941394, 1730.4023512941394, 1780.4023512941394, 1850.4023512941394, 1950.4023512941394, 1910.4023512941394, 1900.4023512941394, 1930.4023512941394, 1843.780151347392, 1873.780151347392, 1903.780151347392, 1973.780151347392, 1873.780151347392, 1993.780151347392, 1963.780151347392, 2043.780151347392, 1993.780151347392, 1973.780151347392, 1963.780151347392, 1943.780151347392, 1989.3384404544036, 1959.3384404544036, 1939.3384404544036, 1889.3384404544036, 1809.3384404544036, 1659.3384404544036, 1646.1787096774194, 1695.7145483870968, 1701.5099, 1744.2294838709677, 1677.8002333333334, 1590.5119677419355, 1462.6427419354839, 1594.5225357142856, 1579.8726774193549, 1530.4112, 1566.1245161290324, 1532.3766666666668, 1559.1169677419355, 1386.1917419354838, 1533.1062333333332, 1492.0047741935484, 1545.5223333333333, 1497.4814838709676, 1488.6514516129032, 1521.5414642857143, 1414.472129032258, 1399.7098333333333, 1246.0464193548387, 1268.4399333333333, 1216.439258064516, 1102.0520967741934, 1153.7675, 1187.654870967742, 1247.7987333333333, 1270.400193548387, 1387.180064516129, 1449.750607142857, 1435.4685483870967, 1272.9, 1472.9353421463, 1462.9353421463, 1342.9353421463, 1412.9353421463, 1502.9353421463, 1522.9353421463, 1462.9353421463, 1572.9353421463, 1502.2398421463, 1471.5443421463, 1500.8488421463, 1420.1533421463, 1459.4578421463002, 1458.7623421463002, 1508.0668421463001, 1567.3713421463, 1466.6758421463, 1475.9803421463, 1475.2848421463002, 1554.5893421463002, 1532.5159171463001, 1580.4424921463003, 1598.3690671463003, 1576.2956421463002, 1614.2222171463002, 1642.1487921463001, 1610.0753671463, 1688.0019421463003, 1665.9285171463002, 1623.8550921463002, 1561.7816671463004, 1569.7082421463003, 1548.2744254796337, 1526.8406088129668, 1525.4067921463004, 1623.9729754796335, 1652.539158812967, 1691.1053421463002], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-06-01"], "y": [1691.1053421463002], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "TBPD", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://www.eia.gov/international/data/country/NGA" target="_blank" rel="noreferrer">US Energy Information Administration (EIA)</a></span>
+    <span>Series: </span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2026-06-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Monthly crude oil production including lease condensate reported by US EIA international energy statistics.</span><span data-lang="zh">美国能源信息署(EIA)国际能源数据库发布的尼日利亚月度原油及凝析油日均产量（千桶/日）。</span></p>
+</article>
+
+
   </div>
 </section>
 
@@ -1577,7 +1606,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 <tr>
   <td><span data-lang="en">Monetary, Credit &amp; Commodities</span><span data-lang="zh">货币、利率与大宗商品</span></td>
   <td><span data-lang="en">Monthly NBS Bonny Light Crude Oil Production (mbpd)</span><span data-lang="zh">尼日利亚国家统计局(NBS)月度原油日均产量 (百万桶/日)</span></td>
-  <td><span data-lang="en">Monitored via National Bureau of Statistics (nigerianstat.gov.ng) and NUPRC official bulletins.</span><span data-lang="zh">通过尼日利亚国家统计局与上游石油监管委员会(NUPRC)月度公报跟踪监控。</span></td>
+  <td><span data-lang="en">Official monthly crude oil production is now charted via US EIA Open Data API v2 (international energy statistics).</span><span data-lang="zh">已通过美国能源信息署(EIA) Open Data API v2接入并绘制月度原油日均产量。</span></td>
 </tr></tbody>
     </table>
   </section>

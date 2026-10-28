@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-28T23:04:46.767662+00:00",
+  "generated": "2026-10-28T23:34:05.233658+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -7669,16 +7669,16 @@
       "currency": "KZT",
       "institution": "NBK",
       "category": "data-first country page",
-      "charts": 33,
-      "expected": 33,
+      "charts": 34,
+      "expected": 34,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/KZT official rate",
       "headline": "457.09 (2026-10-28)",
       "secondary_label": "Source groups",
-      "secondary": "12",
-      "quality": "12 source groups · 4 low-confidence charts",
+      "secondary": "13",
+      "quality": "13 source groups · 5 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -7747,7 +7747,7 @@
         }
       },
       "source_health": {
-        "source_groups": 12,
+        "source_groups": 13,
         "sources": [
           {
             "source_name": "IMF SDMX / NBK",
@@ -7794,12 +7794,16 @@
             "charts": 1
           },
           {
+            "source_name": "US Energy Information Administration (EIA)",
+            "charts": 1
+          },
+          {
             "source_name": "World Bank / ILO",
             "charts": 1
           }
         ],
         "quality_counts": {
-          "low_confidence": 4,
+          "low_confidence": 5,
           "verified": 4,
           "watch": 25
         },
@@ -7811,7 +7815,7 @@
           "current": 21,
           "due": 2,
           "projection": 6,
-          "stale": 4
+          "stale": 5
         },
         "latest_historical_date": "2026-10-28",
         "attention": [
@@ -7946,6 +7950,28 @@
             "source_name": "IMF / DBnomics (IFS)",
             "series": "IMF/IFS/M.KZ.ENDE_XDC_USD_RATE",
             "transform": "level"
+          },
+          {
+            "id": "crude_oil_production",
+            "concept_id": "kz:crude_oil_production",
+            "label_en": "Crude Oil & Lease Condensate Production",
+            "latest_date": "2026-06-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-06-01",
+            "age_days": 120,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "US Energy Information Administration (EIA)",
+            "series": "",
+            "transform": "level"
           }
         ]
       },
@@ -7956,23 +7982,23 @@
           "value"
         ],
         "file": "kazakhstan_canonical_frame.json",
-        "series": 33,
-        "observations": 9680,
-        "series_count": 33,
-        "observation_count": 9680
+        "series": 34,
+        "observations": 9878,
+        "series_count": 34,
+        "observation_count": 9878
       },
       "freshness_summary": {
         "dashboard": "Kazakhstan",
-        "charts": 33,
+        "charts": 34,
         "current": 27,
-        "stale": 4,
+        "stale": 5,
         "lagged_source": 0,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 4,
+        "low_confidence": 5,
         "latest_historical_date": "2026-10-28",
         "headline_latest": ""
       }
@@ -8356,16 +8382,16 @@
       "currency": "EGP",
       "institution": "CBE",
       "category": "data-first country page",
-      "charts": 32,
-      "expected": 32,
+      "charts": 33,
+      "expected": 33,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/EGP official rate",
       "headline": "49.70 (2025-05-01)",
       "secondary_label": "Source groups",
-      "secondary": "10",
-      "quality": "10 source groups · 12 low-confidence charts",
+      "secondary": "11",
+      "quality": "11 source groups · 13 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -8434,7 +8460,7 @@
         }
       },
       "source_health": {
-        "source_groups": 10,
+        "source_groups": 11,
         "sources": [
           {
             "source_name": "IMF SDMX / CBE",
@@ -8473,12 +8499,16 @@
             "charts": 1
           },
           {
+            "source_name": "US Energy Information Administration (EIA)",
+            "charts": 1
+          },
+          {
             "source_name": "World Bank / ILO",
             "charts": 1
           }
         ],
         "quality_counts": {
-          "low_confidence": 12,
+          "low_confidence": 13,
           "watch": 20
         },
         "unavailable_count": 0
@@ -8489,7 +8519,7 @@
           "current": 11,
           "due": 3,
           "projection": 6,
-          "stale": 12
+          "stale": 13
         },
         "latest_historical_date": "2026-10-27",
         "attention": [
@@ -8758,6 +8788,28 @@
             "transform": "level"
           },
           {
+            "id": "crude_oil_production",
+            "concept_id": "eg:crude_oil_production",
+            "label_en": "Crude Oil & Lease Condensate Production",
+            "latest_date": "2026-06-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-06-01",
+            "age_days": 120,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "US Energy Information Administration (EIA)",
+            "series": "",
+            "transform": "level"
+          },
+          {
             "id": "cpi_index",
             "concept_id": "eg:cpi_index",
             "label_en": "Headline Consumer Price Index",
@@ -8832,23 +8884,23 @@
           "value"
         ],
         "file": "egypt_canonical_frame.json",
-        "series": 32,
-        "observations": 9421,
-        "series_count": 32,
-        "observation_count": 9421
+        "series": 33,
+        "observations": 9619,
+        "series_count": 33,
+        "observation_count": 9619
       },
       "freshness_summary": {
         "dashboard": "Egypt",
-        "charts": 32,
+        "charts": 33,
         "current": 17,
-        "stale": 12,
+        "stale": 13,
         "lagged_source": 0,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 12,
+        "low_confidence": 13,
         "latest_historical_date": "2026-10-27",
         "headline_latest": ""
       }
@@ -8860,16 +8912,16 @@
       "currency": "NGN",
       "institution": "CBN",
       "category": "data-first country page",
-      "charts": 35,
-      "expected": 35,
+      "charts": 36,
+      "expected": 36,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/NGN official rate",
       "headline": "1,347.03 (2026-10-28)",
       "secondary_label": "Source groups",
-      "secondary": "11",
-      "quality": "11 source groups · 8 low-confidence charts",
+      "secondary": "12",
+      "quality": "12 source groups · 9 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -8938,7 +8990,7 @@
         }
       },
       "source_health": {
-        "source_groups": 11,
+        "source_groups": 12,
         "sources": [
           {
             "source_name": "IMF SDMX / CBN",
@@ -8981,12 +9033,16 @@
             "charts": 1
           },
           {
+            "source_name": "US Energy Information Administration (EIA)",
+            "charts": 1
+          },
+          {
             "source_name": "World Bank / ILO",
             "charts": 1
           }
         ],
         "quality_counts": {
-          "low_confidence": 8,
+          "low_confidence": 9,
           "verified": 1,
           "watch": 26
         },
@@ -8998,7 +9054,7 @@
           "current": 18,
           "due": 3,
           "projection": 6,
-          "stale": 8
+          "stale": 9
         },
         "latest_historical_date": "2026-10-28",
         "attention": [
@@ -9179,6 +9235,28 @@
             "transform": "level"
           },
           {
+            "id": "crude_oil_production",
+            "concept_id": "ng:crude_oil_production",
+            "label_en": "Crude Oil & Lease Condensate Production",
+            "latest_date": "2026-06-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-06-01",
+            "age_days": 120,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "US Energy Information Administration (EIA)",
+            "series": "",
+            "transform": "level"
+          },
+          {
             "id": "cpi_index",
             "concept_id": "ng:cpi_index",
             "label_en": "Headline Consumer Price Index",
@@ -9253,23 +9331,23 @@
           "value"
         ],
         "file": "nigeria_canonical_frame.json",
-        "series": 35,
-        "observations": 13589,
-        "series_count": 35,
-        "observation_count": 13589
+        "series": 36,
+        "observations": 13787,
+        "series_count": 36,
+        "observation_count": 13787
       },
       "freshness_summary": {
         "dashboard": "Nigeria",
-        "charts": 35,
+        "charts": 36,
         "current": 24,
-        "stale": 8,
+        "stale": 9,
         "lagged_source": 0,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 8,
+        "low_confidence": 9,
         "latest_historical_date": "2026-10-28",
         "headline_latest": ""
       }
@@ -10538,10 +10616,10 @@
       "structural_score": 55.0,
       "composite_label": "defensive",
       "quality": {
-        "score": 80.6,
-        "label": "high-confidence dashboard",
+        "score": 77.8,
+        "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 81.8,
+        "freshness_score": 79.4,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10720,10 +10798,10 @@
       "structural_score": 45.0,
       "composite_label": "defensive",
       "quality": {
-        "score": 58.6,
+        "score": 58.0,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 53.1,
+        "freshness_score": 51.5,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10811,10 +10889,10 @@
       "structural_score": 55.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 68.0,
+        "score": 65.3,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 68.6,
+        "freshness_score": 66.7,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -12465,11 +12543,11 @@
       "code": "KZ",
       "name": "Kazakhstan",
       "coverage_pct": 100.0,
-      "freshness_pct": 81.8,
+      "freshness_pct": 79.4,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 49.4,
-      "quality_score": 80.6
+      "quality_score": 77.8
     },
     {
       "code": "UZ",
@@ -12485,21 +12563,21 @@
       "code": "EG",
       "name": "Egypt",
       "coverage_pct": 100.0,
-      "freshness_pct": 53.1,
+      "freshness_pct": 51.5,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 49.4,
-      "quality_score": 58.6
+      "quality_score": 58.0
     },
     {
       "code": "NG",
       "name": "Nigeria",
       "coverage_pct": 100.0,
-      "freshness_pct": 68.6,
+      "freshness_pct": 66.7,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 54.4,
-      "quality_score": 68.0
+      "quality_score": 65.3
     }
   ],
   "release_monitor": [
@@ -13676,7 +13754,7 @@
       "country": "Nigeria",
       "section": "monetary_financial",
       "item": "Monthly NBS Bonny Light Crude Oil Production (mbpd)",
-      "status": "Monitored via National Bureau of Statistics (nigerianstat.gov.ng) and NUPRC official bulletins.",
+      "status": "Official monthly crude oil production is now charted via US EIA Open Data API v2 (international energy statistics).",
       "priority": "high",
       "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
     },
