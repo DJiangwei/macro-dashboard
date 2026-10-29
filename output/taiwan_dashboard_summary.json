@@ -1,6 +1,6 @@
 {
   "file": "taiwan.html",
-  "generated": "2026-10-29T15:34:19.816555+00:00",
+  "generated": "2026-10-29T17:00:37.817594+00:00",
   "charts": 48,
   "source_groups": 9,
   "data_gaps": 1,
@@ -226,13 +226,13 @@
       "id": "m1b_growth",
       "label_en": "M1B Monetary Aggregate YoY Growth",
       "label_zh": "M1B货币总计数年增率",
-      "latest_date": "2026-08-01",
-      "latest_value": 6.65,
-      "latest_display": "6.65 % y/y",
+      "latest_date": "2026-09-01",
+      "latest_value": 7.2,
+      "latest_display": "7.20 % y/y",
       "frequency": "monthly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
-      "quality_status": "watch"
+      "quality_status": "verified"
     },
     {
       "id": "m2_growth",
@@ -633,9 +633,9 @@
     ],
     "file": "taiwan_canonical_frame.json",
     "series": 48,
-    "observations": 13332,
+    "observations": 13333,
     "series_count": 48,
-    "observation_count": 13332
+    "observation_count": 13333
   },
   "data_gaps_detail": [
     {
@@ -688,8 +688,8 @@
     ],
     "quality_counts": {
       "low_confidence": 1,
-      "verified": 27,
-      "watch": 20
+      "verified": 28,
+      "watch": 19
     },
     "unavailable_count": 0
   },
@@ -702,8 +702,8 @@
   "freshness": {
     "as_of_date": "2026-10-29",
     "counts": {
-      "current": 32,
-      "due": 11,
+      "current": 33,
+      "due": 10,
       "projection": 4,
       "stale": 1
     },
@@ -882,28 +882,6 @@
         "validation": "passed",
         "comparability": "high",
         "source_name": "Taiwan Ministry of Finance (Customs Administration)",
-        "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "m1b_growth",
-        "concept_id": "tw:m1b_growth",
-        "label_en": "M1B Monetary Aggregate YoY Growth",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-08-01",
-        "age_days": 59,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Central Bank of the Republic of China (Taiwan)",
         "series": "",
         "transform": "level"
       },

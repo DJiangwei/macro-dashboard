@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-29T15:34:43.381386+00:00",
+  "generated": "2026-10-29T17:01:14.607763+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -119,7 +119,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T15:20:30.684391+00:00",
+          "timestamp": "2026-10-29T16:50:32.067026+00:00",
           "country": "HU",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -242,7 +242,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T15:20:39.695851+00:00",
+          "timestamp": "2026-10-29T16:50:41.191569+00:00",
           "country": "PL",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -251,7 +251,7 @@
           "message": "name 'ROOT' is not defined"
         },
         {
-          "timestamp": "2026-10-29T15:20:40.112644+00:00",
+          "timestamp": "2026-10-29T16:50:41.641799+00:00",
           "country": "PL",
           "indicator_id": "equity_yoy",
           "source_id": "CredentialedStooqFetcher",
@@ -375,7 +375,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T15:20:43.265756+00:00",
+          "timestamp": "2026-10-29T16:50:44.372304+00:00",
           "country": "CZ",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -499,7 +499,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T15:20:52.129581+00:00",
+          "timestamp": "2026-10-29T16:50:46.097485+00:00",
           "country": "RO",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -594,7 +594,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T15:25:33.736050+00:00",
+          "timestamp": "2026-10-29T16:54:40.265773+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -603,7 +603,7 @@
           "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
         },
         {
-          "timestamp": "2026-10-29T15:25:54.727087+00:00",
+          "timestamp": "2026-10-29T16:54:46.516229+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -612,7 +612,7 @@
           "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
         },
         {
-          "timestamp": "2026-10-29T15:25:54.984723+00:00",
+          "timestamp": "2026-10-29T16:54:46.703768+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -623,13 +623,12 @@
       ]
     },
     "TR": {
-      "calls": 58,
-      "success": 52,
+      "calls": 56,
+      "success": 53,
       "empty": 0,
-      "failed": 6,
+      "failed": 3,
       "circuit_open": 0,
       "failure_reasons": {
-        "timeout": 3,
         "unexpected_error": 3
       },
       "empty_reasons": {},
@@ -660,12 +659,12 @@
           "success": 1
         },
         "world_bank": {
-          "failed": 3
+          "success": 1
         }
       },
       "events": [
         {
-          "timestamp": "2026-10-29T15:29:18.934729+00:00",
+          "timestamp": "2026-10-29T16:58:05.276863+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -674,34 +673,7 @@
           "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         },
         {
-          "timestamp": "2026-10-29T15:29:48.305376+00:00",
-          "country": "TR",
-          "indicator_id": "labour_participation_rate",
-          "source_id": "world_bank",
-          "outcome": "failed",
-          "reason": "timeout",
-          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
-        },
-        {
-          "timestamp": "2026-10-29T15:30:18.419899+00:00",
-          "country": "TR",
-          "indicator_id": "labour_participation_rate",
-          "source_id": "world_bank",
-          "outcome": "failed",
-          "reason": "timeout",
-          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
-        },
-        {
-          "timestamp": "2026-10-29T15:30:48.470963+00:00",
-          "country": "TR",
-          "indicator_id": "labour_participation_rate",
-          "source_id": "world_bank",
-          "outcome": "failed",
-          "reason": "timeout",
-          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
-        },
-        {
-          "timestamp": "2026-10-29T15:30:48.471267+00:00",
+          "timestamp": "2026-10-29T16:58:26.186937+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -710,7 +682,7 @@
           "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         },
         {
-          "timestamp": "2026-10-29T15:30:48.471305+00:00",
+          "timestamp": "2026-10-29T16:58:26.186991+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -721,14 +693,12 @@
       ]
     },
     "HK": {
-      "calls": 40,
-      "success": 37,
+      "calls": 38,
+      "success": 38,
       "empty": 0,
-      "failed": 3,
+      "failed": 0,
       "circuit_open": 0,
-      "failure_reasons": {
-        "timeout": 3
-      },
+      "failure_reasons": {},
       "empty_reasons": {},
       "sources": {
         "bruegel_reer": {
@@ -750,38 +720,10 @@
           "success": 4
         },
         "world_bank": {
-          "failed": 3
+          "success": 1
         }
       },
-      "events": [
-        {
-          "timestamp": "2026-10-29T15:31:25.971592+00:00",
-          "country": "HK",
-          "indicator_id": "total_reserves_usd",
-          "source_id": "world_bank",
-          "outcome": "failed",
-          "reason": "timeout",
-          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
-        },
-        {
-          "timestamp": "2026-10-29T15:31:56.091028+00:00",
-          "country": "HK",
-          "indicator_id": "total_reserves_usd",
-          "source_id": "world_bank",
-          "outcome": "failed",
-          "reason": "timeout",
-          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
-        },
-        {
-          "timestamp": "2026-10-29T15:32:26.139886+00:00",
-          "country": "HK",
-          "indicator_id": "total_reserves_usd",
-          "source_id": "world_bank",
-          "outcome": "failed",
-          "reason": "timeout",
-          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
-        }
-      ]
+      "events": []
     },
     "KR": {
       "calls": 57,
@@ -816,16 +758,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T15:32:39.789272+00:00",
-          "country": "KR",
-          "indicator_id": "consumer_confidence",
-          "source_id": "fred",
-          "outcome": "failed",
-          "reason": "http_error",
-          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
-        },
-        {
-          "timestamp": "2026-10-29T15:32:39.997547+00:00",
+          "timestamp": "2026-10-29T16:58:48.042825+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -834,7 +767,16 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T15:32:41.041242+00:00",
+          "timestamp": "2026-10-29T16:58:48.408691+00:00",
+          "country": "KR",
+          "indicator_id": "consumer_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-29T16:58:49.202963+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
@@ -843,7 +785,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T15:32:57.710424+00:00",
+          "timestamp": "2026-10-29T16:59:07.032497+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -852,7 +794,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T15:33:10.926187+00:00",
+          "timestamp": "2026-10-29T16:59:19.840428+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -861,7 +803,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T15:33:23.402822+00:00",
+          "timestamp": "2026-10-29T16:59:32.505491+00:00",
           "country": "KR",
           "indicator_id": "consumer_confidence",
           "source_id": "fred",
@@ -870,7 +812,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T15:33:36.314490+00:00",
+          "timestamp": "2026-10-29T16:59:45.892621+00:00",
           "country": "KR",
           "indicator_id": "consumer_confidence",
           "source_id": "fred",
@@ -879,7 +821,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T15:33:51.158306+00:00",
+          "timestamp": "2026-10-29T16:59:58.258497+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
@@ -888,7 +830,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T15:34:03.879883+00:00",
+          "timestamp": "2026-10-29T17:00:18.100005+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",

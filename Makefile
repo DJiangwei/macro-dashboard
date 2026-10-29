@@ -1,6 +1,6 @@
 UV ?= scripts/uv_project.sh
 
-.PHONY: setup doctor build-v4 refresh-data rebuild-ui refresh-check data-catalog freshness-audit test validate proxy-report proxy-report-live publish-check publish clean
+.PHONY: setup doctor build-v4 refresh-data rebuild-ui refresh-check refresh-scheduled refresh-quick ci-summary data-catalog freshness-audit test validate proxy-report proxy-report-live publish-check publish clean
 
 setup:
 	$(UV) sync
@@ -56,6 +56,15 @@ rebuild-ui:
 
 refresh-check:
 	$(UV) run python scripts/refresh_check.py
+
+refresh-scheduled:
+	$(UV) run python scripts/run_scheduled_refresh.py --mode auto
+
+refresh-quick:
+	$(UV) run python scripts/run_scheduled_refresh.py --mode quick
+
+ci-summary:
+	$(UV) run python scripts/ci_step_summary.py
 
 data-catalog:
 	$(UV) run python scripts/data_source_catalog.py

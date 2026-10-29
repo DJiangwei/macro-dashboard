@@ -1,0 +1,96 @@
+name: Scheduled Macro Data Refresh & Publish
+
+on:
+  schedule:
+    # Mon-Fri at 02:00 UTC (10:00 HKT) — Weekday high-frequency & release monitor
+    - cron: '0 2 * * 1-5'
+    # Saturday at 02:00 UTC (10:00 HKT) — Weekend full 18-country deep refresh & audit
+    - cron: '0 2 * * 6'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Refresh mode (auto: weekday quick, weekend full; or explicit full / quick)'
+        required: true
+        default: 'auto'
+        type: choice
+        options:
+          - auto
+          - full
+          - quick
+      country:
+        description: 'Target country code (e.g., ALL, KR, TW, TR, CN, US)'
+        required: true
+        default: 'ALL'
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: macro-dashboard-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Astral uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Install Python 3.12
+        run: uv python install 3.12
+
+      - name: Sync dependencies
+        run: uv sync --frozen
+
+      - name: Verify environment
+        run: uv run python scripts/doctor_env.py
+
+      - name: Execute scheduled data refresh
+        env:
+          EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+          FINMIND_API_TOKEN: ${{ secrets.FINMIND_API_TOKEN }}
+          TCMB_EVDS_API_KEY: ${{ secrets.TCMB_EVDS_API_KEY }}
+          BOK_ECOS_API_KEY: ${{ secrets.BOK_ECOS_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: |
+          MODE="${{ github.event.inputs.mode || 'auto' }}"
+          COUNTRY="${{ github.event.inputs.country || 'ALL' }}"
+          echo "Executing refresh with MODE=${MODE}, COUNTRY=${COUNTRY}"
+          uv run python scripts/run_scheduled_refresh.py --mode "$MODE" --country "$COUNTRY"
+
+      - name: Validate output contract
+        run: |
+          uv run pytest -q
+          uv run python scripts/validate_outputs.py
+          uv run python scripts/dashboard_consistency_check.py
+          git diff --check
+
+      - name: Smart commit and push updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html output/ CORE_COVERAGE_MATRIX.md DATA_SOURCE_CATALOG.md DATA_FRESHNESS_AUDIT.md MACRO_WORKBENCH_BRIEFING.md config/
+
+          if git diff --staged --quiet; then
+            echo "No data changes detected. Skipping commit."
+          else
+            DATE_STR=$(date -u +'%Y-%m-%d')
+            git commit -m "Auto-refresh macro data: ${DATE_STR} [skip ci]"
+            git push origin main
+            echo "Pushed updated macro datasets and dashboards to main."
+          fi
+
+      - name: Render rich GitHub Actions Job Summary
+        if: always()
+        run: |
+          uv run python scripts/ci_step_summary.py
