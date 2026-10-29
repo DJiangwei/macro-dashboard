@@ -1,6 +1,6 @@
 {
   "file": "taiwan.html",
-  "generated": "2026-10-29T22:07:48.380487+00:00",
+  "generated": "2026-10-29T22:56:51.307341+00:00",
   "charts": 48,
   "source_groups": 9,
   "data_gaps": 1,
@@ -238,25 +238,25 @@
       "id": "m2_growth",
       "label_en": "M2 Monetary Aggregate YoY Growth",
       "label_zh": "M2货币总计数年增率",
-      "latest_date": "2026-08-01",
-      "latest_value": 6.79,
-      "latest_display": "6.79 % y/y",
+      "latest_date": "2026-09-01",
+      "latest_value": 7.24,
+      "latest_display": "7.24 % y/y",
       "frequency": "monthly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
-      "quality_status": "watch"
+      "quality_status": "verified"
     },
     {
       "id": "reserve_money_growth",
       "label_en": "Reserve Money YoY Growth",
       "label_zh": "准备货币年增率",
-      "latest_date": "2026-08-01",
-      "latest_value": 7.03,
-      "latest_display": "7.03 % y/y",
+      "latest_date": "2026-09-01",
+      "latest_value": 8.03,
+      "latest_display": "8.03 % y/y",
       "frequency": "monthly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
-      "quality_status": "watch"
+      "quality_status": "verified"
     },
     {
       "id": "taiex_index",
@@ -633,9 +633,9 @@
     ],
     "file": "taiwan_canonical_frame.json",
     "series": 48,
-    "observations": 13335,
+    "observations": 13337,
     "series_count": 48,
-    "observation_count": 13335
+    "observation_count": 13337
   },
   "data_gaps_detail": [
     {
@@ -688,8 +688,8 @@
     ],
     "quality_counts": {
       "low_confidence": 1,
-      "verified": 30,
-      "watch": 17
+      "verified": 32,
+      "watch": 15
     },
     "unavailable_count": 0
   },
@@ -702,8 +702,8 @@
   "freshness": {
     "as_of_date": "2026-10-29",
     "counts": {
-      "current": 35,
-      "due": 8,
+      "current": 37,
+      "due": 6,
       "projection": 4,
       "stale": 1
     },
@@ -838,50 +838,6 @@
         "validation": "passed",
         "comparability": "high",
         "source_name": "Taiwan Ministry of Finance (Customs Administration)",
-        "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "m2_growth",
-        "concept_id": "broad_money_growth",
-        "label_en": "M2 Monetary Aggregate YoY Growth",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-08-01",
-        "age_days": 59,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Central Bank of the Republic of China (Taiwan)",
-        "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "reserve_money_growth",
-        "concept_id": "tw:reserve_money_growth",
-        "label_en": "Reserve Money YoY Growth",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-08-01",
-        "age_days": 59,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Central Bank of the Republic of China (Taiwan)",
         "series": "",
         "transform": "level"
       },

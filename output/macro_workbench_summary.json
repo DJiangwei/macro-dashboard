@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-29T22:08:28.615522+00:00",
+  "generated": "2026-10-29T22:57:36.491773+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -6892,16 +6892,16 @@
         ],
         "quality_counts": {
           "low_confidence": 1,
-          "verified": 30,
-          "watch": 17
+          "verified": 32,
+          "watch": 15
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-29",
         "counts": {
-          "current": 35,
-          "due": 8,
+          "current": 37,
+          "due": 6,
           "projection": 4,
           "stale": 1
         },
@@ -7040,50 +7040,6 @@
             "transform": "level"
           },
           {
-            "id": "m2_growth",
-            "concept_id": "broad_money_growth",
-            "label_en": "M2 Monetary Aggregate YoY Growth",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "due",
-            "age_basis_date": "2026-08-01",
-            "age_days": 59,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Central Bank of the Republic of China (Taiwan)",
-            "series": "",
-            "transform": "level"
-          },
-          {
-            "id": "reserve_money_growth",
-            "concept_id": "tw:reserve_money_growth",
-            "label_en": "Reserve Money YoY Growth",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "due",
-            "age_basis_date": "2026-08-01",
-            "age_days": 59,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Central Bank of the Republic of China (Taiwan)",
-            "series": "",
-            "transform": "level"
-          },
-          {
             "id": "sovereign_yield_10y",
             "concept_id": "sovereign_yield_10y",
             "label_en": "10-Year Government Benchmark Bond Yield",
@@ -7115,14 +7071,14 @@
         ],
         "file": "taiwan_canonical_frame.json",
         "series": 48,
-        "observations": 13335,
+        "observations": 13337,
         "series_count": 48,
-        "observation_count": 13335
+        "observation_count": 13337
       },
       "freshness_summary": {
         "dashboard": "Taiwan",
         "charts": 48,
-        "current": 39,
+        "current": 41,
         "stale": 1,
         "lagged_source": 0,
         "projection": 0,
@@ -10022,10 +9978,10 @@
       "structural_score": 71.7,
       "composite_label": "constructive",
       "quality": {
-        "score": 88.9,
+        "score": 90.4,
         "label": "high-confidence dashboard",
         "coverage_score": 100.0,
-        "freshness_score": 81.2,
+        "freshness_score": 85.4,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -12030,11 +11986,11 @@
       "code": "TW",
       "name": "Taiwan",
       "coverage_pct": 100.0,
-      "freshness_pct": 81.2,
+      "freshness_pct": 85.4,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 73.3,
-      "quality_score": 88.9
+      "quality_score": 90.4
     },
     {
       "code": "KZ",

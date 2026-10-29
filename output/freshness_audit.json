@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-29T22:08:27.391562+00:00",
+  "generated": "2026-10-29T22:57:35.239507+00:00",
   "as_of_date": "2026-10-29",
   "thresholds": {
     "daily": "14 days",
@@ -207,7 +207,7 @@
     {
       "dashboard": "Taiwan",
       "charts": 48,
-      "current": 39,
+      "current": 41,
       "stale": 1,
       "lagged_source": 0,
       "projection": 0,
@@ -17438,7 +17438,7 @@
       "quality_status": "watch",
       "source": "FRED / Realtor.com",
       "series_id": "PENLISCOUUS",
-      "provider_update": "2026-10-01",
+      "provider_update": "2026-10-02",
       "note": "Realtor.com pending-listing count via FRED; related to transaction pipeline, but it is not the NAR Pending Home Sales Index."
     },
     {
@@ -17458,7 +17458,7 @@
       "quality_status": "watch",
       "source": "FRED / Realtor.com",
       "series_id": "PENLISCOUUS",
-      "provider_update": "2026-10-01",
+      "provider_update": "2026-10-02",
       "note": "Year-over-year growth derived from Realtor.com pending listings; a cleaner transaction-pipeline signal than the raw level when seasonality is material."
     },
     {
@@ -17478,7 +17478,7 @@
       "quality_status": "watch",
       "source": "FRED / Realtor.com",
       "series_id": "MEDDAYONMARUS",
-      "provider_update": "2026-10-01",
+      "provider_update": "2026-10-02",
       "note": "Realtor.com median days on market via FRED; methodology changes in 2021/2022 mean it is best used for broad market-slack direction, not precise historical level comparison."
     },
     {
@@ -22946,19 +22946,19 @@
       "indicator_id": "m2_growth",
       "label": "M2 Monetary Aggregate YoY Growth",
       "frequency": "monthly",
-      "latest_observation": "2026-08-01",
-      "latest_date": "2026-08-01",
-      "age_basis_date": "2026-08-31",
-      "age_days": 59,
+      "latest_observation": "2026-09-01",
+      "latest_date": "2026-09-01",
+      "age_basis_date": "2026-09-30",
+      "age_days": 29,
       "threshold_days": 75,
       "release_calendar_id": "",
       "expected_release_date": "",
       "due_date": "",
-      "freshness_status": "due",
-      "quality_status": "watch",
+      "freshness_status": "current",
+      "quality_status": "verified",
       "source": "Central Bank of the Republic of China (Taiwan)",
       "series_id": "",
-      "provider_update": "2026-09-24",
+      "provider_update": "2026-10-28",
       "note": "Annual percentage change in broad money M2 (averages of daily figures)."
     },
     {
@@ -22966,19 +22966,19 @@
       "indicator_id": "reserve_money_growth",
       "label": "Reserve Money YoY Growth",
       "frequency": "monthly",
-      "latest_observation": "2026-08-01",
-      "latest_date": "2026-08-01",
-      "age_basis_date": "2026-08-31",
-      "age_days": 59,
+      "latest_observation": "2026-09-01",
+      "latest_date": "2026-09-01",
+      "age_basis_date": "2026-09-30",
+      "age_days": 29,
       "threshold_days": 75,
       "release_calendar_id": "",
       "expected_release_date": "",
       "due_date": "",
-      "freshness_status": "due",
-      "quality_status": "watch",
+      "freshness_status": "current",
+      "quality_status": "verified",
       "source": "Central Bank of the Republic of China (Taiwan)",
       "series_id": "",
-      "provider_update": "2026-09-24",
+      "provider_update": "2026-10-28",
       "note": "Annual percentage change in central bank reserve money (averages of daily figures)."
     },
     {
