@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-29T17:01:14.607763+00:00",
+  "generated": "2026-10-29T21:28:50.147329+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -565,12 +565,13 @@
       "events": []
     },
     "EA": {
-      "calls": 72,
+      "calls": 73,
       "success": 69,
       "empty": 0,
-      "failed": 3,
+      "failed": 4,
       "circuit_open": 0,
       "failure_reasons": {
+        "timeout": 1,
         "unexpected_error": 3
       },
       "empty_reasons": {},
@@ -589,12 +590,13 @@
           "success": 1
         },
         "spread": {
+          "failed": 1,
           "success": 5
         }
       },
       "events": [
         {
-          "timestamp": "2026-10-29T16:54:40.265773+00:00",
+          "timestamp": "2026-10-29T21:21:06.529082+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -603,7 +605,16 @@
           "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
         },
         {
-          "timestamp": "2026-10-29T16:54:46.516229+00:00",
+          "timestamp": "2026-10-29T21:22:14.258180+00:00",
+          "country": "EA",
+          "indicator_id": "gr_de_spread_10y",
+          "source_id": "spread",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='data-api.ecb.europa.eu', port=443): Read timed out. (read timeout=60)"
+        },
+        {
+          "timestamp": "2026-10-29T21:22:14.889523+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -612,7 +623,7 @@
           "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
         },
         {
-          "timestamp": "2026-10-29T16:54:46.703768+00:00",
+          "timestamp": "2026-10-29T21:22:15.542508+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -664,7 +675,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T16:58:05.276863+00:00",
+          "timestamp": "2026-10-29T21:26:26.064359+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -673,7 +684,7 @@
           "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         },
         {
-          "timestamp": "2026-10-29T16:58:26.186937+00:00",
+          "timestamp": "2026-10-29T21:26:47.710133+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -682,7 +693,7 @@
           "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         },
         {
-          "timestamp": "2026-10-29T16:58:26.186991+00:00",
+          "timestamp": "2026-10-29T21:26:47.710200+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -758,7 +769,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T16:58:48.042825+00:00",
+          "timestamp": "2026-10-29T21:27:17.886615+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -767,16 +778,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T16:58:48.408691+00:00",
-          "country": "KR",
-          "indicator_id": "consumer_confidence",
-          "source_id": "fred",
-          "outcome": "failed",
-          "reason": "http_error",
-          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
-        },
-        {
-          "timestamp": "2026-10-29T16:58:49.202963+00:00",
+          "timestamp": "2026-10-29T21:27:17.982040+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
@@ -785,25 +787,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T16:59:07.032497+00:00",
-          "country": "KR",
-          "indicator_id": "business_confidence",
-          "source_id": "fred",
-          "outcome": "failed",
-          "reason": "http_error",
-          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
-        },
-        {
-          "timestamp": "2026-10-29T16:59:19.840428+00:00",
-          "country": "KR",
-          "indicator_id": "business_confidence",
-          "source_id": "fred",
-          "outcome": "failed",
-          "reason": "http_error",
-          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
-        },
-        {
-          "timestamp": "2026-10-29T16:59:32.505491+00:00",
+          "timestamp": "2026-10-29T21:27:18.092141+00:00",
           "country": "KR",
           "indicator_id": "consumer_confidence",
           "source_id": "fred",
@@ -812,7 +796,25 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T16:59:45.892621+00:00",
+          "timestamp": "2026-10-29T21:27:30.730546+00:00",
+          "country": "KR",
+          "indicator_id": "business_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-29T21:27:42.678474+00:00",
+          "country": "KR",
+          "indicator_id": "business_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-29T21:27:54.566813+00:00",
           "country": "KR",
           "indicator_id": "consumer_confidence",
           "source_id": "fred",
@@ -821,7 +823,16 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T16:59:58.258497+00:00",
+          "timestamp": "2026-10-29T21:28:06.943119+00:00",
+          "country": "KR",
+          "indicator_id": "consumer_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-10-29T21:28:18.839146+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
@@ -830,7 +841,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T17:00:18.100005+00:00",
+          "timestamp": "2026-10-29T21:28:30.667037+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",

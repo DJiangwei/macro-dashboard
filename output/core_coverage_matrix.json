@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-10-29T17:01:14.907776+00:00",
+  "generated": "2026-10-29T21:28:50.489741+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -74,8 +74,8 @@
       "missing": 7
     },
     "JP": {
-      "verified": 6,
-      "watch": 18,
+      "verified": 1,
+      "watch": 23,
       "low_confidence": 11,
       "substitute": 0,
       "missing": 13
@@ -2058,13 +2058,13 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "job_to_applicant_ratio"
           ],
           "latest_date": "2026-08-01",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "ZA": {
           "state": "missing",
@@ -2526,14 +2526,14 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "cpi_inflation",
             "cpi_inflation_estat"
           ],
           "latest_date": "2026-09-01",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "ZA": {
           "state": "verified",
@@ -2701,14 +2701,14 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "core_core_inflation",
             "core_inflation"
           ],
           "latest_date": "2026-09-01",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "ZA": {
           "state": "missing",
@@ -2866,13 +2866,13 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "services_inflation"
           ],
           "latest_date": "2026-09-01",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "ZA": {
           "state": "missing",
@@ -3024,13 +3024,13 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "goods_inflation"
           ],
           "latest_date": "2026-09-01",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "ZA": {
           "state": "missing",
@@ -3528,7 +3528,7 @@
             "michigan_inflation_expectation",
             "ten_year_breakeven"
           ],
-          "latest_date": "2026-10-28",
+          "latest_date": "2026-10-29",
           "refresh_fallback": false
         },
         "TR": {
@@ -3820,7 +3820,7 @@
             "housing_starts"
           ],
           "latest_date": "2024-12-01",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "ZA": {
           "state": "missing",
@@ -6156,7 +6156,7 @@
           "indicator_ids": [
             "treasury_10y_yield"
           ],
-          "latest_date": "2026-10-27",
+          "latest_date": "2026-10-28",
           "refresh_fallback": false
         },
         "TR": {
@@ -6321,7 +6321,7 @@
           "indicator_ids": [
             "daily_fed_funds"
           ],
-          "latest_date": "2026-10-27",
+          "latest_date": "2026-10-28",
           "refresh_fallback": false
         },
         "TR": {
@@ -7312,7 +7312,7 @@
           "indicator_ids": [
             "yield_curve_10y2y"
           ],
-          "latest_date": "2026-10-28",
+          "latest_date": "2026-10-29",
           "refresh_fallback": false
         },
         "TR": {

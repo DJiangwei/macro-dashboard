@@ -1,6 +1,6 @@
 {
   "file": "us.html",
-  "generated": "2026-10-29T16:57:04.927739+00:00",
+  "generated": "2026-10-29T21:21:04.140469+00:00",
   "charts": 168,
   "source_groups": 27,
   "data_gaps": 7,
@@ -70,22 +70,22 @@
   "unavailable": [],
   "data_mode": "refresh",
   "latest_cards": [],
-  "fed_funds_latest": "3.88% (2026-10-27)",
+  "fed_funds_latest": "3.88% (2026-10-28)",
   "cross_checks": [
     {
       "concept": "overnight_policy_rate",
       "primary": "daily_fed_funds",
       "secondary": "overnight_bank_funding_rate",
       "label_en": "Daily Effective Fed Funds (DFF) vs Overnight Bank Funding Rate (OBFR)",
-      "n_common": 2215,
+      "n_common": 2216,
       "latest_diff": 0.0,
       "max_abs_diff": 0.1,
       "n_breaches": 4,
       "last_breach_date": "2020-03-19",
       "tolerance": 0.05,
-      "window_since": "2024-10-27",
+      "window_since": "2024-10-28",
       "window_months": 24,
-      "window_n_common": 501,
+      "window_n_common": 502,
       "window_max_abs_diff": 0.010000000000000231,
       "window_n_breaches": 0,
       "status": "agree"
@@ -95,13 +95,13 @@
       "primary": "daily_fed_funds",
       "secondary": "reserve_balance_rate",
       "label_en": "Daily Effective Fed Funds (DFF) vs Interest on Reserve Balances (IORB)",
-      "n_common": 1917,
+      "n_common": 1918,
       "latest_diff": -0.020000000000000018,
       "max_abs_diff": 0.09,
       "n_breaches": 0,
       "last_breach_date": "",
       "tolerance": 0.15,
-      "window_since": "2024-10-27",
+      "window_since": "2024-10-28",
       "window_months": 24,
       "window_n_common": 731,
       "window_max_abs_diff": 0.07000000000000028,
@@ -135,9 +135,9 @@
     ],
     "file": "us_canonical_frame.json",
     "series": 168,
-    "observations": 118229,
+    "observations": 118245,
     "series_count": 168,
-    "observation_count": 118229
+    "observation_count": 118245
   },
   "data_gaps_detail": [
     {
@@ -318,7 +318,8 @@
     "as_of_date": "2026-10-29",
     "counts": {
       "current": 151,
-      "due": 17
+      "due": 16,
+      "scheduled_policy": 1
     },
     "latest_historical_date": "2026-10-29",
     "attention": [
@@ -672,28 +673,6 @@
         "comparability": "high",
         "source_name": "FRED / Treasury International Capital",
         "series": "FORTREASPOS42609",
-        "transform": "level"
-      },
-      {
-        "id": "trimmed_mean_pce",
-        "concept_id": "us:trimmed_mean_pce",
-        "label_en": "Trimmed Mean PCE Inflation",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-08-01",
-        "age_days": 59,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "FRED / Dallas Fed",
-        "series": "PCETRIM12M159SFRBDAL",
         "transform": "level"
       }
     ]

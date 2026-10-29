@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-29T17:01:58.018271+00:00",
+  "generated": "2026-10-29T21:35:46.883143+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -88,15 +88,15 @@
       "freshness_summary": {
         "dashboard": "Hungary",
         "charts": 105,
-        "current": 55,
-        "stale": 19,
+        "current": 64,
+        "stale": 16,
         "lagged_source": 0,
         "projection": 4,
         "scheduled_policy": 0,
         "future_date": 0,
-        "missing_date": 0,
+        "missing_date": 3,
         "needs_review": 5,
-        "low_confidence": 14,
+        "low_confidence": 11,
         "latest_historical_date": "2026-12-31",
         "headline_latest": ""
       }
@@ -187,15 +187,15 @@
       "freshness_summary": {
         "dashboard": "Poland",
         "charts": 108,
-        "current": 54,
-        "stale": 22,
+        "current": 68,
+        "stale": 14,
         "lagged_source": 0,
         "projection": 4,
         "scheduled_policy": 0,
         "future_date": 0,
-        "missing_date": 0,
+        "missing_date": 3,
         "needs_review": 5,
-        "low_confidence": 14,
+        "low_confidence": 11,
         "latest_historical_date": "2026-12-31",
         "headline_latest": ""
       }
@@ -286,15 +286,15 @@
       "freshness_summary": {
         "dashboard": "Czechia",
         "charts": 104,
-        "current": 53,
-        "stale": 18,
+        "current": 62,
+        "stale": 15,
         "lagged_source": 0,
         "projection": 4,
         "scheduled_policy": 0,
         "future_date": 0,
-        "missing_date": 1,
+        "missing_date": 4,
         "needs_review": 5,
-        "low_confidence": 14,
+        "low_confidence": 11,
         "latest_historical_date": "2026-12-31",
         "headline_latest": ""
       }
@@ -385,15 +385,15 @@
       "freshness_summary": {
         "dashboard": "Romania",
         "charts": 104,
-        "current": 52,
-        "stale": 21,
+        "current": 65,
+        "stale": 15,
         "lagged_source": 0,
         "projection": 4,
         "scheduled_policy": 0,
         "future_date": 0,
-        "missing_date": 0,
+        "missing_date": 4,
         "needs_review": 5,
-        "low_confidence": 14,
+        "low_confidence": 11,
         "latest_historical_date": "2026-12-31",
         "headline_latest": ""
       }
@@ -2382,8 +2382,8 @@
         ],
         "quality_counts": {
           "low_confidence": 19,
-          "verified": 7,
-          "watch": 28
+          "verified": 1,
+          "watch": 34
         },
         "unavailable_count": 0
       },
@@ -2413,7 +2413,7 @@
             "quality_status": "low_confidence",
             "source_authority": "official_primary",
             "derivation": "observed",
-            "validation": "passed",
+            "validation": "watch",
             "comparability": "high",
             "source_name": "",
             "series": "0003114496/19/11/11/11/00000",
@@ -4508,7 +4508,7 @@
       "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
       "headline_label": "Fed funds",
-      "headline": "3.88% (2026-10-27)",
+      "headline": "3.88% (2026-10-28)",
       "secondary_label": "Source groups",
       "secondary": "27",
       "quality": "27 source groups · 0 low-confidence charts",
@@ -4538,7 +4538,7 @@
           "label": "Fed funds",
           "value": 3.88,
           "display": "3.88 %",
-          "date": "2026-10-27",
+          "date": "2026-10-28",
           "source": "FRED / Federal Reserve",
           "quality_status": "verified"
         },
@@ -4701,7 +4701,8 @@
         "as_of_date": "2026-10-29",
         "counts": {
           "current": 151,
-          "due": 17
+          "due": 16,
+          "scheduled_policy": 1
         },
         "latest_historical_date": "2026-10-29",
         "attention": [
@@ -5056,28 +5057,6 @@
             "source_name": "FRED / Treasury International Capital",
             "series": "FORTREASPOS42609",
             "transform": "level"
-          },
-          {
-            "id": "trimmed_mean_pce",
-            "concept_id": "us:trimmed_mean_pce",
-            "label_en": "Trimmed Mean PCE Inflation",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "due",
-            "age_basis_date": "2026-08-01",
-            "age_days": 59,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "FRED / Dallas Fed",
-            "series": "PCETRIM12M159SFRBDAL",
-            "transform": "level"
           }
         ]
       },
@@ -5089,9 +5068,9 @@
         ],
         "file": "us_canonical_frame.json",
         "series": 168,
-        "observations": 118229,
+        "observations": 118245,
         "series_count": 168,
-        "observation_count": 118229
+        "observation_count": 118245
       },
       "freshness_summary": {
         "dashboard": "United States",
@@ -5100,13 +5079,13 @@
         "stale": 4,
         "lagged_source": 0,
         "projection": 0,
-        "scheduled_policy": 0,
+        "scheduled_policy": 1,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 0,
         "latest_historical_date": "2026-10-29",
-        "headline_latest": "3.88% (2026-10-27)"
+        "headline_latest": "3.88% (2026-10-28)"
       }
     },
     {
@@ -6864,11 +6843,11 @@
         "property": {
           "id": "mortgage_loans_growth",
           "label": "Mortgage growth",
-          "value": 4.58,
-          "display": "4.58 % y/y",
-          "date": "2026-08-01",
+          "value": 5.02,
+          "display": "5.02 % y/y",
+          "date": "2026-09-01",
           "source": "Central Bank of the Republic of China (Taiwan)",
-          "quality_status": "watch"
+          "quality_status": "verified"
         }
       },
       "source_health": {
@@ -6913,16 +6892,16 @@
         ],
         "quality_counts": {
           "low_confidence": 1,
-          "verified": 28,
-          "watch": 19
+          "verified": 31,
+          "watch": 16
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-29",
         "counts": {
-          "current": 33,
-          "due": 10,
+          "current": 36,
+          "due": 7,
           "projection": 4,
           "stale": 1
         },
@@ -7017,28 +6996,6 @@
             "transform": "level"
           },
           {
-            "id": "construction_loans_growth",
-            "concept_id": "tw:construction_loans_growth",
-            "label_en": "Construction Loans YoY Growth",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "due",
-            "age_basis_date": "2026-08-01",
-            "age_days": 59,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Central Bank of the Republic of China (Taiwan)",
-            "series": "",
-            "transform": "level"
-          },
-          {
             "id": "customs_exports_yoy",
             "concept_id": "tw:customs_exports_yoy",
             "label_en": "Monthly Customs Merchandise Exports YoY (NTD Basis)",
@@ -7105,50 +7062,6 @@
             "transform": "level"
           },
           {
-            "id": "mortgage_loans_growth",
-            "concept_id": "private_credit_growth",
-            "label_en": "House-Purchasing Loans (Mortgages) YoY Growth",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "due",
-            "age_basis_date": "2026-08-01",
-            "age_days": 59,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Central Bank of the Republic of China (Taiwan)",
-            "series": "",
-            "transform": "level"
-          },
-          {
-            "id": "reserve_money_growth",
-            "concept_id": "tw:reserve_money_growth",
-            "label_en": "Reserve Money YoY Growth",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "due",
-            "age_basis_date": "2026-08-01",
-            "age_days": 59,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Central Bank of the Republic of China (Taiwan)",
-            "series": "",
-            "transform": "level"
-          },
-          {
             "id": "sovereign_yield_10y",
             "concept_id": "sovereign_yield_10y",
             "label_en": "10-Year Government Benchmark Bond Yield",
@@ -7180,14 +7093,14 @@
         ],
         "file": "taiwan_canonical_frame.json",
         "series": 48,
-        "observations": 13333,
+        "observations": 13336,
         "series_count": 48,
-        "observation_count": 13333
+        "observation_count": 13336
       },
       "freshness_summary": {
         "dashboard": "Taiwan",
         "charts": 48,
-        "current": 37,
+        "current": 40,
         "stale": 1,
         "lagged_source": 0,
         "projection": 0,
@@ -8922,10 +8835,10 @@
       "structural_score": 38.3,
       "composite_label": "defensive",
       "quality": {
-        "score": 53.3,
+        "score": 56.3,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 52.4,
+        "freshness_score": 61.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 10.0
       },
@@ -9013,10 +8926,10 @@
       "structural_score": 45.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 60.0,
+        "score": 64.5,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 50.0,
+        "freshness_score": 63.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -9104,10 +9017,10 @@
       "structural_score": 58.3,
       "composite_label": "mixed",
       "quality": {
-        "score": 50.3,
+        "score": 53.4,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 51.0,
+        "freshness_score": 59.6,
         "proxy_penalty": 0.0,
         "gap_penalty": 12.5
       },
@@ -9195,10 +9108,10 @@
       "structural_score": 46.7,
       "composite_label": "defensive",
       "quality": {
-        "score": 50.0,
+        "score": 54.4,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 50.0,
+        "freshness_score": 62.5,
         "proxy_penalty": 0.0,
         "gap_penalty": 12.5
       },
@@ -10087,10 +10000,10 @@
       "structural_score": 71.7,
       "composite_label": "constructive",
       "quality": {
-        "score": 87.5,
+        "score": 89.7,
         "label": "high-confidence dashboard",
         "coverage_score": 100.0,
-        "freshness_score": 77.1,
+        "freshness_score": 83.3,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -10147,8 +10060,8 @@
           "label": "healthy property expansion",
           "score": 65.0,
           "confidence_weight": 1.0,
-          "value": 4.58,
-          "display": "4.58 % y/y",
+          "value": 5.02,
+          "display": "5.02 % y/y",
           "source_signal": "mortgage_loans_growth"
         }
       },
@@ -11254,8 +11167,8 @@
     "sovereign_spreads_to_us": {
       "US": {
         "benchmark": "10Y Treasury",
-        "date": "2026-10-27",
-        "yield": 4.99,
+        "date": "2026-10-28",
+        "yield": 5.05,
         "spread_bps": 0.0,
         "status": "observed"
       },
@@ -11263,21 +11176,21 @@
         "benchmark": "10Y Bund",
         "date": "2026-09-01",
         "yield": 3.47,
-        "spread_bps": -152.0,
+        "spread_bps": -158.0,
         "status": "observed"
       },
       "UK": {
         "benchmark": "10Y Gilt",
         "date": "2026-10-27",
         "yield": 5.3,
-        "spread_bps": 31.0,
+        "spread_bps": 25.0,
         "status": "observed"
       },
       "JP": {
         "benchmark": "10Y JGB",
         "date": "2026-09-01",
         "yield": 3.05,
-        "spread_bps": -194.0,
+        "spread_bps": -200.0,
         "status": "observed"
       },
       "CN": {
@@ -11291,7 +11204,7 @@
         "benchmark": "10Y Sovereign",
         "date": "2026-10-28",
         "yield": 8.04,
-        "spread_bps": 305.0,
+        "spread_bps": 299.0,
         "status": "observed"
       },
       "TR": {
@@ -11312,14 +11225,14 @@
         "benchmark": "10Y KTB",
         "date": "2026-09-01",
         "yield": 4.45,
-        "spread_bps": -54.0,
+        "spread_bps": -60.0,
         "status": "observed"
       },
       "TW": {
         "benchmark": "10Y Gov Bond",
         "date": "2026-08-01",
         "yield": 1.97,
-        "spread_bps": -302.0,
+        "spread_bps": -308.0,
         "status": "observed"
       },
       "KZ": {
@@ -11354,28 +11267,28 @@
         "benchmark": "PL 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 6.23,
-        "spread_bps": 124.0,
+        "spread_bps": 118.0,
         "status": "observed"
       },
       "CZ": {
         "benchmark": "CZ 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 5.24,
-        "spread_bps": 25.0,
+        "spread_bps": 19.0,
         "status": "observed"
       },
       "HU": {
         "benchmark": "HU 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 5.68,
-        "spread_bps": 69.0,
+        "spread_bps": 63.0,
         "status": "observed"
       },
       "RO": {
         "benchmark": "RO 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 6.71,
-        "spread_bps": 172.0,
+        "spread_bps": 166.0,
         "status": "observed"
       }
     },
@@ -11965,41 +11878,41 @@
       "code": "HU",
       "name": "Hungary",
       "coverage_pct": 100.0,
-      "freshness_pct": 52.4,
+      "freshness_pct": 61.0,
       "proxy_fills": 0,
       "gaps": 4,
       "regime_score": 48.5,
-      "quality_score": 53.3
+      "quality_score": 56.3
     },
     {
       "code": "PL",
       "name": "Poland",
       "coverage_pct": 100.0,
-      "freshness_pct": 50.0,
+      "freshness_pct": 63.0,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 53.1,
-      "quality_score": 60.0
+      "quality_score": 64.5
     },
     {
       "code": "CZ",
       "name": "Czechia",
       "coverage_pct": 100.0,
-      "freshness_pct": 51.0,
+      "freshness_pct": 59.6,
       "proxy_fills": 0,
       "gaps": 5,
       "regime_score": 61.7,
-      "quality_score": 50.3
+      "quality_score": 53.4
     },
     {
       "code": "RO",
       "name": "Romania",
       "coverage_pct": 100.0,
-      "freshness_pct": 50.0,
+      "freshness_pct": 62.5,
       "proxy_fills": 0,
       "gaps": 5,
       "regime_score": 38.3,
-      "quality_score": 50.0
+      "quality_score": 54.4
     },
     {
       "code": "CN",
@@ -12095,11 +12008,11 @@
       "code": "TW",
       "name": "Taiwan",
       "coverage_pct": 100.0,
-      "freshness_pct": 77.1,
+      "freshness_pct": 83.3,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 73.3,
-      "quality_score": 87.5
+      "quality_score": 89.7
     },
     {
       "code": "KZ",
@@ -12157,45 +12070,6 @@
       "note": "NBK monetary policy-related rate reported in IMF International Financial Statistics."
     },
     {
-      "code": "CZ",
-      "dashboard": "Czechia",
-      "indicator_id": "wgi_control_of_corruption",
-      "label": "WGI Control of Corruption",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1033,
-      "severity": "high",
-      "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 1033 days old for annual data."
-    },
-    {
-      "code": "CZ",
-      "dashboard": "Czechia",
-      "indicator_id": "wgi_government_effectiveness",
-      "label": "WGI Government Effectiveness",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1033,
-      "severity": "high",
-      "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 1033 days old for annual data."
-    },
-    {
-      "code": "CZ",
-      "dashboard": "Czechia",
-      "indicator_id": "wgi_rule_of_law",
-      "label": "WGI Rule of Law",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1033,
-      "severity": "high",
-      "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 1033 days old for annual data."
-    },
-    {
       "code": "HK",
       "dashboard": "Hong Kong",
       "indicator_id": "total_reserves_usd",
@@ -12209,45 +12083,6 @@
       "note": "Total official foreign currency reserve assets in billions of USD."
     },
     {
-      "code": "HU",
-      "dashboard": "Hungary",
-      "indicator_id": "wgi_control_of_corruption",
-      "label": "WGI Control of Corruption",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1033,
-      "severity": "high",
-      "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 1033 days old for annual data."
-    },
-    {
-      "code": "HU",
-      "dashboard": "Hungary",
-      "indicator_id": "wgi_government_effectiveness",
-      "label": "WGI Government Effectiveness",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1033,
-      "severity": "high",
-      "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 1033 days old for annual data."
-    },
-    {
-      "code": "HU",
-      "dashboard": "Hungary",
-      "indicator_id": "wgi_rule_of_law",
-      "label": "WGI Rule of Law",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1033,
-      "severity": "high",
-      "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 1033 days old for annual data."
-    },
-    {
       "code": "NG",
       "dashboard": "Nigeria",
       "indicator_id": "private_credit_gdp",
@@ -12259,84 +12094,6 @@
       "severity": "high",
       "source": "World Bank WDI",
       "note": "Domestic credit to private sector refers to financial resources provided to the private sector."
-    },
-    {
-      "code": "PL",
-      "dashboard": "Poland",
-      "indicator_id": "wgi_control_of_corruption",
-      "label": "WGI Control of Corruption",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1033,
-      "severity": "high",
-      "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 1033 days old for annual data."
-    },
-    {
-      "code": "PL",
-      "dashboard": "Poland",
-      "indicator_id": "wgi_government_effectiveness",
-      "label": "WGI Government Effectiveness",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1033,
-      "severity": "high",
-      "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 1033 days old for annual data."
-    },
-    {
-      "code": "PL",
-      "dashboard": "Poland",
-      "indicator_id": "wgi_rule_of_law",
-      "label": "WGI Rule of Law",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1033,
-      "severity": "high",
-      "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 1033 days old for annual data."
-    },
-    {
-      "code": "RO",
-      "dashboard": "Romania",
-      "indicator_id": "wgi_control_of_corruption",
-      "label": "WGI Control of Corruption",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1033,
-      "severity": "high",
-      "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 1033 days old for annual data."
-    },
-    {
-      "code": "RO",
-      "dashboard": "Romania",
-      "indicator_id": "wgi_government_effectiveness",
-      "label": "WGI Government Effectiveness",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1033,
-      "severity": "high",
-      "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 1033 days old for annual data."
-    },
-    {
-      "code": "RO",
-      "dashboard": "Romania",
-      "indicator_id": "wgi_rule_of_law",
-      "label": "WGI Rule of Law",
-      "latest": "2023-12-31",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1033,
-      "severity": "high",
-      "source": "World Bank Sovereign ESG Data Portal / WGI",
-      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 1033 days old for annual data."
     },
     {
       "code": "HU",
@@ -12426,7 +12183,7 @@
       "status": "stale",
       "age_days": 697,
       "severity": "high",
-      "source": "unknown",
+      "source": "",
       "note": ""
     },
     {
@@ -12467,19 +12224,6 @@
       "severity": "high",
       "source": "Eurostat",
       "note": "Eurostat total energy import dependency; annual and affected by stock changes, domestic production, and methodology revisions. Source validation passed."
-    },
-    {
-      "code": "CZ",
-      "dashboard": "Czechia",
-      "indicator_id": "fx_reserves",
-      "label": "FX Reserves",
-      "latest": "2024-12-31",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 667,
-      "severity": "high",
-      "source": "World Bank",
-      "note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD. Source validation: Latest observation is 667 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence."
     },
     {
       "code": "CZ",
@@ -12545,19 +12289,6 @@
       "severity": "high",
       "source": "Eurostat",
       "note": "Eurostat total energy import dependency; annual and affected by stock changes, domestic production, and methodology revisions. Source validation passed."
-    },
-    {
-      "code": "HU",
-      "dashboard": "Hungary",
-      "indicator_id": "fx_reserves",
-      "label": "FX Reserves",
-      "latest": "2024-12-31",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 667,
-      "severity": "high",
-      "source": "World Bank",
-      "note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD. Source validation: Latest observation is 667 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence."
     },
     {
       "code": "HU",
@@ -12679,19 +12410,6 @@
     {
       "code": "RO",
       "dashboard": "Romania",
-      "indicator_id": "credit_to_gdp_gap",
-      "label": "Credit-to-GDP Gap",
-      "latest": "2024-12-31",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 667,
-      "severity": "high",
-      "source": "World Bank WDI fallback",
-      "note": "BIS private non-financial credit gap preferred; World Bank annual credit/GDP trailing-trend fallback used only where BIS coverage is unavailable. Used only when BIS credit-gap data is unavailable; annual and not methodologically identical to BIS HP-filter gap. Source validation: Latest observation is 667 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence. Methodology fallback: World Bank annual credit/GDP minus trailing average, not BIS HP-filter credit gap."
-    },
-    {
-      "code": "RO",
-      "dashboard": "Romania",
       "indicator_id": "energy_import_dependency",
       "label": "Energy Import Dependency",
       "latest": "2024-12-31",
@@ -12701,32 +12419,6 @@
       "severity": "high",
       "source": "Eurostat",
       "note": "Eurostat total energy import dependency; annual and affected by stock changes, domestic production, and methodology revisions. Source validation passed."
-    },
-    {
-      "code": "RO",
-      "dashboard": "Romania",
-      "indicator_id": "fx_reserves",
-      "label": "FX Reserves",
-      "latest": "2024-12-31",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 667,
-      "severity": "high",
-      "source": "World Bank",
-      "note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD. Source validation: Latest observation is 667 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence."
-    },
-    {
-      "code": "RO",
-      "dashboard": "Romania",
-      "indicator_id": "import_prices_yoy",
-      "label": "Import Price Index, YoY",
-      "latest": "2024-12-31",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 667,
-      "severity": "high",
-      "source": "INSSE TEMPO",
-      "note": "Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Romania substitute uses annual import unit-value indices, not a monthly transaction import-price index; use as a broad external-price signal. Source validation passed."
     },
     {
       "code": "RO",
@@ -13182,6 +12874,227 @@
       "severity": "high",
       "source": "FRED / OECD",
       "note": "OECD consumer price index growth rate series mirrored on FRED."
+    },
+    {
+      "code": "CN",
+      "dashboard": "China",
+      "indicator_id": "large_bank_rrr_akshare",
+      "label": "Large Bank RRR",
+      "latest": "2025-05-15",
+      "frequency": "irregular",
+      "status": "stale",
+      "age_days": 532,
+      "severity": "high",
+      "source": "AKShare / PBC RRR Announcements",
+      "note": "Event-based required reserve ratio history via AKShare; effective dates and institution buckets should be cross-checked against PBC announcements."
+    },
+    {
+      "code": "CN",
+      "dashboard": "China",
+      "indicator_id": "small_bank_rrr_akshare",
+      "label": "Small/Mid Bank RRR",
+      "latest": "2025-05-15",
+      "frequency": "irregular",
+      "status": "stale",
+      "age_days": 532,
+      "severity": "high",
+      "source": "AKShare / PBC RRR Announcements",
+      "note": "Event-based required reserve ratio history via AKShare; smaller-bank categories have changed over time, so use the series as a policy-easing marker."
+    },
+    {
+      "code": "EG",
+      "dashboard": "Egypt",
+      "indicator_id": "deposit_rate",
+      "label": "Commercial Bank Deposit Rate",
+      "latest": "2025-05-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 516,
+      "severity": "high",
+      "source": "IMF / DBnomics (IFS)",
+      "note": "Commercial bank deposit rate on local currency time deposits."
+    },
+    {
+      "code": "EG",
+      "dashboard": "Egypt",
+      "indicator_id": "lending_rate",
+      "label": "Commercial Bank Lending Rate",
+      "latest": "2025-05-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 516,
+      "severity": "high",
+      "source": "IMF / DBnomics (IFS)",
+      "note": "Commercial bank weighted average lending rate on local currency loans."
+    },
+    {
+      "code": "EG",
+      "dashboard": "Egypt",
+      "indicator_id": "policy_rate",
+      "label": "Central Bank Corridor / Policy Rate",
+      "latest": "2025-05-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 516,
+      "severity": "high",
+      "source": "IMF / DBnomics (IFS)",
+      "note": "Central Bank of Egypt monetary policy rate reported in IFS."
+    },
+    {
+      "code": "EG",
+      "dashboard": "Egypt",
+      "indicator_id": "usd_egp",
+      "label": "USD/EGP End-of-Period Official Rate",
+      "latest": "2025-05-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 516,
+      "severity": "high",
+      "source": "IMF / DBnomics (IFS)",
+      "note": "Monthly end-of-period national currency units per US dollar."
+    },
+    {
+      "code": "NG",
+      "dashboard": "Nigeria",
+      "indicator_id": "fx_reserves",
+      "label": "Official Reserve Assets (USD Millions)",
+      "latest": "2025-06-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 486,
+      "severity": "high",
+      "source": "IMF / DBnomics (IFS)",
+      "note": "Official reserve assets in US dollars reported in IMF IFS."
+    },
+    {
+      "code": "NG",
+      "dashboard": "Nigeria",
+      "indicator_id": "usd_ngn_ifs",
+      "label": "USD/NGN End-of-Period (IMF IFS Cross-Check)",
+      "latest": "2025-06-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 486,
+      "severity": "high",
+      "source": "IMF / DBnomics (IFS)",
+      "note": "Monthly end-of-period national currency units per US dollar."
+    },
+    {
+      "code": "ZA",
+      "dashboard": "South Africa",
+      "indicator_id": "bank_capital_ratio",
+      "label": "Regulatory Capital to Risk-Weighted Assets",
+      "latest": "2025-04-01",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 486,
+      "severity": "high",
+      "source": "IMF SDMX / Financial Soundness Indicators",
+      "note": "Deposit-taker aggregate reported to the IMF; national regulatory definitions differ, so cross-country levels are indicative rather than exact."
+    },
+    {
+      "code": "ZA",
+      "dashboard": "South Africa",
+      "indicator_id": "bank_npl_ratio",
+      "label": "Non-Performing Loans to Total Gross Loans",
+      "latest": "2025-04-01",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 486,
+      "severity": "high",
+      "source": "IMF SDMX / Financial Soundness Indicators",
+      "note": "Deposit-taker aggregate. The post-2020 rise reflects the interaction of high prime lending rates with stagnant household income."
+    },
+    {
+      "code": "KR",
+      "dashboard": "South Korea",
+      "indicator_id": "government_consumption",
+      "label": "Government Final Consumption YoY",
+      "latest": "2025-04-01",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 486,
+      "severity": "high",
+      "source": "FRED / OECD",
+      "note": "Real general government final consumption expenditure year-on-year change."
+    },
+    {
+      "code": "UZ",
+      "dashboard": "Uzbekistan",
+      "indicator_id": "bank_capital_ratio",
+      "label": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
+      "latest": "2025-06-30",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 486,
+      "severity": "high",
+      "source": "IMF / DBnomics (FSI)",
+      "note": "Regulatory capital to risk-weighted assets for deposit-takers in Uzbekistan."
+    },
+    {
+      "code": "UZ",
+      "dashboard": "Uzbekistan",
+      "indicator_id": "bank_npl_ratio",
+      "label": "Bank Non-Performing Loans Ratio (NPL)",
+      "latest": "2025-06-30",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 486,
+      "severity": "high",
+      "source": "IMF / DBnomics (FSI)",
+      "note": "Non-performing loans to total gross loans reported to the IMF."
+    },
+    {
+      "code": "KZ",
+      "dashboard": "Kazakhstan",
+      "indicator_id": "usd_kzt_ifs",
+      "label": "USD/KZT End-of-Period (IMF IFS)",
+      "latest": "2025-07-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 455,
+      "severity": "high",
+      "source": "IMF / DBnomics (IFS)",
+      "note": "Monthly end-of-period national currency units per US dollar."
+    },
+    {
+      "code": "UZ",
+      "dashboard": "Uzbekistan",
+      "indicator_id": "usd_uzs",
+      "label": "USD/UZS End-of-Period Official Rate",
+      "latest": "2025-07-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 455,
+      "severity": "high",
+      "source": "IMF / DBnomics (IFS)",
+      "note": "Monthly end-of-period national currency units per US dollar."
+    },
+    {
+      "code": "EA",
+      "dashboard": "Euro Area",
+      "indicator_id": "current_account_gdp",
+      "label": "Current Account Balance",
+      "latest": "2025-07-01",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 394,
+      "severity": "high",
+      "source": "Eurostat",
+      "note": "Current account balance as percentage of GDP; seasonally and calendar adjusted (BPM6)."
+    },
+    {
+      "code": "EA",
+      "dashboard": "Euro Area",
+      "indicator_id": "negotiated_wages_yoy",
+      "label": "ECB Negotiated Wages Growth, YoY",
+      "latest": "2025-07-01",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 394,
+      "severity": "high",
+      "source": "ECB",
+      "note": "ECB indicator of negotiated wage rates annual growth in the euro area (I9)."
     }
   ],
   "gap_backlog": [

@@ -1,6 +1,6 @@
 {
   "file": "taiwan.html",
-  "generated": "2026-10-29T17:00:37.817594+00:00",
+  "generated": "2026-10-29T21:27:04.365912+00:00",
   "charts": 48,
   "source_groups": 9,
   "data_gaps": 1,
@@ -250,13 +250,13 @@
       "id": "reserve_money_growth",
       "label_en": "Reserve Money YoY Growth",
       "label_zh": "准备货币年增率",
-      "latest_date": "2026-08-01",
-      "latest_value": 7.03,
-      "latest_display": "7.03 % y/y",
+      "latest_date": "2026-09-01",
+      "latest_value": 8.03,
+      "latest_display": "8.03 % y/y",
       "frequency": "monthly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
-      "quality_status": "watch"
+      "quality_status": "verified"
     },
     {
       "id": "taiex_index",
@@ -298,25 +298,25 @@
       "id": "mortgage_loans_growth",
       "label_en": "House-Purchasing Loans (Mortgages) YoY Growth",
       "label_zh": "购屋贷款(房贷)余额年增率",
-      "latest_date": "2026-08-01",
-      "latest_value": 4.58,
-      "latest_display": "4.58 % y/y",
+      "latest_date": "2026-09-01",
+      "latest_value": 5.02,
+      "latest_display": "5.02 % y/y",
       "frequency": "monthly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
-      "quality_status": "watch"
+      "quality_status": "verified"
     },
     {
       "id": "construction_loans_growth",
       "label_en": "Construction Loans YoY Growth",
       "label_zh": "建筑贷款余额年增率",
-      "latest_date": "2026-08-01",
-      "latest_value": -0.59,
-      "latest_display": "-0.59 % y/y",
+      "latest_date": "2026-09-01",
+      "latest_value": -0.99,
+      "latest_display": "-0.99 % y/y",
       "frequency": "monthly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
-      "quality_status": "watch"
+      "quality_status": "verified"
     },
     {
       "id": "bank_npl_ratio",
@@ -633,9 +633,9 @@
     ],
     "file": "taiwan_canonical_frame.json",
     "series": 48,
-    "observations": 13333,
+    "observations": 13336,
     "series_count": 48,
-    "observation_count": 13333
+    "observation_count": 13336
   },
   "data_gaps_detail": [
     {
@@ -688,8 +688,8 @@
     ],
     "quality_counts": {
       "low_confidence": 1,
-      "verified": 28,
-      "watch": 19
+      "verified": 31,
+      "watch": 16
     },
     "unavailable_count": 0
   },
@@ -702,8 +702,8 @@
   "freshness": {
     "as_of_date": "2026-10-29",
     "counts": {
-      "current": 33,
-      "due": 10,
+      "current": 36,
+      "due": 7,
       "projection": 4,
       "stale": 1
     },
@@ -798,28 +798,6 @@
         "transform": "level"
       },
       {
-        "id": "construction_loans_growth",
-        "concept_id": "tw:construction_loans_growth",
-        "label_en": "Construction Loans YoY Growth",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-08-01",
-        "age_days": 59,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Central Bank of the Republic of China (Taiwan)",
-        "series": "",
-        "transform": "level"
-      },
-      {
         "id": "customs_exports_yoy",
         "concept_id": "tw:customs_exports_yoy",
         "label_en": "Monthly Customs Merchandise Exports YoY (NTD Basis)",
@@ -882,50 +860,6 @@
         "validation": "passed",
         "comparability": "high",
         "source_name": "Taiwan Ministry of Finance (Customs Administration)",
-        "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "mortgage_loans_growth",
-        "concept_id": "private_credit_growth",
-        "label_en": "House-Purchasing Loans (Mortgages) YoY Growth",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-08-01",
-        "age_days": 59,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Central Bank of the Republic of China (Taiwan)",
-        "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "reserve_money_growth",
-        "concept_id": "tw:reserve_money_growth",
-        "label_en": "Reserve Money YoY Growth",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-08-01",
-        "age_days": 59,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Central Bank of the Republic of China (Taiwan)",
         "series": "",
         "transform": "level"
       },
