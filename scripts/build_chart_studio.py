@@ -1,0 +1,1192 @@
+#!/usr/bin/env python3
+"""Build the Macro Chart Studio page and indicator catalog.
+
+Outputs:
+  output/chart_studio_catalog.json
+  output/chart_studio.html
+  chart_studio.html
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+import shutil
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+OUTPUT = ROOT / "output"
+
+COUNTRY_MAP = {
+    "US": ("United States", "美国", "us_canonical_frame.json", "🇺🇸"),
+    "CN": ("China", "中国", "china_canonical_frame.json", "🇨🇳"),
+    "EA": ("Euro Area", "欧元区", "euro_area_canonical_frame.json", "🇪🇺"),
+    "UK": ("United Kingdom", "英国", "uk_canonical_frame.json", "🇬🇧"),
+    "JP": ("Japan", "日本", "japan_canonical_frame.json", "🇯🇵"),
+    "ZA": ("South Africa", "南非", "south_africa_canonical_frame.json", "🇿🇦"),
+    "TR": ("Turkey", "土耳其", "turkey_canonical_frame.json", "🇹🇷"),
+    "HK": ("Hong Kong", "中国香港", "hong_kong_canonical_frame.json", "🇭🇰"),
+    "KR": ("South Korea", "韩国", "south_korea_canonical_frame.json", "🇰🇷"),
+    "TW": ("Taiwan", "中国台湾", "taiwan_canonical_frame.json", "🇹🇼"),
+    "KZ": ("Kazakhstan", "哈萨克斯坦", "kazakhstan_canonical_frame.json", "🇰🇿"),
+    "UZ": ("Uzbekistan", "乌兹别克斯坦", "uzbekistan_canonical_frame.json", "🇺🇿"),
+    "EG": ("Egypt", "埃及", "egypt_canonical_frame.json", "🇪🇬"),
+    "NG": ("Nigeria", "尼日利亚", "nigeria_canonical_frame.json", "🇳🇬"),
+    "HU": ("Hungary", "匈牙利", "cee_canonical_frame.json", "🇭🇺"),
+    "PL": ("Poland", "波兰", "cee_canonical_frame.json", "🇵🇱"),
+    "CZ": ("Czechia", "捷克", "cee_canonical_frame.json", "🇨🇿"),
+    "RO": ("Romania", "罗马尼亚", "cee_canonical_frame.json", "🇷🇴"),
+}
+
+PRESETS = [
+    {
+        "id": "us_cn_10y_spread",
+        "title_en": "US vs China 10Y Sovereign Yield & Spread",
+        "title_zh": "中美 10 年期国债收益率与利差对比",
+        "description_zh": "全球两大经济体基准无风险利率与跨境利差走势对比。",
+        "description_en": "Benchmark 10Y sovereign yields for US and China with capital flow spread dynamics.",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "US", "id": "sovereign_yield_10y", "axis": "left", "color": "#2563eb", "label": "US 10Y Treasury"},
+            {"country": "CN", "id": "gov_bond_yield_10y_akshare", "axis": "left", "color": "#dc2626", "label": "China 10Y Gov Bond"}
+        ]
+    },
+    {
+        "id": "central_bank_rates",
+        "title_en": "Major Central Bank Policy Rates (Fed, ECB, BOJ, BOE)",
+        "title_zh": "主要央行基准政策利率走廊对比 (美联储/欧央行/日银/英格兰银行)",
+        "description_zh": "全球核心央行货币政策周期、加息与降息节奏同屏对比。",
+        "description_en": "Global major central bank benchmark policy rates and monetary easing cycles.",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "US", "id": "policy_rate", "axis": "left", "color": "#1d4ed8", "label": "Fed Funds Target Rate"},
+            {"country": "EA", "id": "deposit_facility_rate", "axis": "left", "color": "#059669", "label": "ECB Deposit Facility Rate"},
+            {"country": "UK", "id": "policy_rate", "axis": "left", "color": "#7c3aed", "label": "BOE Official Bank Rate"},
+            {"country": "JP", "id": "overnight_call_rate", "axis": "left", "color": "#e11d48", "label": "BOJ Uncollateralized Overnight Rate"}
+        ]
+    },
+    {
+        "id": "kr_tw_tech_momentum",
+        "title_en": "Korea KOSPI vs Taiwan TAIEX Equity Momentum (Rebased = 100)",
+        "title_zh": "韩国 KOSPI vs 台湾 TAIEX 科技股指走势 (基期归一化 = 100)",
+        "description_zh": "东亚半导体与科技出口双雄核心股指累计收益率走势归一化对比。",
+        "description_en": "Normalized equity return comparison for East Asian semiconductor powerhouses.",
+        "transform": "rebase",
+        "date_range": "3y",
+        "series": [
+            {"country": "KR", "id": "kospi_stock_index", "axis": "left", "color": "#0284c7", "label": "Korea KOSPI Composite"},
+            {"country": "TW", "id": "taiex_index", "axis": "left", "color": "#b91c1c", "label": "Taiwan TAIEX Index"}
+        ]
+    },
+    {
+        "id": "em_inflation_defense",
+        "title_en": "EM Inflation Defense: Turkey vs Egypt vs Nigeria Policy Rates",
+        "title_zh": "新兴市场利率防线：土耳其 vs 埃及 vs 尼日利亚 政策利率",
+        "description_zh": "高通胀大宗商品与汇率承压新兴市场央行政策基准利率对比。",
+        "description_en": "Central bank policy rate defense across high-inflation emerging markets.",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "TR", "id": "policy_rate", "axis": "left", "color": "#dc2626", "label": "Turkey One-Week Repo Rate"},
+            {"country": "EG", "id": "policy_rate", "axis": "left", "color": "#d97706", "label": "Egypt CBE Corridor Lending Rate"},
+            {"country": "NG", "id": "policy_rate", "axis": "left", "color": "#16a34a", "label": "Nigeria Monetary Policy Rate"}
+        ]
+    },
+    {
+        "id": "oil_producers_brent",
+        "title_en": "Kazakhstan & Nigeria Crude Oil Production vs Brent Benchmark",
+        "title_zh": "哈萨克斯坦与尼日利亚原油月产 (左轴) vs 布伦特油价 (右轴)",
+        "description_zh": "主要产油国原油日产量（千桶/日）与国际原油基准现货价格双轴联动对比。",
+        "description_en": "Crude oil output in major producers (kb/d) paired with international Brent crude benchmark (USD/bbl).",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "KZ", "id": "crude_oil_production", "axis": "left", "color": "#0284c7", "label": "Kazakhstan Crude Output (kb/d)"},
+            {"country": "NG", "id": "crude_oil_production", "axis": "left", "color": "#059669", "label": "Nigeria Crude Output (kb/d)"},
+            {"country": "US", "id": "brent_crude_oil", "axis": "right", "color": "#b91c1c", "label": "Brent Crude Spot Price (USD/bbl)"}
+        ]
+    }
+]
+
+
+def extract_catalog() -> dict:
+    countries = []
+    for code, (name_en, name_zh, cfile, flag) in COUNTRY_MAP.items():
+        p = OUTPUT / cfile
+        if not p.exists():
+            continue
+        try:
+            d = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        series_list = d.get("series", [])
+        c_indicators = []
+        for s in series_list:
+            if cfile == "cee_canonical_frame.json":
+                if s.get("country") != code:
+                    continue
+                meta = s.get("metadata") or {}
+                obs = s.get("observations") or []
+                ind_id = s.get("indicator_id")
+                label_en = meta.get("label_en") or ind_id
+                label_zh = meta.get("label_zh") or label_en
+                unit = meta.get("unit") or ""
+                section = meta.get("section") or "general"
+                freq = meta.get("frequency") or "monthly"
+            else:
+                obs = s.get("observations") or []
+                ind_id = s.get("indicator_id")
+                label_en = s.get("label_en") or ind_id
+                label_zh = s.get("label_zh") or label_en
+                unit = s.get("unit") or ""
+                section = s.get("section") or "general"
+                freq = s.get("frequency") or "monthly"
+
+            latest_date = obs[-1][0] if obs else ""
+            latest_val = obs[-1][1] if obs else None
+            c_indicators.append({
+                "id": ind_id,
+                "label_en": label_en,
+                "label_zh": label_zh,
+                "unit": unit,
+                "section": section,
+                "frequency": freq,
+                "obs_count": len(obs),
+                "latest_date": str(latest_date),
+                "latest_val": latest_val,
+            })
+        countries.append({
+            "code": code,
+            "name_en": name_en,
+            "name_zh": name_zh,
+            "flag": flag,
+            "canonical_file": cfile,
+            "indicator_count": len(c_indicators),
+            "indicators": c_indicators,
+        })
+
+    return {
+        "generated": "2026-10-29",
+        "total_countries": len(countries),
+        "total_indicators": sum(c["indicator_count"] for c in countries),
+        "countries": countries,
+        "presets": PRESETS,
+    }
+
+
+def render_html() -> str:
+    return """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Macro Chart Studio · 宏观多指标对比工坊</title>
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-subtle: #f1f5f9;
+      --border: #e2e8f0;
+      --border-focus: #3b82f6;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #dc2626;
+      --radius: 8px;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 0 0 60px 0;
+    }
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-left { display: flex; align-items: center; gap: 14px; }
+    .brand-title { font-size: 1.25rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
+    .brand-badge { font-size: 0.75rem; background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 2px 8px; border-radius: 9999px; font-weight: 600; }
+    .header-nav { display: flex; align-items: center; gap: 12px; }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .nav-btn:hover { color: var(--text); background: #e2e8f0; }
+    .main-container { max-width: 1440px; margin: 24px auto; padding: 0 24px; display: grid; gap: 24px; }
+
+    /* Presets Carousel Bar */
+    .presets-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .panel-header { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .presets-list { display: flex; flex-wrap: wrap; gap: 10px; }
+    .preset-chip {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .preset-chip:hover {
+      background: #e0e7ff;
+      border-color: #a5b4fc;
+      color: #3730a3;
+      transform: translateY(-1px);
+    }
+
+    /* Studio Workspace Grid */
+    .studio-workspace {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 1024px) {
+      .studio-workspace { grid-template-columns: 1fr; }
+    }
+
+    /* Left Control Sidebar */
+    .controls-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .series-list { display: flex; flex-direction: column; gap: 14px; }
+    .series-card {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      position: relative;
+      transition: border-color 0.15s ease;
+    }
+    .series-card:hover { border-color: #cbd5e1; }
+    .series-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .series-badge-group { display: flex; align-items: center; gap: 8px; }
+    .series-indicator-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    .series-title { font-size: 0.875rem; font-weight: 600; color: var(--text); }
+    .remove-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .remove-btn:hover { background: #fee2e2; color: #dc2626; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    .field-full { margin-bottom: 10px; }
+    label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; }
+    select, input[type="text"] {
+      width: 100%;
+      padding: 7px 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    select:focus, input:focus { border-color: var(--border-focus); }
+    .axis-selector {
+      display: inline-flex;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px;
+      width: 100%;
+    }
+    .axis-option {
+      flex: 1;
+      text-align: center;
+      padding: 5px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 4px;
+      user-select: none;
+      color: var(--text-muted);
+    }
+    .axis-option.active { background: var(--primary); color: #ffffff; }
+
+    .add-series-btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--surface-subtle);
+      border: 1px dashed #94a3b8;
+      border-radius: var(--radius);
+      color: var(--primary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .add-series-btn:hover { background: #eff6ff; border-color: var(--primary); }
+    .add-series-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Chart Canvas Panel */
+    .canvas-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .toolbar-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+    .tool-group { display: flex; align-items: center; gap: 8px; }
+    .btn-toggle-group {
+      display: inline-flex;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px;
+    }
+    .btn-toggle {
+      padding: 5px 12px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-toggle.active { background: var(--surface); color: var(--text); font-weight: 600; box-shadow: var(--shadow-sm); }
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .action-btn:hover { background: var(--surface-subtle); }
+
+    #chart-canvas {
+      width: 100%;
+      height: 560px;
+      min-height: 560px;
+    }
+
+    /* Stats Table */
+    .data-summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      margin-top: 12px;
+    }
+    .data-summary-table th, .data-summary-table td {
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-summary-table th { background: var(--surface-subtle); color: var(--text-muted); font-weight: 600; }
+
+    .loading-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255, 255, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      z-index: 10;
+      border-radius: var(--radius);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="brand-title">
+      <span>📈 Macro Chart Studio</span>
+      <span class="brand-badge">PRO MULTI-SERIES WORKBENCH</span>
+    </div>
+  </div>
+  <div class="header-nav">
+    <a href="index.html" class="nav-btn">← Back to Overview</a>
+    <button class="nav-btn" id="lang-toggle" onclick="toggleLang()">中文 / EN</button>
+  </div>
+</header>
+
+<div class="main-container">
+
+  <!-- Preset Templates Carousel -->
+  <div class="presets-panel">
+    <div class="panel-header">
+      <span data-zh="宏观经典对比预设" data-en="Curated Macro Analysis Presets">Curated Macro Analysis Presets</span>
+      <span style="font-size: 0.75rem; font-weight: normal; text-transform: none; color: var(--text-muted);" data-zh="点击一键加载常用投资研究主题" data-en="Click any preset to load multi-series configuration">Click any preset to load multi-series configuration</span>
+    </div>
+    <div class="presets-list" id="presets-container">
+      <!-- Injected via JS -->
+    </div>
+  </div>
+
+  <!-- Studio Workspace -->
+  <div class="studio-workspace">
+
+    <!-- Left Controls Panel -->
+    <div class="controls-panel">
+      <div class="panel-header">
+        <span data-zh="指标配置面板 (最多 5 条)" data-en="Series Configuration (Up to 5)">Series Configuration (Up to 5)</span>
+        <span id="series-counter" style="font-size: 0.75rem; color: var(--primary);">2/5</span>
+      </div>
+
+      <div class="series-list" id="series-list">
+        <!-- Series Cards dynamically rendered -->
+      </div>
+
+      <button type="button" class="add-series-btn" id="add-series-btn" onclick="addSeries()">
+        <span>+</span>
+        <span data-zh="添加对比指标" data-en="Add Comparison Series">Add Comparison Series</span>
+      </button>
+
+      <div style="border-top: 1px solid var(--border); padding-top: 16px;">
+        <label data-zh="图表变换 / 归一化模式" data-en="Calculation & Transformation">Calculation & Transformation</label>
+        <div class="btn-toggle-group" style="width: 100%;" id="transform-group">
+          <button type="button" class="btn-toggle active" data-transform="raw" onclick="setTransform('raw')">
+            <span data-zh="原始数值" data-en="Raw Level">Raw Level</span>
+          </button>
+          <button type="button" class="btn-toggle" data-transform="rebase" onclick="setTransform('rebase')">
+            <span data-zh="基期归一化 (100)" data-en="Rebased (100)">Rebased (100)</span>
+          </button>
+          <button type="button" class="btn-toggle" data-transform="spread" onclick="setTransform('spread')">
+            <span data-zh="利差 / 差值 (S1-S2)" data-en="Spread (S1-S2)">Spread (S1-S2)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Chart Canvas Panel -->
+    <div class="canvas-panel" style="position: relative;">
+      <div id="canvas-loading" class="loading-overlay" style="display: none;">
+        <span>Loading series data...</span>
+      </div>
+
+      <div class="toolbar-bar">
+        <div class="tool-group">
+          <label style="margin: 0;" data-zh="时间窗口:" data-en="Range:">Range:</label>
+          <div class="btn-toggle-group" id="range-group">
+            <button type="button" class="btn-toggle" data-range="1y" onclick="setDateRange('1y')">1Y</button>
+            <button type="button" class="btn-toggle" data-range="3y" onclick="setDateRange('3y')">3Y</button>
+            <button type="button" class="btn-toggle active" data-range="5y" onclick="setDateRange('5y')">5Y</button>
+            <button type="button" class="btn-toggle" data-range="10y" onclick="setDateRange('10y')">10Y</button>
+            <button type="button" class="btn-toggle" data-range="max" onclick="setDateRange('max')">Max</button>
+          </div>
+        </div>
+
+        <div class="tool-group">
+          <button type="button" class="action-btn" onclick="exportPNG()">
+            <span>📷</span>
+            <span data-zh="下载高清图表" data-en="Download PNG">Download PNG</span>
+          </button>
+          <button type="button" class="action-btn" onclick="exportCSV()">
+            <span>📥</span>
+            <span data-zh="导出 CSV" data-en="Export CSV">Export CSV</span>
+          </button>
+          <button type="button" class="action-btn" onclick="copyShareURL()">
+            <span>🔗</span>
+            <span data-zh="复制分享链接" data-en="Share Link">Share Link</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="chart-canvas"></div>
+
+      <!-- Data Details Table -->
+      <div>
+        <div class="panel-header" style="margin-top: 10px;">
+          <span data-zh="当前选定指标统计汇总" data-en="Active Series Statistics">Active Series Statistics</span>
+        </div>
+        <table class="data-summary-table" id="summary-table">
+          <thead>
+            <tr>
+              <th data-zh="图例 / 指标" data-en="Series / Label">Series / Label</th>
+              <th data-zh="国家" data-en="Country">Country</th>
+              <th data-zh="最新观测值" data-en="Latest Value">Latest Value</th>
+              <th data-zh="区间最低" data-en="Range Min">Range Min</th>
+              <th data-zh="区间最高" data-en="Range Max">Range Max</th>
+              <th data-zh="区间均值" data-en="Range Mean">Range Mean</th>
+              <th data-zh="分配 Y 轴" data-en="Y-Axis">Y-Axis</th>
+            </tr>
+          </thead>
+          <tbody id="summary-table-body">
+            <!-- Injected via JS -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// State Management
+let CATALOG = null;
+let FRAME_CACHE = {}; // country_code -> series_map
+let ACTIVE_SERIES = [];
+let CURRENT_TRANSFORM = 'raw';
+let CURRENT_RANGE = '5y';
+let CURRENT_LANG = 'en';
+
+const DEFAULT_COLORS = ["#2563eb", "#dc2626", "#059669", "#d97706", "#7c3aed"];
+
+// Initialization
+async function init() {
+  try {
+    const inOutputDir = window.location.pathname.includes('/output/');
+    const prefix = inOutputDir ? '' : 'output/';
+    let res;
+    try {
+      res = await fetch('chart_studio_catalog.json');
+      if (!res.ok) res = await fetch(prefix + 'chart_studio_catalog.json');
+    } catch (e) {
+      res = await fetch(prefix + 'chart_studio_catalog.json');
+    }
+    CATALOG = await res.json();
+    renderPresets();
+    
+    // Check URL parameters or hash
+    if (window.location.hash && window.location.hash.length > 3) {
+      loadFromHash(window.location.hash);
+    } else {
+      // Load default preset (US vs CN 10Y spread)
+      loadPreset(CATALOG.presets[0]);
+    }
+  } catch (err) {
+    console.error("Failed to load catalog:", err);
+  }
+}
+
+function renderPresets() {
+  const container = document.getElementById('presets-container');
+  container.innerHTML = '';
+  CATALOG.presets.forEach(p => {
+    const btn = document.createElement('div');
+    btn.className = 'preset-chip';
+    btn.innerHTML = `<span>★</span><span>${CURRENT_LANG === 'zh' ? p.title_zh : p.title_en}</span>`;
+    btn.onclick = () => loadPreset(p);
+    container.appendChild(btn);
+  });
+}
+
+function loadPreset(preset) {
+  ACTIVE_SERIES = [];
+  preset.series.forEach((s, idx) => {
+    ACTIVE_SERIES.push({
+      country: s.country,
+      indicatorId: s.id,
+      axis: s.axis || (idx === 0 ? 'left' : 'right'),
+      color: s.color || DEFAULT_COLORS[idx % DEFAULT_COLORS.length],
+      labelCustom: s.label || ''
+    });
+  });
+  CURRENT_TRANSFORM = preset.transform || 'raw';
+  CURRENT_RANGE = preset.date_range || '5y';
+  
+  updateTransformUI();
+  updateRangeUI();
+  renderSeriesCards();
+  refreshChart();
+}
+
+function updateTransformUI() {
+  document.querySelectorAll('#transform-group .btn-toggle').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.transform === CURRENT_TRANSFORM);
+  });
+}
+
+function updateRangeUI() {
+  document.querySelectorAll('#range-group .btn-toggle').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.range === CURRENT_RANGE);
+  });
+}
+
+function renderSeriesCards() {
+  const listEl = document.getElementById('series-list');
+  listEl.innerHTML = '';
+  
+  document.getElementById('series-counter').innerText = `${ACTIVE_SERIES.length}/5`;
+  document.getElementById('add-series-btn').disabled = (ACTIVE_SERIES.length >= 5);
+
+  ACTIVE_SERIES.forEach((item, index) => {
+    const card = document.createElement('div');
+    card.className = 'series-card';
+    card.innerHTML = `
+      <div class="series-card-top">
+        <div class="series-badge-group">
+          <span class="series-indicator-dot" style="background: ${item.color};"></span>
+          <span class="series-title">Series ${index + 1}</span>
+        </div>
+        ${ACTIVE_SERIES.length > 1 ? `<button type="button" class="remove-btn" onclick="removeSeries(${index})">✕</button>` : ''}
+      </div>
+      <div class="field-row">
+        <div>
+          <label>Country / 经济体</label>
+          <select onchange="onCountryChange(${index}, this.value)">
+            ${CATALOG.countries.map(c => `
+              <option value="${c.code}" ${c.code === item.country ? 'selected' : ''}>
+                ${c.flag} ${CURRENT_LANG === 'zh' ? c.name_zh : c.name_en} (${c.code})
+              </option>
+            `).join('')}
+          </select>
+        </div>
+        <div>
+          <label>Y-Axis / Y 轴</label>
+          <div class="axis-selector">
+            <div class="axis-option ${item.axis === 'left' ? 'active' : ''}" onclick="setSeriesAxis(${index}, 'left')">Left (Y1)</div>
+            <div class="axis-option ${item.axis === 'right' ? 'active' : ''}" onclick="setSeriesAxis(${index}, 'right')">Right (Y2)</div>
+          </div>
+        </div>
+      </div>
+      <div class="field-full">
+        <label>Indicator / 宏观指标</label>
+        <select onchange="onIndicatorChange(${index}, this.value)">
+          ${getIndicatorOptionsHtml(item.country, item.indicatorId)}
+        </select>
+      </div>
+    `;
+    listEl.appendChild(card);
+  });
+}
+
+function getIndicatorOptionsHtml(countryCode, selectedId) {
+  const cData = CATALOG.countries.find(c => c.code === countryCode);
+  if (!cData) return '';
+  
+  // Group by section
+  const sections = {};
+  cData.indicators.forEach(ind => {
+    if (!sections[ind.section]) sections[ind.section] = [];
+    sections[ind.section].push(ind);
+  });
+  
+  return Object.keys(sections).map(sec => `
+    <optgroup label="${sec.replace('_', ' ').toUpperCase()}">
+      ${sections[sec].map(ind => `
+        <option value="${ind.id}" ${ind.id === selectedId ? 'selected' : ''}>
+          ${CURRENT_LANG === 'zh' ? ind.label_zh : ind.label_en} [${ind.unit || 'Index'}]
+        </option>
+      `).join('')}
+    </optgroup>
+  `).join('');
+}
+
+function addSeries() {
+  if (ACTIVE_SERIES.length >= 5) return;
+  const nextIdx = ACTIVE_SERIES.length;
+  // Default to a sensible next country
+  const fallbackCountry = nextIdx === 1 ? 'EA' : (nextIdx === 2 ? 'JP' : 'CN');
+  const cData = CATALOG.countries.find(c => c.code === fallbackCountry) || CATALOG.countries[0];
+  const ind = cData.indicators[0];
+  
+  ACTIVE_SERIES.push({
+    country: cData.code,
+    indicatorId: ind.id,
+    axis: nextIdx === 0 ? 'left' : 'right',
+    color: DEFAULT_COLORS[nextIdx % DEFAULT_COLORS.length],
+    labelCustom: ''
+  });
+  renderSeriesCards();
+  refreshChart();
+}
+
+function removeSeries(index) {
+  if (ACTIVE_SERIES.length <= 1) return;
+  ACTIVE_SERIES.splice(index, 1);
+  renderSeriesCards();
+  refreshChart();
+}
+
+function onCountryChange(index, newCountry) {
+  ACTIVE_SERIES[index].country = newCountry;
+  const cData = CATALOG.countries.find(c => c.code === newCountry);
+  if (cData && cData.indicators.length > 0) {
+    ACTIVE_SERIES[index].indicatorId = cData.indicators[0].id;
+  }
+  renderSeriesCards();
+  refreshChart();
+}
+
+function onIndicatorChange(index, newIndicator) {
+  ACTIVE_SERIES[index].indicatorId = newIndicator;
+  refreshChart();
+}
+
+function setSeriesAxis(index, axis) {
+  ACTIVE_SERIES[index].axis = axis;
+  renderSeriesCards();
+  refreshChart();
+}
+
+function setTransform(t) {
+  CURRENT_TRANSFORM = t;
+  updateTransformUI();
+  refreshChart();
+}
+
+function setDateRange(r) {
+  CURRENT_RANGE = r;
+  updateRangeUI();
+  refreshChart();
+}
+
+// Data Fetching & Caching
+async function fetchCountryFrame(countryCode) {
+  if (FRAME_CACHE[countryCode]) return FRAME_CACHE[countryCode];
+  const cData = CATALOG.countries.find(c => c.code === countryCode);
+  if (!cData) return {};
+  
+  const inOutputDir = window.location.pathname.includes('/output/');
+  const prefix = inOutputDir ? '' : 'output/';
+  let res;
+  try {
+    res = await fetch(prefix + cData.canonical_file);
+    if (!res.ok && prefix) {
+      res = await fetch(cData.canonical_file);
+    }
+  } catch (err) {
+    res = await fetch(cData.canonical_file);
+  }
+  const data = await res.json();
+  const map = {};
+  
+  if (cData.canonical_file === 'cee_canonical_frame.json') {
+    (data.series || []).forEach(s => {
+      if (s.country === countryCode) {
+        map[s.indicator_id] = s;
+      }
+    });
+  } else {
+    (data.series || []).forEach(s => {
+      map[s.indicator_id] = s;
+    });
+  }
+  FRAME_CACHE[countryCode] = map;
+  return map;
+}
+
+// Chart Rendering Logic
+async function refreshChart() {
+  document.getElementById('canvas-loading').style.display = 'flex';
+  
+  try {
+    // 1. Ensure all active countries are cached
+    const neededCountries = [...new Set(ACTIVE_SERIES.map(s => s.country))];
+    await Promise.all(neededCountries.map(fetchCountryFrame));
+
+    // 2. Extract series observations
+    const seriesData = [];
+    ACTIVE_SERIES.forEach((item, idx) => {
+      const cData = CATALOG.countries.find(c => c.code === item.country);
+      const frame = FRAME_CACHE[item.country] || {};
+      const rawSeries = frame[item.indicatorId];
+      if (!rawSeries) return;
+
+      const meta = rawSeries.metadata || rawSeries;
+      let label = (CURRENT_LANG === 'zh' ? meta.label_zh : meta.label_en) || item.indicatorId;
+      label = `${cData.flag} ${item.country}: ${label}`;
+      const unit = meta.unit || '';
+      
+      const rawObs = (rawSeries.observations || []).map(row => ({
+        date: String(row[0]),
+        value: Number(row[1])
+      })).filter(r => !isNaN(r.value));
+
+      seriesData.push({
+        index: idx,
+        config: item,
+        label: label,
+        unit: unit,
+        country: item.country,
+        observations: rawObs
+      });
+    });
+
+    // 3. Filter by Date Range
+    const now = new Date();
+    let cutoff = null;
+    if (CURRENT_RANGE === '1y') cutoff = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+    else if (CURRENT_RANGE === '3y') cutoff = new Date(now.getFullYear() - 3, now.getMonth(), now.getDate());
+    else if (CURRENT_RANGE === '5y') cutoff = new Date(now.getFullYear() - 5, now.getMonth(), now.getDate());
+    else if (CURRENT_RANGE === '10y') cutoff = new Date(now.getFullYear() - 10, now.getMonth(), now.getDate());
+    
+    const cutoffStr = cutoff ? cutoff.toISOString().slice(0, 10) : '0000-00-00';
+    seriesData.forEach(s => {
+      s.filteredObs = s.observations.filter(o => o.date >= cutoffStr);
+    });
+
+    // 4. Apply Transformations
+    let plotTraces = [];
+    let y1Title = seriesData[0] ? seriesData[0].unit : '';
+    let y2Title = '';
+    let hasY2 = false;
+
+    if (CURRENT_TRANSFORM === 'rebase') {
+      y1Title = CURRENT_LANG === 'zh' ? '归一化指数 (基期 = 100)' : 'Rebased Index (Base = 100)';
+      seriesData.forEach(s => {
+        if (!s.filteredObs.length) return;
+        const baseVal = s.filteredObs[0].value || 1.0;
+        const x = s.filteredObs.map(o => o.date);
+        const y = s.filteredObs.map(o => (o.value / baseVal) * 100.0);
+        plotTraces.push({
+          name: s.label,
+          x: x,
+          y: y,
+          type: 'scatter',
+          mode: 'lines',
+          line: { color: s.config.color, width: 2.4 }
+        });
+      });
+    } else if (CURRENT_TRANSFORM === 'spread' && seriesData.length >= 2) {
+      // Calculate spread between Series 1 and Series 2
+      const s1 = seriesData[0];
+      const s2 = seriesData[1];
+      y1Title = s1.unit ? `${s1.unit} (Spread)` : 'Spread';
+      
+      const s2Map = new Map(s2.filteredObs.map(o => [o.date, o.value]));
+      const spreadX = [];
+      const spreadY = [];
+      s1.filteredObs.forEach(o => {
+        if (s2Map.has(o.date)) {
+          spreadX.push(o.date);
+          spreadY.push(o.value - s2Map.get(o.date));
+        }
+      });
+      plotTraces.push({
+        name: `Spread (${s1.config.country} - ${s2.config.country})`,
+        x: spreadX,
+        y: spreadY,
+        type: 'scatter',
+        mode: 'lines',
+        fill: 'tozeroy',
+        fillcolor: 'rgba(37, 99, 235, 0.08)',
+        line: { color: '#2563eb', width: 2.2 }
+      });
+      // Also show underlying series with thin dashed lines
+      plotTraces.push({
+        name: `${s1.label}`,
+        x: s1.filteredObs.map(o => o.date),
+        y: s1.filteredObs.map(o => o.value),
+        type: 'scatter',
+        mode: 'lines',
+        line: { color: '#94a3b8', width: 1.5, dash: 'dot' }
+      });
+      plotTraces.push({
+        name: `${s2.label}`,
+        x: s2.filteredObs.map(o => o.date),
+        y: s2.filteredObs.map(o => o.value),
+        type: 'scatter',
+        mode: 'lines',
+        line: { color: '#cbd5e1', width: 1.5, dash: 'dot' }
+      });
+    } else {
+      // Raw Levels
+      seriesData.forEach(s => {
+        if (!s.filteredObs.length) return;
+        const isRight = (s.config.axis === 'right');
+        if (isRight) {
+          hasY2 = true;
+          if (!y2Title) y2Title = s.unit;
+        } else {
+          if (!y1Title) y1Title = s.unit;
+        }
+        plotTraces.push({
+          name: s.label,
+          x: s.filteredObs.map(o => o.date),
+          y: s.filteredObs.map(o => o.value),
+          yaxis: isRight ? 'y2' : 'y',
+          type: 'scatter',
+          mode: 'lines',
+          line: { color: s.config.color, width: 2.4 }
+        });
+      });
+    }
+
+    // 5. Layout Configuration
+    const layout = {
+      height: 560,
+      margin: { l: 55, r: hasY2 ? 55 : 25, t: 20, b: 50 },
+      paper_bgcolor: '#ffffff',
+      plot_bgcolor: '#ffffff',
+      font: { family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', size: 11, color: '#0f172a' },
+      xaxis: {
+        gridcolor: 'rgba(15, 23, 42, 0.06)',
+        autorange: true,
+        automargin: true,
+      },
+      yaxis: {
+        title: y1Title,
+        gridcolor: 'rgba(15, 23, 42, 0.06)',
+        zeroline: true,
+        zerolinecolor: 'rgba(15, 23, 42, 0.3)',
+        zerolinewidth: 1.2,
+        autorange: true,
+        automargin: true
+      },
+      legend: { orientation: 'h', y: -0.18, font: { size: 11 } },
+      hovermode: 'x unified',
+      autosize: true
+    };
+
+    if (hasY2 && CURRENT_TRANSFORM === 'raw') {
+      layout.yaxis2 = {
+        title: y2Title,
+        overlaying: 'y',
+        side: 'right',
+        gridcolor: 'transparent',
+        showgrid: false,
+        zeroline: false,
+        autorange: true,
+        automargin: true
+      };
+    }
+
+    Plotly.react('chart-canvas', plotTraces, layout, { responsive: true, displayModeBar: true, displaylogo: false });
+
+    // 6. Update Summary Table
+    renderSummaryTable(seriesData);
+
+    // 7. Update Hash for Sharing
+    updateURLHash();
+
+  } catch (err) {
+    console.error("Error refreshing chart:", err);
+  } finally {
+    document.getElementById('canvas-loading').style.display = 'none';
+  }
+}
+
+function renderSummaryTable(seriesData) {
+  const tbody = document.getElementById('summary-table-body');
+  tbody.innerHTML = '';
+  seriesData.forEach(s => {
+    const vals = s.filteredObs.map(o => o.value);
+    const count = vals.length;
+    const minVal = count ? Math.min(...vals).toFixed(2) : 'n/a';
+    const maxVal = count ? Math.max(...vals).toFixed(2) : 'n/a';
+    const meanVal = count ? (vals.reduce((a,b)=>a+b, 0) / count).toFixed(2) : 'n/a';
+    const latest = count ? `${vals[vals.length - 1].toFixed(2)} (${s.filteredObs[count - 1].date})` : 'n/a';
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span style="color:${s.config.color}; font-weight:bold;">●</span> ${s.label}</td>
+      <td><strong>${s.country}</strong></td>
+      <td><strong>${latest} ${s.unit}</strong></td>
+      <td>${minVal}</td>
+      <td>${maxVal}</td>
+      <td>${meanVal}</td>
+      <td><code>${s.config.axis.toUpperCase()}</code></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function updateURLHash() {
+  const str = ACTIVE_SERIES.map(s => `${s.country}:${s.indicatorId}:${s.axis}:${encodeURIComponent(s.color)}`).join(',');
+  window.history.replaceState(null, '', `#series=${str}&t=${CURRENT_TRANSFORM}&r=${CURRENT_RANGE}`);
+}
+
+function loadFromHash(hash) {
+  try {
+    const params = new URLSearchParams(hash.slice(1));
+    const sStr = params.get('series');
+    if (sStr) {
+      ACTIVE_SERIES = sStr.split(',').map(part => {
+        const [c, id, axis, col] = part.split(':');
+        return {
+          country: c,
+          indicatorId: id,
+          axis: axis || 'left',
+          color: col ? decodeURIComponent(col) : DEFAULT_COLORS[0],
+          labelCustom: ''
+        };
+      });
+    }
+    CURRENT_TRANSFORM = params.get('t') || 'raw';
+    CURRENT_RANGE = params.get('r') || '5y';
+    updateTransformUI();
+    updateRangeUI();
+    renderSeriesCards();
+    refreshChart();
+  } catch (e) {
+    console.error("Invalid URL hash", e);
+    loadPreset(CATALOG.presets[0]);
+  }
+}
+
+function toggleLang() {
+  CURRENT_LANG = CURRENT_LANG === 'en' ? 'zh' : 'en';
+  document.querySelectorAll('[data-zh]').forEach(el => {
+    el.innerText = CURRENT_LANG === 'zh' ? el.dataset.zh : el.dataset.en;
+  });
+  renderPresets();
+  renderSeriesCards();
+  refreshChart();
+}
+
+function exportPNG() {
+  Plotly.downloadImage('chart-canvas', {
+    format: 'png',
+    width: 1400,
+    height: 700,
+    filename: `macro_chart_studio_${new Date().toISOString().slice(0, 10)}`
+  });
+}
+
+function exportCSV() {
+  // Collect all unique dates
+  const dateSet = new Set();
+  ACTIVE_SERIES.forEach(item => {
+    const frame = FRAME_CACHE[item.country] || {};
+    const s = frame[item.indicatorId];
+    if (s && s.observations) {
+      s.observations.forEach(o => dateSet.add(o[0]));
+    }
+  });
+  const sortedDates = [...dateSet].sort();
+  
+  // Headers
+  const headers = ['date', ...ACTIVE_SERIES.map(s => `${s.country}_${s.indicatorId}`)];
+  const rows = [headers.join(',')];
+  
+  // Map observations
+  const seriesMaps = ACTIVE_SERIES.map(item => {
+    const frame = FRAME_CACHE[item.country] || {};
+    const s = frame[item.indicatorId];
+    return new Map((s && s.observations) ? s.observations : []);
+  });
+
+  sortedDates.forEach(dt => {
+    const row = [dt];
+    seriesMaps.forEach(m => {
+      row.push(m.has(dt) ? m.get(dt) : '');
+    });
+    rows.push(row.join(','));
+  });
+
+  const blob = new Blob([rows.join('\\n')], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `macro_chart_data_${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function copyShareURL() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    alert(CURRENT_LANG === 'zh' ? "✅ 图表分享链接已复制到剪贴板！" : "✅ Shareable chart URL copied to clipboard!");
+  });
+}
+
+// Start
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
+"""
+
+
+def main():
+    OUTPUT.mkdir(parents=True, exist_ok=True)
+    catalog = extract_catalog()
+    catalog_path = OUTPUT / "chart_studio_catalog.json"
+    catalog_path.write_text(json.dumps(catalog, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"Wrote {catalog_path} ({catalog_path.stat().st_size:,} bytes)")
+
+    html_content = render_html()
+    out_html = OUTPUT / "chart_studio.html"
+    out_html.write_text(html_content, encoding="utf-8")
+    print(f"Wrote {out_html} ({out_html.stat().st_size:,} bytes)")
+
+    # Also mirror to root chart_studio.html
+    root_html = ROOT / "chart_studio.html"
+    root_html.write_text(html_content, encoding="utf-8")
+    print(f"Wrote {root_html} ({root_html.stat().st_size:,} bytes)")
+
+    # Copy catalog to root as well if needed
+    root_catalog = ROOT / "chart_studio_catalog.json"
+    root_catalog.write_text(json.dumps(catalog, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"Wrote {root_catalog} ({root_catalog.stat().st_size:,} bytes)")
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

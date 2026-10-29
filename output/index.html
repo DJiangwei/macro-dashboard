@@ -153,12 +153,28 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
 <body>
 <div class="topbar">
   <div class="brand">East Meridian <span>/ Country Primer</span></div>
-  <div>Macro Dashboard Archive · 18 Economies (CEE-4, G10 & Asia-Pacific Hubs, Frontier & Emerging Markets)</div>
+  <div style="display: flex; gap: 12px; align-items: center;">
+    <a href="chart_studio.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: #0d7680; color: #ffffff; text-decoration: none; border-radius: 4px; font-weight: 600; font-size: 11px; letter-spacing: 0.02em;">📈 Chart Studio · 图表工坊</a>
+    <span>Macro Dashboard Archive · 18 Economies (CEE-4, G10 & Asia-Pacific Hubs, Frontier & Emerging Markets)</span>
+  </div>
 </div>
 <main class="container">
   <header>
-    <h1>Macro Dashboard Archive</h1>
-    <p class="subtitle">Generated archive for 18 national and regional macro dashboards (CEE-4, China, Euro Area, Japan, South Africa, UK, US, Turkey, Hong Kong, South Korea, Taiwan, Kazakhstan, Uzbekistan, Egypt, Nigeria). Cards are rebuilt from the latest country summaries and canonical data-first pipelines, then exported to <code>dashboard_archive_summary.json</code> so homepage data stays synchronized with dashboard builds.</p>
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+      <div>
+        <h1>Macro Dashboard Archive</h1>
+        <p class="subtitle">Generated archive for 18 national and regional macro dashboards (CEE-4, China, Euro Area, Japan, South Africa, UK, US, Turkey, Hong Kong, South Korea, Taiwan, Kazakhstan, Uzbekistan, Egypt, Nigeria). Cards are rebuilt from the latest country summaries and canonical data-first pipelines, then exported to <code>dashboard_archive_summary.json</code> so homepage data stays synchronized with dashboard builds.</p>
+      </div>
+      <div style="margin-top: 8px;">
+        <a href="chart_studio.html" style="display: inline-flex; flex-direction: column; gap: 4px; padding: 14px 18px; background: #ffffff; border: 1.5px solid #0d7680; border-radius: 6px; text-decoration: none; box-shadow: 0 2px 4px rgba(13,118,128,0.08); transition: transform 0.15s ease;">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #0d7680; font-size: 15px;">
+            <span>📈 Macro Chart Studio</span>
+            <span style="font-size: 11px; background: rgba(13,118,128,0.1); padding: 2px 6px; border-radius: 3px;">NEW</span>
+          </div>
+          <span style="color: var(--text-secondary); font-size: 12px;">自定义多指标对比画板 · 18国 1,300+ 序列</span>
+        </a>
+      </div>
+    </div>
   </header>
   <section class="meta-grid" aria-label="coverage summary">
     <div class="meta-chip"><strong>1307</strong><span>rendered chart slots</span></div>
@@ -184,7 +200,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>moderate expansion</td>
         <td>near-target inflation</td>
         <td>restrictive stance</td>
-        <td><span class="score-pill bad">56.3</span></td>
+        <td><span class="score-pill bad">53.3</span></td>
       </tr>
       <tr>
         <td><strong>PL</strong><span>Poland</span></td>
@@ -193,7 +209,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>above-trend expansion</td>
         <td>above-target inflation</td>
         <td>neutral-moderate stance</td>
-        <td><span class="score-pill neutral">64.5</span></td>
+        <td><span class="score-pill neutral">60.0</span></td>
       </tr>
       <tr>
         <td><strong>CZ</strong><span>Czechia</span></td>
@@ -202,7 +218,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>moderate expansion</td>
         <td>near-target inflation</td>
         <td>neutral-moderate stance</td>
-        <td><span class="score-pill bad">53.4</span></td>
+        <td><span class="score-pill bad">50.3</span></td>
       </tr>
       <tr>
         <td><strong>RO</strong><span>Romania</span></td>
@@ -211,7 +227,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>contraction</td>
         <td>inflation pressure</td>
         <td>restrictive stance</td>
-        <td><span class="score-pill bad">54.4</span></td>
+        <td><span class="score-pill bad">50.0</span></td>
       </tr>
       <tr>
         <td><strong>CN</strong><span>China</span></td>
@@ -301,7 +317,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <td>above-trend expansion</td>
         <td>near-target inflation</td>
         <td>accommodative stance</td>
-        <td><span class="score-pill good">89.7</span></td>
+        <td><span class="score-pill good">88.9</span></td>
       </tr>
       <tr>
         <td><strong>KZ</strong><span>Kazakhstan</span></td>
@@ -899,7 +915,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>HU</strong></td>
         <td class="good">100.0%</td>
-        <td class="neutral">61.0%</td>
+        <td class="bad">52.4%</td>
         <td class="good">0</td>
         <td class="neutral">4</td>
         <td class="bad">48.5</td>
@@ -907,7 +923,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>PL</strong></td>
         <td class="good">100.0%</td>
-        <td class="neutral">63.0%</td>
+        <td class="bad">50.0%</td>
         <td class="good">0</td>
         <td class="neutral">1</td>
         <td class="bad">53.1</td>
@@ -915,7 +931,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>CZ</strong></td>
         <td class="good">100.0%</td>
-        <td class="bad">59.6%</td>
+        <td class="bad">51.0%</td>
         <td class="good">0</td>
         <td class="neutral">5</td>
         <td class="neutral">61.7</td>
@@ -923,7 +939,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>RO</strong></td>
         <td class="good">100.0%</td>
-        <td class="neutral">62.5%</td>
+        <td class="bad">50.0%</td>
         <td class="good">0</td>
         <td class="neutral">5</td>
         <td class="bad">38.3</td>
@@ -1003,7 +1019,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>TW</strong></td>
         <td class="good">100.0%</td>
-        <td class="good">83.3%</td>
+        <td class="good">81.2%</td>
         <td class="good">0</td>
         <td class="neutral">1</td>
         <td class="neutral">73.3</td>
@@ -1050,32 +1066,32 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <span>stale · 2020-12-01 · IMF / DBnomics (IFS)</span>
       </li>
       <li>
+        <strong>CZ · wgi_control_of_corruption</strong>
+        <span>stale · 2023-12-31 · World Bank Sovereign ESG Data Portal / WGI</span>
+      </li>
+      <li>
+        <strong>CZ · wgi_government_effectiveness</strong>
+        <span>stale · 2023-12-31 · World Bank Sovereign ESG Data Portal / WGI</span>
+      </li>
+      <li>
+        <strong>CZ · wgi_rule_of_law</strong>
+        <span>stale · 2023-12-31 · World Bank Sovereign ESG Data Portal / WGI</span>
+      </li>
+      <li>
         <strong>HK · total_reserves_usd</strong>
         <span>stale · 2023 · World Bank / HKMA</span>
       </li>
       <li>
-        <strong>NG · private_credit_gdp</strong>
-        <span>stale · 2023 · World Bank WDI</span>
+        <strong>HU · wgi_control_of_corruption</strong>
+        <span>stale · 2023-12-31 · World Bank Sovereign ESG Data Portal / WGI</span>
       </li>
       <li>
-        <strong>HU · gross_ext_debt</strong>
-        <span>stale · 2024-01-01 · ECB BPS / Eurostat GDP</span>
+        <strong>HU · wgi_government_effectiveness</strong>
+        <span>stale · 2023-12-31 · World Bank Sovereign ESG Data Portal / WGI</span>
       </li>
       <li>
-        <strong>KR · bank_capital_ratio</strong>
-        <span>stale · 2024-06-30 · IMF / DBnomics (Financial Soundness Indicators)</span>
-      </li>
-      <li>
-        <strong>KR · bank_npl_ratio</strong>
-        <span>stale · 2024-06-30 · IMF / DBnomics (Financial Soundness Indicators)</span>
-      </li>
-      <li>
-        <strong>NG · deposit_rate</strong>
-        <span>stale · 2024-08-01 · IMF / DBnomics (IFS)</span>
-      </li>
-      <li>
-        <strong>NG · lending_rate</strong>
-        <span>stale · 2024-08-01 · IMF / DBnomics (IFS)</span>
+        <strong>HU · wgi_rule_of_law</strong>
+        <span>stale · 2023-12-31 · World Bank Sovereign ESG Data Portal / WGI</span>
       </li></ul>
       </div>
       <div class="workbench-card">
@@ -1118,8 +1134,8 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
         <h3>What Changed</h3>
         <ul class="signal-list">
       <li>
-        <strong>US</strong>
-        <span>headline: 3.88% (2026-10-27) -&gt; 3.88% (2026-10-28)</span>
+        <strong>workbench</strong>
+        <span>Coverage, proxy, headline, and regime metrics are unchanged versus the previous workbench build.</span>
       </li></ul>
       </div>
     </div>
@@ -1350,6 +1366,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
   </a>
   </section>
   <nav class="links" aria-label="documentation links">
+    <a href="chart_studio.html" style="background: rgba(13, 118, 128, 0.08); color: #0d7680; font-weight: 600; border-color: rgba(13, 118, 128, 0.3);">📈 Macro Chart Studio (自定义对比图表)</a>
     <a href="../CORE_COVERAGE_MATRIX.md">Core 48 Coverage</a>
     <a href="../DATA_SOURCE_CATALOG.md">Data Source Catalog</a>
     <a href="../DATA_FRESHNESS_AUDIT.md">Freshness Audit</a>
@@ -1361,7 +1378,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
     <a href="what_changed.json">What Changed</a>
   </nav>
   <footer>
-    Generated 2026-10-29 21:35 UTC from country dashboard summaries and canonical CE4 data. Research artefact only, not investment advice.
+    Generated 2026-10-29 22:08 UTC from country dashboard summaries and canonical CE4 data. Research artefact only, not investment advice.
   </footer>
 </main>
 <script>

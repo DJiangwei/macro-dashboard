@@ -876,6 +876,7 @@ def render_html(
     for code, item in COUNTRY_META.items():
         active_cls = ' class="active"' if code == code_upper else ""
         nav_links.append(f'<a href="{item["file"]}"{active_cls} title="{item.get("name", code)}">{code}</a>')
+    nav_links.append('<a href="chart_studio.html" style="color:var(--accent);font-weight:600;margin-left:4px;" title="Macro Chart Studio · 自定义对比图表工坊">📈 Studio</a>')
     country_nav_html = "\n    ".join(nav_links)
 
     chart_count = sum(1 for item in series_list if item.get("observations"))

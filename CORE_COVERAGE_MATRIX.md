@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-10-29T21:28:50.489741+00:00
+Generated: 2026-10-29T22:08:10.408201+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -17,13 +17,13 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 9 | `labour_household` | `unemployment_rate` Unemployment Rate | V | V | V | V | W | V | W | W | L | V | W | V | W | W | W | W | W | W |
 | 10 | `labour_household` | `employment_growth` Employment Growth | V | V | V | V | - | V | W | W | W | V | - | - | W | - | - | - | - | - |
 | 11 | `labour_household` | `participation_rate` Labour Force Participation | W | W | W | W | - | V | W | - | L | V | W | - | W | - | W | W | W | W |
-| 12 | `labour_household` | `vacancies` Labour Demand / Vacancies | L | L | L | L | - | L | W | - | V | W | - | - | - | - | - | - | - | - |
+| 12 | `labour_household` | `vacancies` Labour Demand / Vacancies | L | L | L | L | - | L | V | - | V | W | - | - | - | - | - | - | - | - |
 | 13 | `labour_household` | `wage_growth` Wage Growth | V | V | V | V | - | L | L | - | V | V | - | W | - | - | - | - | - | - |
 | 14 | `labour_household` | `real_income_growth` Real Household Income Growth | V | V | V | V | - | - | - | - | V | V | - | - | - | - | - | - | - | - |
-| 15 | `prices_costs` | `headline_inflation` Headline Inflation | V | V | V | V | W | L | W | V | V | V | W | V | W | V | W | W | W | W |
-| 16 | `prices_costs` | `core_inflation` Core Inflation | V | V | V | V | - | L | W | - | V | V | L | V | V | V | - | - | - | - |
-| 17 | `prices_costs` | `services_inflation` Services Inflation | V | V | V | V | - | L | W | - | V | V | L | - | - | - | - | - | - | - |
-| 18 | `prices_costs` | `goods_inflation` Goods Inflation | V | V | V | V | - | L | W | - | V | V | - | - | - | - | - | - | - | - |
+| 15 | `prices_costs` | `headline_inflation` Headline Inflation | V | V | V | V | W | L | V | V | V | V | W | V | W | V | W | W | W | W |
+| 16 | `prices_costs` | `core_inflation` Core Inflation | V | V | V | V | - | L | V | - | V | V | L | V | V | V | - | - | - | - |
+| 17 | `prices_costs` | `services_inflation` Services Inflation | V | V | V | V | - | L | V | - | V | V | L | - | - | - | - | - | - | - |
+| 18 | `prices_costs` | `goods_inflation` Goods Inflation | V | V | V | V | - | L | V | - | V | V | - | - | - | - | - | - | - | - |
 | 19 | `prices_costs` | `producer_price_inflation` Producer Price Inflation | V | V | V | V | W | V | V | V | V | V | V | - | V | V | - | - | - | - |
 | 20 | `prices_costs` | `wage_cost_inflation` Labour Cost Inflation | V | V | V | V | - | V | - | - | V | V | - | - | - | - | - | - | - | - |
 | 21 | `prices_costs` | `inflation_expectations` Inflation Expectations | V | V | V | V | - | V | - | - | - | V | - | - | - | - | - | - | - | - |
@@ -45,7 +45,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 37 | `fiscal_sovereign` | `sovereign_yield_10y` 10Y Sovereign Yield | V | V | V | V | - | V | W | V | V | V | - | - | W | W | - | - | - | - |
 | 38 | `monetary_financial` | `policy_rate` Policy Rate | V | V | V | V | W | V | W | V | V | V | V | - | V | V | L | L | L | L |
 | 39 | `monetary_financial` | `real_policy_rate` Real Policy Rate | L | L | L | L | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
-| 40 | `monetary_financial` | `broad_money_growth` Broad Money Growth | W | W | W | W | W | V | L | L | V | V | - | - | W | V | W | W | W | W |
+| 40 | `monetary_financial` | `broad_money_growth` Broad Money Growth | W | W | W | W | W | V | L | L | V | V | - | - | W | W | W | W | W | W |
 | 41 | `monetary_financial` | `private_credit_growth` Private Credit Growth | W | W | W | W | W | V | L | L | V | V | L | L | L | V | W | W | W | L |
 | 42 | `monetary_financial` | `bank_lending_rate` Bank Lending Rate | W | W | W | W | W | W | - | V | - | - | V | - | - | V | - | L | L | L |
 | 43 | `monetary_financial` | `equity_return` Equity Market Return | W | W | W | W | W | - | W | - | W | - | V | - | V | W | - | - | - | - |
@@ -65,14 +65,14 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | RO | 41/48 | 21 | 16 | 4 | 0 | 7 |
 | CN | 26/48 | 0 | 24 | 2 | 0 | 22 |
 | EA | 41/48 | 28 | 4 | 9 | 0 | 7 |
-| JP | 35/48 | 1 | 23 | 11 | 0 | 13 |
+| JP | 35/48 | 6 | 18 | 11 | 0 | 13 |
 | ZA | 28/48 | 6 | 9 | 12 | 1 | 20 |
 | UK | 38/48 | 26 | 7 | 5 | 0 | 10 |
 | US | 40/48 | 35 | 5 | 0 | 0 | 8 |
 | TR | 30/48 | 14 | 10 | 6 | 0 | 18 |
 | HK | 21/48 | 9 | 8 | 4 | 0 | 27 |
 | KR | 29/48 | 4 | 21 | 4 | 0 | 19 |
-| TW | 23/48 | 13 | 10 | 0 | 0 | 25 |
+| TW | 23/48 | 12 | 11 | 0 | 0 | 25 |
 | KZ | 18/48 | 1 | 14 | 3 | 0 | 30 |
 | UZ | 19/48 | 0 | 14 | 5 | 0 | 29 |
 | EG | 17/48 | 0 | 13 | 4 | 0 | 31 |

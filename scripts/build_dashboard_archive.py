@@ -883,12 +883,28 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
 <body>
 <div class="topbar">
   <div class="brand">East Meridian <span>/ Country Primer</span></div>
-  <div>Macro Dashboard Archive · 18 Economies (CEE-4, G10 & Asia-Pacific Hubs, Frontier & Emerging Markets)</div>
+  <div style="display: flex; gap: 12px; align-items: center;">
+    <a href="{prefix}chart_studio.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: #0d7680; color: #ffffff; text-decoration: none; border-radius: 4px; font-weight: 600; font-size: 11px; letter-spacing: 0.02em;">📈 Chart Studio · 图表工坊</a>
+    <span>Macro Dashboard Archive · 18 Economies (CEE-4, G10 & Asia-Pacific Hubs, Frontier & Emerging Markets)</span>
+  </div>
 </div>
 <main class="container">
   <header>
-    <h1>Macro Dashboard Archive</h1>
-    <p class="subtitle">Generated archive for 18 national and regional macro dashboards (CEE-4, China, Euro Area, Japan, South Africa, UK, US, Turkey, Hong Kong, South Korea, Taiwan, Kazakhstan, Uzbekistan, Egypt, Nigeria). Cards are rebuilt from the latest country summaries and canonical data-first pipelines, then exported to <code>{escape(archive_json_href)}</code> so homepage data stays synchronized with dashboard builds.</p>
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+      <div>
+        <h1>Macro Dashboard Archive</h1>
+        <p class="subtitle">Generated archive for 18 national and regional macro dashboards (CEE-4, China, Euro Area, Japan, South Africa, UK, US, Turkey, Hong Kong, South Korea, Taiwan, Kazakhstan, Uzbekistan, Egypt, Nigeria). Cards are rebuilt from the latest country summaries and canonical data-first pipelines, then exported to <code>{escape(archive_json_href)}</code> so homepage data stays synchronized with dashboard builds.</p>
+      </div>
+      <div style="margin-top: 8px;">
+        <a href="{prefix}chart_studio.html" style="display: inline-flex; flex-direction: column; gap: 4px; padding: 14px 18px; background: #ffffff; border: 1.5px solid #0d7680; border-radius: 6px; text-decoration: none; box-shadow: 0 2px 4px rgba(13,118,128,0.08); transition: transform 0.15s ease;">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #0d7680; font-size: 15px;">
+            <span>📈 Macro Chart Studio</span>
+            <span style="font-size: 11px; background: rgba(13,118,128,0.1); padding: 2px 6px; border-radius: 3px;">NEW</span>
+          </div>
+          <span style="color: var(--text-secondary); font-size: 12px;">自定义多指标对比画板 · 18国 1,300+ 序列</span>
+        </a>
+      </div>
+    </div>
   </header>
   <section class="meta-grid" aria-label="coverage summary">
     <div class="meta-chip"><strong>{total_charts}</strong><span>rendered chart slots</span></div>
@@ -907,6 +923,7 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
 {card_markup}
   </section>
   <nav class="links" aria-label="documentation links">
+    <a href="{prefix}chart_studio.html" style="background: rgba(13, 118, 128, 0.08); color: #0d7680; font-weight: 600; border-color: rgba(13, 118, 128, 0.3);">📈 Macro Chart Studio (自定义对比图表)</a>
     <a href="{docs_prefix}CORE_COVERAGE_MATRIX.md">Core 48 Coverage</a>
     <a href="{docs_prefix}DATA_SOURCE_CATALOG.md">Data Source Catalog</a>
     <a href="{docs_prefix}DATA_FRESHNESS_AUDIT.md">Freshness Audit</a>

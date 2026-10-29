@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-10-29T21:28:50.489741+00:00",
+  "generated": "2026-10-29T22:08:10.408201+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -74,8 +74,8 @@
       "missing": 7
     },
     "JP": {
-      "verified": 1,
-      "watch": 23,
+      "verified": 6,
+      "watch": 18,
       "low_confidence": 11,
       "substitute": 0,
       "missing": 13
@@ -123,8 +123,8 @@
       "missing": 19
     },
     "TW": {
-      "verified": 13,
-      "watch": 10,
+      "verified": 12,
+      "watch": 11,
       "low_confidence": 0,
       "substitute": 0,
       "missing": 25
@@ -1335,7 +1335,7 @@
             "economic_sentiment",
             "industry_confidence"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -1345,7 +1345,7 @@
             "economic_sentiment",
             "industry_confidence"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -1355,7 +1355,7 @@
             "economic_sentiment",
             "industry_confidence"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -1365,7 +1365,7 @@
             "economic_sentiment",
             "industry_confidence"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -2058,13 +2058,13 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "job_to_applicant_ratio"
           ],
           "latest_date": "2026-08-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "ZA": {
           "state": "missing",
@@ -2526,14 +2526,14 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "cpi_inflation",
             "cpi_inflation_estat"
           ],
           "latest_date": "2026-09-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "ZA": {
           "state": "verified",
@@ -2701,14 +2701,14 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "core_core_inflation",
             "core_inflation"
           ],
           "latest_date": "2026-09-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "ZA": {
           "state": "missing",
@@ -2866,13 +2866,13 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "services_inflation"
           ],
           "latest_date": "2026-09-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "ZA": {
           "state": "missing",
@@ -3024,13 +3024,13 @@
           "refresh_fallback": false
         },
         "JP": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "goods_inflation"
           ],
           "latest_date": "2026-09-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "ZA": {
           "state": "missing",
@@ -3453,7 +3453,7 @@
           "indicator_ids": [
             "inflation_expectations"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -3462,7 +3462,7 @@
           "indicator_ids": [
             "inflation_expectations"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -3471,7 +3471,7 @@
           "indicator_ids": [
             "inflation_expectations"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -3480,7 +3480,7 @@
           "indicator_ids": [
             "inflation_expectations"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -3820,7 +3820,7 @@
             "housing_starts"
           ],
           "latest_date": "2024-12-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "ZA": {
           "state": "missing",
@@ -6670,12 +6670,12 @@
           "refresh_fallback": false
         },
         "TW": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "m2_growth"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         },
         "KZ": {

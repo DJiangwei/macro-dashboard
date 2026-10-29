@@ -1,6 +1,6 @@
 UV ?= scripts/uv_project.sh
 
-.PHONY: setup doctor build-v4 refresh-data rebuild-ui refresh-check refresh-scheduled refresh-quick ci-summary data-catalog freshness-audit test validate proxy-report proxy-report-live publish-check publish clean
+.PHONY: setup doctor build-v4 refresh-data rebuild-ui refresh-check refresh-scheduled refresh-quick ci-summary data-catalog freshness-audit chart-studio test validate proxy-report proxy-report-live publish-check publish clean
 
 setup:
 	$(UV) sync
@@ -31,6 +31,7 @@ refresh-data:
 	$(UV) run python scripts/freshness_audit.py
 	$(UV) run python scripts/build_dashboard_archive.py
 	$(UV) run python scripts/macro_workbench.py
+	$(UV) run python scripts/build_chart_studio.py
 
 rebuild-ui:
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python build_v4.py ALL
@@ -53,6 +54,7 @@ rebuild-ui:
 	$(UV) run python scripts/freshness_audit.py
 	$(UV) run python scripts/build_dashboard_archive.py
 	$(UV) run python scripts/macro_workbench.py
+	$(UV) run python scripts/build_chart_studio.py
 
 refresh-check:
 	$(UV) run python scripts/refresh_check.py
@@ -71,6 +73,9 @@ data-catalog:
 
 freshness-audit:
 	$(UV) run python scripts/freshness_audit.py
+
+chart-studio:
+	$(UV) run python scripts/build_chart_studio.py
 
 test:
 	$(UV) run pytest -q
@@ -104,6 +109,8 @@ publish-check:
 	curl -L https://djiangwei.github.io/macro-dashboard/output/uzbekistan.html | rg -n "Uzbekistan Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/egypt.html | rg -n "Egypt Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/nigeria.html | rg -n "Nigeria Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/chart_studio.html | rg -n "Macro Chart Studio|chart_studio_catalog.json"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/chart_studio_catalog.json | rg -n "countries|series"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/core_coverage_matrix.json | rg -n "core-coverage-v1|concept_count|priorities"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/source_health.json | rg -n "source-health-v1|circuit_breaker|countries"
 
