@@ -2882,9 +2882,25 @@ def fetch_tcmb_evds(spec: dict[str, Any]) -> dict[str, Any]:
         raise RuntimeError("TCMB_EVDS_API_KEY not configured in environment")
 
     series_code = str(spec.get("series") or "")
-    start_date = str(spec.get("evds_start") or "01-01-2010")
+    start_date = str(spec.get("evds_start") or spec.get("start_date") or "01-01-2010")
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", start_date):
+        y, m, d = start_date.split("-")
+        start_date = f"{d}-{m}-{y}"
+
     end_date = str(spec.get("evds_end") or "31-12-2030")
-    url = f"https://evds2.tcmb.gov.tr/service/evds/series={series_code}&startDate={start_date}&endDate={end_date}&type=json"
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", end_date):
+        y, m, d = end_date.split("-")
+        end_date = f"{d}-{m}-{y}"
+
+    url = f"https://evds3.tcmb.gov.tr/igmevdsms-dis/series={series_code}&startDate={start_date}&endDate={end_date}&type=json"
+    evds_freq = spec.get("evds_frequency")
+    if evds_freq is not None:
+        freq_map = {"daily": 1, "workday": 2, "weekly": 3, "monthly": 5, "quarterly": 6, "annual": 8}
+        freq_val = freq_map.get(str(evds_freq).lower(), evds_freq)
+        url += f"&frequency={freq_val}"
+    if "aggregationTypes" in spec:
+        url += f"&aggregationTypes={spec['aggregationTypes']}"
+
     headers = {"User-Agent": USER_AGENT, "key": api_key, "Accept": "application/json"}
     response = requests.get(url, headers=headers, timeout=30)
     response.raise_for_status()
@@ -2892,6 +2908,7 @@ def fetch_tcmb_evds(spec: dict[str, Any]) -> dict[str, Any]:
     items = payload.get("items") or []
     field_key = series_code.replace(".", "_")
 
+    today_iso = datetime.now(UTC).strftime("%Y-%m-%d")
     observations: list[dict[str, Any]] = []
     for item in items:
         raw_val = item.get(field_key)
@@ -2914,7 +2931,7 @@ def fetch_tcmb_evds(spec: dict[str, Any]) -> dict[str, Any]:
             m = int(q_part) * 3
             day = 31 if m in {3, 12} else 30
             dt = f"{y}-{m:02d}-{day:02d}"
-        if dt:
+        if dt and dt <= today_iso:
             observations.append({"date": dt, "value": val})
 
     observations.sort(key=lambda x: x["date"])

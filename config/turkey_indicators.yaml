@@ -709,6 +709,22 @@ indicators:
     caveat_en: IMF World Economic Outlook historical series and projections.
     caveat_zh: IMF《世界经济展望》历史序列与预测值。
 
+  - id: fx_reserves
+    section: external_fx
+    label_en: CBRT Gross FX Reserves
+    label_zh: 央行官方外汇储备总额 (美元)
+    unit: "USD bn"
+    fetcher: tcmb_evds
+    series: TP.AB.B2
+    scale: 1000.0
+    source_authority: official_primary
+    source_name: Central Bank of the Republic of Turkey (TCMB) / EVDS
+    source_url: https://evds3.tcmb.gov.tr/
+    frequency: monthly
+    start_date: 2015-01-01
+    caveat_en: Official gross foreign exchange reserves held by the Central Bank of the Republic of Turkey.
+    caveat_zh: 土耳其央行持有的官方外汇储备总额（十亿美元）。
+
   # ==========================================
   # 7. Fiscal & Sovereign
   # ==========================================
@@ -765,6 +781,21 @@ indicators:
   # ==========================================
   - id: policy_rate
     section: monetary_financial
+    label_en: CBRT 1-Week Repo Auction Rate (Official Policy Rate)
+    label_zh: 土耳其央行1周回购拍卖利率 (官方政策利率)
+    unit: "%"
+    fetcher: tcmb_evds
+    series: TP.APIFON4
+    source_authority: official_primary
+    source_name: Central Bank of the Republic of Turkey (TCMB) / EVDS
+    source_url: https://evds3.tcmb.gov.tr/
+    frequency: daily
+    start_date: 2020-01-01
+    caveat_en: Central Bank of the Republic of Turkey 1-week repo auction interest rate (headline official policy rate).
+    caveat_zh: 土耳其央行（CBRT）1周回购拍卖利率，为官方基准政策利率。
+
+  - id: overnight_interbank_rate
+    section: monetary_financial
     label_en: Overnight Interbank Rate (Immediate Rates)
     label_zh: 隔夜银行间利率 (市场基准)
     unit: "%"
@@ -776,6 +807,51 @@ indicators:
     start_date: 2005-01-01
     caveat_en: Immediate interest rate / overnight interbank lending rate for Turkey.
     caveat_zh: 土耳其隔夜银行间拆借利率。
+
+  - id: commercial_loan_rate
+    section: monetary_financial
+    label_en: Commercial Loans TL Flow Rate (Weekly)
+    label_zh: 商业贷款加权平均利率 (周度发生额)
+    unit: "%"
+    fetcher: tcmb_evds
+    series: TP.KTF10
+    source_authority: official_primary
+    source_name: Central Bank of the Republic of Turkey (TCMB) / EVDS
+    source_url: https://evds3.tcmb.gov.tr/
+    frequency: weekly
+    start_date: 2015-01-01
+    caveat_en: Weighted average interest rate on new commercial Turkish Lira loan flows.
+    caveat_zh: 土耳其央行统计的每周新发放商业贷款（里拉）加权平均利率。
+
+  - id: mortgage_loan_rate
+    section: monetary_financial
+    label_en: Housing Mortgage Loans TL Flow Rate (Weekly)
+    label_zh: 住房贷款加权平均利率 (周度发生额)
+    unit: "%"
+    fetcher: tcmb_evds
+    series: TP.KTF12
+    source_authority: official_primary
+    source_name: Central Bank of the Republic of Turkey (TCMB) / EVDS
+    source_url: https://evds3.tcmb.gov.tr/
+    frequency: weekly
+    start_date: 2015-01-01
+    caveat_en: Weighted average interest rate on new housing mortgage Turkish Lira loan flows.
+    caveat_zh: 土耳其央行统计的每周新发放个人住房抵押贷款（里拉）加权平均利率。
+
+  - id: consumer_loan_rate
+    section: monetary_financial
+    label_en: Consumer Personal Loans TL Flow Rate (Weekly)
+    label_zh: 消费贷款加权平均利率 (周度发生额)
+    unit: "%"
+    fetcher: tcmb_evds
+    series: TP.KTF17
+    source_authority: official_primary
+    source_name: Central Bank of the Republic of Turkey (TCMB) / EVDS
+    source_url: https://evds3.tcmb.gov.tr/
+    frequency: weekly
+    start_date: 2015-01-01
+    caveat_en: Weighted average interest rate on new personal consumer Turkish Lira loan flows (ex-mortgage/auto).
+    caveat_zh: 土耳其央行统计的每周新发放个人综合消费贷款（里拉，不含房贷车贷）加权平均利率。
 
   - id: private_credit_gdp
     section: monetary_financial
@@ -851,12 +927,6 @@ indicators:
     caveat_zh: 银行体系不良贷款占贷款总额比重。
 
 data_gaps:
-  - section: monetary_financial
-    item_en: Weekly TRY Commercial, Mortgage, and Consumer Loan Flow Rates
-    item_zh: 每周土耳其里拉商业、房贷及消费贷加权平均发生额利率
-    status_en: Published by CBRT on EVDS API under series TP.KTF10/12/17. Requires free TCMB_EVDS_API_KEY to fetch automatically.
-    status_zh: 由土耳其央行在EVDS API（序列TP.KTF10/12/17）发布。需配置免费申请的TCMB_EVDS_API_KEY即可自动升级获取。
-
   - section: production_cycle
     item_en: Istanbul Chamber of Industry / S&P Global Turkey Manufacturing PMI
     item_zh: 伊斯坦布尔工业商会 / 标普全球土耳其制造业PMI

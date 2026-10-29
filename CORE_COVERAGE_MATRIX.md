@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-10-28T23:56:11.438510+00:00
+Generated: 2026-10-29T00:36:05.073959+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -33,8 +33,8 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 25 | `housing_investment` | `mortgage_rate` Mortgage Rate | W | W | W | W | - | W | - | - | V | W | - | - | - | - | - | - | - | - |
 | 26 | `housing_investment` | `property_inventory` Property Inventory / Supply | - | - | - | - | - | - | - | - | - | V | - | - | - | - | - | - | - | - |
 | 27 | `external_fx` | `current_account_gdp` Current Account, % GDP | W | W | W | W | W | L | L | L | V | V | W | - | W | W | W | W | W | W |
-| 28 | `external_fx` | `trade_balance` Trade Balance | W | W | W | W | W | V | W | W | V | W | W | V | W | V | W | W | L | W |
-| 29 | `external_fx` | `exports_growth` Exports Growth | - | - | - | - | W | V | W | W | V | W | V | V | W | V | - | - | - | - |
+| 28 | `external_fx` | `trade_balance` Trade Balance | W | W | W | W | W | V | W | W | V | W | W | W | W | V | W | W | L | W |
+| 29 | `external_fx` | `exports_growth` Exports Growth | - | - | - | - | W | V | W | W | V | W | V | W | W | V | - | - | - | - |
 | 30 | `external_fx` | `imports_growth` Imports Growth | - | - | - | - | W | V | W | W | V | W | V | V | W | V | - | - | - | - |
 | 31 | `external_fx` | `fx_spot` Spot Exchange Rate | V | V | V | V | W | V | W | V | V | V | V | W | W | W | V | L | L | V |
 | 32 | `external_fx` | `reer` Real Effective Exchange Rate | W | W | W | W | L | V | L | L | L | V | W | W | W | W | W | W | W | W |
@@ -43,7 +43,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 35 | `fiscal_sovereign` | `government_debt_gdp` Government Debt, % GDP | W | W | W | W | W | V | W | W | W | V | W | W | W | W | W | W | W | W |
 | 36 | `fiscal_sovereign` | `government_interest_cost` Government Interest Cost | W | W | W | W | - | - | - | - | W | V | - | - | - | - | - | - | - | - |
 | 37 | `fiscal_sovereign` | `sovereign_yield_10y` 10Y Sovereign Yield | V | V | V | V | - | V | W | V | V | V | - | - | W | W | - | - | - | - |
-| 38 | `monetary_financial` | `policy_rate` Policy Rate | V | V | V | V | W | V | W | V | V | V | W | - | W | W | L | L | L | L |
+| 38 | `monetary_financial` | `policy_rate` Policy Rate | V | V | V | V | W | V | W | V | V | V | V | - | W | W | L | L | L | L |
 | 39 | `monetary_financial` | `real_policy_rate` Real Policy Rate | L | L | L | L | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | 40 | `monetary_financial` | `broad_money_growth` Broad Money Growth | W | W | W | W | W | V | L | L | W | V | - | - | - | W | W | W | W | W |
 | 41 | `monetary_financial` | `private_credit_growth` Private Credit Growth | W | W | W | W | W | V | L | L | W | V | L | L | L | W | W | W | W | L |
@@ -69,8 +69,8 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | ZA | 28/48 | 5 | 10 | 12 | 1 | 20 |
 | UK | 38/48 | 24 | 9 | 5 | 0 | 10 |
 | US | 40/48 | 32 | 8 | 0 | 0 | 8 |
-| TR | 27/48 | 11 | 10 | 6 | 0 | 21 |
-| HK | 20/48 | 9 | 7 | 4 | 0 | 28 |
+| TR | 27/48 | 12 | 9 | 6 | 0 | 21 |
+| HK | 20/48 | 7 | 9 | 4 | 0 | 28 |
 | KR | 25/48 | 0 | 21 | 4 | 0 | 23 |
 | TW | 21/48 | 9 | 12 | 0 | 0 | 27 |
 | KZ | 17/48 | 1 | 13 | 3 | 0 | 31 |

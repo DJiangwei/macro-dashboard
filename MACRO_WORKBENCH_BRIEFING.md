@@ -1,6 +1,6 @@
 # Global Macro Workbench Intelligence Briefing
 
-**Generated**: 2026-10-28 | **Coverage**: 14 Economies (US, EA, UK, JP, CN, ZA, TR, HK, KR, TW, PL, CZ, HU, RO)
+**Generated**: 2026-10-29 | **Coverage**: 14 Economies (US, EA, UK, JP, CN, ZA, TR, HK, KR, TW, PL, CZ, HU, RO)
 
 ---
 
@@ -17,9 +17,9 @@
 | **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 44.9 (needs data review) |
 | **South Africa (ZA)** | 50.0 | 53.3 | **mixed** | moderate expansion | inflation pressure | restrictive stance | 47.2 (needs data review) |
 | **United Kingdom (UK)** | 52.9 | 53.3 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 48.3 (needs data review) |
-| **United States (US)** | 51.2 | 43.3 | **defensive** | moderate expansion | above-target inflation | neutral-moderate stance | 74.6 (usable with watch-list) |
-| **Turkey (TR)** | 46.2 | 51.7 | **defensive** | moderate expansion | inflation pressure | restrictive stance | 61.0 (usable with watch-list) |
-| **Hong Kong (HK)** | 63.3 | 55.0 | **mixed** | above-trend expansion | near-target inflation | insufficient data | 73.1 (usable with watch-list) |
+| **United States (US)** | 51.2 | 43.3 | **defensive** | moderate expansion | above-target inflation | neutral-moderate stance | 75.2 (usable with watch-list) |
+| **Turkey (TR)** | 46.2 | 51.7 | **defensive** | moderate expansion | inflation pressure | restrictive stance | 64.2 (usable with watch-list) |
+| **Hong Kong (HK)** | 63.3 | 55.0 | **mixed** | above-trend expansion | near-target inflation | insufficient data | 71.2 (usable with watch-list) |
 | **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 60.8 (usable with watch-list) |
 | **Taiwan (TW)** | 75.0 | 71.7 | **constructive** | above-trend expansion | near-target inflation | accommodative stance | 78.2 (usable with watch-list) |
 | **Kazakhstan (KZ)** | 43.8 | 55.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 77.8 (usable with watch-list) |
@@ -45,7 +45,7 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | **ZA** (SARB) | **7.25%** | 4.50% (4.5%) | 2.50% | **7.27%** (6.77% ~ 7.77%) | **-0.02%** | *calibrated / neutral* |
 | **UK** (Bank of England) | **3.75%** | 3.50% (2.0%) | 1.25% | **4.95%** (4.45% ~ 5.45%) | **-1.20%** | *moderately accommodative* |
 | **US** (Federal Reserve) | **3.88%** | 3.01% (2.0%) | 1.00% | **4.61%** (4.11% ~ 5.11%) | **-0.73%** | *moderately accommodative* |
-| **TR** (TCMB) | **35.50%** | 29.73% (5.0%) | 3.00% | **44.65%** (44.15% ~ 45.15%) | **-9.15%** | *substantially accommodative* |
+| **TR** (TCMB) | **36.00%** | 29.73% (5.0%) | 3.00% | **44.65%** (44.15% ~ 45.15%) | **-8.65%** | *substantially accommodative* |
 | **KR** (BOK) | **3.04%** | 2.88% (2.0%) | 1.00% | **5.09%** (4.59% ~ 5.59%) | **-2.05%** | *substantially accommodative* |
 | **TW** (CBC) | **2.00%** | 2.73% (2.0%) | 1.00% | **5.60%** (5.10% ~ 6.10%) | **-3.60%** | *substantially accommodative* |
 | **KZ** (NBK) | **9.00%** | 9.24% (5.0%) | 2.50% | **15.11%** (14.61% ~ 15.61%) | **-6.11%** | *substantially accommodative* |
