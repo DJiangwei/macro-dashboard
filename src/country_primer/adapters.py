@@ -2815,30 +2815,48 @@ def _get_env_key(key_name: str) -> str:
 
 def fetch_bok_ecos(spec: dict[str, Any]) -> dict[str, Any]:
     """Fetch time series from Bank of Korea (BOK) ECOS OpenAPI."""
-    api_key = _get_env_key("BOK_ECOS_API_KEY")
-    if not api_key:
-        fallback = spec.get("fallback")
-        if fallback and callable(fallback):
-            return fallback(spec)
-        raise RuntimeError("BOK_ECOS_API_KEY not configured in environment")
+    api_key = _get_env_key("BOK_ECOS_API_KEY") or "sample"
 
     stat_code = spec["stat_code"]
     cycle = spec.get("cycle", "M")
-    start_date = spec.get("start_date", "200001")
+    start_date = spec.get("start_date", "201501")
     end_date = spec.get("end_date", "203012")
-    item1 = spec.get("item_code1", "")
+    item1 = spec.get("item_code1", "?")
+    lang = spec.get("lang", "en")
 
-    url = f"https://ecos.bok.or.kr/api/StatisticSearch/{api_key}/json/en/1/10000/{stat_code}/{cycle}/{start_date}/{end_date}/{item1}"
     headers = {"User-Agent": USER_AGENT}
-    response = requests.get(url, headers=headers, timeout=30)
+    step = 10 if api_key == "sample" else 100000
+
+    url1 = f"https://ecos.bok.or.kr/api/StatisticSearch/{api_key}/json/{lang}/1/{step}/{stat_code}/{cycle}/{start_date}/{end_date}/{item1}"
+    response = requests.get(url1, headers=headers, timeout=30)
     response.raise_for_status()
     data = response.json()
-    rows = (data.get("StatisticSearch") or {}).get("row") or []
+    stat_search = data.get("StatisticSearch") or {}
+    total = int(stat_search.get("list_total_count") or 0)
+    rows = stat_search.get("row") or []
 
+    if api_key == "sample" and total > 10:
+        from concurrent.futures import ThreadPoolExecutor
+
+        chunk_ranges = [(s, min(s + step - 1, total)) for s in range(11, total + 1, step)]
+
+        def _fetch_chunk(rng: tuple[int, int]) -> tuple[int, list[dict[str, Any]]]:
+            s, e = rng
+            u = f"https://ecos.bok.or.kr/api/StatisticSearch/{api_key}/json/{lang}/{s}/{e}/{stat_code}/{cycle}/{start_date}/{end_date}/{item1}"
+            r = requests.get(u, headers=headers, timeout=20)
+            return (s, (r.json().get("StatisticSearch") or {}).get("row") or [])
+
+        with ThreadPoolExecutor(max_workers=6) as ex:
+            results = list(ex.map(_fetch_chunk, chunk_ranges))
+        results.sort(key=lambda x: x[0])
+        for _, chunk in results:
+            rows.extend(chunk)
+
+    today_iso = datetime.now(UTC).strftime("%Y-%m-%d")
     observations: list[dict[str, Any]] = []
     for r in rows:
         raw_val = r.get("DATA_VALUE")
-        if raw_val is None or raw_val == "":
+        if raw_val in (None, "", "ND", "null"):
             continue
         try:
             val = float(str(raw_val).replace(",", ""))
@@ -2860,15 +2878,22 @@ def fetch_bok_ecos(spec: dict[str, Any]) -> dict[str, Any]:
         elif len(raw_time) == 4:
             dt = f"{raw_time}-12-31"
 
-        if dt:
+        if dt and dt <= today_iso:
             observations.append({"date": dt, "value": val})
 
     observations.sort(key=lambda x: x["date"])
+    if not observations:
+        fallback = spec.get("fallback")
+        if fallback and callable(fallback):
+            return fallback(spec)
+        raise RuntimeError(f"fetch_bok_ecos returned no observations for {stat_code}/{item1}")
+
+    redacted_url = f"https://ecos.bok.or.kr/api/StatisticSearch/REDACTED/json/{lang}/1/{step}/{stat_code}/{cycle}/{start_date}/{end_date}/{item1}"
     return {
         **spec,
         "observations": observations,
         "provider_updated": observations[-1]["date"] if observations else "",
-        "api_url": f"https://ecos.bok.or.kr/api/StatisticSearch/REDACTED/json/en/1/10000/{stat_code}/{cycle}/{start_date}/{end_date}/{item1}",
+        "api_url": redacted_url,
     }
 
 

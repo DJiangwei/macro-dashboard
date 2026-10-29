@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-29T00:36:53.768283+00:00",
+  "generated": "2026-10-29T01:11:58.834545+00:00",
   "items": [
     {
       "code": "CN",
@@ -97,24 +97,6 @@
       "section": "prices_costs",
       "item": "CPI by COICOP division (food, housing, transport, and the other CP01-CP12 categories)",
       "status": "OECD's Japan COICOP-division CPI mirror was discontinued after June 2021, and the IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations. The Statistics Bureau's e-Stat table carries these divisions too, but they are not yet wired here; only the goods/services split is chartable so far.",
-      "priority": "high",
-      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
-    },
-    {
-      "code": "KR",
-      "country": "South Korea",
-      "section": "housing_property",
-      "item": "KB Kookmin Bank / KREB Jeonse Rental Price Index",
-      "status": "Korea's unique Jeonse deposit leasing contract index published by KB Financial and Korea Real Estate Board; available via ECOS table 901Y062.",
-      "priority": "high",
-      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
-    },
-    {
-      "code": "KR",
-      "country": "South Korea",
-      "section": "monetary_financial",
-      "item": "Daily BOK Base Rate Target Decisions and KTB 3Y Benchmark",
-      "status": "Maintained by Bank of Korea ECOS API under tables 722Y001 and 817Y002. Requires free BOK_ECOS_API_KEY in .env.local to enable automatically.",
       "priority": "high",
       "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
     },

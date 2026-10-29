@@ -1,6 +1,6 @@
 {
   "file": "hong_kong.html",
-  "generated": "2026-10-29T00:32:55.784886+00:00",
+  "generated": "2026-10-29T01:09:03.506304+00:00",
   "charts": 37,
   "source_groups": 10,
   "data_gaps": 1,
@@ -250,13 +250,13 @@
       "id": "merchandise_exports_growth",
       "label_en": "Merchandise Exports YoY",
       "label_zh": "商品出口总值同比",
-      "latest_date": "2026-08-01",
-      "latest_value": 53.0,
-      "latest_display": "53.0 % y/y",
+      "latest_date": "2026-09-01",
+      "latest_value": 64.9,
+      "latest_display": "64.9 % y/y",
       "frequency": "monthly",
       "source_name": "HK C&SD",
       "series": "",
-      "quality_status": "watch"
+      "quality_status": "verified"
     },
     {
       "id": "merchandise_imports_growth",
@@ -274,13 +274,13 @@
       "id": "merchandise_trade_balance",
       "label_en": "Merchandise Trade Balance",
       "label_zh": "商品贸易差额",
-      "latest_date": "2026-08-01",
-      "latest_value": -71243.0,
-      "latest_display": "-71,243 HK$ mn",
+      "latest_date": "2026-09-01",
+      "latest_value": -46333.0,
+      "latest_display": "-46,333 HK$ mn",
       "frequency": "monthly",
       "source_name": "HK C&SD",
       "series": "",
-      "quality_status": "watch"
+      "quality_status": "verified"
     },
     {
       "id": "current_account_usd",
@@ -471,9 +471,9 @@
     ],
     "file": "hong_kong_canonical_frame.json",
     "series": 37,
-    "observations": 11251,
+    "observations": 11253,
     "series_count": 37,
-    "observation_count": 11251
+    "observation_count": 11253
   },
   "data_gaps_detail": [
     {
@@ -530,8 +530,8 @@
     ],
     "quality_counts": {
       "low_confidence": 7,
-      "verified": 13,
-      "watch": 17
+      "verified": 15,
+      "watch": 15
     },
     "unavailable_count": 0
   },
@@ -544,8 +544,8 @@
   "freshness": {
     "as_of_date": "2026-10-29",
     "counts": {
-      "current": 20,
-      "due": 6,
+      "current": 22,
+      "due": 4,
       "projection": 4,
       "stale": 7
     },
@@ -769,50 +769,6 @@
         "comparability": "medium",
         "source_name": "IMF SDMX / HK C&SD",
         "series": "HKG.CPI._T.YOY_PCH_PA_PT.M",
-        "transform": "level"
-      },
-      {
-        "id": "merchandise_exports_growth",
-        "concept_id": "exports_growth",
-        "label_en": "Merchandise Exports YoY",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-08-01",
-        "age_days": 59,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "HK C&SD",
-        "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "merchandise_trade_balance",
-        "concept_id": "trade_balance",
-        "label_en": "Merchandise Trade Balance",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-08-01",
-        "age_days": 59,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "HK C&SD",
-        "series": "",
         "transform": "level"
       },
       {

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-29T00:36:53.768283+00:00",
+  "generated": "2026-10-29T01:11:58.834545+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -1537,7 +1537,7 @@
       "gaps_or_dropped": 5,
       "gaps_label": "Official data gaps",
       "headline_label": "Deposit Facility Rate",
-      "headline": "2.50% (2026-10-28)",
+      "headline": "2.50% (2026-10-29)",
       "secondary_label": "Source groups",
       "secondary": "6",
       "quality": "6 source groups · 18 low-confidence charts",
@@ -1567,7 +1567,7 @@
           "label": "ECB DFR",
           "value": 2.5,
           "display": "2.50 %",
-          "date": "2026-10-28",
+          "date": "2026-10-29",
           "source": "ECB",
           "quality_status": "verified"
         },
@@ -1652,7 +1652,7 @@
           "future_date": 1,
           "stale": 18
         },
-        "latest_historical_date": "2026-10-28",
+        "latest_historical_date": "2026-10-29",
         "attention": [
           {
             "id": "current_account_gdp",
@@ -2192,9 +2192,9 @@
         ],
         "file": "euro_area_canonical_frame.json",
         "series": 70,
-        "observations": 59604,
+        "observations": 59605,
         "series_count": 70,
-        "observation_count": 59604
+        "observation_count": 59605
       },
       "freshness_summary": {
         "dashboard": "Euro Area",
@@ -6129,11 +6129,11 @@
         "external": {
           "id": "merchandise_trade_balance",
           "label": "Trade balance",
-          "value": -71243.0,
-          "display": "-71,243 HK$ mn",
-          "date": "2026-08-01",
+          "value": -46333.0,
+          "display": "-46,333 HK$ mn",
+          "date": "2026-09-01",
           "source": "HK C&SD",
-          "quality_status": "watch"
+          "quality_status": "verified"
         },
         "fiscal": {
           "id": "government_debt_gdp",
@@ -6209,16 +6209,16 @@
         ],
         "quality_counts": {
           "low_confidence": 7,
-          "verified": 13,
-          "watch": 17
+          "verified": 15,
+          "watch": 15
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-29",
         "counts": {
-          "current": 20,
-          "due": 6,
+          "current": 22,
+          "due": 4,
           "projection": 4,
           "stale": 7
         },
@@ -6445,50 +6445,6 @@
             "transform": "level"
           },
           {
-            "id": "merchandise_exports_growth",
-            "concept_id": "exports_growth",
-            "label_en": "Merchandise Exports YoY",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "due",
-            "age_basis_date": "2026-08-01",
-            "age_days": 59,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "HK C&SD",
-            "series": "",
-            "transform": "level"
-          },
-          {
-            "id": "merchandise_trade_balance",
-            "concept_id": "trade_balance",
-            "label_en": "Merchandise Trade Balance",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "due",
-            "age_basis_date": "2026-08-01",
-            "age_days": 59,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "HK C&SD",
-            "series": "",
-            "transform": "level"
-          },
-          {
             "id": "retail_sales_growth",
             "concept_id": "retail_sales_growth",
             "label_en": "Retail Sales Value Index YoY",
@@ -6520,14 +6476,14 @@
         ],
         "file": "hong_kong_canonical_frame.json",
         "series": 37,
-        "observations": 11251,
+        "observations": 11253,
         "series_count": 37,
-        "observation_count": 11251
+        "observation_count": 11253
       },
       "freshness_summary": {
         "dashboard": "Hong Kong",
         "charts": 37,
-        "current": 24,
+        "current": 26,
         "stale": 7,
         "lagged_source": 0,
         "projection": 0,
@@ -6547,16 +6503,16 @@
       "currency": "KRW",
       "institution": "BOK",
       "category": "data-first country page",
-      "charts": 39,
-      "expected": 39,
+      "charts": 43,
+      "expected": 43,
       "proxy_fills": 0,
-      "gaps_or_dropped": 2,
+      "gaps_or_dropped": 0,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/KRW spot",
       "headline": "1325.06 (2026-10-23)",
       "secondary_label": "Source groups",
-      "secondary": "9",
-      "quality": "9 source groups · 9 low-confidence charts",
+      "secondary": "11",
+      "quality": "11 source groups · 9 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -6581,11 +6537,11 @@
         "policy": {
           "id": "policy_rate",
           "label": "Call rate",
-          "value": 3.044,
-          "display": "3.04 %",
+          "value": 3.0,
+          "display": "3.00 %",
           "date": "2026-09-01",
-          "source": "FRED / OECD",
-          "quality_status": "watch"
+          "source": "Bank of Korea (BOK) / ECOS",
+          "quality_status": "verified"
         },
         "external": {
           "id": "current_account_usd",
@@ -6625,7 +6581,7 @@
         }
       },
       "source_health": {
-        "source_groups": 9,
+        "source_groups": 11,
         "sources": [
           {
             "source_name": "FRED / OECD",
@@ -6648,6 +6604,14 @@
             "charts": 3
           },
           {
+            "source_name": "Bank of Korea (BOK) / ECOS",
+            "charts": 2
+          },
+          {
+            "source_name": "Bank of Korea (BOK) / KB Kookmin Bank",
+            "charts": 2
+          },
+          {
             "source_name": "Bruegel (Darvas 120-Trading-Partner Basket)",
             "charts": 2
           },
@@ -6666,6 +6630,7 @@
         ],
         "quality_counts": {
           "low_confidence": 9,
+          "verified": 4,
           "watch": 30
         },
         "unavailable_count": 3
@@ -6673,7 +6638,7 @@
       "freshness": {
         "as_of_date": "2026-10-29",
         "counts": {
-          "current": 17,
+          "current": 21,
           "due": 9,
           "projection": 4,
           "stale": 9
@@ -7085,15 +7050,15 @@
           "value"
         ],
         "file": "south_korea_canonical_frame.json",
-        "series": 39,
-        "observations": 8862,
-        "series_count": 39,
-        "observation_count": 8862
+        "series": 43,
+        "observations": 9428,
+        "series_count": 43,
+        "observation_count": 9428
       },
       "freshness_summary": {
         "dashboard": "South Korea",
-        "charts": 39,
-        "current": 21,
+        "charts": 43,
+        "current": 25,
         "stale": 9,
         "lagged_source": 0,
         "projection": 0,
@@ -7102,7 +7067,7 @@
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 9,
-        "latest_historical_date": "2026-10-23",
+        "latest_historical_date": "2026-10-29",
         "headline_latest": ""
       }
     },
@@ -10438,10 +10403,10 @@
       "structural_score": 55.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 71.2,
+        "score": 73.1,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 64.9,
+        "freshness_score": 70.3,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -10474,8 +10439,8 @@
           "label": "external drag",
           "score": 35.0,
           "confidence_weight": 1.0,
-          "value": -71243.0,
-          "display": "-71,243 HK$ mn",
+          "value": -46333.0,
+          "display": "-46,333 HK$ mn",
           "source_signal": "merchandise_trade_balance"
         },
         "fiscal": {
@@ -10511,12 +10476,12 @@
       "structural_score": 63.3,
       "composite_label": "mixed",
       "quality": {
-        "score": 60.8,
+        "score": 67.3,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 53.8,
+        "freshness_score": 58.1,
         "proxy_penalty": 0.0,
-        "gap_penalty": 5.0
+        "gap_penalty": 0.0
       },
       "dimensions": {
         "growth": {
@@ -10539,8 +10504,8 @@
           "label": "neutral-moderate stance",
           "score": 60.0,
           "confidence_weight": 1.0,
-          "value": 3.044,
-          "display": "3.04 %",
+          "value": 3.0,
+          "display": "3.00 %",
           "source_signal": "policy_rate"
         },
         "external": {
@@ -10578,7 +10543,7 @@
       },
       "taylor_stance": {
         "institution": "BOK",
-        "policy_rate": 3.04,
+        "policy_rate": 3.0,
         "inflation_rate": 2.88,
         "inflation_target": 2.0,
         "neutral_real_rate_r_star": 1.0,
@@ -10587,12 +10552,12 @@
           4.59,
           5.59
         ],
-        "policy_gap_deviation": -2.05,
+        "policy_gap_deviation": -2.09,
         "policy_gap_range": [
-          -2.55,
-          -1.55
+          -2.59,
+          -1.59
         ],
-        "real_policy_rate": 0.17,
+        "real_policy_rate": 0.12,
         "stance_label": "substantially accommodative"
       }
     },
@@ -11264,7 +11229,7 @@
     },
     "KR": {
       "institution": "BOK",
-      "policy_rate": 3.04,
+      "policy_rate": 3.0,
       "inflation_rate": 2.88,
       "inflation_target": 2.0,
       "neutral_real_rate_r_star": 1.0,
@@ -11273,12 +11238,12 @@
         4.59,
         5.59
       ],
-      "policy_gap_deviation": -2.05,
+      "policy_gap_deviation": -2.09,
       "policy_gap_range": [
-        -2.55,
-        -1.55
+        -2.59,
+        -1.59
       ],
-      "real_policy_rate": 0.17,
+      "real_policy_rate": 0.12,
       "stance_label": "substantially accommodative"
     },
     "TW": {
@@ -12590,21 +12555,21 @@
       "code": "HK",
       "name": "Hong Kong",
       "coverage_pct": 100.0,
-      "freshness_pct": 64.9,
+      "freshness_pct": 70.3,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 59.2,
-      "quality_score": 71.2
+      "quality_score": 73.1
     },
     {
       "code": "KR",
       "name": "South Korea",
       "coverage_pct": 100.0,
-      "freshness_pct": 53.8,
+      "freshness_pct": 58.1,
       "proxy_fills": 0,
-      "gaps": 2,
+      "gaps": 0,
       "regime_score": 64.2,
-      "quality_score": 60.8
+      "quality_score": 67.3
     },
     {
       "code": "TW",
@@ -13796,24 +13761,6 @@
       "section": "prices_costs",
       "item": "CPI by COICOP division (food, housing, transport, and the other CP01-CP12 categories)",
       "status": "OECD's Japan COICOP-division CPI mirror was discontinued after June 2021, and the IMF CPI dataset declares Japan's COICOP division keys (CP01-CP12) but returns them with no observations. The Statistics Bureau's e-Stat table carries these divisions too, but they are not yet wired here; only the goods/services split is chartable so far.",
-      "priority": "high",
-      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
-    },
-    {
-      "code": "KR",
-      "country": "South Korea",
-      "section": "housing_property",
-      "item": "KB Kookmin Bank / KREB Jeonse Rental Price Index",
-      "status": "Korea's unique Jeonse deposit leasing contract index published by KB Financial and Korea Real Estate Board; available via ECOS table 901Y062.",
-      "priority": "high",
-      "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
-    },
-    {
-      "code": "KR",
-      "country": "South Korea",
-      "section": "monetary_financial",
-      "item": "Daily BOK Base Rate Target Decisions and KTB 3Y Benchmark",
-      "status": "Maintained by Bank of Korea ECOS API under tables 722Y001 and 817Y002. Requires free BOK_ECOS_API_KEY in .env.local to enable automatically.",
       "priority": "high",
       "source_hint": "Prefer ONS, BoE IADB, HMRC/GOV.UK, OBR, or DESNZ endpoints before mirrors."
     },

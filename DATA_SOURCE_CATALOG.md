@@ -1060,7 +1060,7 @@ The South Korea page is generated from `config/south_korea_indicators.yaml`. FRE
 
 Generated from `config/south_korea_indicators.yaml`; latest dates are tracked in `output/south_korea_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 42. Latest rendered chart count: 39. Source groups: 9.
+Configured charts: 46. Latest rendered chart count: 43. Source groups: 11.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1084,6 +1084,8 @@ Configured charts: 42. Latest rendered chart count: 39. Source groups: 9.
 | prices_costs | `cpi_inflation_fred` | Headline CPI YoY (OECD Mirror Cross-Check) | monthly | % y/y | fred | FRED / OECD | KORCPALTT01CTGYM | OECD consumer price index growth rate series mirrored on FRED. |
 | housing_property | `bis_nominal_house_prices` | BIS Nominal Residential Property Prices | quarterly | Index (2010 = 100) | fred | FRED / BIS | QKRN628BIS | BIS long-term nominal residential property price index for Korea. |
 | housing_property | `bis_real_house_prices` | BIS Real Residential Property Prices | quarterly | Index (2010 = 100) | fred | FRED / BIS | QKRR628BIS | BIS consumer price-deflated real residential property prices. |
+| housing_property | `jeonse_rental_index` | KB National Housing Jeonse Rental Price Index | monthly | Index (2026.01 = 100) | bok_ecos | Bank of Korea (BOK) / KB Kookmin Bank |  | Korea's unique Jeonse deposit leasing contract rental price index compiled by KB Financial and published via BOK ECOS. |
+| housing_property | `jeonse_seoul_index` | KB Seoul Housing Jeonse Rental Price Index | monthly | Index (2026.01 = 100) | bok_ecos | Bank of Korea (BOK) / KB Kookmin Bank |  | Seoul metropolitan area Jeonse deposit leasing rental price index. |
 | external_fx | `krw_usd` | USD/KRW Exchange Rate (Fed H.10) | daily | KRW per USD | fred | FRED / Federal Reserve Board | DEXKOUS | Daily noon buying rates in New York City for cable transfers in Korean won. |
 | external_fx | `reer` | Real Effective Exchange Rate (REER) | monthly | Index (2007 = 100) | bruegel_reer | Bruegel (Darvas 120-Trading-Partner Basket) |  | CPI-based monthly real effective exchange rate calculated against 120 trading partners. |
 | external_fx | `neer` | Nominal Effective Exchange Rate (NEER) | monthly | Index (2007 = 100) | bruegel_reer | Bruegel (Darvas 120-Trading-Partner Basket) |  | Monthly nominal effective exchange rate calculated against 120 trading partners. |
@@ -1099,7 +1101,9 @@ Configured charts: 42. Latest rendered chart count: 39. Source groups: 9.
 | fiscal_sovereign | `fiscal_balance_gdp` | General Government Net Lending / Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper | GGXCNL_NGDP | General government net lending/borrowing as a percentage of GDP. |
 | fiscal_sovereign | `primary_balance_gdp` | Primary Net Lending / Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF Fiscal Monitor | GGXONLB_G01_GDP_PT | General government primary balance excluding net interest payments. |
 | fiscal_sovereign | `sovereign_yield_10y` | 10-Year Korea Treasury Bond (KTB) Benchmark Yield | monthly | % | fred | FRED / OECD | IRLTLT01KRM156N | Long-term government bond yields for 10-year maturity KTB benchmark. |
-| monetary_financial | `policy_rate` | Overnight Interbank Rate (Immediate Rates / Call Rate) | monthly | % | fred | FRED / OECD | IRSTCI01KRM156N | Immediate interest rate / overnight interbank lending rate for South Korea. |
+| monetary_financial | `policy_rate` | Bank of Korea Base Rate (Official Policy Rate) | monthly | % | bok_ecos | Bank of Korea (BOK) / ECOS |  | Bank of Korea Monetary Policy Board official base rate decision. |
+| monetary_financial | `overnight_interbank_rate` | Overnight Interbank Rate (Immediate Rates / Call Rate) | monthly | % | fred | FRED / OECD | IRSTCI01KRM156N | Immediate interest rate / overnight interbank lending rate for South Korea. |
+| monetary_financial | `ktb_3y_yield` | 3-Year Korea Treasury Bond (KTB) Benchmark Yield | monthly | % | bok_ecos | Bank of Korea (BOK) / ECOS |  | Monthly average 3-year Korea Treasury Bond benchmark market yield. |
 | monetary_financial | `interbank_rate_3m` | 3-Month Interbank Rate | monthly | % | fred | FRED / OECD | IR3TIB01KRM156N | 3-month interbank borrowing rate. |
 | monetary_financial | `private_credit_gdp` | Total Credit to Private Non-Financial Sector (% of GDP) | quarterly | % of GDP | fred | FRED / BIS | QKRPAM770A | BIS credit to the private non-financial sector as a percentage of GDP. |
 | monetary_financial | `household_credit_gdp` | Household Credit (% of GDP) | quarterly | % of GDP | fred | FRED / BIS | QKRHAM770A | BIS total credit to households and NPISH as a percentage of GDP (key Korea financial vulnerability indicator). |
@@ -1111,8 +1115,6 @@ Configured charts: 42. Latest rendered chart count: 39. Source groups: 9.
 
 | Section | Indicator family | Current status |
 |---|---|---|
-| monetary_financial | Daily BOK Base Rate Target Decisions and KTB 3Y Benchmark | Maintained by Bank of Korea ECOS API under tables 722Y001 and 817Y002. Requires free BOK_ECOS_API_KEY in .env.local to enable automatically. |
-| housing_property | KB Kookmin Bank / KREB Jeonse Rental Price Index | Korea's unique Jeonse deposit leasing contract index published by KB Financial and Korea Real Estate Board; available via ECOS table 901Y062. |
 
 ## Taiwan Data-First Dashboard Sources
 

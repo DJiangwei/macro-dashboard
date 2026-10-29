@@ -1,9 +1,9 @@
 {
   "file": "south_korea.html",
-  "generated": "2026-10-29T00:34:29.695006+00:00",
-  "charts": 39,
-  "source_groups": 9,
-  "data_gaps": 2,
+  "generated": "2026-10-29T01:10:37.164830+00:00",
+  "charts": 43,
+  "source_groups": 11,
+  "data_gaps": 0,
   "low_confidence": 9,
   "key_series_latest": [
     {
@@ -199,6 +199,30 @@
       "quality_status": "low_confidence"
     },
     {
+      "id": "jeonse_rental_index",
+      "label_en": "KB National Housing Jeonse Rental Price Index",
+      "label_zh": "KB全国住宅全租房(Jeonse)租金价格指数",
+      "latest_date": "2026-10-01",
+      "latest_value": 102.758,
+      "latest_display": "103 Index (2026.01 = 100)",
+      "frequency": "monthly",
+      "source_name": "Bank of Korea (BOK) / KB Kookmin Bank",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "jeonse_seoul_index",
+      "label_en": "KB Seoul Housing Jeonse Rental Price Index",
+      "label_zh": "KB首尔住宅全租房(Jeonse)租金价格指数",
+      "latest_date": "2026-10-01",
+      "latest_value": 105.432,
+      "latest_display": "105 Index (2026.01 = 100)",
+      "frequency": "monthly",
+      "source_name": "Bank of Korea (BOK) / KB Kookmin Bank",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
       "id": "krw_usd",
       "label_en": "USD/KRW Exchange Rate (Fed H.10)",
       "label_zh": "美元兑韩元汇率 (美联储H.10)",
@@ -380,6 +404,18 @@
     },
     {
       "id": "policy_rate",
+      "label_en": "Bank of Korea Base Rate (Official Policy Rate)",
+      "label_zh": "韩国央行基准利率 (官方政策利率)",
+      "latest_date": "2026-09-01",
+      "latest_value": 3.0,
+      "latest_display": "3.00 %",
+      "frequency": "monthly",
+      "source_name": "Bank of Korea (BOK) / ECOS",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "overnight_interbank_rate",
       "label_en": "Overnight Interbank Rate (Immediate Rates / Call Rate)",
       "label_zh": "隔夜拆借利率 (市场基准)",
       "latest_date": "2026-09-01",
@@ -389,6 +425,18 @@
       "source_name": "FRED / OECD",
       "series": "IRSTCI01KRM156N",
       "quality_status": "watch"
+    },
+    {
+      "id": "ktb_3y_yield",
+      "label_en": "3-Year Korea Treasury Bond (KTB) Benchmark Yield",
+      "label_zh": "3年期韩国国债(KTB)基准收益率",
+      "latest_date": "2026-09-01",
+      "latest_value": 3.991,
+      "latest_display": "3.99 %",
+      "frequency": "monthly",
+      "source_name": "Bank of Korea (BOK) / ECOS",
+      "series": "",
+      "quality_status": "verified"
     },
     {
       "id": "interbank_rate_3m",
@@ -498,29 +546,14 @@
       "value"
     ],
     "file": "south_korea_canonical_frame.json",
-    "series": 39,
-    "observations": 8862,
-    "series_count": 39,
-    "observation_count": 8862
+    "series": 43,
+    "observations": 9428,
+    "series_count": 43,
+    "observation_count": 9428
   },
-  "data_gaps_detail": [
-    {
-      "section": "monetary_financial",
-      "item_en": "Daily BOK Base Rate Target Decisions and KTB 3Y Benchmark",
-      "item_zh": "韩国央行基准利率目标决策与3年期国债基准收益率",
-      "status_en": "Maintained by Bank of Korea ECOS API under tables 722Y001 and 817Y002. Requires free BOK_ECOS_API_KEY in .env.local to enable automatically.",
-      "status_zh": "由韩国银行ECOS API（表722Y001与817Y002）维护。在.env.local中配置免费申请的BOK_ECOS_API_KEY即可自动升级获取。"
-    },
-    {
-      "section": "housing_property",
-      "item_en": "KB Kookmin Bank / KREB Jeonse Rental Price Index",
-      "item_zh": "国民银行 / 韩国房地产院全租房(Jeonse)租金价格指数",
-      "status_en": "Korea's unique Jeonse deposit leasing contract index published by KB Financial and Korea Real Estate Board; available via ECOS table 901Y062.",
-      "status_zh": "韩国特有的全租房(Jeonse)押金租赁价格指数，由国民银行与房地产院编制，可通过ECOS表901Y062获取。"
-    }
-  ],
+  "data_gaps_detail": [],
   "source_health": {
-    "source_groups": 9,
+    "source_groups": 11,
     "sources": [
       {
         "source_name": "FRED / OECD",
@@ -543,6 +576,14 @@
         "charts": 3
       },
       {
+        "source_name": "Bank of Korea (BOK) / ECOS",
+        "charts": 2
+      },
+      {
+        "source_name": "Bank of Korea (BOK) / KB Kookmin Bank",
+        "charts": 2
+      },
+      {
         "source_name": "Bruegel (Darvas 120-Trading-Partner Basket)",
         "charts": 2
       },
@@ -561,6 +602,7 @@
     ],
     "quality_counts": {
       "low_confidence": 9,
+      "verified": 4,
       "watch": 30
     },
     "unavailable_count": 3
@@ -574,7 +616,7 @@
   "freshness": {
     "as_of_date": "2026-10-29",
     "counts": {
-      "current": 17,
+      "current": 21,
       "due": 9,
       "projection": 4,
       "stale": 9
@@ -981,7 +1023,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 35,
+      "level": 39,
       "pct_change": 1,
       "yoy_pct": 3
     },
@@ -1018,6 +1060,6 @@
       "date",
       "value"
     ],
-    "charted_series": 39
+    "charted_series": 43
   }
 }

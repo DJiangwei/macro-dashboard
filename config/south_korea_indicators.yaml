@@ -356,6 +356,42 @@ indicators:
     caveat_en: BIS consumer price-deflated real residential property prices.
     caveat_zh: 经CPI平减后的实际住宅物业价格指数。
 
+  - id: jeonse_rental_index
+    section: housing_property
+    label_en: KB National Housing Jeonse Rental Price Index
+    label_zh: KB全国住宅全租房(Jeonse)租金价格指数
+    unit: "Index (2026.01 = 100)"
+    fetcher: bok_ecos
+    stat_code: "901Y063"
+    item_code1: "P64A"
+    cycle: "M"
+    start_date: "201501"
+    lang: "kr"
+    source_authority: official_primary
+    source_name: Bank of Korea (BOK) / KB Kookmin Bank
+    source_url: https://ecos.bok.or.kr/
+    frequency: monthly
+    caveat_en: Korea's unique Jeonse deposit leasing contract rental price index compiled by KB Financial and published via BOK ECOS.
+    caveat_zh: 由KB国民银行编制并通过韩国银行ECOS发布的全国全租房押金租金价格指数。
+
+  - id: jeonse_seoul_index
+    section: housing_property
+    label_en: KB Seoul Housing Jeonse Rental Price Index
+    label_zh: KB首尔住宅全租房(Jeonse)租金价格指数
+    unit: "Index (2026.01 = 100)"
+    fetcher: bok_ecos
+    stat_code: "901Y063"
+    item_code1: "P64AD"
+    cycle: "M"
+    start_date: "201501"
+    lang: "kr"
+    source_authority: official_primary
+    source_name: Bank of Korea (BOK) / KB Kookmin Bank
+    source_url: https://ecos.bok.or.kr/
+    frequency: monthly
+    caveat_en: Seoul metropolitan area Jeonse deposit leasing rental price index.
+    caveat_zh: 韩国首尔都市圈全租房押金租金价格指数。
+
   # ==========================================
   # 6. External Balance, Trade & FX
   # ==========================================
@@ -599,6 +635,23 @@ indicators:
   # ==========================================
   - id: policy_rate
     section: monetary_financial
+    label_en: Bank of Korea Base Rate (Official Policy Rate)
+    label_zh: 韩国央行基准利率 (官方政策利率)
+    unit: "%"
+    fetcher: bok_ecos
+    stat_code: "722Y001"
+    item_code1: "0101000"
+    cycle: "M"
+    start_date: "201501"
+    source_authority: official_primary
+    source_name: Bank of Korea (BOK) / ECOS
+    source_url: https://ecos.bok.or.kr/
+    frequency: monthly
+    caveat_en: Bank of Korea Monetary Policy Board official base rate decision.
+    caveat_zh: 韩国银行货币政策委员会官方基准利率。
+
+  - id: overnight_interbank_rate
+    section: monetary_financial
     label_en: Overnight Interbank Rate (Immediate Rates / Call Rate)
     label_zh: 隔夜拆借利率 (市场基准)
     unit: "%"
@@ -610,6 +663,23 @@ indicators:
     start_date: 2000-01-01
     caveat_en: Immediate interest rate / overnight interbank lending rate for South Korea.
     caveat_zh: 韩国隔夜银行同业拆借利率。
+
+  - id: ktb_3y_yield
+    section: monetary_financial
+    label_en: 3-Year Korea Treasury Bond (KTB) Benchmark Yield
+    label_zh: 3年期韩国国债(KTB)基准收益率
+    unit: "%"
+    fetcher: bok_ecos
+    stat_code: "721Y001"
+    item_code1: "5020000"
+    cycle: "M"
+    start_date: "201501"
+    source_authority: official_primary
+    source_name: Bank of Korea (BOK) / ECOS
+    source_url: https://ecos.bok.or.kr/
+    frequency: monthly
+    caveat_en: Monthly average 3-year Korea Treasury Bond benchmark market yield.
+    caveat_zh: 韩国银行统计的3年期韩国国债基准市场月度平均收益率。
 
   - id: interbank_rate_3m
     section: monetary_financial
@@ -698,18 +768,7 @@ indicators:
     caveat_en: Non-performing loans to total gross loans for deposit-takers.
     caveat_zh: 银行体系不良贷款占贷款总额比重。
 
-data_gaps:
-  - section: monetary_financial
-    item_en: Daily BOK Base Rate Target Decisions and KTB 3Y Benchmark
-    item_zh: 韩国央行基准利率目标决策与3年期国债基准收益率
-    status_en: Maintained by Bank of Korea ECOS API under tables 722Y001 and 817Y002. Requires free BOK_ECOS_API_KEY in .env.local to enable automatically.
-    status_zh: 由韩国银行ECOS API（表722Y001与817Y002）维护。在.env.local中配置免费申请的BOK_ECOS_API_KEY即可自动升级获取。
-
-  - section: housing_property
-    item_en: KB Kookmin Bank / KREB Jeonse Rental Price Index
-    item_zh: 国民银行 / 韩国房地产院全租房(Jeonse)租金价格指数
-    status_en: Korea's unique Jeonse deposit leasing contract index published by KB Financial and Korea Real Estate Board; available via ECOS table 901Y062.
-    status_zh: 韩国特有的全租房(Jeonse)押金租赁价格指数，由国民银行与房地产院编制，可通过ECOS表901Y062获取。
+data_gaps: []
 
 cross_checks:
   - concept: headline_inflation
