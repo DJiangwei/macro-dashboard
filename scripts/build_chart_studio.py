@@ -70,38 +70,52 @@ FT_PALETTE = [
 
 PRESETS = [
     {
-        "id": "us_cn_10y_spread",
-        "title_en": "US vs China 10Y Sovereign Yield & Spread",
-        "title_zh": "中美 10 年期国债收益率与利差对比",
-        "description_zh": "全球两大经济体基准无风险利率与跨境利差走势对比。",
-        "description_en": "Benchmark 10Y sovereign yields for US and China with capital flow spread dynamics.",
+        "id": "us_ea_10y_spread",
+        "title_en": "US vs Euro Area 10Y Sovereign Yield & Spread",
+        "title_zh": "欧美 10 年期基准国债收益率与跨大西洋利差对比",
+        "description_zh": "全球核心无风险利率：美债 10 年期收益率 vs 欧元区 AAA 基准 10 年期公债收益率及跨大西洋利差走势。",
+        "description_en": "Global benchmark 10Y sovereign yields for US and Euro Area AAA benchmark with transatlantic spread dynamics.",
         "transform": "raw",
         "date_range": "5y",
         "series": [
-            {"country": "US", "id": "sovereign_yield_10y", "axis": "left", "color": "#990f3d", "label": "US 10Y Treasury"},
-            {"country": "CN", "id": "gov_bond_yield_10y_akshare", "axis": "left", "color": "#0d7680", "label": "China 10Y Gov Bond"}
+            {"country": "US", "id": "treasury_10y_yield", "axis": "left", "color": "#990f3d", "label": "US 10Y Treasury Yield (%)"},
+            {"country": "EA", "id": "aaa_yield_10y", "axis": "left", "color": "#0d7680", "label": "Euro Area AAA 10Y Yield (%)"}
         ]
     },
     {
         "id": "central_bank_rates",
-        "title_en": "Major Central Bank Policy Rates (Fed, ECB, BOJ, BOE)",
-        "title_zh": "主要央行基准政策利率对比 (美联储/欧央行/日银/英格兰银行)",
-        "description_zh": "全球核心央行货币政策周期、加息与降息节奏同屏对比。",
+        "title_en": "Major Central Bank Policy Rates (Fed, ECB, BOE, BOJ)",
+        "title_zh": "主要央行基准政策利率走廊对比 (美联储/欧央行/英格兰银行/日银)",
+        "description_zh": "全球核心央行货币政策周期、加息见顶与降息节奏同屏横向对比。",
         "description_en": "Global major central bank benchmark policy rates and monetary easing cycles.",
         "transform": "raw",
         "date_range": "5y",
         "series": [
-            {"country": "US", "id": "policy_rate", "axis": "left", "color": "#990f3d", "label": "Fed Funds Target Rate"},
-            {"country": "EA", "id": "deposit_facility_rate", "axis": "left", "color": "#0d7680", "label": "ECB Deposit Facility Rate"},
-            {"country": "UK", "id": "policy_rate", "axis": "left", "color": "#364b61", "label": "BOE Official Bank Rate"},
-            {"country": "JP", "id": "overnight_call_rate", "axis": "left", "color": "#d97706", "label": "BOJ Overnight Rate"}
+            {"country": "US", "id": "effective_fed_funds", "axis": "left", "color": "#990f3d", "label": "Fed Effective Funds Rate (%)"},
+            {"country": "EA", "id": "policy_rate", "axis": "left", "color": "#0d7680", "label": "ECB Deposit Facility Rate (%)"},
+            {"country": "UK", "id": "bank_rate", "axis": "left", "color": "#364b61", "label": "BOE Bank Rate (%)"},
+            {"country": "JP", "id": "policy_rate", "axis": "left", "color": "#d97706", "label": "BOJ Overnight Call Rate (%)"}
+        ]
+    },
+    {
+        "id": "global_inflation_battle",
+        "title_en": "Inflation Battle: US vs Euro Area vs China CPI",
+        "title_zh": "全球三大经济体通胀去向：美欧中 CPI 同比路径对比",
+        "description_zh": "美欧抗通胀与去通胀进程 vs 中国温和通胀格局全景对比。",
+        "description_en": "Disinflation and price stability dynamics across US, Euro Area and China.",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "US", "id": "cpi_inflation", "axis": "left", "color": "#990f3d", "label": "US Headline CPI Inflation (% y/y)"},
+            {"country": "EA", "id": "hicp_inflation", "axis": "left", "color": "#0d7680", "label": "Euro Area HICP Inflation (% y/y)"},
+            {"country": "CN", "id": "cpi_yoy_akshare", "axis": "left", "color": "#d97706", "label": "China CPI Inflation (% y/y)"}
         ]
     },
     {
         "id": "kr_tw_tech_momentum",
         "title_en": "Korea KOSPI vs Taiwan TAIEX Equity Momentum (Base = 100)",
-        "title_zh": "韩国 KOSPI vs 台湾 TAIEX 股指走势 (基期归一化 = 100)",
-        "description_zh": "东亚半导体与科技出口核心股指累计收益率走势归一化对比。",
+        "title_zh": "韩国 KOSPI vs 台湾 TAIEX 科技股指走势 (基期归一化 = 100)",
+        "description_zh": "东亚半导体与科技出口双雄核心股指累计收益率走势归一化发散度对比。",
         "description_en": "Normalized equity return comparison for East Asian semiconductor powerhouses.",
         "transform": "rebase",
         "date_range": "3y",
@@ -111,31 +125,31 @@ PRESETS = [
         ]
     },
     {
-        "id": "em_inflation_defense",
-        "title_en": "EM Monetary Defense: Turkey vs Egypt vs Nigeria Policy Rates",
-        "title_zh": "新兴市场利率防线：土耳其 vs 埃及 vs 尼日利亚 政策利率",
-        "description_zh": "高通胀新兴市场央行基准借贷与回购政策利率横向对比。",
-        "description_en": "Central bank policy rate defense across high-inflation emerging markets.",
-        "transform": "raw",
-        "date_range": "5y",
-        "series": [
-            {"country": "TR", "id": "policy_rate", "axis": "left", "color": "#990f3d", "label": "Turkey One-Week Repo Rate"},
-            {"country": "EG", "id": "policy_rate", "axis": "left", "color": "#0d7680", "label": "Egypt CBE Corridor Rate"},
-            {"country": "NG", "id": "policy_rate", "axis": "left", "color": "#d97706", "label": "Nigeria Monetary Policy Rate"}
-        ]
-    },
-    {
-        "id": "oil_producers_brent",
-        "title_en": "Kazakhstan & Nigeria Oil Production (Left) vs Brent Crude (Right)",
-        "title_zh": "哈萨克与尼日利亚原油月产 (左轴) vs 布伦特油价 (右轴)",
-        "description_zh": "主要产油国原油日产量（千桶/日）与国际现货油价双轴联动对比。",
+        "id": "crude_oil_production_brent",
+        "title_en": "Crude Oil Output & Spot Price: Kazakhstan & Nigeria vs Brent",
+        "title_zh": "产油国供给与油价：哈萨克斯坦与尼日利亚日产 (左轴) vs 布伦特油价 (右轴)",
+        "description_zh": "产油国日产水平（千桶/日）与国际现货油价（美元/桶）双 Y 轴联动。",
         "description_en": "Crude oil output for key producers compared against Brent crude spot price.",
         "transform": "raw",
         "date_range": "5y",
         "series": [
-            {"country": "KZ", "id": "crude_oil_production_eia", "axis": "left", "color": "#990f3d", "label": "Kazakhstan Crude Output"},
-            {"country": "NG", "id": "crude_oil_production_eia", "axis": "left", "color": "#0d7680", "label": "Nigeria Crude Output"},
-            {"country": "KZ", "id": "brent_crude_oil_spot_eia", "axis": "right", "color": "#364b61", "label": "Brent Crude Price ($/bbl)"}
+            {"country": "KZ", "id": "crude_oil_production", "axis": "left", "color": "#990f3d", "label": "Kazakhstan Crude Output (TBPD)"},
+            {"country": "NG", "id": "crude_oil_production", "axis": "left", "color": "#0d7680", "label": "Nigeria Crude Output (TBPD)"},
+            {"country": "KZ", "id": "brent_crude_oil", "axis": "right", "color": "#364b61", "label": "Brent Crude Price ($/bbl)"}
+        ]
+    },
+    {
+        "id": "em_inflation_defense",
+        "title_en": "EM Monetary Defense: Turkey vs Egypt vs Nigeria Policy Rates",
+        "title_zh": "新兴市场利率防线：土耳其 vs 埃及 vs 尼日利亚 政策利率",
+        "description_zh": "高通胀新兴市场央行基准借贷与回购政策利率横向防线对比。",
+        "description_en": "Central bank policy rate defense across high-inflation emerging markets.",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "TR", "id": "policy_rate", "axis": "left", "color": "#990f3d", "label": "Turkey One-Week Repo Rate (%)"},
+            {"country": "EG", "id": "policy_rate", "axis": "left", "color": "#0d7680", "label": "Egypt CBE Corridor Rate (%)"},
+            {"country": "NG", "id": "policy_rate", "axis": "left", "color": "#d97706", "label": "Nigeria Monetary Policy Rate (%)"}
         ]
     }
 ]
@@ -209,11 +223,40 @@ def generate_catalog() -> dict:
     }
 
 
-def render_html() -> str:
+def get_initial_embedded_frames() -> dict:
+    """Pre-extract default preset indicators so the initial chart renders with zero network latency."""
+    embedded = {}
+    try:
+        # 1. US treasury_10y_yield
+        us_file = OUTPUT / "us_canonical_frame.json"
+        if us_file.exists():
+            with open(us_file, "r", encoding="utf-8") as f:
+                us_data = json.load(f)
+            us_series = {s.get("indicator_id"): s for s in us_data.get("series", [])}
+            if "treasury_10y_yield" in us_series:
+                embedded.setdefault("US", {})["treasury_10y_yield"] = us_series["treasury_10y_yield"]
+
+        # 2. EA aaa_yield_10y
+        ea_file = OUTPUT / "euro_area_canonical_frame.json"
+        if ea_file.exists():
+            with open(ea_file, "r", encoding="utf-8") as f:
+                ea_data = json.load(f)
+            ea_series = {s.get("indicator_id"): s for s in ea_data.get("series", [])}
+            if "aaa_yield_10y" in ea_series:
+                embedded.setdefault("EA", {})["aaa_yield_10y"] = ea_series["aaa_yield_10y"]
+    except Exception as e:
+        print(f"Warning: could not prepare embedded initial frames: {e}", file=sys.stderr)
+    return embedded
+
+
+def render_html(catalog: dict) -> str:
     nav_links = []
     for code, name, name_zh, cfile in COUNTRY_NAV:
         nav_links.append(f'<a href="{cfile}" title="{name} ({name_zh})">{code}</a>')
     country_nav_html = "\n    ".join(nav_links)
+
+    embedded_catalog_json = json.dumps(catalog, ensure_ascii=False)
+    initial_frames_json = json.dumps(get_initial_embedded_frames(), ensure_ascii=False)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -892,9 +935,13 @@ def render_html() -> str:
 </main>
 
 <script>
+// Embedded Catalog & Initial Frames Cache for Fail-Safe Instant Rendering
+const EMBEDDED_CATALOG = {embedded_catalog_json};
+const INITIAL_EMBEDDED_FRAMES = {initial_frames_json};
+
 // State Management
-let CATALOG = null;
-let FRAME_CACHE = {{}};
+let CATALOG = EMBEDDED_CATALOG;
+let FRAME_CACHE = Object.assign({{}}, INITIAL_EMBEDDED_FRAMES);
 let ACTIVE_SERIES = [];
 let CURRENT_TRANSFORM = 'raw';
 let CURRENT_RANGE = '5y';
@@ -905,16 +952,19 @@ const FT_PALETTE = ["#990f3d", "#0d7680", "#d97706", "#364b61", "#593380"];
 // Initialization
 async function init() {{
   try {{
-    const inOutputDir = window.location.pathname.includes('/output/');
-    const prefix = inOutputDir ? '' : 'output/';
-    let res;
-    try {{
-      res = await fetch('chart_studio_catalog.json');
-      if (!res.ok) res = await fetch(prefix + 'chart_studio_catalog.json');
-    }} catch (e) {{
-      res = await fetch(prefix + 'chart_studio_catalog.json');
+    // If embedded catalog is missing, fetch remotely
+    if (!CATALOG || !CATALOG.countries) {{
+      const inOutputDir = window.location.pathname.includes('/output/');
+      const prefix = inOutputDir ? '' : 'output/';
+      let res;
+      try {{
+        res = await fetch('chart_studio_catalog.json');
+        if (!res.ok) res = await fetch(prefix + 'chart_studio_catalog.json');
+      }} catch (e) {{
+        res = await fetch(prefix + 'chart_studio_catalog.json');
+      }}
+      CATALOG = await res.json();
     }}
-    CATALOG = await res.json();
     renderPresets();
 
     // Check URL parameters or hash
@@ -924,7 +974,7 @@ async function init() {{
       loadPreset(CATALOG.presets[0]);
     }}
   }} catch (err) {{
-    console.error("Failed to load catalog:", err);
+    console.error("Failed to initialize catalog:", err);
   }}
 }}
 
@@ -983,6 +1033,14 @@ function renderSeriesControls() {{
 
     const cData = CATALOG.countries.find(c => c.code === item.country);
     const countryName = cData ? (CURRENT_LANG === 'zh' ? cData.name_zh : cData.name_en) : item.country;
+
+    // Validate that indicatorId exists in this country; fallback to first indicator if not
+    if (cData && cData.indicators && cData.indicators.length > 0) {{
+      const exists = cData.indicators.some(ind => ind.id === item.indicatorId);
+      if (!exists) {{
+        item.indicatorId = cData.indicators[0].id;
+      }}
+    }}
 
     // Build country options
     const countryOpts = CATALOG.countries.map(c => {{
@@ -1104,9 +1162,11 @@ function setDateRange(range) {{
 
 // Data Fetching & Caching
 async function fetchCountryFrame(countryCode) {{
-  if (FRAME_CACHE[countryCode]) return FRAME_CACHE[countryCode];
+  if (FRAME_CACHE[countryCode] && Object.keys(FRAME_CACHE[countryCode]).length > 2) {{
+    return FRAME_CACHE[countryCode];
+  }}
   const cData = CATALOG.countries.find(c => c.code === countryCode);
-  if (!cData) return {{}};
+  if (!cData) return FRAME_CACHE[countryCode] || {{}};
 
   const inOutputDir = window.location.pathname.includes('/output/');
   const prefix = inOutputDir ? '' : 'output/';
@@ -1117,10 +1177,15 @@ async function fetchCountryFrame(countryCode) {{
       res = await fetch(cData.canonical_file);
     }}
   }} catch (err) {{
-    res = await fetch(cData.canonical_file);
+    try {{
+      res = await fetch(cData.canonical_file);
+    }} catch (e2) {{
+      console.warn("Could not fetch remote canonical frame:", e2);
+      return FRAME_CACHE[countryCode] || {{}};
+    }}
   }}
   const data = await res.json();
-  const map = {{}};
+  const map = FRAME_CACHE[countryCode] || {{}};
 
   if (cData.canonical_file === 'cee_canonical_frame.json') {{
     (data.series || []).forEach(s => {{
@@ -1139,7 +1204,8 @@ async function fetchCountryFrame(countryCode) {{
 
 // Chart Rendering Logic (FT Graphic Specification)
 async function refreshChart() {{
-  document.getElementById('canvas-loading').style.display = 'flex';
+  const loadingEl = document.getElementById('canvas-loading');
+  if (loadingEl) loadingEl.style.display = 'flex';
 
   try {{
     // 1. Ensure all active countries are cached
@@ -1156,13 +1222,13 @@ async function refreshChart() {{
 
       const meta = rawSeries.metadata || rawSeries;
       let label = (CURRENT_LANG === 'zh' ? meta.label_zh : meta.label_en) || item.indicatorId;
-      label = `${{cData.flag}} ${{item.country}}: ${{label}}`;
+      label = `${{cData ? cData.flag : ''}} ${{item.country}}: ${{label}}`;
       const unit = meta.unit || '';
 
       const rawObs = (rawSeries.observations || []).map(row => ({{
         date: String(row[0]),
         value: Number(row[1])
-      }})).filter(r => !isNaN(r.value));
+      }})).filter(r => !isNaN(r.value) && r.date);
 
       seriesData.push({{
         index: idx,
@@ -1174,17 +1240,39 @@ async function refreshChart() {{
       }});
     }});
 
-    // 3. Filter by Date Range
-    const now = new Date();
-    let cutoff = null;
-    if (CURRENT_RANGE === '1y') cutoff = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-    else if (CURRENT_RANGE === '3y') cutoff = new Date(now.getFullYear() - 3, now.getMonth(), now.getDate());
-    else if (CURRENT_RANGE === '5y') cutoff = new Date(now.getFullYear() - 5, now.getMonth(), now.getDate());
-    else if (CURRENT_RANGE === '10y') cutoff = new Date(now.getFullYear() - 10, now.getMonth(), now.getDate());
+    // 3. Filter by Date Range relative to latest observation available
+    let latestObsDateStr = '';
+    seriesData.forEach(s => {{
+      if (s.observations.length > 0) {{
+        const lastDate = s.observations[s.observations.length - 1].date;
+        if (lastDate > latestObsDateStr) {{
+          latestObsDateStr = lastDate;
+        }}
+      }}
+    }});
 
-    const cutoffStr = cutoff ? cutoff.toISOString().slice(0, 10) : '0000-00-00';
+    let cutoffStr = '0000-00-00';
+    if (CURRENT_RANGE !== 'max' && latestObsDateStr) {{
+      const parts = latestObsDateStr.split('-');
+      const y = parseInt(parts[0], 10) || 2026;
+      const m = parts[1] || '01';
+      const d = parts[2] || '01';
+      let yearsBack = 5;
+      if (CURRENT_RANGE === '1y') yearsBack = 1;
+      else if (CURRENT_RANGE === '3y') yearsBack = 3;
+      else if (CURRENT_RANGE === '5y') yearsBack = 5;
+      else if (CURRENT_RANGE === '10y') yearsBack = 10;
+
+      const startYear = y - yearsBack;
+      cutoffStr = `${{startYear}}-${{m}}-${{d}}`;
+    }}
+
     seriesData.forEach(s => {{
       s.filteredObs = s.observations.filter(o => o.date >= cutoffStr);
+      // Fallback: if range filter leaves 0 observations, show all
+      if (s.filteredObs.length === 0 && s.observations.length > 0) {{
+        s.filteredObs = s.observations;
+      }}
     }});
 
     // 4. Apply Transformations
@@ -1223,16 +1311,44 @@ async function refreshChart() {{
           spreadY.push(o.value - s2Map.get(o.date));
         }}
       }});
-      plotTraces.push({{
-        name: `Spread (${{s1.config.country}} − ${{s2.config.country}})`,
-        x: spreadX,
-        y: spreadY,
-        type: 'scatter',
-        mode: 'lines',
-        fill: 'tozeroy',
-        fillcolor: 'rgba(153, 15, 61, 0.08)',
-        line: {{ color: '#990f3d', width: 2.4 }}
-      }});
+
+      // Fallback: Month-level matching if daily timestamps don't align directly
+      if (spreadX.length < 5) {{
+        const s2MonthMap = new Map();
+        s2.filteredObs.forEach(o => {{
+          s2MonthMap.set(o.date.slice(0, 7), o.value);
+        }});
+        const mSpreadX = [];
+        const mSpreadY = [];
+        s1.filteredObs.forEach(o => {{
+          const ym = o.date.slice(0, 7);
+          if (s2MonthMap.has(ym) && !mSpreadX.includes(o.date)) {{
+            mSpreadX.push(o.date);
+            mSpreadY.push(o.value - s2MonthMap.get(ym));
+          }}
+        }});
+        if (mSpreadX.length > spreadX.length) {{
+          spreadX.length = 0;
+          spreadY.length = 0;
+          mSpreadX.forEach((x, i) => {{
+            spreadX.push(x);
+            spreadY.push(mSpreadY[i]);
+          }});
+        }}
+      }}
+
+      if (spreadX.length > 0) {{
+        plotTraces.push({{
+          name: `Spread (${{s1.config.country}} − ${{s2.config.country}})`,
+          x: spreadX,
+          y: spreadY,
+          type: 'scatter',
+          mode: 'lines',
+          fill: 'tozeroy',
+          fillcolor: 'rgba(153, 15, 61, 0.08)',
+          line: {{ color: '#990f3d', width: 2.4 }}
+        }});
+      }}
       // Also display underlying series as fine dashed lines
       plotTraces.push({{
         name: `${{s1.label}}`,
@@ -1328,7 +1444,18 @@ async function refreshChart() {{
       autosize: true,
     }};
 
-    Plotly.react('chart-canvas', plotTraces, layout, {{
+    if (plotTraces.length === 0) {{
+      layout.annotations = [{{
+        xref: 'paper', yref: 'paper',
+        x: 0.5, y: 0.5,
+        text: CURRENT_LANG === 'zh' ? '暂无数据或选定序列在所选区间内无有效观测值，请尝试更换时间窗口或指标' : 'No observations found for the selected series within this range.',
+        showarrow: false,
+        font: {{ size: 13, color: '#737c8c' }}
+      }}];
+    }}
+
+    // Use Plotly.newPlot for robust canvas rendering
+    Plotly.newPlot('chart-canvas', plotTraces, layout, {{
       displayModeBar: "hover",
       displaylogo: false,
       responsive: true
@@ -1343,12 +1470,13 @@ async function refreshChart() {{
   }} catch (err) {{
     console.error("Chart refresh error:", err);
   }} finally {{
-    document.getElementById('canvas-loading').style.display = 'none';
+    if (loadingEl) loadingEl.style.display = 'none';
   }}
 }}
 
 function renderSummaryTable(seriesData) {{
   const tbody = document.getElementById('summary-table-body');
+  if (!tbody) return;
   tbody.innerHTML = '';
 
   seriesData.forEach(s => {{
@@ -1474,7 +1602,8 @@ function copyShareURL() {{
 function toggleLang() {{
   CURRENT_LANG = CURRENT_LANG === 'en' ? 'zh' : 'en';
   document.documentElement.lang = CURRENT_LANG;
-  document.getElementById('lang-btn').textContent = CURRENT_LANG === 'en' ? '中文' : 'English';
+  const langBtn = document.getElementById('lang-btn');
+  if (langBtn) langBtn.textContent = CURRENT_LANG === 'en' ? '中文' : 'English';
   renderPresets();
   renderSeriesControls();
   refreshChart();
@@ -1496,7 +1625,7 @@ def build_studio() -> tuple[Path, Path, Path, Path]:
         json.dump(catalog, f, indent=2, ensure_ascii=False)
     print(f"Wrote {catalog_path} ({catalog_path.stat().st_size:,} bytes)")
 
-    html_content = render_html()
+    html_content = render_html(catalog)
     html_path = OUTPUT / "chart_studio.html"
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(html_content)
