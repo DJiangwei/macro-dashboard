@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-29T01:11:58.834545+00:00",
+  "generated": "2026-10-29T15:35:02.117552+00:00",
   "items": [
     {
       "code": "KZ",
@@ -52,6 +52,19 @@
       "severity": "high",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
       "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 1033 days old for annual data."
+    },
+    {
+      "code": "HK",
+      "dashboard": "Hong Kong",
+      "indicator_id": "total_reserves_usd",
+      "label": "Official Foreign Currency Reserve Assets",
+      "latest": "2023",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1033,
+      "severity": "high",
+      "source": "World Bank / HKMA",
+      "note": "Total official foreign currency reserve assets in billions of USD."
     },
     {
       "code": "HU",
@@ -1027,19 +1040,6 @@
       "severity": "high",
       "source": "FRED / OECD",
       "note": "OECD consumer price index growth rate series mirrored on FRED."
-    },
-    {
-      "code": "CN",
-      "dashboard": "China",
-      "indicator_id": "large_bank_rrr_akshare",
-      "label": "Large Bank RRR",
-      "latest": "2025-05-15",
-      "frequency": "irregular",
-      "status": "stale",
-      "age_days": 532,
-      "severity": "high",
-      "source": "AKShare / PBC RRR Announcements",
-      "note": "Event-based required reserve ratio history via AKShare; effective dates and institution buckets should be cross-checked against PBC announcements."
     }
   ]
 }

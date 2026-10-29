@@ -1,8 +1,8 @@
 {
   "file": "uzbekistan.html",
-  "generated": "2026-10-29T01:11:02.558342+00:00",
-  "charts": 32,
-  "source_groups": 10,
+  "generated": "2026-10-29T15:34:34.473654+00:00",
+  "charts": 35,
+  "source_groups": 12,
   "data_gaps": 2,
   "low_confidence": 6,
   "key_series_latest": [
@@ -64,6 +64,18 @@
       "frequency": "annual",
       "source_name": "World Bank / ILO",
       "series": "SL.UEM.TOTL.ZS",
+      "quality_status": "watch"
+    },
+    {
+      "id": "labour_participation_rate",
+      "label_en": "Labour Force Participation Rate (Total 15+)",
+      "label_zh": "劳动力参与率 (15岁及以上)",
+      "latest_date": "2025",
+      "latest_value": 57.499,
+      "latest_display": "57.5 % of total population 15+",
+      "frequency": "annual",
+      "source_name": "World Bank / ILO",
+      "series": "SL.TLF.CACT.ZS",
       "quality_status": "watch"
     },
     {
@@ -247,6 +259,30 @@
       "quality_status": "watch"
     },
     {
+      "id": "personal_remittances_usd",
+      "label_en": "Personal Remittances Received (from Abroad)",
+      "label_zh": "个人侨汇收入总额 (海外汇款)",
+      "latest_date": "2025",
+      "latest_value": 21.100902510685398,
+      "latest_display": "21.1 USD bn",
+      "frequency": "annual",
+      "source_name": "World Bank / Central Bank of Uzbekistan (CBU)",
+      "series": "BX.TRF.PWKR.CD.DT",
+      "quality_status": "watch"
+    },
+    {
+      "id": "total_reserves_usd",
+      "label_en": "Official Reserve Assets (Total Reserves including Gold)",
+      "label_zh": "官方储备资产总额 (含黄金)",
+      "latest_date": "2025",
+      "latest_value": 66.0352207252339,
+      "latest_display": "66.0 USD bn",
+      "frequency": "annual",
+      "source_name": "World Bank / CBU",
+      "series": "FI.RES.TOTL.CD",
+      "quality_status": "watch"
+    },
+    {
       "id": "government_debt_gdp",
       "label_en": "General Government Gross Debt (% of GDP)",
       "label_zh": "广义政府总债务占GDP比重",
@@ -389,7 +425,7 @@
       "primary": "real_gdp_growth",
       "secondary": "real_gdp_growth_wb",
       "label_en": "IMF WEO vs World Bank WDI Real GDP Growth",
-      "n_common": 34,
+      "n_common": 26,
       "latest_diff": 0.00037522067087003563,
       "max_abs_diff": 0.10283203899840032,
       "n_breaches": 0,
@@ -397,7 +433,7 @@
       "tolerance": 0.5,
       "window_since": null,
       "window_months": null,
-      "window_n_common": 34,
+      "window_n_common": 26,
       "window_max_abs_diff": 0.10283203899840032,
       "window_n_breaches": 0,
       "status": "agree"
@@ -410,10 +446,10 @@
       "value"
     ],
     "file": "uzbekistan_canonical_frame.json",
-    "series": 32,
-    "observations": 2538,
-    "series_count": 32,
-    "observation_count": 2538
+    "series": 35,
+    "observations": 2568,
+    "series_count": 35,
+    "observation_count": 2568
   },
   "data_gaps_detail": [
     {
@@ -432,7 +468,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 10,
+    "source_groups": 12,
     "sources": [
       {
         "source_name": "IMF SDMX / CBU",
@@ -463,6 +499,10 @@
         "charts": 2
       },
       {
+        "source_name": "World Bank / ILO",
+        "charts": 2
+      },
+      {
         "source_name": "IMF / FRED",
         "charts": 1
       },
@@ -471,13 +511,17 @@
         "charts": 1
       },
       {
-        "source_name": "World Bank / ILO",
+        "source_name": "World Bank / CBU",
+        "charts": 1
+      },
+      {
+        "source_name": "World Bank / Central Bank of Uzbekistan (CBU)",
         "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 6,
-      "watch": 26
+      "watch": 29
     },
     "unavailable_count": 0
   },
@@ -490,7 +534,7 @@
   "freshness": {
     "as_of_date": "2026-10-29",
     "counts": {
-      "current": 17,
+      "current": 20,
       "due": 3,
       "projection": 6,
       "stale": 6
@@ -699,7 +743,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 32
+      "level": 35
     },
     "non_level": []
   },
@@ -709,6 +753,6 @@
       "date",
       "value"
     ],
-    "charted_series": 32
+    "charted_series": 35
   }
 }

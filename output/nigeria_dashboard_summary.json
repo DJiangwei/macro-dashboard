@@ -1,8 +1,8 @@
 {
   "file": "nigeria.html",
-  "generated": "2026-10-29T01:11:10.900318+00:00",
-  "charts": 36,
-  "source_groups": 12,
+  "generated": "2026-10-29T15:34:43.367525+00:00",
+  "charts": 38,
+  "source_groups": 13,
   "data_gaps": 2,
   "low_confidence": 9,
   "key_series_latest": [
@@ -76,6 +76,18 @@
       "frequency": "annual",
       "source_name": "World Bank / ILO",
       "series": "SL.UEM.TOTL.ZS",
+      "quality_status": "watch"
+    },
+    {
+      "id": "labour_participation_rate",
+      "label_en": "Labour Force Participation Rate (Total 15+)",
+      "label_zh": "劳动力参与率 (15岁及以上)",
+      "latest_date": "2025",
+      "latest_value": 82.517,
+      "latest_display": "82.5 % of total population 15+",
+      "frequency": "annual",
+      "source_name": "World Bank / ILO",
+      "series": "SL.TLF.CACT.ZS",
       "quality_status": "watch"
     },
     {
@@ -271,6 +283,18 @@
       "quality_status": "watch"
     },
     {
+      "id": "total_reserves_usd",
+      "label_en": "Official Reserve Assets (Total Reserves including Gold)",
+      "label_zh": "官方储备资产总额 (含黄金)",
+      "latest_date": "2025",
+      "latest_value": 46.0249167674055,
+      "latest_display": "46.0 USD bn",
+      "frequency": "annual",
+      "source_name": "World Bank / CBN",
+      "series": "FI.RES.TOTL.CD",
+      "quality_status": "watch"
+    },
+    {
       "id": "government_debt_gdp",
       "label_en": "General Government Gross Debt (% of GDP)",
       "label_zh": "广义政府总债务占GDP比重",
@@ -437,10 +461,10 @@
       "primary": "real_gdp_growth",
       "secondary": "real_gdp_growth_wb",
       "label_en": "IMF WEO vs World Bank WDI Real GDP Growth",
-      "n_common": 35,
+      "n_common": 26,
       "latest_diff": -0.013361807009729887,
-      "max_abs_diff": 3.6351187739953903,
-      "n_breaches": 14,
+      "max_abs_diff": 3.2943440837683404,
+      "n_breaches": 9,
       "last_breach_date": "2013",
       "tolerance": 0.5,
       "window_since": "2015",
@@ -458,10 +482,10 @@
       "value"
     ],
     "file": "nigeria_canonical_frame.json",
-    "series": 36,
-    "observations": 13787,
-    "series_count": 36,
-    "observation_count": 13787
+    "series": 38,
+    "observations": 13635,
+    "series_count": 38,
+    "observation_count": 13635
   },
   "data_gaps_detail": [
     {
@@ -480,7 +504,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 12,
+    "source_groups": 13,
     "sources": [
       {
         "source_name": "IMF SDMX / CBN",
@@ -511,6 +535,10 @@
         "charts": 2
       },
       {
+        "source_name": "World Bank / ILO",
+        "charts": 2
+      },
+      {
         "source_name": "Central Bank of Nigeria (CBN)",
         "charts": 1
       },
@@ -527,14 +555,14 @@
         "charts": 1
       },
       {
-        "source_name": "World Bank / ILO",
+        "source_name": "World Bank / CBN",
         "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 9,
       "verified": 1,
-      "watch": 26
+      "watch": 28
     },
     "unavailable_count": 0
   },
@@ -547,7 +575,7 @@
   "freshness": {
     "as_of_date": "2026-10-29",
     "counts": {
-      "current": 18,
+      "current": 20,
       "due": 3,
       "projection": 6,
       "stale": 9
@@ -822,7 +850,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 36
+      "level": 38
     },
     "non_level": []
   },
@@ -832,6 +860,6 @@
       "date",
       "value"
     ],
-    "charted_series": 36
+    "charted_series": 38
   }
 }

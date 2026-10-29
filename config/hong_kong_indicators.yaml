@@ -551,6 +551,23 @@ indicators:
     caveat_en: IMF World Economic Outlook historical series and projections.
     caveat_zh: IMF《世界经济展望》历史序列与预测值。
 
+  - id: total_reserves_usd
+    section: external_fx
+    label_en: Official Foreign Currency Reserve Assets
+    label_zh: 官方外汇储备资产总额
+    unit: "USD bn"
+    fetcher: world_bank
+    country: HKG
+    series: FI.RES.TOTL.CD
+    scale: 1000000000
+    source_authority: official_secondary
+    source_name: World Bank / HKMA
+    source_url: https://data.worldbank.org/indicator/FI.RES.TOTL.CD?locations=HK
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Total official foreign currency reserve assets in billions of USD.
+    caveat_zh: 官方外汇储备资产总额（十亿美元，世行口径）。
+
   # ==========================================
   # 7. Fiscal & Public Finance
   # ==========================================

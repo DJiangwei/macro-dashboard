@@ -321,6 +321,21 @@ indicators:
     caveat_en: OECD amplitude-adjusted Composite Leading Indicator (CLI) for Turkey.
     caveat_zh: OECD编制的土耳其振幅调整综合领先指标（CLI）。
 
+  - id: real_sector_confidence
+    section: production_cycle
+    label_en: Real Sector Business Confidence Index (RKGE)
+    label_zh: 实体部门企业景气指数 (RKGE)
+    unit: "Index (100 = Neutral)"
+    fetcher: tcmb_evds
+    series: TP.TG2.Y01
+    source_authority: official_primary
+    source_name: Central Bank of the Republic of Turkey (TCMB) / EVDS
+    source_url: https://evds3.tcmb.gov.tr/
+    frequency: monthly
+    start_date: 2018-01-01
+    caveat_en: TCMB Real Sector Business Confidence Index (values above 100 indicate optimism).
+    caveat_zh: 土耳其央行发布的实体部门景气信心指数（100以上代表乐观景气）。
+
   # ==========================================
   # 3. Labour & Wages
   # ==========================================
@@ -363,6 +378,22 @@ indicators:
     start_date: 2005-01-01
     caveat_en: Unemployment rate for persons aged 15-24.
     caveat_zh: 15至24岁青年劳动力的季调失业率。
+
+  - id: labour_participation_rate
+    section: labour_wages
+    label_en: Labour Force Participation Rate (Total 15+)
+    label_zh: 劳动力参与率 (15岁及以上)
+    unit: "% of total population 15+"
+    fetcher: world_bank
+    country: TUR
+    series: SL.TLF.CACT.ZS
+    source_authority: official_secondary
+    source_name: World Bank / ILO
+    source_url: https://data.worldbank.org/indicator/SL.TLF.CACT.ZS?locations=TR
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Labour force participation rate for ages 15 and older (modelled ILO estimate via World Bank).
+    caveat_zh: 15岁及以上人口的劳动力参与率（世行/国际劳工组织口径）。
 
   # ==========================================
   # 4. Prices & Costs
@@ -894,6 +925,21 @@ indicators:
     start_date: 2005-01-01
     caveat_en: BIS domestic bank credit to the private non-financial sector as a percentage of GDP.
     caveat_zh: 国际清算银行（BIS）统计的国内银行对私营非金融部门信贷占GDP比重。
+
+  - id: bist_100_equity_index
+    section: monetary_financial
+    label_en: Borsa Istanbul BIST 100 Benchmark Equity Index
+    label_zh: 伊斯坦布尔证券交易所 BIST 100 基准指数
+    unit: "Index (2015 = 100)"
+    fetcher: fred
+    series: SPASTT01TRM661N
+    source_authority: official_primary
+    source_name: FRED / OECD / Borsa Istanbul
+    source_url: https://fred.stlouisfed.org/series/SPASTT01TRM661N
+    frequency: monthly
+    start_date: 2015-01-01
+    caveat_en: Borsa Istanbul 100 equity benchmark monthly average index mirrored on FRED.
+    caveat_zh: FRED镜像收录的伊斯坦布尔证券交易所BIST 100核心基准股指月均价。
 
   # ==========================================
   # 9. Financial Stability

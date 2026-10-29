@@ -46,6 +46,7 @@ from country_primer.adapters import (
     fetch_hkma,
     fetch_imf_datamapper,
     fetch_imf_sdmx,
+    fetch_world_bank,
 )
 from country_primer.cross_checks import evaluate_cross_checks
 from country_primer.source_health import SOURCE_HEALTH
@@ -84,6 +85,7 @@ SUMMARY_KEY_IDS = [
     "current_account_usd",
     "services_balance_usd",
     "fdi_net_usd",
+    "total_reserves_usd",
     "current_account_gdp",
     "government_debt_gdp",
     "fiscal_balance_gdp",
@@ -113,6 +115,7 @@ def build(data_mode: str | None = None) -> Path:
         "fred": lambda spec, cache: _apply_transform(apply_scale(fetch_fred_us(requests.Session(), spec))),
         "imf_sdmx": lambda spec, cache: _apply_transform(apply_scale(fetch_imf_sdmx(requests.Session(), spec))),
         "imf_datamapper": lambda spec, cache: _apply_transform(fetch_imf_datamapper(requests.Session(), spec)),
+        "world_bank": lambda spec, cache: _apply_transform(apply_scale(fetch_world_bank(spec))),
         "bruegel_reer": lambda spec, cache: _apply_transform(fetch_bruegel_reer(requests.Session(), spec)),
         "dbnomics": lambda spec, cache: _apply_transform(fetch_dbnomics(spec)),
     }

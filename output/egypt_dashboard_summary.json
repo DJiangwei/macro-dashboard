@@ -1,8 +1,8 @@
 {
   "file": "egypt.html",
-  "generated": "2026-10-29T01:11:06.662052+00:00",
-  "charts": 33,
-  "source_groups": 11,
+  "generated": "2026-10-29T15:34:39.386412+00:00",
+  "charts": 36,
+  "source_groups": 13,
   "data_gaps": 2,
   "low_confidence": 13,
   "key_series_latest": [
@@ -64,6 +64,18 @@
       "frequency": "annual",
       "source_name": "World Bank / ILO",
       "series": "SL.UEM.TOTL.ZS",
+      "quality_status": "watch"
+    },
+    {
+      "id": "labour_participation_rate",
+      "label_en": "Labour Force Participation Rate (Total 15+)",
+      "label_zh": "劳动力参与率 (15岁及以上)",
+      "latest_date": "2025",
+      "latest_value": 44.568,
+      "latest_display": "44.6 % of total population 15+",
+      "frequency": "annual",
+      "source_name": "World Bank / ILO",
+      "series": "SL.TLF.CACT.ZS",
       "quality_status": "watch"
     },
     {
@@ -259,6 +271,30 @@
       "quality_status": "watch"
     },
     {
+      "id": "personal_remittances_usd",
+      "label_en": "Personal Remittances Received (from Abroad)",
+      "label_zh": "个人侨汇收入总额 (海外汇款)",
+      "latest_date": "2025",
+      "latest_value": 41.5174,
+      "latest_display": "41.5 USD bn",
+      "frequency": "annual",
+      "source_name": "World Bank / Central Bank of Egypt (CBE)",
+      "series": "BX.TRF.PWKR.CD.DT",
+      "quality_status": "watch"
+    },
+    {
+      "id": "total_reserves_usd",
+      "label_en": "Official Reserve Assets (Total Reserves including Gold)",
+      "label_zh": "官方储备资产总额 (含黄金)",
+      "latest_date": "2025",
+      "latest_value": 48.8754945392689,
+      "latest_display": "48.9 USD bn",
+      "frequency": "annual",
+      "source_name": "World Bank / CBE",
+      "series": "FI.RES.TOTL.CD",
+      "quality_status": "watch"
+    },
+    {
       "id": "government_debt_gdp",
       "label_en": "General Government Gross Debt (% of GDP)",
       "label_zh": "广义政府总债务占GDP比重",
@@ -401,10 +437,10 @@
       "primary": "real_gdp_growth",
       "secondary": "real_gdp_growth_wb",
       "label_en": "IMF WEO vs World Bank WDI Real GDP Growth",
-      "n_common": 46,
+      "n_common": 26,
       "latest_diff": 0.00798931429812022,
-      "max_abs_diff": 6.6113290379907,
-      "n_breaches": 15,
+      "max_abs_diff": 1.11453394636614,
+      "n_breaches": 3,
       "last_breach_date": "2013",
       "tolerance": 0.5,
       "window_since": "2015",
@@ -422,10 +458,10 @@
       "value"
     ],
     "file": "egypt_canonical_frame.json",
-    "series": 33,
-    "observations": 9619,
-    "series_count": 33,
-    "observation_count": 9619
+    "series": 36,
+    "observations": 9491,
+    "series_count": 36,
+    "observation_count": 9491
   },
   "data_gaps_detail": [
     {
@@ -444,7 +480,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 11,
+    "source_groups": 13,
     "sources": [
       {
         "source_name": "IMF SDMX / CBE",
@@ -471,6 +507,10 @@
         "charts": 2
       },
       {
+        "source_name": "World Bank / ILO",
+        "charts": 2
+      },
+      {
         "source_name": "EIA / FRED",
         "charts": 1
       },
@@ -487,13 +527,17 @@
         "charts": 1
       },
       {
-        "source_name": "World Bank / ILO",
+        "source_name": "World Bank / CBE",
+        "charts": 1
+      },
+      {
+        "source_name": "World Bank / Central Bank of Egypt (CBE)",
         "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 13,
-      "watch": 20
+      "watch": 23
     },
     "unavailable_count": 0
   },
@@ -506,7 +550,7 @@
   "freshness": {
     "as_of_date": "2026-10-29",
     "counts": {
-      "current": 11,
+      "current": 14,
       "due": 3,
       "projection": 6,
       "stale": 13
@@ -869,7 +913,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 33
+      "level": 36
     },
     "non_level": []
   },
@@ -879,6 +923,6 @@
       "date",
       "value"
     ],
-    "charted_series": 33
+    "charted_series": 36
   }
 }

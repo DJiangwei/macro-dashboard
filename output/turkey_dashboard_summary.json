@@ -1,8 +1,8 @@
 {
   "file": "turkey.html",
-  "generated": "2026-10-29T01:08:54.389957+00:00",
-  "charts": 50,
-  "source_groups": 13,
+  "generated": "2026-10-29T15:30:48.555164+00:00",
+  "charts": 53,
+  "source_groups": 15,
   "data_gaps": 1,
   "low_confidence": 12,
   "key_series_latest": [
@@ -106,9 +106,9 @@
       "id": "economic_sentiment_indicator",
       "label_en": "Economic Sentiment Indicator (ESI)",
       "label_zh": "经济景气指数 (ESI)",
-      "latest_date": "2026-09-01",
-      "latest_value": 101.5,
-      "latest_display": "102 Index (100 = Neutral)",
+      "latest_date": "2026-10-01",
+      "latest_value": 95.9,
+      "latest_display": "95.9 Index (100 = Neutral)",
       "frequency": "monthly",
       "source_name": "Eurostat / DG ECFIN",
       "series": "",
@@ -118,9 +118,9 @@
       "id": "capacity_utilization",
       "label_en": "Manufacturing Capacity Utilization",
       "label_zh": "制造业产能利用率",
-      "latest_date": "2026-07-01",
-      "latest_value": 73.9,
-      "latest_display": "73.9 %",
+      "latest_date": "2026-10-01",
+      "latest_value": 74.5,
+      "latest_display": "74.5 %",
       "frequency": "quarterly",
       "source_name": "Eurostat / CBRT",
       "series": "",
@@ -487,6 +487,42 @@
       "quality_status": "low_confidence"
     },
     {
+      "id": "bist_100_equity_index",
+      "label_en": "Borsa Istanbul BIST 100 Benchmark Equity Index",
+      "label_zh": "伊斯坦布尔证券交易所 BIST 100 基准指数",
+      "latest_date": "2026-09-01",
+      "latest_value": 1682.344,
+      "latest_display": "1,682 Index (2015 = 100)",
+      "frequency": "monthly",
+      "source_name": "FRED / OECD / Borsa Istanbul",
+      "series": "SPASTT01TRM661N",
+      "quality_status": "verified"
+    },
+    {
+      "id": "real_sector_confidence",
+      "label_en": "Real Sector Business Confidence Index (RKGE)",
+      "label_zh": "实体部门企业景气指数 (RKGE)",
+      "latest_date": "2026-10-01",
+      "latest_value": 84.81707139,
+      "latest_display": "84.8 Index (100 = Neutral)",
+      "frequency": "monthly",
+      "source_name": "Central Bank of the Republic of Turkey (TCMB) / EVDS",
+      "series": "TP.TG2.Y01",
+      "quality_status": "verified"
+    },
+    {
+      "id": "labour_participation_rate",
+      "label_en": "Labour Force Participation Rate (Total 15+)",
+      "label_zh": "劳动力参与率 (15岁及以上)",
+      "latest_date": "2025",
+      "latest_value": 54.379,
+      "latest_display": "54.4 % of total population 15+",
+      "frequency": "annual",
+      "source_name": "World Bank / ILO",
+      "series": "SL.TLF.CACT.ZS",
+      "quality_status": "watch"
+    },
+    {
       "id": "bank_capital_ratio",
       "label_en": "Bank Regulatory Capital to Risk-Weighted Assets",
       "label_zh": "银行监管资本充足率",
@@ -544,10 +580,10 @@
       "value"
     ],
     "file": "turkey_canonical_frame.json",
-    "series": 50,
-    "observations": 10039,
-    "series_count": 50,
-    "observation_count": 10039
+    "series": 53,
+    "observations": 10314,
+    "series_count": 53,
+    "observation_count": 10314
   },
   "data_gaps_detail": [
     {
@@ -559,7 +595,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 13,
+    "source_groups": 15,
     "sources": [
       {
         "source_name": "Eurostat / TurkStat",
@@ -567,7 +603,7 @@
       },
       {
         "source_name": "Central Bank of the Republic of Turkey (TCMB) / EVDS",
-        "charts": 5
+        "charts": 6
       },
       {
         "source_name": "FRED / BIS",
@@ -610,14 +646,22 @@
         "charts": 1
       },
       {
+        "source_name": "FRED / OECD / Borsa Istanbul",
+        "charts": 1
+      },
+      {
         "source_name": "IMF Fiscal Monitor",
+        "charts": 1
+      },
+      {
+        "source_name": "World Bank / ILO",
         "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 12,
-      "verified": 18,
-      "watch": 20
+      "verified": 20,
+      "watch": 21
     },
     "unavailable_count": 1
   },
@@ -630,7 +674,7 @@
   "freshness": {
     "as_of_date": "2026-10-29",
     "counts": {
-      "current": 27,
+      "current": 30,
       "due": 7,
       "projection": 4,
       "stale": 12
@@ -1059,7 +1103,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 50
+      "level": 53
     },
     "non_level": []
   },
@@ -1069,6 +1113,6 @@
       "date",
       "value"
     ],
-    "charted_series": 50
+    "charted_series": 53
   }
 }

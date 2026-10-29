@@ -1,10 +1,10 @@
 {
   "file": "hong_kong.html",
-  "generated": "2026-10-29T01:09:03.506304+00:00",
-  "charts": 37,
-  "source_groups": 10,
+  "generated": "2026-10-29T15:32:26.216087+00:00",
+  "charts": 38,
+  "source_groups": 11,
   "data_gaps": 1,
-  "low_confidence": 7,
+  "low_confidence": 8,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -319,6 +319,18 @@
       "quality_status": "watch"
     },
     {
+      "id": "total_reserves_usd",
+      "label_en": "Official Foreign Currency Reserve Assets",
+      "label_zh": "官方外汇储备资产总额",
+      "latest_date": "2023",
+      "latest_value": 425.554111033182,
+      "latest_display": "426 USD bn",
+      "frequency": "annual",
+      "source_name": "World Bank / HKMA",
+      "series": "FI.RES.TOTL.CD",
+      "quality_status": "low_confidence"
+    },
+    {
       "id": "current_account_gdp",
       "label_en": "Current Account Balance (% of GDP)",
       "label_zh": "经常账户占GDP比重",
@@ -470,10 +482,10 @@
       "value"
     ],
     "file": "hong_kong_canonical_frame.json",
-    "series": 37,
-    "observations": 11253,
-    "series_count": 37,
-    "observation_count": 11253
+    "series": 38,
+    "observations": 11276,
+    "series_count": 38,
+    "observation_count": 11276
   },
   "data_gaps_detail": [
     {
@@ -485,7 +497,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 10,
+    "source_groups": 11,
     "sources": [
       {
         "source_name": "HK C&SD",
@@ -526,10 +538,14 @@
       {
         "source_name": "IMF Fiscal Monitor",
         "charts": 1
+      },
+      {
+        "source_name": "World Bank / HKMA",
+        "charts": 1
       }
     ],
     "quality_counts": {
-      "low_confidence": 7,
+      "low_confidence": 8,
       "verified": 15,
       "watch": 15
     },
@@ -547,10 +563,32 @@
       "current": 22,
       "due": 4,
       "projection": 4,
-      "stale": 7
+      "stale": 8
     },
     "latest_historical_date": "2026-10-23",
     "attention": [
+      {
+        "id": "total_reserves_usd",
+        "concept_id": "hk:total_reserves_usd",
+        "label_en": "Official Foreign Currency Reserve Assets",
+        "latest_date": "2023-12-31",
+        "frequency": "annual",
+        "freshness_status": "stale",
+        "age_basis_date": "2023-12-31",
+        "age_days": 1033,
+        "threshold_days": 730,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "watch",
+        "comparability": "medium",
+        "source_name": "World Bank / HKMA",
+        "series": "FI.RES.TOTL.CD",
+        "transform": "level"
+      },
       {
         "id": "bank_capital_ratio",
         "concept_id": "bank_capital_ratio",
@@ -797,7 +835,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 37
+      "level": 38
     },
     "non_level": []
   },
@@ -807,6 +845,6 @@
       "date",
       "value"
     ],
-    "charted_series": 37
+    "charted_series": 38
   }
 }

@@ -325,6 +325,42 @@ indicators:
     caveat_en: OECD consumer price index growth rate series mirrored on FRED.
     caveat_zh: FRED镜像收录的OECD韩国CPI增长率序列。
 
+  - id: ppi_inflation_index
+    section: prices_costs
+    label_en: Producer Price Index (PPI Basic Classification)
+    label_zh: 生产者价格指数 (PPI 基本分类总指数)
+    unit: "Index (2020 = 100)"
+    fetcher: bok_ecos
+    stat_code: "404Y014"
+    item_code1: "*AA"
+    cycle: "M"
+    start_date: "201501"
+    lang: "kr"
+    source_authority: official_primary
+    source_name: Bank of Korea (BOK) / ECOS
+    source_url: https://ecos.bok.or.kr/
+    frequency: monthly
+    caveat_en: Bank of Korea official Producer Price Index (basic classification total index).
+    caveat_zh: 韩国银行官方编制发布的生产者价格指数（基本分类总指数）。
+
+  - id: core_cpi_index
+    section: prices_costs
+    label_en: Core CPI Index (Excluding Agricultural & Petroleum Products)
+    label_zh: 核心CPI指数 (剔除农产品与石油类)
+    unit: "Index (2020 = 100)"
+    fetcher: bok_ecos
+    stat_code: "901Y010"
+    item_code1: "00"
+    cycle: "M"
+    start_date: "201501"
+    lang: "kr"
+    source_authority: official_primary
+    source_name: Bank of Korea (BOK) / Statistics Korea
+    source_url: https://ecos.bok.or.kr/
+    frequency: monthly
+    caveat_en: Core CPI excluding agricultural and petroleum products published via BOK ECOS.
+    caveat_zh: 韩国统计厅编制并通过韩国银行发布的剔除农产品与石油类商品核心CPI指数。
+
   # ==========================================
   # 5. Housing & Property
   # ==========================================
@@ -565,6 +601,22 @@ indicators:
     caveat_en: IMF World Economic Outlook historical series and projections.
     caveat_zh: IMF《世界经济展望》历史序列与预测值。
 
+  - id: foreign_reserves_usd
+    section: external_fx
+    label_en: Total Foreign Exchange Reserves (Excluding Gold)
+    label_zh: 官方外汇储备总额 (不含黄金)
+    unit: "USD bn"
+    fetcher: fred
+    series: TRESEGKRM052N
+    scale: 1000
+    source_authority: official_primary
+    source_name: FRED / IMF / Bank of Korea
+    source_url: https://fred.stlouisfed.org/series/TRESEGKRM052N
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Total official foreign exchange reserves excluding gold holdings in billions of US dollars.
+    caveat_zh: 韩国官方外汇储备总额（不含黄金，十亿美元口径）。
+
   # ==========================================
   # 7. Fiscal & Sovereign
   # ==========================================
@@ -736,6 +788,40 @@ indicators:
     start_date: 2000-01-01
     caveat_en: BIS domestic bank credit to the private non-financial sector as a percentage of GDP.
     caveat_zh: 国际清算银行（BIS）统计的国内银行对私营非金融部门信贷占GDP比重。
+
+  - id: broad_money_m2_bok
+    section: monetary_financial
+    label_en: Broad Money M2 SA (Level)
+    label_zh: 广义货币供应量 M2 (季调水平值)
+    unit: "KRW tn"
+    fetcher: bok_ecos
+    stat_code: "161Y005"
+    item_code1: "BBHS00"
+    cycle: "M"
+    start_date: "201501"
+    lang: "kr"
+    scale: 1000
+    source_authority: official_primary
+    source_name: Bank of Korea (BOK) / ECOS
+    source_url: https://ecos.bok.or.kr/
+    frequency: monthly
+    caveat_en: Broad money M2 monthly average seasonally adjusted series published by BOK ECOS.
+    caveat_zh: 韩国银行ECOS发布的月均广义货币M2季调序列（万亿韩元）。
+
+  - id: kospi_stock_index
+    section: monetary_financial
+    label_en: KOSPI Benchmark Composite Stock Price Index
+    label_zh: 韩国综合股价指数 (KOSPI 基准股指)
+    unit: "Index (2015 = 100)"
+    fetcher: fred
+    series: SPASTT01KRM661N
+    source_authority: official_primary
+    source_name: FRED / OECD / Korea Exchange
+    source_url: https://fred.stlouisfed.org/series/SPASTT01KRM661N
+    frequency: monthly
+    start_date: 2015-01-01
+    caveat_en: Korea Stock Price Index (KOSPI) benchmark monthly index mirrored on FRED.
+    caveat_zh: FRED镜像收录的韩国证券交易所KOSPI核心基准股指月均价。
 
   # ==========================================
   # 9. Financial Stability

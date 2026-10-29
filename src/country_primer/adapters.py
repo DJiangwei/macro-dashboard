@@ -1768,7 +1768,7 @@ def fetch_world_bank(spec: dict[str, Any]) -> dict[str, Any]:
     code = spec['series']
     country = str(spec.get('country_iso3') or spec.get('country') or 'CHN').upper()
     url = f'https://api.worldbank.org/v2/country/{country}/indicator/{code}'
-    response = requests.get(url, params={'format': 'json', 'per_page': 20000}, timeout=30)
+    response = requests.get(url, params={'format': 'json', 'per_page': 300}, timeout=30)
     response.raise_for_status()
     payload = response.json()
     meta = payload[0] if isinstance(payload, list) and payload else {}
@@ -1778,11 +1778,15 @@ def fetch_world_bank(spec: dict[str, Any]) -> dict[str, Any]:
         raw_value = row.get('value')
         if raw_value is None:
             continue
+        dt_str = str(row.get('date'))
+        start_date = spec.get('start_date')
+        if start_date and dt_str < str(start_date)[:4]:
+            continue
         try:
             value = _apply_china_transform(float(raw_value), spec.get('transform'))
         except (TypeError, ValueError):
             continue
-        observations.append({'date': str(row.get('date')), 'value': value})
+        observations.append({'date': dt_str, 'value': value})
     observations.sort(key=lambda item: item['date'])
     return {**spec, 'observations': observations, 'provider_updated': meta.get('lastupdated', ''), 'api_url': url}
 
@@ -2911,6 +2915,9 @@ def fetch_tcmb_evds(spec: dict[str, Any]) -> dict[str, Any]:
     if re.match(r"^\d{4}-\d{2}-\d{2}$", start_date):
         y, m, d = start_date.split("-")
         start_date = f"{d}-{m}-{y}"
+    elif re.match(r"^\d{4}-\d{2}$", start_date):
+        y, m = start_date.split("-")
+        start_date = f"01-{m}-{y}"
 
     end_date = str(spec.get("evds_end") or "31-12-2030")
     if re.match(r"^\d{4}-\d{2}-\d{2}$", end_date):

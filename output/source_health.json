@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-29T01:11:10.912400+00:00",
+  "generated": "2026-10-29T15:34:43.381386+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -119,7 +119,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T01:00:26.914767+00:00",
+          "timestamp": "2026-10-29T15:20:30.684391+00:00",
           "country": "HU",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -242,7 +242,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T01:00:35.521135+00:00",
+          "timestamp": "2026-10-29T15:20:39.695851+00:00",
           "country": "PL",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -251,7 +251,7 @@
           "message": "name 'ROOT' is not defined"
         },
         {
-          "timestamp": "2026-10-29T01:00:35.956530+00:00",
+          "timestamp": "2026-10-29T15:20:40.112644+00:00",
           "country": "PL",
           "indicator_id": "equity_yoy",
           "source_id": "CredentialedStooqFetcher",
@@ -262,31 +262,31 @@
       ]
     },
     "CZ": {
-      "calls": 853,
-      "success": 102,
-      "empty": 750,
+      "calls": 840,
+      "success": 103,
+      "empty": 736,
       "failed": 1,
       "circuit_open": 0,
       "failure_reasons": {
         "unexpected_error": 1
       },
       "empty_reasons": {
-        "empty_response": 750
+        "empty_response": 736
       },
       "sources": {
         "BISFetcher": {
-          "empty": 11,
+          "empty": 10,
           "success": 3
         },
         "BVBIndexProfileFetcher": {
-          "empty": 14
+          "empty": 13
         },
         "CZSOFetcher": {
-          "empty": 2,
+          "empty": 1,
           "success": 1
         },
         "CredentialedStooqFetcher": {
-          "empty": 14
+          "empty": 13
         },
         "DerivedMacroFetcher": {
           "empty": 51,
@@ -301,7 +301,7 @@
           "success": 1
         },
         "ECBMIRFetcher": {
-          "empty": 8,
+          "empty": 7,
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
@@ -320,14 +320,14 @@
           "empty": 38
         },
         "GIEAGSIFetcher": {
-          "empty": 7,
+          "empty": 6,
           "failed": 1
         },
         "GPWBenchmarkFetcher": {
-          "empty": 14
+          "empty": 13
         },
         "GUSDBWFetcher": {
-          "empty": 2
+          "empty": 1
         },
         "IMFDataMapperFetcher": {
           "empty": 44,
@@ -338,13 +338,13 @@
           "success": 5
         },
         "INSSETempoFetcher": {
-          "empty": 2
+          "empty": 1
         },
         "KSHFetcher": {
-          "empty": 2
+          "empty": 1
         },
         "ManualIndicatorFetcher": {
-          "empty": 3,
+          "empty": 2,
           "success": 5
         },
         "NationalCBFetcher": {
@@ -355,27 +355,27 @@
           "success": 1
         },
         "PragueExchangeFetcher": {
-          "empty": 14,
-          "success": 2
+          "empty": 13,
+          "success": 3
         },
         "WorldBankESGFetcher": {
           "empty": 41,
           "success": 3
         },
         "WorldBankFallbackFetcher": {
-          "empty": 11
+          "empty": 10
         },
         "WorldBankFetcher": {
           "empty": 16,
           "success": 17
         },
         "YahooMarketFetcher": {
-          "empty": 14
+          "empty": 13
         }
       },
       "events": [
         {
-          "timestamp": "2026-10-29T01:00:39.256627+00:00",
+          "timestamp": "2026-10-29T15:20:43.265756+00:00",
           "country": "CZ",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -499,7 +499,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T01:01:10.964922+00:00",
+          "timestamp": "2026-10-29T15:20:52.129581+00:00",
           "country": "RO",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -594,7 +594,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T01:05:04.705367+00:00",
+          "timestamp": "2026-10-29T15:25:33.736050+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -603,7 +603,7 @@
           "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
         },
         {
-          "timestamp": "2026-10-29T01:05:10.690733+00:00",
+          "timestamp": "2026-10-29T15:25:54.727087+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -612,7 +612,7 @@
           "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
         },
         {
-          "timestamp": "2026-10-29T01:05:10.872671+00:00",
+          "timestamp": "2026-10-29T15:25:54.984723+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -623,12 +623,13 @@
       ]
     },
     "TR": {
-      "calls": 53,
-      "success": 50,
+      "calls": 58,
+      "success": 52,
       "empty": 0,
-      "failed": 3,
+      "failed": 6,
       "circuit_open": 0,
       "failure_reasons": {
+        "timeout": 3,
         "unexpected_error": 3
       },
       "empty_reasons": {},
@@ -643,7 +644,7 @@
           "success": 22
         },
         "fred": {
-          "success": 8
+          "success": 9
         },
         "imf_datamapper": {
           "success": 4
@@ -653,15 +654,18 @@
           "success": 6
         },
         "tcmb_evds": {
-          "success": 5
+          "success": 6
         },
         "tcmb_xml": {
           "success": 1
+        },
+        "world_bank": {
+          "failed": 3
         }
       },
       "events": [
         {
-          "timestamp": "2026-10-29T01:08:32.539273+00:00",
+          "timestamp": "2026-10-29T15:29:18.934729+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -670,7 +674,34 @@
           "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         },
         {
-          "timestamp": "2026-10-29T01:08:54.300596+00:00",
+          "timestamp": "2026-10-29T15:29:48.305376+00:00",
+          "country": "TR",
+          "indicator_id": "labour_participation_rate",
+          "source_id": "world_bank",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
+        },
+        {
+          "timestamp": "2026-10-29T15:30:18.419899+00:00",
+          "country": "TR",
+          "indicator_id": "labour_participation_rate",
+          "source_id": "world_bank",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
+        },
+        {
+          "timestamp": "2026-10-29T15:30:48.470963+00:00",
+          "country": "TR",
+          "indicator_id": "labour_participation_rate",
+          "source_id": "world_bank",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
+        },
+        {
+          "timestamp": "2026-10-29T15:30:48.471267+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -679,7 +710,7 @@
           "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         },
         {
-          "timestamp": "2026-10-29T01:08:54.300842+00:00",
+          "timestamp": "2026-10-29T15:30:48.471305+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -690,12 +721,14 @@
       ]
     },
     "HK": {
-      "calls": 37,
+      "calls": 40,
       "success": 37,
       "empty": 0,
-      "failed": 0,
+      "failed": 3,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "timeout": 3
+      },
       "empty_reasons": {},
       "sources": {
         "bruegel_reer": {
@@ -715,13 +748,44 @@
         },
         "imf_sdmx": {
           "success": 4
+        },
+        "world_bank": {
+          "failed": 3
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-10-29T15:31:25.971592+00:00",
+          "country": "HK",
+          "indicator_id": "total_reserves_usd",
+          "source_id": "world_bank",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
+        },
+        {
+          "timestamp": "2026-10-29T15:31:56.091028+00:00",
+          "country": "HK",
+          "indicator_id": "total_reserves_usd",
+          "source_id": "world_bank",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
+        },
+        {
+          "timestamp": "2026-10-29T15:32:26.139886+00:00",
+          "country": "HK",
+          "indicator_id": "total_reserves_usd",
+          "source_id": "world_bank",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='api.worldbank.org', port=443): Read timed out. (read timeout=30)"
+        }
+      ]
     },
     "KR": {
-      "calls": 52,
-      "success": 43,
+      "calls": 57,
+      "success": 48,
       "empty": 0,
       "failed": 9,
       "circuit_open": 0,
@@ -731,7 +795,7 @@
       "empty_reasons": {},
       "sources": {
         "bok_ecos": {
-          "success": 4
+          "success": 7
         },
         "bruegel_reer": {
           "success": 2
@@ -741,7 +805,7 @@
         },
         "fred": {
           "failed": 9,
-          "success": 23
+          "success": 25
         },
         "imf_datamapper": {
           "success": 4
@@ -752,7 +816,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-29T01:09:17.008895+00:00",
+          "timestamp": "2026-10-29T15:32:39.789272+00:00",
           "country": "KR",
           "indicator_id": "consumer_confidence",
           "source_id": "fred",
@@ -761,7 +825,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T01:09:17.546431+00:00",
+          "timestamp": "2026-10-29T15:32:39.997547+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -770,7 +834,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T01:09:18.753090+00:00",
+          "timestamp": "2026-10-29T15:32:41.041242+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
@@ -779,7 +843,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T01:09:31.756137+00:00",
+          "timestamp": "2026-10-29T15:32:57.710424+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -788,7 +852,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T01:09:44.792401+00:00",
+          "timestamp": "2026-10-29T15:33:10.926187+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -797,7 +861,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T01:09:57.538601+00:00",
+          "timestamp": "2026-10-29T15:33:23.402822+00:00",
           "country": "KR",
           "indicator_id": "consumer_confidence",
           "source_id": "fred",
@@ -806,7 +870,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T01:10:10.680941+00:00",
+          "timestamp": "2026-10-29T15:33:36.314490+00:00",
           "country": "KR",
           "indicator_id": "consumer_confidence",
           "source_id": "fred",
@@ -815,7 +879,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T01:10:23.838960+00:00",
+          "timestamp": "2026-10-29T15:33:51.158306+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
@@ -824,7 +888,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-29T01:10:37.073823+00:00",
+          "timestamp": "2026-10-29T15:34:03.879883+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
@@ -868,8 +932,8 @@
       "events": []
     },
     "KZ": {
-      "calls": 34,
-      "success": 34,
+      "calls": 36,
+      "success": 36,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -898,14 +962,14 @@
           "success": 4
         },
         "world_bank": {
-          "success": 6
+          "success": 8
         }
       },
       "events": []
     },
     "UZ": {
-      "calls": 32,
-      "success": 32,
+      "calls": 35,
+      "success": 35,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -928,14 +992,14 @@
           "success": 10
         },
         "world_bank": {
-          "success": 7
+          "success": 10
         }
       },
       "events": []
     },
     "EG": {
-      "calls": 33,
-      "success": 33,
+      "calls": 36,
+      "success": 36,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -961,14 +1025,14 @@
           "success": 11
         },
         "world_bank": {
-          "success": 7
+          "success": 10
         }
       },
       "events": []
     },
     "NG": {
-      "calls": 36,
-      "success": 36,
+      "calls": 38,
+      "success": 38,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -997,7 +1061,7 @@
           "success": 10
         },
         "world_bank": {
-          "success": 8
+          "success": 10
         }
       },
       "events": []

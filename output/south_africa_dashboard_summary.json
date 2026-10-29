@@ -1,6 +1,6 @@
 {
   "file": "south_africa.html",
-  "generated": "2026-10-29T01:08:31.052740+00:00",
+  "generated": "2026-10-29T15:29:17.637135+00:00",
   "charts": 64,
   "source_groups": 15,
   "data_gaps": 7,
@@ -106,13 +106,13 @@
       "id": "ppi_inflation",
       "label_en": "Producer Prices, YoY",
       "label_zh": "生产者价格同比",
-      "latest_date": "2026-08-01",
-      "latest_value": 5.0193,
-      "latest_display": "5.02 % y/y",
+      "latest_date": "2026-09-01",
+      "latest_value": 6.1836,
+      "latest_display": "6.18 % y/y",
       "frequency": "monthly",
       "source_name": "SARB Web API (Stats SA)",
       "series": "PPI1000F",
-      "quality_status": "watch"
+      "quality_status": "verified"
     },
     {
       "id": "house_price_growth",
@@ -142,8 +142,8 @@
       "id": "zar_usd",
       "label_en": "ZAR/USD Spot Rate",
       "label_zh": "美元兑兰特",
-      "latest_date": "2026-10-28",
-      "latest_value": 16.6485,
+      "latest_date": "2026-10-29",
+      "latest_value": 16.6415,
       "latest_display": "16.6 ZAR per USD",
       "frequency": "daily",
       "source_name": "SARB Web API",
@@ -178,9 +178,9 @@
       "id": "sovereign_yield_10y",
       "label_en": "R2030 Benchmark Bond Yield",
       "label_zh": "R2030基准国债收益率",
-      "latest_date": "2026-10-27",
-      "latest_value": 8.015,
-      "latest_display": "8.02 %",
+      "latest_date": "2026-10-28",
+      "latest_value": 8.035,
+      "latest_display": "8.04 %",
       "frequency": "daily",
       "source_name": "SARB Web API",
       "series": "MMRD708A",
@@ -190,7 +190,7 @@
       "id": "policy_rate",
       "label_en": "SARB Policy Rate",
       "label_zh": "南非央行政策利率",
-      "latest_date": "2026-10-28",
+      "latest_date": "2026-10-29",
       "latest_value": 7.25,
       "latest_display": "7.25 %",
       "frequency": "daily",
@@ -202,7 +202,7 @@
       "id": "prime_lending_rate",
       "label_en": "Prime Lending Rate",
       "label_zh": "优惠贷款利率",
-      "latest_date": "2026-10-28",
+      "latest_date": "2026-10-29",
       "latest_value": 10.75,
       "latest_display": "10.8 %",
       "frequency": "daily",
@@ -255,9 +255,9 @@
     ],
     "file": "south_africa_canonical_frame.json",
     "series": 64,
-    "observations": 30515,
+    "observations": 30524,
     "series_count": 64,
-    "observation_count": 30515
+    "observation_count": 30524
   },
   "data_gaps_detail": [
     {
@@ -376,8 +376,8 @@
     ],
     "quality_counts": {
       "low_confidence": 22,
-      "verified": 9,
-      "watch": 33
+      "verified": 10,
+      "watch": 32
     },
     "unavailable_count": 0
   },
@@ -390,12 +390,12 @@
   "freshness": {
     "as_of_date": "2026-10-29",
     "counts": {
-      "current": 33,
-      "due": 6,
+      "current": 34,
+      "due": 5,
       "projection": 3,
       "stale": 22
     },
-    "latest_historical_date": "2026-10-28",
+    "latest_historical_date": "2026-10-29",
     "attention": [
       {
         "id": "current_account_gdp",
@@ -967,28 +967,6 @@
         "comparability": "medium",
         "source_name": "FRED / OECD (SARS Customs)",
         "series": "XTNTVA01ZAM667S",
-        "transform": "level"
-      },
-      {
-        "id": "ppi_inflation",
-        "concept_id": "producer_price_inflation",
-        "label_en": "Producer Prices, YoY",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-08-01",
-        "age_days": 59,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "SARB Web API (Stats SA)",
-        "series": "PPI1000F",
         "transform": "level"
       },
       {

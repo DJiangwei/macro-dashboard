@@ -125,6 +125,22 @@ indicators:
     caveat_en: Total unemployment as a percentage of the total labor force (ILO modeled estimate).
     caveat_zh: 占总劳动力百分比的总失业率（国际劳工组织模型估算值）。
 
+  - id: labour_participation_rate
+    section: labour_wages
+    label_en: Labour Force Participation Rate (Total 15+)
+    label_zh: 劳动力参与率 (15岁及以上)
+    unit: "% of total population 15+"
+    fetcher: world_bank
+    country: UZB
+    series: SL.TLF.CACT.ZS
+    source_authority: official_secondary
+    source_name: World Bank / ILO
+    source_url: https://data.worldbank.org/indicator/SL.TLF.CACT.ZS?locations=UZ
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Labour force participation rate for ages 15 and older (modelled ILO estimate via World Bank).
+    caveat_zh: 15岁及以上人口的劳动力参与率（世行/国际劳工组织口径）。
+
   # ==========================================
   # 3. Prices & Inflation
   # ==========================================
@@ -376,6 +392,40 @@ indicators:
     start_date: 2000-01-01
     caveat_en: Current account balance expressed as a percentage of gross domestic product.
     caveat_zh: 经常账户差额占GDP比重。
+
+  - id: personal_remittances_usd
+    section: external_fx
+    label_en: Personal Remittances Received (from Abroad)
+    label_zh: 个人侨汇收入总额 (海外汇款)
+    unit: "USD bn"
+    fetcher: world_bank
+    country: UZB
+    series: BX.TRF.PWKR.CD.DT
+    scale: 1000000000
+    source_authority: official_secondary
+    source_name: World Bank / Central Bank of Uzbekistan (CBU)
+    source_url: https://data.worldbank.org/indicator/BX.TRF.PWKR.CD.DT?locations=UZ
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Personal remittances received by residents from abroad in billions of USD.
+    caveat_zh: 乌兹别克斯坦居民自海外收到的个人侨汇收入总额（十亿美元，居民可支配收入核心来源）。
+
+  - id: total_reserves_usd
+    section: external_fx
+    label_en: Official Reserve Assets (Total Reserves including Gold)
+    label_zh: 官方储备资产总额 (含黄金)
+    unit: "USD bn"
+    fetcher: world_bank
+    country: UZB
+    series: FI.RES.TOTL.CD
+    scale: 1000000000
+    source_authority: official_secondary
+    source_name: World Bank / CBU
+    source_url: https://data.worldbank.org/indicator/FI.RES.TOTL.CD?locations=UZ
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Total official reserves comprising foreign exchange and gold holdings in billions of USD.
+    caveat_zh: 官方储备资产总额（包含外汇与黄金储备，十亿美元，世行口径）。
 
   # ==========================================
   # 5. Fiscal & Sovereign

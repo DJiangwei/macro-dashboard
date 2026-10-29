@@ -294,8 +294,10 @@ concepts:
     - industry_confidence
     TR:
     - economic_sentiment_indicator
+    - real_sector_confidence
     KR:
     - composite_leading_indicator
+    - consumer_sentiment_bok
     KZ: []
     UZ: []
     EG: []
@@ -377,12 +379,18 @@ concepts:
     ZA: []
     EA:
     - labour_force_participation_rate
+    TR:
+    - labour_participation_rate
     KR:
     - participation_rate
-    KZ: []
-    UZ: []
-    EG: []
-    NG: []
+    KZ:
+    - labour_participation_rate
+    UZ:
+    - labour_participation_rate
+    EG:
+    - labour_participation_rate
+    NG:
+    - labour_participation_rate
 - id: vacancies
   pillar: labour_household
   label_en: Labour Demand / Vacancies
@@ -502,9 +510,12 @@ concepts:
     EA:
     - hicp_core_inflation
     TR:
+    - core_cpi_inflation
     - core_hicp_inflation
     HK:
     - core_cpi_inflation
+    KR:
+    - core_cpi_index
     TW:
     - core_cpi_inflation
     KZ: []
@@ -577,6 +588,9 @@ concepts:
     - ppi_yoy
     TR:
     - ppi_inflation
+    - domestic_ppi_yoy
+    KR:
+    - ppi_inflation_index
     TW:
     - ppi_inflation
     KZ: []
@@ -757,6 +771,8 @@ concepts:
     EA:
     - current_account_gdp
     TR:
+    - current_account_gdp
+    HK:
     - current_account_gdp
     KR:
     - current_account_gdp
@@ -1156,6 +1172,8 @@ concepts:
     - broad_money_growth
     EA:
     - m3_growth
+    KR:
+    - broad_money_m2_bok
     TW:
     - m2_growth
     KZ:
@@ -1225,6 +1243,12 @@ concepts:
     - prime_lending_rate
     EA:
     - nfc_cost_of_borrowing
+    TR:
+    - commercial_loan_rate
+    HK:
+    - best_lending_rate
+    KR:
+    - commercial_lending_rate
     TW:
     - prime_lending_rate
     KZ: []
@@ -1251,6 +1275,12 @@ concepts:
     - equity_index
     ZA: []
     EA: []
+    TR:
+    - bist_100_equity_index
+    KR:
+    - kospi_stock_index
+    TW:
+    - taiex_index
     KZ: []
     UZ: []
     EG: []
@@ -1353,6 +1383,8 @@ concepts:
     HK:
     - bank_npl_ratio
     KR:
+    - bank_npl_ratio
+    TW:
     - bank_npl_ratio
     KZ:
     - bank_npl_ratio

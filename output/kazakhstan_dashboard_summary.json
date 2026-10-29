@@ -1,8 +1,8 @@
 {
   "file": "kazakhstan.html",
-  "generated": "2026-10-29T01:10:59.171840+00:00",
-  "charts": 34,
-  "source_groups": 13,
+  "generated": "2026-10-29T15:34:30.158092+00:00",
+  "charts": 36,
+  "source_groups": 14,
   "data_gaps": 2,
   "low_confidence": 5,
   "key_series_latest": [
@@ -67,6 +67,18 @@
       "quality_status": "watch"
     },
     {
+      "id": "labour_participation_rate",
+      "label_en": "Labour Force Participation Rate (Total 15+)",
+      "label_zh": "劳动力参与率 (15岁及以上)",
+      "latest_date": "2025",
+      "latest_value": 67.77,
+      "latest_display": "67.8 % of total population 15+",
+      "frequency": "annual",
+      "source_name": "World Bank / ILO",
+      "series": "SL.TLF.CACT.ZS",
+      "quality_status": "watch"
+    },
+    {
       "id": "cpi_inflation",
       "label_en": "Headline CPI Inflation YoY",
       "label_zh": "总体CPI通胀同比",
@@ -107,8 +119,8 @@
       "label_en": "USD/KZT Official Exchange Rate",
       "label_zh": "美元兑哈萨克斯坦坚戈官方汇率 (NBK)",
       "latest_date": "2026-10-29",
-      "latest_value": 457.09,
-      "latest_display": "457 KZT",
+      "latest_value": 453.71,
+      "latest_display": "454 KZT",
       "frequency": "daily",
       "source_name": "National Bank of Kazakhstan (NBK)",
       "series": "",
@@ -131,8 +143,8 @@
       "label_en": "EUR/KZT Official Exchange Rate",
       "label_zh": "欧元兑坚戈官方汇率 (NBK)",
       "latest_date": "2026-10-29",
-      "latest_value": 508.42,
-      "latest_display": "508 KZT",
+      "latest_value": 505.8,
+      "latest_display": "506 KZT",
       "frequency": "daily",
       "source_name": "National Bank of Kazakhstan (NBK)",
       "series": "",
@@ -143,8 +155,8 @@
       "label_en": "RUB/KZT Official Exchange Rate",
       "label_zh": "俄罗斯卢布兑坚戈官方汇率 (NBK)",
       "latest_date": "2026-10-29",
-      "latest_value": 5.67,
-      "latest_display": "5.67 KZT",
+      "latest_value": 5.63,
+      "latest_display": "5.63 KZT",
       "frequency": "daily",
       "source_name": "National Bank of Kazakhstan (NBK)",
       "series": "",
@@ -155,8 +167,8 @@
       "label_en": "CNY/KZT Official Exchange Rate",
       "label_zh": "人民币兑坚戈官方汇率 (NBK)",
       "latest_date": "2026-10-29",
-      "latest_value": 68.56,
-      "latest_display": "68.6 KZT",
+      "latest_value": 68.11,
+      "latest_display": "68.1 KZT",
       "frequency": "daily",
       "source_name": "National Bank of Kazakhstan (NBK)",
       "series": "",
@@ -268,6 +280,18 @@
       "frequency": "annual",
       "source_name": "IMF DataMapper (WEO)",
       "series": "BCA_NGDPD/KAZ",
+      "quality_status": "watch"
+    },
+    {
+      "id": "total_reserves_usd",
+      "label_en": "Total Official Reserves (Including Gold)",
+      "label_zh": "官方储备资产总额 (含黄金)",
+      "latest_date": "2025",
+      "latest_value": 66.0686401104733,
+      "latest_display": "66.1 USD bn",
+      "frequency": "annual",
+      "source_name": "World Bank / NBK",
+      "series": "FI.RES.TOTL.CD",
       "quality_status": "watch"
     },
     {
@@ -406,14 +430,14 @@
   "unavailable": [],
   "data_mode": "refresh",
   "latest_cards": [],
-  "usd_kzt_latest": "457.09 (2026-10-29)",
+  "usd_kzt_latest": "453.71 (2026-10-29)",
   "cross_checks": [
     {
       "concept": "real_gdp_growth",
       "primary": "real_gdp_growth",
       "secondary": "real_gdp_growth_wb",
       "label_en": "IMF WEO vs World Bank WDI Real GDP Growth",
-      "n_common": 33,
+      "n_common": 26,
       "latest_diff": 0.0,
       "max_abs_diff": 0.2000000047170296,
       "n_breaches": 0,
@@ -421,7 +445,7 @@
       "tolerance": 0.5,
       "window_since": null,
       "window_months": null,
-      "window_n_common": 33,
+      "window_n_common": 26,
       "window_max_abs_diff": 0.2000000047170296,
       "window_n_breaches": 0,
       "status": "agree"
@@ -434,10 +458,10 @@
       "value"
     ],
     "file": "kazakhstan_canonical_frame.json",
-    "series": 34,
-    "observations": 9878,
-    "series_count": 34,
-    "observation_count": 9878
+    "series": 36,
+    "observations": 9888,
+    "series_count": 36,
+    "observation_count": 9888
   },
   "data_gaps_detail": [
     {
@@ -456,7 +480,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 13,
+    "source_groups": 14,
     "sources": [
       {
         "source_name": "IMF SDMX / NBK",
@@ -491,6 +515,10 @@
         "charts": 2
       },
       {
+        "source_name": "World Bank / ILO",
+        "charts": 2
+      },
+      {
         "source_name": "EIA / FRED",
         "charts": 1
       },
@@ -507,14 +535,14 @@
         "charts": 1
       },
       {
-        "source_name": "World Bank / ILO",
+        "source_name": "World Bank / NBK",
         "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 5,
       "verified": 4,
-      "watch": 25
+      "watch": 27
     },
     "unavailable_count": 0
   },
@@ -527,7 +555,7 @@
   "freshness": {
     "as_of_date": "2026-10-29",
     "counts": {
-      "current": 21,
+      "current": 23,
       "due": 2,
       "projection": 6,
       "stale": 5
@@ -692,7 +720,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 34
+      "level": 36
     },
     "non_level": []
   },
@@ -702,6 +730,6 @@
       "date",
       "value"
     ],
-    "charted_series": 34
+    "charted_series": 36
   }
 }
