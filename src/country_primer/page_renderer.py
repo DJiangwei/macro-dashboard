@@ -1051,9 +1051,10 @@ def inject_index(summary: dict[str, Any]) -> None:
     marker = '  </section>\n  <nav class="links"'
     if marker in html:
         html = html.replace(marker, _index_card(summary) + "\n  </section>\n  <nav class=\"links\"", 1)
-    html = html.replace("<title>Country Primer — CEE-4 Macro Dashboard</title>", "<title>Country Primer — Macro Dashboard Archive</title>")
-    html = html.replace("CEE-4 Macro Dashboard · v4 · Proxy-free public pages", "Macro Dashboard Archive · CEE-4 v4 + China")
-    html = html.replace("<h1>CEE-4 Macro Dashboard</h1>", "<h1>Macro Dashboard Archive</h1>")
+    html = html.replace("<title>Country Primer — CEE-4 Macro Dashboard</title>", "<title>Macro Dashboard</title>")
+    html = html.replace("<title>Macro Dashboard — CEE-4</title>", "<title>Macro Dashboard</title>")
+    html = html.replace("CEE-4 Macro Dashboard · v4 · Proxy-free public pages", "Macro Dashboard · CEE-4 v4 + China")
+    html = html.replace("<h1>CEE-4 Macro Dashboard</h1>", "<h1>Macro Dashboard</h1>")
     html = html.replace(
         "Generated archive entry for the four country dashboards. This page is rebuilt by <code>build_v4.py ALL</code>, so its links, indicator counts, proxy status, and quality summary stay synchronized with the individual country pages.",
         "Generated archive entry for the proxy-free CEE-4 dashboards plus the China data-first page. This page is rebuilt by <code>make build-v4</code>, so links, indicator counts, proxy status, and quality summary stay synchronized with generated pages.",

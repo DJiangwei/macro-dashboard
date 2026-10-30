@@ -733,7 +733,7 @@ def _html(cards: list[dict], workbench: dict, *, prefix: str, docs_prefix: str) 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Country Primer — Macro Dashboard Archive</title>
+<title>Macro Dashboard</title>
 <style>
 :root {{
   --bg-canvas: #fcfaf7;
@@ -882,18 +882,18 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
 </head>
 <body>
 <div class="topbar">
-  <div class="brand">East Meridian <span>/ Country Primer</span></div>
+  <div class="brand">East Meridian <span>/ Macro Dashboard</span></div>
   <div style="display: flex; gap: 12px; align-items: center;">
     <a href="{prefix}chart_studio.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: #0d7680; color: #ffffff; text-decoration: none; border-radius: 4px; font-weight: 600; font-size: 11px; letter-spacing: 0.02em;">📈 Chart Studio · 图表工坊</a>
-    <span>Macro Dashboard Archive · 18 Economies (CEE-4, G10 & Asia-Pacific Hubs, Frontier & Emerging Markets)</span>
+    <span>Macro Dashboard · 18 Economies (CEE-4, G10 & Asia-Pacific Hubs, Frontier & Emerging Markets)</span>
   </div>
 </div>
 <main class="container">
   <header>
     <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
       <div>
-        <h1>Macro Dashboard Archive</h1>
-        <p class="subtitle">Generated archive for 18 national and regional macro dashboards (CEE-4, China, Euro Area, Japan, South Africa, UK, US, Turkey, Hong Kong, South Korea, Taiwan, Kazakhstan, Uzbekistan, Egypt, Nigeria). Cards are rebuilt from the latest country summaries and canonical data-first pipelines, then exported to <code>{escape(archive_json_href)}</code> so homepage data stays synchronized with dashboard builds.</p>
+        <h1>Macro Dashboard</h1>
+        <p class="subtitle">Global macroeconomic intelligence platform across 18 national and regional economies (CEE-4, China, Euro Area, Japan, South Africa, UK, US, Turkey, Hong Kong, South Korea, Taiwan, Kazakhstan, Uzbekistan, Egypt, Nigeria). Indicators are refreshed from official pipelines and canonical data-first models, synchronized with dashboard builds.</p>
       </div>
       <div style="margin-top: 8px;">
         <a href="{prefix}chart_studio.html" style="display: inline-flex; flex-direction: column; gap: 4px; padding: 14px 18px; background: #ffffff; border: 1.5px solid #0d7680; border-radius: 6px; text-decoration: none; box-shadow: 0 2px 4px rgba(13,118,128,0.08); transition: transform 0.15s ease;">
@@ -929,13 +929,13 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
     <a href="{docs_prefix}DATA_FRESHNESS_AUDIT.md">Freshness Audit</a>
     <a href="{docs_prefix}PROXY_REVIEW.md">Proxy Review</a>
     <a href="{prefix}macro_framework_proposal.html">Framework Proposal</a>
-    <a href="{escape(archive_json_href)}">Archive JSON</a>
+    <a href="{escape(archive_json_href)}">Index JSON</a>
     <a href="{prefix}macro_workbench_summary.json">Workbench JSON</a>
     <a href="{prefix}release_monitor.json">Release Monitor</a>
     <a href="{prefix}what_changed.json">What Changed</a>
   </nav>
   <footer>
-    Generated {generated} from country dashboard summaries and canonical CE4 data. Research artefact only, not investment advice.
+    Generated {generated} from country dashboard summaries and canonical macro data. Research artefact only, not investment advice.
   </footer>
 </main>
 <script>

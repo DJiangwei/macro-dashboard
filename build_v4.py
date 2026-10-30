@@ -3467,7 +3467,7 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
 <body data-dashboard-view="core">
 
 <div class="topbar">
-  <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">East Meridian <span>/ Country Primer</span></div></a>
+  <a href="../index.html" style="text-decoration:none;color:inherit;"><div class="brand">East Meridian <span>/ Macro Dashboard</span></div></a>
   <div class="country-nav">
     {country_nav}
   </div>
@@ -3535,8 +3535,8 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
 
 <footer>
   <div class="attribution">
-    <span data-lang="en">Country Primer v4 · Data via openecon-data MCP, ECB, Eurostat, BIS, World Bank, Yahoo Finance · Charts: Plotly</span>
-    <span data-lang="zh">Country Primer v4 · 数据来源: openecon-data MCP, ECB, Eurostat, BIS, World Bank, Yahoo Finance · 图表: Plotly</span>
+    <span data-lang="en">Macro Dashboard v4 · Data via openecon-data MCP, ECB, Eurostat, BIS, World Bank, Yahoo Finance · Charts: Plotly</span>
+    <span data-lang="zh">Macro Dashboard v4 · 数据来源: openecon-data MCP, ECB, Eurostat, BIS, World Bank, Yahoo Finance · 图表: Plotly</span>
   </div>
   <div class="disclaimer">
     <span data-lang="en"><strong>Disclaimer:</strong> This is a research artefact produced for analytical purposes, not investment advice. All positioning views expressed are illustrative of the analytical framework and should not be construed as trade recommendations. Past performance does not guarantee future results. Macro narratives reflect the author's assessment as of the generation date and may change without notice.</span>
@@ -3902,7 +3902,7 @@ def build_output_index(country_codes: list[str] | None = None, frames: dict[str,
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Country Primer — CEE-4 Macro Dashboard</title>
+<title>Macro Dashboard — CEE-4</title>
 <style>
 :root {{
   --bg: #f4efe7;
@@ -4007,13 +4007,13 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
 </head>
 <body>
 <div class="topbar">
-  <div class="brand">East Meridian <span>/ Country Primer</span></div>
+  <div class="brand">East Meridian <span>/ Macro Dashboard</span></div>
   <div>CEE-4 Macro Dashboard · v4 · Proxy-free public pages</div>
 </div>
 <main class="container">
   <header>
     <h1>CEE-4 Macro Dashboard</h1>
-    <p class="subtitle">Generated archive entry for the four country dashboards. This page is rebuilt by <code>build_v4.py ALL</code>, so its links, indicator counts, proxy status, and quality summary stay synchronized with the individual country pages.</p>
+    <p class="subtitle">Summary view for the four CEE country dashboards. This page is rebuilt by <code>build_v4.py ALL</code>, so its links, indicator counts, proxy status, and quality summary stay synchronized with the individual country pages.</p>
   </header>
   <section class="meta-grid" aria-label="coverage summary">
     <div class="meta-chip"><strong>{total_rendered}</strong><span>rendered country-indicator slots</span></div>

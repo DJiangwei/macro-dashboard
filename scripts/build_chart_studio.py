@@ -975,13 +975,13 @@ def render_html(catalog: dict) -> str:
 
 <!-- Topbar (FT/Claude Specification) -->
 <div class="topbar">
-  <a href="index.html" class="brand">East Meridian <span>/ Country Primer</span></a>
+  <a href="index.html" class="brand">East Meridian <span>/ Macro Dashboard</span></a>
   <nav class="country-nav" aria-label="country dashboards">
     {country_nav_html}
     <a href="chart_studio.html" class="active" title="Macro Chart Studio · 宏观图表工坊">📈 Studio</a>
   </nav>
   <div class="topbar-actions">
-    <a href="index.html" class="topbar-btn">← <span data-lang="en">Archive</span><span data-lang="zh">返回归档</span></a>
+    <a href="index.html" class="topbar-btn">← <span data-lang="en">Home</span><span data-lang="zh">首页</span></a>
     <button class="topbar-btn" onclick="toggleLang()" id="lang-btn">中文</button>
   </div>
 </div>
@@ -1176,7 +1176,7 @@ def render_html(catalog: dict) -> str:
   </div>
 
   <footer>
-    <div>East Meridian Country Primer · Macro Chart Studio · Financial Times & Claude UI Design System.</div>
+    <div>East Meridian Macro Dashboard · Macro Chart Studio · Financial Times & Claude UI Design System.</div>
     <div>Research artefact only, not investment advice.</div>
   </footer>
 
@@ -2008,7 +2008,7 @@ async function refreshChart() {{
       y: -0.21,
       xanchor: 'right',
       yanchor: 'top',
-      text: '<i>Source: East Meridian Country Primer · Official Macro Pipeline</i>',
+      text: '<i>Source: East Meridian Macro Dashboard · Official Macro Pipeline</i>',
       showarrow: false,
       font: {{
         family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",

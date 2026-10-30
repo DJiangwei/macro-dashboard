@@ -92,8 +92,8 @@ proxy-report-live:
 	$(UV) run python scripts/proxy_report.py --details --mode live
 
 publish-check:
-	curl -L https://djiangwei.github.io/macro-dashboard/ | rg -n "Macro Dashboard Archive|Hungary|dashboard_archive_summary.json"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/index.html | rg -n "Macro Dashboard Archive|china.html|euro_area.html|japan.html|south_africa.html|uk.html|us.html|turkey.html|hong_kong.html|south_korea.html|taiwan.html|kazakhstan.html|uzbekistan.html|egypt.html|nigeria.html"
+	curl -L https://djiangwei.github.io/macro-dashboard/ | rg -n "Macro Dashboard|Hungary|dashboard_archive_summary.json"
+	curl -L https://djiangwei.github.io/macro-dashboard/output/index.html | rg -n "Macro Dashboard|china.html|euro_area.html|japan.html|south_africa.html|uk.html|us.html|turkey.html|hong_kong.html|south_korea.html|taiwan.html|kazakhstan.html|uzbekistan.html|egypt.html|nigeria.html"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/hungary.html | rg -n "Hungary Dashboard|Core 48|chart-financial_stability-bank_car"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/china.html | rg -n "China Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
 	curl -L https://djiangwei.github.io/macro-dashboard/output/euro_area.html | rg -n "Euro Area Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"

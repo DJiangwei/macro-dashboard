@@ -168,7 +168,7 @@ def inject_output_index(summary: dict[str, Any]) -> None:
     if marker in html:
         html = html.replace(marker, card + "\n  </section>\n  <nav class=\"links\"", 1)
 
-    html = re.sub(r"Macro Dashboard Archive · CEE-4 v4 \+ China[^<]*", "Macro Dashboard Archive · CEE-4 v4 + China + Japan + South Africa + UK + US", html)
+    html = re.sub(r"Macro Dashboard(?: Archive)? · CEE-4 v4 \+ China[^<]*", "Macro Dashboard · CEE-4 v4 + China + Japan + South Africa + UK + US", html)
     html = re.sub(
         r"Generated archive entry for the proxy-free CEE-4 dashboards plus the [^.]*\.",
         "Generated archive entry for the proxy-free CEE-4 dashboards plus the China, Japan, South Africa, UK, and US data-first pages.",
