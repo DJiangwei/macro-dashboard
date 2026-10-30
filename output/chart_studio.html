@@ -328,6 +328,35 @@
       font-weight: 600;
       box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
+    .segmented-btn.btn-axis-left.active {
+      background: var(--accent);
+      color: #ffffff;
+    }
+    .segmented-btn.btn-axis-right.active {
+      background: var(--teal);
+      color: #ffffff;
+    }
+
+    .card-axis-pill {
+      display: inline-flex;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 3px;
+      letter-spacing: 0.2px;
+      margin-left: 6px;
+    }
+    .card-axis-pill.badge-left {
+      background: rgba(153, 15, 61, 0.08);
+      color: var(--accent);
+      border: 1px solid rgba(153, 15, 61, 0.22);
+    }
+    .card-axis-pill.badge-right {
+      background: rgba(13, 118, 128, 0.08);
+      color: var(--teal);
+      border: 1px solid rgba(13, 118, 128, 0.22);
+    }
 
     .add-btn {
       width: 100%;
@@ -824,11 +853,16 @@ function renderSeriesControls() {
       }
     }
 
+    const isRightAxis = (item.axis === 'right');
+    const axisPillClass = isRightAxis ? 'badge-right' : 'badge-left';
+    const axisPillText = isRightAxis ? (CURRENT_LANG === 'zh' ? '右轴 · Y2' : 'Right · Y2') : (CURRENT_LANG === 'zh' ? '左轴 · Y1' : 'Left · Y1');
+
     card.innerHTML = `
       <div class="series-card-top">
         <div class="series-tag">
           <span class="series-color-bullet" style="background: ${item.color};"></span>
           <span>S${idx + 1} · ${cData ? cData.flag : ''} ${item.country}</span>
+          <span class="card-axis-pill ${axisPillClass}">${axisPillText}</span>
         </div>
         ${ACTIVE_SERIES.length > 1 ? `<button type="button" class="remove-btn" onclick="removeSeries(${idx})" title="Remove series">✕</button>` : ''}
       </div>
@@ -842,8 +876,12 @@ function renderSeriesControls() {
         <div>
           <span class="form-label">${CURRENT_LANG === 'zh' ? '指派坐标轴' : 'Y-Axis'}</span>
           <div class="segmented-group">
-            <button type="button" class="segmented-btn ${item.axis === 'left' ? 'active' : ''}" onclick="setSeriesAxis(${idx}, 'left')">Y1 (${CURRENT_LANG === 'zh' ? '左' : 'Left'})</button>
-            <button type="button" class="segmented-btn ${item.axis === 'right' ? 'active' : ''}" onclick="setSeriesAxis(${idx}, 'right')">Y2 (${CURRENT_LANG === 'zh' ? '右' : 'Right'})</button>
+            <button type="button" class="segmented-btn btn-axis-left ${!isRightAxis ? 'active' : ''}" onclick="setSeriesAxis(${idx}, 'left')">
+              ← Y1 (${CURRENT_LANG === 'zh' ? '左' : 'Left'})
+            </button>
+            <button type="button" class="segmented-btn btn-axis-right ${isRightAxis ? 'active' : ''}" onclick="setSeriesAxis(${idx}, 'right')">
+              Y2 (${CURRENT_LANG === 'zh' ? '右' : 'Right'}) →
+            </button>
           </div>
         </div>
       </div>
@@ -1037,24 +1075,74 @@ async function refreshChart() {
 
     // 4. Apply Transformations
     let plotTraces = [];
+    let annotations = [];
     let y1Title = '';
     let y2Title = '';
     let hasY2 = false;
 
     if (CURRENT_TRANSFORM === 'rebase') {
       y1Title = CURRENT_LANG === 'zh' ? '归一化指数 (基期 = 100)' : 'Rebased Index (Base = 100)';
-      seriesData.forEach(s => {
+      seriesData.forEach((s, sIdx) => {
         if (!s.filteredObs.length) return;
         const baseVal = s.filteredObs[0].value || 1.0;
         const x = s.filteredObs.map(o => o.date);
         const y = s.filteredObs.map(o => (o.value / baseVal) * 100.0);
+        const lastVal = y[y.length - 1];
+        const lastDate = x[x.length - 1];
+        const valFormatted = lastVal.toFixed(1);
+
+        const legendLabel = `[Y1 · ${CURRENT_LANG === 'zh' ? '左轴' : 'Left'}] ${s.label} · ${CURRENT_LANG === 'zh' ? '最新' : 'Latest'}: ${valFormatted}`;
+
         plotTraces.push({
-          name: s.label,
+          name: legendLabel,
           x: x,
           y: y,
+          yaxis: 'y',
           type: 'scatter',
           mode: 'lines',
           line: { color: s.config.color, width: 2.3 }
+        });
+
+        // Dedicated latest observation point marker
+        plotTraces.push({
+          name: `${s.label} (${CURRENT_LANG === 'zh' ? '最新值' : 'Latest'})`,
+          x: [lastDate],
+          y: [lastVal],
+          yaxis: 'y',
+          type: 'scatter',
+          mode: 'markers',
+          marker: {
+            size: 8,
+            color: s.config.color,
+            line: { width: 2, color: '#ffffff' }
+          },
+          showlegend: false,
+          hoverinfo: 'skip'
+        });
+
+        annotations.push({
+          x: lastDate,
+          y: lastVal,
+          xref: 'x',
+          yref: 'y',
+          text: `<b>${valFormatted}</b> <span style="font-size:9.5px; opacity:0.85;">[Y1]</span>`,
+          showarrow: true,
+          arrowhead: 0,
+          arrowcolor: s.config.color,
+          arrowwidth: 1.2,
+          ax: 34,
+          ay: (sIdx % 2 === 0 ? -12 : 12),
+          xanchor: 'left',
+          yanchor: 'middle',
+          font: {
+            family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif",
+            size: 11,
+            color: s.config.color
+          },
+          bgcolor: 'rgba(255, 255, 255, 0.92)',
+          bordercolor: s.config.color,
+          borderwidth: 1.2,
+          borderpad: 3
         });
       });
     } else if (CURRENT_TRANSFORM === 'spread' && seriesData.length >= 2) {
@@ -1098,37 +1186,86 @@ async function refreshChart() {
       }
 
       if (spreadX.length > 0) {
+        const lastSpreadVal = spreadY[spreadY.length - 1];
+        const lastSpreadDate = spreadX[spreadX.length - 1];
+        const spreadSign = lastSpreadVal > 0 ? '+' : '';
+        const spreadFormatted = `${spreadSign}${lastSpreadVal.toFixed(2)}${s1.unit ? ' ' + s1.unit : ''}`;
+
         plotTraces.push({
-          name: `Spread (${s1.config.country} − ${s2.config.country})`,
+          name: `[Y1 · ${CURRENT_LANG === 'zh' ? '左轴' : 'Left'}] Spread (${s1.config.country} − ${s2.config.country}) · ${CURRENT_LANG === 'zh' ? '最新' : 'Latest'}: ${spreadFormatted}`,
           x: spreadX,
           y: spreadY,
+          yaxis: 'y',
           type: 'scatter',
           mode: 'lines',
           fill: 'tozeroy',
           fillcolor: 'rgba(153, 15, 61, 0.08)',
           line: { color: '#990f3d', width: 2.4 }
         });
+
+        plotTraces.push({
+          name: 'Spread Latest',
+          x: [lastSpreadDate],
+          y: [lastSpreadVal],
+          yaxis: 'y',
+          type: 'scatter',
+          mode: 'markers',
+          marker: {
+            size: 8,
+            color: '#990f3d',
+            line: { width: 2, color: '#ffffff' }
+          },
+          showlegend: false,
+          hoverinfo: 'skip'
+        });
+
+        annotations.push({
+          x: lastSpreadDate,
+          y: lastSpreadVal,
+          xref: 'x',
+          yref: 'y',
+          text: `<b>${spreadFormatted}</b> <span style="font-size:9.5px; opacity:0.85;">[Spread]</span>`,
+          showarrow: true,
+          arrowhead: 0,
+          arrowcolor: '#990f3d',
+          arrowwidth: 1.2,
+          ax: 34,
+          ay: -12,
+          xanchor: 'left',
+          yanchor: 'middle',
+          font: {
+            family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif",
+            size: 11,
+            color: '#990f3d'
+          },
+          bgcolor: 'rgba(255, 255, 255, 0.92)',
+          bordercolor: '#990f3d',
+          borderwidth: 1.2,
+          borderpad: 3
+        });
       }
       // Also display underlying series as fine dashed lines
       plotTraces.push({
-        name: `${s1.label}`,
+        name: `[Y1] ${s1.label}`,
         x: s1.filteredObs.map(o => o.date),
         y: s1.filteredObs.map(o => o.value),
+        yaxis: 'y',
         type: 'scatter',
         mode: 'lines',
         line: { color: '#0d7680', width: 1.5, dash: 'dot' }
       });
       plotTraces.push({
-        name: `${s2.label}`,
+        name: `[Y1] ${s2.label}`,
         x: s2.filteredObs.map(o => o.date),
         y: s2.filteredObs.map(o => o.value),
+        yaxis: 'y',
         type: 'scatter',
         mode: 'lines',
         line: { color: '#737c8c', width: 1.5, dash: 'dot' }
       });
     } else {
       // Raw Levels
-      seriesData.forEach(s => {
+      seriesData.forEach((s, sIdx) => {
         if (!s.filteredObs.length) return;
         const isRight = (s.config.axis === 'right');
         if (isRight) {
@@ -1137,8 +1274,17 @@ async function refreshChart() {
         } else {
           if (!y1Title) y1Title = s.unit;
         }
+
+        const latestObs = s.filteredObs[s.filteredObs.length - 1];
+        const latestVal = typeof latestObs.value === 'number' ? latestObs.value.toFixed(2) : '';
+        const axisTag = isRight ? (CURRENT_LANG === 'zh' ? '右轴 · Y2' : 'Right · Y2') : (CURRENT_LANG === 'zh' ? '左轴 · Y1' : 'Left · Y1');
+        const axisTagShort = isRight ? (CURRENT_LANG === 'zh' ? '右轴' : 'Right') : (CURRENT_LANG === 'zh' ? '左轴' : 'Left');
+        const unitSuffix = s.unit ? ` ${s.unit}` : '';
+        const legendLabel = `[${axisTag}] ${s.label} · ${CURRENT_LANG === 'zh' ? '最新' : 'Latest'}: ${latestVal}${unitSuffix}`;
+
+        // 1. Main Line Trace
         plotTraces.push({
-          name: s.label,
+          name: legendLabel,
           x: s.filteredObs.map(o => o.date),
           y: s.filteredObs.map(o => o.value),
           yaxis: isRight ? 'y2' : 'y',
@@ -1146,14 +1292,60 @@ async function refreshChart() {
           mode: 'lines',
           line: { color: s.config.color, width: 2.3 }
         });
+
+        // 2. Dedicated Latest Observation Marker
+        plotTraces.push({
+          name: `${s.label} (${CURRENT_LANG === 'zh' ? '最新值' : 'Latest'})`,
+          x: [latestObs.date],
+          y: [latestObs.value],
+          yaxis: isRight ? 'y2' : 'y',
+          type: 'scatter',
+          mode: 'markers',
+          marker: {
+            size: 8,
+            color: s.config.color,
+            line: { width: 2, color: '#ffffff' }
+          },
+          showlegend: false,
+          hoverinfo: 'skip'
+        });
+
+        // 3. On-Chart Callout Annotation at Latest Point
+        annotations.push({
+          x: latestObs.date,
+          y: latestObs.value,
+          xref: 'x',
+          yref: isRight ? 'y2' : 'y',
+          text: `<b>${latestVal}${unitSuffix}</b> <span style="font-size:9.5px; opacity:0.85;">[${axisTagShort}]</span>`,
+          showarrow: true,
+          arrowhead: 0,
+          arrowcolor: s.config.color,
+          arrowwidth: 1.2,
+          ax: 34,
+          ay: (sIdx % 2 === 0 ? -12 : 12),
+          xanchor: 'left',
+          yanchor: 'middle',
+          font: {
+            family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif",
+            size: 11,
+            color: s.config.color
+          },
+          bgcolor: 'rgba(255, 255, 255, 0.92)',
+          bordercolor: s.config.color,
+          borderwidth: 1.2,
+          borderpad: 3
+        });
       });
       if (!y1Title && y2Title) y1Title = y2Title;
     }
 
     // 5. Layout Configuration in FT/Claude Style
+    const y1Label = CURRENT_LANG === 'zh' ? `← Y1 (左轴)${y1Title ? ' · ' + y1Title : ''}` : `← Y1 (Left)${y1Title ? ' · ' + y1Title : ''}`;
+    const y2Label = CURRENT_LANG === 'zh' ? `Y2 (右轴) →${y2Title ? ' · ' + y2Title : ''}` : `Y2 (Right) →${y2Title ? ' · ' + y2Title : ''}`;
+
     const layout = {
       height: 560,
-      margin: { l: 56, r: hasY2 ? 56 : 24, t: 24, b: 54 },
+      margin: { l: 64, r: hasY2 ? 84 : 96, t: 26, b: 64 },
       paper_bgcolor: '#ffffff',
       plot_bgcolor: '#ffffff',
       font: {
@@ -1170,7 +1362,7 @@ async function refreshChart() {
         tickfont: { size: 10, color: '#4b525f' },
       },
       yaxis: {
-        title: { text: y1Title, font: { size: 11, color: '#4b525f' } },
+        title: { text: y1Label, font: { size: 11, color: '#4b525f' } },
         gridcolor: 'rgba(18, 21, 26, 0.06)',
         zeroline: true,
         zerolinewidth: 1.4,
@@ -1193,11 +1385,12 @@ async function refreshChart() {
         font: { family: '-apple-system, sans-serif', size: 11, color: '#12151a' },
       },
       autosize: true,
+      annotations: annotations
     };
 
     if (hasY2) {
       layout.yaxis2 = {
-        title: { text: y2Title, font: { size: 11, color: '#4b525f' } },
+        title: { text: y2Label, font: { size: 11, color: '#4b525f' } },
         overlaying: 'y',
         side: 'right',
         showgrid: false,
