@@ -151,6 +151,35 @@ PRESETS = [
             {"country": "EG", "id": "policy_rate", "axis": "left", "color": "#0d7680", "label": "Egypt CBE Corridor Rate (%)"},
             {"country": "NG", "id": "policy_rate", "axis": "left", "color": "#d97706", "label": "Nigeria Monetary Policy Rate (%)"}
         ]
+    },
+    {
+        "id": "cgb_yield_curve_and_us_spread",
+        "title_en": "China Sovereign Yield Curve & US-China 10Y Spread",
+        "title_zh": "中国国债收益率曲线关键期限与中美10年期利差走势",
+        "description_zh": "中国国债 2 年、10 年期基准收益率走势（左轴）与中美 10 年期国债利差（右轴）联动对比。",
+        "description_en": "China 2Y & 10Y Sovereign CGB benchmark yields (left axis) with US-China 10Y sovereign yield spread dynamics (right axis).",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "CN", "id": "cgb_yield_2y", "axis": "left", "color": "#2563eb", "label": "China 2Y CGB Yield (%)"},
+            {"country": "CN", "id": "cgb_yield_10y", "axis": "left", "color": "#990f3d", "label": "China 10Y CGB Yield (%)"},
+            {"country": "CN", "id": "us_cn_spread_10y", "axis": "right", "color": "#0d7680", "label": "US-China 10Y Spread (% pts)"}
+        ]
+    },
+    {
+        "id": "em_guidotti_greenspan_safety",
+        "title_en": "EM External Debt Solvency: Guidotti-Greenspan Ratio Comparison",
+        "title_zh": "新兴市场外部债务防线：格林斯潘-吉多蒂流动性安全垫对比",
+        "description_zh": "短期外债占总外储比重（%）：低于100%为安全阈值（格林斯潘-吉多蒂法则），横向追踪土耳其、南非、埃及与哈萨克斯坦外部清偿安全垫。",
+        "description_en": "Short-Term External Debt as % of Total Reserves across emerging markets; <100% represents the Guidotti-Greenspan safety cushion.",
+        "transform": "raw",
+        "date_range": "max",
+        "series": [
+            {"country": "TR", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#990f3d", "label": "Turkey Short-Term Debt / Reserves (%)"},
+            {"country": "ZA", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#0d7680", "label": "South Africa Short-Term Debt / Reserves (%)"},
+            {"country": "EG", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#d97706", "label": "Egypt Short-Term Debt / Reserves (%)"},
+            {"country": "KZ", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#2563eb", "label": "Kazakhstan Short-Term Debt / Reserves (%)"}
+        ]
     }
 ]
 

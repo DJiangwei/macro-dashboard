@@ -935,6 +935,21 @@ indicators:
     caveat_en: "Euro area central government AAA 2-year spot rate yield."
     caveat_zh: "欧元区中央政府AAA级2年期即期收益率。"
 
+  - id: aaa_yield_5y
+    section: fiscal_sovereign
+    label_en: "Euro Area AAA Benchmark 5Y Yield"
+    label_zh: "欧元区AAA级基准5年期国债收益率"
+    unit: "%"
+    fetcher: ecb_sdmx
+    flow: "YC"
+    series: "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_5Y"
+    source_name: "ECB"
+    source_url: "https://data.ecb.europa.eu/data/datasets/YC"
+    frequency: "daily"
+    start_date: "2004-09-01"
+    caveat_en: "Euro area central government AAA 5-year spot rate yield."
+    caveat_zh: "欧元区中央政府AAA级5年期即期收益率。"
+
   - id: yield_curve_slope
     section: fiscal_sovereign
     label_en: "AAA Yield Curve Slope (10Y - 2Y)"

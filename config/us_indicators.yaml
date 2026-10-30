@@ -1870,6 +1870,20 @@ indicators:
   caveat_en: Daily 2-year constant-maturity Treasury yield; policy-sensitive front-end proxy.
   caveat_zh: 日度2年期固定期限国债收益率；用于观察政策敏感的前端利率。
   source_authority: official_primary
+- id: treasury_5y_yield
+  section: monetary_financial
+  label_en: 5Y Treasury Yield
+  label_zh: 5年期美国国债收益率
+  unit: '%'
+  fetcher: fred
+  series: DGS5
+  source_name: FRED / US Treasury
+  source_url: https://fred.stlouisfed.org/series/DGS5
+  frequency: daily
+  start_date: '2018-01-01'
+  caveat_en: Intermediate 5-year constant-maturity Treasury yield; key belly-of-the-curve benchmark.
+  caveat_zh: 5年期固定期限国债收益率；国债收益率曲线腹部核心基准。
+  source_authority: official_primary
 - id: yield_curve_10y2y
   section: monetary_financial
   label_en: 10Y minus 2Y Treasury Curve
@@ -1952,6 +1966,20 @@ indicators:
   caveat_en: STLFSI4 measures financial market stress across 18 weekly variables; values above zero reflect above-average financial stress.
   caveat_zh: STLFSI4综合18个周频变量量化金融市场压力；大于零表示市场压力高于历史平均水平。
   source_authority: official_primary
+- id: em_corporate_spread_oas
+  section: monetary_financial
+  label_en: Emerging Markets Corporate Option-Adjusted Spread
+  label_zh: 新兴市场企业债期权调整利差 (ICE BofA EM OAS)
+  unit: '%'
+  fetcher: fred
+  series: BAMLEMCBPIOAS
+  source_name: FRED / ICE Benchmark Administration
+  source_url: https://fred.stlouisfed.org/series/BAMLEMCBPIOAS
+  frequency: daily
+  start_date: '2023-10-31'
+  caveat_en: Option-adjusted spread of the ICE BofA Emerging Markets Corporate Plus Index; global bellwether for EM credit risk and external dollar refinancing stress.
+  caveat_zh: ICE美银新兴市场企业综合指数期权调整利差；衡量全球新兴市场信用风险与离岸美元再融资压力的核心晴雨表。
+  source_authority: official_secondary
 - id: vix
   section: monetary_financial
   label_en: VIX
@@ -2120,6 +2148,20 @@ indicators:
   start_date: '2000-01-01'
   caveat_en: Daily effective fed funds rate for policy plumbing.
   caveat_zh: 用于观察政策传导管道的日度有效联邦基金利率。
+  source_authority: official_primary
+- id: fed_total_assets
+  section: fed_policy
+  label_en: Fed Total Assets (Balance Sheet)
+  label_zh: 美联储总资产规模 (资产负债表)
+  unit: USD mn
+  fetcher: fred
+  series: WALCL
+  source_name: FRED / Federal Reserve
+  source_url: https://fred.stlouisfed.org/series/WALCL
+  frequency: weekly
+  start_date: '2018-01-01'
+  caveat_en: Total assets of the Federal Reserve (less eliminations from consolidation), the definitive quantitative tightening/easing (QT/QE) metric.
+  caveat_zh: 美联储资产负债表总资产规模（百万美元），衡量量化紧缩(QT)与量化宽松(QE)的最终流动性标尺。
   source_authority: official_primary
 - id: fed_target_upper
   section: fed_policy

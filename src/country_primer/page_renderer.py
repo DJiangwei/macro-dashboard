@@ -161,8 +161,13 @@ def _chart_html(series: dict[str, Any], country_code: str) -> str:
     actual_through = series.get("actual_through")
     traces: list[dict[str, Any]] = []
     if actual_through:
-        actual = [item for item in observations if (_parse_year(item["date"]) or 9999) <= int(actual_through)]
-        forecast = [item for item in observations if (_parse_year(item["date"]) or 0) >= int(actual_through)]
+        try:
+            cutoff = int(str(actual_through)[:4])
+            actual = [item for item in observations if (_parse_year(item["date"]) or 9999) <= cutoff]
+            forecast = [item for item in observations if (_parse_year(item["date"]) or 0) >= cutoff]
+        except (ValueError, TypeError):
+            actual = observations
+            forecast = []
         if actual:
             traces.append({
                 "name": "Actual / history",

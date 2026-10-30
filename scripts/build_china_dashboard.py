@@ -103,7 +103,7 @@ def build(data_mode: str | None = None) -> Path:
     config = _load_config()
 
     import requests
-    from country_primer.adapters import fetch_eastmoney, fetch_nbs_api
+    from country_primer.adapters import fetch_eastmoney, fetch_nbs_api, fetch_bond_zh_us_rate
     registry = {
         "world_bank": lambda spec, cache: fetch_world_bank(spec),
         "imf_datamapper": lambda spec, cache: fetch_imf_datamapper(spec),
@@ -115,6 +115,7 @@ def build(data_mode: str | None = None) -> Path:
         "pbc_card": lambda spec, cache: fetch_pbc_card(spec),
         "eastmoney_api": lambda spec, cache: fetch_eastmoney(requests.Session(), spec),
         "nbs_api": lambda spec, cache: fetch_nbs_api(requests.Session(), spec),
+        "bond_zh_us_rate": lambda spec, cache: fetch_bond_zh_us_rate(spec),
     }
 
     if data_mode == "snapshot":

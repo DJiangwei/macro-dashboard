@@ -1,8 +1,8 @@
 {
   "file": "nigeria.html",
-  "generated": "2026-10-29T23:29:02.316443+00:00",
-  "charts": 38,
-  "source_groups": 13,
+  "generated": "2026-10-30T21:35:11.554650+00:00",
+  "charts": 39,
+  "source_groups": 14,
   "data_gaps": 2,
   "low_confidence": 9,
   "key_series_latest": [
@@ -130,8 +130,8 @@
       "id": "usd_ngn",
       "label_en": "USD/NGN Official Daily Central Rate (CBN NFEM)",
       "label_zh": "美元兑尼日利亚奈拉官方日度中间价 (CBN)",
-      "latest_date": "2026-10-29",
-      "latest_value": 1346.4108,
+      "latest_date": "2026-10-30",
+      "latest_value": 1345.7565,
       "latest_display": "1,346 NGN",
       "frequency": "daily",
       "source_name": "Central Bank of Nigeria (CBN)",
@@ -454,7 +454,7 @@
   "unavailable": [],
   "data_mode": "refresh",
   "latest_cards": [],
-  "usd_ngn_latest": "1,346.41 (2026-10-29)",
+  "usd_ngn_latest": "1,345.76 (2026-10-30)",
   "cross_checks": [
     {
       "concept": "real_gdp_growth",
@@ -482,10 +482,10 @@
       "value"
     ],
     "file": "nigeria_canonical_frame.json",
-    "series": 38,
-    "observations": 13636,
-    "series_count": 38,
-    "observation_count": 13636
+    "series": 39,
+    "observations": 13662,
+    "series_count": 39,
+    "observation_count": 13662
   },
   "data_gaps_detail": [
     {
@@ -504,7 +504,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 13,
+    "source_groups": 14,
     "sources": [
       {
         "source_name": "IMF SDMX / CBN",
@@ -557,12 +557,16 @@
       {
         "source_name": "World Bank / CBN",
         "charts": 1
+      },
+      {
+        "source_name": "World Bank International Debt Statistics",
+        "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 9,
       "verified": 1,
-      "watch": 28
+      "watch": 29
     },
     "unavailable_count": 0
   },
@@ -573,14 +577,14 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-10-29",
+    "as_of_date": "2026-10-30",
     "counts": {
       "current": 20,
-      "due": 3,
+      "due": 4,
       "projection": 6,
       "stale": 9
     },
-    "latest_historical_date": "2026-10-29",
+    "latest_historical_date": "2026-10-30",
     "attention": [
       {
         "id": "private_credit_gdp",
@@ -590,7 +594,7 @@
         "frequency": "annual",
         "freshness_status": "stale",
         "age_basis_date": "2023-12-31",
-        "age_days": 1033,
+        "age_days": 1034,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -612,7 +616,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-08-01",
-        "age_days": 789,
+        "age_days": 790,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -634,7 +638,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-08-01",
-        "age_days": 789,
+        "age_days": 790,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -656,7 +660,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-08-01",
-        "age_days": 789,
+        "age_days": 790,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -671,6 +675,28 @@
         "transform": "level"
       },
       {
+        "id": "short_term_external_debt_pct_reserves",
+        "concept_id": "ng:short_term_external_debt_pct_reserves",
+        "label_en": "Short-Term External Debt (% of Reserves)",
+        "latest_date": "2024-12-31",
+        "frequency": "annual",
+        "freshness_status": "due",
+        "age_basis_date": "2024-12-31",
+        "age_days": 668,
+        "threshold_days": 730,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "World Bank International Debt Statistics",
+        "series": "DT.DOD.DSTC.IR.ZS",
+        "transform": "level"
+      },
+      {
         "id": "bank_capital_ratio",
         "concept_id": "bank_capital_ratio",
         "label_en": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
@@ -678,7 +704,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 577,
+        "age_days": 578,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -700,7 +726,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 577,
+        "age_days": 578,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -722,7 +748,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-06-01",
-        "age_days": 486,
+        "age_days": 487,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -744,7 +770,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-06-01",
-        "age_days": 486,
+        "age_days": 487,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -766,7 +792,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 121,
+        "age_days": 122,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -788,7 +814,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 59,
+        "age_days": 60,
         "threshold_days": 60,
         "release_calendar_id": "nbs_monthly",
         "expected_release_date": "2026-10-20",
@@ -810,7 +836,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 59,
+        "age_days": 60,
         "threshold_days": 60,
         "release_calendar_id": "nbs_monthly",
         "expected_release_date": "2026-10-20",
@@ -832,7 +858,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 59,
+        "age_days": 60,
         "threshold_days": 60,
         "release_calendar_id": "nbs_monthly",
         "expected_release_date": "2026-10-20",
@@ -850,7 +876,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 38
+      "level": 39
     },
     "non_level": []
   },
@@ -860,6 +886,6 @@
       "date",
       "value"
     ],
-    "charted_series": 38
+    "charted_series": 39
   }
 }

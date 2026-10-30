@@ -1,8 +1,8 @@
 {
   "file": "egypt.html",
-  "generated": "2026-10-29T23:28:57.583695+00:00",
-  "charts": 36,
-  "source_groups": 13,
+  "generated": "2026-10-30T21:34:50.898537+00:00",
+  "charts": 37,
+  "source_groups": 14,
   "data_gaps": 2,
   "low_confidence": 13,
   "key_series_latest": [
@@ -458,10 +458,10 @@
       "value"
     ],
     "file": "egypt_canonical_frame.json",
-    "series": 36,
-    "observations": 9491,
-    "series_count": 36,
-    "observation_count": 9491
+    "series": 37,
+    "observations": 9516,
+    "series_count": 37,
+    "observation_count": 9516
   },
   "data_gaps_detail": [
     {
@@ -480,7 +480,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 13,
+    "source_groups": 14,
     "sources": [
       {
         "source_name": "IMF SDMX / CBE",
@@ -533,11 +533,15 @@
       {
         "source_name": "World Bank / Central Bank of Egypt (CBE)",
         "charts": 1
+      },
+      {
+        "source_name": "World Bank International Debt Statistics",
+        "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 13,
-      "watch": 23
+      "watch": 24
     },
     "unavailable_count": 0
   },
@@ -548,15 +552,37 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-10-29",
+    "as_of_date": "2026-10-30",
     "counts": {
       "current": 14,
-      "due": 3,
+      "due": 4,
       "projection": 6,
       "stale": 13
     },
     "latest_historical_date": "2026-10-27",
     "attention": [
+      {
+        "id": "short_term_external_debt_pct_reserves",
+        "concept_id": "eg:short_term_external_debt_pct_reserves",
+        "label_en": "Short-Term External Debt (% of Reserves)",
+        "latest_date": "2024-12-31",
+        "frequency": "annual",
+        "freshness_status": "due",
+        "age_basis_date": "2024-12-31",
+        "age_days": 668,
+        "threshold_days": 730,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "World Bank International Debt Statistics",
+        "series": "DT.DOD.DSTC.IR.ZS",
+        "transform": "level"
+      },
       {
         "id": "deposit_rate",
         "concept_id": "eg:deposit_rate",
@@ -565,7 +591,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-05-01",
-        "age_days": 516,
+        "age_days": 517,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -587,7 +613,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-05-01",
-        "age_days": 516,
+        "age_days": 517,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -609,7 +635,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-05-01",
-        "age_days": 516,
+        "age_days": 517,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -631,7 +657,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-05-01",
-        "age_days": 516,
+        "age_days": 517,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -653,7 +679,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 363,
+        "age_days": 364,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -675,7 +701,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 212,
+        "age_days": 213,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -697,7 +723,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 212,
+        "age_days": 213,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -719,7 +745,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 212,
+        "age_days": 213,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -741,7 +767,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 212,
+        "age_days": 213,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -763,7 +789,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 212,
+        "age_days": 213,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -785,7 +811,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 212,
+        "age_days": 213,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -807,7 +833,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 212,
+        "age_days": 213,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -829,7 +855,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 121,
+        "age_days": 122,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -851,7 +877,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 59,
+        "age_days": 60,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -873,7 +899,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 59,
+        "age_days": 60,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -895,7 +921,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 59,
+        "age_days": 60,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -913,7 +939,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 36
+      "level": 37
     },
     "non_level": []
   },
@@ -923,6 +949,6 @@
       "date",
       "value"
     ],
-    "charted_series": 36
+    "charted_series": 37
   }
 }

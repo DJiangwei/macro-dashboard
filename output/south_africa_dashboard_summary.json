@@ -1,8 +1,8 @@
 {
   "file": "south_africa.html",
-  "generated": "2026-10-30T08:06:56.047175+00:00",
-  "charts": 64,
-  "source_groups": 15,
+  "generated": "2026-10-30T21:31:31.988089+00:00",
+  "charts": 65,
+  "source_groups": 16,
   "data_gaps": 7,
   "low_confidence": 22,
   "key_series_latest": [
@@ -142,8 +142,8 @@
       "id": "zar_usd",
       "label_en": "ZAR/USD Spot Rate",
       "label_zh": "美元兑兰特",
-      "latest_date": "2026-10-29",
-      "latest_value": 16.6415,
+      "latest_date": "2026-10-30",
+      "latest_value": 16.6444,
       "latest_display": "16.6 ZAR per USD",
       "frequency": "daily",
       "source_name": "SARB Web API",
@@ -178,9 +178,9 @@
       "id": "sovereign_yield_10y",
       "label_en": "R2030 Benchmark Bond Yield",
       "label_zh": "R2030基准国债收益率",
-      "latest_date": "2026-10-28",
-      "latest_value": 8.035,
-      "latest_display": "8.04 %",
+      "latest_date": "2026-10-29",
+      "latest_value": 8.0,
+      "latest_display": "8.00 %",
       "frequency": "daily",
       "source_name": "SARB Web API",
       "series": "MMRD708A",
@@ -190,7 +190,7 @@
       "id": "policy_rate",
       "label_en": "SARB Policy Rate",
       "label_zh": "南非央行政策利率",
-      "latest_date": "2026-10-29",
+      "latest_date": "2026-10-30",
       "latest_value": 7.25,
       "latest_display": "7.25 %",
       "frequency": "daily",
@@ -202,7 +202,7 @@
       "id": "prime_lending_rate",
       "label_en": "Prime Lending Rate",
       "label_zh": "优惠贷款利率",
-      "latest_date": "2026-10-29",
+      "latest_date": "2026-10-30",
       "latest_value": 10.75,
       "latest_display": "10.8 %",
       "frequency": "daily",
@@ -254,10 +254,10 @@
       "value"
     ],
     "file": "south_africa_canonical_frame.json",
-    "series": 64,
-    "observations": 30524,
-    "series_count": 64,
-    "observation_count": 30524
+    "series": 65,
+    "observations": 30557,
+    "series_count": 65,
+    "observation_count": 30557
   },
   "data_gaps_detail": [
     {
@@ -311,7 +311,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 15,
+    "source_groups": 16,
     "sources": [
       {
         "source_name": "IMF SDMX / Balance of Payments (SARB)",
@@ -372,12 +372,16 @@
       {
         "source_name": "IMF Fiscal Monitor DataMapper",
         "charts": 1
+      },
+      {
+        "source_name": "World Bank International Debt Statistics",
+        "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 22,
       "verified": 10,
-      "watch": 32
+      "watch": 33
     },
     "unavailable_count": 0
   },
@@ -391,11 +395,11 @@
     "as_of_date": "2026-10-30",
     "counts": {
       "current": 34,
-      "due": 5,
+      "due": 6,
       "projection": 3,
       "stale": 22
     },
-    "latest_historical_date": "2026-10-29",
+    "latest_historical_date": "2026-10-30",
     "attention": [
       {
         "id": "current_account_gdp",
@@ -417,6 +421,28 @@
         "comparability": "medium",
         "source_name": "FRED / OECD (SARB BoP)",
         "series": "ZAFB6BLTT02STSAQ",
+        "transform": "level"
+      },
+      {
+        "id": "short_term_external_debt_pct_reserves",
+        "concept_id": "za:short_term_external_debt_pct_reserves",
+        "label_en": "Short-Term External Debt (% of Reserves)",
+        "latest_date": "2024-12-31",
+        "frequency": "annual",
+        "freshness_status": "due",
+        "age_basis_date": "2024-12-31",
+        "age_days": 668,
+        "threshold_days": 730,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "World Bank International Debt Statistics",
+        "series": "DT.DOD.DSTC.IR.ZS",
         "transform": "level"
       },
       {
@@ -995,7 +1021,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 56,
+      "level": 57,
       "pct_change": 1,
       "yoy_pct": 7
     },
@@ -1056,6 +1082,6 @@
       "date",
       "value"
     ],
-    "charted_series": 64
+    "charted_series": 65
   }
 }

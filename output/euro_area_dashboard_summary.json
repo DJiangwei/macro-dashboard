@@ -1,7 +1,7 @@
 {
   "file": "euro_area.html",
-  "generated": "2026-10-30T08:00:37.466567+00:00",
-  "charts": 70,
+  "generated": "2026-10-30T21:28:10.610289+00:00",
+  "charts": 71,
   "source_groups": 6,
   "data_gaps": 5,
   "low_confidence": 18,
@@ -10,21 +10,21 @@
       "id": "real_gdp_growth",
       "label_en": "Real GDP Growth, QoQ",
       "label_zh": "实际GDP环比",
-      "latest_date": "2026-04-01",
-      "latest_value": 0.6,
-      "latest_display": "0.60 % q/q",
+      "latest_date": "2026-07-01",
+      "latest_value": 0.4,
+      "latest_display": "0.40 % q/q",
       "frequency": "quarterly",
       "source_name": "Eurostat",
       "series": "",
-      "quality_status": "watch"
+      "quality_status": "verified"
     },
     {
       "id": "real_gdp_yoy",
       "label_en": "Real GDP Growth, YoY",
       "label_zh": "实际GDP同比",
-      "latest_date": "2026-04-01",
-      "latest_value": 1.2,
-      "latest_display": "1.20 % y/y",
+      "latest_date": "2026-07-01",
+      "latest_value": 1.3,
+      "latest_display": "1.30 % y/y",
       "frequency": "quarterly",
       "source_name": "Eurostat",
       "series": "",
@@ -70,9 +70,9 @@
       "id": "unemployment_rate",
       "label_en": "Harmonised Unemployment Rate",
       "label_zh": "调和失业率",
-      "latest_date": "2026-08-01",
-      "latest_value": 6.4,
-      "latest_display": "6.40 %",
+      "latest_date": "2026-09-01",
+      "latest_value": 6.5,
+      "latest_display": "6.50 %",
       "frequency": "monthly",
       "source_name": "Eurostat",
       "series": "",
@@ -127,10 +127,10 @@
       "value"
     ],
     "file": "euro_area_canonical_frame.json",
-    "series": 70,
-    "observations": 59613,
-    "series_count": 70,
-    "observation_count": 59613
+    "series": 71,
+    "observations": 65286,
+    "series_count": 71,
+    "observation_count": 65286
   },
   "data_gaps_detail": [
     {
@@ -173,12 +173,12 @@
     "source_groups": 6,
     "sources": [
       {
-        "source_name": "Eurostat",
+        "source_name": "ECB",
         "charts": 30
       },
       {
-        "source_name": "ECB",
-        "charts": 29
+        "source_name": "Eurostat",
+        "charts": 30
       },
       {
         "source_name": "Eurostat / DG ECFIN",
@@ -200,8 +200,8 @@
     "quality_counts": {
       "low_confidence": 18,
       "unavailable": 1,
-      "verified": 46,
-      "watch": 5
+      "verified": 48,
+      "watch": 4
     },
     "unavailable_count": 0
   },
@@ -214,8 +214,8 @@
   "freshness": {
     "as_of_date": "2026-10-30",
     "counts": {
-      "current": 46,
-      "due": 5,
+      "current": 48,
+      "due": 4,
       "future_date": 1,
       "stale": 18
     },
@@ -596,28 +596,6 @@
         "transform": "level"
       },
       {
-        "id": "real_gdp_growth",
-        "concept_id": "real_gdp_growth_qoq",
-        "label_en": "Real GDP Growth, QoQ",
-        "latest_date": "2026-04-01",
-        "frequency": "quarterly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-04-01",
-        "age_days": 122,
-        "threshold_days": 137,
-        "release_calendar_id": "bea_quarterly",
-        "expected_release_date": "2026-11-04",
-        "due_date": "2026-11-14",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Eurostat",
-        "series": "",
-        "transform": "level"
-      },
-      {
         "id": "reer",
         "concept_id": "reer",
         "label_en": "Euro Real Effective Exchange Rate (BIS)",
@@ -753,7 +731,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 70
+      "level": 71
     },
     "non_level": []
   },
@@ -763,6 +741,6 @@
       "date",
       "value"
     ],
-    "charted_series": 70
+    "charted_series": 71
   }
 }

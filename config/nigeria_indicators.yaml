@@ -441,6 +441,22 @@ indicators:
     caveat_en: Total official reserves comprising foreign exchange and gold holdings in billions of USD.
     caveat_zh: 官方储备资产总额（包含外汇与黄金储备，十亿美元，世行口径）。
 
+  - id: short_term_external_debt_pct_reserves
+    section: external_fx
+    label_en: Short-Term External Debt (% of Reserves)
+    label_zh: 短期外债占外汇储备比重 (Guidotti-Greenspan比率)
+    unit: "% reserves"
+    fetcher: world_bank
+    series: DT.DOD.DSTC.IR.ZS
+    country_iso3: NGA
+    source_authority: official_secondary
+    source_name: World Bank International Debt Statistics
+    source_url: https://data.worldbank.org/indicator/DT.DOD.DSTC.IR.ZS?locations=NG
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Guidotti-Greenspan rule indicator; ratios above 100% indicate short-term external debt exceeding gross international reserves.
+    caveat_zh: Guidotti-Greenspan规则指标；比率高于100%代表短期外债超出外汇储备总额，衡量外部清偿再融资风险。
+
   # ==========================================
   # 5. Fiscal & Sovereign
   # ==========================================

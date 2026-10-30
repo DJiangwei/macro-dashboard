@@ -3361,3 +3361,64 @@ def fetch_finmind(spec: dict[str, Any]) -> dict[str, Any]:
         "provider_updated": observations[-1]["date"] if observations else "",
         "api_url": f"https://api.finmindtrade.com/api/v4/data?dataset={dataset}&data_id={data_id}",
     }
+
+
+_BOND_ZH_US_LOCK = threading.Lock()
+_BOND_ZH_US_CACHE: Any = None
+
+
+def fetch_bond_zh_us_rate(spec: dict[str, Any]) -> dict[str, Any]:
+    """Fetch Chinese and US benchmark sovereign bond yields and spreads via AKShare.
+
+    Provides daily 2Y, 5Y, 10Y, 30Y yields, 10Y-2Y term spread, and US-CN 10Y spread.
+    Uses an in-memory cached frame to avoid repeated network pulls across indicator specs.
+    """
+    global _BOND_ZH_US_CACHE
+    with _BOND_ZH_US_LOCK:
+        if _BOND_ZH_US_CACHE is None:
+            try:
+                import akshare as ak
+                _BOND_ZH_US_CACHE = ak.bond_zh_us_rate(start_date="20150101")
+            except Exception as exc:
+                raise RuntimeError(f"Failed to fetch bond_zh_us_rate via akshare: {exc}") from exc
+        df = _BOND_ZH_US_CACHE
+
+    val_col = str(spec.get("value_column") or "中国国债收益率10年")
+    date_col = str(spec.get("date_column") or "日期")
+    start_date = spec.get("start_date")
+    is_spread = bool(spec.get("is_us_cn_spread"))
+
+    observations: list[dict[str, Any]] = []
+    if is_spread:
+        for _, row in df.iterrows():
+            d_str = str(row[date_col])[:10]
+            if start_date and d_str < str(start_date)[:10]:
+                continue
+            us_val = row.get("美国国债收益率10年")
+            cn_val = row.get("中国国债收益率10年")
+            if us_val is not None and cn_val is not None and str(us_val) != "nan" and str(cn_val) != "nan":
+                try:
+                    diff = float(us_val) - float(cn_val)
+                    observations.append({"date": d_str, "value": round(diff, 4)})
+                except (ValueError, TypeError):
+                    continue
+    else:
+        for _, row in df.iterrows():
+            d_str = str(row[date_col])[:10]
+            if start_date and d_str < str(start_date)[:10]:
+                continue
+            val = row.get(val_col)
+            if val is not None and str(val) != "nan" and str(val) != "":
+                try:
+                    observations.append({"date": d_str, "value": round(float(val), 4)})
+                except (ValueError, TypeError):
+                    continue
+
+    observations.sort(key=lambda item: item["date"])
+    provider_updated = observations[-1]["date"] if observations else ""
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": provider_updated,
+        "api_url": "https://finance.sina.com.cn",
+    }

@@ -1,8 +1,8 @@
 {
   "file": "us.html",
-  "generated": "2026-10-30T08:00:18.409140+00:00",
-  "charts": 168,
-  "source_groups": 27,
+  "generated": "2026-10-30T21:30:32.373119+00:00",
+  "charts": 171,
+  "source_groups": 28,
   "data_gaps": 7,
   "low_confidence": 0,
   "key_series_latest": [
@@ -70,20 +70,20 @@
   "unavailable": [],
   "data_mode": "refresh",
   "latest_cards": [],
-  "fed_funds_latest": "3.88% (2026-10-28)",
+  "fed_funds_latest": "3.88% (2026-10-29)",
   "cross_checks": [
     {
       "concept": "overnight_policy_rate",
       "primary": "daily_fed_funds",
       "secondary": "overnight_bank_funding_rate",
       "label_en": "Daily Effective Fed Funds (DFF) vs Overnight Bank Funding Rate (OBFR)",
-      "n_common": 2216,
+      "n_common": 2217,
       "latest_diff": 0.0,
       "max_abs_diff": 0.1,
       "n_breaches": 4,
       "last_breach_date": "2020-03-19",
       "tolerance": 0.05,
-      "window_since": "2024-10-28",
+      "window_since": "2024-10-29",
       "window_months": 24,
       "window_n_common": 502,
       "window_max_abs_diff": 0.010000000000000231,
@@ -95,13 +95,13 @@
       "primary": "daily_fed_funds",
       "secondary": "reserve_balance_rate",
       "label_en": "Daily Effective Fed Funds (DFF) vs Interest on Reserve Balances (IORB)",
-      "n_common": 1918,
+      "n_common": 1919,
       "latest_diff": -0.020000000000000018,
       "max_abs_diff": 0.09,
       "n_breaches": 0,
       "last_breach_date": "",
       "tolerance": 0.15,
-      "window_since": "2024-10-28",
+      "window_since": "2024-10-29",
       "window_months": 24,
       "window_n_common": 731,
       "window_max_abs_diff": 0.07000000000000028,
@@ -134,10 +134,10 @@
       "value"
     ],
     "file": "us_canonical_frame.json",
-    "series": 168,
-    "observations": 118245,
-    "series_count": 168,
-    "observation_count": 118245
+    "series": 171,
+    "observations": 121722,
+    "series_count": 171,
+    "observation_count": 121722
   },
   "data_gaps_detail": [
     {
@@ -191,18 +191,18 @@
     }
   ],
   "source_health": {
-    "source_groups": 27,
+    "source_groups": 28,
     "sources": [
       {
         "source_name": "FRED / BLS",
         "charts": 34
       },
       {
-        "source_name": "FRED / BEA",
-        "charts": 29
+        "source_name": "FRED / Federal Reserve",
+        "charts": 30
       },
       {
-        "source_name": "FRED / Federal Reserve",
+        "source_name": "FRED / BEA",
         "charts": 29
       },
       {
@@ -211,7 +211,7 @@
       },
       {
         "source_name": "FRED / US Treasury",
-        "charts": 14
+        "charts": 15
       },
       {
         "source_name": "FRED / Realtor.com",
@@ -290,6 +290,10 @@
         "charts": 1
       },
       {
+        "source_name": "FRED / ICE Benchmark Administration",
+        "charts": 1
+      },
+      {
         "source_name": "FRED / MBA",
         "charts": 1
       },
@@ -303,8 +307,8 @@
       }
     ],
     "quality_counts": {
-      "verified": 134,
-      "watch": 34
+      "verified": 135,
+      "watch": 36
     },
     "unavailable_count": 0
   },
@@ -317,8 +321,9 @@
   "freshness": {
     "as_of_date": "2026-10-30",
     "counts": {
-      "current": 152,
-      "due": 16
+      "current": 154,
+      "due": 16,
+      "scheduled_policy": 1
     },
     "latest_historical_date": "2026-10-30",
     "attention": [
@@ -679,7 +684,7 @@
   "transform_audit": {
     "counts": {
       "diff": 2,
-      "level": 97,
+      "level": 100,
       "pct_change": 7,
       "yoy_pct": 62
     },
@@ -1118,6 +1123,6 @@
       "date",
       "value"
     ],
-    "charted_series": 168
+    "charted_series": 171
   }
 }

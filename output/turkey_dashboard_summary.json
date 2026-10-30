@@ -1,8 +1,8 @@
 {
   "file": "turkey.html",
-  "generated": "2026-10-30T08:04:57.262860+00:00",
-  "charts": 53,
-  "source_groups": 15,
+  "generated": "2026-10-30T21:31:57.056507+00:00",
+  "charts": 54,
+  "source_groups": 16,
   "data_gaps": 1,
   "low_confidence": 12,
   "key_series_latest": [
@@ -142,25 +142,25 @@
       "id": "unemployment_rate",
       "label_en": "Harmonised Unemployment Rate SA",
       "label_zh": "季调失业率",
-      "latest_date": "2026-07-01",
-      "latest_value": 8.1,
-      "latest_display": "8.10 % of labour force",
+      "latest_date": "2026-09-01",
+      "latest_value": 8.4,
+      "latest_display": "8.40 % of labour force",
       "frequency": "monthly",
       "source_name": "Eurostat / TurkStat",
       "series": "",
-      "quality_status": "watch"
+      "quality_status": "verified"
     },
     {
       "id": "youth_unemployment_rate",
       "label_en": "Youth Unemployment Rate (<25) SA",
       "label_zh": "青年失业率 (25岁以下)",
-      "latest_date": "2026-07-01",
-      "latest_value": 14.5,
-      "latest_display": "14.5 % of labour force",
+      "latest_date": "2026-09-01",
+      "latest_value": 14.8,
+      "latest_display": "14.8 % of labour force",
       "frequency": "monthly",
       "source_name": "Eurostat / TurkStat",
       "series": "",
-      "quality_status": "watch"
+      "quality_status": "verified"
     },
     {
       "id": "cpi_inflation",
@@ -262,9 +262,9 @@
       "id": "try_usd",
       "label_en": "USD/TRY Official Exchange Rate",
       "label_zh": "美元兑土耳其里拉官方汇率",
-      "latest_date": "2026-10-27",
-      "latest_value": 49.6997,
-      "latest_display": "49.7 TRY per USD",
+      "latest_date": "2026-10-30",
+      "latest_value": 49.7747,
+      "latest_display": "49.8 TRY per USD",
       "frequency": "daily",
       "source_name": "Central Bank of the Republic of Turkey (TCMB)",
       "series": "",
@@ -418,7 +418,7 @@
       "id": "policy_rate",
       "label_en": "CBRT 1-Week Repo Auction Rate (Official Policy Rate)",
       "label_zh": "土耳其央行1周回购拍卖利率 (官方政策利率)",
-      "latest_date": "2026-10-28",
+      "latest_date": "2026-10-30",
       "latest_value": 36.0,
       "latest_display": "36.0 %",
       "frequency": "daily",
@@ -552,7 +552,7 @@
   ],
   "data_mode": "refresh",
   "latest_cards": [],
-  "usd_try_latest": "49.6997 (2026-10-27)",
+  "usd_try_latest": "49.7747 (2026-10-30)",
   "cross_checks": [
     {
       "concept": "headline_inflation",
@@ -580,10 +580,10 @@
       "value"
     ],
     "file": "turkey_canonical_frame.json",
-    "series": 53,
-    "observations": 10314,
-    "series_count": 53,
-    "observation_count": 10314
+    "series": 54,
+    "observations": 10342,
+    "series_count": 54,
+    "observation_count": 10342
   },
   "data_gaps_detail": [
     {
@@ -595,7 +595,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 15,
+    "source_groups": 16,
     "sources": [
       {
         "source_name": "Eurostat / TurkStat",
@@ -656,12 +656,16 @@
       {
         "source_name": "World Bank / ILO",
         "charts": 1
+      },
+      {
+        "source_name": "World Bank International Debt Statistics",
+        "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 12,
-      "verified": 20,
-      "watch": 21
+      "verified": 22,
+      "watch": 20
     },
     "unavailable_count": 1
   },
@@ -674,12 +678,12 @@
   "freshness": {
     "as_of_date": "2026-10-30",
     "counts": {
-      "current": 30,
-      "due": 7,
+      "current": 32,
+      "due": 6,
       "projection": 4,
       "stale": 12
     },
-    "latest_historical_date": "2026-10-28",
+    "latest_historical_date": "2026-10-30",
     "attention": [
       {
         "id": "house_price_growth",
@@ -701,6 +705,28 @@
         "comparability": "high",
         "source_name": "Eurostat / CBRT",
         "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "short_term_external_debt_pct_reserves",
+        "concept_id": "tr:short_term_external_debt_pct_reserves",
+        "label_en": "Short-Term External Debt (% of Reserves)",
+        "latest_date": "2024-12-31",
+        "frequency": "annual",
+        "freshness_status": "due",
+        "age_basis_date": "2024-12-31",
+        "age_days": 668,
+        "threshold_days": 730,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "World Bank International Debt Statistics",
+        "series": "DT.DOD.DSTC.IR.ZS",
         "transform": "level"
       },
       {
@@ -968,50 +994,6 @@
         "transform": "level"
       },
       {
-        "id": "unemployment_rate",
-        "concept_id": "unemployment_rate",
-        "label_en": "Harmonised Unemployment Rate SA",
-        "latest_date": "2026-07-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-07-01",
-        "age_days": 91,
-        "threshold_days": 91,
-        "release_calendar_id": "eurostat_monthly",
-        "expected_release_date": "2026-10-15",
-        "due_date": "2026-10-30",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Eurostat / TurkStat",
-        "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "youth_unemployment_rate",
-        "concept_id": "tr:youth_unemployment_rate",
-        "label_en": "Youth Unemployment Rate (<25) SA",
-        "latest_date": "2026-07-01",
-        "frequency": "monthly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-07-01",
-        "age_days": 91,
-        "threshold_days": 91,
-        "release_calendar_id": "eurostat_monthly",
-        "expected_release_date": "2026-10-15",
-        "due_date": "2026-10-30",
-        "quality_status": "watch",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Eurostat / TurkStat",
-        "series": "",
-        "transform": "level"
-      },
-      {
         "id": "fx_reserves",
         "concept_id": "tr:fx_reserves",
         "label_en": "CBRT Gross FX Reserves",
@@ -1103,7 +1085,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 53
+      "level": 54
     },
     "non_level": []
   },
@@ -1113,6 +1095,6 @@
       "date",
       "value"
     ],
-    "charted_series": 53
+    "charted_series": 54
   }
 }

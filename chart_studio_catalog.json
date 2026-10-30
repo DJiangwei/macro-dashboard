@@ -1,7 +1,7 @@
 {
   "generated": "2026-10-29",
   "total_countries": 18,
-  "total_indicators": 1307,
+  "total_indicators": 1326,
   "countries": [
     {
       "code": "US",
@@ -9,7 +9,7 @@
       "name_zh": "美国",
       "flag": "🇺🇸",
       "canonical_file": "us_canonical_frame.json",
-      "indicator_count": 168,
+      "indicator_count": 171,
       "indicators": [
         {
           "id": "active_listing_count",
@@ -73,9 +73,9 @@
           "unit": "% y/y",
           "section": "monetary_financial",
           "frequency": "weekly",
-          "obs_count": 1868,
-          "latest_date": "2026-10-14",
-          "latest_val": 7.936963617811776
+          "obs_count": 1869,
+          "latest_date": "2026-10-21",
+          "latest_val": 7.854645310785391
         },
         {
           "id": "bank_deposits_growth",
@@ -84,9 +84,9 @@
           "unit": "% y/y",
           "section": "monetary_financial",
           "frequency": "weekly",
-          "obs_count": 1868,
-          "latest_date": "2026-10-14",
-          "latest_val": 7.058039851307618
+          "obs_count": 1869,
+          "latest_date": "2026-10-21",
+          "latest_val": 6.893728176014058
         },
         {
           "id": "bed_gross_job_gains_level",
@@ -229,7 +229,7 @@
           "frequency": "monthly",
           "obs_count": 429,
           "latest_date": "2026-09-01",
-          "latest_val": 9.961023492481779
+          "latest_val": 9.958251294608967
         },
         {
           "id": "construction_payrolls_growth",
@@ -403,8 +403,8 @@
           "unit": "%",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 9798,
-          "latest_date": "2026-10-28",
+          "obs_count": 9799,
+          "latest_date": "2026-10-29",
           "latest_val": 3.88
         },
         {
@@ -425,9 +425,9 @@
           "unit": "% y/y",
           "section": "prices_wages",
           "frequency": "quarterly",
-          "obs_count": 98,
-          "latest_date": "2026-04-01",
-          "latest_val": 3.1383416972511347
+          "obs_count": 99,
+          "latest_date": "2026-07-01",
+          "latest_val": 3.1174977707661533
         },
         {
           "id": "effective_fed_funds",
@@ -439,6 +439,17 @@
           "obs_count": 441,
           "latest_date": "2026-09-01",
           "latest_val": 3.75
+        },
+        {
+          "id": "em_corporate_spread_oas",
+          "label_en": "Emerging Markets Corporate Option-Adjusted Spread",
+          "label_zh": "新兴市场企业债期权调整利差 (ICE BofA EM OAS)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "daily",
+          "obs_count": 786,
+          "latest_date": "2026-10-29",
+          "latest_val": 1.73
         },
         {
           "id": "empire_state_manufacturing",
@@ -502,9 +513,9 @@
           "unit": "USD bn",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 2216,
-          "latest_date": "2026-10-28",
-          "latest_val": 116.0
+          "obs_count": 2217,
+          "latest_date": "2026-10-29",
+          "latest_val": 117.0
         },
         {
           "id": "fed_target_lower",
@@ -513,8 +524,8 @@
           "unit": "%",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 6527,
-          "latest_date": "2026-10-29",
+          "obs_count": 6528,
+          "latest_date": "2026-10-30",
           "latest_val": 3.75
         },
         {
@@ -524,9 +535,20 @@
           "unit": "%",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 6527,
-          "latest_date": "2026-10-29",
+          "obs_count": 6528,
+          "latest_date": "2026-10-30",
           "latest_val": 4.0
+        },
+        {
+          "id": "fed_total_assets",
+          "label_en": "Fed Total Assets (Balance Sheet)",
+          "label_zh": "美联储总资产规模 (资产负债表)",
+          "unit": "USD mn",
+          "section": "fed_policy",
+          "frequency": "weekly",
+          "obs_count": 461,
+          "latest_date": "2026-10-28",
+          "latest_val": 6745635.0
         },
         {
           "id": "fed_treasury_holdings",
@@ -667,9 +689,9 @@
           "unit": "%",
           "section": "prices_wages",
           "frequency": "daily",
-          "obs_count": 2207,
-          "latest_date": "2026-10-29",
-          "latest_val": 2.23
+          "obs_count": 2208,
+          "latest_date": "2026-10-30",
+          "latest_val": 2.22
         },
         {
           "id": "gdp_deflator_inflation",
@@ -734,8 +756,8 @@
           "section": "monetary_financial",
           "frequency": "daily",
           "obs_count": 786,
-          "latest_date": "2026-10-28",
-          "latest_val": 3.14
+          "latest_date": "2026-10-29",
+          "latest_val": 3.26
         },
         {
           "id": "homeownership_rate",
@@ -888,8 +910,8 @@
           "section": "monetary_financial",
           "frequency": "daily",
           "obs_count": 785,
-          "latest_date": "2026-10-28",
-          "latest_val": 0.86
+          "latest_date": "2026-10-29",
+          "latest_val": 0.89
         },
         {
           "id": "jolts_hires_rate",
@@ -1162,8 +1184,8 @@
           "unit": "%",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 2216,
-          "latest_date": "2026-10-28",
+          "obs_count": 2217,
+          "latest_date": "2026-10-29",
           "latest_val": 3.88
         },
         {
@@ -1173,9 +1195,9 @@
           "unit": "USD mn",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 2201,
-          "latest_date": "2026-10-29",
-          "latest_val": 0.353
+          "obs_count": 2202,
+          "latest_date": "2026-10-30",
+          "latest_val": 4.375
         },
         {
           "id": "owners_equivalent_rent_inflation",
@@ -1448,8 +1470,8 @@
           "unit": "%",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 1920,
-          "latest_date": "2026-10-30",
+          "obs_count": 1923,
+          "latest_date": "2026-11-02",
           "latest_val": 3.9
         },
         {
@@ -1569,8 +1591,8 @@
           "unit": "%",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 2141,
-          "latest_date": "2026-10-28",
+          "obs_count": 2142,
+          "latest_date": "2026-10-29",
           "latest_val": 3.94
         },
         {
@@ -1602,9 +1624,9 @@
           "unit": "%",
           "section": "prices_wages",
           "frequency": "daily",
-          "obs_count": 2207,
-          "latest_date": "2026-10-29",
-          "latest_val": 2.35
+          "obs_count": 2208,
+          "latest_date": "2026-10-30",
+          "latest_val": 2.34
         },
         {
           "id": "ten_year_tips_yield",
@@ -1613,9 +1635,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2206,
-          "latest_date": "2026-10-28",
-          "latest_val": 2.67
+          "obs_count": 2207,
+          "latest_date": "2026-10-29",
+          "latest_val": 2.63
         },
         {
           "id": "tic_china_treasury_holdings",
@@ -1668,9 +1690,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2206,
-          "latest_date": "2026-10-28",
-          "latest_val": 5.05
+          "obs_count": 2207,
+          "latest_date": "2026-10-29",
+          "latest_val": 4.98
         },
         {
           "id": "treasury_2y_yield",
@@ -1679,9 +1701,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2206,
-          "latest_date": "2026-10-28",
-          "latest_val": 4.67
+          "obs_count": 2207,
+          "latest_date": "2026-10-29",
+          "latest_val": 4.61
         },
         {
           "id": "treasury_30y_yield",
@@ -1690,9 +1712,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2206,
-          "latest_date": "2026-10-28",
-          "latest_val": 5.37
+          "obs_count": 2207,
+          "latest_date": "2026-10-29",
+          "latest_val": 5.32
         },
         {
           "id": "treasury_3m_yield",
@@ -1701,9 +1723,20 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2206,
-          "latest_date": "2026-10-28",
+          "obs_count": 2207,
+          "latest_date": "2026-10-29",
           "latest_val": 4.18
+        },
+        {
+          "id": "treasury_5y_yield",
+          "label_en": "5Y Treasury Yield",
+          "label_zh": "5年期美国国债收益率",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "daily",
+          "obs_count": 2207,
+          "latest_date": "2026-10-29",
+          "latest_val": 4.78
         },
         {
           "id": "treasury_auction_bid_to_cover",
@@ -1822,9 +1855,9 @@
           "unit": "index",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2251,
-          "latest_date": "2026-10-28",
-          "latest_val": 16.91
+          "obs_count": 2252,
+          "latest_date": "2026-10-29",
+          "latest_val": 17.2
         },
         {
           "id": "weekly_economic_index",
@@ -1844,9 +1877,9 @@
           "unit": "pp",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2207,
-          "latest_date": "2026-10-29",
-          "latest_val": 0.37
+          "obs_count": 2208,
+          "latest_date": "2026-10-30",
+          "latest_val": 0.38
         },
         {
           "id": "yield_curve_10y3m",
@@ -1855,9 +1888,9 @@
           "unit": "pp",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2207,
-          "latest_date": "2026-10-29",
-          "latest_val": 0.8
+          "obs_count": 2208,
+          "latest_date": "2026-10-30",
+          "latest_val": 0.78
         }
       ]
     },
@@ -1867,7 +1900,7 @@
       "name_zh": "中国",
       "flag": "🇨🇳",
       "canonical_file": "china_canonical_frame.json",
-      "indicator_count": 105,
+      "indicator_count": 111,
       "indicators": [
         {
           "id": "a_share_market_cap_akshare",
@@ -1956,6 +1989,61 @@
           "obs_count": 47,
           "latest_date": "2024",
           "latest_val": 6.8107070839647
+        },
+        {
+          "id": "cgb_curve_10y2y",
+          "label_en": "China CGB 10Y-2Y Term Spread",
+          "label_zh": "中国国债10Y-2Y期限利差",
+          "unit": "%",
+          "section": "money_credit",
+          "frequency": "daily",
+          "obs_count": 2955,
+          "latest_date": "2026-10-30",
+          "latest_val": 0.4043
+        },
+        {
+          "id": "cgb_yield_10y",
+          "label_en": "China 10Y Sovereign CGB Yield",
+          "label_zh": "中国10年期国债收益率",
+          "unit": "%",
+          "section": "money_credit",
+          "frequency": "daily",
+          "obs_count": 2955,
+          "latest_date": "2026-10-30",
+          "latest_val": 1.65
+        },
+        {
+          "id": "cgb_yield_2y",
+          "label_en": "China 2Y Sovereign CGB Yield",
+          "label_zh": "中国2年期国债收益率",
+          "unit": "%",
+          "section": "money_credit",
+          "frequency": "daily",
+          "obs_count": 2955,
+          "latest_date": "2026-10-30",
+          "latest_val": 1.2457
+        },
+        {
+          "id": "cgb_yield_30y",
+          "label_en": "China 30Y Sovereign CGB Yield",
+          "label_zh": "中国30年期国债收益率",
+          "unit": "%",
+          "section": "money_credit",
+          "frequency": "daily",
+          "obs_count": 2955,
+          "latest_date": "2026-10-30",
+          "latest_val": 2.0826
+        },
+        {
+          "id": "cgb_yield_5y",
+          "label_en": "China 5Y Sovereign CGB Yield",
+          "label_zh": "中国5年期国债收益率",
+          "unit": "%",
+          "section": "money_credit",
+          "frequency": "daily",
+          "obs_count": 2955,
+          "latest_date": "2026-10-30",
+          "latest_val": 1.3532
         },
         {
           "id": "civil_aviation_cargo_load_factor_akshare",
@@ -2981,6 +3069,17 @@
           "latest_val": 66.3429910348272
         },
         {
+          "id": "us_cn_spread_10y",
+          "label_en": "US-China 10Y Sovereign Spread",
+          "label_zh": "中美10年期国债利差 (US minus CN)",
+          "unit": "%",
+          "section": "money_credit",
+          "frequency": "daily",
+          "obs_count": 2765,
+          "latest_date": "2026-10-30",
+          "latest_val": 3.29
+        },
+        {
           "id": "usd_cny_midpoint",
           "label_en": "USD/CNY Central Parity",
           "label_zh": "美元兑人民币中间价",
@@ -3032,7 +3131,7 @@
       "name_zh": "欧元区",
       "flag": "🇪🇺",
       "canonical_file": "euro_area_canonical_frame.json",
-      "indicator_count": 70,
+      "indicator_count": 71,
       "indicators": [
         {
           "id": "aaa_yield_10y",
@@ -3041,9 +3140,9 @@
           "unit": "%",
           "section": "fiscal_sovereign",
           "frequency": "daily",
-          "obs_count": 5662,
-          "latest_date": "2026-10-28",
-          "latest_val": 3.392748863
+          "obs_count": 5663,
+          "latest_date": "2026-10-29",
+          "latest_val": 3.3733145545
         },
         {
           "id": "aaa_yield_2y",
@@ -3052,9 +3151,20 @@
           "unit": "%",
           "section": "fiscal_sovereign",
           "frequency": "daily",
-          "obs_count": 5662,
-          "latest_date": "2026-10-28",
-          "latest_val": 3.0598017227
+          "obs_count": 5663,
+          "latest_date": "2026-10-29",
+          "latest_val": 3.0080012626
+        },
+        {
+          "id": "aaa_yield_5y",
+          "label_en": "Euro Area AAA Benchmark 5Y Yield",
+          "label_zh": "欧元区AAA级基准5年期国债收益率",
+          "unit": "%",
+          "section": "fiscal_sovereign",
+          "frequency": "daily",
+          "obs_count": 5663,
+          "latest_date": "2026-10-29",
+          "latest_val": 3.11075734
         },
         {
           "id": "bank_cet1_ratio",
@@ -3118,9 +3228,9 @@
           "unit": "index [0,1]",
           "section": "fragmentation",
           "frequency": "daily",
-          "obs_count": 7267,
-          "latest_date": "2026-10-28",
-          "latest_val": 0.015634209868252726
+          "obs_count": 7268,
+          "latest_date": "2026-10-29",
+          "latest_val": 0.012765230371305855
         },
         {
           "id": "construction_output_yoy",
@@ -3228,9 +3338,9 @@
           "unit": "USD",
           "section": "external_fx",
           "frequency": "daily",
-          "obs_count": 7125,
-          "latest_date": "2026-10-29",
-          "latest_val": 1.113
+          "obs_count": 7126,
+          "latest_date": "2026-10-30",
+          "latest_val": 1.1172
         },
         {
           "id": "eurosystem_total_assets",
@@ -3679,9 +3789,9 @@
           "unit": "% q/q",
           "section": "growth_accounts",
           "frequency": "quarterly",
-          "obs_count": 125,
-          "latest_date": "2026-04-01",
-          "latest_val": 0.6
+          "obs_count": 126,
+          "latest_date": "2026-07-01",
+          "latest_val": 0.4
         },
         {
           "id": "real_gdp_yoy",
@@ -3690,9 +3800,9 @@
           "unit": "% y/y",
           "section": "growth_accounts",
           "frequency": "quarterly",
-          "obs_count": 122,
-          "latest_date": "2026-04-01",
-          "latest_val": 1.2
+          "obs_count": 123,
+          "latest_date": "2026-07-01",
+          "latest_val": 1.3
         },
         {
           "id": "reer",
@@ -3734,9 +3844,9 @@
           "unit": "%",
           "section": "prices_costs",
           "frequency": "quarterly",
-          "obs_count": 105,
-          "latest_date": "2026-07-01",
-          "latest_val": 2.0368652187499996
+          "obs_count": 106,
+          "latest_date": "2026-10-01",
+          "latest_val": 2.0190515007894736
         },
         {
           "id": "structural_balance_gdp",
@@ -3778,9 +3888,9 @@
           "unit": "%",
           "section": "labour_wages",
           "frequency": "monthly",
-          "obs_count": 320,
-          "latest_date": "2026-08-01",
-          "latest_val": 6.4
+          "obs_count": 321,
+          "latest_date": "2026-09-01",
+          "latest_val": 6.5
         },
         {
           "id": "yield_curve_slope",
@@ -3789,9 +3899,9 @@
           "unit": "bps",
           "section": "fiscal_sovereign",
           "frequency": "daily",
-          "obs_count": 5662,
-          "latest_date": "2026-10-28",
-          "latest_val": 33.2947
+          "obs_count": 5663,
+          "latest_date": "2026-10-29",
+          "latest_val": 36.5313
         },
         {
           "id": "youth_unemployment_rate",
@@ -3800,9 +3910,9 @@
           "unit": "%",
           "section": "labour_wages",
           "frequency": "monthly",
-          "obs_count": 320,
-          "latest_date": "2026-08-01",
-          "latest_val": 15.0
+          "obs_count": 321,
+          "latest_date": "2026-09-01",
+          "latest_val": 15.4
         }
       ]
     },
@@ -3812,7 +3922,7 @@
       "name_zh": "英国",
       "flag": "🇬🇧",
       "canonical_file": "uk_canonical_frame.json",
-      "indicator_count": 93,
+      "indicator_count": 95,
       "indicators": [
         {
           "id": "awe_regular_pay_growth",
@@ -3843,8 +3953,8 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 7536,
-          "latest_date": "2026-10-28",
+          "obs_count": 7537,
+          "latest_date": "2026-10-29",
           "latest_val": 3.75
         },
         {
@@ -4085,9 +4195,9 @@
           "unit": "USD per GBP",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 7536,
-          "latest_date": "2026-10-28",
-          "latest_val": 1.3301
+          "obs_count": 7537,
+          "latest_date": "2026-10-29",
+          "latest_val": 1.3375
         },
         {
           "id": "gfcf_qoq",
@@ -4101,15 +4211,26 @@
           "latest_val": 1.234105938820007
         },
         {
+          "id": "gilt_20y_nominal_par_yield",
+          "label_en": "20Y Nominal Gilt Par Yield",
+          "label_zh": "20年期名义英国国债平价收益率",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "daily",
+          "obs_count": 6778,
+          "latest_date": "2026-10-28",
+          "latest_val": 5.5854
+        },
+        {
           "id": "gilt_5y_nominal_par_yield",
           "label_en": "5Y Nominal Gilt Par Yield",
           "label_zh": "5年期名义英国国债平价收益率",
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 7535,
-          "latest_date": "2026-10-27",
-          "latest_val": 4.9444
+          "obs_count": 7536,
+          "latest_date": "2026-10-28",
+          "latest_val": 4.9614
         },
         {
           "id": "goods_trade_balance",
@@ -4239,9 +4360,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 7535,
-          "latest_date": "2026-10-27",
-          "latest_val": 5.3046
+          "obs_count": 7536,
+          "latest_date": "2026-10-28",
+          "latest_val": 5.3087
         },
         {
           "id": "m4_lending_growth",
@@ -4756,9 +4877,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 7535,
-          "latest_date": "2026-10-27",
-          "latest_val": 3.734
+          "obs_count": 7536,
+          "latest_date": "2026-10-28",
+          "latest_val": 3.7338
         },
         {
           "id": "sterling_eri_boe",
@@ -4833,9 +4954,20 @@
           "unit": "bps",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 7535,
-          "latest_date": "2026-10-27",
-          "latest_val": 36.02
+          "obs_count": 7536,
+          "latest_date": "2026-10-28",
+          "latest_val": 34.73
+        },
+        {
+          "id": "yield_curve_slope_20y5y",
+          "label_en": "20Y-5Y Gilt Par Yield Slope",
+          "label_zh": "20年-5年期英国国债收益率曲线斜率",
+          "unit": "bps",
+          "section": "monetary_financial",
+          "frequency": "daily",
+          "obs_count": 6778,
+          "latest_date": "2026-10-28",
+          "latest_val": 62.4
         }
       ]
     },
@@ -4845,7 +4977,7 @@
       "name_zh": "日本",
       "flag": "🇯🇵",
       "canonical_file": "japan_canonical_frame.json",
-      "indicator_count": 54,
+      "indicator_count": 55,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -4879,6 +5011,17 @@
           "obs_count": 34,
           "latest_date": "2026-01-01",
           "latest_val": 1.03179565658388
+        },
+        {
+          "id": "boj_total_assets",
+          "label_en": "Bank of Japan Total Assets",
+          "label_zh": "日本央行总资产规模 (资产负债表)",
+          "unit": "JPY 100mn",
+          "section": "monetary_financial",
+          "frequency": "monthly",
+          "obs_count": 321,
+          "latest_date": "2026-09-01",
+          "latest_val": 6250253.0
         },
         {
           "id": "broad_money_growth",
@@ -5030,9 +5173,9 @@
           "unit": "index",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2888,
-          "latest_date": "2026-10-29",
-          "latest_val": 64659.47
+          "obs_count": 2889,
+          "latest_date": "2026-10-30",
+          "latest_val": 63290.11
         },
         {
           "id": "fiscal_balance_gdp",
@@ -5449,7 +5592,7 @@
       "name_zh": "南非",
       "flag": "🇿🇦",
       "canonical_file": "south_africa_canonical_frame.json",
-      "indicator_count": 64,
+      "indicator_count": 65,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -5865,8 +6008,8 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 3087,
-          "latest_date": "2026-10-29",
+          "obs_count": 3088,
+          "latest_date": "2026-10-30",
           "latest_val": 7.25
         },
         {
@@ -5920,8 +6063,8 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 3096,
-          "latest_date": "2026-10-29",
+          "obs_count": 3097,
+          "latest_date": "2026-10-30",
           "latest_val": 10.75
         },
         {
@@ -6030,8 +6173,8 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 3130,
-          "latest_date": "2026-10-28",
+          "obs_count": 3131,
+          "latest_date": "2026-10-29",
           "latest_val": 7.221
         },
         {
@@ -6057,15 +6200,26 @@
           "latest_val": -1.12383340004026
         },
         {
+          "id": "short_term_external_debt_pct_reserves",
+          "label_en": "Short-Term External Debt (% of Reserves)",
+          "label_zh": "短期外债占外汇储备比重 (Guidotti-Greenspan比率)",
+          "unit": "% reserves",
+          "section": "external_fx",
+          "frequency": "annual",
+          "obs_count": 25,
+          "latest_date": "2024",
+          "latest_val": 71.5648989974117
+        },
+        {
           "id": "sovereign_yield_10y",
           "label_en": "R2030 Benchmark Bond Yield",
           "label_zh": "R2030基准国债收益率",
           "unit": "%",
           "section": "fiscal_sovereign",
           "frequency": "daily",
-          "obs_count": 918,
-          "latest_date": "2026-10-28",
-          "latest_val": 8.035
+          "obs_count": 919,
+          "latest_date": "2026-10-29",
+          "latest_val": 8.0
         },
         {
           "id": "sovereign_yield_long",
@@ -6074,9 +6228,9 @@
           "unit": "%",
           "section": "fiscal_sovereign",
           "frequency": "daily",
-          "obs_count": 220,
-          "latest_date": "2026-10-28",
-          "latest_val": 8.705
+          "obs_count": 221,
+          "latest_date": "2026-10-29",
+          "latest_val": 8.675
         },
         {
           "id": "total_credit_gdp",
@@ -6129,9 +6283,9 @@
           "unit": "ZAR per EUR",
           "section": "external_fx",
           "frequency": "daily",
-          "obs_count": 2956,
-          "latest_date": "2026-10-29",
-          "latest_val": 18.542
+          "obs_count": 2957,
+          "latest_date": "2026-10-30",
+          "latest_val": 18.6417
         },
         {
           "id": "zar_usd",
@@ -6140,9 +6294,9 @@
           "unit": "ZAR per USD",
           "section": "external_fx",
           "frequency": "daily",
-          "obs_count": 2956,
-          "latest_date": "2026-10-29",
-          "latest_val": 16.6415
+          "obs_count": 2957,
+          "latest_date": "2026-10-30",
+          "latest_val": 16.6444
         },
         {
           "id": "zaronia_rate",
@@ -6151,9 +6305,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 1061,
-          "latest_date": "2026-10-28",
-          "latest_val": 7.106
+          "obs_count": 1062,
+          "latest_date": "2026-10-29",
+          "latest_val": 7.105
         }
       ]
     },
@@ -6163,7 +6317,7 @@
       "name_zh": "土耳其",
       "flag": "🇹🇷",
       "canonical_file": "turkey_canonical_frame.json",
-      "indicator_count": 53,
+      "indicator_count": 54,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -6601,8 +6755,8 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 962,
-          "latest_date": "2026-10-28",
+          "obs_count": 961,
+          "latest_date": "2026-10-30",
           "latest_val": 36.0
         },
         {
@@ -6716,6 +6870,17 @@
           "latest_val": 44.0
         },
         {
+          "id": "short_term_external_debt_pct_reserves",
+          "label_en": "Short-Term External Debt (% of Reserves)",
+          "label_zh": "短期外债占外汇储备比重 (Guidotti-Greenspan比率)",
+          "unit": "% reserves",
+          "section": "external_fx",
+          "frequency": "annual",
+          "obs_count": 25,
+          "latest_date": "2024",
+          "latest_val": 114.519671079132
+        },
+        {
           "id": "try_usd",
           "label_en": "USD/TRY Official Exchange Rate",
           "label_zh": "美元兑土耳其里拉官方汇率",
@@ -6723,8 +6888,8 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 1,
-          "latest_date": "2026-10-27",
-          "latest_val": 49.6997
+          "latest_date": "2026-10-30",
+          "latest_val": 49.7747
         },
         {
           "id": "unemployment_rate",
@@ -6733,9 +6898,9 @@
           "unit": "% of labour force",
           "section": "labour_wages",
           "frequency": "monthly",
-          "obs_count": 259,
-          "latest_date": "2026-07-01",
-          "latest_val": 8.1
+          "obs_count": 261,
+          "latest_date": "2026-09-01",
+          "latest_val": 8.4
         },
         {
           "id": "youth_unemployment_rate",
@@ -6744,9 +6909,9 @@
           "unit": "% of labour force",
           "section": "labour_wages",
           "frequency": "monthly",
-          "obs_count": 259,
-          "latest_date": "2026-07-01",
-          "latest_val": 14.5
+          "obs_count": 261,
+          "latest_date": "2026-09-01",
+          "latest_val": 14.8
         }
       ]
     },
@@ -8260,7 +8425,7 @@
       "name_zh": "哈萨克斯坦",
       "flag": "🇰🇿",
       "canonical_file": "kazakhstan_canonical_frame.json",
-      "indicator_count": 36,
+      "indicator_count": 37,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -8313,9 +8478,9 @@
           "unit": "KZT",
           "section": "external_fx",
           "frequency": "daily",
-          "obs_count": 82,
-          "latest_date": "2026-10-29",
-          "latest_val": 68.11
+          "obs_count": 81,
+          "latest_date": "2026-10-30",
+          "latest_val": 68.22
         },
         {
           "id": "consumption_growth",
@@ -8412,9 +8577,9 @@
           "unit": "KZT",
           "section": "external_fx",
           "frequency": "daily",
-          "obs_count": 82,
-          "latest_date": "2026-10-29",
-          "latest_val": 505.8
+          "obs_count": 81,
+          "latest_date": "2026-10-30",
+          "latest_val": 508.33
         },
         {
           "id": "fdi_net_usd",
@@ -8599,9 +8764,9 @@
           "unit": "KZT",
           "section": "external_fx",
           "frequency": "daily",
-          "obs_count": 82,
-          "latest_date": "2026-10-29",
-          "latest_val": 5.63
+          "obs_count": 81,
+          "latest_date": "2026-10-30",
+          "latest_val": 5.65
         },
         {
           "id": "services_balance",
@@ -8613,6 +8778,17 @@
           "obs_count": 86,
           "latest_date": "2026-04-01",
           "latest_val": -419.287400956349
+        },
+        {
+          "id": "short_term_external_debt_pct_reserves",
+          "label_en": "Short-Term External Debt (% of Reserves)",
+          "label_zh": "短期外债占外汇储备比重 (Guidotti-Greenspan比率)",
+          "unit": "% reserves",
+          "section": "external_fx",
+          "frequency": "annual",
+          "obs_count": 25,
+          "latest_date": "2024",
+          "latest_val": 42.7754278275046
         },
         {
           "id": "total_reserves_usd",
@@ -8643,9 +8819,9 @@
           "unit": "KZT",
           "section": "external_fx",
           "frequency": "daily",
-          "obs_count": 82,
-          "latest_date": "2026-10-29",
-          "latest_val": 453.71
+          "obs_count": 81,
+          "latest_date": "2026-10-30",
+          "latest_val": 453.87
         },
         {
           "id": "usd_kzt_ifs",
@@ -8666,7 +8842,7 @@
       "name_zh": "乌兹别克斯坦",
       "flag": "🇺🇿",
       "canonical_file": "uzbekistan_canonical_frame.json",
-      "indicator_count": 35,
+      "indicator_count": 36,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -9021,6 +9197,17 @@
           "latest_val": -532.946901021569
         },
         {
+          "id": "short_term_external_debt_pct_reserves",
+          "label_en": "Short-Term External Debt (% of Reserves)",
+          "label_zh": "短期外债占外汇储备比重 (Guidotti-Greenspan比率)",
+          "unit": "% reserves",
+          "section": "external_fx",
+          "frequency": "annual",
+          "obs_count": 12,
+          "latest_date": "2024",
+          "latest_val": 13.820840954718
+        },
+        {
           "id": "total_reserves_usd",
           "label_en": "Official Reserve Assets (Total Reserves including Gold)",
           "label_zh": "官方储备资产总额 (含黄金)",
@@ -9061,7 +9248,7 @@
       "name_zh": "埃及",
       "flag": "🇪🇬",
       "canonical_file": "egypt_canonical_frame.json",
-      "indicator_count": 36,
+      "indicator_count": 37,
       "indicators": [
         {
           "id": "brent_crude_oil",
@@ -9427,6 +9614,17 @@
           "latest_val": 699.1625
         },
         {
+          "id": "short_term_external_debt_pct_reserves",
+          "label_en": "Short-Term External Debt (% of Reserves)",
+          "label_zh": "短期外债占外汇储备比重 (Guidotti-Greenspan比率)",
+          "unit": "% reserves",
+          "section": "external_fx",
+          "frequency": "annual",
+          "obs_count": 25,
+          "latest_date": "2024",
+          "latest_val": 68.9990087055921
+        },
+        {
           "id": "total_reserves_usd",
           "label_en": "Official Reserve Assets (Total Reserves including Gold)",
           "label_zh": "官方储备资产总额 (含黄金)",
@@ -9467,7 +9665,7 @@
       "name_zh": "尼日利亚",
       "flag": "🇳🇬",
       "canonical_file": "nigeria_canonical_frame.json",
-      "indicator_count": 38,
+      "indicator_count": 39,
       "indicators": [
         {
           "id": "agriculture_growth",
@@ -9844,6 +10042,17 @@
           "latest_val": 4.14211203494577
         },
         {
+          "id": "short_term_external_debt_pct_reserves",
+          "label_en": "Short-Term External Debt (% of Reserves)",
+          "label_zh": "短期外债占外汇储备比重 (Guidotti-Greenspan比率)",
+          "unit": "% reserves",
+          "section": "external_fx",
+          "frequency": "annual",
+          "obs_count": 25,
+          "latest_date": "2024",
+          "latest_val": 55.0092641857999
+        },
+        {
           "id": "total_reserves_usd",
           "label_en": "Official Reserve Assets (Total Reserves including Gold)",
           "label_zh": "官方储备资产总额 (含黄金)",
@@ -9872,9 +10081,9 @@
           "unit": "NGN",
           "section": "external_fx",
           "frequency": "daily",
-          "obs_count": 4125,
-          "latest_date": "2026-10-29",
-          "latest_val": 1346.4108
+          "obs_count": 4126,
+          "latest_date": "2026-10-30",
+          "latest_val": 1345.7565
         },
         {
           "id": "usd_ngn_ifs",
@@ -10225,7 +10434,7 @@
           "frequency": "1mo",
           "obs_count": 61,
           "latest_date": "2026-10-01",
-          "latest_val": 42650.0
+          "latest_val": 41800.0
         },
         {
           "id": "equity_vol_30d",
@@ -10235,8 +10444,8 @@
           "section": "macro",
           "frequency": "daily",
           "obs_count": 226,
-          "latest_date": "2026-10-29",
-          "latest_val": 49.22975785917379
+          "latest_date": "2026-10-30",
+          "latest_val": 49.220075738596826
         },
         {
           "id": "equity_yoy",
@@ -10247,7 +10456,7 @@
           "frequency": "1mo",
           "obs_count": 49,
           "latest_date": "2026-10-01",
-          "latest_val": 24.671148786904418
+          "latest_val": 22.186495176848876
         },
         {
           "id": "eu_funds_absorption",
@@ -10344,9 +10553,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 43,
-          "latest_date": "2026-10-29",
-          "latest_val": 5.092421277969243
+          "obs_count": 44,
+          "latest_date": "2026-10-30",
+          "latest_val": 5.013888755034035
         },
         {
           "id": "fx_reserves",
@@ -10366,9 +10575,9 @@
           "unit": "HUF per EUR",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 64,
-          "latest_date": "2026-10-29",
-          "latest_val": 365.95
+          "obs_count": 65,
+          "latest_date": "2026-10-30",
+          "latest_val": 366.33
         },
         {
           "id": "gas_storage_level",
@@ -10751,9 +10960,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 92,
-          "latest_date": "2026-08-01",
-          "latest_val": 4.943578721117681
+          "obs_count": 93,
+          "latest_date": "2026-09-01",
+          "latest_val": 7.1312803889789445
         },
         {
           "id": "primary_balance",
@@ -10971,9 +11180,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 104,
-          "latest_date": "2026-08-01",
-          "latest_val": 4.7
+          "obs_count": 105,
+          "latest_date": "2026-09-01",
+          "latest_val": 4.6
         },
         {
           "id": "unit_labour_cost",
@@ -11445,7 +11654,7 @@
           "frequency": "1mo",
           "obs_count": 1,
           "latest_date": "2026-10-01",
-          "latest_val": 4278.5498046875
+          "latest_val": 4180.8798828125
         },
         {
           "id": "eu_funds_absorption",
@@ -11542,9 +11751,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 43,
-          "latest_date": "2026-10-29",
-          "latest_val": 3.5658769953791656
+          "obs_count": 44,
+          "latest_date": "2026-10-30",
+          "latest_val": 3.6248249178639904
         },
         {
           "id": "fx_reserves",
@@ -11564,9 +11773,9 @@
           "unit": "PLN per EUR",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 64,
-          "latest_date": "2026-10-29",
-          "latest_val": 4.3938
+          "obs_count": 65,
+          "latest_date": "2026-10-30",
+          "latest_val": 4.4038
         },
         {
           "id": "gas_storage_level",
@@ -12048,9 +12257,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 92,
-          "latest_date": "2026-08-01",
-          "latest_val": 2.070207020702086
+          "obs_count": 93,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.981981981981984
         },
         {
           "id": "road_freight_activity",
@@ -12169,8 +12378,8 @@
           "unit": "%",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 104,
-          "latest_date": "2026-08-01",
+          "obs_count": 105,
+          "latest_date": "2026-09-01",
           "latest_val": 3.4
         },
         {
@@ -12586,9 +12795,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 436,
-          "latest_date": "2026-10-27",
-          "latest_val": 17.28656439086389
+          "obs_count": 438,
+          "latest_date": "2026-10-30",
+          "latest_val": 17.135262500246494
         },
         {
           "id": "equity_yoy",
@@ -12696,9 +12905,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 43,
-          "latest_date": "2026-10-29",
-          "latest_val": 2.069009677863545
+          "obs_count": 44,
+          "latest_date": "2026-10-30",
+          "latest_val": 2.064480964098049
         },
         {
           "id": "fx_reserves",
@@ -12718,9 +12927,9 @@
           "unit": "CZK per EUR",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 64,
-          "latest_date": "2026-10-29",
-          "latest_val": 24.336
+          "obs_count": 65,
+          "latest_date": "2026-10-30",
+          "latest_val": 24.353
         },
         {
           "id": "gas_storage_level",
@@ -13323,9 +13532,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 104,
-          "latest_date": "2026-08-01",
-          "latest_val": 3.2
+          "obs_count": 105,
+          "latest_date": "2026-09-01",
+          "latest_val": 2.8
         },
         {
           "id": "unit_labour_cost",
@@ -13850,9 +14059,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 43,
-          "latest_date": "2026-10-29",
-          "latest_val": 4.730360318934319
+          "obs_count": 44,
+          "latest_date": "2026-10-30",
+          "latest_val": 4.732459250514313
         },
         {
           "id": "fx_reserves",
@@ -13872,9 +14081,9 @@
           "unit": "RON per EUR",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 64,
-          "latest_date": "2026-10-29",
-          "latest_val": 5.3441
+          "obs_count": 65,
+          "latest_date": "2026-10-30",
+          "latest_val": 5.3447
         },
         {
           "id": "gas_storage_level",
@@ -14477,9 +14686,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 104,
-          "latest_date": "2026-08-01",
-          "latest_val": 6.4
+          "obs_count": 105,
+          "latest_date": "2026-09-01",
+          "latest_val": 6.3
         },
         {
           "id": "unit_labour_cost",
@@ -14744,6 +14953,77 @@
           "axis": "left",
           "color": "#d97706",
           "label": "Nigeria Monetary Policy Rate (%)"
+        }
+      ]
+    },
+    {
+      "id": "cgb_yield_curve_and_us_spread",
+      "title_en": "China Sovereign Yield Curve & US-China 10Y Spread",
+      "title_zh": "中国国债收益率曲线关键期限与中美10年期利差走势",
+      "description_zh": "中国国债 2 年、10 年期基准收益率走势（左轴）与中美 10 年期国债利差（右轴）联动对比。",
+      "description_en": "China 2Y & 10Y Sovereign CGB benchmark yields (left axis) with US-China 10Y sovereign yield spread dynamics (right axis).",
+      "transform": "raw",
+      "date_range": "5y",
+      "series": [
+        {
+          "country": "CN",
+          "id": "cgb_yield_2y",
+          "axis": "left",
+          "color": "#2563eb",
+          "label": "China 2Y CGB Yield (%)"
+        },
+        {
+          "country": "CN",
+          "id": "cgb_yield_10y",
+          "axis": "left",
+          "color": "#990f3d",
+          "label": "China 10Y CGB Yield (%)"
+        },
+        {
+          "country": "CN",
+          "id": "us_cn_spread_10y",
+          "axis": "right",
+          "color": "#0d7680",
+          "label": "US-China 10Y Spread (% pts)"
+        }
+      ]
+    },
+    {
+      "id": "em_guidotti_greenspan_safety",
+      "title_en": "EM External Debt Solvency: Guidotti-Greenspan Ratio Comparison",
+      "title_zh": "新兴市场外部债务防线：格林斯潘-吉多蒂流动性安全垫对比",
+      "description_zh": "短期外债占总外储比重（%）：低于100%为安全阈值（格林斯潘-吉多蒂法则），横向追踪土耳其、南非、埃及与哈萨克斯坦外部清偿安全垫。",
+      "description_en": "Short-Term External Debt as % of Total Reserves across emerging markets; <100% represents the Guidotti-Greenspan safety cushion.",
+      "transform": "raw",
+      "date_range": "max",
+      "series": [
+        {
+          "country": "TR",
+          "id": "short_term_external_debt_pct_reserves",
+          "axis": "left",
+          "color": "#990f3d",
+          "label": "Turkey Short-Term Debt / Reserves (%)"
+        },
+        {
+          "country": "ZA",
+          "id": "short_term_external_debt_pct_reserves",
+          "axis": "left",
+          "color": "#0d7680",
+          "label": "South Africa Short-Term Debt / Reserves (%)"
+        },
+        {
+          "country": "EG",
+          "id": "short_term_external_debt_pct_reserves",
+          "axis": "left",
+          "color": "#d97706",
+          "label": "Egypt Short-Term Debt / Reserves (%)"
+        },
+        {
+          "country": "KZ",
+          "id": "short_term_external_debt_pct_reserves",
+          "axis": "left",
+          "color": "#2563eb",
+          "label": "Kazakhstan Short-Term Debt / Reserves (%)"
         }
       ]
     }

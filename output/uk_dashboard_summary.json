@@ -1,7 +1,7 @@
 {
   "file": "uk.html",
-  "generated": "2026-10-30T08:04:33.982514+00:00",
-  "charts": 93,
+  "generated": "2026-10-30T21:28:20.634736+00:00",
+  "charts": 95,
   "source_groups": 11,
   "data_gaps": 8,
   "low_confidence": 15,
@@ -34,9 +34,9 @@
       "id": "gbp_usd",
       "label_en": "GBP/USD Spot",
       "label_zh": "英镑兑美元现汇",
-      "latest_date": "2026-10-28",
-      "latest_value": 1.3301,
-      "latest_display": "1.33 USD per GBP",
+      "latest_date": "2026-10-29",
+      "latest_value": 1.3375,
+      "latest_display": "1.34 USD per GBP",
       "frequency": "daily",
       "source_name": "Bank of England IADB",
       "series": "XUDLUSS",
@@ -58,7 +58,7 @@
       "id": "bank_rate",
       "label_en": "Bank Rate",
       "label_zh": "英国央行Bank Rate",
-      "latest_date": "2026-10-28",
+      "latest_date": "2026-10-29",
       "latest_value": 3.75,
       "latest_display": "3.75 %",
       "frequency": "daily",
@@ -70,7 +70,7 @@
   "unavailable": [],
   "data_mode": "refresh",
   "latest_cards": [],
-  "bank_rate_latest": "3.75% (2026-10-28)",
+  "bank_rate_latest": "3.75% (2026-10-29)",
   "cross_checks": [],
   "canonical_frame": {
     "schema_version": "data-first-canonical-v2",
@@ -79,10 +79,10 @@
       "value"
     ],
     "file": "uk_canonical_frame.json",
-    "series": 93,
-    "observations": 67808,
-    "series_count": 93,
-    "observation_count": 67808
+    "series": 95,
+    "observations": 81370,
+    "series_count": 95,
+    "observation_count": 81370
   },
   "data_gaps_detail": [
     {
@@ -151,7 +151,7 @@
       },
       {
         "source_name": "Bank of England IADB",
-        "charts": 12
+        "charts": 14
       },
       {
         "source_name": "ONS / HMRC RTI",
@@ -192,7 +192,7 @@
     ],
     "quality_counts": {
       "low_confidence": 15,
-      "verified": 58,
+      "verified": 60,
       "watch": 20
     },
     "unavailable_count": 0
@@ -206,12 +206,12 @@
   "freshness": {
     "as_of_date": "2026-10-30",
     "counts": {
-      "current": 70,
+      "current": 72,
       "due": 4,
       "projection": 4,
       "stale": 15
     },
-    "latest_historical_date": "2026-10-28",
+    "latest_historical_date": "2026-10-29",
     "attention": [
       {
         "id": "government_balance_gdp",
@@ -639,7 +639,7 @@
       "divide_1bn": 1,
       "divide_1k": 3,
       "divide_1m": 1,
-      "level": 75,
+      "level": 77,
       "mom_pct": 2,
       "qoq_pct": 4,
       "yoy": 6
@@ -761,6 +761,6 @@
       "date",
       "value"
     ],
-    "charted_series": 93
+    "charted_series": 95
   }
 }

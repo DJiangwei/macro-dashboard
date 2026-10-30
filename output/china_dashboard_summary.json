@@ -1,8 +1,8 @@
 {
   "file": "china.html",
-  "generated": "2026-10-30T08:04:15.713885+00:00",
-  "charts": 105,
-  "source_groups": 28,
+  "generated": "2026-10-30T21:28:02.080221+00:00",
+  "charts": 111,
+  "source_groups": 30,
   "data_gaps": 8,
   "low_confidence": 21,
   "key_series_latest": [
@@ -211,10 +211,10 @@
       "value"
     ],
     "file": "china_canonical_frame.json",
-    "series": 105,
-    "observations": 63244,
-    "series_count": 105,
-    "observation_count": 63244
+    "series": 111,
+    "observations": 80784,
+    "series_count": 111,
+    "observation_count": 80784
   },
   "data_gaps_detail": [
     {
@@ -254,10 +254,10 @@
     },
     {
       "section": "money_credit",
-      "item_en": "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates",
-      "item_zh": "PBOC月度人民币贷款、存款、社融流量/存量、LPR/MLF/RRR与银行间利率",
-      "status_en": "M2, M1, aggregate RMB+FX deposits, new RMB loans, TSF flow/components, LPR, RRR, daily SHIBOR, 3M interbank, selected PBC balance-sheet items, and PBC latest cards are charted; TSF stock, deposits by sector, MLF, and full PBOC-native history remain open.",
-      "status_zh": "页面已加入M2、M1、本外币存款总量、新增人民币贷款、社融增量/分项、LPR、存准率、日度SHIBOR、3个月银行间利率、部分PBC资产负债表项目和PBC最新卡片；社融存量、分部门存款、MLF和完整PBOC原生历史仍待补充。"
+      "item_en": "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, CGB yield curves, and interbank rates",
+      "item_zh": "PBOC月度人民币贷款、存款、社融流量/存量、LPR/MLF/RRR、国债收益率曲线与银行间利率",
+      "status_en": "M2, M1, aggregate RMB+FX deposits, new RMB loans, TSF flow/components, LPR, RRR, daily SHIBOR, 3M interbank, China Sovereign CGB yield curve (2Y, 5Y, 10Y, 30Y, 10Y-2Y term spread), US-China 10Y spread, selected PBC balance-sheet items, and PBC latest cards are charted; TSF stock, deposits by sector, MLF, and full PBOC-native history remain open.",
+      "status_zh": "页面已加入M2、M1、本外币存款总量、新增人民币贷款、社融增量/分项、LPR、存准率、日度SHIBOR、3个月银行间利率、中国国债收益率曲线（2Y、5Y、10Y、30Y、10Y-2Y利差）、中美10Y利差、部分PBC资产负债表项目和PBC最新卡片；社融存量、分部门存款、MLF和完整PBOC原生历史仍待补充。"
     },
     {
       "section": "prices",
@@ -275,7 +275,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 28,
+    "source_groups": 30,
     "sources": [
       {
         "source_name": "AKShare / Eastmoney Data Center",
@@ -284,6 +284,10 @@
       {
         "source_name": "World Bank WDI",
         "charts": 21
+      },
+      {
+        "source_name": "AKShare / ChinaBond Sovereign Yield Curve",
+        "charts": 5
       },
       {
         "source_name": "Eastmoney Data Center / NBS-style industry index",
@@ -374,6 +378,10 @@
         "charts": 1
       },
       {
+        "source_name": "AKShare / US Treasury & ChinaBond",
+        "charts": 1
+      },
+      {
         "source_name": "FRED / BIS Effective Exchange Rate",
         "charts": 1
       },
@@ -392,7 +400,7 @@
     ],
     "quality_counts": {
       "low_confidence": 21,
-      "watch": 84
+      "watch": 90
     },
     "unavailable_count": 0
   },
@@ -405,12 +413,12 @@
   "freshness": {
     "as_of_date": "2026-10-30",
     "counts": {
-      "current": 35,
+      "current": 41,
       "due": 47,
       "projection": 2,
       "stale": 21
     },
-    "latest_historical_date": "2026-10-23",
+    "latest_historical_date": "2026-10-30",
     "attention": [
       {
         "id": "birth_rate",
@@ -1301,7 +1309,7 @@
       "cny_10k_to_bn": 1,
       "cny_yuan_to_trn": 2,
       "index_100_to_yoy": 4,
-      "level": 75,
+      "level": 81,
       "people_billion": 1,
       "usd_100mn_to_trn": 1,
       "usd_mn_to_trn": 1,
@@ -1497,6 +1505,6 @@
       "date",
       "value"
     ],
-    "charted_series": 105
+    "charted_series": 111
   }
 }

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-30T08:18:38.086785+00:00",
+  "generated": "2026-10-30T21:35:46.254417+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -88,15 +88,15 @@
       "freshness_summary": {
         "dashboard": "Hungary",
         "charts": 105,
-        "current": 63,
-        "stale": 15,
+        "current": 55,
+        "stale": 19,
         "lagged_source": 0,
         "projection": 4,
         "scheduled_policy": 0,
         "future_date": 0,
-        "missing_date": 7,
+        "missing_date": 0,
         "needs_review": 5,
-        "low_confidence": 11,
+        "low_confidence": 14,
         "latest_historical_date": "2026-12-31",
         "headline_latest": ""
       }
@@ -187,15 +187,15 @@
       "freshness_summary": {
         "dashboard": "Poland",
         "charts": 108,
-        "current": 63,
-        "stale": 14,
+        "current": 54,
+        "stale": 22,
         "lagged_source": 0,
         "projection": 4,
         "scheduled_policy": 0,
         "future_date": 0,
-        "missing_date": 8,
+        "missing_date": 0,
         "needs_review": 5,
-        "low_confidence": 11,
+        "low_confidence": 14,
         "latest_historical_date": "2026-12-31",
         "headline_latest": ""
       }
@@ -286,15 +286,15 @@
       "freshness_summary": {
         "dashboard": "Czechia",
         "charts": 104,
-        "current": 59,
-        "stale": 14,
+        "current": 53,
+        "stale": 18,
         "lagged_source": 0,
         "projection": 4,
         "scheduled_policy": 0,
         "future_date": 0,
-        "missing_date": 9,
+        "missing_date": 1,
         "needs_review": 5,
-        "low_confidence": 11,
+        "low_confidence": 14,
         "latest_historical_date": "2026-12-31",
         "headline_latest": ""
       }
@@ -385,15 +385,15 @@
       "freshness_summary": {
         "dashboard": "Romania",
         "charts": 104,
-        "current": 65,
-        "stale": 16,
+        "current": 52,
+        "stale": 21,
         "lagged_source": 0,
         "projection": 4,
         "scheduled_policy": 0,
         "future_date": 0,
-        "missing_date": 3,
+        "missing_date": 0,
         "needs_review": 5,
-        "low_confidence": 11,
+        "low_confidence": 14,
         "latest_historical_date": "2026-12-31",
         "headline_latest": ""
       }
@@ -405,16 +405,16 @@
       "currency": "CNY",
       "institution": "PBC",
       "category": "data-first country page",
-      "charts": 105,
-      "expected": 105,
+      "charts": 111,
+      "expected": 111,
       "proxy_fills": 0,
       "gaps_or_dropped": 8,
       "gaps_label": "Official data gaps",
       "headline_label": "Latest USD/CNY fixing",
       "headline": "6.7330 (2026-10-09)",
       "secondary_label": "Source groups",
-      "secondary": "28",
-      "quality": "28 source groups · 21 low-confidence charts",
+      "secondary": "30",
+      "quality": "30 source groups · 21 low-confidence charts",
       "framework": "GS China statistics logic",
       "status": "clean",
       "signals": {
@@ -483,7 +483,7 @@
         }
       },
       "source_health": {
-        "source_groups": 28,
+        "source_groups": 30,
         "sources": [
           {
             "source_name": "AKShare / Eastmoney Data Center",
@@ -492,6 +492,10 @@
           {
             "source_name": "World Bank WDI",
             "charts": 21
+          },
+          {
+            "source_name": "AKShare / ChinaBond Sovereign Yield Curve",
+            "charts": 5
           },
           {
             "source_name": "Eastmoney Data Center / NBS-style industry index",
@@ -582,6 +586,10 @@
             "charts": 1
           },
           {
+            "source_name": "AKShare / US Treasury & ChinaBond",
+            "charts": 1
+          },
+          {
             "source_name": "FRED / BIS Effective Exchange Rate",
             "charts": 1
           },
@@ -600,19 +608,19 @@
         ],
         "quality_counts": {
           "low_confidence": 21,
-          "watch": 84
+          "watch": 90
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-30",
         "counts": {
-          "current": 35,
+          "current": 41,
           "due": 47,
           "projection": 2,
           "stale": 21
         },
-        "latest_historical_date": "2026-10-23",
+        "latest_historical_date": "2026-10-30",
         "attention": [
           {
             "id": "birth_rate",
@@ -1503,15 +1511,15 @@
           "value"
         ],
         "file": "china_canonical_frame.json",
-        "series": 105,
-        "observations": 63244,
-        "series_count": 105,
-        "observation_count": 63244
+        "series": 111,
+        "observations": 80784,
+        "series_count": 111,
+        "observation_count": 80784
       },
       "freshness_summary": {
         "dashboard": "China",
-        "charts": 105,
-        "current": 35,
+        "charts": 111,
+        "current": 41,
         "stale": 21,
         "lagged_source": 0,
         "projection": 0,
@@ -1520,7 +1528,7 @@
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 21,
-        "latest_historical_date": "2026-10-23",
+        "latest_historical_date": "2026-10-30",
         "headline_latest": "6.7330 (2026-10-09)"
       }
     },
@@ -1531,8 +1539,8 @@
       "currency": "EUR",
       "institution": "ECB",
       "category": "data-first country page",
-      "charts": 70,
-      "expected": 70,
+      "charts": 71,
+      "expected": 71,
       "proxy_fills": 0,
       "gaps_or_dropped": 5,
       "gaps_label": "Official data gaps",
@@ -1547,9 +1555,9 @@
         "growth": {
           "id": "real_gdp_yoy",
           "label": "Real GDP",
-          "value": 1.2,
-          "display": "1.20 % y/y",
-          "date": "2026-04-01",
+          "value": 1.3,
+          "display": "1.30 % y/y",
+          "date": "2026-07-01",
           "source": "Eurostat",
           "quality_status": "verified"
         },
@@ -1612,12 +1620,12 @@
         "source_groups": 6,
         "sources": [
           {
-            "source_name": "Eurostat",
+            "source_name": "ECB",
             "charts": 30
           },
           {
-            "source_name": "ECB",
-            "charts": 29
+            "source_name": "Eurostat",
+            "charts": 30
           },
           {
             "source_name": "Eurostat / DG ECFIN",
@@ -1639,16 +1647,16 @@
         "quality_counts": {
           "low_confidence": 18,
           "unavailable": 1,
-          "verified": 46,
-          "watch": 5
+          "verified": 48,
+          "watch": 4
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-30",
         "counts": {
-          "current": 46,
-          "due": 5,
+          "current": 48,
+          "due": 4,
           "future_date": 1,
           "stale": 18
         },
@@ -2029,28 +2037,6 @@
             "transform": "level"
           },
           {
-            "id": "real_gdp_growth",
-            "concept_id": "real_gdp_growth_qoq",
-            "label_en": "Real GDP Growth, QoQ",
-            "latest_date": "2026-04-01",
-            "frequency": "quarterly",
-            "freshness_status": "due",
-            "age_basis_date": "2026-04-01",
-            "age_days": 122,
-            "threshold_days": 137,
-            "release_calendar_id": "bea_quarterly",
-            "expected_release_date": "2026-11-04",
-            "due_date": "2026-11-14",
-            "quality_status": "watch",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Eurostat",
-            "series": "",
-            "transform": "level"
-          },
-          {
             "id": "reer",
             "concept_id": "reer",
             "label_en": "Euro Real Effective Exchange Rate (BIS)",
@@ -2191,15 +2177,15 @@
           "value"
         ],
         "file": "euro_area_canonical_frame.json",
-        "series": 70,
-        "observations": 59613,
-        "series_count": 70,
-        "observation_count": 59613
+        "series": 71,
+        "observations": 65286,
+        "series_count": 71,
+        "observation_count": 65286
       },
       "freshness_summary": {
         "dashboard": "Euro Area",
-        "charts": 70,
-        "current": 46,
+        "charts": 71,
+        "current": 48,
         "stale": 18,
         "lagged_source": 0,
         "projection": 1,
@@ -2219,16 +2205,16 @@
       "currency": "JPY",
       "institution": "BoJ",
       "category": "data-first country page",
-      "charts": 54,
-      "expected": 54,
+      "charts": 55,
+      "expected": 55,
       "proxy_fills": 0,
       "gaps_or_dropped": 6,
       "gaps_label": "Official data gaps",
       "headline_label": "Overnight call rate",
       "headline": "n/a",
       "secondary_label": "Source groups",
-      "secondary": "20",
-      "quality": "20 source groups · 19 low-confidence charts",
+      "secondary": "21",
+      "quality": "21 source groups · 19 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -2297,7 +2283,7 @@
         }
       },
       "source_health": {
-        "source_groups": 20,
+        "source_groups": 21,
         "sources": [
           {
             "source_name": "FRED / BIS",
@@ -2356,6 +2342,10 @@
             "charts": 1
           },
           {
+            "source_name": "FRED / Bank of Japan",
+            "charts": 1
+          },
+          {
             "source_name": "FRED / Federal Reserve H.10",
             "charts": 1
           },
@@ -2382,20 +2372,20 @@
         ],
         "quality_counts": {
           "low_confidence": 19,
-          "verified": 1,
-          "watch": 34
+          "verified": 7,
+          "watch": 29
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-30",
         "counts": {
-          "current": 20,
+          "current": 21,
           "due": 12,
           "projection": 3,
           "stale": 19
         },
-        "latest_historical_date": "2026-10-29",
+        "latest_historical_date": "2026-10-30",
         "attention": [
           {
             "id": "housing_starts",
@@ -2413,7 +2403,7 @@
             "quality_status": "low_confidence",
             "source_authority": "official_primary",
             "derivation": "observed",
-            "validation": "watch",
+            "validation": "passed",
             "comparability": "high",
             "source_name": "",
             "series": "0003114496/19/11/11/11/00000",
@@ -3088,15 +3078,15 @@
           "value"
         ],
         "file": "japan_canonical_frame.json",
-        "series": 54,
-        "observations": 19352,
-        "series_count": 54,
-        "observation_count": 19352
+        "series": 55,
+        "observations": 19674,
+        "series_count": 55,
+        "observation_count": 19674
       },
       "freshness_summary": {
         "dashboard": "Japan",
-        "charts": 54,
-        "current": 23,
+        "charts": 55,
+        "current": 24,
         "stale": 19,
         "lagged_source": 0,
         "projection": 0,
@@ -3105,7 +3095,7 @@
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 19,
-        "latest_historical_date": "2026-10-29",
+        "latest_historical_date": "2026-10-30",
         "headline_latest": ""
       }
     },
@@ -3116,16 +3106,16 @@
       "currency": "ZAR",
       "institution": "SARB",
       "category": "data-first country page",
-      "charts": 64,
-      "expected": 64,
+      "charts": 65,
+      "expected": 65,
       "proxy_fills": 0,
       "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
       "headline_label": "SARB repo rate",
       "headline": "n/a",
       "secondary_label": "Source groups",
-      "secondary": "15",
-      "quality": "15 source groups · 22 low-confidence charts",
+      "secondary": "16",
+      "quality": "16 source groups · 22 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -3152,7 +3142,7 @@
           "label": "SARB repo rate",
           "value": 7.25,
           "display": "7.25 %",
-          "date": "2026-10-29",
+          "date": "2026-10-30",
           "source": "SARB Web API",
           "quality_status": "verified"
         },
@@ -3179,7 +3169,7 @@
           "label": "Prime lending rate",
           "value": 10.75,
           "display": "10.8 %",
-          "date": "2026-10-29",
+          "date": "2026-10-30",
           "source": "SARB Web API",
           "quality_status": "verified"
         },
@@ -3194,7 +3184,7 @@
         }
       },
       "source_health": {
-        "source_groups": 15,
+        "source_groups": 16,
         "sources": [
           {
             "source_name": "IMF SDMX / Balance of Payments (SARB)",
@@ -3255,12 +3245,16 @@
           {
             "source_name": "IMF Fiscal Monitor DataMapper",
             "charts": 1
+          },
+          {
+            "source_name": "World Bank International Debt Statistics",
+            "charts": 1
           }
         ],
         "quality_counts": {
           "low_confidence": 22,
           "verified": 10,
-          "watch": 32
+          "watch": 33
         },
         "unavailable_count": 0
       },
@@ -3268,11 +3262,11 @@
         "as_of_date": "2026-10-30",
         "counts": {
           "current": 34,
-          "due": 5,
+          "due": 6,
           "projection": 3,
           "stale": 22
         },
-        "latest_historical_date": "2026-10-29",
+        "latest_historical_date": "2026-10-30",
         "attention": [
           {
             "id": "current_account_gdp",
@@ -3294,6 +3288,28 @@
             "comparability": "medium",
             "source_name": "FRED / OECD (SARB BoP)",
             "series": "ZAFB6BLTT02STSAQ",
+            "transform": "level"
+          },
+          {
+            "id": "short_term_external_debt_pct_reserves",
+            "concept_id": "za:short_term_external_debt_pct_reserves",
+            "label_en": "Short-Term External Debt (% of Reserves)",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 668,
+            "threshold_days": 730,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank International Debt Statistics",
+            "series": "DT.DOD.DSTC.IR.ZS",
             "transform": "level"
           },
           {
@@ -3877,14 +3893,14 @@
           "value"
         ],
         "file": "south_africa_canonical_frame.json",
-        "series": 64,
-        "observations": 30524,
-        "series_count": 64,
-        "observation_count": 30524
+        "series": 65,
+        "observations": 30557,
+        "series_count": 65,
+        "observation_count": 30557
       },
       "freshness_summary": {
         "dashboard": "South Africa",
-        "charts": 64,
+        "charts": 65,
         "current": 37,
         "stale": 22,
         "lagged_source": 0,
@@ -3894,7 +3910,7 @@
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 22,
-        "latest_historical_date": "2026-10-29",
+        "latest_historical_date": "2026-10-30",
         "headline_latest": ""
       }
     },
@@ -3905,13 +3921,13 @@
       "currency": "GBP",
       "institution": "BoE",
       "category": "data-first country page",
-      "charts": 93,
-      "expected": 93,
+      "charts": 95,
+      "expected": 95,
       "proxy_fills": 0,
       "gaps_or_dropped": 8,
       "gaps_label": "Official data gaps",
       "headline_label": "Bank Rate",
-      "headline": "3.75% (2026-10-28)",
+      "headline": "3.75% (2026-10-29)",
       "secondary_label": "Source groups",
       "secondary": "11",
       "quality": "11 source groups · 15 low-confidence charts",
@@ -3941,7 +3957,7 @@
           "label": "Bank Rate",
           "value": 3.75,
           "display": "3.75 %",
-          "date": "2026-10-28",
+          "date": "2026-10-29",
           "source": "Bank of England IADB",
           "quality_status": "verified"
         },
@@ -3966,9 +3982,9 @@
         "financial": {
           "id": "sonia_rate",
           "label": "SONIA",
-          "value": 3.734,
+          "value": 3.7338,
           "display": "3.73 %",
-          "date": "2026-10-27",
+          "date": "2026-10-28",
           "source": "Bank of England IADB",
           "quality_status": "verified"
         },
@@ -3991,7 +4007,7 @@
           },
           {
             "source_name": "Bank of England IADB",
-            "charts": 12
+            "charts": 14
           },
           {
             "source_name": "ONS / HMRC RTI",
@@ -4032,7 +4048,7 @@
         ],
         "quality_counts": {
           "low_confidence": 15,
-          "verified": 58,
+          "verified": 60,
           "watch": 20
         },
         "unavailable_count": 0
@@ -4040,12 +4056,12 @@
       "freshness": {
         "as_of_date": "2026-10-30",
         "counts": {
-          "current": 70,
+          "current": 72,
           "due": 4,
           "projection": 4,
           "stale": 15
         },
-        "latest_historical_date": "2026-10-28",
+        "latest_historical_date": "2026-10-29",
         "attention": [
           {
             "id": "government_balance_gdp",
@@ -4474,15 +4490,15 @@
           "value"
         ],
         "file": "uk_canonical_frame.json",
-        "series": 93,
-        "observations": 67808,
-        "series_count": 93,
-        "observation_count": 67808
+        "series": 95,
+        "observations": 81370,
+        "series_count": 95,
+        "observation_count": 81370
       },
       "freshness_summary": {
         "dashboard": "United Kingdom",
-        "charts": 93,
-        "current": 66,
+        "charts": 95,
+        "current": 68,
         "stale": 17,
         "lagged_source": 0,
         "projection": 4,
@@ -4491,8 +4507,8 @@
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 15,
-        "latest_historical_date": "2026-10-28",
-        "headline_latest": "3.75% (2026-10-28)"
+        "latest_historical_date": "2026-10-29",
+        "headline_latest": "3.75% (2026-10-29)"
       }
     },
     {
@@ -4502,16 +4518,16 @@
       "currency": "USD",
       "institution": "Fed",
       "category": "data-first country page",
-      "charts": 168,
-      "expected": 168,
+      "charts": 171,
+      "expected": 171,
       "proxy_fills": 0,
       "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
       "headline_label": "Fed funds",
-      "headline": "3.88% (2026-10-28)",
+      "headline": "3.88% (2026-10-29)",
       "secondary_label": "Source groups",
-      "secondary": "27",
-      "quality": "27 source groups · 0 low-confidence charts",
+      "secondary": "28",
+      "quality": "28 source groups · 0 low-confidence charts",
       "framework": "GS US statistics logic",
       "status": "clean",
       "signals": {
@@ -4538,7 +4554,7 @@
           "label": "Fed funds",
           "value": 3.88,
           "display": "3.88 %",
-          "date": "2026-10-28",
+          "date": "2026-10-29",
           "source": "FRED / Federal Reserve",
           "quality_status": "verified"
         },
@@ -4580,18 +4596,18 @@
         }
       },
       "source_health": {
-        "source_groups": 27,
+        "source_groups": 28,
         "sources": [
           {
             "source_name": "FRED / BLS",
             "charts": 34
           },
           {
-            "source_name": "FRED / BEA",
-            "charts": 29
+            "source_name": "FRED / Federal Reserve",
+            "charts": 30
           },
           {
-            "source_name": "FRED / Federal Reserve",
+            "source_name": "FRED / BEA",
             "charts": 29
           },
           {
@@ -4600,7 +4616,7 @@
           },
           {
             "source_name": "FRED / US Treasury",
-            "charts": 14
+            "charts": 15
           },
           {
             "source_name": "FRED / Realtor.com",
@@ -4679,6 +4695,10 @@
             "charts": 1
           },
           {
+            "source_name": "FRED / ICE Benchmark Administration",
+            "charts": 1
+          },
+          {
             "source_name": "FRED / MBA",
             "charts": 1
           },
@@ -4692,16 +4712,17 @@
           }
         ],
         "quality_counts": {
-          "verified": 134,
-          "watch": 34
+          "verified": 135,
+          "watch": 36
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-30",
         "counts": {
-          "current": 152,
-          "due": 16
+          "current": 154,
+          "due": 16,
+          "scheduled_policy": 1
         },
         "latest_historical_date": "2026-10-30",
         "attention": [
@@ -5066,25 +5087,25 @@
           "value"
         ],
         "file": "us_canonical_frame.json",
-        "series": 168,
-        "observations": 118245,
-        "series_count": 168,
-        "observation_count": 118245
+        "series": 171,
+        "observations": 121722,
+        "series_count": 171,
+        "observation_count": 121722
       },
       "freshness_summary": {
         "dashboard": "United States",
-        "charts": 168,
-        "current": 146,
+        "charts": 171,
+        "current": 148,
         "stale": 4,
         "lagged_source": 0,
         "projection": 0,
-        "scheduled_policy": 0,
+        "scheduled_policy": 1,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 0,
         "latest_historical_date": "2026-10-30",
-        "headline_latest": "3.88% (2026-10-28)"
+        "headline_latest": "3.88% (2026-10-29)"
       }
     },
     {
@@ -5094,16 +5115,16 @@
       "currency": "TRY",
       "institution": "TCMB",
       "category": "data-first country page",
-      "charts": 53,
-      "expected": 53,
+      "charts": 54,
+      "expected": 54,
       "proxy_fills": 0,
       "gaps_or_dropped": 1,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/TRY spot",
-      "headline": "49.6997 (2026-10-27)",
+      "headline": "49.7747 (2026-10-30)",
       "secondary_label": "Source groups",
-      "secondary": "15",
-      "quality": "15 source groups · 12 low-confidence charts",
+      "secondary": "16",
+      "quality": "16 source groups · 12 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -5130,7 +5151,7 @@
           "label": "1W Repo",
           "value": 36.0,
           "display": "36.0 %",
-          "date": "2026-10-28",
+          "date": "2026-10-30",
           "source": "Central Bank of the Republic of Turkey (TCMB) / EVDS",
           "quality_status": "verified"
         },
@@ -5155,9 +5176,9 @@
         "financial": {
           "id": "try_usd",
           "label": "USD/TRY",
-          "value": 49.6997,
-          "display": "49.7 TRY per USD",
-          "date": "2026-10-27",
+          "value": 49.7747,
+          "display": "49.8 TRY per USD",
+          "date": "2026-10-30",
           "source": "Central Bank of the Republic of Turkey (TCMB)",
           "quality_status": "verified"
         },
@@ -5172,7 +5193,7 @@
         }
       },
       "source_health": {
-        "source_groups": 15,
+        "source_groups": 16,
         "sources": [
           {
             "source_name": "Eurostat / TurkStat",
@@ -5233,24 +5254,28 @@
           {
             "source_name": "World Bank / ILO",
             "charts": 1
+          },
+          {
+            "source_name": "World Bank International Debt Statistics",
+            "charts": 1
           }
         ],
         "quality_counts": {
           "low_confidence": 12,
-          "verified": 20,
-          "watch": 21
+          "verified": 22,
+          "watch": 20
         },
         "unavailable_count": 1
       },
       "freshness": {
         "as_of_date": "2026-10-30",
         "counts": {
-          "current": 30,
-          "due": 7,
+          "current": 32,
+          "due": 6,
           "projection": 4,
           "stale": 12
         },
-        "latest_historical_date": "2026-10-28",
+        "latest_historical_date": "2026-10-30",
         "attention": [
           {
             "id": "house_price_growth",
@@ -5272,6 +5297,28 @@
             "comparability": "high",
             "source_name": "Eurostat / CBRT",
             "series": "",
+            "transform": "level"
+          },
+          {
+            "id": "short_term_external_debt_pct_reserves",
+            "concept_id": "tr:short_term_external_debt_pct_reserves",
+            "label_en": "Short-Term External Debt (% of Reserves)",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 668,
+            "threshold_days": 730,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank International Debt Statistics",
+            "series": "DT.DOD.DSTC.IR.ZS",
             "transform": "level"
           },
           {
@@ -5539,50 +5586,6 @@
             "transform": "level"
           },
           {
-            "id": "unemployment_rate",
-            "concept_id": "unemployment_rate",
-            "label_en": "Harmonised Unemployment Rate SA",
-            "latest_date": "2026-07-01",
-            "frequency": "monthly",
-            "freshness_status": "due",
-            "age_basis_date": "2026-07-01",
-            "age_days": 91,
-            "threshold_days": 91,
-            "release_calendar_id": "eurostat_monthly",
-            "expected_release_date": "2026-10-15",
-            "due_date": "2026-10-30",
-            "quality_status": "watch",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Eurostat / TurkStat",
-            "series": "",
-            "transform": "level"
-          },
-          {
-            "id": "youth_unemployment_rate",
-            "concept_id": "tr:youth_unemployment_rate",
-            "label_en": "Youth Unemployment Rate (<25) SA",
-            "latest_date": "2026-07-01",
-            "frequency": "monthly",
-            "freshness_status": "due",
-            "age_basis_date": "2026-07-01",
-            "age_days": 91,
-            "threshold_days": 91,
-            "release_calendar_id": "eurostat_monthly",
-            "expected_release_date": "2026-10-15",
-            "due_date": "2026-10-30",
-            "quality_status": "watch",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Eurostat / TurkStat",
-            "series": "",
-            "transform": "level"
-          },
-          {
             "id": "fx_reserves",
             "concept_id": "tr:fx_reserves",
             "label_en": "CBRT Gross FX Reserves",
@@ -5679,15 +5682,15 @@
           "value"
         ],
         "file": "turkey_canonical_frame.json",
-        "series": 53,
-        "observations": 10314,
-        "series_count": 53,
-        "observation_count": 10314
+        "series": 54,
+        "observations": 10342,
+        "series_count": 54,
+        "observation_count": 10342
       },
       "freshness_summary": {
         "dashboard": "Turkey",
-        "charts": 53,
-        "current": 34,
+        "charts": 54,
+        "current": 36,
         "stale": 12,
         "lagged_source": 0,
         "projection": 0,
@@ -5831,7 +5834,7 @@
         "unavailable_count": 0
       },
       "freshness": {
-        "as_of_date": "2026-10-29",
+        "as_of_date": "2026-10-30",
         "counts": {
           "current": 22,
           "due": 4,
@@ -5848,7 +5851,7 @@
             "frequency": "annual",
             "freshness_status": "stale",
             "age_basis_date": "2023-12-31",
-            "age_days": 1033,
+            "age_days": 1034,
             "threshold_days": 730,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -5870,7 +5873,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2025-03-31",
-            "age_days": 577,
+            "age_days": 578,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -5892,7 +5895,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2025-03-31",
-            "age_days": 577,
+            "age_days": 578,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -5914,7 +5917,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2025-10-01",
-            "age_days": 302,
+            "age_days": 303,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -5936,7 +5939,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2025-10-01",
-            "age_days": 302,
+            "age_days": 303,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -5958,7 +5961,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2025-10-01",
-            "age_days": 302,
+            "age_days": 303,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -5980,7 +5983,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2026-01-01",
-            "age_days": 212,
+            "age_days": 213,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -6002,7 +6005,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2026-01-01",
-            "age_days": 212,
+            "age_days": 213,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -6024,7 +6027,7 @@
             "frequency": "quarterly",
             "freshness_status": "due",
             "age_basis_date": "2026-06-01",
-            "age_days": 150,
+            "age_days": 151,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -6046,7 +6049,7 @@
             "frequency": "quarterly",
             "freshness_status": "due",
             "age_basis_date": "2026-06-30",
-            "age_days": 121,
+            "age_days": 122,
             "threshold_days": 137,
             "release_calendar_id": "bea_quarterly",
             "expected_release_date": "2026-11-04",
@@ -6068,7 +6071,7 @@
             "frequency": "monthly",
             "freshness_status": "due",
             "age_basis_date": "2026-08-01",
-            "age_days": 59,
+            "age_days": 60,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -6090,7 +6093,7 @@
             "frequency": "monthly",
             "freshness_status": "due",
             "age_basis_date": "2026-08-01",
-            "age_days": 59,
+            "age_days": 60,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7097,16 +7100,16 @@
       "currency": "KZT",
       "institution": "NBK",
       "category": "data-first country page",
-      "charts": 36,
-      "expected": 36,
+      "charts": 37,
+      "expected": 37,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/KZT official rate",
-      "headline": "453.71 (2026-10-29)",
+      "headline": "453.87 (2026-10-30)",
       "secondary_label": "Source groups",
-      "secondary": "14",
-      "quality": "14 source groups · 5 low-confidence charts",
+      "secondary": "15",
+      "quality": "15 source groups · 5 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -7158,9 +7161,9 @@
         "financial": {
           "id": "usd_kzt",
           "label": "USD/KZT",
-          "value": 453.71,
+          "value": 453.87,
           "display": "454 KZT",
-          "date": "2026-10-29",
+          "date": "2026-10-30",
           "source": "National Bank of Kazakhstan (NBK)",
           "quality_status": "verified"
         },
@@ -7175,7 +7178,7 @@
         }
       },
       "source_health": {
-        "source_groups": 14,
+        "source_groups": 15,
         "sources": [
           {
             "source_name": "IMF SDMX / NBK",
@@ -7232,24 +7235,28 @@
           {
             "source_name": "World Bank / NBK",
             "charts": 1
+          },
+          {
+            "source_name": "World Bank International Debt Statistics",
+            "charts": 1
           }
         ],
         "quality_counts": {
           "low_confidence": 5,
           "verified": 4,
-          "watch": 27
+          "watch": 28
         },
         "unavailable_count": 0
       },
       "freshness": {
-        "as_of_date": "2026-10-29",
+        "as_of_date": "2026-10-30",
         "counts": {
           "current": 23,
-          "due": 2,
+          "due": 3,
           "projection": 6,
           "stale": 5
         },
-        "latest_historical_date": "2026-10-29",
+        "latest_historical_date": "2026-10-30",
         "attention": [
           {
             "id": "policy_rate",
@@ -7259,7 +7266,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2020-12-01",
-            "age_days": 2128,
+            "age_days": 2129,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7281,7 +7288,7 @@
             "frequency": "annual",
             "freshness_status": "due",
             "age_basis_date": "2024-12-31",
-            "age_days": 667,
+            "age_days": 668,
             "threshold_days": 730,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7303,7 +7310,7 @@
             "frequency": "annual",
             "freshness_status": "due",
             "age_basis_date": "2024-12-31",
-            "age_days": 667,
+            "age_days": 668,
             "threshold_days": 730,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7318,6 +7325,28 @@
             "transform": "level"
           },
           {
+            "id": "short_term_external_debt_pct_reserves",
+            "concept_id": "kz:short_term_external_debt_pct_reserves",
+            "label_en": "Short-Term External Debt (% of Reserves)",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 668,
+            "threshold_days": 730,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank International Debt Statistics",
+            "series": "DT.DOD.DSTC.IR.ZS",
+            "transform": "level"
+          },
+          {
             "id": "bank_capital_ratio",
             "concept_id": "bank_capital_ratio",
             "label_en": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
@@ -7325,7 +7354,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2025-03-31",
-            "age_days": 577,
+            "age_days": 578,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7347,7 +7376,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2025-03-31",
-            "age_days": 577,
+            "age_days": 578,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7369,7 +7398,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2025-07-01",
-            "age_days": 455,
+            "age_days": 456,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7391,7 +7420,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2026-06-01",
-            "age_days": 121,
+            "age_days": 122,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7414,14 +7443,14 @@
           "value"
         ],
         "file": "kazakhstan_canonical_frame.json",
-        "series": 36,
-        "observations": 9888,
-        "series_count": 36,
-        "observation_count": 9888
+        "series": 37,
+        "observations": 9909,
+        "series_count": 37,
+        "observation_count": 9909
       },
       "freshness_summary": {
         "dashboard": "Kazakhstan",
-        "charts": 36,
+        "charts": 37,
         "current": 29,
         "stale": 5,
         "lagged_source": 0,
@@ -7431,7 +7460,7 @@
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 5,
-        "latest_historical_date": "2026-10-29",
+        "latest_historical_date": "2026-10-30",
         "headline_latest": ""
       }
     },
@@ -7442,16 +7471,16 @@
       "currency": "UZS",
       "institution": "CBU",
       "category": "data-first country page",
-      "charts": 35,
-      "expected": 35,
+      "charts": 36,
+      "expected": 36,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/UZS official rate",
       "headline": "12,591.57 (2025-07-01)",
       "secondary_label": "Source groups",
-      "secondary": "12",
-      "quality": "12 source groups · 6 low-confidence charts",
+      "secondary": "13",
+      "quality": "13 source groups · 6 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -7520,7 +7549,7 @@
         }
       },
       "source_health": {
-        "source_groups": 12,
+        "source_groups": 13,
         "sources": [
           {
             "source_name": "IMF SDMX / CBU",
@@ -7569,19 +7598,23 @@
           {
             "source_name": "World Bank / Central Bank of Uzbekistan (CBU)",
             "charts": 1
+          },
+          {
+            "source_name": "World Bank International Debt Statistics",
+            "charts": 1
           }
         ],
         "quality_counts": {
           "low_confidence": 6,
-          "watch": 29
+          "watch": 30
         },
         "unavailable_count": 0
       },
       "freshness": {
-        "as_of_date": "2026-10-29",
+        "as_of_date": "2026-10-30",
         "counts": {
           "current": 20,
-          "due": 3,
+          "due": 4,
           "projection": 6,
           "stale": 6
         },
@@ -7595,7 +7628,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2024-12-01",
-            "age_days": 667,
+            "age_days": 668,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7617,7 +7650,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2024-12-01",
-            "age_days": 667,
+            "age_days": 668,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7639,7 +7672,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2024-12-01",
-            "age_days": 667,
+            "age_days": 668,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7654,6 +7687,28 @@
             "transform": "level"
           },
           {
+            "id": "short_term_external_debt_pct_reserves",
+            "concept_id": "uz:short_term_external_debt_pct_reserves",
+            "label_en": "Short-Term External Debt (% of Reserves)",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 668,
+            "threshold_days": 730,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank International Debt Statistics",
+            "series": "DT.DOD.DSTC.IR.ZS",
+            "transform": "level"
+          },
+          {
             "id": "bank_capital_ratio",
             "concept_id": "bank_capital_ratio",
             "label_en": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
@@ -7661,7 +7716,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2025-06-30",
-            "age_days": 486,
+            "age_days": 487,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7683,7 +7738,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2025-06-30",
-            "age_days": 486,
+            "age_days": 487,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7705,7 +7760,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2025-07-01",
-            "age_days": 455,
+            "age_days": 456,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7727,7 +7782,7 @@
             "frequency": "monthly",
             "freshness_status": "due",
             "age_basis_date": "2026-08-01",
-            "age_days": 59,
+            "age_days": 60,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7749,7 +7804,7 @@
             "frequency": "monthly",
             "freshness_status": "due",
             "age_basis_date": "2026-08-01",
-            "age_days": 59,
+            "age_days": 60,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7771,7 +7826,7 @@
             "frequency": "monthly",
             "freshness_status": "due",
             "age_basis_date": "2026-08-01",
-            "age_days": 59,
+            "age_days": 60,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -7794,14 +7849,14 @@
           "value"
         ],
         "file": "uzbekistan_canonical_frame.json",
-        "series": 35,
-        "observations": 2568,
-        "series_count": 35,
-        "observation_count": 2568
+        "series": 36,
+        "observations": 2580,
+        "series_count": 36,
+        "observation_count": 2580
       },
       "freshness_summary": {
         "dashboard": "Uzbekistan",
-        "charts": 35,
+        "charts": 36,
         "current": 26,
         "stale": 6,
         "lagged_source": 0,
@@ -7822,16 +7877,16 @@
       "currency": "EGP",
       "institution": "CBE",
       "category": "data-first country page",
-      "charts": 36,
-      "expected": 36,
+      "charts": 37,
+      "expected": 37,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/EGP official rate",
       "headline": "49.70 (2025-05-01)",
       "secondary_label": "Source groups",
-      "secondary": "13",
-      "quality": "13 source groups · 13 low-confidence charts",
+      "secondary": "14",
+      "quality": "14 source groups · 13 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -7900,7 +7955,7 @@
         }
       },
       "source_health": {
-        "source_groups": 13,
+        "source_groups": 14,
         "sources": [
           {
             "source_name": "IMF SDMX / CBE",
@@ -7953,24 +8008,50 @@
           {
             "source_name": "World Bank / Central Bank of Egypt (CBE)",
             "charts": 1
+          },
+          {
+            "source_name": "World Bank International Debt Statistics",
+            "charts": 1
           }
         ],
         "quality_counts": {
           "low_confidence": 13,
-          "watch": 23
+          "watch": 24
         },
         "unavailable_count": 0
       },
       "freshness": {
-        "as_of_date": "2026-10-29",
+        "as_of_date": "2026-10-30",
         "counts": {
           "current": 14,
-          "due": 3,
+          "due": 4,
           "projection": 6,
           "stale": 13
         },
         "latest_historical_date": "2026-10-27",
         "attention": [
+          {
+            "id": "short_term_external_debt_pct_reserves",
+            "concept_id": "eg:short_term_external_debt_pct_reserves",
+            "label_en": "Short-Term External Debt (% of Reserves)",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 668,
+            "threshold_days": 730,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank International Debt Statistics",
+            "series": "DT.DOD.DSTC.IR.ZS",
+            "transform": "level"
+          },
           {
             "id": "deposit_rate",
             "concept_id": "eg:deposit_rate",
@@ -7979,7 +8060,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2025-05-01",
-            "age_days": 516,
+            "age_days": 517,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8001,7 +8082,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2025-05-01",
-            "age_days": 516,
+            "age_days": 517,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8023,7 +8104,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2025-05-01",
-            "age_days": 516,
+            "age_days": 517,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8045,7 +8126,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2025-05-01",
-            "age_days": 516,
+            "age_days": 517,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8067,7 +8148,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2025-10-01",
-            "age_days": 363,
+            "age_days": 364,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8089,7 +8170,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2026-01-01",
-            "age_days": 212,
+            "age_days": 213,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8111,7 +8192,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2026-01-01",
-            "age_days": 212,
+            "age_days": 213,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8133,7 +8214,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2026-01-01",
-            "age_days": 212,
+            "age_days": 213,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8155,7 +8236,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2026-01-01",
-            "age_days": 212,
+            "age_days": 213,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8177,7 +8258,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2026-01-01",
-            "age_days": 212,
+            "age_days": 213,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8199,7 +8280,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2026-01-01",
-            "age_days": 212,
+            "age_days": 213,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8221,7 +8302,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2026-01-01",
-            "age_days": 212,
+            "age_days": 213,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8243,7 +8324,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2026-06-01",
-            "age_days": 121,
+            "age_days": 122,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8265,7 +8346,7 @@
             "frequency": "monthly",
             "freshness_status": "due",
             "age_basis_date": "2026-08-01",
-            "age_days": 59,
+            "age_days": 60,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8287,7 +8368,7 @@
             "frequency": "monthly",
             "freshness_status": "due",
             "age_basis_date": "2026-08-01",
-            "age_days": 59,
+            "age_days": 60,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8309,7 +8390,7 @@
             "frequency": "monthly",
             "freshness_status": "due",
             "age_basis_date": "2026-08-01",
-            "age_days": 59,
+            "age_days": 60,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8332,14 +8413,14 @@
           "value"
         ],
         "file": "egypt_canonical_frame.json",
-        "series": 36,
-        "observations": 9491,
-        "series_count": 36,
-        "observation_count": 9491
+        "series": 37,
+        "observations": 9516,
+        "series_count": 37,
+        "observation_count": 9516
       },
       "freshness_summary": {
         "dashboard": "Egypt",
-        "charts": 36,
+        "charts": 37,
         "current": 20,
         "stale": 13,
         "lagged_source": 0,
@@ -8360,16 +8441,16 @@
       "currency": "NGN",
       "institution": "CBN",
       "category": "data-first country page",
-      "charts": 38,
-      "expected": 38,
+      "charts": 39,
+      "expected": 39,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/NGN official rate",
-      "headline": "1,346.41 (2026-10-29)",
+      "headline": "1,345.76 (2026-10-30)",
       "secondary_label": "Source groups",
-      "secondary": "13",
-      "quality": "13 source groups · 9 low-confidence charts",
+      "secondary": "14",
+      "quality": "14 source groups · 9 low-confidence charts",
       "framework": "Nine-pillar comparable core",
       "status": "clean",
       "signals": {
@@ -8421,9 +8502,9 @@
         "financial": {
           "id": "usd_ngn",
           "label": "USD/NGN",
-          "value": 1346.4108,
+          "value": 1345.7565,
           "display": "1,346 NGN",
-          "date": "2026-10-29",
+          "date": "2026-10-30",
           "source": "Central Bank of Nigeria (CBN)",
           "quality_status": "verified"
         },
@@ -8438,7 +8519,7 @@
         }
       },
       "source_health": {
-        "source_groups": 13,
+        "source_groups": 14,
         "sources": [
           {
             "source_name": "IMF SDMX / CBN",
@@ -8491,24 +8572,28 @@
           {
             "source_name": "World Bank / CBN",
             "charts": 1
+          },
+          {
+            "source_name": "World Bank International Debt Statistics",
+            "charts": 1
           }
         ],
         "quality_counts": {
           "low_confidence": 9,
           "verified": 1,
-          "watch": 28
+          "watch": 29
         },
         "unavailable_count": 0
       },
       "freshness": {
-        "as_of_date": "2026-10-29",
+        "as_of_date": "2026-10-30",
         "counts": {
           "current": 20,
-          "due": 3,
+          "due": 4,
           "projection": 6,
           "stale": 9
         },
-        "latest_historical_date": "2026-10-29",
+        "latest_historical_date": "2026-10-30",
         "attention": [
           {
             "id": "private_credit_gdp",
@@ -8518,7 +8603,7 @@
             "frequency": "annual",
             "freshness_status": "stale",
             "age_basis_date": "2023-12-31",
-            "age_days": 1033,
+            "age_days": 1034,
             "threshold_days": 730,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8540,7 +8625,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2024-08-01",
-            "age_days": 789,
+            "age_days": 790,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8562,7 +8647,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2024-08-01",
-            "age_days": 789,
+            "age_days": 790,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8584,7 +8669,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2024-08-01",
-            "age_days": 789,
+            "age_days": 790,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8599,6 +8684,28 @@
             "transform": "level"
           },
           {
+            "id": "short_term_external_debt_pct_reserves",
+            "concept_id": "ng:short_term_external_debt_pct_reserves",
+            "label_en": "Short-Term External Debt (% of Reserves)",
+            "latest_date": "2024-12-31",
+            "frequency": "annual",
+            "freshness_status": "due",
+            "age_basis_date": "2024-12-31",
+            "age_days": 668,
+            "threshold_days": 730,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_mirror",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "World Bank International Debt Statistics",
+            "series": "DT.DOD.DSTC.IR.ZS",
+            "transform": "level"
+          },
+          {
             "id": "bank_capital_ratio",
             "concept_id": "bank_capital_ratio",
             "label_en": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
@@ -8606,7 +8713,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2025-03-31",
-            "age_days": 577,
+            "age_days": 578,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8628,7 +8735,7 @@
             "frequency": "quarterly",
             "freshness_status": "stale",
             "age_basis_date": "2025-03-31",
-            "age_days": 577,
+            "age_days": 578,
             "threshold_days": 165,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8650,7 +8757,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2025-06-01",
-            "age_days": 486,
+            "age_days": 487,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8672,7 +8779,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2025-06-01",
-            "age_days": 486,
+            "age_days": 487,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8694,7 +8801,7 @@
             "frequency": "monthly",
             "freshness_status": "stale",
             "age_basis_date": "2026-06-01",
-            "age_days": 121,
+            "age_days": 122,
             "threshold_days": 75,
             "release_calendar_id": "",
             "expected_release_date": "",
@@ -8716,7 +8823,7 @@
             "frequency": "monthly",
             "freshness_status": "due",
             "age_basis_date": "2026-08-01",
-            "age_days": 59,
+            "age_days": 60,
             "threshold_days": 60,
             "release_calendar_id": "nbs_monthly",
             "expected_release_date": "2026-10-20",
@@ -8738,7 +8845,7 @@
             "frequency": "monthly",
             "freshness_status": "due",
             "age_basis_date": "2026-08-01",
-            "age_days": 59,
+            "age_days": 60,
             "threshold_days": 60,
             "release_calendar_id": "nbs_monthly",
             "expected_release_date": "2026-10-20",
@@ -8760,7 +8867,7 @@
             "frequency": "monthly",
             "freshness_status": "due",
             "age_basis_date": "2026-08-01",
-            "age_days": 59,
+            "age_days": 60,
             "threshold_days": 60,
             "release_calendar_id": "nbs_monthly",
             "expected_release_date": "2026-10-20",
@@ -8783,14 +8890,14 @@
           "value"
         ],
         "file": "nigeria_canonical_frame.json",
-        "series": 38,
-        "observations": 13636,
-        "series_count": 38,
-        "observation_count": 13636
+        "series": 39,
+        "observations": 13662,
+        "series_count": 39,
+        "observation_count": 13662
       },
       "freshness_summary": {
         "dashboard": "Nigeria",
-        "charts": 38,
+        "charts": 39,
         "current": 26,
         "stale": 9,
         "lagged_source": 0,
@@ -8800,7 +8907,7 @@
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 9,
-        "latest_historical_date": "2026-10-29",
+        "latest_historical_date": "2026-10-30",
         "headline_latest": ""
       }
     }
@@ -8812,10 +8919,10 @@
       "structural_score": 38.3,
       "composite_label": "defensive",
       "quality": {
-        "score": 56.0,
+        "score": 53.3,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 60.0,
+        "freshness_score": 52.4,
         "proxy_penalty": 0.0,
         "gap_penalty": 10.0
       },
@@ -8903,10 +9010,10 @@
       "structural_score": 45.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 62.9,
+        "score": 60.0,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 58.3,
+        "freshness_score": 50.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -8994,10 +9101,10 @@
       "structural_score": 58.3,
       "composite_label": "mixed",
       "quality": {
-        "score": 52.4,
+        "score": 50.3,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 56.7,
+        "freshness_score": 51.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 12.5
       },
@@ -9085,10 +9192,10 @@
       "structural_score": 46.7,
       "composite_label": "defensive",
       "quality": {
-        "score": 54.4,
+        "score": 50.0,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 62.5,
+        "freshness_score": 50.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 12.5
       },
@@ -9176,10 +9283,10 @@
       "structural_score": 46.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 36.7,
+        "score": 37.9,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 33.3,
+        "freshness_score": 36.9,
         "proxy_penalty": 0.0,
         "gap_penalty": 20.0
       },
@@ -9267,10 +9374,10 @@
       "structural_score": 61.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 55.5,
+        "score": 56.2,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 65.7,
+        "freshness_score": 67.6,
         "proxy_penalty": 0.0,
         "gap_penalty": 12.5
       },
@@ -9279,8 +9386,8 @@
           "label": "stall-speed growth",
           "score": 45.0,
           "confidence_weight": 1.0,
-          "value": 1.2,
-          "display": "1.20 % y/y",
+          "value": 1.3,
+          "display": "1.30 % y/y",
           "source_signal": "real_gdp_yoy"
         },
         "inflation": {
@@ -9338,15 +9445,15 @@
         "inflation_rate": 2.0,
         "inflation_target": 2.0,
         "neutral_real_rate_r_star": 0.5,
-        "taylor_implied_rate": 2.5,
+        "taylor_implied_rate": 2.55,
         "taylor_rate_range": [
-          2.0,
-          3.0
+          2.05,
+          3.05
         ],
-        "policy_gap_deviation": 0.0,
+        "policy_gap_deviation": -0.05,
         "policy_gap_range": [
-          -0.5,
-          0.5
+          -0.55,
+          0.45
         ],
         "real_policy_rate": 0.5,
         "stance_label": "calibrated / neutral"
@@ -9358,10 +9465,10 @@
       "structural_score": 56.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 44.9,
+        "score": 45.3,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 42.6,
+        "freshness_score": 43.6,
         "proxy_penalty": 0.0,
         "gap_penalty": 15.0
       },
@@ -9449,10 +9556,10 @@
       "structural_score": 53.3,
       "composite_label": "mixed",
       "quality": {
-        "score": 47.7,
+        "score": 47.4,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 57.8,
+        "freshness_score": 56.9,
         "proxy_penalty": 0.0,
         "gap_penalty": 17.5
       },
@@ -9540,10 +9647,10 @@
       "structural_score": 53.3,
       "composite_label": "mixed",
       "quality": {
-        "score": 49.8,
+        "score": 50.1,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 71.0,
+        "freshness_score": 71.6,
         "proxy_penalty": 0.0,
         "gap_penalty": 20.0
       },
@@ -9592,7 +9699,7 @@
           "label": "neutral financial conditions",
           "score": 60.0,
           "confidence_weight": 1.0,
-          "value": 3.734,
+          "value": 3.7338,
           "display": "3.73 %",
           "source_signal": "sonia_rate"
         },
@@ -9631,10 +9738,10 @@
       "structural_score": 43.3,
       "composite_label": "defensive",
       "quality": {
-        "score": 77.9,
+        "score": 77.8,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 86.9,
+        "freshness_score": 86.5,
         "proxy_penalty": 0.0,
         "gap_penalty": 17.5
       },
@@ -9722,10 +9829,10 @@
       "structural_score": 51.7,
       "composite_label": "defensive",
       "quality": {
-        "score": 65.0,
+        "score": 65.8,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 64.2,
+        "freshness_score": 66.7,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -9774,8 +9881,8 @@
           "label": "tight financial conditions",
           "score": 35.0,
           "confidence_weight": 1.0,
-          "value": 49.6997,
-          "display": "49.7 TRY per USD",
+          "value": 49.7747,
+          "display": "49.8 TRY per USD",
           "source_signal": "try_usd"
         },
         "property": {
@@ -10068,10 +10175,10 @@
       "structural_score": 55.0,
       "composite_label": "defensive",
       "quality": {
-        "score": 78.2,
+        "score": 77.4,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 80.6,
+        "freshness_score": 78.4,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10120,7 +10227,7 @@
           "label": "tight financial conditions",
           "score": 35.0,
           "confidence_weight": 1.0,
-          "value": 453.71,
+          "value": 453.87,
           "display": "454 KZT",
           "source_signal": "usd_kzt"
         },
@@ -10159,10 +10266,10 @@
       "structural_score": 51.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 74.0,
+        "score": 73.3,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 74.3,
+        "freshness_score": 72.2,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10250,10 +10357,10 @@
       "structural_score": 45.0,
       "composite_label": "defensive",
       "quality": {
-        "score": 59.4,
+        "score": 58.9,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 55.6,
+        "freshness_score": 54.1,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10341,10 +10448,10 @@
       "structural_score": 55.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 65.9,
+        "score": 65.3,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 68.4,
+        "freshness_score": 66.7,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10393,7 +10500,7 @@
           "label": "tight financial conditions",
           "score": 35.0,
           "confidence_weight": 1.0,
-          "value": 1346.4108,
+          "value": 1345.7565,
           "display": "1,346 NGN",
           "source_signal": "usd_ngn"
         },
@@ -10529,15 +10636,15 @@
       "inflation_rate": 2.0,
       "inflation_target": 2.0,
       "neutral_real_rate_r_star": 0.5,
-      "taylor_implied_rate": 2.5,
+      "taylor_implied_rate": 2.55,
       "taylor_rate_range": [
-        2.0,
-        3.0
+        2.05,
+        3.05
       ],
-      "policy_gap_deviation": 0.0,
+      "policy_gap_deviation": -0.05,
       "policy_gap_range": [
-        -0.5,
-        0.5
+        -0.55,
+        0.45
       ],
       "real_policy_rate": 0.5,
       "stance_label": "calibrated / neutral"
@@ -11144,8 +11251,8 @@
     "sovereign_spreads_to_us": {
       "US": {
         "benchmark": "10Y Treasury",
-        "date": "2026-10-28",
-        "yield": 5.05,
+        "date": "2026-10-29",
+        "yield": 4.98,
         "spread_bps": 0.0,
         "status": "observed"
       },
@@ -11153,21 +11260,21 @@
         "benchmark": "10Y Bund",
         "date": "2026-09-01",
         "yield": 3.47,
-        "spread_bps": -158.0,
+        "spread_bps": -151.0,
         "status": "observed"
       },
       "UK": {
         "benchmark": "10Y Gilt",
-        "date": "2026-10-27",
-        "yield": 5.3,
-        "spread_bps": 25.0,
+        "date": "2026-10-28",
+        "yield": 5.31,
+        "spread_bps": 33.0,
         "status": "observed"
       },
       "JP": {
         "benchmark": "10Y JGB",
         "date": "2026-09-01",
         "yield": 3.05,
-        "spread_bps": -200.0,
+        "spread_bps": -193.0,
         "status": "observed"
       },
       "CN": {
@@ -11179,9 +11286,9 @@
       },
       "ZA": {
         "benchmark": "10Y Sovereign",
-        "date": "2026-10-28",
-        "yield": 8.04,
-        "spread_bps": 299.0,
+        "date": "2026-10-29",
+        "yield": 8.0,
+        "spread_bps": 302.0,
         "status": "observed"
       },
       "TR": {
@@ -11202,14 +11309,14 @@
         "benchmark": "10Y KTB",
         "date": "2026-09-01",
         "yield": 4.45,
-        "spread_bps": -60.0,
+        "spread_bps": -53.0,
         "status": "observed"
       },
       "TW": {
         "benchmark": "10Y Gov Bond",
         "date": "2026-08-01",
         "yield": 1.97,
-        "spread_bps": -308.0,
+        "spread_bps": -301.0,
         "status": "observed"
       },
       "KZ": {
@@ -11244,28 +11351,28 @@
         "benchmark": "PL 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 6.23,
-        "spread_bps": 118.0,
+        "spread_bps": 125.0,
         "status": "observed"
       },
       "CZ": {
         "benchmark": "CZ 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 5.24,
-        "spread_bps": 19.0,
+        "spread_bps": 26.0,
         "status": "observed"
       },
       "HU": {
         "benchmark": "HU 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 5.68,
-        "spread_bps": 63.0,
+        "spread_bps": 70.0,
         "status": "observed"
       },
       "RO": {
         "benchmark": "RO 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 6.71,
-        "spread_bps": 166.0,
+        "spread_bps": 173.0,
         "status": "observed"
       }
     },
@@ -11855,111 +11962,111 @@
       "code": "HU",
       "name": "Hungary",
       "coverage_pct": 100.0,
-      "freshness_pct": 60.0,
+      "freshness_pct": 52.4,
       "proxy_fills": 0,
       "gaps": 4,
       "regime_score": 48.5,
-      "quality_score": 56.0
+      "quality_score": 53.3
     },
     {
       "code": "PL",
       "name": "Poland",
       "coverage_pct": 100.0,
-      "freshness_pct": 58.3,
+      "freshness_pct": 50.0,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 53.1,
-      "quality_score": 62.9
+      "quality_score": 60.0
     },
     {
       "code": "CZ",
       "name": "Czechia",
       "coverage_pct": 100.0,
-      "freshness_pct": 56.7,
+      "freshness_pct": 51.0,
       "proxy_fills": 0,
       "gaps": 5,
       "regime_score": 61.7,
-      "quality_score": 52.4
+      "quality_score": 50.3
     },
     {
       "code": "RO",
       "name": "Romania",
       "coverage_pct": 100.0,
-      "freshness_pct": 62.5,
+      "freshness_pct": 50.0,
       "proxy_fills": 0,
       "gaps": 5,
       "regime_score": 38.3,
-      "quality_score": 54.4
+      "quality_score": 50.0
     },
     {
       "code": "CN",
       "name": "China",
       "coverage_pct": 100.0,
-      "freshness_pct": 33.3,
+      "freshness_pct": 36.9,
       "proxy_fills": 0,
       "gaps": 8,
       "regime_score": 57.1,
-      "quality_score": 36.7
+      "quality_score": 37.9
     },
     {
       "code": "EA",
       "name": "Euro Area",
       "coverage_pct": 100.0,
-      "freshness_pct": 65.7,
+      "freshness_pct": 67.6,
       "proxy_fills": 0,
       "gaps": 5,
       "regime_score": 60.8,
-      "quality_score": 55.5
+      "quality_score": 56.2
     },
     {
       "code": "JP",
       "name": "Japan",
       "coverage_pct": 100.0,
-      "freshness_pct": 42.6,
+      "freshness_pct": 43.6,
       "proxy_fills": 0,
       "gaps": 6,
       "regime_score": 56.5,
-      "quality_score": 44.9
+      "quality_score": 45.3
     },
     {
       "code": "ZA",
       "name": "South Africa",
       "coverage_pct": 100.0,
-      "freshness_pct": 57.8,
+      "freshness_pct": 56.9,
       "proxy_fills": 0,
       "gaps": 7,
       "regime_score": 51.7,
-      "quality_score": 47.7
+      "quality_score": 47.4
     },
     {
       "code": "UK",
       "name": "United Kingdom",
       "coverage_pct": 100.0,
-      "freshness_pct": 71.0,
+      "freshness_pct": 71.6,
       "proxy_fills": 0,
       "gaps": 8,
       "regime_score": 53.1,
-      "quality_score": 49.8
+      "quality_score": 50.1
     },
     {
       "code": "US",
       "name": "United States",
       "coverage_pct": 100.0,
-      "freshness_pct": 86.9,
+      "freshness_pct": 86.5,
       "proxy_fills": 0,
       "gaps": 7,
       "regime_score": 49.2,
-      "quality_score": 77.9
+      "quality_score": 77.8
     },
     {
       "code": "TR",
       "name": "Turkey",
       "coverage_pct": 100.0,
-      "freshness_pct": 64.2,
+      "freshness_pct": 66.7,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 49.0,
-      "quality_score": 65.0
+      "quality_score": 65.8
     },
     {
       "code": "HK",
@@ -11995,41 +12102,41 @@
       "code": "KZ",
       "name": "Kazakhstan",
       "coverage_pct": 100.0,
-      "freshness_pct": 80.6,
+      "freshness_pct": 78.4,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 49.4,
-      "quality_score": 78.2
+      "quality_score": 77.4
     },
     {
       "code": "UZ",
       "name": "Uzbekistan",
       "coverage_pct": 100.0,
-      "freshness_pct": 74.3,
+      "freshness_pct": 72.2,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 52.7,
-      "quality_score": 74.0
+      "quality_score": 73.3
     },
     {
       "code": "EG",
       "name": "Egypt",
       "coverage_pct": 100.0,
-      "freshness_pct": 55.6,
+      "freshness_pct": 54.1,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 49.4,
-      "quality_score": 59.4
+      "quality_score": 58.9
     },
     {
       "code": "NG",
       "name": "Nigeria",
       "coverage_pct": 100.0,
-      "freshness_pct": 68.4,
+      "freshness_pct": 66.7,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 54.4,
-      "quality_score": 65.9
+      "quality_score": 65.3
     }
   ],
   "release_monitor": [
@@ -12047,6 +12154,45 @@
       "note": "NBK monetary policy-related rate reported in IMF International Financial Statistics."
     },
     {
+      "code": "CZ",
+      "dashboard": "Czechia",
+      "indicator_id": "wgi_control_of_corruption",
+      "label": "WGI Control of Corruption",
+      "latest": "2023-12-31",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1034,
+      "severity": "high",
+      "source": "World Bank Sovereign ESG Data Portal / WGI",
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 1034 days old for annual data."
+    },
+    {
+      "code": "CZ",
+      "dashboard": "Czechia",
+      "indicator_id": "wgi_government_effectiveness",
+      "label": "WGI Government Effectiveness",
+      "latest": "2023-12-31",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1034,
+      "severity": "high",
+      "source": "World Bank Sovereign ESG Data Portal / WGI",
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 1034 days old for annual data."
+    },
+    {
+      "code": "CZ",
+      "dashboard": "Czechia",
+      "indicator_id": "wgi_rule_of_law",
+      "label": "WGI Rule of Law",
+      "latest": "2023-12-31",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1034,
+      "severity": "high",
+      "source": "World Bank Sovereign ESG Data Portal / WGI",
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 1034 days old for annual data."
+    },
+    {
       "code": "HK",
       "dashboard": "Hong Kong",
       "indicator_id": "total_reserves_usd",
@@ -12060,6 +12206,45 @@
       "note": "Total official foreign currency reserve assets in billions of USD."
     },
     {
+      "code": "HU",
+      "dashboard": "Hungary",
+      "indicator_id": "wgi_control_of_corruption",
+      "label": "WGI Control of Corruption",
+      "latest": "2023-12-31",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1034,
+      "severity": "high",
+      "source": "World Bank Sovereign ESG Data Portal / WGI",
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 1034 days old for annual data."
+    },
+    {
+      "code": "HU",
+      "dashboard": "Hungary",
+      "indicator_id": "wgi_government_effectiveness",
+      "label": "WGI Government Effectiveness",
+      "latest": "2023-12-31",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1034,
+      "severity": "high",
+      "source": "World Bank Sovereign ESG Data Portal / WGI",
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 1034 days old for annual data."
+    },
+    {
+      "code": "HU",
+      "dashboard": "Hungary",
+      "indicator_id": "wgi_rule_of_law",
+      "label": "WGI Rule of Law",
+      "latest": "2023-12-31",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1034,
+      "severity": "high",
+      "source": "World Bank Sovereign ESG Data Portal / WGI",
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 1034 days old for annual data."
+    },
+    {
       "code": "NG",
       "dashboard": "Nigeria",
       "indicator_id": "private_credit_gdp",
@@ -12071,6 +12256,84 @@
       "severity": "high",
       "source": "World Bank WDI",
       "note": "Domestic credit to private sector refers to financial resources provided to the private sector."
+    },
+    {
+      "code": "PL",
+      "dashboard": "Poland",
+      "indicator_id": "wgi_control_of_corruption",
+      "label": "WGI Control of Corruption",
+      "latest": "2023-12-31",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1034,
+      "severity": "high",
+      "source": "World Bank Sovereign ESG Data Portal / WGI",
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 1034 days old for annual data."
+    },
+    {
+      "code": "PL",
+      "dashboard": "Poland",
+      "indicator_id": "wgi_government_effectiveness",
+      "label": "WGI Government Effectiveness",
+      "latest": "2023-12-31",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1034,
+      "severity": "high",
+      "source": "World Bank Sovereign ESG Data Portal / WGI",
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 1034 days old for annual data."
+    },
+    {
+      "code": "PL",
+      "dashboard": "Poland",
+      "indicator_id": "wgi_rule_of_law",
+      "label": "WGI Rule of Law",
+      "latest": "2023-12-31",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1034,
+      "severity": "high",
+      "source": "World Bank Sovereign ESG Data Portal / WGI",
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 1034 days old for annual data."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "wgi_control_of_corruption",
+      "label": "WGI Control of Corruption",
+      "latest": "2023-12-31",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1034,
+      "severity": "high",
+      "source": "World Bank Sovereign ESG Data Portal / WGI",
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST. Source validation: Latest observation is 1034 days old for annual data."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "wgi_government_effectiveness",
+      "label": "WGI Government Effectiveness",
+      "latest": "2023-12-31",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1034,
+      "severity": "high",
+      "source": "World Bank Sovereign ESG Data Portal / WGI",
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST. Source validation: Latest observation is 1034 days old for annual data."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "wgi_rule_of_law",
+      "label": "WGI Rule of Law",
+      "latest": "2023-12-31",
+      "frequency": "annual",
+      "status": "stale",
+      "age_days": 1034,
+      "severity": "high",
+      "source": "World Bank Sovereign ESG Data Portal / WGI",
+      "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 1034 days old for annual data."
     },
     {
       "code": "HU",
@@ -12160,7 +12423,7 @@
       "status": "stale",
       "age_days": 698,
       "severity": "high",
-      "source": "",
+      "source": "unknown",
       "note": ""
     },
     {
@@ -12201,6 +12464,19 @@
       "severity": "high",
       "source": "Eurostat",
       "note": "Eurostat total energy import dependency; annual and affected by stock changes, domestic production, and methodology revisions. Source validation passed."
+    },
+    {
+      "code": "CZ",
+      "dashboard": "Czechia",
+      "indicator_id": "fx_reserves",
+      "label": "FX Reserves",
+      "latest": "2024-12-31",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 668,
+      "severity": "high",
+      "source": "World Bank",
+      "note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD. Source validation: Latest observation is 668 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence."
     },
     {
       "code": "CZ",
@@ -12266,6 +12542,19 @@
       "severity": "high",
       "source": "Eurostat",
       "note": "Eurostat total energy import dependency; annual and affected by stock changes, domestic production, and methodology revisions. Source validation passed."
+    },
+    {
+      "code": "HU",
+      "dashboard": "Hungary",
+      "indicator_id": "fx_reserves",
+      "label": "FX Reserves",
+      "latest": "2024-12-31",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 668,
+      "severity": "high",
+      "source": "World Bank",
+      "note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD. Source validation: Latest observation is 668 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence."
     },
     {
       "code": "HU",
@@ -12387,6 +12676,19 @@
     {
       "code": "RO",
       "dashboard": "Romania",
+      "indicator_id": "credit_to_gdp_gap",
+      "label": "Credit-to-GDP Gap",
+      "latest": "2024-12-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 668,
+      "severity": "high",
+      "source": "World Bank WDI fallback",
+      "note": "BIS private non-financial credit gap preferred; World Bank annual credit/GDP trailing-trend fallback used only where BIS coverage is unavailable. Used only when BIS credit-gap data is unavailable; annual and not methodologically identical to BIS HP-filter gap. Source validation: Latest observation is 668 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence. Methodology fallback: World Bank annual credit/GDP minus trailing average, not BIS HP-filter credit gap."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
       "indicator_id": "energy_import_dependency",
       "label": "Energy Import Dependency",
       "latest": "2024-12-31",
@@ -12396,6 +12698,19 @@
       "severity": "high",
       "source": "Eurostat",
       "note": "Eurostat total energy import dependency; annual and affected by stock changes, domestic production, and methodology revisions. Source validation passed."
+    },
+    {
+      "code": "RO",
+      "dashboard": "Romania",
+      "indicator_id": "fx_reserves",
+      "label": "FX Reserves",
+      "latest": "2024-12-31",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 668,
+      "severity": "high",
+      "source": "World Bank",
+      "note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD. Source validation: Latest observation is 668 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence."
     },
     {
       "code": "RO",
@@ -12864,214 +13179,6 @@
       "severity": "high",
       "source": "FRED / OECD",
       "note": "OECD consumer price index growth rate series mirrored on FRED."
-    },
-    {
-      "code": "CN",
-      "dashboard": "China",
-      "indicator_id": "large_bank_rrr_akshare",
-      "label": "Large Bank RRR",
-      "latest": "2025-05-15",
-      "frequency": "irregular",
-      "status": "stale",
-      "age_days": 533,
-      "severity": "high",
-      "source": "AKShare / PBC RRR Announcements",
-      "note": "Event-based required reserve ratio history via AKShare; effective dates and institution buckets should be cross-checked against PBC announcements."
-    },
-    {
-      "code": "CN",
-      "dashboard": "China",
-      "indicator_id": "small_bank_rrr_akshare",
-      "label": "Small/Mid Bank RRR",
-      "latest": "2025-05-15",
-      "frequency": "irregular",
-      "status": "stale",
-      "age_days": 533,
-      "severity": "high",
-      "source": "AKShare / PBC RRR Announcements",
-      "note": "Event-based required reserve ratio history via AKShare; smaller-bank categories have changed over time, so use the series as a policy-easing marker."
-    },
-    {
-      "code": "EG",
-      "dashboard": "Egypt",
-      "indicator_id": "deposit_rate",
-      "label": "Commercial Bank Deposit Rate",
-      "latest": "2025-05-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 517,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Commercial bank deposit rate on local currency time deposits."
-    },
-    {
-      "code": "EG",
-      "dashboard": "Egypt",
-      "indicator_id": "lending_rate",
-      "label": "Commercial Bank Lending Rate",
-      "latest": "2025-05-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 517,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Commercial bank weighted average lending rate on local currency loans."
-    },
-    {
-      "code": "EG",
-      "dashboard": "Egypt",
-      "indicator_id": "policy_rate",
-      "label": "Central Bank Corridor / Policy Rate",
-      "latest": "2025-05-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 517,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Central Bank of Egypt monetary policy rate reported in IFS."
-    },
-    {
-      "code": "EG",
-      "dashboard": "Egypt",
-      "indicator_id": "usd_egp",
-      "label": "USD/EGP End-of-Period Official Rate",
-      "latest": "2025-05-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 517,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Monthly end-of-period national currency units per US dollar."
-    },
-    {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "fx_reserves",
-      "label": "Official Reserve Assets (USD Millions)",
-      "latest": "2025-06-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 487,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Official reserve assets in US dollars reported in IMF IFS."
-    },
-    {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "usd_ngn_ifs",
-      "label": "USD/NGN End-of-Period (IMF IFS Cross-Check)",
-      "latest": "2025-06-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 487,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Monthly end-of-period national currency units per US dollar."
-    },
-    {
-      "code": "ZA",
-      "dashboard": "South Africa",
-      "indicator_id": "bank_capital_ratio",
-      "label": "Regulatory Capital to Risk-Weighted Assets",
-      "latest": "2025-04-01",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 487,
-      "severity": "high",
-      "source": "IMF SDMX / Financial Soundness Indicators",
-      "note": "Deposit-taker aggregate reported to the IMF; national regulatory definitions differ, so cross-country levels are indicative rather than exact."
-    },
-    {
-      "code": "ZA",
-      "dashboard": "South Africa",
-      "indicator_id": "bank_npl_ratio",
-      "label": "Non-Performing Loans to Total Gross Loans",
-      "latest": "2025-04-01",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 487,
-      "severity": "high",
-      "source": "IMF SDMX / Financial Soundness Indicators",
-      "note": "Deposit-taker aggregate. The post-2020 rise reflects the interaction of high prime lending rates with stagnant household income."
-    },
-    {
-      "code": "KR",
-      "dashboard": "South Korea",
-      "indicator_id": "government_consumption",
-      "label": "Government Final Consumption YoY",
-      "latest": "2025-04-01",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 487,
-      "severity": "high",
-      "source": "FRED / OECD",
-      "note": "Real general government final consumption expenditure year-on-year change."
-    },
-    {
-      "code": "UZ",
-      "dashboard": "Uzbekistan",
-      "indicator_id": "bank_capital_ratio",
-      "label": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
-      "latest": "2025-06-30",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 487,
-      "severity": "high",
-      "source": "IMF / DBnomics (FSI)",
-      "note": "Regulatory capital to risk-weighted assets for deposit-takers in Uzbekistan."
-    },
-    {
-      "code": "UZ",
-      "dashboard": "Uzbekistan",
-      "indicator_id": "bank_npl_ratio",
-      "label": "Bank Non-Performing Loans Ratio (NPL)",
-      "latest": "2025-06-30",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 487,
-      "severity": "high",
-      "source": "IMF / DBnomics (FSI)",
-      "note": "Non-performing loans to total gross loans reported to the IMF."
-    },
-    {
-      "code": "KZ",
-      "dashboard": "Kazakhstan",
-      "indicator_id": "usd_kzt_ifs",
-      "label": "USD/KZT End-of-Period (IMF IFS)",
-      "latest": "2025-07-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 456,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Monthly end-of-period national currency units per US dollar."
-    },
-    {
-      "code": "UZ",
-      "dashboard": "Uzbekistan",
-      "indicator_id": "usd_uzs",
-      "label": "USD/UZS End-of-Period Official Rate",
-      "latest": "2025-07-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 456,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Monthly end-of-period national currency units per US dollar."
-    },
-    {
-      "code": "EA",
-      "dashboard": "Euro Area",
-      "indicator_id": "current_account_gdp",
-      "label": "Current Account Balance",
-      "latest": "2025-07-01",
-      "frequency": "quarterly",
-      "status": "stale",
-      "age_days": 395,
-      "severity": "high",
-      "source": "Eurostat",
-      "note": "Current account balance as percentage of GDP; seasonally and calendar adjusted (BPM6)."
     }
   ],
   "gap_backlog": [
@@ -13340,8 +13447,8 @@
       "code": "CN",
       "country": "China",
       "section": "money_credit",
-      "item": "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, and interbank rates",
-      "status": "M2, M1, aggregate RMB+FX deposits, new RMB loans, TSF flow/components, LPR, RRR, daily SHIBOR, 3M interbank, selected PBC balance-sheet items, and PBC latest cards are charted; TSF stock, deposits by sector, MLF, and full PBOC-native history remain open.",
+      "item": "PBOC monthly RMB loans, deposits, TSF flow/stock, LPR/MLF/RRR, CGB yield curves, and interbank rates",
+      "status": "M2, M1, aggregate RMB+FX deposits, new RMB loans, TSF flow/components, LPR, RRR, daily SHIBOR, 3M interbank, China Sovereign CGB yield curve (2Y, 5Y, 10Y, 30Y, 10Y-2Y term spread), US-China 10Y spread, selected PBC balance-sheet items, and PBC latest cards are charted; TSF stock, deposits by sector, MLF, and full PBOC-native history remain open.",
       "priority": "medium",
       "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
     },

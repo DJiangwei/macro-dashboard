@@ -738,6 +738,19 @@ indicators:
   caveat_en: The uncollateralised overnight call rate is the BoJ's operating target.
     Monthly averages smooth the exact meeting-date step changes.
   caveat_zh: 无担保隔夜拆借利率是日银的操作目标。月度均值会平滑议息日的阶跃变化。
+- id: boj_total_assets
+  section: monetary_financial
+  label_en: Bank of Japan Total Assets
+  label_zh: 日本央行总资产规模 (资产负债表)
+  unit: JPY 100mn
+  fetcher: fred
+  series: JPNASSETS
+  source_name: FRED / Bank of Japan
+  source_url: https://fred.stlouisfed.org/series/JPNASSETS
+  frequency: monthly
+  start_date: '2000-01-01'
+  caveat_en: Total assets of the Bank of Japan in 100 million yen, showing the historic scale of QQE expansion and current tapering path.
+  caveat_zh: 日本央行总资产规模（亿日元），展示QQE量化质化宽松的历史峰值与当前缩减购债路径。
 - id: interbank_3m
   section: monetary_financial
   label_en: 3-Month Interbank Rate

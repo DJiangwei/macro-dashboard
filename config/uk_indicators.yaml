@@ -1108,6 +1108,38 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "Spread between Bank of England 10-year and 5-year nominal par gilt yields in basis points (10Y minus 5Y); reflects the slope of the UK gilt curve."
     caveat_zh: "英国央行10年期与5年期名义平价国债收益率利差（基点，10Y减5Y）；反映英国国债收益率曲线斜率。"
+  - id: gilt_20y_nominal_par_yield
+    section: monetary_financial
+    label_en: "20Y Nominal Gilt Par Yield"
+    label_zh: "20年期名义英国国债平价收益率"
+    unit: "%"
+    fetcher: boe_iadb
+    series: "IUDLNPY"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
+    frequency: "daily"
+    start_date: "1997-01-01"
+    caveat_en: "BoE daily yield from British government securities, 20-year nominal par yield; long-end gilt benchmark for pension and liability-driven investment (LDI) demand."
+    caveat_zh: "BoE日频英国政府证券20年期名义平价收益率；长端国债基准，反映养老金与负债驱动投资(LDI)需求及财政期限溢价。"
+  - id: yield_curve_slope_20y5y
+    section: monetary_financial
+    label_en: "20Y-5Y Gilt Par Yield Slope"
+    label_zh: "20年-5年期英国国债收益率曲线斜率"
+    unit: "bps"
+    fetcher: spread
+    factor: 100
+    primary:
+      fetcher: boe_iadb
+      series: "IUDLNPY"
+    secondary:
+      fetcher: boe_iadb
+      series: "IUDSNPY"
+    source_name: "Bank of England IADB"
+    source_url: "https://www.bankofengland.co.uk/boeapps/database/iadb/Bank-Database"
+    frequency: "daily"
+    start_date: "1997-01-01"
+    caveat_en: "Spread between Bank of England 20-year and 5-year nominal par gilt yields in basis points (20Y minus 5Y); measures long-end curve steepness."
+    caveat_zh: "英国央行20年期与5年期名义平价国债收益率利差（基点，20Y减5Y）；衡量长端曲线陡峭度。"
   - id: gbp_usd
     section: monetary_financial
     label_en: "GBP/USD Spot"

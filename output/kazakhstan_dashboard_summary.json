@@ -1,8 +1,8 @@
 {
   "file": "kazakhstan.html",
-  "generated": "2026-10-29T23:28:48.696352+00:00",
-  "charts": 36,
-  "source_groups": 14,
+  "generated": "2026-10-30T21:34:15.490426+00:00",
+  "charts": 37,
+  "source_groups": 15,
   "data_gaps": 2,
   "low_confidence": 5,
   "key_series_latest": [
@@ -118,8 +118,8 @@
       "id": "usd_kzt",
       "label_en": "USD/KZT Official Exchange Rate",
       "label_zh": "美元兑哈萨克斯坦坚戈官方汇率 (NBK)",
-      "latest_date": "2026-10-29",
-      "latest_value": 453.71,
+      "latest_date": "2026-10-30",
+      "latest_value": 453.87,
       "latest_display": "454 KZT",
       "frequency": "daily",
       "source_name": "National Bank of Kazakhstan (NBK)",
@@ -142,9 +142,9 @@
       "id": "eur_kzt",
       "label_en": "EUR/KZT Official Exchange Rate",
       "label_zh": "欧元兑坚戈官方汇率 (NBK)",
-      "latest_date": "2026-10-29",
-      "latest_value": 505.8,
-      "latest_display": "506 KZT",
+      "latest_date": "2026-10-30",
+      "latest_value": 508.33,
+      "latest_display": "508 KZT",
       "frequency": "daily",
       "source_name": "National Bank of Kazakhstan (NBK)",
       "series": "",
@@ -154,9 +154,9 @@
       "id": "rub_kzt",
       "label_en": "RUB/KZT Official Exchange Rate",
       "label_zh": "俄罗斯卢布兑坚戈官方汇率 (NBK)",
-      "latest_date": "2026-10-29",
-      "latest_value": 5.63,
-      "latest_display": "5.63 KZT",
+      "latest_date": "2026-10-30",
+      "latest_value": 5.65,
+      "latest_display": "5.65 KZT",
       "frequency": "daily",
       "source_name": "National Bank of Kazakhstan (NBK)",
       "series": "",
@@ -166,9 +166,9 @@
       "id": "cny_kzt",
       "label_en": "CNY/KZT Official Exchange Rate",
       "label_zh": "人民币兑坚戈官方汇率 (NBK)",
-      "latest_date": "2026-10-29",
-      "latest_value": 68.11,
-      "latest_display": "68.1 KZT",
+      "latest_date": "2026-10-30",
+      "latest_value": 68.22,
+      "latest_display": "68.2 KZT",
       "frequency": "daily",
       "source_name": "National Bank of Kazakhstan (NBK)",
       "series": "",
@@ -430,7 +430,7 @@
   "unavailable": [],
   "data_mode": "refresh",
   "latest_cards": [],
-  "usd_kzt_latest": "453.71 (2026-10-29)",
+  "usd_kzt_latest": "453.87 (2026-10-30)",
   "cross_checks": [
     {
       "concept": "real_gdp_growth",
@@ -458,10 +458,10 @@
       "value"
     ],
     "file": "kazakhstan_canonical_frame.json",
-    "series": 36,
-    "observations": 9888,
-    "series_count": 36,
-    "observation_count": 9888
+    "series": 37,
+    "observations": 9909,
+    "series_count": 37,
+    "observation_count": 9909
   },
   "data_gaps_detail": [
     {
@@ -480,7 +480,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 14,
+    "source_groups": 15,
     "sources": [
       {
         "source_name": "IMF SDMX / NBK",
@@ -537,12 +537,16 @@
       {
         "source_name": "World Bank / NBK",
         "charts": 1
+      },
+      {
+        "source_name": "World Bank International Debt Statistics",
+        "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 5,
       "verified": 4,
-      "watch": 27
+      "watch": 28
     },
     "unavailable_count": 0
   },
@@ -553,14 +557,14 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-10-29",
+    "as_of_date": "2026-10-30",
     "counts": {
       "current": 23,
-      "due": 2,
+      "due": 3,
       "projection": 6,
       "stale": 5
     },
-    "latest_historical_date": "2026-10-29",
+    "latest_historical_date": "2026-10-30",
     "attention": [
       {
         "id": "policy_rate",
@@ -570,7 +574,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2020-12-01",
-        "age_days": 2128,
+        "age_days": 2129,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -592,7 +596,7 @@
         "frequency": "annual",
         "freshness_status": "due",
         "age_basis_date": "2024-12-31",
-        "age_days": 667,
+        "age_days": 668,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -614,7 +618,7 @@
         "frequency": "annual",
         "freshness_status": "due",
         "age_basis_date": "2024-12-31",
-        "age_days": 667,
+        "age_days": 668,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -629,6 +633,28 @@
         "transform": "level"
       },
       {
+        "id": "short_term_external_debt_pct_reserves",
+        "concept_id": "kz:short_term_external_debt_pct_reserves",
+        "label_en": "Short-Term External Debt (% of Reserves)",
+        "latest_date": "2024-12-31",
+        "frequency": "annual",
+        "freshness_status": "due",
+        "age_basis_date": "2024-12-31",
+        "age_days": 668,
+        "threshold_days": 730,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "World Bank International Debt Statistics",
+        "series": "DT.DOD.DSTC.IR.ZS",
+        "transform": "level"
+      },
+      {
         "id": "bank_capital_ratio",
         "concept_id": "bank_capital_ratio",
         "label_en": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
@@ -636,7 +662,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 577,
+        "age_days": 578,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -658,7 +684,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 577,
+        "age_days": 578,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -680,7 +706,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-07-01",
-        "age_days": 455,
+        "age_days": 456,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -702,7 +728,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 121,
+        "age_days": 122,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -720,7 +746,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 36
+      "level": 37
     },
     "non_level": []
   },
@@ -730,6 +756,6 @@
       "date",
       "value"
     ],
-    "charted_series": 36
+    "charted_series": 37
   }
 }

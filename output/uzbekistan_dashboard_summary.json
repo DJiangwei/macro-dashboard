@@ -1,8 +1,8 @@
 {
   "file": "uzbekistan.html",
-  "generated": "2026-10-29T23:28:52.460855+00:00",
-  "charts": 35,
-  "source_groups": 12,
+  "generated": "2026-10-30T21:34:29.352265+00:00",
+  "charts": 36,
+  "source_groups": 13,
   "data_gaps": 2,
   "low_confidence": 6,
   "key_series_latest": [
@@ -446,10 +446,10 @@
       "value"
     ],
     "file": "uzbekistan_canonical_frame.json",
-    "series": 35,
-    "observations": 2568,
-    "series_count": 35,
-    "observation_count": 2568
+    "series": 36,
+    "observations": 2580,
+    "series_count": 36,
+    "observation_count": 2580
   },
   "data_gaps_detail": [
     {
@@ -468,7 +468,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 12,
+    "source_groups": 13,
     "sources": [
       {
         "source_name": "IMF SDMX / CBU",
@@ -517,11 +517,15 @@
       {
         "source_name": "World Bank / Central Bank of Uzbekistan (CBU)",
         "charts": 1
+      },
+      {
+        "source_name": "World Bank International Debt Statistics",
+        "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 6,
-      "watch": 29
+      "watch": 30
     },
     "unavailable_count": 0
   },
@@ -532,10 +536,10 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-10-29",
+    "as_of_date": "2026-10-30",
     "counts": {
       "current": 20,
-      "due": 3,
+      "due": 4,
       "projection": 6,
       "stale": 6
     },
@@ -549,7 +553,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-12-01",
-        "age_days": 667,
+        "age_days": 668,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -571,7 +575,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-12-01",
-        "age_days": 667,
+        "age_days": 668,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -593,7 +597,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-12-01",
-        "age_days": 667,
+        "age_days": 668,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -608,6 +612,28 @@
         "transform": "level"
       },
       {
+        "id": "short_term_external_debt_pct_reserves",
+        "concept_id": "uz:short_term_external_debt_pct_reserves",
+        "label_en": "Short-Term External Debt (% of Reserves)",
+        "latest_date": "2024-12-31",
+        "frequency": "annual",
+        "freshness_status": "due",
+        "age_basis_date": "2024-12-31",
+        "age_days": 668,
+        "threshold_days": 730,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "World Bank International Debt Statistics",
+        "series": "DT.DOD.DSTC.IR.ZS",
+        "transform": "level"
+      },
+      {
         "id": "bank_capital_ratio",
         "concept_id": "bank_capital_ratio",
         "label_en": "Bank Regulatory Capital to Risk-Weighted Assets (CAR)",
@@ -615,7 +641,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-06-30",
-        "age_days": 486,
+        "age_days": 487,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -637,7 +663,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-06-30",
-        "age_days": 486,
+        "age_days": 487,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -659,7 +685,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-07-01",
-        "age_days": 455,
+        "age_days": 456,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -681,7 +707,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 59,
+        "age_days": 60,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -703,7 +729,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 59,
+        "age_days": 60,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -725,7 +751,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 59,
+        "age_days": 60,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -743,7 +769,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 35
+      "level": 36
     },
     "non_level": []
   },
@@ -753,6 +779,6 @@
       "date",
       "value"
     ],
-    "charted_series": 35
+    "charted_series": 36
   }
 }

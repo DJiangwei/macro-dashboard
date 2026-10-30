@@ -741,6 +741,22 @@ indicators:
     caveat_en: "Quarterly transaction flow into (positive) or out of (negative) South Africa's official reserve assets, as recorded in the balance-of-payments financial account. This is a flow, not the level of the SARB's gross gold and foreign-exchange reserves; the reserve stock/level is not available from this dataflow and remains a data gap."
     caveat_zh: "国际收支金融账户中记录的南非官方储备资产季度交易流量，正值为增加、负值为减少。这是流量而非SARB黄金与外汇总储备的存量水平；储备存量数据在此数据流中不可得，仍为数据缺口。"
 
+  - id: short_term_external_debt_pct_reserves
+    section: external_fx
+    label_en: "Short-Term External Debt (% of Reserves)"
+    label_zh: "短期外债占外汇储备比重 (Guidotti-Greenspan比率)"
+    unit: "% reserves"
+    fetcher: world_bank
+    series: "DT.DOD.DSTC.IR.ZS"
+    country_iso3: "ZAF"
+    source_authority: official_secondary
+    source_name: "World Bank International Debt Statistics"
+    source_url: "https://data.worldbank.org/indicator/DT.DOD.DSTC.IR.ZS?locations=ZA"
+    frequency: "annual"
+    start_date: "2000-01-01"
+    caveat_en: "Guidotti-Greenspan rule indicator; ratios above 100% indicate short-term external debt exceeding gross international reserves."
+    caveat_zh: "Guidotti-Greenspan规则指标；比率高于100%代表短期外债超出外汇储备总额，衡量外部清偿再融资风险。"
+
   # --- fiscal_sovereign ----------------------------------------------------
   - id: government_debt_gdp
     section: fiscal_sovereign
