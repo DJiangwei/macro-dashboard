@@ -71,7 +71,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "china_dashboard_summary.json",
         "headline_label": "Latest USD/CNY fixing",
         "headline_key": "usd_cny_latest",
-        "framework": "GS China statistics logic",
+        "framework": "GS China Macro Framework",
     },
     {
         "code": "EA",
@@ -82,7 +82,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "euro_area_dashboard_summary.json",
         "headline_label": "Deposit Facility Rate",
         "headline_key": "policy_rate_latest",
-        "framework": "Nine-pillar comparable core",
+        "framework": "9-Pillar Macro Framework",
     },
     {
         "code": "JP",
@@ -93,7 +93,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "japan_dashboard_summary.json",
         "headline_label": "Overnight call rate",
         "headline_key": "policy_rate_latest",
-        "framework": "Nine-pillar comparable core",
+        "framework": "GS Japan Macro Framework",
     },
     {
         "code": "ZA",
@@ -104,7 +104,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "south_africa_dashboard_summary.json",
         "headline_label": "SARB repo rate",
         "headline_key": "policy_rate_latest",
-        "framework": "Nine-pillar comparable core",
+        "framework": "GS CEEMEA Macro Framework",
     },
     {
         "code": "UK",
@@ -115,7 +115,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "uk_dashboard_summary.json",
         "headline_label": "Bank Rate",
         "headline_key": "bank_rate_latest",
-        "framework": "GS UK statistics logic",
+        "framework": "GS UK Macro Framework",
     },
     {
         "code": "US",
@@ -126,7 +126,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "us_dashboard_summary.json",
         "headline_label": "Fed funds",
         "headline_key": "fed_funds_latest",
-        "framework": "GS US statistics logic",
+        "framework": "GS US Macro Framework",
     },
     {
         "code": "TR",
@@ -137,7 +137,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "turkey_dashboard_summary.json",
         "headline_label": "USD/TRY spot",
         "headline_key": "usd_try_latest",
-        "framework": "Nine-pillar comparable core",
+        "framework": "9-Pillar Macro Framework",
     },
     {
         "code": "HK",
@@ -148,7 +148,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "hong_kong_dashboard_summary.json",
         "headline_label": "USD/HKD spot",
         "headline_key": "usd_hkd_latest",
-        "framework": "Nine-pillar comparable core",
+        "framework": "9-Pillar Macro Framework",
     },
     {
         "code": "KR",
@@ -159,7 +159,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "south_korea_dashboard_summary.json",
         "headline_label": "USD/KRW spot",
         "headline_key": "krw_usd_latest",
-        "framework": "Nine-pillar comparable core",
+        "framework": "9-Pillar Macro Framework",
     },
     {
         "code": "TW",
@@ -170,7 +170,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "taiwan_dashboard_summary.json",
         "headline_label": "USD/TWD spot",
         "headline_key": "usd_twd_latest",
-        "framework": "Nine-pillar comparable core",
+        "framework": "9-Pillar Macro Framework",
     },
     {
         "code": "KZ",
@@ -181,7 +181,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "kazakhstan_dashboard_summary.json",
         "headline_label": "USD/KZT official rate",
         "headline_key": "usd_kzt_latest",
-        "framework": "Nine-pillar comparable core",
+        "framework": "9-Pillar Macro Framework",
     },
     {
         "code": "UZ",
@@ -192,7 +192,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "uzbekistan_dashboard_summary.json",
         "headline_label": "USD/UZS official rate",
         "headline_key": "usd_uzs_latest",
-        "framework": "Nine-pillar comparable core",
+        "framework": "9-Pillar Macro Framework",
     },
     {
         "code": "EG",
@@ -203,7 +203,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "egypt_dashboard_summary.json",
         "headline_label": "USD/EGP official rate",
         "headline_key": "usd_egp_latest",
-        "framework": "Nine-pillar comparable core",
+        "framework": "9-Pillar Macro Framework",
     },
     {
         "code": "NG",
@@ -214,7 +214,7 @@ DATA_FIRST_COUNTRIES = [
         "summary": "nigeria_dashboard_summary.json",
         "headline_label": "USD/NGN official rate",
         "headline_key": "usd_ngn_latest",
-        "framework": "Nine-pillar comparable core",
+        "framework": "9-Pillar Macro Framework",
     },
 ]
 

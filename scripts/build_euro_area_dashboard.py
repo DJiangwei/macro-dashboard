@@ -104,7 +104,7 @@ def inject_output_index(summary: dict[str, Any]) -> None:
       <div class="stat"><span>Official data gaps</span><strong>{summary['data_gaps']}</strong></div>
       <div class="stat"><span>Deposit Facility Rate</span><strong>{summary.get('policy_rate_latest', 'n/a')}</strong></div>
       <div class="stat"><span>Source groups</span><strong>{summary['source_groups']}</strong></div>
-      <div class="stat"><span>Framework</span><strong>Nine-pillar comparable core</strong></div>
+      <div class="stat"><span>Framework</span><strong>9-Pillar Macro Framework</strong></div>
     </div>
   </a>
   <!-- /Euro Area dashboard card -->'''

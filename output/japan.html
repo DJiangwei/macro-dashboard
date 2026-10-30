@@ -221,21 +221,12 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   box-shadow: none;
 }
 .section-title {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 16px;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   border-bottom: 2px solid var(--fg);
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   margin-bottom: 18px;
-}
-.section-title p {
-  margin: 0;
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: normal;
-  text-transform: none;
 }
 .section-title h2 {
   margin: 0;
@@ -245,7 +236,7 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   letter-spacing: -0.025em;
   color: var(--fg);
 }
-.logic { grid-column: 2; color: var(--text-secondary); max-width: 860px; font-size: 13.5px; }
+.logic { color: var(--text-secondary); max-width: 920px; font-size: 13.5px; line-height: 1.55; }
 .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px; margin-bottom: 20px; }
 .chart-card {
   padding: 14px 16px 12px;
@@ -346,8 +337,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 @media (max-width: 760px) {
   .topbar { align-items: flex-start; flex-direction: column; padding: 12px 18px; }
   .container { padding: 24px 16px 42px; }
-  .section-title { grid-template-columns: 1fr; }
-  .logic { grid-column: 1; }
   .charts-grid { grid-template-columns: 1fr; }
   .panel { overflow-x: auto; }
   .chart-card { padding: 13px; }
@@ -472,19 +461,17 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="data_quirks">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Data Quirks &amp; Release Discipline</span><span data-lang="zh">数据特性与发布纪律</span></h2>
     <div class="logic"><span data-lang="en">Japan&#x27;s national accounts are revised heavily between the first preliminary and the second preliminary QoQ prints, and headline CPI is dominated by fresh-food and energy swings. The dashboard keeps FRED/OECD, IMF SDMX, and BIS provenance explicit so revision behaviour can be traced back to the compiling agency.</span><span data-lang="zh">日本国民账户在一次速报与二次速报之间修订幅度较大，总体CPI又高度受生鲜食品与能源波动影响。页面明确标注FRED/OECD、IMF SDMX与BIS的数据来源，以便把修订行为追溯到编制机构。</span></div>
   </div>
   <div class="charts-grid">
 
-    <div class="empty-note"><span data-lang="en">No reproducible public chart wired yet for this section.</span><span data-lang="zh">本节暂未接入可复跑的公开图表数据。</span></div>
+    <div class="empty-note"><span data-lang="en">Official chart series for this section are currently in development.</span><span data-lang="zh">本分析模块的官方指标序列正在标准化接入中。</span></div>
   </div>
 </section>
 
 <section class="panel" id="growth_accounts">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">GDP &amp; National Accounts</span><span data-lang="zh">GDP与国民账户</span></h2>
     <div class="logic"><span data-lang="en">Cabinet Office national accounts anchor the macro story: real GDP level, sequential and year-over-year growth, nominal GDP, fixed investment, and government consumption.</span><span data-lang="zh">内阁府国民账户构成宏观叙事基准：实际GDP水平、环比与同比增速、名义GDP、固定资本形成与政府消费。</span></div>
   </div>
@@ -669,7 +656,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="production_cycle">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Production &amp; Business Cycle</span><span data-lang="zh">生产与商业周期</span></h2>
     <div class="logic"><span data-lang="en">METI industrial and manufacturing production, capacity utilisation, the Tankan-style business tendency survey, and the OECD composite leading indicator read Japan&#x27;s cyclical momentum.</span><span data-lang="zh">经产省工业与制造业生产、产能利用率、短观式企业景气调查以及OECD综合领先指标共同刻画日本周期动能。</span></div>
   </div>
@@ -825,7 +811,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="consumption_retail">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Consumption &amp; Retail Demand</span><span data-lang="zh">消费与零售需求</span></h2>
     <div class="logic"><span data-lang="en">Retail trade volume is the highest-frequency read on Japanese household demand, which has been the swing factor between deflationary and reflationary regimes.</span><span data-lang="zh">零售贸易量是观察日本居民需求最高频的指标，而居民需求正是通缩与再通胀体制之间的摆动因素。</span></div>
   </div>
@@ -865,7 +850,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="labour_wages">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Labour Market &amp; Wages</span><span data-lang="zh">劳动力市场与工资</span></h2>
     <div class="logic"><span data-lang="en">Japan&#x27;s structurally tight labour market makes unemployment a weak signal; participation, employment levels, and manufacturing earnings carry more information for the BoJ reaction function.</span><span data-lang="zh">日本劳动力市场结构性紧张，失业率信号偏弱；劳动参与率、就业人数与制造业工资对日银反应函数信息量更大。</span></div>
   </div>
@@ -1036,7 +1020,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     Plotly.newPlot("chart-job_to_applicant_ratio", [{"name": "Job-to-Applicant Ratio", "x": ["1975-01-01", "1975-02-01", "1975-03-01", "1975-04-01", "1975-05-01", "1975-06-01", "1975-07-01", "1975-08-01", "1975-09-01", "1975-10-01", "1975-11-01", "1975-12-01", "1976-01-01", "1976-02-01", "1976-03-01", "1976-04-01", "1976-05-01", "1976-06-01", "1976-07-01", "1976-08-01", "1976-09-01", "1976-10-01", "1976-11-01", "1976-12-01", "1977-01-01", "1977-02-01", "1977-03-01", "1977-04-01", "1977-05-01", "1977-06-01", "1977-07-01", "1977-08-01", "1977-09-01", "1977-10-01", "1977-11-01", "1977-12-01", "1978-01-01", "1978-02-01", "1978-03-01", "1978-04-01", "1978-05-01", "1978-06-01", "1978-07-01", "1978-08-01", "1978-09-01", "1978-10-01", "1978-11-01", "1978-12-01", "1979-01-01", "1979-02-01", "1979-03-01", "1979-04-01", "1979-05-01", "1979-06-01", "1979-07-01", "1979-08-01", "1979-09-01", "1979-10-01", "1979-11-01", "1979-12-01", "1980-01-01", "1980-02-01", "1980-03-01", "1980-04-01", "1980-05-01", "1980-06-01", "1980-07-01", "1980-08-01", "1980-09-01", "1980-10-01", "1980-11-01", "1980-12-01", "1981-01-01", "1981-02-01", "1981-03-01", "1981-04-01", "1981-05-01", "1981-06-01", "1981-07-01", "1981-08-01", "1981-09-01", "1981-10-01", "1981-11-01", "1981-12-01", "1982-01-01", "1982-02-01", "1982-03-01", "1982-04-01", "1982-05-01", "1982-06-01", "1982-07-01", "1982-08-01", "1982-09-01", "1982-10-01", "1982-11-01", "1982-12-01", "1983-01-01", "1983-02-01", "1983-03-01", "1983-04-01", "1983-05-01", "1983-06-01", "1983-07-01", "1983-08-01", "1983-09-01", "1983-10-01", "1983-11-01", "1983-12-01", "1984-01-01", "1984-02-01", "1984-03-01", "1984-04-01", "1984-05-01", "1984-06-01", "1984-07-01", "1984-08-01", "1984-09-01", "1984-10-01", "1984-11-01", "1984-12-01", "1985-01-01", "1985-02-01", "1985-03-01", "1985-04-01", "1985-05-01", "1985-06-01", "1985-07-01", "1985-08-01", "1985-09-01", "1985-10-01", "1985-11-01", "1985-12-01", "1986-01-01", "1986-02-01", "1986-03-01", "1986-04-01", "1986-05-01", "1986-06-01", "1986-07-01", "1986-08-01", "1986-09-01", "1986-10-01", "1986-11-01", "1986-12-01", "1987-01-01", "1987-02-01", "1987-03-01", "1987-04-01", "1987-05-01", "1987-06-01", "1987-07-01", "1987-08-01", "1987-09-01", "1987-10-01", "1987-11-01", "1987-12-01", "1988-01-01", "1988-02-01", "1988-03-01", "1988-04-01", "1988-05-01", "1988-06-01", "1988-07-01", "1988-08-01", "1988-09-01", "1988-10-01", "1988-11-01", "1988-12-01", "1989-01-01", "1989-02-01", "1989-03-01", "1989-04-01", "1989-05-01", "1989-06-01", "1989-07-01", "1989-08-01", "1989-09-01", "1989-10-01", "1989-11-01", "1989-12-01", "1990-01-01", "1990-02-01", "1990-03-01", "1990-04-01", "1990-05-01", "1990-06-01", "1990-07-01", "1990-08-01", "1990-09-01", "1990-10-01", "1990-11-01", "1990-12-01", "1991-01-01", "1991-02-01", "1991-03-01", "1991-04-01", "1991-05-01", "1991-06-01", "1991-07-01", "1991-08-01", "1991-09-01", "1991-10-01", "1991-11-01", "1991-12-01", "1992-01-01", "1992-02-01", "1992-03-01", "1992-04-01", "1992-05-01", "1992-06-01", "1992-07-01", "1992-08-01", "1992-09-01", "1992-10-01", "1992-11-01", "1992-12-01", "1993-01-01", "1993-02-01", "1993-03-01", "1993-04-01", "1993-05-01", "1993-06-01", "1993-07-01", "1993-08-01", "1993-09-01", "1993-10-01", "1993-11-01", "1993-12-01", "1994-01-01", "1994-02-01", "1994-03-01", "1994-04-01", "1994-05-01", "1994-06-01", "1994-07-01", "1994-08-01", "1994-09-01", "1994-10-01", "1994-11-01", "1994-12-01", "1995-01-01", "1995-02-01", "1995-03-01", "1995-04-01", "1995-05-01", "1995-06-01", "1995-07-01", "1995-08-01", "1995-09-01", "1995-10-01", "1995-11-01", "1995-12-01", "1996-01-01", "1996-02-01", "1996-03-01", "1996-04-01", "1996-05-01", "1996-06-01", "1996-07-01", "1996-08-01", "1996-09-01", "1996-10-01", "1996-11-01", "1996-12-01", "1997-01-01", "1997-02-01", "1997-03-01", "1997-04-01", "1997-05-01", "1997-06-01", "1997-07-01", "1997-08-01", "1997-09-01", "1997-10-01", "1997-11-01", "1997-12-01", "1998-01-01", "1998-02-01", "1998-03-01", "1998-04-01", "1998-05-01", "1998-06-01", "1998-07-01", "1998-08-01", "1998-09-01", "1998-10-01", "1998-11-01", "1998-12-01", "1999-01-01", "1999-02-01", "1999-03-01", "1999-04-01", "1999-05-01", "1999-06-01", "1999-07-01", "1999-08-01", "1999-09-01", "1999-10-01", "1999-11-01", "1999-12-01", "2000-01-01", "2000-02-01", "2000-03-01", "2000-04-01", "2000-05-01", "2000-06-01", "2000-07-01", "2000-08-01", "2000-09-01", "2000-10-01", "2000-11-01", "2000-12-01", "2001-01-01", "2001-02-01", "2001-03-01", "2001-04-01", "2001-05-01", "2001-06-01", "2001-07-01", "2001-08-01", "2001-09-01", "2001-10-01", "2001-11-01", "2001-12-01", "2002-01-01", "2002-02-01", "2002-03-01", "2002-04-01", "2002-05-01", "2002-06-01", "2002-07-01", "2002-08-01", "2002-09-01", "2002-10-01", "2002-11-01", "2002-12-01", "2003-01-01", "2003-02-01", "2003-03-01", "2003-04-01", "2003-05-01", "2003-06-01", "2003-07-01", "2003-08-01", "2003-09-01", "2003-10-01", "2003-11-01", "2003-12-01", "2004-01-01", "2004-02-01", "2004-03-01", "2004-04-01", "2004-05-01", "2004-06-01", "2004-07-01", "2004-08-01", "2004-09-01", "2004-10-01", "2004-11-01", "2004-12-01", "2005-01-01", "2005-02-01", "2005-03-01", "2005-04-01", "2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01"], "y": [0.75, 0.71, 0.67, 0.68, 0.63, 0.59, 0.56, 0.55, 0.55, 0.55, 0.55, 0.55, 0.58, 0.61, 0.63, 0.65, 0.64, 0.66, 0.67, 0.67, 0.66, 0.64, 0.64, 0.62, 0.61, 0.6, 0.6, 0.61, 0.56, 0.54, 0.53, 0.53, 0.53, 0.53, 0.52, 0.52, 0.51, 0.53, 0.54, 0.57, 0.54, 0.54, 0.56, 0.57, 0.59, 0.59, 0.6, 0.6, 0.62, 0.63, 0.66, 0.7, 0.69, 0.71, 0.72, 0.73, 0.75, 0.77, 0.78, 0.79, 0.77, 0.76, 0.77, 0.77, 0.76, 0.77, 0.76, 0.74, 0.73, 0.73, 0.71, 0.7, 0.69, 0.68, 0.67, 0.67, 0.67, 0.68, 0.7, 0.69, 0.68, 0.67, 0.66, 0.67, 0.66, 0.65, 0.63, 0.62, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.59, 0.59, 0.59, 0.59, 0.59, 0.59, 0.59, 0.59, 0.59, 0.6, 0.61, 0.62, 0.62, 0.63, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.65, 0.65, 0.66, 0.66, 0.66, 0.67, 0.68, 0.69, 0.68, 0.69, 0.69, 0.69, 0.69, 0.68, 0.68, 0.67, 0.67, 0.67, 0.67, 0.66, 0.65, 0.63, 0.62, 0.6, 0.6, 0.61, 0.61, 0.61, 0.61, 0.61, 0.62, 0.63, 0.64, 0.64, 0.65, 0.66, 0.68, 0.71, 0.74, 0.77, 0.81, 0.84, 0.87, 0.9, 0.92, 0.95, 0.98, 1.01, 1.04, 1.06, 1.08, 1.1, 1.12, 1.14, 1.15, 1.17, 1.17, 1.19, 1.25, 1.27, 1.3, 1.29, 1.3, 1.31, 1.33, 1.33, 1.33, 1.36, 1.36, 1.35, 1.39, 1.42, 1.46, 1.44, 1.44, 1.44, 1.45, 1.44, 1.43, 1.44, 1.44, 1.41, 1.44, 1.44, 1.44, 1.4, 1.36, 1.36, 1.34, 1.31, 1.25, 1.22, 1.19, 1.14, 1.13, 1.1, 1.08, 1.05, 1.02, 0.99, 0.96, 0.93, 0.91, 0.88, 0.85, 0.82, 0.8, 0.76, 0.74, 0.72, 0.7, 0.68, 0.67, 0.66, 0.65, 0.64, 0.65, 0.65, 0.63, 0.63, 0.63, 0.64, 0.65, 0.65, 0.64, 0.63, 0.64, 0.65, 0.66, 0.65, 0.63, 0.62, 0.61, 0.62, 0.62, 0.62, 0.62, 0.63, 0.65, 0.66, 0.68, 0.69, 0.69, 0.7, 0.72, 0.72, 0.72, 0.73, 0.74, 0.74, 0.74, 0.74, 0.74, 0.74, 0.74, 0.74, 0.74, 0.73, 0.71, 0.7, 0.68, 0.67, 0.63, 0.61, 0.57, 0.56, 0.54, 0.52, 0.51, 0.5, 0.49, 0.48, 0.47, 0.47, 0.48, 0.48, 0.48, 0.47, 0.46, 0.46, 0.47, 0.47, 0.48, 0.49, 0.49, 0.5, 0.51, 0.52, 0.54, 0.56, 0.56, 0.58, 0.6, 0.61, 0.62, 0.64, 0.65, 0.65, 0.65, 0.64, 0.63, 0.62, 0.61, 0.61, 0.6, 0.58, 0.57, 0.54, 0.52, 0.51, 0.5, 0.51, 0.52, 0.52, 0.53, 0.53, 0.54, 0.55, 0.55, 0.56, 0.56, 0.57, 0.58, 0.59, 0.6, 0.61, 0.61, 0.62, 0.63, 0.65, 0.67, 0.7, 0.72, 0.75, 0.76, 0.76, 0.77, 0.78, 0.8, 0.82, 0.83, 0.84, 0.86, 0.88, 0.91, 0.92, 0.91, 0.91, 0.93, 0.94, 0.94, 0.95, 0.96, 0.96, 0.96, 0.98, 0.99, 1.01, 1.03, 1.04, 1.05, 1.05, 1.07, 1.07, 1.08, 1.07, 1.07, 1.06, 1.06, 1.06, 1.06, 1.05, 1.05, 1.07, 1.07, 1.07, 1.06, 1.05, 1.03, 1.01, 0.98, 0.98, 0.97, 0.96, 0.96, 0.96, 0.95, 0.92, 0.89, 0.86, 0.83, 0.79, 0.75, 0.71, 0.64, 0.57, 0.52, 0.49, 0.46, 0.44, 0.43, 0.42, 0.43, 0.44, 0.44, 0.44, 0.45, 0.46, 0.48, 0.49, 0.5, 0.51, 0.53, 0.54, 0.55, 0.56, 0.58, 0.59, 0.6, 0.62, 0.62, 0.62, 0.61, 0.62, 0.64, 0.65, 0.67, 0.69, 0.71, 0.72, 0.74, 0.75, 0.77, 0.78, 0.79, 0.8, 0.81, 0.82, 0.81, 0.82, 0.82, 0.83, 0.84, 0.85, 0.87, 0.88, 0.9, 0.92, 0.93, 0.95, 0.96, 0.99, 1.01, 1.03, 1.04, 1.06, 1.07, 1.08, 1.09, 1.09, 1.1, 1.1, 1.1, 1.11, 1.12, 1.14, 1.15, 1.16, 1.16, 1.16, 1.18, 1.19, 1.2, 1.22, 1.23, 1.24, 1.26, 1.27, 1.29, 1.3, 1.31, 1.33, 1.35, 1.36, 1.36, 1.38, 1.38, 1.4, 1.41, 1.42, 1.43, 1.45, 1.45, 1.48, 1.49, 1.5, 1.51, 1.52, 1.53, 1.55, 1.56, 1.58, 1.6, 1.59, 1.59, 1.59, 1.6, 1.62, 1.63, 1.63, 1.64, 1.63, 1.63, 1.62, 1.63, 1.63, 1.63, 1.63, 1.62, 1.61, 1.6, 1.6, 1.59, 1.59, 1.57, 1.56, 1.49, 1.44, 1.4, 1.31, 1.19, 1.12, 1.08, 1.05, 1.04, 1.04, 1.05, 1.06, 1.08, 1.09, 1.1, 1.1, 1.11, 1.13, 1.14, 1.14, 1.15, 1.15, 1.16, 1.17, 1.19, 1.21, 1.22, 1.24, 1.26, 1.27, 1.29, 1.31, 1.33, 1.34, 1.35, 1.35, 1.35, 1.33, 1.32, 1.32, 1.31, 1.31, 1.3, 1.3, 1.3, 1.3, 1.28, 1.27, 1.26, 1.26, 1.26, 1.25, 1.24, 1.24, 1.24, 1.24, 1.25, 1.26, 1.26, 1.25, 1.25, 1.25, 1.25, 1.25, 1.23, 1.22, 1.22, 1.21, 1.2, 1.19, 1.19, 1.2, 1.18, 1.19, 1.18, 1.18, 1.17, 1.18, 1.18, 1.18], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-08-01"], "y": [1.18], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "ratio", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
   </script>
   <footer>
-    <span>Source: <a href="https://api.e-stat.go.jp/rest/3.0/app/json/getStatsData" target="_blank" rel="noreferrer">unknown</a></span>
+    <span>Source: <a href="https://api.e-stat.go.jp/rest/3.0/app/json/getStatsData" target="_blank" rel="noreferrer"></a></span>
     <span>Series: 0003446462/-/2090</span>
     <span>Frequency: </span>
     <span>Provider update: 2026-08-01</span>
@@ -1050,7 +1034,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="prices_costs">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Prices &amp; Costs</span><span data-lang="zh">价格与成本</span></h2>
     <div class="logic"><span data-lang="en">IMF-compiled national CPI gives headline year-over-year and month-over-month inflation and the price level itself, which is the reproducible public path now that OECD&#x27;s Japan CPI mirror is discontinued. The Statistics Bureau&#x27;s own e-Stat API supplies the BoJ&#x27;s actual policy reference measures natively: core CPI ex-fresh-food, core-core ex-fresh-food-and-energy, and the goods/services split, each published as year-over-year directly rather than derived on this page. The COICOP division breakdown (food, housing, transport, and the other CP01-CP12 categories) is not yet wired and remains a gap.</span><span data-lang="zh">IMF汇编的日本CPI提供总体同比、环比与价格水平本身。在OECD日本CPI镜像停更后，这是可复跑的公开路径。总务省统计局自有的e-Stat接口原生提供日银真正的政策参考口径：剔除生鲜食品的核心CPI、剔除生鲜食品与能源的核心核心CPI，以及商品/服务拆分，均由官方直接公布同比，而非本页派生。COICOP大类分项（食品、住房、交通等CP01-CP12类别）尚未接入，仍列为缺口。</span></div>
   </div>
@@ -1324,7 +1307,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="housing_property">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Housing &amp; Property Prices</span><span data-lang="zh">住房与房地产价格</span></h2>
     <div class="logic"><span data-lang="en">BIS residential property price indices give an internationally comparable nominal and real house-price series for Japan, where the domestic land-price statistics are annual and lagged.</span><span data-lang="zh">BIS住宅价格指数提供国际可比的名义与实际房价序列。日本本土地价统计为年度且滞后较久。</span></div>
   </div>
@@ -1437,7 +1419,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     Plotly.newPlot("chart-housing_starts", [{"name": "Housing Starts (Total Units)", "x": ["2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01"], "y": [66709.0, 62252.0, 63419.0, 66757.0, 63726.0, 72687.0, 83398.0, 81986.0, 64206.0, 67273.0, 72635.0, 69069.0, 65984.0, 66928.0, 66597.0, 73647.0, 69638.0, 72566.0, 75421.0, 77500.0, 74176.0, 84251.0, 80145.0, 75944.0, 69289.0, 68969.0, 71456.0, 77894.0, 79751.0, 83704.0, 84801.0, 84343.0, 88539.0, 90226.0, 91475.0, 89578.0, 77843.0, 69689.0, 69411.0, 75286.0, 67791.0, 75757.0, 72880.0, 73771.0, 75882.0, 79171.0, 78364.0, 76416.0, 67713.0, 67552.0, 69887.0, 75617.0, 71720.0, 88118.0, 78263.0, 80255.0, 77872.0, 77153.0, 79697.0, 75452.0, 67815.0, 72831.0, 75744.0, 82398.0, 78728.0, 85953.0, 85208.0, 82242.0, 85622.0, 87239.0, 85051.0, 78406.0, 76491.0, 70912.0, 75887.0, 83979.0, 78481.0, 87456.0, 83234.0, 80562.0, 83128.0, 83057.0, 84703.0, 76751.0, 66358.0, 69071.0, 69616.0, 84226.0, 79539.0, 81275.0, 82615.0, 81860.0, 81903.0, 83330.0, 84213.0, 78364.0, 67087.0, 71966.0, 76558.0, 79389.0, 72581.0, 81541.0, 79232.0, 76034.0, 77915.0, 77123.0, 73523.0, 72174.0, 60341.0, 63105.0, 70729.0, 69568.0, 63839.0, 71101.0, 70244.0, 69101.0, 70186.0, 70685.0, 70798.0, 65643.0, 58448.0, 60764.0, 71787.0, 74521.0, 70178.0, 76312.0, 77182.0, 74303.0, 73178.0, 78004.0, 73414.0, 68393.0, 59690.0, 64614.0, 76120.0, 76294.0, 67223.0, 74617.0, 73024.0, 77731.0, 74004.0, 76590.0, 72372.0, 67249.0, 63604.0, 64426.0, 73693.0, 67250.0, 69561.0, 71015.0, 68151.0, 70389.0, 68941.0, 71769.0, 66238.0, 64586.0, 58849.0, 59169.0, 64308.0, 76582.0, 65923.0, 66287.0, 68021.0, 66823.0, 68554.0, 69670.0, 65052.0, 62957.0], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2024-12-01"], "y": [62957.0], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "units", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
   </script>
   <footer>
-    <span>Source: <a href="https://api.e-stat.go.jp/rest/3.0/app/json/getStatsData" target="_blank" rel="noreferrer">unknown</a></span>
+    <span>Source: <a href="https://api.e-stat.go.jp/rest/3.0/app/json/getStatsData" target="_blank" rel="noreferrer"></a></span>
     <span>Series: 0003114496/19/11/11/11/00000</span>
     <span>Frequency: </span>
     <span>Provider update: 2024-12-01</span>
@@ -1451,7 +1433,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="external_fx">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">External Balance &amp; FX</span><span data-lang="zh">外部平衡与汇率</span></h2>
     <div class="logic"><span data-lang="en">Merchandise trade, the current-account ratio, USD/JPY, and BIS effective exchange rates capture Japan&#x27;s external position — the dominant transmission channel for the 2022-2026 yen regime.</span><span data-lang="zh">货物贸易、经常账户比率、美元兑日元与BIS有效汇率共同刻画日本外部头寸，这也是2022-2026年日元体制的主要传导渠道。</span></div>
   </div>
@@ -1723,7 +1704,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="fiscal_sovereign">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Fiscal &amp; Sovereign</span><span data-lang="zh">财政与主权</span></h2>
     <div class="logic"><span data-lang="en">IMF WEO fiscal ratios and the 10-year JGB yield frame the sustainability question for the world&#x27;s most indebted advanced economy.</span><span data-lang="zh">IMF WEO财政比率与10年期日本国债收益率共同框定全球负债率最高的发达经济体的可持续性问题。</span></div>
   </div>
@@ -1850,7 +1830,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="monetary_financial">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Monetary &amp; Financial Conditions</span><span data-lang="zh">货币与金融条件</span></h2>
     <div class="logic"><span data-lang="en">The uncollateralised overnight call rate is the BoJ&#x27;s operating target; broad money, BIS credit ratios, and the Nikkei complete the financial-conditions picture.</span><span data-lang="zh">无担保隔夜拆借利率是日银的操作目标；广义货币、BIS信贷比率与日经指数补齐金融条件全貌。</span></div>
   </div>
@@ -2093,7 +2072,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="stability_structural">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Financial Stability &amp; Structural Risk</span><span data-lang="zh">金融稳定与结构性风险</span></h2>
     <div class="logic"><span data-lang="en">IMF Financial Soundness Indicators give the deposit-taker capital and asset-quality core, and BIS total-credit ratios show the aggregate leverage stock.</span><span data-lang="zh">IMF金融稳健指标提供存款机构资本与资产质量核心指标，BIS总信贷比率反映整体杠杆存量。</span></div>
   </div>
@@ -2191,9 +2169,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
-      <p>Pipeline</p>
       <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are macro indicators that matter for Japan but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的日本核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+      <div class="logic"><span data-lang="en">These core macroeconomic indicators are tracked within the analytical framework; official public feeds are currently being verified before chart rendering.</span><span data-lang="zh">这些指标属于宏观分析框架中的核心序列，官方公开数据源当前正在验证标准化接入，完成后将统一绘图展示。</span></div>
     </div>
     <table class="gaps-table">
       <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>

@@ -221,21 +221,12 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   box-shadow: none;
 }
 .section-title {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 16px;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   border-bottom: 2px solid var(--fg);
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   margin-bottom: 18px;
-}
-.section-title p {
-  margin: 0;
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: normal;
-  text-transform: none;
 }
 .section-title h2 {
   margin: 0;
@@ -245,7 +236,7 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   letter-spacing: -0.025em;
   color: var(--fg);
 }
-.logic { grid-column: 2; color: var(--text-secondary); max-width: 860px; font-size: 13.5px; }
+.logic { color: var(--text-secondary); max-width: 920px; font-size: 13.5px; line-height: 1.55; }
 .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px; margin-bottom: 20px; }
 .chart-card {
   padding: 14px 16px 12px;
@@ -346,8 +337,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 @media (max-width: 760px) {
   .topbar { align-items: flex-start; flex-direction: column; padding: 12px 18px; }
   .container { padding: 24px 16px 42px; }
-  .section-title { grid-template-columns: 1fr; }
-  .logic { grid-column: 1; }
   .charts-grid { grid-template-columns: 1fr; }
   .panel { overflow-x: auto; }
   .chart-card { padding: 13px; }
@@ -468,7 +457,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="growth_accounts">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">GDP &amp; Sector Value Added</span><span data-lang="zh">GDP与行业增加值</span></h2>
     <div class="logic"><span data-lang="en">Official real GDP growth trajectories and sector value added dynamics (industry, agriculture, services) from IMF DataMapper and World Bank WDI.</span><span data-lang="zh">基于IMF DataMapper与世界银行WDI的实际GDP增速及行业增加值动态（工业、农业、服务业）。</span></div>
   </div>
@@ -626,7 +614,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="labour_wages">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Labour Market</span><span data-lang="zh">劳动力市场</span></h2>
     <div class="logic"><span data-lang="en">National modeled unemployment rate tracking labor force utilization.</span><span data-lang="zh">国际劳工组织/世界银行模型估算的全国失业率。</span></div>
   </div>
@@ -695,7 +682,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="prices_costs">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Prices &amp; Inflation</span><span data-lang="zh">价格与通胀</span></h2>
     <div class="logic"><span data-lang="en">Official headline CPI inflation rate and index base from IMF International Financial Statistics.</span><span data-lang="zh">IMF国际金融统计(IFS)公布的尼日利亚官方总体CPI通胀同比率与价格基数。</span></div>
   </div>
@@ -822,7 +808,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="external_fx">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">External Sector, FX &amp; Remittances</span><span data-lang="zh">外部部门、汇率与侨汇</span></h2>
     <div class="logic"><span data-lang="en">USD/NGN official exchange rate, Bruegel REER/NEER, workers&#x27; personal remittances (% of GDP), and quarterly BPM6 Current Account Balance.</span><span data-lang="zh">美元兑尼日利亚奈拉官方汇率、Bruegel实际与名义有效汇率、海外劳工侨汇占GDP比重以及季度BPM6经常账户差额。</span></div>
   </div>
@@ -1268,7 +1253,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="fiscal_sovereign">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Fiscal &amp; Public Debt</span><span data-lang="zh">财政与主权债务</span></h2>
     <div class="logic"><span data-lang="en">General government gross debt, fiscal deficit, and primary balance ratios from IMF DataMapper, alongside gross foreign exchange reserves.</span><span data-lang="zh">IMF DataMapper提供的广义政府总债务、财政赤字与初级收支比率，配合官方外汇储备总额。</span></div>
   </div>
@@ -1395,7 +1379,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="monetary_financial">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Monetary, Credit &amp; Commodities</span><span data-lang="zh">货币、利率与大宗商品</span></h2>
     <div class="logic"><span data-lang="en">Central Bank of Nigeria Monetary Policy Rate (MPR), commercial lending and deposit rates, broad money growth, domestic private credit, and Brent crude benchmark pricing.</span><span data-lang="zh">尼日利亚央行货币政策利率(MPR)、商业存贷款利率、广义货币增速、国内私营部门信贷与布伦特原油基准价格。</span></div>
   </div>
@@ -1609,7 +1592,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="stability_structural">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Financial Stability</span><span data-lang="zh">金融稳定与银行体系</span></h2>
     <div class="logic"><span data-lang="en">Banking sector regulatory capital adequacy ratio (CAR) and non-performing loan ratio (NPL) from IMF Financial Soundness Indicators.</span><span data-lang="zh">IMF金融稳健指标(FSI)提供的银行体系监管资本充足率(CAR)与不良贷款率(NPL)。</span></div>
   </div>
@@ -1678,9 +1660,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
-      <p>Pipeline</p>
       <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are macro indicators that matter for Nigeria but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的尼日利亚核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+      <div class="logic"><span data-lang="en">These core macroeconomic indicators are tracked within the analytical framework; official public feeds are currently being verified before chart rendering.</span><span data-lang="zh">这些指标属于宏观分析框架中的核心序列，官方公开数据源当前正在验证标准化接入，完成后将统一绘图展示。</span></div>
     </div>
     <table class="gaps-table">
       <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>

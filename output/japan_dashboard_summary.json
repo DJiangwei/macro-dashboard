@@ -1,6 +1,6 @@
 {
   "file": "japan.html",
-  "generated": "2026-10-30T23:28:06.128588+00:00",
+  "generated": "2026-10-30T23:42:05.172528+00:00",
   "charts": 55,
   "source_groups": 21,
   "data_gaps": 6,
@@ -212,7 +212,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "boj_rate_latest": "n/a",
   "cross_checks": [
@@ -245,7 +245,8 @@
     "series": 55,
     "observations": 19674,
     "series_count": 55,
-    "observation_count": 19674
+    "observation_count": 19674,
+    "snapshot_generated": "2026-10-30T23:28:06.134125+00:00"
   },
   "data_gaps_detail": [
     {
@@ -1094,50 +1095,14 @@
     },
     "non_level": [
       {
-        "id": "real_gdp_growth",
-        "label_en": "Real GDP Growth, QoQ",
-        "transform": "pct_change",
-        "unit": "% q/q"
-      },
-      {
-        "id": "real_gdp_yoy",
-        "label_en": "Real GDP Growth, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "nominal_gdp_growth",
-        "label_en": "Nominal GDP Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "gfcf_growth",
-        "label_en": "Gross Fixed Capital Formation Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "government_consumption_growth",
-        "label_en": "Government Consumption Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
         "id": "employment_growth",
         "label_en": "Employment Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
       {
-        "id": "producer_price_inflation",
-        "label_en": "Corporate Goods Price Index, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "house_price_growth",
-        "label_en": "House Price Growth, YoY",
+        "id": "gfcf_growth",
+        "label_en": "Gross Fixed Capital Formation Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
@@ -1150,6 +1115,42 @@
       {
         "id": "goods_imports_growth",
         "label_en": "Goods Imports Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "government_consumption_growth",
+        "label_en": "Government Consumption Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "house_price_growth",
+        "label_en": "House Price Growth, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "nominal_gdp_growth",
+        "label_en": "Nominal GDP Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "producer_price_inflation",
+        "label_en": "Corporate Goods Price Index, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "real_gdp_growth",
+        "label_en": "Real GDP Growth, QoQ",
+        "transform": "pct_change",
+        "unit": "% q/q"
+      },
+      {
+        "id": "real_gdp_yoy",
+        "label_en": "Real GDP Growth, YoY",
         "transform": "yoy_pct",
         "unit": "% y/y"
       }

@@ -221,21 +221,12 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   box-shadow: none;
 }
 .section-title {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 16px;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   border-bottom: 2px solid var(--fg);
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   margin-bottom: 18px;
-}
-.section-title p {
-  margin: 0;
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: normal;
-  text-transform: none;
 }
 .section-title h2 {
   margin: 0;
@@ -245,7 +236,7 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   letter-spacing: -0.025em;
   color: var(--fg);
 }
-.logic { grid-column: 2; color: var(--text-secondary); max-width: 860px; font-size: 13.5px; }
+.logic { color: var(--text-secondary); max-width: 920px; font-size: 13.5px; line-height: 1.55; }
 .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px; margin-bottom: 20px; }
 .chart-card {
   padding: 14px 16px 12px;
@@ -346,8 +337,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 @media (max-width: 760px) {
   .topbar { align-items: flex-start; flex-direction: column; padding: 12px 18px; }
   .container { padding: 24px 16px 42px; }
-  .section-title { grid-template-columns: 1fr; }
-  .logic { grid-column: 1; }
   .charts-grid { grid-template-columns: 1fr; }
   .panel { overflow-x: auto; }
   .chart-card { padding: 13px; }
@@ -473,31 +462,28 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="data_quirks">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Data Quirks &amp; Release Discipline</span><span data-lang="zh">数据特性与发布纪律</span></h2>
     <div class="logic"><span data-lang="en">The GS guide opens with revisions, seasonal adjustment, and sequential-versus-year-over-year reporting. The dashboard keeps this as a standing caveat for all high-frequency US releases.</span><span data-lang="zh">GS指南开篇强调修订、季调以及环比/同比口径差异。该页面把这些作为所有美国高频数据的基础提示。</span></div>
   </div>
   <div class="charts-grid">
 
-    <div class="empty-note"><span data-lang="en">No reproducible public chart wired yet for this section.</span><span data-lang="zh">本节暂未接入可复跑的公开图表数据。</span></div>
+    <div class="empty-note"><span data-lang="en">Official chart series for this section are currently in development.</span><span data-lang="zh">本分析模块的官方指标序列正在标准化接入中。</span></div>
   </div>
 </section>
 
 <section class="panel" id="gs_market_indexes">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Market Impact &amp; GS Proprietary Indexes</span><span data-lang="zh">市场影响与GS专有指数</span></h2>
     <div class="logic"><span data-lang="en">The report highlights market-moving releases and GS proprietary gauges such as GSFCI, GSAI, and GSSI. Public component series are charted where possible; proprietary aggregates are tracked as gaps.</span><span data-lang="zh">报告强调市场敏感数据以及GSFCI、GSAI、GSSI等GS专有指标。公开组成项尽量绘图；专有综合指标列入缺口。</span></div>
   </div>
   <div class="charts-grid">
 
-    <div class="empty-note"><span data-lang="en">No reproducible public chart wired yet for this section.</span><span data-lang="zh">本节暂未接入可复跑的公开图表数据。</span></div>
+    <div class="empty-note"><span data-lang="en">Official chart series for this section are currently in development.</span><span data-lang="zh">本分析模块的官方指标序列正在标准化接入中。</span></div>
   </div>
 </section>
 
 <section class="panel" id="nipa">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">GDP, Income &amp; NIPA</span><span data-lang="zh">GDP、收入与NIPA</span></h2>
     <div class="logic"><span data-lang="en">BEA national accounts anchor the macro story: real GDP, nominal GDP, personal income, disposable income, and corporate profits.</span><span data-lang="zh">BEA国民账户构成宏观叙事基准：实际GDP、名义GDP、个人收入、可支配收入与企业利润。</span></div>
   </div>
@@ -972,7 +958,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="production_orders">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Production, Orders &amp; Inventories</span><span data-lang="zh">生产、订单与库存</span></h2>
     <div class="logic"><span data-lang="en">The GS report uses ISM, regional Fed surveys, durable goods, factory orders, industrial production, capacity utilization, and inventories to read cyclical momentum.</span><span data-lang="zh">GS报告使用ISM、地区联储调查、耐用品、工厂订单、工业生产、产能利用率和库存来判断周期动能。</span></div>
   </div>
@@ -1331,7 +1316,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="consumer">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Consumer Spending &amp; Confidence</span><span data-lang="zh">消费支出与信心</span></h2>
     <div class="logic"><span data-lang="en">Retail sales, PCE, autos, and confidence surveys capture the US consumer, the largest demand component in GDP.</span><span data-lang="zh">零售、PCE、汽车和信心调查刻画美国消费者，而消费是GDP中最大的需求分项。</span></div>
   </div>
@@ -1690,7 +1674,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="housing">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Housing &amp; Construction</span><span data-lang="zh">住房与建筑</span></h2>
     <div class="logic"><span data-lang="en">Housing starts, permits, home sales, construction spending, house prices, and mortgage stress define the housing transmission channel.</span><span data-lang="zh">开工、许可、新房/成屋销售、建筑支出、房价与按揭压力共同定义住房传导渠道。</span></div>
   </div>
@@ -2136,7 +2119,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="external">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Trade &amp; International Capital Flows</span><span data-lang="zh">贸易与国际资本流动</span></h2>
     <div class="logic"><span data-lang="en">The report separates goods trade, current account, and TIC capital-flow data; this v1 charts the public external-balance skeleton.</span><span data-lang="zh">报告区分货物贸易、经常账户和TIC资本流；v1先绘制公开可复跑的外部平衡骨架。</span></div>
   </div>
@@ -2466,7 +2448,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="employment">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Employment</span><span data-lang="zh">就业</span></h2>
     <div class="logic"><span data-lang="en">Payrolls, unemployment, labor-force participation, hours, wages, claims, and JOLTS are core US market-moving labor indicators.</span><span data-lang="zh">非农、失业率、劳动参与率、工时、工资、失业救济申请和JOLTS是美国最核心的市场敏感劳动力指标。</span></div>
   </div>
@@ -3173,7 +3154,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="prices_wages">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Prices, Wages &amp; Productivity</span><span data-lang="zh">价格、工资与生产率</span></h2>
     <div class="logic"><span data-lang="en">CPI, PCE inflation, GDP deflator, ECI, productivity, unit labor costs, PPI, and trade prices connect inflation to Fed reaction.</span><span data-lang="zh">CPI、PCE通胀、GDP平减指数、ECI、生产率、单位劳动成本、PPI和进出口价格共同连接通胀与美联储反应。</span></div>
   </div>
@@ -3969,7 +3949,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="monetary_financial">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Monetary &amp; Financial Data</span><span data-lang="zh">货币与金融数据</span></h2>
     <div class="logic"><span data-lang="en">Money, credit, SLOOS, household debt service, and household net worth extend the report&#x27;s financial-data section into a modern balance-sheet lens.</span><span data-lang="zh">货币、信贷、SLOOS、居民债务负担和居民净资产把报告中的金融数据章节扩展为现代资产负债表视角。</span></div>
   </div>
@@ -4734,7 +4713,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="fed_policy">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Federal Reserve Policy</span><span data-lang="zh">美联储政策</span></h2>
     <div class="logic"><span data-lang="en">Modern US policy plumbing now requires effective fed funds, target range, IORB, SOFR, and the Fed balance sheet, not only FOMC statements and discount tools.</span><span data-lang="zh">现代美国政策框架需要观察有效联邦基金利率、目标区间、IORB、SOFR与美联储资产负债表，而不只是FOMC声明和贴现工具。</span></div>
   </div>
@@ -5125,7 +5103,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="fiscal">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Federal Government Finances</span><span data-lang="zh">联邦政府财政</span></h2>
     <div class="logic"><span data-lang="en">Monthly Treasury Statement data, federal debt, debt/GDP, and fiscal-year deficits provide the public fiscal anchor.</span><span data-lang="zh">月度财政部报表、联邦债务、债务/GDP和财年赤字提供公开财政锚。</span></div>
   </div>
@@ -5571,9 +5548,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
-      <p>Pipeline</p>
       <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are macro indicators that matter for United States but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的美国核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+      <div class="logic"><span data-lang="en">These core macroeconomic indicators are tracked within the analytical framework; official public feeds are currently being verified before chart rendering.</span><span data-lang="zh">这些指标属于宏观分析框架中的核心序列，官方公开数据源当前正在验证标准化接入，完成后将统一绘图展示。</span></div>
     </div>
     <table class="gaps-table">
       <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>

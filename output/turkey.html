@@ -221,21 +221,12 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   box-shadow: none;
 }
 .section-title {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 16px;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   border-bottom: 2px solid var(--fg);
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   margin-bottom: 18px;
-}
-.section-title p {
-  margin: 0;
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: normal;
-  text-transform: none;
 }
 .section-title h2 {
   margin: 0;
@@ -245,7 +236,7 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   letter-spacing: -0.025em;
   color: var(--fg);
 }
-.logic { grid-column: 2; color: var(--text-secondary); max-width: 860px; font-size: 13.5px; }
+.logic { color: var(--text-secondary); max-width: 920px; font-size: 13.5px; line-height: 1.55; }
 .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px; margin-bottom: 20px; }
 .chart-card {
   padding: 14px 16px 12px;
@@ -346,8 +337,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 @media (max-width: 760px) {
   .topbar { align-items: flex-start; flex-direction: column; padding: 12px 18px; }
   .container { padding: 24px 16px 42px; }
-  .section-title { grid-template-columns: 1fr; }
-  .logic { grid-column: 1; }
   .charts-grid { grid-template-columns: 1fr; }
   .panel { overflow-x: auto; }
   .chart-card { padding: 13px; }
@@ -470,7 +459,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="growth_accounts">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">GDP &amp; National Accounts</span><span data-lang="zh">GDP与国民账户</span></h2>
     <div class="logic"><span data-lang="en">Eurostat quarterly national accounts anchor Turkey&#x27;s growth story: real GDP sequential QoQ SA and annual YoY growth, household consumption, gross fixed capital formation, government consumption, and trade volumes.</span><span data-lang="zh">欧盟统计局(Eurostat)季度国民账户构成土耳其增长叙事基准：实际GDP季调环比与同比增速、居民消费、固定资本形成总额、政府消费及进出口贸易量。</span></div>
   </div>
@@ -684,7 +672,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="production_cycle">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Production &amp; Business Cycle</span><span data-lang="zh">生产与商业周期</span></h2>
     <div class="logic"><span data-lang="en">Eurostat monthly short-term business statistics (STS) track industrial and manufacturing production, retail trade volume, and construction output. DG ECFIN business and consumer surveys supply capacity utilisation and the headline Economic Sentiment Indicator (ESI).</span><span data-lang="zh">欧盟统计局月度短期商业统计(STS)追踪工业与制造业生产、零售销售量与建筑业产出。商业与消费者调查提供产能利用率与综合经济景气指数(ESI)。</span></div>
   </div>
@@ -927,7 +914,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="labour_wages">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Labour Market &amp; Wages</span><span data-lang="zh">劳动力市场与工资</span></h2>
     <div class="logic"><span data-lang="en">Harmonised unemployment and youth unemployment rates track labour slack and employment conditions conforming to ILO standards.</span><span data-lang="zh">调和失业率与青年失业率衡量符合国际劳工组织(ILO)标准的劳动力闲置与就业状况。</span></div>
   </div>
@@ -1025,7 +1011,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="prices_costs">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Prices &amp; Costs</span><span data-lang="zh">价格与成本</span></h2>
     <div class="logic"><span data-lang="en">Eurostat monthly HICP provides headline, core (excluding energy and food), services, energy, and food annual inflation. Industrial producer prices (PPI) capture pipeline production pressures, with independent IMF CPI cross-check.</span><span data-lang="zh">欧盟统计局月度调和消费者物价指数(HICP)提供总体、核心（剔除能源与食品）、服务、能源与食品通胀年率。工业生产者出厂价格(PPI)捕捉生产端管道压力，配合IMF总体CPI交叉核对。</span></div>
   </div>
@@ -1270,7 +1255,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="housing_property">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Housing &amp; Property</span><span data-lang="zh">住房与房地产</span></h2>
     <div class="logic"><span data-lang="en">Eurostat quarterly residential property price index (HPI) tracks residential property valuations across Turkey, cross-checked with the BIS long-term index.</span><span data-lang="zh">欧盟统计局季度住宅价格指数(HPI)跟踪土耳其全国住宅房地产估值，配合国际清算银行(BIS)长期指数核对。</span></div>
   </div>
@@ -1339,7 +1323,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="external_fx">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">External Balance &amp; FX</span><span data-lang="zh">外部平衡与汇率</span></h2>
     <div class="logic"><span data-lang="en">BPM6 balance of payments current account, goods balance, and tourism service revenues capture external dynamics, alongside daily TCMB USD/TRY fixing and Bruegel 120-trading-partner REER/NEER.</span><span data-lang="zh">BPM6国际收支经常账户、货物贸易差额及旅游业外汇收入刻画外部动态，配合土耳其央行官方USD/TRY汇率及Bruegel对120个贸易伙伴的实际有效汇率(REER)。</span></div>
   </div>
@@ -1698,7 +1681,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="fiscal_sovereign">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Fiscal &amp; Sovereign Debt</span><span data-lang="zh">财政与主权债务</span></h2>
     <div class="logic"><span data-lang="en">IMF World Economic Outlook and Fiscal Monitor supply general government gross debt, net lending/borrowing, and primary balance ratios.</span><span data-lang="zh">IMF《世界经济展望》与《财政监测报告》提供广义政府总债务、净借贷（赤字率）及初级财政收支占GDP比重。</span></div>
   </div>
@@ -1796,7 +1778,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="monetary_financial">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Monetary Policy &amp; Financial Conditions</span><span data-lang="zh">货币政策与金融条件</span></h2>
     <div class="logic"><span data-lang="en">Overnight interbank market rates and BIS credit-to-GDP aggregates (total private, household, bank credit) measure financial conditions.</span><span data-lang="zh">隔夜银行间拆借利率与国际清算银行(BIS)信贷占GDP比率（私营部门总信贷、住户信贷、银行信贷）衡量金融环境。</span></div>
   </div>
@@ -2068,7 +2049,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="stability_structural">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Financial Stability &amp; Structure</span><span data-lang="zh">金融稳定与结构</span></h2>
     <div class="logic"><span data-lang="en">IMF Financial Soundness Indicators (FSI) via DBnomics track banking sector regulatory capital adequacy (CAR) and non-performing loans (NPL).</span><span data-lang="zh">国际货币基金组织金融稳健性指标(FSI)追踪土耳其银行体系监管资本充足率(CAR)与不良贷款率(NPL)。</span></div>
   </div>
@@ -2137,9 +2117,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
-      <p>Pipeline</p>
       <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are macro indicators that matter for Turkey but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的土耳其核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+      <div class="logic"><span data-lang="en">These core macroeconomic indicators are tracked within the analytical framework; official public feeds are currently being verified before chart rendering.</span><span data-lang="zh">这些指标属于宏观分析框架中的核心序列，官方公开数据源当前正在验证标准化接入，完成后将统一绘图展示。</span></div>
     </div>
     <table class="gaps-table">
       <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>

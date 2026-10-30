@@ -1,6 +1,6 @@
 {
   "file": "south_africa.html",
-  "generated": "2026-10-30T23:28:26.580467+00:00",
+  "generated": "2026-10-30T23:42:05.477147+00:00",
   "charts": 65,
   "source_groups": 16,
   "data_gaps": 7,
@@ -224,7 +224,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "repo_rate_latest": "n/a",
   "cross_checks": [
@@ -257,7 +257,8 @@
     "series": 65,
     "observations": 30557,
     "series_count": 65,
-    "observation_count": 30557
+    "observation_count": 30557,
+    "snapshot_generated": "2026-10-30T23:28:26.593188+00:00"
   },
   "data_gaps_detail": [
     {
@@ -1027,38 +1028,8 @@
     },
     "non_level": [
       {
-        "id": "real_gdp_growth",
-        "label_en": "Real GDP Growth, QoQ",
-        "transform": "pct_change",
-        "unit": "% q/q"
-      },
-      {
-        "id": "real_gdp_yoy",
-        "label_en": "Real GDP Growth, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "nominal_gdp_growth",
-        "label_en": "Nominal GDP Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
         "id": "gfcf_growth",
         "label_en": "Gross Fixed Capital Formation Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "manufacturing_employment_growth",
-        "label_en": "Manufacturing Employment Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "house_price_growth",
-        "label_en": "House Price Growth, YoY",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
@@ -1071,6 +1042,36 @@
       {
         "id": "goods_imports_growth",
         "label_en": "Goods Imports Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "house_price_growth",
+        "label_en": "House Price Growth, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "manufacturing_employment_growth",
+        "label_en": "Manufacturing Employment Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "nominal_gdp_growth",
+        "label_en": "Nominal GDP Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "real_gdp_growth",
+        "label_en": "Real GDP Growth, QoQ",
+        "transform": "pct_change",
+        "unit": "% q/q"
+      },
+      {
+        "id": "real_gdp_yoy",
+        "label_en": "Real GDP Growth, YoY",
         "transform": "yoy_pct",
         "unit": "% y/y"
       }

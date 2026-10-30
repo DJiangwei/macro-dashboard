@@ -80,7 +80,7 @@ def inject_output_index(summary: dict[str, Any]) -> None:
       <div class="stat"><span>Data gaps tracked</span><strong>{summary['data_gaps']}</strong></div>
       <div class="stat"><span>Bank Rate</span><strong>{summary.get('bank_rate_latest', 'n/a')}</strong></div>
       <div class="stat"><span>Source groups</span><strong>{summary['source_groups']}</strong></div>
-      <div class="stat"><span>Framework</span><strong>GS UK statistics logic</strong></div>
+      <div class="stat"><span>Framework</span><strong>GS UK Macro Framework</strong></div>
     </div>
   </a>
   <!-- /UK dashboard card -->'''

@@ -221,21 +221,12 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   box-shadow: none;
 }
 .section-title {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 16px;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   border-bottom: 2px solid var(--fg);
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   margin-bottom: 18px;
-}
-.section-title p {
-  margin: 0;
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: normal;
-  text-transform: none;
 }
 .section-title h2 {
   margin: 0;
@@ -245,7 +236,7 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   letter-spacing: -0.025em;
   color: var(--fg);
 }
-.logic { grid-column: 2; color: var(--text-secondary); max-width: 860px; font-size: 13.5px; }
+.logic { color: var(--text-secondary); max-width: 920px; font-size: 13.5px; line-height: 1.55; }
 .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px; margin-bottom: 20px; }
 .chart-card {
   padding: 14px 16px 12px;
@@ -346,8 +337,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 @media (max-width: 760px) {
   .topbar { align-items: flex-start; flex-direction: column; padding: 12px 18px; }
   .container { padding: 24px 16px 42px; }
-  .section-title { grid-template-columns: 1fr; }
-  .logic { grid-column: 1; }
   .charts-grid { grid-template-columns: 1fr; }
   .panel { overflow-x: auto; }
   .chart-card { padding: 13px; }
@@ -472,19 +461,17 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="data_quirks">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Data Quirks &amp; Release Discipline</span><span data-lang="zh">数据特性与发布纪律</span></h2>
     <div class="logic"><span data-lang="en">South African labour data comes from the quarterly QLFS, whose headline unemployment rate excludes discouraged workers reported separately in the expanded definition. Activity data is monthly but thin, and load-shedding breaks make several production series non-comparable across years. SARB&#x27;s own web API is preferred for rates and prices because it is the compiling authority.</span><span data-lang="zh">南非劳动力数据来自季度QLFS，其官方失业率不含在扩大口径中单独统计的沮丧工人。活动数据为月度但覆盖较薄，限电断点使部分生产序列跨年不可比。利率与价格优先使用SARB自有Web API，因其为编制机构。</span></div>
   </div>
   <div class="charts-grid">
 
-    <div class="empty-note"><span data-lang="en">No reproducible public chart wired yet for this section.</span><span data-lang="zh">本节暂未接入可复跑的公开图表数据。</span></div>
+    <div class="empty-note"><span data-lang="en">Official chart series for this section are currently in development.</span><span data-lang="zh">本分析模块的官方指标序列正在标准化接入中。</span></div>
   </div>
 </section>
 
 <section class="panel" id="growth_accounts">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">GDP &amp; National Accounts</span><span data-lang="zh">GDP与国民账户</span></h2>
     <div class="logic"><span data-lang="en">Stats SA national accounts anchor the macro story: real GDP level, sequential and year-over-year growth, nominal GDP, and fixed investment.</span><span data-lang="zh">南非统计局国民账户构成宏观叙事基准：实际GDP水平、环比与同比增速、名义GDP与固定投资。</span></div>
   </div>
@@ -640,7 +627,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="production_cycle">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Production &amp; Business Cycle</span><span data-lang="zh">生产与商业周期</span></h2>
     <div class="logic"><span data-lang="en">Manufacturing production, capacity utilisation, and the OECD composite leading indicator read the cycle. South Africa has no monthly total-industry index on a validated public endpoint, so manufacturing carries the cyclical signal.</span><span data-lang="zh">制造业生产、产能利用率与OECD综合领先指标用于判断周期。南非在已验证的公开接口上没有月度工业总体指数，因此由制造业承载周期信号。</span></div>
   </div>
@@ -767,7 +753,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="consumption_retail">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Consumption &amp; Retail Demand</span><span data-lang="zh">消费与零售需求</span></h2>
     <div class="logic"><span data-lang="en">Retail trade volume is the highest-frequency read on South African household demand, which is squeezed between high unemployment and high real policy rates.</span><span data-lang="zh">零售贸易量是观察南非居民需求最高频的指标，而居民需求同时受高失业与高实际政策利率挤压。</span></div>
   </div>
@@ -836,7 +821,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="labour_wages">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Labour Market</span><span data-lang="zh">劳动力市场</span></h2>
     <div class="logic"><span data-lang="en">Unemployment is South Africa&#x27;s central macro and political variable. The headline, working-age, and youth rates plus long-term unemployment describe a structural rather than cyclical problem.</span><span data-lang="zh">失业是南非最核心的宏观与政治变量。总体、劳动年龄与青年失业率以及长期失业共同刻画的是结构性而非周期性问题。</span></div>
   </div>
@@ -992,7 +976,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="prices_costs">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Prices &amp; Costs</span><span data-lang="zh">价格与成本</span></h2>
     <div class="logic"><span data-lang="en">SARB publishes headline CPI and PPI directly through its web API, which is the compiling-authority path. The IMF CPI series is charted alongside as an independent cross-check.</span><span data-lang="zh">SARB通过其Web API直接发布总体CPI与PPI，属编制机构路径。IMF CPI序列并列展示，作为独立交叉校验。</span></div>
   </div>
@@ -1150,7 +1133,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="housing_property">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Housing &amp; Property Prices</span><span data-lang="zh">住房与房地产价格</span></h2>
     <div class="logic"><span data-lang="en">BIS residential property price indices give internationally comparable nominal and real house prices. The real index shows that South African housing has lost value in inflation-adjusted terms for over a decade.</span><span data-lang="zh">BIS住宅价格指数提供国际可比的名义与实际房价。实际指数显示南非住房在通胀调整口径下已贬值十余年。</span></div>
   </div>
@@ -1248,7 +1230,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="external_fx">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">External Balance &amp; FX</span><span data-lang="zh">外部平衡与汇率</span></h2>
     <div class="logic"><span data-lang="en">Commodity-driven merchandise trade, the current-account ratio, the rand crosses, and effective exchange rates capture the external funding channel that dominates South African risk premia.</span><span data-lang="zh">由大宗商品驱动的货物贸易、经常账户比率、兰特汇率与有效汇率共同刻画主导南非风险溢价的外部融资渠道。</span></div>
   </div>
@@ -1955,7 +1936,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="fiscal_sovereign">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Fiscal &amp; Sovereign</span><span data-lang="zh">财政与主权</span></h2>
     <div class="logic"><span data-lang="en">IMF WEO fiscal ratios plus SARB&#x27;s published benchmark bond yields frame the debt-sustainability question that drives the sovereign rating.</span><span data-lang="zh">IMF WEO财政比率与SARB公布的基准国债收益率共同框定驱动主权评级的债务可持续性问题。</span></div>
   </div>
@@ -2111,7 +2091,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="monetary_financial">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Monetary &amp; Financial Conditions</span><span data-lang="zh">货币与金融条件</span></h2>
     <div class="logic"><span data-lang="en">The SARB policy rate, prime lending rate, SABOR and ZARONIA benchmarks, broad money, and BIS credit ratios describe an inflation-targeting regime running deliberately positive real rates.</span><span data-lang="zh">SARB政策利率、优惠贷款利率、SABOR与ZARONIA基准、广义货币及BIS信贷比率共同描述一个有意维持正实际利率的通胀目标制。</span></div>
   </div>
@@ -2383,7 +2362,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="stability_structural">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Financial Stability &amp; Structural Risk</span><span data-lang="zh">金融稳定与结构性风险</span></h2>
     <div class="logic"><span data-lang="en">IMF Financial Soundness Indicators give the deposit-taker capital and asset-quality core; BIS total-credit ratios show aggregate leverage, which is moderate by emerging-market standards.</span><span data-lang="zh">IMF金融稳健指标提供存款机构资本与资产质量核心指标；BIS总信贷比率反映整体杠杆，按新兴市场标准处于温和水平。</span></div>
   </div>
@@ -2481,9 +2459,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
-      <p>Pipeline</p>
       <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are macro indicators that matter for South Africa but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的南非核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+      <div class="logic"><span data-lang="en">These core macroeconomic indicators are tracked within the analytical framework; official public feeds are currently being verified before chart rendering.</span><span data-lang="zh">这些指标属于宏观分析框架中的核心序列，官方公开数据源当前正在验证标准化接入，完成后将统一绘图展示。</span></div>
     </div>
     <table class="gaps-table">
       <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>

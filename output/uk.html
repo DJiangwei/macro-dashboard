@@ -221,21 +221,12 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   box-shadow: none;
 }
 .section-title {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 16px;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   border-bottom: 2px solid var(--fg);
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   margin-bottom: 18px;
-}
-.section-title p {
-  margin: 0;
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: normal;
-  text-transform: none;
 }
 .section-title h2 {
   margin: 0;
@@ -245,7 +236,7 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   letter-spacing: -0.025em;
   color: var(--fg);
 }
-.logic { grid-column: 2; color: var(--text-secondary); max-width: 860px; font-size: 13.5px; }
+.logic { color: var(--text-secondary); max-width: 920px; font-size: 13.5px; line-height: 1.55; }
 .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px; margin-bottom: 20px; }
 .chart-card {
   padding: 14px 16px 12px;
@@ -346,8 +337,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 @media (max-width: 760px) {
   .topbar { align-items: flex-start; flex-direction: column; padding: 12px 18px; }
   .container { padding: 24px 16px 42px; }
-  .section-title { grid-template-columns: 1fr; }
-  .logic { grid-column: 1; }
   .charts-grid { grid-template-columns: 1fr; }
   .panel { overflow-x: auto; }
   .chart-card { padding: 13px; }
@@ -430,7 +419,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="national_accounts">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">National Accounts &amp; GDP Tracking</span><span data-lang="zh">国民账户与GDP跟踪</span></h2>
     <div class="logic"><span data-lang="en">The GS UK guide stresses that early GDP releases are heavily revised. Use official GDP, demand components, and real-time trackers together rather than treating first GDP as the final word.</span><span data-lang="zh">GS英国统计指南强调，早期GDP发布会经历较大修订。应把官方GDP、需求分项与实时跟踪指标结合使用，而不是把初值视为最终答案。</span></div>
   </div>
@@ -673,7 +661,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="monthly_output">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Monthly Output &amp; Survey-Like Signals</span><span data-lang="zh">月度产出与类调查信号</span></h2>
     <div class="logic"><span data-lang="en">Monthly production, retail activity, confidence, and leading indicators help bridge the gap before quarterly national accounts are revised and balanced.</span><span data-lang="zh">月度生产、零售、信心与领先指标可在季度国民账户修订和平衡前提供更及时的活动线索。</span></div>
   </div>
@@ -916,7 +903,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="housing_construction">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Housing &amp; Construction</span><span data-lang="zh">住房与建筑</span></h2>
     <div class="logic"><span data-lang="en">The UK housing channel matters through construction activity, collateral values, household balance sheets, and mortgage-credit transmission.</span><span data-lang="zh">英国住房渠道通过建筑活动、抵押品价值、居民资产负债表与按揭信贷传导影响宏观周期。</span></div>
   </div>
@@ -1217,7 +1203,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="external">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Trade, Sterling &amp; External Balance</span><span data-lang="zh">贸易、英镑与外部平衡</span></h2>
     <div class="logic"><span data-lang="en">Trade volumes and sterling&#x27;s real exchange-rate impulse matter for GDP arithmetic, inflation pass-through, and the external funding narrative.</span><span data-lang="zh">贸易量与英镑实际汇率脉冲会影响GDP核算、通胀传导与外部融资叙事。</span></div>
   </div>
@@ -1402,7 +1387,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="labour_market">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Labour Market</span><span data-lang="zh">劳动力市场</span></h2>
     <div class="logic"><span data-lang="en">The labour-market release is central for UK rates because unemployment, employment, hours, vacancies, and wages shape domestic inflation pressure.</span><span data-lang="zh">劳动力市场发布对英国利率非常关键，因为失业、就业、工时、职位空缺与工资共同塑造国内通胀压力。</span></div>
   </div>
@@ -1935,7 +1919,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="prices">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Prices &amp; Inflation</span><span data-lang="zh">价格与通胀</span></h2>
     <div class="logic"><span data-lang="en">CPI is the MPC target measure, while core CPI and producer-price pressure help separate energy/import effects from domestic persistence.</span><span data-lang="zh">CPI是MPC目标指标；核心CPI与生产者价格压力有助于区分能源/进口冲击和国内通胀粘性。</span></div>
   </div>
@@ -2323,7 +2306,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="monetary_financial">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Monetary &amp; Financial Conditions</span><span data-lang="zh">货币与金融条件</span></h2>
     <div class="logic"><span data-lang="en">The GS FCI frame combines short rates, long rates, sterling, and equities; money, credit, and reserves add banking-system context.</span><span data-lang="zh">GS FCI框架结合短端利率、长端利率、英镑与股票；货币、信贷与储备则补充银行体系背景。</span></div>
   </div>
@@ -2798,7 +2780,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="fiscal_policy">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Fiscal Policy &amp; Sovereign Balance Sheet</span><span data-lang="zh">财政政策与主权资产负债表</span></h2>
     <div class="logic"><span data-lang="en">The guide prioritises public-sector borrowing and debt measures, while warning that cash/accrual concepts, sector boundaries, and interventions can distort comparisons.</span><span data-lang="zh">指南重视公共部门借款与债务指标，同时提醒现金制/权责发生制、部门边界和金融干预会影响比较。</span></div>
   </div>
@@ -3273,9 +3254,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
-      <p>Pipeline</p>
       <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are macro indicators that matter for United Kingdom but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的英国核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+      <div class="logic"><span data-lang="en">These core macroeconomic indicators are tracked within the analytical framework; official public feeds are currently being verified before chart rendering.</span><span data-lang="zh">这些指标属于宏观分析框架中的核心序列，官方公开数据源当前正在验证标准化接入，完成后将统一绘图展示。</span></div>
     </div>
     <table class="gaps-table">
       <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>

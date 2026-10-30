@@ -53,7 +53,7 @@ def inject_output_index(summary: dict[str, Any]) -> None:
       <div class="stat"><span>Official gaps tracked</span><strong>{summary['data_gaps']}</strong></div>
       <div class="stat"><span>Fed Funds Rate</span><strong>{summary.get('fed_funds_latest', 'n/a')}</strong></div>
       <div class="stat"><span>Source groups</span><strong>{summary['source_groups']}</strong></div>
-      <div class="stat"><span>Framework</span><strong>GS US statistics logic</strong></div>
+      <div class="stat"><span>Framework</span><strong>GS US Macro Framework</strong></div>
     </div>
   </a>
   <!-- /US dashboard card -->'''

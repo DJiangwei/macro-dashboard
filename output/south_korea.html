@@ -221,21 +221,12 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   box-shadow: none;
 }
 .section-title {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 16px;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   border-bottom: 2px solid var(--fg);
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   margin-bottom: 18px;
-}
-.section-title p {
-  margin: 0;
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: normal;
-  text-transform: none;
 }
 .section-title h2 {
   margin: 0;
@@ -245,7 +236,7 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   letter-spacing: -0.025em;
   color: var(--fg);
 }
-.logic { grid-column: 2; color: var(--text-secondary); max-width: 860px; font-size: 13.5px; }
+.logic { color: var(--text-secondary); max-width: 920px; font-size: 13.5px; line-height: 1.55; }
 .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px; margin-bottom: 20px; }
 .chart-card {
   padding: 14px 16px 12px;
@@ -346,8 +337,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 @media (max-width: 760px) {
   .topbar { align-items: flex-start; flex-direction: column; padding: 12px 18px; }
   .container { padding: 24px 16px 42px; }
-  .section-title { grid-template-columns: 1fr; }
-  .logic { grid-column: 1; }
   .charts-grid { grid-template-columns: 1fr; }
   .panel { overflow-x: auto; }
   .chart-card { padding: 13px; }
@@ -470,7 +459,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="growth_accounts">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">GDP &amp; National Accounts</span><span data-lang="zh">GDP与国民账户</span></h2>
     <div class="logic"><span data-lang="en">OECD quarterly national accounts via FRED track South Korea&#x27;s real GDP sequential QoQ and annual YoY growth, gross fixed capital formation, and government consumption in constant national currency.</span><span data-lang="zh">通过FRED获取的经合组织(OECD)季度国民账户跟踪韩国实际GDP环比与同比增速、固定资本形成总额及政府消费。</span></div>
   </div>
@@ -597,7 +585,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="production_cycle">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Production, Retail &amp; Sentiment</span><span data-lang="zh">生产、零售与景气</span></h2>
     <div class="logic"><span data-lang="en">OECD monthly indicators track industrial and manufacturing production YoY, retail sales volume growth, and the Composite Leading Indicator (CLI).</span><span data-lang="zh">OECD月度指标追踪工业与制造业生产同比增速、零售销售量增速及综合先行指标(CLI)。</span></div>
   </div>
@@ -724,7 +711,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="labour_wages">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Labour Market &amp; Employment</span><span data-lang="zh">劳动力市场与就业</span></h2>
     <div class="logic"><span data-lang="en">Harmonised unemployment rate (SA), labour force participation rate, and employment rate (15-64) measure labour supply and slack.</span><span data-lang="zh">调和失业率(季调)、劳动力参与率及15-64岁就业率衡量劳动力供给与闲置程度。</span></div>
   </div>
@@ -822,7 +808,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="prices_costs">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Prices &amp; Inflation</span><span data-lang="zh">价格与通胀</span></h2>
     <div class="logic"><span data-lang="en">IMF SDMX monthly CPI provides headline YoY and MoM inflation, cross-checked against OECD consumer price index mirrors on FRED.</span><span data-lang="zh">IMF SDMX月度消费者价格指数(CPI)提供总体同比与环比通胀，配合FRED上的OECD消费者价格镜像核对。</span></div>
   </div>
@@ -1009,7 +994,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="housing_property">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Housing &amp; Property</span><span data-lang="zh">住宅与房地产</span></h2>
     <div class="logic"><span data-lang="en">BIS long-term nominal and consumer price-deflated real residential property prices track property market cycles.</span><span data-lang="zh">国际清算银行(BIS)长期名义与经CPI平减后的实际住宅物业价格指数跟踪房地产周期。</span></div>
   </div>
@@ -1136,7 +1120,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="external_fx">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">External Balance, Trade &amp; FX</span><span data-lang="zh">外部平衡、贸易与汇率</span></h2>
     <div class="logic"><span data-lang="en">Federal Reserve Board daily USD/KRW spot exchange rate (H.10), Bruegel 120-partner REER/NEER, quarterly BPM6 current account balance, and monthly merchandise trade.</span><span data-lang="zh">美联储H.10日度美元兑韩元汇率、Bruegel实际与名义有效汇率、季度经常账户差额及月度商品进出口总额。</span></div>
   </div>
@@ -1495,7 +1478,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="fiscal_sovereign">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Fiscal &amp; Sovereign Debt</span><span data-lang="zh">财政与主权债务</span></h2>
     <div class="logic"><span data-lang="en">IMF World Economic Outlook and Fiscal Monitor supply general government gross debt, net lending/borrowing, and primary balance ratios, alongside 10Y Korea Treasury Bond (KTB) yields.</span><span data-lang="zh">IMF《世界经济展望》与《财政监测报告》提供广义政府总债务、净借贷（赤字率）及初级财政收支占GDP比重，配合10年期韩国国债(KTB)基准收益率。</span></div>
   </div>
@@ -1622,7 +1604,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="monetary_financial">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Monetary Policy &amp; Financial Conditions</span><span data-lang="zh">货币政策与金融条件</span></h2>
     <div class="logic"><span data-lang="en">Overnight call money market rates, 3-month interbank rates, and BIS credit-to-GDP aggregates (total private, household, bank credit) measure financial conditions.</span><span data-lang="zh">隔夜拆借市场利率、3个月银行同业拆借利率及国际清算银行(BIS)信贷占GDP比率（私营部门总信贷、住户信贷、银行信贷）衡量金融环境。</span></div>
   </div>
@@ -1894,7 +1875,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="stability_structural">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Financial Stability &amp; Soundness</span><span data-lang="zh">金融稳定与稳健性</span></h2>
     <div class="logic"><span data-lang="en">IMF Financial Soundness Indicators (FSI) via DBnomics track banking sector regulatory capital adequacy (CAR) and non-performing loans (NPL).</span><span data-lang="zh">国际货币基金组织金融稳健性指标(FSI)追踪韩国银行体系监管资本充足率(CAR)与不良贷款率(NPL)。</span></div>
   </div>
@@ -1963,9 +1943,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
-      <p>Pipeline</p>
       <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are macro indicators that matter for South Korea but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的韩国核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+      <div class="logic"><span data-lang="en">These core macroeconomic indicators are tracked within the analytical framework; official public feeds are currently being verified before chart rendering.</span><span data-lang="zh">这些指标属于宏观分析框架中的核心序列，官方公开数据源当前正在验证标准化接入，完成后将统一绘图展示。</span></div>
     </div>
     <table class="gaps-table">
       <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>

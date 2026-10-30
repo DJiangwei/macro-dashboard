@@ -221,21 +221,12 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   box-shadow: none;
 }
 .section-title {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 16px;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   border-bottom: 2px solid var(--fg);
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   margin-bottom: 18px;
-}
-.section-title p {
-  margin: 0;
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: normal;
-  text-transform: none;
 }
 .section-title h2 {
   margin: 0;
@@ -245,7 +236,7 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   letter-spacing: -0.025em;
   color: var(--fg);
 }
-.logic { grid-column: 2; color: var(--text-secondary); max-width: 860px; font-size: 13.5px; }
+.logic { color: var(--text-secondary); max-width: 920px; font-size: 13.5px; line-height: 1.55; }
 .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px; margin-bottom: 20px; }
 .chart-card {
   padding: 14px 16px 12px;
@@ -346,8 +337,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 @media (max-width: 760px) {
   .topbar { align-items: flex-start; flex-direction: column; padding: 12px 18px; }
   .container { padding: 24px 16px 42px; }
-  .section-title { grid-template-columns: 1fr; }
-  .logic { grid-column: 1; }
   .charts-grid { grid-template-columns: 1fr; }
   .panel { overflow-x: auto; }
   .chart-card { padding: 13px; }
@@ -468,7 +457,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="growth_accounts">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">GDP &amp; National Accounts</span><span data-lang="zh">GDP与国民账户</span></h2>
     <div class="logic"><span data-lang="en">DGBAS chained real quarterly GDP tracks sequential QoQ SA and annual YoY economic expansion, gross fixed capital formation, private consumption, and domestic demand.</span><span data-lang="zh">主计总处连锁实质季度GDP跟踪台湾经济环比季调与同比增速、固定资本形成总额、民间消费及国内需求。</span></div>
   </div>
@@ -740,7 +728,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="prices_costs">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Prices &amp; Inflation</span><span data-lang="zh">价格与通胀</span></h2>
     <div class="logic"><span data-lang="en">DGBAS monthly consumer price indices track headline CPI, core CPI (ex-fruits, vegetables &amp; energy), PPI, and residential rent inflation.</span><span data-lang="zh">主计总处月度价格指数跟踪总体CPI、剔除蔬果能源的核心CPI、生产者物价指数(PPI)与住宅租金变动率。</span></div>
   </div>
@@ -869,7 +856,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="monetary_financial">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Monetary Policy &amp; Liquidity</span><span data-lang="zh">货币政策与流动性</span></h2>
     <div class="logic"><span data-lang="en">Central Bank of the Republic of China (CBC) discount rate, interbank call-loan rates, prime lending rates, and monetary aggregates (M1B, M2, reserve money).</span><span data-lang="zh">中央银行贴放利率（重贴现率）、金融业隔夜拆款利率、五大银行基本放款利率以及货币总计数（M1B、M2、准备货币）。</span></div>
   </div>
@@ -1170,7 +1156,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="credit_property">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Credit &amp; Property Market</span><span data-lang="zh">信贷与房地产市场</span></h2>
     <div class="logic"><span data-lang="en">CBC monthly statistics track consumer loans, house-purchasing loans (mortgages), and money/bond market outstanding growth.</span><span data-lang="zh">央行月度统计跟踪消费者贷款、购屋贷款（房贷余额）以及货币市场与债券市场规模变动率。</span></div>
   </div>
@@ -1355,7 +1340,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="external_trade_fx">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">External Balance, Trade &amp; FX</span><span data-lang="zh">外部平衡、贸易与汇率</span></h2>
     <div class="logic"><span data-lang="en">Federal Reserve Board daily USD/TWD spot exchange rate (H.10), Bruegel 120-partner REER/NEER, BIS real broad effective exchange rate, and quarterly BPM6 balance of payments.</span><span data-lang="zh">美联储H.10日度美元兑新台币即期汇率、Bruegel实际与名义有效汇率、BIS广义实际有效汇率以及BPM6口径季度国际收支。</span></div>
   </div>
@@ -1774,7 +1758,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="fiscal_sovereign">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Fiscal, Sovereign Debt &amp; Yields</span><span data-lang="zh">财政、主权债务与基准收益率</span></h2>
     <div class="logic"><span data-lang="en">Taipei capital market 10-year and 5-year benchmark government bond yields alongside IMF WEO general government debt and net lending ratios.</span><span data-lang="zh">台北资本市场10年期与5年期基准政府公债收益率，配合IMF WEO广义政府债务与净借贷（赤字率）序列。</span></div>
   </div>
@@ -1901,7 +1884,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="labour_structural">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Labour Market &amp; Structure</span><span data-lang="zh">劳动力市场与结构</span></h2>
     <div class="logic"><span data-lang="en">Official unemployment rate and labour market slack indicators.</span><span data-lang="zh">官方失业率与劳动力市场闲置指标。</span></div>
   </div>
@@ -1941,9 +1923,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
-      <p>Pipeline</p>
       <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are macro indicators that matter for Taiwan but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的中国台湾核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+      <div class="logic"><span data-lang="en">These core macroeconomic indicators are tracked within the analytical framework; official public feeds are currently being verified before chart rendering.</span><span data-lang="zh">这些指标属于宏观分析框架中的核心序列，官方公开数据源当前正在验证标准化接入，完成后将统一绘图展示。</span></div>
     </div>
     <table class="gaps-table">
       <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>

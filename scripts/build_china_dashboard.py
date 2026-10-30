@@ -72,7 +72,7 @@ def _index_card(summary: dict[str, Any]) -> str:
       <div class="stat"><span>Official gaps tracked</span><strong>{summary['data_gaps']}</strong></div>
       <div class="stat"><span>Latest USD/CNY fixing</span><strong>{escape(summary.get('usd_cny_latest', 'n/a'))}</strong></div>
       <div class="stat"><span>Source groups</span><strong>{summary['source_groups']}</strong></div>
-      <div class="stat"><span>Framework</span><strong>GS China statistics logic</strong></div>
+      <div class="stat"><span>Framework</span><strong>GS China Macro Framework</strong></div>
     </div>
   </a>
   <!-- /China dashboard card -->"""

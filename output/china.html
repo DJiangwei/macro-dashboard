@@ -221,21 +221,12 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   box-shadow: none;
 }
 .section-title {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 16px;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   border-bottom: 2px solid var(--fg);
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   margin-bottom: 18px;
-}
-.section-title p {
-  margin: 0;
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: normal;
-  text-transform: none;
 }
 .section-title h2 {
   margin: 0;
@@ -245,7 +236,7 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   letter-spacing: -0.025em;
   color: var(--fg);
 }
-.logic { grid-column: 2; color: var(--text-secondary); max-width: 860px; font-size: 13.5px; }
+.logic { color: var(--text-secondary); max-width: 920px; font-size: 13.5px; line-height: 1.55; }
 .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px; margin-bottom: 20px; }
 .chart-card {
   padding: 14px 16px 12px;
@@ -346,8 +337,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 @media (max-width: 760px) {
   .topbar { align-items: flex-start; flex-direction: column; padding: 12px 18px; }
   .container { padding: 24px 16px 42px; }
-  .section-title { grid-template-columns: 1fr; }
-  .logic { grid-column: 1; }
   .charts-grid { grid-template-columns: 1fr; }
   .panel { overflow-x: auto; }
   .chart-card { padding: 13px; }
@@ -441,6 +430,24 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <div class="ft-spark-labels"><span>26.1</span><span class="ft-spark-pct">25%</span><span>2,464</span></div>
   </div>
 </div>
+
+<div class="data-card">
+  <span><span data-lang="en">PBC M2 YoY</span><span data-lang="zh">PBC M2同比</span></span>
+  <strong>n/a</strong>
+  <small>n/a · Extra</small>
+</div>
+
+<div class="data-card">
+  <span><span data-lang="en">PBC AFRE Outstanding</span><span data-lang="zh">PBC社融存量</span></span>
+  <strong>n/a</strong>
+  <small>n/a · Extra</small>
+</div>
+
+<div class="data-card">
+  <span><span data-lang="en">PBC DR007</span><span data-lang="zh">PBC DR007</span></span>
+  <strong>n/a</strong>
+  <small>n/a · Extra</small>
+</div>
   </section>
 
   <nav class="toc" aria-label="section navigation">
@@ -471,7 +478,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="activity_production">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Activity &amp; Production</span><span data-lang="zh">总量活动与生产</span></h2>
     <div class="logic"><span data-lang="en">GDP, production-side value added, industrial activity, services output, electricity, freight, profits, and PMIs.</span><span data-lang="zh">GDP、生产法增加值、工业活动、服务业产出、电力、货运、工业利润与PMI。</span></div>
   </div>
@@ -859,7 +865,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="investment">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Investment</span><span data-lang="zh">投资</span></h2>
     <div class="logic"><span data-lang="en">Fixed asset investment, construction pipeline, and investment funding conditions.</span><span data-lang="zh">固定资产投资、项目施工链条与投资资金来源。</span></div>
   </div>
@@ -957,7 +962,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="real_estate">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Real Estate</span><span data-lang="zh">房地产</span></h2>
     <div class="logic"><span data-lang="en">Property investment, floor space starts/completions/sales, prices, land, and inventory.</span><span data-lang="zh">房地产开发投资、开工/竣工/销售面积、房价、土地与库存。</span></div>
   </div>
@@ -1287,7 +1291,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="consumption">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Consumption</span><span data-lang="zh">消费</span></h2>
     <div class="logic"><span data-lang="en">Retail sales, household income and spending, autos, and consumer confidence.</span><span data-lang="zh">社会消费品零售、居民收入与支出、汽车销售与消费者信心。</span></div>
   </div>
@@ -1530,7 +1533,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="external">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">External Sector</span><span data-lang="zh">外部部门</span></h2>
     <div class="logic"><span data-lang="en">Goods and services trade, BOP, FDI, external debt, FX reserves, and RMB exchange-rate measures.</span><span data-lang="zh">货物和服务贸易、国际收支、FDI、外债、外汇储备与人民币汇率指标。</span></div>
   </div>
@@ -2063,7 +2065,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="money_credit">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Money, Credit &amp; Banking</span><span data-lang="zh">货币、信用与银行</span></h2>
     <div class="logic"><span data-lang="en">Money supply, bank credit, total social financing, policy tools, and interbank rates.</span><span data-lang="zh">货币供应、银行信贷、社会融资规模、政策工具与银行间利率。</span></div>
   </div>
@@ -2828,7 +2829,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="financial_markets">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Financial Markets</span><span data-lang="zh">金融市场</span></h2>
     <div class="logic"><span data-lang="en">Market prices that help cross-check macro stress: equities, effective exchange rates, and market rates.</span><span data-lang="zh">用于交叉验证宏观压力的市场价格：股票、有效汇率与市场利率。</span></div>
   </div>
@@ -2984,7 +2984,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="prices">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Prices</span><span data-lang="zh">价格</span></h2>
     <div class="logic"><span data-lang="en">CPI, PPI, agriculture/raw-material prices, trade prices, and GDP deflator.</span><span data-lang="zh">CPI、PPI、农产品/原材料价格、进出口价格与GDP平减指数。</span></div>
   </div>
@@ -3459,7 +3458,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="population_labor">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Population &amp; Labor</span><span data-lang="zh">人口与劳动力</span></h2>
     <div class="logic"><span data-lang="en">Population structure, migration, employment, unemployment, wages, and survey breaks.</span><span data-lang="zh">人口结构、迁移、就业、失业、工资与调查口径变化。</span></div>
   </div>
@@ -3644,7 +3642,6 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
 <section class="panel" id="government_finance">
   <div class="section-title">
-    <p>PDF logic</p>
     <h2><span data-lang="en">Government Finance</span><span data-lang="zh">政府财政</span></h2>
     <div class="logic"><span data-lang="en">Budget revenue, expenditure, balance, local government debt, and off-budget/quasi-fiscal risks.</span><span data-lang="zh">财政收入、支出、收支差额、地方政府债务与预算外/准财政风险。</span></div>
   </div>
@@ -3800,9 +3797,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
-      <p>Pipeline</p>
       <h2><span data-lang="en">Official Data Gaps</span><span data-lang="zh">官方数据缺口</span></h2>
-      <div class="logic"><span data-lang="en">These are macro indicators that matter for China but are not yet rendered because a reproducible public adapter has not been validated.</span><span data-lang="zh">这些是报告逻辑中的中国核心指标，但由于尚未验证可复跑的公开 adapter，当前暂不渲染为图。</span></div>
+      <div class="logic"><span data-lang="en">These core macroeconomic indicators are tracked within the analytical framework; official public feeds are currently being verified before chart rendering.</span><span data-lang="zh">这些指标属于宏观分析框架中的核心序列，官方公开数据源当前正在验证标准化接入，完成后将统一绘图展示。</span></div>
     </div>
     <table class="gaps-table">
       <thead><tr><th>Section</th><th>Indicator family</th><th>Status</th></tr></thead>

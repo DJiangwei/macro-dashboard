@@ -1,6 +1,6 @@
 {
   "file": "south_korea.html",
-  "generated": "2026-10-30T23:30:39.332188+00:00",
+  "generated": "2026-10-30T23:42:06.300923+00:00",
   "charts": 48,
   "source_groups": 14,
   "data_gaps": 0,
@@ -576,7 +576,7 @@
     "consumer_confidence",
     "manufacturing_wage_growth"
   ],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "krw_usd_latest": "1325.06 (2026-10-23)",
   "cross_checks": [
@@ -609,7 +609,8 @@
     "series": 48,
     "observations": 10251,
     "series_count": 48,
-    "observation_count": 10251
+    "observation_count": 10251,
+    "snapshot_generated": "2026-10-30T23:30:39.335696+00:00"
   },
   "data_gaps_detail": [],
   "source_health": {
@@ -1145,14 +1146,8 @@
     },
     "non_level": [
       {
-        "id": "real_gdp_growth",
-        "label_en": "Real GDP Growth, QoQ SA",
-        "transform": "pct_change",
-        "unit": "% q/q"
-      },
-      {
-        "id": "real_gdp_yoy",
-        "label_en": "Real GDP Growth, YoY",
+        "id": "government_consumption",
+        "label_en": "Government Final Consumption YoY",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
@@ -1163,8 +1158,14 @@
         "unit": "% y/y"
       },
       {
-        "id": "government_consumption",
-        "label_en": "Government Final Consumption YoY",
+        "id": "real_gdp_growth",
+        "label_en": "Real GDP Growth, QoQ SA",
+        "transform": "pct_change",
+        "unit": "% q/q"
+      },
+      {
+        "id": "real_gdp_yoy",
+        "label_en": "Real GDP Growth, YoY",
         "transform": "yoy_pct",
         "unit": "% y/y"
       }
