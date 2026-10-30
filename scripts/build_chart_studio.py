@@ -1184,6 +1184,9 @@ async function fetchCountryFrame(countryCode) {{
       return FRAME_CACHE[countryCode] || {{}};
     }}
   }}
+  if (!res || !res.ok) {{
+    return FRAME_CACHE[countryCode] || {{}};
+  }}
   const data = await res.json();
   const map = FRAME_CACHE[countryCode] || {{}};
 
@@ -1277,7 +1280,7 @@ async function refreshChart() {{
 
     // 4. Apply Transformations
     let plotTraces = [];
-    let y1Title = seriesData[0] ? seriesData[0].unit : '';
+    let y1Title = '';
     let y2Title = '';
     let hasY2 = false;
 
@@ -1387,6 +1390,7 @@ async function refreshChart() {{
           line: {{ color: s.config.color, width: 2.3 }}
         }});
       }});
+      if (!y1Title && y2Title) y1Title = y2Title;
     }}
 
     // 5. Layout Configuration in FT/Claude Style
@@ -1418,16 +1422,6 @@ async function refreshChart() {{
         automargin: true,
         tickfont: {{ size: 10, color: '#4b525f' }},
       }},
-      yaxis2: hasY2 ? {{
-        title: {{ text: y2Title, font: {{ size: 11, color: '#4b525f' }} }},
-        overlaying: 'y',
-        side: 'right',
-        showgrid: false,
-        zeroline: false,
-        autorange: true,
-        automargin: true,
-        tickfont: {{ size: 10, color: '#4b525f' }},
-      }} : undefined,
       legend: {{
         orientation: 'h',
         y: -0.22,
@@ -1443,6 +1437,19 @@ async function refreshChart() {{
       }},
       autosize: true,
     }};
+
+    if (hasY2) {{
+      layout.yaxis2 = {{
+        title: {{ text: y2Title, font: {{ size: 11, color: '#4b525f' }} }},
+        overlaying: 'y',
+        side: 'right',
+        showgrid: false,
+        zeroline: false,
+        autorange: true,
+        automargin: true,
+        tickfont: {{ size: 10, color: '#4b525f' }},
+      }};
+    }}
 
     if (plotTraces.length === 0) {{
       layout.annotations = [{{
