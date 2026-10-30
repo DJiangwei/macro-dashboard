@@ -739,10 +739,161 @@ def render_html(catalog: dict) -> str:
       border-radius: var(--radius);
       cursor: pointer;
       transition: all 0.15s ease;
+      white-space: nowrap;
     }}
     .action-button:hover {{
       background: #fcfaf7;
       border-color: var(--border-strong);
+    }}
+    .action-button.action-accent {{
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }}
+    .action-button.action-accent:hover {{
+      background: #7d0c32;
+    }}
+    .action-button.action-teal {{
+      background: var(--teal);
+      color: #ffffff;
+      border-color: var(--teal);
+    }}
+    .action-button.action-teal:hover {{
+      background: #095860;
+    }}
+
+    /* Chart Header Bar */
+    .chart-header-bar {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: #fcfaf7;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+    }}
+    .chart-title-input {{
+      width: 100%;
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--fg);
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 4px 6px;
+      border-radius: var(--radius);
+      outline: none;
+      transition: all 0.15s ease;
+    }}
+    .chart-title-input:hover {{
+      background: #ffffff;
+      border-color: var(--border);
+    }}
+    .chart-title-input:focus {{
+      background: #ffffff;
+      border-color: var(--accent);
+    }}
+    .chart-title-hint {{
+      font-size: 11px;
+      color: var(--muted);
+      padding-left: 6px;
+    }}
+
+    /* Indicator Inline Search Input */
+    .indicator-search-input {{
+      width: 100%;
+      padding: 5px 8px;
+      background: #f7f5f0;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: var(--radius) var(--radius) 0 0;
+      font-size: 11px;
+      color: var(--fg);
+      font-family: var(--font-body);
+      outline: none;
+      transition: all 0.15s ease;
+    }}
+    .indicator-search-input:focus {{
+      background: #ffffff;
+      border-color: var(--accent);
+    }}
+    select.searchable-select {{
+      border-radius: 0 0 var(--radius) var(--radius) !important;
+    }}
+
+    /* Presets Panel Groupings */
+    .presets-section {{
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }}
+    .presets-group-title {{
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }}
+    .preset-del-btn {{
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 11px;
+      padding: 0 2px;
+      margin-left: 4px;
+      cursor: pointer;
+      border-radius: 2px;
+      line-height: 1;
+      transition: color 0.15s ease;
+    }}
+    .preset-del-btn:hover {{
+      color: var(--accent);
+    }}
+    .empty-custom-note {{
+      font-size: 12px;
+      color: var(--muted);
+      font-style: italic;
+      padding: 4px 0;
+    }}
+
+    /* FT/Claude Toast Notifications */
+    .toast-container {{
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }}
+    .toast {{
+      background: #12151a;
+      color: #ffffff;
+      padding: 11px 18px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.20);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: auto;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      border-left: 3px solid var(--accent);
+    }}
+    .toast.show {{
+      opacity: 1;
+      transform: translateY(0);
+    }}
+    .toast-icon {{
+      font-size: 14px;
     }}
 
     #chart-canvas {{
@@ -842,31 +993,44 @@ def render_html(catalog: dict) -> str:
     <p class="eyebrow"><span data-lang="en">Macro Chart Studio · Cross-Country Workbench</span><span data-lang="zh">宏观专业图表工坊 · 跨国多序列画板</span></p>
     <h1><span data-lang="en">Interactive Macro Chart Studio</span><span data-lang="zh">多指标自定义对比图表工坊</span></h1>
     <p class="subtitle">
-      <span data-lang="en">Overlay up to 5 macroeconomic time series across 18 economies onto a unified canvas. Supports dual Y-axis scaling, base-100 re-indexing, cross-country spread calculation, and publication-quality PNG / CSV exports.</span>
-      <span data-lang="zh">在统一画布上自由叠加对比 18 个经济体的至多 5 条宏观时间序列。支持左/右双 Y 轴自由指派、基期 100 归一化发散度对比、跨国跨序列利差差值分析，以及出版级高清图表与 CSV 数据导出。</span>
+      <span data-lang="en">Overlay up to 5 macroeconomic time series across 18 economies onto a unified canvas. Supports dual Y-axis scaling, base-100 re-indexing, cross-country spread calculation, and publication-quality PNG / SVG exports with full CSV dataset download.</span>
+      <span data-lang="zh">在统一画布上自由叠加对比 18 个经济体的至多 5 条宏观时间序列。支持左/右双 Y 轴自由指派、基期 100 归一化发散度对比、跨国跨序列利差差值分析，以及出版级高清图表 (PNG/SVG) 与完整 CSV/JSON 数据导出。</span>
     </p>
     <div class="meta-row">
       <span class="meta-chip"><strong>18</strong> <span data-lang="en">Economies</span><span data-lang="zh">覆盖经济体</span></span>
-      <span class="meta-chip"><strong>1,307</strong> <span data-lang="en">Standardized Series</span><span data-lang="zh">标准化序列</span></span>
+      <span class="meta-chip"><strong>{catalog['total_indicators']}</strong> <span data-lang="en">Standardized Series</span><span data-lang="zh">标准化序列</span></span>
       <span class="meta-chip"><strong style="color:var(--accent);">Dual Y-Axis</strong> <span data-lang="en">Independent Scaling</span><span data-lang="zh">双 Y 轴支持</span></span>
       <span class="meta-chip"><strong style="color:var(--teal);">Spread & Rebase</strong> <span data-lang="en">Macro Transforms</span><span data-lang="zh">利差与归一化</span></span>
     </div>
   </header>
 
-  <!-- Curated Presets Bar -->
+  <!-- Curated & Custom Presets Panel -->
   <section class="section-card">
     <div class="card-header">
       <div class="card-title">
         <span>★</span>
-        <span data-lang="en">Curated Macro Analysis Presets</span><span data-lang="zh">经典宏观专题预设</span>
+        <span data-lang="en">Analysis Presets & Saved Views</span><span data-lang="zh">经典专题预设与个人视角</span>
       </div>
       <div class="card-desc">
-        <span data-lang="en">Click any template to instantly load cross-country multi-series configurations</span>
-        <span data-lang="zh">点击一键加载典型跨境利差、核心央行政策利率与增长动能对比</span>
+        <span data-lang="en">Click any preset to instantly load multi-series setups, or save your current view</span>
+        <span data-lang="zh">点击一键加载跨境利差、核心央行政策利率与增长动能对比，亦可保存个人专属视角</span>
       </div>
     </div>
-    <div class="presets-list" id="presets-container">
-      <!-- Injected via JS -->
+    <div class="presets-section">
+      <div class="presets-group-title">
+        <span>★</span>
+        <span data-lang="en">Curated Macro Presets</span><span data-lang="zh">经典宏观专题预设</span>
+      </div>
+      <div class="presets-list" id="curated-presets-container">
+        <!-- Injected via JS -->
+      </div>
+      <div class="presets-group-title" style="margin-top: 6px;">
+        <span>⭐</span>
+        <span data-lang="en">My Saved Views (Browser LocalStorage)</span><span data-lang="zh">我的保存视图 (本地持久化)</span>
+      </div>
+      <div class="presets-list" id="custom-presets-container">
+        <!-- Injected via JS -->
+      </div>
     </div>
   </section>
 
@@ -936,16 +1100,42 @@ def render_html(catalog: dict) -> str:
         <div class="toolbar-group">
           <button type="button" class="action-button" onclick="exportPNG()" title="Export high-resolution PNG">
             <span>📷</span>
-            <span data-lang="en">Download PNG</span><span data-lang="zh">下载高清图</span>
+            <span data-lang="en">PNG</span><span data-lang="zh">PNG</span>
+          </button>
+          <button type="button" class="action-button" onclick="exportSVG()" title="Export vector SVG graphic">
+            <span>📐</span>
+            <span data-lang="en">SVG</span><span data-lang="zh">SVG</span>
           </button>
           <button type="button" class="action-button" onclick="exportCSV()" title="Export aligned CSV dataset">
             <span>📥</span>
-            <span data-lang="en">Export CSV</span><span data-lang="zh">导出 CSV</span>
+            <span data-lang="en">CSV</span><span data-lang="zh">CSV</span>
           </button>
-          <button type="button" class="action-button" onclick="copyShareURL()" title="Copy shareable link with current view state">
+          <button type="button" class="action-button" onclick="exportJSON()" title="Export structured JSON dataset">
+            <span>💾</span>
+            <span data-lang="en">JSON</span><span data-lang="zh">JSON</span>
+          </button>
+          <button type="button" class="action-button action-accent" onclick="promptSavePreset()" title="Save current view to My Presets">
+            <span>⭐</span>
+            <span data-lang="en">Save View</span><span data-lang="zh">保存视图</span>
+          </button>
+          <button type="button" class="action-button action-teal" onclick="copyShareURL()" title="Copy shareable link with current view state">
             <span>🔗</span>
-            <span data-lang="en">Share Link</span><span data-lang="zh">分享链接</span>
+            <span data-lang="en">Share</span><span data-lang="zh">分享链接</span>
           </button>
+        </div>
+      </div>
+
+      <!-- Chart Header Bar (Editable Custom Title) -->
+      <div class="chart-header-bar">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+          <input type="text" id="chart-title-input" class="chart-title-input"
+                 placeholder="输入自定义图表标题 (如: 欧美10年期基准国债收益率与利差对比)..."
+                 oninput="onTitleInput(this.value)"
+                 onblur="refreshChart()">
+          <span class="chart-title-hint">
+            <span data-lang="en">Custom title and official source watermark are embedded directly into canvas and exported images (PNG/SVG).</span>
+            <span data-lang="zh">自定义标题与官方权威数据源水印将实时嵌入画布及导出的出版级高清图像 (PNG/SVG)。</span>
+          </span>
         </div>
       </div>
 
@@ -990,6 +1180,7 @@ def render_html(catalog: dict) -> str:
     <div>Research artefact only, not investment advice.</div>
   </footer>
 
+  <div class="toast-container" id="toast-container"></div>
 </main>
 
 <script>
@@ -1036,17 +1227,151 @@ async function init() {{
   }}
 }}
 
+let CHART_CUSTOM_TITLE = '';
+const STORAGE_KEY = 'macro_chart_studio_custom_presets_v1';
+
+function showToast(message, icon = '✓') {{
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `<span class="toast-icon">${{icon}}</span><span>${{message}}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => toast.classList.add('show'), 15);
+  setTimeout(() => {{
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 350);
+  }}, 3200);
+}}
+
+function getEffectiveTitle() {{
+  if (CHART_CUSTOM_TITLE && CHART_CUSTOM_TITLE.trim()) {{
+    return CHART_CUSTOM_TITLE.trim();
+  }}
+  if (window._CURRENT_PRESET_TITLE && window._CURRENT_PRESET_TITLE.trim()) {{
+    return window._CURRENT_PRESET_TITLE.trim();
+  }}
+  if (ACTIVE_SERIES.length > 0) {{
+    const names = ACTIVE_SERIES.map(s => {{
+      const frame = FRAME_CACHE[s.country] || {{}};
+      const raw = frame[s.indicatorId];
+      const meta = raw ? (raw.metadata || raw) : {{}};
+      const lbl = (CURRENT_LANG === 'zh' ? meta.label_zh : meta.label_en) || s.indicatorId;
+      return `${{s.country}} ${{lbl}}`;
+    }});
+    if (CURRENT_TRANSFORM === 'spread' && names.length >= 2) {{
+      return `Spread: ${{names[0]}} vs ${{names[1]}}`;
+    }}
+    return names.slice(0, 2).join(' vs ') + (names.length > 2 ? ` (+${{names.length - 2}})` : '');
+  }}
+  return CURRENT_LANG === 'zh' ? '宏观图表工坊 · 多指标对比' : 'Macro Chart Studio · Multi-Series View';
+}}
+
+function onTitleInput(val) {{
+  CHART_CUSTOM_TITLE = val;
+  clearTimeout(window._titleTimer);
+  window._titleTimer = setTimeout(() => {{
+    syncHash();
+  }}, 500);
+}}
+
+function getCustomPresets() {{
+  try {{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  }} catch (e) {{
+    console.warn("Could not read custom presets from localStorage:", e);
+    return [];
+  }}
+}}
+
+function saveCustomPresets(list) {{
+  try {{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  }} catch (e) {{
+    console.warn("Could not save custom presets to localStorage:", e);
+  }}
+}}
+
+function promptSavePreset() {{
+  const currentTitle = CHART_CUSTOM_TITLE || getEffectiveTitle();
+  const promptText = CURRENT_LANG === 'zh' ? '请输入自定义视图名称：' : 'Enter a name for this custom view:';
+  const name = prompt(promptText, currentTitle);
+  if (!name || !name.trim()) return;
+
+  const newPreset = {{
+    id: 'user_' + Date.now(),
+    title_en: name.trim(),
+    title_zh: name.trim(),
+    custom_title: name.trim(),
+    transform: CURRENT_TRANSFORM,
+    date_range: CURRENT_RANGE,
+    series: ACTIVE_SERIES.map(s => ({{
+      country: s.country,
+      id: s.indicatorId,
+      axis: s.axis || 'left'
+    }}))
+  }};
+
+  const list = getCustomPresets();
+  list.unshift(newPreset);
+  saveCustomPresets(list);
+  renderPresets();
+  showToast(CURRENT_LANG === 'zh' ? `已保存自定义预设：「${{name.trim()}}」` : `Saved custom view: "${{name.trim()}}"`, '⭐');
+}}
+
+function deleteCustomPreset(e, id) {{
+  e.stopPropagation();
+  const confirmMsg = CURRENT_LANG === 'zh' ? '确定删除此自定义预设吗？' : 'Delete this custom view?';
+  if (!confirm(confirmMsg)) return;
+
+  let list = getCustomPresets();
+  list = list.filter(p => p.id !== id);
+  saveCustomPresets(list);
+  renderPresets();
+  showToast(CURRENT_LANG === 'zh' ? '已删除该自定义预设' : 'Preset deleted', '🗑️');
+}}
+
 function renderPresets() {{
-  const container = document.getElementById('presets-container');
-  container.innerHTML = '';
-  CATALOG.presets.forEach(p => {{
-    const btn = document.createElement('div');
-    btn.className = 'preset-pill';
-    const title = CURRENT_LANG === 'zh' ? p.title_zh : p.title_en;
-    btn.innerHTML = `<span class="star">★</span><span>${{title}}</span>`;
-    btn.onclick = () => loadPreset(p);
-    container.appendChild(btn);
-  }});
+  const curatedContainer = document.getElementById('curated-presets-container');
+  const customContainer = document.getElementById('custom-presets-container');
+  if (curatedContainer) {{
+    curatedContainer.innerHTML = '';
+    CATALOG.presets.forEach(p => {{
+      const btn = document.createElement('div');
+      btn.className = 'preset-pill';
+      const title = CURRENT_LANG === 'zh' ? p.title_zh : p.title_en;
+      btn.innerHTML = `<span class="star">★</span><span>${{title}}</span>`;
+      btn.onclick = () => loadPreset(p);
+      curatedContainer.appendChild(btn);
+    }});
+  }}
+
+  if (customContainer) {{
+    customContainer.innerHTML = '';
+    const customs = getCustomPresets();
+    if (customs.length === 0) {{
+      const emptyNote = document.createElement('span');
+      emptyNote.className = 'empty-custom-note';
+      emptyNote.textContent = CURRENT_LANG === 'zh'
+        ? '暂无保存的自定义视图。配置完指标后，点击右侧工具栏「⭐ 保存视图」即可存入浏览器。'
+        : 'No saved views yet. Configure series and click "⭐ Save View" in the toolbar to save here.';
+      customContainer.appendChild(emptyNote);
+    }} else {{
+      customs.forEach(p => {{
+        const btn = document.createElement('div');
+        btn.className = 'preset-pill custom-preset-pill';
+        const title = CURRENT_LANG === 'zh' ? p.title_zh : p.title_en;
+        btn.innerHTML = `
+          <span class="star" style="color:var(--accent);">⭐</span>
+          <span>${{title}}</span>
+          <button type="button" class="preset-del-btn" title="${{CURRENT_LANG === 'zh' ? '删除预设' : 'Delete preset'}}" onclick="deleteCustomPreset(event, '${{p.id}}')">✕</button>
+        `;
+        btn.onclick = () => loadPreset(p);
+        customContainer.appendChild(btn);
+      }});
+    }}
+  }}
 }}
 
 function loadPreset(preset) {{
@@ -1061,6 +1386,13 @@ function loadPreset(preset) {{
   }});
   CURRENT_TRANSFORM = preset.transform || 'raw';
   CURRENT_RANGE = preset.date_range || '5y';
+  CHART_CUSTOM_TITLE = (CURRENT_LANG === 'zh' ? preset.title_zh : preset.title_en) || preset.custom_title || '';
+  window._CURRENT_PRESET_TITLE = CHART_CUSTOM_TITLE;
+
+  const titleInput = document.getElementById('chart-title-input');
+  if (titleInput) {{
+    titleInput.value = CHART_CUSTOM_TITLE;
+  }}
 
   updateControlsUI();
   refreshChart();
@@ -1076,6 +1408,45 @@ function updateControlsUI() {{
     btn.classList.toggle('active', btn.dataset.range === CURRENT_RANGE);
   }});
   renderSeriesControls();
+}}
+
+function filterIndicatorDropdown(idx, query) {{
+  const select = document.getElementById(`select-ind-${{idx}}`);
+  if (!select) return;
+  const q = (query || '').toLowerCase().trim();
+  const cData = CATALOG.countries.find(c => c.code === ACTIVE_SERIES[idx].country);
+  if (!cData) return;
+
+  const optgroups = select.querySelectorAll('optgroup');
+  let firstVisibleVal = null;
+  let matchesCount = 0;
+
+  optgroups.forEach(group => {{
+    let groupHasVisible = false;
+    group.querySelectorAll('option').forEach(opt => {{
+      const text = opt.textContent.toLowerCase();
+      const val = opt.value.toLowerCase();
+      const match = !q || text.includes(q) || val.includes(q);
+      if (match) {{
+        opt.hidden = false;
+        opt.disabled = false;
+        groupHasVisible = true;
+        matchesCount++;
+        if (!firstVisibleVal) firstVisibleVal = opt.value;
+      }} else {{
+        opt.hidden = true;
+        opt.disabled = true;
+      }}
+    }});
+    group.hidden = !groupHasVisible;
+  }});
+
+  const countBadge = document.getElementById(`ind-count-${{idx}}`);
+  if (countBadge) {{
+    countBadge.textContent = q
+      ? `${{matchesCount}} ${{CURRENT_LANG === 'zh' ? '个匹配' : 'matches'}}`
+      : `${{cData.indicators.length}} ${{CURRENT_LANG === 'zh' ? '个序列' : 'series'}}`;
+  }}
 }}
 
 function renderSeriesControls() {{
@@ -1158,8 +1529,16 @@ function renderSeriesControls() {{
         </div>
       </div>
       <div class="form-group">
-        <span class="form-label">${{CURRENT_LANG === 'zh' ? '选择指标' : 'Indicator'}}</span>
-        <select onchange="onIndicatorChange(${{idx}}, this.value)">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+          <span class="form-label" style="margin-bottom:0;">${{CURRENT_LANG === 'zh' ? '选择指标' : 'Indicator'}}</span>
+          <span id="ind-count-${{idx}}" style="font-size: 10px; color: var(--muted); font-weight: 500;">
+            ${{cData ? cData.indicators.length : 0}} ${{CURRENT_LANG === 'zh' ? '个序列' : 'series'}}
+          </span>
+        </div>
+        <input type="text" class="indicator-search-input" id="search-ind-${{idx}}"
+               placeholder="${{CURRENT_LANG === 'zh' ? '🔍 过滤指标 (输入名称/单位)...' : '🔍 Filter indicators (name/id)...'}}"
+               oninput="filterIndicatorDropdown(${{idx}}, this.value)">
+        <select id="select-ind-${{idx}}" class="searchable-select" onchange="onIndicatorChange(${{idx}}, this.value)">
           ${{indicatorOpts}}
         </select>
       </div>
@@ -1612,14 +1991,49 @@ async function refreshChart() {{
     }}
 
     // 5. Layout Configuration in FT/Claude Style
+    const effectiveTitle = getEffectiveTitle();
+    const titleInput = document.getElementById('chart-title-input');
+    if (titleInput && !titleInput.value && !CHART_CUSTOM_TITLE) {{
+      titleInput.placeholder = effectiveTitle;
+    }}
+
     const y1Label = CURRENT_LANG === 'zh' ? `← Y1 (左轴)${{y1Title ? ' · ' + y1Title : ''}}` : `← Y1 (Left)${{y1Title ? ' · ' + y1Title : ''}}`;
     const y2Label = CURRENT_LANG === 'zh' ? `Y2 (右轴) →${{y2Title ? ' · ' + y2Title : ''}}` : `Y2 (Right) →${{y2Title ? ' · ' + y2Title : ''}}`;
 
+    // Add source watermark annotation
+    annotations.push({{
+      xref: 'paper',
+      yref: 'paper',
+      x: 1.0,
+      y: -0.21,
+      xanchor: 'right',
+      yanchor: 'top',
+      text: '<i>Source: East Meridian Country Primer · Official Macro Pipeline</i>',
+      showarrow: false,
+      font: {{
+        family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        size: 9.5,
+        color: '#737c8c'
+      }}
+    }});
+
     const layout = {{
       height: 560,
-      margin: {{ l: 64, r: hasY2 ? 84 : 96, t: 26, b: 64 }},
+      margin: {{ l: 64, r: hasY2 ? 84 : 96, t: 56, b: 64 }},
       paper_bgcolor: '#ffffff',
       plot_bgcolor: '#ffffff',
+      title: {{
+        text: `<b>${{effectiveTitle}}</b>`,
+        font: {{
+          family: '"Newsreader", "Iowan Old Style", "Songti SC", Georgia, serif',
+          size: 16,
+          color: '#12151a'
+        }},
+        x: 0.02,
+        y: 0.98,
+        xanchor: 'left',
+        yanchor: 'top'
+      }},
       font: {{
         family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif",
         size: 11,
@@ -1739,6 +2153,7 @@ function syncHash() {{
   const payload = {{
     t: CURRENT_TRANSFORM,
     r: CURRENT_RANGE,
+    title: CHART_CUSTOM_TITLE || undefined,
     s: ACTIVE_SERIES.map(item => `${{item.country}}:${{item.indicatorId}}:${{item.axis}}`).join(';')
   }};
   const hash = `#state=${{encodeURIComponent(JSON.stringify(payload))}}`;
@@ -1752,6 +2167,11 @@ function loadFromHash(hash) {{
     const payload = JSON.parse(decodeURIComponent(match[1]));
     if (payload.t) CURRENT_TRANSFORM = payload.t;
     if (payload.r) CURRENT_RANGE = payload.r;
+    if (payload.title) {{
+      CHART_CUSTOM_TITLE = payload.title;
+      const titleInput = document.getElementById('chart-title-input');
+      if (titleInput) titleInput.value = payload.title;
+    }}
     if (payload.s) {{
       ACTIVE_SERIES = [];
       payload.s.split(';').forEach((chunk, idx) => {{
@@ -1768,6 +2188,7 @@ function loadFromHash(hash) {{
     }}
     updateControlsUI();
     refreshChart();
+    showToast(CURRENT_LANG === 'zh' ? '已根据分享链接还原图表视图' : 'Chart view restored from share link', '🔗');
   }} catch (e) {{
     console.error("Failed to parse URL hash:", e);
   }}
@@ -1775,36 +2196,116 @@ function loadFromHash(hash) {{
 
 // Action Buttons
 function exportPNG() {{
+  const effectiveTitle = getEffectiveTitle();
+  const safeFilename = effectiveTitle.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fa5]+/gi, '_') + '_' + new Date().toISOString().slice(0, 10);
   Plotly.downloadImage('chart-canvas', {{
     format: 'png',
     width: 1400,
     height: 750,
-    filename: `macro_chart_studio_${{Date.now()}}`
+    filename: safeFilename
+  }}).then(() => {{
+    showToast(CURRENT_LANG === 'zh' ? '高清 PNG 图表下载已启动！' : 'High-resolution PNG download started!', '📷');
+  }}).catch(err => {{
+    console.error("PNG export error:", err);
   }});
 }}
 
-function exportCSV() {{
-  const neededCountries = [...new Set(ACTIVE_SERIES.map(s => s.country))];
-  const allDates = new Set();
-  const seriesMap = [];
+function exportSVG() {{
+  const effectiveTitle = getEffectiveTitle();
+  const safeFilename = effectiveTitle.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fa5]+/gi, '_') + '_' + new Date().toISOString().slice(0, 10);
+  Plotly.downloadImage('chart-canvas', {{
+    format: 'svg',
+    width: 1400,
+    height: 750,
+    filename: safeFilename
+  }}).then(() => {{
+    showToast(CURRENT_LANG === 'zh' ? '矢量 SVG 图表下载已启动！' : 'Vector SVG download started!', '📐');
+  }}).catch(err => {{
+    console.error("SVG export error:", err);
+  }});
+}}
+
+function exportJSON() {{
+  const effectiveTitle = getEffectiveTitle();
+  const payload = {{
+    exported_at: new Date().toISOString(),
+    chart_title: effectiveTitle,
+    transform: CURRENT_TRANSFORM,
+    date_range: CURRENT_RANGE,
+    series: []
+  }};
 
   ACTIVE_SERIES.forEach((item, idx) => {{
     const frame = FRAME_CACHE[item.country] || {{}};
     const rawSeries = frame[item.indicatorId];
     if (!rawSeries) return;
     const meta = rawSeries.metadata || rawSeries;
-    const colName = `${{item.country}}_${{item.indicatorId}}_${{meta.unit || ''}}`.replace(/,/g, '');
+    payload.series.push({{
+      country: item.country,
+      indicator_id: item.indicatorId,
+      label_en: meta.label_en || item.indicatorId,
+      label_zh: meta.label_zh || item.indicatorId,
+      unit: meta.unit || '',
+      frequency: meta.frequency || '',
+      axis: item.axis,
+      source: meta.source || {{}},
+      quality: meta.quality || {{}},
+      observations: rawSeries.observations || []
+    }});
+  }});
+
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {{ type: 'application/json;charset=utf-8;' }});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  const safeFilename = effectiveTitle.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fa5]+/gi, '_') + '_' + new Date().toISOString().slice(0, 10) + '.json';
+  link.setAttribute('download', safeFilename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  showToast(CURRENT_LANG === 'zh' ? 'JSON 数据集下载已启动！' : 'JSON dataset downloaded!', '💾');
+}}
+
+function exportCSV() {{
+  const neededCountries = [...new Set(ACTIVE_SERIES.map(s => s.country))];
+  const allDates = new Set();
+  const seriesCols = [];
+
+  ACTIVE_SERIES.forEach((item, idx) => {{
+    const frame = FRAME_CACHE[item.country] || {{}};
+    const rawSeries = frame[item.indicatorId];
+    if (!rawSeries) return;
+    const meta = rawSeries.metadata || rawSeries;
+    const label = (CURRENT_LANG === 'zh' ? meta.label_zh : meta.label_en) || item.indicatorId;
+    const colName = `${{item.country}}_${{item.indicatorId}}`;
+    const headerTitle = `${{item.country}} - ${{label}} (${{meta.unit || ''}})`;
     const dateMap = new Map((rawSeries.observations || []).map(r => [String(r[0]), Number(r[1])]));
     dateMap.forEach((_, d) => allDates.add(d));
-    seriesMap.push({{ name: colName, map: dateMap }});
+    seriesCols.push({{
+      key: colName,
+      title: headerTitle,
+      unit: meta.unit || '',
+      source: (meta.source && meta.source.name) ? meta.source.name : '',
+      axis: item.axis,
+      map: dateMap
+    }});
   }});
 
   const sortedDates = [...allDates].sort();
-  let csv = 'date,' + seriesMap.map(s => `"${{s.name}}"`).join(',') + '\\n';
+  const effectiveTitle = getEffectiveTitle();
+  const nowStr = new Date().toISOString();
+
+  let csv = `# East Meridian Macro Chart Studio Export\\n`;
+  csv += `# Title: ${{effectiveTitle.replace(/[\\r\\n]/g, ' ')}}\\n`;
+  csv += `# Exported: ${{nowStr}}\\n`;
+  csv += `# Transform: ${{CURRENT_TRANSFORM}} | Range: ${{CURRENT_RANGE}}\\n`;
+  seriesCols.forEach(col => {{
+    csv += `# Series: ${{col.title}} | Source: ${{col.source}} | Axis: ${{col.axis.toUpperCase()}}\\n`;
+  }});
+  csv += 'date,' + seriesCols.map(s => `"${{s.title.replace(/"/g, '""')}}"`).join(',') + '\\n';
 
   sortedDates.forEach(date => {{
     const row = [date];
-    seriesMap.forEach(s => {{
+    seriesCols.forEach(s => {{
       const val = s.map.get(date);
       row.push(val !== undefined && !isNaN(val) ? val : '');
     }});
@@ -1814,17 +2315,21 @@ function exportCSV() {{
   const blob = new Blob([csv], {{ type: 'text/csv;charset=utf-8;' }});
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
-  link.setAttribute('download', `macro_chart_data_${{Date.now()}}.csv`);
+  const safeFilename = effectiveTitle.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fa5]+/gi, '_') + '_' + new Date().toISOString().slice(0, 10) + '.csv';
+  link.setAttribute('download', safeFilename);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+  showToast(CURRENT_LANG === 'zh' ? '包含完整元数据的 CSV 数据集已下载！' : 'CSV dataset with metadata downloaded!', '📥');
 }}
 
 function copyShareURL() {{
-  navigator.clipboard.writeText(window.location.href).then(() => {{
-    alert(CURRENT_LANG === 'zh' ? '已复制分享链接！包含当前的指标配置与变换模式。' : 'Share link copied to clipboard! Contains your series setup and layout.');
+  syncHash();
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(() => {{
+    showToast(CURRENT_LANG === 'zh' ? '分享链接已复制！包含当前的图表配置与标题。' : 'Share link copied! Includes configuration and layout.', '🔗');
   }}).catch(() => {{
-    prompt(CURRENT_LANG === 'zh' ? '复制此链接分享当前图表：' : 'Copy link to share chart:', window.location.href);
+    prompt(CURRENT_LANG === 'zh' ? '复制此链接分享当前图表：' : 'Copy link to share chart:', url);
   }});
 }}
 
@@ -1836,6 +2341,7 @@ function toggleLang() {{
   renderPresets();
   renderSeriesControls();
   refreshChart();
+  showToast(CURRENT_LANG === 'zh' ? '已切换至中文界面' : 'Switched to English interface', '🌐');
 }}
 
 window.addEventListener('DOMContentLoaded', init);
