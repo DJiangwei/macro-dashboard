@@ -332,6 +332,65 @@ PRESETS = [
             {"country": "EA", "id": "eurosystem_total_assets", "axis": "left", "color": "#2563eb", "label": "ECB Eurosystem Assets (EUR mn)"},
             {"country": "JP", "id": "boj_total_assets", "axis": "right", "color": "#990f3d", "label": "BoJ Total Assets (JPY 100mn)"}
         ]
+    },
+    {
+        "id": "us_tips_breakeven_regression",
+        "title_en": "US 10Y Nominal vs TIPS Breakeven: Inflation Expectation Sensitivity (OLS)",
+        "title_zh": "美国10年期名义国债 vs 10年期TIPS通胀预期：敏感度与OLS线性回归",
+        "description_zh": "分析美国10年期名义国债收益率与10年期TIPS盈亏平衡通胀预期的联动关系与回归弹性系数(Beta)。",
+        "description_en": "Scatter and OLS linear regression between US 10Y nominal Treasury yields and 10Y TIPS breakeven inflation expectations.",
+        "transform": "raw",
+        "date_range": "5y",
+        "view": "scatter_ols",
+        "series": [
+            {"country": "US", "id": "ten_year_breakeven", "axis": "left", "color": "#0d7680", "label": "10Y TIPS Breakeven Inflation (%)"},
+            {"country": "US", "id": "treasury_10y_yield", "axis": "left", "color": "#990f3d", "label": "US 10Y Treasury Yield (%)"}
+        ]
+    },
+    {
+        "id": "us_wei_jobless_claims_lead_lag",
+        "title_en": "US Real Activity Pulse: Weekly Economic Index vs Jobless Claims (Lead-Lag)",
+        "title_zh": "美国高频经济动能脉搏：纽约联储WEI vs 初请失业金 领先-滞后时序分析",
+        "description_zh": "高频先行指标交叉相关：纽约联储周度经济指数(WEI)与初请失业金4周均线在不同期数滞后下的相关系数曲线与最佳领先期数探测。",
+        "description_en": "Lead-lag cross-correlation between NY Fed Weekly Economic Index and 4-week moving average initial jobless claims.",
+        "transform": "zscore",
+        "date_range": "5y",
+        "view": "lead_lag",
+        "series": [
+            {"country": "US", "id": "weekly_economic_index", "axis": "left", "color": "#0d7680", "label": "NY Fed Weekly Economic Index"},
+            {"country": "US", "id": "initial_jobless_claims_4w_ma", "axis": "right", "color": "#990f3d", "label": "Initial Jobless Claims 4W-MA (persons)"}
+        ]
+    },
+    {
+        "id": "global_yield_cross_correlation_matrix",
+        "title_en": "Global Sovereign 10Y Yields: Cross-Country Correlation Matrix & Rolling Linkage",
+        "title_zh": "全球主要经济体10年期国债收益率：跨国相关性矩阵与滚动联动分析",
+        "description_zh": "美、德、英、日、中五国基准10年期国债收益率全景相关性矩阵热力图与跨大西洋利差滚动相关性。",
+        "description_en": "Pairwise correlation matrix heatmap across benchmark 10Y sovereign yields for US, Germany, UK, Japan, and China.",
+        "transform": "raw",
+        "date_range": "5y",
+        "view": "correlation",
+        "series": [
+            {"country": "US", "id": "treasury_10y_yield", "axis": "left", "color": "#990f3d", "label": "US 10Y Treasury (%)"},
+            {"country": "EA", "id": "aaa_yield_10y", "axis": "left", "color": "#0d7680", "label": "Germany Bund 10Y (%)"},
+            {"country": "UK", "id": "long_rate_10y", "axis": "left", "color": "#364b61", "label": "UK Gilt 10Y (%)"},
+            {"country": "JP", "id": "sovereign_yield_10y", "axis": "left", "color": "#d97706", "label": "Japan JGB 10Y (%)"},
+            {"country": "CN", "id": "cgb_yield_10y", "axis": "left", "color": "#dc2626", "label": "China CGB 10Y (%)"}
+        ]
+    },
+    {
+        "id": "kr_tw_semiconductor_zscore",
+        "title_en": "East Asia Tech Cycle: Korea KOSPI vs Taiwan TAIEX Normalized Z-Scores",
+        "title_zh": "东亚半导体出口双雄：韩国 KOSPI vs 台湾 TAIEX Z-Score 标准化动能对比",
+        "description_zh": "通过 Z-Score 标准化去除基数差异，同屏评估韩国 KOSPI 与台湾 TAIEX 股指在科技周期中的相对超买超卖与周期极值位置。",
+        "description_en": "Standardized Z-score momentum comparison of Korea KOSPI and Taiwan TAIEX equity benchmarks.",
+        "transform": "zscore",
+        "date_range": "5y",
+        "view": "timeseries",
+        "series": [
+            {"country": "KR", "id": "kospi_stock_index", "axis": "left", "color": "#990f3d", "label": "Korea KOSPI Index"},
+            {"country": "TW", "id": "taiex_index", "axis": "left", "color": "#0d7680", "label": "Taiwan TAIEX Index"}
+        ]
     }
 ]
 
@@ -749,6 +808,23 @@ def render_html(catalog: dict) -> str:
       padding: 2px;
       width: 100%;
     }}
+    .segmented-grid {{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      background: #f7f5f0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 3px;
+      width: 100%;
+    }}
+    .segmented-grid .segmented-btn {{
+      text-align: center;
+      padding: 5px 3px;
+      font-size: 10.5px;
+      line-height: 1.2;
+      border-radius: 3px;
+    }}
     .segmented-btn {{
       flex: 1;
       text-align: center;
@@ -776,6 +852,143 @@ def render_html(catalog: dict) -> str:
     .segmented-btn.btn-axis-right.active {{
       background: var(--teal);
       color: #ffffff;
+    }}
+
+    /* Analytical Canvas View Tabs */
+    .canvas-view-nav {{
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #f7f5f0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 3px;
+      margin-bottom: 10px;
+      overflow-x: auto;
+    }}
+    .view-tab-btn {{
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 12px;
+      background: transparent;
+      border: none;
+      border-radius: 3px;
+      font-family: var(--font-body);
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      user-select: none;
+    }}
+    .view-tab-btn:hover {{
+      color: var(--fg);
+      background: rgba(18, 21, 26, 0.04);
+    }}
+    .view-tab-btn.active {{
+      background: var(--fg);
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }}
+    .view-tab-btn .tab-icon {{
+      font-size: 13px;
+    }}
+
+    /* Quant Analytics Contextual Toolbar */
+    .quant-context-bar {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: #fcfaf7;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px 12px;
+      margin-bottom: 10px;
+    }}
+    .quant-select-group {{
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+    }}
+    .quant-select {{
+      padding: 4px 8px;
+      font-size: 11px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #ffffff;
+      color: var(--fg);
+      outline: none;
+      max-width: 240px;
+    }}
+    .quant-chips-row {{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }}
+    .quant-chip {{
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 11px;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-secondary);
+    }}
+    .quant-chip strong {{
+      color: var(--fg);
+    }}
+    .quant-chip.accent {{
+      border-color: rgba(153, 15, 61, 0.25);
+      background: rgba(153, 15, 61, 0.04);
+      color: var(--accent);
+    }}
+    .quant-chip.teal {{
+      border-color: rgba(13, 118, 128, 0.25);
+      background: rgba(13, 118, 128, 0.04);
+      color: var(--teal);
+    }}
+
+    /* Percentile progress track in summary table */
+    .percentile-cell {{
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 90px;
+    }}
+    .pct-track {{
+      flex: 1;
+      height: 5px;
+      background: rgba(18, 21, 26, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }}
+    .pct-fill {{
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }}
+    .zscore-tag {{
+      display: inline-block;
+      font-weight: 700;
+      font-size: 11px;
+      font-variant-numeric: tabular-nums;
+      padding: 1px 5px;
+      border-radius: 3px;
     }}
 
     .card-axis-pill {{
@@ -1215,18 +1428,30 @@ def render_html(catalog: dict) -> str:
           <span data-lang="en">Transform / Calculation</span>
           <span data-lang="zh">图表计算与变换模式</span>
         </span>
-        <div class="segmented-group" id="transform-group">
+        <div class="segmented-grid" id="transform-group">
           <button type="button" class="segmented-btn active" data-transform="raw" onclick="setTransform('raw')">
             <span data-lang="en">Raw Level</span>
             <span data-lang="zh">原始数值</span>
           </button>
           <button type="button" class="segmented-btn" data-transform="rebase" onclick="setTransform('rebase')">
             <span data-lang="en">Base = 100</span>
-            <span data-lang="zh">基期归一化</span>
+            <span data-lang="zh">基期归一</span>
           </button>
           <button type="button" class="segmented-btn" data-transform="spread" onclick="setTransform('spread')">
-            <span data-lang="en">Spread (S1-S2)</span>
+            <span data-lang="en">Spread S1-S2</span>
             <span data-lang="zh">利差分析</span>
+          </button>
+          <button type="button" class="segmented-btn" data-transform="zscore" onclick="setTransform('zscore')">
+            <span data-lang="en">Z-Score</span>
+            <span data-lang="zh">Z-Score</span>
+          </button>
+          <button type="button" class="segmented-btn" data-transform="yoy" onclick="setTransform('yoy')">
+            <span data-lang="en">YoY Δ</span>
+            <span data-lang="zh">同比变化</span>
+          </button>
+          <button type="button" class="segmented-btn" data-transform="pct_change" onclick="setTransform('pct_change')">
+            <span data-lang="en">% Return</span>
+            <span data-lang="zh">区间涨跌</span>
           </button>
         </div>
       </div>
@@ -1237,6 +1462,29 @@ def render_html(catalog: dict) -> str:
       <div id="canvas-loading" class="loading-veil" style="display: none;">
         <span>Loading observations & rendering...</span>
       </div>
+
+      <!-- Analytical View Switcher Tabs -->
+      <div class="canvas-view-nav" id="canvas-view-nav">
+        <button type="button" class="view-tab-btn active" data-view="timeseries" onclick="switchCanvasView('timeseries')">
+          <span class="tab-icon">📈</span>
+          <span data-lang="en">Time Series Canvas</span><span data-lang="zh">多维时序主画板</span>
+        </button>
+        <button type="button" class="view-tab-btn" data-view="scatter_ols" onclick="switchCanvasView('scatter_ols')">
+          <span class="tab-icon">🎯</span>
+          <span data-lang="en">Scatter & OLS Regression</span><span data-lang="zh">散点分布与 OLS 回归</span>
+        </button>
+        <button type="button" class="view-tab-btn" data-view="correlation" onclick="switchCanvasView('correlation')">
+          <span class="tab-icon">🔥</span>
+          <span data-lang="en">Correlation Matrix & Rolling</span><span data-lang="zh">相关性矩阵与滚动相关</span>
+        </button>
+        <button type="button" class="view-tab-btn" data-view="lead_lag" onclick="switchCanvasView('lead_lag')">
+          <span class="tab-icon">⏱️</span>
+          <span data-lang="en">Lead-Lag Cross-Correlation</span><span data-lang="zh">领先-滞后时序分析</span>
+        </button>
+      </div>
+
+      <!-- Quant Analytics Contextual Toolbar (Dynamic based on active view) -->
+      <div id="quant-context-bar" class="quant-context-bar" style="display: none;"></div>
 
       <div class="canvas-toolbar">
         <div class="toolbar-group">
@@ -1315,10 +1563,13 @@ def render_html(catalog: dict) -> str:
                 <th><span data-lang="en">Country</span><span data-lang="zh">国家</span></th>
                 <th><span data-lang="en">Latest Value</span><span data-lang="zh">最新读数</span></th>
                 <th><span data-lang="en">Date</span><span data-lang="zh">发布日期</span></th>
-                <th><span data-lang="en">Min</span><span data-lang="zh">区间最低</span></th>
-                <th><span data-lang="en">Max</span><span data-lang="zh">区间最高</span></th>
-                <th><span data-lang="en">Mean</span><span data-lang="zh">区间均值</span></th>
-                <th><span data-lang="en">Axis</span><span data-lang="zh">对应坐标轴</span></th>
+                <th><span data-lang="en">Percentile</span><span data-lang="zh">历史分位数</span></th>
+                <th><span data-lang="en">Z-Score</span><span data-lang="zh">当前 Z 值</span></th>
+                <th><span data-lang="en">Mean ± Std</span><span data-lang="zh">均值 ± 标准差</span></th>
+                <th><span data-lang="en">Min ~ Max</span><span data-lang="zh">极值范围</span></th>
+                <th><span data-lang="en">Period Δ (%)</span><span data-lang="zh">区间变动</span></th>
+                <th><span data-lang="en">Skew</span><span data-lang="zh">偏度</span></th>
+                <th><span data-lang="en">Axis</span><span data-lang="zh">坐标轴</span></th>
               </tr>
             </thead>
             <tbody id="summary-table-body">
@@ -1352,6 +1603,9 @@ let ACTIVE_SERIES = [];
 let CURRENT_TRANSFORM = 'raw';
 let CURRENT_RANGE = '5y';
 let CURRENT_LANG = 'en';
+let CURRENT_CANVAS_VIEW = 'timeseries';
+let SCATTER_X_IDX = 0;
+let SCATTER_Y_IDX = 1;
 
 const FT_PALETTE = ["#990f3d", "#0d7680", "#d97706", "#364b61", "#593380"];
 
@@ -1576,6 +1830,9 @@ function loadPreset(preset) {{
   }});
   CURRENT_TRANSFORM = preset.transform || 'raw';
   CURRENT_RANGE = preset.date_range || '5y';
+  CURRENT_CANVAS_VIEW = preset.view || 'timeseries';
+  SCATTER_X_IDX = 0;
+  SCATTER_Y_IDX = ACTIVE_SERIES.length > 1 ? 1 : 0;
   CHART_CUSTOM_TITLE = (CURRENT_LANG === 'zh' ? preset.title_zh : preset.title_en) || preset.custom_title || '';
   window._CURRENT_PRESET_TITLE = CHART_CUSTOM_TITLE;
 
@@ -1589,6 +1846,10 @@ function loadPreset(preset) {{
 }}
 
 function updateControlsUI() {{
+  // Update view navigation tabs
+  document.querySelectorAll('#canvas-view-nav .view-tab-btn').forEach(btn => {{
+    btn.classList.toggle('active', btn.dataset.view === CURRENT_CANVAS_VIEW);
+  }});
   // Update transform buttons
   document.querySelectorAll('#transform-group .segmented-btn').forEach(btn => {{
     btn.classList.toggle('active', btn.dataset.transform === CURRENT_TRANSFORM);
@@ -1786,8 +2047,366 @@ function removeSeries(idx) {{
 
 function setTransform(tf) {{
   CURRENT_TRANSFORM = tf;
+  CURRENT_CANVAS_VIEW = 'timeseries';
   updateControlsUI();
   refreshChart();
+}}
+
+function switchCanvasView(viewName) {{
+  CURRENT_CANVAS_VIEW = viewName;
+  updateControlsUI();
+  refreshChart();
+}}
+
+function onScatterVarChange(varType, val) {{
+  const idx = parseInt(val, 10);
+  if (isNaN(idx)) return;
+  if (varType === 'x') SCATTER_X_IDX = idx;
+  if (varType === 'y') SCATTER_Y_IDX = idx;
+  refreshChart();
+}}
+
+// Mathematical & Statistical Analytics Engine
+function alignTwoSeries(s1Obs, s2Obs) {{
+  if (!s1Obs || !s2Obs || s1Obs.length === 0 || s2Obs.length === 0) return [];
+  const map2 = new Map(s2Obs.map(o => [o.date, o.value]));
+  const matched = [];
+  s1Obs.forEach(o1 => {{
+    if (map2.has(o1.date)) {{
+      matched.push({{ date: o1.date, x: o1.value, y: map2.get(o1.date) }});
+    }}
+  }});
+  if (matched.length >= 8) return matched;
+
+  // Month-level alignment fallback (daily vs monthly or cross-frequency)
+  const s1Month = new Map();
+  s1Obs.forEach(o => s1Month.set(o.date.slice(0, 7), o.value));
+  const s2Month = new Map();
+  s2Obs.forEach(o => s2Month.set(o.date.slice(0, 7), o.value));
+  const commonMonths = [...s1Month.keys()].filter(m => s2Month.has(m)).sort();
+  return commonMonths.map(m => ({{ date: m, x: s1Month.get(m), y: s2Month.get(m) }}));
+}}
+
+function computeStats(obsList) {{
+  if (!obsList || obsList.length === 0) return null;
+  const vals = obsList.map(o => o.value).filter(v => typeof v === 'number' && !isNaN(v));
+  if (vals.length === 0) return null;
+  const N = vals.length;
+  const sum = vals.reduce((a, b) => a + b, 0);
+  const mean = sum / N;
+  const sqDiffs = vals.map(v => (v - mean) ** 2);
+  const variance = N > 1 ? sqDiffs.reduce((a, b) => a + b, 0) / (N - 1) : 0;
+  const std = Math.sqrt(variance);
+  const min = Math.min(...vals);
+  const max = Math.max(...vals);
+  const latestObs = obsList[obsList.length - 1];
+  const latest = latestObs.value;
+  const first = vals[0];
+  const periodDelta = latest - first;
+  const periodPct = first !== 0 ? ((latest - first) / Math.abs(first)) * 100 : 0;
+  const countLessEqual = vals.filter(v => v <= latest).length;
+  const percentile = (countLessEqual / N) * 100;
+  const zScore = std > 0 ? (latest - mean) / std : 0;
+  const cubeDiffs = vals.map(v => (v - mean) ** 3);
+  const skewness = (std > 0 && N > 2) ? (cubeDiffs.reduce((a, b) => a + b, 0) / N) / (std ** 3) : 0;
+  return {{
+    count: N,
+    mean: mean,
+    std: std,
+    min: min,
+    max: max,
+    latest: latest,
+    latestDate: latestObs.date,
+    periodDelta: periodDelta,
+    periodPct: periodPct,
+    percentile: Math.min(100, Math.max(0, percentile)),
+    zScore: zScore,
+    skewness: skewness
+  }};
+}}
+
+function computeOLS(points) {{
+  if (!points || points.length < 3) return null;
+  const N = points.length;
+  const xs = points.map(p => p.x);
+  const ys = points.map(p => p.y);
+  const xMean = xs.reduce((a, b) => a + b, 0) / N;
+  const yMean = ys.reduce((a, b) => a + b, 0) / N;
+
+  let cov = 0;
+  let varX = 0;
+  let varY = 0;
+  for (let i = 0; i < N; i++) {{
+    const dx = xs[i] - xMean;
+    const dy = ys[i] - yMean;
+    cov += dx * dy;
+    varX += dx * dx;
+    varY += dy * dy;
+  }}
+
+  if (varX === 0 || varY === 0) return null;
+  const beta = cov / varX;
+  const alpha = yMean - beta * xMean;
+  const r = cov / Math.sqrt(varX * varY);
+  const r2 = r * r;
+
+  const minX = Math.min(...xs);
+  const maxX = Math.max(...xs);
+  return {{
+    beta: beta,
+    alpha: alpha,
+    r: r,
+    r2: r2,
+    count: N,
+    lineX: [minX, maxX],
+    lineY: [beta * minX + alpha, beta * maxX + alpha]
+  }};
+}}
+
+function computeCrossCorrelation(points, maxLag = 12) {{
+  if (!points || points.length < 8) return null;
+  const N = points.length;
+  const xs = points.map(p => p.x);
+  const ys = points.map(p => p.y);
+  const lags = [];
+  const corrs = [];
+
+  for (let lag = -maxLag; lag <= maxLag; lag++) {{
+    lags.push(lag);
+    let curX = [];
+    let curY = [];
+    if (lag < 0) {{
+      const absLag = Math.abs(lag);
+      for (let i = 0; i < N - absLag; i++) {{
+        curX.push(xs[i + absLag]);
+        curY.push(ys[i]);
+      }}
+    }} else if (lag > 0) {{
+      for (let i = 0; i < N - lag; i++) {{
+        curX.push(xs[i]);
+        curY.push(ys[i + lag]);
+      }}
+    }} else {{
+      curX = xs;
+      curY = ys;
+    }}
+
+    if (curX.length < 5) {{
+      corrs.push(0);
+      continue;
+    }}
+    const xM = curX.reduce((a, b) => a + b, 0) / curX.length;
+    const yM = curY.reduce((a, b) => a + b, 0) / curY.length;
+    let cov = 0, vx = 0, vy = 0;
+    for (let i = 0; i < curX.length; i++) {{
+      const dx = curX[i] - xM;
+      const dy = curY[i] - yM;
+      cov += dx * dy;
+      vx += dx * dx;
+      vy += dy * dy;
+    }}
+    const r = (vx > 0 && vy > 0) ? cov / Math.sqrt(vx * vy) : 0;
+    corrs.push(r);
+  }}
+
+  let peakLag = 0;
+  let peakR = corrs[maxLag];
+  let maxAbsR = Math.abs(peakR);
+  for (let i = 0; i < corrs.length; i++) {{
+    if (Math.abs(corrs[i]) > maxAbsR) {{
+      maxAbsR = Math.abs(corrs[i]);
+      peakR = corrs[i];
+      peakLag = lags[i];
+    }}
+  }}
+
+  return {{
+    lags: lags,
+    corrs: corrs,
+    peakLag: peakLag,
+    peakR: peakR,
+    zeroLagR: corrs[maxLag]
+  }};
+}}
+
+function computeRollingCorrelation(points, windowSize = 60) {{
+  if (!points || points.length < 15) return [];
+  const N = points.length;
+  const W = Math.min(windowSize, Math.max(15, Math.floor(N / 3)));
+  const rolling = [];
+  for (let i = W - 1; i < N; i++) {{
+    const windowSlice = points.slice(i - W + 1, i + 1);
+    const xs = windowSlice.map(p => p.x);
+    const ys = windowSlice.map(p => p.y);
+    const xM = xs.reduce((a, b) => a + b, 0) / W;
+    const yM = ys.reduce((a, b) => a + b, 0) / W;
+    let cov = 0, vx = 0, vy = 0;
+    for (let j = 0; j < W; j++) {{
+      const dx = xs[j] - xM;
+      const dy = ys[j] - yM;
+      cov += dx * dy;
+      vx += dx * dx;
+      vy += dy * dy;
+    }}
+    const r = (vx > 0 && vy > 0) ? cov / Math.sqrt(vx * vy) : 0;
+    rolling.push({{ date: points[i].date, r: Math.max(-1, Math.min(1, r)) }});
+  }}
+  return rolling;
+}}
+
+function computeCorrelationMatrix(seriesList) {{
+  const K = seriesList.length;
+  const matrix = Array.from({{ length: K }}, () => Array(K).fill(1.0));
+  const shortLabels = seriesList.map(s => `${{s.country}}:${{s.config.indicatorId}}`);
+  const offDiagCorrs = [];
+
+  for (let i = 0; i < K; i++) {{
+    for (let j = 0; j < K; j++) {{
+      if (i === j) {{
+        matrix[i][j] = 1.0;
+      }} else if (i < j) {{
+        const paired = alignTwoSeries(seriesList[i].filteredObs, seriesList[j].filteredObs);
+        let r = 0;
+        if (paired.length >= 3) {{
+          const xs = paired.map(p => p.x);
+          const ys = paired.map(p => p.y);
+          const xM = xs.reduce((a, b) => a + b, 0) / xs.length;
+          const yM = ys.reduce((a, b) => a + b, 0) / ys.length;
+          let cov = 0, vx = 0, vy = 0;
+          for (let k = 0; k < xs.length; k++) {{
+            const dx = xs[k] - xM;
+            const dy = ys[k] - yM;
+            cov += dx * dy;
+            vx += dx * dx;
+            vy += dy * dy;
+          }}
+          r = (vx > 0 && vy > 0) ? cov / Math.sqrt(vx * vy) : 0;
+        }}
+        matrix[i][j] = Math.max(-1, Math.min(1, r));
+        matrix[j][i] = matrix[i][j];
+        offDiagCorrs.push(matrix[i][j]);
+      }}
+    }}
+  }}
+
+  const avgCorr = offDiagCorrs.length ? offDiagCorrs.reduce((a, b) => a + b, 0) / offDiagCorrs.length : 1.0;
+  const maxCorr = offDiagCorrs.length ? Math.max(...offDiagCorrs) : 1.0;
+  const minCorr = offDiagCorrs.length ? Math.min(...offDiagCorrs) : 1.0;
+
+  return {{
+    matrix: matrix,
+    shortLabels: shortLabels,
+    avgCorr: avgCorr,
+    maxCorr: maxCorr,
+    minCorr: minCorr
+  }};
+}}
+
+function updateQuantContextBar(seriesData) {{
+  const bar = document.getElementById('quant-context-bar');
+  if (!bar) return;
+
+  if (CURRENT_CANVAS_VIEW === 'timeseries') {{
+    bar.style.display = 'none';
+    bar.innerHTML = '';
+    return;
+  }}
+
+  bar.style.display = 'flex';
+  bar.innerHTML = '';
+
+  if (seriesData.length < 2) {{
+    bar.innerHTML = `
+      <div style="font-size:12px; color:var(--muted); font-style:italic;">
+        <span>${{CURRENT_LANG === 'zh' ? '⚠️ 当前选定序列不足 2 条。请在左侧添加至少 2 条指标以启用高级量化统计分析。' : '⚠️ Need at least 2 active series for quantitative cross-series analysis. Please add more series on the left.'}}</span>
+      </div>
+    `;
+    return;
+  }}
+
+  if (SCATTER_X_IDX >= seriesData.length) SCATTER_X_IDX = 0;
+  if (SCATTER_Y_IDX >= seriesData.length) SCATTER_Y_IDX = Math.min(1, seriesData.length - 1);
+  if (SCATTER_X_IDX === SCATTER_Y_IDX && seriesData.length > 1) {{
+    SCATTER_Y_IDX = (SCATTER_X_IDX + 1) % seriesData.length;
+  }}
+
+  if (CURRENT_CANVAS_VIEW === 'scatter_ols') {{
+    const sX = seriesData[SCATTER_X_IDX];
+    const sY = seriesData[SCATTER_Y_IDX];
+    const paired = alignTwoSeries(sX.filteredObs, sY.filteredObs);
+    const reg = computeOLS(paired);
+
+    const xOptions = seriesData.map((s, idx) => `<option value="${{idx}}" ${{idx === SCATTER_X_IDX ? 'selected' : ''}}>X: ${{s.country}} - ${{s.label.split(': ')[1] || s.label}}</option>`).join('');
+    const yOptions = seriesData.map((s, idx) => `<option value="${{idx}}" ${{idx === SCATTER_Y_IDX ? 'selected' : ''}}>Y: ${{s.country}} - ${{s.label.split(': ')[1] || s.label}}</option>`).join('');
+
+    bar.innerHTML = `
+      <div class="quant-select-group">
+        <label><strong>X (Independent / 自变量):</strong> <select class="quant-select" onchange="onScatterVarChange('x', this.value)">${{xOptions}}</select></label>
+        <label><strong>Y (Dependent / 因变量):</strong> <select class="quant-select" onchange="onScatterVarChange('y', this.value)">${{yOptions}}</select></label>
+      </div>
+      <div class="quant-chips-row">
+        ${{reg ? `
+          <span class="quant-chip accent" title="OLS Regression Equation"><strong>Ŷ = ${{reg.beta >= 0 ? '+' : ''}}${{reg.beta.toFixed(3)}}·X + ${{reg.alpha.toFixed(3)}}</strong></span>
+          <span class="quant-chip" title="Beta (Sensitivity / Slope)">Beta (β): <strong>${{reg.beta.toFixed(3)}}</strong></span>
+          <span class="quant-chip teal" title="Coefficient of Determination R²">R²: <strong>${{reg.r2.toFixed(3)}}</strong></span>
+          <span class="quant-chip" title="Pearson Correlation Coefficient">Pearson r: <strong>${{reg.r >= 0 ? '+' : ''}}${{reg.r.toFixed(3)}}</strong></span>
+          <span class="quant-chip" title="Paired Valid Sample Size">N: <strong>${{paired.length}}</strong></span>
+        ` : `<span class="quant-chip" style="color:var(--muted);">Insufficient paired observations</span>`}}
+      </div>
+    `;
+  }} else if (CURRENT_CANVAS_VIEW === 'lead_lag') {{
+    const s1 = seriesData[SCATTER_X_IDX];
+    const s2 = seriesData[SCATTER_Y_IDX];
+    const paired = alignTwoSeries(s1.filteredObs, s2.filteredObs);
+    const leadLag = computeCrossCorrelation(paired, 12);
+
+    const s1Options = seriesData.map((s, idx) => `<option value="${{idx}}" ${{idx === SCATTER_X_IDX ? 'selected' : ''}}>S1 (Ref): ${{s.country}} - ${{s.label.split(': ')[1] || s.label}}</option>`).join('');
+    const s2Options = seriesData.map((s, idx) => `<option value="${{idx}}" ${{idx === SCATTER_Y_IDX ? 'selected' : ''}}>S2 (Target): ${{s.country}} - ${{s.label.split(': ')[1] || s.label}}</option>`).join('');
+
+    let leadText = '';
+    if (leadLag && leadLag.peakLag !== 0) {{
+      if (leadLag.peakLag < 0) {{
+        leadText = CURRENT_LANG === 'zh'
+          ? `⚡ 最佳相关点：S1 领先 S2 约 ${{Math.abs(leadLag.peakLag)}} 个周期 (r = ${{leadLag.peakR.toFixed(3)}})`
+          : `⚡ Peak: S1 leads S2 by ${{Math.abs(leadLag.peakLag)}} periods (r = ${{leadLag.peakR.toFixed(3)}})`;
+      }} else {{
+        leadText = CURRENT_LANG === 'zh'
+          ? `⚡ 最佳相关点：S2 领先 S1 约 ${{leadLag.peakLag}} 个周期 (r = ${{leadLag.peakR.toFixed(3)}})`
+          : `⚡ Peak: S2 leads S1 by ${{leadLag.peakLag}} periods (r = ${{leadLag.peakR.toFixed(3)}})`;
+      }}
+    }} else if (leadLag) {{
+      leadText = CURRENT_LANG === 'zh'
+        ? `⚡ 同期相关最高：Lag 0 (r = ${{leadLag.peakR.toFixed(3)}})`
+        : `⚡ Peak is contemporaneous: Lag 0 (r = ${{leadLag.peakR.toFixed(3)}})`;
+    }}
+
+    bar.innerHTML = `
+      <div class="quant-select-group">
+        <label><strong>Series 1:</strong> <select class="quant-select" onchange="onScatterVarChange('x', this.value)">${{s1Options}}</select></label>
+        <label><strong>Series 2:</strong> <select class="quant-select" onchange="onScatterVarChange('y', this.value)">${{s2Options}}</select></label>
+      </div>
+      <div class="quant-chips-row">
+        ${{leadLag ? `
+          <span class="quant-chip accent" style="font-weight:600;">${{leadText}}</span>
+          <span class="quant-chip" title="Contemporaneous correlation at lag 0">Lag 0 r: <strong>${{leadLag.zeroLagR >= 0 ? '+' : ''}}${{leadLag.zeroLagR.toFixed(3)}}</strong></span>
+          <span class="quant-chip" title="Effective sample size">N: <strong>${{paired.length}}</strong></span>
+        ` : `<span class="quant-chip" style="color:var(--muted);">Insufficient paired observations</span>`}}
+      </div>
+    `;
+  }} else if (CURRENT_CANVAS_VIEW === 'correlation') {{
+    const matrixRes = computeCorrelationMatrix(seriesData);
+    bar.innerHTML = `
+      <div class="quant-select-group">
+        <span style="font-weight:600; color:var(--fg);">${{CURRENT_LANG === 'zh' ? '全景相关性矩阵与 60 期滚动相关曲线' : 'Full Pairwise Correlation Matrix & 60-Period Rolling Linkage'}}</span>
+      </div>
+      <div class="quant-chips-row">
+        <span class="quant-chip teal" title="Average of off-diagonal correlations">Avg Corr: <strong>${{matrixRes.avgCorr >= 0 ? '+' : ''}}${{matrixRes.avgCorr.toFixed(3)}}</strong></span>
+        <span class="quant-chip" title="Maximum correlation among different pairs">Max: <strong>${{matrixRes.maxCorr >= 0 ? '+' : ''}}${{matrixRes.maxCorr.toFixed(3)}}</strong></span>
+        <span class="quant-chip" title="Minimum correlation among different pairs">Min: <strong>${{matrixRes.minCorr >= 0 ? '+' : ''}}${{matrixRes.minCorr.toFixed(3)}}</strong></span>
+        <span class="quant-chip" title="Total active series in matrix">Active Series: <strong>${{seriesData.length}}</strong></span>
+      </div>
+    `;
+  }}
 }}
 
 function setDateRange(range) {{
@@ -1914,273 +2533,605 @@ async function refreshChart() {{
       }}
     }});
 
-    // 4. Apply Transformations
+    // 4. Update Contextual Quant Toolbar
+    updateQuantContextBar(seriesData);
+
+    // 5. Apply Transformations & Render Active View
     let plotTraces = [];
     let annotations = [];
+    let shapes = [];
     let y1Title = '';
     let y2Title = '';
     let hasY2 = false;
+    let layoutXTitle = '';
+    let isFixedCorrelationRange = false;
 
-    if (CURRENT_TRANSFORM === 'rebase') {{
-      y1Title = CURRENT_LANG === 'zh' ? '归一化指数 (基期 = 100)' : 'Rebased Index (Base = 100)';
-      seriesData.forEach((s, sIdx) => {{
-        if (!s.filteredObs.length) return;
-        const baseVal = s.filteredObs[0].value || 1.0;
-        const x = s.filteredObs.map(o => o.date);
-        const y = s.filteredObs.map(o => (o.value / baseVal) * 100.0);
-        const lastVal = y[y.length - 1];
-        const lastDate = x[x.length - 1];
-        const valFormatted = lastVal.toFixed(1);
-
-        const legendLabel = `[Y1 · ${{CURRENT_LANG === 'zh' ? '左轴' : 'Left'}}] ${{s.label}} · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{valFormatted}}`;
-
-        plotTraces.push({{
-          name: legendLabel,
-          x: x,
-          y: y,
-          yaxis: 'y',
-          type: 'scatter',
-          mode: 'lines',
-          line: {{ color: s.config.color, width: 2.3 }}
-        }});
-
-        // Dedicated latest observation point marker
-        plotTraces.push({{
-          name: `${{s.label}} (${{CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}})`,
-          x: [lastDate],
-          y: [lastVal],
-          yaxis: 'y',
-          type: 'scatter',
-          mode: 'markers',
-          marker: {{
-            size: 8,
-            color: s.config.color,
-            line: {{ width: 2, color: '#ffffff' }}
-          }},
-          showlegend: false,
-          hoverinfo: 'skip'
-        }});
-
+    if (CURRENT_CANVAS_VIEW === 'scatter_ols') {{
+      y1Title = CURRENT_LANG === 'zh' ? '散点分布与 OLS 线性回归' : 'Scatter & OLS Regression';
+      if (seriesData.length < 2) {{
+        plotTraces = [];
         annotations.push({{
-          x: lastDate,
-          y: lastVal,
-          xref: 'x',
-          yref: 'y',
-          text: `<b>${{valFormatted}}</b> <span style="font-size:9.5px; opacity:0.85;">[Y1]</span>`,
-          showarrow: true,
-          arrowhead: 0,
-          arrowcolor: s.config.color,
-          arrowwidth: 1.2,
-          ax: 34,
-          ay: (sIdx % 2 === 0 ? -12 : 12),
-          xanchor: 'left',
-          yanchor: 'middle',
-          font: {{
-            family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif",
-            size: 11,
-            color: s.config.color
-          }},
-          bgcolor: 'rgba(255, 255, 255, 0.92)',
-          bordercolor: s.config.color,
-          borderwidth: 1.2,
-          borderpad: 3
+          xref: 'paper', yref: 'paper',
+          x: 0.5, y: 0.5,
+          text: CURRENT_LANG === 'zh'
+            ? '请在左侧添加至少 2 条指标以启用散点分布与 OLS 线性回归分析'
+            : 'Please select at least 2 series to enable scatter plot & OLS regression.',
+          showarrow: false,
+          font: {{ size: 13, color: '#737c8c' }}
         }});
-      }});
-    }} else if (CURRENT_TRANSFORM === 'spread' && seriesData.length >= 2) {{
-      const s1 = seriesData[0];
-      const s2 = seriesData[1];
-      y1Title = s1.unit ? `${{s1.unit}} (Spread)` : 'Spread';
-
-      const s2Map = new Map(s2.filteredObs.map(o => [o.date, o.value]));
-      const spreadX = [];
-      const spreadY = [];
-      s1.filteredObs.forEach(o => {{
-        if (s2Map.has(o.date)) {{
-          spreadX.push(o.date);
-          spreadY.push(o.value - s2Map.get(o.date));
+      }} else {{
+        if (SCATTER_X_IDX >= seriesData.length) SCATTER_X_IDX = 0;
+        if (SCATTER_Y_IDX >= seriesData.length) SCATTER_Y_IDX = Math.min(1, seriesData.length - 1);
+        if (SCATTER_X_IDX === SCATTER_Y_IDX && seriesData.length > 1) {{
+          SCATTER_Y_IDX = (SCATTER_X_IDX + 1) % seriesData.length;
         }}
-      }});
+        const sX = seriesData[SCATTER_X_IDX];
+        const sY = seriesData[SCATTER_Y_IDX];
+        const paired = alignTwoSeries(sX.filteredObs, sY.filteredObs);
 
-      // Fallback: Month-level matching if daily timestamps don't align directly
-      if (spreadX.length < 5) {{
-        const s2MonthMap = new Map();
-        s2.filteredObs.forEach(o => {{
-          s2MonthMap.set(o.date.slice(0, 7), o.value);
-        }});
-        const mSpreadX = [];
-        const mSpreadY = [];
-        s1.filteredObs.forEach(o => {{
-          const ym = o.date.slice(0, 7);
-          if (s2MonthMap.has(ym) && !mSpreadX.includes(o.date)) {{
-            mSpreadX.push(o.date);
-            mSpreadY.push(o.value - s2MonthMap.get(ym));
+        if (paired.length < 3) {{
+          annotations.push({{
+            xref: 'paper', yref: 'paper',
+            x: 0.5, y: 0.5,
+            text: CURRENT_LANG === 'zh'
+              ? '选定序列在当前窗口内的有效对齐样本不足，无法生成散点图与回归方程'
+              : 'Insufficient paired observations to generate scatter plot and OLS regression.',
+            showarrow: false,
+            font: {{ size: 13, color: '#737c8c' }}
+          }});
+        }} else {{
+          const reg = computeOLS(paired);
+          plotTraces.push({{
+            name: `${{sX.country}} vs ${{sY.country}} (${{paired.length}} pairs)`,
+            x: paired.map(p => p.x),
+            y: paired.map(p => p.y),
+            customdata: paired.map(p => p.date),
+            yaxis: 'y',
+            type: 'scatter',
+            mode: 'markers',
+            marker: {{
+              size: 7.5,
+              color: 'rgba(153, 15, 61, 0.65)',
+              line: {{ width: 1.2, color: '#990f3d' }}
+            }},
+            hovertemplate: '<b>%{{customdata}}</b><br>X: %{{x:.2f}}<br>Y: %{{y:.2f}}<extra></extra>'
+          }});
+
+          if (reg) {{
+            const regTitle = `OLS Fit: Ŷ = ${{reg.beta >= 0 ? '+' : ''}}${{reg.beta.toFixed(3)}}·X + ${{reg.alpha.toFixed(3)}} (R² = ${{reg.r2.toFixed(3)}})`;
+            plotTraces.push({{
+              name: regTitle,
+              x: reg.lineX,
+              y: reg.lineY,
+              yaxis: 'y',
+              type: 'scatter',
+              mode: 'lines',
+              line: {{ color: '#0d7680', width: 2.6 }}
+            }});
+
+            annotations.push({{
+              xref: 'paper', yref: 'paper',
+              x: 0.03, y: 0.95,
+              xanchor: 'left', yanchor: 'top',
+              text: `<b>OLS Linear Regression (普通最小二乘回归)</b><br>` +
+                    `Model: <b>Ŷ = ${{reg.beta >= 0 ? '+' : ''}}${{reg.beta.toFixed(3)}} · X + ${{reg.alpha.toFixed(3)}}</b><br>` +
+                    `Beta (敏感度/斜率): <b>${{reg.beta.toFixed(3)}}</b> | Alpha (截距): <b>${{reg.alpha.toFixed(3)}}</b><br>` +
+                    `R² (决定系数): <b>${{reg.r2.toFixed(3)}}</b> | Pearson r (相关系数): <b>${{reg.r >= 0 ? '+' : ''}}${{reg.r.toFixed(3)}}</b><br>` +
+                    `Sample Size (对齐有效样本): <b>${{paired.length}}</b>`,
+              showarrow: false,
+              font: {{ family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", size: 11, color: '#12151a' }},
+              bgcolor: 'rgba(255, 255, 255, 0.92)',
+              bordercolor: '#0d7680',
+              borderwidth: 1.2,
+              borderpad: 6
+            }});
           }}
+
+          y1Title = `${{sY.country}} · ${{sY.label.split(': ')[1] || sY.label}} (${{sY.unit}})`;
+          layoutXTitle = `${{sX.country}} · ${{sX.label.split(': ')[1] || sX.label}} (${{sX.unit}})`;
+        }}
+      }}
+    }} else if (CURRENT_CANVAS_VIEW === 'correlation') {{
+      if (seriesData.length < 2) {{
+        plotTraces = [];
+        annotations.push({{
+          xref: 'paper', yref: 'paper',
+          x: 0.5, y: 0.5,
+          text: CURRENT_LANG === 'zh'
+            ? '请在左侧添加至少 2 条指标以启用相关性分析'
+            : 'Please select at least 2 series to enable correlation analysis.',
+          showarrow: false,
+          font: {{ size: 13, color: '#737c8c' }}
         }});
-        if (mSpreadX.length > spreadX.length) {{
-          spreadX.length = 0;
-          spreadY.length = 0;
-          mSpreadX.forEach((x, i) => {{
-            spreadX.push(x);
-            spreadY.push(mSpreadY[i]);
+      }} else if (seriesData.length === 2) {{
+        const s1 = seriesData[0];
+        const s2 = seriesData[1];
+        const paired = alignTwoSeries(s1.filteredObs, s2.filteredObs);
+        const rolling = computeRollingCorrelation(paired, 60);
+
+        if (rolling.length > 0) {{
+          plotTraces.push({{
+            name: `Rolling Correlation (S1 vs S2)`,
+            x: rolling.map(r => r.date),
+            y: rolling.map(r => r.r),
+            yaxis: 'y',
+            type: 'scatter',
+            mode: 'lines',
+            fill: 'tozeroy',
+            fillcolor: 'rgba(13, 118, 128, 0.08)',
+            line: {{ color: '#0d7680', width: 2.4 }}
+          }});
+
+          const lastR = rolling[rolling.length - 1];
+          plotTraces.push({{
+            name: 'Latest Correlation',
+            x: [lastR.date],
+            y: [lastR.r],
+            yaxis: 'y',
+            type: 'scatter',
+            mode: 'markers',
+            marker: {{ size: 8, color: '#0d7680', line: {{ width: 2, color: '#ffffff' }} }},
+            showlegend: false,
+            hoverinfo: 'skip'
+          }});
+
+          annotations.push({{
+            x: lastR.date,
+            y: lastR.r,
+            xref: 'x', yref: 'y',
+            text: `<b>Latest r = ${{lastR.r >= 0 ? '+' : ''}}${{lastR.r.toFixed(2)}}</b>`,
+            showarrow: true,
+            arrowhead: 0,
+            arrowcolor: '#0d7680',
+            ax: 32, ay: -12,
+            font: {{ size: 11, color: '#0d7680' }},
+            bgcolor: 'rgba(255, 255, 255, 0.92)',
+            bordercolor: '#0d7680',
+            borderwidth: 1.2,
+            borderpad: 3
           }});
         }}
-      }}
-
-      if (spreadX.length > 0) {{
-        const lastSpreadVal = spreadY[spreadY.length - 1];
-        const lastSpreadDate = spreadX[spreadX.length - 1];
-        const spreadSign = lastSpreadVal > 0 ? '+' : '';
-        const spreadFormatted = `${{spreadSign}}${{lastSpreadVal.toFixed(2)}}${{s1.unit ? ' ' + s1.unit : ''}}`;
-
+        y1Title = CURRENT_LANG === 'zh' ? '滚动相关系数 (Pearson r)' : 'Rolling Pearson r';
+        isFixedCorrelationRange = true;
+      }} else {{
+        const matrixRes = computeCorrelationMatrix(seriesData);
         plotTraces.push({{
-          name: `[Y1 · ${{CURRENT_LANG === 'zh' ? '左轴' : 'Left'}}] Spread (${{s1.config.country}} − ${{s2.config.country}}) · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{spreadFormatted}}`,
-          x: spreadX,
-          y: spreadY,
-          yaxis: 'y',
-          type: 'scatter',
-          mode: 'lines',
-          fill: 'tozeroy',
-          fillcolor: 'rgba(153, 15, 61, 0.08)',
-          line: {{ color: '#990f3d', width: 2.4 }}
-        }});
-
-        plotTraces.push({{
-          name: 'Spread Latest',
-          x: [lastSpreadDate],
-          y: [lastSpreadVal],
-          yaxis: 'y',
-          type: 'scatter',
-          mode: 'markers',
-          marker: {{
-            size: 8,
-            color: '#990f3d',
-            line: {{ width: 2, color: '#ffffff' }}
+          type: 'heatmap',
+          z: matrixRes.matrix,
+          x: matrixRes.shortLabels,
+          y: matrixRes.shortLabels,
+          colorscale: [
+            [0.0, '#990f3d'],
+            [0.5, '#ffffff'],
+            [1.0, '#0d7680']
+          ],
+          zmin: -1.0,
+          zmax: 1.0,
+          text: matrixRes.matrix.map(row => row.map(v => (v >= 0 ? '+' : '') + v.toFixed(2))),
+          texttemplate: '<b>%{{text}}</b>',
+          textfont: {{ family: "-apple-system, sans-serif", size: 12, color: '#12151a' }},
+          colorbar: {{
+            title: CURRENT_LANG === 'zh' ? '相关系数 (r)' : 'Pearson r',
+            titleside: 'right',
+            tickfont: {{ size: 10, color: '#4b525f' }}
           }},
-          showlegend: false,
-          hoverinfo: 'skip'
+          hoverongaps: false
         }});
-
+        y1Title = CURRENT_LANG === 'zh' ? '相关性热力矩阵' : 'Correlation Matrix';
+      }}
+    }} else if (CURRENT_CANVAS_VIEW === 'lead_lag') {{
+      if (seriesData.length < 2) {{
+        plotTraces = [];
         annotations.push({{
-          x: lastSpreadDate,
-          y: lastSpreadVal,
-          xref: 'x',
-          yref: 'y',
-          text: `<b>${{spreadFormatted}}</b> <span style="font-size:9.5px; opacity:0.85;">[Spread]</span>`,
-          showarrow: true,
-          arrowhead: 0,
-          arrowcolor: '#990f3d',
-          arrowwidth: 1.2,
-          ax: 34,
-          ay: -12,
-          xanchor: 'left',
-          yanchor: 'middle',
-          font: {{
-            family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif",
-            size: 11,
-            color: '#990f3d'
-          }},
-          bgcolor: 'rgba(255, 255, 255, 0.92)',
-          bordercolor: '#990f3d',
-          borderwidth: 1.2,
-          borderpad: 3
+          xref: 'paper', yref: 'paper',
+          x: 0.5, y: 0.5,
+          text: CURRENT_LANG === 'zh'
+            ? '请在左侧添加至少 2 条指标以启用领先-滞后分析'
+            : 'Please select at least 2 series to enable lead-lag cross-correlation.',
+          showarrow: false,
+          font: {{ size: 13, color: '#737c8c' }}
         }});
+      }} else {{
+        if (SCATTER_X_IDX >= seriesData.length) SCATTER_X_IDX = 0;
+        if (SCATTER_Y_IDX >= seriesData.length) SCATTER_Y_IDX = Math.min(1, seriesData.length - 1);
+        if (SCATTER_X_IDX === SCATTER_Y_IDX && seriesData.length > 1) {{
+          SCATTER_Y_IDX = (SCATTER_X_IDX + 1) % seriesData.length;
+        }}
+        const s1 = seriesData[SCATTER_X_IDX];
+        const s2 = seriesData[SCATTER_Y_IDX];
+        const paired = alignTwoSeries(s1.filteredObs, s2.filteredObs);
+        const leadLag = computeCrossCorrelation(paired, 12);
+
+        if (leadLag) {{
+          const barColors = leadLag.lags.map(lag => {{
+            if (lag === leadLag.peakLag) return '#d97706';
+            const r = leadLag.corrs[lag + 12];
+            return r >= 0 ? '#0d7680' : '#990f3d';
+          }});
+
+          const xLabels = leadLag.lags.map(l => l === 0 ? (CURRENT_LANG === 'zh' ? 'Lag 0 (同期)' : 'Lag 0 (Sync)') : (l < 0 ? `t${{l}} (S1 Leads)` : `t+${{l}} (S2 Leads)`));
+
+          plotTraces.push({{
+            x: xLabels,
+            y: leadLag.corrs,
+            yaxis: 'y',
+            type: 'bar',
+            marker: {{
+              color: barColors,
+              line: {{ width: 1, color: 'rgba(18, 21, 26, 0.15)' }}
+            }},
+            hovertemplate: '<b>%{{x}}</b><br>Correlation: %{{y:.3f}}<extra></extra>'
+          }});
+
+          annotations.push({{
+            xref: 'paper', yref: 'paper',
+            x: 0.03, y: 0.95,
+            xanchor: 'left', yanchor: 'top',
+            text: `<b>Lead-Lag Cross-Correlation (领先-滞后交叉相关分析)</b><br>` +
+                  `Peak Lag (最佳峰值滞后): <b>${{leadLag.peakLag >= 0 ? '+' : ''}}${{leadLag.peakLag}} periods (r = ${{leadLag.peakR.toFixed(3)}})</b><br>` +
+                  `Contemporaneous (同期相关 r): <b>${{leadLag.zeroLagR >= 0 ? '+' : ''}}${{leadLag.zeroLagR.toFixed(3)}}</b><br>` +
+                  `Interpretation: <b>${{leadLag.peakLag < 0 ? `S1 (${{s1.country}}) leads S2 (${{s2.country}}) by ${{Math.abs(leadLag.peakLag)}} periods` : (leadLag.peakLag > 0 ? `S2 (${{s2.country}}) leads S1 (${{s1.country}}) by ${{leadLag.peakLag}} periods` : 'Contemporaneous co-movement (synchronous)')}}</b>`,
+            showarrow: false,
+            font: {{ family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", size: 11, color: '#12151a' }},
+            bgcolor: 'rgba(255, 255, 255, 0.92)',
+            bordercolor: '#d97706',
+            borderwidth: 1.2,
+            borderpad: 6
+          }});
+        }}
+        y1Title = CURRENT_LANG === 'zh' ? '交叉相关系数 (Pearson r)' : 'Cross-Correlation (Pearson r)';
+        isFixedCorrelationRange = true;
       }}
-      // Also display underlying series as fine dashed lines
-      plotTraces.push({{
-        name: `[Y1] ${{s1.label}}`,
-        x: s1.filteredObs.map(o => o.date),
-        y: s1.filteredObs.map(o => o.value),
-        yaxis: 'y',
-        type: 'scatter',
-        mode: 'lines',
-        line: {{ color: '#0d7680', width: 1.5, dash: 'dot' }}
-      }});
-      plotTraces.push({{
-        name: `[Y1] ${{s2.label}}`,
-        x: s2.filteredObs.map(o => o.date),
-        y: s2.filteredObs.map(o => o.value),
-        yaxis: 'y',
-        type: 'scatter',
-        mode: 'lines',
-        line: {{ color: '#737c8c', width: 1.5, dash: 'dot' }}
-      }});
     }} else {{
-      // Raw Levels
-      seriesData.forEach((s, sIdx) => {{
-        if (!s.filteredObs.length) return;
-        const isRight = (s.config.axis === 'right');
-        if (isRight) {{
-          hasY2 = true;
-          if (!y2Title) y2Title = s.unit;
-        }} else {{
-          if (!y1Title) y1Title = s.unit;
+      // CURRENT_CANVAS_VIEW === 'timeseries'
+      if (CURRENT_TRANSFORM === 'rebase') {{
+        y1Title = CURRENT_LANG === 'zh' ? '归一化指数 (基期 = 100)' : 'Rebased Index (Base = 100)';
+        seriesData.forEach((s, sIdx) => {{
+          if (!s.filteredObs.length) return;
+          const baseVal = s.filteredObs[0].value || 1.0;
+          const x = s.filteredObs.map(o => o.date);
+          const y = s.filteredObs.map(o => (o.value / baseVal) * 100.0);
+          const lastVal = y[y.length - 1];
+          const lastDate = x[x.length - 1];
+          const valFormatted = lastVal.toFixed(1);
+
+          const legendLabel = `[Y1 · ${{CURRENT_LANG === 'zh' ? '左轴' : 'Left'}}] ${{s.label}} · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{valFormatted}}`;
+          plotTraces.push({{
+            name: legendLabel,
+            x: x, y: y, yaxis: 'y',
+            type: 'scatter', mode: 'lines',
+            line: {{ color: s.config.color, width: 2.3 }}
+          }});
+
+          plotTraces.push({{
+            name: `${{s.label}} (${{CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}})`,
+            x: [lastDate], y: [lastVal], yaxis: 'y',
+            type: 'scatter', mode: 'markers',
+            marker: {{ size: 8, color: s.config.color, line: {{ width: 2, color: '#ffffff' }} }},
+            showlegend: false, hoverinfo: 'skip'
+          }});
+
+          annotations.push({{
+            x: lastDate, y: lastVal, xref: 'x', yref: 'y',
+            text: `<b>${{valFormatted}}</b> <span style="font-size:9.5px; opacity:0.85;">[Y1]</span>`,
+            showarrow: true, arrowhead: 0, arrowcolor: s.config.color, arrowwidth: 1.2,
+            ax: 34, ay: (sIdx % 2 === 0 ? -12 : 12),
+            xanchor: 'left', yanchor: 'middle',
+            font: {{ family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif", size: 11, color: s.config.color }},
+            bgcolor: 'rgba(255, 255, 255, 0.92)', bordercolor: s.config.color, borderwidth: 1.2, borderpad: 3
+          }});
+        }});
+      }} else if (CURRENT_TRANSFORM === 'spread' && seriesData.length >= 2) {{
+        const s1 = seriesData[0];
+        const s2 = seriesData[1];
+        y1Title = s1.unit ? `${{s1.unit}} (Spread)` : 'Spread';
+
+        const s2Map = new Map(s2.filteredObs.map(o => [o.date, o.value]));
+        const spreadX = [];
+        const spreadY = [];
+        s1.filteredObs.forEach(o => {{
+          if (s2Map.has(o.date)) {{
+            spreadX.push(o.date);
+            spreadY.push(o.value - s2Map.get(o.date));
+          }}
+        }});
+
+        if (spreadX.length < 5) {{
+          const s2MonthMap = new Map();
+          s2.filteredObs.forEach(o => {{
+            s2MonthMap.set(o.date.slice(0, 7), o.value);
+          }});
+          const mSpreadX = [];
+          const mSpreadY = [];
+          s1.filteredObs.forEach(o => {{
+            const ym = o.date.slice(0, 7);
+            if (s2MonthMap.has(ym) && !mSpreadX.includes(o.date)) {{
+              mSpreadX.push(o.date);
+              mSpreadY.push(o.value - s2MonthMap.get(ym));
+            }}
+          }});
+          if (mSpreadX.length > spreadX.length) {{
+            spreadX.length = 0;
+            spreadY.length = 0;
+            mSpreadX.forEach((x, i) => {{
+              spreadX.push(x);
+              spreadY.push(mSpreadY[i]);
+            }});
+          }}
         }}
 
-        const latestObs = s.filteredObs[s.filteredObs.length - 1];
-        const latestVal = typeof latestObs.value === 'number' ? latestObs.value.toFixed(2) : '';
-        const axisTag = isRight ? (CURRENT_LANG === 'zh' ? '右轴 · Y2' : 'Right · Y2') : (CURRENT_LANG === 'zh' ? '左轴 · Y1' : 'Left · Y1');
-        const axisTagShort = isRight ? (CURRENT_LANG === 'zh' ? '右轴' : 'Right') : (CURRENT_LANG === 'zh' ? '左轴' : 'Left');
-        const unitSuffix = s.unit ? ` ${{s.unit}}` : '';
-        const legendLabel = `[${{axisTag}}] ${{s.label}} · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{latestVal}}${{unitSuffix}}`;
+        if (spreadX.length > 0) {{
+          const lastSpreadVal = spreadY[spreadY.length - 1];
+          const lastSpreadDate = spreadX[spreadX.length - 1];
+          const spreadSign = lastSpreadVal > 0 ? '+' : '';
+          const spreadFormatted = `${{spreadSign}}${{lastSpreadVal.toFixed(2)}}${{s1.unit ? ' ' + s1.unit : ''}}`;
 
-        // 1. Main Line Trace
+          plotTraces.push({{
+            name: `[Y1 · ${{CURRENT_LANG === 'zh' ? '左轴' : 'Left'}}] Spread (${{s1.config.country}} − ${{s2.config.country}}) · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{spreadFormatted}}`,
+            x: spreadX, y: spreadY, yaxis: 'y',
+            type: 'scatter', mode: 'lines',
+            fill: 'tozeroy', fillcolor: 'rgba(153, 15, 61, 0.08)',
+            line: {{ color: '#990f3d', width: 2.4 }}
+          }});
+
+          plotTraces.push({{
+            name: 'Spread Latest',
+            x: [lastSpreadDate], y: [lastSpreadVal], yaxis: 'y',
+            type: 'scatter', mode: 'markers',
+            marker: {{ size: 8, color: '#990f3d', line: {{ width: 2, color: '#ffffff' }} }},
+            showlegend: false, hoverinfo: 'skip'
+          }});
+
+          annotations.push({{
+            x: lastSpreadDate, y: lastSpreadVal, xref: 'x', yref: 'y',
+            text: `<b>${{spreadFormatted}}</b> <span style="font-size:9.5px; opacity:0.85;">[Spread]</span>`,
+            showarrow: true, arrowhead: 0, arrowcolor: '#990f3d', arrowwidth: 1.2,
+            ax: 34, ay: -12, xanchor: 'left', yanchor: 'middle',
+            font: {{ family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif", size: 11, color: '#990f3d' }},
+            bgcolor: 'rgba(255, 255, 255, 0.92)', bordercolor: '#990f3d', borderwidth: 1.2, borderpad: 3
+          }});
+        }}
         plotTraces.push({{
-          name: legendLabel,
-          x: s.filteredObs.map(o => o.date),
-          y: s.filteredObs.map(o => o.value),
-          yaxis: isRight ? 'y2' : 'y',
-          type: 'scatter',
-          mode: 'lines',
-          line: {{ color: s.config.color, width: 2.3 }}
+          name: `[Y1] ${{s1.label}}`,
+          x: s1.filteredObs.map(o => o.date), y: s1.filteredObs.map(o => o.value), yaxis: 'y',
+          type: 'scatter', mode: 'lines',
+          line: {{ color: '#0d7680', width: 1.5, dash: 'dot' }}
         }});
-
-        // 2. Dedicated Latest Observation Marker
         plotTraces.push({{
-          name: `${{s.label}} (${{CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}})`,
-          x: [latestObs.date],
-          y: [latestObs.value],
-          yaxis: isRight ? 'y2' : 'y',
-          type: 'scatter',
-          mode: 'markers',
-          marker: {{
-            size: 8,
-            color: s.config.color,
-            line: {{ width: 2, color: '#ffffff' }}
-          }},
-          showlegend: false,
-          hoverinfo: 'skip'
+          name: `[Y1] ${{s2.label}}`,
+          x: s2.filteredObs.map(o => o.date), y: s2.filteredObs.map(o => o.value), yaxis: 'y',
+          type: 'scatter', mode: 'lines',
+          line: {{ color: '#737c8c', width: 1.5, dash: 'dot' }}
+        }});
+      }} else if (CURRENT_TRANSFORM === 'zscore') {{
+        y1Title = CURRENT_LANG === 'zh' ? 'Z-Score 标准化得分 (均值=0, 标准差=1)' : 'Standardized Z-Score (Mean = 0, Std = 1)';
+        seriesData.forEach((s, sIdx) => {{
+          if (!s.filteredObs.length) return;
+          const vals = s.filteredObs.map(o => o.value);
+          const mean = vals.reduce((a, b) => a + b, 0) / vals.length;
+          const variance = vals.reduce((a, b) => a + (b - mean) ** 2, 0) / (vals.length - 1 || 1);
+          const std = Math.sqrt(variance);
+          const x = s.filteredObs.map(o => o.date);
+          const y = std > 0 ? vals.map(v => (v - mean) / std) : vals.map(() => 0);
+          const lastVal = y[y.length - 1];
+          const lastDate = x[x.length - 1];
+          const valFormatted = `${{lastVal >= 0 ? '+' : ''}}${{lastVal.toFixed(2)}}σ`;
+
+          const legendLabel = `[Z-Score] ${{s.label}} · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{valFormatted}}`;
+          plotTraces.push({{
+            name: legendLabel,
+            x: x, y: y, yaxis: 'y',
+            type: 'scatter', mode: 'lines',
+            line: {{ color: s.config.color, width: 2.3 }}
+          }});
+
+          plotTraces.push({{
+            name: `${{s.label}} (${{CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}})`,
+            x: [lastDate], y: [lastVal], yaxis: 'y',
+            type: 'scatter', mode: 'markers',
+            marker: {{ size: 8, color: s.config.color, line: {{ width: 2, color: '#ffffff' }} }},
+            showlegend: false, hoverinfo: 'skip'
+          }});
+
+          annotations.push({{
+            x: lastDate, y: lastVal, xref: 'x', yref: 'y',
+            text: `<b>${{valFormatted}}</b> <span style="font-size:9.5px; opacity:0.85;">[Z]</span>`,
+            showarrow: true, arrowhead: 0, arrowcolor: s.config.color, arrowwidth: 1.2,
+            ax: 34, ay: (sIdx % 2 === 0 ? -12 : 12),
+            xanchor: 'left', yanchor: 'middle',
+            font: {{ family: "-apple-system, sans-serif", size: 11, color: s.config.color }},
+            bgcolor: 'rgba(255, 255, 255, 0.92)', bordercolor: s.config.color, borderwidth: 1.2, borderpad: 3
+          }});
         }});
 
-        // 3. On-Chart Callout Annotation at Latest Point
-        annotations.push({{
-          x: latestObs.date,
-          y: latestObs.value,
-          xref: 'x',
-          yref: isRight ? 'y2' : 'y',
-          text: `<b>${{latestVal}}${{unitSuffix}}</b> <span style="font-size:9.5px; opacity:0.85;">[${{axisTagShort}}]</span>`,
-          showarrow: true,
-          arrowhead: 0,
-          arrowcolor: s.config.color,
-          arrowwidth: 1.2,
-          ax: 34,
-          ay: (sIdx % 2 === 0 ? -12 : 12),
-          xanchor: 'left',
-          yanchor: 'middle',
-          font: {{
-            family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif",
-            size: 11,
-            color: s.config.color
-          }},
-          bgcolor: 'rgba(255, 255, 255, 0.92)',
-          bordercolor: s.config.color,
-          borderwidth: 1.2,
-          borderpad: 3
+        shapes.push(
+          {{ type: 'line', xref: 'paper', x0: 0, x1: 1, yref: 'y', y0: 2, y1: 2, line: {{ color: 'rgba(153, 15, 61, 0.4)', width: 1, dash: 'dot' }} }},
+          {{ type: 'line', xref: 'paper', x0: 0, x1: 1, yref: 'y', y0: -2, y1: -2, line: {{ color: 'rgba(13, 118, 128, 0.4)', width: 1, dash: 'dot' }} }}
+        );
+        annotations.push(
+          {{ xref: 'paper', yref: 'y', x: 0.02, y: 2, text: '+2σ (High / 过热高位)', showarrow: false, font: {{ size: 9.5, color: '#990f3d' }} }},
+          {{ xref: 'paper', yref: 'y', x: 0.02, y: -2, text: '-2σ (Low / 周期低位)', showarrow: false, font: {{ size: 9.5, color: '#0d7680' }} }}
+        );
+      }} else if (CURRENT_TRANSFORM === 'yoy') {{
+        y1Title = CURRENT_LANG === 'zh' ? '同比变动 (YoY % / 差值)' : 'YoY Change (% / Points)';
+        seriesData.forEach((s, sIdx) => {{
+          if (!s.filteredObs.length) return;
+          const dateMap = new Map(s.observations.map(o => [o.date, o.value]));
+          const isRate = s.unit.includes('%') || s.unit.includes('bps') || s.unit.includes('pts');
+          const x = [];
+          const y = [];
+          s.filteredObs.forEach(o => {{
+            const parts = o.date.split('-');
+            const prevYear = parseInt(parts[0], 10) - 1;
+            const targetExact = `${{prevYear}}-${{parts[1]}}-${{parts[2]}}`;
+            let prevVal = dateMap.get(targetExact);
+            if (prevVal === undefined) {{
+              const targetMonth = `${{prevYear}}-${{parts[1]}}`;
+              for (const [d, v] of dateMap.entries()) {{
+                if (d.startsWith(targetMonth)) {{
+                  prevVal = v;
+                  break;
+                }}
+              }}
+            }}
+            if (prevVal !== undefined && !isNaN(prevVal)) {{
+              x.push(o.date);
+              if (isRate) {{
+                y.push(o.value - prevVal);
+              }} else {{
+                y.push(prevVal !== 0 ? ((o.value - prevVal) / Math.abs(prevVal)) * 100 : 0);
+              }}
+            }}
+          }});
+
+          if (x.length > 0) {{
+            const lastVal = y[y.length - 1];
+            const lastDate = x[x.length - 1];
+            const sign = lastVal >= 0 ? '+' : '';
+            const unitSuffix = isRate ? (s.unit || '% pts') : '%';
+            const valFormatted = `${{sign}}${{lastVal.toFixed(2)}} ${{unitSuffix}}`;
+
+            const legendLabel = `[YoY] ${{s.label}} · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{valFormatted}}`;
+            plotTraces.push({{
+              name: legendLabel,
+              x: x, y: y, yaxis: 'y',
+              type: 'scatter', mode: 'lines',
+              line: {{ color: s.config.color, width: 2.3 }}
+            }});
+
+            plotTraces.push({{
+              name: `${{s.label}} (${{CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}})`,
+              x: [lastDate], y: [lastVal], yaxis: 'y',
+              type: 'scatter', mode: 'markers',
+              marker: {{ size: 8, color: s.config.color, line: {{ width: 2, color: '#ffffff' }} }},
+              showlegend: false, hoverinfo: 'skip'
+            }});
+
+            annotations.push({{
+              x: lastDate, y: lastVal, xref: 'x', yref: 'y',
+              text: `<b>${{valFormatted}}</b> <span style="font-size:9.5px; opacity:0.85;">[YoY]</span>`,
+              showarrow: true, arrowhead: 0, arrowcolor: s.config.color, arrowwidth: 1.2,
+              ax: 34, ay: (sIdx % 2 === 0 ? -12 : 12),
+              xanchor: 'left', yanchor: 'middle',
+              font: {{ family: "-apple-system, sans-serif", size: 11, color: s.config.color }},
+              bgcolor: 'rgba(255, 255, 255, 0.92)', bordercolor: s.config.color, borderwidth: 1.2, borderpad: 3
+            }});
+          }}
         }});
-      }});
-      if (!y1Title && y2Title) y1Title = y2Title;
+      }} else if (CURRENT_TRANSFORM === 'pct_change') {{
+        y1Title = CURRENT_LANG === 'zh' ? '区间累计涨跌幅 (%)' : 'Cumulative Change (%)';
+        seriesData.forEach((s, sIdx) => {{
+          if (!s.filteredObs.length) return;
+          const baseVal = s.filteredObs[0].value;
+          if (baseVal === 0) return;
+          const x = s.filteredObs.map(o => o.date);
+          const y = s.filteredObs.map(o => ((o.value - baseVal) / Math.abs(baseVal)) * 100);
+          const lastVal = y[y.length - 1];
+          const lastDate = x[x.length - 1];
+          const sign = lastVal >= 0 ? '+' : '';
+          const valFormatted = `${{sign}}${{lastVal.toFixed(1)}}%`;
+
+          const legendLabel = `[% Δ] ${{s.label}} · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{valFormatted}}`;
+          plotTraces.push({{
+            name: legendLabel,
+            x: x, y: y, yaxis: 'y',
+            type: 'scatter', mode: 'lines',
+            line: {{ color: s.config.color, width: 2.3 }}
+          }});
+
+          plotTraces.push({{
+            name: `${{s.label}} (${{CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}})`,
+            x: [lastDate], y: [lastVal], yaxis: 'y',
+            type: 'scatter', mode: 'markers',
+            marker: {{ size: 8, color: s.config.color, line: {{ width: 2, color: '#ffffff' }} }},
+            showlegend: false, hoverinfo: 'skip'
+          }});
+
+          annotations.push({{
+            x: lastDate, y: lastVal, xref: 'x', yref: 'y',
+            text: `<b>${{valFormatted}}</b> <span style="font-size:9.5px; opacity:0.85;">[%]</span>`,
+            showarrow: true, arrowhead: 0, arrowcolor: s.config.color, arrowwidth: 1.2,
+            ax: 34, ay: (sIdx % 2 === 0 ? -12 : 12),
+            xanchor: 'left', yanchor: 'middle',
+            font: {{ family: "-apple-system, sans-serif", size: 11, color: s.config.color }},
+            bgcolor: 'rgba(255, 255, 255, 0.92)', bordercolor: s.config.color, borderwidth: 1.2, borderpad: 3
+          }});
+        }});
+      }} else {{
+        // Raw Levels
+        seriesData.forEach((s, sIdx) => {{
+          if (!s.filteredObs.length) return;
+          const isRight = (s.config.axis === 'right');
+          if (isRight) {{
+            hasY2 = true;
+            if (!y2Title) y2Title = s.unit;
+          }} else {{
+            if (!y1Title) y1Title = s.unit;
+          }}
+
+          const latestObs = s.filteredObs[s.filteredObs.length - 1];
+          const latestVal = typeof latestObs.value === 'number' ? latestObs.value.toFixed(2) : '';
+          const axisTag = isRight ? (CURRENT_LANG === 'zh' ? '右轴 · Y2' : 'Right · Y2') : (CURRENT_LANG === 'zh' ? '左轴 · Y1' : 'Left · Y1');
+          const axisTagShort = isRight ? (CURRENT_LANG === 'zh' ? '右轴' : 'Right') : (CURRENT_LANG === 'zh' ? '左轴' : 'Left');
+          const unitSuffix = s.unit ? ` ${{s.unit}}` : '';
+          const legendLabel = `[${{axisTag}}] ${{s.label}} · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{latestVal}}${{unitSuffix}}`;
+
+          plotTraces.push({{
+            name: legendLabel,
+            x: s.filteredObs.map(o => o.date),
+            y: s.filteredObs.map(o => o.value),
+            yaxis: isRight ? 'y2' : 'y',
+            type: 'scatter',
+            mode: 'lines',
+            line: {{ color: s.config.color, width: 2.3 }}
+          }});
+
+          plotTraces.push({{
+            name: `${{s.label}} (${{CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}})`,
+            x: [latestObs.date],
+            y: [latestObs.value],
+            yaxis: isRight ? 'y2' : 'y',
+            type: 'scatter',
+            mode: 'markers',
+            marker: {{
+              size: 8,
+              color: s.config.color,
+              line: {{ width: 2, color: '#ffffff' }}
+            }},
+            showlegend: false,
+            hoverinfo: 'skip'
+          }});
+
+          annotations.push({{
+            x: latestObs.date,
+            y: latestObs.value,
+            xref: 'x',
+            yref: isRight ? 'y2' : 'y',
+            text: `<b>${{latestVal}}${{unitSuffix}}</b> <span style="font-size:9.5px; opacity:0.85;">[${{axisTagShort}}]</span>`,
+            showarrow: true,
+            arrowhead: 0,
+            arrowcolor: s.config.color,
+            arrowwidth: 1.2,
+            ax: 34,
+            ay: (sIdx % 2 === 0 ? -12 : 12),
+            xanchor: 'left',
+            yanchor: 'middle',
+            font: {{
+              family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif",
+              size: 11,
+              color: s.config.color
+            }},
+            bgcolor: 'rgba(255, 255, 255, 0.92)',
+            bordercolor: s.config.color,
+            borderwidth: 1.2,
+            borderpad: 3
+          }});
+        }});
+        if (!y1Title && y2Title) y1Title = y2Title;
+      }}
     }}
 
-    // 5. Layout Configuration in FT/Claude Style
+    // 6. Layout Configuration in FT/Claude Style
     const effectiveTitle = getEffectiveTitle();
     const titleInput = document.getElementById('chart-title-input');
     if (titleInput && !titleInput.value && !CHART_CUSTOM_TITLE) {{
@@ -2190,7 +3141,6 @@ async function refreshChart() {{
     const y1Label = CURRENT_LANG === 'zh' ? `← Y1 (左轴)${{y1Title ? ' · ' + y1Title : ''}}` : `← Y1 (Left)${{y1Title ? ' · ' + y1Title : ''}}`;
     const y2Label = CURRENT_LANG === 'zh' ? `Y2 (右轴) →${{y2Title ? ' · ' + y2Title : ''}}` : `Y2 (Right) →${{y2Title ? ' · ' + y2Title : ''}}`;
 
-    // Add source watermark annotation
     annotations.push({{
       xref: 'paper',
       yref: 'paper',
@@ -2212,6 +3162,7 @@ async function refreshChart() {{
       margin: {{ l: 64, r: hasY2 ? 84 : 96, t: 56, b: 64 }},
       paper_bgcolor: '#ffffff',
       plot_bgcolor: '#ffffff',
+      shapes: shapes,
       title: {{
         text: `<b>${{effectiveTitle}}</b>`,
         font: {{
@@ -2230,6 +3181,7 @@ async function refreshChart() {{
         color: '#12151a'
       }},
       xaxis: {{
+        title: layoutXTitle ? {{ text: layoutXTitle, font: {{ size: 11, color: '#4b525f' }} }} : undefined,
         gridcolor: 'rgba(18, 21, 26, 0.06)',
         showgrid: false,
         zeroline: false,
@@ -2239,11 +3191,12 @@ async function refreshChart() {{
       }},
       yaxis: {{
         title: {{ text: y1Label, font: {{ size: 11, color: '#4b525f' }} }},
+        range: isFixedCorrelationRange ? [-1.08, 1.08] : undefined,
         gridcolor: 'rgba(18, 21, 26, 0.06)',
         zeroline: true,
         zerolinewidth: 1.4,
         zerolinecolor: 'rgba(18, 21, 26, 0.40)',
-        autorange: true,
+        autorange: !isFixedCorrelationRange,
         automargin: true,
         tickfont: {{ size: 10, color: '#4b525f' }},
       }},
@@ -2254,7 +3207,7 @@ async function refreshChart() {{
         font: {{ size: 11, color: '#12151a' }},
         bgcolor: 'rgba(255, 255, 255, 0.85)',
       }},
-      hovermode: 'x unified',
+      hovermode: CURRENT_CANVAS_VIEW === 'scatter_ols' ? 'closest' : 'x unified',
       hoverlabel: {{
         bgcolor: '#ffffff',
         bordercolor: 'rgba(18, 21, 26, 0.20)',
@@ -2294,10 +3247,10 @@ async function refreshChart() {{
       responsive: true
     }});
 
-    // 6. Update Summary Table
+    // 7. Update Summary Table
     renderSummaryTable(seriesData);
 
-    // 7. Update URL Hash
+    // 8. Update URL Hash
     syncHash();
 
   }} catch (err) {{
@@ -2313,12 +3266,14 @@ function renderSummaryTable(seriesData) {{
   tbody.innerHTML = '';
 
   seriesData.forEach(s => {{
-    const vals = s.filteredObs.map(o => o.value);
-    const minVal = vals.length ? Math.min(...vals).toFixed(2) : 'n/a';
-    const maxVal = vals.length ? Math.max(...vals).toFixed(2) : 'n/a';
-    const meanVal = vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(2) : 'n/a';
-    const latestObs = s.filteredObs.length ? s.filteredObs[s.filteredObs.length - 1] : {{ date: 'n/a', value: 'n/a' }};
-    const latestFormatted = typeof latestObs.value === 'number' ? `${{latestObs.value.toFixed(2)}} ${{s.unit}}` : 'n/a';
+    const stats = computeStats(s.filteredObs);
+    if (!stats) return;
+
+    const latestFormatted = typeof stats.latest === 'number' ? `${{stats.latest.toFixed(2)}} ${{s.unit}}` : 'n/a';
+    const zColor = stats.zScore > 1.5 ? '#990f3d' : (stats.zScore < -1.5 ? '#0d7680' : '#4b525f');
+    const zSign = stats.zScore > 0 ? '+' : '';
+    const dSign = stats.periodDelta > 0 ? '+' : '';
+    const pSign = stats.periodPct > 0 ? '+' : '';
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
@@ -2328,10 +3283,29 @@ function renderSummaryTable(seriesData) {{
       </td>
       <td><strong>${{s.country}}</strong></td>
       <td><strong>${{latestFormatted}}</strong></td>
-      <td style="color: var(--muted);">${{latestObs.date}}</td>
-      <td>${{minVal}}</td>
-      <td>${{maxVal}}</td>
-      <td>${{meanVal}}</td>
+      <td style="color: var(--muted);">${{stats.latestDate}}</td>
+      <td>
+        <div class="percentile-cell" title="Percentile rank: ${{stats.percentile.toFixed(1)}}% of historical values in this window are <= latest">
+          <div class="pct-track">
+            <div class="pct-fill" style="width: ${{stats.percentile.toFixed(1)}}%; background: ${{s.config.color}};"></div>
+          </div>
+          <strong style="font-size:11px;">${{stats.percentile.toFixed(1)}}%</strong>
+        </div>
+      </td>
+      <td>
+        <span class="zscore-tag" style="color: ${{zColor}}; background: ${{zColor}}14;">
+          ${{zSign}}${{stats.zScore.toFixed(2)}}σ
+        </span>
+      </td>
+      <td>${{stats.mean.toFixed(2)}} ± ${{stats.std.toFixed(2)}}</td>
+      <td>${{stats.min.toFixed(2)}} ~ ${{stats.max.toFixed(2)}}</td>
+      <td>
+        <span style="color: ${{stats.periodDelta >= 0 ? '#16a34a' : '#dc2626'}}; font-weight:600;">
+          ${{dSign}}${{stats.periodDelta.toFixed(2)}}
+        </span>
+        <span style="color: var(--muted); font-size:10.5px;">(${{pSign}}${{stats.periodPct.toFixed(1)}}%)</span>
+      </td>
+      <td style="color: var(--text-secondary);">${{stats.skewness >= 0 ? '+' : ''}}${{stats.skewness.toFixed(2)}}</td>
       <td><span style="font-weight:600; color: ${{s.config.axis === 'right' ? 'var(--teal)' : 'var(--accent)'}};">${{s.config.axis.toUpperCase()}}</span></td>
     `;
     tbody.appendChild(tr);
@@ -2343,6 +3317,7 @@ function syncHash() {{
   const payload = {{
     t: CURRENT_TRANSFORM,
     r: CURRENT_RANGE,
+    v: CURRENT_CANVAS_VIEW,
     title: CHART_CUSTOM_TITLE || undefined,
     s: ACTIVE_SERIES.map(item => `${{item.country}}:${{item.indicatorId}}:${{item.axis}}`).join(';')
   }};
@@ -2357,6 +3332,7 @@ function loadFromHash(hash) {{
     const payload = JSON.parse(decodeURIComponent(match[1]));
     if (payload.t) CURRENT_TRANSFORM = payload.t;
     if (payload.r) CURRENT_RANGE = payload.r;
+    if (payload.v) CURRENT_CANVAS_VIEW = payload.v;
     if (payload.title) {{
       CHART_CUSTOM_TITLE = payload.title;
       const titleInput = document.getElementById('chart-title-input');
@@ -2487,7 +3463,7 @@ function exportCSV() {{
   let csv = `# East Meridian Macro Chart Studio Export\\n`;
   csv += `# Title: ${{effectiveTitle.replace(/[\\r\\n]/g, ' ')}}\\n`;
   csv += `# Exported: ${{nowStr}}\\n`;
-  csv += `# Transform: ${{CURRENT_TRANSFORM}} | Range: ${{CURRENT_RANGE}}\\n`;
+  csv += `# View: ${{CURRENT_CANVAS_VIEW}} | Transform: ${{CURRENT_TRANSFORM}} | Range: ${{CURRENT_RANGE}}\\n`;
   seriesCols.forEach(col => {{
     csv += `# Series: ${{col.title}} | Source: ${{col.source}} | Axis: ${{col.axis.toUpperCase()}}\\n`;
   }});

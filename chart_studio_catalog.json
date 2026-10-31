@@ -12070,9 +12070,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 92,
-          "latest_date": "2026-08-01",
-          "latest_val": 2.1333333333333426
+          "obs_count": 93,
+          "latest_date": "2026-09-01",
+          "latest_val": 3.2314410480349443
         },
         {
           "id": "industry_confidence",
@@ -12279,9 +12279,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 92,
-          "latest_date": "2026-08-01",
-          "latest_val": 5.744336569579289
+          "obs_count": 93,
+          "latest_date": "2026-09-01",
+          "latest_val": 8.3739837398374
         },
         {
           "id": "primary_balance",
@@ -15549,6 +15549,131 @@
           "axis": "right",
           "color": "#990f3d",
           "label": "BoJ Total Assets (JPY 100mn)"
+        }
+      ]
+    },
+    {
+      "id": "us_tips_breakeven_regression",
+      "title_en": "US 10Y Nominal vs TIPS Breakeven: Inflation Expectation Sensitivity (OLS)",
+      "title_zh": "美国10年期名义国债 vs 10年期TIPS通胀预期：敏感度与OLS线性回归",
+      "description_zh": "分析美国10年期名义国债收益率与10年期TIPS盈亏平衡通胀预期的联动关系与回归弹性系数(Beta)。",
+      "description_en": "Scatter and OLS linear regression between US 10Y nominal Treasury yields and 10Y TIPS breakeven inflation expectations.",
+      "transform": "raw",
+      "date_range": "5y",
+      "view": "scatter_ols",
+      "series": [
+        {
+          "country": "US",
+          "id": "ten_year_breakeven",
+          "axis": "left",
+          "color": "#0d7680",
+          "label": "10Y TIPS Breakeven Inflation (%)"
+        },
+        {
+          "country": "US",
+          "id": "treasury_10y_yield",
+          "axis": "left",
+          "color": "#990f3d",
+          "label": "US 10Y Treasury Yield (%)"
+        }
+      ]
+    },
+    {
+      "id": "us_wei_jobless_claims_lead_lag",
+      "title_en": "US Real Activity Pulse: Weekly Economic Index vs Jobless Claims (Lead-Lag)",
+      "title_zh": "美国高频经济动能脉搏：纽约联储WEI vs 初请失业金 领先-滞后时序分析",
+      "description_zh": "高频先行指标交叉相关：纽约联储周度经济指数(WEI)与初请失业金4周均线在不同期数滞后下的相关系数曲线与最佳领先期数探测。",
+      "description_en": "Lead-lag cross-correlation between NY Fed Weekly Economic Index and 4-week moving average initial jobless claims.",
+      "transform": "zscore",
+      "date_range": "5y",
+      "view": "lead_lag",
+      "series": [
+        {
+          "country": "US",
+          "id": "weekly_economic_index",
+          "axis": "left",
+          "color": "#0d7680",
+          "label": "NY Fed Weekly Economic Index"
+        },
+        {
+          "country": "US",
+          "id": "initial_jobless_claims_4w_ma",
+          "axis": "right",
+          "color": "#990f3d",
+          "label": "Initial Jobless Claims 4W-MA (persons)"
+        }
+      ]
+    },
+    {
+      "id": "global_yield_cross_correlation_matrix",
+      "title_en": "Global Sovereign 10Y Yields: Cross-Country Correlation Matrix & Rolling Linkage",
+      "title_zh": "全球主要经济体10年期国债收益率：跨国相关性矩阵与滚动联动分析",
+      "description_zh": "美、德、英、日、中五国基准10年期国债收益率全景相关性矩阵热力图与跨大西洋利差滚动相关性。",
+      "description_en": "Pairwise correlation matrix heatmap across benchmark 10Y sovereign yields for US, Germany, UK, Japan, and China.",
+      "transform": "raw",
+      "date_range": "5y",
+      "view": "correlation",
+      "series": [
+        {
+          "country": "US",
+          "id": "treasury_10y_yield",
+          "axis": "left",
+          "color": "#990f3d",
+          "label": "US 10Y Treasury (%)"
+        },
+        {
+          "country": "EA",
+          "id": "aaa_yield_10y",
+          "axis": "left",
+          "color": "#0d7680",
+          "label": "Germany Bund 10Y (%)"
+        },
+        {
+          "country": "UK",
+          "id": "long_rate_10y",
+          "axis": "left",
+          "color": "#364b61",
+          "label": "UK Gilt 10Y (%)"
+        },
+        {
+          "country": "JP",
+          "id": "sovereign_yield_10y",
+          "axis": "left",
+          "color": "#d97706",
+          "label": "Japan JGB 10Y (%)"
+        },
+        {
+          "country": "CN",
+          "id": "cgb_yield_10y",
+          "axis": "left",
+          "color": "#dc2626",
+          "label": "China CGB 10Y (%)"
+        }
+      ]
+    },
+    {
+      "id": "kr_tw_semiconductor_zscore",
+      "title_en": "East Asia Tech Cycle: Korea KOSPI vs Taiwan TAIEX Normalized Z-Scores",
+      "title_zh": "东亚半导体出口双雄：韩国 KOSPI vs 台湾 TAIEX Z-Score 标准化动能对比",
+      "description_zh": "通过 Z-Score 标准化去除基数差异，同屏评估韩国 KOSPI 与台湾 TAIEX 股指在科技周期中的相对超买超卖与周期极值位置。",
+      "description_en": "Standardized Z-score momentum comparison of Korea KOSPI and Taiwan TAIEX equity benchmarks.",
+      "transform": "zscore",
+      "date_range": "5y",
+      "view": "timeseries",
+      "series": [
+        {
+          "country": "KR",
+          "id": "kospi_stock_index",
+          "axis": "left",
+          "color": "#990f3d",
+          "label": "Korea KOSPI Index"
+        },
+        {
+          "country": "TW",
+          "id": "taiex_index",
+          "axis": "left",
+          "color": "#0d7680",
+          "label": "Taiwan TAIEX Index"
         }
       ]
     }
