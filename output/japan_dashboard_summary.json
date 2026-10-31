@@ -1,8 +1,8 @@
 {
   "file": "japan.html",
-  "generated": "2026-10-30T23:42:05.172528+00:00",
-  "charts": 55,
-  "source_groups": 21,
+  "generated": "2026-10-31T00:43:01.117261+00:00",
+  "charts": 57,
+  "source_groups": 22,
   "data_gaps": 6,
   "low_confidence": 19,
   "key_series_latest": [
@@ -212,7 +212,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "snapshot",
+  "data_mode": "refresh",
   "latest_cards": [],
   "boj_rate_latest": "n/a",
   "cross_checks": [
@@ -242,11 +242,10 @@
       "value"
     ],
     "file": "japan_canonical_frame.json",
-    "series": 55,
-    "observations": 19674,
-    "series_count": 55,
-    "observation_count": 19674,
-    "snapshot_generated": "2026-10-30T23:28:06.134125+00:00"
+    "series": 57,
+    "observations": 20260,
+    "series_count": 57,
+    "observation_count": 20260
   },
   "data_gaps_detail": [
     {
@@ -293,7 +292,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 21,
+    "source_groups": 22,
     "sources": [
       {
         "source_name": "FRED / BIS",
@@ -316,6 +315,10 @@
         "charts": 4
       },
       {
+        "source_name": "FRED / OECD (Bank of Japan)",
+        "charts": 3
+      },
+      {
         "source_name": "FRED / OECD (METI)",
         "charts": 3
       },
@@ -325,10 +328,6 @@
       },
       {
         "source_name": "FRED / OECD",
-        "charts": 2
-      },
-      {
-        "source_name": "FRED / OECD (Bank of Japan)",
         "charts": 2
       },
       {
@@ -349,6 +348,10 @@
       },
       {
         "source_name": "Bank of Japan / Corporate Goods Price Index",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived (OECD / BoJ / MOF)",
         "charts": 1
       },
       {
@@ -383,7 +386,7 @@
     "quality_counts": {
       "low_confidence": 19,
       "verified": 7,
-      "watch": 29
+      "watch": 31
     },
     "unavailable_count": 0
   },
@@ -394,10 +397,10 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-10-30",
+    "as_of_date": "2026-10-31",
     "counts": {
-      "current": 21,
-      "due": 12,
+      "current": 20,
+      "due": 15,
       "projection": 3,
       "stale": 19
     },
@@ -411,7 +414,7 @@
         "frequency": "",
         "freshness_status": "stale",
         "age_basis_date": "2024-12-01",
-        "age_days": 698,
+        "age_days": 699,
         "threshold_days": 365,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -433,7 +436,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2024-10-01",
-        "age_days": 668,
+        "age_days": 669,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -455,7 +458,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-01-01",
-        "age_days": 578,
+        "age_days": 579,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -477,7 +480,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 303,
+        "age_days": 304,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -499,7 +502,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 303,
+        "age_days": 304,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -521,7 +524,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 303,
+        "age_days": 304,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -543,7 +546,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 303,
+        "age_days": 304,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -565,7 +568,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 303,
+        "age_days": 304,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -587,7 +590,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 303,
+        "age_days": 304,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -609,7 +612,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 303,
+        "age_days": 304,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -631,7 +634,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 213,
+        "age_days": 214,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -653,7 +656,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 213,
+        "age_days": 214,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -675,7 +678,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 122,
+        "age_days": 123,
         "threshold_days": 137,
         "release_calendar_id": "bea_quarterly",
         "expected_release_date": "2026-11-04",
@@ -697,7 +700,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 122,
+        "age_days": 123,
         "threshold_days": 137,
         "release_calendar_id": "bea_quarterly",
         "expected_release_date": "2026-11-04",
@@ -719,7 +722,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 122,
+        "age_days": 123,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -741,7 +744,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-07-01",
-        "age_days": 91,
+        "age_days": 92,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -763,7 +766,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-07-01",
-        "age_days": 91,
+        "age_days": 92,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -785,7 +788,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-07-01",
-        "age_days": 91,
+        "age_days": 92,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -807,7 +810,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-07-01",
-        "age_days": 91,
+        "age_days": 92,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -829,7 +832,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-07-01",
-        "age_days": 91,
+        "age_days": 92,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -851,7 +854,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-07-01",
-        "age_days": 91,
+        "age_days": 92,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -873,7 +876,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -895,7 +898,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -917,7 +920,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -939,7 +942,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -961,7 +964,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -983,7 +986,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1005,7 +1008,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1027,7 +1030,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1042,6 +1045,28 @@
         "transform": "level"
       },
       {
+        "id": "jp_tibor_3m_rate",
+        "concept_id": "jp:jp_tibor_3m_rate",
+        "label_en": "3M Interbank / Money Market Rate",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 61,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / OECD (Bank of Japan)",
+        "series": "IR3TIB01JPM156N",
+        "transform": "level"
+      },
+      {
         "id": "participation_rate",
         "concept_id": "participation_rate",
         "label_en": "Labour Force Participation Rate",
@@ -1049,7 +1074,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1071,7 +1096,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1084,16 +1109,90 @@
         "source_name": "FRED / OECD (Statistics Bureau)",
         "series": "LRHUTTTTJPM156S",
         "transform": "level"
+      },
+      {
+        "id": "yield_curve_slope_10y3m",
+        "concept_id": "jp:yield_curve_slope_10y3m",
+        "label_en": "10Y-3M JGB Yield Curve Slope",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 61,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "Derived (OECD / BoJ / MOF)",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "usd_jpy",
+        "concept_id": "fx_spot",
+        "label_en": "USD/JPY Spot Rate",
+        "latest_date": "2026-10-23",
+        "frequency": "daily",
+        "freshness_status": "due",
+        "age_basis_date": "2026-10-23",
+        "age_days": 8,
+        "threshold_days": 10,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / Federal Reserve H.10",
+        "series": "DEXJPUS",
+        "transform": "level"
       }
     ]
   },
   "transform_audit": {
     "counts": {
-      "level": 45,
+      "level": 47,
       "pct_change": 1,
       "yoy_pct": 9
     },
     "non_level": [
+      {
+        "id": "real_gdp_growth",
+        "label_en": "Real GDP Growth, QoQ",
+        "transform": "pct_change",
+        "unit": "% q/q"
+      },
+      {
+        "id": "real_gdp_yoy",
+        "label_en": "Real GDP Growth, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "nominal_gdp_growth",
+        "label_en": "Nominal GDP Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "gfcf_growth",
+        "label_en": "Gross Fixed Capital Formation Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "government_consumption_growth",
+        "label_en": "Government Consumption Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
       {
         "id": "employment_growth",
         "label_en": "Employment Growth",
@@ -1101,8 +1200,14 @@
         "unit": "% y/y"
       },
       {
-        "id": "gfcf_growth",
-        "label_en": "Gross Fixed Capital Formation Growth",
+        "id": "producer_price_inflation",
+        "label_en": "Corporate Goods Price Index, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "house_price_growth",
+        "label_en": "House Price Growth, YoY",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
@@ -1117,42 +1222,6 @@
         "label_en": "Goods Imports Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
-      },
-      {
-        "id": "government_consumption_growth",
-        "label_en": "Government Consumption Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "house_price_growth",
-        "label_en": "House Price Growth, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "nominal_gdp_growth",
-        "label_en": "Nominal GDP Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "producer_price_inflation",
-        "label_en": "Corporate Goods Price Index, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "real_gdp_growth",
-        "label_en": "Real GDP Growth, QoQ",
-        "transform": "pct_change",
-        "unit": "% q/q"
-      },
-      {
-        "id": "real_gdp_yoy",
-        "label_en": "Real GDP Growth, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
       }
     ]
   },
@@ -1162,6 +1231,6 @@
       "date",
       "value"
     ],
-    "charted_series": 55
+    "charted_series": 57
   }
 }

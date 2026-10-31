@@ -724,6 +724,37 @@ indicators:
   caveat_en: Monthly average benchmark yield. The 2016-2024 range was administered
     under yield-curve control, so the pre-2024 series is not a free-market price.
   caveat_zh: 月度平均基准收益率。2016-2024年受收益率曲线控制管理，因此2024年前的序列并非自由市场价格。
+- id: jp_tibor_3m_rate
+  section: fiscal_sovereign
+  label_en: 3M Interbank / Money Market Rate
+  label_zh: 3个月银行间同业拆借利率 (TIBOR)
+  unit: '%'
+  fetcher: fred
+  series: IR3TIB01JPM156N
+  source_name: FRED / OECD (Bank of Japan)
+  source_url: https://fred.stlouisfed.org/series/IR3TIB01JPM156N
+  frequency: monthly
+  start_date: '1995-01-01'
+  caveat_en: Monthly average 3-month interbank money market rate.
+  caveat_zh: 月度3个月银行间货币市场拆借利率。
+- id: yield_curve_slope_10y3m
+  section: fiscal_sovereign
+  label_en: 10Y-3M JGB Yield Curve Slope
+  label_zh: 10年-3个月日本国债收益率曲线斜率
+  unit: bps
+  fetcher: spread
+  factor: 100
+  primary:
+    fetcher: fred
+    series: IRLTLT01JPM156N
+  secondary:
+    fetcher: fred
+    series: IR3TIB01JPM156N
+  source_name: Derived (OECD / BoJ / MOF)
+  frequency: monthly
+  start_date: '1995-01-01'
+  caveat_en: 10-year JGB yield minus 3-month money market rate in basis points; monitors BoJ curve steepening post-YCC.
+  caveat_zh: 日本10年期国债收益率减3个月货币市场利率（基点）；跟踪后YCC时代日银收益率曲线陡峭化。
 - id: policy_rate
   section: monetary_financial
   label_en: Overnight Call Rate (BoJ Target)

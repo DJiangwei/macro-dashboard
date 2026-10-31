@@ -1,6 +1,6 @@
 {
   "file": "taiwan.html",
-  "generated": "2026-10-30T23:42:06.573960+00:00",
+  "generated": "2026-10-31T00:45:46.556956+00:00",
   "charts": 48,
   "source_groups": 9,
   "data_gaps": 1,
@@ -584,7 +584,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "snapshot",
+  "data_mode": "refresh",
   "latest_cards": [],
   "usd_twd_latest": "32.54 (2026-10-23)",
   "cross_checks": [
@@ -635,8 +635,7 @@
     "series": 48,
     "observations": 13339,
     "series_count": 48,
-    "observation_count": 13339,
-    "snapshot_generated": "2026-10-30T23:30:54.927767+00:00"
+    "observation_count": 13339
   },
   "data_gaps_detail": [
     {
@@ -701,10 +700,10 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-10-30",
+    "as_of_date": "2026-10-31",
     "counts": {
-      "current": 37,
-      "due": 6,
+      "current": 36,
+      "due": 7,
       "projection": 4,
       "stale": 1
     },
@@ -718,7 +717,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-30",
-        "age_days": 122,
+        "age_days": 123,
         "threshold_days": 137,
         "release_calendar_id": "bea_quarterly",
         "expected_release_date": "2026-11-04",
@@ -740,7 +739,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-07-01",
-        "age_days": 91,
+        "age_days": 92,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -762,7 +761,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -784,7 +783,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -806,7 +805,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -828,7 +827,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -850,7 +849,7 @@
         "frequency": "bimonthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -862,6 +861,28 @@
         "comparability": "high",
         "source_name": "Central Bank of the Republic of China (Taiwan)",
         "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "usd_twd",
+        "concept_id": "fx_spot",
+        "label_en": "USD/TWD Spot Exchange Rate (Fed H.10)",
+        "latest_date": "2026-10-23",
+        "frequency": "daily",
+        "freshness_status": "due",
+        "age_basis_date": "2026-10-23",
+        "age_days": 8,
+        "threshold_days": 10,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / Federal Reserve Board",
+        "series": "DEXTAUS",
         "transform": "level"
       }
     ]

@@ -180,6 +180,68 @@ PRESETS = [
             {"country": "EG", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#d97706", "label": "Egypt Short-Term Debt / Reserves (%)"},
             {"country": "KZ", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#2563eb", "label": "Kazakhstan Short-Term Debt / Reserves (%)"}
         ]
+    },
+    {
+        "id": "us_treasury_curve_matrix",
+        "title_en": "US Treasury Yield Curve Structure (2Y, 5Y, 10Y, 30Y & 10s2s Slope)",
+        "title_zh": "美国国债收益率期限结构与利差形态 (2Y/5Y/10Y/30Y & 10s2s利差)",
+        "description_zh": "覆盖2年、5年、10年与30年期美债基准利率形态（左轴），结合10Y-2Y期限利差（右轴）监测收益率曲线倒挂与陡峭化走势。",
+        "description_en": "Benchmark US Treasury yields across 2Y, 5Y, 10Y, and 30Y tenors (left axis) alongside the 10Y-2Y term spread (right axis).",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "US", "id": "treasury_2y_yield", "axis": "left", "color": "#2563eb", "label": "US 2Y Treasury Yield (%)"},
+            {"country": "US", "id": "treasury_5y_yield", "axis": "left", "color": "#0d7680", "label": "US 5Y Treasury Yield (%)"},
+            {"country": "US", "id": "treasury_10y_yield", "axis": "left", "color": "#990f3d", "label": "US 10Y Treasury Yield (%)"},
+            {"country": "US", "id": "treasury_30y_yield", "axis": "left", "color": "#7c3aed", "label": "US 30Y Treasury Yield (%)"},
+            {"country": "US", "id": "yield_curve_10y2y", "axis": "right", "color": "#d97706", "label": "10Y-2Y Term Spread (% pts)"}
+        ]
+    },
+    {
+        "id": "us_inflation_expectations_matrix",
+        "title_en": "US Inflation Expectations: Market TIPS Breakevens vs Michigan Survey",
+        "title_zh": "美国通胀预期网络：TIPS市场盈亏平衡通胀 vs 密歇根消费者预期",
+        "description_zh": "对比5年/10年期TIPS市场隐含通胀预期与密歇根大学消费者1年/5年期通胀预期，监控通胀预期锚定状态。",
+        "description_en": "Market-implied 5Y and 10Y TIPS breakeven inflation rates alongside University of Michigan 1Y and 5Y survey expectations.",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "US", "id": "five_year_breakeven", "axis": "left", "color": "#0d7680", "label": "5Y TIPS Breakeven Inflation (%)"},
+            {"country": "US", "id": "ten_year_breakeven", "axis": "left", "color": "#990f3d", "label": "10Y TIPS Breakeven Inflation (%)"},
+            {"country": "US", "id": "michigan_inflation_expectation", "axis": "left", "color": "#d97706", "label": "Michigan 1Y Inflation Exp (%)"},
+            {"country": "US", "id": "michigan_5y_inflation_expectation", "axis": "left", "color": "#2563eb", "label": "Michigan 5Y Inflation Exp (%)"}
+        ]
+    },
+    {
+        "id": "euro_area_sovereign_fragmentation",
+        "title_en": "Euro Area Sovereign Risk Fragmentation (BTP, Bonos, OAT vs Bund)",
+        "title_zh": "欧元区核心与外围主权利差监控 (意/西/法/希 vs 德国公债基准利差)",
+        "description_zh": "追踪欧元区金融碎片化与主权信用风险：意大利BTP、法国OAT、西班牙Bonos与希腊GGB对德国10年期公债利差 (基点)。",
+        "description_en": "Monitors sovereign spread fragmentation in the Euro Area: Italy BTP, France OAT, Spain Bonos, and Greece GGB 10Y spreads vs German Bund (bps).",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "EA", "id": "it_de_spread_10y", "axis": "left", "color": "#990f3d", "label": "Italy BTP - Bund 10Y Spread (bps)"},
+            {"country": "EA", "id": "fr_de_spread_10y", "axis": "left", "color": "#0d7680", "label": "France OAT - Bund 10Y Spread (bps)"},
+            {"country": "EA", "id": "es_de_spread_10y", "axis": "left", "color": "#d97706", "label": "Spain Bonos - Bund 10Y Spread (bps)"},
+            {"country": "EA", "id": "gr_de_spread_10y", "axis": "left", "color": "#7c3aed", "label": "Greece GGB - Bund 10Y Spread (bps)"}
+        ]
+    },
+    {
+        "id": "global_10y_yields_convergence",
+        "title_en": "Global Major 10Y Sovereign Yields (US, Germany, UK, Japan, China)",
+        "title_zh": "全球核心经济体10年期国债收益率联动 (美/德/英/日/中)",
+        "description_zh": "全球五大经济体10年期基准国债无风险收益率横向联动走势。",
+        "description_en": "Global cross-market sovereign yields: US 10Y Treasury, German 10Y Bund, UK 10Y Gilt, Japan 10Y JGB, and China 10Y CGB.",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "US", "id": "treasury_10y_yield", "axis": "left", "color": "#990f3d", "label": "US 10Y Treasury (%)"},
+            {"country": "EA", "id": "aaa_yield_10y", "axis": "left", "color": "#0d7680", "label": "Germany Bund 10Y (%)"},
+            {"country": "UK", "id": "long_rate_10y", "axis": "left", "color": "#364b61", "label": "UK Gilt 10Y (%)"},
+            {"country": "JP", "id": "sovereign_yield_10y", "axis": "left", "color": "#d97706", "label": "Japan JGB 10Y (%)"},
+            {"country": "CN", "id": "cgb_yield_10y", "axis": "left", "color": "#dc2626", "label": "China CGB 10Y (%)"}
+        ]
     }
 ]
 

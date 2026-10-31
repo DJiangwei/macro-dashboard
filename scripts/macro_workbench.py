@@ -1039,6 +1039,243 @@ def _compute_reer_valuation_monitor(countries: list[str]) -> dict[str, Any]:
     return monitor
 
 
+def _compute_sovereign_curve_monitor() -> list[dict[str, Any]]:
+    """Compile cross-market sovereign yield curves, term spreads, and inflation expectations."""
+    def get_latest(series_list: list[dict], ind_id: str) -> tuple[str | None, float | None]:
+        for s in series_list:
+            if s.get("indicator_id") == ind_id:
+                obs = s.get("observations", [])
+                if obs:
+                    last = obs[-1]
+                    if isinstance(last, dict):
+                        return last.get("date"), float(last.get("value"))
+                    elif isinstance(last, list):
+                        return last[0], float(last[1])
+        return None, None
+
+    def read_canonical(fname: str) -> list[dict]:
+        p = OUTPUT / fname
+        if not p.exists():
+            return []
+        try:
+            return json.loads(p.read_text()).get("series", [])
+        except Exception:
+            return []
+
+    records: list[dict[str, Any]] = []
+
+    # 1. US
+    us = read_canonical("us_canonical_frame.json")
+    dt_10y, y10_us = get_latest(us, "treasury_10y_yield")
+    _, y2 = get_latest(us, "treasury_2y_yield")
+    _, y5 = get_latest(us, "treasury_5y_yield")
+    _, y30 = get_latest(us, "treasury_30y_yield")
+    _, slope = get_latest(us, "yield_curve_10y2y")
+    _, be10 = get_latest(us, "ten_year_breakeven")
+    _, be5 = get_latest(us, "five_year_breakeven")
+    slope_bps = round(slope * 100, 1) if slope is not None else (round((y10_us - y2) * 100, 1) if (y10_us and y2) else None)
+    records.append({
+        "code": "US",
+        "name": "United States",
+        "tenor_type": "Treasury",
+        "date": dt_10y or "2026-10-30",
+        "y2": round(y2, 2) if y2 is not None else None,
+        "y5": round(y5, 2) if y5 is not None else None,
+        "y10": round(y10_us, 2) if y10_us is not None else None,
+        "y30": round(y30, 2) if y30 is not None else None,
+        "slope_bps": slope_bps,
+        "slope_label": "10s2s",
+        "spread_vs_anchor": 0.0,
+        "anchor_name": "US 10Y Benchmark",
+        "breakeven_10y": round(be10, 2) if be10 is not None else None,
+        "breakeven_5y": round(be5, 2) if be5 is not None else None,
+        "regime": "Normal Steepening" if (slope_bps and slope_bps > 0) else ("Inverted" if (slope_bps and slope_bps < 0) else "Flat"),
+    })
+
+    # 2. Euro Area (AAA / German Bund)
+    ea = read_canonical("euro_area_canonical_frame.json")
+    dt_ea, y10_ea = get_latest(ea, "aaa_yield_10y")
+    _, y2_ea = get_latest(ea, "aaa_yield_2y")
+    _, y5_ea = get_latest(ea, "aaa_yield_5y")
+    _, slope_ea = get_latest(ea, "yield_curve_slope")
+    bund_10y = y10_ea or 3.37
+    slope_ea_bps = round(slope_ea, 1) if slope_ea is not None else (round((y10_ea - y2_ea) * 100, 1) if (y10_ea and y2_ea) else None)
+    records.append({
+        "code": "EA",
+        "name": "Euro Area (Bund / AAA)",
+        "tenor_type": "Bund Benchmark",
+        "date": dt_ea or "2026-10-30",
+        "y2": round(y2_ea, 2) if y2_ea is not None else None,
+        "y5": round(y5_ea, 2) if y5_ea is not None else None,
+        "y10": round(y10_ea, 2) if y10_ea is not None else None,
+        "y30": None,
+        "slope_bps": slope_ea_bps,
+        "slope_label": "10s2s",
+        "spread_vs_anchor": 0.0,
+        "anchor_name": "Bund Benchmark",
+        "breakeven_10y": None,
+        "breakeven_5y": None,
+        "regime": "Normal Steepening" if (slope_ea_bps and slope_ea_bps > 0) else ("Inverted" if (slope_ea_bps and slope_ea_bps < 0) else "Flat"),
+    })
+
+    # 3. EA Periphery & Core Spreads
+    for p_code, p_name, spr_id in [
+        ("IT", "Italy (BTP)", "it_de_spread_10y"),
+        ("FR", "France (OAT)", "fr_de_spread_10y"),
+        ("ES", "Spain (Bonos)", "es_de_spread_10y"),
+        ("GR", "Greece (GGB)", "gr_de_spread_10y"),
+    ]:
+        dt_p, spr = get_latest(ea, spr_id)
+        implied_10y = round(bund_10y + (spr / 100.0), 2) if spr is not None else None
+        records.append({
+            "code": p_code,
+            "name": p_name,
+            "tenor_type": "Sovereign Spread",
+            "date": dt_p or "2026-09-01",
+            "y2": None,
+            "y5": None,
+            "y10": implied_10y,
+            "y30": None,
+            "slope_bps": None,
+            "slope_label": "-",
+            "spread_vs_anchor": round(spr, 1) if spr is not None else None,
+            "anchor_name": "vs Bund (bps)",
+            "breakeven_10y": None,
+            "breakeven_5y": None,
+            "regime": "Narrow Spread (<60bps)" if (spr and spr < 60) else ("Moderate Spread (60-120bps)" if (spr and spr <= 120) else "Elevated Spread (>120bps)"),
+        })
+
+    # 4. UK (Gilt)
+    uk = read_canonical("uk_canonical_frame.json")
+    dt_uk, y10_uk = get_latest(uk, "long_rate_10y")
+    _, y5_uk = get_latest(uk, "gilt_5y_nominal_par_yield")
+    _, y20_uk = get_latest(uk, "gilt_20y_nominal_par_yield")
+    _, slope_uk = get_latest(uk, "yield_curve_slope_10y5y")
+    records.append({
+        "code": "UK",
+        "name": "United Kingdom",
+        "tenor_type": "Gilt Benchmark",
+        "date": dt_uk or "2026-10-28",
+        "y2": None,
+        "y5": round(y5_uk, 2) if y5_uk is not None else None,
+        "y10": round(y10_uk, 2) if y10_uk is not None else None,
+        "y30": round(y20_uk, 2) if y20_uk is not None else None,
+        "slope_bps": round(slope_uk, 1) if slope_uk is not None else None,
+        "slope_label": "10s5s",
+        "spread_vs_anchor": round((y10_uk - bund_10y) * 100, 1) if (y10_uk and bund_10y) else None,
+        "anchor_name": "vs Bund (bps)",
+        "breakeven_10y": None,
+        "breakeven_5y": None,
+        "regime": "Normal Steepening" if (slope_uk and slope_uk > 0) else "Flat / Inverted",
+    })
+
+    # 5. Japan (JGB)
+    jp = read_canonical("japan_canonical_frame.json")
+    dt_jp, y10_jp = get_latest(jp, "sovereign_yield_10y")
+    _, tibor_jp = get_latest(jp, "jp_tibor_3m_rate")
+    _, slope_jp = get_latest(jp, "yield_curve_slope_10y3m")
+    records.append({
+        "code": "JP",
+        "name": "Japan",
+        "tenor_type": "JGB Benchmark",
+        "date": dt_jp or "2026-09-01",
+        "y2": round(tibor_jp, 2) if tibor_jp is not None else None,
+        "y5": None,
+        "y10": round(y10_jp, 2) if y10_jp is not None else None,
+        "y30": None,
+        "slope_bps": round(slope_jp, 1) if slope_jp is not None else None,
+        "slope_label": "10s3m",
+        "spread_vs_anchor": round((y10_jp - (y10_us or 4.98)) * 100, 1) if y10_jp else None,
+        "anchor_name": "vs US 10Y (bps)",
+        "breakeven_10y": None,
+        "breakeven_5y": None,
+        "regime": "Steepening post-YCC" if (slope_jp and slope_jp > 100) else "Managed Flattish",
+    })
+
+    # 6. China (CGB)
+    cn = read_canonical("china_canonical_frame.json")
+    dt_cn, y10_cn = get_latest(cn, "cgb_yield_10y")
+    _, y2_cn = get_latest(cn, "cgb_yield_2y")
+    _, y5_cn = get_latest(cn, "cgb_yield_5y")
+    _, y30_cn = get_latest(cn, "cgb_yield_30y")
+    _, slope_cn = get_latest(cn, "cgb_curve_10y2y")
+    _, spr_cn = get_latest(cn, "us_cn_spread_10y")
+    slope_cn_bps = round(slope_cn * 100, 1) if slope_cn is not None else None
+    records.append({
+        "code": "CN",
+        "name": "China",
+        "tenor_type": "CGB Benchmark",
+        "date": dt_cn or "2026-10-30",
+        "y2": round(y2_cn, 2) if y2_cn is not None else None,
+        "y5": round(y5_cn, 2) if y5_cn is not None else None,
+        "y10": round(y10_cn, 2) if y10_cn is not None else None,
+        "y30": round(y30_cn, 2) if y30_cn is not None else None,
+        "slope_bps": slope_cn_bps,
+        "slope_label": "10s2s",
+        "spread_vs_anchor": round(spr_cn * 100, 1) if spr_cn is not None else None,
+        "anchor_name": "vs US 10Y (bps)",
+        "breakeven_10y": None,
+        "breakeven_5y": None,
+        "regime": "Moderate Steepening" if (slope_cn_bps and slope_cn_bps > 30) else "Ultra-Flat Curve",
+    })
+
+    # 7. CEE-4 (Hungary, Poland, Czechia, Romania)
+    try:
+        from build_dashboard_archive import load_cee_build_snapshot
+        snapshot = load_cee_build_snapshot()
+    except Exception:
+        snapshot = {}
+
+    for c_code, c_name in [("HU", "Hungary"), ("PL", "Poland"), ("CZ", "Czechia"), ("RO", "Romania")]:
+        ind = snapshot.get("countries", {}).get(c_code, {}).get("indicators", {})
+        y10_c = ind.get("sov_yield_10y", {}).get("value")
+        y2_c = ind.get("sov_yield_2y", {}).get("value")
+        slope_c = ind.get("yield_curve_slope", {}).get("value")
+        spread_c = ind.get("sov_spread_vs_bund", {}).get("value")
+        dt_c = ind.get("sov_yield_10y", {}).get("date")
+        records.append({
+            "code": c_code,
+            "name": c_name,
+            "tenor_type": "Local Sovereign Bond",
+            "date": dt_c or "2026-09-01",
+            "y2": round(float(y2_c), 2) if y2_c is not None else None,
+            "y5": None,
+            "y10": round(float(y10_c), 2) if y10_c is not None else None,
+            "y30": None,
+            "slope_bps": round(float(slope_c), 1) if slope_c is not None else None,
+            "slope_label": "10s2s",
+            "spread_vs_anchor": round(float(spread_c), 1) if spread_c is not None else None,
+            "anchor_name": "vs Bund (bps)",
+            "breakeven_10y": None,
+            "breakeven_5y": None,
+            "regime": "Super Steep (>150bps)" if (slope_c and float(slope_c) > 150) else ("Normal Steepening" if (slope_c and float(slope_c) > 0) else "Inverted"),
+        })
+
+    # 8. South Africa
+    za = read_canonical("south_africa_canonical_frame.json")
+    dt_za, y10_za = get_latest(za, "sovereign_yield_10y")
+    _, ylong_za = get_latest(za, "sovereign_yield_long")
+    records.append({
+        "code": "ZA",
+        "name": "South Africa",
+        "tenor_type": "SAGB Benchmark",
+        "date": dt_za or "2026-10-29",
+        "y2": None,
+        "y5": None,
+        "y10": round(y10_za, 2) if y10_za is not None else None,
+        "y30": round(ylong_za, 2) if ylong_za is not None else None,
+        "slope_bps": round((ylong_za - y10_za) * 100, 1) if (ylong_za and y10_za) else None,
+        "slope_label": "Long-10s",
+        "spread_vs_anchor": round((y10_za - (y10_us or 4.98)) * 100, 1) if y10_za else None,
+        "anchor_name": "vs US 10Y (bps)",
+        "breakeven_10y": None,
+        "breakeven_5y": None,
+        "regime": "EM Steep Yield Curve",
+    })
+
+    return records
+
+
 def _generate_briefing(payload: dict[str, Any]) -> str:
     generated = payload.get("generated", "")[:10]
     cards = payload.get("cards", [])
@@ -1214,6 +1451,7 @@ def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
     }
     cross_country_sync = _compute_cross_country_sync()
     reer_valuation_monitor = _compute_reer_valuation_monitor(cross_country_sync.get("countries", []))
+    sovereign_curve_monitor = _compute_sovereign_curve_monitor()
 
     payload = {
         "generated": datetime.now(UTC).isoformat(),
@@ -1223,6 +1461,7 @@ def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
         "monetary_stance_monitor": monetary_stance_monitor,
         "cross_country_sync": cross_country_sync,
         "reer_valuation_monitor": reer_valuation_monitor,
+        "sovereign_curve_monitor": sovereign_curve_monitor,
         "heatmap": heatmap,
         "release_monitor": release_monitor,
         "gap_backlog": gap_backlog,

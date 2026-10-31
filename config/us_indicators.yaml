@@ -1713,6 +1713,20 @@ indicators:
   caveat_en: Energy prices drive headline inflation volatility but are less persistent than core services.
   caveat_zh: 能源价格驱动总体通胀波动，但通常比核心服务通胀更不持久。
   source_authority: official_primary
+- id: five_year_breakeven
+  section: prices_wages
+  label_en: 5Y Breakeven Inflation
+  label_zh: 5年盈亏平衡通胀 (TIPS)
+  unit: '%'
+  fetcher: fred
+  series: T5YIE
+  source_name: FRED / Federal Reserve
+  source_url: https://fred.stlouisfed.org/series/T5YIE
+  frequency: daily
+  start_date: '2018-01-01'
+  caveat_en: Market-based medium-term inflation compensation derived from 5-year TIPS.
+  caveat_zh: 5年期TIPS盈亏平衡通胀率，反映市场中期通胀补偿预期。
+  source_authority: official_primary
 - id: ten_year_breakeven
   section: prices_wages
   label_en: 10Y Breakeven Inflation
@@ -1754,6 +1768,21 @@ indicators:
   start_date: '1990-01-01'
   caveat_en: Survey-based short-term inflation expectation; sensitive to gasoline and sentiment.
   caveat_zh: 调查型短期通胀预期；对汽油价格和情绪较敏感。
+  source_authority: official_primary
+- id: michigan_5y_inflation_expectation
+  section: prices_wages
+  label_en: Michigan 5Y Inflation Expectation
+  label_zh: 密歇根5年通胀预期
+  unit: '%'
+  fetcher: fred
+  series: EXPINF5YR
+  source_name: FRED / University of Michigan
+  source_url: https://fred.stlouisfed.org/series/EXPINF5YR
+  frequency: monthly
+  start_date: '1990-01-01'
+  caveat_en: Survey-based 5-year consumer inflation expectation; closely monitored by the FOMC for inflation anchoring.
+  caveat_zh: 调查型5年期消费者通胀预期；美联储FOMC高度关注的长期通胀预期针锚指标。
+  source_authority: official_primary
 - id: broad_money_growth
   section: monetary_financial
   label_en: M2 Money Growth

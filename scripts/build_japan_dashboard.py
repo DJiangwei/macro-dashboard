@@ -48,8 +48,7 @@ from country_primer.adapters import (
     apply_scale,
     fetch_boj_flatfile,
     fetch_estat,
-    fetch_imf_datamapper,
-    fetch_imf_sdmx,
+    fetch_spread,
 )
 from country_primer.cross_checks import evaluate_cross_checks
 from country_primer.source_health import (
@@ -142,6 +141,7 @@ def build(data_mode: str | None = None) -> Path:
         "estat": lambda spec, cache: _apply_transform(apply_scale(fetch_estat(requests.Session(), spec))),
         "imf_datamapper": lambda spec, cache: _apply_transform(fetch_imf_datamapper(requests.Session(), spec)),
         "imf_sdmx": lambda spec, cache: _apply_transform(fetch_imf_sdmx(requests.Session(), spec)),
+        "spread": lambda spec, cache: _apply_transform(apply_scale(fetch_spread(requests.Session(), spec))),
     }
 
     if data_mode == "snapshot":

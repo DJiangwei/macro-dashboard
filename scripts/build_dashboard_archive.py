@@ -468,38 +468,80 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
     cpi_matrix = sync_data.get("inflation_correlation", {}) or {}
     ip_matrix = sync_data.get("industrial_production_correlation", {}) or {}
     yield_matrix = sync_data.get("sovereign_yield_correlation", {}) or {}
-    spreads = sync_data.get("sovereign_spreads_to_us", {}) or {}
     sync_countries = sync_data.get("countries", []) or []
-
+    sovereign_monitor = workbench.get("sovereign_curve_monitor", []) or []
     sovereign_rows = []
-    for code in sync_countries:
-        sp = spreads.get(code, {})
-        bmk = sp.get("benchmark", f"{code} 10Y")
-        dt = sp.get("date", "n/a")
-        y_val = sp.get("yield")
-        sp_bps = sp.get("spread_bps")
-        if y_val is not None:
-            sign = "+" if sp_bps > 0 else ""
-            sp_str = f"{sign}{sp_bps:.1f} bps" if code != "US" else "Benchmark (0.0)"
-            pill_cls = "neutral" if code == "US" or abs(sp_bps) <= 100 else ("bad" if sp_bps > 200 else "good")
-            sovereign_rows.append(f"""
-      <tr>
-        <td><strong>{escape(str(code))}</strong></td>
-        <td>{escape(str(bmk))}</td>
-        <td><strong>{y_val:.2f}%</strong></td>
-        <td>{escape(str(dt))}</td>
-        <td><span class="score-pill {pill_cls}">{escape(sp_str)}</span></td>
-        <td><em>Official Observed</em></td>
-      </tr>""")
+    for item in sovereign_monitor:
+        code = str(item.get("code", ""))
+        name = str(item.get("name", ""))
+        tenor_type = str(item.get("tenor_type", ""))
+        dt = str(item.get("date", "n/a"))
+        y2 = item.get("y2")
+        y5 = item.get("y5")
+        y10 = item.get("y10")
+        y30 = item.get("y30")
+        slope_bps = item.get("slope_bps")
+        slope_label = item.get("slope_label", "10s2s")
+        spr = item.get("spread_vs_anchor")
+        anchor = item.get("anchor_name", "")
+        be10 = item.get("breakeven_10y")
+        be5 = item.get("breakeven_5y")
+        regime = item.get("regime", "")
+
+        y2_str = f"<strong>{y2:.2f}%</strong>" if y2 is not None else "-"
+        y5_str = f"<strong>{y5:.2f}%</strong>" if y5 is not None else "-"
+        y10_str = f"<strong>{y10:.2f}%</strong>" if y10 is not None else "-"
+        y30_str = f"<strong>{y30:.2f}%</strong>" if y30 is not None else "-"
+
+        if slope_bps is not None:
+            slope_sign = "+" if slope_bps > 0 else ""
+            if slope_bps < 0:
+                slope_pill = "bad"
+            elif slope_bps > 150:
+                slope_pill = "neutral"
+            else:
+                slope_pill = "good"
+            slope_html = f'<span class="score-pill {slope_pill}">{slope_sign}{slope_bps:.1f} bps</span><em style="font-size:10px; color:var(--text-secondary); margin-left:4px;">{escape(slope_label)}</em>'
         else:
-            sovereign_rows.append(f"""
+            slope_html = '<span style="color:var(--text-secondary);">-</span>'
+
+        if spr is not None:
+            if code in ("US", "EA"):
+                spr_html = '<span class="score-pill neutral">Benchmark (0.0)</span>'
+            else:
+                spr_sign = "+" if spr > 0 else ""
+                spr_pill = "good" if abs(spr) < 80 else ("neutral" if abs(spr) <= 150 else "bad")
+                spr_html = f'<span class="score-pill {spr_pill}">{spr_sign}{spr:.1f} bps</span><em style="font-size:10px; color:var(--text-secondary); margin-left:4px;">{escape(anchor)}</em>'
+        else:
+            spr_html = '<span style="color:var(--text-secondary);">-</span>'
+
+        if be10 is not None:
+            be_html = f'<strong>{be10:.2f}%</strong>' + (f'<span style="font-size:11px; color:var(--text-secondary);"> (5Y: {be5:.2f}%)</span>' if be5 is not None else '')
+        else:
+            be_html = '<span style="color:var(--text-secondary);">-</span>'
+
+        if code == "US":
+            chart_link = '<a href="chart_studio.html?preset=us_treasury_curve_matrix" style="color: var(--accent); font-weight: 600; text-decoration: none;">US Curve &rarr;</a>'
+        elif code in ("EA", "IT", "FR", "ES", "GR"):
+            chart_link = '<a href="chart_studio.html?preset=euro_area_sovereign_fragmentation" style="color: var(--accent); font-weight: 600; text-decoration: none;">EA Spreads &rarr;</a>'
+        elif code == "CN":
+            chart_link = '<a href="chart_studio.html?preset=cgb_yield_curve_and_us_spread" style="color: var(--accent); font-weight: 600; text-decoration: none;">CGB Curve &rarr;</a>'
+        else:
+            chart_link = '<a href="chart_studio.html?preset=global_10y_yields_convergence" style="color: var(--accent); font-weight: 600; text-decoration: none;">10Y Global &rarr;</a>'
+
+        sovereign_rows.append(f"""
       <tr>
-        <td><strong>{escape(str(code))}</strong></td>
-        <td>{escape(str(bmk))}</td>
-        <td><em>n/a</em></td>
-        <td>{escape(str(dt))}</td>
-        <td><span class="score-pill neutral">-</span></td>
-        <td><em style="color: var(--warn);">Tracked in Data Gap Backlog</em></td>
+        <td><strong>{escape(code)}</strong><span>{escape(name)}</span></td>
+        <td>{escape(tenor_type)}</td>
+        <td>{y2_str}</td>
+        <td>{y5_str}</td>
+        <td>{y10_str}</td>
+        <td>{y30_str}</td>
+        <td>{slope_html}</td>
+        <td>{spr_html}</td>
+        <td>{be_html}</td>
+        <td><em>{escape(regime)}</em></td>
+        <td>{chart_link}</td>
       </tr>""")
 
     reer_monitor = workbench.get("reer_valuation_monitor", {}) or {}
@@ -636,11 +678,11 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
     </div>
     <div class="table-wrap" style="margin-top: 16px;">
       <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
-        <strong style="font-size: 13px; color: var(--fg);">Global Sovereign 10Y Benchmark Yields & Spreads to US Treasury</strong>
-        <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Official 10-year sovereign bond benchmark yields and basis point spreads relative to the US 10-year Treasury benchmark ({escape(str(sync_data.get('sample_period_yield', '')))}).</span>
+        <strong style="font-size: 13px; color: var(--fg);">Global Sovereign Yield Curves, Spreads & Inflation Expectations Network</strong>
+        <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Comprehensive cross-market sovereign yield curves (2Y, 5Y, 10Y, 30Y), term structure slopes (10s2s / 10s3m / 10s5s in bps), anchor benchmark spreads (bps vs Bund or vs US 10Y), and market-implied TIPS inflation compensation.</span>
       </div>
       <table class="regime-table">
-        <thead><tr><th>Country</th><th>Benchmark Instrument</th><th>Latest Yield</th><th>Observation Date</th><th>Spread to US 10Y (bps)</th><th>Data Reliability</th></tr></thead>
+        <thead><tr><th>Country / Entity</th><th>Instrument Tenor</th><th>2Y Yield</th><th>5Y Yield</th><th>10Y Benchmark</th><th>30Y Yield</th><th>Curve Slope</th><th>Spread vs Anchor</th><th>Breakeven Infl (10Y/5Y)</th><th>Curve Regime</th><th>Chart Studio</th></tr></thead>
         <tbody>{''.join(sovereign_rows)}</tbody>
       </table>
     </div>

@@ -1,7 +1,7 @@
 {
   "generated": "2026-10-29",
   "total_countries": 18,
-  "total_indicators": 1326,
+  "total_indicators": 1330,
   "countries": [
     {
       "code": "US",
@@ -9,7 +9,7 @@
       "name_zh": "美国",
       "flag": "🇺🇸",
       "canonical_file": "us_canonical_frame.json",
-      "indicator_count": 171,
+      "indicator_count": 173,
       "indicators": [
         {
           "id": "active_listing_count",
@@ -683,6 +683,17 @@
           "latest_val": -1992473.22435242
         },
         {
+          "id": "five_year_breakeven",
+          "label_en": "5Y Breakeven Inflation",
+          "label_zh": "5年盈亏平衡通胀 (TIPS)",
+          "unit": "%",
+          "section": "prices_wages",
+          "frequency": "daily",
+          "obs_count": 2208,
+          "latest_date": "2026-10-30",
+          "latest_val": 2.46
+        },
+        {
           "id": "five_year_forward_inflation",
           "label_en": "5Y5Y Forward Inflation Expectation",
           "label_zh": "5年5年远期通胀预期",
@@ -1033,6 +1044,17 @@
           "obs_count": 143,
           "latest_date": "2026-07-01",
           "latest_val": -4.0965618141916575
+        },
+        {
+          "id": "michigan_5y_inflation_expectation",
+          "label_en": "Michigan 5Y Inflation Expectation",
+          "label_zh": "密歇根5年通胀预期",
+          "unit": "%",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 442,
+          "latest_date": "2026-10-01",
+          "latest_val": 2.77031325
         },
         {
           "id": "michigan_inflation_expectation",
@@ -3767,8 +3789,8 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 10165,
-          "latest_date": "2026-10-30",
+          "obs_count": 10166,
+          "latest_date": "2026-10-31",
           "latest_val": 2.5
         },
         {
@@ -4977,7 +4999,7 @@
       "name_zh": "日本",
       "flag": "🇯🇵",
       "canonical_file": "japan_canonical_frame.json",
-      "indicator_count": 55,
+      "indicator_count": 57,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -5365,6 +5387,17 @@
           "latest_val": 1.18
         },
         {
+          "id": "jp_tibor_3m_rate",
+          "label_en": "3M Interbank / Money Market Rate",
+          "label_zh": "3个月银行间同业拆借利率 (TIBOR)",
+          "unit": "%",
+          "section": "fiscal_sovereign",
+          "frequency": "monthly",
+          "obs_count": 293,
+          "latest_date": "2026-08-01",
+          "latest_val": 1.55991
+        },
+        {
           "id": "manufacturing_earnings_growth",
           "label_en": "Manufacturing Hourly Earnings, YoY",
           "label_zh": "制造业时薪同比",
@@ -5583,6 +5616,17 @@
           "obs_count": 2952,
           "latest_date": "2026-10-23",
           "latest_val": 156.87
+        },
+        {
+          "id": "yield_curve_slope_10y3m",
+          "label_en": "10Y-3M JGB Yield Curve Slope",
+          "label_zh": "10年-3个月日本国债收益率曲线斜率",
+          "unit": "bps",
+          "section": "fiscal_sovereign",
+          "frequency": "monthly",
+          "obs_count": 293,
+          "latest_date": "2026-08-01",
+          "latest_val": 138.009
         }
       ]
     },
@@ -8479,7 +8523,7 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 82,
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-10-31",
           "latest_val": 68.22
         },
         {
@@ -8578,7 +8622,7 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 82,
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-10-31",
           "latest_val": 508.33
         },
         {
@@ -8765,7 +8809,7 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 82,
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-10-31",
           "latest_val": 5.65
         },
         {
@@ -8820,7 +8864,7 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 82,
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-10-31",
           "latest_val": 453.87
         },
         {
@@ -10223,9 +10267,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "quarterly",
-          "obs_count": 35,
-          "latest_date": "2026-07-01",
-          "latest_val": 78.8
+          "obs_count": 36,
+          "latest_date": "2026-10-01",
+          "latest_val": 75.0
         },
         {
           "id": "carry_trade_return",
@@ -11004,9 +11048,9 @@
           "unit": "% QoQ",
           "section": "macro",
           "frequency": "quarterly",
-          "obs_count": 34,
-          "latest_date": "2026-04-01",
-          "latest_val": 0.6
+          "obs_count": 35,
+          "latest_date": "2026-07-01",
+          "latest_val": 0.1
         },
         {
           "id": "real_gdp_yoy",
@@ -11015,9 +11059,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "quarterly",
-          "obs_count": 34,
-          "latest_date": "2026-04-01",
-          "latest_val": 1.7
+          "obs_count": 35,
+          "latest_date": "2026-07-01",
+          "latest_val": 1.5
         },
         {
           "id": "real_policy_rate",
@@ -11070,9 +11114,9 @@
           "unit": "million tonne-km",
           "section": "macro",
           "frequency": "quarterly",
-          "obs_count": 32,
-          "latest_date": "2025-10-01",
-          "latest_val": 7832.0
+          "obs_count": 33,
+          "latest_date": "2026-01-01",
+          "latest_val": 8607.0
         },
         {
           "id": "services_balance",
@@ -11388,8 +11432,8 @@
           "unit": "%",
           "section": "macro",
           "frequency": "quarterly",
-          "obs_count": 35,
-          "latest_date": "2026-07-01",
+          "obs_count": 36,
+          "latest_date": "2026-10-01",
           "latest_val": 78.4
         },
         {
@@ -12268,9 +12312,9 @@
           "unit": "million tonne-km",
           "section": "macro",
           "frequency": "quarterly",
-          "obs_count": 32,
-          "latest_date": "2025-10-01",
-          "latest_val": 99828.0
+          "obs_count": 33,
+          "latest_date": "2026-01-01",
+          "latest_val": 93601.0
         },
         {
           "id": "services_balance",
@@ -12575,9 +12619,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "quarterly",
-          "obs_count": 35,
-          "latest_date": "2026-07-01",
-          "latest_val": 84.8
+          "obs_count": 36,
+          "latest_date": "2026-10-01",
+          "latest_val": 82.1
         },
         {
           "id": "carry_trade_return",
@@ -13356,9 +13400,9 @@
           "unit": "% QoQ",
           "section": "macro",
           "frequency": "quarterly",
-          "obs_count": 34,
-          "latest_date": "2026-04-01",
-          "latest_val": 0.3
+          "obs_count": 35,
+          "latest_date": "2026-07-01",
+          "latest_val": 0.5
         },
         {
           "id": "real_gdp_yoy",
@@ -13367,9 +13411,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "quarterly",
-          "obs_count": 34,
-          "latest_date": "2026-04-01",
-          "latest_val": 1.8
+          "obs_count": 35,
+          "latest_date": "2026-07-01",
+          "latest_val": 1.6
         },
         {
           "id": "real_policy_rate",
@@ -13422,9 +13466,9 @@
           "unit": "million tonne-km",
           "section": "macro",
           "frequency": "quarterly",
-          "obs_count": 32,
-          "latest_date": "2025-10-01",
-          "latest_val": 18510.0
+          "obs_count": 33,
+          "latest_date": "2026-01-01",
+          "latest_val": 17059.0
         },
         {
           "id": "services_balance",
@@ -13740,9 +13784,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "quarterly",
-          "obs_count": 35,
-          "latest_date": "2026-07-01",
-          "latest_val": 68.3
+          "obs_count": 36,
+          "latest_date": "2026-10-01",
+          "latest_val": 65.6
         },
         {
           "id": "carry_trade_return",
@@ -14226,7 +14270,7 @@
           "frequency": "quarterly",
           "obs_count": 34,
           "latest_date": "2026-04-01",
-          "latest_val": -45.2
+          "latest_val": -44.8
         },
         {
           "id": "import_prices_yoy",
@@ -14576,9 +14620,9 @@
           "unit": "million tonne-km",
           "section": "macro",
           "frequency": "quarterly",
-          "obs_count": 32,
-          "latest_date": "2025-10-01",
-          "latest_val": 17727.0
+          "obs_count": 33,
+          "latest_date": "2026-01-01",
+          "latest_val": 16699.0
         },
         {
           "id": "services_balance",
@@ -15024,6 +15068,176 @@
           "axis": "left",
           "color": "#2563eb",
           "label": "Kazakhstan Short-Term Debt / Reserves (%)"
+        }
+      ]
+    },
+    {
+      "id": "us_treasury_curve_matrix",
+      "title_en": "US Treasury Yield Curve Structure (2Y, 5Y, 10Y, 30Y & 10s2s Slope)",
+      "title_zh": "美国国债收益率期限结构与利差形态 (2Y/5Y/10Y/30Y & 10s2s利差)",
+      "description_zh": "覆盖2年、5年、10年与30年期美债基准利率形态（左轴），结合10Y-2Y期限利差（右轴）监测收益率曲线倒挂与陡峭化走势。",
+      "description_en": "Benchmark US Treasury yields across 2Y, 5Y, 10Y, and 30Y tenors (left axis) alongside the 10Y-2Y term spread (right axis).",
+      "transform": "raw",
+      "date_range": "5y",
+      "series": [
+        {
+          "country": "US",
+          "id": "treasury_2y_yield",
+          "axis": "left",
+          "color": "#2563eb",
+          "label": "US 2Y Treasury Yield (%)"
+        },
+        {
+          "country": "US",
+          "id": "treasury_5y_yield",
+          "axis": "left",
+          "color": "#0d7680",
+          "label": "US 5Y Treasury Yield (%)"
+        },
+        {
+          "country": "US",
+          "id": "treasury_10y_yield",
+          "axis": "left",
+          "color": "#990f3d",
+          "label": "US 10Y Treasury Yield (%)"
+        },
+        {
+          "country": "US",
+          "id": "treasury_30y_yield",
+          "axis": "left",
+          "color": "#7c3aed",
+          "label": "US 30Y Treasury Yield (%)"
+        },
+        {
+          "country": "US",
+          "id": "yield_curve_10y2y",
+          "axis": "right",
+          "color": "#d97706",
+          "label": "10Y-2Y Term Spread (% pts)"
+        }
+      ]
+    },
+    {
+      "id": "us_inflation_expectations_matrix",
+      "title_en": "US Inflation Expectations: Market TIPS Breakevens vs Michigan Survey",
+      "title_zh": "美国通胀预期网络：TIPS市场盈亏平衡通胀 vs 密歇根消费者预期",
+      "description_zh": "对比5年/10年期TIPS市场隐含通胀预期与密歇根大学消费者1年/5年期通胀预期，监控通胀预期锚定状态。",
+      "description_en": "Market-implied 5Y and 10Y TIPS breakeven inflation rates alongside University of Michigan 1Y and 5Y survey expectations.",
+      "transform": "raw",
+      "date_range": "5y",
+      "series": [
+        {
+          "country": "US",
+          "id": "five_year_breakeven",
+          "axis": "left",
+          "color": "#0d7680",
+          "label": "5Y TIPS Breakeven Inflation (%)"
+        },
+        {
+          "country": "US",
+          "id": "ten_year_breakeven",
+          "axis": "left",
+          "color": "#990f3d",
+          "label": "10Y TIPS Breakeven Inflation (%)"
+        },
+        {
+          "country": "US",
+          "id": "michigan_inflation_expectation",
+          "axis": "left",
+          "color": "#d97706",
+          "label": "Michigan 1Y Inflation Exp (%)"
+        },
+        {
+          "country": "US",
+          "id": "michigan_5y_inflation_expectation",
+          "axis": "left",
+          "color": "#2563eb",
+          "label": "Michigan 5Y Inflation Exp (%)"
+        }
+      ]
+    },
+    {
+      "id": "euro_area_sovereign_fragmentation",
+      "title_en": "Euro Area Sovereign Risk Fragmentation (BTP, Bonos, OAT vs Bund)",
+      "title_zh": "欧元区核心与外围主权利差监控 (意/西/法/希 vs 德国公债基准利差)",
+      "description_zh": "追踪欧元区金融碎片化与主权信用风险：意大利BTP、法国OAT、西班牙Bonos与希腊GGB对德国10年期公债利差 (基点)。",
+      "description_en": "Monitors sovereign spread fragmentation in the Euro Area: Italy BTP, France OAT, Spain Bonos, and Greece GGB 10Y spreads vs German Bund (bps).",
+      "transform": "raw",
+      "date_range": "5y",
+      "series": [
+        {
+          "country": "EA",
+          "id": "it_de_spread_10y",
+          "axis": "left",
+          "color": "#990f3d",
+          "label": "Italy BTP - Bund 10Y Spread (bps)"
+        },
+        {
+          "country": "EA",
+          "id": "fr_de_spread_10y",
+          "axis": "left",
+          "color": "#0d7680",
+          "label": "France OAT - Bund 10Y Spread (bps)"
+        },
+        {
+          "country": "EA",
+          "id": "es_de_spread_10y",
+          "axis": "left",
+          "color": "#d97706",
+          "label": "Spain Bonos - Bund 10Y Spread (bps)"
+        },
+        {
+          "country": "EA",
+          "id": "gr_de_spread_10y",
+          "axis": "left",
+          "color": "#7c3aed",
+          "label": "Greece GGB - Bund 10Y Spread (bps)"
+        }
+      ]
+    },
+    {
+      "id": "global_10y_yields_convergence",
+      "title_en": "Global Major 10Y Sovereign Yields (US, Germany, UK, Japan, China)",
+      "title_zh": "全球核心经济体10年期国债收益率联动 (美/德/英/日/中)",
+      "description_zh": "全球五大经济体10年期基准国债无风险收益率横向联动走势。",
+      "description_en": "Global cross-market sovereign yields: US 10Y Treasury, German 10Y Bund, UK 10Y Gilt, Japan 10Y JGB, and China 10Y CGB.",
+      "transform": "raw",
+      "date_range": "5y",
+      "series": [
+        {
+          "country": "US",
+          "id": "treasury_10y_yield",
+          "axis": "left",
+          "color": "#990f3d",
+          "label": "US 10Y Treasury (%)"
+        },
+        {
+          "country": "EA",
+          "id": "aaa_yield_10y",
+          "axis": "left",
+          "color": "#0d7680",
+          "label": "Germany Bund 10Y (%)"
+        },
+        {
+          "country": "UK",
+          "id": "long_rate_10y",
+          "axis": "left",
+          "color": "#364b61",
+          "label": "UK Gilt 10Y (%)"
+        },
+        {
+          "country": "JP",
+          "id": "sovereign_yield_10y",
+          "axis": "left",
+          "color": "#d97706",
+          "label": "Japan JGB 10Y (%)"
+        },
+        {
+          "country": "CN",
+          "id": "cgb_yield_10y",
+          "axis": "left",
+          "color": "#dc2626",
+          "label": "China CGB 10Y (%)"
         }
       ]
     }

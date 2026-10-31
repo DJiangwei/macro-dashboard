@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-10-30T23:42:07.905780+00:00",
+  "generated": "2026-10-31T00:46:05.540164+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -61,8 +61,8 @@
     },
     "CN": {
       "verified": 0,
-      "watch": 24,
-      "low_confidence": 2,
+      "watch": 15,
+      "low_confidence": 11,
       "substitute": 0,
       "missing": 22
     },
@@ -152,8 +152,8 @@
     },
     "NG": {
       "verified": 1,
-      "watch": 12,
-      "low_confidence": 5,
+      "watch": 11,
+      "low_confidence": 6,
       "substitute": 0,
       "missing": 30
     }
@@ -177,7 +177,7 @@
           "indicator_ids": [
             "real_gdp_qoq"
           ],
-          "latest_date": "2026-04-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -195,7 +195,7 @@
           "indicator_ids": [
             "real_gdp_qoq"
           ],
-          "latest_date": "2026-04-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -343,7 +343,7 @@
           "indicator_ids": [
             "real_gdp_yoy"
           ],
-          "latest_date": "2026-04-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -361,7 +361,7 @@
           "indicator_ids": [
             "real_gdp_yoy"
           ],
-          "latest_date": "2026-04-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -818,8 +818,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 2,
-      "weak_countries": 1,
-      "priority_score": 62,
+      "weak_countries": 2,
+      "priority_score": 64,
       "countries": {
         "HU": {
           "state": "watch",
@@ -858,8 +858,8 @@
           "refresh_fallback": false
         },
         "CN": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "fixed_asset_investment_yoy_akshare"
           ],
@@ -990,8 +990,8 @@
       "unit": "percent",
       "priority_weight": 4,
       "missing_countries": 4,
-      "weak_countries": 2,
-      "priority_score": 64,
+      "weak_countries": 3,
+      "priority_score": 66,
       "countries": {
         "HU": {
           "state": "verified",
@@ -1030,8 +1030,8 @@
           "refresh_fallback": false
         },
         "CN": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "industrial_value_added_yoy_akshare"
           ],
@@ -1159,8 +1159,8 @@
       "unit": "percent",
       "priority_weight": 4,
       "missing_countries": 5,
-      "weak_countries": 2,
-      "priority_score": 69,
+      "weak_countries": 3,
+      "priority_score": 71,
       "countries": {
         "HU": {
           "state": "verified",
@@ -1199,8 +1199,8 @@
           "refresh_fallback": false
         },
         "CN": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "retail_sales_yoy_akshare"
           ],
@@ -2468,8 +2468,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 0,
-      "weak_countries": 1,
-      "priority_score": 52,
+      "weak_countries": 2,
+      "priority_score": 54,
       "countries": {
         "HU": {
           "state": "verified",
@@ -2626,8 +2626,8 @@
           "refresh_fallback": false
         },
         "NG": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "cpi_inflation"
           ],
@@ -3124,8 +3124,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 5,
-      "weak_countries": 0,
-      "priority_score": 75,
+      "weak_countries": 1,
+      "priority_score": 77,
       "countries": {
         "HU": {
           "state": "verified",
@@ -3164,8 +3164,8 @@
           "refresh_fallback": false
         },
         "CN": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "ppi_yoy_akshare"
           ],
@@ -4547,8 +4547,8 @@
       "unit": "currency",
       "priority_weight": 4,
       "missing_countries": 0,
-      "weak_countries": 1,
-      "priority_score": 42,
+      "weak_countries": 2,
+      "priority_score": 44,
       "countries": {
         "HU": {
           "state": "watch",
@@ -4587,8 +4587,8 @@
           "refresh_fallback": false
         },
         "CN": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "customs_trade_balance_akshare"
           ],
@@ -4723,8 +4723,8 @@
       "unit": "percent",
       "priority_weight": 4,
       "missing_countries": 8,
-      "weak_countries": 0,
-      "priority_score": 80,
+      "weak_countries": 1,
+      "priority_score": 82,
       "countries": {
         "HU": {
           "state": "missing",
@@ -4755,8 +4755,8 @@
           "refresh_fallback": false
         },
         "CN": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "customs_exports_yoy_akshare"
           ],
@@ -4883,8 +4883,8 @@
       "unit": "percent",
       "priority_weight": 4,
       "missing_countries": 8,
-      "weak_countries": 0,
-      "priority_score": 80,
+      "weak_countries": 1,
+      "priority_score": 82,
       "countries": {
         "HU": {
           "state": "missing",
@@ -4915,8 +4915,8 @@
           "refresh_fallback": false
         },
         "CN": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "customs_imports_yoy_akshare"
           ],
@@ -5179,7 +5179,7 @@
             "usd_kzt",
             "usd_kzt_ifs"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-10-31",
           "refresh_fallback": false
         },
         "UZ": {
@@ -6285,7 +6285,7 @@
             "estr",
             "policy_rate"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-10-31",
           "refresh_fallback": false
         },
         "JP": {
@@ -6553,8 +6553,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 2,
-      "weak_countries": 2,
-      "priority_score": 64,
+      "weak_countries": 3,
+      "priority_score": 66,
       "countries": {
         "HU": {
           "state": "watch",
@@ -6593,8 +6593,8 @@
           "refresh_fallback": false
         },
         "CN": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "m2_yoy_akshare"
           ],
@@ -6725,8 +6725,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 0,
-      "weak_countries": 6,
-      "priority_score": 62,
+      "weak_countries": 7,
+      "priority_score": 64,
       "countries": {
         "HU": {
           "state": "watch",
@@ -6765,8 +6765,8 @@
           "refresh_fallback": false
         },
         "CN": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "low_confidence",
+          "quality_status": "low_confidence",
           "indicator_ids": [
             "new_rmb_loans_akshare"
           ],
@@ -8447,6 +8447,44 @@
       ]
     },
     {
+      "concept_id": "exports_growth",
+      "pillar": "external_fx",
+      "label_en": "Exports Growth",
+      "priority_score": 82,
+      "missing_countries": [
+        "HU",
+        "PL",
+        "CZ",
+        "RO",
+        "KZ",
+        "UZ",
+        "EG",
+        "NG"
+      ],
+      "weak_countries": [
+        "CN"
+      ]
+    },
+    {
+      "concept_id": "imports_growth",
+      "pillar": "external_fx",
+      "label_en": "Imports Growth",
+      "priority_score": 82,
+      "missing_countries": [
+        "HU",
+        "PL",
+        "CZ",
+        "RO",
+        "KZ",
+        "UZ",
+        "EG",
+        "NG"
+      ],
+      "weak_countries": [
+        "CN"
+      ]
+    },
+    {
       "concept_id": "employment_growth",
       "pillar": "labour_household",
       "label_en": "Employment Growth",
@@ -8456,40 +8494,6 @@
         "TR",
         "HK",
         "TW",
-        "KZ",
-        "UZ",
-        "EG",
-        "NG"
-      ],
-      "weak_countries": []
-    },
-    {
-      "concept_id": "exports_growth",
-      "pillar": "external_fx",
-      "label_en": "Exports Growth",
-      "priority_score": 80,
-      "missing_countries": [
-        "HU",
-        "PL",
-        "CZ",
-        "RO",
-        "KZ",
-        "UZ",
-        "EG",
-        "NG"
-      ],
-      "weak_countries": []
-    },
-    {
-      "concept_id": "imports_growth",
-      "pillar": "external_fx",
-      "label_en": "Imports Growth",
-      "priority_score": 80,
-      "missing_countries": [
-        "HU",
-        "PL",
-        "CZ",
-        "RO",
         "KZ",
         "UZ",
         "EG",
@@ -8517,7 +8521,7 @@
       "concept_id": "producer_price_inflation",
       "pillar": "prices_costs",
       "label_en": "Producer Price Inflation",
-      "priority_score": 75,
+      "priority_score": 77,
       "missing_countries": [
         "HK",
         "KZ",
@@ -8525,7 +8529,9 @@
         "EG",
         "NG"
       ],
-      "weak_countries": []
+      "weak_countries": [
+        "CN"
+      ]
     },
     {
       "concept_id": "business_confidence",
@@ -8567,7 +8573,7 @@
       "concept_id": "retail_sales_growth",
       "pillar": "production_cycle",
       "label_en": "Retail Sales Growth",
-      "priority_score": 69,
+      "priority_score": 71,
       "missing_countries": [
         "TW",
         "KZ",
@@ -8576,6 +8582,7 @@
         "NG"
       ],
       "weak_countries": [
+        "CN",
         "JP",
         "ZA"
       ]
@@ -8603,6 +8610,38 @@
       ]
     },
     {
+      "concept_id": "industrial_production_growth",
+      "pillar": "production_cycle",
+      "label_en": "Industrial Production Growth",
+      "priority_score": 66,
+      "missing_countries": [
+        "TW",
+        "KZ",
+        "UZ",
+        "EG"
+      ],
+      "weak_countries": [
+        "CN",
+        "JP",
+        "ZA"
+      ]
+    },
+    {
+      "concept_id": "broad_money_growth",
+      "pillar": "monetary_financial",
+      "label_en": "Broad Money Growth",
+      "priority_score": 66,
+      "missing_countries": [
+        "TR",
+        "HK"
+      ],
+      "weak_countries": [
+        "CN",
+        "JP",
+        "ZA"
+      ]
+    },
+    {
       "concept_id": "sovereign_yield_10y",
       "pillar": "fiscal_sovereign",
       "label_en": "10Y Sovereign Yield",
@@ -8619,33 +8658,33 @@
       "weak_countries": []
     },
     {
-      "concept_id": "industrial_production_growth",
-      "pillar": "production_cycle",
-      "label_en": "Industrial Production Growth",
+      "concept_id": "investment_growth",
+      "pillar": "growth_demand",
+      "label_en": "Investment Growth",
       "priority_score": 64,
       "missing_countries": [
-        "TW",
-        "KZ",
-        "UZ",
-        "EG"
+        "HK",
+        "NG"
       ],
       "weak_countries": [
-        "JP",
+        "CN",
         "ZA"
       ]
     },
     {
-      "concept_id": "broad_money_growth",
+      "concept_id": "private_credit_growth",
       "pillar": "monetary_financial",
-      "label_en": "Broad Money Growth",
+      "label_en": "Private Credit Growth",
       "priority_score": 64,
-      "missing_countries": [
-        "TR",
-        "HK"
-      ],
+      "missing_countries": [],
       "weak_countries": [
+        "CN",
         "JP",
-        "ZA"
+        "ZA",
+        "TR",
+        "HK",
+        "KR",
+        "NG"
       ]
     },
     {
@@ -8677,19 +8716,6 @@
       ]
     },
     {
-      "concept_id": "investment_growth",
-      "pillar": "growth_demand",
-      "label_en": "Investment Growth",
-      "priority_score": 62,
-      "missing_countries": [
-        "HK",
-        "NG"
-      ],
-      "weak_countries": [
-        "ZA"
-      ]
-    },
-    {
       "concept_id": "participation_rate",
       "pillar": "labour_household",
       "label_en": "Labour Force Participation",
@@ -8702,21 +8728,6 @@
       ],
       "weak_countries": [
         "UK"
-      ]
-    },
-    {
-      "concept_id": "private_credit_growth",
-      "pillar": "monetary_financial",
-      "label_en": "Private Credit Growth",
-      "priority_score": 62,
-      "missing_countries": [],
-      "weak_countries": [
-        "JP",
-        "ZA",
-        "TR",
-        "HK",
-        "KR",
-        "NG"
       ]
     },
     {
@@ -8782,10 +8793,11 @@
       "concept_id": "headline_inflation",
       "pillar": "prices_costs",
       "label_en": "Headline Inflation",
-      "priority_score": 52,
+      "priority_score": 54,
       "missing_countries": [],
       "weak_countries": [
-        "EA"
+        "EA",
+        "NG"
       ]
     },
     {
@@ -8814,6 +8826,17 @@
       ]
     },
     {
+      "concept_id": "trade_balance",
+      "pillar": "external_fx",
+      "label_en": "Trade Balance",
+      "priority_score": 44,
+      "missing_countries": [],
+      "weak_countries": [
+        "CN",
+        "EG"
+      ]
+    },
+    {
       "concept_id": "fx_spot",
       "pillar": "external_fx",
       "label_en": "Spot Exchange Rate",
@@ -8832,16 +8855,6 @@
       "missing_countries": [],
       "weak_countries": [
         "UK"
-      ]
-    },
-    {
-      "concept_id": "trade_balance",
-      "pillar": "external_fx",
-      "label_en": "Trade Balance",
-      "priority_score": 42,
-      "missing_countries": [],
-      "weak_countries": [
-        "EG"
       ]
     }
   ]

@@ -1,10 +1,10 @@
 {
   "file": "nigeria.html",
-  "generated": "2026-10-30T23:42:07.612037+00:00",
+  "generated": "2026-10-31T00:46:05.233050+00:00",
   "charts": 39,
   "source_groups": 14,
   "data_gaps": 2,
-  "low_confidence": 9,
+  "low_confidence": 12,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -100,7 +100,7 @@
       "frequency": "monthly",
       "source_name": "IMF SDMX / Nigeria NBS",
       "series": "NGA.CPI._T.YOY_PCH_PA_PT.M",
-      "quality_status": "watch"
+      "quality_status": "low_confidence"
     },
     {
       "id": "cpi_inflation_mom",
@@ -112,7 +112,7 @@
       "frequency": "monthly",
       "source_name": "IMF SDMX / Nigeria NBS",
       "series": "NGA.CPI._T.POP_PCH_PA_PT.M",
-      "quality_status": "watch"
+      "quality_status": "low_confidence"
     },
     {
       "id": "cpi_index",
@@ -124,7 +124,7 @@
       "frequency": "monthly",
       "source_name": "IMF SDMX / Nigeria NBS",
       "series": "NGA.CPI._T.IX.M",
-      "quality_status": "watch"
+      "quality_status": "low_confidence"
     },
     {
       "id": "usd_ngn",
@@ -452,7 +452,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "snapshot",
+  "data_mode": "refresh",
   "latest_cards": [],
   "usd_ngn_latest": "1,345.76 (2026-10-30)",
   "cross_checks": [
@@ -485,8 +485,7 @@
     "series": 39,
     "observations": 13662,
     "series_count": 39,
-    "observation_count": 13662,
-    "snapshot_generated": "2026-10-30T23:31:17.348831+00:00"
+    "observation_count": 13662
   },
   "data_gaps_detail": [
     {
@@ -565,9 +564,9 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 9,
+      "low_confidence": 12,
       "verified": 1,
-      "watch": 29
+      "watch": 26
     },
     "unavailable_count": 0
   },
@@ -578,12 +577,12 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-10-30",
+    "as_of_date": "2026-10-31",
     "counts": {
       "current": 20,
-      "due": 4,
+      "due": 1,
       "projection": 6,
-      "stale": 9
+      "stale": 12
     },
     "latest_historical_date": "2026-10-30",
     "attention": [
@@ -595,7 +594,7 @@
         "frequency": "annual",
         "freshness_status": "stale",
         "age_basis_date": "2023-12-31",
-        "age_days": 1034,
+        "age_days": 1035,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -617,7 +616,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-08-01",
-        "age_days": 790,
+        "age_days": 791,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -639,7 +638,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-08-01",
-        "age_days": 790,
+        "age_days": 791,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -661,7 +660,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-08-01",
-        "age_days": 790,
+        "age_days": 791,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -683,7 +682,7 @@
         "frequency": "annual",
         "freshness_status": "due",
         "age_basis_date": "2024-12-31",
-        "age_days": 668,
+        "age_days": 669,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -705,7 +704,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 578,
+        "age_days": 579,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -727,7 +726,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 578,
+        "age_days": 579,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -749,7 +748,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-06-01",
-        "age_days": 487,
+        "age_days": 488,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -771,7 +770,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-06-01",
-        "age_days": 487,
+        "age_days": 488,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -793,7 +792,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 122,
+        "age_days": 123,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -813,14 +812,14 @@
         "label_en": "Headline Consumer Price Index",
         "latest_date": "2026-08-01",
         "frequency": "monthly",
-        "freshness_status": "due",
+        "freshness_status": "stale",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 60,
         "release_calendar_id": "nbs_monthly",
         "expected_release_date": "2026-10-20",
         "due_date": "2026-10-30",
-        "quality_status": "watch",
+        "quality_status": "low_confidence",
         "source_authority": "official_mirror",
         "derivation": "observed",
         "validation": "passed",
@@ -835,14 +834,14 @@
         "label_en": "Headline CPI Inflation YoY",
         "latest_date": "2026-08-01",
         "frequency": "monthly",
-        "freshness_status": "due",
+        "freshness_status": "stale",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 60,
         "release_calendar_id": "nbs_monthly",
         "expected_release_date": "2026-10-20",
         "due_date": "2026-10-30",
-        "quality_status": "watch",
+        "quality_status": "low_confidence",
         "source_authority": "official_mirror",
         "derivation": "observed",
         "validation": "passed",
@@ -857,14 +856,14 @@
         "label_en": "Headline CPI Inflation MoM",
         "latest_date": "2026-08-01",
         "frequency": "monthly",
-        "freshness_status": "due",
+        "freshness_status": "stale",
         "age_basis_date": "2026-08-01",
-        "age_days": 60,
+        "age_days": 61,
         "threshold_days": 60,
         "release_calendar_id": "nbs_monthly",
         "expected_release_date": "2026-10-20",
         "due_date": "2026-10-30",
-        "quality_status": "watch",
+        "quality_status": "low_confidence",
         "source_authority": "official_mirror",
         "derivation": "observed",
         "validation": "passed",
