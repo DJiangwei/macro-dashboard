@@ -101,3 +101,4 @@ curl -L "https://djiangwei.github.io/macro-dashboard/output/egypt.html?v=$COMMIT
 curl -L "https://djiangwei.github.io/macro-dashboard/output/nigeria.html?v=$COMMIT" | rg -n "Nigeria Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
 curl -L "https://djiangwei.github.io/macro-dashboard/output/chart_studio.html?v=$COMMIT" | rg -n "Macro Chart Studio|chart_studio_catalog.json"
 curl -L "https://djiangwei.github.io/macro-dashboard/output/chart_studio_catalog.json?v=$COMMIT" | rg -n "countries|series"
+curl -L "https://djiangwei.github.io/macro-dashboard/output/my_dashboard.html?v=$COMMIT" | rg -n "My Macro Dashboard|my_dashboard"

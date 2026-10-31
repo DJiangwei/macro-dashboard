@@ -1,6 +1,6 @@
 UV ?= scripts/uv_project.sh
 
-.PHONY: setup doctor build-v4 refresh-data rebuild-ui refresh-check refresh-scheduled refresh-quick ci-summary data-catalog freshness-audit chart-studio test validate proxy-report proxy-report-live publish-check publish clean
+.PHONY: setup doctor build-v4 refresh-data rebuild-ui refresh-check refresh-scheduled refresh-quick ci-summary data-catalog freshness-audit chart-studio my-dashboard test validate proxy-report proxy-report-live publish-check publish clean
 
 setup:
 	$(UV) sync
@@ -32,6 +32,7 @@ refresh-data:
 	$(UV) run python scripts/build_dashboard_archive.py
 	$(UV) run python scripts/macro_workbench.py
 	$(UV) run python scripts/build_chart_studio.py
+	$(UV) run python scripts/build_my_dashboard.py
 
 rebuild-ui:
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python build_v4.py ALL
@@ -55,6 +56,7 @@ rebuild-ui:
 	$(UV) run python scripts/build_dashboard_archive.py
 	$(UV) run python scripts/macro_workbench.py
 	$(UV) run python scripts/build_chart_studio.py
+	$(UV) run python scripts/build_my_dashboard.py
 
 refresh-check:
 	$(UV) run python scripts/refresh_check.py
@@ -76,6 +78,9 @@ freshness-audit:
 
 chart-studio:
 	$(UV) run python scripts/build_chart_studio.py
+
+my-dashboard:
+	$(UV) run python scripts/build_my_dashboard.py
 
 test:
 	$(UV) run pytest -q

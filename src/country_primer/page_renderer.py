@@ -870,6 +870,7 @@ def render_html(
         active_cls = ' class="active"' if code == code_upper else ""
         nav_links.append(f'<a href="{item["file"]}"{active_cls} title="{item.get("name", code)}">{code}</a>')
     nav_links.append('<a href="chart_studio.html" style="color:var(--accent);font-weight:600;margin-left:4px;" title="Macro Chart Studio · 自定义对比图表工坊">📈 Studio</a>')
+    nav_links.append('<a href="my_dashboard.html" style="color:var(--teal);font-weight:600;margin-left:4px;" title="My Dashboard · 我的自选宏观看板">⭐ My Dashboard</a>')
     country_nav_html = "\n    ".join(nav_links)
 
     chart_count = sum(1 for item in series_list if item.get("observations"))

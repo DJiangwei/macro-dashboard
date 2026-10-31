@@ -1131,6 +1131,7 @@ def render_html(catalog: dict) -> str:
   <nav class="country-nav" aria-label="country dashboards">
     {country_nav_html}
     <a href="chart_studio.html" class="active" title="Macro Chart Studio · 宏观图表工坊">📈 Studio</a>
+    <a href="my_dashboard.html" title="My Dashboard · 我的自选宏观看板">⭐ My Dashboard</a>
   </nav>
   <div class="topbar-actions">
     <a href="index.html" class="topbar-btn">← <span data-lang="en">Home</span><span data-lang="zh">首页</span></a>
@@ -1269,6 +1270,10 @@ def render_html(catalog: dict) -> str:
           <button type="button" class="action-button action-accent" onclick="promptSavePreset()" title="Save current view to My Presets">
             <span>⭐</span>
             <span data-lang="en">Save View</span><span data-lang="zh">保存视图</span>
+          </button>
+          <button type="button" class="action-button action-teal" onclick="pinToMyDashboard()" title="Pin active series to My Dashboard">
+            <span>📌</span>
+            <span data-lang="en">Pin to Dashboard</span><span data-lang="zh">钉选到自选</span>
           </button>
           <button type="button" class="action-button action-teal" onclick="copyShareURL()" title="Copy shareable link with current view state">
             <span>🔗</span>
@@ -1470,6 +1475,39 @@ function promptSavePreset() {{
   saveCustomPresets(list);
   renderPresets();
   showToast(CURRENT_LANG === 'zh' ? `已保存自定义预设：「${{name.trim()}}」` : `Saved custom view: "${{name.trim()}}"`, '⭐');
+}}
+
+function pinToMyDashboard() {{
+  if (!ACTIVE_SERIES.length) {{
+    alert(CURRENT_LANG === 'zh' ? '当前没有加载任何时间序列' : 'No series currently active.');
+    return;
+  }}
+  const storageKey = 'macro_my_dashboard_watchlist_v1';
+  let list = [];
+  try {{
+    const raw = localStorage.getItem(storageKey);
+    if (raw) list = JSON.parse(raw);
+  }} catch(e) {{}}
+
+  let addedCount = 0;
+  ACTIVE_SERIES.forEach(s => {{
+    if (!list.some(item => item.country === s.country && item.id === s.indicatorId)) {{
+      list.push({{
+        type: 'indicator',
+        country: s.country,
+        id: s.indicatorId,
+        notes: `Pinned from Chart Studio (${{getEffectiveTitle()}})`
+      }});
+      addedCount++;
+    }}
+  }});
+
+  if (addedCount > 0) {{
+    localStorage.setItem(storageKey, JSON.stringify(list));
+    showToast(CURRENT_LANG === 'zh' ? `已成功将 ${{addedCount}} 个指标钉选到自选看板！` : `Pinned ${{addedCount}} indicator(s) to My Dashboard!`, '⭐');
+  }} else {{
+    showToast(CURRENT_LANG === 'zh' ? '所选指标已全部在自选看板中！' : 'Selected indicator(s) already in My Dashboard!', '✓');
+  }}
 }}
 
 function deleteCustomPreset(e, id) {{

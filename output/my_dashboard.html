@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Macro Dashboard · 我的自选宏观看板</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐</text></svg>">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    :root {
+      --bg: #fffdfa;
+      --surface: #ffffff;
+      --card-bg: #ffffff;
+      --border: #e8e4df;
+      --border-subtle: #f0ebe4;
+      --fg: #12151a;
+      --text-secondary: #737c8c;
+      --accent: #990f3d; /* FT Burgundy */
+      --teal: #0d7680;   /* FT Teal */
+      --slate: #364b61;  /* Slate Navy */
+      --amber: #d97706;  /* Claude Amber */
+      --good: #0d7680;
+      --bad: #990f3d;
+      --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-serif: "Newsreader", "Iowan Old Style", "Songti SC", Georgia, serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --shadow-sm: 0 1px 2px rgba(18, 21, 26, 0.04);
+      --shadow-md: 0 4px 12px rgba(18, 21, 26, 0.08);
+      --shadow-lg: 0 8px 24px rgba(18, 21, 26, 0.12);
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg);
+      color: var(--fg);
+      line-height: 1.5;
+      padding-bottom: 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Topbar matching FT Institutional specification */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--fg);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .brand span {
+      color: var(--accent);
+      font-weight: 400;
+    }
+
+    .country-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 4px 0;
+      scrollbar-width: none;
+    }
+    .country-nav::-webkit-scrollbar { display: none; }
+    .country-nav a {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 3px 6px;
+      border-radius: 3px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .country-nav a:hover {
+      background: var(--border-subtle);
+      color: var(--fg);
+    }
+    .country-nav a.active {
+      background: rgba(153, 15, 61, 0.1);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .topbar-btn {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--fg);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+    .topbar-btn:hover {
+      border-color: var(--text-secondary);
+      background: #fbf9f5;
+    }
+
+    .container {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+    }
+
+    /* Header & Hero Section */
+    .dashboard-header {
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .header-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--fg);
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 13.5px;
+      max-width: 880px;
+      line-height: 1.5;
+    }
+
+    /* Stats Chips Row */
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .meta-chip {
+      font-size: 11.5px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 4px;
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .meta-chip strong {
+      color: var(--fg);
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    /* Control Toolbar */
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      background: var(--surface);
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+    }
+    .toolbar-left, .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--fg);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      background: #fcfaf7;
+      border-color: var(--text-secondary);
+    }
+    .btn-primary {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: #095961;
+      border-color: #095961;
+      color: #ffffff;
+    }
+    .btn-group {
+      display: inline-flex;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .btn-group .btn {
+      border: none;
+      border-radius: 0;
+      border-right: 1px solid var(--border);
+    }
+    .btn-group .btn:last-child {
+      border-right: none;
+    }
+    .btn-group .btn.active {
+      background: #f0ebe4;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Watchlist Grid View */
+    .watchlist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      gap: 20px;
+    }
+    @media (max-width: 600px) {
+      .watchlist-grid { grid-template-columns: 1fr; }
+    }
+
+    .indicator-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s, transform 0.2s;
+      position: relative;
+    }
+    .indicator-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-top {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      background: #fdfcf9;
+      border-top-left-radius: var(--radius);
+      border-top-right-radius: var(--radius);
+    }
+    .card-title-group {
+      flex: 1;
+      min-width: 0;
+    }
+    .card-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .country-tag {
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      background: #f0ebe4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--fg);
+    }
+    .section-tag {
+      font-size: 10.5px;
+      color: var(--text-secondary);
+      text-transform: capitalize;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--fg);
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .icon-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      padding: 3px 6px;
+      cursor: pointer;
+      font-size: 11px;
+      color: var(--text-secondary);
+      transition: all 0.15s;
+    }
+    .icon-btn:hover {
+      background: #f0ebe4;
+      border-color: var(--border);
+      color: var(--fg);
+    }
+    .icon-btn.remove:hover {
+      background: rgba(153, 15, 61, 0.08);
+      color: var(--bad);
+      border-color: rgba(153, 15, 61, 0.2);
+    }
+
+    .card-stat-hero {
+      padding: 14px 16px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .hero-val {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--fg);
+    }
+    .hero-meta {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-align: right;
+    }
+
+    .card-chart-wrap {
+      padding: 0 10px 10px;
+      height: 230px;
+      position: relative;
+    }
+    .plotly-graph {
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-notes-wrap {
+      padding: 10px 14px;
+      background: #fbf9f5;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom-left-radius: var(--radius);
+      border-bottom-right-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .notes-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .notes-saved-indicator {
+      font-size: 9.5px;
+      color: var(--teal);
+      display: none;
+    }
+    .notes-textarea {
+      width: 100%;
+      font-family: var(--font-main);
+      font-size: 12px;
+      color: var(--fg);
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      padding: 4px 6px;
+      resize: vertical;
+      min-height: 38px;
+      line-height: 1.4;
+      transition: all 0.15s;
+    }
+    .notes-textarea:focus {
+      outline: none;
+      background: #ffffff;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 2px rgba(13, 118, 128, 0.1);
+    }
+
+    /* Table View */
+    .table-view-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+      display: none;
+    }
+    .watchlist-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+    .watchlist-table th {
+      background: #fcfaf7;
+      color: var(--text-secondary);
+      font-weight: 700;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .watchlist-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: middle;
+    }
+    .watchlist-table tr:hover {
+      background: #fdfcf9;
+    }
+
+    /* Modal for Adding Indicators */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(18, 21, 26, 0.45);
+      backdrop-filter: blur(2px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-card {
+      background: var(--surface);
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 680px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fdfcf9;
+    }
+    .modal-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .modal-body {
+      padding: 16px 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .search-inputs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .search-input {
+      flex: 1;
+      padding: 8px 12px;
+      font-size: 13px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 2px rgba(13, 118, 128, 0.1);
+    }
+    .country-select {
+      padding: 8px 10px;
+      font-size: 13px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+      outline: none;
+    }
+    .results-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+    .result-item {
+      padding: 10px 12px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.15s;
+    }
+    .result-item:hover {
+      background: #fdfcf9;
+      border-color: var(--border);
+    }
+    .result-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .result-title {
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--fg);
+    }
+    .result-sub {
+      font-size: 11px;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #12151a;
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 500;
+      box-shadow: var(--shadow-md);
+      z-index: 300;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Empty State */
+    .empty-state {
+      padding: 60px 20px;
+      text-align: center;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      display: none;
+    }
+    .empty-icon { font-size: 40px; margin-bottom: 12px; }
+    .empty-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .empty-desc { color: var(--text-secondary); font-size: 13px; margin-bottom: 20px; }
+
+    /* Print styles */
+    @media print {
+      .topbar, .toolbar, .modal-backdrop, .icon-btn, .notes-label span:last-child {
+        display: none !important;
+      }
+      body { background: #ffffff; padding: 0; }
+      .container { max-width: 100%; padding: 0; }
+      .indicator-card {
+        break-inside: avoid;
+        border: 1px solid #ccc;
+        box-shadow: none;
+        margin-bottom: 20px;
+      }
+      .card-notes-wrap { background: #fff; border-top: 1px solid #eee; }
+      .notes-textarea { border: none; resize: none; }
+    }
+  </style>
+</head>
+<body data-lang="en">
+
+<!-- Topbar Navigation -->
+<div class="topbar">
+  <a href="index.html" class="brand">East Meridian <span>/ Macro Dashboard</span></a>
+  <nav class="country-nav" aria-label="country dashboards">
+    <a href="hungary.html" title="Hungary (匈牙利)">HU</a>
+    <a href="poland.html" title="Poland (波兰)">PL</a>
+    <a href="czechia.html" title="Czechia (捷克)">CZ</a>
+    <a href="romania.html" title="Romania (罗马尼亚)">RO</a>
+    <a href="china.html" title="China (中国)">CN</a>
+    <a href="euro_area.html" title="Euro Area (欧元区)">EA</a>
+    <a href="japan.html" title="Japan (日本)">JP</a>
+    <a href="south_africa.html" title="South Africa (南非)">ZA</a>
+    <a href="uk.html" title="United Kingdom (英国)">UK</a>
+    <a href="us.html" title="United States (美国)">US</a>
+    <a href="turkey.html" title="Turkey (土耳其)">TR</a>
+    <a href="hong_kong.html" title="Hong Kong (中国香港)">HK</a>
+    <a href="south_korea.html" title="South Korea (韩国)">KR</a>
+    <a href="taiwan.html" title="Taiwan (中国台湾)">TW</a>
+    <a href="kazakhstan.html" title="Kazakhstan (哈萨克斯坦)">KZ</a>
+    <a href="uzbekistan.html" title="Uzbekistan (乌兹别克斯坦)">UZ</a>
+    <a href="egypt.html" title="Egypt (埃及)">EG</a>
+    <a href="nigeria.html" title="Nigeria (尼日利亚)">NG</a>
+    <a href="chart_studio.html" title="Macro Chart Studio · 宏观图表工坊">📈 Studio</a>
+    <a href="my_dashboard.html" class="active" title="My Dashboard · 我的自选宏观看板">⭐ My Dashboard</a>
+  </nav>
+  <div class="topbar-actions">
+    <a href="index.html" class="topbar-btn">← <span data-lang="en">Home</span><span data-lang="zh">首页</span></a>
+    <button class="topbar-btn" onclick="toggleLang()" id="lang-btn">中文</button>
+  </div>
+</div>
+
+<main class="container">
+
+  <!-- Header -->
+  <header class="dashboard-header">
+    <p class="eyebrow"><span data-lang="en">Personalized Macro Intelligence Desk</span><span data-lang="zh">专属宏观投研工作台 · 自选看板</span></p>
+    <div class="header-main">
+      <div>
+        <h1><span data-lang="en">My Macro Dashboard</span><span data-lang="zh">我的自选宏观看板</span></h1>
+        <p class="subtitle">
+          <span data-lang="en">Curate, monitor, and annotate your high-conviction macro indicators across 18 economies. Persisted automatically in your browser with full CSV timeseries download, JSON configuration backup, and print-ready executive briefing views.</span>
+          <span data-lang="zh">自由钉选、持续跟踪并批注 18 个核心经济体的自选宏观指标。基于浏览器本地存储持久化保存，支持多图表画板与紧凑清单双视图、个人研究笔记、一键导出全量时序 CSV 与配置备份。</span>
+        </p>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><strong>18</strong> <span data-lang="en">Economies</span><span data-lang="zh">经济体数据池</span></span>
+        <span class="meta-chip"><strong id="stat-pinned-count">8</strong> <span data-lang="en">Pinned Items</span><span data-lang="zh">自选指标数</span></span>
+        <span class="meta-chip"><strong style="color:var(--teal);">Client Persistent</strong> <span data-lang="en">localStorage</span><span data-lang="zh">本地持久化</span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Controls Toolbar -->
+  <section class="toolbar">
+    <div class="toolbar-left">
+      <button class="btn btn-primary" onclick="openAddModal()">
+        <span>➕</span>
+        <span data-lang="en">Add Indicator</span><span data-lang="zh">添加指标</span>
+      </button>
+
+      <div class="btn-group">
+        <button class="btn active" id="view-grid-btn" onclick="switchView('grid')">
+          <span>🔲</span>
+          <span data-lang="en">Grid</span><span data-lang="zh">图表看板</span>
+        </button>
+        <button class="btn" id="view-table-btn" onclick="switchView('table')">
+          <span>📋</span>
+          <span data-lang="en">Table</span><span data-lang="zh">紧凑清单</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="toolbar-right">
+      <button class="btn" onclick="exportWatchlistCSV()" title="Download CSV dataset of all pinned indicators">
+        <span>📊</span>
+        <span data-lang="en">Export CSV</span><span data-lang="zh">导出数据</span>
+      </button>
+      <button class="btn" onclick="exportWatchlistJSON()" title="Backup configuration file">
+        <span>📥</span>
+        <span data-lang="en">Backup JSON</span><span data-lang="zh">导出配置</span>
+      </button>
+      <button class="btn" onclick="document.getElementById('import-file-input').click()" title="Restore configuration">
+        <span>📤</span>
+        <span data-lang="en">Restore</span><span data-lang="zh">导入配置</span>
+      </button>
+      <input type="file" id="import-file-input" accept=".json" style="display:none;" onchange="importWatchlistJSON(event)">
+
+      <button class="btn" onclick="window.print()" title="Print executive briefing">
+        <span>🖨️</span>
+        <span data-lang="en">Print</span><span data-lang="zh">打印报告</span>
+      </button>
+      <button class="btn" onclick="resetToStarterSet()" title="Reset to standard institutional starter watchlist" style="color:var(--text-secondary);">
+        <span>↺</span>
+        <span data-lang="en">Reset</span><span data-lang="zh">恢复推荐</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="empty-state">
+    <div class="empty-icon">⭐</div>
+    <div class="empty-title"><span data-lang="en">Your Watchlist is Empty</span><span data-lang="zh">自选看板暂无指标</span></div>
+    <div class="empty-desc">
+      <span data-lang="en">Click "Add Indicator" above or explore Country Dashboards to pin series.</span>
+      <span data-lang="zh">点击上方“添加指标”按钮，或从各国家主页与图表工坊将核心时间序列加入自选。</span>
+    </div>
+    <button class="btn btn-primary" onclick="resetToStarterSet()">
+      <span data-lang="en">Load Institutional Starter Set</span><span data-lang="zh">加载精选机构自选推荐包</span>
+    </button>
+  </div>
+
+  <!-- View 1: Card Grid View -->
+  <section class="watchlist-grid" id="watchlist-grid"></section>
+
+  <!-- View 2: Executive Table View -->
+  <section class="table-view-wrap" id="table-view-wrap">
+    <table class="watchlist-table">
+      <thead>
+        <tr>
+          <th><span data-lang="en">Country</span><span data-lang="zh">国家/经济体</span></th>
+          <th><span data-lang="en">Indicator Name</span><span data-lang="zh">指标名称</span></th>
+          <th><span data-lang="en">Freq</span><span data-lang="zh">频率</span></th>
+          <th><span data-lang="en">Latest Date</span><span data-lang="zh">最新期数</span></th>
+          <th><span data-lang="en">Latest Reading</span><span data-lang="zh">最新读数</span></th>
+          <th><span data-lang="en">Personal Thesis & Notes</span><span data-lang="zh">个人研判观点 / 备忘</span></th>
+          <th><span data-lang="en">Actions</span><span data-lang="zh">操作</span></th>
+        </tr>
+      </thead>
+      <tbody id="table-view-tbody"></tbody>
+    </table>
+  </section>
+
+</main>
+
+<!-- Add Indicator Search Modal -->
+<div class="modal-backdrop" id="add-modal" onclick="if(event.target === this) closeAddModal()">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title"><span data-lang="en">Add Macro Indicator</span><span data-lang="zh">添加宏观自选指标</span></div>
+      <button class="icon-btn" onclick="closeAddModal()" style="font-size:16px;">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="search-inputs">
+        <select class="country-select" id="modal-country-select" onchange="filterModalResults()">
+          <option value="ALL">🌐 All 18 Economies / 全部经济体</option>
+        </select>
+        <input type="text" class="search-input" id="modal-search-input" placeholder="Search indicator name, series ID, concept..." oninput="filterModalResults()">
+      </div>
+      <div class="results-list" id="modal-results-list">
+        <div style="text-align:center; padding:30px; color:var(--text-secondary); font-size:12px;">Loading catalog...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// --- Configuration & Global State ---
+const STORAGE_KEY = 'macro_my_dashboard_watchlist_v1';
+const STARTER_SET = [{"type": "indicator", "country": "US", "id": "treasury_10y_yield", "notes": "Global risk-free rate anchor & term premium barometer. Critical benchmark for global duration and mortgage rates."}, {"type": "indicator", "country": "US", "id": "fed_total_assets", "notes": "Federal Reserve Balance Sheet level ($6.75T). Tracks Quantitative Tightening (QT) runoff and bank reserve plumbing."}, {"type": "indicator", "country": "EA", "id": "aaa_yield_10y", "notes": "Eurozone 10Y AAA Bund Yield benchmark. Reflects European safe-haven duration and ECB policy easing expectations."}, {"type": "indicator", "country": "CN", "id": "cgb_yield_10y", "notes": "China 10Y Sovereign CGB benchmark yield. Tracking domestic credit demand, PBOC monetary stance, and US-China spread."}, {"type": "indicator", "country": "JP", "id": "boj_total_assets", "notes": "Bank of Japan Total Assets (¥625T). Monitors post-YCC quantitative normalization and JGB purchase reductions."}, {"type": "indicator", "country": "TR", "id": "short_term_external_debt_pct_reserves", "notes": "Guidotti-Greenspan Ratio (114.5% of reserves). Emerging market short-term foreign debt rollover threshold (<100%)."}, {"type": "indicator", "country": "KZ", "id": "brent_crude_oil", "notes": "Brent Crude Spot Price. Upstream commodity terms of trade, global energy demand, and headline cost-push inflation."}, {"type": "indicator", "country": "US", "id": "initial_jobless_claims_4w_ma", "notes": "US Initial Jobless Claims 4-Week Moving Average. High-frequency US labor market leading pulse & layoff friction."}];
+const COUNTRY_MAP = {"US": ["United States", "美国", "us_canonical_frame.json", "🇺🇸"], "CN": ["China", "中国", "china_canonical_frame.json", "🇨🇳"], "EA": ["Euro Area", "欧元区", "euro_area_canonical_frame.json", "🇪🇺"], "UK": ["United Kingdom", "英国", "uk_canonical_frame.json", "🇬🇧"], "JP": ["Japan", "日本", "japan_canonical_frame.json", "🇯🇵"], "ZA": ["South Africa", "南非", "south_africa_canonical_frame.json", "🇿🇦"], "TR": ["Turkey", "土耳其", "turkey_canonical_frame.json", "🇹🇷"], "HK": ["Hong Kong", "中国香港", "hong_kong_canonical_frame.json", "🇭🇰"], "KR": ["South Korea", "韩国", "south_korea_canonical_frame.json", "🇰🇷"], "TW": ["Taiwan", "中国台湾", "taiwan_canonical_frame.json", "🇹🇼"], "KZ": ["Kazakhstan", "哈萨克斯坦", "kazakhstan_canonical_frame.json", "🇰🇿"], "UZ": ["Uzbekistan", "乌兹别克斯坦", "uzbekistan_canonical_frame.json", "🇺🇿"], "EG": ["Egypt", "埃及", "egypt_canonical_frame.json", "🇪🇬"], "NG": ["Nigeria", "尼日利亚", "nigeria_canonical_frame.json", "🇳🇬"], "HU": ["Hungary", "匈牙利", "cee_canonical_frame.json", "🇭🇺"], "PL": ["Poland", "波兰", "cee_canonical_frame.json", "🇵🇱"], "CZ": ["Czechia", "捷克", "cee_canonical_frame.json", "🇨🇿"], "RO": ["Romania", "罗马尼亚", "cee_canonical_frame.json", "🇷🇴"]};
+
+let CURRENT_LANG = 'en';
+let CURRENT_VIEW = 'grid'; // 'grid' or 'table'
+let WATCHLIST = [];
+let CATALOG = null;
+const FRAME_CACHE = {};
+
+// --- Initialization ---
+document.addEventListener('DOMContentLoaded', async () => {
+  initLanguage();
+  loadWatchlistFromStorage();
+  populateCountrySelect();
+  await loadCatalog();
+  await renderDashboard();
+});
+
+function initLanguage() {
+  const saved = localStorage.getItem('macro_dashboard_lang');
+  if (saved && (saved === 'zh' || saved === 'en')) {
+    CURRENT_LANG = saved;
+  }
+  applyLang();
+}
+
+function toggleLang() {
+  CURRENT_LANG = (CURRENT_LANG === 'en' ? 'zh' : 'en');
+  localStorage.setItem('macro_dashboard_lang', CURRENT_LANG);
+  applyLang();
+  renderDashboard();
+}
+
+function applyLang() {
+  document.body.setAttribute('data-lang', CURRENT_LANG);
+  document.getElementById('lang-btn').textContent = (CURRENT_LANG === 'en' ? '中文' : 'EN');
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    const lang = el.getAttribute('data-lang');
+    el.style.display = (lang === CURRENT_LANG ? '' : 'none');
+  });
+}
+
+// --- LocalStorage Management ---
+function loadWatchlistFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      WATCHLIST = JSON.parse(raw);
+    } else {
+      WATCHLIST = JSON.parse(JSON.stringify(STARTER_SET));
+      saveWatchlistToStorage();
+    }
+  } catch (e) {
+    console.error('Could not load watchlist, falling back to starter set:', e);
+    WATCHLIST = JSON.parse(JSON.stringify(STARTER_SET));
+  }
+}
+
+function saveWatchlistToStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(WATCHLIST));
+    document.getElementById('stat-pinned-count').textContent = WATCHLIST.length;
+  } catch (e) {
+    console.error('Failed to save to localStorage:', e);
+  }
+}
+
+function resetToStarterSet() {
+  if (confirm(CURRENT_LANG === 'zh' ? '确定要恢复为推荐的机构自选组合吗？' : 'Reset watchlist to default institutional starter set?')) {
+    WATCHLIST = JSON.parse(JSON.stringify(STARTER_SET));
+    saveWatchlistToStorage();
+    renderDashboard();
+    showToast(CURRENT_LANG === 'zh' ? '已恢复为推荐自选组合' : 'Watchlist reset to starter set');
+  }
+}
+
+// --- Catalog & Canonical Frame Fetching ---
+async function loadCatalog() {
+  try {
+    let res = await fetch('chart_studio_catalog.json');
+    if (!res.ok) res = await fetch('output/chart_studio_catalog.json');
+    if (res.ok) {
+      CATALOG = await res.json();
+    }
+  } catch (e) {
+    console.warn('Could not fetch chart_studio_catalog.json:', e);
+  }
+}
+
+async function getCanonicalFrame(cfile) {
+  if (FRAME_CACHE[cfile]) return FRAME_CACHE[cfile];
+  try {
+    let res = await fetch(cfile);
+    if (!res.ok) res = await fetch('output/' + cfile);
+    if (res.ok) {
+      const data = await res.json();
+      FRAME_CACHE[cfile] = data;
+      return data;
+    }
+  } catch (e) {
+    console.warn('Could not load frame ' + cfile, e);
+  }
+  return null;
+}
+
+async function resolveIndicatorData(country, indicatorId) {
+  const cMeta = COUNTRY_MAP[country];
+  if (!cMeta) return null;
+  const frame = await getCanonicalFrame(cMeta[2]);
+  if (!frame) return null;
+
+  let series = null;
+  if (cMeta[2] === 'cee_canonical_frame.json') {
+    series = (frame.series || []).find(s => s.country === country && (s.indicator_id === indicatorId || s.id === indicatorId));
+  } else {
+    series = (frame.series || []).find(s => s.indicator_id === indicatorId || s.id === indicatorId);
+  }
+  return series;
+}
+
+// --- Rendering Dashboard (Grid & Table) ---
+async function renderDashboard() {
+  const gridContainer = document.getElementById('watchlist-grid');
+  const tableTbody = document.getElementById('table-view-tbody');
+  const emptyState = document.getElementById('empty-state');
+  const pinnedCountEl = document.getElementById('stat-pinned-count');
+
+  pinnedCountEl.textContent = WATCHLIST.length;
+
+  if (!WATCHLIST.length) {
+    gridContainer.innerHTML = '';
+    tableTbody.innerHTML = '';
+    emptyState.style.display = 'block';
+    return;
+  }
+  emptyState.style.display = 'none';
+
+  if (CURRENT_VIEW === 'grid') {
+    document.getElementById('watchlist-grid').style.display = 'grid';
+    document.getElementById('table-view-wrap').style.display = 'none';
+  } else {
+    document.getElementById('watchlist-grid').style.display = 'none';
+    document.getElementById('table-view-wrap').style.display = 'block';
+  }
+
+  gridContainer.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:40px; color:var(--text-secondary);"><span data-lang="en">Loading observations...</span><span data-lang="zh">正在同步官方时序数据...</span></div>';
+  applyLang();
+
+  const renderedCards = [];
+  const renderedTableRows = [];
+
+  for (let idx = 0; idx < WATCHLIST.length; idx++) {
+    const item = WATCHLIST[idx];
+    const series = await resolveIndicatorData(item.country, item.id);
+    const cMeta = COUNTRY_MAP[item.country] || [item.country, item.country, '', '🏳️'];
+    const cName = CURRENT_LANG === 'zh' ? cMeta[1] : cMeta[0];
+    const flag = cMeta[3];
+
+    let title = item.id;
+    let unit = '';
+    let freq = '';
+    let latestValStr = 'n/a';
+    let latestDateStr = '';
+    let observations = [];
+
+    if (series) {
+      title = CURRENT_LANG === 'zh' ? (series.label_zh || series.label_en || item.id) : (series.label_en || item.id);
+      unit = series.unit || '';
+      freq = series.frequency || '';
+      observations = (series.observations || []).map(o => {
+        if (Array.isArray(o)) return { date: o[0], value: parseFloat(o[1]) };
+        if (typeof o === 'object') return { date: o.date, value: parseFloat(o.value) };
+        return null;
+      }).filter(o => o && !isNaN(o.value));
+
+      if (observations.length) {
+        const last = observations[observations.length - 1];
+        latestValStr = (typeof last.value === 'number') ? last.value.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 2 }) : last.value;
+        latestDateStr = last.date;
+      }
+    }
+
+    // Grid Card HTML
+    const cardId = `chart-card-${idx}`;
+    const cardHtml = `
+      <div class="indicator-card" id="card-box-${idx}">
+        <div class="card-top">
+          <div class="card-title-group">
+            <div class="card-badge-row">
+              <span class="country-tag">${flag} ${item.country}</span>
+              <span class="section-tag">${cName} · ${freq}</span>
+            </div>
+            <div class="card-title" title="${title}">${title}</div>
+          </div>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="moveItem(${idx}, -1)" title="Move Up">▲</button>
+            <button class="icon-btn" onclick="moveItem(${idx}, 1)" title="Move Down">▼</button>
+            <a href="chart_studio.html" class="icon-btn" title="Open in Chart Studio">📈</a>
+            <button class="icon-btn remove" onclick="removeItem(${idx})" title="Remove from Watchlist">✕</button>
+          </div>
+        </div>
+
+        <div class="card-stat-hero">
+          <div class="hero-val">${latestValStr} <span style="font-size:12px; font-weight:500; color:var(--text-secondary);">${unit}</span></div>
+          <div class="hero-meta">${latestDateStr}<br><span style="text-transform:capitalize;">${freq}</span></div>
+        </div>
+
+        <div class="card-chart-wrap">
+          <div id="${cardId}" class="plotly-graph"></div>
+        </div>
+
+        <div class="card-notes-wrap">
+          <div class="notes-label">
+            <span>${CURRENT_LANG === 'zh' ? '个人研判 / 观点备忘' : 'Personal Thesis & Trigger Notes'}</span>
+            <span class="notes-saved-indicator" id="saved-badge-${idx}">✓ Saved</span>
+          </div>
+          <textarea class="notes-textarea" id="notes-input-${idx}" placeholder="${CURRENT_LANG === 'zh' ? '记录宏观逻辑、拐点阈值或调仓触发点...' : 'Add macro thesis, inflection trigger, or notes...'}" oninput="updateItemNotes(${idx}, this.value)">${item.notes || ''}</textarea>
+        </div>
+      </div>
+    `;
+    renderedCards.push({ html: cardHtml, cardId, observations, title, unit });
+
+    // Table Row HTML
+    const tableRowHtml = `
+      <tr>
+        <td><strong>${flag} ${item.country}</strong> <span style="color:var(--text-secondary); font-size:11px;">(${cName})</span></td>
+        <td><strong>${title}</strong></td>
+        <td><span style="font-size:11px; text-transform:uppercase;">${freq}</span></td>
+        <td><code>${latestDateStr}</code></td>
+        <td><strong style="font-family:var(--font-mono); font-size:13px; color:var(--teal);">${latestValStr}</strong> <em style="font-size:10px; color:var(--text-secondary);">${unit}</em></td>
+        <td style="max-width:320px;">
+          <input type="text" class="notes-textarea" style="min-height:28px;" value="${item.notes || ''}" placeholder="Add note..." oninput="updateItemNotes(${idx}, this.value)">
+        </td>
+        <td>
+          <button class="icon-btn remove" onclick="removeItem(${idx})" title="Remove">✕</button>
+        </td>
+      </tr>
+    `;
+    renderedTableRows.push(tableRowHtml);
+  }
+
+  gridContainer.innerHTML = renderedCards.map(c => c.html).join('');
+  tableTbody.innerHTML = renderedTableRows.join('');
+
+  // Render Mini Plotly Charts for Grid Cards
+  renderedCards.forEach(c => {
+    if (!c.observations.length) return;
+    const xVals = c.observations.map(o => o.date);
+    const yVals = c.observations.map(o => o.value);
+    const trace = {
+      x: xVals,
+      y: yVals,
+      type: 'scatter',
+      mode: 'lines',
+      line: { color: '#0d7680', width: 2.0 },
+      hoverinfo: 'x+y'
+    };
+
+    const layout = {
+      margin: { l: 36, r: 16, t: 10, b: 24 },
+      paper_bgcolor: 'transparent',
+      plot_bgcolor: 'transparent',
+      font: { family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size: 10, color: '#737c8c' },
+      xaxis: { showgrid: false, zeroline: false, automargin: true, tickfont: { size: 9 } },
+      yaxis: { showgrid: true, gridcolor: 'rgba(18,21,26,0.06)', automargin: true, tickfont: { size: 9 } },
+      hovermode: 'x unified',
+      autosize: true
+    };
+
+    Plotly.newPlot(c.cardId, [trace], layout, { displayModeBar: false, responsive: true });
+  });
+}
+
+function switchView(view) {
+  CURRENT_VIEW = view;
+  document.getElementById('view-grid-btn').classList.toggle('active', view === 'grid');
+  document.getElementById('view-table-btn').classList.toggle('active', view === 'table');
+  if (view === 'grid') {
+    document.getElementById('watchlist-grid').style.display = 'grid';
+    document.getElementById('table-view-wrap').style.display = 'none';
+    window.dispatchEvent(new Event('resize'));
+  } else {
+    document.getElementById('watchlist-grid').style.display = 'none';
+    document.getElementById('table-view-wrap').style.display = 'block';
+  }
+}
+
+// --- Item Mutations ---
+function updateItemNotes(idx, notes) {
+  if (WATCHLIST[idx]) {
+    WATCHLIST[idx].notes = notes;
+    saveWatchlistToStorage();
+    const badge = document.getElementById(`saved-badge-${idx}`);
+    if (badge) {
+      badge.style.display = 'inline';
+      setTimeout(() => { badge.style.display = 'none'; }, 1200);
+    }
+  }
+}
+
+function moveItem(idx, direction) {
+  const target = idx + direction;
+  if (target < 0 || target >= WATCHLIST.length) return;
+  const temp = WATCHLIST[idx];
+  WATCHLIST[idx] = WATCHLIST[target];
+  WATCHLIST[target] = temp;
+  saveWatchlistToStorage();
+  renderDashboard();
+}
+
+function removeItem(idx) {
+  WATCHLIST.splice(idx, 1);
+  saveWatchlistToStorage();
+  renderDashboard();
+  showToast(CURRENT_LANG === 'zh' ? '已从自选看板移除' : 'Removed from Watchlist');
+}
+
+// --- Modal Add Indicator ---
+function openAddModal() {
+  document.getElementById('add-modal').style.display = 'flex';
+  filterModalResults();
+}
+
+function closeAddModal() {
+  document.getElementById('add-modal').style.display = 'none';
+}
+
+function populateCountrySelect() {
+  const select = document.getElementById('modal-country-select');
+  COUNTRY_NAV.forEach(([code, nameEn, nameZh]) => {
+    const opt = document.createElement('option');
+    opt.value = code;
+    opt.textContent = `${code} · ${nameEn} (${nameZh})`;
+    select.appendChild(opt);
+  });
+}
+
+function filterModalResults() {
+  const resultsContainer = document.getElementById('modal-results-list');
+  if (!CATALOG || !CATALOG.countries) {
+    resultsContainer.innerHTML = '<div style="text-align:center; padding:30px; color:var(--text-secondary);">Catalog not available.</div>';
+    return;
+  }
+
+  const countryFilter = document.getElementById('modal-country-select').value;
+  const keyword = (document.getElementById('modal-search-input').value || '').trim().toLowerCase();
+
+  let matches = [];
+  CATALOG.countries.forEach(c => {
+    if (countryFilter !== 'ALL' && c.code !== countryFilter) return;
+    (c.indicators || []).forEach(ind => {
+      const matchKey = (ind.label_en + ' ' + (ind.label_zh || '') + ' ' + ind.id + ' ' + (ind.section || '')).toLowerCase();
+      if (!keyword || matchKey.includes(keyword)) {
+        matches.push({
+          country: c.code,
+          countryName: c.name_en,
+          flag: c.flag,
+          id: ind.id,
+          label_en: ind.label_en,
+          label_zh: ind.label_zh,
+          latest_val: ind.latest_val,
+          latest_date: ind.latest_date,
+          unit: ind.unit,
+          frequency: ind.frequency
+        });
+      }
+    });
+  });
+
+  if (!matches.length) {
+    resultsContainer.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-secondary); font-size:12px;">${CURRENT_LANG === 'zh' ? '无匹配指标' : 'No matching indicators found.'}</div>`;
+    return;
+  }
+
+  // Render first 60 matches
+  const html = matches.slice(0, 60).map(m => {
+    const isPinned = WATCHLIST.some(item => item.country === m.country && item.id === m.id);
+    const title = CURRENT_LANG === 'zh' ? (m.label_zh || m.label_en) : m.label_en;
+    const btnHtml = isPinned
+      ? `<span style="font-size:11px; color:var(--teal); font-weight:600;">✓ ${CURRENT_LANG === 'zh' ? '已在自选' : 'Pinned'}</span>`
+      : `<button class="btn btn-primary" style="padding:3px 8px; font-size:11px;" onclick="addIndicatorFromModal('${m.country}', '${m.id}')">+ ${CURRENT_LANG === 'zh' ? '添加' : 'Pin'}</button>`;
+
+    return `
+      <div class="result-item">
+        <div class="result-info">
+          <div class="result-title">${m.flag} ${title} <span style="font-size:10.5px; font-weight:400; color:var(--text-secondary);">(${m.country} · ${m.id})</span></div>
+          <div class="result-sub">
+            <span>${CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}: <strong>${m.latest_val != null ? m.latest_val : 'n/a'} ${m.unit || ''}</strong></span>
+            <span>· ${m.latest_date || ''}</span>
+            <span>· ${m.frequency || ''}</span>
+          </div>
+        </div>
+        <div>${btnHtml}</div>
+      </div>
+    `;
+  }).join('');
+
+  resultsContainer.innerHTML = html;
+}
+
+function addIndicatorFromModal(country, id) {
+  if (WATCHLIST.some(item => item.country === country && item.id === id)) return;
+  WATCHLIST.push({
+    type: 'indicator',
+    country: country,
+    id: id,
+    notes: ''
+  });
+  saveWatchlistToStorage();
+  filterModalResults();
+  renderDashboard();
+  showToast(CURRENT_LANG === 'zh' ? '已成功添加到自选看板！' : 'Indicator pinned to your Dashboard!');
+}
+
+// --- Export & Import ---
+function exportWatchlistJSON() {
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(WATCHLIST, null, 2));
+  const a = document.createElement('a');
+  a.setAttribute("href", dataStr);
+  a.setAttribute("download", `macro_dashboard_watchlist_${new Date().toISOString().slice(0,10)}.json`);
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  showToast(CURRENT_LANG === 'zh' ? '自选配置已导出' : 'Watchlist config exported');
+}
+
+function importWatchlistJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (Array.isArray(imported)) {
+        WATCHLIST = imported;
+        saveWatchlistToStorage();
+        renderDashboard();
+        showToast(CURRENT_LANG === 'zh' ? '自选配置导入成功！' : 'Watchlist restored successfully!');
+      } else {
+        alert('Invalid watchlist format.');
+      }
+    } catch (err) {
+      alert('Failed to parse JSON file.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+async function exportWatchlistCSV() {
+  showToast(CURRENT_LANG === 'zh' ? '正在准备 CSV 数据导出...' : 'Preparing CSV timeseries export...');
+  let csv = '# East Meridian Macro Dashboard - Pinned Watchlist Export\n';
+  csv += '# Generated: ' + new Date().toISOString() + '\n';
+  csv += 'Country,Indicator_ID,Indicator_Name,Date,Value,Unit\n';
+
+  for (const item of WATCHLIST) {
+    const s = await resolveIndicatorData(item.country, item.id);
+    if (s && s.observations) {
+      const label = (s.label_en || item.id).replace(/,/g, ' ');
+      const unit = (s.unit || '').replace(/,/g, ' ');
+      s.observations.forEach(o => {
+        const dt = Array.isArray(o) ? o[0] : o.date;
+        const val = Array.isArray(o) ? o[1] : o.value;
+        if (dt && val != null) {
+          csv += `${item.country},${item.id},"${label}",${dt},${val},"${unit}"\n`;
+        }
+      });
+    }
+  }
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+  link.setAttribute("href", url);
+  link.setAttribute("download", `macro_watchlist_data_${new Date().toISOString().slice(0,10)}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  showToast(CURRENT_LANG === 'zh' ? 'CSV 导出完成！' : 'CSV download completed!');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => { t.classList.remove('show'); }, 2500);
+}
+</script>
+</body>
+</html>

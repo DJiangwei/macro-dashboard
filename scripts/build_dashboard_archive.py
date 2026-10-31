@@ -1041,6 +1041,7 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
   <div class="brand">East Meridian <span>/ Macro Dashboard</span></div>
   <div style="display: flex; gap: 12px; align-items: center;">
     <a href="{prefix}chart_studio.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: #0d7680; color: #ffffff; text-decoration: none; border-radius: 4px; font-weight: 600; font-size: 11px; letter-spacing: 0.02em;">📈 Chart Studio · 图表工坊</a>
+    <a href="{prefix}my_dashboard.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: #990f3d; color: #ffffff; text-decoration: none; border-radius: 4px; font-weight: 600; font-size: 11px; letter-spacing: 0.02em;">⭐ My Dashboard · 自选看板</a>
     <span>Macro Dashboard · 18 Economies (CEE-4, G10 & Asia-Pacific Hubs, Frontier & Emerging Markets)</span>
   </div>
 </div>
@@ -1051,13 +1052,20 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
         <h1>Macro Dashboard</h1>
         <p class="subtitle">Global macroeconomic intelligence platform across 18 national and regional economies (CEE-4, China, Euro Area, Japan, South Africa, UK, US, Turkey, Hong Kong, South Korea, Taiwan, Kazakhstan, Uzbekistan, Egypt, Nigeria). Indicators are refreshed from official pipelines and canonical data-first models, synchronized with dashboard builds.</p>
       </div>
-      <div style="margin-top: 8px;">
+      <div style="margin-top: 8px; display: flex; gap: 12px; flex-wrap: wrap;">
         <a href="{prefix}chart_studio.html" style="display: inline-flex; flex-direction: column; gap: 4px; padding: 14px 18px; background: #ffffff; border: 1.5px solid #0d7680; border-radius: 6px; text-decoration: none; box-shadow: 0 2px 4px rgba(13,118,128,0.08); transition: transform 0.15s ease;">
           <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #0d7680; font-size: 15px;">
             <span>📈 Macro Chart Studio</span>
-            <span style="font-size: 11px; background: rgba(13,118,128,0.1); padding: 2px 6px; border-radius: 3px;">NEW</span>
+            <span style="font-size: 11px; background: rgba(13,118,128,0.1); padding: 2px 6px; border-radius: 3px;">STUDIO</span>
           </div>
           <span style="color: var(--text-secondary); font-size: 12px;">自定义多指标对比画板 · 18国 1,300+ 序列</span>
+        </a>
+        <a href="{prefix}my_dashboard.html" style="display: inline-flex; flex-direction: column; gap: 4px; padding: 14px 18px; background: #ffffff; border: 1.5px solid #990f3d; border-radius: 6px; text-decoration: none; box-shadow: 0 2px 4px rgba(153,15,61,0.08); transition: transform 0.15s ease;">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #990f3d; font-size: 15px;">
+            <span>⭐ My Dashboard</span>
+            <span style="font-size: 11px; background: rgba(153,15,61,0.1); padding: 2px 6px; border-radius: 3px;">NEW</span>
+          </div>
+          <span style="color: var(--text-secondary); font-size: 12px;">个人专属自选看板 · 本地持久化与批注</span>
         </a>
       </div>
     </div>
@@ -1080,6 +1088,7 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
   </section>
   <nav class="links" aria-label="documentation links">
     <a href="{prefix}chart_studio.html" style="background: rgba(13, 118, 128, 0.08); color: #0d7680; font-weight: 600; border-color: rgba(13, 118, 128, 0.3);">📈 Macro Chart Studio (自定义对比图表)</a>
+    <a href="{prefix}my_dashboard.html" style="background: rgba(153, 15, 61, 0.08); color: #990f3d; font-weight: 600; border-color: rgba(153, 15, 61, 0.3);">⭐ My Dashboard (专属自选看板)</a>
     <a href="{docs_prefix}CORE_COVERAGE_MATRIX.md">Core 48 Coverage</a>
     <a href="{docs_prefix}DATA_SOURCE_CATALOG.md">Data Source Catalog</a>
     <a href="{docs_prefix}DATA_FRESHNESS_AUDIT.md">Freshness Audit</a>
