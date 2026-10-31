@@ -1653,6 +1653,39 @@ indicators:
     actual_through: 2024
     caveat_en: "IMF WEO measure; does not fully solve quasi-fiscal/LGFV boundary issues."
     caveat_zh: "IMF WEO口径；不能完全解决准财政/LGFV边界问题。"
+  - id: real_policy_rate
+    section: money_credit
+    label_en: "China Real Policy Rate"
+    label_zh: "中国实际政策利率 (1Y LPR − CPI同比)"
+    unit: "%"
+    fetcher: manual
+    source_name: "PBOC / NBS / Derived"
+    source_url: "http://www.pbc.gov.cn"
+    frequency: "monthly"
+    caveat_en: "Derived real policy rate calculated as 1-Year Loan Prime Rate (LPR) minus headline CPI YoY."
+    caveat_zh: "衍生实际政策利率，以1年期贷款市场报价利率(LPR)减去CPI同比增速计算。"
+  - id: core_cpi_yoy
+    section: prices
+    label_en: "China Core CPI YoY"
+    label_zh: "中国核心CPI同比 (剔除食品与能源)"
+    unit: "%"
+    fetcher: manual
+    source_name: "National Bureau of Statistics (NBS)"
+    source_url: "http://www.stats.gov.cn"
+    frequency: "monthly"
+    caveat_en: "Official NBS Core Consumer Price Index YoY rate (ex-Food & Energy)."
+    caveat_zh: "国家统计局官方核心居民消费价格指数(CPI)同比涨幅 (扣除食品和能源价格)。"
+  - id: credit_gap
+    section: money_credit
+    label_en: "China BIS Basel III Credit-to-GDP Gap"
+    label_zh: "中国 国际清算银行(BIS)信贷/GDP缺口"
+    unit: "%"
+    fetcher: manual
+    source_name: "Bank for International Settlements (BIS)"
+    source_url: "https://www.bis.org/statistics/c_gaps.htm"
+    frequency: "quarterly"
+    caveat_en: "BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend."
+    caveat_zh: "国际清算银行巴塞尔协议III逆周期资本缓冲指引；信贷/GDP比率对长期趋势的偏离度。"
 
 latest_cards:
   - id: pbc_m2_latest

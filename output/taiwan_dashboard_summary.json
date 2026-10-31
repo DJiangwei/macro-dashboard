@@ -1,8 +1,8 @@
 {
   "file": "taiwan.html",
-  "generated": "2026-10-31T16:35:50.674330+00:00",
-  "charts": 48,
-  "source_groups": 9,
+  "generated": "2026-10-31T22:13:24.268373+00:00",
+  "charts": 50,
+  "source_groups": 11,
   "data_gaps": 1,
   "low_confidence": 1,
   "key_series_latest": [
@@ -584,7 +584,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "usd_twd_latest": "32.54 (2026-10-23)",
   "cross_checks": [
@@ -632,10 +632,11 @@
       "value"
     ],
     "file": "taiwan_canonical_frame.json",
-    "series": 48,
-    "observations": 13339,
-    "series_count": 48,
-    "observation_count": 13339
+    "series": 50,
+    "observations": 13737,
+    "series_count": 50,
+    "observation_count": 13737,
+    "snapshot_generated": "2026-10-31T22:13:18.382514+00:00"
   },
   "data_gaps_detail": [
     {
@@ -647,7 +648,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 9,
+    "source_groups": 11,
     "sources": [
       {
         "source_name": "Central Bank of the Republic of China (Taiwan)",
@@ -670,6 +671,14 @@
         "charts": 2
       },
       {
+        "source_name": "Central Bank of the Republic of China (Taiwan) / CBC",
+        "charts": 1
+      },
+      {
+        "source_name": "Central Bank of the Republic of China (Taiwan) / Derived",
+        "charts": 1
+      },
+      {
         "source_name": "FRED / BIS",
         "charts": 1
       },
@@ -688,8 +697,8 @@
     ],
     "quality_counts": {
       "low_confidence": 1,
-      "verified": 32,
-      "watch": 15
+      "verified": 33,
+      "watch": 16
     },
     "unavailable_count": 0
   },
@@ -702,8 +711,8 @@
   "freshness": {
     "as_of_date": "2026-10-31",
     "counts": {
-      "current": 36,
-      "due": 7,
+      "current": 37,
+      "due": 8,
       "projection": 4,
       "stale": 1
     },
@@ -777,7 +786,7 @@
       },
       {
         "id": "customs_exports_yoy",
-        "concept_id": "tw:customs_exports_yoy",
+        "concept_id": "exports_growth",
         "label_en": "Monthly Customs Merchandise Exports YoY (NTD Basis)",
         "latest_date": "2026-08-01",
         "frequency": "monthly",
@@ -799,7 +808,7 @@
       },
       {
         "id": "customs_imports_yoy",
-        "concept_id": "tw:customs_imports_yoy",
+        "concept_id": "imports_growth",
         "label_en": "Monthly Customs Merchandise Imports YoY (NTD Basis)",
         "latest_date": "2026-08-01",
         "frequency": "monthly",
@@ -821,7 +830,7 @@
       },
       {
         "id": "customs_trade_balance",
-        "concept_id": "tw:customs_trade_balance",
+        "concept_id": "trade_balance",
         "label_en": "Monthly Customs Merchandise Trade Balance (NTD)",
         "latest_date": "2026-08-01",
         "frequency": "monthly",
@@ -864,6 +873,28 @@
         "transform": "level"
       },
       {
+        "id": "yield_curve_slope_10y5y",
+        "concept_id": "yield_curve_slope",
+        "label_en": "Taiwan Sovereign 10Y-5Y Yield Slope",
+        "latest_date": "2026-08-01",
+        "frequency": "bimonthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 61,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "Central Bank of the Republic of China (Taiwan) / CBC",
+        "series": "yield_curve_slope_10y5y",
+        "transform": "level"
+      },
+      {
         "id": "usd_twd",
         "concept_id": "fx_spot",
         "label_en": "USD/TWD Spot Exchange Rate (Fed H.10)",
@@ -889,7 +920,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 46,
+      "level": 48,
       "yoy_pct": 2
     },
     "non_level": [
@@ -913,6 +944,6 @@
       "date",
       "value"
     ],
-    "charted_series": 48
+    "charted_series": 50
   }
 }

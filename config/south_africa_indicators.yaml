@@ -994,6 +994,17 @@ indicators:
     start_date: "1995-01-01"
     caveat_en: "Includes general government, so this is the aggregate economy-wide leverage stock; moderate by developed-market standards but rising through the government channel."
     caveat_zh: "包含广义政府，因此是全经济杠杆存量；按发达市场标准处于温和水平，但正通过政府渠道上升。"
+  - id: real_policy_rate
+    section: monetary_financial
+    label_en: South Africa Real Policy Rate
+    label_zh: 南非实际政策利率 (Repo Rate − CPI同比)
+    unit: "%"
+    fetcher: manual
+    source_name: SARB / Stats SA / Derived
+    source_url: https://www.resbank.co.za
+    frequency: monthly
+    caveat_en: Derived real policy rate calculated as SARB Repo Rate minus headline CPI YoY.
+    caveat_zh: 衍生实际政策利率，以南非央行回购利率减去CPI同比增速计算。
 
 data_gaps:
   - section: prices_costs

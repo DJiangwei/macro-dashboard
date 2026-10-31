@@ -794,6 +794,28 @@ indicators:
     start_date: 2000-01-01
     caveat_en: Unemployment rate as percentage of the total labour force from the IMF WEO database.
     caveat_zh: 国际货币基金组织《世界经济展望》统计的失业率（占劳动力比重）。
+  - id: real_policy_rate
+    section: monetary_financial
+    label_en: Taiwan Real Policy Rate
+    label_zh: 台湾实际政策利率 (Discount Rate − CPI同比)
+    unit: "%"
+    fetcher: manual
+    source_name: CBC / DGBAS / Derived
+    source_url: https://www.cbc.gov.tw
+    frequency: monthly
+    caveat_en: Derived real policy rate calculated as CBC Discount Rate minus headline CPI YoY.
+    caveat_zh: 衍生实际政策利率，以台湾央行重贴现率减去CPI同比增速计算。
+  - id: yield_curve_slope_10y5y
+    section: monetary_financial
+    label_en: Taiwan Sovereign 10Y-5Y Yield Slope
+    label_zh: 台湾公债 10Y-5Y 期限利差
+    unit: bps
+    fetcher: manual
+    source_name: CBC / Central Bank of ROC (Taiwan)
+    source_url: https://www.cbc.gov.tw
+    frequency: bimonthly
+    caveat_en: Derived Taiwan sovereign term structure slope (10Y minus 5Y yield in bps).
+    caveat_zh: 台湾公债期限利差（10年期减5年期，基点bps）。
 
 data_gaps:
   - section: labour_structural

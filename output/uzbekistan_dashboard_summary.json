@@ -1,10 +1,10 @@
 {
   "file": "uzbekistan.html",
-  "generated": "2026-10-31T16:36:02.130049+00:00",
-  "charts": 36,
-  "source_groups": 13,
+  "generated": "2026-10-31T22:13:24.780807+00:00",
+  "charts": 37,
+  "source_groups": 14,
   "data_gaps": 2,
-  "low_confidence": 6,
+  "low_confidence": 7,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -416,7 +416,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "usd_uzs_latest": "12,591.57 (2025-07-01)",
   "cross_checks": [
@@ -446,10 +446,11 @@
       "value"
     ],
     "file": "uzbekistan_canonical_frame.json",
-    "series": 36,
-    "observations": 2580,
-    "series_count": 36,
-    "observation_count": 2580
+    "series": 37,
+    "observations": 2700,
+    "series_count": 37,
+    "observation_count": 2700,
+    "snapshot_generated": "2026-10-31T22:13:18.005541+00:00"
   },
   "data_gaps_detail": [
     {
@@ -468,7 +469,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 13,
+    "source_groups": 14,
     "sources": [
       {
         "source_name": "IMF SDMX / CBU",
@@ -503,6 +504,10 @@
         "charts": 2
       },
       {
+        "source_name": "IMF / DBnomics (IFS) / Derived",
+        "charts": 1
+      },
+      {
         "source_name": "IMF / FRED",
         "charts": 1
       },
@@ -524,7 +529,7 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 6,
+      "low_confidence": 7,
       "watch": 30
     },
     "unavailable_count": 0
@@ -541,7 +546,7 @@
       "current": 20,
       "due": 4,
       "projection": 6,
-      "stale": 6
+      "stale": 7
     },
     "latest_historical_date": "2026-09-01",
     "attention": [
@@ -609,6 +614,28 @@
         "comparability": "medium",
         "source_name": "IMF / DBnomics (IFS)",
         "series": "IMF/IFS/M.UZ.FPOLM_PA",
+        "transform": "level"
+      },
+      {
+        "id": "real_policy_rate",
+        "concept_id": "real_policy_rate",
+        "label_en": "UZ Real Policy Rate (Policy Rate − CPI YoY)",
+        "latest_date": "2024-12-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2024-12-01",
+        "age_days": 669,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF / DBnomics (IFS) / Derived",
+        "series": "real_policy_rate",
         "transform": "level"
       },
       {
@@ -769,7 +796,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 36
+      "level": 37
     },
     "non_level": []
   },
@@ -779,6 +806,6 @@
       "date",
       "value"
     ],
-    "charted_series": 36
+    "charted_series": 37
   }
 }

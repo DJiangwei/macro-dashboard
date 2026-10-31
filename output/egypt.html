@@ -383,10 +383,10 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h1><span data-lang="en">Egypt Dashboard</span><span data-lang="zh">埃及宏观仪表盘</span></h1>
     <p class="subtitle"><span data-lang="en">A data-first macro page for Egypt built from DBnomics (IMF IFS), IMF DataMapper, World Bank WDI, FRED, and Bruegel REER.</span><span data-lang="zh">基于DBnomics (IMF IFS)、IMF DataMapper、世界银行WDI、FRED与Bruegel实际有效汇率构建的埃及数据优先宏观页面。</span></p>
     <div class="meta-row">
-      <span class="meta-chip">37 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
-      <span class="meta-chip">14 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
+      <span class="meta-chip">38 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
+      <span class="meta-chip">15 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
       <span class="meta-chip">2 <span data-lang="en">official-data gaps tracked</span><span data-lang="zh">个官方数据缺口</span></span>
-      <span class="meta-chip">13 <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
+      <span class="meta-chip">14 <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
       <span class="meta-chip">0 <span data-lang="en">native official</span><span data-lang="zh">原生官方</span> · 0 <span data-lang="en">mirror</span><span data-lang="zh">镜像</span></span>
     </div>
   </header>
@@ -1585,6 +1585,35 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Provider update: 2026-06-01</span>
   </footer>
   <p class="caveat"><span data-lang="en">Monthly crude oil production including lease condensate for Egypt reported by US EIA.</span><span data-lang="zh">美国能源信息署(EIA)国际能源数据库发布的埃及月度原油及凝析油日均产量（千桶/日）。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="real_policy_rate">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">EG Real Policy Rate (Policy Rate − CPI YoY)</span><span data-lang="zh">EG 实际政策利率 (基准利率 − CPI同比)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2025-05-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>7.65</strong><em>%</em></span>
+        <time datetime="2025-05-01"><span data-lang="en">May 2025</span><span data-lang="zh">2025年5月</span></time>
+      </div>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
+    </div>
+  </div>
+  <div id="chart-real_policy_rate" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-real_policy_rate", [{"name": "Actual / history", "x": ["2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01"], "y": [-0.45, -1.83, -1.81, -0.85, 0.12, 1.38, 0.13, -1.9, -3.57, -3.6, -5.07, -3.69, -1.31, -7.18, -8.02, -12.89, -15.0, -15.66, -16.21, -12.46, -12.51, -13.7, -12.67, -12.34, -11.57, -6.73, -2.65, 2.18, 3.85, 3.93, 4.13, 5.8, 2.87, 3.74, 3.01, 1.28, -0.42, 1.59, 5.28, 4.54, 1.9, 2.09, 3.24, 2.16, 6.87, 7.59, 7.29, 8.98, 10.6, 9.12, 5.65, 5.58, 7.43, 4.66, 3.87, 5.05, 4.12, 5.55, 6.38, 5.56, 4.73, 3.05, 3.32, 4.47, 4.29, 4.28, 4.65, 3.89, 3.79, 3.27, 3.1, 2.21, 2.46, 3.23, 2.89, 1.53, -0.03, -0.79, -3.38, -1.73, -1.35, -1.85, -2.81, -3.34, -2.48, -5.02, -4.6, -9.16, -15.25, -13.85, -11.79, -13.98, -17.01, -16.7, -17.69, -18.16, -16.11, -14.8, -13.89, -10.04, -13.92, -5.62, -4.84, -0.44, 0.26, 2.06, 1.51, 1.3, 1.25, 2.23, 3.68, 3.81, 14.91, 14.16, 11.59, 7.65], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "IMF WEO estimate / forecast", "x": ["2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01"], "y": [3.81, 14.91, 14.16, 11.59, 7.65], "mode": "lines", "line": {"color": "#364b61", "width": 2.2, "dash": "dash"}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2025-05-01"], "y": [7.65], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "%", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://db.nomics.world/IMF/IFS/M.EG.FPOLM_PA" target="_blank" rel="noreferrer">IMF / DBnomics (IFS) / Derived</a></span>
+    <span>Series: real_policy_rate</span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2025-05-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Derived real policy rate calculated as CBE Overnight Deposit Rate minus headline CPI YoY.</span><span data-lang="zh">衍生实际政策利率，以埃及央行隔夜存款利率减去CPI同比增速计算。</span></p>
 </article>
 
 

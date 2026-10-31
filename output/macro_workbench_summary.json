@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-31T16:36:29.919146+00:00",
+  "generated": "2026-10-31T22:13:45.653318+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -18,7 +18,7 @@
       "headline": "6.25%",
       "secondary_label": "10Y yield",
       "secondary": "5.68%",
-      "quality": "39 verified · 52 watch · 14 low",
+      "quality": "40 verified · 52 watch · 13 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -117,7 +117,7 @@
       "headline": "3.75%",
       "secondary_label": "10Y yield",
       "secondary": "6.23%",
-      "quality": "40 verified · 54 watch · 14 low",
+      "quality": "41 verified · 54 watch · 13 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -216,7 +216,7 @@
       "headline": "3.50%",
       "secondary_label": "10Y yield",
       "secondary": "5.24%",
-      "quality": "40 verified · 50 watch · 14 low",
+      "quality": "41 verified · 50 watch · 13 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -315,7 +315,7 @@
       "headline": "6.50%",
       "secondary_label": "10Y yield",
       "secondary": "6.71%",
-      "quality": "40 verified · 50 watch · 14 low",
+      "quality": "41 verified · 50 watch · 13 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -405,54 +405,54 @@
       "currency": "CNY",
       "institution": "PBC",
       "category": "data-first country page",
-      "charts": 111,
-      "expected": 111,
+      "charts": 114,
+      "expected": 114,
       "proxy_fills": 0,
       "gaps_or_dropped": 8,
       "gaps_label": "Official data gaps",
       "headline_label": "Latest USD/CNY fixing",
-      "headline": "6.7330 (2026-10-09)",
+      "headline": "7.1250 (2026-10-30)",
       "secondary_label": "Source groups",
-      "secondary": "30",
-      "quality": "30 source groups · 60 low-confidence charts",
+      "secondary": "33",
+      "quality": "33 source groups · 48 low-confidence charts",
       "framework": "GS China Macro Framework",
       "status": "clean",
       "signals": {
         "growth": {
           "id": "industrial_value_added_yoy_akshare",
           "label": "Industrial production",
-          "value": 5.2,
-          "display": "5.20 %",
-          "date": "2026-08-01",
+          "value": 5.4,
+          "display": "5.40 %",
+          "date": "2026-09-01",
           "source": "AKShare / Eastmoney Data Center",
-          "quality_status": "low_confidence"
+          "quality_status": "watch"
         },
         "inflation": {
           "id": "cpi_yoy_akshare",
           "label": "CPI inflation",
-          "value": 0.9,
-          "display": "0.90 %",
-          "date": "2026-09-01",
+          "value": 0.3,
+          "display": "0.30 %",
+          "date": "2026-10-01",
           "source": "AKShare / Eastmoney Data Center",
           "quality_status": "watch"
         },
         "policy": {
           "id": "lpr_1y_akshare",
           "label": "1Y LPR",
-          "value": 3.0,
-          "display": "3.00 %",
-          "date": "2026-09-20",
+          "value": 3.1,
+          "display": "3.10 %",
+          "date": "2026-10-21",
           "source": "AKShare / Eastmoney Data Center",
-          "quality_status": "watch"
+          "quality_status": "verified"
         },
         "external": {
           "id": "customs_exports_yoy_akshare",
           "label": "Exports",
-          "value": 25.0,
-          "display": "25.0 %",
-          "date": "2026-08-01",
+          "value": 2.4,
+          "display": "2.40 %",
+          "date": "2026-09-01",
           "source": "AKShare / Eastmoney Data Center",
-          "quality_status": "low_confidence"
+          "quality_status": "watch"
         },
         "fiscal": {
           "id": "general_gov_debt",
@@ -461,7 +461,7 @@
           "display": "122.10 % of GDP",
           "date": "2031",
           "source": "IMF WEO",
-          "quality_status": "watch"
+          "quality_status": "verified"
         },
         "financial": {
           "id": "shibor_3m_akshare",
@@ -479,11 +479,11 @@
           "display": "-21.14 %",
           "date": "2026-09-01",
           "source": "Eastmoney Data Center / NBS-style industry index",
-          "quality_status": "watch"
+          "quality_status": "verified"
         }
       },
       "source_health": {
-        "source_groups": 30,
+        "source_groups": 33,
         "sources": [
           {
             "source_name": "AKShare / Eastmoney Data Center",
@@ -570,6 +570,10 @@
             "charts": 1
           },
           {
+            "source_name": "AKShare / Eastmoney Data Center / Derived",
+            "charts": 1
+          },
+          {
             "source_name": "AKShare / Energy Price Index",
             "charts": 1
           },
@@ -590,6 +594,10 @@
             "charts": 1
           },
           {
+            "source_name": "Bank for International Settlements (BIS)",
+            "charts": 1
+          },
+          {
             "source_name": "FRED / BIS Effective Exchange Rate",
             "charts": 1
           },
@@ -602,23 +610,28 @@
             "charts": 1
           },
           {
+            "source_name": "National Bureau of Statistics (NBS)",
+            "charts": 1
+          },
+          {
             "source_name": "World Bank WDI / ILO estimate",
             "charts": 1
           }
         ],
         "quality_counts": {
-          "low_confidence": 60,
-          "watch": 51
+          "low_confidence": 48,
+          "verified": 1,
+          "watch": 65
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 40,
+          "current": 55,
           "due": 9,
           "projection": 2,
-          "stale": 60
+          "stale": 48
         },
         "latest_historical_date": "2026-10-30",
         "attention": [
@@ -646,7 +659,7 @@
           },
           {
             "id": "broad_money_growth",
-            "concept_id": "cn:broad_money_growth",
+            "concept_id": "broad_money_growth",
             "label_en": "Broad Money Growth",
             "latest_date": "2024-12-31",
             "frequency": "annual",
@@ -1217,28 +1230,6 @@
             "transform": "usd_thousand_to_bn"
           },
           {
-            "id": "customs_exports_yoy_akshare",
-            "concept_id": "exports_growth",
-            "label_en": "Customs Exports, YoY",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2026-08-01",
-            "age_days": 61,
-            "threshold_days": 60,
-            "release_calendar_id": "nbs_monthly",
-            "expected_release_date": "2026-10-20",
-            "due_date": "2026-10-30",
-            "quality_status": "low_confidence",
-            "source_authority": "public_wrapper",
-            "derivation": "observed",
-            "validation": "watch",
-            "comparability": "medium",
-            "source_name": "AKShare / Eastmoney Data Center",
-            "series": "macro_china_hgjck:当月出口额-同比增长",
-            "transform": "level"
-          },
-          {
             "id": "customs_imports_value_akshare",
             "concept_id": "cn:customs_imports_value_akshare",
             "label_en": "Customs Imports",
@@ -1258,50 +1249,6 @@
             "comparability": "medium",
             "source_name": "AKShare / Eastmoney Data Center",
             "series": "macro_china_hgjck:当月进口额-金额",
-            "transform": "usd_thousand_to_bn"
-          },
-          {
-            "id": "customs_imports_yoy_akshare",
-            "concept_id": "imports_growth",
-            "label_en": "Customs Imports, YoY",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2026-08-01",
-            "age_days": 61,
-            "threshold_days": 60,
-            "release_calendar_id": "nbs_monthly",
-            "expected_release_date": "2026-10-20",
-            "due_date": "2026-10-30",
-            "quality_status": "low_confidence",
-            "source_authority": "public_wrapper",
-            "derivation": "observed",
-            "validation": "watch",
-            "comparability": "medium",
-            "source_name": "AKShare / Eastmoney Data Center",
-            "series": "macro_china_hgjck:当月进口额-同比增长",
-            "transform": "level"
-          },
-          {
-            "id": "customs_trade_balance_akshare",
-            "concept_id": "trade_balance",
-            "label_en": "Customs Trade Balance",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2026-08-01",
-            "age_days": 61,
-            "threshold_days": 60,
-            "release_calendar_id": "nbs_monthly",
-            "expected_release_date": "2026-10-20",
-            "due_date": "2026-10-30",
-            "quality_status": "low_confidence",
-            "source_authority": "public_wrapper",
-            "derivation": "derived",
-            "validation": "watch",
-            "comparability": "medium",
-            "source_name": "AKShare / Eastmoney Data Center",
-            "series": "macro_china_hgjck:当月出口额-金额-当月进口额-金额",
             "transform": "usd_thousand_to_bn"
           },
           {
@@ -1371,50 +1318,6 @@
             "transform": "cny_100mn_to_trn"
           },
           {
-            "id": "fixed_asset_investment_yoy_akshare",
-            "concept_id": "investment_growth",
-            "label_en": "Fixed Asset Investment, YoY",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2026-08-01",
-            "age_days": 61,
-            "threshold_days": 60,
-            "release_calendar_id": "nbs_monthly",
-            "expected_release_date": "2026-10-20",
-            "due_date": "2026-10-30",
-            "quality_status": "low_confidence",
-            "source_authority": "public_wrapper",
-            "derivation": "observed",
-            "validation": "watch",
-            "comparability": "medium",
-            "source_name": "AKShare / Eastmoney Data Center",
-            "series": "macro_china_gdzctz:同比增长",
-            "transform": "level"
-          },
-          {
-            "id": "industrial_value_added_yoy_akshare",
-            "concept_id": "industrial_production_growth",
-            "label_en": "Industrial Value Added, YoY",
-            "latest_date": "2026-08-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2026-08-01",
-            "age_days": 61,
-            "threshold_days": 60,
-            "release_calendar_id": "nbs_monthly",
-            "expected_release_date": "2026-10-20",
-            "due_date": "2026-10-30",
-            "quality_status": "low_confidence",
-            "source_authority": "public_wrapper",
-            "derivation": "observed",
-            "validation": "watch",
-            "comparability": "medium",
-            "source_name": "AKShare / Eastmoney Data Center",
-            "series": "macro_china_gyzjz:同比增长",
-            "transform": "level"
-          },
-          {
             "id": "interbank_3m_rate",
             "concept_id": "cn:interbank_3m_rate",
             "label_en": "3M Interbank Rate",
@@ -1459,9 +1362,9 @@
             "transform": "level"
           },
           {
-            "id": "m1_yoy_akshare",
-            "concept_id": "cn:m1_yoy_akshare",
-            "label_en": "M1 Growth, YoY",
+            "id": "new_energy_vehicle_retail_cpca",
+            "concept_id": "cn:new_energy_vehicle_retail_cpca",
+            "label_en": "New Energy Vehicle Retail Sales",
             "latest_date": "2026-08-01",
             "frequency": "monthly",
             "freshness_status": "stale",
@@ -1476,14 +1379,14 @@
             "derivation": "observed",
             "validation": "watch",
             "comparability": "medium",
-            "source_name": "AKShare / Eastmoney Data Center",
-            "series": "macro_china_money_supply:M1同比增长",
+            "source_name": "AKShare / China Passenger Car Association",
+            "series": "car_market_fuel_cpca:整体市场",
             "transform": "level"
           },
           {
-            "id": "m2_yoy_akshare",
-            "concept_id": "broad_money_growth",
-            "label_en": "M2 Growth, YoY",
+            "id": "new_energy_vehicle_share_cpca",
+            "concept_id": "cn:new_energy_vehicle_share_cpca",
+            "label_en": "New Energy Vehicle Retail Share",
             "latest_date": "2026-08-01",
             "frequency": "monthly",
             "freshness_status": "stale",
@@ -1498,9 +1401,119 @@
             "derivation": "observed",
             "validation": "watch",
             "comparability": "medium",
-            "source_name": "AKShare / Eastmoney Data Center",
-            "series": "macro_china_money_supply:M2同比增长",
+            "source_name": "AKShare / China Passenger Car Association",
+            "series": "car_market_fuel_cpca:销量占比-ICE-NEV:NEV",
             "transform": "level"
+          },
+          {
+            "id": "new_rmb_loans_akshare",
+            "concept_id": "private_credit_growth",
+            "label_en": "New RMB Loans",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-08-01",
+            "age_days": 61,
+            "threshold_days": 60,
+            "release_calendar_id": "nbs_monthly",
+            "expected_release_date": "2026-10-20",
+            "due_date": "2026-10-30",
+            "quality_status": "low_confidence",
+            "source_authority": "public_wrapper",
+            "derivation": "derived",
+            "validation": "watch",
+            "comparability": "medium",
+            "source_name": "AKShare / Eastmoney Data Center",
+            "series": "macro_china_new_financial_credit:当月",
+            "transform": "cny_100mn_to_trn"
+          },
+          {
+            "id": "passenger_vehicle_exports_cpca",
+            "concept_id": "cn:passenger_vehicle_exports_cpca",
+            "label_en": "Passenger Vehicle Exports",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-08-01",
+            "age_days": 61,
+            "threshold_days": 60,
+            "release_calendar_id": "nbs_monthly",
+            "expected_release_date": "2026-10-20",
+            "due_date": "2026-10-30",
+            "quality_status": "low_confidence",
+            "source_authority": "public_wrapper",
+            "derivation": "observed",
+            "validation": "watch",
+            "comparability": "medium",
+            "source_name": "AKShare / China Passenger Car Association",
+            "series": "car_market_total_cpca:狭义乘用车:出口",
+            "transform": "level"
+          },
+          {
+            "id": "passenger_vehicle_retail_cpca",
+            "concept_id": "cn:passenger_vehicle_retail_cpca",
+            "label_en": "Passenger Vehicle Retail Sales",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-08-01",
+            "age_days": 61,
+            "threshold_days": 60,
+            "release_calendar_id": "nbs_monthly",
+            "expected_release_date": "2026-10-20",
+            "due_date": "2026-10-30",
+            "quality_status": "low_confidence",
+            "source_authority": "public_wrapper",
+            "derivation": "observed",
+            "validation": "watch",
+            "comparability": "medium",
+            "source_name": "AKShare / China Passenger Car Association",
+            "series": "car_market_total_cpca:狭义乘用车:零售",
+            "transform": "level"
+          },
+          {
+            "id": "pbc_claims_on_depository_corps_akshare",
+            "concept_id": "cn:pbc_claims_on_depository_corps_akshare",
+            "label_en": "PBC Claims on Depository Corporations",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-08-01",
+            "age_days": 61,
+            "threshold_days": 60,
+            "release_calendar_id": "nbs_monthly",
+            "expected_release_date": "2026-10-20",
+            "due_date": "2026-10-30",
+            "quality_status": "low_confidence",
+            "source_authority": "public_wrapper",
+            "derivation": "derived",
+            "validation": "watch",
+            "comparability": "medium",
+            "source_name": "AKShare / Sina Finance / PBC Balance Sheet",
+            "series": "macro_china_central_bank_balance:对其他存款性公司债权",
+            "transform": "cny_100mn_to_trn"
+          },
+          {
+            "id": "pbc_fx_assets_akshare",
+            "concept_id": "cn:pbc_fx_assets_akshare",
+            "label_en": "PBC Foreign-Exchange Assets",
+            "latest_date": "2026-08-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-08-01",
+            "age_days": 61,
+            "threshold_days": 60,
+            "release_calendar_id": "nbs_monthly",
+            "expected_release_date": "2026-10-20",
+            "due_date": "2026-10-30",
+            "quality_status": "low_confidence",
+            "source_authority": "public_wrapper",
+            "derivation": "derived",
+            "validation": "watch",
+            "comparability": "medium",
+            "source_name": "AKShare / Sina Finance / PBC Balance Sheet",
+            "series": "macro_china_central_bank_balance:外汇",
+            "transform": "cny_100mn_to_trn"
           }
         ]
       },
@@ -1511,25 +1524,26 @@
           "value"
         ],
         "file": "china_canonical_frame.json",
-        "series": 111,
-        "observations": 80784,
-        "series_count": 111,
-        "observation_count": 80784
+        "series": 114,
+        "observations": 82367,
+        "series_count": 114,
+        "observation_count": 82367,
+        "snapshot_generated": "2026-10-31T22:13:19.248062+00:00"
       },
       "freshness_summary": {
         "dashboard": "China",
-        "charts": 111,
-        "current": 40,
-        "stale": 60,
+        "charts": 114,
+        "current": 55,
+        "stale": 48,
         "lagged_source": 0,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 60,
-        "latest_historical_date": "2026-10-30",
-        "headline_latest": "6.7330 (2026-10-09)"
+        "low_confidence": 48,
+        "latest_historical_date": "2026-10-31",
+        "headline_latest": "7.1250 (2026-10-30)"
       }
     },
     {
@@ -1539,16 +1553,16 @@
       "currency": "EUR",
       "institution": "ECB",
       "category": "data-first country page",
-      "charts": 72,
-      "expected": 72,
+      "charts": 76,
+      "expected": 76,
       "proxy_fills": 0,
       "gaps_or_dropped": 5,
       "gaps_label": "Official data gaps",
       "headline_label": "Deposit Facility Rate",
       "headline": "2.50% (2026-10-31)",
       "secondary_label": "Source groups",
-      "secondary": "6",
-      "quality": "6 source groups · 18 low-confidence charts",
+      "secondary": "10",
+      "quality": "10 source groups · 18 low-confidence charts",
       "framework": "9-Pillar Macro Framework",
       "status": "clean",
       "signals": {
@@ -1617,7 +1631,7 @@
         }
       },
       "source_health": {
-        "source_groups": 6,
+        "source_groups": 10,
         "sources": [
           {
             "source_name": "ECB",
@@ -1640,6 +1654,22 @@
             "charts": 2
           },
           {
+            "source_name": "Bank for International Settlements (BIS)",
+            "charts": 1
+          },
+          {
+            "source_name": "ECB / Derived",
+            "charts": 1
+          },
+          {
+            "source_name": "ECB / STOXX Ltd",
+            "charts": 1
+          },
+          {
+            "source_name": "European Central Bank (ECB)",
+            "charts": 1
+          },
+          {
             "source_name": "IMF DataMapper",
             "charts": 1
           }
@@ -1647,15 +1677,15 @@
         "quality_counts": {
           "low_confidence": 18,
           "unavailable": 1,
-          "verified": 49,
-          "watch": 4
+          "verified": 51,
+          "watch": 6
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 49,
+          "current": 53,
           "due": 4,
           "future_date": 1,
           "stale": 18
@@ -2177,15 +2207,16 @@
           "value"
         ],
         "file": "euro_area_canonical_frame.json",
-        "series": 72,
-        "observations": 65669,
-        "series_count": 72,
-        "observation_count": 65669
+        "series": 76,
+        "observations": 75204,
+        "series_count": 76,
+        "observation_count": 75204,
+        "snapshot_generated": "2026-10-31T22:13:19.688631+00:00"
       },
       "freshness_summary": {
         "dashboard": "Euro Area",
-        "charts": 72,
-        "current": 49,
+        "charts": 76,
+        "current": 53,
         "stale": 18,
         "lagged_source": 0,
         "projection": 1,
@@ -2205,16 +2236,16 @@
       "currency": "JPY",
       "institution": "BoJ",
       "category": "data-first country page",
-      "charts": 57,
-      "expected": 57,
+      "charts": 59,
+      "expected": 59,
       "proxy_fills": 0,
       "gaps_or_dropped": 6,
       "gaps_label": "Official data gaps",
       "headline_label": "Overnight call rate",
       "headline": "n/a",
       "secondary_label": "Source groups",
-      "secondary": "22",
-      "quality": "22 source groups · 19 low-confidence charts",
+      "secondary": "24",
+      "quality": "24 source groups · 19 low-confidence charts",
       "framework": "GS Japan Macro Framework",
       "status": "clean",
       "signals": {
@@ -2283,7 +2314,7 @@
         }
       },
       "source_health": {
-        "source_groups": 22,
+        "source_groups": 24,
         "sources": [
           {
             "source_name": "FRED / BIS",
@@ -2338,6 +2369,10 @@
             "charts": 2
           },
           {
+            "source_name": "Bank for International Settlements (BIS)",
+            "charts": 1
+          },
+          {
             "source_name": "Bank of Japan / Corporate Goods Price Index",
             "charts": 1
           },
@@ -2355,6 +2390,10 @@
           },
           {
             "source_name": "FRED / Nikkei Inc.",
+            "charts": 1
+          },
+          {
+            "source_name": "FRED / OECD (Bank of Japan) / Derived",
             "charts": 1
           },
           {
@@ -2376,7 +2415,7 @@
         ],
         "quality_counts": {
           "low_confidence": 19,
-          "verified": 7,
+          "verified": 9,
           "watch": 31
         },
         "unavailable_count": 0
@@ -2384,7 +2423,7 @@
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 20,
+          "current": 22,
           "due": 15,
           "projection": 3,
           "stale": 19
@@ -3097,7 +3136,7 @@
           },
           {
             "id": "yield_curve_slope_10y3m",
-            "concept_id": "jp:yield_curve_slope_10y3m",
+            "concept_id": "yield_curve_slope",
             "label_en": "10Y-3M JGB Yield Curve Slope",
             "latest_date": "2026-08-01",
             "frequency": "monthly",
@@ -3148,15 +3187,16 @@
           "value"
         ],
         "file": "japan_canonical_frame.json",
-        "series": 57,
-        "observations": 20260,
-        "series_count": 57,
-        "observation_count": 20260
+        "series": 59,
+        "observations": 20649,
+        "series_count": 59,
+        "observation_count": 20649,
+        "snapshot_generated": "2026-10-31T22:13:19.182051+00:00"
       },
       "freshness_summary": {
         "dashboard": "Japan",
-        "charts": 57,
-        "current": 23,
+        "charts": 59,
+        "current": 25,
         "stale": 19,
         "lagged_source": 0,
         "projection": 0,
@@ -3176,16 +3216,16 @@
       "currency": "ZAR",
       "institution": "SARB",
       "category": "data-first country page",
-      "charts": 65,
-      "expected": 65,
+      "charts": 66,
+      "expected": 66,
       "proxy_fills": 0,
       "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
       "headline_label": "SARB repo rate",
       "headline": "n/a",
       "secondary_label": "Source groups",
-      "secondary": "16",
-      "quality": "16 source groups · 22 low-confidence charts",
+      "secondary": "17",
+      "quality": "17 source groups · 22 low-confidence charts",
       "framework": "GS CEEMEA Macro Framework",
       "status": "clean",
       "signals": {
@@ -3254,7 +3294,7 @@
         }
       },
       "source_health": {
-        "source_groups": 16,
+        "source_groups": 17,
         "sources": [
           {
             "source_name": "IMF SDMX / Balance of Payments (SARB)",
@@ -3317,13 +3357,17 @@
             "charts": 1
           },
           {
+            "source_name": "SARB Web API / Derived",
+            "charts": 1
+          },
+          {
             "source_name": "World Bank International Debt Statistics",
             "charts": 1
           }
         ],
         "quality_counts": {
           "low_confidence": 22,
-          "verified": 10,
+          "verified": 11,
           "watch": 33
         },
         "unavailable_count": 0
@@ -3331,7 +3375,7 @@
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 34,
+          "current": 35,
           "due": 6,
           "projection": 3,
           "stale": 22
@@ -3963,15 +4007,16 @@
           "value"
         ],
         "file": "south_africa_canonical_frame.json",
-        "series": 65,
-        "observations": 30557,
-        "series_count": 65,
-        "observation_count": 30557
+        "series": 66,
+        "observations": 33645,
+        "series_count": 66,
+        "observation_count": 33645,
+        "snapshot_generated": "2026-10-31T22:13:17.805706+00:00"
       },
       "freshness_summary": {
         "dashboard": "South Africa",
-        "charts": 65,
-        "current": 37,
+        "charts": 66,
+        "current": 38,
         "stale": 22,
         "lagged_source": 0,
         "projection": 0,
@@ -3991,16 +4036,16 @@
       "currency": "GBP",
       "institution": "BoE",
       "category": "data-first country page",
-      "charts": 95,
-      "expected": 95,
+      "charts": 97,
+      "expected": 97,
       "proxy_fills": 0,
       "gaps_or_dropped": 8,
       "gaps_label": "Official data gaps",
       "headline_label": "Bank Rate",
       "headline": "3.75% (2026-10-29)",
       "secondary_label": "Source groups",
-      "secondary": "11",
-      "quality": "11 source groups · 15 low-confidence charts",
+      "secondary": "13",
+      "quality": "13 source groups · 15 low-confidence charts",
       "framework": "GS UK Macro Framework",
       "status": "clean",
       "signals": {
@@ -4069,7 +4114,7 @@
         }
       },
       "source_health": {
-        "source_groups": 11,
+        "source_groups": 13,
         "sources": [
           {
             "source_name": "ONS",
@@ -4114,19 +4159,27 @@
           {
             "source_name": "ONS / HM Land Registry",
             "charts": 2
+          },
+          {
+            "source_name": "Bank for International Settlements (BIS)",
+            "charts": 1
+          },
+          {
+            "source_name": "Bank of England IADB / Derived",
+            "charts": 1
           }
         ],
         "quality_counts": {
           "low_confidence": 15,
-          "verified": 60,
-          "watch": 20
+          "verified": 61,
+          "watch": 21
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 66,
+          "current": 68,
           "due": 10,
           "projection": 4,
           "stale": 15
@@ -4692,15 +4745,16 @@
           "value"
         ],
         "file": "uk_canonical_frame.json",
-        "series": 95,
-        "observations": 81370,
-        "series_count": 95,
-        "observation_count": 81370
+        "series": 97,
+        "observations": 88915,
+        "series_count": 97,
+        "observation_count": 88915,
+        "snapshot_generated": "2026-10-31T22:13:19.042724+00:00"
       },
       "freshness_summary": {
         "dashboard": "United Kingdom",
-        "charts": 95,
-        "current": 68,
+        "charts": 97,
+        "current": 70,
         "stale": 17,
         "lagged_source": 0,
         "projection": 4,
@@ -4720,16 +4774,16 @@
       "currency": "USD",
       "institution": "Fed",
       "category": "data-first country page",
-      "charts": 179,
-      "expected": 179,
+      "charts": 182,
+      "expected": 182,
       "proxy_fills": 0,
       "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
       "headline_label": "Fed funds",
       "headline": "3.88% (2026-10-29)",
       "secondary_label": "Source groups",
-      "secondary": "28",
-      "quality": "28 source groups · 0 low-confidence charts",
+      "secondary": "31",
+      "quality": "31 source groups · 0 low-confidence charts",
       "framework": "GS US Macro Framework",
       "status": "clean",
       "signals": {
@@ -4798,7 +4852,7 @@
         }
       },
       "source_health": {
-        "source_groups": 28,
+        "source_groups": 31,
         "sources": [
           {
             "source_name": "FRED / BLS",
@@ -4865,6 +4919,10 @@
             "charts": 2
           },
           {
+            "source_name": "Bank for International Settlements (BIS)",
+            "charts": 1
+          },
+          {
             "source_name": "FRED / ADP Research Institute",
             "charts": 1
           },
@@ -4886,6 +4944,10 @@
           },
           {
             "source_name": "FRED / FHFA",
+            "charts": 1
+          },
+          {
+            "source_name": "FRED / Federal Reserve / Derived",
             "charts": 1
           },
           {
@@ -4911,10 +4973,14 @@
           {
             "source_name": "FRED / S&P CoreLogic Case-Shiller",
             "charts": 1
+          },
+          {
+            "source_name": "FRED / S&P Dow Jones Indices",
+            "charts": 1
           }
         ],
         "quality_counts": {
-          "verified": 144,
+          "verified": 147,
           "watch": 35
         },
         "unavailable_count": 0
@@ -4922,7 +4988,7 @@
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 162,
+          "current": 165,
           "due": 16,
           "scheduled_policy": 1
         },
@@ -5289,15 +5355,16 @@
           "value"
         ],
         "file": "us_canonical_frame.json",
-        "series": 179,
-        "observations": 131453,
-        "series_count": 179,
-        "observation_count": 131453
+        "series": 182,
+        "observations": 131936,
+        "series_count": 182,
+        "observation_count": 131936,
+        "snapshot_generated": "2026-10-31T22:13:19.455275+00:00"
       },
       "freshness_summary": {
         "dashboard": "United States",
-        "charts": 179,
-        "current": 155,
+        "charts": 182,
+        "current": 158,
         "stale": 4,
         "lagged_source": 0,
         "projection": 0,
@@ -5317,16 +5384,16 @@
       "currency": "TRY",
       "institution": "TCMB",
       "category": "data-first country page",
-      "charts": 54,
-      "expected": 54,
+      "charts": 56,
+      "expected": 56,
       "proxy_fills": 0,
       "gaps_or_dropped": 1,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/TRY spot",
       "headline": "49.7747 (2026-10-30)",
       "secondary_label": "Source groups",
-      "secondary": "16",
-      "quality": "16 source groups · 12 low-confidence charts",
+      "secondary": "18",
+      "quality": "18 source groups · 12 low-confidence charts",
       "framework": "9-Pillar Macro Framework",
       "status": "clean",
       "signals": {
@@ -5395,7 +5462,7 @@
         }
       },
       "source_health": {
-        "source_groups": 16,
+        "source_groups": 18,
         "sources": [
           {
             "source_name": "Eurostat / TurkStat",
@@ -5438,7 +5505,15 @@
             "charts": 2
           },
           {
+            "source_name": "Central Bank of Republic of Turkey (CBRT) / Ministry of Treasury",
+            "charts": 1
+          },
+          {
             "source_name": "Central Bank of the Republic of Turkey (TCMB)",
+            "charts": 1
+          },
+          {
+            "source_name": "Central Bank of the Republic of Turkey (TCMB) / EVDS / Derived",
             "charts": 1
           },
           {
@@ -5464,7 +5539,7 @@
         ],
         "quality_counts": {
           "low_confidence": 12,
-          "verified": 22,
+          "verified": 24,
           "watch": 20
         },
         "unavailable_count": 1
@@ -5472,7 +5547,7 @@
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 32,
+          "current": 34,
           "due": 6,
           "projection": 4,
           "stale": 12
@@ -5811,7 +5886,7 @@
           },
           {
             "id": "goods_exports",
-            "concept_id": "tr:goods_exports",
+            "concept_id": "exports_growth",
             "label_en": "Exports of Goods SA (USD)",
             "latest_date": "2026-08-01",
             "frequency": "monthly",
@@ -5833,7 +5908,7 @@
           },
           {
             "id": "goods_imports",
-            "concept_id": "tr:goods_imports",
+            "concept_id": "imports_growth",
             "label_en": "Imports of Goods SA (USD)",
             "latest_date": "2026-08-01",
             "frequency": "monthly",
@@ -5884,15 +5959,16 @@
           "value"
         ],
         "file": "turkey_canonical_frame.json",
-        "series": 54,
-        "observations": 10342,
-        "series_count": 54,
-        "observation_count": 10342
+        "series": 56,
+        "observations": 11318,
+        "series_count": 56,
+        "observation_count": 11318,
+        "snapshot_generated": "2026-10-31T22:13:18.408819+00:00"
       },
       "freshness_summary": {
         "dashboard": "Turkey",
-        "charts": 54,
-        "current": 36,
+        "charts": 56,
+        "current": 38,
         "stale": 12,
         "lagged_source": 0,
         "projection": 0,
@@ -5912,16 +5988,16 @@
       "currency": "HKD",
       "institution": "HKMA",
       "category": "data-first country page",
-      "charts": 38,
-      "expected": 38,
+      "charts": 40,
+      "expected": 40,
       "proxy_fills": 0,
       "gaps_or_dropped": 1,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/HKD spot",
       "headline": "7.8423 (2026-10-23)",
       "secondary_label": "Source groups",
-      "secondary": "11",
-      "quality": "11 source groups · 8 low-confidence charts",
+      "secondary": "12",
+      "quality": "12 source groups · 7 low-confidence charts",
       "framework": "9-Pillar Macro Framework",
       "status": "clean",
       "signals": {
@@ -5981,7 +6057,7 @@
         }
       },
       "source_health": {
-        "source_groups": 11,
+        "source_groups": 12,
         "sources": [
           {
             "source_name": "HK C&SD",
@@ -6016,57 +6092,39 @@
             "charts": 2
           },
           {
+            "source_name": "Hong Kong Monetary Authority (HKMA)",
+            "charts": 2
+          },
+          {
             "source_name": "IMF / DBnomics (Financial Soundness Indicators)",
             "charts": 2
           },
           {
-            "source_name": "IMF Fiscal Monitor",
+            "source_name": "FRED / Federal Reserve Board / Derived",
             "charts": 1
           },
           {
-            "source_name": "World Bank / HKMA",
+            "source_name": "IMF Fiscal Monitor",
             "charts": 1
           }
         ],
         "quality_counts": {
-          "low_confidence": 8,
-          "verified": 15,
-          "watch": 15
+          "low_confidence": 7,
+          "verified": 17,
+          "watch": 16
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 21,
+          "current": 24,
           "due": 5,
           "projection": 4,
-          "stale": 8
+          "stale": 7
         },
-        "latest_historical_date": "2026-10-23",
+        "latest_historical_date": "2026-10-31",
         "attention": [
-          {
-            "id": "total_reserves_usd",
-            "concept_id": "hk:total_reserves_usd",
-            "label_en": "Official Foreign Currency Reserve Assets",
-            "latest_date": "2023-12-31",
-            "frequency": "annual",
-            "freshness_status": "stale",
-            "age_basis_date": "2023-12-31",
-            "age_days": 1035,
-            "threshold_days": 730,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "World Bank / HKMA",
-            "series": "FI.RES.TOTL.CD",
-            "transform": "level"
-          },
           {
             "id": "bank_capital_ratio",
             "concept_id": "bank_capital_ratio",
@@ -6340,24 +6398,25 @@
           "value"
         ],
         "file": "hong_kong_canonical_frame.json",
-        "series": 38,
-        "observations": 11276,
-        "series_count": 38,
-        "observation_count": 11276
+        "series": 40,
+        "observations": 11607,
+        "series_count": 40,
+        "observation_count": 11607,
+        "snapshot_generated": "2026-10-31T22:13:18.431376+00:00"
       },
       "freshness_summary": {
         "dashboard": "Hong Kong",
-        "charts": 38,
-        "current": 25,
-        "stale": 8,
+        "charts": 40,
+        "current": 28,
+        "stale": 7,
         "lagged_source": 0,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 8,
-        "latest_historical_date": "2026-10-23",
+        "low_confidence": 7,
+        "latest_historical_date": "2026-10-31",
         "headline_latest": ""
       }
     },
@@ -6368,16 +6427,16 @@
       "currency": "KRW",
       "institution": "BOK",
       "category": "data-first country page",
-      "charts": 48,
-      "expected": 48,
+      "charts": 51,
+      "expected": 51,
       "proxy_fills": 0,
       "gaps_or_dropped": 0,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/KRW spot",
       "headline": "1325.06 (2026-10-23)",
       "secondary_label": "Source groups",
-      "secondary": "14",
-      "quality": "14 source groups · 9 low-confidence charts",
+      "secondary": "17",
+      "quality": "17 source groups · 10 low-confidence charts",
       "framework": "9-Pillar Macro Framework",
       "status": "clean",
       "signals": {
@@ -6446,7 +6505,7 @@
         }
       },
       "source_health": {
-        "source_groups": 14,
+        "source_groups": 17,
         "sources": [
           {
             "source_name": "FRED / OECD",
@@ -6485,7 +6544,19 @@
             "charts": 2
           },
           {
+            "source_name": "Bank for International Settlements (BIS)",
+            "charts": 1
+          },
+          {
+            "source_name": "Bank of Korea (BOK) / ECOS / Derived",
+            "charts": 1
+          },
+          {
             "source_name": "Bank of Korea (BOK) / Statistics Korea",
+            "charts": 1
+          },
+          {
+            "source_name": "Bank of Korea / ECOS",
             "charts": 1
           },
           {
@@ -6506,19 +6577,19 @@
           }
         ],
         "quality_counts": {
-          "low_confidence": 9,
-          "verified": 7,
-          "watch": 32
+          "low_confidence": 10,
+          "verified": 8,
+          "watch": 33
         },
         "unavailable_count": 3
       },
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 23,
+          "current": 25,
           "due": 12,
           "projection": 4,
-          "stale": 9
+          "stale": 10
         },
         "latest_historical_date": "2026-10-23",
         "attention": [
@@ -6963,6 +7034,28 @@
             "transform": "level"
           },
           {
+            "id": "yield_curve_slope_10y3y",
+            "concept_id": "yield_curve_slope",
+            "label_en": "South Korea KTB 10Y-3Y Sovereign Yield Slope",
+            "latest_date": "2026-09-01",
+            "frequency": "daily",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-09-01",
+            "age_days": 60,
+            "threshold_days": 10,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "Bank of Korea / ECOS",
+            "series": "yield_curve_slope_10y3y",
+            "transform": "level"
+          },
+          {
             "id": "krw_usd",
             "concept_id": "fx_spot",
             "label_en": "USD/KRW Exchange Rate (Fed H.10)",
@@ -6993,23 +7086,24 @@
           "value"
         ],
         "file": "south_korea_canonical_frame.json",
-        "series": 48,
-        "observations": 10251,
-        "series_count": 48,
-        "observation_count": 10251
+        "series": 51,
+        "observations": 10541,
+        "series_count": 51,
+        "observation_count": 10541,
+        "snapshot_generated": "2026-10-31T22:13:19.374643+00:00"
       },
       "freshness_summary": {
         "dashboard": "South Korea",
-        "charts": 48,
-        "current": 27,
-        "stale": 9,
+        "charts": 51,
+        "current": 29,
+        "stale": 10,
         "lagged_source": 0,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 9,
+        "low_confidence": 10,
         "latest_historical_date": "2026-10-31",
         "headline_latest": ""
       }
@@ -7021,16 +7115,16 @@
       "currency": "TWD",
       "institution": "CBC",
       "category": "data-first country page",
-      "charts": 48,
-      "expected": 48,
+      "charts": 50,
+      "expected": 50,
       "proxy_fills": 0,
       "gaps_or_dropped": 1,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/TWD spot",
       "headline": "32.54 (2026-10-23)",
       "secondary_label": "Source groups",
-      "secondary": "9",
-      "quality": "9 source groups · 1 low-confidence charts",
+      "secondary": "11",
+      "quality": "11 source groups · 1 low-confidence charts",
       "framework": "9-Pillar Macro Framework",
       "status": "clean",
       "signals": {
@@ -7099,7 +7193,7 @@
         }
       },
       "source_health": {
-        "source_groups": 9,
+        "source_groups": 11,
         "sources": [
           {
             "source_name": "Central Bank of the Republic of China (Taiwan)",
@@ -7122,6 +7216,14 @@
             "charts": 2
           },
           {
+            "source_name": "Central Bank of the Republic of China (Taiwan) / CBC",
+            "charts": 1
+          },
+          {
+            "source_name": "Central Bank of the Republic of China (Taiwan) / Derived",
+            "charts": 1
+          },
+          {
             "source_name": "FRED / BIS",
             "charts": 1
           },
@@ -7140,16 +7242,16 @@
         ],
         "quality_counts": {
           "low_confidence": 1,
-          "verified": 32,
-          "watch": 15
+          "verified": 33,
+          "watch": 16
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 36,
-          "due": 7,
+          "current": 37,
+          "due": 8,
           "projection": 4,
           "stale": 1
         },
@@ -7223,7 +7325,7 @@
           },
           {
             "id": "customs_exports_yoy",
-            "concept_id": "tw:customs_exports_yoy",
+            "concept_id": "exports_growth",
             "label_en": "Monthly Customs Merchandise Exports YoY (NTD Basis)",
             "latest_date": "2026-08-01",
             "frequency": "monthly",
@@ -7245,7 +7347,7 @@
           },
           {
             "id": "customs_imports_yoy",
-            "concept_id": "tw:customs_imports_yoy",
+            "concept_id": "imports_growth",
             "label_en": "Monthly Customs Merchandise Imports YoY (NTD Basis)",
             "latest_date": "2026-08-01",
             "frequency": "monthly",
@@ -7267,7 +7369,7 @@
           },
           {
             "id": "customs_trade_balance",
-            "concept_id": "tw:customs_trade_balance",
+            "concept_id": "trade_balance",
             "label_en": "Monthly Customs Merchandise Trade Balance (NTD)",
             "latest_date": "2026-08-01",
             "frequency": "monthly",
@@ -7310,6 +7412,28 @@
             "transform": "level"
           },
           {
+            "id": "yield_curve_slope_10y5y",
+            "concept_id": "yield_curve_slope",
+            "label_en": "Taiwan Sovereign 10Y-5Y Yield Slope",
+            "latest_date": "2026-08-01",
+            "frequency": "bimonthly",
+            "freshness_status": "due",
+            "age_basis_date": "2026-08-01",
+            "age_days": 61,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "watch",
+            "source_authority": "official_primary",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "Central Bank of the Republic of China (Taiwan) / CBC",
+            "series": "yield_curve_slope_10y5y",
+            "transform": "level"
+          },
+          {
             "id": "usd_twd",
             "concept_id": "fx_spot",
             "label_en": "USD/TWD Spot Exchange Rate (Fed H.10)",
@@ -7340,15 +7464,16 @@
           "value"
         ],
         "file": "taiwan_canonical_frame.json",
-        "series": 48,
-        "observations": 13339,
-        "series_count": 48,
-        "observation_count": 13339
+        "series": 50,
+        "observations": 13737,
+        "series_count": 50,
+        "observation_count": 13737,
+        "snapshot_generated": "2026-10-31T22:13:18.382514+00:00"
       },
       "freshness_summary": {
         "dashboard": "Taiwan",
-        "charts": 48,
-        "current": 40,
+        "charts": 50,
+        "current": 41,
         "stale": 1,
         "lagged_source": 0,
         "projection": 0,
@@ -7368,16 +7493,16 @@
       "currency": "KZT",
       "institution": "NBK",
       "category": "data-first country page",
-      "charts": 37,
-      "expected": 37,
+      "charts": 38,
+      "expected": 38,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/KZT official rate",
       "headline": "453.87 (2026-10-31)",
       "secondary_label": "Source groups",
-      "secondary": "15",
-      "quality": "15 source groups · 5 low-confidence charts",
+      "secondary": "16",
+      "quality": "16 source groups · 4 low-confidence charts",
       "framework": "9-Pillar Macro Framework",
       "status": "clean",
       "signals": {
@@ -7402,11 +7527,11 @@
         "policy": {
           "id": "policy_rate",
           "label": "NBK policy rate",
-          "value": 9.0,
-          "display": "9.00 %",
-          "date": "2020-12-01",
-          "source": "IMF / DBnomics (IFS)",
-          "quality_status": "low_confidence"
+          "value": 14.25,
+          "display": "14.2 %",
+          "date": "2026-10-30",
+          "source": "National Bank of Kazakhstan (NBK)",
+          "quality_status": "verified"
         },
         "external": {
           "id": "current_account_gdp",
@@ -7446,7 +7571,7 @@
         }
       },
       "source_health": {
-        "source_groups": 15,
+        "source_groups": 16,
         "sources": [
           {
             "source_name": "IMF SDMX / NBK",
@@ -7457,12 +7582,12 @@
             "charts": 5
           },
           {
-            "source_name": "World Bank WDI",
+            "source_name": "National Bank of Kazakhstan (NBK)",
             "charts": 5
           },
           {
-            "source_name": "National Bank of Kazakhstan (NBK)",
-            "charts": 4
+            "source_name": "World Bank WDI",
+            "charts": 5
           },
           {
             "source_name": "IMF SDMX / Kazakhstan BNS",
@@ -7477,10 +7602,6 @@
             "charts": 2
           },
           {
-            "source_name": "IMF / DBnomics (IFS)",
-            "charts": 2
-          },
-          {
             "source_name": "World Bank / ILO",
             "charts": 2
           },
@@ -7489,11 +7610,19 @@
             "charts": 1
           },
           {
+            "source_name": "IMF / DBnomics (IFS)",
+            "charts": 1
+          },
+          {
             "source_name": "IMF / FRED",
             "charts": 1
           },
           {
             "source_name": "IMF DataMapper (Fiscal Monitor)",
+            "charts": 1
+          },
+          {
+            "source_name": "National Bank of Kazakhstan (NBK) / Derived",
             "charts": 1
           },
           {
@@ -7510,8 +7639,8 @@
           }
         ],
         "quality_counts": {
-          "low_confidence": 5,
-          "verified": 4,
+          "low_confidence": 4,
+          "verified": 6,
           "watch": 28
         },
         "unavailable_count": 0
@@ -7519,35 +7648,13 @@
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 23,
+          "current": 25,
           "due": 3,
           "projection": 6,
-          "stale": 5
+          "stale": 4
         },
         "latest_historical_date": "2026-10-31",
         "attention": [
-          {
-            "id": "policy_rate",
-            "concept_id": "policy_rate",
-            "label_en": "Monetary Policy-Related Interest Rate",
-            "latest_date": "2020-12-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2020-12-01",
-            "age_days": 2130,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/M.KZ.FPOLM_PA",
-            "transform": "level"
-          },
           {
             "id": "consumption_growth",
             "concept_id": "consumption_growth",
@@ -7711,23 +7818,24 @@
           "value"
         ],
         "file": "kazakhstan_canonical_frame.json",
-        "series": 37,
-        "observations": 9913,
-        "series_count": 37,
-        "observation_count": 9913
+        "series": 38,
+        "observations": 9775,
+        "series_count": 38,
+        "observation_count": 9775,
+        "snapshot_generated": "2026-10-31T22:13:18.122098+00:00"
       },
       "freshness_summary": {
         "dashboard": "Kazakhstan",
-        "charts": 37,
-        "current": 29,
-        "stale": 5,
+        "charts": 38,
+        "current": 31,
+        "stale": 4,
         "lagged_source": 0,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 5,
+        "low_confidence": 4,
         "latest_historical_date": "2026-10-31",
         "headline_latest": ""
       }
@@ -7739,16 +7847,16 @@
       "currency": "UZS",
       "institution": "CBU",
       "category": "data-first country page",
-      "charts": 36,
-      "expected": 36,
+      "charts": 37,
+      "expected": 37,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/UZS official rate",
       "headline": "12,591.57 (2025-07-01)",
       "secondary_label": "Source groups",
-      "secondary": "13",
-      "quality": "13 source groups · 6 low-confidence charts",
+      "secondary": "14",
+      "quality": "14 source groups · 7 low-confidence charts",
       "framework": "9-Pillar Macro Framework",
       "status": "clean",
       "signals": {
@@ -7817,7 +7925,7 @@
         }
       },
       "source_health": {
-        "source_groups": 13,
+        "source_groups": 14,
         "sources": [
           {
             "source_name": "IMF SDMX / CBU",
@@ -7852,6 +7960,10 @@
             "charts": 2
           },
           {
+            "source_name": "IMF / DBnomics (IFS) / Derived",
+            "charts": 1
+          },
+          {
             "source_name": "IMF / FRED",
             "charts": 1
           },
@@ -7873,7 +7985,7 @@
           }
         ],
         "quality_counts": {
-          "low_confidence": 6,
+          "low_confidence": 7,
           "watch": 30
         },
         "unavailable_count": 0
@@ -7884,7 +7996,7 @@
           "current": 20,
           "due": 4,
           "projection": 6,
-          "stale": 6
+          "stale": 7
         },
         "latest_historical_date": "2026-09-01",
         "attention": [
@@ -7952,6 +8064,28 @@
             "comparability": "medium",
             "source_name": "IMF / DBnomics (IFS)",
             "series": "IMF/IFS/M.UZ.FPOLM_PA",
+            "transform": "level"
+          },
+          {
+            "id": "real_policy_rate",
+            "concept_id": "real_policy_rate",
+            "label_en": "UZ Real Policy Rate (Policy Rate − CPI YoY)",
+            "latest_date": "2024-12-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2024-12-01",
+            "age_days": 669,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "IMF / DBnomics (IFS) / Derived",
+            "series": "real_policy_rate",
             "transform": "level"
           },
           {
@@ -8117,23 +8251,24 @@
           "value"
         ],
         "file": "uzbekistan_canonical_frame.json",
-        "series": 36,
-        "observations": 2580,
-        "series_count": 36,
-        "observation_count": 2580
+        "series": 37,
+        "observations": 2700,
+        "series_count": 37,
+        "observation_count": 2700,
+        "snapshot_generated": "2026-10-31T22:13:18.005541+00:00"
       },
       "freshness_summary": {
         "dashboard": "Uzbekistan",
-        "charts": 36,
+        "charts": 37,
         "current": 26,
-        "stale": 6,
+        "stale": 7,
         "lagged_source": 0,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 6,
+        "low_confidence": 7,
         "latest_historical_date": "2026-09-30",
         "headline_latest": ""
       }
@@ -8145,16 +8280,16 @@
       "currency": "EGP",
       "institution": "CBE",
       "category": "data-first country page",
-      "charts": 37,
-      "expected": 37,
+      "charts": 38,
+      "expected": 38,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/EGP official rate",
       "headline": "49.70 (2025-05-01)",
       "secondary_label": "Source groups",
-      "secondary": "14",
-      "quality": "14 source groups · 13 low-confidence charts",
+      "secondary": "15",
+      "quality": "15 source groups · 14 low-confidence charts",
       "framework": "9-Pillar Macro Framework",
       "status": "clean",
       "signals": {
@@ -8223,7 +8358,7 @@
         }
       },
       "source_health": {
-        "source_groups": 14,
+        "source_groups": 15,
         "sources": [
           {
             "source_name": "IMF SDMX / CBE",
@@ -8258,6 +8393,10 @@
             "charts": 1
           },
           {
+            "source_name": "IMF / DBnomics (IFS) / Derived",
+            "charts": 1
+          },
+          {
             "source_name": "IMF / FRED",
             "charts": 1
           },
@@ -8283,7 +8422,7 @@
           }
         ],
         "quality_counts": {
-          "low_confidence": 13,
+          "low_confidence": 14,
           "watch": 24
         },
         "unavailable_count": 0
@@ -8294,7 +8433,7 @@
           "current": 14,
           "due": 4,
           "projection": 6,
-          "stale": 13
+          "stale": 14
         },
         "latest_historical_date": "2026-10-27",
         "attention": [
@@ -8384,6 +8523,28 @@
             "comparability": "medium",
             "source_name": "IMF / DBnomics (IFS)",
             "series": "IMF/IFS/M.EG.FPOLM_PA",
+            "transform": "level"
+          },
+          {
+            "id": "real_policy_rate",
+            "concept_id": "real_policy_rate",
+            "label_en": "EG Real Policy Rate (Policy Rate − CPI YoY)",
+            "latest_date": "2025-05-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2025-05-01",
+            "age_days": 518,
+            "threshold_days": 75,
+            "release_calendar_id": "",
+            "expected_release_date": "",
+            "due_date": "",
+            "quality_status": "low_confidence",
+            "source_authority": "official_mirror",
+            "derivation": "derived",
+            "validation": "passed",
+            "comparability": "medium",
+            "source_name": "IMF / DBnomics (IFS) / Derived",
+            "series": "real_policy_rate",
             "transform": "level"
           },
           {
@@ -8681,23 +8842,24 @@
           "value"
         ],
         "file": "egypt_canonical_frame.json",
-        "series": 37,
-        "observations": 9516,
-        "series_count": 37,
-        "observation_count": 9516
+        "series": 38,
+        "observations": 9632,
+        "series_count": 38,
+        "observation_count": 9632,
+        "snapshot_generated": "2026-10-31T22:13:18.019140+00:00"
       },
       "freshness_summary": {
         "dashboard": "Egypt",
-        "charts": 37,
+        "charts": 38,
         "current": 20,
-        "stale": 13,
+        "stale": 14,
         "lagged_source": 0,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 13,
+        "low_confidence": 14,
         "latest_historical_date": "2026-10-27",
         "headline_latest": ""
       }
@@ -8709,16 +8871,16 @@
       "currency": "NGN",
       "institution": "CBN",
       "category": "data-first country page",
-      "charts": 39,
-      "expected": 39,
+      "charts": 40,
+      "expected": 40,
       "proxy_fills": 0,
       "gaps_or_dropped": 2,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/NGN official rate",
       "headline": "1,345.76 (2026-10-30)",
       "secondary_label": "Source groups",
-      "secondary": "14",
-      "quality": "14 source groups · 12 low-confidence charts",
+      "secondary": "15",
+      "quality": "15 source groups · 11 low-confidence charts",
       "framework": "9-Pillar Macro Framework",
       "status": "clean",
       "signals": {
@@ -8743,11 +8905,11 @@
         "policy": {
           "id": "policy_rate",
           "label": "CBN MPR",
-          "value": 26.75,
-          "display": "26.8 %",
-          "date": "2024-08-01",
-          "source": "IMF / DBnomics (IFS)",
-          "quality_status": "low_confidence"
+          "value": 27.25,
+          "display": "27.2 %",
+          "date": "2026-10-30",
+          "source": "Central Bank of Nigeria (CBN)",
+          "quality_status": "verified"
         },
         "external": {
           "id": "current_account_gdp",
@@ -8787,7 +8949,7 @@
         }
       },
       "source_health": {
-        "source_groups": 14,
+        "source_groups": 15,
         "sources": [
           {
             "source_name": "IMF SDMX / CBN",
@@ -8798,12 +8960,12 @@
             "charts": 7
           },
           {
-            "source_name": "IMF / DBnomics (IFS)",
+            "source_name": "IMF DataMapper (WEO)",
             "charts": 5
           },
           {
-            "source_name": "IMF DataMapper (WEO)",
-            "charts": 5
+            "source_name": "IMF / DBnomics (IFS)",
+            "charts": 4
           },
           {
             "source_name": "IMF SDMX / Nigeria NBS",
@@ -8811,6 +8973,10 @@
           },
           {
             "source_name": "Bruegel (Darvas REER Dataset)",
+            "charts": 2
+          },
+          {
+            "source_name": "Central Bank of Nigeria (CBN)",
             "charts": 2
           },
           {
@@ -8822,7 +8988,7 @@
             "charts": 2
           },
           {
-            "source_name": "Central Bank of Nigeria (CBN)",
+            "source_name": "Central Bank of Nigeria (CBN) / Derived",
             "charts": 1
           },
           {
@@ -8847,8 +9013,8 @@
           }
         ],
         "quality_counts": {
-          "low_confidence": 12,
-          "verified": 1,
+          "low_confidence": 11,
+          "verified": 3,
           "watch": 26
         },
         "unavailable_count": 0
@@ -8856,10 +9022,10 @@
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 20,
+          "current": 22,
           "due": 1,
           "projection": 6,
-          "stale": 12
+          "stale": 11
         },
         "latest_historical_date": "2026-10-30",
         "attention": [
@@ -8927,28 +9093,6 @@
             "comparability": "medium",
             "source_name": "IMF / DBnomics (IFS)",
             "series": "IMF/IFS/M.NG.FILR_PA",
-            "transform": "level"
-          },
-          {
-            "id": "policy_rate",
-            "concept_id": "policy_rate",
-            "label_en": "Central Bank Monetary Policy Rate (MPR)",
-            "latest_date": "2024-08-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2024-08-01",
-            "age_days": 791,
-            "threshold_days": 75,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "low_confidence",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "IMF / DBnomics (IFS)",
-            "series": "IMF/IFS/M.NG.FPOLM_PA",
             "transform": "level"
           },
           {
@@ -9158,23 +9302,24 @@
           "value"
         ],
         "file": "nigeria_canonical_frame.json",
-        "series": 39,
-        "observations": 13662,
-        "series_count": 39,
-        "observation_count": 13662
+        "series": 40,
+        "observations": 13570,
+        "series_count": 40,
+        "observation_count": 13570,
+        "snapshot_generated": "2026-10-31T22:13:18.165389+00:00"
       },
       "freshness_summary": {
         "dashboard": "Nigeria",
-        "charts": 39,
-        "current": 26,
-        "stale": 12,
+        "charts": 40,
+        "current": 28,
+        "stale": 11,
         "lagged_source": 0,
         "projection": 0,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 12,
+        "low_confidence": 11,
         "latest_historical_date": "2026-10-30",
         "headline_latest": ""
       }
@@ -9546,15 +9691,15 @@
       }
     },
     "CN": {
-      "composite_score": 57.1,
-      "cyclical_score": 67.5,
+      "composite_score": 55.2,
+      "cyclical_score": 63.8,
       "structural_score": 46.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 37.6,
+        "score": 41.9,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 36.0,
+        "freshness_score": 48.2,
         "proxy_penalty": 0.0,
         "gap_penalty": 20.0
       },
@@ -9563,32 +9708,32 @@
           "label": "above-trend expansion",
           "score": 80.0,
           "confidence_weight": 1.0,
-          "value": 5.2,
-          "display": "5.20 %",
+          "value": 5.4,
+          "display": "5.40 %",
           "source_signal": "industrial_value_added_yoy_akshare"
         },
         "inflation": {
           "label": "disinflation risk",
           "score": 55.0,
           "confidence_weight": 1.0,
-          "value": 0.9,
-          "display": "0.90 %",
+          "value": 0.3,
+          "display": "0.30 %",
           "source_signal": "cpi_yoy_akshare"
         },
         "policy": {
           "label": "neutral-moderate stance",
           "score": 60.0,
           "confidence_weight": 1.0,
-          "value": 3.0,
-          "display": "3.00 %",
+          "value": 3.1,
+          "display": "3.10 %",
           "source_signal": "lpr_1y_akshare"
         },
         "external": {
-          "label": "external strength",
-          "score": 75.0,
+          "label": "balanced external impulse",
+          "score": 60.0,
           "confidence_weight": 1.0,
-          "value": 25.0,
-          "display": "25.0 %",
+          "value": 2.4,
+          "display": "2.40 %",
           "source_signal": "customs_exports_yoy_akshare"
         },
         "fiscal": {
@@ -9618,22 +9763,22 @@
       },
       "taylor_stance": {
         "institution": "PBC",
-        "policy_rate": 3.0,
-        "inflation_rate": 0.9,
+        "policy_rate": 3.1,
+        "inflation_rate": 0.3,
         "inflation_target": 3.0,
         "neutral_real_rate_r_star": 1.5,
-        "taylor_implied_rate": 1.7,
+        "taylor_implied_rate": 0.9,
         "taylor_rate_range": [
-          1.2,
-          2.2
+          0.4,
+          1.4
         ],
-        "policy_gap_deviation": 1.3,
+        "policy_gap_deviation": 2.2,
         "policy_gap_range": [
-          0.8,
-          1.8
+          1.7,
+          2.7
         ],
-        "real_policy_rate": 2.1,
-        "stance_label": "moderately restrictive"
+        "real_policy_rate": 2.8,
+        "stance_label": "substantially restrictive"
       }
     },
     "EA": {
@@ -9642,10 +9787,10 @@
       "structural_score": 61.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 56.3,
+        "score": 56.9,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 68.1,
+        "freshness_score": 69.7,
         "proxy_penalty": 0.0,
         "gap_penalty": 12.5
       },
@@ -9733,10 +9878,10 @@
       "structural_score": 56.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 44.1,
+        "score": 44.8,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 40.4,
+        "freshness_score": 42.4,
         "proxy_penalty": 0.0,
         "gap_penalty": 15.0
       },
@@ -9824,10 +9969,10 @@
       "structural_score": 53.3,
       "composite_label": "mixed",
       "quality": {
-        "score": 47.4,
+        "score": 47.7,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 56.9,
+        "freshness_score": 57.6,
         "proxy_penalty": 0.0,
         "gap_penalty": 17.5
       },
@@ -9915,10 +10060,10 @@
       "structural_score": 53.3,
       "composite_label": "mixed",
       "quality": {
-        "score": 50.1,
+        "score": 50.3,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 71.6,
+        "freshness_score": 72.2,
         "proxy_penalty": 0.0,
         "gap_penalty": 20.0
       },
@@ -10006,10 +10151,10 @@
       "structural_score": 43.3,
       "composite_label": "defensive",
       "quality": {
-        "score": 77.8,
+        "score": 77.9,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 86.6,
+        "freshness_score": 86.8,
         "proxy_penalty": 0.0,
         "gap_penalty": 17.5
       },
@@ -10097,10 +10242,10 @@
       "structural_score": 51.7,
       "composite_label": "defensive",
       "quality": {
-        "score": 65.8,
+        "score": 66.2,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 66.7,
+        "freshness_score": 67.9,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -10188,10 +10333,10 @@
       "structural_score": 55.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 69.5,
+        "score": 73.0,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 65.8,
+        "freshness_score": 70.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -10261,10 +10406,10 @@
       "structural_score": 63.3,
       "composite_label": "mixed",
       "quality": {
-        "score": 66.7,
+        "score": 64.9,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 56.2,
+        "freshness_score": 56.9,
         "proxy_penalty": 0.0,
         "gap_penalty": 0.0
       },
@@ -10352,10 +10497,10 @@
       "structural_score": 71.7,
       "composite_label": "constructive",
       "quality": {
-        "score": 89.7,
+        "score": 89.2,
         "label": "high-confidence dashboard",
         "coverage_score": 100.0,
-        "freshness_score": 83.3,
+        "freshness_score": 82.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -10443,10 +10588,10 @@
       "structural_score": 55.0,
       "composite_label": "defensive",
       "quality": {
-        "score": 77.4,
-        "label": "usable with watch-list",
+        "score": 80.6,
+        "label": "high-confidence dashboard",
         "coverage_score": 100.0,
-        "freshness_score": 78.4,
+        "freshness_score": 81.6,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10471,8 +10616,8 @@
           "label": "restrictive stance",
           "score": 35.0,
           "confidence_weight": 1.0,
-          "value": 9.0,
-          "display": "9.00 %",
+          "value": 14.25,
+          "display": "14.2 %",
           "source_signal": "policy_rate"
         },
         "external": {
@@ -10510,7 +10655,7 @@
       },
       "taylor_stance": {
         "institution": "NBK",
-        "policy_rate": 9.0,
+        "policy_rate": 14.25,
         "inflation_rate": 9.24,
         "inflation_target": 5.0,
         "neutral_real_rate_r_star": 2.5,
@@ -10519,13 +10664,13 @@
           14.61,
           15.61
         ],
-        "policy_gap_deviation": -6.11,
+        "policy_gap_deviation": -0.86,
         "policy_gap_range": [
-          -6.61,
-          -5.61
+          -1.36,
+          -0.36
         ],
-        "real_policy_rate": -0.24,
-        "stance_label": "substantially accommodative"
+        "real_policy_rate": 5.01,
+        "stance_label": "moderately accommodative"
       }
     },
     "UZ": {
@@ -10534,10 +10679,10 @@
       "structural_score": 51.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 73.3,
+        "score": 70.6,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 72.2,
+        "freshness_score": 70.3,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10625,10 +10770,10 @@
       "structural_score": 45.0,
       "composite_label": "defensive",
       "quality": {
-        "score": 58.9,
+        "score": 58.4,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 54.1,
+        "freshness_score": 52.6,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10716,10 +10861,10 @@
       "structural_score": 55.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 63.3,
+        "score": 64.5,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 66.7,
+        "freshness_score": 70.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 5.0
       },
@@ -10744,8 +10889,8 @@
           "label": "restrictive stance",
           "score": 35.0,
           "confidence_weight": 1.0,
-          "value": 26.75,
-          "display": "26.8 %",
+          "value": 27.25,
+          "display": "27.2 %",
           "source_signal": "policy_rate"
         },
         "external": {
@@ -10783,7 +10928,7 @@
       },
       "taylor_stance": {
         "institution": "CBN",
-        "policy_rate": 26.75,
+        "policy_rate": 27.25,
         "inflation_rate": 15.39,
         "inflation_target": 9.0,
         "neutral_real_rate_r_star": 2.0,
@@ -10792,12 +10937,12 @@
           20.34,
           21.34
         ],
-        "policy_gap_deviation": 5.91,
+        "policy_gap_deviation": 6.41,
         "policy_gap_range": [
-          5.41,
-          6.41
+          5.91,
+          6.91
         ],
-        "real_policy_rate": 11.36,
+        "real_policy_rate": 11.86,
         "stance_label": "substantially restrictive"
       }
     }
@@ -10881,22 +11026,22 @@
     },
     "CN": {
       "institution": "PBC",
-      "policy_rate": 3.0,
-      "inflation_rate": 0.9,
+      "policy_rate": 3.1,
+      "inflation_rate": 0.3,
       "inflation_target": 3.0,
       "neutral_real_rate_r_star": 1.5,
-      "taylor_implied_rate": 1.7,
+      "taylor_implied_rate": 0.9,
       "taylor_rate_range": [
-        1.2,
-        2.2
+        0.4,
+        1.4
       ],
-      "policy_gap_deviation": 1.3,
+      "policy_gap_deviation": 2.2,
       "policy_gap_range": [
-        0.8,
-        1.8
+        1.7,
+        2.7
       ],
-      "real_policy_rate": 2.1,
-      "stance_label": "moderately restrictive"
+      "real_policy_rate": 2.8,
+      "stance_label": "substantially restrictive"
     },
     "EA": {
       "institution": "ECB",
@@ -11052,7 +11197,7 @@
     },
     "KZ": {
       "institution": "NBK",
-      "policy_rate": 9.0,
+      "policy_rate": 14.25,
       "inflation_rate": 9.24,
       "inflation_target": 5.0,
       "neutral_real_rate_r_star": 2.5,
@@ -11061,13 +11206,13 @@
         14.61,
         15.61
       ],
-      "policy_gap_deviation": -6.11,
+      "policy_gap_deviation": -0.86,
       "policy_gap_range": [
-        -6.61,
-        -5.61
+        -1.36,
+        -0.36
       ],
-      "real_policy_rate": -0.24,
-      "stance_label": "substantially accommodative"
+      "real_policy_rate": 5.01,
+      "stance_label": "moderately accommodative"
     },
     "UZ": {
       "institution": "CBU",
@@ -11109,7 +11254,7 @@
     },
     "NG": {
       "institution": "CBN",
-      "policy_rate": 26.75,
+      "policy_rate": 27.25,
       "inflation_rate": 15.39,
       "inflation_target": 9.0,
       "neutral_real_rate_r_star": 2.0,
@@ -11118,12 +11263,12 @@
         20.34,
         21.34
       ],
-      "policy_gap_deviation": 5.91,
+      "policy_gap_deviation": 6.41,
       "policy_gap_range": [
-        5.41,
-        6.41
+        5.91,
+        6.91
       ],
-      "real_policy_rate": 11.36,
+      "real_policy_rate": 11.86,
       "stance_label": "substantially restrictive"
     }
   },
@@ -12613,12 +12758,12 @@
       "category": "Global Trade & Tech Bellwether",
       "indicator_name": "China Customs Goods Exports YoY",
       "frequency": "Monthly",
-      "latest_date": "2026-08-01",
-      "latest_value": 25.0,
-      "display_value": "+25.0%",
+      "latest_date": "2026-09-01",
+      "latest_value": 2.4,
+      "display_value": "+2.4%",
       "unit": "% y/y",
       "neutral_benchmark": ">0% YoY (manufacturing export cycle)",
-      "status_pill": "good",
+      "status_pill": "neutral",
       "signal_assessment": "Resilient capital goods & EM export demand",
       "chart_link": "global_tech_and_export_bellwether"
     }
@@ -12741,7 +12886,7 @@
       "country_code": "CN",
       "indicator_name": "PBC Balance Sheet Total Assets",
       "frequency": "Monthly",
-      "latest_date": "2026-08-01",
+      "latest_date": "2026-09-01",
       "latest_value": 49.86,
       "display_value": "¥49.86T",
       "unit": "CNY tn",
@@ -12755,7 +12900,7 @@
       "country_code": "CN",
       "indicator_name": "PBC Reserve Money (Base Money)",
       "frequency": "Monthly",
-      "latest_date": "2026-08-01",
+      "latest_date": "2026-09-01",
       "latest_value": 40.18,
       "display_value": "¥40.18T",
       "unit": "CNY tn",
@@ -13020,157 +13165,144 @@
       "code": "CN",
       "name": "China",
       "coverage_pct": 100.0,
-      "freshness_pct": 36.0,
+      "freshness_pct": 48.2,
       "proxy_fills": 0,
       "gaps": 8,
-      "regime_score": 57.1,
-      "quality_score": 37.6
+      "regime_score": 55.2,
+      "quality_score": 41.9
     },
     {
       "code": "EA",
       "name": "Euro Area",
       "coverage_pct": 100.0,
-      "freshness_pct": 68.1,
+      "freshness_pct": 69.7,
       "proxy_fills": 0,
       "gaps": 5,
       "regime_score": 60.8,
-      "quality_score": 56.3
+      "quality_score": 56.9
     },
     {
       "code": "JP",
       "name": "Japan",
       "coverage_pct": 100.0,
-      "freshness_pct": 40.4,
+      "freshness_pct": 42.4,
       "proxy_fills": 0,
       "gaps": 6,
       "regime_score": 56.5,
-      "quality_score": 44.1
+      "quality_score": 44.8
     },
     {
       "code": "ZA",
       "name": "South Africa",
       "coverage_pct": 100.0,
-      "freshness_pct": 56.9,
+      "freshness_pct": 57.6,
       "proxy_fills": 0,
       "gaps": 7,
       "regime_score": 51.7,
-      "quality_score": 47.4
+      "quality_score": 47.7
     },
     {
       "code": "UK",
       "name": "United Kingdom",
       "coverage_pct": 100.0,
-      "freshness_pct": 71.6,
+      "freshness_pct": 72.2,
       "proxy_fills": 0,
       "gaps": 8,
       "regime_score": 53.1,
-      "quality_score": 50.1
+      "quality_score": 50.3
     },
     {
       "code": "US",
       "name": "United States",
       "coverage_pct": 100.0,
-      "freshness_pct": 86.6,
+      "freshness_pct": 86.8,
       "proxy_fills": 0,
       "gaps": 7,
       "regime_score": 49.2,
-      "quality_score": 77.8
+      "quality_score": 77.9
     },
     {
       "code": "TR",
       "name": "Turkey",
       "coverage_pct": 100.0,
-      "freshness_pct": 66.7,
+      "freshness_pct": 67.9,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 49.0,
-      "quality_score": 65.8
+      "quality_score": 66.2
     },
     {
       "code": "HK",
       "name": "Hong Kong",
       "coverage_pct": 100.0,
-      "freshness_pct": 65.8,
+      "freshness_pct": 70.0,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 59.2,
-      "quality_score": 69.5
+      "quality_score": 73.0
     },
     {
       "code": "KR",
       "name": "South Korea",
       "coverage_pct": 100.0,
-      "freshness_pct": 56.2,
+      "freshness_pct": 56.9,
       "proxy_fills": 0,
       "gaps": 0,
       "regime_score": 64.2,
-      "quality_score": 66.7
+      "quality_score": 64.9
     },
     {
       "code": "TW",
       "name": "Taiwan",
       "coverage_pct": 100.0,
-      "freshness_pct": 83.3,
+      "freshness_pct": 82.0,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 73.3,
-      "quality_score": 89.7
+      "quality_score": 89.2
     },
     {
       "code": "KZ",
       "name": "Kazakhstan",
       "coverage_pct": 100.0,
-      "freshness_pct": 78.4,
+      "freshness_pct": 81.6,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 49.4,
-      "quality_score": 77.4
+      "quality_score": 80.6
     },
     {
       "code": "UZ",
       "name": "Uzbekistan",
       "coverage_pct": 100.0,
-      "freshness_pct": 72.2,
+      "freshness_pct": 70.3,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 52.7,
-      "quality_score": 73.3
+      "quality_score": 70.6
     },
     {
       "code": "EG",
       "name": "Egypt",
       "coverage_pct": 100.0,
-      "freshness_pct": 54.1,
+      "freshness_pct": 52.6,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 49.4,
-      "quality_score": 58.9
+      "quality_score": 58.4
     },
     {
       "code": "NG",
       "name": "Nigeria",
       "coverage_pct": 100.0,
-      "freshness_pct": 66.7,
+      "freshness_pct": 70.0,
       "proxy_fills": 0,
       "gaps": 2,
       "regime_score": 54.4,
-      "quality_score": 63.3
+      "quality_score": 64.5
     }
   ],
   "release_monitor": [
-    {
-      "code": "KZ",
-      "dashboard": "Kazakhstan",
-      "indicator_id": "policy_rate",
-      "label": "Monetary Policy-Related Interest Rate",
-      "latest": "2020-12-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 2130,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "NBK monetary policy-related rate reported in IMF International Financial Statistics."
-    },
     {
       "code": "CZ",
       "dashboard": "Czechia",
@@ -13209,19 +13341,6 @@
       "severity": "high",
       "source": "World Bank Sovereign ESG Data Portal / WGI",
       "note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST. Source validation: Latest observation is 1035 days old for annual data."
-    },
-    {
-      "code": "HK",
-      "dashboard": "Hong Kong",
-      "indicator_id": "total_reserves_usd",
-      "label": "Official Foreign Currency Reserve Assets",
-      "latest": "2023",
-      "frequency": "annual",
-      "status": "stale",
-      "age_days": 1035,
-      "severity": "high",
-      "source": "World Bank / HKMA",
-      "note": "Total official foreign currency reserve assets in billions of USD."
     },
     {
       "code": "HU",
@@ -13419,19 +13538,6 @@
       "note": "Commercial bank prime lending rate on local currency loans."
     },
     {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "policy_rate",
-      "label": "Central Bank Monetary Policy Rate (MPR)",
-      "latest": "2024-08-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 791,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Central Bank of Nigeria Monetary Policy Rate reported in IFS."
-    },
-    {
       "code": "JP",
       "dashboard": "Japan",
       "indicator_id": "housing_starts",
@@ -13441,7 +13547,7 @@
       "status": "stale",
       "age_days": 699,
       "severity": "high",
-      "source": "unknown",
+      "source": "",
       "note": ""
     },
     {
@@ -13822,6 +13928,19 @@
       "note": "Central Bank of Uzbekistan refinancing/policy rate reported in IFS."
     },
     {
+      "code": "UZ",
+      "dashboard": "Uzbekistan",
+      "indicator_id": "real_policy_rate",
+      "label": "UZ Real Policy Rate (Policy Rate − CPI YoY)",
+      "latest": "2024-12-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 669,
+      "severity": "high",
+      "source": "IMF / DBnomics (IFS) / Derived",
+      "note": "Derived real policy rate calculated as CBU Policy Rate minus headline CPI YoY."
+    },
+    {
       "code": "RO",
       "dashboard": "Romania",
       "indicator_id": "cb_balance_sheet_gdp",
@@ -14197,6 +14316,32 @@
       "severity": "high",
       "source": "FRED / OECD",
       "note": "OECD consumer price index growth rate series mirrored on FRED."
+    },
+    {
+      "code": "CN",
+      "dashboard": "China",
+      "indicator_id": "large_bank_rrr_akshare",
+      "label": "Large Bank RRR",
+      "latest": "2025-05-15",
+      "frequency": "irregular",
+      "status": "stale",
+      "age_days": 534,
+      "severity": "high",
+      "source": "AKShare / PBC RRR Announcements",
+      "note": "Event-based required reserve ratio history via AKShare; effective dates and institution buckets should be cross-checked against PBC announcements."
+    },
+    {
+      "code": "CN",
+      "dashboard": "China",
+      "indicator_id": "small_bank_rrr_akshare",
+      "label": "Small/Mid Bank RRR",
+      "latest": "2025-05-15",
+      "frequency": "irregular",
+      "status": "stale",
+      "age_days": 534,
+      "severity": "high",
+      "source": "AKShare / PBC RRR Announcements",
+      "note": "Event-based required reserve ratio history via AKShare; smaller-bank categories have changed over time, so use the series as a policy-easing marker."
     }
   ],
   "gap_backlog": [

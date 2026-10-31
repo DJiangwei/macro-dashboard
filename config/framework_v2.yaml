@@ -522,6 +522,8 @@ concepts:
     UZ: []
     EG: []
     NG: []
+    CN:
+    - core_cpi_yoy
 - id: services_inflation
   pillar: prices_costs
   label_en: Services Inflation
@@ -696,6 +698,7 @@ concepts:
   mappings:
     CEE:
     - construction_production
+    - construction_production_yoy
     CN:
     - real_estate_development_investment_ytd_yoy_eastmoney
     UK:
@@ -706,6 +709,7 @@ concepts:
     ZA: []
     EA:
     - construction_output_yoy
+    - construction_production_yoy
     TR:
     - construction_production_growth
     HK:
@@ -714,6 +718,8 @@ concepts:
     UZ: []
     EG: []
     NG: []
+    TW:
+    - construction_loans_growth
 - id: mortgage_rate
   pillar: housing_investment
   label_en: Mortgage Rate
@@ -798,22 +804,28 @@ concepts:
     - customs_trade_balance_akshare
     UK:
     - total_trade_balance
+    - trade_balance
+    - goods_trade_balance
     US:
     - goods_trade_balance
+    - trade_balance
     JP:
     - goods_trade_balance
     ZA:
     - goods_trade_balance
     EA:
     - goods_trade_balance
+    - trade_balance
     TR:
     - goods_trade_balance
     HK:
     - merchandise_trade_balance
+    - goods_trade_balance
     KR:
     - goods_trade_balance
     TW:
     - goods_trade_balance
+    - customs_trade_balance
     KZ:
     - goods_trade_balance
     UZ:
@@ -832,6 +844,7 @@ concepts:
     - customs_exports_yoy_akshare
     UK:
     - exports_qoq
+    - goods_exports_growth
     US:
     - goods_exports_growth
     JP:
@@ -840,14 +853,18 @@ concepts:
     - goods_exports_growth
     EA:
     - exports_volume_yoy
+    - exports_growth
     TR:
     - exports_goods_services
+    - goods_exports
     HK:
     - merchandise_exports_growth
+    - goods_exports
     KR:
     - goods_exports
     TW:
     - goods_exports
+    - customs_exports_yoy
     KZ: []
     UZ: []
     EG: []
@@ -862,6 +879,7 @@ concepts:
     - customs_imports_yoy_akshare
     UK:
     - imports_qoq
+    - goods_imports_growth
     US:
     - goods_imports_growth
     JP:
@@ -870,14 +888,18 @@ concepts:
     - goods_imports_growth
     EA:
     - imports_volume_yoy
+    - imports_growth
     TR:
     - imports_goods_services
+    - goods_imports
     HK:
     - merchandise_imports_growth
+    - goods_imports
     KR:
     - goods_imports
     TW:
     - goods_imports
+    - customs_imports_yoy
     KZ: []
     UZ: []
     EG: []
@@ -1083,6 +1105,7 @@ concepts:
     - sov_yield_10y
     UK:
     - long_rate_10y
+    - ten_year_yield
     US:
     - treasury_10y_yield
     JP:
@@ -1092,14 +1115,22 @@ concepts:
     EA:
     - aaa_yield_10y
     - irs_10y_de
+    - sovereign_yield_10y
     KR:
     - sovereign_yield_10y
+    - ktb_10y_yield
     TW:
     - sovereign_yield_10y
     KZ: []
     UZ: []
     EG: []
     NG: []
+    CN:
+    - cgb_yield_10y
+    TR:
+    - sovereign_yield_10y
+    HK:
+    - sovereign_yield_10y
 - id: policy_rate
   pillar: monetary_financial
   label_en: Policy Rate
@@ -1110,10 +1141,12 @@ concepts:
     - policy_rate
     CN:
     - lpr_1y_akshare
+    - policy_rate
     UK:
     - bank_rate
     US:
     - daily_fed_funds
+    - effective_fed_funds
     JP:
     - policy_rate
     ZA:
@@ -1125,10 +1158,12 @@ concepts:
     - policy_rate
     HK:
     - policy_rate
+    - fed_funds_anchor
     KR:
     - policy_rate
     TW:
     - policy_rate
+    - collateral_rate
     KZ:
     - policy_rate
     UZ:
@@ -1145,13 +1180,34 @@ concepts:
   mappings:
     CEE:
     - real_policy_rate
-    JP: []
-    ZA: []
-    EA: []
-    KZ: []
-    UZ: []
-    EG: []
-    NG: []
+    JP:
+    - real_policy_rate
+    ZA:
+    - real_policy_rate
+    EA:
+    - real_policy_rate
+    KZ:
+    - real_policy_rate
+    UZ:
+    - real_policy_rate
+    EG:
+    - real_policy_rate
+    NG:
+    - real_policy_rate
+    CN:
+    - real_policy_rate
+    UK:
+    - real_policy_rate
+    US:
+    - real_policy_rate
+    TR:
+    - real_policy_rate
+    HK:
+    - real_policy_rate
+    KR:
+    - real_policy_rate
+    TW:
+    - real_policy_rate
 - id: broad_money_growth
   pillar: monetary_financial
   label_en: Broad Money Growth
@@ -1160,10 +1216,13 @@ concepts:
   mappings:
     CEE:
     - m3_yoy
+    - broad_money_growth
     CN:
     - m2_yoy_akshare
+    - broad_money_growth
     UK:
     - broad_money_m3_yoy
+    - broad_money_growth
     US:
     - broad_money_growth
     JP:
@@ -1172,6 +1231,7 @@ concepts:
     - broad_money_growth
     EA:
     - m3_growth
+    - broad_money_growth
     KR:
     - broad_money_m2_bok
     TW:
@@ -1270,11 +1330,13 @@ concepts:
     - share_price_index
     UK:
     - equity_prices
-    US: []
+    US:
+    - sp500_return_yoy
     JP:
     - equity_index
     ZA: []
-    EA: []
+    EA:
+    - euro_stoxx_return_yoy
     TR:
     - bist_100_equity_index
     KR:
@@ -1295,16 +1357,26 @@ concepts:
     - yield_curve_slope
     US:
     - yield_curve_10y2y
-    JP: []
+    - yield_curve_slope_10y2y
+    JP:
+    - yield_curve_slope_10y3m
     ZA: []
     EA:
     - yield_curve_slope
+    - yield_curve_slope_10y2y
     UK:
     - yield_curve_slope_10y5y
+    - yield_curve_slope_20y5y
     KZ: []
     UZ: []
     EG: []
     NG: []
+    CN:
+    - cgb_curve_10y2y
+    KR:
+    - yield_curve_slope_10y3y
+    TW:
+    - yield_curve_slope_10y5y
 - id: financial_conditions
   pillar: monetary_financial
   label_en: Financial Conditions
@@ -1318,6 +1390,7 @@ concepts:
     ZA: []
     EA:
     - ciss
+    - systemic_stress_ciss
     KZ: []
     UZ: []
     EG: []
@@ -1330,13 +1403,24 @@ concepts:
   mappings:
     CEE:
     - credit_to_gdp_gap
-    JP: []
+    - credit_gap
+    JP:
+    - credit_gap
     ZA: []
-    EA: []
+    EA:
+    - credit_gap
     KZ: []
     UZ: []
     EG: []
     NG: []
+    US:
+    - credit_gap
+    UK:
+    - credit_gap
+    CN:
+    - credit_gap
+    KR:
+    - credit_gap
 - id: bank_capital_ratio
   pillar: stability_structural
   label_en: Bank Capital Ratio

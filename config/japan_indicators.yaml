@@ -936,6 +936,30 @@ indicators:
   estat_area: '00000'
   series: 0003114496/19/11/11/11/00000
   source_authority: official_primary
+- id: real_policy_rate
+  section: monetary_financial
+  label_en: Japan Real Policy Rate
+  label_zh: 日本实际政策利率 (Uncollateralized Overnight Call Rate − CPI同比)
+  unit: '%'
+  fetcher: manual
+  source_name: Bank of Japan / Statistics Bureau / Derived
+  source_url: https://www.stat-search.boj.or.jp
+  frequency: monthly
+  caveat_en: Derived real policy rate calculated as BOJ policy rate minus headline CPI YoY.
+  caveat_zh: 衍生实际政策利率，以日本央行无担保隔夜拆借利率减去CPI同比增速计算。
+  source_authority: official_primary
+- id: credit_gap
+  section: stability_structural
+  label_en: Japan BIS Basel III Credit-to-GDP Gap
+  label_zh: 日本 国际清算银行(BIS)信贷/GDP缺口
+  unit: '%'
+  fetcher: manual
+  source_name: Bank for International Settlements (BIS)
+  source_url: https://www.bis.org/statistics/c_gaps.htm
+  frequency: quarterly
+  caveat_en: BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend.
+  caveat_zh: 国际清算银行巴塞尔协议III逆周期资本缓冲指引；信贷/GDP比率对长期趋势的偏离度。
+  source_authority: official_primary
 data_gaps:
 - section: prices_costs
   item_en: CPI by COICOP division (food, housing, transport, and the other CP01-CP12

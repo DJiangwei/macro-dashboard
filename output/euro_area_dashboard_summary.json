@@ -1,8 +1,8 @@
 {
   "file": "euro_area.html",
-  "generated": "2026-10-31T16:30:03.225621+00:00",
-  "charts": 72,
-  "source_groups": 6,
+  "generated": "2026-10-31T22:13:21.454331+00:00",
+  "charts": 76,
+  "source_groups": 10,
   "data_gaps": 5,
   "low_confidence": 18,
   "key_series_latest": [
@@ -116,7 +116,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "policy_rate_latest": "2.50% (2026-10-31)",
   "cross_checks": [],
@@ -127,10 +127,11 @@
       "value"
     ],
     "file": "euro_area_canonical_frame.json",
-    "series": 72,
-    "observations": 65669,
-    "series_count": 72,
-    "observation_count": 65669
+    "series": 76,
+    "observations": 75204,
+    "series_count": 76,
+    "observation_count": 75204,
+    "snapshot_generated": "2026-10-31T22:13:19.688631+00:00"
   },
   "data_gaps_detail": [
     {
@@ -170,7 +171,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 6,
+    "source_groups": 10,
     "sources": [
       {
         "source_name": "ECB",
@@ -193,6 +194,22 @@
         "charts": 2
       },
       {
+        "source_name": "Bank for International Settlements (BIS)",
+        "charts": 1
+      },
+      {
+        "source_name": "ECB / Derived",
+        "charts": 1
+      },
+      {
+        "source_name": "ECB / STOXX Ltd",
+        "charts": 1
+      },
+      {
+        "source_name": "European Central Bank (ECB)",
+        "charts": 1
+      },
+      {
         "source_name": "IMF DataMapper",
         "charts": 1
       }
@@ -200,8 +217,8 @@
     "quality_counts": {
       "low_confidence": 18,
       "unavailable": 1,
-      "verified": 49,
-      "watch": 4
+      "verified": 51,
+      "watch": 6
     },
     "unavailable_count": 0
   },
@@ -214,7 +231,7 @@
   "freshness": {
     "as_of_date": "2026-10-31",
     "counts": {
-      "current": 49,
+      "current": 53,
       "due": 4,
       "future_date": 1,
       "stale": 18
@@ -731,7 +748,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 72
+      "level": 76
     },
     "non_level": []
   },
@@ -741,6 +758,6 @@
       "date",
       "value"
     ],
-    "charted_series": 72
+    "charted_series": 76
   }
 }

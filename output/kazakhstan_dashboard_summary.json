@@ -1,10 +1,10 @@
 {
   "file": "kazakhstan.html",
-  "generated": "2026-10-31T16:35:58.077211+00:00",
-  "charts": 37,
-  "source_groups": 15,
+  "generated": "2026-10-31T22:13:24.527128+00:00",
+  "charts": 38,
+  "source_groups": 16,
   "data_gaps": 2,
-  "low_confidence": 5,
+  "low_confidence": 4,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -344,15 +344,15 @@
     },
     {
       "id": "policy_rate",
-      "label_en": "Monetary Policy-Related Interest Rate",
-      "label_zh": "央行货币政策利率",
-      "latest_date": "2020-12-01",
-      "latest_value": 9.0,
-      "latest_display": "9.00 %",
-      "frequency": "monthly",
-      "source_name": "IMF / DBnomics (IFS)",
-      "series": "IMF/IFS/M.KZ.FPOLM_PA",
-      "quality_status": "low_confidence"
+      "label_en": "National Bank of Kazakhstan Base Rate (Базалық мөлшерлеме)",
+      "label_zh": "哈萨克斯坦国家银行基准利率",
+      "latest_date": "2026-10-30",
+      "latest_value": 14.25,
+      "latest_display": "14.2 %",
+      "frequency": "event",
+      "source_name": "National Bank of Kazakhstan (NBK)",
+      "series": "policy_rate",
+      "quality_status": "verified"
     },
     {
       "id": "broad_money_growth",
@@ -428,7 +428,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "usd_kzt_latest": "453.87 (2026-10-31)",
   "cross_checks": [
@@ -458,10 +458,11 @@
       "value"
     ],
     "file": "kazakhstan_canonical_frame.json",
-    "series": 37,
-    "observations": 9913,
-    "series_count": 37,
-    "observation_count": 9913
+    "series": 38,
+    "observations": 9775,
+    "series_count": 38,
+    "observation_count": 9775,
+    "snapshot_generated": "2026-10-31T22:13:18.122098+00:00"
   },
   "data_gaps_detail": [
     {
@@ -480,7 +481,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 15,
+    "source_groups": 16,
     "sources": [
       {
         "source_name": "IMF SDMX / NBK",
@@ -491,12 +492,12 @@
         "charts": 5
       },
       {
-        "source_name": "World Bank WDI",
+        "source_name": "National Bank of Kazakhstan (NBK)",
         "charts": 5
       },
       {
-        "source_name": "National Bank of Kazakhstan (NBK)",
-        "charts": 4
+        "source_name": "World Bank WDI",
+        "charts": 5
       },
       {
         "source_name": "IMF SDMX / Kazakhstan BNS",
@@ -511,10 +512,6 @@
         "charts": 2
       },
       {
-        "source_name": "IMF / DBnomics (IFS)",
-        "charts": 2
-      },
-      {
         "source_name": "World Bank / ILO",
         "charts": 2
       },
@@ -523,11 +520,19 @@
         "charts": 1
       },
       {
+        "source_name": "IMF / DBnomics (IFS)",
+        "charts": 1
+      },
+      {
         "source_name": "IMF / FRED",
         "charts": 1
       },
       {
         "source_name": "IMF DataMapper (Fiscal Monitor)",
+        "charts": 1
+      },
+      {
+        "source_name": "National Bank of Kazakhstan (NBK) / Derived",
         "charts": 1
       },
       {
@@ -544,8 +549,8 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 5,
-      "verified": 4,
+      "low_confidence": 4,
+      "verified": 6,
       "watch": 28
     },
     "unavailable_count": 0
@@ -559,35 +564,13 @@
   "freshness": {
     "as_of_date": "2026-10-31",
     "counts": {
-      "current": 23,
+      "current": 25,
       "due": 3,
       "projection": 6,
-      "stale": 5
+      "stale": 4
     },
     "latest_historical_date": "2026-10-31",
     "attention": [
-      {
-        "id": "policy_rate",
-        "concept_id": "policy_rate",
-        "label_en": "Monetary Policy-Related Interest Rate",
-        "latest_date": "2020-12-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2020-12-01",
-        "age_days": 2130,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF / DBnomics (IFS)",
-        "series": "IMF/IFS/M.KZ.FPOLM_PA",
-        "transform": "level"
-      },
       {
         "id": "consumption_growth",
         "concept_id": "consumption_growth",
@@ -746,7 +729,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 37
+      "level": 38
     },
     "non_level": []
   },
@@ -756,6 +739,6 @@
       "date",
       "value"
     ],
-    "charted_series": 37
+    "charted_series": 38
   }
 }

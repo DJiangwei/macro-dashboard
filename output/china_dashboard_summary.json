@@ -1,10 +1,10 @@
 {
   "file": "china.html",
-  "generated": "2026-10-31T16:29:56.122900+00:00",
-  "charts": 111,
-  "source_groups": 30,
+  "generated": "2026-10-31T22:13:21.027639+00:00",
+  "charts": 114,
+  "source_groups": 33,
   "data_gaps": 8,
-  "low_confidence": 60,
+  "low_confidence": 48,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -22,25 +22,25 @@
       "id": "industrial_value_added_yoy_akshare",
       "label_en": "Industrial Value Added, YoY",
       "label_zh": "工业增加值同比",
-      "latest_date": "2026-08-01",
-      "latest_value": 5.2,
-      "latest_display": "5.20 %",
+      "latest_date": "2026-09-01",
+      "latest_value": 5.4,
+      "latest_display": "5.40 %",
       "frequency": "monthly",
       "source_name": "AKShare / Eastmoney Data Center",
       "series": "macro_china_gyzjz:同比增长",
-      "quality_status": "low_confidence"
+      "quality_status": "watch"
     },
     {
       "id": "fixed_asset_investment_yoy_akshare",
       "label_en": "Fixed Asset Investment, YoY",
       "label_zh": "固定资产投资同比",
-      "latest_date": "2026-08-01",
-      "latest_value": -13.51,
-      "latest_display": "-13.5 %",
+      "latest_date": "2026-09-01",
+      "latest_value": 3.4,
+      "latest_display": "3.40 %",
       "frequency": "monthly",
       "source_name": "AKShare / Eastmoney Data Center",
       "series": "macro_china_gdzctz:同比增长",
-      "quality_status": "low_confidence"
+      "quality_status": "watch"
     },
     {
       "id": "commercial_housing_sales_value_eastmoney",
@@ -94,37 +94,37 @@
       "id": "customs_exports_yoy_akshare",
       "label_en": "Customs Exports, YoY",
       "label_zh": "海关出口同比",
-      "latest_date": "2026-08-01",
-      "latest_value": 25.0,
-      "latest_display": "25.0 %",
+      "latest_date": "2026-09-01",
+      "latest_value": 2.4,
+      "latest_display": "2.40 %",
       "frequency": "monthly",
       "source_name": "AKShare / Eastmoney Data Center",
       "series": "macro_china_hgjck:当月出口额-同比增长",
-      "quality_status": "low_confidence"
+      "quality_status": "watch"
     },
     {
       "id": "usd_cny_midpoint",
       "label_en": "USD/CNY Central Parity",
       "label_zh": "美元兑人民币中间价",
-      "latest_date": "2026-10-09",
-      "latest_value": 6.733,
-      "latest_display": "6.73 CNY per USD",
+      "latest_date": "2026-10-30",
+      "latest_value": 7.125,
+      "latest_display": "7.12 CNY per USD",
       "frequency": "daily",
       "source_name": "SAFE",
       "series": "SAFE RMBQuery USD column",
-      "quality_status": "low_confidence"
+      "quality_status": "watch"
     },
     {
       "id": "m2_yoy_akshare",
       "label_en": "M2 Growth, YoY",
       "label_zh": "M2同比增速",
-      "latest_date": "2026-08-01",
-      "latest_value": 7.5,
-      "latest_display": "7.50 %",
+      "latest_date": "2026-09-01",
+      "latest_value": 6.8,
+      "latest_display": "6.80 %",
       "frequency": "monthly",
       "source_name": "AKShare / Eastmoney Data Center",
       "series": "macro_china_money_supply:M2同比增长",
-      "quality_status": "low_confidence"
+      "quality_status": "watch"
     },
     {
       "id": "financial_institution_deposits_stock_akshare",
@@ -154,33 +154,33 @@
       "id": "pbc_total_assets_akshare",
       "label_en": "PBC Total Assets",
       "label_zh": "央行总资产",
-      "latest_date": "2026-08-01",
-      "latest_value": 49.856728000000004,
+      "latest_date": "2026-09-01",
+      "latest_value": 49.86,
       "latest_display": "49.9 CNY tn",
       "frequency": "monthly",
       "source_name": "AKShare / Sina Finance / PBC Balance Sheet",
       "series": "macro_china_central_bank_balance:总资产",
-      "quality_status": "low_confidence"
+      "quality_status": "watch"
     },
     {
       "id": "pbc_reserve_money_akshare",
       "label_en": "PBC Reserve Money",
       "label_zh": "央行储备货币",
-      "latest_date": "2026-08-01",
-      "latest_value": 40.181426,
+      "latest_date": "2026-09-01",
+      "latest_value": 40.18,
       "latest_display": "40.2 CNY tn",
       "frequency": "monthly",
       "source_name": "AKShare / Sina Finance / PBC Balance Sheet",
       "series": "macro_china_central_bank_balance:储备货币",
-      "quality_status": "low_confidence"
+      "quality_status": "watch"
     },
     {
       "id": "cpi_yoy_akshare",
       "label_en": "CPI Inflation, YoY",
       "label_zh": "CPI同比",
-      "latest_date": "2026-09-01",
-      "latest_value": 0.9,
-      "latest_display": "0.90 %",
+      "latest_date": "2026-10-01",
+      "latest_value": 0.3,
+      "latest_display": "0.30 %",
       "frequency": "monthly",
       "source_name": "AKShare / Eastmoney Data Center",
       "series": "",
@@ -190,19 +190,50 @@
       "id": "ppi_yoy_akshare",
       "label_en": "PPI Inflation, YoY",
       "label_zh": "PPI同比",
-      "latest_date": "2026-08-01",
-      "latest_value": 3.8,
-      "latest_display": "3.80 %",
+      "latest_date": "2026-10-01",
+      "latest_value": -2.9,
+      "latest_display": "-2.90 %",
       "frequency": "monthly",
       "source_name": "AKShare / Eastmoney Data Center",
       "series": "macro_china_ppi:当月同比增长",
-      "quality_status": "low_confidence"
+      "quality_status": "watch"
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
-  "latest_cards": [],
-  "usd_cny_latest": "6.7330 (2026-10-09)",
+  "data_mode": "snapshot",
+  "latest_cards": [
+    {
+      "id": "pbc_m2_latest",
+      "label_en": "PBC M2 YoY",
+      "label_zh": "PBC M2同比",
+      "fetcher": "pbc_indicator_card",
+      "url": "https://www.pbc.gov.cn/en/3688006/3689169/3753760/index.html",
+      "expected_title": "M2",
+      "value": "n/a",
+      "updated": "n/a"
+    },
+    {
+      "id": "pbc_afre_latest",
+      "label_en": "PBC AFRE Outstanding",
+      "label_zh": "PBC社融存量",
+      "fetcher": "pbc_indicator_card",
+      "url": "https://www.pbc.gov.cn/en/3688006/3689169/3753765/index.html",
+      "expected_title": "AFRE (Outstanding)",
+      "value": "n/a",
+      "updated": "n/a"
+    },
+    {
+      "id": "pbc_dr007_latest",
+      "label_en": "PBC DR007",
+      "label_zh": "PBC DR007",
+      "fetcher": "pbc_indicator_card",
+      "url": "https://www.pbc.gov.cn/en/3688006/3689169/3753752/index.html",
+      "expected_title": "DR007",
+      "value": "n/a",
+      "updated": "n/a"
+    }
+  ],
+  "usd_cny_latest": "7.1250 (2026-10-30)",
   "cross_checks": [],
   "canonical_frame": {
     "schema_version": "data-first-canonical-v2",
@@ -211,10 +242,11 @@
       "value"
     ],
     "file": "china_canonical_frame.json",
-    "series": 111,
-    "observations": 80784,
-    "series_count": 111,
-    "observation_count": 80784
+    "series": 114,
+    "observations": 82367,
+    "series_count": 114,
+    "observation_count": 82367,
+    "snapshot_generated": "2026-10-31T22:13:19.248062+00:00"
   },
   "data_gaps_detail": [
     {
@@ -275,7 +307,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 30,
+    "source_groups": 33,
     "sources": [
       {
         "source_name": "AKShare / Eastmoney Data Center",
@@ -362,6 +394,10 @@
         "charts": 1
       },
       {
+        "source_name": "AKShare / Eastmoney Data Center / Derived",
+        "charts": 1
+      },
+      {
         "source_name": "AKShare / Energy Price Index",
         "charts": 1
       },
@@ -382,6 +418,10 @@
         "charts": 1
       },
       {
+        "source_name": "Bank for International Settlements (BIS)",
+        "charts": 1
+      },
+      {
         "source_name": "FRED / BIS Effective Exchange Rate",
         "charts": 1
       },
@@ -394,13 +434,18 @@
         "charts": 1
       },
       {
+        "source_name": "National Bureau of Statistics (NBS)",
+        "charts": 1
+      },
+      {
         "source_name": "World Bank WDI / ILO estimate",
         "charts": 1
       }
     ],
     "quality_counts": {
-      "low_confidence": 60,
-      "watch": 51
+      "low_confidence": 48,
+      "verified": 1,
+      "watch": 65
     },
     "unavailable_count": 0
   },
@@ -413,10 +458,10 @@
   "freshness": {
     "as_of_date": "2026-10-31",
     "counts": {
-      "current": 40,
+      "current": 55,
       "due": 9,
       "projection": 2,
-      "stale": 60
+      "stale": 48
     },
     "latest_historical_date": "2026-10-30",
     "attention": [
@@ -444,7 +489,7 @@
       },
       {
         "id": "broad_money_growth",
-        "concept_id": "cn:broad_money_growth",
+        "concept_id": "broad_money_growth",
         "label_en": "Broad Money Growth",
         "latest_date": "2024-12-31",
         "frequency": "annual",
@@ -1015,28 +1060,6 @@
         "transform": "usd_thousand_to_bn"
       },
       {
-        "id": "customs_exports_yoy_akshare",
-        "concept_id": "exports_growth",
-        "label_en": "Customs Exports, YoY",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2026-08-01",
-        "age_days": 61,
-        "threshold_days": 60,
-        "release_calendar_id": "nbs_monthly",
-        "expected_release_date": "2026-10-20",
-        "due_date": "2026-10-30",
-        "quality_status": "low_confidence",
-        "source_authority": "public_wrapper",
-        "derivation": "observed",
-        "validation": "watch",
-        "comparability": "medium",
-        "source_name": "AKShare / Eastmoney Data Center",
-        "series": "macro_china_hgjck:当月出口额-同比增长",
-        "transform": "level"
-      },
-      {
         "id": "customs_imports_value_akshare",
         "concept_id": "cn:customs_imports_value_akshare",
         "label_en": "Customs Imports",
@@ -1056,50 +1079,6 @@
         "comparability": "medium",
         "source_name": "AKShare / Eastmoney Data Center",
         "series": "macro_china_hgjck:当月进口额-金额",
-        "transform": "usd_thousand_to_bn"
-      },
-      {
-        "id": "customs_imports_yoy_akshare",
-        "concept_id": "imports_growth",
-        "label_en": "Customs Imports, YoY",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2026-08-01",
-        "age_days": 61,
-        "threshold_days": 60,
-        "release_calendar_id": "nbs_monthly",
-        "expected_release_date": "2026-10-20",
-        "due_date": "2026-10-30",
-        "quality_status": "low_confidence",
-        "source_authority": "public_wrapper",
-        "derivation": "observed",
-        "validation": "watch",
-        "comparability": "medium",
-        "source_name": "AKShare / Eastmoney Data Center",
-        "series": "macro_china_hgjck:当月进口额-同比增长",
-        "transform": "level"
-      },
-      {
-        "id": "customs_trade_balance_akshare",
-        "concept_id": "trade_balance",
-        "label_en": "Customs Trade Balance",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2026-08-01",
-        "age_days": 61,
-        "threshold_days": 60,
-        "release_calendar_id": "nbs_monthly",
-        "expected_release_date": "2026-10-20",
-        "due_date": "2026-10-30",
-        "quality_status": "low_confidence",
-        "source_authority": "public_wrapper",
-        "derivation": "derived",
-        "validation": "watch",
-        "comparability": "medium",
-        "source_name": "AKShare / Eastmoney Data Center",
-        "series": "macro_china_hgjck:当月出口额-金额-当月进口额-金额",
         "transform": "usd_thousand_to_bn"
       },
       {
@@ -1169,50 +1148,6 @@
         "transform": "cny_100mn_to_trn"
       },
       {
-        "id": "fixed_asset_investment_yoy_akshare",
-        "concept_id": "investment_growth",
-        "label_en": "Fixed Asset Investment, YoY",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2026-08-01",
-        "age_days": 61,
-        "threshold_days": 60,
-        "release_calendar_id": "nbs_monthly",
-        "expected_release_date": "2026-10-20",
-        "due_date": "2026-10-30",
-        "quality_status": "low_confidence",
-        "source_authority": "public_wrapper",
-        "derivation": "observed",
-        "validation": "watch",
-        "comparability": "medium",
-        "source_name": "AKShare / Eastmoney Data Center",
-        "series": "macro_china_gdzctz:同比增长",
-        "transform": "level"
-      },
-      {
-        "id": "industrial_value_added_yoy_akshare",
-        "concept_id": "industrial_production_growth",
-        "label_en": "Industrial Value Added, YoY",
-        "latest_date": "2026-08-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2026-08-01",
-        "age_days": 61,
-        "threshold_days": 60,
-        "release_calendar_id": "nbs_monthly",
-        "expected_release_date": "2026-10-20",
-        "due_date": "2026-10-30",
-        "quality_status": "low_confidence",
-        "source_authority": "public_wrapper",
-        "derivation": "observed",
-        "validation": "watch",
-        "comparability": "medium",
-        "source_name": "AKShare / Eastmoney Data Center",
-        "series": "macro_china_gyzjz:同比增长",
-        "transform": "level"
-      },
-      {
         "id": "interbank_3m_rate",
         "concept_id": "cn:interbank_3m_rate",
         "label_en": "3M Interbank Rate",
@@ -1257,9 +1192,9 @@
         "transform": "level"
       },
       {
-        "id": "m1_yoy_akshare",
-        "concept_id": "cn:m1_yoy_akshare",
-        "label_en": "M1 Growth, YoY",
+        "id": "new_energy_vehicle_retail_cpca",
+        "concept_id": "cn:new_energy_vehicle_retail_cpca",
+        "label_en": "New Energy Vehicle Retail Sales",
         "latest_date": "2026-08-01",
         "frequency": "monthly",
         "freshness_status": "stale",
@@ -1274,14 +1209,14 @@
         "derivation": "observed",
         "validation": "watch",
         "comparability": "medium",
-        "source_name": "AKShare / Eastmoney Data Center",
-        "series": "macro_china_money_supply:M1同比增长",
+        "source_name": "AKShare / China Passenger Car Association",
+        "series": "car_market_fuel_cpca:整体市场",
         "transform": "level"
       },
       {
-        "id": "m2_yoy_akshare",
-        "concept_id": "broad_money_growth",
-        "label_en": "M2 Growth, YoY",
+        "id": "new_energy_vehicle_share_cpca",
+        "concept_id": "cn:new_energy_vehicle_share_cpca",
+        "label_en": "New Energy Vehicle Retail Share",
         "latest_date": "2026-08-01",
         "frequency": "monthly",
         "freshness_status": "stale",
@@ -1296,9 +1231,119 @@
         "derivation": "observed",
         "validation": "watch",
         "comparability": "medium",
-        "source_name": "AKShare / Eastmoney Data Center",
-        "series": "macro_china_money_supply:M2同比增长",
+        "source_name": "AKShare / China Passenger Car Association",
+        "series": "car_market_fuel_cpca:销量占比-ICE-NEV:NEV",
         "transform": "level"
+      },
+      {
+        "id": "new_rmb_loans_akshare",
+        "concept_id": "private_credit_growth",
+        "label_en": "New RMB Loans",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-08-01",
+        "age_days": 61,
+        "threshold_days": 60,
+        "release_calendar_id": "nbs_monthly",
+        "expected_release_date": "2026-10-20",
+        "due_date": "2026-10-30",
+        "quality_status": "low_confidence",
+        "source_authority": "public_wrapper",
+        "derivation": "derived",
+        "validation": "watch",
+        "comparability": "medium",
+        "source_name": "AKShare / Eastmoney Data Center",
+        "series": "macro_china_new_financial_credit:当月",
+        "transform": "cny_100mn_to_trn"
+      },
+      {
+        "id": "passenger_vehicle_exports_cpca",
+        "concept_id": "cn:passenger_vehicle_exports_cpca",
+        "label_en": "Passenger Vehicle Exports",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-08-01",
+        "age_days": 61,
+        "threshold_days": 60,
+        "release_calendar_id": "nbs_monthly",
+        "expected_release_date": "2026-10-20",
+        "due_date": "2026-10-30",
+        "quality_status": "low_confidence",
+        "source_authority": "public_wrapper",
+        "derivation": "observed",
+        "validation": "watch",
+        "comparability": "medium",
+        "source_name": "AKShare / China Passenger Car Association",
+        "series": "car_market_total_cpca:狭义乘用车:出口",
+        "transform": "level"
+      },
+      {
+        "id": "passenger_vehicle_retail_cpca",
+        "concept_id": "cn:passenger_vehicle_retail_cpca",
+        "label_en": "Passenger Vehicle Retail Sales",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-08-01",
+        "age_days": 61,
+        "threshold_days": 60,
+        "release_calendar_id": "nbs_monthly",
+        "expected_release_date": "2026-10-20",
+        "due_date": "2026-10-30",
+        "quality_status": "low_confidence",
+        "source_authority": "public_wrapper",
+        "derivation": "observed",
+        "validation": "watch",
+        "comparability": "medium",
+        "source_name": "AKShare / China Passenger Car Association",
+        "series": "car_market_total_cpca:狭义乘用车:零售",
+        "transform": "level"
+      },
+      {
+        "id": "pbc_claims_on_depository_corps_akshare",
+        "concept_id": "cn:pbc_claims_on_depository_corps_akshare",
+        "label_en": "PBC Claims on Depository Corporations",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-08-01",
+        "age_days": 61,
+        "threshold_days": 60,
+        "release_calendar_id": "nbs_monthly",
+        "expected_release_date": "2026-10-20",
+        "due_date": "2026-10-30",
+        "quality_status": "low_confidence",
+        "source_authority": "public_wrapper",
+        "derivation": "derived",
+        "validation": "watch",
+        "comparability": "medium",
+        "source_name": "AKShare / Sina Finance / PBC Balance Sheet",
+        "series": "macro_china_central_bank_balance:对其他存款性公司债权",
+        "transform": "cny_100mn_to_trn"
+      },
+      {
+        "id": "pbc_fx_assets_akshare",
+        "concept_id": "cn:pbc_fx_assets_akshare",
+        "label_en": "PBC Foreign-Exchange Assets",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-08-01",
+        "age_days": 61,
+        "threshold_days": 60,
+        "release_calendar_id": "nbs_monthly",
+        "expected_release_date": "2026-10-20",
+        "due_date": "2026-10-30",
+        "quality_status": "low_confidence",
+        "source_authority": "public_wrapper",
+        "derivation": "derived",
+        "validation": "watch",
+        "comparability": "medium",
+        "source_name": "AKShare / Sina Finance / PBC Balance Sheet",
+        "series": "macro_china_central_bank_balance:外汇",
+        "transform": "cny_100mn_to_trn"
       }
     ]
   },
@@ -1309,7 +1354,7 @@
       "cny_10k_to_bn": 1,
       "cny_yuan_to_trn": 2,
       "index_100_to_yoy": 4,
-      "level": 81,
+      "level": 84,
       "people_billion": 1,
       "usd_100mn_to_trn": 1,
       "usd_mn_to_trn": 1,
@@ -1318,22 +1363,16 @@
     },
     "non_level": [
       {
-        "id": "nominal_gdp_usd",
-        "label_en": "Nominal GDP",
-        "transform": "usd_trn",
-        "unit": "USD"
+        "id": "a_share_market_cap_akshare",
+        "label_en": "A-share Market Capitalization",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
       },
       {
-        "id": "beijing_new_home_price_yoy_akshare",
-        "label_en": "Beijing New Home Prices, YoY",
-        "transform": "index_100_to_yoy",
-        "unit": "%"
-      },
-      {
-        "id": "shanghai_new_home_price_yoy_akshare",
-        "label_en": "Shanghai New Home Prices, YoY",
-        "transform": "index_100_to_yoy",
-        "unit": "%"
+        "id": "a_share_trading_value_akshare",
+        "label_en": "A-share Trading Value",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
       },
       {
         "id": "beijing_existing_home_price_yoy_akshare",
@@ -1342,8 +1381,8 @@
         "unit": "%"
       },
       {
-        "id": "shanghai_existing_home_price_yoy_akshare",
-        "label_en": "Shanghai Existing Home Prices, YoY",
+        "id": "beijing_new_home_price_yoy_akshare",
+        "label_en": "Beijing New Home Prices, YoY",
         "transform": "index_100_to_yoy",
         "unit": "%"
       },
@@ -1352,24 +1391,6 @@
         "label_en": "Commercial Housing Sales Value",
         "transform": "cny_10k_to_bn",
         "unit": "CNY bn"
-      },
-      {
-        "id": "real_estate_development_investment_ytd_eastmoney",
-        "label_en": "Real Estate Development Investment, YTD",
-        "transform": "cny_100mn_to_bn",
-        "unit": "CNY bn"
-      },
-      {
-        "id": "exports_goods_services",
-        "label_en": "Exports of Goods & Services",
-        "transform": "usd_trn",
-        "unit": "USD"
-      },
-      {
-        "id": "imports_goods_services",
-        "label_en": "Imports of Goods & Services",
-        "transform": "usd_trn",
-        "unit": "USD"
       },
       {
         "id": "customs_exports_value_akshare",
@@ -1390,6 +1411,24 @@
         "unit": "USD bn"
       },
       {
+        "id": "exports_goods_services",
+        "label_en": "Exports of Goods & Services",
+        "transform": "usd_trn",
+        "unit": "USD"
+      },
+      {
+        "id": "financial_institution_deposits_flow_akshare",
+        "label_en": "New Deposits, Monthly",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "financial_institution_deposits_stock_akshare",
+        "label_en": "Financial Institution Deposits",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
         "id": "fx_reserves",
         "label_en": "Foreign Exchange Reserves",
         "transform": "usd_trn",
@@ -1408,22 +1447,88 @@
         "unit": "USD"
       },
       {
-        "id": "financial_institution_deposits_stock_akshare",
-        "label_en": "Financial Institution Deposits",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "financial_institution_deposits_flow_akshare",
-        "label_en": "New Deposits, Monthly",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
+        "id": "imports_goods_services",
+        "label_en": "Imports of Goods & Services",
+        "transform": "usd_trn",
+        "unit": "USD"
       },
       {
         "id": "new_rmb_loans_akshare",
         "label_en": "New RMB Loans",
         "transform": "cny_100mn_to_trn",
         "unit": "CNY tn"
+      },
+      {
+        "id": "nominal_gdp_usd",
+        "label_en": "Nominal GDP",
+        "transform": "usd_trn",
+        "unit": "USD"
+      },
+      {
+        "id": "pbc_claims_on_depository_corps_akshare",
+        "label_en": "PBC Claims on Depository Corporations",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "pbc_fx_assets_akshare",
+        "label_en": "PBC Foreign-Exchange Assets",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "pbc_reserve_money_akshare",
+        "label_en": "PBC Reserve Money",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "pbc_total_assets_akshare",
+        "label_en": "PBC Total Assets",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "real_estate_development_investment_ytd_eastmoney",
+        "label_en": "Real Estate Development Investment, YTD",
+        "transform": "cny_100mn_to_bn",
+        "unit": "CNY bn"
+      },
+      {
+        "id": "sh_margin_balance_akshare",
+        "label_en": "Shanghai Margin Balance",
+        "transform": "cny_yuan_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "shanghai_existing_home_price_yoy_akshare",
+        "label_en": "Shanghai Existing Home Prices, YoY",
+        "transform": "index_100_to_yoy",
+        "unit": "%"
+      },
+      {
+        "id": "shanghai_new_home_price_yoy_akshare",
+        "label_en": "Shanghai New Home Prices, YoY",
+        "transform": "index_100_to_yoy",
+        "unit": "%"
+      },
+      {
+        "id": "sz_margin_balance_akshare",
+        "label_en": "Shenzhen Margin Balance",
+        "transform": "cny_yuan_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "tax_receipts_ytd_akshare",
+        "label_en": "Tax Receipts YTD",
+        "transform": "cny_100mn_to_trn",
+        "unit": "CNY tn"
+      },
+      {
+        "id": "total_population",
+        "label_en": "Total Population",
+        "transform": "people_billion",
+        "unit": "people"
       },
       {
         "id": "tsf_flow_akshare",
@@ -1436,66 +1541,6 @@
         "label_en": "TSF RMB Loan Component",
         "transform": "cny_100mn_to_trn",
         "unit": "CNY tn"
-      },
-      {
-        "id": "pbc_total_assets_akshare",
-        "label_en": "PBC Total Assets",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "pbc_fx_assets_akshare",
-        "label_en": "PBC Foreign-Exchange Assets",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "pbc_claims_on_depository_corps_akshare",
-        "label_en": "PBC Claims on Depository Corporations",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "pbc_reserve_money_akshare",
-        "label_en": "PBC Reserve Money",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "a_share_market_cap_akshare",
-        "label_en": "A-share Market Capitalization",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "a_share_trading_value_akshare",
-        "label_en": "A-share Trading Value",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "sh_margin_balance_akshare",
-        "label_en": "Shanghai Margin Balance",
-        "transform": "cny_yuan_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "sz_margin_balance_akshare",
-        "label_en": "Shenzhen Margin Balance",
-        "transform": "cny_yuan_to_trn",
-        "unit": "CNY tn"
-      },
-      {
-        "id": "total_population",
-        "label_en": "Total Population",
-        "transform": "people_billion",
-        "unit": "people"
-      },
-      {
-        "id": "tax_receipts_ytd_akshare",
-        "label_en": "Tax Receipts YTD",
-        "transform": "cny_100mn_to_trn",
-        "unit": "CNY tn"
       }
     ]
   },
@@ -1505,6 +1550,6 @@
       "date",
       "value"
     ],
-    "charted_series": 111
+    "charted_series": 114
   }
 }

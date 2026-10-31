@@ -623,6 +623,17 @@ indicators:
     start_date: 2008-01-01
     caveat_en: Non-performing loans to total gross loans reported to the IMF.
     caveat_zh: 报送IMF的银行不良贷款占总贷款比重。
+  - id: real_policy_rate
+    section: monetary_financial
+    label_en: Kazakhstan Real Policy Rate
+    label_zh: 哈萨克斯坦实际政策利率 (Base Rate − CPI同比)
+    unit: "%"
+    fetcher: manual
+    source_name: National Bank of Kazakhstan / BNS / Derived
+    source_url: https://nationalbank.kz
+    frequency: monthly
+    caveat_en: Derived real policy rate calculated as NBK Base Rate minus headline CPI YoY.
+    caveat_zh: 衍生实际政策利率，以哈萨克斯坦国家银行基准利率减去CPI同比增速计算。
 
 data_gaps:
   - section: monetary_financial

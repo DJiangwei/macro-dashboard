@@ -1,10 +1,10 @@
 {
   "file": "hong_kong.html",
-  "generated": "2026-10-31T16:33:57.432541+00:00",
-  "charts": 38,
-  "source_groups": 11,
+  "generated": "2026-10-31T22:13:23.687149+00:00",
+  "charts": 40,
+  "source_groups": 12,
   "data_gaps": 1,
-  "low_confidence": 8,
+  "low_confidence": 7,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -320,15 +320,15 @@
     },
     {
       "id": "total_reserves_usd",
-      "label_en": "Official Foreign Currency Reserve Assets",
-      "label_zh": "官方外汇储备资产总额",
-      "latest_date": "2023",
-      "latest_value": 425.554111033182,
-      "latest_display": "426 USD bn",
-      "frequency": "annual",
-      "source_name": "World Bank / HKMA",
-      "series": "FI.RES.TOTL.CD",
-      "quality_status": "low_confidence"
+      "label_en": "Official Foreign Currency Reserve Assets (HKMA)",
+      "label_zh": "官方外汇储备资产 (香港金管局)",
+      "latest_date": "2026-10-31",
+      "latest_value": 421.4,
+      "latest_display": "421 USD bn",
+      "frequency": "monthly",
+      "source_name": "Hong Kong Monetary Authority (HKMA)",
+      "series": "total_reserves_usd",
+      "quality_status": "verified"
     },
     {
       "id": "current_account_gdp",
@@ -452,7 +452,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "usd_hkd_latest": "7.8423 (2026-10-23)",
   "cross_checks": [
@@ -482,10 +482,11 @@
       "value"
     ],
     "file": "hong_kong_canonical_frame.json",
-    "series": 38,
-    "observations": 11276,
-    "series_count": 38,
-    "observation_count": 11276
+    "series": 40,
+    "observations": 11607,
+    "series_count": 40,
+    "observation_count": 11607,
+    "snapshot_generated": "2026-10-31T22:13:18.431376+00:00"
   },
   "data_gaps_detail": [
     {
@@ -497,7 +498,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 11,
+    "source_groups": 12,
     "sources": [
       {
         "source_name": "HK C&SD",
@@ -532,22 +533,26 @@
         "charts": 2
       },
       {
+        "source_name": "Hong Kong Monetary Authority (HKMA)",
+        "charts": 2
+      },
+      {
         "source_name": "IMF / DBnomics (Financial Soundness Indicators)",
         "charts": 2
       },
       {
-        "source_name": "IMF Fiscal Monitor",
+        "source_name": "FRED / Federal Reserve Board / Derived",
         "charts": 1
       },
       {
-        "source_name": "World Bank / HKMA",
+        "source_name": "IMF Fiscal Monitor",
         "charts": 1
       }
     ],
     "quality_counts": {
-      "low_confidence": 8,
-      "verified": 15,
-      "watch": 15
+      "low_confidence": 7,
+      "verified": 17,
+      "watch": 16
     },
     "unavailable_count": 0
   },
@@ -560,35 +565,13 @@
   "freshness": {
     "as_of_date": "2026-10-31",
     "counts": {
-      "current": 21,
+      "current": 24,
       "due": 5,
       "projection": 4,
-      "stale": 8
+      "stale": 7
     },
-    "latest_historical_date": "2026-10-23",
+    "latest_historical_date": "2026-10-31",
     "attention": [
-      {
-        "id": "total_reserves_usd",
-        "concept_id": "hk:total_reserves_usd",
-        "label_en": "Official Foreign Currency Reserve Assets",
-        "latest_date": "2023-12-31",
-        "frequency": "annual",
-        "freshness_status": "stale",
-        "age_basis_date": "2023-12-31",
-        "age_days": 1035,
-        "threshold_days": 730,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "World Bank / HKMA",
-        "series": "FI.RES.TOTL.CD",
-        "transform": "level"
-      },
       {
         "id": "bank_capital_ratio",
         "concept_id": "bank_capital_ratio",
@@ -857,7 +840,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 38
+      "level": 40
     },
     "non_level": []
   },
@@ -867,6 +850,6 @@
       "date",
       "value"
     ],
-    "charted_series": 38
+    "charted_series": 40
   }
 }

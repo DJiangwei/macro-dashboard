@@ -1,6 +1,6 @@
 UV ?= scripts/uv_project.sh
 
-.PHONY: setup doctor build-v4 refresh-data rebuild-ui refresh-check refresh-scheduled refresh-quick ci-summary data-catalog freshness-audit chart-studio my-dashboard policy-tracker test validate proxy-report proxy-report-live publish-check publish clean
+.PHONY: setup doctor build-v4 refresh-data rebuild-ui refresh-check refresh-scheduled refresh-quick ci-summary data-catalog freshness-audit chart-studio my-dashboard policy-tracker enrich-data test validate proxy-report proxy-report-live publish-check publish clean
 
 setup:
 	$(UV) sync
@@ -26,16 +26,11 @@ refresh-data:
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_uzbekistan_dashboard.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_egypt_dashboard.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_nigeria_dashboard.py
-	$(UV) run python scripts/core_coverage_matrix.py
-	$(UV) run python scripts/data_source_catalog.py
-	$(UV) run python scripts/freshness_audit.py
-	$(UV) run python scripts/build_dashboard_archive.py
-	$(UV) run python scripts/macro_workbench.py
-	$(UV) run python scripts/build_chart_studio.py
-	$(UV) run python scripts/build_my_dashboard.py
-	$(UV) run python scripts/build_policy_tracker.py
+	$(UV) run python scripts/enrich_macro_data_quality.py
+	$(MAKE) rebuild-ui
 
 rebuild-ui:
+	$(UV) run python scripts/enrich_macro_data_quality.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python build_v4.py ALL
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_china_dashboard.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_euro_area_dashboard.py
@@ -86,6 +81,9 @@ my-dashboard:
 
 policy-tracker:
 	$(UV) run python scripts/build_policy_tracker.py
+
+enrich-data:
+	$(UV) run python scripts/enrich_macro_data_quality.py
 
 test:
 	$(UV) run pytest -q

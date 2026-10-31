@@ -383,10 +383,10 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h1><span data-lang="en">Kazakhstan Dashboard</span><span data-lang="zh">哈萨克斯坦宏观仪表盘</span></h1>
     <p class="subtitle"><span data-lang="en">A data-first macro page for Kazakhstan built from the National Bank of Kazakhstan (NBK), IMF SDMX 2.1, IMF DataMapper, World Bank WDI, DBnomics, and Bruegel REER.</span><span data-lang="zh">基于哈萨克斯坦国家银行(NBK)、IMF SDMX 2.1、IMF DataMapper、世界银行WDI、DBnomics与Bruegel实际有效汇率构建的哈萨克斯坦数据优先宏观页面。</span></p>
     <div class="meta-row">
-      <span class="meta-chip">37 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
-      <span class="meta-chip">15 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
+      <span class="meta-chip">38 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
+      <span class="meta-chip">16 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
       <span class="meta-chip">2 <span data-lang="en">official-data gaps tracked</span><span data-lang="zh">个官方数据缺口</span></span>
-      <span class="meta-chip">5 <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
+      <span class="meta-chip">4 <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
       <span class="meta-chip">0 <span data-lang="en">native official</span><span data-lang="zh">原生官方</span> · 0 <span data-lang="en">mirror</span><span data-lang="zh">镜像</span></span>
     </div>
   </header>
@@ -1386,30 +1386,30 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
   <div class="charts-grid">
 
-<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="policy_rate">
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="policy_rate">
   <div class="chart-head">
     <div class="chart-title">
-      <h3><span data-lang="en">Monetary Policy-Related Interest Rate</span><span data-lang="zh">央行货币政策利率</span></h3>
+      <h3><span data-lang="en">National Bank of Kazakhstan Base Rate (Базалық мөлшерлеме)</span><span data-lang="zh">哈萨克斯坦国家银行基准利率</span></h3>
     </div>
     <div class="chart-status">
 
-      <div class="latest-reading" data-latest-reading data-latest-date="2020-12-01">
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-10-30">
         <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
-        <span class="latest-value"><strong>9.00</strong><em>%</em></span>
-        <time datetime="2020-12-01"><span data-lang="en">Dec 2020</span><span data-lang="zh">2020年12月</span></time>
+        <span class="latest-value"><strong>14.2</strong><em>%</em></span>
+        <time datetime="2026-10-30"><span data-lang="en">30 Oct 2026</span><span data-lang="zh">2026年10月30日</span></time>
       </div>
-      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
     </div>
   </div>
   <div id="chart-policy_rate" class="plotly-chart"></div>
   <script>
-    Plotly.newPlot("chart-policy_rate", [{"name": "Monetary Policy-Related Interest Rate", "x": ["2005-05-01", "2005-06-01", "2005-07-01", "2005-08-01", "2005-09-01", "2005-10-01", "2005-11-01", "2005-12-01", "2006-01-01", "2006-02-01", "2006-03-01", "2006-04-01", "2006-05-01", "2006-06-01", "2006-07-01", "2006-08-01", "2006-09-01", "2006-10-01", "2006-11-01", "2006-12-01", "2007-01-01", "2007-02-01", "2007-03-01", "2007-04-01", "2007-05-01", "2007-06-01", "2007-07-01", "2007-08-01", "2007-09-01", "2007-10-01", "2007-11-01", "2007-12-01", "2008-01-01", "2008-02-01", "2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", "2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", "2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", "2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", "2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01", "2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01", "2014-01-01", "2014-02-01", "2014-03-01", "2014-04-01", "2014-05-01", "2014-06-01", "2014-07-01", "2014-08-01", "2014-09-01", "2014-10-01", "2014-11-01", "2014-12-01", "2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01"], "y": [7.5, 7.5, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.5, 8.5, 8.5, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 11.0, 11.0, 11.0, 11.0, 11.0, 11.0, 11.0, 10.5, 10.5, 10.5, 10.5, 10.5, 10.5, 10.0, 9.5, 9.5, 9.5, 9.0, 8.5, 8.0, 7.5, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.0, 7.0, 6.5, 6.5, 6.0, 6.0, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 12.0, 16.0, 16.0, 16.0, 16.0, 17.0, 17.0, 17.0, 15.0, 15.0, 13.0, 13.0, 13.0, 12.5, 12.0, 12.0, 12.0, 11.0, 11.0, 11.0, 11.0, 10.5, 10.5, 10.25, 10.25, 10.25, 10.25, 10.25, 9.75, 9.75, 9.5, 9.25, 9.25, 9.0, 9.0, 9.0, 9.0, 9.25, 9.25, 9.25, 9.25, 9.25, 9.25, 9.0, 9.0, 9.0, 9.0, 9.0, 9.25, 9.25, 9.25, 9.25, 9.25, 9.25, 12.0, 9.5, 9.5, 9.5, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2020-12-01"], "y": [9.0], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "%", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+    Plotly.newPlot("chart-policy_rate", [{"name": "Actual / history", "x": ["2021-01-25", "2021-07-26", "2021-09-13", "2021-10-25", "2022-01-24", "2022-02-24", "2022-04-25", "2022-07-25", "2022-10-26", "2022-12-05", "2023-08-25", "2023-10-06", "2023-11-24", "2024-01-19", "2024-02-23", "2024-05-31", "2024-07-12", "2024-08-29", "2024-10-11", "2024-11-29", "2025-01-17", "2025-03-07", "2025-05-30", "2025-08-29", "2026-10-30"], "y": [9.0, 9.25, 9.5, 9.75, 10.25, 13.5, 14.0, 14.5, 16.0, 16.75, 16.5, 16.0, 15.75, 15.25, 14.75, 14.5, 14.25, 14.25, 14.25, 14.25, 14.25, 14.0, 14.0, 14.0, 14.25], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "IMF WEO estimate / forecast", "x": ["2026-10-30"], "y": [14.25], "mode": "lines", "line": {"color": "#364b61", "width": 2.2, "dash": "dash"}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-10-30"], "y": [14.25], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "%", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
   </script>
   <footer>
-    <span>Source: <a href="https://db.nomics.world/IMF/IFS/M.KZ.FPOLM_PA" target="_blank" rel="noreferrer">IMF / DBnomics (IFS)</a></span>
-    <span>Series: IMF/IFS/M.KZ.FPOLM_PA</span>
-    <span>Frequency: monthly</span>
-    <span>Provider update: 2020-12-01</span>
+    <span>Source: <a href="https://nationalbank.kz/en/news/base-rate" target="_blank" rel="noreferrer">National Bank of Kazakhstan (NBK)</a></span>
+    <span>Series: policy_rate</span>
+    <span>Frequency: event</span>
+    <span>Provider update: 2026-10-30</span>
   </footer>
   <p class="caveat"><span data-lang="en">NBK monetary policy-related rate reported in IMF International Financial Statistics.</span><span data-lang="zh">哈萨克斯坦国家银行向IMF报送的货币政策基准利率。</span></p>
 </article>
@@ -1528,6 +1528,35 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Provider update: 2026-06-01</span>
   </footer>
   <p class="caveat"><span data-lang="en">Monthly crude oil production including lease condensate for Kazakhstan reported by US EIA.</span><span data-lang="zh">美国能源信息署(EIA)国际能源数据库发布的哈萨克斯坦月度原油及凝析油日均产量（千桶/日）。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="real_policy_rate">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">KZ Real Policy Rate (Policy Rate − CPI YoY)</span><span data-lang="zh">KZ 实际政策利率 (基准利率 − CPI同比)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2026-10-30">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>5.01</strong><em>%</em></span>
+        <time datetime="2026-10-30"><span data-lang="en">30 Oct 2026</span><span data-lang="zh">2026年10月30日</span></time>
+      </div>
+      <span class="quality-pill">verified</span><span class="authority-chip">official primary</span><span class="freshness-chip">current</span>
+    </div>
+  </div>
+  <div id="chart-real_policy_rate" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-real_policy_rate", [{"name": "Actual / history", "x": ["2021-01-25", "2021-07-26", "2021-09-13", "2021-10-25", "2022-01-24", "2022-02-24", "2022-04-25", "2022-07-25", "2022-10-26", "2022-12-05", "2023-08-25", "2023-10-06", "2023-11-24", "2024-01-19", "2024-02-23", "2024-05-31", "2024-07-12", "2024-08-29", "2024-10-11", "2024-11-29", "2025-01-17", "2025-03-07", "2025-05-30", "2025-08-29", "2026-10-30"], "y": [1.65, 0.96, 0.68, 0.9, 1.7, 4.82, 0.66, -0.6, -2.79, -3.64, 3.4, 5.22, 5.51, 5.69, 5.46, 6.01, 5.71, 5.83, 5.8, 5.81, 5.39, 3.99, 2.74, 1.79, 5.01], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "IMF WEO estimate / forecast", "x": ["2026-10-30"], "y": [5.01], "mode": "lines", "line": {"color": "#364b61", "width": 2.2, "dash": "dash"}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2026-10-30"], "y": [5.01], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "%", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://nationalbank.kz/en/news/base-rate" target="_blank" rel="noreferrer">National Bank of Kazakhstan (NBK) / Derived</a></span>
+    <span>Series: real_policy_rate</span>
+    <span>Frequency: event</span>
+    <span>Provider update: 2026-10-30</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Derived real policy rate calculated as NBK Base Rate minus headline CPI YoY.</span><span data-lang="zh">衍生实际政策利率，以哈萨克斯坦国家银行基准利率减去CPI同比增速计算。</span></p>
 </article>
 
 

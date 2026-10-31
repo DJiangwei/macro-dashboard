@@ -1,10 +1,10 @@
 {
   "file": "south_korea.html",
-  "generated": "2026-10-31T16:35:31.351951+00:00",
-  "charts": 48,
-  "source_groups": 14,
+  "generated": "2026-10-31T22:13:23.981634+00:00",
+  "charts": 51,
+  "source_groups": 17,
   "data_gaps": 0,
-  "low_confidence": 9,
+  "low_confidence": 10,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -576,7 +576,7 @@
     "consumer_confidence",
     "manufacturing_wage_growth"
   ],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "krw_usd_latest": "1325.06 (2026-10-23)",
   "cross_checks": [
@@ -606,14 +606,15 @@
       "value"
     ],
     "file": "south_korea_canonical_frame.json",
-    "series": 48,
-    "observations": 10251,
-    "series_count": 48,
-    "observation_count": 10251
+    "series": 51,
+    "observations": 10541,
+    "series_count": 51,
+    "observation_count": 10541,
+    "snapshot_generated": "2026-10-31T22:13:19.374643+00:00"
   },
   "data_gaps_detail": [],
   "source_health": {
-    "source_groups": 14,
+    "source_groups": 17,
     "sources": [
       {
         "source_name": "FRED / OECD",
@@ -652,7 +653,19 @@
         "charts": 2
       },
       {
+        "source_name": "Bank for International Settlements (BIS)",
+        "charts": 1
+      },
+      {
+        "source_name": "Bank of Korea (BOK) / ECOS / Derived",
+        "charts": 1
+      },
+      {
         "source_name": "Bank of Korea (BOK) / Statistics Korea",
+        "charts": 1
+      },
+      {
+        "source_name": "Bank of Korea / ECOS",
         "charts": 1
       },
       {
@@ -673,9 +686,9 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 9,
-      "verified": 7,
-      "watch": 32
+      "low_confidence": 10,
+      "verified": 8,
+      "watch": 33
     },
     "unavailable_count": 3
   },
@@ -688,10 +701,10 @@
   "freshness": {
     "as_of_date": "2026-10-31",
     "counts": {
-      "current": 23,
+      "current": 25,
       "due": 12,
       "projection": 4,
-      "stale": 9
+      "stale": 10
     },
     "latest_historical_date": "2026-10-23",
     "attention": [
@@ -1136,6 +1149,28 @@
         "transform": "level"
       },
       {
+        "id": "yield_curve_slope_10y3y",
+        "concept_id": "yield_curve_slope",
+        "label_en": "South Korea KTB 10Y-3Y Sovereign Yield Slope",
+        "latest_date": "2026-09-01",
+        "frequency": "daily",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-09-01",
+        "age_days": 60,
+        "threshold_days": 10,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "Bank of Korea / ECOS",
+        "series": "yield_curve_slope_10y3y",
+        "transform": "level"
+      },
+      {
         "id": "krw_usd",
         "concept_id": "fx_spot",
         "label_en": "USD/KRW Exchange Rate (Fed H.10)",
@@ -1161,11 +1196,23 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 44,
+      "level": 47,
       "pct_change": 1,
       "yoy_pct": 3
     },
     "non_level": [
+      {
+        "id": "government_consumption",
+        "label_en": "Government Final Consumption YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "gross_fixed_capital_formation",
+        "label_en": "Gross Fixed Capital Formation YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
       {
         "id": "real_gdp_growth",
         "label_en": "Real GDP Growth, QoQ SA",
@@ -1177,18 +1224,6 @@
         "label_en": "Real GDP Growth, YoY",
         "transform": "yoy_pct",
         "unit": "% y/y"
-      },
-      {
-        "id": "gross_fixed_capital_formation",
-        "label_en": "Gross Fixed Capital Formation YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "government_consumption",
-        "label_en": "Government Final Consumption YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
       }
     ]
   },
@@ -1198,6 +1233,6 @@
       "date",
       "value"
     ],
-    "charted_series": 48
+    "charted_series": 51
   }
 }

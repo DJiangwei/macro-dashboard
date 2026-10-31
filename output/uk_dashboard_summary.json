@@ -1,8 +1,8 @@
 {
   "file": "uk.html",
-  "generated": "2026-10-31T16:30:14.617679+00:00",
-  "charts": 95,
-  "source_groups": 11,
+  "generated": "2026-10-31T22:13:21.895023+00:00",
+  "charts": 97,
+  "source_groups": 13,
   "data_gaps": 8,
   "low_confidence": 15,
   "key_series_latest": [
@@ -68,7 +68,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "bank_rate_latest": "3.75% (2026-10-29)",
   "cross_checks": [],
@@ -79,10 +79,11 @@
       "value"
     ],
     "file": "uk_canonical_frame.json",
-    "series": 95,
-    "observations": 81370,
-    "series_count": 95,
-    "observation_count": 81370
+    "series": 97,
+    "observations": 88915,
+    "series_count": 97,
+    "observation_count": 88915,
+    "snapshot_generated": "2026-10-31T22:13:19.042724+00:00"
   },
   "data_gaps_detail": [
     {
@@ -143,7 +144,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 11,
+    "source_groups": 13,
     "sources": [
       {
         "source_name": "ONS",
@@ -188,12 +189,20 @@
       {
         "source_name": "ONS / HM Land Registry",
         "charts": 2
+      },
+      {
+        "source_name": "Bank for International Settlements (BIS)",
+        "charts": 1
+      },
+      {
+        "source_name": "Bank of England IADB / Derived",
+        "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 15,
-      "verified": 60,
-      "watch": 20
+      "verified": 61,
+      "watch": 21
     },
     "unavailable_count": 0
   },
@@ -206,7 +215,7 @@
   "freshness": {
     "as_of_date": "2026-10-31",
     "counts": {
-      "current": 66,
+      "current": 68,
       "due": 10,
       "projection": 4,
       "stale": 15
@@ -771,54 +780,12 @@
       "divide_1bn": 1,
       "divide_1k": 3,
       "divide_1m": 1,
-      "level": 77,
+      "level": 79,
       "mom_pct": 2,
       "qoq_pct": 4,
       "yoy": 6
     },
     "non_level": [
-      {
-        "id": "private_consumption_qoq",
-        "label_en": "Real Private Consumption",
-        "transform": "qoq_pct",
-        "unit": "%"
-      },
-      {
-        "id": "gfcf_qoq",
-        "label_en": "Real Gross Fixed Capital Formation",
-        "transform": "qoq_pct",
-        "unit": "%"
-      },
-      {
-        "id": "monthly_gdp_mom",
-        "label_en": "Monthly GDP Growth, MoM",
-        "transform": "mom_pct",
-        "unit": "% m/m"
-      },
-      {
-        "id": "industrial_production_yoy",
-        "label_en": "Industrial Production Growth, YoY",
-        "transform": "yoy",
-        "unit": "% y/y"
-      },
-      {
-        "id": "services_output_yoy",
-        "label_en": "Services Output Growth, YoY",
-        "transform": "yoy",
-        "unit": "% y/y"
-      },
-      {
-        "id": "retail_sales_yoy",
-        "label_en": "Retail Sales Volume Growth, YoY",
-        "transform": "yoy",
-        "unit": "% y/y"
-      },
-      {
-        "id": "retail_sales_mom",
-        "label_en": "Retail Sales Volume Growth, MoM",
-        "transform": "mom_pct",
-        "unit": "% m/m"
-      },
       {
         "id": "construction_output_yoy",
         "label_en": "Construction Output Growth, YoY",
@@ -832,22 +799,28 @@
         "unit": "%"
       },
       {
+        "id": "gfcf_qoq",
+        "label_en": "Real Gross Fixed Capital Formation",
+        "transform": "qoq_pct",
+        "unit": "%"
+      },
+      {
         "id": "imports_qoq",
         "label_en": "Real Imports",
         "transform": "qoq_pct",
         "unit": "%"
       },
       {
-        "id": "paye_payrolled_employees",
-        "label_en": "PAYE Payrolled Employees",
-        "transform": "divide_1m",
-        "unit": "mn"
+        "id": "industrial_production_yoy",
+        "label_en": "Industrial Production Growth, YoY",
+        "transform": "yoy",
+        "unit": "% y/y"
       },
       {
-        "id": "paye_payrolled_employees_mom_change",
-        "label_en": "PAYE Employees Monthly Change",
-        "transform": "divide_1k",
-        "unit": "000s"
+        "id": "monthly_gdp_mom",
+        "label_en": "Monthly GDP Growth, MoM",
+        "transform": "mom_pct",
+        "unit": "% m/m"
       },
       {
         "id": "paye_aggregate_pay",
@@ -874,14 +847,50 @@
         "unit": "%"
       },
       {
+        "id": "paye_payrolled_employees",
+        "label_en": "PAYE Payrolled Employees",
+        "transform": "divide_1m",
+        "unit": "mn"
+      },
+      {
+        "id": "paye_payrolled_employees_mom_change",
+        "label_en": "PAYE Employees Monthly Change",
+        "transform": "divide_1k",
+        "unit": "000s"
+      },
+      {
+        "id": "private_consumption_qoq",
+        "label_en": "Real Private Consumption",
+        "transform": "qoq_pct",
+        "unit": "%"
+      },
+      {
+        "id": "producer_prices",
+        "label_en": "PPI Output Inflation",
+        "transform": "yoy",
+        "unit": "% y/y"
+      },
+      {
+        "id": "retail_sales_mom",
+        "label_en": "Retail Sales Volume Growth, MoM",
+        "transform": "mom_pct",
+        "unit": "% m/m"
+      },
+      {
+        "id": "retail_sales_yoy",
+        "label_en": "Retail Sales Volume Growth, YoY",
+        "transform": "yoy",
+        "unit": "% y/y"
+      },
+      {
         "id": "rpix_yoy",
         "label_en": "RPIX Inflation",
         "transform": "yoy",
         "unit": "%"
       },
       {
-        "id": "producer_prices",
-        "label_en": "PPI Output Inflation",
+        "id": "services_output_yoy",
+        "label_en": "Services Output Growth, YoY",
         "transform": "yoy",
         "unit": "% y/y"
       }
@@ -893,6 +902,6 @@
       "date",
       "value"
     ],
-    "charted_series": 95
+    "charted_series": 97
   }
 }

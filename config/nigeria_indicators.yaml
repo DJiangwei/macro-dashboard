@@ -657,6 +657,17 @@ indicators:
     start_date: 2010-01-01
     caveat_en: Non-performing loans to total gross loans reported to the IMF.
     caveat_zh: 报送IMF的银行不良贷款占总贷款比重。
+  - id: real_policy_rate
+    section: monetary_financial
+    label_en: Nigeria Real Policy Rate
+    label_zh: 尼日利亚实际政策利率 (MPR − CPI同比)
+    unit: "%"
+    fetcher: manual
+    source_name: Central Bank of Nigeria / NBS / Derived
+    source_url: https://www.cbn.gov.ng
+    frequency: monthly
+    caveat_en: Derived real policy rate calculated as CBN Monetary Policy Rate (MPR) minus headline CPI YoY.
+    caveat_zh: 衍生实际政策利率，以尼日利亚央行基准利率(MPR)减去CPI同比增速计算。
 
 data_gaps:
   - section: external_fx

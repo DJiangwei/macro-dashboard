@@ -548,7 +548,7 @@ Remaining rendered proxy slots: 0.
 
 The China page is generated from `config/china_indicators.yaml`. Current rendered charts deliberately use reproducible public endpoints: AKShare-wrapped Eastmoney/Sina/PBC-style tables for selected China-native high-frequency indicators, World Bank WDI for annual national-account and structural series, IMF DataMapper for WEO fiscal ratios, SAFE for RMB central parity, PBC latest-card pages for selected money-market snapshots, and FRED graph CSV mirrors for validated IMF IFS, BIS, OECD, and Federal Reserve series. China-native monthly NBS/PBOC history is not proxied when an official reusable endpoint has not been validated.
 
-Configured charts: 111. Latest rendered chart count: 111. Source groups: 30.
+Configured charts: 114. Latest rendered chart count: 114. Source groups: 33.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -663,6 +663,9 @@ Configured charts: 111. Latest rendered chart count: 111. Source groups: 30.
 | government_finance | `tax_receipts_ytd_akshare` | Tax Receipts YTD | quarterly | CNY tn | eastmoney_api | AKShare / National Tax Receipts |  | Cumulative national tax receipts via AKShare, converted from CNY 100mn to CNY tn; not the full general-government revenue envelope. |
 | government_finance | `tax_receipts_yoy_akshare` | Tax Receipts YTD, YoY | quarterly | % | eastmoney_api | AKShare / National Tax Receipts |  | Cumulative tax-receipts growth via AKShare; quarterly/YTD reporting can create mechanical jumps at year boundaries. |
 | government_finance | `general_gov_debt` | General Government Gross Debt | annual | % of GDP | imf_datamapper | IMF WEO | GGXWDG_NGDP | IMF WEO measure; does not fully solve quasi-fiscal/LGFV boundary issues. |
+| money_credit | `real_policy_rate` | China Real Policy Rate | monthly | % | manual | PBOC / NBS / Derived |  | Derived real policy rate calculated as 1-Year Loan Prime Rate (LPR) minus headline CPI YoY. |
+| prices | `core_cpi_yoy` | China Core CPI YoY | monthly | % | manual | National Bureau of Statistics (NBS) |  | Official NBS Core Consumer Price Index YoY rate (ex-Food & Energy). |
+| money_credit | `credit_gap` | China BIS Basel III Credit-to-GDP Gap | quarterly | % | manual | Bank for International Settlements (BIS) |  | BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend. |
 
 ### China Latest-Card Snapshots
 
@@ -691,7 +694,7 @@ The Euro Area page is generated from `config/euro_area_indicators.yaml`. Officia
 
 Generated from `config/euro_area_indicators.yaml`; latest dates are tracked in `output/euro_area_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 72. Latest rendered chart count: 72. Source groups: 6.
+Configured charts: 76. Latest rendered chart count: 76. Source groups: 10.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -767,6 +770,10 @@ Configured charts: 72. Latest rendered chart count: 72. Source groups: 6.
 | stability_structural | `bank_cet1_ratio` | Significant Institutions CET1 Ratio | quarterly | % | ecb_sdmx | ECB Banking Supervision | Q.B01.W0._Z.I4008._T.SII._Z._Z._Z.PCT.C | ECB Supervisory Banking Statistics: CET1 ratio for Significant Institutions under Single Supervisory Mechanism. |
 | stability_structural | `bank_npl_ratio` | Significant Institutions NPL Ratio | quarterly | % | ecb_sdmx | ECB Banking Supervision | Q.B01.W0._Z.I7000._T.SII._Z._Z._Z.PCT.C | ECB Supervisory Banking Statistics: Non-performing loans ratio (including cash balances) for Significant Institutions. |
 | stability_structural | `household_debt_gdp` | Household Debt to GDP | quarterly | % of GDP | fred | FRED / BIS | QXMHAM770A | Credit to households and NPISHs from all sectors at market value as percentage of GDP. |
+| monetary_financial | `real_policy_rate` | Euro Area Real Policy Rate | monthly | % | manual | ECB / Eurostat / Derived |  | Derived real policy rate calculated as nominal ECB Deposit Facility Rate minus headline HICP YoY. |
+| monetary_financial | `systemic_stress_ciss` | ECB Composite Indicator of Systemic Stress (CISS) | quarterly | index | manual | European Central Bank (ECB) |  | Official ECB CISS measuring contemporary systemic stress in the financial system. |
+| stability_structural | `credit_gap` | Euro Area BIS Basel III Credit-to-GDP Gap | quarterly | % | manual | Bank for International Settlements (BIS) |  | BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend. |
+| monetary_financial | `euro_stoxx_return_yoy` | Euro Stoxx 50 Index YoY Return | monthly | % | manual | ECB / OECD / FRED |  | Year-over-year percentage change of the Euro Area benchmark share price index. |
 
 ## Euro Area Official / Vendor Data Gaps
 
@@ -784,7 +791,7 @@ The Japan page is generated from `config/japan_indicators.yaml`. FRED (official 
 
 Generated from `config/japan_indicators.yaml`; latest dates are tracked in `output/japan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 57. Latest rendered chart count: 57. Source groups: 22.
+Configured charts: 59. Latest rendered chart count: 59. Source groups: 24.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -845,6 +852,8 @@ Configured charts: 57. Latest rendered chart count: 57. Source groups: 22.
 | stability_structural | `total_credit_gdp` | Total Credit to Non-Financial Sector | quarterly | % of GDP | fred | FRED / BIS | QJPCAM770A | Includes general government, so this is the aggregate economy-wide leverage stock and the highest in the BIS reporting population. |
 | labour_wages | `job_to_applicant_ratio` | Job-to-Applicant Ratio |  | ratio | estat |  | 0003446462/-/2090 |  |
 | housing_property | `housing_starts` | Housing Starts (Total Units) |  | units | estat |  | 0003114496/19/11/11/11/00000 |  |
+| monetary_financial | `real_policy_rate` | Japan Real Policy Rate | monthly | % | manual | Bank of Japan / Statistics Bureau / Derived |  | Derived real policy rate calculated as BOJ policy rate minus headline CPI YoY. |
+| stability_structural | `credit_gap` | Japan BIS Basel III Credit-to-GDP Gap | quarterly | % | manual | Bank for International Settlements (BIS) |  | BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend. |
 
 ## Japan Official / Vendor Data Gaps
 
@@ -863,7 +872,7 @@ The South Africa page is generated from `config/south_africa_indicators.yaml`. T
 
 Generated from `config/south_africa_indicators.yaml`; latest dates are tracked in `output/south_africa_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 65. Latest rendered chart count: 65. Source groups: 16.
+Configured charts: 66. Latest rendered chart count: 66. Source groups: 17.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -932,6 +941,7 @@ Configured charts: 65. Latest rendered chart count: 65. Source groups: 16.
 | stability_structural | `bank_capital_ratio` | Regulatory Capital to Risk-Weighted Assets | quarterly | % | imf_sdmx | IMF SDMX / Financial Soundness Indicators | ZAF.S12CFSI.FSI688_CFSI_PT.Q | Deposit-taker aggregate reported to the IMF; national regulatory definitions differ, so cross-country levels are indicative rather than exact. |
 | stability_structural | `bank_npl_ratio` | Non-Performing Loans to Total Gross Loans | quarterly | % | imf_sdmx | IMF SDMX / Financial Soundness Indicators | ZAF.S12CFSI.AQ12_CFSI_PT.Q | Deposit-taker aggregate. The post-2020 rise reflects the interaction of high prime lending rates with stagnant household income. |
 | stability_structural | `total_credit_gdp` | Total Credit to Non-Financial Sector | quarterly | % of GDP | fred | FRED / BIS | QZACAM770A | Includes general government, so this is the aggregate economy-wide leverage stock; moderate by developed-market standards but rising through the government channel. |
+| monetary_financial | `real_policy_rate` | South Africa Real Policy Rate | monthly | % | manual | SARB / Stats SA / Derived |  | Derived real policy rate calculated as SARB Repo Rate minus headline CPI YoY. |
 
 ## South Africa Official / Vendor Data Gaps
 
@@ -951,7 +961,7 @@ The Turkey page is generated from `config/turkey_indicators.yaml`. TurkStat offi
 
 Generated from `config/turkey_indicators.yaml`; latest dates are tracked in `output/turkey_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 55. Latest rendered chart count: 54. Source groups: 16.
+Configured charts: 57. Latest rendered chart count: 56. Source groups: 18.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1010,6 +1020,8 @@ Configured charts: 55. Latest rendered chart count: 54. Source groups: 16.
 | monetary_financial | `bist_100_equity_index` | Borsa Istanbul BIST 100 Benchmark Equity Index | monthly | Index (2015 = 100) | fred | FRED / OECD / Borsa Istanbul | SPASTT01TRM661N | Borsa Istanbul 100 equity benchmark monthly average index mirrored on FRED. |
 | stability_structural | `bank_capital_ratio` | Bank Regulatory Capital to Risk-Weighted Assets | quarterly | % | dbnomics | IMF / DBnomics (Financial Soundness Indicators) | IMF/FSI/Q.TR.FSKRC_PT | Deposit-taker regulatory capital to risk-weighted assets reported to the IMF. |
 | stability_structural | `bank_npl_ratio` | Bank Non-Performing Loans (% of Gross Loans) | quarterly | % | dbnomics | IMF / DBnomics (Financial Soundness Indicators) | IMF/FSI/Q.TR.FSANL_PT | Non-performing loans to total gross loans for deposit-takers. |
+| monetary_financial | `real_policy_rate` | Turkey Real Policy Rate | monthly | % | manual | Central Bank of Republic of Turkey (CBRT) / Derived |  | Derived real policy rate calculated as 1-Week Repo Rate minus headline CPI YoY. |
+| monetary_financial | `sovereign_yield_10y` | Turkey 10Y Benchmark Government Bond Yield | quarterly | % | manual | CBRT / Ministry of Treasury |  | Official benchmark 10-year Turkish Lira government bond yield. |
 
 ## Turkey Official / Vendor Data Gaps
 
@@ -1023,7 +1035,7 @@ The Hong Kong page is generated from `config/hong_kong_indicators.yaml`. Census 
 
 Generated from `config/hong_kong_indicators.yaml`; latest dates are tracked in `output/hong_kong_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 38. Latest rendered chart count: 38. Source groups: 11.
+Configured charts: 40. Latest rendered chart count: 40. Source groups: 12.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1065,6 +1077,8 @@ Configured charts: 38. Latest rendered chart count: 38. Source groups: 11.
 | monetary_financial | `household_credit_gdp` | Credit to Households & NPISHs (% of GDP) | quarterly | % of GDP | fred | FRED / BIS | QHKHAM770A | Total credit to households and non-profit institutions serving households as a percentage of GDP. |
 | stability_structural | `bank_capital_ratio` | Locally Incorporated AIs Capital Adequacy Ratio | quarterly | % | dbnomics | IMF / DBnomics (Financial Soundness Indicators) | IMF/FSI/Q.HK.FSKRC_PT | Consolidated regulatory capital to risk-weighted assets for locally incorporated banks in Hong Kong. |
 | stability_structural | `bank_npl_ratio` | Bank Classified / Non-Performing Loan Ratio | quarterly | % | dbnomics | IMF / DBnomics (Financial Soundness Indicators) | IMF/FSI/Q.HK.FSANL_PT | Non-performing loans to total gross loans reported to the IMF. |
+| monetary_financial | `real_policy_rate` | Hong Kong Real Base Rate | monthly | % | manual | HKMA / Census and Statistics / Derived |  | Derived real policy rate calculated as HKMA Base Rate minus headline Composite CPI YoY. |
+| monetary_financial | `sovereign_yield_10y` | Hong Kong 10Y Exchange Fund Notes Yield | quarterly | % | manual | Hong Kong Monetary Authority (HKMA) |  | Official benchmark 10-year Hong Kong Exchange Fund Note yield. |
 
 ## Hong Kong Official / Vendor Data Gaps
 
@@ -1078,7 +1092,7 @@ The South Korea page is generated from `config/south_korea_indicators.yaml`. FRE
 
 Generated from `config/south_korea_indicators.yaml`; latest dates are tracked in `output/south_korea_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 51. Latest rendered chart count: 48. Source groups: 14.
+Configured charts: 54. Latest rendered chart count: 51. Source groups: 17.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1133,6 +1147,9 @@ Configured charts: 51. Latest rendered chart count: 48. Source groups: 14.
 | monetary_financial | `kospi_stock_index` | KOSPI Benchmark Composite Stock Price Index | monthly | Index (2015 = 100) | fred | FRED / OECD / Korea Exchange | SPASTT01KRM661N | Korea Stock Price Index (KOSPI) benchmark monthly index mirrored on FRED. |
 | stability_structural | `bank_capital_ratio` | Bank Regulatory Capital to Risk-Weighted Assets | quarterly | % | dbnomics | IMF / DBnomics (Financial Soundness Indicators) | IMF/FSI/Q.KR.FSKRC_PT | Deposit-taker regulatory capital to risk-weighted assets reported to the IMF. |
 | stability_structural | `bank_npl_ratio` | Bank Non-Performing Loans (% of Gross Loans) | quarterly | % | dbnomics | IMF / DBnomics (Financial Soundness Indicators) | IMF/FSI/Q.KR.FSANL_PT | Non-performing loans to total gross loans for deposit-takers. |
+| monetary_financial | `real_policy_rate` | South Korea Real Policy Rate | monthly | % | manual | Bank of Korea / Statistics Korea / Derived |  | Derived real policy rate calculated as Bank of Korea Base Rate minus headline CPI YoY. |
+| monetary_financial | `yield_curve_slope_10y3y` | South Korea KTB 10Y-3Y Sovereign Yield Slope | daily | bps | manual | Bank of Korea / ECOS |  | Derived South Korea sovereign term structure slope (10Y minus 3Y KTB yield in bps). |
+| stability_structural | `credit_gap` | South Korea BIS Basel III Credit-to-GDP Gap | quarterly | % | manual | Bank for International Settlements (BIS) |  | BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend. |
 
 ## South Korea Official / Vendor Data Gaps
 
@@ -1145,7 +1162,7 @@ The Taiwan page is generated from `config/taiwan_indicators.yaml`. Central Bank 
 
 Generated from `config/taiwan_indicators.yaml`; latest dates are tracked in `output/taiwan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 48. Latest rendered chart count: 48. Source groups: 9.
+Configured charts: 50. Latest rendered chart count: 50. Source groups: 11.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1197,6 +1214,8 @@ Configured charts: 48. Latest rendered chart count: 48. Source groups: 9.
 | fiscal_sovereign | `government_debt_gdp` | General Government Gross Debt (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper | GGXWDG_NGDP | General government gross debt as a percentage of GDP. |
 | fiscal_sovereign | `fiscal_balance_gdp` | General Government Net Lending / Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF WEO DataMapper | GGXCNL_NGDP | General government net lending/borrowing as a percentage of GDP. |
 | labour_structural | `unemployment_rate_weo` | Unemployment Rate (IMF WEO) | annual | % of labour force | imf_datamapper | IMF WEO DataMapper | LUR | Unemployment rate as percentage of the total labour force from the IMF WEO database. |
+| monetary_financial | `real_policy_rate` | Taiwan Real Policy Rate | monthly | % | manual | CBC / DGBAS / Derived |  | Derived real policy rate calculated as CBC Discount Rate minus headline CPI YoY. |
+| monetary_financial | `yield_curve_slope_10y5y` | Taiwan Sovereign 10Y-5Y Yield Slope | bimonthly | bps | manual | CBC / Central Bank of ROC (Taiwan) |  | Derived Taiwan sovereign term structure slope (10Y minus 5Y yield in bps). |
 
 ## Taiwan Official / Vendor Data Gaps
 
@@ -1210,7 +1229,7 @@ The Kazakhstan page is generated from `config/kazakhstan_indicators.yaml`. Natio
 
 Generated from `config/kazakhstan_indicators.yaml`; latest dates are tracked in `output/kazakhstan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 37. Latest rendered chart count: 37. Source groups: 15.
+Configured charts: 38. Latest rendered chart count: 38. Source groups: 16.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1251,6 +1270,7 @@ Configured charts: 37. Latest rendered chart count: 37. Source groups: 15.
 | monetary_financial | `crude_oil_production` | Crude Oil & Lease Condensate Production | monthly | TBPD | eia | US Energy Information Administration (EIA) |  | Monthly crude oil production including lease condensate for Kazakhstan reported by US EIA. |
 | stability_structural | `bank_capital_ratio` | Bank Regulatory Capital to Risk-Weighted Assets (CAR) | quarterly | % | dbnomics | IMF / DBnomics (FSI) | IMF/FSI/Q.KZ.FSKRC_PT | Regulatory capital to risk-weighted assets for deposit-takers in Kazakhstan. |
 | stability_structural | `bank_npl_ratio` | Bank Non-Performing Loans Ratio (NPL) | quarterly | % | dbnomics | IMF / DBnomics (FSI) | IMF/FSI/Q.KZ.FSANL_PT | Non-performing loans to total gross loans reported to the IMF. |
+| monetary_financial | `real_policy_rate` | Kazakhstan Real Policy Rate | monthly | % | manual | National Bank of Kazakhstan / BNS / Derived |  | Derived real policy rate calculated as NBK Base Rate minus headline CPI YoY. |
 
 ## Kazakhstan Official / Vendor Data Gaps
 
@@ -1265,7 +1285,7 @@ The Uzbekistan page is generated from `config/uzbekistan_indicators.yaml`. DBnom
 
 Generated from `config/uzbekistan_indicators.yaml`; latest dates are tracked in `output/uzbekistan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 36. Latest rendered chart count: 36. Source groups: 13.
+Configured charts: 37. Latest rendered chart count: 37. Source groups: 14.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1305,6 +1325,7 @@ Configured charts: 36. Latest rendered chart count: 36. Source groups: 13.
 | monetary_financial | `private_credit_gdp` | Domestic Private Credit (% of GDP) | annual | % of GDP | world_bank | World Bank WDI | FS.AST.PRVT.GD.ZS | Domestic credit to private sector refers to financial resources provided to the private sector. |
 | stability_structural | `bank_capital_ratio` | Bank Regulatory Capital to Risk-Weighted Assets (CAR) | quarterly | % | dbnomics | IMF / DBnomics (FSI) | IMF/FSI/Q.UZ.FSKRC_PT | Regulatory capital to risk-weighted assets for deposit-takers in Uzbekistan. |
 | stability_structural | `bank_npl_ratio` | Bank Non-Performing Loans Ratio (NPL) | quarterly | % | dbnomics | IMF / DBnomics (FSI) | IMF/FSI/Q.UZ.FSANL_PT | Non-performing loans to total gross loans reported to the IMF. |
+| monetary_financial | `real_policy_rate` | Uzbekistan Real Policy Rate | monthly | % | manual | Central Bank of the Republic of Uzbekistan / Derived |  | Derived real policy rate calculated as CBU Policy Rate minus headline CPI YoY. |
 
 ## Uzbekistan Official / Vendor Data Gaps
 
@@ -1319,7 +1340,7 @@ The Egypt page is generated from `config/egypt_indicators.yaml`. DBnomics (IMF I
 
 Generated from `config/egypt_indicators.yaml`; latest dates are tracked in `output/egypt_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 37. Latest rendered chart count: 37. Source groups: 14.
+Configured charts: 38. Latest rendered chart count: 38. Source groups: 15.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1360,6 +1381,7 @@ Configured charts: 37. Latest rendered chart count: 37. Source groups: 14.
 | monetary_financial | `private_credit_gdp` | Domestic Private Credit (% of GDP) | annual | % of GDP | world_bank | World Bank WDI | FS.AST.PRVT.GD.ZS | Domestic credit to private sector refers to financial resources provided to the private sector. |
 | monetary_financial | `brent_crude_oil` | Crude Oil Prices: Brent - Europe | daily | USD/bbl | fred_graph | EIA / FRED | DCOILBRENTEU | Daily spot price for Brent crude, external terms-of-trade driver for Egyptian hydrocarbons. |
 | monetary_financial | `crude_oil_production` | Crude Oil & Lease Condensate Production | monthly | TBPD | eia | US Energy Information Administration (EIA) |  | Monthly crude oil production including lease condensate for Egypt reported by US EIA. |
+| monetary_financial | `real_policy_rate` | Egypt Real Policy Rate | monthly | % | manual | Central Bank of Egypt / CAPMAS / Derived |  | Derived real policy rate calculated as CBE Overnight Deposit Rate minus headline CPI YoY. |
 
 ## Egypt Official / Vendor Data Gaps
 
@@ -1374,7 +1396,7 @@ The Nigeria page is generated from `config/nigeria_indicators.yaml`. DBnomics (I
 
 Generated from `config/nigeria_indicators.yaml`; latest dates are tracked in `output/nigeria_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 39. Latest rendered chart count: 39. Source groups: 14.
+Configured charts: 40. Latest rendered chart count: 40. Source groups: 15.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1417,6 +1439,7 @@ Configured charts: 39. Latest rendered chart count: 39. Source groups: 14.
 | monetary_financial | `crude_oil_production` | Crude Oil & Lease Condensate Production | monthly | TBPD | eia | US Energy Information Administration (EIA) |  | Monthly crude oil production including lease condensate reported by US EIA international energy statistics. |
 | stability_structural | `bank_capital_ratio` | Bank Regulatory Capital to Risk-Weighted Assets (CAR) | quarterly | % | dbnomics | IMF / DBnomics (FSI) | IMF/FSI/Q.NG.FSKRC_PT | Regulatory capital to risk-weighted assets for commercial banks in Nigeria. |
 | stability_structural | `bank_npl_ratio` | Bank Non-Performing Loans Ratio (NPL) | quarterly | % | dbnomics | IMF / DBnomics (FSI) | IMF/FSI/Q.NG.FSANL_PT | Non-performing loans to total gross loans reported to the IMF. |
+| monetary_financial | `real_policy_rate` | Nigeria Real Policy Rate | monthly | % | manual | Central Bank of Nigeria / NBS / Derived |  | Derived real policy rate calculated as CBN Monetary Policy Rate (MPR) minus headline CPI YoY. |
 
 ## Nigeria Official / Vendor Data Gaps
 
@@ -1429,7 +1452,7 @@ Configured charts: 39. Latest rendered chart count: 39. Source groups: 14.
 
 The UK page is generated from `config/uk_indicators.yaml`. Native ONS time-series JSON and Bank of England IADB CSV endpoints are preferred where validated; FRED/OECD/BIS/IMF mirror series remain for broader public-data coverage.
 
-Configured charts: 95. Latest rendered chart count: 95. Source groups: 11.
+Configured charts: 97. Latest rendered chart count: 97. Source groups: 13.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1528,6 +1551,8 @@ Configured charts: 95. Latest rendered chart count: 95. Source groups: 11.
 | fiscal_policy | `obr_public_sector_effective_interest_rate` | OBR Public-Sector Effective Interest Rate | annual | % | obr_xlsx_row | OBR EFO March 2026 |  | OBR effective interest-rate forecast for the public-sector debt stock; useful for debt-service pressure, but it is modelled from the OBR forecast vintage. |
 | fiscal_policy | `government_balance_gdp` | General Government Net Lending/Borrowing | annual | % of GDP | fred | FRED / IMF | GGNLBAGBA188N | Annual IMF general-government concept; not the same as monthly PSNB. |
 | fiscal_policy | `government_debt_gdp` | General Government Gross Debt | annual | % of GDP | fred | FRED / IMF | GGGDTAGBA188N | Annual IMF debt ratio; the GS guide warns that UK PSND and general-government debt differ by sector boundary and liquid-asset treatment. |
+| monetary_financial | `real_policy_rate` | UK Real Policy Rate | monthly | % | manual | Bank of England / ONS / Derived |  | Derived real policy rate calculated as nominal Bank Rate minus headline CPI YoY. |
+| monetary_financial | `credit_gap` | UK BIS Basel III Credit-to-GDP Gap | quarterly | % | manual | Bank for International Settlements (BIS) |  | BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend. |
 
 ## United Kingdom Official / Vendor Data Gaps
 
@@ -1546,7 +1571,7 @@ Configured charts: 95. Latest rendered chart count: 95. Source groups: 11.
 
 The US page is generated from `config/us_indicators.yaml`. This table records configured sources for each rendered chart slot; latest dates are tracked in `output/us_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 179. Latest rendered chart count: 179. Source groups: 28.
+Configured charts: 182. Latest rendered chart count: 182. Source groups: 31.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1729,6 +1754,9 @@ Configured charts: 179. Latest rendered chart count: 179. Source groups: 28.
 | fiscal | `federal_interest_outlays_gdp` | Federal Interest Outlays to GDP | annual | % of GDP | fred | FRED / OMB | FYOIGDA188S | Annual federal interest burden; useful for fiscal sustainability narratives. |
 | fiscal | `federal_net_outlays_gdp` | Federal Net Outlays to GDP | annual | % of GDP | fred | FRED / OMB | FYONGDA188S | Annual federal net outlays ratio; budget definitions differ from NIPA fiscal flows. |
 | fiscal | `federal_current_expenditures_growth` | Federal Current Expenditures Growth | quarterly | % y/y | fred | FRED / BEA | FGEXPND | NIPA federal current expenditures; complements Treasury cash-flow data. |
+| monetary_financial | `real_policy_rate` | US Real Policy Rate | monthly | % | manual | Federal Reserve / BLS / Derived |  | Derived real policy rate calculated as nominal Effective Federal Funds Rate minus headline CPI YoY. |
+| monetary_financial | `credit_gap` | US BIS Basel III Credit-to-GDP Gap | quarterly | % | manual | Bank for International Settlements (BIS) |  | BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend. |
+| monetary_financial | `sp500_return_yoy` | S&P 500 Index YoY Return | monthly | % | manual | FRED / S&P Dow Jones Indices |  | Year-over-year percentage change of the S&P 500 benchmark index. |
 
 ## United States Official / Vendor Data Gaps
 

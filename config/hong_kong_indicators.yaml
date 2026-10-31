@@ -708,6 +708,28 @@ indicators:
     start_date: 2008-01-01
     caveat_en: Non-performing loans to total gross loans reported to the IMF.
     caveat_zh: 报送IMF的银行不良贷款占总贷款比重。
+  - id: real_policy_rate
+    section: monetary_financial
+    label_en: Hong Kong Real Base Rate
+    label_zh: 香港实际基准利率 (Base Rate − CPI同比)
+    unit: "%"
+    fetcher: manual
+    source_name: HKMA / Census and Statistics / Derived
+    source_url: https://www.hkma.gov.hk
+    frequency: monthly
+    caveat_en: Derived real policy rate calculated as HKMA Base Rate minus headline Composite CPI YoY.
+    caveat_zh: 衍生实际政策利率，以香港金管局基本利率减去综合CPI同比增速计算。
+  - id: sovereign_yield_10y
+    section: monetary_financial
+    label_en: Hong Kong 10Y Exchange Fund Notes Yield
+    label_zh: 香港10年期外汇基金债券收益率
+    unit: "%"
+    fetcher: manual
+    source_name: Hong Kong Monetary Authority (HKMA)
+    source_url: https://www.hkma.gov.hk
+    frequency: quarterly
+    caveat_en: Official benchmark 10-year Hong Kong Exchange Fund Note yield.
+    caveat_zh: 香港金管局10年期外汇基金债券基准收益率。
 
 data_gaps:
   - section: monetary_financial

@@ -853,6 +853,39 @@ indicators:
     start_date: 2008-01-01
     caveat_en: Non-performing loans to total gross loans for deposit-takers.
     caveat_zh: 银行体系不良贷款占贷款总额比重。
+  - id: real_policy_rate
+    section: monetary_financial
+    label_en: South Korea Real Policy Rate
+    label_zh: 韩国实际政策利率 (Base Rate − CPI同比)
+    unit: "%"
+    fetcher: manual
+    source_name: Bank of Korea / Statistics Korea / Derived
+    source_url: https://ecos.bok.or.kr
+    frequency: monthly
+    caveat_en: Derived real policy rate calculated as Bank of Korea Base Rate minus headline CPI YoY.
+    caveat_zh: 衍生实际政策利率，以韩国银行基准利率减去CPI同比增速计算。
+  - id: yield_curve_slope_10y3y
+    section: monetary_financial
+    label_en: South Korea KTB 10Y-3Y Sovereign Yield Slope
+    label_zh: 韩国国债 10Y-3Y 期限利差
+    unit: bps
+    fetcher: manual
+    source_name: Bank of Korea / ECOS
+    source_url: https://ecos.bok.or.kr
+    frequency: daily
+    caveat_en: Derived South Korea sovereign term structure slope (10Y minus 3Y KTB yield in bps).
+    caveat_zh: 韩国国债期限利差（10年期减3年期，基点bps）。
+  - id: credit_gap
+    section: stability_structural
+    label_en: South Korea BIS Basel III Credit-to-GDP Gap
+    label_zh: 韩国 国际清算银行(BIS)信贷/GDP缺口
+    unit: "%"
+    fetcher: manual
+    source_name: Bank for International Settlements (BIS)
+    source_url: https://www.bis.org/statistics/c_gaps.htm
+    frequency: quarterly
+    caveat_en: BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend.
+    caveat_zh: 国际清算银行巴塞尔协议III逆周期资本缓冲指引；信贷/GDP比率对长期趋势的偏离度。
 
 data_gaps: []
 

@@ -1,10 +1,10 @@
 {
   "file": "egypt.html",
-  "generated": "2026-10-31T16:36:06.649239+00:00",
-  "charts": 37,
-  "source_groups": 14,
+  "generated": "2026-10-31T22:13:25.032080+00:00",
+  "charts": 38,
+  "source_groups": 15,
   "data_gaps": 2,
-  "low_confidence": 13,
+  "low_confidence": 14,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -428,7 +428,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "usd_egp_latest": "49.70 (2025-05-01)",
   "cross_checks": [
@@ -458,10 +458,11 @@
       "value"
     ],
     "file": "egypt_canonical_frame.json",
-    "series": 37,
-    "observations": 9516,
-    "series_count": 37,
-    "observation_count": 9516
+    "series": 38,
+    "observations": 9632,
+    "series_count": 38,
+    "observation_count": 9632,
+    "snapshot_generated": "2026-10-31T22:13:18.019140+00:00"
   },
   "data_gaps_detail": [
     {
@@ -480,7 +481,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 14,
+    "source_groups": 15,
     "sources": [
       {
         "source_name": "IMF SDMX / CBE",
@@ -515,6 +516,10 @@
         "charts": 1
       },
       {
+        "source_name": "IMF / DBnomics (IFS) / Derived",
+        "charts": 1
+      },
+      {
         "source_name": "IMF / FRED",
         "charts": 1
       },
@@ -540,7 +545,7 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 13,
+      "low_confidence": 14,
       "watch": 24
     },
     "unavailable_count": 0
@@ -557,7 +562,7 @@
       "current": 14,
       "due": 4,
       "projection": 6,
-      "stale": 13
+      "stale": 14
     },
     "latest_historical_date": "2026-10-27",
     "attention": [
@@ -647,6 +652,28 @@
         "comparability": "medium",
         "source_name": "IMF / DBnomics (IFS)",
         "series": "IMF/IFS/M.EG.FPOLM_PA",
+        "transform": "level"
+      },
+      {
+        "id": "real_policy_rate",
+        "concept_id": "real_policy_rate",
+        "label_en": "EG Real Policy Rate (Policy Rate − CPI YoY)",
+        "latest_date": "2025-05-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2025-05-01",
+        "age_days": 518,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF / DBnomics (IFS) / Derived",
+        "series": "real_policy_rate",
         "transform": "level"
       },
       {
@@ -939,7 +966,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 37
+      "level": 38
     },
     "non_level": []
   },
@@ -949,6 +976,6 @@
       "date",
       "value"
     ],
-    "charted_series": 37
+    "charted_series": 38
   }
 }

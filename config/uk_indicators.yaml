@@ -1507,6 +1507,28 @@ indicators:
     start_date: "1997-01-01"
     caveat_en: "Annual IMF debt ratio; the GS guide warns that UK PSND and general-government debt differ by sector boundary and liquid-asset treatment."
     caveat_zh: "IMF年度债务率；GS指南提醒英国PSND与广义政府债务会因部门边界和流动资产处理而不同。"
+  - id: real_policy_rate
+    section: monetary_financial
+    label_en: "UK Real Policy Rate"
+    label_zh: "英国实际政策利率 (Bank Rate − CPI同比)"
+    unit: "%"
+    fetcher: manual
+    source_name: "Bank of England / ONS / Derived"
+    source_url: "https://www.bankofengland.co.uk"
+    frequency: "monthly"
+    caveat_en: "Derived real policy rate calculated as nominal Bank Rate minus headline CPI YoY."
+    caveat_zh: "衍生实际政策利率，以英国央行基准利率减去CPI同比增速计算。"
+  - id: credit_gap
+    section: monetary_financial
+    label_en: "UK BIS Basel III Credit-to-GDP Gap"
+    label_zh: "英国 国际清算银行(BIS)信贷/GDP缺口"
+    unit: "%"
+    fetcher: manual
+    source_name: "Bank for International Settlements (BIS)"
+    source_url: "https://www.bis.org/statistics/c_gaps.htm"
+    frequency: "quarterly"
+    caveat_en: "BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend."
+    caveat_zh: "国际清算银行巴塞尔协议III逆周期资本缓冲指引；信贷/GDP比率对长期趋势的偏离度。"
 
 data_gaps:
   - section: monthly_output

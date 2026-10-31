@@ -1,7 +1,7 @@
 {
   "generated": "2026-10-29",
   "total_countries": 18,
-  "total_indicators": 1337,
+  "total_indicators": 1365,
   "countries": [
     {
       "code": "US",
@@ -9,7 +9,7 @@
       "name_zh": "美国",
       "flag": "🇺🇸",
       "canonical_file": "us_canonical_frame.json",
-      "indicator_count": 179,
+      "indicator_count": 182,
       "indicators": [
         {
           "id": "active_listing_count",
@@ -395,6 +395,17 @@
           "obs_count": 142,
           "latest_date": "2026-04-01",
           "latest_val": 2.85
+        },
+        {
+          "id": "credit_gap",
+          "label_en": "US BIS Basel III Credit-to-GDP Gap",
+          "label_zh": "US 国际清算银行(BIS)信贷/GDP缺口",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "quarterly",
+          "obs_count": 8,
+          "latest_date": "2026-06-30",
+          "latest_val": -9.2
         },
         {
           "id": "current_account_balance",
@@ -1519,6 +1530,17 @@
           "latest_val": 0.5442265306002003
         },
         {
+          "id": "real_policy_rate",
+          "label_en": "US Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "US 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "monthly",
+          "obs_count": 429,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.03
+        },
+        {
           "id": "real_retail_sales_growth",
           "label_en": "Real Retail Sales Growth",
           "label_zh": "实际零售销售同比",
@@ -1671,6 +1693,17 @@
           "obs_count": 2142,
           "latest_date": "2026-10-29",
           "latest_val": 3.94
+        },
+        {
+          "id": "sp500_return_yoy",
+          "label_en": "S&P 500 Index YoY Return",
+          "label_zh": "标普500指数年度收益率",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "monthly",
+          "obs_count": 46,
+          "latest_date": "2026-10-01",
+          "latest_val": 14.83
         },
         {
           "id": "st_louis_fed_financial_stress_index",
@@ -1988,7 +2021,7 @@
       "name_zh": "中国",
       "flag": "🇨🇳",
       "canonical_file": "china_canonical_frame.json",
-      "indicator_count": 111,
+      "indicator_count": 114,
       "indicators": [
         {
           "id": "a_share_market_cap_akshare",
@@ -2222,6 +2255,17 @@
           "latest_val": 88.4
         },
         {
+          "id": "core_cpi_yoy",
+          "label_en": "China Core CPI YoY (NBS ex-Food & Energy)",
+          "label_zh": "中国核心CPI同比 (国家统计局 剔除食品与能源)",
+          "unit": "%",
+          "section": "prices",
+          "frequency": "monthly",
+          "obs_count": 18,
+          "latest_date": "2026-10-01",
+          "latest_val": 0.4
+        },
+        {
           "id": "cpi_inflation",
           "label_en": "CPI Inflation",
           "label_zh": "CPI通胀",
@@ -2250,9 +2294,20 @@
           "unit": "%",
           "section": "prices",
           "frequency": "monthly",
-          "obs_count": 225,
-          "latest_date": "2026-09-01",
-          "latest_val": 0.9
+          "obs_count": 226,
+          "latest_date": "2026-10-01",
+          "latest_val": 0.3
+        },
+        {
+          "id": "credit_gap",
+          "label_en": "CN BIS Basel III Credit-to-GDP Gap",
+          "label_zh": "CN 国际清算银行(BIS)信贷/GDP缺口",
+          "unit": "%",
+          "section": "money_credit",
+          "frequency": "quarterly",
+          "obs_count": 8,
+          "latest_date": "2026-06-30",
+          "latest_val": 15.8
         },
         {
           "id": "current_account_gdp",
@@ -2283,9 +2338,9 @@
           "unit": "%",
           "section": "external",
           "frequency": "monthly",
-          "obs_count": 224,
-          "latest_date": "2026-08-01",
-          "latest_val": 25.0
+          "obs_count": 225,
+          "latest_date": "2026-09-01",
+          "latest_val": 2.4
         },
         {
           "id": "customs_imports_value_akshare",
@@ -2305,9 +2360,9 @@
           "unit": "%",
           "section": "external",
           "frequency": "monthly",
-          "obs_count": 224,
-          "latest_date": "2026-08-01",
-          "latest_val": 28.2
+          "obs_count": 225,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.3
         },
         {
           "id": "customs_trade_balance_akshare",
@@ -2316,9 +2371,9 @@
           "unit": "USD bn",
           "section": "external",
           "frequency": "monthly",
-          "obs_count": 224,
-          "latest_date": "2026-08-01",
-          "latest_val": 119.085193648
+          "obs_count": 225,
+          "latest_date": "2026-09-01",
+          "latest_val": 81.71
         },
         {
           "id": "death_rate",
@@ -2470,9 +2525,9 @@
           "unit": "%",
           "section": "investment",
           "frequency": "monthly",
-          "obs_count": 136,
-          "latest_date": "2026-08-01",
-          "latest_val": -13.51
+          "obs_count": 137,
+          "latest_date": "2026-09-01",
+          "latest_val": 3.4
         },
         {
           "id": "fx_reserves",
@@ -2602,9 +2657,9 @@
           "unit": "%",
           "section": "activity_production",
           "frequency": "monthly",
-          "obs_count": 193,
-          "latest_date": "2026-08-01",
-          "latest_val": 5.2
+          "obs_count": 194,
+          "latest_date": "2026-09-01",
+          "latest_val": 5.4
         },
         {
           "id": "industry_value_added_growth",
@@ -2657,9 +2712,9 @@
           "unit": "%",
           "section": "money_credit",
           "frequency": "monthly",
-          "obs_count": 1538,
-          "latest_date": "2026-09-20",
-          "latest_val": 3.0
+          "obs_count": 1539,
+          "latest_date": "2026-10-21",
+          "latest_val": 3.1
         },
         {
           "id": "lpr_5y_akshare",
@@ -2668,9 +2723,9 @@
           "unit": "%",
           "section": "money_credit",
           "frequency": "monthly",
-          "obs_count": 86,
-          "latest_date": "2026-09-20",
-          "latest_val": 3.5
+          "obs_count": 87,
+          "latest_date": "2026-10-21",
+          "latest_val": 3.6
         },
         {
           "id": "m1_yoy_akshare",
@@ -2679,9 +2734,9 @@
           "unit": "%",
           "section": "money_credit",
           "frequency": "monthly",
-          "obs_count": 224,
-          "latest_date": "2026-08-01",
-          "latest_val": 4.1
+          "obs_count": 225,
+          "latest_date": "2026-09-01",
+          "latest_val": -7.4
         },
         {
           "id": "m2_yoy_akshare",
@@ -2690,9 +2745,9 @@
           "unit": "%",
           "section": "money_credit",
           "frequency": "monthly",
-          "obs_count": 224,
-          "latest_date": "2026-08-01",
-          "latest_val": 7.5
+          "obs_count": 225,
+          "latest_date": "2026-09-01",
+          "latest_val": 6.8
         },
         {
           "id": "manufacturing_pmi_akshare",
@@ -2822,9 +2877,9 @@
           "unit": "CNY tn",
           "section": "money_credit",
           "frequency": "monthly",
-          "obs_count": 346,
-          "latest_date": "2026-08-01",
-          "latest_val": 40.181426
+          "obs_count": 347,
+          "latest_date": "2026-09-01",
+          "latest_val": 40.18
         },
         {
           "id": "pbc_total_assets_akshare",
@@ -2833,9 +2888,9 @@
           "unit": "CNY tn",
           "section": "money_credit",
           "frequency": "monthly",
-          "obs_count": 296,
-          "latest_date": "2026-08-01",
-          "latest_val": 49.856728000000004
+          "obs_count": 297,
+          "latest_date": "2026-09-01",
+          "latest_val": 49.86
         },
         {
           "id": "ppi_index_akshare",
@@ -2855,9 +2910,9 @@
           "unit": "%",
           "section": "prices",
           "frequency": "monthly",
-          "obs_count": 248,
-          "latest_date": "2026-08-01",
-          "latest_val": 3.8
+          "obs_count": 250,
+          "latest_date": "2026-10-01",
+          "latest_val": -2.9
         },
         {
           "id": "private_credit_gdp",
@@ -2926,6 +2981,17 @@
           "latest_val": 4.95994886240992
         },
         {
+          "id": "real_policy_rate",
+          "label_en": "CN Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "CN 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "money_credit",
+          "frequency": "monthly",
+          "obs_count": 1539,
+          "latest_date": "2026-10-21",
+          "latest_val": 2.8
+        },
+        {
           "id": "real_residential_property_price_bis",
           "label_en": "Real Residential Property Prices",
           "label_zh": "实际住宅价格指数",
@@ -2943,9 +3009,9 @@
           "unit": "%",
           "section": "consumption",
           "frequency": "monthly",
-          "obs_count": 194,
-          "latest_date": "2026-08-01",
-          "latest_val": 0.4
+          "obs_count": 195,
+          "latest_date": "2026-09-01",
+          "latest_val": 3.2
         },
         {
           "id": "rural_cpi_yoy_akshare",
@@ -3130,9 +3196,9 @@
           "unit": "%",
           "section": "population_labor",
           "frequency": "annual",
-          "obs_count": 35,
-          "latest_date": "2025",
-          "latest_val": 4.615
+          "obs_count": 36,
+          "latest_date": "2026-09-01",
+          "latest_val": 5.1
         },
         {
           "id": "urban_cpi_yoy_akshare",
@@ -3174,9 +3240,9 @@
           "unit": "CNY per USD",
           "section": "external",
           "frequency": "daily",
-          "obs_count": 242,
-          "latest_date": "2026-10-09",
-          "latest_val": 6.733
+          "obs_count": 244,
+          "latest_date": "2026-10-30",
+          "latest_val": 7.125
         },
         {
           "id": "usd_cny_spot",
@@ -3219,7 +3285,7 @@
       "name_zh": "欧元区",
       "flag": "🇪🇺",
       "canonical_file": "euro_area_canonical_frame.json",
-      "indicator_count": 72,
+      "indicator_count": 76,
       "indicators": [
         {
           "id": "aaa_yield_10y",
@@ -3354,6 +3420,17 @@
           "latest_val": 3.1
         },
         {
+          "id": "credit_gap",
+          "label_en": "EA BIS Basel III Credit-to-GDP Gap",
+          "label_zh": "EA 国际清算银行(BIS)信贷/GDP缺口",
+          "unit": "%",
+          "section": "stability_structural",
+          "frequency": "quarterly",
+          "obs_count": 8,
+          "latest_date": "2026-06-30",
+          "latest_val": -6.8
+        },
+        {
           "id": "current_account_gdp",
           "label_en": "Current Account Balance",
           "label_zh": "经常账户差额占GDP比重",
@@ -3429,6 +3506,17 @@
           "obs_count": 7126,
           "latest_date": "2026-10-30",
           "latest_val": 1.1172
+        },
+        {
+          "id": "euro_stoxx_return_yoy",
+          "label_en": "Euro Stoxx 50 Index YoY Return",
+          "label_zh": "欧洲斯托克50指数年度收益率",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "monthly",
+          "obs_count": 46,
+          "latest_date": "2026-10-01",
+          "latest_val": 15.8
         },
         {
           "id": "eurosystem_total_assets",
@@ -3904,6 +3992,17 @@
           "latest_val": 1.3
         },
         {
+          "id": "real_policy_rate",
+          "label_en": "EA Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "EA 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "daily",
+          "obs_count": 9466,
+          "latest_date": "2026-10-31",
+          "latest_val": 0.5
+        },
+        {
           "id": "reer",
           "label_en": "Euro Real Effective Exchange Rate (BIS)",
           "label_zh": "欧元实际有效汇率 (BIS)",
@@ -3957,6 +4056,17 @@
           "obs_count": 37,
           "latest_date": "2031",
           "latest_val": -3.1879547448418
+        },
+        {
+          "id": "systemic_stress_ciss",
+          "label_en": "ECB Composite Indicator of Systemic Stress (CISS)",
+          "label_zh": "欧洲央行系统性压力综合指标 (CISS 金融条件)",
+          "unit": "index",
+          "section": "monetary_financial",
+          "frequency": "quarterly",
+          "obs_count": 15,
+          "latest_date": "2026-09-30",
+          "latest_val": 0.16
         },
         {
           "id": "target2_balances_de",
@@ -4021,7 +4131,7 @@
       "name_zh": "英国",
       "flag": "🇬🇧",
       "canonical_file": "uk_canonical_frame.json",
-      "indicator_count": 95,
+      "indicator_count": 97,
       "indicators": [
         {
           "id": "awe_regular_pay_growth",
@@ -4187,6 +4297,17 @@
           "obs_count": 357,
           "latest_date": "2026-09-01",
           "latest_val": 3.6
+        },
+        {
+          "id": "credit_gap",
+          "label_en": "UK BIS Basel III Credit-to-GDP Gap",
+          "label_zh": "UK 国际清算银行(BIS)信贷/GDP缺口",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "quarterly",
+          "obs_count": 8,
+          "latest_date": "2026-06-30",
+          "latest_val": -10.5
         },
         {
           "id": "current_account_gdp",
@@ -4860,6 +4981,17 @@
           "latest_val": 6577.0
         },
         {
+          "id": "real_policy_rate",
+          "label_en": "UK Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "UK 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "daily",
+          "obs_count": 7537,
+          "latest_date": "2026-10-29",
+          "latest_val": 0.25
+        },
+        {
           "id": "redundancy_level",
           "label_en": "Redundancy Level",
           "label_zh": "裁员人数",
@@ -5076,7 +5208,7 @@
       "name_zh": "日本",
       "flag": "🇯🇵",
       "canonical_file": "japan_canonical_frame.json",
-      "indicator_count": 57,
+      "indicator_count": 59,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -5231,6 +5363,17 @@
           "obs_count": 321,
           "latest_date": "2026-09-01",
           "latest_val": 0.1749781277340332
+        },
+        {
+          "id": "credit_gap",
+          "label_en": "JP BIS Basel III Credit-to-GDP Gap",
+          "label_zh": "JP 国际清算银行(BIS)信贷/GDP缺口",
+          "unit": "%",
+          "section": "stability_structural",
+          "frequency": "quarterly",
+          "obs_count": 8,
+          "latest_date": "2026-06-30",
+          "latest_val": 9.5
         },
         {
           "id": "current_account_gdp",
@@ -5618,6 +5761,17 @@
           "latest_val": 121.3699
         },
         {
+          "id": "real_policy_rate",
+          "label_en": "JP Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "JP 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "monthly",
+          "obs_count": 381,
+          "latest_date": "2026-09-01",
+          "latest_val": -1.19
+        },
+        {
           "id": "reer",
           "label_en": "Real Effective Exchange Rate",
           "label_zh": "实际有效汇率",
@@ -5713,7 +5867,7 @@
       "name_zh": "南非",
       "flag": "🇿🇦",
       "canonical_file": "south_africa_canonical_frame.json",
-      "indicator_count": 65,
+      "indicator_count": 66,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -6244,6 +6398,17 @@
           "latest_val": 90.333
         },
         {
+          "id": "real_policy_rate",
+          "label_en": "ZA Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "ZA 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "daily",
+          "obs_count": 3088,
+          "latest_date": "2026-10-30",
+          "latest_val": 2.75
+        },
+        {
           "id": "reer",
           "label_en": "Real Effective Exchange Rate (BIS)",
           "label_zh": "实际有效汇率（BIS）",
@@ -6438,7 +6603,7 @@
       "name_zh": "土耳其",
       "flag": "🇹🇷",
       "canonical_file": "turkey_canonical_frame.json",
-      "indicator_count": 54,
+      "indicator_count": 56,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -6936,6 +7101,17 @@
           "latest_val": 2.6
         },
         {
+          "id": "real_policy_rate",
+          "label_en": "TR Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "TR 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "daily",
+          "obs_count": 961,
+          "latest_date": "2026-10-30",
+          "latest_val": 6.27
+        },
+        {
           "id": "real_sector_confidence",
           "label_en": "Real Sector Business Confidence Index (RKGE)",
           "label_zh": "实体部门企业景气指数 (RKGE)",
@@ -7002,6 +7178,17 @@
           "latest_val": 114.519671079132
         },
         {
+          "id": "sovereign_yield_10y",
+          "label_en": "Turkey 10Y Benchmark Government Bond Yield",
+          "label_zh": "土耳其10年期基准国债收益率",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "quarterly",
+          "obs_count": 15,
+          "latest_date": "2026-09-30",
+          "latest_val": 27.85
+        },
+        {
           "id": "try_usd",
           "label_en": "USD/TRY Official Exchange Rate",
           "label_zh": "美元兑土耳其里拉官方汇率",
@@ -7042,7 +7229,7 @@
       "name_zh": "中国香港",
       "flag": "🇭🇰",
       "canonical_file": "hong_kong_canonical_frame.json",
-      "indicator_count": 38,
+      "indicator_count": 40,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -7375,6 +7562,17 @@
           "latest_val": 4.3
         },
         {
+          "id": "real_policy_rate",
+          "label_en": "HK Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "HK 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "monthly",
+          "obs_count": 321,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.45
+        },
+        {
           "id": "reer",
           "label_en": "Real Effective Exchange Rate (REER)",
           "label_zh": "实际有效汇率 (REER)",
@@ -7419,15 +7617,26 @@
           "latest_val": 10.2
         },
         {
+          "id": "sovereign_yield_10y",
+          "label_en": "Hong Kong 10Y Exchange Fund Notes Yield",
+          "label_zh": "香港10年期外汇基金债券收益率",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "quarterly",
+          "obs_count": 15,
+          "latest_date": "2026-09-30",
+          "latest_val": 3.75
+        },
+        {
           "id": "total_reserves_usd",
-          "label_en": "Official Foreign Currency Reserve Assets",
-          "label_zh": "官方外汇储备资产总额",
+          "label_en": "Official Foreign Currency Reserve Assets (HKMA)",
+          "label_zh": "官方外汇储备资产 (香港金管局)",
           "unit": "USD bn",
-          "section": "external_fx",
-          "frequency": "annual",
-          "obs_count": 23,
-          "latest_date": "2023",
-          "latest_val": 425.554111033182
+          "section": "monetary_financial",
+          "frequency": "monthly",
+          "obs_count": 18,
+          "latest_date": "2026-10-31",
+          "latest_val": 421.4
         },
         {
           "id": "underemployment_rate",
@@ -7470,7 +7679,7 @@
       "name_zh": "韩国",
       "flag": "🇰🇷",
       "canonical_file": "south_korea_canonical_frame.json",
-      "indicator_count": 48,
+      "indicator_count": 51,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -7592,6 +7801,17 @@
           "obs_count": 321,
           "latest_date": "2026-09-01",
           "latest_val": 0.3165347771761766
+        },
+        {
+          "id": "credit_gap",
+          "label_en": "KR BIS Basel III Credit-to-GDP Gap",
+          "label_zh": "KR 国际清算银行(BIS)信贷/GDP缺口",
+          "unit": "%",
+          "section": "stability_structural",
+          "frequency": "quarterly",
+          "obs_count": 8,
+          "latest_date": "2026-06-30",
+          "latest_val": 5.2
         },
         {
           "id": "current_account_gdp",
@@ -7946,6 +8166,17 @@
           "latest_val": 3.7473268555803907
         },
         {
+          "id": "real_policy_rate",
+          "label_en": "KR Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "KR 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "monthly",
+          "obs_count": 141,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.12
+        },
+        {
           "id": "reer",
           "label_en": "Real Effective Exchange Rate (REER)",
           "label_zh": "实际有效汇率 (REER)",
@@ -7999,6 +8230,17 @@
           "obs_count": 320,
           "latest_date": "2026-08-01",
           "latest_val": 2.7
+        },
+        {
+          "id": "yield_curve_slope_10y3y",
+          "label_en": "South Korea KTB 10Y-3Y Sovereign Yield Slope",
+          "label_zh": "韩国国债 10Y-3Y 期限利差",
+          "unit": "bps",
+          "section": "monetary_financial",
+          "frequency": "daily",
+          "obs_count": 141,
+          "latest_date": "2026-09-01",
+          "latest_val": 46.3
         }
       ]
     },
@@ -8008,7 +8250,7 @@
       "name_zh": "中国台湾",
       "flag": "🇹🇼",
       "canonical_file": "taiwan_canonical_frame.json",
-      "indicator_count": 48,
+      "indicator_count": 50,
       "indicators": [
         {
           "id": "bank_npl_ratio",
@@ -8429,6 +8671,17 @@
           "latest_val": 18.25
         },
         {
+          "id": "real_policy_rate",
+          "label_en": "TW Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "TW 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "monthly",
+          "obs_count": 261,
+          "latest_date": "2026-09-01",
+          "latest_val": -0.73
+        },
+        {
           "id": "reer",
           "label_en": "Real Effective Exchange Rate (REER)",
           "label_zh": "实际有效汇率 (REER)",
@@ -8537,6 +8790,17 @@
           "obs_count": 1703,
           "latest_date": "2026-10-23",
           "latest_val": 32.54
+        },
+        {
+          "id": "yield_curve_slope_10y5y",
+          "label_en": "Taiwan Sovereign 10Y-5Y Yield Slope",
+          "label_zh": "台湾公债 10Y-5Y 期限利差",
+          "unit": "bps",
+          "section": "monetary_financial",
+          "frequency": "bimonthly",
+          "obs_count": 137,
+          "latest_date": "2026-08-01",
+          "latest_val": 62.8
         }
       ]
     },
@@ -8546,7 +8810,7 @@
       "name_zh": "哈萨克斯坦",
       "flag": "🇰🇿",
       "canonical_file": "kazakhstan_canonical_frame.json",
-      "indicator_count": 37,
+      "indicator_count": 38,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -8814,14 +9078,14 @@
         },
         {
           "id": "policy_rate",
-          "label_en": "Monetary Policy-Related Interest Rate",
-          "label_zh": "央行货币政策利率",
+          "label_en": "National Bank of Kazakhstan Base Rate (Базалық мөлшерлеме)",
+          "label_zh": "哈萨克斯坦国家银行基准利率",
           "unit": "%",
           "section": "monetary_financial",
-          "frequency": "monthly",
-          "obs_count": 188,
-          "latest_date": "2020-12-01",
-          "latest_val": 9.0
+          "frequency": "event",
+          "obs_count": 25,
+          "latest_date": "2026-10-30",
+          "latest_val": 14.25
         },
         {
           "id": "primary_balance_gdp",
@@ -8866,6 +9130,17 @@
           "obs_count": 26,
           "latest_date": "2025",
           "latest_val": 6.5
+        },
+        {
+          "id": "real_policy_rate",
+          "label_en": "KZ Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "KZ 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "event",
+          "obs_count": 25,
+          "latest_date": "2026-10-30",
+          "latest_val": 5.01
         },
         {
           "id": "reer",
@@ -8963,7 +9238,7 @@
       "name_zh": "乌兹别克斯坦",
       "flag": "🇺🇿",
       "canonical_file": "uzbekistan_canonical_frame.json",
-      "indicator_count": 36,
+      "indicator_count": 37,
       "indicators": [
         {
           "id": "bank_capital_ratio",
@@ -9274,6 +9549,17 @@
           "latest_val": 7.69962477932913
         },
         {
+          "id": "real_policy_rate",
+          "label_en": "UZ Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "UZ 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "monthly",
+          "obs_count": 120,
+          "latest_date": "2024-12-01",
+          "latest_val": 3.71
+        },
+        {
           "id": "reer",
           "label_en": "Real Effective Exchange Rate (120 Partners)",
           "label_zh": "实际有效汇率 (REER 120国)",
@@ -9369,7 +9655,7 @@
       "name_zh": "埃及",
       "flag": "🇪🇬",
       "canonical_file": "egypt_canonical_frame.json",
-      "indicator_count": 37,
+      "indicator_count": 38,
       "indicators": [
         {
           "id": "brent_crude_oil",
@@ -9691,6 +9977,17 @@
           "latest_val": 4.39201068570188
         },
         {
+          "id": "real_policy_rate",
+          "label_en": "EG Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "EG 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "monthly",
+          "obs_count": 116,
+          "latest_date": "2025-05-01",
+          "latest_val": 7.65
+        },
+        {
           "id": "reer",
           "label_en": "Real Effective Exchange Rate (120 Partners)",
           "label_zh": "实际有效汇率 (REER 120国)",
@@ -9786,7 +10083,7 @@
       "name_zh": "尼日利亚",
       "flag": "🇳🇬",
       "canonical_file": "nigeria_canonical_frame.json",
-      "indicator_count": 39,
+      "indicator_count": 40,
       "indicators": [
         {
           "id": "agriculture_growth",
@@ -10054,14 +10351,14 @@
         },
         {
           "id": "policy_rate",
-          "label_en": "Central Bank Monetary Policy Rate (MPR)",
-          "label_zh": "央行货币政策利率 (CBN MPR)",
+          "label_en": "Central Bank of Nigeria Monetary Policy Rate (MPR)",
+          "label_zh": "尼日利亚央行货币政策基准利率 (MPR)",
           "unit": "%",
           "section": "monetary_financial",
-          "frequency": "monthly",
-          "obs_count": 116,
-          "latest_date": "2024-08-01",
-          "latest_val": 26.75
+          "frequency": "event",
+          "obs_count": 12,
+          "latest_date": "2026-10-30",
+          "latest_val": 27.25
         },
         {
           "id": "primary_balance_gdp",
@@ -10106,6 +10403,17 @@
           "obs_count": 26,
           "latest_date": "2025",
           "latest_val": 4.01336180700973
+        },
+        {
+          "id": "real_policy_rate",
+          "label_en": "NG Real Policy Rate (Policy Rate − CPI YoY)",
+          "label_zh": "NG 实际政策利率 (基准利率 − CPI同比)",
+          "unit": "%",
+          "section": "monetary_financial",
+          "frequency": "event",
+          "obs_count": 12,
+          "latest_date": "2026-10-30",
+          "latest_val": 11.86
         },
         {
           "id": "reer",

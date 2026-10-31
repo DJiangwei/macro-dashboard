@@ -12,20 +12,20 @@
 | **Poland (PL)** | 61.2 | 45.0 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 60.0 (usable with watch-list) |
 | **Czechia (CZ)** | 65.0 | 58.3 | **mixed** | moderate expansion | near-target inflation | neutral-moderate stance | 50.3 (needs data review) |
 | **Romania (RO)** | 30.0 | 46.7 | **defensive** | contraction | inflation pressure | restrictive stance | 50.0 (needs data review) |
-| **China (CN)** | 67.5 | 46.7 | **mixed** | above-trend expansion | disinflation risk | neutral-moderate stance | 37.6 (needs data review) |
-| **Euro Area (EA)** | 60.0 | 61.7 | **mixed** | stall-speed growth | near-target inflation | neutral-moderate stance | 56.3 (needs data review) |
-| **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 44.1 (needs data review) |
-| **South Africa (ZA)** | 50.0 | 53.3 | **mixed** | moderate expansion | inflation pressure | restrictive stance | 47.4 (needs data review) |
-| **United Kingdom (UK)** | 52.9 | 53.3 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 50.1 (needs data review) |
-| **United States (US)** | 55.0 | 43.3 | **defensive** | above-trend expansion | above-target inflation | neutral-moderate stance | 77.8 (usable with watch-list) |
-| **Turkey (TR)** | 46.2 | 51.7 | **defensive** | moderate expansion | inflation pressure | restrictive stance | 65.8 (usable with watch-list) |
-| **Hong Kong (HK)** | 63.3 | 55.0 | **mixed** | above-trend expansion | near-target inflation | insufficient data | 69.5 (usable with watch-list) |
-| **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 66.7 (usable with watch-list) |
-| **Taiwan (TW)** | 75.0 | 71.7 | **constructive** | above-trend expansion | near-target inflation | accommodative stance | 89.7 (high-confidence dashboard) |
-| **Kazakhstan (KZ)** | 43.8 | 55.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 77.4 (usable with watch-list) |
-| **Uzbekistan (UZ)** | 53.8 | 51.7 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 73.3 (usable with watch-list) |
-| **Egypt (EG)** | 53.8 | 45.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 58.9 (needs data review) |
-| **Nigeria (NG)** | 53.8 | 55.0 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 63.3 (usable with watch-list) |
+| **China (CN)** | 63.8 | 46.7 | **mixed** | above-trend expansion | disinflation risk | neutral-moderate stance | 41.9 (needs data review) |
+| **Euro Area (EA)** | 60.0 | 61.7 | **mixed** | stall-speed growth | near-target inflation | neutral-moderate stance | 56.9 (needs data review) |
+| **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 44.8 (needs data review) |
+| **South Africa (ZA)** | 50.0 | 53.3 | **mixed** | moderate expansion | inflation pressure | restrictive stance | 47.7 (needs data review) |
+| **United Kingdom (UK)** | 52.9 | 53.3 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 50.3 (needs data review) |
+| **United States (US)** | 55.0 | 43.3 | **defensive** | above-trend expansion | above-target inflation | neutral-moderate stance | 77.9 (usable with watch-list) |
+| **Turkey (TR)** | 46.2 | 51.7 | **defensive** | moderate expansion | inflation pressure | restrictive stance | 66.2 (usable with watch-list) |
+| **Hong Kong (HK)** | 63.3 | 55.0 | **mixed** | above-trend expansion | near-target inflation | insufficient data | 73.0 (usable with watch-list) |
+| **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 64.9 (usable with watch-list) |
+| **Taiwan (TW)** | 75.0 | 71.7 | **constructive** | above-trend expansion | near-target inflation | accommodative stance | 89.2 (high-confidence dashboard) |
+| **Kazakhstan (KZ)** | 43.8 | 55.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 80.6 (high-confidence dashboard) |
+| **Uzbekistan (UZ)** | 53.8 | 51.7 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 70.6 (usable with watch-list) |
+| **Egypt (EG)** | 53.8 | 45.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 58.4 (needs data review) |
+| **Nigeria (NG)** | 53.8 | 55.0 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 64.5 (usable with watch-list) |
 
 ---
 
@@ -39,7 +39,7 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | **PL** (NBP) | **3.75%** | 4.00% (2.5%) | 1.50% | **6.75%** (6.25% ~ 7.25%) | **-3.00%** | *substantially accommodative* |
 | **CZ** (CNB) | **3.50%** | 2.20% (2.0%) | 1.20% | **3.30%** (2.80% ~ 3.80%) | **+0.20%** | *calibrated / neutral* |
 | **RO** (BNR) | **6.50%** | 6.50% (2.5%) | 2.00% | **9.00%** (8.50% ~ 9.50%) | **-2.50%** | *substantially accommodative* |
-| **CN** (PBC) | **3.00%** | 0.90% (3.0%) | 1.50% | **1.70%** (1.20% ~ 2.20%) | **+1.30%** | *moderately restrictive* |
+| **CN** (PBC) | **3.10%** | 0.30% (3.0%) | 1.50% | **0.90%** (0.40% ~ 1.40%) | **+2.20%** | *substantially restrictive* |
 | **EA** (ECB) | **2.50%** | 2.00% (2.0%) | 0.50% | **2.55%** (2.05% ~ 3.05%) | **-0.05%** | *calibrated / neutral* |
 | **JP** (Bank of Japan) | **1.04%** | 2.23% (2.0%) | 0.00% | **2.31%** (1.81% ~ 2.81%) | **-1.27%** | *moderately accommodative* |
 | **ZA** (SARB) | **7.25%** | 4.50% (4.5%) | 2.50% | **7.27%** (6.77% ~ 7.77%) | **-0.02%** | *calibrated / neutral* |
@@ -48,10 +48,10 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | **TR** (TCMB) | **36.00%** | 29.73% (5.0%) | 3.00% | **44.65%** (44.15% ~ 45.15%) | **-8.65%** | *substantially accommodative* |
 | **KR** (BOK) | **3.00%** | 2.88% (2.0%) | 1.00% | **5.09%** (4.59% ~ 5.59%) | **-2.09%** | *substantially accommodative* |
 | **TW** (CBC) | **2.00%** | 2.73% (2.0%) | 1.00% | **5.60%** (5.10% ~ 6.10%) | **-3.60%** | *substantially accommodative* |
-| **KZ** (NBK) | **9.00%** | 9.24% (5.0%) | 2.50% | **15.11%** (14.61% ~ 15.61%) | **-6.11%** | *substantially accommodative* |
+| **KZ** (NBK) | **14.25%** | 9.24% (5.0%) | 2.50% | **15.11%** (14.61% ~ 15.61%) | **-0.86%** | *moderately accommodative* |
 | **UZ** (CBU) | **13.50%** | 6.23% (5.0%) | 3.00% | **10.94%** (10.44% ~ 11.44%) | **+2.56%** | *substantially restrictive* |
 | **EG** (CBE) | **24.50%** | 14.54% (7.0%) | 2.00% | **20.26%** (19.76% ~ 20.76%) | **+4.24%** | *substantially restrictive* |
-| **NG** (CBN) | **26.75%** | 15.39% (9.0%) | 2.00% | **20.84%** (20.34% ~ 21.34%) | **+5.91%** | *substantially restrictive* |
+| **NG** (CBN) | **27.25%** | 15.39% (9.0%) | 2.00% | **20.84%** (20.34% ~ 21.34%) | **+6.41%** | *substantially restrictive* |
 
 ---
 
@@ -142,8 +142,8 @@ US Net Liquidity Metric is calculated as $\text{Fed Total Assets} - \text{Treasu
 | **Federal Reserve (Fed)** | `US` | Overnight Reverse Repo Facility (ON RRP) | Daily | 2026-10-30 | **$4.38B** | Near-exhausted ($4.4B vs $2.55T peak); liquidity cushion spent |
 | **European Central Bank (ECB)** | `EA` | Eurosystem Total Assets (Consolidated) | Weekly | 2026-10-19 | **€5,935.0B** | Controlled quantitative tightening across Eurosystem |
 | **Bank of Japan (BoJ)** | `JP` | Bank of Japan Total Assets | Monthly | 2026-09-01 | **¥625.0T** | Transition away from Yield Curve Control (YCC) |
-| **People's Bank of China (PBC)** | `CN` | PBC Balance Sheet Total Assets | Monthly | 2026-08-01 | **¥49.86T** | Structural liquidity support & credit expansion |
-| **People's Bank of China (PBC)** | `CN` | PBC Reserve Money (Base Money) | Monthly | 2026-08-01 | **¥40.18T** | RRR cuts lowering cost of funding for banks |
+| **People's Bank of China (PBC)** | `CN` | PBC Balance Sheet Total Assets | Monthly | 2026-09-01 | **¥49.86T** | Structural liquidity support & credit expansion |
+| **People's Bank of China (PBC)** | `CN` | PBC Reserve Money (Base Money) | Monthly | 2026-09-01 | **¥40.18T** | RRR cuts lowering cost of funding for banks |
 
 ---
 

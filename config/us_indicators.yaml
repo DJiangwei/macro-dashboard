@@ -2651,6 +2651,42 @@ indicators:
   caveat_en: NIPA federal current expenditures; complements Treasury cash-flow data.
   caveat_zh: NIPA联邦经常支出；补充财政部现金流数据。
   source_authority: official_primary
+- id: real_policy_rate
+  section: monetary_financial
+  label_en: US Real Policy Rate
+  label_zh: 美国实际政策利率 (Effective Fed Funds Rate − CPI YoY)
+  unit: '%'
+  fetcher: manual
+  source_name: Federal Reserve / BLS / Derived
+  source_url: https://fred.stlouisfed.org
+  frequency: monthly
+  caveat_en: Derived real policy rate calculated as nominal Effective Federal Funds Rate minus headline CPI YoY.
+  caveat_zh: 衍生实际政策利率，以有效联邦基金利率减去CPI同比增速计算。
+  source_authority: official_primary
+- id: credit_gap
+  section: monetary_financial
+  label_en: US BIS Basel III Credit-to-GDP Gap
+  label_zh: 美国 国际清算银行(BIS)信贷/GDP缺口
+  unit: '%'
+  fetcher: manual
+  source_name: Bank for International Settlements (BIS)
+  source_url: https://www.bis.org/statistics/c_gaps.htm
+  frequency: quarterly
+  caveat_en: BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend.
+  caveat_zh: 国际清算银行巴塞尔协议III逆周期资本缓冲指引；信贷/GDP比率对长期趋势的偏离度。
+  source_authority: official_primary
+- id: sp500_return_yoy
+  section: monetary_financial
+  label_en: S&P 500 Index YoY Return
+  label_zh: 标普500指数年度收益率
+  unit: '%'
+  fetcher: manual
+  source_name: FRED / S&P Dow Jones Indices
+  source_url: https://fred.stlouisfed.org/series/SP500
+  frequency: monthly
+  caveat_en: Year-over-year percentage change of the S&P 500 benchmark index.
+  caveat_zh: 标普500基准指数年度百分比变动。
+  source_authority: official_primary
 data_gaps:
 - section: gs_market_indexes
   item_en: GSFCI, GSAI, GSSI, GSRI

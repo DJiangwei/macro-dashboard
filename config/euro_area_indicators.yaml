@@ -1363,6 +1363,50 @@ indicators:
     start_date: "1999-01-01"
     caveat_en: "Credit to households and NPISHs from all sectors at market value as percentage of GDP."
     caveat_zh: "来自所有部门的住户及为住户服务的非营利机构信贷占GDP比重（按市值计）。"
+  - id: real_policy_rate
+    section: monetary_financial
+    label_en: "Euro Area Real Policy Rate"
+    label_zh: "欧元区实际政策利率 (ECB DFR − HICP同比)"
+    unit: "%"
+    fetcher: manual
+    source_name: "ECB / Eurostat / Derived"
+    source_url: "https://data.ecb.europa.eu"
+    frequency: "monthly"
+    caveat_en: "Derived real policy rate calculated as nominal ECB Deposit Facility Rate minus headline HICP YoY."
+    caveat_zh: "衍生实际政策利率，以欧央行存款便利利率(DFR)减去HICP调和CPI同比增速计算。"
+  - id: systemic_stress_ciss
+    section: monetary_financial
+    label_en: "ECB Composite Indicator of Systemic Stress (CISS)"
+    label_zh: "欧洲央行系统性压力综合指标 (CISS 金融条件)"
+    unit: "index"
+    fetcher: manual
+    source_name: "European Central Bank (ECB)"
+    source_url: "https://data.ecb.europa.eu"
+    frequency: "quarterly"
+    caveat_en: "Official ECB CISS measuring contemporary systemic stress in the financial system."
+    caveat_zh: "欧央行官方系统性压力综合指标(CISS)，衡量金融系统即期系统性压力水平。"
+  - id: credit_gap
+    section: stability_structural
+    label_en: "Euro Area BIS Basel III Credit-to-GDP Gap"
+    label_zh: "欧元区 国际清算银行(BIS)信贷/GDP缺口"
+    unit: "%"
+    fetcher: manual
+    source_name: "Bank for International Settlements (BIS)"
+    source_url: "https://www.bis.org/statistics/c_gaps.htm"
+    frequency: "quarterly"
+    caveat_en: "BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend."
+    caveat_zh: "国际清算银行巴塞尔协议III逆周期资本缓冲指引；信贷/GDP比率对长期趋势的偏离度。"
+  - id: euro_stoxx_return_yoy
+    section: monetary_financial
+    label_en: "Euro Stoxx 50 Index YoY Return"
+    label_zh: "欧洲斯托克50指数年度收益率"
+    unit: "%"
+    fetcher: manual
+    source_name: "ECB / OECD / FRED"
+    source_url: "https://fred.stlouisfed.org/series/SPASTT01EZM661N"
+    frequency: "monthly"
+    caveat_en: "Year-over-year percentage change of the Euro Area benchmark share price index."
+    caveat_zh: "欧元区基准股票价格指数年度百分比变动。"
 
 data_gaps:
   - section: production_cycle

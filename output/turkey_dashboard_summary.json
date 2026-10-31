@@ -1,8 +1,8 @@
 {
   "file": "turkey.html",
-  "generated": "2026-10-31T16:33:47.813432+00:00",
-  "charts": 54,
-  "source_groups": 16,
+  "generated": "2026-10-31T22:13:23.427337+00:00",
+  "charts": 56,
+  "source_groups": 18,
   "data_gaps": 1,
   "low_confidence": 12,
   "key_series_latest": [
@@ -550,7 +550,7 @@
   "unavailable": [
     "food_cpi_inflation"
   ],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "usd_try_latest": "49.7747 (2026-10-30)",
   "cross_checks": [
@@ -580,10 +580,11 @@
       "value"
     ],
     "file": "turkey_canonical_frame.json",
-    "series": 54,
-    "observations": 10342,
-    "series_count": 54,
-    "observation_count": 10342
+    "series": 56,
+    "observations": 11318,
+    "series_count": 56,
+    "observation_count": 11318,
+    "snapshot_generated": "2026-10-31T22:13:18.408819+00:00"
   },
   "data_gaps_detail": [
     {
@@ -595,7 +596,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 16,
+    "source_groups": 18,
     "sources": [
       {
         "source_name": "Eurostat / TurkStat",
@@ -638,7 +639,15 @@
         "charts": 2
       },
       {
+        "source_name": "Central Bank of Republic of Turkey (CBRT) / Ministry of Treasury",
+        "charts": 1
+      },
+      {
         "source_name": "Central Bank of the Republic of Turkey (TCMB)",
+        "charts": 1
+      },
+      {
+        "source_name": "Central Bank of the Republic of Turkey (TCMB) / EVDS / Derived",
         "charts": 1
       },
       {
@@ -664,7 +673,7 @@
     ],
     "quality_counts": {
       "low_confidence": 12,
-      "verified": 22,
+      "verified": 24,
       "watch": 20
     },
     "unavailable_count": 1
@@ -678,7 +687,7 @@
   "freshness": {
     "as_of_date": "2026-10-31",
     "counts": {
-      "current": 32,
+      "current": 34,
       "due": 6,
       "projection": 4,
       "stale": 12
@@ -1017,7 +1026,7 @@
       },
       {
         "id": "goods_exports",
-        "concept_id": "tr:goods_exports",
+        "concept_id": "exports_growth",
         "label_en": "Exports of Goods SA (USD)",
         "latest_date": "2026-08-01",
         "frequency": "monthly",
@@ -1039,7 +1048,7 @@
       },
       {
         "id": "goods_imports",
-        "concept_id": "tr:goods_imports",
+        "concept_id": "imports_growth",
         "label_en": "Imports of Goods SA (USD)",
         "latest_date": "2026-08-01",
         "frequency": "monthly",
@@ -1085,7 +1094,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 54
+      "level": 56
     },
     "non_level": []
   },
@@ -1095,6 +1104,6 @@
       "date",
       "value"
     ],
-    "charted_series": 54
+    "charted_series": 56
   }
 }

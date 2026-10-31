@@ -1,8 +1,8 @@
 {
   "file": "south_africa.html",
-  "generated": "2026-10-31T16:33:22.580079+00:00",
-  "charts": 65,
-  "source_groups": 16,
+  "generated": "2026-10-31T22:13:23.144978+00:00",
+  "charts": 66,
+  "source_groups": 17,
   "data_gaps": 7,
   "low_confidence": 22,
   "key_series_latest": [
@@ -224,7 +224,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "repo_rate_latest": "n/a",
   "cross_checks": [
@@ -254,10 +254,11 @@
       "value"
     ],
     "file": "south_africa_canonical_frame.json",
-    "series": 65,
-    "observations": 30557,
-    "series_count": 65,
-    "observation_count": 30557
+    "series": 66,
+    "observations": 33645,
+    "series_count": 66,
+    "observation_count": 33645,
+    "snapshot_generated": "2026-10-31T22:13:17.805706+00:00"
   },
   "data_gaps_detail": [
     {
@@ -311,7 +312,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 16,
+    "source_groups": 17,
     "sources": [
       {
         "source_name": "IMF SDMX / Balance of Payments (SARB)",
@@ -374,13 +375,17 @@
         "charts": 1
       },
       {
+        "source_name": "SARB Web API / Derived",
+        "charts": 1
+      },
+      {
         "source_name": "World Bank International Debt Statistics",
         "charts": 1
       }
     ],
     "quality_counts": {
       "low_confidence": 22,
-      "verified": 10,
+      "verified": 11,
       "watch": 33
     },
     "unavailable_count": 0
@@ -394,7 +399,7 @@
   "freshness": {
     "as_of_date": "2026-10-31",
     "counts": {
-      "current": 34,
+      "current": 35,
       "due": 6,
       "projection": 3,
       "stale": 22
@@ -1021,44 +1026,14 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 57,
+      "level": 58,
       "pct_change": 1,
       "yoy_pct": 7
     },
     "non_level": [
       {
-        "id": "real_gdp_growth",
-        "label_en": "Real GDP Growth, QoQ",
-        "transform": "pct_change",
-        "unit": "% q/q"
-      },
-      {
-        "id": "real_gdp_yoy",
-        "label_en": "Real GDP Growth, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "nominal_gdp_growth",
-        "label_en": "Nominal GDP Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
         "id": "gfcf_growth",
         "label_en": "Gross Fixed Capital Formation Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "manufacturing_employment_growth",
-        "label_en": "Manufacturing Employment Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "house_price_growth",
-        "label_en": "House Price Growth, YoY",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
@@ -1073,6 +1048,36 @@
         "label_en": "Goods Imports Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
+      },
+      {
+        "id": "house_price_growth",
+        "label_en": "House Price Growth, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "manufacturing_employment_growth",
+        "label_en": "Manufacturing Employment Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "nominal_gdp_growth",
+        "label_en": "Nominal GDP Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "real_gdp_growth",
+        "label_en": "Real GDP Growth, QoQ",
+        "transform": "pct_change",
+        "unit": "% q/q"
+      },
+      {
+        "id": "real_gdp_yoy",
+        "label_en": "Real GDP Growth, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
       }
     ]
   },
@@ -1082,6 +1087,6 @@
       "date",
       "value"
     ],
-    "charted_series": 65
+    "charted_series": 66
   }
 }

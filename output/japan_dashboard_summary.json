@@ -1,8 +1,8 @@
 {
   "file": "japan.html",
-  "generated": "2026-10-31T16:33:03.833407+00:00",
-  "charts": 57,
-  "source_groups": 22,
+  "generated": "2026-10-31T22:13:22.826428+00:00",
+  "charts": 59,
+  "source_groups": 24,
   "data_gaps": 6,
   "low_confidence": 19,
   "key_series_latest": [
@@ -212,7 +212,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "boj_rate_latest": "n/a",
   "cross_checks": [
@@ -242,10 +242,11 @@
       "value"
     ],
     "file": "japan_canonical_frame.json",
-    "series": 57,
-    "observations": 20260,
-    "series_count": 57,
-    "observation_count": 20260
+    "series": 59,
+    "observations": 20649,
+    "series_count": 59,
+    "observation_count": 20649,
+    "snapshot_generated": "2026-10-31T22:13:19.182051+00:00"
   },
   "data_gaps_detail": [
     {
@@ -292,7 +293,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 22,
+    "source_groups": 24,
     "sources": [
       {
         "source_name": "FRED / BIS",
@@ -347,6 +348,10 @@
         "charts": 2
       },
       {
+        "source_name": "Bank for International Settlements (BIS)",
+        "charts": 1
+      },
+      {
         "source_name": "Bank of Japan / Corporate Goods Price Index",
         "charts": 1
       },
@@ -364,6 +369,10 @@
       },
       {
         "source_name": "FRED / Nikkei Inc.",
+        "charts": 1
+      },
+      {
+        "source_name": "FRED / OECD (Bank of Japan) / Derived",
         "charts": 1
       },
       {
@@ -385,7 +394,7 @@
     ],
     "quality_counts": {
       "low_confidence": 19,
-      "verified": 7,
+      "verified": 9,
       "watch": 31
     },
     "unavailable_count": 0
@@ -399,7 +408,7 @@
   "freshness": {
     "as_of_date": "2026-10-31",
     "counts": {
-      "current": 20,
+      "current": 22,
       "due": 15,
       "projection": 3,
       "stale": 19
@@ -1112,7 +1121,7 @@
       },
       {
         "id": "yield_curve_slope_10y3m",
-        "concept_id": "jp:yield_curve_slope_10y3m",
+        "concept_id": "yield_curve_slope",
         "label_en": "10Y-3M JGB Yield Curve Slope",
         "latest_date": "2026-08-01",
         "frequency": "monthly",
@@ -1158,41 +1167,11 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 47,
+      "level": 49,
       "pct_change": 1,
       "yoy_pct": 9
     },
     "non_level": [
-      {
-        "id": "real_gdp_growth",
-        "label_en": "Real GDP Growth, QoQ",
-        "transform": "pct_change",
-        "unit": "% q/q"
-      },
-      {
-        "id": "real_gdp_yoy",
-        "label_en": "Real GDP Growth, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "nominal_gdp_growth",
-        "label_en": "Nominal GDP Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "gfcf_growth",
-        "label_en": "Gross Fixed Capital Formation Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "government_consumption_growth",
-        "label_en": "Government Consumption Growth",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
       {
         "id": "employment_growth",
         "label_en": "Employment Growth",
@@ -1200,14 +1179,8 @@
         "unit": "% y/y"
       },
       {
-        "id": "producer_price_inflation",
-        "label_en": "Corporate Goods Price Index, YoY",
-        "transform": "yoy_pct",
-        "unit": "% y/y"
-      },
-      {
-        "id": "house_price_growth",
-        "label_en": "House Price Growth, YoY",
+        "id": "gfcf_growth",
+        "label_en": "Gross Fixed Capital Formation Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
       },
@@ -1222,6 +1195,42 @@
         "label_en": "Goods Imports Growth",
         "transform": "yoy_pct",
         "unit": "% y/y"
+      },
+      {
+        "id": "government_consumption_growth",
+        "label_en": "Government Consumption Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "house_price_growth",
+        "label_en": "House Price Growth, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "nominal_gdp_growth",
+        "label_en": "Nominal GDP Growth",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "producer_price_inflation",
+        "label_en": "Corporate Goods Price Index, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      },
+      {
+        "id": "real_gdp_growth",
+        "label_en": "Real GDP Growth, QoQ",
+        "transform": "pct_change",
+        "unit": "% q/q"
+      },
+      {
+        "id": "real_gdp_yoy",
+        "label_en": "Real GDP Growth, YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
       }
     ]
   },
@@ -1231,6 +1240,6 @@
       "date",
       "value"
     ],
-    "charted_series": 57
+    "charted_series": 59
   }
 }

@@ -1,10 +1,10 @@
 {
   "file": "nigeria.html",
-  "generated": "2026-10-31T16:36:11.330772+00:00",
-  "charts": 39,
-  "source_groups": 14,
+  "generated": "2026-10-31T22:13:25.294142+00:00",
+  "charts": 40,
+  "source_groups": 15,
   "data_gaps": 2,
-  "low_confidence": 12,
+  "low_confidence": 11,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -344,15 +344,15 @@
     },
     {
       "id": "policy_rate",
-      "label_en": "Central Bank Monetary Policy Rate (MPR)",
-      "label_zh": "央行货币政策利率 (CBN MPR)",
-      "latest_date": "2024-08-01",
-      "latest_value": 26.75,
-      "latest_display": "26.8 %",
-      "frequency": "monthly",
-      "source_name": "IMF / DBnomics (IFS)",
-      "series": "IMF/IFS/M.NG.FPOLM_PA",
-      "quality_status": "low_confidence"
+      "label_en": "Central Bank of Nigeria Monetary Policy Rate (MPR)",
+      "label_zh": "尼日利亚央行货币政策基准利率 (MPR)",
+      "latest_date": "2026-10-30",
+      "latest_value": 27.25,
+      "latest_display": "27.2 %",
+      "frequency": "event",
+      "source_name": "Central Bank of Nigeria (CBN)",
+      "series": "policy_rate",
+      "quality_status": "verified"
     },
     {
       "id": "lending_rate",
@@ -452,7 +452,7 @@
     }
   ],
   "unavailable": [],
-  "data_mode": "refresh",
+  "data_mode": "snapshot",
   "latest_cards": [],
   "usd_ngn_latest": "1,345.76 (2026-10-30)",
   "cross_checks": [
@@ -482,10 +482,11 @@
       "value"
     ],
     "file": "nigeria_canonical_frame.json",
-    "series": 39,
-    "observations": 13662,
-    "series_count": 39,
-    "observation_count": 13662
+    "series": 40,
+    "observations": 13570,
+    "series_count": 40,
+    "observation_count": 13570,
+    "snapshot_generated": "2026-10-31T22:13:18.165389+00:00"
   },
   "data_gaps_detail": [
     {
@@ -504,7 +505,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 14,
+    "source_groups": 15,
     "sources": [
       {
         "source_name": "IMF SDMX / CBN",
@@ -515,12 +516,12 @@
         "charts": 7
       },
       {
-        "source_name": "IMF / DBnomics (IFS)",
+        "source_name": "IMF DataMapper (WEO)",
         "charts": 5
       },
       {
-        "source_name": "IMF DataMapper (WEO)",
-        "charts": 5
+        "source_name": "IMF / DBnomics (IFS)",
+        "charts": 4
       },
       {
         "source_name": "IMF SDMX / Nigeria NBS",
@@ -528,6 +529,10 @@
       },
       {
         "source_name": "Bruegel (Darvas REER Dataset)",
+        "charts": 2
+      },
+      {
+        "source_name": "Central Bank of Nigeria (CBN)",
         "charts": 2
       },
       {
@@ -539,7 +544,7 @@
         "charts": 2
       },
       {
-        "source_name": "Central Bank of Nigeria (CBN)",
+        "source_name": "Central Bank of Nigeria (CBN) / Derived",
         "charts": 1
       },
       {
@@ -564,8 +569,8 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 12,
-      "verified": 1,
+      "low_confidence": 11,
+      "verified": 3,
       "watch": 26
     },
     "unavailable_count": 0
@@ -579,10 +584,10 @@
   "freshness": {
     "as_of_date": "2026-10-31",
     "counts": {
-      "current": 20,
+      "current": 22,
       "due": 1,
       "projection": 6,
-      "stale": 12
+      "stale": 11
     },
     "latest_historical_date": "2026-10-30",
     "attention": [
@@ -650,28 +655,6 @@
         "comparability": "medium",
         "source_name": "IMF / DBnomics (IFS)",
         "series": "IMF/IFS/M.NG.FILR_PA",
-        "transform": "level"
-      },
-      {
-        "id": "policy_rate",
-        "concept_id": "policy_rate",
-        "label_en": "Central Bank Monetary Policy Rate (MPR)",
-        "latest_date": "2024-08-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2024-08-01",
-        "age_days": 791,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF / DBnomics (IFS)",
-        "series": "IMF/IFS/M.NG.FPOLM_PA",
         "transform": "level"
       },
       {
@@ -876,7 +859,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 39
+      "level": 40
     },
     "non_level": []
   },
@@ -886,6 +869,6 @@
       "date",
       "value"
     ],
-    "charted_series": 39
+    "charted_series": 40
   }
 }

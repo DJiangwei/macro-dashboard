@@ -1,6 +1,6 @@
 {
   "schema_version": "cee-build-snapshot-v1",
-  "generated": "2026-10-31T16:25:52.295598+00:00",
+  "generated": "2026-10-31T22:13:20.618631+00:00",
   "countries": {
     "HU": {
       "coverage": {
@@ -11,9 +11,9 @@
         "generated_at": "2026-10-31"
       },
       "source_mix": {
-        "verified": 39,
+        "verified": 40,
         "watch": 52,
-        "low_confidence": 14
+        "low_confidence": 13
       },
       "dropped_proxy_slots": 4,
       "indicators": {
@@ -1457,13 +1457,13 @@
           "frequency": "monthly",
           "source": "Derived from official policy-rate configuration and Eurostat HICP",
           "source_url": "https://www.mnb.hu/en/monetary-policy/the-monetary-council/press-releases/2026/press-release-on-the-monetary-council-meeting-of-28-april-2026",
-          "quality_status": "low_confidence",
+          "quality_status": "verified",
           "quality_note": "Ex-post official policy rate minus headline HICP; not an ex-ante real policy rate. Derived from official policy-rate configuration and Eurostat HICP.  Source validation passed.",
           "source_authority": "official_primary",
           "derivation": "derived",
           "freshness_status": "stale",
           "validation_status": "passed",
-          "comparability": "medium",
+          "comparability": "high",
           "observation_type": "historical",
           "is_projection": false,
           "is_proxy": false,
@@ -2338,9 +2338,9 @@
         "generated_at": "2026-10-31"
       },
       "source_mix": {
-        "verified": 40,
+        "verified": 41,
         "watch": 54,
-        "low_confidence": 14
+        "low_confidence": 13
       },
       "dropped_proxy_slots": 1,
       "indicators": {
@@ -3850,13 +3850,13 @@
           "frequency": "monthly",
           "source": "Derived from official policy-rate configuration and Eurostat HICP",
           "source_url": "https://nbp.pl/en/monetary-policy/mpc-decisions/",
-          "quality_status": "low_confidence",
+          "quality_status": "verified",
           "quality_note": "Ex-post official policy rate minus headline HICP; not an ex-ante real policy rate. Derived from official policy-rate configuration and Eurostat HICP.  Source validation passed.",
           "source_authority": "official_primary",
           "derivation": "derived",
           "freshness_status": "stale",
           "validation_status": "passed",
-          "comparability": "medium",
+          "comparability": "high",
           "observation_type": "historical",
           "is_projection": false,
           "is_proxy": false,
@@ -4731,9 +4731,9 @@
         "generated_at": "2026-10-31"
       },
       "source_mix": {
-        "verified": 40,
+        "verified": 41,
         "watch": 50,
-        "low_confidence": 14
+        "low_confidence": 13
       },
       "dropped_proxy_slots": 5,
       "indicators": {
@@ -5166,7 +5166,7 @@
           "source": "CNB external debt / CNB international reserves",
           "source_url": "https://www.cnb.cz/en/statistics/bop_stat/external_debt/zz_usd_en.htm",
           "quality_status": "watch",
-          "quality_note": "Uses IMF ARA ratio where available; Czechia uses a quarterly CNB short-term external debt position over matched CNB quarter-end international reserves. Read as a structural external-liquidity gauge. National-CB override for Czechia where IMF ARA ratio coverage is missing; external debt is quarterly while reserve denominator is matched to quarter-end.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot.",
+          "quality_note": "Uses IMF ARA ratio where available; Czechia uses a quarterly CNB short-term external debt position over matched CNB quarter-end international reserves. Read as a structural external-liquidity gauge. National-CB override for Czechia where IMF ARA ratio coverage is missing; external debt is quarterly while reserve denominator is matched to quarter-end.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot.",
           "source_authority": "official_primary",
           "derivation": "observed",
           "freshness_status": "current",
@@ -6155,13 +6155,13 @@
           "frequency": "monthly",
           "source": "Derived from official policy-rate configuration and Eurostat HICP",
           "source_url": "https://www.cnb.cz/en/monetary-policy/instruments/index.html",
-          "quality_status": "low_confidence",
+          "quality_status": "verified",
           "quality_note": "Ex-post official policy rate minus headline HICP; not an ex-ante real policy rate. Derived from official policy-rate configuration and Eurostat HICP.  Source validation passed.",
           "source_authority": "official_primary",
           "derivation": "derived",
           "freshness_status": "stale",
           "validation_status": "passed",
-          "comparability": "medium",
+          "comparability": "high",
           "observation_type": "historical",
           "is_projection": false,
           "is_proxy": false,
@@ -7036,9 +7036,9 @@
         "generated_at": "2026-10-31"
       },
       "source_mix": {
-        "verified": 40,
+        "verified": 41,
         "watch": 50,
-        "low_confidence": 14
+        "low_confidence": 13
       },
       "dropped_proxy_slots": 5,
       "indicators": {
@@ -8460,13 +8460,13 @@
           "frequency": "monthly",
           "source": "Derived from official policy-rate configuration and Eurostat HICP",
           "source_url": "https://www.bnr.ro/1970-rata-dobanzii-de-politica-monetara",
-          "quality_status": "low_confidence",
+          "quality_status": "verified",
           "quality_note": "Ex-post official policy rate minus headline HICP; not an ex-ante real policy rate. Derived from official policy-rate configuration and Eurostat HICP.  Source validation passed.",
           "source_authority": "official_primary",
           "derivation": "derived",
           "freshness_status": "stale",
           "validation_status": "passed",
-          "comparability": "medium",
+          "comparability": "high",
           "observation_type": "historical",
           "is_projection": false,
           "is_proxy": false,

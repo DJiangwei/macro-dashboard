@@ -383,10 +383,10 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h1><span data-lang="en">Uzbekistan Dashboard</span><span data-lang="zh">乌兹别克斯坦宏观仪表盘</span></h1>
     <p class="subtitle"><span data-lang="en">A data-first macro page for Uzbekistan built from DBnomics (IMF IFS & FSI), IMF DataMapper, World Bank WDI, FRED, and Bruegel REER.</span><span data-lang="zh">基于DBnomics (IMF IFS与FSI)、IMF DataMapper、世界银行WDI、FRED与Bruegel实际有效汇率构建的乌兹别克斯坦数据优先宏观页面。</span></p>
     <div class="meta-row">
-      <span class="meta-chip">36 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
-      <span class="meta-chip">13 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
+      <span class="meta-chip">37 <span data-lang="en">charts</span><span data-lang="zh">张图</span></span>
+      <span class="meta-chip">14 <span data-lang="en">public source groups</span><span data-lang="zh">组公开来源</span></span>
       <span class="meta-chip">2 <span data-lang="en">official-data gaps tracked</span><span data-lang="zh">个官方数据缺口</span></span>
-      <span class="meta-chip">6 <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
+      <span class="meta-chip">7 <span data-lang="en">low-confidence charts</span><span data-lang="zh">张低置信图</span></span>
       <span class="meta-chip">0 <span data-lang="en">native official</span><span data-lang="zh">原生官方</span> · 0 <span data-lang="en">mirror</span><span data-lang="zh">镜像</span></span>
     </div>
   </header>
@@ -1499,6 +1499,35 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Provider update: 2026-10-08</span>
   </footer>
   <p class="caveat"><span data-lang="en">Domestic credit to private sector refers to financial resources provided to the private sector.</span><span data-lang="zh">金融机构向私营部门提供的信贷总额占GDP比重。</span></p>
+</article>
+
+
+<article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="real_policy_rate">
+  <div class="chart-head">
+    <div class="chart-title">
+      <h3><span data-lang="en">UZ Real Policy Rate (Policy Rate − CPI YoY)</span><span data-lang="zh">UZ 实际政策利率 (基准利率 − CPI同比)</span></h3>
+    </div>
+    <div class="chart-status">
+
+      <div class="latest-reading" data-latest-reading data-latest-date="2024-12-01">
+        <span class="latest-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
+        <span class="latest-value"><strong>3.71</strong><em>%</em></span>
+        <time datetime="2024-12-01"><span data-lang="en">Dec 2024</span><span data-lang="zh">2024年12月</span></time>
+      </div>
+      <span class="quality-pill">low confidence</span><span class="authority-chip">official mirror</span><span class="freshness-chip">stale</span>
+    </div>
+  </div>
+  <div id="chart-real_policy_rate" class="plotly-chart"></div>
+  <script>
+    Plotly.newPlot("chart-real_policy_rate", [{"name": "Actual / history", "x": ["2015-01-01", "2015-02-01", "2015-03-01", "2015-04-01", "2015-05-01", "2015-06-01", "2015-07-01", "2015-08-01", "2015-09-01", "2015-10-01", "2015-11-01", "2015-12-01", "2016-01-01", "2016-02-01", "2016-03-01", "2016-04-01", "2016-05-01", "2016-06-01", "2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01", "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01", "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01", "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", "2018-07-01", "2018-08-01", "2018-09-01", "2018-10-01", "2018-11-01", "2018-12-01", "2019-01-01", "2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01", "2019-09-01", "2019-10-01", "2019-11-01", "2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01", "2020-06-01", "2020-07-01", "2020-08-01", "2020-09-01", "2020-10-01", "2020-11-01", "2020-12-01", "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01", "2021-06-01", "2021-07-01", "2021-08-01", "2021-09-01", "2021-10-01", "2021-11-01", "2021-12-01", "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01", "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01"], "y": [-1.27, -1.16, -1.05, -0.71, -0.11, 0.38, 0.7, 1.1, 1.1, 1.01, 1.27, 1.44, 0.7, 0.66, 0.7, 0.83, 1.4, 1.39, 1.66, 1.68, 1.31, 0.86, 0.12, -0.8, -0.65, -1.31, -1.92, -2.32, -3.56, 0.4, -1.23, -1.96, -1.83, -1.58, -2.2, -4.78, -6.14, -5.74, -5.78, -5.61, -4.97, -3.65, -2.32, -1.69, -0.21, -0.31, -0.52, 1.73, 3.04, 2.5, 2.37, 2.3, 2.32, 2.39, 2.51, -0.45, 0.04, -0.24, 0.38, 0.81, 1.83, 2.66, 2.51, 0.62, 1.14, 0.84, 0.74, 3.42, 2.35, 2.46, 2.68, 2.83, 2.38, 2.6, 3.13, 3.31, 3.07, 3.06, 2.93, 2.88, 3.22, 3.36, 3.7, 4.02, 4.16, 4.3, 6.55, 6.62, 6.03, 3.78, 2.68, 2.7, 2.76, 2.84, 2.71, 2.74, 2.8, 2.76, 2.34, 3.04, 3.64, 4.98, 5.07, 5.05, 4.82, 5.04, 5.26, 5.25, 5.45, 5.68, 6.05, 5.94, 3.46, 3.4, 3.03, 3.05, 3.06, 3.27, 3.49, 3.71], "mode": "lines", "line": {"color": "#990f3d", "width": 2.4}, "type": "scatter"}, {"name": "IMF WEO estimate / forecast", "x": ["2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01"], "y": [5.45, 5.68, 6.05, 5.94, 3.46, 3.4, 3.03, 3.05, 3.06, 3.27, 3.49, 3.71], "mode": "lines", "line": {"color": "#364b61", "width": 2.2, "dash": "dash"}, "type": "scatter"}, {"name": "Latest observation", "meta": "cp-latest-marker", "x": ["2024-12-01"], "y": [3.71], "mode": "markers", "marker": {"size": 8, "color": "#990f3d", "line": {"width": 2, "color": "#ffffff"}}, "showlegend": false, "hovertemplate": "Latest: %{y}<extra></extra>", "cliponaxis": false, "type": "scatter"}], {"height": 360, "margin": {"l": 52, "r": 26, "t": 20, "b": 46}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "size": 11, "color": "#12151a"}, "xaxis": {"gridcolor": "rgba(18,21,26,0.06)", "showgrid": false, "autorange": true, "automargin": true}, "yaxis": {"title": "%", "gridcolor": "rgba(18,21,26,0.06)", "zeroline": true, "zerolinewidth": 1.4, "zerolinecolor": "rgba(18,21,26,0.40)", "autorange": true, "automargin": true}, "legend": {"orientation": "h", "y": -0.24}, "hovermode": "x unified", "autosize": true}, {displayModeBar:"hover", displaylogo:false, responsive:true});
+  </script>
+  <footer>
+    <span>Source: <a href="https://db.nomics.world/IMF/IFS/M.UZ.FPOLM_PA" target="_blank" rel="noreferrer">IMF / DBnomics (IFS) / Derived</a></span>
+    <span>Series: real_policy_rate</span>
+    <span>Frequency: monthly</span>
+    <span>Provider update: 2024-12-01</span>
+  </footer>
+  <p class="caveat"><span data-lang="en">Derived real policy rate calculated as CBU Policy Rate minus headline CPI YoY.</span><span data-lang="zh">衍生实际政策利率，以乌兹别克斯坦央行基准利率减去CPI同比增速计算。</span></p>
 </article>
 
 
