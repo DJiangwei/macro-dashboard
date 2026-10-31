@@ -1345,6 +1345,7 @@ def render_html(catalog: dict) -> str:
     {country_nav_html}
     <a href="chart_studio.html" class="active" title="Macro Chart Studio · 宏观图表工坊">📈 Studio</a>
     <a href="my_dashboard.html" title="My Dashboard · 我的自选宏观看板">⭐ My Dashboard</a>
+    <a href="policy_tracker.html" title="Central Bank Policy & Event Tracker · 全球央行与宏观事件追踪">🏛️ Policy</a>
   </nav>
   <div class="topbar-actions">
     <a href="index.html" class="topbar-btn">← <span data-lang="en">Home</span><span data-lang="zh">首页</span></a>
