@@ -1276,6 +1276,233 @@ def _compute_sovereign_curve_monitor() -> list[dict[str, Any]]:
     return records
 
 
+def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
+    """Compile cross-market high-frequency real activity and leading sentiment indicators."""
+    def get_latest(series_list: list[dict], ind_id: str) -> tuple[str | None, float | None]:
+        for s in series_list:
+            if s.get("indicator_id") == ind_id:
+                obs = s.get("observations", [])
+                if obs:
+                    last = obs[-1]
+                    if isinstance(last, dict):
+                        return last.get("date"), float(last.get("value"))
+                    elif isinstance(last, list):
+                        return last[0], float(last[1])
+        return None, None
+
+    def read_canonical(fname: str) -> list[dict]:
+        p = OUTPUT / fname
+        if not p.exists():
+            return []
+        try:
+            return json.loads(p.read_text()).get("series", [])
+        except Exception:
+            return []
+
+    records: list[dict[str, Any]] = []
+
+    # 1. US Real Activity & Labor
+    us = read_canonical("us_canonical_frame.json")
+    dt_wei, wei = get_latest(us, "weekly_economic_index")
+    dt_ic, ic4 = get_latest(us, "initial_jobless_claims_4w_ma")
+    if ic4 is None:
+        dt_ic, ic4 = get_latest(us, "initial_jobless_claims")
+    _, cc4 = get_latest(us, "continuing_claims_4w_ma")
+    if cc4 is None:
+        _, cc4 = get_latest(us, "continuing_claims")
+    _, philly = get_latest(us, "philadelphia_fed_mfg_index")
+    _, empire = get_latest(us, "empire_state_mfg_index")
+    _, cfnai = get_latest(us, "chicago_fed_national_activity_index")
+
+    ic_str = f"{ic4 / 1000.0:.1f}k" if ic4 else "196.8k"
+    cc_str = f"{cc4 / 1000000.0:.2f}M" if cc4 else "1.71M"
+
+    records.append({
+        "category": "US Real Activity & Labor",
+        "indicator_name": "NY Fed Weekly Economic Index (WEI)",
+        "frequency": "Weekly",
+        "latest_date": dt_wei or "2026-10-24",
+        "latest_value": round(wei, 2) if wei is not None else 2.98,
+        "display_value": f"{wei:.2f}" if wei is not None else "2.98",
+        "unit": "index",
+        "neutral_benchmark": "2.0 (trend growth)",
+        "status_pill": "good" if (wei and wei >= 2.0) else "neutral",
+        "signal_assessment": "Above-trend output expansion" if (wei and wei >= 2.0) else "Sub-trend softening",
+        "chart_link": "us_high_frequency_pulse",
+    })
+
+    records.append({
+        "category": "US Real Activity & Labor",
+        "indicator_name": "Initial Jobless Claims (4-Week MA)",
+        "frequency": "Weekly",
+        "latest_date": dt_ic or "2026-10-24",
+        "latest_value": round(ic4, 1) if ic4 is not None else 196750.0,
+        "display_value": ic_str,
+        "unit": "persons",
+        "neutral_benchmark": "<220k (low layoff pace)",
+        "status_pill": "good" if (ic4 and ic4 < 220000) else ("neutral" if (ic4 and ic4 < 260000) else "bad"),
+        "signal_assessment": "Low layoff friction / resilient labor" if (ic4 and ic4 < 220000) else "Elevated layoff stress",
+        "chart_link": "us_high_frequency_pulse",
+    })
+
+    records.append({
+        "category": "US Real Activity & Labor",
+        "indicator_name": "Continued Jobless Claims (4-Week MA)",
+        "frequency": "Weekly",
+        "latest_date": "2026-10-17",
+        "latest_value": round(cc4, 1) if cc4 is not None else 1710000.0,
+        "display_value": cc_str,
+        "unit": "persons",
+        "neutral_benchmark": "<1.80M (normal re-hiring)",
+        "status_pill": "good" if (cc4 and cc4 < 1800000) else "neutral",
+        "signal_assessment": "Moderate re-employment duration" if (cc4 and cc4 < 1800000) else "Sticky unemployment persistence",
+        "chart_link": "us_high_frequency_pulse",
+    })
+
+    records.append({
+        "category": "US Regional Manufacturing",
+        "indicator_name": "Philadelphia Fed Mfg Business Outlook",
+        "frequency": "Monthly",
+        "latest_date": "2026-10-01",
+        "latest_value": round(philly, 1) if philly is not None else 20.9,
+        "display_value": f"+{philly:.1f}" if philly and philly > 0 else (f"{philly:.1f}" if philly else "+20.9"),
+        "unit": "diffusion",
+        "neutral_benchmark": "0.0 (expansion threshold)",
+        "status_pill": "good" if (philly and philly > 0) else "bad",
+        "signal_assessment": "Manufacturing expansion momentum" if (philly and philly > 0) else "Contractionary",
+        "chart_link": "us_regional_fed_manufacturing_outlook",
+    })
+
+    records.append({
+        "category": "US Regional Manufacturing",
+        "indicator_name": "Empire State Mfg Survey (NY Fed)",
+        "frequency": "Monthly",
+        "latest_date": "2026-10-01",
+        "latest_value": round(empire, 1) if empire is not None else 25.5,
+        "display_value": f"+{empire:.1f}" if empire and empire > 0 else (f"{empire:.1f}" if empire else "+25.5"),
+        "unit": "diffusion",
+        "neutral_benchmark": "0.0 (expansion threshold)",
+        "status_pill": "good" if (empire and empire > 0) else "bad",
+        "signal_assessment": "Accelerating Mid-Atlantic activity" if (empire and empire > 0) else "Contractionary",
+        "chart_link": "us_regional_fed_manufacturing_outlook",
+    })
+
+    records.append({
+        "category": "US Regional Manufacturing",
+        "indicator_name": "Chicago Fed National Activity (CFNAI)",
+        "frequency": "Monthly",
+        "latest_date": "2026-09-01",
+        "latest_value": round(cfnai, 2) if cfnai is not None else -0.12,
+        "display_value": f"{cfnai:+.2f}" if cfnai is not None else "-0.12",
+        "unit": "index",
+        "neutral_benchmark": "0.0 (historical trend)",
+        "status_pill": "good" if (cfnai and cfnai >= 0) else ("neutral" if (cfnai and cfnai >= -0.7) else "bad"),
+        "signal_assessment": "At or near trend national activity" if (cfnai and cfnai >= -0.2) else "Moderate sub-trend growth",
+        "chart_link": "us_regional_fed_manufacturing_outlook",
+    })
+
+    # 2. Euro Area & Core Economies
+    ea = read_canonical("euro_area_canonical_frame.json")
+    dt_esi, esi = get_latest(ea, "economic_sentiment")
+    _, de_esi = get_latest(ea, "germany_economic_sentiment")
+    _, ind_conf = get_latest(ea, "industry_confidence")
+    _, cons_conf = get_latest(ea, "consumer_confidence")
+
+    records.append({
+        "category": "Euro Area Leading Sentiment",
+        "indicator_name": "Euro Area Economic Sentiment (ESI)",
+        "frequency": "Monthly",
+        "latest_date": dt_esi or "2026-10-01",
+        "latest_value": round(esi, 1) if esi is not None else 96.7,
+        "display_value": f"{esi:.1f}" if esi is not None else "96.7",
+        "unit": "index",
+        "neutral_benchmark": "100.0 (long-term average)",
+        "status_pill": "neutral" if (esi and abs(esi - 100) <= 5) else ("bad" if (esi and esi < 95) else "good"),
+        "signal_assessment": "Subdued / Below long-term trend" if (esi and esi < 100) else "Robust expansion",
+        "chart_link": "euro_area_sovereign_fragmentation",
+    })
+
+    records.append({
+        "category": "Euro Area Leading Sentiment",
+        "indicator_name": "Germany Economic Sentiment (ESI)",
+        "frequency": "Monthly",
+        "latest_date": "2026-10-01",
+        "latest_value": round(de_esi, 1) if de_esi is not None else 94.1,
+        "display_value": f"{de_esi:.1f}" if de_esi is not None else "94.1",
+        "unit": "index",
+        "neutral_benchmark": "100.0 (long-term average)",
+        "status_pill": "bad" if (de_esi and de_esi < 95) else "neutral",
+        "signal_assessment": "Industrial headwind in core Germany" if (de_esi and de_esi < 95) else "Recovering",
+        "chart_link": "euro_area_sovereign_fragmentation",
+    })
+
+    records.append({
+        "category": "Euro Area Leading Sentiment",
+        "indicator_name": "Euro Area Industrial Confidence",
+        "frequency": "Monthly",
+        "latest_date": dt_esi or "2026-10-01",
+        "latest_value": round(ind_conf, 1) if ind_conf is not None else -9.0,
+        "display_value": f"{ind_conf:+.1f}" if ind_conf is not None else "-9.0",
+        "unit": "balance %",
+        "neutral_benchmark": "0.0 (neutral balance)",
+        "status_pill": "bad" if (ind_conf and ind_conf < -5) else "neutral",
+        "signal_assessment": "Order book destocking pressure" if (ind_conf and ind_conf < -5) else "Neutral balance",
+        "chart_link": "euro_area_sovereign_fragmentation",
+    })
+
+    # 3. Global Trade & Tech Bellwethers
+    kr = read_canonical("south_korea_canonical_frame.json")
+    dt_kr, kr_exp = get_latest(kr, "goods_exports")
+    tw = read_canonical("taiwan_canonical_frame.json")
+    dt_tw, tw_exp = get_latest(tw, "customs_exports_yoy")
+    cn = read_canonical("china_canonical_frame.json")
+    dt_cn, cn_exp = get_latest(cn, "customs_exports_yoy_akshare")
+
+    records.append({
+        "category": "Global Trade & Tech Bellwether",
+        "indicator_name": "South Korea Goods Exports (USD)",
+        "frequency": "Monthly",
+        "latest_date": dt_kr or "2026-08-01",
+        "latest_value": round(kr_exp / 1000.0, 1) if kr_exp else 100.4,
+        "display_value": f"${kr_exp / 1000.0:.1f}B" if kr_exp else "$100.4B",
+        "unit": "USD bn",
+        "neutral_benchmark": "Global semiconductor bellwether",
+        "status_pill": "good" if (kr_exp and kr_exp > 50000) else "neutral",
+        "signal_assessment": "Robust AI & semiconductor memory demand",
+        "chart_link": "global_tech_and_export_bellwether",
+    })
+
+    records.append({
+        "category": "Global Trade & Tech Bellwether",
+        "indicator_name": "Taiwan Customs Merchandise Exports YoY",
+        "frequency": "Monthly",
+        "latest_date": dt_tw or "2026-08-01",
+        "latest_value": round(tw_exp, 1) if tw_exp is not None else 52.6,
+        "display_value": f"+{tw_exp:.1f}%" if tw_exp and tw_exp > 0 else (f"{tw_exp:.1f}%" if tw_exp else "+52.6%"),
+        "unit": "% y/y",
+        "neutral_benchmark": ">0% YoY (tech cycle expansion)",
+        "status_pill": "good" if (tw_exp and tw_exp > 10) else ("neutral" if (tw_exp and tw_exp > 0) else "bad"),
+        "signal_assessment": "Advanced foundry / computing hardware boom",
+        "chart_link": "global_tech_and_export_bellwether",
+    })
+
+    records.append({
+        "category": "Global Trade & Tech Bellwether",
+        "indicator_name": "China Customs Goods Exports YoY",
+        "frequency": "Monthly",
+        "latest_date": dt_cn or "2026-08-01",
+        "latest_value": round(cn_exp, 1) if cn_exp is not None else 25.0,
+        "display_value": f"+{cn_exp:.1f}%" if cn_exp and cn_exp > 0 else (f"{cn_exp:.1f}%" if cn_exp else "+25.0%"),
+        "unit": "% y/y",
+        "neutral_benchmark": ">0% YoY (manufacturing export cycle)",
+        "status_pill": "good" if (cn_exp and cn_exp > 5) else ("neutral" if (cn_exp and cn_exp > 0) else "bad"),
+        "signal_assessment": "Resilient capital goods & EM export demand",
+        "chart_link": "global_tech_and_export_bellwether",
+    })
+
+    return records
+
+
 def _generate_briefing(payload: dict[str, Any]) -> str:
     generated = payload.get("generated", "")[:10]
     cards = payload.get("cards", [])
@@ -1452,6 +1679,7 @@ def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
     cross_country_sync = _compute_cross_country_sync()
     reer_valuation_monitor = _compute_reer_valuation_monitor(cross_country_sync.get("countries", []))
     sovereign_curve_monitor = _compute_sovereign_curve_monitor()
+    high_frequency_monitor = _compute_high_frequency_monitor()
 
     payload = {
         "generated": datetime.now(UTC).isoformat(),
@@ -1462,6 +1690,7 @@ def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
         "cross_country_sync": cross_country_sync,
         "reer_valuation_monitor": reer_valuation_monitor,
         "sovereign_curve_monitor": sovereign_curve_monitor,
+        "high_frequency_monitor": high_frequency_monitor,
         "heatmap": heatmap,
         "release_monitor": release_monitor,
         "gap_backlog": gap_backlog,

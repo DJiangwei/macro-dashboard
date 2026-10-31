@@ -242,6 +242,47 @@ PRESETS = [
             {"country": "JP", "id": "sovereign_yield_10y", "axis": "left", "color": "#d97706", "label": "Japan JGB 10Y (%)"},
             {"country": "CN", "id": "cgb_yield_10y", "axis": "left", "color": "#dc2626", "label": "China CGB 10Y (%)"}
         ]
+    },
+    {
+        "id": "us_high_frequency_pulse",
+        "title_en": "US High-Frequency Growth Pulse: WEI vs Jobless Claims 4W-MA",
+        "title_zh": "美国高频经济景气脉搏：纽约联储周度经济指数 vs 初请失业金4周均线",
+        "description_zh": "高频追踪美国经济增长与劳动力市场动能：纽约联储周度经济指数(WEI，左轴)与初请失业金4周移动均线(右轴)，反映实际产出与裁员拐点。",
+        "description_en": "Tracks high-frequency US economic momentum: NY Fed Weekly Economic Index (left axis) against 4-Week Moving Average Initial Jobless Claims (right axis).",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "US", "id": "weekly_economic_index", "axis": "left", "color": "#0d7680", "label": "NY Fed Weekly Economic Index"},
+            {"country": "US", "id": "initial_jobless_claims_4w_ma", "axis": "right", "color": "#990f3d", "label": "Initial Jobless Claims 4W-MA (persons)"}
+        ]
+    },
+    {
+        "id": "us_regional_fed_manufacturing_outlook",
+        "title_en": "US Regional Fed Manufacturing: Philly Fed vs Empire State vs Chicago CFNAI",
+        "title_zh": "美国地区联储制造业先行扩散对比 (费城联储 / 纽约帝国州 / 芝加哥联储)",
+        "description_zh": "每月月中率先公布的区域制造业活动扩散指数：费城联储商业前景(左轴)、纽约联储帝国州(左轴)与芝加哥联储全国活动指数(CFNAI，右轴)同屏交叉验证。",
+        "description_en": "Early-month manufacturing diffusion indicators: Philadelphia Fed and NY Fed Empire State (left axis) with Chicago Fed CFNAI (right axis).",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "US", "id": "philadelphia_fed_mfg_index", "axis": "left", "color": "#2563eb", "label": "Philadelphia Fed Mfg Index"},
+            {"country": "US", "id": "empire_state_mfg_index", "axis": "left", "color": "#990f3d", "label": "Empire State Mfg Index"},
+            {"country": "US", "id": "chicago_fed_national_activity_index", "axis": "right", "color": "#0d7680", "label": "Chicago Fed CFNAI (index)"}
+        ]
+    },
+    {
+        "id": "global_tech_and_export_bellwether",
+        "title_en": "Global Tech & Trade Cycle: Korea Exports, Taiwan Customs & China Exports",
+        "title_zh": "全球科技与贸易出口晴雨表：韩国出口 vs 台湾出口 vs 中国海关出口",
+        "description_zh": "全球外需与半导体资本品周期敏感前哨：韩国货物出口（百万美元，左轴）、中国台湾海关出口同比（右轴）与中国海关出口同比（右轴）联动追踪。",
+        "description_en": "Leading global trade cycle indicators across East Asian manufacturing powerhouses: South Korea goods exports (USD mn, left axis), Taiwan customs exports YoY (right axis), and China customs exports YoY (right axis).",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "KR", "id": "goods_exports", "axis": "left", "color": "#2563eb", "label": "South Korea Goods Exports (USD mn)"},
+            {"country": "TW", "id": "customs_exports_yoy", "axis": "right", "color": "#0d7680", "label": "Taiwan Customs Exports (% y/y)"},
+            {"country": "CN", "id": "customs_exports_yoy_akshare", "axis": "right", "color": "#990f3d", "label": "China Customs Exports (% y/y)"}
+        ]
     }
 ]
 

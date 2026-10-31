@@ -1,7 +1,7 @@
 {
   "file": "us.html",
-  "generated": "2026-10-31T08:13:11.257204+00:00",
-  "charts": 173,
+  "generated": "2026-10-31T10:04:11.192317+00:00",
+  "charts": 177,
   "source_groups": 28,
   "data_gaps": 7,
   "low_confidence": 0,
@@ -134,10 +134,10 @@
       "value"
     ],
     "file": "us_canonical_frame.json",
-    "series": 173,
-    "observations": 124372,
-    "series_count": 173,
-    "observation_count": 124372
+    "series": 177,
+    "observations": 128959,
+    "series_count": 177,
+    "observation_count": 128959
   },
   "data_gaps_detail": [
     {
@@ -214,6 +214,10 @@
         "charts": 15
       },
       {
+        "source_name": "FRED / New York Fed",
+        "charts": 5
+      },
+      {
         "source_name": "FRED / Realtor.com",
         "charts": 5
       },
@@ -222,7 +226,7 @@
         "charts": 4
       },
       {
-        "source_name": "FRED / New York Fed",
+        "source_name": "FRED / Department of Labor",
         "charts": 4
       },
       {
@@ -242,15 +246,15 @@
         "charts": 3
       },
       {
-        "source_name": "FRED / Department of Labor",
-        "charts": 2
-      },
-      {
         "source_name": "FRED / ICE BofA",
         "charts": 2
       },
       {
         "source_name": "FRED / OMB",
+        "charts": 2
+      },
+      {
+        "source_name": "FRED / Philadelphia Fed",
         "charts": 2
       },
       {
@@ -298,16 +302,12 @@
         "charts": 1
       },
       {
-        "source_name": "FRED / Philadelphia Fed",
-        "charts": 1
-      },
-      {
         "source_name": "FRED / S&P CoreLogic Case-Shiller",
         "charts": 1
       }
     ],
     "quality_counts": {
-      "verified": 138,
+      "verified": 142,
       "watch": 35
     },
     "unavailable_count": 0
@@ -321,7 +321,7 @@
   "freshness": {
     "as_of_date": "2026-10-31",
     "counts": {
-      "current": 156,
+      "current": 160,
       "due": 16,
       "scheduled_policy": 1
     },
@@ -684,7 +684,7 @@
   "transform_audit": {
     "counts": {
       "diff": 2,
-      "level": 102,
+      "level": 106,
       "pct_change": 7,
       "yoy_pct": 62
     },
@@ -1123,6 +1123,6 @@
       "date",
       "value"
     ],
-    "charted_series": 173
+    "charted_series": 177
   }
 }

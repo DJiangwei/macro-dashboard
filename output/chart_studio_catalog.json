@@ -1,7 +1,7 @@
 {
   "generated": "2026-10-29",
   "total_countries": 18,
-  "total_indicators": 1330,
+  "total_indicators": 1335,
   "countries": [
     {
       "code": "US",
@@ -9,7 +9,7 @@
       "name_zh": "美国",
       "flag": "🇺🇸",
       "canonical_file": "us_canonical_frame.json",
-      "indicator_count": 173,
+      "indicator_count": 177,
       "indicators": [
         {
           "id": "active_listing_count",
@@ -276,6 +276,17 @@
           "latest_val": 1701000.0
         },
         {
+          "id": "continuing_claims_4w_ma",
+          "label_en": "Continued Claims 4-Week Moving Average",
+          "label_zh": "续请失业金4周均线",
+          "unit": "persons",
+          "section": "employment",
+          "frequency": "weekly",
+          "obs_count": 1920,
+          "latest_date": "2026-10-17",
+          "latest_val": 1710000.0
+        },
+        {
           "id": "core_cpi_inflation",
           "label_en": "Core CPI Inflation",
           "label_zh": "核心CPI通胀",
@@ -456,6 +467,17 @@
           "label_en": "Empire State Manufacturing Conditions",
           "label_zh": "纽约联储制造业景气",
           "unit": "diffusion",
+          "section": "production_orders",
+          "frequency": "monthly",
+          "obs_count": 304,
+          "latest_date": "2026-10-01",
+          "latest_val": 25.5
+        },
+        {
+          "id": "empire_state_mfg_index",
+          "label_en": "Empire State Manufacturing Index",
+          "label_zh": "纽约帝国州制造业指数",
+          "unit": "index",
           "section": "production_orders",
           "frequency": "monthly",
           "obs_count": 304,
@@ -868,6 +890,17 @@
           "obs_count": 1921,
           "latest_date": "2026-10-24",
           "latest_val": 194000.0
+        },
+        {
+          "id": "initial_jobless_claims_4w_ma",
+          "label_en": "Initial Claims 4-Week Moving Average",
+          "label_zh": "初请失业金4周均线",
+          "unit": "persons",
+          "section": "employment",
+          "frequency": "weekly",
+          "obs_count": 1921,
+          "latest_date": "2026-10-24",
+          "latest_val": 196750.0
         },
         {
           "id": "inventory_contribution_gdp",
@@ -1286,6 +1319,17 @@
           "obs_count": 441,
           "latest_date": "2026-09-01",
           "latest_val": 3.8
+        },
+        {
+          "id": "philadelphia_fed_mfg_index",
+          "label_en": "Philadelphia Fed Manufacturing Index",
+          "label_zh": "费城联储制造业景气指数",
+          "unit": "index",
+          "section": "production_orders",
+          "frequency": "monthly",
+          "obs_count": 442,
+          "latest_date": "2026-10-01",
+          "latest_val": 20.9
         },
         {
           "id": "philly_fed_outlook",
@@ -3153,7 +3197,7 @@
       "name_zh": "欧元区",
       "flag": "🇪🇺",
       "canonical_file": "euro_area_canonical_frame.json",
-      "indicator_count": 71,
+      "indicator_count": 72,
       "indicators": [
         {
           "id": "aaa_yield_10y",
@@ -3407,6 +3451,17 @@
           "obs_count": 321,
           "latest_date": "2026-09-01",
           "latest_val": 96.7
+        },
+        {
+          "id": "germany_economic_sentiment",
+          "label_en": "Germany Economic Sentiment (ESI)",
+          "label_zh": "德国经济景气指数 (ESI)",
+          "unit": "index",
+          "section": "production_cycle",
+          "frequency": "monthly",
+          "obs_count": 382,
+          "latest_date": "2026-10-01",
+          "latest_val": 94.1
         },
         {
           "id": "gfcf_yoy",
@@ -15238,6 +15293,95 @@
           "axis": "left",
           "color": "#dc2626",
           "label": "China CGB 10Y (%)"
+        }
+      ]
+    },
+    {
+      "id": "us_high_frequency_pulse",
+      "title_en": "US High-Frequency Growth Pulse: WEI vs Jobless Claims 4W-MA",
+      "title_zh": "美国高频经济景气脉搏：纽约联储周度经济指数 vs 初请失业金4周均线",
+      "description_zh": "高频追踪美国经济增长与劳动力市场动能：纽约联储周度经济指数(WEI，左轴)与初请失业金4周移动均线(右轴)，反映实际产出与裁员拐点。",
+      "description_en": "Tracks high-frequency US economic momentum: NY Fed Weekly Economic Index (left axis) against 4-Week Moving Average Initial Jobless Claims (right axis).",
+      "transform": "raw",
+      "date_range": "5y",
+      "series": [
+        {
+          "country": "US",
+          "id": "weekly_economic_index",
+          "axis": "left",
+          "color": "#0d7680",
+          "label": "NY Fed Weekly Economic Index"
+        },
+        {
+          "country": "US",
+          "id": "initial_jobless_claims_4w_ma",
+          "axis": "right",
+          "color": "#990f3d",
+          "label": "Initial Jobless Claims 4W-MA (persons)"
+        }
+      ]
+    },
+    {
+      "id": "us_regional_fed_manufacturing_outlook",
+      "title_en": "US Regional Fed Manufacturing: Philly Fed vs Empire State vs Chicago CFNAI",
+      "title_zh": "美国地区联储制造业先行扩散对比 (费城联储 / 纽约帝国州 / 芝加哥联储)",
+      "description_zh": "每月月中率先公布的区域制造业活动扩散指数：费城联储商业前景(左轴)、纽约联储帝国州(左轴)与芝加哥联储全国活动指数(CFNAI，右轴)同屏交叉验证。",
+      "description_en": "Early-month manufacturing diffusion indicators: Philadelphia Fed and NY Fed Empire State (left axis) with Chicago Fed CFNAI (right axis).",
+      "transform": "raw",
+      "date_range": "5y",
+      "series": [
+        {
+          "country": "US",
+          "id": "philadelphia_fed_mfg_index",
+          "axis": "left",
+          "color": "#2563eb",
+          "label": "Philadelphia Fed Mfg Index"
+        },
+        {
+          "country": "US",
+          "id": "empire_state_mfg_index",
+          "axis": "left",
+          "color": "#990f3d",
+          "label": "Empire State Mfg Index"
+        },
+        {
+          "country": "US",
+          "id": "chicago_fed_national_activity_index",
+          "axis": "right",
+          "color": "#0d7680",
+          "label": "Chicago Fed CFNAI (index)"
+        }
+      ]
+    },
+    {
+      "id": "global_tech_and_export_bellwether",
+      "title_en": "Global Tech & Trade Cycle: Korea Exports, Taiwan Customs & China Exports",
+      "title_zh": "全球科技与贸易出口晴雨表：韩国出口 vs 台湾出口 vs 中国海关出口",
+      "description_zh": "全球外需与半导体资本品周期敏感前哨：韩国货物出口（百万美元，左轴）、中国台湾海关出口同比（右轴）与中国海关出口同比（右轴）联动追踪。",
+      "description_en": "Leading global trade cycle indicators across East Asian manufacturing powerhouses: South Korea goods exports (USD mn, left axis), Taiwan customs exports YoY (right axis), and China customs exports YoY (right axis).",
+      "transform": "raw",
+      "date_range": "5y",
+      "series": [
+        {
+          "country": "KR",
+          "id": "goods_exports",
+          "axis": "left",
+          "color": "#2563eb",
+          "label": "South Korea Goods Exports (USD mn)"
+        },
+        {
+          "country": "TW",
+          "id": "customs_exports_yoy",
+          "axis": "right",
+          "color": "#0d7680",
+          "label": "Taiwan Customs Exports (% y/y)"
+        },
+        {
+          "country": "CN",
+          "id": "customs_exports_yoy_akshare",
+          "axis": "right",
+          "color": "#990f3d",
+          "label": "China Customs Exports (% y/y)"
         }
       ]
     }

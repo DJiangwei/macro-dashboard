@@ -467,6 +467,34 @@ indicators:
   caveat_en: Lewis-Mertens-Stock Weekly Economic Index; a high-frequency public activity composite, not a replacement for ISM or proprietary retail trackers.
   caveat_zh: Lewis-Mertens-Stock周度经济指数；是公开高频活动综合指标，不能替代ISM或专有零售追踪器。
   source_authority: official_primary
+- id: philadelphia_fed_mfg_index
+  section: production_orders
+  label_en: Philadelphia Fed Manufacturing Index
+  label_zh: 费城联储制造业景气指数
+  unit: index
+  fetcher: fred
+  series: GACDFSA066MSFRBPHI
+  source_name: FRED / Philadelphia Fed
+  source_url: https://fred.stlouisfed.org/series/GACDFSA066MSFRBPHI
+  frequency: monthly
+  start_date: '1990-01-01'
+  caveat_en: Philadelphia Fed Manufacturing Business Outlook diffusion index for general business activity; >0 indicates monthly expansion.
+  caveat_zh: 费城联储制造业商业前景调查总体活动扩散指数；>0表示制造业景气处于扩张区间。
+  source_authority: official_primary
+- id: empire_state_mfg_index
+  section: production_orders
+  label_en: Empire State Manufacturing Index
+  label_zh: 纽约帝国州制造业指数
+  unit: index
+  fetcher: fred
+  series: GACDISA066MSFRBNY
+  source_name: FRED / New York Fed
+  source_url: https://fred.stlouisfed.org/series/GACDISA066MSFRBNY
+  frequency: monthly
+  start_date: '2001-07-01'
+  caveat_en: New York Fed Empire State Manufacturing current general business conditions index; released mid-month as an early cyclical gauge.
+  caveat_zh: 纽约联储帝国州制造业当前一般商业状况指数；每月月中发布，是美国最早出炉的官方制造业高频先行读数。
+  source_authority: official_primary
 - id: retail_sales_growth
   section: consumer
   label_en: Retail Sales Growth
@@ -1255,6 +1283,34 @@ indicators:
   start_date: '1990-01-01'
   caveat_en: Continuing claims indicate persistence in unemployment stress.
   caveat_zh: 续请反映失业压力的持续性。
+  source_authority: official_primary
+- id: initial_jobless_claims_4w_ma
+  section: employment
+  label_en: Initial Claims 4-Week Moving Average
+  label_zh: 初请失业金4周均线
+  unit: persons
+  fetcher: fred
+  series: IC4WSA
+  source_name: FRED / Department of Labor
+  source_url: https://fred.stlouisfed.org/series/IC4WSA
+  frequency: weekly
+  start_date: '1990-01-01'
+  caveat_en: 4-week moving average of initial claims; smooths weekly volatility to measure underlying layoff momentum.
+  caveat_zh: 初请失业救济4周移动平均值；平滑周度节假日波动，精准衡量底层劳动力市场裁员趋势。
+  source_authority: official_primary
+- id: continuing_claims_4w_ma
+  section: employment
+  label_en: Continued Claims 4-Week Moving Average
+  label_zh: 续请失业金4周均线
+  unit: persons
+  fetcher: fred
+  series: CC4WSA
+  source_name: FRED / Department of Labor
+  source_url: https://fred.stlouisfed.org/series/CC4WSA
+  frequency: weekly
+  start_date: '1990-01-01'
+  caveat_en: 4-week moving average of continued claims; tracks medium-term persistence of unemployment.
+  caveat_zh: 续请失业救济4周移动平均值；反映求职者再就业难度与失业粘性。
   source_authority: official_primary
 - id: jolts_openings
   section: employment

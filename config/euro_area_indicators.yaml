@@ -323,6 +323,25 @@ indicators:
     caveat_en: "Headline Economic Sentiment Indicator (long-term average = 100); seasonally adjusted."
     caveat_zh: "综合经济景气指数（长期均值=100）；季调口径。"
 
+  - id: germany_economic_sentiment
+    section: production_cycle
+    label_en: "Germany Economic Sentiment (ESI)"
+    label_zh: "德国经济景气指数 (ESI)"
+    unit: "index"
+    fetcher: eurostat_jsonstat
+    dataset: "ei_bssi_m_r2"
+    filters:
+      freq: "M"
+      geo: "DE"
+      indic: "BS-ESI-I"
+      s_adj: "SA"
+    source_name: "Eurostat / DG ECFIN"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bssi_m_r2"
+    frequency: "monthly"
+    start_date: "1995"
+    caveat_en: "European Commission Economic Sentiment Indicator for Germany (long-term average = 100); seasonally adjusted."
+    caveat_zh: "欧盟委员会针对德国的经济景气综合指数（长期均值=100）；季调口径，是欧洲核心工业国景气状态晴雨表。"
+
   - id: industry_confidence
     section: production_cycle
     label_en: "Industrial Confidence Indicator"

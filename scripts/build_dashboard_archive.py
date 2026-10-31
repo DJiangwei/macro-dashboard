@@ -544,6 +544,33 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
         <td>{chart_link}</td>
       </tr>""")
 
+    hf_monitor = workbench.get("high_frequency_monitor", []) or []
+    hf_rows = []
+    for item in hf_monitor:
+        cat = str(item.get("category", ""))
+        ind_name = str(item.get("indicator_name", ""))
+        freq = str(item.get("frequency", ""))
+        dt = str(item.get("latest_date", ""))
+        disp = str(item.get("display_value", ""))
+        unit = str(item.get("unit", ""))
+        bench = str(item.get("neutral_benchmark", ""))
+        pill = str(item.get("status_pill", "neutral"))
+        sig = str(item.get("signal_assessment", ""))
+        preset = str(item.get("chart_link", "us_high_frequency_pulse"))
+        link_html = f'<a href="chart_studio.html?preset={preset}" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a>'
+
+        hf_rows.append(f"""
+      <tr>
+        <td><strong>{escape(cat)}</strong></td>
+        <td><strong>{escape(ind_name)}</strong></td>
+        <td>{escape(freq)}</td>
+        <td>{escape(dt)}</td>
+        <td><span class="score-pill {pill}">{escape(disp)}</span> <em style="font-size: 10px; color: var(--text-secondary);">{escape(unit)}</em></td>
+        <td>{escape(bench)}</td>
+        <td><em>{escape(sig)}</em></td>
+        <td>{link_html}</td>
+      </tr>""")
+
     reer_monitor = workbench.get("reer_valuation_monitor", {}) or {}
     reer_rows = []
     for code in sync_countries:
@@ -684,6 +711,16 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
       <table class="regime-table">
         <thead><tr><th>Country / Entity</th><th>Instrument Tenor</th><th>2Y Yield</th><th>5Y Yield</th><th>10Y Benchmark</th><th>30Y Yield</th><th>Curve Slope</th><th>Spread vs Anchor</th><th>Breakeven Infl (10Y/5Y)</th><th>Curve Regime</th><th>Chart Studio</th></tr></thead>
         <tbody>{''.join(sovereign_rows)}</tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="margin-top: 16px;">
+      <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
+        <strong style="font-size: 13px; color: var(--fg);">Global Real Economy High-Frequency Activity & Leading Indicators Network</strong>
+        <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Multi-horizon leading cyclical indicators: US weekly economic activity (WEI) & smoothed jobless claims (4W-MA), regional Federal Reserve manufacturing outlooks, European Commission economic sentiment (ESI), and East Asian semiconductor & trade bellwethers.</span>
+      </div>
+      <table class="regime-table">
+        <thead><tr><th>Cluster / Domain</th><th>Indicator & Instrument</th><th>Frequency</th><th>Latest Date</th><th>Latest Reading</th><th>Neutral / Trend Threshold</th><th>Cyclical Stance Assessment</th><th>Chart Studio</th></tr></thead>
+        <tbody>{''.join(hf_rows)}</tbody>
       </table>
     </div>
     <div class="table-wrap" style="margin-top: 16px;">
