@@ -147,7 +147,30 @@ US Net Liquidity Metric is calculated as $\text{Fed Total Assets} - \text{Treasu
 
 ---
 
-## 7. Priority Data Quality & Maintenance Backlog
+## 7. Emerging Markets & Frontier External Solvency & Reserve Resilience Monitor
+
+Assessing external funding risks, short-term debt amortization pressures, and official reserve buffers across EM peers.
+Guidotti-Greenspan Rule: $\text{Short-Term External Debt} / \text{Total FX Reserves} < 100\%$ indicates adequate liquid liquidity to cover one year of foreign debt maturities without new borrowing.
+
+| Economy | Cluster | ST Debt / Reserves (Guidotti) | Guidotti Status | Current Account / GDP | Gross FX Reserves | Solvency Assessment & Vulnerability Context |
+| :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+| **Turkey** (`TR`) | Emerging & Frontier | **114.5%** | Breached (>100%) | **-1.8%** | **$69.6B** | High rollover pressure; Guidotti-Greenspan breached (>100%), mitigated by tight monetary defense |
+| **South Africa** (`ZA`) | Emerging & Frontier | **71.6%** | Comfortable (<80%) | **-0.1%** | **$62.5B** | Sound reserve coverage against short-term debt; balanced current account supported by commodity terms of trade |
+| **Egypt** (`EG`) | Emerging & Frontier | **69.0%** | Comfortable (<80%) | **-2.7%** | **$48.9B** | Substantial reserve replenishment post-Ras El-Hekma investment & IMF augmentation; deficit persists |
+| **Nigeria** (`NG`) | Emerging & Frontier | **55.0%** | Comfortable (<80%) | **+3.8%** | **$46.0B** | Hydrocarbon surplus generates external cushion; FX unification stabilizing official reserve accumulation |
+| **Kazakhstan** (`KZ`) | Emerging & Frontier | **42.8%** | Comfortable (<80%) | **-2.9%** | **$66.1B** | Strong sovereign solvency bolstered by National Fund (NFRK) foreign assets & low short-term debt |
+| **Uzbekistan** (`UZ`) | Emerging & Frontier | **13.8%** | Comfortable (<80%) | **-4.8%** | **$66.0B** | Exceptional reserve fortress driven by gold holdings (ST debt only 13.8% of reserves); high CA deficit |
+| **Poland** (`PL`) | Central & Eastern Europe | **81.7%** | Watch Zone (80-100%) | **+0.3%** | **$204.8B** | Strong reserve fortress ($205B) with balanced current account and deep local-currency debt market |
+| **Czechia** (`CZ`) | Central & Eastern Europe | **80.7%** | Watch Zone (80-100%) | **+1.7%** | **$146.3B** | Abundant reserves (>40% of GDP from legacy FX cap); comfortable trade and external solvency balance |
+| **Hungary** (`HU`) | Central & Eastern Europe | **74.2%** | Comfortable (<80%) | **+1.6%** | **$46.4B** | Current account returned to structural surplus; external debt refinancing needs covered by reserves |
+| **Romania** (`RO`) | Central & Eastern Europe | **88.3%** | Watch Zone (80-100%) | **-8.2%** | **$73.4B** | Twin deficit vulnerability (CA deficit -8.2% of GDP); heavy dependence on foreign capital inflows |
+| **China** (`CN`) | Asian EM Surplus Anchors | **<30%** | Net Creditor Fortress | **+3.8%** | **$3,400.3B** | World's largest FX reserve fortress ($3.4T); massive goods trade surplus reinforces external independence |
+| **South Korea** (`KR`) | Asian EM Surplus Anchors | **<30%** | Net Creditor Fortress | **+5.8%** | **$436.2B** | Deep tech export-driven current account surplus ($116B annualized); safe net creditor economy |
+| **Taiwan** (`TW`) | Asian EM Surplus Anchors | **<30%** | Net Creditor Fortress | **+19.8%** | **$600.7B** | Extreme current account surplus (+19.8% of GDP); massive net foreign asset position exceeds 100% of GDP |
+
+---
+
+## 8. Priority Data Quality & Maintenance Backlog
 
 | Code | Section | Item | Priority | Action Hint |
 | :---: | :--- | :--- | :---: | :--- |

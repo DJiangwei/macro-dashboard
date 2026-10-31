@@ -600,6 +600,34 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
         <td>{link_html}</td>
       </tr>""")
 
+    em_vuln_monitor = workbench.get("em_external_vulnerability_monitor", []) or []
+    em_vuln_rows = []
+    for item in em_vuln_monitor:
+        c_name = str(item.get("country_name", ""))
+        c_code = str(item.get("country_code", ""))
+        cluster = str(item.get("cluster", ""))
+        gg_disp = str(item.get("guidotti_greenspan_display", ""))
+        gg_stat = str(item.get("guidotti_status", ""))
+        gg_pill = str(item.get("guidotti_pill", "neutral"))
+        ca_disp = str(item.get("current_account_display", ""))
+        ca_pill = str(item.get("ca_pill", "neutral"))
+        fx_disp = str(item.get("fx_reserves_display", ""))
+        comm = str(item.get("operational_commentary", ""))
+        preset = str(item.get("chart_link", "em_guidotti_greenspan_safety"))
+        link_html = f'<a href="chart_studio.html?preset={preset}" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a>'
+
+        em_vuln_rows.append(f"""
+      <tr>
+        <td><strong>{escape(c_name)}</strong> (<code>{escape(c_code)}</code>)</td>
+        <td>{escape(cluster)}</td>
+        <td><span class="score-pill {gg_pill}"><strong>{escape(gg_disp)}</strong></span></td>
+        <td><em>{escape(gg_stat)}</em></td>
+        <td><span class="score-pill {ca_pill}">{escape(ca_disp)}</span></td>
+        <td><strong>{escape(fx_disp)}</strong></td>
+        <td>{escape(comm)}</td>
+        <td>{link_html}</td>
+      </tr>""")
+
     reer_monitor = workbench.get("reer_valuation_monitor", {}) or {}
     reer_rows = []
     for code in sync_countries:
@@ -760,6 +788,16 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
       <table class="regime-table">
         <thead><tr><th>Institution</th><th>Country</th><th>Indicator & Plumbing Signal</th><th>Frequency</th><th>Latest Date</th><th>Latest Reading</th><th>Policy / Facility Context</th><th>Operational Stance</th><th>Chart Studio</th></tr></thead>
         <tbody>{''.join(cb_liq_rows)}</tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="margin-top: 16px;">
+      <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
+        <strong style="font-size: 13px; color: var(--fg);">Global EM & Frontier External Solvency & Reserve Resilience Network</strong>
+        <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Emerging and frontier economies external debt coverage, Guidotti-Greenspan safety ratio (Short-Term External Debt / FX Reserves &lt; 100%), structural current account balance (% GDP), and gross official foreign exchange buffers.</span>
+      </div>
+      <table class="regime-table">
+        <thead><tr><th>Country / Entity</th><th>Cluster</th><th>ST Debt / Reserves (Guidotti)</th><th>Guidotti Safety Status</th><th>Current Account / GDP</th><th>Gross FX Reserves</th><th>External Solvency Assessment & Vulnerability Drivers</th><th>Chart Studio</th></tr></thead>
+        <tbody>{''.join(em_vuln_rows)}</tbody>
       </table>
     </div>
     <div class="table-wrap" style="margin-top: 16px;">

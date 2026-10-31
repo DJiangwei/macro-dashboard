@@ -170,7 +170,7 @@ PRESETS = [
         "id": "em_guidotti_greenspan_safety",
         "title_en": "EM External Debt Solvency: Guidotti-Greenspan Ratio Comparison",
         "title_zh": "新兴市场外部债务防线：格林斯潘-吉多蒂流动性安全垫对比",
-        "description_zh": "短期外债占总外储比重（%）：低于100%为安全阈值（格林斯潘-吉多蒂法则），横向追踪土耳其、南非、埃及与哈萨克斯坦外部清偿安全垫。",
+        "description_zh": "短期外债占总外储比重（%）：低于100%为安全阈值（格林斯潘-吉多蒂法则），横向追踪土耳其、南非、埃及、尼日利亚、哈萨克斯坦与乌兹别克斯坦外部清偿安全垫。",
         "description_en": "Short-Term External Debt as % of Total Reserves across emerging markets; <100% represents the Guidotti-Greenspan safety cushion.",
         "transform": "raw",
         "date_range": "max",
@@ -178,7 +178,26 @@ PRESETS = [
             {"country": "TR", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#990f3d", "label": "Turkey Short-Term Debt / Reserves (%)"},
             {"country": "ZA", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#0d7680", "label": "South Africa Short-Term Debt / Reserves (%)"},
             {"country": "EG", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#d97706", "label": "Egypt Short-Term Debt / Reserves (%)"},
-            {"country": "KZ", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#2563eb", "label": "Kazakhstan Short-Term Debt / Reserves (%)"}
+            {"country": "NG", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#16a34a", "label": "Nigeria Short-Term Debt / Reserves (%)"},
+            {"country": "KZ", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#2563eb", "label": "Kazakhstan Short-Term Debt / Reserves (%)"},
+            {"country": "UZ", "id": "short_term_external_debt_pct_reserves", "axis": "left", "color": "#7c3aed", "label": "Uzbekistan Short-Term Debt / Reserves (%)"}
+        ]
+    },
+    {
+        "id": "em_current_account_and_solvency",
+        "title_en": "EM Structural External Balance: Current Account % GDP (Surplus vs Deficit)",
+        "title_zh": "新兴市场外部收支分化：经常账户占GDP比重 (逆差承压 vs 顺差安全垫)",
+        "description_zh": "对比新兴市场与前沿经济体经常账户占GDP比重（%）：监控从罗马尼亚(-8.2%)、乌兹别克斯坦(-4.8%)、土耳其(-1.8%)的外部融资依赖，到波兰(+0.3%)、尼日利亚(+3.8%)与中国台湾(+19.8%)的顺差安全垫。",
+        "description_en": "Current Account Balance as % of GDP across emerging and frontier markets: highlighting external financing vulnerability (Romania, Uzbekistan, Turkey) versus structural surplus cushions (Nigeria, Poland, Taiwan).",
+        "transform": "raw",
+        "date_range": "max",
+        "series": [
+            {"country": "RO", "id": "current_account_pct_gdp", "axis": "left", "color": "#990f3d", "label": "Romania Current Account (% GDP)"},
+            {"country": "TR", "id": "current_account_gdp", "axis": "left", "color": "#ea580c", "label": "Turkey Current Account (% GDP)"},
+            {"country": "EG", "id": "current_account_gdp", "axis": "left", "color": "#d97706", "label": "Egypt Current Account (% GDP)"},
+            {"country": "PL", "id": "current_account_pct_gdp", "axis": "left", "color": "#0d7680", "label": "Poland Current Account (% GDP)"},
+            {"country": "NG", "id": "current_account_gdp", "axis": "left", "color": "#16a34a", "label": "Nigeria Current Account (% GDP)"},
+            {"country": "TW", "id": "current_account_gdp", "axis": "left", "color": "#2563eb", "label": "Taiwan Current Account (% GDP)"}
         ]
     },
     {
