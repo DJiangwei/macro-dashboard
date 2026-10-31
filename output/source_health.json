@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-10-31T00:46:05.246207+00:00",
+  "generated": "2026-10-31T08:17:15.765733+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -13,37 +13,37 @@
   },
   "countries": {
     "HU": {
-      "calls": 856,
-      "success": 105,
-      "empty": 750,
+      "calls": 919,
+      "success": 102,
+      "empty": 816,
       "failed": 1,
       "circuit_open": 0,
       "failure_reasons": {
         "unexpected_error": 1
       },
       "empty_reasons": {
-        "empty_response": 750
+        "empty_response": 816
       },
       "sources": {
         "BISFetcher": {
-          "empty": 10,
+          "empty": 13,
           "success": 3
         },
         "BVBIndexProfileFetcher": {
-          "empty": 16
+          "empty": 19
         },
         "CZSOFetcher": {
-          "empty": 1
+          "empty": 4
         },
         "CredentialedStooqFetcher": {
-          "empty": 16
+          "empty": 19
         },
         "DerivedMacroFetcher": {
           "empty": 53,
           "success": 12
         },
         "ECBExternalDebtFetcher": {
-          "empty": 39,
+          "empty": 42,
           "success": 1
         },
         "ECBFetcher": {
@@ -51,15 +51,15 @@
           "success": 1
         },
         "ECBMIRFetcher": {
-          "empty": 7,
+          "empty": 10,
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
-          "empty": 38,
+          "empty": 41,
           "success": 1
         },
         "EUFundsAbsorptionFetcher": {
-          "empty": 40,
+          "empty": 43,
           "success": 1
         },
         "EurostatFetcher": {
@@ -67,59 +67,65 @@
           "success": 38
         },
         "FREDInternationalFetcher": {
-          "empty": 38
+          "empty": 41
         },
         "GIEAGSIFetcher": {
-          "empty": 6,
+          "empty": 9,
           "failed": 1
         },
         "GPWBenchmarkFetcher": {
-          "empty": 16
+          "empty": 19
+        },
+        "GUSDBWFetcher": {
+          "empty": 3
         },
         "IMFDataMapperFetcher": {
           "empty": 44,
           "success": 9
         },
         "IMFFinancialSoundnessFetcher": {
-          "empty": 33,
+          "empty": 36,
           "success": 5
         },
+        "INSSETempoFetcher": {
+          "empty": 3
+        },
         "KSHFetcher": {
+          "empty": 3,
           "success": 1
         },
         "ManualIndicatorFetcher": {
-          "empty": 1,
+          "empty": 4,
           "success": 6
         },
         "NationalCBFetcher": {
-          "empty": 38
+          "empty": 41
         },
         "PolicyRateFetcher": {
           "empty": 96,
           "success": 1
         },
         "PragueExchangeFetcher": {
-          "empty": 16
+          "empty": 19
         },
         "WorldBankESGFetcher": {
-          "empty": 41,
-          "success": 3
+          "empty": 44
         },
         "WorldBankFallbackFetcher": {
-          "empty": 10
+          "empty": 13
         },
         "WorldBankFetcher": {
-          "empty": 16,
+          "empty": 19,
           "success": 17
         },
         "YahooMarketFetcher": {
-          "empty": 13,
+          "empty": 16,
           "success": 3
         }
       },
       "events": [
         {
-          "timestamp": "2026-10-31T00:35:51.541937+00:00",
+          "timestamp": "2026-10-31T08:01:16.729470+00:00",
           "country": "HU",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -130,30 +136,30 @@
       ]
     },
     "PL": {
-      "calls": 874,
-      "success": 108,
-      "empty": 764,
+      "calls": 937,
+      "success": 105,
+      "empty": 830,
       "failed": 2,
       "circuit_open": 0,
       "failure_reasons": {
         "unexpected_error": 2
       },
       "empty_reasons": {
-        "empty_response": 764
+        "empty_response": 830
       },
       "sources": {
         "BISFetcher": {
-          "empty": 9,
+          "empty": 12,
           "success": 3
         },
         "BVBIndexProfileFetcher": {
-          "empty": 13
+          "empty": 16
         },
         "CZSOFetcher": {
-          "empty": 1
+          "empty": 4
         },
         "CredentialedStooqFetcher": {
-          "empty": 12,
+          "empty": 15,
           "failed": 1
         },
         "DerivedMacroFetcher": {
@@ -161,7 +167,7 @@
           "success": 12
         },
         "ECBExternalDebtFetcher": {
-          "empty": 41,
+          "empty": 44,
           "success": 1
         },
         "ECBFetcher": {
@@ -169,15 +175,15 @@
           "success": 1
         },
         "ECBMIRFetcher": {
-          "empty": 6,
+          "empty": 9,
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
-          "empty": 40,
+          "empty": 43,
           "success": 1
         },
         "EUFundsAbsorptionFetcher": {
-          "empty": 42,
+          "empty": 45,
           "success": 1
         },
         "EurostatFetcher": {
@@ -185,18 +191,19 @@
           "success": 39
         },
         "FREDInternationalFetcher": {
-          "empty": 39,
+          "empty": 42,
           "success": 1
         },
         "GIEAGSIFetcher": {
-          "empty": 5,
+          "empty": 8,
           "failed": 1
         },
         "GPWBenchmarkFetcher": {
-          "empty": 13,
+          "empty": 16,
           "success": 5
         },
         "GUSDBWFetcher": {
+          "empty": 3,
           "success": 1
         },
         "IMFDataMapperFetcher": {
@@ -204,45 +211,47 @@
           "success": 9
         },
         "IMFFinancialSoundnessFetcher": {
-          "empty": 34,
+          "empty": 37,
           "success": 5
         },
+        "INSSETempoFetcher": {
+          "empty": 3
+        },
         "KSHFetcher": {
-          "empty": 1
+          "empty": 4
         },
         "ManualIndicatorFetcher": {
-          "empty": 1,
+          "empty": 4,
           "success": 5
         },
         "NationalCBFetcher": {
-          "empty": 40
+          "empty": 43
         },
         "PolicyRateFetcher": {
           "empty": 99,
           "success": 1
         },
         "PragueExchangeFetcher": {
-          "empty": 18
+          "empty": 21
         },
         "WorldBankESGFetcher": {
-          "empty": 43,
-          "success": 3
+          "empty": 46
         },
         "WorldBankFallbackFetcher": {
-          "empty": 9
+          "empty": 12
         },
         "WorldBankFetcher": {
-          "empty": 18,
+          "empty": 21,
           "success": 16
         },
         "YahooMarketFetcher": {
-          "empty": 12,
+          "empty": 15,
           "success": 1
         }
       },
       "events": [
         {
-          "timestamp": "2026-10-31T00:35:59.951852+00:00",
+          "timestamp": "2026-10-31T08:02:29.634535+00:00",
           "country": "PL",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -251,7 +260,7 @@
           "message": "name 'ROOT' is not defined"
         },
         {
-          "timestamp": "2026-10-31T00:36:00.379495+00:00",
+          "timestamp": "2026-10-31T08:02:40.694025+00:00",
           "country": "PL",
           "indicator_id": "equity_yoy",
           "source_id": "CredentialedStooqFetcher",
@@ -262,38 +271,38 @@
       ]
     },
     "CZ": {
-      "calls": 840,
-      "success": 103,
-      "empty": 736,
+      "calls": 903,
+      "success": 100,
+      "empty": 802,
       "failed": 1,
       "circuit_open": 0,
       "failure_reasons": {
         "unexpected_error": 1
       },
       "empty_reasons": {
-        "empty_response": 736
+        "empty_response": 802
       },
       "sources": {
         "BISFetcher": {
-          "empty": 10,
+          "empty": 13,
           "success": 3
         },
         "BVBIndexProfileFetcher": {
-          "empty": 13
+          "empty": 16
         },
         "CZSOFetcher": {
-          "empty": 1,
+          "empty": 4,
           "success": 1
         },
         "CredentialedStooqFetcher": {
-          "empty": 13
+          "empty": 16
         },
         "DerivedMacroFetcher": {
           "empty": 51,
           "success": 12
         },
         "ECBExternalDebtFetcher": {
-          "empty": 39,
+          "empty": 42,
           "success": 1
         },
         "ECBFetcher": {
@@ -301,15 +310,15 @@
           "success": 1
         },
         "ECBMIRFetcher": {
-          "empty": 7,
+          "empty": 10,
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
-          "empty": 38,
+          "empty": 41,
           "success": 1
         },
         "EUFundsAbsorptionFetcher": {
-          "empty": 40,
+          "empty": 43,
           "success": 1
         },
         "EurostatFetcher": {
@@ -317,65 +326,64 @@
           "success": 39
         },
         "FREDInternationalFetcher": {
-          "empty": 38
+          "empty": 41
         },
         "GIEAGSIFetcher": {
-          "empty": 6,
+          "empty": 9,
           "failed": 1
         },
         "GPWBenchmarkFetcher": {
-          "empty": 13
+          "empty": 16
         },
         "GUSDBWFetcher": {
-          "empty": 1
+          "empty": 4
         },
         "IMFDataMapperFetcher": {
           "empty": 44,
           "success": 7
         },
         "IMFFinancialSoundnessFetcher": {
-          "empty": 33,
+          "empty": 36,
           "success": 5
         },
         "INSSETempoFetcher": {
-          "empty": 1
+          "empty": 4
         },
         "KSHFetcher": {
-          "empty": 1
+          "empty": 4
         },
         "ManualIndicatorFetcher": {
-          "empty": 2,
+          "empty": 5,
           "success": 5
         },
         "NationalCBFetcher": {
-          "empty": 38
+          "empty": 41
         },
         "PolicyRateFetcher": {
           "empty": 95,
           "success": 1
         },
         "PragueExchangeFetcher": {
-          "empty": 13,
+          "empty": 16,
           "success": 3
         },
         "WorldBankESGFetcher": {
-          "empty": 41,
-          "success": 3
+          "empty": 44
         },
         "WorldBankFallbackFetcher": {
-          "empty": 10
+          "empty": 13
         },
         "WorldBankFetcher": {
-          "empty": 16,
+          "empty": 19,
           "success": 17
         },
         "YahooMarketFetcher": {
-          "empty": 13
+          "empty": 16
         }
       },
       "events": [
         {
-          "timestamp": "2026-10-31T00:36:02.685951+00:00",
+          "timestamp": "2026-10-31T08:03:23.969726+00:00",
           "country": "CZ",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -386,38 +394,38 @@
       ]
     },
     "RO": {
-      "calls": 821,
-      "success": 104,
-      "empty": 716,
+      "calls": 898,
+      "success": 100,
+      "empty": 797,
       "failed": 1,
       "circuit_open": 0,
       "failure_reasons": {
         "unexpected_error": 1
       },
       "empty_reasons": {
-        "empty_response": 716
+        "empty_response": 797
       },
       "sources": {
         "BISFetcher": {
-          "empty": 11,
+          "empty": 15,
           "success": 1
         },
         "BVBIndexProfileFetcher": {
-          "empty": 12,
+          "empty": 16,
           "success": 2
         },
         "CZSOFetcher": {
-          "empty": 1
+          "empty": 5
         },
         "CredentialedStooqFetcher": {
-          "empty": 12
+          "empty": 16
         },
         "DerivedMacroFetcher": {
           "empty": 51,
           "success": 12
         },
         "ECBExternalDebtFetcher": {
-          "empty": 37,
+          "empty": 40,
           "success": 1
         },
         "ECBFetcher": {
@@ -425,15 +433,15 @@
           "success": 1
         },
         "ECBMIRFetcher": {
-          "empty": 7,
+          "empty": 11,
           "success": 3
         },
         "ECBPortfolioFlowsFetcher": {
-          "empty": 36,
+          "empty": 39,
           "success": 1
         },
         "EUFundsAbsorptionFetcher": {
-          "empty": 38,
+          "empty": 41,
           "success": 1
         },
         "EurostatFetcher": {
@@ -441,65 +449,65 @@
           "success": 39
         },
         "FREDInternationalFetcher": {
-          "empty": 36
+          "empty": 39
         },
         "GIEAGSIFetcher": {
-          "empty": 6,
+          "empty": 10,
           "failed": 1
         },
         "GPWBenchmarkFetcher": {
-          "empty": 14
+          "empty": 18
         },
         "GUSDBWFetcher": {
-          "empty": 1
+          "empty": 5
         },
         "IMFDataMapperFetcher": {
           "empty": 42,
           "success": 9
         },
         "IMFFinancialSoundnessFetcher": {
-          "empty": 31,
+          "empty": 34,
           "success": 5
         },
         "INSSETempoFetcher": {
+          "empty": 4,
           "success": 1
         },
         "KSHFetcher": {
-          "empty": 1
+          "empty": 5
         },
         "ManualIndicatorFetcher": {
-          "empty": 1,
+          "empty": 5,
           "success": 6
         },
         "NationalCBFetcher": {
-          "empty": 36
+          "empty": 39
         },
         "PolicyRateFetcher": {
           "empty": 95,
           "success": 1
         },
         "PragueExchangeFetcher": {
-          "empty": 14
+          "empty": 18
         },
         "WorldBankESGFetcher": {
-          "empty": 39,
-          "success": 3
+          "empty": 42
         },
         "WorldBankFallbackFetcher": {
-          "empty": 10,
+          "empty": 14,
           "success": 1
         },
         "WorldBankFetcher": {
-          "empty": 14,
-          "success": 17
+          "empty": 18,
+          "success": 16
         },
         "YahooMarketFetcher": {
-          "empty": 12
+          "empty": 16
         }
       },
       "events": [
         {
-          "timestamp": "2026-10-31T00:36:04.266246+00:00",
+          "timestamp": "2026-10-31T08:04:55.698273+00:00",
           "country": "RO",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -594,7 +602,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-31T00:39:53.955684+00:00",
+          "timestamp": "2026-10-31T08:10:58.849926+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -603,7 +611,7 @@
           "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
         },
         {
-          "timestamp": "2026-10-31T00:40:03.703038+00:00",
+          "timestamp": "2026-10-31T08:11:09.278069+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -612,7 +620,7 @@
           "message": "Eurostat returned no observations for ei_bsee_m_r2 with filters {'freq': 'M', 'geo': 'EA20', 'indic': 'BS-EEI-I', 's_adj': 'SA'}."
         },
         {
-          "timestamp": "2026-10-31T00:40:03.824932+00:00",
+          "timestamp": "2026-10-31T08:11:09.569797+00:00",
           "country": "EA",
           "indicator_id": "employment_expectations",
           "source_id": "eurostat_jsonstat",
@@ -664,7 +672,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-31T00:43:23.145878+00:00",
+          "timestamp": "2026-10-31T08:14:33.002004+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -673,7 +681,7 @@
           "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         },
         {
-          "timestamp": "2026-10-31T00:43:46.637607+00:00",
+          "timestamp": "2026-10-31T08:14:54.577224+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -682,7 +690,7 @@
           "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
         },
         {
-          "timestamp": "2026-10-31T00:43:46.637733+00:00",
+          "timestamp": "2026-10-31T08:14:54.577287+00:00",
           "country": "TR",
           "indicator_id": "food_cpi_inflation",
           "source_id": "imf_sdmx",
@@ -758,7 +766,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-10-31T00:44:08.366576+00:00",
+          "timestamp": "2026-10-31T08:15:18.104007+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -767,7 +775,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-31T00:44:08.757354+00:00",
+          "timestamp": "2026-10-31T08:15:18.316886+00:00",
           "country": "KR",
           "indicator_id": "consumer_confidence",
           "source_id": "fred",
@@ -776,7 +784,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-31T00:44:09.062954+00:00",
+          "timestamp": "2026-10-31T08:15:18.976968+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
@@ -785,7 +793,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-31T00:44:25.890410+00:00",
+          "timestamp": "2026-10-31T08:15:32.647690+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -794,7 +802,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-31T00:44:38.815173+00:00",
+          "timestamp": "2026-10-31T08:15:44.495975+00:00",
           "country": "KR",
           "indicator_id": "business_confidence",
           "source_id": "fred",
@@ -803,7 +811,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-31T00:44:51.642388+00:00",
+          "timestamp": "2026-10-31T08:15:56.630205+00:00",
           "country": "KR",
           "indicator_id": "consumer_confidence",
           "source_id": "fred",
@@ -812,7 +820,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-31T00:45:05.379033+00:00",
+          "timestamp": "2026-10-31T08:16:08.769189+00:00",
           "country": "KR",
           "indicator_id": "consumer_confidence",
           "source_id": "fred",
@@ -821,7 +829,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-31T00:45:18.272309+00:00",
+          "timestamp": "2026-10-31T08:16:27.406458+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
@@ -830,7 +838,7 @@
           "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
         },
         {
-          "timestamp": "2026-10-31T00:45:31.091542+00:00",
+          "timestamp": "2026-10-31T08:16:39.637121+00:00",
           "country": "KR",
           "indicator_id": "manufacturing_wage_growth",
           "source_id": "fred",
