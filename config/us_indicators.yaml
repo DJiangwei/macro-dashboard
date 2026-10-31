@@ -2365,7 +2365,7 @@ indicators:
   section: fed_policy
   label_en: Overnight Reverse Repo
   label_zh: 隔夜逆回购
-  unit: USD mn
+  unit: USD bn
   fetcher: fred
   series: RRPONTSYD
   source_name: FRED / Federal Reserve
@@ -2388,6 +2388,34 @@ indicators:
   start_date: '2002-12-18'
   caveat_en: Treasury holdings separate QT/QE composition from total balance-sheet size.
   caveat_zh: 国债持仓帮助区分QT/QE构成与总资产负债表规模。
+  source_authority: official_primary
+- id: fed_mbs_holdings
+  section: fed_policy
+  label_en: Fed Mortgage-Backed Securities Holdings
+  label_zh: 美联储持有机构抵押支持证券 (MBS)
+  unit: USD mn
+  fetcher: fred
+  series: WSHOMCB
+  source_name: FRED / Federal Reserve
+  source_url: https://fred.stlouisfed.org/series/WSHOMCB
+  frequency: weekly
+  start_date: '2002-12-18'
+  caveat_en: Mortgage-backed securities held outright on the Federal Reserve balance sheet.
+  caveat_zh: 美联储资产负债表中直接持有的抵押贷款支持证券(MBS)，用于追踪量化紧缩(QT)被动缩减进程。
+  source_authority: official_primary
+- id: treasury_general_account
+  section: fed_policy
+  label_en: Treasury General Account (TGA)
+  label_zh: 美财政部一般账户 (TGA)
+  unit: USD mn
+  fetcher: fred
+  series: WTREGEN
+  source_name: FRED / Federal Reserve
+  source_url: https://fred.stlouisfed.org/series/WTREGEN
+  frequency: weekly
+  start_date: '2002-12-18'
+  caveat_en: Treasury cash balance held at the Federal Reserve; drains bank reserves when built up and injects liquidity when spent down.
+  caveat_zh: 财政部在美联储的现金账户，其资金增加会抽离银行准备金，支出则向金融体系注入流动性。
   source_authority: official_primary
 - id: treasury_auction_total_accepted
   section: fiscal

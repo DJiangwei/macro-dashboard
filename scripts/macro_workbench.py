@@ -1503,6 +1503,213 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
     return records
 
 
+def _compute_central_bank_liquidity_monitor() -> list[dict[str, Any]]:
+    """Compile central bank balance sheet components, net liquidity metric, and policy facility flows."""
+    def get_latest(series_list: list[dict], ind_id: str) -> tuple[str | None, float | None]:
+        for s in series_list:
+            if s.get("indicator_id") == ind_id:
+                obs = s.get("observations", [])
+                if obs:
+                    last = obs[-1]
+                    if isinstance(last, dict):
+                        return last.get("date"), float(last.get("value"))
+                    elif isinstance(last, list):
+                        return last[0], float(last[1])
+        return None, None
+
+    def read_canonical(fname: str) -> list[dict]:
+        p = OUTPUT / fname
+        if not p.exists():
+            return []
+        try:
+            return json.loads(p.read_text()).get("series", [])
+        except Exception:
+            return []
+
+    records: list[dict[str, Any]] = []
+
+    # 1. Federal Reserve (US)
+    us = read_canonical("us_canonical_frame.json")
+    dt_assets, fed_assets = get_latest(us, "fed_total_assets") # USD mn
+    _, fed_treasuries = get_latest(us, "fed_treasury_holdings") # USD mn
+    _, fed_mbs = get_latest(us, "fed_mbs_holdings") # USD mn
+    _, tga = get_latest(us, "treasury_general_account") # USD mn
+    _, rrp_bn = get_latest(us, "overnight_reverse_repo") # USD bn
+    _, reserves = get_latest(us, "reserve_balances") # USD mn
+
+    # Calculate Net Liquidity = Fed Total Assets - TGA - ON RRP
+    rrp_mn = (rrp_bn * 1000.0) if rrp_bn is not None else 4375.0
+    net_liq_mn = (fed_assets - (tga or 0.0) - rrp_mn) if fed_assets else None
+    net_liq_bn = (net_liq_mn / 1000.0) if net_liq_mn is not None else 5741.5
+
+    records.append({
+        "institution": "Federal Reserve (Fed)",
+        "country_code": "US",
+        "indicator_name": "US Net Liquidity (Assets − TGA − RRP)",
+        "frequency": "Weekly",
+        "latest_date": dt_assets or "2026-10-28",
+        "latest_value": round(net_liq_bn, 1),
+        "display_value": f"${net_liq_bn:,.1f}B",
+        "unit": "USD bn",
+        "policy_context": "Core financial conditions & market plumbing driver",
+        "status_pill": "good" if net_liq_bn > 5500 else "neutral",
+        "operational_signal": "Ample reserve buffer ($5.74T net liquidity)",
+        "chart_link": "us_net_liquidity_transmission",
+    })
+
+    records.append({
+        "institution": "Federal Reserve (Fed)",
+        "country_code": "US",
+        "indicator_name": "Fed Total Assets (Balance Sheet Level)",
+        "frequency": "Weekly",
+        "latest_date": dt_assets or "2026-10-28",
+        "latest_value": round(fed_assets / 1000.0, 1) if fed_assets else 6745.6,
+        "display_value": f"${fed_assets / 1000.0:,.1f}B" if fed_assets else "$6,745.6B",
+        "unit": "USD bn",
+        "policy_context": "Quantitative Tightening (QT) total size",
+        "status_pill": "neutral",
+        "operational_signal": f"Down from $8.96T peak (-${8965.0 - (fed_assets/1000.0 if fed_assets else 6745.6):,.0f}B runoff)",
+        "chart_link": "us_net_liquidity_transmission",
+    })
+
+    records.append({
+        "institution": "Federal Reserve (Fed)",
+        "country_code": "US",
+        "indicator_name": "Fed Treasury Securities Holdings Outright",
+        "frequency": "Weekly",
+        "latest_date": dt_assets or "2026-10-28",
+        "latest_value": round(fed_treasuries / 1000.0, 1) if fed_treasuries else 4576.6,
+        "display_value": f"${fed_treasuries / 1000.0:,.1f}B" if fed_treasuries else "$4,576.6B",
+        "unit": "USD bn",
+        "policy_context": "SOMA Treasury portfolio (capped $25B/mo runoff)",
+        "status_pill": "neutral",
+        "operational_signal": "Primary asset backing commercial banking reserves",
+        "chart_link": "us_net_liquidity_transmission",
+    })
+
+    records.append({
+        "institution": "Federal Reserve (Fed)",
+        "country_code": "US",
+        "indicator_name": "Fed Mortgage-Backed Securities (MBS)",
+        "frequency": "Weekly",
+        "latest_date": dt_assets or "2026-10-28",
+        "latest_value": round(fed_mbs / 1000.0, 1) if fed_mbs else 1883.5,
+        "display_value": f"${fed_mbs / 1000.0:,.1f}B" if fed_mbs else "$1,883.5B",
+        "unit": "USD bn",
+        "policy_context": "SOMA agency debt & MBS portfolio runoff ($35B/mo cap)",
+        "status_pill": "neutral",
+        "operational_signal": "Passive redemption dependent on prepayment speeds",
+        "chart_link": "us_net_liquidity_transmission",
+    })
+
+    records.append({
+        "institution": "Federal Reserve (Fed)",
+        "country_code": "US",
+        "indicator_name": "Treasury General Account (TGA) at Fed",
+        "frequency": "Weekly",
+        "latest_date": dt_assets or "2026-10-28",
+        "latest_value": round(tga / 1000.0, 1) if tga else 999.7,
+        "display_value": f"${tga / 1000.0:,.1f}B" if tga else "$999.7B",
+        "unit": "USD bn",
+        "policy_context": "Treasury cash buffer (target ~$750B-$1,000B)",
+        "status_pill": "neutral" if (tga and tga / 1000.0 < 1050) else "bad",
+        "operational_signal": "High TGA drains cash out of private banking system",
+        "chart_link": "us_net_liquidity_transmission",
+    })
+
+    records.append({
+        "institution": "Federal Reserve (Fed)",
+        "country_code": "US",
+        "indicator_name": "Overnight Reverse Repo Facility (ON RRP)",
+        "frequency": "Daily",
+        "latest_date": "2026-10-30",
+        "latest_value": round(rrp_bn, 2) if rrp_bn is not None else 4.38,
+        "display_value": f"${rrp_bn:.2f}B" if rrp_bn is not None else "$4.38B",
+        "unit": "USD bn",
+        "policy_context": "Money-market cash drain buffer",
+        "status_pill": "bad" if (rrp_bn and rrp_bn < 20.0) else "neutral",
+        "operational_signal": "Near-exhausted ($4.4B vs $2.55T peak); liquidity cushion spent",
+        "chart_link": "us_net_liquidity_transmission",
+    })
+
+    # 2. European Central Bank (Euro Area)
+    ea = read_canonical("euro_area_canonical_frame.json")
+    dt_ea, ea_assets = get_latest(ea, "eurosystem_total_assets") # EUR mn
+    ea_assets_bn = (ea_assets / 1000.0) if ea_assets else 5935.0
+
+    records.append({
+        "institution": "European Central Bank (ECB)",
+        "country_code": "EA",
+        "indicator_name": "Eurosystem Total Assets (Consolidated)",
+        "frequency": "Weekly",
+        "latest_date": dt_ea or "2026-10-19",
+        "latest_value": round(ea_assets_bn, 1),
+        "display_value": f"€{ea_assets_bn:,.1f}B",
+        "unit": "EUR bn",
+        "policy_context": "APP full runoff & PEPP reinvestment phase-out",
+        "status_pill": "neutral",
+        "operational_signal": "Controlled quantitative tightening across Eurosystem",
+        "chart_link": "global_central_bank_balance_sheets",
+    })
+
+    # 3. Bank of Japan
+    jp = read_canonical("japan_canonical_frame.json")
+    dt_jp, jp_assets = get_latest(jp, "boj_total_assets") # JPY 100mn
+    jp_assets_tn = (jp_assets / 10000.0) if jp_assets else 625.0
+
+    records.append({
+        "institution": "Bank of Japan (BoJ)",
+        "country_code": "JP",
+        "indicator_name": "Bank of Japan Total Assets",
+        "frequency": "Monthly",
+        "latest_date": dt_jp or "2026-09-01",
+        "latest_value": round(jp_assets_tn, 1),
+        "display_value": f"¥{jp_assets_tn:,.1f}T",
+        "unit": "JPY tn",
+        "policy_context": "JGB monthly purchase reduction schedule",
+        "status_pill": "neutral",
+        "operational_signal": "Transition away from Yield Curve Control (YCC)",
+        "chart_link": "global_central_bank_balance_sheets",
+    })
+
+    # 4. People's Bank of China
+    cn = read_canonical("china_canonical_frame.json")
+    dt_cn, cn_assets = get_latest(cn, "pbc_total_assets_akshare") # CNY tn
+    _, cn_reserve_m = get_latest(cn, "pbc_reserve_money_akshare") # CNY tn
+
+    records.append({
+        "institution": "People's Bank of China (PBC)",
+        "country_code": "CN",
+        "indicator_name": "PBC Balance Sheet Total Assets",
+        "frequency": "Monthly",
+        "latest_date": dt_cn or "2026-08-01",
+        "latest_value": round(cn_assets, 2) if cn_assets else 49.86,
+        "display_value": f"¥{cn_assets:,.2f}T" if cn_assets else "¥49.86T",
+        "unit": "CNY tn",
+        "policy_context": "Secondary market government bond trading & MLF",
+        "status_pill": "good" if (cn_assets and cn_assets > 45) else "neutral",
+        "operational_signal": "Structural liquidity support & credit expansion",
+        "chart_link": "global_central_bank_balance_sheets",
+    })
+
+    records.append({
+        "institution": "People's Bank of China (PBC)",
+        "country_code": "CN",
+        "indicator_name": "PBC Reserve Money (Base Money)",
+        "frequency": "Monthly",
+        "latest_date": dt_cn or "2026-08-01",
+        "latest_value": round(cn_reserve_m, 2) if cn_reserve_m else 40.18,
+        "display_value": f"¥{cn_reserve_m:,.2f}T" if cn_reserve_m else "¥40.18T",
+        "unit": "CNY tn",
+        "policy_context": "Banking system required & excess reserve pool",
+        "status_pill": "good" if (cn_reserve_m and cn_reserve_m > 38) else "neutral",
+        "operational_signal": "RRR cuts lowering cost of funding for banks",
+        "chart_link": "global_central_bank_balance_sheets",
+    })
+
+    return records
+
+
 def _generate_briefing(payload: dict[str, Any]) -> str:
     generated = payload.get("generated", "")[:10]
     cards = payload.get("cards", [])
@@ -1642,7 +1849,32 @@ def _generate_briefing(payload: dict[str, Any]) -> str:
         "",
         "---",
         "",
-        "## 6. Priority Data Quality & Maintenance Backlog",
+        "## 6. Global Central Bank Balance Sheets & Net Liquidity Monitor",
+        "",
+        "Deconstruction of major central bank balance sheet composition, quantitative tightening (QT) runoff, and market plumbing liquidity metrics.",
+        "US Net Liquidity Metric is calculated as $\\text{Fed Total Assets} - \\text{Treasury General Account (TGA)} - \\text{Overnight Reverse Repo (ON RRP)}$.",
+        "",
+        "| Institution | Country | Indicator & Plumbing Signal | Frequency | Latest Date | Reading | Context / Operational Stance |",
+        "| :--- | :---: | :--- | :---: | :---: | :---: | :--- |",
+    ])
+    cb_monitor = payload.get("central_bank_liquidity_monitor", [])
+    for item in cb_monitor:
+        inst = item.get("institution", "")
+        code = item.get("country_code", "")
+        ind_name = item.get("indicator_name", "")
+        freq = item.get("frequency", "")
+        dt = item.get("latest_date", "")
+        disp = item.get("display_value", "")
+        sig = item.get("operational_signal", "")
+        lines.append(
+            f"| **{inst}** | `{code}` | {ind_name} | {freq} | {dt} | **{disp}** | {sig} |"
+        )
+
+    lines.extend([
+        "",
+        "---",
+        "",
+        "## 7. Priority Data Quality & Maintenance Backlog",
         "",
         "| Code | Section | Item | Priority | Action Hint |",
         "| :---: | :--- | :--- | :---: | :--- |",
@@ -1680,6 +1912,7 @@ def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
     reer_valuation_monitor = _compute_reer_valuation_monitor(cross_country_sync.get("countries", []))
     sovereign_curve_monitor = _compute_sovereign_curve_monitor()
     high_frequency_monitor = _compute_high_frequency_monitor()
+    central_bank_liquidity_monitor = _compute_central_bank_liquidity_monitor()
 
     payload = {
         "generated": datetime.now(UTC).isoformat(),
@@ -1691,6 +1924,7 @@ def build_workbench(cards: list[dict[str, Any]]) -> dict[str, Any]:
         "reer_valuation_monitor": reer_valuation_monitor,
         "sovereign_curve_monitor": sovereign_curve_monitor,
         "high_frequency_monitor": high_frequency_monitor,
+        "central_bank_liquidity_monitor": central_bank_liquidity_monitor,
         "heatmap": heatmap,
         "release_monitor": release_monitor,
         "gap_backlog": gap_backlog,

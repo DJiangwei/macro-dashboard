@@ -177,7 +177,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
     </div>
   </header>
   <section class="meta-grid" aria-label="coverage summary">
-    <div class="meta-chip"><strong>1335</strong><span>rendered chart slots</span></div>
+    <div class="meta-chip"><strong>1337</strong><span>rendered chart slots</span></div>
     <div class="meta-chip"><strong>0</strong><span>remaining proxy fills</span></div>
     <div class="meta-chip"><strong>67</strong><span>gaps or dropped slots</span></div>
     <div class="meta-chip"><strong>18</strong><span>country dashboards</span></div>
@@ -844,6 +844,126 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
     </div>
     <div class="table-wrap" style="margin-top: 16px;">
       <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
+        <strong style="font-size: 13px; color: var(--fg);">Global Central Bank Balance Sheets & Net Liquidity Monitor</strong>
+        <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Comprehensive central bank balance sheet deconstruction, QT runoff dynamics, and dollar liquidity plumbing (Fed Net Liquidity = Assets − TGA − ON RRP).</span>
+      </div>
+      <table class="regime-table">
+        <thead><tr><th>Institution</th><th>Country</th><th>Indicator & Plumbing Signal</th><th>Frequency</th><th>Latest Date</th><th>Latest Reading</th><th>Policy / Facility Context</th><th>Operational Stance</th><th>Chart Studio</th></tr></thead>
+        <tbody>
+      <tr>
+        <td><strong>Federal Reserve (Fed)</strong></td>
+        <td><code>US</code></td>
+        <td><strong>US Net Liquidity (Assets − TGA − RRP)</strong></td>
+        <td>Weekly</td>
+        <td>2026-10-28</td>
+        <td><span class="score-pill good">$5,741.5B</span> <em style="font-size: 10px; color: var(--text-secondary);">USD bn</em></td>
+        <td>Core financial conditions &amp; market plumbing driver</td>
+        <td><em>Ample reserve buffer ($5.74T net liquidity)</em></td>
+        <td><a href="chart_studio.html?preset=us_net_liquidity_transmission" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a></td>
+      </tr>
+      <tr>
+        <td><strong>Federal Reserve (Fed)</strong></td>
+        <td><code>US</code></td>
+        <td><strong>Fed Total Assets (Balance Sheet Level)</strong></td>
+        <td>Weekly</td>
+        <td>2026-10-28</td>
+        <td><span class="score-pill neutral">$6,745.6B</span> <em style="font-size: 10px; color: var(--text-secondary);">USD bn</em></td>
+        <td>Quantitative Tightening (QT) total size</td>
+        <td><em>Down from $8.96T peak (-$2,219B runoff)</em></td>
+        <td><a href="chart_studio.html?preset=us_net_liquidity_transmission" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a></td>
+      </tr>
+      <tr>
+        <td><strong>Federal Reserve (Fed)</strong></td>
+        <td><code>US</code></td>
+        <td><strong>Fed Treasury Securities Holdings Outright</strong></td>
+        <td>Weekly</td>
+        <td>2026-10-28</td>
+        <td><span class="score-pill neutral">$4,576.6B</span> <em style="font-size: 10px; color: var(--text-secondary);">USD bn</em></td>
+        <td>SOMA Treasury portfolio (capped $25B/mo runoff)</td>
+        <td><em>Primary asset backing commercial banking reserves</em></td>
+        <td><a href="chart_studio.html?preset=us_net_liquidity_transmission" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a></td>
+      </tr>
+      <tr>
+        <td><strong>Federal Reserve (Fed)</strong></td>
+        <td><code>US</code></td>
+        <td><strong>Fed Mortgage-Backed Securities (MBS)</strong></td>
+        <td>Weekly</td>
+        <td>2026-10-28</td>
+        <td><span class="score-pill neutral">$1,883.5B</span> <em style="font-size: 10px; color: var(--text-secondary);">USD bn</em></td>
+        <td>SOMA agency debt &amp; MBS portfolio runoff ($35B/mo cap)</td>
+        <td><em>Passive redemption dependent on prepayment speeds</em></td>
+        <td><a href="chart_studio.html?preset=us_net_liquidity_transmission" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a></td>
+      </tr>
+      <tr>
+        <td><strong>Federal Reserve (Fed)</strong></td>
+        <td><code>US</code></td>
+        <td><strong>Treasury General Account (TGA) at Fed</strong></td>
+        <td>Weekly</td>
+        <td>2026-10-28</td>
+        <td><span class="score-pill neutral">$999.7B</span> <em style="font-size: 10px; color: var(--text-secondary);">USD bn</em></td>
+        <td>Treasury cash buffer (target ~$750B-$1,000B)</td>
+        <td><em>High TGA drains cash out of private banking system</em></td>
+        <td><a href="chart_studio.html?preset=us_net_liquidity_transmission" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a></td>
+      </tr>
+      <tr>
+        <td><strong>Federal Reserve (Fed)</strong></td>
+        <td><code>US</code></td>
+        <td><strong>Overnight Reverse Repo Facility (ON RRP)</strong></td>
+        <td>Daily</td>
+        <td>2026-10-30</td>
+        <td><span class="score-pill bad">$4.38B</span> <em style="font-size: 10px; color: var(--text-secondary);">USD bn</em></td>
+        <td>Money-market cash drain buffer</td>
+        <td><em>Near-exhausted ($4.4B vs $2.55T peak); liquidity cushion spent</em></td>
+        <td><a href="chart_studio.html?preset=us_net_liquidity_transmission" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a></td>
+      </tr>
+      <tr>
+        <td><strong>European Central Bank (ECB)</strong></td>
+        <td><code>EA</code></td>
+        <td><strong>Eurosystem Total Assets (Consolidated)</strong></td>
+        <td>Weekly</td>
+        <td>2026-10-19</td>
+        <td><span class="score-pill neutral">€5,935.0B</span> <em style="font-size: 10px; color: var(--text-secondary);">EUR bn</em></td>
+        <td>APP full runoff &amp; PEPP reinvestment phase-out</td>
+        <td><em>Controlled quantitative tightening across Eurosystem</em></td>
+        <td><a href="chart_studio.html?preset=global_central_bank_balance_sheets" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a></td>
+      </tr>
+      <tr>
+        <td><strong>Bank of Japan (BoJ)</strong></td>
+        <td><code>JP</code></td>
+        <td><strong>Bank of Japan Total Assets</strong></td>
+        <td>Monthly</td>
+        <td>2026-09-01</td>
+        <td><span class="score-pill neutral">¥625.0T</span> <em style="font-size: 10px; color: var(--text-secondary);">JPY tn</em></td>
+        <td>JGB monthly purchase reduction schedule</td>
+        <td><em>Transition away from Yield Curve Control (YCC)</em></td>
+        <td><a href="chart_studio.html?preset=global_central_bank_balance_sheets" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a></td>
+      </tr>
+      <tr>
+        <td><strong>People&#x27;s Bank of China (PBC)</strong></td>
+        <td><code>CN</code></td>
+        <td><strong>PBC Balance Sheet Total Assets</strong></td>
+        <td>Monthly</td>
+        <td>2026-08-01</td>
+        <td><span class="score-pill good">¥49.86T</span> <em style="font-size: 10px; color: var(--text-secondary);">CNY tn</em></td>
+        <td>Secondary market government bond trading &amp; MLF</td>
+        <td><em>Structural liquidity support &amp; credit expansion</em></td>
+        <td><a href="chart_studio.html?preset=global_central_bank_balance_sheets" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a></td>
+      </tr>
+      <tr>
+        <td><strong>People&#x27;s Bank of China (PBC)</strong></td>
+        <td><code>CN</code></td>
+        <td><strong>PBC Reserve Money (Base Money)</strong></td>
+        <td>Monthly</td>
+        <td>2026-08-01</td>
+        <td><span class="score-pill good">¥40.18T</span> <em style="font-size: 10px; color: var(--text-secondary);">CNY tn</em></td>
+        <td>Banking system required &amp; excess reserve pool</td>
+        <td><em>RRR cuts lowering cost of funding for banks</em></td>
+        <td><a href="chart_studio.html?preset=global_central_bank_balance_sheets" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a></td>
+      </tr></tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="margin-top: 16px;">
+      <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
         <strong style="font-size: 13px; color: var(--fg);">Global Currency Valuation & REER Misalignment Monitor (Bruegel Database)</strong>
         <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Real Effective Exchange Rate (REER, 120 trading partners, CPI-deflated, 2020=100) vs. historical moving averages and Nominal EER (NEER). Inflation Wedge = REER − NEER (higher domestic inflation erodes cost competitiveness).</span>
       </div>
@@ -1155,7 +1275,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
       <tr>
         <td><strong>US</strong></td>
         <td class="good">100.0%</td>
-        <td class="good">86.4%</td>
+        <td class="good">86.6%</td>
         <td class="good">0</td>
         <td class="bad">7</td>
         <td class="bad">49.2</td>
@@ -1428,7 +1548,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
     <div class="card-kicker">USD · Fed · data-first country page</div>
     <h2>United States</h2>
     <div class="stats">
-      <div class="stat"><span>Rendered charts</span><strong>177/177</strong></div>
+      <div class="stat"><span>Rendered charts</span><strong>179/179</strong></div>
       <div class="stat"><span>Proxy fills</span><strong>0</strong></div>
       <div class="stat"><span>Official data gaps</span><strong>7</strong></div>
       <div class="stat"><span>Fed funds</span><strong>3.88% (2026-10-29)</strong></div>
@@ -1546,7 +1666,7 @@ footer { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border
     <a href="output/what_changed.json">What Changed</a>
   </nav>
   <footer>
-    Generated 2026-10-31 10:08 UTC from country dashboard summaries and canonical macro data. Research artefact only, not investment advice.
+    Generated 2026-10-31 13:46 UTC from country dashboard summaries and canonical macro data. Research artefact only, not investment advice.
   </footer>
 </main>
 <script>

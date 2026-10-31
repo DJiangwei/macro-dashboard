@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-31T10:08:47.297694+00:00",
+  "generated": "2026-10-31T13:46:27.564027+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -4720,8 +4720,8 @@
       "currency": "USD",
       "institution": "Fed",
       "category": "data-first country page",
-      "charts": 177,
-      "expected": 177,
+      "charts": 179,
+      "expected": 179,
       "proxy_fills": 0,
       "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
@@ -4806,7 +4806,7 @@
           },
           {
             "source_name": "FRED / Federal Reserve",
-            "charts": 31
+            "charts": 33
           },
           {
             "source_name": "FRED / BEA",
@@ -4914,7 +4914,7 @@
           }
         ],
         "quality_counts": {
-          "verified": 142,
+          "verified": 144,
           "watch": 35
         },
         "unavailable_count": 0
@@ -4922,11 +4922,11 @@
       "freshness": {
         "as_of_date": "2026-10-31",
         "counts": {
-          "current": 160,
+          "current": 162,
           "due": 16,
           "scheduled_policy": 1
         },
-        "latest_historical_date": "2026-10-30",
+        "latest_historical_date": "2026-10-31",
         "attention": [
           {
             "id": "business_inventories_growth",
@@ -5289,15 +5289,15 @@
           "value"
         ],
         "file": "us_canonical_frame.json",
-        "series": 177,
-        "observations": 128959,
-        "series_count": 177,
-        "observation_count": 128959
+        "series": 179,
+        "observations": 131453,
+        "series_count": 179,
+        "observation_count": 131453
       },
       "freshness_summary": {
         "dashboard": "United States",
-        "charts": 177,
-        "current": 153,
+        "charts": 179,
+        "current": 155,
         "stale": 4,
         "lagged_source": 0,
         "projection": 0,
@@ -10009,7 +10009,7 @@
         "score": 77.8,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 86.4,
+        "freshness_score": 86.6,
         "proxy_penalty": 0.0,
         "gap_penalty": 17.5
       },
@@ -12623,6 +12623,148 @@
       "chart_link": "global_tech_and_export_bellwether"
     }
   ],
+  "central_bank_liquidity_monitor": [
+    {
+      "institution": "Federal Reserve (Fed)",
+      "country_code": "US",
+      "indicator_name": "US Net Liquidity (Assets − TGA − RRP)",
+      "frequency": "Weekly",
+      "latest_date": "2026-10-28",
+      "latest_value": 5741.5,
+      "display_value": "$5,741.5B",
+      "unit": "USD bn",
+      "policy_context": "Core financial conditions & market plumbing driver",
+      "status_pill": "good",
+      "operational_signal": "Ample reserve buffer ($5.74T net liquidity)",
+      "chart_link": "us_net_liquidity_transmission"
+    },
+    {
+      "institution": "Federal Reserve (Fed)",
+      "country_code": "US",
+      "indicator_name": "Fed Total Assets (Balance Sheet Level)",
+      "frequency": "Weekly",
+      "latest_date": "2026-10-28",
+      "latest_value": 6745.6,
+      "display_value": "$6,745.6B",
+      "unit": "USD bn",
+      "policy_context": "Quantitative Tightening (QT) total size",
+      "status_pill": "neutral",
+      "operational_signal": "Down from $8.96T peak (-$2,219B runoff)",
+      "chart_link": "us_net_liquidity_transmission"
+    },
+    {
+      "institution": "Federal Reserve (Fed)",
+      "country_code": "US",
+      "indicator_name": "Fed Treasury Securities Holdings Outright",
+      "frequency": "Weekly",
+      "latest_date": "2026-10-28",
+      "latest_value": 4576.6,
+      "display_value": "$4,576.6B",
+      "unit": "USD bn",
+      "policy_context": "SOMA Treasury portfolio (capped $25B/mo runoff)",
+      "status_pill": "neutral",
+      "operational_signal": "Primary asset backing commercial banking reserves",
+      "chart_link": "us_net_liquidity_transmission"
+    },
+    {
+      "institution": "Federal Reserve (Fed)",
+      "country_code": "US",
+      "indicator_name": "Fed Mortgage-Backed Securities (MBS)",
+      "frequency": "Weekly",
+      "latest_date": "2026-10-28",
+      "latest_value": 1883.5,
+      "display_value": "$1,883.5B",
+      "unit": "USD bn",
+      "policy_context": "SOMA agency debt & MBS portfolio runoff ($35B/mo cap)",
+      "status_pill": "neutral",
+      "operational_signal": "Passive redemption dependent on prepayment speeds",
+      "chart_link": "us_net_liquidity_transmission"
+    },
+    {
+      "institution": "Federal Reserve (Fed)",
+      "country_code": "US",
+      "indicator_name": "Treasury General Account (TGA) at Fed",
+      "frequency": "Weekly",
+      "latest_date": "2026-10-28",
+      "latest_value": 999.7,
+      "display_value": "$999.7B",
+      "unit": "USD bn",
+      "policy_context": "Treasury cash buffer (target ~$750B-$1,000B)",
+      "status_pill": "neutral",
+      "operational_signal": "High TGA drains cash out of private banking system",
+      "chart_link": "us_net_liquidity_transmission"
+    },
+    {
+      "institution": "Federal Reserve (Fed)",
+      "country_code": "US",
+      "indicator_name": "Overnight Reverse Repo Facility (ON RRP)",
+      "frequency": "Daily",
+      "latest_date": "2026-10-30",
+      "latest_value": 4.38,
+      "display_value": "$4.38B",
+      "unit": "USD bn",
+      "policy_context": "Money-market cash drain buffer",
+      "status_pill": "bad",
+      "operational_signal": "Near-exhausted ($4.4B vs $2.55T peak); liquidity cushion spent",
+      "chart_link": "us_net_liquidity_transmission"
+    },
+    {
+      "institution": "European Central Bank (ECB)",
+      "country_code": "EA",
+      "indicator_name": "Eurosystem Total Assets (Consolidated)",
+      "frequency": "Weekly",
+      "latest_date": "2026-10-19",
+      "latest_value": 5935.0,
+      "display_value": "€5,935.0B",
+      "unit": "EUR bn",
+      "policy_context": "APP full runoff & PEPP reinvestment phase-out",
+      "status_pill": "neutral",
+      "operational_signal": "Controlled quantitative tightening across Eurosystem",
+      "chart_link": "global_central_bank_balance_sheets"
+    },
+    {
+      "institution": "Bank of Japan (BoJ)",
+      "country_code": "JP",
+      "indicator_name": "Bank of Japan Total Assets",
+      "frequency": "Monthly",
+      "latest_date": "2026-09-01",
+      "latest_value": 625.0,
+      "display_value": "¥625.0T",
+      "unit": "JPY tn",
+      "policy_context": "JGB monthly purchase reduction schedule",
+      "status_pill": "neutral",
+      "operational_signal": "Transition away from Yield Curve Control (YCC)",
+      "chart_link": "global_central_bank_balance_sheets"
+    },
+    {
+      "institution": "People's Bank of China (PBC)",
+      "country_code": "CN",
+      "indicator_name": "PBC Balance Sheet Total Assets",
+      "frequency": "Monthly",
+      "latest_date": "2026-08-01",
+      "latest_value": 49.86,
+      "display_value": "¥49.86T",
+      "unit": "CNY tn",
+      "policy_context": "Secondary market government bond trading & MLF",
+      "status_pill": "good",
+      "operational_signal": "Structural liquidity support & credit expansion",
+      "chart_link": "global_central_bank_balance_sheets"
+    },
+    {
+      "institution": "People's Bank of China (PBC)",
+      "country_code": "CN",
+      "indicator_name": "PBC Reserve Money (Base Money)",
+      "frequency": "Monthly",
+      "latest_date": "2026-08-01",
+      "latest_value": 40.18,
+      "display_value": "¥40.18T",
+      "unit": "CNY tn",
+      "policy_context": "Banking system required & excess reserve pool",
+      "status_pill": "good",
+      "operational_signal": "RRR cuts lowering cost of funding for banks",
+      "chart_link": "global_central_bank_balance_sheets"
+    }
+  ],
   "heatmap": [
     {
       "code": "HU",
@@ -12718,7 +12860,7 @@
       "code": "US",
       "name": "United States",
       "coverage_pct": 100.0,
-      "freshness_pct": 86.4,
+      "freshness_pct": 86.6,
       "proxy_fills": 0,
       "gaps": 7,
       "regime_score": 49.2,

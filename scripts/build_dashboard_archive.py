@@ -571,6 +571,35 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
         <td>{link_html}</td>
       </tr>""")
 
+    cb_liq_monitor = workbench.get("central_bank_liquidity_monitor", []) or []
+    cb_liq_rows = []
+    for item in cb_liq_monitor:
+        inst = str(item.get("institution", ""))
+        code = str(item.get("country_code", ""))
+        ind_name = str(item.get("indicator_name", ""))
+        freq = str(item.get("frequency", ""))
+        dt = str(item.get("latest_date", ""))
+        disp = str(item.get("display_value", ""))
+        unit = str(item.get("unit", ""))
+        ctx = str(item.get("policy_context", ""))
+        pill = str(item.get("status_pill", "neutral"))
+        sig = str(item.get("operational_signal", ""))
+        preset = str(item.get("chart_link", "us_net_liquidity_transmission"))
+        link_html = f'<a href="chart_studio.html?preset={preset}" style="color: var(--accent); font-weight: 600; text-decoration: none;">View Chart &rarr;</a>'
+
+        cb_liq_rows.append(f"""
+      <tr>
+        <td><strong>{escape(inst)}</strong></td>
+        <td><code>{escape(code)}</code></td>
+        <td><strong>{escape(ind_name)}</strong></td>
+        <td>{escape(freq)}</td>
+        <td>{escape(dt)}</td>
+        <td><span class="score-pill {pill}">{escape(disp)}</span> <em style="font-size: 10px; color: var(--text-secondary);">{escape(unit)}</em></td>
+        <td>{escape(ctx)}</td>
+        <td><em>{escape(sig)}</em></td>
+        <td>{link_html}</td>
+      </tr>""")
+
     reer_monitor = workbench.get("reer_valuation_monitor", {}) or {}
     reer_rows = []
     for code in sync_countries:
@@ -721,6 +750,16 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
       <table class="regime-table">
         <thead><tr><th>Cluster / Domain</th><th>Indicator & Instrument</th><th>Frequency</th><th>Latest Date</th><th>Latest Reading</th><th>Neutral / Trend Threshold</th><th>Cyclical Stance Assessment</th><th>Chart Studio</th></tr></thead>
         <tbody>{''.join(hf_rows)}</tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="margin-top: 16px;">
+      <div style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fcfaf7;">
+        <strong style="font-size: 13px; color: var(--fg);">Global Central Bank Balance Sheets & Net Liquidity Monitor</strong>
+        <span style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Comprehensive central bank balance sheet deconstruction, QT runoff dynamics, and dollar liquidity plumbing (Fed Net Liquidity = Assets − TGA − ON RRP).</span>
+      </div>
+      <table class="regime-table">
+        <thead><tr><th>Institution</th><th>Country</th><th>Indicator & Plumbing Signal</th><th>Frequency</th><th>Latest Date</th><th>Latest Reading</th><th>Policy / Facility Context</th><th>Operational Stance</th><th>Chart Studio</th></tr></thead>
+        <tbody>{''.join(cb_liq_rows)}</tbody>
       </table>
     </div>
     <div class="table-wrap" style="margin-top: 16px;">

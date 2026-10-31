@@ -283,6 +283,36 @@ PRESETS = [
             {"country": "TW", "id": "customs_exports_yoy", "axis": "right", "color": "#0d7680", "label": "Taiwan Customs Exports (% y/y)"},
             {"country": "CN", "id": "customs_exports_yoy_akshare", "axis": "right", "color": "#990f3d", "label": "China Customs Exports (% y/y)"}
         ]
+    },
+    {
+        "id": "us_net_liquidity_transmission",
+        "title_en": "US Central Bank Plumbing: Fed Assets, TGA, ON RRP & Reserve Balances",
+        "title_zh": "美国央行流动性管道与资产负债表拆解 (美联储总资产 / 国债持仓 / MBS / TGA / 逆回购 / 准备金)",
+        "description_zh": "监控美元流动性核心管道：资产端美联储总资产规模、国债与MBS持仓（左轴，百万美元）与负债端准备金余额、财政部一般账户(TGA)以及隔夜逆回购(ON RRP)（右轴）拆解联动。",
+        "description_en": "Monitors the mechanics of US dollar liquidity transmission: Fed Total Assets, Treasury holdings, and MBS on the asset side (left axis, USD mn) against Treasury General Account (TGA) cash drain, ON RRP, and commercial bank reserve balances (right axis, USD mn).",
+        "transform": "raw",
+        "date_range": "5y",
+        "series": [
+            {"country": "US", "id": "fed_total_assets", "axis": "left", "color": "#0d7680", "label": "Fed Total Assets ($M)"},
+            {"country": "US", "id": "fed_treasury_holdings", "axis": "left", "color": "#2563eb", "label": "Fed Treasury Holdings ($M)"},
+            {"country": "US", "id": "fed_mbs_holdings", "axis": "left", "color": "#7c3aed", "label": "Fed MBS Holdings ($M)"},
+            {"country": "US", "id": "reserve_balances", "axis": "right", "color": "#990f3d", "label": "Bank Reserve Balances ($M)"},
+            {"country": "US", "id": "treasury_general_account", "axis": "right", "color": "#d97706", "label": "Treasury General Account ($M)"}
+        ]
+    },
+    {
+        "id": "global_central_bank_balance_sheets",
+        "title_en": "Global Central Bank Balance Sheets: Fed vs ECB vs BoJ Total Assets",
+        "title_zh": "全球核心央行资产负债表扩张与收缩 (美联储 vs 欧洲央行 vs 日本央行)",
+        "description_zh": "全球主要央行量化宽松与紧缩(QT/QE)总规模对比：美联储总资产（百万美元，左轴）、欧洲央行欧元系统资产（百万欧元，左轴）与日本央行总资产（百亿日元，右轴）联动对比。",
+        "description_en": "Comparative quantitative tightening and easing across major central banks: US Federal Reserve (USD mn, left axis), Eurosystem ECB (EUR mn, left axis), and Bank of Japan (JPY 100mn, right axis).",
+        "transform": "rebase",
+        "date_range": "5y",
+        "series": [
+            {"country": "US", "id": "fed_total_assets", "axis": "left", "color": "#0d7680", "label": "Fed Total Assets (USD mn)"},
+            {"country": "EA", "id": "eurosystem_total_assets", "axis": "left", "color": "#2563eb", "label": "ECB Eurosystem Assets (EUR mn)"},
+            {"country": "JP", "id": "boj_total_assets", "axis": "right", "color": "#990f3d", "label": "BoJ Total Assets (JPY 100mn)"}
+        ]
     }
 ]
 

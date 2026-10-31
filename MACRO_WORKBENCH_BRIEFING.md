@@ -127,7 +127,27 @@ Misalignment evaluated against 5-Year and 10-Year historical moving averages. In
 
 ---
 
-## 6. Priority Data Quality & Maintenance Backlog
+## 6. Global Central Bank Balance Sheets & Net Liquidity Monitor
+
+Deconstruction of major central bank balance sheet composition, quantitative tightening (QT) runoff, and market plumbing liquidity metrics.
+US Net Liquidity Metric is calculated as $\text{Fed Total Assets} - \text{Treasury General Account (TGA)} - \text{Overnight Reverse Repo (ON RRP)}$.
+
+| Institution | Country | Indicator & Plumbing Signal | Frequency | Latest Date | Reading | Context / Operational Stance |
+| :--- | :---: | :--- | :---: | :---: | :---: | :--- |
+| **Federal Reserve (Fed)** | `US` | US Net Liquidity (Assets − TGA − RRP) | Weekly | 2026-10-28 | **$5,741.5B** | Ample reserve buffer ($5.74T net liquidity) |
+| **Federal Reserve (Fed)** | `US` | Fed Total Assets (Balance Sheet Level) | Weekly | 2026-10-28 | **$6,745.6B** | Down from $8.96T peak (-$2,219B runoff) |
+| **Federal Reserve (Fed)** | `US` | Fed Treasury Securities Holdings Outright | Weekly | 2026-10-28 | **$4,576.6B** | Primary asset backing commercial banking reserves |
+| **Federal Reserve (Fed)** | `US` | Fed Mortgage-Backed Securities (MBS) | Weekly | 2026-10-28 | **$1,883.5B** | Passive redemption dependent on prepayment speeds |
+| **Federal Reserve (Fed)** | `US` | Treasury General Account (TGA) at Fed | Weekly | 2026-10-28 | **$999.7B** | High TGA drains cash out of private banking system |
+| **Federal Reserve (Fed)** | `US` | Overnight Reverse Repo Facility (ON RRP) | Daily | 2026-10-30 | **$4.38B** | Near-exhausted ($4.4B vs $2.55T peak); liquidity cushion spent |
+| **European Central Bank (ECB)** | `EA` | Eurosystem Total Assets (Consolidated) | Weekly | 2026-10-19 | **€5,935.0B** | Controlled quantitative tightening across Eurosystem |
+| **Bank of Japan (BoJ)** | `JP` | Bank of Japan Total Assets | Monthly | 2026-09-01 | **¥625.0T** | Transition away from Yield Curve Control (YCC) |
+| **People's Bank of China (PBC)** | `CN` | PBC Balance Sheet Total Assets | Monthly | 2026-08-01 | **¥49.86T** | Structural liquidity support & credit expansion |
+| **People's Bank of China (PBC)** | `CN` | PBC Reserve Money (Base Money) | Monthly | 2026-08-01 | **¥40.18T** | RRR cuts lowering cost of funding for banks |
+
+---
+
+## 7. Priority Data Quality & Maintenance Backlog
 
 | Code | Section | Item | Priority | Action Hint |
 | :---: | :--- | :--- | :---: | :--- |

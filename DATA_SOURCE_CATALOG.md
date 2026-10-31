@@ -1546,7 +1546,7 @@ Configured charts: 95. Latest rendered chart count: 95. Source groups: 11.
 
 The US page is generated from `config/us_indicators.yaml`. This table records configured sources for each rendered chart slot; latest dates are tracked in `output/us_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 177. Latest rendered chart count: 177. Source groups: 28.
+Configured charts: 179. Latest rendered chart count: 179. Source groups: 28.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1710,8 +1710,10 @@ Configured charts: 177. Latest rendered chart count: 177. Source groups: 28.
 | fed_policy | `overnight_bank_funding_rate` | Overnight Bank Funding Rate | daily | % | fred | FRED / New York Fed | OBFR | OBFR helps monitor unsecured overnight funding around the fed funds market. |
 | fed_policy | `fed_funds_volume` | Effective Fed Funds Volume | daily | USD bn | fred | FRED / New York Fed | EFFRVOL | Volume helps interpret the depth of the fed funds market under abundant reserves. |
 | fed_policy | `reserve_balances` | Reserve Balances at Federal Reserve Banks | weekly | USD mn | fred | FRED / Federal Reserve | WRESBAL | Reserve balances are central to the abundant-reserves operating framework. |
-| fed_policy | `overnight_reverse_repo` | Overnight Reverse Repo | daily | USD mn | fred | FRED / Federal Reserve | RRPONTSYD | ON RRP usage is a money-market plumbing signal. |
+| fed_policy | `overnight_reverse_repo` | Overnight Reverse Repo | daily | USD bn | fred | FRED / Federal Reserve | RRPONTSYD | ON RRP usage is a money-market plumbing signal. |
 | fed_policy | `fed_treasury_holdings` | Fed Treasury Holdings | weekly | USD mn | fred | FRED / Federal Reserve | TREAST | Treasury holdings separate QT/QE composition from total balance-sheet size. |
+| fed_policy | `fed_mbs_holdings` | Fed Mortgage-Backed Securities Holdings | weekly | USD mn | fred | FRED / Federal Reserve | WSHOMCB | Mortgage-backed securities held outright on the Federal Reserve balance sheet. |
+| fed_policy | `treasury_general_account` | Treasury General Account (TGA) | weekly | USD mn | fred | FRED / Federal Reserve | WTREGEN | Treasury cash balance held at the Federal Reserve; drains bank reserves when built up and injects liquidity when spent down. |
 | fiscal | `treasury_auction_total_accepted` | Treasury Auction Accepted Amount | monthly | USD bn | treasury_auctions | Treasury FiscalData / US Treasury | auctions_query.total_accepted | Official completed-auction results aggregated by auction month; this is issuance supply already auctioned, not the future auction calendar. |
 | fiscal | `treasury_bill_auction_accepted` | T-Bill Auction Accepted Amount | monthly | USD bn | treasury_auctions | Treasury FiscalData / US Treasury | auctions_query.total_accepted.bill | Bills dominate front-end Treasury supply and can matter for money-market liquidity and reserve-drain narratives. |
 | fiscal | `treasury_coupon_auction_accepted` | Coupon/TIPS/FRN Auction Accepted Amount | monthly | USD bn | treasury_auctions | Treasury FiscalData / US Treasury | auctions_query.total_accepted.coupon_tips_frn | Coupon/TIPS/FRN auction supply is the cleaner duration-heavy issuance gauge; reopenings are included when Treasury reports completed auction results. |
