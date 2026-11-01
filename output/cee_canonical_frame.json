@@ -1,6 +1,6 @@
 {
   "schema_version": "cee-canonical-v2",
-  "generated": "2026-11-01T11:36:50.572912+00:00",
+  "generated": "2026-11-01T14:13:47.202792+00:00",
   "observation_columns": [
     "date",
     "value",
@@ -19902,15 +19902,16 @@
         "source": "Czech Statistical Office open data",
         "series_id": "CEN0301:614703:ABCDEJ:IR",
         "quality_status": "watch",
-        "quality_note": "Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Czechia national-statistics override where Eurostat import-price coverage is incomplete.  Source validation passed.",
+        "quality_note": "Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Czechia national-statistics override where Eurostat import-price coverage is incomplete.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.csu.gov.cz/opendata/sady/CEN0301/distribuce/csv",
         "source_authority": "public_secondary",
         "derivation": "observed",
         "freshness_status": "due",
-        "validation_status": "passed",
-        "comparability": "high"
+        "validation_status": "watch",
+        "comparability": "high",
+        "refresh_fallback": true
       },
       "observations": [
         [
@@ -30678,7 +30679,7 @@
         "source": "CNB external debt / CNB international reserves",
         "series_id": "CNB USD short-term external debt / CNB USD reserves",
         "quality_status": "watch",
-        "quality_note": "Uses IMF ARA ratio where available; Czechia uses a quarterly CNB short-term external debt position over matched CNB quarter-end international reserves. Read as a structural external-liquidity gauge. National-CB override for Czechia where IMF ARA ratio coverage is missing; external debt is quarterly while reserve denominator is matched to quarter-end.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot.",
+        "quality_note": "Uses IMF ARA ratio where available; Czechia uses a quarterly CNB short-term external debt position over matched CNB quarter-end international reserves. Read as a structural external-liquidity gauge. National-CB override for Czechia where IMF ARA ratio coverage is missing; external debt is quarterly while reserve denominator is matched to quarter-end.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://www.cnb.cz/en/statistics/bop_stat/external_debt/zz_usd_en.htm",
@@ -53538,15 +53539,16 @@
         "source": "Hungarian Central Statistical Office STADAT",
         "series_id": "STADAT:ara0046:import-monthly-total",
         "quality_status": "watch",
-        "quality_note": "Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Hungary national-statistics override; latest KSH methodology column is preferred and older-method values fill only missing early history.  Source validation passed.",
+        "quality_note": "Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Hungary national-statistics override; latest KSH methodology column is preferred and older-method values fill only missing early history.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://www.ksh.hu/stadat_files/ara/en/ara0046.csv",
         "source_authority": "public_secondary",
         "derivation": "observed",
         "freshness_status": "current",
-        "validation_status": "passed",
-        "comparability": "high"
+        "validation_status": "watch",
+        "comparability": "high",
+        "refresh_fallback": true
       },
       "observations": [
         [
@@ -133599,6 +133601,237 @@
       ]
     },
     {
+      "country": "HU",
+      "indicator_id": "cpi_head_3m_ann",
+      "metadata": {
+        "label": "Headline CPI 3M Annualized Rate",
+        "label_en": "Headline CPI 3M Annualized Rate",
+        "label_zh": "整体通胀3个月年化率",
+        "unit": "% annualized",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr (compounded 3M pace)",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2025-12-01",
+          0.4,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          2.8,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          2.8,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          4.5,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          4.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          4.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          2.0,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          0.0,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          0.8,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          1.2,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "HU",
+      "indicator_id": "cpi_core_3m_ann",
+      "metadata": {
+        "label": "Core CPI 3M Annualized Rate",
+        "label_en": "Core CPI 3M Annualized Rate",
+        "label_zh": "核心通胀3个月年化率",
+        "unit": "% annualized",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr (compounded 3M pace)",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2025-12-01",
+          3.7,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          4.5,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          4.9,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          4.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          4.5,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          4.5,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          4.5,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          4.9,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          5.3,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          2.8,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "HU",
+      "indicator_id": "cpi_momentum_gap",
+      "metadata": {
+        "label": "Inflation Momentum Spread (3M Ann - YoY)",
+        "label_en": "Inflation Momentum Spread (3M Ann - YoY)",
+        "label_zh": "通胀动量差值(3M年化-同比)",
+        "unit": "percentage points",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr (3M ann - 12M YoY)",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2025-12-01",
+          -2.9,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          0.5,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          1.2,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          2.4,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          1.5,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          1.8,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          -0.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          -1.6,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          -1.0,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          -0.9,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
       "country": "PL",
       "indicator_id": "cpi_contrib_food_yoy",
       "metadata": {
@@ -136314,6 +136547,237 @@
         [
           "2026-09-01",
           -26.3,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "PL",
+      "indicator_id": "cpi_head_3m_ann",
+      "metadata": {
+        "label": "Headline CPI 3M Annualized Rate",
+        "label_en": "Headline CPI 3M Annualized Rate",
+        "label_zh": "整体通胀3个月年化率",
+        "unit": "% annualized",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr (compounded 3M pace)",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2025-12-01",
+          1.6,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          3.2,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          4.5,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          8.3,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          7.9,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          5.7,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          0.8,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          -0.0,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          1.6,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          5.7,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "PL",
+      "indicator_id": "cpi_core_3m_ann",
+      "metadata": {
+        "label": "Core CPI 3M Annualized Rate",
+        "label_en": "Core CPI 3M Annualized Rate",
+        "label_zh": "核心通胀3个月年化率",
+        "unit": "% annualized",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr (compounded 3M pace)",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2025-12-01",
+          0.4,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          1.2,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          2.4,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          4.9,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          6.2,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          5.3,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          3.7,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          1.6,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          2.8,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          2.8,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "PL",
+      "indicator_id": "cpi_momentum_gap",
+      "metadata": {
+        "label": "Inflation Momentum Spread (3M Ann - YoY)",
+        "label_en": "Inflation Momentum Spread (3M Ann - YoY)",
+        "label_zh": "通胀动量差值(3M年化-同比)",
+        "unit": "percentage points",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr (3M ann - 12M YoY)",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2025-12-01",
+          -1.0,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          0.7,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          2.0,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          5.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          4.5,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          2.4,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          -2.2,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          -3.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          -1.9,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          1.7,
           "historical",
           false
         ]
@@ -139041,6 +139505,237 @@
       ]
     },
     {
+      "country": "CZ",
+      "indicator_id": "cpi_head_3m_ann",
+      "metadata": {
+        "label": "Headline CPI 3M Annualized Rate",
+        "label_en": "Headline CPI 3M Annualized Rate",
+        "label_zh": "整体通胀3个月年化率",
+        "unit": "% annualized",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr (compounded 3M pace)",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2025-12-01",
+          -0.4,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          1.2,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          2.0,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          5.7,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          4.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          5.3,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          0.8,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          1.2,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          1.6,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          3.2,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "CZ",
+      "indicator_id": "cpi_core_3m_ann",
+      "metadata": {
+        "label": "Core CPI 3M Annualized Rate",
+        "label_en": "Core CPI 3M Annualized Rate",
+        "label_zh": "核心通胀3个月年化率",
+        "unit": "% annualized",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr (compounded 3M pace)",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2025-12-01",
+          0.8,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          2.8,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          5.7,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          6.2,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          4.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          2.4,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          2.8,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          5.7,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          6.2,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          2.0,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "CZ",
+      "indicator_id": "cpi_momentum_gap",
+      "metadata": {
+        "label": "Inflation Momentum Spread (3M Ann - YoY)",
+        "label_en": "Inflation Momentum Spread (3M Ann - YoY)",
+        "label_zh": "通胀动量差值(3M年化-同比)",
+        "unit": "percentage points",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr (3M ann - 12M YoY)",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2025-12-01",
+          -2.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          0.0,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          1.0,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          4.2,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          2.0,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          3.5,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          -0.3,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          -0.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          0.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          1.0,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
       "country": "RO",
       "indicator_id": "cpi_contrib_food_yoy",
       "metadata": {
@@ -141750,6 +142445,237 @@
         [
           "2026-09-01",
           -46.6,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "RO",
+      "indicator_id": "cpi_head_3m_ann",
+      "metadata": {
+        "label": "Headline CPI 3M Annualized Rate",
+        "label_en": "Headline CPI 3M Annualized Rate",
+        "label_zh": "整体通胀3个月年化率",
+        "unit": "% annualized",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr (compounded 3M pace)",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2025-12-01",
+          4.9,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          6.2,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          6.6,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          9.6,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          9.2,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          9.6,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          5.3,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          4.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          2.4,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          6.2,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "RO",
+      "indicator_id": "cpi_core_3m_ann",
+      "metadata": {
+        "label": "Core CPI 3M Annualized Rate",
+        "label_en": "Core CPI 3M Annualized Rate",
+        "label_zh": "核心通胀3个月年化率",
+        "unit": "% annualized",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr (compounded 3M pace)",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2025-12-01",
+          7.0,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          6.6,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          5.3,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          5.7,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          7.4,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          9.6,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          8.7,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          6.6,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          4.9,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          6.6,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "RO",
+      "indicator_id": "cpi_momentum_gap",
+      "metadata": {
+        "label": "Inflation Momentum Spread (3M Ann - YoY)",
+        "label_en": "Inflation Momentum Spread (3M Ann - YoY)",
+        "label_zh": "通胀动量差值(3M年化-同比)",
+        "unit": "percentage points",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr (3M ann - 12M YoY)",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2025-12-01",
+          -3.7,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          -2.3,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          -1.7,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          0.6,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          -0.3,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          -0.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          -3.9,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          -4.1,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          -3.9,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          -0.3,
           "historical",
           false
         ]

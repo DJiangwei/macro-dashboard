@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-11-01T11:47:15.529344+00:00",
+  "generated": "2026-11-01T14:13:47.252099+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -13,16 +13,16 @@
   },
   "countries": {
     "HU": {
-      "calls": 856,
-      "success": 105,
-      "empty": 750,
+      "calls": 858,
+      "success": 104,
+      "empty": 753,
       "failed": 1,
       "circuit_open": 0,
       "failure_reasons": {
         "unexpected_error": 1
       },
       "empty_reasons": {
-        "empty_response": 750
+        "empty_response": 753
       },
       "sources": {
         "BISFetcher": {
@@ -76,6 +76,9 @@
         "GPWBenchmarkFetcher": {
           "empty": 16
         },
+        "GUSDBWFetcher": {
+          "empty": 1
+        },
         "IMFDataMapperFetcher": {
           "empty": 44,
           "success": 9
@@ -84,8 +87,11 @@
           "empty": 33,
           "success": 5
         },
+        "INSSETempoFetcher": {
+          "empty": 1
+        },
         "KSHFetcher": {
-          "success": 1
+          "empty": 1
         },
         "ManualIndicatorFetcher": {
           "empty": 1,
@@ -119,7 +125,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-11-01T11:36:34.988458+00:00",
+          "timestamp": "2026-11-01T14:13:34.810421+00:00",
           "country": "HU",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -242,7 +248,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-11-01T11:36:44.171534+00:00",
+          "timestamp": "2026-11-01T14:13:43.103590+00:00",
           "country": "PL",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -251,7 +257,7 @@
           "message": "name 'ROOT' is not defined"
         },
         {
-          "timestamp": "2026-11-01T11:36:44.602337+00:00",
+          "timestamp": "2026-11-01T14:13:43.530214+00:00",
           "country": "PL",
           "indicator_id": "equity_yoy",
           "source_id": "CredentialedStooqFetcher",
@@ -262,16 +268,16 @@
       ]
     },
     "CZ": {
-      "calls": 840,
-      "success": 103,
-      "empty": 736,
+      "calls": 843,
+      "success": 102,
+      "empty": 740,
       "failed": 1,
       "circuit_open": 0,
       "failure_reasons": {
         "unexpected_error": 1
       },
       "empty_reasons": {
-        "empty_response": 736
+        "empty_response": 740
       },
       "sources": {
         "BISFetcher": {
@@ -282,8 +288,7 @@
           "empty": 13
         },
         "CZSOFetcher": {
-          "empty": 1,
-          "success": 1
+          "empty": 2
         },
         "CredentialedStooqFetcher": {
           "empty": 13
@@ -327,7 +332,7 @@
           "empty": 13
         },
         "GUSDBWFetcher": {
-          "empty": 1
+          "empty": 2
         },
         "IMFDataMapperFetcher": {
           "empty": 44,
@@ -338,10 +343,10 @@
           "success": 5
         },
         "INSSETempoFetcher": {
-          "empty": 1
+          "empty": 2
         },
         "KSHFetcher": {
-          "empty": 1
+          "empty": 2
         },
         "ManualIndicatorFetcher": {
           "empty": 2,
@@ -375,7 +380,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-11-01T11:36:48.027434+00:00",
+          "timestamp": "2026-11-01T14:13:44.707715+00:00",
           "country": "CZ",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
@@ -499,7 +504,7 @@
       },
       "events": [
         {
-          "timestamp": "2026-11-01T11:36:49.664935+00:00",
+          "timestamp": "2026-11-01T14:13:46.307250+00:00",
           "country": "RO",
           "indicator_id": "gas_storage_level",
           "source_id": "GIEAGSIFetcher",
