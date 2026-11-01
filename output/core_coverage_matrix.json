@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-10-31T22:13:25.698947+00:00",
+  "generated": "2026-11-01T11:47:31.864251+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -67,8 +67,8 @@
       "missing": 17
     },
     "EA": {
-      "verified": 32,
-      "watch": 3,
+      "verified": 30,
+      "watch": 5,
       "low_confidence": 9,
       "substitute": 0,
       "missing": 4
@@ -81,8 +81,8 @@
       "missing": 10
     },
     "ZA": {
-      "verified": 7,
-      "watch": 9,
+      "verified": 1,
+      "watch": 15,
       "low_confidence": 12,
       "substitute": 1,
       "missing": 19
@@ -95,8 +95,8 @@
       "missing": 8
     },
     "US": {
-      "verified": 38,
-      "watch": 5,
+      "verified": 35,
+      "watch": 8,
       "low_confidence": 0,
       "substitute": 0,
       "missing": 5
@@ -109,8 +109,8 @@
       "missing": 16
     },
     "HK": {
-      "verified": 11,
-      "watch": 9,
+      "verified": 8,
+      "watch": 12,
       "low_confidence": 4,
       "substitute": 0,
       "missing": 24
@@ -123,8 +123,8 @@
       "missing": 16
     },
     "TW": {
-      "verified": 16,
-      "watch": 10,
+      "verified": 10,
+      "watch": 16,
       "low_confidence": 0,
       "substitute": 0,
       "missing": 22
@@ -433,8 +433,8 @@
           "refresh_fallback": false
         },
         "HK": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "real_gdp_yoy"
           ],
@@ -451,8 +451,8 @@
           "refresh_fallback": false
         },
         "TW": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "real_gdp_yoy"
           ],
@@ -765,8 +765,8 @@
           "refresh_fallback": false
         },
         "TW": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "private_consumption"
           ],
@@ -937,8 +937,8 @@
           "refresh_fallback": false
         },
         "TW": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "gross_fixed_capital_formation"
           ],
@@ -1094,8 +1094,8 @@
           "refresh_fallback": false
         },
         "HK": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "industrial_production_growth"
           ],
@@ -2536,13 +2536,13 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "cpi_inflation"
           ],
           "latest_date": "2026-09-01",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "UK": {
           "state": "verified",
@@ -3193,13 +3193,13 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "ppi_inflation"
           ],
           "latest_date": "2026-09-01",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "UK": {
           "state": "verified",
@@ -3371,8 +3371,8 @@
           "refresh_fallback": false
         },
         "US": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "unit_labor_cost_growth"
           ],
@@ -3685,8 +3685,8 @@
           "refresh_fallback": true
         },
         "US": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "fhfa_house_price_growth"
           ],
@@ -4015,8 +4015,8 @@
           "refresh_fallback": false
         },
         "HK": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "construction_works_growth"
           ],
@@ -4460,8 +4460,8 @@
           "refresh_fallback": false
         },
         "US": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "current_account_balance"
           ],
@@ -4673,8 +4673,8 @@
           "refresh_fallback": false
         },
         "TW": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "customs_trade_balance",
             "goods_trade_balance"
@@ -4843,8 +4843,8 @@
           "refresh_fallback": false
         },
         "TW": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "customs_exports_yoy",
             "goods_exports"
@@ -5005,8 +5005,8 @@
           "refresh_fallback": false
         },
         "TW": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "customs_imports_yoy",
             "goods_imports"
@@ -5121,13 +5121,13 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "zar_usd"
           ],
           "latest_date": "2026-10-30",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "UK": {
           "state": "verified",
@@ -5190,7 +5190,7 @@
             "usd_kzt",
             "usd_kzt_ifs"
           ],
-          "latest_date": "2026-10-31",
+          "latest_date": "2026-11-01",
           "refresh_fallback": false
         },
         "UZ": {
@@ -6146,13 +6146,13 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "sovereign_yield_10y"
           ],
           "latest_date": "2026-10-29",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "UK": {
           "state": "verified",
@@ -6315,13 +6315,13 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "policy_rate"
           ],
           "latest_date": "2026-10-30",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "UK": {
           "state": "verified",
@@ -7019,13 +7019,13 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "prime_lending_rate"
           ],
           "latest_date": "2026-10-30",
-          "refresh_fallback": false
+          "refresh_fallback": true
         },
         "UK": {
           "state": "missing",
@@ -7145,7 +7145,7 @@
           "indicator_ids": [
             "equity_yoy"
           ],
-          "latest_date": "2026-10-02",
+          "latest_date": "2026-10-30",
           "refresh_fallback": false
         },
         "RO": {
@@ -7798,8 +7798,8 @@
           "refresh_fallback": false
         },
         "EA": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "bank_cet1_ratio"
           ],
@@ -7964,8 +7964,8 @@
           "refresh_fallback": false
         },
         "EA": {
-          "state": "verified",
-          "quality_status": "verified",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "bank_npl_ratio"
           ],

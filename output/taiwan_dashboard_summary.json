@@ -1,6 +1,6 @@
 {
   "file": "taiwan.html",
-  "generated": "2026-10-31T22:13:24.268373+00:00",
+  "generated": "2026-11-01T11:47:30.489417+00:00",
   "charts": 50,
   "source_groups": 11,
   "data_gaps": 1,
@@ -16,7 +16,7 @@
       "frequency": "quarterly",
       "source_name": "Taiwan DGBAS",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "real_gdp_growth",
@@ -40,7 +40,7 @@
       "frequency": "quarterly",
       "source_name": "Taiwan DGBAS",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "private_consumption",
@@ -52,7 +52,7 @@
       "frequency": "quarterly",
       "source_name": "Taiwan DGBAS",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "government_consumption",
@@ -64,7 +64,7 @@
       "frequency": "quarterly",
       "source_name": "Taiwan DGBAS",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "domestic_demand",
@@ -76,7 +76,7 @@
       "frequency": "quarterly",
       "source_name": "Taiwan DGBAS",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "machinery_investment_yoy",
@@ -88,7 +88,7 @@
       "frequency": "quarterly",
       "source_name": "Taiwan DGBAS",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "real_exports_yoy",
@@ -100,7 +100,7 @@
       "frequency": "quarterly",
       "source_name": "Taiwan DGBAS",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "real_imports_yoy",
@@ -112,7 +112,7 @@
       "frequency": "quarterly",
       "source_name": "Taiwan DGBAS",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "cpi_inflation",
@@ -460,7 +460,7 @@
       "frequency": "quarterly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "goods_trade_balance",
@@ -472,7 +472,7 @@
       "frequency": "quarterly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "goods_exports",
@@ -484,7 +484,7 @@
       "frequency": "quarterly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "goods_imports",
@@ -496,7 +496,7 @@
       "frequency": "quarterly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "services_balance",
@@ -508,7 +508,7 @@
       "frequency": "quarterly",
       "source_name": "Central Bank of the Republic of China (Taiwan)",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "current_account_gdp",
@@ -636,7 +636,7 @@
     "observations": 13737,
     "series_count": 50,
     "observation_count": 13737,
-    "snapshot_generated": "2026-10-31T22:13:18.382514+00:00"
+    "snapshot_generated": "2026-11-01T11:47:22.640410+00:00"
   },
   "data_gaps_detail": [
     {
@@ -697,8 +697,8 @@
     ],
     "quality_counts": {
       "low_confidence": 1,
-      "verified": 33,
-      "watch": 16
+      "verified": 20,
+      "watch": 29
     },
     "unavailable_count": 0
   },
@@ -709,15 +709,235 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-10-31",
+    "as_of_date": "2026-11-01",
     "counts": {
-      "current": 37,
-      "due": 8,
+      "current": 24,
+      "due": 21,
       "projection": 4,
       "stale": 1
     },
     "latest_historical_date": "2026-10-30",
     "attention": [
+      {
+        "id": "current_account_usd",
+        "concept_id": "tw:current_account_usd",
+        "label_en": "Current Account Balance (USD)",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Central Bank of the Republic of China (Taiwan)",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "domestic_demand",
+        "concept_id": "tw:domestic_demand",
+        "label_en": "Domestic Demand YoY",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Taiwan DGBAS",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "goods_exports",
+        "concept_id": "exports_growth",
+        "label_en": "Exports of Goods (BOP Basis, USD)",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Central Bank of the Republic of China (Taiwan)",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "goods_imports",
+        "concept_id": "imports_growth",
+        "label_en": "Imports of Goods (BOP Basis, USD)",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Central Bank of the Republic of China (Taiwan)",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "goods_trade_balance",
+        "concept_id": "trade_balance",
+        "label_en": "Goods Trade Balance (BOP Basis, USD)",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Central Bank of the Republic of China (Taiwan)",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "government_consumption",
+        "concept_id": "tw:government_consumption",
+        "label_en": "Government Final Consumption YoY",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Taiwan DGBAS",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "gross_fixed_capital_formation",
+        "concept_id": "investment_growth",
+        "label_en": "Gross Fixed Capital Formation YoY",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Taiwan DGBAS",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "machinery_investment_yoy",
+        "concept_id": "tw:machinery_investment_yoy",
+        "label_en": "Machinery & Equipment Investment YoY (AI / Semiconductor Capex)",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Taiwan DGBAS",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "private_consumption",
+        "concept_id": "consumption_growth",
+        "label_en": "Private Final Consumption YoY",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Taiwan DGBAS",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "real_exports_yoy",
+        "concept_id": "tw:real_exports_yoy",
+        "label_en": "Real Exports of Goods & Services YoY",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Taiwan DGBAS",
+        "series": "",
+        "transform": "level"
+      },
       {
         "id": "real_gdp_growth",
         "concept_id": "real_gdp_growth_qoq",
@@ -726,7 +946,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-30",
-        "age_days": 123,
+        "age_days": 124,
         "threshold_days": 137,
         "release_calendar_id": "bea_quarterly",
         "expected_release_date": "2026-11-04",
@@ -741,6 +961,72 @@
         "transform": "level"
       },
       {
+        "id": "real_gdp_yoy",
+        "concept_id": "real_gdp_growth_yoy",
+        "label_en": "Real GDP Growth, YoY",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Taiwan DGBAS",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "real_imports_yoy",
+        "concept_id": "tw:real_imports_yoy",
+        "label_en": "Real Imports of Goods & Services YoY",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Taiwan DGBAS",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "services_balance",
+        "concept_id": "tw:services_balance",
+        "label_en": "Services Trade Balance (USD)",
+        "latest_date": "2026-06-30",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-06-30",
+        "age_days": 124,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Central Bank of the Republic of China (Taiwan)",
+        "series": "",
+        "transform": "level"
+      },
+      {
         "id": "bis_reer",
         "concept_id": "tw:bis_reer",
         "label_en": "BIS Real Broad Effective Exchange Rate (Cross-Check)",
@@ -748,7 +1034,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-07-01",
-        "age_days": 92,
+        "age_days": 93,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -770,7 +1056,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 61,
+        "age_days": 62,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -792,7 +1078,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 61,
+        "age_days": 62,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -814,7 +1100,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 61,
+        "age_days": 62,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -836,7 +1122,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 61,
+        "age_days": 62,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -858,7 +1144,7 @@
         "frequency": "bimonthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 61,
+        "age_days": 62,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -880,7 +1166,7 @@
         "frequency": "bimonthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 61,
+        "age_days": 62,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -902,7 +1188,7 @@
         "frequency": "daily",
         "freshness_status": "due",
         "age_basis_date": "2026-10-23",
-        "age_days": 8,
+        "age_days": 9,
         "threshold_days": 10,
         "release_calendar_id": "",
         "expected_release_date": "",

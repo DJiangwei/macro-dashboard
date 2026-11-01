@@ -1,7 +1,7 @@
 {
   "generated": "2026-10-29",
   "total_countries": 18,
-  "total_indicators": 1365,
+  "total_indicators": 1401,
   "countries": [
     {
       "code": "US",
@@ -8864,7 +8864,7 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 82,
-          "latest_date": "2026-10-31",
+          "latest_date": "2026-11-01",
           "latest_val": 68.22
         },
         {
@@ -8963,7 +8963,7 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 82,
-          "latest_date": "2026-10-31",
+          "latest_date": "2026-11-01",
           "latest_val": 508.33
         },
         {
@@ -9161,7 +9161,7 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 82,
-          "latest_date": "2026-10-31",
+          "latest_date": "2026-11-01",
           "latest_val": 5.65
         },
         {
@@ -9216,7 +9216,7 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 82,
-          "latest_date": "2026-10-31",
+          "latest_date": "2026-11-01",
           "latest_val": 453.87
         },
         {
@@ -10533,7 +10533,7 @@
       "name_zh": "匈牙利",
       "flag": "🇭🇺",
       "canonical_file": "cee_canonical_frame.json",
-      "indicator_count": 105,
+      "indicator_count": 114,
       "indicators": [
         {
           "id": "administered_prices",
@@ -10647,14 +10647,14 @@
         },
         {
           "id": "capacity_utilization",
-          "label_en": "capacity_utilization",
-          "label_zh": "capacity_utilization",
+          "label_en": "Industrial Capacity Utilization Rate",
+          "label_zh": "工业产能利用率",
           "unit": "%",
-          "section": "macro",
-          "frequency": "quarterly",
-          "obs_count": 36,
-          "latest_date": "2026-10-01",
-          "latest_val": 75.0
+          "section": "real_activity",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 78.8
         },
         {
           "id": "carry_trade_return",
@@ -11689,6 +11689,105 @@
           "obs_count": 105,
           "latest_date": "2026-09-01",
           "latest_val": 23.499999999999943
+        },
+        {
+          "id": "cpi_contrib_food_yoy",
+          "label_en": "Food CPI Contribution (YoY)",
+          "label_zh": "食品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": -0.93
+        },
+        {
+          "id": "cpi_contrib_goods_yoy",
+          "label_en": "Goods CPI Contribution (YoY)",
+          "label_zh": "商品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.31
+        },
+        {
+          "id": "cpi_contrib_energy_yoy",
+          "label_en": "Energy CPI Contribution (YoY)",
+          "label_zh": "能源与公用事业贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.25
+        },
+        {
+          "id": "cpi_contrib_services_yoy",
+          "label_en": "Services CPI Contribution (YoY)",
+          "label_zh": "服务业通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 2.24
+        },
+        {
+          "id": "ppi_cpi_scissors_gap",
+          "label_en": "PPI-CPI Margin Scissors Gap",
+          "label_zh": "PPI-CPI 工业利润剪刀差",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 5.0
+        },
+        {
+          "id": "exp_industry_3m",
+          "label_en": "Industrial Selling Price Exp 3M",
+          "label_zh": "工业企业3个月提价预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 12.5
+        },
+        {
+          "id": "exp_services_3m",
+          "label_en": "Services Price Expectations 3M",
+          "label_zh": "服务业3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 16.3
+        },
+        {
+          "id": "exp_retail_3m",
+          "label_en": "Retail Price Expectations 3M",
+          "label_zh": "零售分销商3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 23.2
+        },
+        {
+          "id": "exp_consumer_12m",
+          "label_en": "Consumer 12M Inflation Expectations",
+          "label_zh": "消费者12个月通胀预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": -16.0
         }
       ]
     },
@@ -11698,7 +11797,7 @@
       "name_zh": "波兰",
       "flag": "🇵🇱",
       "canonical_file": "cee_canonical_frame.json",
-      "indicator_count": 108,
+      "indicator_count": 117,
       "indicators": [
         {
           "id": "administered_prices",
@@ -11812,13 +11911,13 @@
         },
         {
           "id": "capacity_utilization",
-          "label_en": "capacity_utilization",
-          "label_zh": "capacity_utilization",
+          "label_en": "Industrial Capacity Utilization Rate",
+          "label_zh": "工业产能利用率",
           "unit": "%",
-          "section": "macro",
-          "frequency": "quarterly",
-          "obs_count": 36,
-          "latest_date": "2026-10-01",
+          "section": "real_activity",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
           "latest_val": 78.4
         },
         {
@@ -12887,6 +12986,105 @@
           "obs_count": 105,
           "latest_date": "2026-09-01",
           "latest_val": 252.00000000000006
+        },
+        {
+          "id": "cpi_contrib_food_yoy",
+          "label_en": "Food CPI Contribution (YoY)",
+          "label_zh": "食品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": -0.07
+        },
+        {
+          "id": "cpi_contrib_goods_yoy",
+          "label_en": "Goods CPI Contribution (YoY)",
+          "label_zh": "商品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.06
+        },
+        {
+          "id": "cpi_contrib_energy_yoy",
+          "label_en": "Energy CPI Contribution (YoY)",
+          "label_zh": "能源与公用事业贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.14
+        },
+        {
+          "id": "cpi_contrib_services_yoy",
+          "label_en": "Services CPI Contribution (YoY)",
+          "label_zh": "服务业通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 2.28
+        },
+        {
+          "id": "ppi_cpi_scissors_gap",
+          "label_en": "PPI-CPI Margin Scissors Gap",
+          "label_zh": "PPI-CPI 工业利润剪刀差",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 4.4
+        },
+        {
+          "id": "exp_industry_3m",
+          "label_en": "Industrial Selling Price Exp 3M",
+          "label_zh": "工业企业3个月提价预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 11.8
+        },
+        {
+          "id": "exp_services_3m",
+          "label_en": "Services Price Expectations 3M",
+          "label_zh": "服务业3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 6.7
+        },
+        {
+          "id": "exp_retail_3m",
+          "label_en": "Retail Price Expectations 3M",
+          "label_zh": "零售分销商3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 14.3
+        },
+        {
+          "id": "exp_consumer_12m",
+          "label_en": "Consumer 12M Inflation Expectations",
+          "label_zh": "消费者12个月通胀预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": -26.3
         }
       ]
     },
@@ -12896,7 +13094,7 @@
       "name_zh": "捷克",
       "flag": "🇨🇿",
       "canonical_file": "cee_canonical_frame.json",
-      "indicator_count": 104,
+      "indicator_count": 113,
       "indicators": [
         {
           "id": "administered_prices",
@@ -12999,14 +13197,14 @@
         },
         {
           "id": "capacity_utilization",
-          "label_en": "capacity_utilization",
-          "label_zh": "capacity_utilization",
+          "label_en": "Industrial Capacity Utilization Rate",
+          "label_zh": "工业产能利用率",
           "unit": "%",
-          "section": "macro",
-          "frequency": "quarterly",
-          "obs_count": 36,
-          "latest_date": "2026-10-01",
-          "latest_val": 82.1
+          "section": "real_activity",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 84.8
         },
         {
           "id": "carry_trade_return",
@@ -13213,9 +13411,9 @@
           "unit": "Index",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 70,
-          "latest_date": "2026-10-02",
-          "latest_val": 2616.27
+          "obs_count": 71,
+          "latest_date": "2026-10-30",
+          "latest_val": 2627.33
         },
         {
           "id": "equity_vol_30d",
@@ -13235,9 +13433,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 58,
-          "latest_date": "2026-10-02",
-          "latest_val": 9.16635719918717
+          "obs_count": 59,
+          "latest_date": "2026-10-30",
+          "latest_val": 5.385328129575173
         },
         {
           "id": "eu_funds_absorption",
@@ -14041,6 +14239,105 @@
           "obs_count": 105,
           "latest_date": "2026-09-01",
           "latest_val": 149.00000000000003
+        },
+        {
+          "id": "cpi_contrib_food_yoy",
+          "label_en": "Food CPI Contribution (YoY)",
+          "label_zh": "食品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": -0.73
+        },
+        {
+          "id": "cpi_contrib_goods_yoy",
+          "label_en": "Goods CPI Contribution (YoY)",
+          "label_zh": "商品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.02
+        },
+        {
+          "id": "cpi_contrib_energy_yoy",
+          "label_en": "Energy CPI Contribution (YoY)",
+          "label_zh": "能源与公用事业贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": -0.17
+        },
+        {
+          "id": "cpi_contrib_services_yoy",
+          "label_en": "Services CPI Contribution (YoY)",
+          "label_zh": "服务业通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 2.62
+        },
+        {
+          "id": "ppi_cpi_scissors_gap",
+          "label_en": "PPI-CPI Margin Scissors Gap",
+          "label_zh": "PPI-CPI 工业利润剪刀差",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.5
+        },
+        {
+          "id": "exp_industry_3m",
+          "label_en": "Industrial Selling Price Exp 3M",
+          "label_zh": "工业企业3个月提价预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 17.5
+        },
+        {
+          "id": "exp_services_3m",
+          "label_en": "Services Price Expectations 3M",
+          "label_zh": "服务业3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 13.4
+        },
+        {
+          "id": "exp_retail_3m",
+          "label_en": "Retail Price Expectations 3M",
+          "label_zh": "零售分销商3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 14.2
+        },
+        {
+          "id": "exp_consumer_12m",
+          "label_en": "Consumer 12M Inflation Expectations",
+          "label_zh": "消费者12个月通胀预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": -7.4
         }
       ]
     },
@@ -14050,7 +14347,7 @@
       "name_zh": "罗马尼亚",
       "flag": "🇷🇴",
       "canonical_file": "cee_canonical_frame.json",
-      "indicator_count": 104,
+      "indicator_count": 113,
       "indicators": [
         {
           "id": "administered_prices",
@@ -14164,14 +14461,14 @@
         },
         {
           "id": "capacity_utilization",
-          "label_en": "capacity_utilization",
-          "label_zh": "capacity_utilization",
+          "label_en": "Industrial Capacity Utilization Rate",
+          "label_zh": "工业产能利用率",
           "unit": "%",
-          "section": "macro",
-          "frequency": "quarterly",
-          "obs_count": 36,
-          "latest_date": "2026-10-01",
-          "latest_val": 65.6
+          "section": "real_activity",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 68.1
         },
         {
           "id": "carry_trade_return",
@@ -15195,6 +15492,105 @@
           "obs_count": 105,
           "latest_date": "2026-09-01",
           "latest_val": 116.00000000000001
+        },
+        {
+          "id": "cpi_contrib_food_yoy",
+          "label_en": "Food CPI Contribution (YoY)",
+          "label_zh": "食品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.72
+        },
+        {
+          "id": "cpi_contrib_goods_yoy",
+          "label_en": "Goods CPI Contribution (YoY)",
+          "label_zh": "商品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.72
+        },
+        {
+          "id": "cpi_contrib_energy_yoy",
+          "label_en": "Energy CPI Contribution (YoY)",
+          "label_zh": "能源与公用事业贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.83
+        },
+        {
+          "id": "cpi_contrib_services_yoy",
+          "label_en": "Services CPI Contribution (YoY)",
+          "label_zh": "服务业通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-09-01",
+          "latest_val": 3.93
+        },
+        {
+          "id": "ppi_cpi_scissors_gap",
+          "label_en": "PPI-CPI Margin Scissors Gap",
+          "label_zh": "PPI-CPI 工业利润剪刀差",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-08-01",
+          "latest_val": 6.2
+        },
+        {
+          "id": "exp_industry_3m",
+          "label_en": "Industrial Selling Price Exp 3M",
+          "label_zh": "工业企业3个月提价预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 23.7
+        },
+        {
+          "id": "exp_services_3m",
+          "label_en": "Services Price Expectations 3M",
+          "label_zh": "服务业3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 17.5
+        },
+        {
+          "id": "exp_retail_3m",
+          "label_en": "Retail Price Expectations 3M",
+          "label_zh": "零售分销商3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 31.6
+        },
+        {
+          "id": "exp_consumer_12m",
+          "label_en": "Consumer 12M Inflation Expectations",
+          "label_zh": "消费者12个月通胀预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": -46.6
         }
       ]
     }

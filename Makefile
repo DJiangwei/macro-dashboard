@@ -27,10 +27,12 @@ refresh-data:
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_egypt_dashboard.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_nigeria_dashboard.py
 	$(UV) run python scripts/enrich_macro_data_quality.py
+	$(UV) run python scripts/enrich_cee_inflation_deepdive.py
 	$(MAKE) rebuild-ui
 
 rebuild-ui:
 	$(UV) run python scripts/enrich_macro_data_quality.py
+	$(UV) run python scripts/enrich_cee_inflation_deepdive.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python build_v4.py ALL
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_china_dashboard.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_euro_area_dashboard.py
@@ -84,6 +86,7 @@ policy-tracker:
 
 enrich-data:
 	$(UV) run python scripts/enrich_macro_data_quality.py
+	$(UV) run python scripts/enrich_cee_inflation_deepdive.py
 
 test:
 	$(UV) run pytest -q

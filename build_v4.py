@@ -52,8 +52,16 @@ Plotly.newPlot("{chart_id}",[{traces_str}],{layout});
 
 ROOT = Path(__file__).parent
 SRC = ROOT / "src"
+SCRIPTS = ROOT / "scripts"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+
+try:
+    from render_cee_inflation_deepdive import render_deepdive_panel
+except ImportError:
+    render_deepdive_panel = lambda cc: ""
 
 from country_primer.data_fetcher import (  # noqa: E402
     DataPipeline,
@@ -3392,12 +3400,15 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
         rendered_chart_ids.extend(section_chart_ids)
         ledger_html = _indicator_ledger_html(sec_id, country_code)
 
+        deepdive_html = render_deepdive_panel(country_code) if sec_id == "prices_wages" else ""
+        deepdive_block = f"{deepdive_html}\n" if deepdive_html else ""
+
         sections_html += f"""
 <section class="panel" id="{sec_id}">
   <h2><span data-lang="en">{title_en}</span><span data-lang="zh">{title_zh}</span> <span class="section-badge"><span data-lang="en">{badge_en}</span><span data-lang="zh">{badge_zh}</span></span></h2>
   <div class="blurb"><span data-lang="en">{blurb_en}</span><span data-lang="zh">{blurb_zh}</span></div>
   {ledger_html}
-  <div class="charts">{charts_html}</div>
+{deepdive_block}  <div class="charts">{charts_html}</div>
   <div data-lang="en">{narrative_en}</div>
   <div data-lang="zh">{narrative_zh}</div>
 {quality_html}</section>
