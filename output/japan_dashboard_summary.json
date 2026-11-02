@@ -1,6 +1,6 @@
 {
   "file": "japan.html",
-  "generated": "2026-11-02T20:44:20.088233+00:00",
+  "generated": "2026-11-02T23:44:33.729368+00:00",
   "charts": 59,
   "source_groups": 24,
   "data_gaps": 6,
@@ -130,8 +130,8 @@
       "id": "usd_jpy",
       "label_en": "USD/JPY Spot Rate",
       "label_zh": "美元兑日元",
-      "latest_date": "2026-10-23",
-      "latest_value": 156.87,
+      "latest_date": "2026-10-30",
+      "latest_value": 157.47,
       "latest_display": "157 JPY per USD",
       "frequency": "daily",
       "source_name": "FRED / Federal Reserve H.10",
@@ -243,10 +243,10 @@
     ],
     "file": "japan_canonical_frame.json",
     "series": 59,
-    "observations": 20650,
+    "observations": 20655,
     "series_count": 59,
-    "observation_count": 20650,
-    "snapshot_generated": "2026-11-02T20:43:43.390930+00:00"
+    "observation_count": 20655,
+    "snapshot_generated": "2026-11-02T23:44:00.811009+00:00"
   },
   "data_gaps_detail": [
     {
@@ -408,8 +408,8 @@
   "freshness": {
     "as_of_date": "2026-11-02",
     "counts": {
-      "current": 18,
-      "due": 19,
+      "current": 19,
+      "due": 18,
       "projection": 3,
       "stale": 19
     },
@@ -1227,28 +1227,6 @@
         "comparability": "medium",
         "source_name": "Derived (OECD / BoJ / MOF)",
         "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "usd_jpy",
-        "concept_id": "fx_spot",
-        "label_en": "USD/JPY Spot Rate",
-        "latest_date": "2026-10-23",
-        "frequency": "daily",
-        "freshness_status": "due",
-        "age_basis_date": "2026-10-23",
-        "age_days": 10,
-        "threshold_days": 10,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "FRED / Federal Reserve H.10",
-        "series": "DEXJPUS",
         "transform": "level"
       }
     ]

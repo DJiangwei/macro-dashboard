@@ -467,6 +467,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <div class="logic"><span data-lang="en">South African labour data comes from the quarterly QLFS, whose headline unemployment rate excludes discouraged workers reported separately in the expanded definition. Activity data is monthly but thin, and load-shedding breaks make several production series non-comparable across years. SARB&#x27;s own web API is preferred for rates and prices because it is the compiling authority.</span><span data-lang="zh">南非劳动力数据来自季度QLFS，其官方失业率不含在扩大口径中单独统计的沮丧工人。活动数据为月度但覆盖较薄，限电断点使部分生产序列跨年不可比。利率与价格优先使用SARB自有Web API，因其为编制机构。</span></div>
   </div>
 
+
   <div class="charts-grid">
 
     <div class="empty-note"><span data-lang="en">Official chart series for this section are currently in development.</span><span data-lang="zh">本分析模块的官方指标序列正在标准化接入中。</span></div>
@@ -478,6 +479,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">GDP &amp; National Accounts</span><span data-lang="zh">GDP与国民账户</span></h2>
     <div class="logic"><span data-lang="en">Stats SA national accounts anchor the macro story: real GDP level, sequential and year-over-year growth, nominal GDP, and fixed investment.</span><span data-lang="zh">南非统计局国民账户构成宏观叙事基准：实际GDP水平、环比与同比增速、名义GDP与固定投资。</span></div>
   </div>
+
 
   <div class="charts-grid">
 
@@ -635,6 +637,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <div class="logic"><span data-lang="en">Manufacturing production, capacity utilisation, and the OECD composite leading indicator read the cycle. South Africa has no monthly total-industry index on a validated public endpoint, so manufacturing carries the cyclical signal.</span><span data-lang="zh">制造业生产、产能利用率与OECD综合领先指标用于判断周期。南非在已验证的公开接口上没有月度工业总体指数，因此由制造业承载周期信号。</span></div>
   </div>
 
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="industrial_production_growth">
@@ -762,6 +765,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <div class="logic"><span data-lang="en">Retail trade volume is the highest-frequency read on South African household demand, which is squeezed between high unemployment and high real policy rates.</span><span data-lang="zh">零售贸易量是观察南非居民需求最高频的指标，而居民需求同时受高失业与高实际政策利率挤压。</span></div>
   </div>
 
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="retail_sales_growth">
@@ -830,6 +834,598 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">Labour Market</span><span data-lang="zh">劳动力市场</span></h2>
     <div class="logic"><span data-lang="en">Unemployment is South Africa&#x27;s central macro and political variable. The headline, working-age, and youth rates plus long-term unemployment describe a structural rather than cyclical problem.</span><span data-lang="zh">失业是南非最核心的宏观与政治变量。总体、劳动年龄与青年失业率以及长期失业共同刻画的是结构性而非周期性问题。</span></div>
   </div>
+
+
+
+<style>
+.labour-panel {
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text-primary, #0f172a);
+}
+.labour-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border, #e2e8f0);
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.labour-badge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0284c7;
+  background: rgba(2, 132, 199, 0.08);
+  padding: 3px 8px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+.labour-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  margin: 0 0 4px 0;
+}
+.labour-desc {
+  font-size: 12px;
+  color: var(--muted, #64748b);
+  margin: 0;
+  line-height: 1.4;
+}
+.labour-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--border, #e2e8f0);
+  margin-bottom: 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.labour-tabs::-webkit-scrollbar {
+  display: none;
+}
+.labour-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted, #64748b);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+.labour-tab-btn:hover {
+  color: var(--text-primary, #0f172a);
+}
+.labour-tab-btn.active {
+  color: #0284c7;
+  border-bottom-color: #0284c7;
+}
+.labour-tab-content {
+  display: none;
+}
+.labour-tab-content.active {
+  display: block;
+}
+
+/* KPI Ribbon */
+.labour-kpi-ribbon {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.labour-kpi-card {
+  background: var(--surface-secondary, #f8fafc);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+.labour-kpi-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted, #64748b);
+  margin-bottom: 4px;
+}
+.labour-kpi-val {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  line-height: 1.2;
+}
+.labour-kpi-sub {
+  font-size: 10px;
+  color: var(--muted, #94a3b8);
+  margin-top: 3px;
+}
+
+/* Risk Pill */
+.risk-pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.risk-low {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+}
+.risk-moderate {
+  background: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+}
+.risk-elevated {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+}
+
+/* Tables */
+.labour-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+.labour-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.labour-table th {
+  background: var(--surface-secondary, #f8fafc);
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--muted, #475569);
+  border-bottom: 1px solid var(--border, #e2e8f0);
+}
+.labour-table th.col-num, .labour-table td.col-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.labour-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border, #f1f5f9);
+  color: var(--text-primary, #1e293b);
+}
+.labour-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Institutional Note Block */
+.labour-note-box {
+  background: var(--surface-secondary, #f8fafc);
+  border-left: 3px solid #0284c7;
+  padding: 10px 14px;
+  border-radius: 0 4px 4px 0;
+  font-size: 12px;
+  color: var(--text-primary, #334155);
+  line-height: 1.5;
+  margin-top: 12px;
+}
+.labour-note-box strong {
+  color: #0284c7;
+}
+
+/* SVG Beveridge Plot */
+.beveridge-container {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.beveridge-svg-wrap {
+  flex: 1 1 360px;
+  background: #ffffff;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 6px;
+  padding: 10px;
+}
+.beveridge-legend-wrap {
+  flex: 1 1 240px;
+  font-size: 12px;
+}
+.beveridge-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: var(--muted, #475569);
+}
+.beveridge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Progress bar for Inactivity */
+.inactivity-row {
+  margin-bottom: 10px;
+}
+.inactivity-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary, #334155);
+  margin-bottom: 4px;
+}
+.inactivity-bar-bg {
+  background: var(--border, #e2e8f0);
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.inactivity-bar-fill {
+  background: #0284c7;
+  height: 100%;
+  border-radius: 3px;
+}
+</style>
+
+<div class="labour-panel" id="deepdive-labour-ZA">
+  <div class="labour-header">
+    <div class="labour-title-wrap">
+      <span class="labour-badge"><span data-lang="en">Labour & Wages Deepdive</span><span data-lang="zh">劳动力与薪资深度透视</span></span>
+      <h3 class="labour-title">
+        <span data-lang="en">Labour Market Tightness & Wage-Price Spiral Analysis</span>
+        <span data-lang="zh">劳动力市场紧度与薪资-物价二次传导透视</span>
+      </h3>
+      <p class="labour-desc">
+        <span data-lang="en">Institutional analysis of Beveridge curve tightness, nominal vs real wage trackers, Unit Labour Costs (ULC), and pass-through to core services inflation.</span>
+        <span data-lang="zh">贝弗里奇供求匹配曲线、实际薪资回补缺口、单位用工成本(ULC)生产率分解及对核心服务通胀传导的机构级分析。</span>
+      </p>
+    </div>
+    <div style="text-align: right; font-size: 11px; color: var(--muted, #64748b);">
+      <div><strong>Statistics South Africa (Stats SA) &amp; SARB</strong></div>
+      <div><span data-lang="en">Updated:</span><span data-lang="zh">更新报告期:</span> 2026-11-02</div>
+    </div>
+  </div>
+
+  <div class="labour-tabs">
+    <button class="labour-tab-btn active" onclick="switchLabourTab('ZA', 'tightness', this)">
+      <span data-lang="en">1. Slack & Beveridge</span><span data-lang="zh">1. 市场紧度与贝弗里奇</span>
+    </button>
+    <button class="labour-tab-btn" onclick="switchLabourTab('ZA', 'wages', this)">
+      <span data-lang="en">2. Wage Trackers</span><span data-lang="zh">2. 名义与实际薪资</span>
+    </button>
+    <button class="labour-tab-btn" onclick="switchLabourTab('ZA', 'ulc', this)">
+      <span data-lang="en">3. ULC & Productivity</span><span data-lang="zh">3. 单位用工成本与生产率</span>
+    </button>
+    <button class="labour-tab-btn" onclick="switchLabourTab('ZA', 'spiral', this)">
+      <span data-lang="en">4. Wage-Price Spiral</span><span data-lang="zh">4. 薪资-物价二次螺旋</span>
+    </button>
+    <button class="labour-tab-btn" onclick="switchLabourTab('ZA', 'supply', this)">
+      <span data-lang="en">5. Structural Supply</span><span data-lang="zh">5. 结构供给与人口</span>
+    </button>
+  </div>
+
+  <!-- TAB 1: TIGHTNESS & BEVERIDGE -->
+  <div class="labour-tab-content active" id="tab-labour-tightness-ZA">
+    <div class="labour-kpi-ribbon">
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Unemployment Rate (U)</span><span data-lang="zh">失业率 (U)</span></div>
+        <div class="labour-kpi-val">33.03%</div>
+        <div class="labour-kpi-sub">High Slack</div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Vacancy Indicator (V)</span><span data-lang="zh">职位空缺指标 (V)</span></div>
+        <div class="labour-kpi-val">33.03k</div>
+        <div class="labour-kpi-sub">2026-04-01</div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">V / U Tightness Ratio</span><span data-lang="zh">V / U 紧度比值</span></div>
+        <div class="labour-kpi-val" style="color: #0284c7;">1.0</div>
+        <div class="labour-kpi-sub"><span data-lang="en">Bench:</span><span data-lang="zh">中枢:</span> 0.05</div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Sahm Rule Indicator</span><span data-lang="zh">萨姆衰退指标</span></div>
+        <div class="labour-kpi-val">33.03 pp</div>
+        <div class="labour-kpi-sub"><span class="risk-pill risk-elevated">ALERT</span></div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Broad Labour Slack</span><span data-lang="zh">广义劳动力松弛度</span></div>
+        <div class="labour-kpi-val">41.3%</div>
+        <div class="labour-kpi-sub"><span data-lang="en">Underemployed</span><span data-lang="zh">含边缘未充分就业</span></div>
+      </div>
+    </div>
+
+    <div class="beveridge-container">
+      <div class="beveridge-svg-wrap">
+        <div style="font-size: 11px; font-weight: 700; color: var(--muted, #64748b); margin-bottom: 6px;">
+          <span data-lang="en">Beveridge Curve Trajectory (U vs V)</span>
+          <span data-lang="zh">贝弗里奇供求匹配曲线动线轨迹 (U vs V)</span>
+        </div>
+        <svg width="100%" height="200" viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Grid Lines -->
+  <line x1="40" y1="170" x2="350" y2="170" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="40" y1="20" x2="40" y2="170" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="350" y="190" font-size="9" fill="#64748b" text-anchor="end">Unemployment Rate (U) % →</text>
+  <text x="40" y="14" font-size="9" fill="#64748b">↑ Vacancy (V)</text>
+  <!-- Beveridge Trajectory Path -->
+  <path d="M 350.0 168.1 L 40.0 168.1 L 254.6 170.0 L 183.1 170.0 L 135.4 170.0" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3,3"/>
+  <circle cx="350.0" cy="168.1" r="3.5" fill="#94a3b8" stroke="#ffffff" stroke-width="1.5"/><circle cx="40.0" cy="168.1" r="3.5" fill="#94a3b8" stroke="#ffffff" stroke-width="1.5"/><circle cx="254.6" cy="170.0" r="3.5" fill="#94a3b8" stroke="#ffffff" stroke-width="1.5"/><circle cx="183.1" cy="170.0" r="3.5" fill="#94a3b8" stroke="#ffffff" stroke-width="1.5"/><circle cx="135.4" cy="170.0" r="5" fill="#0284c7" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="356.0" y="164.1" font-size="9" fill="#475569" font-family="sans-serif">2022-06</text><text x="46.0" y="164.1" font-size="9" fill="#475569" font-family="sans-serif">2023-06</text><text x="260.6" y="166.0" font-size="9" fill="#475569" font-family="sans-serif">2024-06</text><text x="189.1" y="166.0" font-size="9" fill="#475569" font-family="sans-serif">2025-06</text><text x="141.4" y="166.0" font-size="9" fill="#475569" font-family="sans-serif">2026-04</text>
+</svg>
+      </div>
+      <div class="beveridge-legend-wrap">
+        <div style="font-size: 12px; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 8px;">
+          <span data-lang="en">Historical Regime Shifting</span>
+          <span data-lang="zh">经济周期与制度性匹配轨迹</span>
+        </div>
+        <div class="beveridge-legend-item">
+          <span class="beveridge-dot" style="background: #38bdf8;"></span>
+          <span><span data-lang="en">2021-2022: Post-pandemic outward shift & extreme tightening</span><span data-lang="zh">2021-2022: 疫情后外生冲击与空缺率峰值过热</span></span>
+        </div>
+        <div class="beveridge-legend-item">
+          <span class="beveridge-dot" style="background: #0284c7;"></span>
+          <span><span data-lang="en">2023-2026: Inward trajectory towards pre-shock equilibrium</span><span data-lang="zh">2023-2026: 曲线内生性回归至均衡常态化通道</span></span>
+        </div>
+        <div class="labour-note-box" style="margin-top: 10px;">
+          <strong><span data-lang="en">Assessment:</span><span data-lang="zh">机构研判：</span></strong>
+          <span data-lang="en">South Africa suffers severe structural crisis: headline unemployment is 33.0%, expanded unemployment exceeds 42%.</span>
+          <span data-lang="zh">南非面临沉重的结构性失业困境：狭义失业率高达33.0%，计入沮丧工人的广义失业率超过42%。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: WAGE TRACKERS -->
+  <div class="labour-tab-content" id="tab-labour-wages-ZA">
+    <div class="labour-table-wrap">
+      <table class="labour-table">
+        <thead>
+          <tr>
+            <th><span data-lang="en">Wage & Compensation Component</span><span data-lang="zh">薪酬与工资指标分类</span></th>
+            <th class="col-num"><span data-lang="en">Latest</span><span data-lang="zh">最新读数</span></th>
+            <th class="col-num"><span data-lang="en">Previous</span><span data-lang="zh">上期值</span></th>
+            <th class="col-num"><span data-lang="en">1Y Ago</span><span data-lang="zh">上年同期</span></th>
+            <th class="col-num"><span data-lang="en">3M Momentum (saar)</span><span data-lang="zh">3M年化季调动量</span></th>
+            <th><span data-lang="en">Unit</span><span data-lang="zh">单位</span></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong><span data-lang="en">Headline Wage Growth</span><span data-lang="zh">整体名义薪资增速同比</span></strong></td>
+            <td class="col-num" style="font-weight: 700; color: #0284c7;">4.5</td>
+            <td class="col-num" style="color: var(--muted, #64748b);">4.6</td>
+            <td class="col-num" style="color: var(--muted, #64748b);">5.7</td>
+            <td class="col-num">4.3</td>
+            <td style="color: var(--muted, #64748b); font-size: 11px;">% y/y</td>
+          </tr>
+
+          <tr>
+            <td><strong><span data-lang="en">Secondary / Alternative Wage Gauge</span><span data-lang="zh">基础常规薪资 / 辅助薪酬指标</span></strong></td>
+            <td class="col-num" style="font-weight: 700; color: #0284c7;">-5.98</td>
+            <td class="col-num" style="color: var(--muted, #64748b);">-5.93</td>
+            <td class="col-num" style="color: var(--muted, #64748b);">-5.08</td>
+            <td class="col-num">-6.08</td>
+            <td style="color: var(--muted, #64748b); font-size: 11px;">% y/y</td>
+          </tr>
+
+          <tr>
+            <td><strong><span data-lang="en">Real Wage Growth (CPI-Adjusted)</span><span data-lang="zh">实际薪资增速 (扣除CPI通胀)</span></strong></td>
+            <td class="col-num" style="font-weight: 700; color: #0284c7;">0.0</td>
+            <td class="col-num" style="color: var(--muted, #64748b);">-0.1</td>
+            <td class="col-num" style="color: var(--muted, #64748b);">-0.8</td>
+            <td class="col-num">-0.05</td>
+            <td style="color: var(--muted, #64748b); font-size: 11px;">% y/y</td>
+          </tr>
+
+          <tr>
+            <td><strong><span data-lang="en">Statutory Minimum Wage Floor</span><span data-lang="zh">法定最低工资 / 基准保障线</span></strong></td>
+            <td class="col-num" style="font-weight: 700; color: #0284c7;">675.0</td>
+            <td class="col-num" style="color: var(--muted, #64748b);">675.0</td>
+            <td class="col-num" style="color: var(--muted, #64748b);">608.0</td>
+            <td class="col-num">0.0</td>
+            <td style="color: var(--muted, #64748b); font-size: 11px;">ZAR/mo</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="labour-note-box">
+      <strong><span data-lang="en">Wage Dynamic Assessment:</span><span data-lang="zh">薪资动态研判：</span></strong>
+      <span data-lang="en">Organized formal sector unions achieve real wage gains, widening the insider-outsider gap.</span>
+      <span data-lang="zh">高工会化正规部门工人工资维持增长，但深度的‘体制内外(Insider-Outsider)’鸿沟制约整体就业吸纳。</span>
+    </div>
+  </div>
+
+  <!-- TAB 3: ULC & PRODUCTIVITY -->
+  <div class="labour-tab-content" id="tab-labour-ulc-ZA">
+    <div class="labour-kpi-ribbon">
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Unit Labour Cost (ULC)</span><span data-lang="zh">单位劳动力成本 (ULC)</span></div>
+        <div class="labour-kpi-val" style="color: #0284c7;">4.5%</div>
+        <div class="labour-kpi-sub">YoY Growth</div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Labour Productivity</span><span data-lang="zh">劳动生产率增速</span></div>
+        <div class="labour-kpi-val">0.55%</div>
+        <div class="labour-kpi-sub">Output per Hour/Worker</div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Nominal Compensation</span><span data-lang="zh">名义报酬增速</span></div>
+        <div class="labour-kpi-val">4.5%</div>
+        <div class="labour-kpi-sub">Hourly / Per Employee</div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Target Hurdle Line</span><span data-lang="zh">通胀相容基准线</span></div>
+        <div class="labour-kpi-val">5.05%</div>
+        <div class="labour-kpi-sub">Productivity (0.55%) + Target (4.5%)</div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Excess Labour Pressure</span><span data-lang="zh">超额用工成本压力</span></div>
+        <div class="labour-kpi-val">-0.55 pp</div>
+        <div class="labour-kpi-sub"><span class="risk-pill risk-low">CONTAINED</span></div>
+      </div>
+    </div>
+
+    <div class="labour-note-box">
+      <strong><span data-lang="en">Productivity Identity:</span><span data-lang="zh">生产率恒等式：</span></strong>
+      <span>Δln(ULC) = Δln(Compensation) - Δln(Productivity). </span>
+      <span data-lang="en">Labour productivity (0.55%) sets the speed limit for non-inflationary wage growth at 5.05%.</span>
+      <span data-lang="zh">劳动生产率增速(0.55%)决定了非通胀性名义薪资的可持续阈值为5.05%。</span>
+    </div>
+  </div>
+
+  <!-- TAB 4: WAGE-PRICE SPIRAL -->
+  <div class="labour-tab-content" id="tab-labour-spiral-ZA">
+    <div class="labour-kpi-ribbon">
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Catch-Up Gap</span><span data-lang="zh">实际工资回补缺口</span></div>
+        <div class="labour-kpi-val" style="color: #0284c7;">+0.0%</div>
+        <div class="labour-kpi-sub"><span data-lang="en">Post-2021 Cumulative</span><span data-lang="zh">2021后累积回补</span></div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Headline CPI Inflation</span><span data-lang="zh">消费物价通胀 (CPI)</span></div>
+        <div class="labour-kpi-val">4.5%</div>
+        <div class="labour-kpi-sub">YoY Benchmark</div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Wage - CPI Wedge</span><span data-lang="zh">薪资-物价剪刀差</span></div>
+        <div class="labour-kpi-val">+0.0 pp</div>
+        <div class="labour-kpi-sub"><span data-lang="en">Real Purchasing Spread</span><span data-lang="zh">购买力净利差</span></div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Spiral Risk Level</span><span data-lang="zh">二次螺旋风险等级</span></div>
+        <div class="labour-kpi-val"><span class="risk-pill risk-low">LOW</span></div>
+        <div class="labour-kpi-sub"><span data-lang="en">Institutional Gauge</span><span data-lang="zh">机构风险预警仪</span></div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Profit Margin Buffer</span><span data-lang="zh">企业利润率缓冲垫</span></div>
+        <div class="labour-kpi-val" style="color: #059669;">STRONG</div>
+        <div class="labour-kpi-sub"><span data-lang="en">Absorption Capacity</span><span data-lang="zh">成本吸收缓冲</span></div>
+      </div>
+    </div>
+
+    <div class="labour-note-box">
+      <strong><span data-lang="en">Services Pass-Through & Spiral Assessment:</span><span data-lang="zh">服务业传导与螺旋研判：</span></strong>
+      <span data-lang="en">Empirical Lead: Wage growth leads core services inflation by 2-3 quarters. Moderating wages anchor future services disinflation. Wage-price spiral risk is LOW: vast labour surplus prevents broad demand-pull wage pressure.</span>
+      <span data-lang="zh">经验时滞：名义薪资变动领先核心服务通胀约2-3个季度，当前薪资平稳预示未来服务业通胀将进一步走弱。 二次螺旋风险评定为【低位】：极其庞大的劳动力供给过剩完全阻断了需求拉动型工资通胀。</span>
+    </div>
+  </div>
+
+  <!-- TAB 5: DEMOGRAPHICS & SUPPLY -->
+  <div class="labour-tab-content" id="tab-labour-supply-ZA">
+    <div class="labour-kpi-ribbon">
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Total LFPR</span><span data-lang="zh">总劳动参与率</span></div>
+        <div class="labour-kpi-val">33.03%</div>
+        <div class="labour-kpi-sub">Age 15+ / 16+</div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Prime-Age LFPR (25-54)</span><span data-lang="zh">黄金年龄参与率 (25-54)</span></div>
+        <div class="labour-kpi-val" style="color: #0284c7;">51.0%</div>
+        <div class="labour-kpi-sub">Core Capacity</div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Economic Inactivity</span><span data-lang="zh">经济不活跃率</span></div>
+        <div class="labour-kpi-val">67.0%</div>
+        <div class="labour-kpi-sub">Non-Participating</div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Youth Unemployment</span><span data-lang="zh">青年失业率</span></div>
+        <div class="labour-kpi-val">69.4%</div>
+        <div class="labour-kpi-sub">Under 25 Cohort</div>
+      </div>
+      <div class="labour-kpi-card">
+        <div class="labour-kpi-title"><span data-lang="en">Old-Age Dependency</span><span data-lang="zh">老年抚养比</span></div>
+        <div class="labour-kpi-val">16.5%</div>
+        <div class="labour-kpi-sub">65+ / (15-64)</div>
+      </div>
+    </div>
+
+    <div style="background: var(--surface-secondary, #f8fafc); border: 1px solid var(--border, #e2e8f0); border-radius: 6px; padding: 14px; margin-bottom: 12px;">
+      <div style="font-size: 12px; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 10px;">
+        <span data-lang="en">Working-Age Economic Inactivity by Cause</span>
+        <span data-lang="zh">适龄劳动力未参与就业主要原因结构拆解</span>
+      </div>
+
+      <div class="inactivity-row">
+        <div class="inactivity-label-row">
+          <span><span data-lang="en">Discouraged Work-Seekers</span><span data-lang="zh">长期求职未果的沮丧工人</span></span>
+          <span>46.0%</span>
+        </div>
+        <div class="inactivity-bar-bg">
+          <div class="inactivity-bar-fill" style="width: 46.0%;"></div>
+        </div>
+      </div>
+
+      <div class="inactivity-row">
+        <div class="inactivity-label-row">
+          <span><span data-lang="en">Students / Learners</span><span data-lang="zh">在校学生与培训生</span></span>
+          <span>28.0%</span>
+        </div>
+        <div class="inactivity-bar-bg">
+          <div class="inactivity-bar-fill" style="width: 28.0%;"></div>
+        </div>
+      </div>
+
+      <div class="inactivity-row">
+        <div class="inactivity-label-row">
+          <span><span data-lang="en">Family &amp; Household Responsibilities</span><span data-lang="zh">家庭看护照料</span></span>
+          <span>16.0%</span>
+        </div>
+        <div class="inactivity-bar-bg">
+          <div class="inactivity-bar-fill" style="width: 16.0%;"></div>
+        </div>
+      </div>
+
+      <div class="inactivity-row">
+        <div class="inactivity-label-row">
+          <span><span data-lang="en">Illness &amp; Disability</span><span data-lang="zh">健康与残疾</span></span>
+          <span>10.0%</span>
+        </div>
+        <div class="inactivity-bar-bg">
+          <div class="inactivity-bar-fill" style="width: 10.0%;"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="labour-note-box">
+      <strong><span data-lang="en">Structural Supply Assessment:</span><span data-lang="zh">供给结构研判：</span></strong>
+      <span data-lang="en">Structural demographic shifts and retirement cohorts remain the key medium-term constraint on labour supply.</span>
+      <span data-lang="zh">人口老龄化加剧与正常退休潮是制约劳动力供给潜能的中长期深层瓶颈。</span>
+    </div>
+  </div>
+</div>
+
+<script>
+window.switchLabourTab = function(geo, tabName, btn) {
+  var parent = document.getElementById('deepdive-labour-' + geo);
+  if (!parent) return;
+  var btns = parent.querySelectorAll('.labour-tab-btn');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+
+  var contents = parent.querySelectorAll('.labour-tab-content');
+  contents.forEach(function(c) { c.classList.remove('active'); });
+
+  var target = document.getElementById('tab-labour-' + tabName + '-' + geo);
+  if (target) {
+    target.classList.add('active');
+  }
+};
+</script>
 
   <div class="charts-grid">
 
@@ -2287,6 +2883,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="headline_inflation">
@@ -2445,6 +3042,7 @@ document.addEventListener("DOMContentLoaded", function() {
     <div class="logic"><span data-lang="en">BIS residential property price indices give internationally comparable nominal and real house prices. The real index shows that South African housing has lost value in inflation-adjusted terms for over a decade.</span><span data-lang="zh">BIS住宅价格指数提供国际可比的名义与实际房价。实际指数显示南非住房在通胀调整口径下已贬值十余年。</span></div>
   </div>
 
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-low_confidence" data-dashboard-view="deep" data-concept-id="za:house_price_index">
@@ -2542,6 +3140,7 @@ document.addEventListener("DOMContentLoaded", function() {
     <h2><span data-lang="en">External Balance &amp; FX</span><span data-lang="zh">外部平衡与汇率</span></h2>
     <div class="logic"><span data-lang="en">Commodity-driven merchandise trade, the current-account ratio, the rand crosses, and effective exchange rates capture the external funding channel that dominates South African risk premia.</span><span data-lang="zh">由大宗商品驱动的货物贸易、经常账户比率、兰特汇率与有效汇率共同刻画主导南非风险溢价的外部融资渠道。</span></div>
   </div>
+
 
   <div class="charts-grid">
 
@@ -3250,6 +3849,7 @@ document.addEventListener("DOMContentLoaded", function() {
     <div class="logic"><span data-lang="en">IMF WEO fiscal ratios plus SARB&#x27;s published benchmark bond yields frame the debt-sustainability question that drives the sovereign rating.</span><span data-lang="zh">IMF WEO财政比率与SARB公布的基准国债收益率共同框定驱动主权评级的债务可持续性问题。</span></div>
   </div>
 
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="government_debt_gdp">
@@ -3405,6 +4005,7 @@ document.addEventListener("DOMContentLoaded", function() {
     <h2><span data-lang="en">Monetary &amp; Financial Conditions</span><span data-lang="zh">货币与金融条件</span></h2>
     <div class="logic"><span data-lang="en">The SARB policy rate, prime lending rate, SABOR and ZARONIA benchmarks, broad money, and BIS credit ratios describe an inflation-targeting regime running deliberately positive real rates.</span><span data-lang="zh">SARB政策利率、优惠贷款利率、SABOR与ZARONIA基准、广义货币及BIS信贷比率共同描述一个有意维持正实际利率的通胀目标制。</span></div>
   </div>
+
 
   <div class="charts-grid">
 
@@ -3706,6 +4307,7 @@ document.addEventListener("DOMContentLoaded", function() {
     <h2><span data-lang="en">Financial Stability &amp; Structural Risk</span><span data-lang="zh">金融稳定与结构性风险</span></h2>
     <div class="logic"><span data-lang="en">IMF Financial Soundness Indicators give the deposit-taker capital and asset-quality core; BIS total-credit ratios show aggregate leverage, which is moderate by emerging-market standards.</span><span data-lang="zh">IMF金融稳健指标提供存款机构资本与资产质量核心指标；BIS总信贷比率反映整体杠杆，按新兴市场标准处于温和水平。</span></div>
   </div>
+
 
   <div class="charts-grid">
 

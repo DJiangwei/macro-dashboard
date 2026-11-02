@@ -63,6 +63,11 @@ try:
 except ImportError:
     render_deepdive_panel = lambda cc: ""
 
+try:
+    from render_labour_wage_deepdive import render_labour_deepdive_panel
+except ImportError:
+    render_labour_deepdive_panel = lambda cc: ""
+
 from country_primer.data_fetcher import (  # noqa: E402
     DataPipeline,
     INDICATOR_MANIFEST_48,
@@ -3401,7 +3406,9 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
         ledger_html = _indicator_ledger_html(sec_id, country_code)
 
         deepdive_html = render_deepdive_panel(country_code) if sec_id == "prices_wages" else ""
-        deepdive_block = f"{deepdive_html}\n" if deepdive_html else ""
+        labour_html = render_labour_deepdive_panel(country_code) if sec_id == "real_activity" else ""
+        combined_blocks = "\n".join(filter(None, [deepdive_html, labour_html]))
+        deepdive_block = f"{combined_blocks}\n" if combined_blocks else ""
 
         sections_html += f"""
 <section class="panel" id="{sec_id}">

@@ -508,6 +508,20 @@ def _sections_html(config: dict[str, Any], series_list: list[dict[str, Any]], co
                 except Exception:
                     pass
 
+        labour_block = ""
+        if section_id in ("labour_wages", "labour_market", "employment", "population_labor", "labour_structural"):
+            cc_upper = (country_code or "").upper()
+            try:
+                import sys
+                from pathlib import Path
+                scripts_dir = str(Path(__file__).resolve().parent.parent.parent / "scripts")
+                if scripts_dir not in sys.path:
+                    sys.path.insert(0, scripts_dir)
+                from render_labour_wage_deepdive import render_labour_deepdive_panel
+                labour_block = render_labour_deepdive_panel(cc_upper)
+            except Exception:
+                pass
+
         html_parts.append(f"""
 <section class="panel" id="{escape(section_id)}">
   <div class="section-title">
@@ -515,6 +529,7 @@ def _sections_html(config: dict[str, Any], series_list: list[dict[str, Any]], co
     <div class="logic"><span data-lang="en">{escape(section['report_logic_en'])}</span><span data-lang="zh">{escape(section['report_logic_zh'])}</span></div>
   </div>
   {deepdive_block}
+  {labour_block}
   <div class="charts-grid">
     {charts}
     {empty}

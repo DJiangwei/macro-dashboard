@@ -1,6 +1,6 @@
 {
   "file": "hong_kong.html",
-  "generated": "2026-11-02T20:44:20.986520+00:00",
+  "generated": "2026-11-02T23:44:34.657887+00:00",
   "charts": 40,
   "source_groups": 12,
   "data_gaps": 1,
@@ -214,8 +214,8 @@
       "id": "usd_hkd",
       "label_en": "USD/HKD Exchange Rate (Fed H.10, Linked Band 7.75-7.85)",
       "label_zh": "美元兑港元汇率 (联系汇率区间 7.75-7.85)",
-      "latest_date": "2026-10-23",
-      "latest_value": 7.8423,
+      "latest_date": "2026-10-30",
+      "latest_value": 7.8449,
       "latest_display": "7.84 HKD per USD",
       "frequency": "daily",
       "source_name": "FRED / Federal Reserve Board",
@@ -382,9 +382,9 @@
       "id": "fed_funds_anchor",
       "label_en": "US Effective Federal Funds Rate (LERS Currency Board Anchor)",
       "label_zh": "美联储有效联邦基金利率 (联系汇率制政策锚)",
-      "latest_date": "2026-09-01",
-      "latest_value": 3.75,
-      "latest_display": "3.75 %",
+      "latest_date": "2026-10-01",
+      "latest_value": 3.88,
+      "latest_display": "3.88 %",
       "frequency": "monthly",
       "source_name": "FRED / Federal Reserve Board",
       "series": "FEDFUNDS",
@@ -454,7 +454,7 @@
   "unavailable": [],
   "data_mode": "snapshot",
   "latest_cards": [],
-  "usd_hkd_latest": "7.8423 (2026-10-23)",
+  "usd_hkd_latest": "7.8449 (2026-10-30)",
   "cross_checks": [
     {
       "concept": "headline_inflation",
@@ -483,10 +483,10 @@
     ],
     "file": "hong_kong_canonical_frame.json",
     "series": 40,
-    "observations": 11607,
+    "observations": 11614,
     "series_count": 40,
-    "observation_count": 11607,
-    "snapshot_generated": "2026-11-02T20:43:42.512963+00:00"
+    "observation_count": 11614,
+    "snapshot_generated": "2026-11-02T23:44:00.045776+00:00"
   },
   "data_gaps_detail": [
     {
@@ -565,8 +565,8 @@
   "freshness": {
     "as_of_date": "2026-11-02",
     "counts": {
-      "current": 14,
-      "due": 15,
+      "current": 15,
+      "due": 14,
       "projection": 4,
       "stale": 7
     },
@@ -1032,28 +1032,6 @@
         "comparability": "high",
         "source_name": "HK C&SD",
         "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "usd_hkd",
-        "concept_id": "fx_spot",
-        "label_en": "USD/HKD Exchange Rate (Fed H.10, Linked Band 7.75-7.85)",
-        "latest_date": "2026-10-23",
-        "frequency": "daily",
-        "freshness_status": "due",
-        "age_basis_date": "2026-10-23",
-        "age_days": 10,
-        "threshold_days": 10,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "FRED / Federal Reserve Board",
-        "series": "DEXHKUS",
         "transform": "level"
       }
     ]

@@ -1,0 +1,292 @@
+{
+  "geo": "EA",
+  "country": "Euro Area",
+  "agency": "Eurostat & European Central Bank (ECB)",
+  "currency": "EUR",
+  "target_inflation": 2.0,
+  "last_updated": "2026-11-02",
+  "tab1_tightness": {
+    "kpi": {
+      "unemployment_rate": {
+        "val": 6.5,
+        "unit": "%",
+        "date": "2026-09-01",
+        "status": "Moderate Slack"
+      },
+      "vacancy_indicator": {
+        "val": 2.2,
+        "unit": "%",
+        "date": "2025-10-01"
+      },
+      "tightness_vu": {
+        "val": 0.34,
+        "benchmark": 0.4,
+        "status": "NORMALIZED"
+      },
+      "sahm_rule": {
+        "val": 6.5,
+        "threshold": 0.5,
+        "status": "ALERT"
+      },
+      "broad_slack_type": "Broad Slack & Underemployment",
+      "broad_slack_val": 9.8
+    },
+    "beveridge_points": [
+      {
+        "date": "2021-06",
+        "u": 7.9,
+        "v": 2.3,
+        "regime": "Post-Pandemic Rebound"
+      },
+      {
+        "date": "2022-06",
+        "u": 6.8,
+        "v": 3.2,
+        "regime": "Energy Shock Overheating"
+      },
+      {
+        "date": "2023-06",
+        "u": 6.5,
+        "v": 2.8,
+        "regime": "Peak Negotiated Wages"
+      },
+      {
+        "date": "2024-06",
+        "u": 6.5,
+        "v": 2.5,
+        "regime": "Manufacturing Weakness"
+      },
+      {
+        "date": "2025-06",
+        "u": 6.5,
+        "v": 2.3,
+        "regime": "Services Resilience"
+      },
+      {
+        "date": "2026-09",
+        "u": 6.5,
+        "v": 2.2,
+        "regime": "Historical Low Unemployment"
+      }
+    ],
+    "eval_en": "Euro Area unemployment (6.5%) remains at historical lows despite stagnant industrial output.",
+    "eval_zh": "欧元区失业率(6.5%)持续徘徊于历史最低位，呈现明显的企业‘劳动力囤积’特征。"
+  },
+  "tab2_wages": {
+    "table_rows": [
+      {
+        "label_en": "Headline Wage Growth",
+        "label_zh": "整体名义薪资增速同比",
+        "latest": 1.87,
+        "prev": 1.97,
+        "ago_1y": 3.07,
+        "momentum_3m": 1.67,
+        "unit": "% y/y"
+      },
+      {
+        "label_en": "Secondary / Alternative Wage Gauge",
+        "label_zh": "基础常规薪资 / 辅助薪酬指标",
+        "latest": 3.1,
+        "prev": 3.15,
+        "ago_1y": 4.0,
+        "momentum_3m": 3.0,
+        "unit": "% y/y"
+      },
+      {
+        "label_en": "Real Wage Growth (CPI-Adjusted)",
+        "label_zh": "实际薪资增速 (扣除CPI通胀)",
+        "latest": -0.13,
+        "prev": -0.23,
+        "ago_1y": -0.93,
+        "momentum_3m": -0.18,
+        "unit": "% y/y"
+      },
+      {
+        "label_en": "Statutory Minimum Wage Floor",
+        "label_zh": "法定最低工资 / 基准保障线",
+        "latest": 280.0,
+        "prev": 280.0,
+        "ago_1y": 252.0,
+        "momentum_3m": 0.0,
+        "unit": "EUR/mo"
+      }
+    ],
+    "real_wage_history": [
+      {
+        "date": "2022-06",
+        "nominal": 4.1,
+        "cpi": 7.5,
+        "real": -3.4
+      },
+      {
+        "date": "2023-06",
+        "nominal": 3.4,
+        "cpi": 4.8,
+        "real": -1.4
+      },
+      {
+        "date": "2024-06",
+        "nominal": 2.7,
+        "cpi": 3.0,
+        "real": -0.3
+      },
+      {
+        "date": "2025-06",
+        "nominal": 2.2,
+        "cpi": 2.4,
+        "real": -0.2
+      },
+      {
+        "date": "2025-07-01",
+        "nominal": 1.87,
+        "cpi": 2.0,
+        "real": -0.13
+      }
+    ],
+    "eval_en": "ECB negotiated wages (+1.87%) cooled sharply from 2023 peaks (>4.5%).",
+    "eval_zh": "欧央行重点监测的工会协商薪资增速大幅回落至1.87%，为ECB降息打开空间。"
+  },
+  "tab3_ulc": {
+    "kpi": {
+      "ulc_growth": {
+        "val": 3.1,
+        "unit": "% y/y",
+        "date": "2026-Q2"
+      },
+      "productivity_growth": {
+        "val": 0.5,
+        "unit": "% y/y",
+        "date": "2026-Q2"
+      },
+      "nominal_compensation": {
+        "val": 1.87,
+        "unit": "% y/y",
+        "date": "2026-Q2"
+      },
+      "inflation_target_hurdle": {
+        "val": 2.5,
+        "unit": "% y/y",
+        "desc": "Productivity (0.5%) + Target (2.0%)"
+      },
+      "excess_labor_cost_pressure": {
+        "val": -0.63,
+        "unit": "pp",
+        "status": "CONTAINED"
+      }
+    },
+    "history": [
+      {
+        "date": "2024-Q1",
+        "comp": 3.3,
+        "prod": 0.9,
+        "ulc": 2.4
+      },
+      {
+        "date": "2024-Q3",
+        "comp": 2.9,
+        "prod": 0.7,
+        "ulc": 2.2
+      },
+      {
+        "date": "2025-Q1",
+        "comp": 2.5,
+        "prod": 0.5,
+        "ulc": 2.0
+      },
+      {
+        "date": "2025-Q3",
+        "comp": 2.2,
+        "prod": 0.6,
+        "ulc": 1.6
+      },
+      {
+        "date": "2026-Q2",
+        "comp": 1.87,
+        "prod": 0.5,
+        "ulc": 3.1
+      }
+    ],
+    "eval_en": "Labour productivity (0.5%) sets the speed limit for non-inflationary wage growth at 2.5%.",
+    "eval_zh": "劳动生产率增速(0.5%)决定了非通胀性名义薪资的可持续阈值为2.5%。"
+  },
+  "tab4_spiral": {
+    "kpi": {
+      "catch_up_gap": {
+        "val": "-0.1%",
+        "status": "DEFICIT",
+        "eval_en": "Cumulative post-2021 purchasing power losses mostly recouped.",
+        "eval_zh": "2021年通胀高企以来的居民实际购买力亏损已完成大部分回补。"
+      },
+      "cpi_yoy": {
+        "val": 2.0,
+        "unit": "% y/y"
+      },
+      "wage_services_gap": {
+        "val": -0.13,
+        "unit": "pp",
+        "eval_en": "Wage growth vs headline inflation differential.",
+        "eval_zh": "薪资增长率与当前消费物价通胀的动态剪刀差。"
+      },
+      "spiral_risk_level": "LOW",
+      "profit_margin_buffer": {
+        "level": "STRONG",
+        "eval_en": "Corporate gross operating margins absorbing wage gains without immediate markup.",
+        "eval_zh": "企业营业盈余提供了必要缓冲，并未立即将用工成本全额转嫁至终端提价。"
+      }
+    },
+    "lead_lag_note_en": "Empirical Lead: Wage growth leads core services inflation by 2-3 quarters. Moderating wages anchor future services disinflation.",
+    "lead_lag_note_zh": "经验时滞：名义薪资变动领先核心服务通胀约2-3个季度，当前薪资平稳预示未来服务业通胀将进一步走弱。",
+    "eval_en": "Wage-price spiral risk is LOW: unit labour cost pressures are converging back to target.",
+    "eval_zh": "二次螺旋风险处于【低位】：单位用工成本正加速向2%的可持续轨道收敛。"
+  },
+  "tab5_supply": {
+    "kpi": {
+      "lfpr_total": {
+        "val": 75.9,
+        "unit": "%"
+      },
+      "prime_age_lfpr": {
+        "val": 87.5,
+        "unit": "%",
+        "eval_en": "Prime-age engagement (25-54) remains robust across sectors.",
+        "eval_zh": "黄金年龄人口(25-54岁)参与率保持坚挺，劳动力核心供给稳固。"
+      },
+      "inactivity_rate": {
+        "val": 24.1,
+        "unit": "%"
+      },
+      "youth_unemployment": {
+        "val": 13.7,
+        "unit": "%"
+      },
+      "old_age_dependency": {
+        "val": 30.5,
+        "unit": "%"
+      }
+    },
+    "inactivity_breakdown": [
+      {
+        "cause_en": "Education or Training",
+        "cause_zh": "受教育与职业培训",
+        "share": 36.4
+      },
+      {
+        "cause_en": "Own Illness or Disability",
+        "cause_zh": "疾病与残障",
+        "share": 24.1
+      },
+      {
+        "cause_en": "Family or Caring Duties",
+        "cause_zh": "照料家庭与看护",
+        "share": 22.8
+      },
+      {
+        "cause_en": "Retirement / Other",
+        "cause_zh": "退休与其他",
+        "share": 16.7
+      }
+    ],
+    "eval_en": "Structural demographic shifts and retirement cohorts remain the key medium-term constraint on labour supply.",
+    "eval_zh": "人口老龄化加剧与正常退休潮是制约劳动力供给潜能的中长期深层瓶颈。"
+  }
+}

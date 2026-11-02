@@ -1,6 +1,6 @@
 {
   "file": "taiwan.html",
-  "generated": "2026-11-02T20:44:21.569249+00:00",
+  "generated": "2026-11-02T23:44:35.224348+00:00",
   "charts": 50,
   "source_groups": 11,
   "data_gaps": 1,
@@ -358,9 +358,9 @@
       "id": "usd_twd",
       "label_en": "USD/TWD Spot Exchange Rate (Fed H.10)",
       "label_zh": "美元兑新台币汇率 (美联储H.10)",
-      "latest_date": "2026-10-23",
-      "latest_value": 32.54,
-      "latest_display": "32.5 TWD per USD",
+      "latest_date": "2026-10-30",
+      "latest_value": 32.59,
+      "latest_display": "32.6 TWD per USD",
       "frequency": "daily",
       "source_name": "FRED / Federal Reserve Board",
       "series": "DEXTAUS",
@@ -586,7 +586,7 @@
   "unavailable": [],
   "data_mode": "snapshot",
   "latest_cards": [],
-  "usd_twd_latest": "32.54 (2026-10-23)",
+  "usd_twd_latest": "32.59 (2026-10-30)",
   "cross_checks": [
     {
       "concept": "headline_inflation",
@@ -633,10 +633,10 @@
     ],
     "file": "taiwan_canonical_frame.json",
     "series": 50,
-    "observations": 13739,
+    "observations": 13744,
     "series_count": 50,
-    "observation_count": 13739,
-    "snapshot_generated": "2026-11-02T20:43:42.464192+00:00"
+    "observation_count": 13744,
+    "snapshot_generated": "2026-11-02T23:43:59.993610+00:00"
   },
   "data_gaps_detail": [
     {
@@ -711,8 +711,8 @@
   "freshness": {
     "as_of_date": "2026-11-02",
     "counts": {
-      "current": 24,
-      "due": 21,
+      "current": 25,
+      "due": 20,
       "projection": 4,
       "stale": 1
     },
@@ -1178,28 +1178,6 @@
         "comparability": "medium",
         "source_name": "Central Bank of the Republic of China (Taiwan) / CBC",
         "series": "yield_curve_slope_10y5y",
-        "transform": "level"
-      },
-      {
-        "id": "usd_twd",
-        "concept_id": "fx_spot",
-        "label_en": "USD/TWD Spot Exchange Rate (Fed H.10)",
-        "latest_date": "2026-10-23",
-        "frequency": "daily",
-        "freshness_status": "due",
-        "age_basis_date": "2026-10-23",
-        "age_days": 10,
-        "threshold_days": 10,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "FRED / Federal Reserve Board",
-        "series": "DEXTAUS",
         "transform": "level"
       }
     ]

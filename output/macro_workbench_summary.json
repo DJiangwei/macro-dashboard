@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-02T20:57:03.694307+00:00",
+  "generated": "2026-11-02T23:44:56.578109+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -628,8 +628,8 @@
       "freshness": {
         "as_of_date": "2026-11-02",
         "counts": {
-          "current": 54,
-          "due": 10,
+          "current": 55,
+          "due": 9,
           "projection": 2,
           "stale": 48
         },
@@ -673,7 +673,7 @@
             "quality_status": "watch",
             "source_authority": "official_mirror",
             "derivation": "observed",
-            "validation": "watch",
+            "validation": "passed",
             "comparability": "medium",
             "source_name": "World Bank WDI",
             "series": "FM.LBL.BMNY.ZG",
@@ -783,7 +783,7 @@
             "quality_status": "watch",
             "source_authority": "official_mirror",
             "derivation": "observed",
-            "validation": "watch",
+            "validation": "passed",
             "comparability": "medium",
             "source_name": "World Bank WDI",
             "series": "FS.AST.PRVT.GD.ZS",
@@ -1355,7 +1355,7 @@
             "quality_status": "watch",
             "source_authority": "official_mirror",
             "derivation": "observed",
-            "validation": "watch",
+            "validation": "passed",
             "comparability": "medium",
             "source_name": "FRED / OECD",
             "series": "IR3TIB01CNM156N",
@@ -1525,15 +1525,15 @@
         ],
         "file": "china_canonical_frame.json",
         "series": 114,
-        "observations": 82372,
+        "observations": 82378,
         "series_count": 114,
-        "observation_count": 82372,
-        "snapshot_generated": "2026-11-02T20:43:43.459086+00:00"
+        "observation_count": 82378,
+        "snapshot_generated": "2026-11-02T23:44:00.883538+00:00"
       },
       "freshness_summary": {
         "dashboard": "China",
         "charts": 114,
-        "current": 54,
+        "current": 55,
         "stale": 48,
         "lagged_source": 0,
         "projection": 0,
@@ -2189,7 +2189,7 @@
         "observations": 75220,
         "series_count": 76,
         "observation_count": 75220,
-        "snapshot_generated": "2026-11-02T20:43:43.919815+00:00"
+        "snapshot_generated": "2026-11-02T23:44:01.348832+00:00"
       },
       "freshness_summary": {
         "dashboard": "Euro Area",
@@ -2401,8 +2401,8 @@
       "freshness": {
         "as_of_date": "2026-11-02",
         "counts": {
-          "current": 18,
-          "due": 19,
+          "current": 19,
+          "due": 18,
           "projection": 3,
           "stale": 19
         },
@@ -3221,28 +3221,6 @@
             "source_name": "Derived (OECD / BoJ / MOF)",
             "series": "",
             "transform": "level"
-          },
-          {
-            "id": "usd_jpy",
-            "concept_id": "fx_spot",
-            "label_en": "USD/JPY Spot Rate",
-            "latest_date": "2026-10-23",
-            "frequency": "daily",
-            "freshness_status": "due",
-            "age_basis_date": "2026-10-23",
-            "age_days": 10,
-            "threshold_days": 10,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "FRED / Federal Reserve H.10",
-            "series": "DEXJPUS",
-            "transform": "level"
           }
         ]
       },
@@ -3254,15 +3232,15 @@
         ],
         "file": "japan_canonical_frame.json",
         "series": 59,
-        "observations": 20650,
+        "observations": 20655,
         "series_count": 59,
-        "observation_count": 20650,
-        "snapshot_generated": "2026-11-02T20:43:43.390930+00:00"
+        "observation_count": 20655,
+        "snapshot_generated": "2026-11-02T23:44:00.811009+00:00"
       },
       "freshness_summary": {
         "dashboard": "Japan",
         "charts": 59,
-        "current": 21,
+        "current": 22,
         "stale": 19,
         "lagged_source": 0,
         "projection": 0,
@@ -4341,7 +4319,7 @@
         "observations": 33654,
         "series_count": 66,
         "observation_count": 33654,
-        "snapshot_generated": "2026-11-02T20:43:41.817252+00:00"
+        "snapshot_generated": "2026-11-02T23:43:59.361357+00:00"
       },
       "freshness_summary": {
         "dashboard": "South Africa",
@@ -5145,7 +5123,7 @@
         "observations": 88924,
         "series_count": 97,
         "observation_count": 88924,
-        "snapshot_generated": "2026-11-02T20:43:43.251012+00:00"
+        "snapshot_generated": "2026-11-02T23:44:00.671775+00:00"
       },
       "freshness_summary": {
         "dashboard": "United Kingdom",
@@ -5176,7 +5154,7 @@
       "gaps_or_dropped": 7,
       "gaps_label": "Official data gaps",
       "headline_label": "Fed funds",
-      "headline": "3.88% (2026-10-29)",
+      "headline": "3.88% (2026-10-30)",
       "secondary_label": "Source groups",
       "secondary": "31",
       "quality": "31 source groups · 0 low-confidence charts",
@@ -5206,7 +5184,7 @@
           "label": "Fed funds",
           "value": 3.88,
           "display": "3.88 %",
-          "date": "2026-10-29",
+          "date": "2026-10-30",
           "source": "FRED / Federal Reserve",
           "quality_status": "verified"
         },
@@ -5376,16 +5354,17 @@
           }
         ],
         "quality_counts": {
-          "verified": 135,
-          "watch": 47
+          "verified": 134,
+          "watch": 48
         },
         "unavailable_count": 0
       },
       "freshness": {
         "as_of_date": "2026-11-02",
         "counts": {
-          "current": 152,
-          "due": 30
+          "current": 151,
+          "due": 30,
+          "scheduled_policy": 1
         },
         "latest_historical_date": "2026-11-02",
         "attention": [
@@ -6059,10 +6038,10 @@
         ],
         "file": "us_canonical_frame.json",
         "series": 182,
-        "observations": 131941,
+        "observations": 131962,
         "series_count": 182,
-        "observation_count": 131941,
-        "snapshot_generated": "2026-11-02T20:43:43.671306+00:00"
+        "observation_count": 131962,
+        "snapshot_generated": "2026-11-02T23:44:01.103489+00:00"
       },
       "freshness_summary": {
         "dashboard": "United States",
@@ -6071,13 +6050,13 @@
         "stale": 4,
         "lagged_source": 0,
         "projection": 0,
-        "scheduled_policy": 0,
+        "scheduled_policy": 1,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
         "low_confidence": 0,
         "latest_historical_date": "2026-11-02",
-        "headline_latest": "3.88% (2026-10-29)"
+        "headline_latest": "3.88% (2026-10-30)"
       }
     },
     {
@@ -6754,7 +6733,7 @@
         "observations": 11321,
         "series_count": 56,
         "observation_count": 11321,
-        "snapshot_generated": "2026-11-02T20:43:42.490412+00:00"
+        "snapshot_generated": "2026-11-02T23:44:00.021943+00:00"
       },
       "freshness_summary": {
         "dashboard": "Turkey",
@@ -6785,7 +6764,7 @@
       "gaps_or_dropped": 1,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/HKD spot",
-      "headline": "7.8423 (2026-10-23)",
+      "headline": "7.8449 (2026-10-30)",
       "secondary_label": "Source groups",
       "secondary": "12",
       "quality": "12 source groups · 7 low-confidence charts",
@@ -6813,9 +6792,9 @@
         "policy": {
           "id": "fed_funds_anchor",
           "label": "Base rate (Fed anchor)",
-          "value": 3.75,
-          "display": "3.75 %",
-          "date": "2026-09-01",
+          "value": 3.88,
+          "display": "3.88 %",
+          "date": "2026-10-01",
           "source": "FRED / Federal Reserve Board",
           "quality_status": "watch"
         },
@@ -6840,9 +6819,9 @@
         "financial": {
           "id": "usd_hkd",
           "label": "USD/HKD",
-          "value": 7.8423,
+          "value": 7.8449,
           "display": "7.84 HKD per USD",
-          "date": "2026-10-23",
+          "date": "2026-10-30",
           "source": "FRED / Federal Reserve Board",
           "quality_status": "watch"
         },
@@ -6918,8 +6897,8 @@
       "freshness": {
         "as_of_date": "2026-11-02",
         "counts": {
-          "current": 14,
-          "due": 15,
+          "current": 15,
+          "due": 14,
           "projection": 4,
           "stale": 7
         },
@@ -7386,28 +7365,6 @@
             "source_name": "HK C&SD",
             "series": "",
             "transform": "level"
-          },
-          {
-            "id": "usd_hkd",
-            "concept_id": "fx_spot",
-            "label_en": "USD/HKD Exchange Rate (Fed H.10, Linked Band 7.75-7.85)",
-            "latest_date": "2026-10-23",
-            "frequency": "daily",
-            "freshness_status": "due",
-            "age_basis_date": "2026-10-23",
-            "age_days": 10,
-            "threshold_days": 10,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "FRED / Federal Reserve Board",
-            "series": "DEXHKUS",
-            "transform": "level"
           }
         ]
       },
@@ -7419,15 +7376,15 @@
         ],
         "file": "hong_kong_canonical_frame.json",
         "series": 40,
-        "observations": 11607,
+        "observations": 11614,
         "series_count": 40,
-        "observation_count": 11607,
-        "snapshot_generated": "2026-11-02T20:43:42.512963+00:00"
+        "observation_count": 11614,
+        "snapshot_generated": "2026-11-02T23:44:00.045776+00:00"
       },
       "freshness_summary": {
         "dashboard": "Hong Kong",
         "charts": 40,
-        "current": 18,
+        "current": 19,
         "stale": 7,
         "lagged_source": 0,
         "projection": 0,
@@ -7453,7 +7410,7 @@
       "gaps_or_dropped": 0,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/KRW spot",
-      "headline": "1325.06 (2026-10-23)",
+      "headline": "1333.99 (2026-10-30)",
       "secondary_label": "Source groups",
       "secondary": "17",
       "quality": "17 source groups · 10 low-confidence charts",
@@ -7606,12 +7563,12 @@
       "freshness": {
         "as_of_date": "2026-11-02",
         "counts": {
-          "current": 18,
-          "due": 19,
+          "current": 19,
+          "due": 18,
           "projection": 4,
           "stale": 10
         },
-        "latest_historical_date": "2026-10-23",
+        "latest_historical_date": "2026-10-30",
         "attention": [
           {
             "id": "bank_capital_ratio",
@@ -8228,28 +8185,6 @@
             "source_name": "Bank of Korea / ECOS",
             "series": "yield_curve_slope_10y3y",
             "transform": "level"
-          },
-          {
-            "id": "krw_usd",
-            "concept_id": "fx_spot",
-            "label_en": "USD/KRW Exchange Rate (Fed H.10)",
-            "latest_date": "2026-10-23",
-            "frequency": "daily",
-            "freshness_status": "due",
-            "age_basis_date": "2026-10-23",
-            "age_days": 10,
-            "threshold_days": 10,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "FRED / Federal Reserve Board",
-            "series": "DEXKOUS",
-            "transform": "level"
           }
         ]
       },
@@ -8261,15 +8196,15 @@
         ],
         "file": "south_korea_canonical_frame.json",
         "series": 51,
-        "observations": 10543,
+        "observations": 10548,
         "series_count": 51,
-        "observation_count": 10543,
-        "snapshot_generated": "2026-11-02T20:43:43.587728+00:00"
+        "observation_count": 10548,
+        "snapshot_generated": "2026-11-02T23:44:01.016449+00:00"
       },
       "freshness_summary": {
         "dashboard": "South Korea",
         "charts": 51,
-        "current": 22,
+        "current": 23,
         "stale": 10,
         "lagged_source": 0,
         "projection": 0,
@@ -8295,7 +8230,7 @@
       "gaps_or_dropped": 1,
       "gaps_label": "Official data gaps",
       "headline_label": "USD/TWD spot",
-      "headline": "32.54 (2026-10-23)",
+      "headline": "32.59 (2026-10-30)",
       "secondary_label": "Source groups",
       "secondary": "11",
       "quality": "11 source groups · 1 low-confidence charts",
@@ -8424,8 +8359,8 @@
       "freshness": {
         "as_of_date": "2026-11-02",
         "counts": {
-          "current": 24,
-          "due": 21,
+          "current": 25,
+          "due": 20,
           "projection": 4,
           "stale": 1
         },
@@ -8892,28 +8827,6 @@
             "source_name": "Central Bank of the Republic of China (Taiwan) / CBC",
             "series": "yield_curve_slope_10y5y",
             "transform": "level"
-          },
-          {
-            "id": "usd_twd",
-            "concept_id": "fx_spot",
-            "label_en": "USD/TWD Spot Exchange Rate (Fed H.10)",
-            "latest_date": "2026-10-23",
-            "frequency": "daily",
-            "freshness_status": "due",
-            "age_basis_date": "2026-10-23",
-            "age_days": 10,
-            "threshold_days": 10,
-            "release_calendar_id": "",
-            "expected_release_date": "",
-            "due_date": "",
-            "quality_status": "watch",
-            "source_authority": "official_mirror",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "medium",
-            "source_name": "FRED / Federal Reserve Board",
-            "series": "DEXTAUS",
-            "transform": "level"
           }
         ]
       },
@@ -8925,15 +8838,15 @@
         ],
         "file": "taiwan_canonical_frame.json",
         "series": 50,
-        "observations": 13739,
+        "observations": 13744,
         "series_count": 50,
-        "observation_count": 13739,
-        "snapshot_generated": "2026-11-02T20:43:42.464192+00:00"
+        "observation_count": 13744,
+        "snapshot_generated": "2026-11-02T23:43:59.993610+00:00"
       },
       "freshness_summary": {
         "dashboard": "Taiwan",
         "charts": 50,
-        "current": 28,
+        "current": 29,
         "stale": 1,
         "lagged_source": 0,
         "projection": 0,
@@ -9414,7 +9327,7 @@
         "observations": 9779,
         "series_count": 38,
         "observation_count": 9779,
-        "snapshot_generated": "2026-11-02T20:43:42.189087+00:00"
+        "snapshot_generated": "2026-11-02T23:43:59.716961+00:00"
       },
       "freshness_summary": {
         "dashboard": "Kazakhstan",
@@ -10001,7 +9914,7 @@
         "observations": 2700,
         "series_count": 37,
         "observation_count": 2700,
-        "snapshot_generated": "2026-11-02T20:43:42.039078+00:00"
+        "snapshot_generated": "2026-11-02T23:43:59.582632+00:00"
       },
       "freshness_summary": {
         "dashboard": "Uzbekistan",
@@ -10592,7 +10505,7 @@
         "observations": 9632,
         "series_count": 38,
         "observation_count": 9632,
-        "snapshot_generated": "2026-11-02T20:43:42.055550+00:00"
+        "snapshot_generated": "2026-11-02T23:43:59.596761+00:00"
       },
       "freshness_summary": {
         "dashboard": "Egypt",
@@ -11206,7 +11119,7 @@
         "observations": 13571,
         "series_count": 40,
         "observation_count": 13571,
-        "snapshot_generated": "2026-11-02T20:43:42.237856+00:00"
+        "snapshot_generated": "2026-11-02T23:43:59.769938+00:00"
       },
       "freshness_summary": {
         "dashboard": "Nigeria",
@@ -11596,10 +11509,10 @@
       "structural_score": 46.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 41.6,
+        "score": 41.9,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 47.4,
+        "freshness_score": 48.2,
         "proxy_penalty": 0.0,
         "gap_penalty": 20.0
       },
@@ -11778,10 +11691,10 @@
       "structural_score": 56.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 42.5,
+        "score": 43.1,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 35.6,
+        "freshness_score": 37.3,
         "proxy_penalty": 0.0,
         "gap_penalty": 15.0
       },
@@ -12233,10 +12146,10 @@
       "structural_score": 55.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 64.2,
+        "score": 65.1,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 45.0,
+        "freshness_score": 47.5,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -12261,8 +12174,8 @@
           "label": "neutral-moderate stance",
           "score": 60.0,
           "confidence_weight": 1.0,
-          "value": 3.75,
-          "display": "3.75 %",
+          "value": 3.88,
+          "display": "3.88 %",
           "source_signal": "fed_funds_anchor"
         },
         "external": {
@@ -12285,7 +12198,7 @@
           "label": "tight financial conditions",
           "score": 35.0,
           "confidence_weight": 1.0,
-          "value": 7.8423,
+          "value": 7.8449,
           "display": "7.84 HKD per USD",
           "source_signal": "usd_hkd"
         },
@@ -12300,7 +12213,7 @@
       },
       "taylor_stance": {
         "institution": "HKMA",
-        "policy_rate": 3.75,
+        "policy_rate": 3.88,
         "inflation_rate": 2.3,
         "inflation_target": 2.0,
         "neutral_real_rate_r_star": 1.0,
@@ -12309,13 +12222,13 @@
           3.85,
           4.85
         ],
-        "policy_gap_deviation": -0.6,
+        "policy_gap_deviation": -0.47,
         "policy_gap_range": [
-          -1.1,
-          -0.1
+          -0.97,
+          0.03
         ],
-        "real_policy_rate": 1.45,
-        "stance_label": "moderately accommodative"
+        "real_policy_rate": 1.58,
+        "stance_label": "calibrated / neutral"
       }
     },
     "KR": {
@@ -12324,10 +12237,10 @@
       "structural_score": 63.3,
       "composite_label": "mixed",
       "quality": {
-        "score": 60.1,
+        "score": 60.8,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 43.1,
+        "freshness_score": 45.1,
         "proxy_penalty": 0.0,
         "gap_penalty": 0.0
       },
@@ -12415,10 +12328,10 @@
       "structural_score": 71.7,
       "composite_label": "constructive",
       "quality": {
-        "score": 80.1,
+        "score": 80.8,
         "label": "high-confidence dashboard",
         "coverage_score": 100.0,
-        "freshness_score": 56.0,
+        "freshness_score": 58.0,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -13077,7 +12990,7 @@
     },
     "HK": {
       "institution": "HKMA",
-      "policy_rate": 3.75,
+      "policy_rate": 3.88,
       "inflation_rate": 2.3,
       "inflation_target": 2.0,
       "neutral_real_rate_r_star": 1.0,
@@ -13086,13 +12999,13 @@
         3.85,
         4.85
       ],
-      "policy_gap_deviation": -0.6,
+      "policy_gap_deviation": -0.47,
       "policy_gap_range": [
-        -1.1,
-        -0.1
+        -0.97,
+        0.03
       ],
-      "real_policy_rate": 1.45,
-      "stance_label": "moderately accommodative"
+      "real_policy_rate": 1.58,
+      "stance_label": "calibrated / neutral"
     },
     "KR": {
       "institution": "BOK",
@@ -13601,8 +13514,8 @@
     "sovereign_spreads_to_us": {
       "US": {
         "benchmark": "10Y Treasury",
-        "date": "2026-10-29",
-        "yield": 4.98,
+        "date": "2026-10-30",
+        "yield": 4.94,
         "spread_bps": 0.0,
         "status": "observed"
       },
@@ -13610,21 +13523,21 @@
         "benchmark": "10Y Bund",
         "date": "2026-09-01",
         "yield": 3.47,
-        "spread_bps": -151.0,
+        "spread_bps": -147.0,
         "status": "observed"
       },
       "UK": {
         "benchmark": "10Y Gilt",
         "date": "2026-10-29",
         "yield": 5.26,
-        "spread_bps": 28.0,
+        "spread_bps": 32.0,
         "status": "observed"
       },
       "JP": {
         "benchmark": "10Y JGB",
         "date": "2026-09-01",
         "yield": 3.05,
-        "spread_bps": -193.0,
+        "spread_bps": -189.0,
         "status": "observed"
       },
       "CN": {
@@ -13638,7 +13551,7 @@
         "benchmark": "10Y Sovereign",
         "date": "2026-10-30",
         "yield": 8.01,
-        "spread_bps": 303.0,
+        "spread_bps": 307.0,
         "status": "observed"
       },
       "TR": {
@@ -13659,14 +13572,14 @@
         "benchmark": "10Y KTB",
         "date": "2026-09-01",
         "yield": 4.45,
-        "spread_bps": -53.0,
+        "spread_bps": -49.0,
         "status": "observed"
       },
       "TW": {
         "benchmark": "10Y Gov Bond",
         "date": "2026-08-01",
         "yield": 1.97,
-        "spread_bps": -301.0,
+        "spread_bps": -297.0,
         "status": "observed"
       },
       "KZ": {
@@ -13701,28 +13614,28 @@
         "benchmark": "PL 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 6.23,
-        "spread_bps": 125.0,
+        "spread_bps": 129.0,
         "status": "observed"
       },
       "CZ": {
         "benchmark": "CZ 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 5.24,
-        "spread_bps": 26.0,
+        "spread_bps": 30.0,
         "status": "observed"
       },
       "HU": {
         "benchmark": "HU 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 5.68,
-        "spread_bps": 70.0,
+        "spread_bps": 74.0,
         "status": "observed"
       },
       "RO": {
         "benchmark": "RO 10Y Benchmark",
         "date": "2026-09-01",
         "yield": 6.71,
-        "spread_bps": 173.0,
+        "spread_bps": 177.0,
         "status": "observed"
       }
     },
@@ -14312,17 +14225,17 @@
       "code": "US",
       "name": "United States",
       "tenor_type": "Treasury",
-      "date": "2026-10-29",
-      "y2": 4.61,
-      "y5": 4.78,
-      "y10": 4.98,
-      "y30": 5.32,
-      "slope_bps": 38.0,
+      "date": "2026-10-30",
+      "y2": 4.56,
+      "y5": 4.71,
+      "y10": 4.94,
+      "y30": 5.31,
+      "slope_bps": 32.0,
       "slope_label": "10s2s",
       "spread_vs_anchor": 0.0,
       "anchor_name": "US 10Y Benchmark",
-      "breakeven_10y": 2.34,
-      "breakeven_5y": 2.46,
+      "breakeven_10y": 2.29,
+      "breakeven_5y": 2.39,
       "regime": "Normal Steepening"
     },
     {
@@ -14438,7 +14351,7 @@
       "y30": null,
       "slope_bps": 138.0,
       "slope_label": "10s3m",
-      "spread_vs_anchor": -193.0,
+      "spread_vs_anchor": -189.0,
       "anchor_name": "vs US 10Y (bps)",
       "breakeven_10y": null,
       "breakeven_5y": null,
@@ -14455,7 +14368,7 @@
       "y30": 2.07,
       "slope_bps": 39.8,
       "slope_label": "10s2s",
-      "spread_vs_anchor": 329.0,
+      "spread_vs_anchor": 327.6,
       "anchor_name": "vs US 10Y (bps)",
       "breakeven_10y": null,
       "breakeven_5y": null,
@@ -14540,7 +14453,7 @@
       "y30": 8.71,
       "slope_bps": 70.5,
       "slope_label": "Long-10s",
-      "spread_vs_anchor": 302.5,
+      "spread_vs_anchor": 306.5,
       "anchor_name": "vs US 10Y (bps)",
       "breakeven_10y": null,
       "breakeven_5y": null,
@@ -15102,11 +15015,11 @@
       "code": "CN",
       "name": "China",
       "coverage_pct": 100.0,
-      "freshness_pct": 47.4,
+      "freshness_pct": 48.2,
       "proxy_fills": 0,
       "gaps": 8,
       "regime_score": 55.2,
-      "quality_score": 41.6
+      "quality_score": 41.9
     },
     {
       "code": "EA",
@@ -15122,11 +15035,11 @@
       "code": "JP",
       "name": "Japan",
       "coverage_pct": 100.0,
-      "freshness_pct": 35.6,
+      "freshness_pct": 37.3,
       "proxy_fills": 0,
       "gaps": 6,
       "regime_score": 56.5,
-      "quality_score": 42.5
+      "quality_score": 43.1
     },
     {
       "code": "ZA",
@@ -15172,31 +15085,31 @@
       "code": "HK",
       "name": "Hong Kong",
       "coverage_pct": 100.0,
-      "freshness_pct": 45.0,
+      "freshness_pct": 47.5,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 58.8,
-      "quality_score": 64.2
+      "quality_score": 65.1
     },
     {
       "code": "KR",
       "name": "South Korea",
       "coverage_pct": 100.0,
-      "freshness_pct": 43.1,
+      "freshness_pct": 45.1,
       "proxy_fills": 0,
       "gaps": 0,
       "regime_score": 64.2,
-      "quality_score": 60.1
+      "quality_score": 60.8
     },
     {
       "code": "TW",
       "name": "Taiwan",
       "coverage_pct": 100.0,
-      "freshness_pct": 56.0,
+      "freshness_pct": 58.0,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 73.3,
-      "quality_score": 80.1
+      "quality_score": 80.8
     },
     {
       "code": "KZ",

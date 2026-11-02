@@ -1,0 +1,292 @@
+{
+  "geo": "US",
+  "country": "United States",
+  "agency": "U.S. Bureau of Labor Statistics (BLS)",
+  "currency": "USD",
+  "target_inflation": 2.0,
+  "last_updated": "2026-11-02",
+  "tab1_tightness": {
+    "kpi": {
+      "unemployment_rate": {
+        "val": 4.2,
+        "unit": "%",
+        "date": "2026-09-01",
+        "status": "Low Slack"
+      },
+      "vacancy_indicator": {
+        "val": 7079.0,
+        "unit": "k",
+        "date": "2026-08-01"
+      },
+      "tightness_vu": {
+        "val": 1.04,
+        "benchmark": 1.1,
+        "status": "NORMALIZED"
+      },
+      "sahm_rule": {
+        "val": 0.0,
+        "threshold": 0.5,
+        "status": "SAFE"
+      },
+      "broad_slack_type": "Broad Slack & Underemployment",
+      "broad_slack_val": 6.3
+    },
+    "beveridge_points": [
+      {
+        "date": "2021-06",
+        "u": 5.9,
+        "v": 6.3,
+        "regime": "Reopening Expansion"
+      },
+      {
+        "date": "2022-03",
+        "u": 3.6,
+        "v": 7.3,
+        "regime": "Peak Overheating"
+      },
+      {
+        "date": "2023-03",
+        "u": 3.5,
+        "v": 6.0,
+        "regime": "Initial Cooling"
+      },
+      {
+        "date": "2024-01",
+        "u": 3.7,
+        "v": 5.4,
+        "regime": "Normalization"
+      },
+      {
+        "date": "2025-01",
+        "u": 4.0,
+        "v": 4.8,
+        "regime": "Soft Landing"
+      },
+      {
+        "date": "2026-08",
+        "u": 4.2,
+        "v": 4.3,
+        "regime": "Current Inward Shift"
+      }
+    ],
+    "eval_en": "US labour market has smoothly cooled; V/U vacancy ratio is back to ~1.05 from 2.0 peak.",
+    "eval_zh": "美国劳动力市场实现平稳降温；岗位空缺与失业人数之比从2.0峰值回落至1.05的均衡水平。"
+  },
+  "tab2_wages": {
+    "table_rows": [
+      {
+        "label_en": "Headline Wage Growth",
+        "label_zh": "整体名义薪资增速同比",
+        "latest": 3.02,
+        "prev": 3.12,
+        "ago_1y": 4.22,
+        "momentum_3m": 2.82,
+        "unit": "% y/y"
+      },
+      {
+        "label_en": "Secondary / Alternative Wage Gauge",
+        "label_zh": "基础常规薪资 / 辅助薪酬指标",
+        "latest": 3.12,
+        "prev": 3.17,
+        "ago_1y": 4.02,
+        "momentum_3m": 3.02,
+        "unit": "% y/y"
+      },
+      {
+        "label_en": "Real Wage Growth (CPI-Adjusted)",
+        "label_zh": "实际薪资增速 (扣除CPI通胀)",
+        "latest": -0.67,
+        "prev": -0.77,
+        "ago_1y": -1.47,
+        "momentum_3m": -0.72,
+        "unit": "% y/y"
+      },
+      {
+        "label_en": "Statutory Minimum Wage Floor",
+        "label_zh": "法定最低工资 / 基准保障线",
+        "latest": 453.0,
+        "prev": 453.0,
+        "ago_1y": 408.0,
+        "momentum_3m": 0.0,
+        "unit": "USD/mo"
+      }
+    ],
+    "real_wage_history": [
+      {
+        "date": "2022-06",
+        "nominal": 5.2,
+        "cpi": 9.2,
+        "real": -4.0
+      },
+      {
+        "date": "2023-06",
+        "nominal": 4.5,
+        "cpi": 6.5,
+        "real": -2.0
+      },
+      {
+        "date": "2024-06",
+        "nominal": 3.8,
+        "cpi": 4.7,
+        "real": -0.9
+      },
+      {
+        "date": "2025-06",
+        "nominal": 3.3,
+        "cpi": 4.1,
+        "real": -0.8
+      },
+      {
+        "date": "2026-09-01",
+        "nominal": 3.02,
+        "cpi": 3.72,
+        "real": -0.67
+      }
+    ],
+    "eval_en": "Wage gains (AHE +3.0%, ECI +3.1%) are well aligned with 2% PCE inflation target.",
+    "eval_zh": "时薪增速(+3.0%)与ECI薪酬指数(+3.1%)已充分收敛至与2%通胀目标相容通道。"
+  },
+  "tab3_ulc": {
+    "kpi": {
+      "ulc_growth": {
+        "val": 1.4,
+        "unit": "% y/y",
+        "date": "2026-Q2"
+      },
+      "productivity_growth": {
+        "val": 2.24,
+        "unit": "% y/y",
+        "date": "2026-Q2"
+      },
+      "nominal_compensation": {
+        "val": 3.02,
+        "unit": "% y/y",
+        "date": "2026-Q2"
+      },
+      "inflation_target_hurdle": {
+        "val": 4.24,
+        "unit": "% y/y",
+        "desc": "Productivity (2.24%) + Target (2.0%)"
+      },
+      "excess_labor_cost_pressure": {
+        "val": -1.22,
+        "unit": "pp",
+        "status": "CONTAINED"
+      }
+    },
+    "history": [
+      {
+        "date": "2024-Q1",
+        "comp": 4.4,
+        "prod": 2.6,
+        "ulc": 1.8
+      },
+      {
+        "date": "2024-Q3",
+        "comp": 4.0,
+        "prod": 2.4,
+        "ulc": 1.6
+      },
+      {
+        "date": "2025-Q1",
+        "comp": 3.6,
+        "prod": 2.2,
+        "ulc": 1.4
+      },
+      {
+        "date": "2025-Q3",
+        "comp": 3.3,
+        "prod": 2.3,
+        "ulc": 1.0
+      },
+      {
+        "date": "2026-Q2",
+        "comp": 3.02,
+        "prod": 2.24,
+        "ulc": 1.4
+      }
+    ],
+    "eval_en": "Labour productivity (2.24%) sets the speed limit for non-inflationary wage growth at 4.24%.",
+    "eval_zh": "劳动生产率增速(2.24%)决定了非通胀性名义薪资的可持续阈值为4.24%。"
+  },
+  "tab4_spiral": {
+    "kpi": {
+      "catch_up_gap": {
+        "val": "-0.5%",
+        "status": "DEFICIT",
+        "eval_en": "Cumulative post-2021 purchasing power losses mostly recouped.",
+        "eval_zh": "2021年通胀高企以来的居民实际购买力亏损已完成大部分回补。"
+      },
+      "cpi_yoy": {
+        "val": 3.72,
+        "unit": "% y/y"
+      },
+      "wage_services_gap": {
+        "val": -0.7,
+        "unit": "pp",
+        "eval_en": "Wage growth vs headline inflation differential.",
+        "eval_zh": "薪资增长率与当前消费物价通胀的动态剪刀差。"
+      },
+      "spiral_risk_level": "LOW",
+      "profit_margin_buffer": {
+        "level": "STRONG",
+        "eval_en": "Corporate gross operating margins absorbing wage gains without immediate markup.",
+        "eval_zh": "企业营业盈余提供了必要缓冲，并未立即将用工成本全额转嫁至终端提价。"
+      }
+    },
+    "lead_lag_note_en": "Empirical Lead: Wage growth leads core services inflation by 2-3 quarters. Moderating wages anchor future services disinflation.",
+    "lead_lag_note_zh": "经验时滞：名义薪资变动领先核心服务通胀约2-3个季度，当前薪资平稳预示未来服务业通胀将进一步走弱。",
+    "eval_en": "Wage-price spiral risk is LOW: productivity growth (+2.2%) absorbs wage push.",
+    "eval_zh": "薪资-物价二次螺旋风险处于【低位】：生产率增长(+2.2%)充裕吸收了薪酬成本。"
+  },
+  "tab5_supply": {
+    "kpi": {
+      "lfpr_total": {
+        "val": 61.8,
+        "unit": "%"
+      },
+      "prime_age_lfpr": {
+        "val": 79.8,
+        "unit": "%",
+        "eval_en": "Prime-age engagement (25-54) remains robust across sectors.",
+        "eval_zh": "黄金年龄人口(25-54岁)参与率保持坚挺，劳动力核心供给稳固。"
+      },
+      "inactivity_rate": {
+        "val": 38.2,
+        "unit": "%"
+      },
+      "youth_unemployment": {
+        "val": 8.8,
+        "unit": "%"
+      },
+      "old_age_dependency": {
+        "val": 30.5,
+        "unit": "%"
+      }
+    },
+    "inactivity_breakdown": [
+      {
+        "cause_en": "Retired / Early Retirement",
+        "cause_zh": "正常及提前退休",
+        "share": 48.5
+      },
+      {
+        "cause_en": "Disabled / Long-term Sick",
+        "cause_zh": "失能及长期患病",
+        "share": 19.8
+      },
+      {
+        "cause_en": "Family / Caregiving Responsibilities",
+        "cause_zh": "家庭照护与育儿",
+        "share": 17.2
+      },
+      {
+        "cause_en": "Students in Full-Time Education",
+        "cause_zh": "全日制在校学生",
+        "share": 14.5
+      }
+    ],
+    "eval_en": "Structural demographic shifts and retirement cohorts remain the key medium-term constraint on labour supply.",
+    "eval_zh": "人口老龄化加剧与正常退休潮是制约劳动力供给潜能的中长期深层瓶颈。"
+  }
+}

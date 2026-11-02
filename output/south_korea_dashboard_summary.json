@@ -1,6 +1,6 @@
 {
   "file": "south_korea.html",
-  "generated": "2026-11-02T20:44:21.285448+00:00",
+  "generated": "2026-11-02T23:44:34.941696+00:00",
   "charts": 51,
   "source_groups": 17,
   "data_gaps": 0,
@@ -250,9 +250,9 @@
       "id": "krw_usd",
       "label_en": "USD/KRW Exchange Rate (Fed H.10)",
       "label_zh": "美元兑韩元汇率 (美联储H.10)",
-      "latest_date": "2026-10-23",
-      "latest_value": 1325.06,
-      "latest_display": "1,325 KRW per USD",
+      "latest_date": "2026-10-30",
+      "latest_value": 1333.99,
+      "latest_display": "1,334 KRW per USD",
       "frequency": "daily",
       "source_name": "FRED / Federal Reserve Board",
       "series": "DEXKOUS",
@@ -578,7 +578,7 @@
   ],
   "data_mode": "snapshot",
   "latest_cards": [],
-  "krw_usd_latest": "1325.06 (2026-10-23)",
+  "krw_usd_latest": "1333.99 (2026-10-30)",
   "cross_checks": [
     {
       "concept": "headline_inflation",
@@ -607,10 +607,10 @@
     ],
     "file": "south_korea_canonical_frame.json",
     "series": 51,
-    "observations": 10543,
+    "observations": 10548,
     "series_count": 51,
-    "observation_count": 10543,
-    "snapshot_generated": "2026-11-02T20:43:43.587728+00:00"
+    "observation_count": 10548,
+    "snapshot_generated": "2026-11-02T23:44:01.016449+00:00"
   },
   "data_gaps_detail": [],
   "source_health": {
@@ -701,12 +701,12 @@
   "freshness": {
     "as_of_date": "2026-11-02",
     "counts": {
-      "current": 18,
-      "due": 19,
+      "current": 19,
+      "due": 18,
       "projection": 4,
       "stale": 10
     },
-    "latest_historical_date": "2026-10-23",
+    "latest_historical_date": "2026-10-30",
     "attention": [
       {
         "id": "bank_capital_ratio",
@@ -1322,28 +1322,6 @@
         "comparability": "medium",
         "source_name": "Bank of Korea / ECOS",
         "series": "yield_curve_slope_10y3y",
-        "transform": "level"
-      },
-      {
-        "id": "krw_usd",
-        "concept_id": "fx_spot",
-        "label_en": "USD/KRW Exchange Rate (Fed H.10)",
-        "latest_date": "2026-10-23",
-        "frequency": "daily",
-        "freshness_status": "due",
-        "age_basis_date": "2026-10-23",
-        "age_days": 10,
-        "threshold_days": 10,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "FRED / Federal Reserve Board",
-        "series": "DEXKOUS",
         "transform": "level"
       }
     ]

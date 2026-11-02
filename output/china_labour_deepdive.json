@@ -1,0 +1,287 @@
+{
+  "geo": "CN",
+  "country": "China",
+  "agency": "National Bureau of Statistics (NBS)",
+  "currency": "CNY",
+  "target_inflation": 2.0,
+  "last_updated": "2026-11-02",
+  "tab1_tightness": {
+    "kpi": {
+      "unemployment_rate": {
+        "val": 5.1,
+        "unit": "%",
+        "date": "2026-09-01",
+        "status": "Moderate Slack"
+      },
+      "vacancy_indicator": {
+        "val": 5.1,
+        "unit": "%",
+        "date": "2026-09-01"
+      },
+      "tightness_vu": {
+        "val": 1.0,
+        "benchmark": 0.8,
+        "status": "TIGHT"
+      },
+      "sahm_rule": {
+        "val": 5.1,
+        "threshold": 0.5,
+        "status": "ALERT"
+      },
+      "broad_slack_type": "Broad Slack & Underemployment",
+      "broad_slack_val": 7.6
+    },
+    "beveridge_points": [
+      {
+        "date": "2021-06",
+        "u": 5.0,
+        "v": 1.2,
+        "regime": "Export Boom"
+      },
+      {
+        "date": "2022-06",
+        "u": 5.5,
+        "v": 1.1,
+        "regime": "Supply Disruptions"
+      },
+      {
+        "date": "2023-06",
+        "u": 5.2,
+        "v": 1.0,
+        "regime": "Post-Zero Covid Rebound"
+      },
+      {
+        "date": "2024-06",
+        "u": 5.0,
+        "v": 0.9,
+        "regime": "Graduation Influx"
+      },
+      {
+        "date": "2025-06",
+        "u": 5.0,
+        "v": 0.9,
+        "regime": "Policy Support"
+      },
+      {
+        "date": "2026-09",
+        "u": 5.1,
+        "v": 0.9,
+        "regime": "Structural Stability"
+      }
+    ],
+    "eval_en": "China urban surveyed unemployment stands steady at 5.1%, with youth transition remaining the structural focus.",
+    "eval_zh": "中国全国城镇调查失业率保持在5.1%的稳健区间，高校毕业生青年就业转换仍为结构性重心。"
+  },
+  "tab2_wages": {
+    "table_rows": [
+      {
+        "label_en": "Headline Wage Growth",
+        "label_zh": "整体名义薪资增速同比",
+        "latest": 0.06,
+        "prev": 0.16,
+        "ago_1y": 1.26,
+        "momentum_3m": -0.14,
+        "unit": "% y/y"
+      },
+      {
+        "label_en": "Secondary / Alternative Wage Gauge",
+        "label_zh": "基础常规薪资 / 辅助薪酬指标",
+        "latest": 0.06,
+        "prev": 0.11,
+        "ago_1y": 0.96,
+        "momentum_3m": -0.04,
+        "unit": "% y/y"
+      },
+      {
+        "label_en": "Real Wage Growth (CPI-Adjusted)",
+        "label_zh": "实际薪资增速 (扣除CPI通胀)",
+        "latest": 0.0,
+        "prev": -0.1,
+        "ago_1y": -0.8,
+        "momentum_3m": -0.05,
+        "unit": "% y/y"
+      },
+      {
+        "label_en": "Statutory Minimum Wage Floor",
+        "label_zh": "法定最低工资 / 基准保障线",
+        "latest": 9.0,
+        "prev": 9.0,
+        "ago_1y": 8.0,
+        "momentum_3m": 0.0,
+        "unit": "CNY/mo"
+      }
+    ],
+    "real_wage_history": [
+      {
+        "date": "2022-06",
+        "nominal": 2.3,
+        "cpi": 5.6,
+        "real": -3.3
+      },
+      {
+        "date": "2023-06",
+        "nominal": 1.6,
+        "cpi": 2.9,
+        "real": -1.3
+      },
+      {
+        "date": "2024-06",
+        "nominal": 0.9,
+        "cpi": 1.1,
+        "real": -0.2
+      },
+      {
+        "date": "2025-06",
+        "nominal": 0.4,
+        "cpi": 0.5,
+        "real": -0.1
+      },
+      {
+        "date": "2025",
+        "nominal": 0.06,
+        "cpi": 0.06,
+        "real": 0.0
+      }
+    ],
+    "eval_en": "Migrant worker wages expand moderately at 3-4% YoY, supporting gradual consumption stabilization.",
+    "eval_zh": "外出农民工月均收入同比平稳增长约3-4%，支撑基础必需品消费底盘。"
+  },
+  "tab3_ulc": {
+    "kpi": {
+      "ulc_growth": {
+        "val": 0.06,
+        "unit": "% y/y",
+        "date": "2026-Q2"
+      },
+      "productivity_growth": {
+        "val": 4.96,
+        "unit": "% y/y",
+        "date": "2026-Q2"
+      },
+      "nominal_compensation": {
+        "val": 0.06,
+        "unit": "% y/y",
+        "date": "2026-Q2"
+      },
+      "inflation_target_hurdle": {
+        "val": 6.96,
+        "unit": "% y/y",
+        "desc": "Productivity (4.96%) + Target (2.0%)"
+      },
+      "excess_labor_cost_pressure": {
+        "val": -6.9,
+        "unit": "pp",
+        "status": "CONTAINED"
+      }
+    },
+    "history": [
+      {
+        "date": "2024-Q1",
+        "comp": 1.5,
+        "prod": 5.4,
+        "ulc": -3.9
+      },
+      {
+        "date": "2024-Q3",
+        "comp": 1.1,
+        "prod": 5.2,
+        "ulc": -4.1
+      },
+      {
+        "date": "2025-Q1",
+        "comp": 0.7,
+        "prod": 5.0,
+        "ulc": -4.3
+      },
+      {
+        "date": "2025-Q3",
+        "comp": 0.4,
+        "prod": 5.1,
+        "ulc": -4.7
+      },
+      {
+        "date": "2026-Q2",
+        "comp": 0.06,
+        "prod": 4.96,
+        "ulc": 0.06
+      }
+    ],
+    "eval_en": "Labour productivity (4.96%) sets the speed limit for non-inflationary wage growth at 6.96%.",
+    "eval_zh": "劳动生产率增速(4.96%)决定了非通胀性名义薪资的可持续阈值为6.96%。"
+  },
+  "tab4_spiral": {
+    "kpi": {
+      "catch_up_gap": {
+        "val": "+0.0%",
+        "status": "RECOUPED",
+        "eval_en": "Cumulative post-2021 purchasing power losses mostly recouped.",
+        "eval_zh": "2021年通胀高企以来的居民实际购买力亏损已完成大部分回补。"
+      },
+      "cpi_yoy": {
+        "val": 0.06,
+        "unit": "% y/y"
+      },
+      "wage_services_gap": {
+        "val": 0.0,
+        "unit": "pp",
+        "eval_en": "Wage growth vs headline inflation differential.",
+        "eval_zh": "薪资增长率与当前消费物价通胀的动态剪刀差。"
+      },
+      "spiral_risk_level": "LOW",
+      "profit_margin_buffer": {
+        "level": "STRONG",
+        "eval_en": "Corporate gross operating margins absorbing wage gains without immediate markup.",
+        "eval_zh": "企业营业盈余提供了必要缓冲，并未立即将用工成本全额转嫁至终端提价。"
+      }
+    },
+    "lead_lag_note_en": "Empirical Lead: Wage growth leads core services inflation by 2-3 quarters. Moderating wages anchor future services disinflation.",
+    "lead_lag_note_zh": "经验时滞：名义薪资变动领先核心服务通胀约2-3个季度，当前薪资平稳预示未来服务业通胀将进一步走弱。",
+    "eval_en": "Wage-price spiral risk is ZERO: domestic supply capacity remains highly elastic.",
+    "eval_zh": "二次通胀螺旋风险为【零】：上游制造业产能充沛，劳动力供给弹性显著。"
+  },
+  "tab5_supply": {
+    "kpi": {
+      "lfpr_total": {
+        "val": 66.8,
+        "unit": "%"
+      },
+      "prime_age_lfpr": {
+        "val": 84.8,
+        "unit": "%",
+        "eval_en": "Prime-age engagement (25-54) remains robust across sectors.",
+        "eval_zh": "黄金年龄人口(25-54岁)参与率保持坚挺，劳动力核心供给稳固。"
+      },
+      "inactivity_rate": {
+        "val": 33.2,
+        "unit": "%"
+      },
+      "youth_unemployment": {
+        "val": 10.7,
+        "unit": "%"
+      },
+      "old_age_dependency": {
+        "val": 16.5,
+        "unit": "%"
+      }
+    },
+    "inactivity_breakdown": [
+      {
+        "cause_en": "Students / Higher Ed",
+        "cause_zh": "在校专科与高校本科生",
+        "share": 38.0
+      },
+      {
+        "cause_en": "Retirement & Homemakers",
+        "cause_zh": "退休人员与全职家庭看护",
+        "share": 42.0
+      },
+      {
+        "cause_en": "Agricultural Transition",
+        "cause_zh": "农村剩余劳动力转移转型",
+        "share": 20.0
+      }
+    ],
+    "eval_en": "Structural demographic shifts and retirement cohorts remain the key medium-term constraint on labour supply.",
+    "eval_zh": "人口老龄化加剧与正常退休潮是制约劳动力供给潜能的中长期深层瓶颈。"
+  }
+}
