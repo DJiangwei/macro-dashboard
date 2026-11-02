@@ -1,6 +1,6 @@
 {
   "schema_version": "cee-canonical-v2",
-  "generated": "2026-11-01T14:13:47.202792+00:00",
+  "generated": "2026-11-02T16:41:37.438967+00:00",
   "observation_columns": [
     "date",
     "value",
@@ -385,7 +385,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.CZ.FSKRC_PT",
         "quality_status": "watch",
-        "quality_note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -775,7 +775,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.CZ.FSCD_PT",
         "quality_status": "watch",
-        "quality_note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions.",
+        "quality_note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -1165,7 +1165,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.CZ.FSLCR_PT",
         "quality_status": "watch",
-        "quality_note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -1285,7 +1285,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.CZ.FSANL_PT",
         "quality_status": "watch",
-        "quality_note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -1675,7 +1675,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.CZ.FSERE_PT",
         "quality_status": "watch",
-        "quality_note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -2065,7 +2065,7 @@
         "source": "BIS LBS via DB.nomics",
         "series_id": "Q.S.C.A.TO1.A.5J.A.5A.A.CZ.N",
         "quality_status": "watch",
-        "quality_note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions.  Source validation: Latest observation is 670 days old for quarterly data.",
+        "quality_note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions.  Source validation: Latest observation is 671 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.bis.org/topics/LBS",
@@ -13894,6 +13894,12 @@
           17.135262500246494,
           "historical",
           false
+        ],
+        [
+          "2026-11-02",
+          16.22668075477542,
+          "historical",
+          false
         ]
       ]
     },
@@ -16134,18 +16140,6 @@
       },
       "observations": [
         [
-          "2026-09-01",
-          1.6283911054474454,
-          "historical",
-          false
-        ],
-        [
-          "2026-09-02",
-          1.6989753337407245,
-          "historical",
-          false
-        ],
-        [
           "2026-09-03",
           1.7517376270601552,
           "historical",
@@ -16396,6 +16390,12 @@
           2.064480964098049,
           "historical",
           false
+        ],
+        [
+          "2026-11-02",
+          2.0513525442529867,
+          "historical",
+          false
         ]
       ]
     },
@@ -16410,7 +16410,7 @@
         "source": "World Bank",
         "series_id": "FI.RES.TOTL.CD",
         "quality_status": "watch",
-        "quality_note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD.  Source validation: Latest observation is 670 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence.",
+        "quality_note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD.  Source validation: Latest observation is 671 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://data.worldbank.org/indicator/FI.RES.TOTL.CD",
@@ -16535,18 +16535,6 @@
         "comparability": "high"
       },
       "observations": [
-        [
-          "2026-08-03",
-          24.206,
-          "historical",
-          false
-        ],
-        [
-          "2026-08-04",
-          24.2,
-          "historical",
-          false
-        ],
         [
           "2026-08-05",
           24.195,
@@ -16922,6 +16910,12 @@
         [
           "2026-10-30",
           24.353,
+          "historical",
+          false
+        ],
+        [
+          "2026-11-02",
+          24.351,
           "historical",
           false
         ]
@@ -19902,16 +19896,15 @@
         "source": "Czech Statistical Office open data",
         "series_id": "CEN0301:614703:ABCDEJ:IR",
         "quality_status": "watch",
-        "quality_note": "Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Czechia national-statistics override where Eurostat import-price coverage is incomplete.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot.",
+        "quality_note": "Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Czechia national-statistics override where Eurostat import-price coverage is incomplete.  Source validation passed.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.csu.gov.cz/opendata/sady/CEN0301/distribuce/csv",
         "source_authority": "public_secondary",
         "derivation": "observed",
         "freshness_status": "due",
-        "validation_status": "watch",
-        "comparability": "high",
-        "refresh_fallback": true
+        "validation_status": "passed",
+        "comparability": "high"
       },
       "observations": [
         [
@@ -23544,14 +23537,14 @@
         "unit": "%",
         "source": "ECB MIR",
         "series_id": "M.CZ.B.A2A.A.R.A.2240.CZK.N",
-        "quality_status": "watch",
+        "quality_status": "verified",
         "quality_note": "ECB MIR local-currency new-business non-financial corporate loan rate; direct ECB Data API preferred, with DB.nomics as fallback; excludes revolving loans and overdrafts. ECB Data API is used directly.  Source validation: Observed date gap of 122 days exceeds expected monthly cadence.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.ecb.europa.eu/data/datasets/MIR",
         "source_authority": "official_primary",
         "derivation": "observed",
-        "freshness_status": "due",
+        "freshness_status": "current",
         "validation_status": "passed",
         "comparability": "high"
       },
@@ -24035,6 +24028,12 @@
           5.6,
           "historical",
           false
+        ],
+        [
+          "2026-09-01",
+          5.6,
+          "historical",
+          false
         ]
       ]
     },
@@ -24048,14 +24047,14 @@
         "unit": "%",
         "source": "ECB MIR",
         "series_id": "M.CZ.B.A2B.A.R.A.2250.CZK.N",
-        "quality_status": "watch",
+        "quality_status": "verified",
         "quality_note": "ECB MIR local-currency new-business household consumption loan rate; direct ECB Data API preferred, with DB.nomics as fallback; excludes revolving loans and overdrafts, so compare carefully with broader household lending concepts. ECB Data API is used directly.  Source validation passed.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.ecb.europa.eu/data/datasets/MIR",
         "source_authority": "official_primary",
         "derivation": "observed",
-        "freshness_status": "due",
+        "freshness_status": "current",
         "validation_status": "passed",
         "comparability": "high"
       },
@@ -24683,6 +24682,12 @@
           7.99,
           "historical",
           false
+        ],
+        [
+          "2026-09-01",
+          7.96,
+          "historical",
+          false
         ]
       ]
     },
@@ -25158,14 +25163,14 @@
         "unit": "%",
         "source": "ECB MIR",
         "series_id": "M.CZ.B.A2C.A.R.A.2250.CZK.N",
-        "quality_status": "watch",
+        "quality_status": "verified",
         "quality_note": "ECB MIR local-currency new-business lending for house purchase; direct ECB Data API preferred, with DB.nomics as fallback; annualised agreed rate / narrowly defined effective rate. ECB Data API is used directly.  Source validation passed.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.ecb.europa.eu/data/datasets/MIR",
         "source_authority": "official_primary",
         "derivation": "observed",
-        "freshness_status": "due",
+        "freshness_status": "current",
         "validation_status": "passed",
         "comparability": "high"
       },
@@ -25793,6 +25798,12 @@
           4.94,
           "historical",
           false
+        ],
+        [
+          "2026-09-01",
+          5.05,
+          "historical",
+          false
         ]
       ]
     },
@@ -26155,7 +26166,7 @@
         "source": "World Bank",
         "series_id": "SL.TLF.CACT.ZS",
         "quality_status": "watch",
-        "quality_note": "Participation definitions differ across Eurostat LFS and World Bank annual series; compare levels cautiously. World Bank indicator SL.TLF.CACT.ZS.  Source validation: Latest observation is 305 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence.",
+        "quality_note": "Participation definitions differ across Eurostat LFS and World Bank annual series; compare levels cautiously. World Bank indicator SL.TLF.CACT.ZS.  Source validation: Latest observation is 306 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://data.worldbank.org/indicator/SL.TLF.CACT.ZS",
@@ -29689,7 +29700,7 @@
         "source": "Eurostat",
         "series_id": "road_go_tq_tott",
         "quality_status": "low_confidence",
-        "quality_note": "Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series. Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres.  Source validation: Latest observation is 304 days old for quarterly data.",
+        "quality_note": "Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series. Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres.  Source validation: Latest observation is 305 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://ec.europa.eu/eurostat/databrowser/view/road_go_tq_tott/default/table?lang=en",
@@ -30679,7 +30690,7 @@
         "source": "CNB external debt / CNB international reserves",
         "series_id": "CNB USD short-term external debt / CNB USD reserves",
         "quality_status": "watch",
-        "quality_note": "Uses IMF ARA ratio where available; Czechia uses a quarterly CNB short-term external debt position over matched CNB quarter-end international reserves. Read as a structural external-liquidity gauge. National-CB override for Czechia where IMF ARA ratio coverage is missing; external debt is quarterly while reserve denominator is matched to quarter-end.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot.",
+        "quality_note": "Uses IMF ARA ratio where available; Czechia uses a quarterly CNB short-term external debt position over matched CNB quarter-end international reserves. Read as a structural external-liquidity gauge. National-CB override for Czechia where IMF ARA ratio coverage is missing; external debt is quarterly while reserve denominator is matched to quarter-end.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot. Live refresh unavailable; retained prior canonical snapshot.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://www.cnb.cz/en/statistics/bop_stat/external_debt/zz_usd_en.htm",
@@ -33914,7 +33925,7 @@
         "source": "Eurostat",
         "series_id": "jvs_q_nace2",
         "quality_status": "low_confidence",
-        "quality_note": "Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy.  Source validation: Latest observation is 396 days old for quarterly data.",
+        "quality_note": "Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy.  Source validation: Latest observation is 397 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://ec.europa.eu/eurostat/databrowser/view/jvs_q_nace2/default/table?lang=en",
@@ -34130,7 +34141,7 @@
         "source": "World Bank Sovereign ESG Data Portal / WGI",
         "series_id": "CC.EST",
         "quality_status": "low_confidence",
-        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST.  Source validation: Latest observation is 1036 days old for annual data.",
+        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST.  Source validation: Latest observation is 1037 days old for annual data.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx",
@@ -34238,7 +34249,7 @@
         "source": "World Bank Sovereign ESG Data Portal / WGI",
         "series_id": "GE.EST",
         "quality_status": "low_confidence",
-        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST.  Source validation: Latest observation is 1036 days old for annual data.",
+        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST.  Source validation: Latest observation is 1037 days old for annual data.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx",
@@ -34346,7 +34357,7 @@
         "source": "World Bank Sovereign ESG Data Portal / WGI",
         "series_id": "RL.EST",
         "quality_status": "low_confidence",
-        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST.  Source validation: Latest observation is 1036 days old for annual data.",
+        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST.  Source validation: Latest observation is 1037 days old for annual data.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx",
@@ -35684,7 +35695,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.HU.FSKRC_PT",
         "quality_status": "watch",
-        "quality_note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 670 days old for quarterly data.",
+        "quality_note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 671 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -36068,7 +36079,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.HU.FSCD_PT",
         "quality_status": "watch",
-        "quality_note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions.",
+        "quality_note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -36188,7 +36199,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.HU.FSLCR_PT",
         "quality_status": "watch",
-        "quality_note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -36308,7 +36319,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.HU.FSANL_PT",
         "quality_status": "watch",
-        "quality_note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -36698,7 +36709,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.HU.FSERE_PT",
         "quality_status": "watch",
-        "quality_note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -37088,7 +37099,7 @@
         "source": "BIS LBS via DB.nomics",
         "series_id": "Q.S.C.A.TO1.A.5J.A.5A.A.HU.N",
         "quality_status": "watch",
-        "quality_note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions.  Source validation: Latest observation is 670 days old for quarterly data.",
+        "quality_note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions.  Source validation: Latest observation is 671 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.bis.org/topics/LBS",
@@ -45871,12 +45882,6 @@
       },
       "observations": [
         [
-          "2021-10-01",
-          17790.0,
-          "historical",
-          false
-        ],
-        [
           "2021-11-01",
           16600.0,
           "historical",
@@ -46231,8 +46236,8 @@
           false
         ],
         [
-          "2026-10-01",
-          41800.0,
+          "2026-11-01",
+          41870.0,
           "historical",
           false
         ]
@@ -46260,18 +46265,6 @@
         "comparability": "medium"
       },
       "observations": [
-        [
-          "2025-11-28",
-          18.387588750736803,
-          "historical",
-          false
-        ],
-        [
-          "2025-12-01",
-          18.595281500747827,
-          "historical",
-          false
-        ],
         [
           "2025-12-02",
           18.862385463517096,
@@ -47615,6 +47608,12 @@
           49.220075738596826,
           "historical",
           false
+        ],
+        [
+          "2026-11-02",
+          43.20915001428286,
+          "historical",
+          false
         ]
       ]
     },
@@ -47640,12 +47639,6 @@
         "comparability": "medium"
       },
       "observations": [
-        [
-          "2022-10-01",
-          -39.57279370432828,
-          "historical",
-          false
-        ],
         [
           "2022-11-01",
           -39.096385542168676,
@@ -47929,8 +47922,8 @@
           false
         ],
         [
-          "2026-10-01",
-          22.186495176848876,
+          "2026-11-01",
+          22.39111370944169,
           "historical",
           false
         ]
@@ -49825,18 +49818,6 @@
       },
       "observations": [
         [
-          "2026-09-01",
-          6.629625875866299,
-          "historical",
-          false
-        ],
-        [
-          "2026-09-02",
-          6.488165971192885,
-          "historical",
-          false
-        ],
-        [
           "2026-09-03",
           6.5480389251476705,
           "historical",
@@ -50087,6 +50068,12 @@
           5.013888755034035,
           "historical",
           false
+        ],
+        [
+          "2026-11-02",
+          4.8617718495932225,
+          "historical",
+          false
         ]
       ]
     },
@@ -50101,7 +50088,7 @@
         "source": "World Bank",
         "series_id": "FI.RES.TOTL.CD",
         "quality_status": "watch",
-        "quality_note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD.  Source validation: Latest observation is 670 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence.",
+        "quality_note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD.  Source validation: Latest observation is 671 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://data.worldbank.org/indicator/FI.RES.TOTL.CD",
@@ -50226,18 +50213,6 @@
         "comparability": "high"
       },
       "observations": [
-        [
-          "2026-08-03",
-          363.98,
-          "historical",
-          false
-        ],
-        [
-          "2026-08-04",
-          362.3,
-          "historical",
-          false
-        ],
         [
           "2026-08-05",
           362.08,
@@ -50613,6 +50588,12 @@
         [
           "2026-10-30",
           366.33,
+          "historical",
+          false
+        ],
+        [
+          "2026-11-02",
+          364.5,
           "historical",
           false
         ]
@@ -52699,7 +52680,7 @@
         "source": "ECB BPS / Eurostat GDP",
         "series_id": "BPS external-debt liability components / rolling 4Q GDP",
         "quality_status": "watch",
-        "quality_note": "Component-based external-debt liability estimate from ECB balance-of-payments positions, scaled by Eurostat rolling four-quarter nominal GDP; direct-investment intercompany debt may need national-release cross-checks. Official ECB BPS component stack; direct-investment intercompany debt is not included unless reported through the selected debt-instrument components, so compare with national external-debt releases.  Source validation: Latest observation is 1035 days old for quarterly data.",
+        "quality_note": "Component-based external-debt liability estimate from ECB balance-of-payments positions, scaled by Eurostat rolling four-quarter nominal GDP; direct-investment intercompany debt may need national-release cross-checks. Official ECB BPS component stack; direct-investment intercompany debt is not included unless reported through the selected debt-instrument components, so compare with national external-debt releases.  Source validation: Latest observation is 1036 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.ecb.europa.eu/main-figures/external-sector/external-debt",
@@ -53539,16 +53520,15 @@
         "source": "Hungarian Central Statistical Office STADAT",
         "series_id": "STADAT:ara0046:import-monthly-total",
         "quality_status": "watch",
-        "quality_note": "Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Hungary national-statistics override; latest KSH methodology column is preferred and older-method values fill only missing early history.  Source validation passed. Live refresh unavailable; retained prior canonical snapshot.",
+        "quality_note": "Import-price coverage is source-sensitive; Czechia, Hungary, and Poland use national-statistics import-price YoY series while remaining non-euro CEE gaps stay explicit until national sources are wired. Hungary national-statistics override; latest KSH methodology column is preferred and older-method values fill only missing early history.  Source validation passed.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://www.ksh.hu/stadat_files/ara/en/ara0046.csv",
         "source_authority": "public_secondary",
         "derivation": "observed",
         "freshness_status": "current",
-        "validation_status": "watch",
-        "comparability": "high",
-        "refresh_fallback": true
+        "validation_status": "passed",
+        "comparability": "high"
       },
       "observations": [
         [
@@ -57043,14 +57023,14 @@
         "unit": "%",
         "source": "ECB MIR",
         "series_id": "M.HU.B.A2A.A.R.A.2240.HUF.N",
-        "quality_status": "watch",
+        "quality_status": "verified",
         "quality_note": "ECB MIR local-currency new-business non-financial corporate loan rate; direct ECB Data API preferred, with DB.nomics as fallback; excludes revolving loans and overdrafts. ECB Data API is used directly.  Source validation: Observed date gap of 92 days exceeds expected monthly cadence.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.ecb.europa.eu/data/datasets/MIR",
         "source_authority": "official_primary",
         "derivation": "observed",
-        "freshness_status": "due",
+        "freshness_status": "current",
         "validation_status": "passed",
         "comparability": "high"
       },
@@ -57558,6 +57538,12 @@
           7.57,
           "historical",
           false
+        ],
+        [
+          "2026-09-01",
+          7.23,
+          "historical",
+          false
         ]
       ]
     },
@@ -57571,14 +57557,14 @@
         "unit": "%",
         "source": "ECB MIR",
         "series_id": "M.HU.B.A2B.A.R.A.2250.HUF.N",
-        "quality_status": "watch",
+        "quality_status": "verified",
         "quality_note": "ECB MIR local-currency new-business household consumption loan rate; direct ECB Data API preferred, with DB.nomics as fallback; excludes revolving loans and overdrafts, so compare carefully with broader household lending concepts. ECB Data API is used directly.  Source validation passed.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.ecb.europa.eu/data/datasets/MIR",
         "source_authority": "official_primary",
         "derivation": "observed",
-        "freshness_status": "due",
+        "freshness_status": "current",
         "validation_status": "passed",
         "comparability": "high"
       },
@@ -58206,6 +58192,12 @@
           12.32,
           "historical",
           false
+        ],
+        [
+          "2026-09-01",
+          12.18,
+          "historical",
+          false
         ]
       ]
     },
@@ -58681,14 +58673,14 @@
         "unit": "%",
         "source": "ECB MIR",
         "series_id": "M.HU.B.A2C.A.R.A.2250.HUF.N",
-        "quality_status": "watch",
+        "quality_status": "verified",
         "quality_note": "ECB MIR local-currency new-business lending for house purchase; direct ECB Data API preferred, with DB.nomics as fallback; annualised agreed rate / narrowly defined effective rate. ECB Data API is used directly.  Source validation passed.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.ecb.europa.eu/data/datasets/MIR",
         "source_authority": "official_primary",
         "derivation": "observed",
-        "freshness_status": "due",
+        "freshness_status": "current",
         "validation_status": "passed",
         "comparability": "high"
       },
@@ -59316,6 +59308,12 @@
           7.15,
           "historical",
           false
+        ],
+        [
+          "2026-09-01",
+          6.9,
+          "historical",
+          false
         ]
       ]
     },
@@ -59678,7 +59676,7 @@
         "source": "World Bank",
         "series_id": "SL.TLF.CACT.ZS",
         "quality_status": "watch",
-        "quality_note": "Participation definitions differ across Eurostat LFS and World Bank annual series; compare levels cautiously. World Bank indicator SL.TLF.CACT.ZS.  Source validation: Latest observation is 305 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence.",
+        "quality_note": "Participation definitions differ across Eurostat LFS and World Bank annual series; compare levels cautiously. World Bank indicator SL.TLF.CACT.ZS.  Source validation: Latest observation is 306 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://data.worldbank.org/indicator/SL.TLF.CACT.ZS",
@@ -63200,7 +63198,7 @@
         "source": "Eurostat",
         "series_id": "road_go_tq_tott",
         "quality_status": "low_confidence",
-        "quality_note": "Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series. Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres.  Source validation: Latest observation is 304 days old for quarterly data.",
+        "quality_note": "Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series. Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres.  Source validation: Latest observation is 305 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://ec.europa.eu/eurostat/databrowser/view/road_go_tq_tott/default/table?lang=en",
@@ -67436,7 +67434,7 @@
         "source": "Eurostat",
         "series_id": "jvs_q_nace2",
         "quality_status": "low_confidence",
-        "quality_note": "Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy.  Source validation: Latest observation is 396 days old for quarterly data.",
+        "quality_note": "Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy.  Source validation: Latest observation is 397 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://ec.europa.eu/eurostat/databrowser/view/jvs_q_nace2/default/table?lang=en",
@@ -67652,7 +67650,7 @@
         "source": "World Bank Sovereign ESG Data Portal / WGI",
         "series_id": "CC.EST",
         "quality_status": "low_confidence",
-        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST.  Source validation: Latest observation is 1036 days old for annual data.",
+        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST.  Source validation: Latest observation is 1037 days old for annual data.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx",
@@ -67760,7 +67758,7 @@
         "source": "World Bank Sovereign ESG Data Portal / WGI",
         "series_id": "GE.EST",
         "quality_status": "low_confidence",
-        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST.  Source validation: Latest observation is 1036 days old for annual data.",
+        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST.  Source validation: Latest observation is 1037 days old for annual data.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx",
@@ -67868,7 +67866,7 @@
         "source": "World Bank Sovereign ESG Data Portal / WGI",
         "series_id": "RL.EST",
         "quality_status": "low_confidence",
-        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST.  Source validation: Latest observation is 1036 days old for annual data.",
+        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST.  Source validation: Latest observation is 1037 days old for annual data.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx",
@@ -69230,7 +69228,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.PL.FSKRC_PT",
         "quality_status": "watch",
-        "quality_note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 670 days old for quarterly data.",
+        "quality_note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 671 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -69614,7 +69612,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.PL.FSCD_PT",
         "quality_status": "watch",
-        "quality_note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions.",
+        "quality_note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -70004,7 +70002,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.PL.FSLCR_PT",
         "quality_status": "watch",
-        "quality_note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -70130,7 +70128,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.PL.FSANL_PT",
         "quality_status": "watch",
-        "quality_note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -70520,7 +70518,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.PL.FSERE_PT",
         "quality_status": "watch",
-        "quality_note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -70910,7 +70908,7 @@
         "source": "BIS LBS via DB.nomics",
         "series_id": "Q.S.C.A.TO1.A.5J.A.5A.A.PL.N",
         "quality_status": "watch",
-        "quality_note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions.  Source validation: Latest observation is 670 days old for quarterly data.",
+        "quality_note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions.  Source validation: Latest observation is 671 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.bis.org/topics/LBS",
@@ -79663,7 +79661,7 @@
         "source": "GPW Benchmark",
         "series_id": "WIG20:Dividend yield (%)",
         "quality_status": "watch",
-        "quality_note": "Trailing/forward methodology must be checked. Official GPW Benchmark index dividend-yield snapshot.  Source validation: Latest observation is 163 days old for monthly data. Short history returned by adapter.",
+        "quality_note": "Trailing/forward methodology must be checked. Official GPW Benchmark index dividend-yield snapshot.  Source validation: Latest observation is 164 days old for monthly data. Short history returned by adapter.",
         "is_proxy": false,
         "frequency": "event",
         "source_url": "https://gpwbenchmark.pl/en-karta-indeksu?isin=PL9999999987",
@@ -79693,7 +79691,7 @@
         "source": "GPW Benchmark",
         "series_id": "WIG20:P/E",
         "quality_status": "watch",
-        "quality_note": "Index-level P/E is sourced from exchange factsheets where available; forward-consensus estimates usually require vendor data. Official GPW Benchmark index P/E snapshot; this is not a forward-consensus multiple.  Source validation: Latest observation is 163 days old for monthly data. Short history returned by adapter.",
+        "quality_note": "Index-level P/E is sourced from exchange factsheets where available; forward-consensus estimates usually require vendor data. Official GPW Benchmark index P/E snapshot; this is not a forward-consensus multiple.  Source validation: Latest observation is 164 days old for monthly data. Short history returned by adapter.",
         "is_proxy": false,
         "frequency": "event",
         "source_url": "https://gpwbenchmark.pl/en-karta-indeksu?isin=PL9999999987",
@@ -79723,7 +79721,7 @@
         "source": "GPW Benchmark",
         "series_id": "WIG20:closing",
         "quality_status": "watch",
-        "quality_note": "Headline-index monthly close from the available exchange or vendor feed; confirm local index convention for trading use. Official WIG20 closing level from GPW Benchmark.  Source validation: Latest observation is 163 days old for monthly data. Short history returned by adapter.",
+        "quality_note": "Headline-index monthly close from the available exchange or vendor feed; confirm local index convention for trading use. Official WIG20 closing level from GPW Benchmark.  Source validation: Latest observation is 164 days old for monthly data. Short history returned by adapter.",
         "is_proxy": false,
         "frequency": "event",
         "source_url": "https://gpwbenchmark.pl/en-karta-indeksu?isin=PL9999999987",
@@ -79753,7 +79751,7 @@
         "source": "GPW Benchmark",
         "series_id": "WIG20:P/BV",
         "quality_status": "watch",
-        "quality_note": "Index-level price-to-book usually requires vendor or exchange aggregate fundamentals; proxy fill is only indicative. Official GPW Benchmark index price-to-book-value snapshot.  Source validation: Latest observation is 163 days old for monthly data. Short history returned by adapter.",
+        "quality_note": "Index-level price-to-book usually requires vendor or exchange aggregate fundamentals; proxy fill is only indicative. Official GPW Benchmark index price-to-book-value snapshot.  Source validation: Latest observation is 164 days old for monthly data. Short history returned by adapter.",
         "is_proxy": false,
         "frequency": "event",
         "source_url": "https://gpwbenchmark.pl/en-karta-indeksu?isin=PL9999999987",
@@ -79783,7 +79781,7 @@
         "source": "GPW Benchmark",
         "series_id": "WIG20:index volatility",
         "quality_status": "watch",
-        "quality_note": "Annualised realised volatility from daily closes; vendor closes and holidays should be checked against exchange data. Official GPW Benchmark index volatility snapshot based on the last 20 sessions; this is a close substitute for the dashboard's 30D realised-volatility slot.  Source validation: Latest observation is 163 days old for daily data. Short history returned by adapter.",
+        "quality_note": "Annualised realised volatility from daily closes; vendor closes and holidays should be checked against exchange data. Official GPW Benchmark index volatility snapshot based on the last 20 sessions; this is a close substitute for the dashboard's 30D realised-volatility slot.  Source validation: Latest observation is 164 days old for daily data. Short history returned by adapter.",
         "is_proxy": false,
         "frequency": "event",
         "source_url": "https://gpwbenchmark.pl/en-karta-indeksu?isin=PL9999999987",
@@ -79825,8 +79823,8 @@
       },
       "observations": [
         [
-          "2026-10-01",
-          4180.8798828125,
+          "2026-11-01",
+          4152.64990234375,
           "historical",
           false
         ]
@@ -81691,18 +81689,6 @@
       },
       "observations": [
         [
-          "2026-09-01",
-          3.396479537756651,
-          "historical",
-          false
-        ],
-        [
-          "2026-09-02",
-          3.427938996229695,
-          "historical",
-          false
-        ],
-        [
           "2026-09-03",
           3.427274818448011,
           "historical",
@@ -81951,6 +81937,12 @@
         [
           "2026-10-30",
           3.6248249178639904,
+          "historical",
+          false
+        ],
+        [
+          "2026-11-02",
+          3.7680077104063243,
           "historical",
           false
         ]
@@ -83209,18 +83201,6 @@
       },
       "observations": [
         [
-          "2026-08-03",
-          4.3033,
-          "historical",
-          false
-        ],
-        [
-          "2026-08-04",
-          4.3063,
-          "historical",
-          false
-        ],
-        [
           "2026-08-05",
           4.306,
           "historical",
@@ -83595,6 +83575,12 @@
         [
           "2026-10-30",
           4.4038,
+          "historical",
+          false
+        ],
+        [
+          "2026-11-02",
+          4.4185,
           "historical",
           false
         ]
@@ -89718,14 +89704,14 @@
         "unit": "%",
         "source": "ECB MIR",
         "series_id": "M.PL.B.A2A.A.R.A.2240.PLN.N",
-        "quality_status": "watch",
+        "quality_status": "verified",
         "quality_note": "ECB MIR local-currency new-business non-financial corporate loan rate; direct ECB Data API preferred, with DB.nomics as fallback; excludes revolving loans and overdrafts. ECB Data API is used directly.  Source validation: Observed date gap of 92 days exceeds expected monthly cadence.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.ecb.europa.eu/data/datasets/MIR",
         "source_authority": "official_primary",
         "derivation": "observed",
-        "freshness_status": "due",
+        "freshness_status": "current",
         "validation_status": "passed",
         "comparability": "high"
       },
@@ -90257,6 +90243,12 @@
           5.7,
           "historical",
           false
+        ],
+        [
+          "2026-09-01",
+          5.43,
+          "historical",
+          false
         ]
       ]
     },
@@ -90270,14 +90262,14 @@
         "unit": "%",
         "source": "ECB MIR",
         "series_id": "M.PL.B.A2B.A.R.A.2250.PLN.N",
-        "quality_status": "watch",
+        "quality_status": "verified",
         "quality_note": "ECB MIR local-currency new-business household consumption loan rate; direct ECB Data API preferred, with DB.nomics as fallback; excludes revolving loans and overdrafts, so compare carefully with broader household lending concepts. ECB Data API is used directly.  Source validation passed.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.ecb.europa.eu/data/datasets/MIR",
         "source_authority": "official_primary",
         "derivation": "observed",
-        "freshness_status": "due",
+        "freshness_status": "current",
         "validation_status": "passed",
         "comparability": "high"
       },
@@ -90905,6 +90897,12 @@
           10.05,
           "historical",
           false
+        ],
+        [
+          "2026-09-01",
+          9.91,
+          "historical",
+          false
         ]
       ]
     },
@@ -91380,14 +91378,14 @@
         "unit": "%",
         "source": "ECB MIR",
         "series_id": "M.PL.B.A2C.A.R.A.2250.PLN.N",
-        "quality_status": "watch",
+        "quality_status": "verified",
         "quality_note": "ECB MIR local-currency new-business lending for house purchase; direct ECB Data API preferred, with DB.nomics as fallback; annualised agreed rate / narrowly defined effective rate. ECB Data API is used directly.  Source validation passed.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.ecb.europa.eu/data/datasets/MIR",
         "source_authority": "official_primary",
         "derivation": "observed",
-        "freshness_status": "due",
+        "freshness_status": "current",
         "validation_status": "passed",
         "comparability": "high"
       },
@@ -92015,6 +92013,12 @@
           5.94,
           "historical",
           false
+        ],
+        [
+          "2026-09-01",
+          5.95,
+          "historical",
+          false
         ]
       ]
     },
@@ -92377,7 +92381,7 @@
         "source": "World Bank",
         "series_id": "SL.TLF.CACT.ZS",
         "quality_status": "watch",
-        "quality_note": "Participation definitions differ across Eurostat LFS and World Bank annual series; compare levels cautiously. World Bank indicator SL.TLF.CACT.ZS.  Source validation: Latest observation is 305 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence.",
+        "quality_note": "Participation definitions differ across Eurostat LFS and World Bank annual series; compare levels cautiously. World Bank indicator SL.TLF.CACT.ZS.  Source validation: Latest observation is 306 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://data.worldbank.org/indicator/SL.TLF.CACT.ZS",
@@ -95953,7 +95957,7 @@
         "source": "Eurostat",
         "series_id": "road_go_tq_tott",
         "quality_status": "low_confidence",
-        "quality_note": "Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series. Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres.  Source validation: Latest observation is 304 days old for quarterly data.",
+        "quality_note": "Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series. Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres.  Source validation: Latest observation is 305 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://ec.europa.eu/eurostat/databrowser/view/road_go_tq_tott/default/table?lang=en",
@@ -100189,7 +100193,7 @@
         "source": "Eurostat",
         "series_id": "jvs_q_nace2",
         "quality_status": "low_confidence",
-        "quality_note": "Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy.  Source validation: Latest observation is 396 days old for quarterly data.",
+        "quality_note": "Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy.  Source validation: Latest observation is 397 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://ec.europa.eu/eurostat/databrowser/view/jvs_q_nace2/default/table?lang=en",
@@ -100405,7 +100409,7 @@
         "source": "World Bank Sovereign ESG Data Portal / WGI",
         "series_id": "CC.EST",
         "quality_status": "low_confidence",
-        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST.  Source validation: Latest observation is 1036 days old for annual data.",
+        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST.  Source validation: Latest observation is 1037 days old for annual data.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx",
@@ -100513,7 +100517,7 @@
         "source": "World Bank Sovereign ESG Data Portal / WGI",
         "series_id": "GE.EST",
         "quality_status": "low_confidence",
-        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST.  Source validation: Latest observation is 1036 days old for annual data.",
+        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST.  Source validation: Latest observation is 1037 days old for annual data.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx",
@@ -100621,7 +100625,7 @@
         "source": "World Bank Sovereign ESG Data Portal / WGI",
         "series_id": "RL.EST",
         "quality_status": "low_confidence",
-        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST.  Source validation: Latest observation is 1036 days old for annual data.",
+        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST.  Source validation: Latest observation is 1037 days old for annual data.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx",
@@ -101983,7 +101987,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.RO.FSKRC_PT",
         "quality_status": "watch",
-        "quality_note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF deposit-taker regulatory capital to risk-weighted assets; supervisory definitions and consolidation bases can vary. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -102373,7 +102377,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.RO.FSCD_PT",
         "quality_status": "watch",
-        "quality_note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions.",
+        "quality_note": "IMF FSI reports customer deposits to total non-interbank loans; dashboard inverts it to approximate loans/deposits, so compare with national supervisory definitions. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data. Series transformed from IMF deposits-to-loans into loans-to-deposits; compare levels with national supervisory definitions.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -102763,7 +102767,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.RO.FSLCR_PT",
         "quality_status": "watch",
-        "quality_note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF Financial Soundness Indicator for deposit-taker liquidity coverage ratio; supervisory definitions and reporting coverage can differ across countries. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -102997,7 +103001,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.RO.FSANL_PT",
         "quality_status": "watch",
-        "quality_note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF deposit-taker non-performing loans to total gross loans; definitions and write-off practices vary by jurisdiction. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -103387,7 +103391,7 @@
         "source": "IMF FSI via DB.nomics",
         "series_id": "Q.RO.FSERE_PT",
         "quality_status": "watch",
-        "quality_note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 580 days old for quarterly data.",
+        "quality_note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access.  Source validation: Latest observation is 581 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.imf.org/en/Datasets/FSIC",
@@ -103777,7 +103781,7 @@
         "source": "BIS LBS via DB.nomics",
         "series_id": "Q.S.C.A.TO1.A.5J.A.5A.A.RO.N",
         "quality_status": "watch",
-        "quality_note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions.  Source validation: Latest observation is 670 days old for quarterly data.",
+        "quality_note": "BIS LBS cross-border total claims on residents, all currencies, all reporting countries and all sectors; DB.nomics mirror is used for narrow API access instead of the full BIS bulk file. Amounts outstanding are converted from USD millions to USD billions.  Source validation: Latest observation is 671 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://data.bis.org/topics/LBS",
@@ -105120,7 +105124,7 @@
         "source": "National Bank of Romania Monthly Bulletin / Romania Ministry of Finance GDP snapshot",
         "series_id": "manual:cb_balance_sheet_gdp",
         "quality_status": "watch",
-        "quality_note": "Central-bank total assets scaled by nominal GDP from BIS/World Bank where available, or official national-bank and GDP snapshots where automated coverage is missing; monthly numerator is paired with annual GDP, so use as a balance-sheet scale proxy rather than exact national-account ratio. Maintained in config/manual_indicators.yaml; revise manually when source values change.  Source validation: Latest observation is 639 days old for monthly data. Short history returned by adapter. Manual snapshot maintained because BIS CBTA does not currently return Romania coverage in this pipeline and BNR's direct statistical-data endpoints reject automated access in this environment. Update when the latest BNR monthly bulletin and current-price GDP snapshot are refreshed.",
+        "quality_note": "Central-bank total assets scaled by nominal GDP from BIS/World Bank where available, or official national-bank and GDP snapshots where automated coverage is missing; monthly numerator is paired with annual GDP, so use as a balance-sheet scale proxy rather than exact national-account ratio. Maintained in config/manual_indicators.yaml; revise manually when source values change.  Source validation: Latest observation is 640 days old for monthly data. Short history returned by adapter. Manual snapshot maintained because BIS CBTA does not currently return Romania coverage in this pipeline and BNR's direct statistical-data endpoints reject automated access in this environment. Update when the latest BNR monthly bulletin and current-price GDP snapshot are refreshed.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://muzeu.bnr.ro/uploads/2025-03-07monthlybulletinno.012025_documentpdf_545_1743160358.pdf",
@@ -107994,7 +107998,7 @@
         "source": "World Bank WDI fallback",
         "series_id": "FS.AST.PRVT.GD.ZS minus 10Y trailing average",
         "quality_status": "low_confidence",
-        "quality_note": "BIS private non-financial credit gap preferred; World Bank annual credit/GDP trailing-trend fallback used only where BIS coverage is unavailable. Used only when BIS credit-gap data is unavailable; annual and not methodologically identical to BIS HP-filter gap.  Source validation: Latest observation is 670 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence. Methodology fallback: World Bank annual credit/GDP minus trailing average, not BIS HP-filter credit gap.",
+        "quality_note": "BIS private non-financial credit gap preferred; World Bank annual credit/GDP trailing-trend fallback used only where BIS coverage is unavailable. Used only when BIS credit-gap data is unavailable; annual and not methodologically identical to BIS HP-filter gap.  Source validation: Latest observation is 671 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence. Methodology fallback: World Bank annual credit/GDP minus trailing average, not BIS HP-filter credit gap.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://data.worldbank.org/indicator/FS.AST.PRVT.GD.ZS",
@@ -110676,7 +110680,7 @@
         "source": "Bucharest Stock Exchange",
         "series_id": "BVB:BET:profile-current-value",
         "quality_status": "watch",
-        "quality_note": "Headline-index monthly close from the available exchange or vendor feed; confirm local index convention for trading use. Official BVB BET profile snapshot; current-value observation, not a full historical close feed.  Source validation: Latest observation is 160 days old for monthly data. Short history returned by adapter.",
+        "quality_note": "Headline-index monthly close from the available exchange or vendor feed; confirm local index convention for trading use. Official BVB BET profile snapshot; current-value observation, not a full historical close feed.  Source validation: Latest observation is 161 days old for monthly data. Short history returned by adapter.",
         "is_proxy": false,
         "frequency": "event",
         "source_url": "https://m.bvb.ro/FinancialInstruments/Indices/IndicesProfiles?r=1",
@@ -110706,7 +110710,7 @@
         "source": "Bucharest Stock Exchange",
         "series_id": "BVB:BET:performance-1y",
         "quality_status": "watch",
-        "quality_note": "Derived from the headline-index monthly close; verify vendor feeds against local-exchange index convention. Official BVB BET 1-year performance snapshot; not recomputed from a full historical close feed.  Source validation: Latest observation is 160 days old for monthly data. Short history returned by adapter.",
+        "quality_note": "Derived from the headline-index monthly close; verify vendor feeds against local-exchange index convention. Official BVB BET 1-year performance snapshot; not recomputed from a full historical close feed.  Source validation: Latest observation is 161 days old for monthly data. Short history returned by adapter.",
         "is_proxy": false,
         "frequency": "event",
         "source_url": "https://www.bvb.ro/FinancialInstruments/Indices/IndicesPerformance",
@@ -112584,18 +112588,6 @@
       },
       "observations": [
         [
-          "2026-09-01",
-          1.2923787662513975,
-          "historical",
-          false
-        ],
-        [
-          "2026-09-02",
-          1.248136684438551,
-          "historical",
-          false
-        ],
-        [
           "2026-09-03",
           1.2259960546410587,
           "historical",
@@ -112846,6 +112838,12 @@
           4.732459250514313,
           "historical",
           false
+        ],
+        [
+          "2026-11-02",
+          1.9907430173638077,
+          "historical",
+          false
         ]
       ]
     },
@@ -112860,7 +112858,7 @@
         "source": "World Bank",
         "series_id": "FI.RES.TOTL.CD",
         "quality_status": "watch",
-        "quality_note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD.  Source validation: Latest observation is 670 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence.",
+        "quality_note": "Official central-bank or FRED/IMF IFS reserve series is preferred where explicitly verified; World Bank annual reserves remains a fallback. USD valuation effects matter. World Bank indicator FI.RES.TOTL.CD.  Source validation: Latest observation is 671 days old for monthly data. Observed date gap of 366 days exceeds expected monthly cadence.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://data.worldbank.org/indicator/FI.RES.TOTL.CD",
@@ -112985,18 +112983,6 @@
         "comparability": "high"
       },
       "observations": [
-        [
-          "2026-08-03",
-          5.2455,
-          "historical",
-          false
-        ],
-        [
-          "2026-08-04",
-          5.251,
-          "historical",
-          false
-        ],
         [
           "2026-08-05",
           5.2469,
@@ -113372,6 +113358,12 @@
         [
           "2026-10-30",
           5.3447,
+          "historical",
+          false
+        ],
+        [
+          "2026-11-02",
+          5.3405,
           "historical",
           false
         ]
@@ -119735,14 +119727,14 @@
         "unit": "%",
         "source": "ECB MIR",
         "series_id": "M.RO.B.A2B.A.R.A.2250.RON.N",
-        "quality_status": "watch",
+        "quality_status": "verified",
         "quality_note": "ECB MIR local-currency new-business household consumption loan rate; direct ECB Data API preferred, with DB.nomics as fallback; excludes revolving loans and overdrafts, so compare carefully with broader household lending concepts. ECB Data API is used directly.  Source validation passed.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.ecb.europa.eu/data/datasets/MIR",
         "source_authority": "official_primary",
         "derivation": "observed",
-        "freshness_status": "due",
+        "freshness_status": "current",
         "validation_status": "passed",
         "comparability": "high"
       },
@@ -120370,6 +120362,12 @@
           9.61,
           "historical",
           false
+        ],
+        [
+          "2026-09-01",
+          9.36,
+          "historical",
+          false
         ]
       ]
     },
@@ -120845,14 +120843,14 @@
         "unit": "%",
         "source": "ECB MIR",
         "series_id": "M.RO.B.A2C.A.R.A.2250.RON.N",
-        "quality_status": "watch",
+        "quality_status": "verified",
         "quality_note": "ECB MIR local-currency new-business lending for house purchase; direct ECB Data API preferred, with DB.nomics as fallback; annualised agreed rate / narrowly defined effective rate. ECB Data API is used directly.  Source validation passed.",
         "is_proxy": false,
         "frequency": "monthly",
         "source_url": "https://data.ecb.europa.eu/data/datasets/MIR",
         "source_authority": "official_primary",
         "derivation": "observed",
-        "freshness_status": "due",
+        "freshness_status": "current",
         "validation_status": "passed",
         "comparability": "high"
       },
@@ -121480,6 +121478,12 @@
           5.65,
           "historical",
           false
+        ],
+        [
+          "2026-09-01",
+          5.61,
+          "historical",
+          false
         ]
       ]
     },
@@ -121842,7 +121846,7 @@
         "source": "World Bank",
         "series_id": "SL.TLF.CACT.ZS",
         "quality_status": "watch",
-        "quality_note": "Participation definitions differ across Eurostat LFS and World Bank annual series; compare levels cautiously. World Bank indicator SL.TLF.CACT.ZS.  Source validation: Latest observation is 305 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence.",
+        "quality_note": "Participation definitions differ across Eurostat LFS and World Bank annual series; compare levels cautiously. World Bank indicator SL.TLF.CACT.ZS.  Source validation: Latest observation is 306 days old for quarterly data. Observed date gap of 366 days exceeds expected quarterly cadence.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://data.worldbank.org/indicator/SL.TLF.CACT.ZS",
@@ -125346,7 +125350,7 @@
         "source": "Eurostat",
         "series_id": "road_go_tq_tott",
         "quality_status": "low_confidence",
-        "quality_note": "Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series. Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres.  Source validation: Latest observation is 304 days old for quarterly data.",
+        "quality_note": "Eurostat quarterly road freight transport performance in million tonne-kilometres; it is not a high-frequency traffic-count series. Eurostat quarterly road freight transport performance by reporting country in million tonne-kilometres.  Source validation: Latest observation is 305 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://ec.europa.eu/eurostat/databrowser/view/road_go_tq_tott/default/table?lang=en",
@@ -129582,7 +129586,7 @@
         "source": "Eurostat",
         "series_id": "jvs_q_nace2",
         "quality_status": "low_confidence",
-        "quality_note": "Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy.  Source validation: Latest observation is 396 days old for quarterly data.",
+        "quality_note": "Job vacancy coverage varies by firm size and sector; read as a labour-market tightness proxy.  Source validation: Latest observation is 397 days old for quarterly data.",
         "is_proxy": false,
         "frequency": "quarterly",
         "source_url": "https://ec.europa.eu/eurostat/databrowser/view/jvs_q_nace2/default/table?lang=en",
@@ -129798,7 +129802,7 @@
         "source": "World Bank Sovereign ESG Data Portal / WGI",
         "series_id": "CC.EST",
         "quality_status": "low_confidence",
-        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST.  Source validation: Latest observation is 1036 days old for annual data.",
+        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; perception/model composite can move with methodology. World Bank Sovereign ESG workbook indicator CC.EST.  Source validation: Latest observation is 1037 days old for annual data.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx",
@@ -129906,7 +129910,7 @@
         "source": "World Bank Sovereign ESG Data Portal / WGI",
         "series_id": "GE.EST",
         "quality_status": "low_confidence",
-        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST.  Source validation: Latest observation is 1036 days old for annual data.",
+        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator GE.EST.  Source validation: Latest observation is 1037 days old for annual data.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx",
@@ -130014,7 +130018,7 @@
         "source": "World Bank Sovereign ESG Data Portal / WGI",
         "series_id": "RL.EST",
         "quality_status": "low_confidence",
-        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST.  Source validation: Latest observation is 1036 days old for annual data.",
+        "quality_note": "WGI estimate score from the World Bank Sovereign ESG workbook; use directionally and note confidence intervals are not shown. World Bank Sovereign ESG workbook indicator RL.EST.  Source validation: Latest observation is 1037 days old for annual data.",
         "is_proxy": false,
         "frequency": "annual",
         "source_url": "https://esgdata.worldbank.org/dist/content/data/download/esgdata_download-2026-01-09.xlsx",
@@ -133616,6 +133620,222 @@
       },
       "observations": [
         [
+          "2022-12-01",
+          24.85,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          26.32,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          21.91,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          17.19,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          9.6,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          4.47,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          2.41,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          1.2,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          2.83,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          -0.4,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          -1.98,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          1.6,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          4.48,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          2.83,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          3.24,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          3.65,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          2.83,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          -0.0,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          1.61,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          10.46,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          11.34,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          9.14,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          3.24,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          1.21,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          2.02,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          3.25,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          2.42,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          0.8,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          -0.8,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          -0.8,
+          "historical",
+          false
+        ],
+        [
           "2025-12-01",
           0.4,
           "historical",
@@ -133623,37 +133843,37 @@
         ],
         [
           "2026-01-01",
-          2.8,
+          2.83,
           "historical",
           false
         ],
         [
           "2026-02-01",
-          2.8,
+          2.83,
           "historical",
           false
         ],
         [
           "2026-03-01",
-          4.5,
+          4.49,
           "historical",
           false
         ],
         [
           "2026-04-01",
-          4.1,
+          4.07,
           "historical",
           false
         ],
         [
           "2026-05-01",
-          4.1,
+          4.07,
           "historical",
           false
         ],
         [
           "2026-06-01",
-          2.0,
+          2.02,
           "historical",
           false
         ],
@@ -133671,7 +133891,7 @@
         ],
         [
           "2026-09-01",
-          1.2,
+          1.21,
           "historical",
           false
         ]
@@ -133693,44 +133913,260 @@
       },
       "observations": [
         [
+          "2022-12-01",
+          14.93,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          16.76,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          16.3,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          18.62,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          17.69,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          14.92,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          11.34,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          8.73,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          3.65,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          1.2,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          1.61,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          3.66,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          9.59,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          10.47,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          8.3,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          2.82,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          -1.2,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          -1.59,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          1.2,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          6.58,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          8.72,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          10.03,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          3.66,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          2.01,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          1.21,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          1.21,
+          "historical",
+          false
+        ],
+        [
           "2025-12-01",
-          3.7,
+          3.66,
           "historical",
           false
         ],
         [
           "2026-01-01",
-          4.5,
+          4.49,
           "historical",
           false
         ],
         [
           "2026-02-01",
-          4.9,
+          4.91,
           "historical",
           false
         ],
         [
           "2026-03-01",
-          4.1,
+          4.07,
           "historical",
           false
         ],
         [
           "2026-04-01",
-          4.5,
+          4.49,
           "historical",
           false
         ],
         [
           "2026-05-01",
-          4.5,
+          4.49,
           "historical",
           false
         ],
         [
           "2026-06-01",
-          4.5,
+          4.49,
           "historical",
           false
         ],
@@ -133742,13 +134178,306 @@
         ],
         [
           "2026-08-01",
-          5.3,
+          5.32,
           "historical",
           false
         ],
         [
           "2026-09-01",
-          2.8,
+          2.83,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "HU",
+      "indicator_id": "cpi_services_3m_ann",
+      "metadata": {
+        "label": "Services CPI 3M Annualized Rate",
+        "label_en": "Services CPI 3M Annualized Rate",
+        "label_zh": "服务业通胀3个月年化率",
+        "unit": "% annualized",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2022-12-01",
+          14.93,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          20.96,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          21.44,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          24.34,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          21.93,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          20.49,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          15.84,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          15.38,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          13.11,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          6.11,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          -0.81,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          -1.2,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          3.66,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          6.59,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          8.3,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          12.67,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          14.93,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          15.84,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          13.58,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          13.58,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          12.23,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          4.03,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          -3.56,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          -4.71,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          -0.01,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          10.44,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          14.46,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          15.37,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          11.79,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          7.87,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          8.73,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          8.73,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          9.6,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          4.05,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          0.39,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          -1.59,
+          "historical",
+          false
+        ],
+        [
+          "2025-12-01",
+          3.65,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          5.74,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          5.75,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          6.17,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          5.74,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          5.74,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          8.72,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          10.46,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          6.55,
           "historical",
           false
         ]
@@ -133770,6 +134499,222 @@
       },
       "observations": [
         [
+          "2022-12-01",
+          -0.15,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          0.12,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          -3.89,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          -8.41,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          -14.8,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          -17.43,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          -17.49,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          -16.3,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          -8.04,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          -6.88,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          -6.77,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          -8.1,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          -7.48,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          -2.1,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          0.88,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          5.56,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          5.56,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          2.26,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          -0.77,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          -0.86,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          0.25,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          -0.17,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          -3.4,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          -2.29,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          -0.31,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          4.76,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          5.64,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          4.34,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          -0.96,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          -3.29,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          -2.58,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          -0.95,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          -1.78,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          -3.5,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          -5.0,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          -4.5,
+          "historical",
+          false
+        ],
+        [
           "2025-12-01",
           -2.9,
           "historical",
@@ -133777,37 +134722,37 @@
         ],
         [
           "2026-01-01",
-          0.5,
+          0.53,
           "historical",
           false
         ],
         [
           "2026-02-01",
-          1.2,
+          1.23,
           "historical",
           false
         ],
         [
           "2026-03-01",
-          2.4,
+          2.39,
           "historical",
           false
         ],
         [
           "2026-04-01",
-          1.5,
+          1.47,
           "historical",
           false
         ],
         [
           "2026-05-01",
-          1.8,
+          1.77,
           "historical",
           false
         ],
         [
           "2026-06-01",
-          -0.1,
+          -0.08,
           "historical",
           false
         ],
@@ -133825,7 +134770,7 @@
         ],
         [
           "2026-09-01",
-          -0.9,
+          -0.89,
           "historical",
           false
         ]
@@ -136568,20 +137513,236 @@
       },
       "observations": [
         [
+          "2022-12-01",
+          10.88,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          12.2,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          14.44,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          19.08,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          13.58,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          9.15,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          4.48,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          0.4,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          -0.4,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          -1.59,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          0.8,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          3.24,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          3.25,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          3.66,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          4.48,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          4.48,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          3.65,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          2.02,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          2.83,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          2.83,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          4.48,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          4.48,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          5.74,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          4.07,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          2.42,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          1.61,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          1.21,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          1.21,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          1.61,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          1.61,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          2.43,
+          "historical",
+          false
+        ],
+        [
           "2025-12-01",
-          1.6,
+          1.61,
           "historical",
           false
         ],
         [
           "2026-01-01",
-          3.2,
+          3.24,
           "historical",
           false
         ],
         [
           "2026-02-01",
-          4.5,
+          4.48,
           "historical",
           false
         ],
@@ -136593,37 +137754,37 @@
         ],
         [
           "2026-04-01",
-          7.9,
+          7.87,
           "historical",
           false
         ],
         [
           "2026-05-01",
-          5.7,
+          5.73,
           "historical",
           false
         ],
         [
           "2026-06-01",
-          0.8,
+          0.79,
           "historical",
           false
         ],
         [
           "2026-07-01",
-          -0.0,
+          -0.01,
           "historical",
           false
         ],
         [
           "2026-08-01",
-          1.6,
+          1.61,
           "historical",
           false
         ],
         [
           "2026-09-01",
-          5.7,
+          5.74,
           "historical",
           false
         ]
@@ -136645,6 +137806,222 @@
       },
       "observations": [
         [
+          "2022-12-01",
+          10.03,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          8.73,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          11.35,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          12.68,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          10.9,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          7.01,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          2.84,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          2.02,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          1.61,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          3.66,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          2.83,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          3.66,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          2.43,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          4.07,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          7.01,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          4.48,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          2.02,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          2.84,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          2.43,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          2.84,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          2.43,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          2.02,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          2.42,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          2.83,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          4.07,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          3.25,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          2.02,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          0.8,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          0.8,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          1.61,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          2.02,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          1.61,
+          "historical",
+          false
+        ],
+        [
           "2025-12-01",
           0.4,
           "historical",
@@ -136658,49 +138035,342 @@
         ],
         [
           "2026-02-01",
-          2.4,
+          2.42,
           "historical",
           false
         ],
         [
           "2026-03-01",
-          4.9,
+          4.91,
           "historical",
           false
         ],
         [
           "2026-04-01",
-          6.2,
+          6.16,
           "historical",
           false
         ],
         [
           "2026-05-01",
-          5.3,
+          5.32,
           "historical",
           false
         ],
         [
           "2026-06-01",
-          3.7,
+          3.65,
           "historical",
           false
         ],
         [
           "2026-07-01",
-          1.6,
+          1.61,
           "historical",
           false
         ],
         [
           "2026-08-01",
-          2.8,
+          2.84,
           "historical",
           false
         ],
         [
           "2026-09-01",
-          2.8,
+          2.84,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "PL",
+      "indicator_id": "cpi_services_3m_ann",
+      "metadata": {
+        "label": "Services CPI 3M Annualized Rate",
+        "label_en": "Services CPI 3M Annualized Rate",
+        "label_zh": "服务业通胀3个月年化率",
+        "unit": "% annualized",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2022-12-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          11.35,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          14.03,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          13.57,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          12.68,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          8.29,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          7.43,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          6.59,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          5.75,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          2.43,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          4.48,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          7.01,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          10.91,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          8.73,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          10.02,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          6.58,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          7.86,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          6.58,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          8.3,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          2.83,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          1.21,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          1.21,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          6.57,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          9.58,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          10.02,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          7.01,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          3.24,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          4.9,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          2.84,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          1.61,
+          "historical",
+          false
+        ],
+        [
+          "2025-12-01",
+          2.43,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          8.29,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          7.87,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          6.59,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          6.59,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          8.3,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          5.74,
           "historical",
           false
         ]
@@ -136722,20 +138392,236 @@
       },
       "observations": [
         [
+          "2022-12-01",
+          -4.52,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          -3.6,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          -2.76,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          3.88,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          -0.42,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          -3.25,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          -6.52,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          -9.9,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          -9.9,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          -9.29,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          -5.5,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          -3.06,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          -1.71,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          -0.11,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          -0.35,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          0.96,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          3.16,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          2.52,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          2.42,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          0.48,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          0.48,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          -0.65,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          -2.28,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          -1.17,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          -0.97,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          0.18,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          0.08,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          1.34,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          0.37,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          -1.18,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          -1.79,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          -1.69,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          -1.59,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          -1.29,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          -1.19,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          -0.17,
+          "historical",
+          false
+        ],
+        [
           "2025-12-01",
-          -1.0,
+          -0.99,
           "historical",
           false
         ],
         [
           "2026-01-01",
-          0.7,
+          0.74,
           "historical",
           false
         ],
         [
           "2026-02-01",
-          2.0,
+          1.98,
           "historical",
           false
         ],
@@ -136747,37 +138633,37 @@
         ],
         [
           "2026-04-01",
-          4.5,
+          4.47,
           "historical",
           false
         ],
         [
           "2026-05-01",
-          2.4,
+          2.43,
           "historical",
           false
         ],
         [
           "2026-06-01",
-          -2.2,
+          -2.21,
           "historical",
           false
         ],
         [
           "2026-07-01",
-          -3.1,
+          -3.11,
           "historical",
           false
         ],
         [
           "2026-08-01",
-          -1.9,
+          -1.89,
           "historical",
           false
         ],
         [
           "2026-09-01",
-          1.7,
+          1.74,
           "historical",
           false
         ]
@@ -139520,14 +141406,230 @@
       },
       "observations": [
         [
+          "2022-12-01",
+          0.74,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          35.98,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          33.31,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          34.92,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          3.65,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          1.61,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          1.61,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          4.07,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          3.66,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          -0.81,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          -2.38,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          -3.16,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          -1.59,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          5.27,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          6.97,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          9.57,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          5.74,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          3.65,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          1.6,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          1.2,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          2.42,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          1.6,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          -0.41,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          -0.8,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          -0.0,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          4.87,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          5.29,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          6.99,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          0.8,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          2.01,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          2.42,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          2.42,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          -1.6,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          -1.21,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          -2.39,
+          "historical",
+          false
+        ],
+        [
           "2025-12-01",
-          -0.4,
+          -0.41,
           "historical",
           false
         ],
         [
           "2026-01-01",
-          1.2,
+          1.19,
           "historical",
           false
         ],
@@ -139539,31 +141641,31 @@
         ],
         [
           "2026-03-01",
-          5.7,
+          5.73,
           "historical",
           false
         ],
         [
           "2026-04-01",
-          4.1,
+          4.07,
           "historical",
           false
         ],
         [
           "2026-05-01",
-          5.3,
+          5.32,
           "historical",
           false
         ],
         [
           "2026-06-01",
-          0.8,
+          0.79,
           "historical",
           false
         ],
         [
           "2026-07-01",
-          1.2,
+          1.19,
           "historical",
           false
         ],
@@ -139575,7 +141677,7 @@
         ],
         [
           "2026-09-01",
-          3.2,
+          3.24,
           "historical",
           false
         ]
@@ -139597,6 +141699,222 @@
       },
       "observations": [
         [
+          "2022-12-01",
+          8.29,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          11.32,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          14.46,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          14.46,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          8.29,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          7.01,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          6.58,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          1.99,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          -1.2,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          -1.6,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          1.21,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          4.89,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          7.43,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          5.75,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          3.66,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          2.02,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          5.31,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          5.31,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          2.4,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          -0.81,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          -1.2,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          1.21,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          2.42,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          4.9,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          4.07,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          2.84,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          3.66,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          5.74,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          0.77,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          -1.61,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          -3.17,
+          "historical",
+          false
+        ],
+        [
           "2025-12-01",
           0.8,
           "historical",
@@ -139604,55 +141922,348 @@
         ],
         [
           "2026-01-01",
-          2.8,
+          2.83,
           "historical",
           false
         ],
         [
           "2026-02-01",
-          5.7,
+          5.74,
           "historical",
           false
         ],
         [
           "2026-03-01",
-          6.2,
+          6.16,
           "historical",
           false
         ],
         [
           "2026-04-01",
-          4.1,
+          4.07,
           "historical",
           false
         ],
         [
           "2026-05-01",
-          2.4,
+          2.43,
           "historical",
           false
         ],
         [
           "2026-06-01",
-          2.8,
+          2.84,
           "historical",
           false
         ],
         [
           "2026-07-01",
-          5.7,
+          5.74,
           "historical",
           false
         ],
         [
           "2026-08-01",
-          6.2,
+          6.16,
           "historical",
           false
         ],
         [
           "2026-09-01",
-          2.0,
+          1.99,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "CZ",
+      "indicator_id": "cpi_services_3m_ann",
+      "metadata": {
+        "label": "Services CPI 3M Annualized Rate",
+        "label_en": "Services CPI 3M Annualized Rate",
+        "label_zh": "服务业通胀3个月年化率",
+        "unit": "% annualized",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2022-12-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          16.24,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          19.51,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          19.51,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          4.91,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          13.54,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          14.45,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          5.64,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          -2.4,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          -3.94,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          2.02,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          9.13,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          13.56,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          15.38,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          7.86,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          4.9,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          3.25,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          11.75,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          12.64,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          5.2,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          -1.63,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          -3.57,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          2.02,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          4.48,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          8.72,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          9.15,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          5.74,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          3.66,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          11.76,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          11.76,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          3.54,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          -3.2,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          -5.11,
+          "historical",
+          false
+        ],
+        [
+          "2025-12-01",
+          1.21,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          5.72,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          8.28,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          8.72,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          3.25,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          3.66,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          10.0,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          10.44,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          3.56,
           "historical",
           false
         ]
@@ -139674,14 +142285,230 @@
       },
       "observations": [
         [
+          "2022-12-01",
+          -15.96,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          16.88,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          14.91,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          18.42,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          -10.55,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          -10.89,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          -9.49,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          -6.13,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          -6.44,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          -9.01,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          -11.88,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          -11.16,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          -9.19,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          2.57,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          4.67,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          7.37,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          2.64,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          0.85,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          -0.6,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          -1.3,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          0.02,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          -1.2,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          -3.41,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          -3.9,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          -3.3,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          1.97,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          2.59,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          4.39,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          -0.9,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          -0.29,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          -0.28,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          1.99,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          0.12,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          -3.6,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          -3.51,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          -4.19,
+          "historical",
+          false
+        ],
+        [
           "2025-12-01",
-          -2.1,
+          -2.11,
           "historical",
           false
         ],
         [
           "2026-01-01",
-          0.0,
+          -0.01,
           "historical",
           false
         ],
@@ -139693,31 +142520,31 @@
         ],
         [
           "2026-03-01",
-          4.2,
+          4.23,
           "historical",
           false
         ],
         [
           "2026-04-01",
-          2.0,
+          1.97,
           "historical",
           false
         ],
         [
           "2026-05-01",
-          3.5,
+          3.52,
           "historical",
           false
         ],
         [
           "2026-06-01",
-          -0.3,
+          -0.31,
           "historical",
           false
         ],
         [
           "2026-07-01",
-          -0.1,
+          -0.11,
           "historical",
           false
         ],
@@ -139729,7 +142556,7 @@
         ],
         [
           "2026-09-01",
-          1.0,
+          1.04,
           "historical",
           false
         ]
@@ -142466,20 +145293,236 @@
       },
       "observations": [
         [
+          "2022-12-01",
+          11.33,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          8.72,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          7.86,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          10.91,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          10.91,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          8.73,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          4.91,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          2.83,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          4.89,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          8.72,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          9.59,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          6.59,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          3.25,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          2.02,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          2.83,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          4.07,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          5.74,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          5.74,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          7.87,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          8.3,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          9.15,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          16.27,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          16.74,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          13.09,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          6.17,
+          "historical",
+          false
+        ],
+        [
           "2025-12-01",
-          4.9,
+          4.91,
           "historical",
           false
         ],
         [
           "2026-01-01",
-          6.2,
+          6.16,
           "historical",
           false
         ],
         [
           "2026-02-01",
-          6.6,
+          6.59,
           "historical",
           false
         ],
@@ -142491,7 +145534,7 @@
         ],
         [
           "2026-04-01",
-          9.2,
+          9.16,
           "historical",
           false
         ],
@@ -142503,25 +145546,25 @@
         ],
         [
           "2026-06-01",
-          5.3,
+          5.32,
           "historical",
           false
         ],
         [
           "2026-07-01",
-          4.1,
+          4.07,
           "historical",
           false
         ],
         [
           "2026-08-01",
-          2.4,
+          2.42,
           "historical",
           false
         ],
         [
           "2026-09-01",
-          6.2,
+          6.16,
           "historical",
           false
         ]
@@ -142543,32 +145586,248 @@
       },
       "observations": [
         [
+          "2022-12-01",
+          12.23,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          11.79,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          10.03,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          7.43,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          6.59,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          9.6,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          16.72,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          17.64,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          18.58,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          7.01,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          7.01,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          6.59,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          6.17,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          4.91,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          4.91,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          5.75,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          6.59,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          6.59,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          5.74,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          5.74,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          6.17,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          4.91,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          5.33,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          4.49,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          4.91,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          12.63,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          15.35,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          16.27,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
           "2025-12-01",
-          7.0,
+          7.02,
           "historical",
           false
         ],
         [
           "2026-01-01",
-          6.6,
+          6.59,
           "historical",
           false
         ],
         [
           "2026-02-01",
-          5.3,
+          5.32,
           "historical",
           false
         ],
         [
           "2026-03-01",
-          5.7,
+          5.75,
           "historical",
           false
         ],
         [
           "2026-04-01",
-          7.4,
+          7.44,
           "historical",
           false
         ],
@@ -142580,25 +145839,318 @@
         ],
         [
           "2026-06-01",
-          8.7,
+          8.73,
           "historical",
           false
         ],
         [
           "2026-07-01",
-          6.6,
+          6.59,
           "historical",
           false
         ],
         [
           "2026-08-01",
-          4.9,
+          4.91,
           "historical",
           false
         ],
         [
           "2026-09-01",
-          6.6,
+          6.59,
+          "historical",
+          false
+        ]
+      ]
+    },
+    {
+      "country": "RO",
+      "indicator_id": "cpi_services_3m_ann",
+      "metadata": {
+        "label": "Services CPI 3M Annualized Rate",
+        "label_en": "Services CPI 3M Annualized Rate",
+        "label_zh": "服务业通胀3个月年化率",
+        "unit": "% annualized",
+        "section": "prices_wages",
+        "source": "Eurostat prc_hicp_minr",
+        "quality_status": "verified",
+        "quality_note": "Primary Eurostat series with exact mathematical accounting",
+        "frequency": "monthly"
+      },
+      "observations": [
+        [
+          "2022-12-01",
+          11.79,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          13.13,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          10.03,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          11.35,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          9.6,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          11.35,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          10.03,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          10.47,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          8.73,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          10.9,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          10.03,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          9.59,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          7.02,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          8.72,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          6.17,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          6.59,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          5.74,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          8.3,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          7.01,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          4.91,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          5.32,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          7.02,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          7.02,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          7.87,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          6.17,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          7.01,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          16.23,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          20.94,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          21.9,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          12.68,
+          "historical",
+          false
+        ],
+        [
+          "2025-12-01",
+          8.73,
+          "historical",
+          false
+        ],
+        [
+          "2026-01-01",
+          7.02,
+          "historical",
+          false
+        ],
+        [
+          "2026-02-01",
+          4.91,
+          "historical",
+          false
+        ],
+        [
+          "2026-03-01",
+          6.16,
+          "historical",
+          false
+        ],
+        [
+          "2026-04-01",
+          10.02,
+          "historical",
+          false
+        ],
+        [
+          "2026-05-01",
+          13.57,
+          "historical",
+          false
+        ],
+        [
+          "2026-06-01",
+          12.22,
+          "historical",
+          false
+        ],
+        [
+          "2026-07-01",
+          9.16,
+          "historical",
+          false
+        ],
+        [
+          "2026-08-01",
+          7.44,
+          "historical",
+          false
+        ],
+        [
+          "2026-09-01",
+          9.6,
           "historical",
           false
         ]
@@ -142620,20 +146172,236 @@
       },
       "observations": [
         [
+          "2022-12-01",
+          -2.77,
+          "historical",
+          false
+        ],
+        [
+          "2023-01-01",
+          -4.68,
+          "historical",
+          false
+        ],
+        [
+          "2023-02-01",
+          -5.54,
+          "historical",
+          false
+        ],
+        [
+          "2023-03-01",
+          -1.19,
+          "historical",
+          false
+        ],
+        [
+          "2023-04-01",
+          0.51,
+          "historical",
+          false
+        ],
+        [
+          "2023-05-01",
+          -0.87,
+          "historical",
+          false
+        ],
+        [
+          "2023-06-01",
+          -1.86,
+          "historical",
+          false
+        ],
+        [
+          "2023-07-01",
+          -3.99,
+          "historical",
+          false
+        ],
+        [
+          "2023-08-01",
+          -3.14,
+          "historical",
+          false
+        ],
+        [
+          "2023-09-01",
+          -1.76,
+          "historical",
+          false
+        ],
+        [
+          "2023-10-01",
+          0.86,
+          "historical",
+          false
+        ],
+        [
+          "2023-11-01",
+          -1.58,
+          "historical",
+          false
+        ],
+        [
+          "2023-12-01",
+          -4.17,
+          "historical",
+          false
+        ],
+        [
+          "2024-01-01",
+          -2.41,
+          "historical",
+          false
+        ],
+        [
+          "2024-02-01",
+          1.62,
+          "historical",
+          false
+        ],
+        [
+          "2024-03-01",
+          2.89,
+          "historical",
+          false
+        ],
+        [
+          "2024-04-01",
+          0.39,
+          "historical",
+          false
+        ],
+        [
+          "2024-05-01",
+          -2.55,
+          "historical",
+          false
+        ],
+        [
+          "2024-06-01",
+          -3.28,
+          "historical",
+          false
+        ],
+        [
+          "2024-07-01",
+          -2.97,
+          "historical",
+          false
+        ],
+        [
+          "2024-08-01",
+          -1.23,
+          "historical",
+          false
+        ],
+        [
+          "2024-09-01",
+          0.52,
+          "historical",
+          false
+        ],
+        [
+          "2024-10-01",
+          0.74,
+          "historical",
+          false
+        ],
+        [
+          "2024-11-01",
+          0.34,
+          "historical",
+          false
+        ],
+        [
+          "2024-12-01",
+          -0.18,
+          "historical",
+          false
+        ],
+        [
+          "2025-01-01",
+          0.86,
+          "historical",
+          false
+        ],
+        [
+          "2025-02-01",
+          2.67,
+          "historical",
+          false
+        ],
+        [
+          "2025-03-01",
+          3.2,
+          "historical",
+          false
+        ],
+        [
+          "2025-04-01",
+          0.42,
+          "historical",
+          false
+        ],
+        [
+          "2025-05-01",
+          -0.91,
+          "historical",
+          false
+        ],
+        [
+          "2025-06-01",
+          -1.31,
+          "historical",
+          false
+        ],
+        [
+          "2025-07-01",
+          2.55,
+          "historical",
+          false
+        ],
+        [
+          "2025-08-01",
+          7.77,
+          "historical",
+          false
+        ],
+        [
+          "2025-09-01",
+          8.14,
+          "historical",
+          false
+        ],
+        [
+          "2025-10-01",
+          4.69,
+          "historical",
+          false
+        ],
+        [
+          "2025-11-01",
+          -2.43,
+          "historical",
+          false
+        ],
+        [
           "2025-12-01",
-          -3.7,
+          -3.69,
           "historical",
           false
         ],
         [
           "2026-01-01",
-          -2.3,
+          -2.34,
           "historical",
           false
         ],
         [
           "2026-02-01",
-          -1.7,
+          -1.71,
           "historical",
           false
         ],
@@ -142645,7 +146413,7 @@
         ],
         [
           "2026-04-01",
-          -0.3,
+          -0.34,
           "historical",
           false
         ],
@@ -142657,25 +146425,25 @@
         ],
         [
           "2026-06-01",
-          -3.9,
+          -3.88,
           "historical",
           false
         ],
         [
           "2026-07-01",
-          -4.1,
+          -4.13,
           "historical",
           false
         ],
         [
           "2026-08-01",
-          -3.9,
+          -3.88,
           "historical",
           false
         ],
         [
           "2026-09-01",
-          -0.3,
+          -0.34,
           "historical",
           false
         ]

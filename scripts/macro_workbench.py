@@ -147,7 +147,7 @@ DATA_FIRST_SIGNAL_MAP = {
     "HK": {
         "growth": ("real_gdp_yoy", "Real GDP"),
         "inflation": ("cpi_inflation", "Composite CPI"),
-        "policy": ("policy_rate", "Base rate"),
+        "policy": ("fed_funds_anchor", "Base rate (Fed anchor)"),
         "external": ("merchandise_trade_balance", "Trade balance"),
         "fiscal": ("government_debt_gdp", "Government debt/GDP"),
         "financial": ("usd_hkd", "USD/HKD"),

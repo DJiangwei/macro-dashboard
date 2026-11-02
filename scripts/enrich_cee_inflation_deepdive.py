@@ -22,6 +22,7 @@ Outputs to:
 import json
 import logging
 import os
+import sys
 import urllib.request
 import urllib.parse
 from pathlib import Path
@@ -33,7 +34,15 @@ logger = logging.getLogger("cee_inflation_deepdive")
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "output"
 
-COUNTRIES = ["HU", "PL", "CZ", "RO"]
+COUNTRIES = ["HU", "PL", "CZ", "RO", "EA"]
+
+EUROSTAT_GEO_MAP = {
+    "HU": "HU",
+    "PL": "PL",
+    "CZ": "CZ",
+    "RO": "RO",
+    "EA": "EA20",
+}
 
 # COICOP 12 Divisions + Sub-items mapping
 COICOP_MAIN = [
@@ -100,6 +109,7 @@ PPI_MIG_WEIGHTS = {
     "PL": {"MIG_ING": 36.5, "MIG_CAG": 9.5, "MIG_DCOG": 5.5, "MIG_NDCOG": 24.5, "MIG_NRG": 24.0},
     "CZ": {"MIG_ING": 32.1, "MIG_CAG": 21.4, "MIG_DCOG": 2.5, "MIG_NDCOG": 15.0, "MIG_NRG": 29.0},
     "RO": {"MIG_ING": 31.6, "MIG_CAG": 8.6, "MIG_DCOG": 2.5, "MIG_NDCOG": 17.5, "MIG_NRG": 39.8},
+    "EA": {"MIG_ING": 34.0, "MIG_CAG": 20.0, "MIG_DCOG": 4.0, "MIG_NDCOG": 26.0, "MIG_NRG": 16.0},
 }
 
 
@@ -136,6 +146,8 @@ def parse_jsonstat_grid(d: dict):
     }
 
     def get_val(coords: dict):
+        if coords.get("geo") == "EA":
+            coords = dict(coords, geo="EA20")
         mult = 1
         flat_idx = 0
         for i, dn in reversed(list(enumerate(dims))):
@@ -480,7 +492,8 @@ def sync_canonical_from_deepdive(payload: dict):
 
     new_series_count = 0
     updated_count = 0
-    for geo in COUNTRIES:
+    cee_countries = [c for c in COUNTRIES if c != "EA"]
+    for geo in cee_countries:
         ts_dict = payload.get("countries", {}).get(geo, {}).get("time_series", {})
         series_meta = [
             ("cpi_contrib_food_yoy", "Food CPI Contribution (YoY)", "食品通胀贡献(同比)", "percentage points", "prices_wages", "Eurostat prc_hicp_minr / prc_hicp_iw"),
@@ -562,8 +575,10 @@ def main():
         for _, _, _, subs in COICOP_MAIN:
             all_coicop_codes.extend([s for s, _ in subs])
 
+        eurostat_geos = [EUROSTAT_GEO_MAP.get(c, c) for c in COUNTRIES]
+
         weights_raw = fetch_eurostat_json("prc_hicp_iw", {
-            "geo": COUNTRIES,
+            "geo": eurostat_geos,
             "coicop18": all_coicop_codes,
             "lastTimePeriod": 10,
         })
@@ -573,9 +588,10 @@ def main():
 
         weights_map = {}
         for geo in COUNTRIES:
+            es_geo = EUROSTAT_GEO_MAP.get(geo, geo)
             for yr in w_years:
                 for code in all_coicop_codes:
-                    val = get_weight({"geo": geo, "time": yr, "coicop18": code})
+                    val = get_weight({"geo": es_geo, "time": yr, "coicop18": code})
                     if val is not None:
                         # Eurostat weights in permille -> convert to percent
                         weights_map[(geo, yr, code)] = val / 10.0
@@ -584,7 +600,7 @@ def main():
         logger.info("Fetching Eurostat HICP Rates (prc_hicp_minr)...")
         cpi_codes_with_total = all_coicop_codes + ["TOTAL", "FOOD", "IGD_NNRG", "NRG", "SERV"]
         cpi_raw = fetch_eurostat_json("prc_hicp_minr", {
-            "geo": COUNTRIES,
+            "geo": eurostat_geos,
             "coicop18": cpi_codes_with_total,
             "unit": ["RCH_A", "RCH_M"],
             "lastTimePeriod": 48,
@@ -597,7 +613,7 @@ def main():
         logger.info("Fetching Eurostat Domestic PPI Rates (sts_inppd_m)...")
         ppi_codes = ["B-E36", "MIG_ING", "MIG_CAG", "MIG_DCOG", "MIG_NDCOG", "MIG_NRG", "B_C_X_MIG_NRG", "C10", "C20", "C24", "C29"]
         ppi_raw = fetch_eurostat_json("sts_inppd_m", {
-            "geo": COUNTRIES,
+            "geo": eurostat_geos,
             "nace_r2": ppi_codes,
             "unit": ["PCH_SM", "PCH_PRE"],
             "indic_bt": "PRC_PRR_DOM",
@@ -611,7 +627,7 @@ def main():
         # 4. Fetch Business Surveys & Expectations
         logger.info("Fetching Eurostat Expectations & Survey datasets...")
         bs_ind_raw = fetch_eurostat_json("ei_bsin_m_r2", {
-            "geo": COUNTRIES,
+            "geo": eurostat_geos,
             "indic": "BS-ISPE",
             "s_adj": "SA",
             "unit": "BAL",
@@ -620,7 +636,7 @@ def main():
         get_bs_ind, _ = parse_jsonstat_grid(bs_ind_raw)
 
         bs_serv_raw = fetch_eurostat_json("ei_bsse_m_r2", {
-            "geo": COUNTRIES,
+            "geo": eurostat_geos,
             "indic": "BS-PE3M",
             "s_adj": "SA",
             "unit": "BAL",
@@ -629,7 +645,7 @@ def main():
         get_bs_serv, _ = parse_jsonstat_grid(bs_serv_raw)
 
         bs_ret_raw = fetch_eurostat_json("ei_bsrt_m_r2", {
-            "geo": COUNTRIES,
+            "geo": eurostat_geos,
             "indic": "BS-RPE",
             "s_adj": "SA",
             "unit": "BAL",
@@ -638,7 +654,7 @@ def main():
         get_bs_ret, _ = parse_jsonstat_grid(bs_ret_raw)
 
         bs_cons_raw = fetch_eurostat_json("ei_bsco_m", {
-            "geo": COUNTRIES,
+            "geo": eurostat_geos,
             "indic": "BS-MP-NY",
             "s_adj": "SA",
             "unit": "BAL",
@@ -647,7 +663,7 @@ def main():
         get_bs_cons, _ = parse_jsonstat_grid(bs_cons_raw)
 
         bs_cu_raw = fetch_eurostat_json("ei_bsin_q_r2", {
-            "geo": COUNTRIES,
+            "geo": eurostat_geos,
             "indic": "BS-ICU-PC",
             "s_adj": "SA",
             "lastTimePeriod": 20,
@@ -658,9 +674,10 @@ def main():
         # Map quarterly CU to monthly (forward fill)
         cu_monthly = {}
         for geo in COUNTRIES:
+            es_geo = EUROSTAT_GEO_MAP.get(geo, geo)
             last_val = None
             for q in cu_times:
-                val = get_bs_cu({"geo": geo, "indic": "BS-ICU-PC", "s_adj": "SA", "time": q})
+                val = get_bs_cu({"geo": es_geo, "indic": "BS-ICU-PC", "s_adj": "SA", "time": q})
                 if val is not None:
                     last_val = val
                 yr, qtr = q.split("-")

@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-11-01T14:30:08.276294+00:00
+Generated: 2026-11-02T20:44:23.014993+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -20,34 +20,34 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 12 | `labour_household` | `vacancies` Labour Demand / Vacancies | L | L | L | L | - | L | V | - | V | W | - | - | - | - | - | - | - | - |
 | 13 | `labour_household` | `wage_growth` Wage Growth | V | V | V | V | - | L | L | - | V | V | - | W | - | - | - | - | - | - |
 | 14 | `labour_household` | `real_income_growth` Real Household Income Growth | V | V | V | V | - | - | - | - | V | V | - | - | - | - | - | - | - | - |
-| 15 | `prices_costs` | `headline_inflation` Headline Inflation | V | V | V | V | V | L | V | W | V | V | W | V | W | V | W | W | W | L |
+| 15 | `prices_costs` | `headline_inflation` Headline Inflation | V | V | V | V | V | L | V | V | V | V | W | V | W | V | W | W | W | L |
 | 16 | `prices_costs` | `core_inflation` Core Inflation | V | V | V | V | V | L | V | - | V | V | L | V | V | V | - | - | - | - |
 | 17 | `prices_costs` | `services_inflation` Services Inflation | V | V | V | V | - | L | V | - | V | V | L | - | - | - | - | - | - | - |
 | 18 | `prices_costs` | `goods_inflation` Goods Inflation | V | V | V | V | - | L | V | - | V | V | - | - | - | - | - | - | - | - |
-| 19 | `prices_costs` | `producer_price_inflation` Producer Price Inflation | V | V | V | V | V | V | V | W | V | V | V | - | V | V | - | - | - | - |
+| 19 | `prices_costs` | `producer_price_inflation` Producer Price Inflation | V | V | V | V | V | V | V | V | V | V | V | - | V | V | - | - | - | - |
 | 20 | `prices_costs` | `wage_cost_inflation` Labour Cost Inflation | V | V | V | V | - | V | - | - | V | W | - | - | - | - | - | - | - | - |
 | 21 | `prices_costs` | `inflation_expectations` Inflation Expectations | V | V | V | V | - | V | - | - | - | V | - | - | - | - | - | - | - | - |
 | 22 | `housing_investment` | `house_price_growth` House Price Growth | V | V | V | V | V | V | L | L | L | W | L | L | L | - | - | - | - | - |
 | 23 | `housing_investment` | `housing_activity` Housing Activity | - | - | - | - | V | L | L | - | W | V | - | - | - | - | - | - | - | - |
 | 24 | `housing_investment` | `construction_activity` Construction Activity | V | V | V | V | V | V | - | - | L | V | V | W | - | V | - | - | - | - |
-| 25 | `housing_investment` | `mortgage_rate` Mortgage Rate | W | W | W | W | - | W | - | - | V | W | - | - | - | - | - | - | - | - |
+| 25 | `housing_investment` | `mortgage_rate` Mortgage Rate | V | V | V | V | - | V | - | - | V | W | - | - | - | - | - | - | - | - |
 | 26 | `housing_investment` | `property_inventory` Property Inventory / Supply | - | - | - | - | - | - | - | - | - | V | - | - | - | - | - | - | - | - |
 | 27 | `external_fx` | `current_account_gdp` Current Account, % GDP | W | W | W | W | W | L | L | L | V | W | W | W | W | W | W | W | W | W |
 | 28 | `external_fx` | `trade_balance` Trade Balance | W | W | W | W | V | V | W | W | V | W | W | V | W | W | W | W | L | W |
 | 29 | `external_fx` | `exports_growth` Exports Growth | - | - | - | - | V | V | W | W | V | W | V | V | W | W | - | - | - | - |
 | 30 | `external_fx` | `imports_growth` Imports Growth | - | - | - | - | V | V | W | W | V | W | V | V | W | W | - | - | - | - |
-| 31 | `external_fx` | `fx_spot` Spot Exchange Rate | V | V | V | V | V | V | W | W | V | V | V | W | W | W | V | L | L | V |
+| 31 | `external_fx` | `fx_spot` Spot Exchange Rate | V | V | V | V | V | V | W | V | V | V | V | W | W | W | V | L | L | V |
 | 32 | `external_fx` | `reer` Real Effective Exchange Rate | W | W | W | W | V | V | L | L | L | V | W | W | W | W | W | W | W | W |
 | 33 | `fiscal_sovereign` | `fiscal_balance_gdp` Fiscal Balance, % GDP | W | W | W | W | V | V | W | W | W | V | W | W | W | W | W | W | W | W |
 | 34 | `fiscal_sovereign` | `primary_balance_gdp` Primary Balance, % GDP | W | W | W | W | - | W | W | W | - | - | W | - | W | - | W | W | W | W |
 | 35 | `fiscal_sovereign` | `government_debt_gdp` Government Debt, % GDP | W | W | W | W | V | V | W | W | W | V | W | W | W | W | W | W | W | W |
 | 36 | `fiscal_sovereign` | `government_interest_cost` Government Interest Cost | W | W | W | W | - | - | - | - | W | V | - | - | - | - | - | - | - | - |
-| 37 | `fiscal_sovereign` | `sovereign_yield_10y` 10Y Sovereign Yield | V | V | V | V | V | V | W | W | V | V | V | V | W | W | - | - | - | - |
-| 38 | `monetary_financial` | `policy_rate` Policy Rate | V | V | V | V | V | V | W | W | V | V | V | W | V | V | V | L | L | V |
+| 37 | `fiscal_sovereign` | `sovereign_yield_10y` 10Y Sovereign Yield | V | V | V | V | V | V | W | V | V | V | V | V | W | W | - | - | - | - |
+| 38 | `monetary_financial` | `policy_rate` Policy Rate | V | V | V | V | V | V | W | V | V | V | V | W | V | V | V | L | L | V |
 | 39 | `monetary_financial` | `real_policy_rate` Real Policy Rate | V | V | V | V | V | V | V | V | V | V | V | V | V | V | V | V | V | V |
 | 40 | `monetary_financial` | `broad_money_growth` Broad Money Growth | W | W | W | W | V | V | L | L | V | V | - | - | W | V | W | W | W | W |
 | 41 | `monetary_financial` | `private_credit_growth` Private Credit Growth | W | W | W | W | V | V | L | L | V | V | L | L | L | V | W | W | W | L |
-| 42 | `monetary_financial` | `bank_lending_rate` Bank Lending Rate | W | W | W | W | V | W | - | W | - | - | V | - | - | V | - | L | L | L |
+| 42 | `monetary_financial` | `bank_lending_rate` Bank Lending Rate | V | V | V | W | V | V | - | V | - | - | V | - | - | V | - | L | L | L |
 | 43 | `monetary_financial` | `equity_return` Equity Market Return | W | W | W | W | V | V | W | - | W | V | V | - | V | W | - | - | - | - |
 | 44 | `monetary_financial` | `yield_curve_slope` Yield Curve Slope | L | L | L | L | V | V | W | - | V | V | - | - | V | V | - | - | - | - |
 | 45 | `monetary_financial` | `financial_conditions` Financial Conditions | - | - | - | - | - | V | - | - | - | V | - | - | - | - | - | - | - | - |
@@ -59,14 +59,14 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 
 | Country | Covered | Verified | Watch | Low | Substitute | Missing |
 |---|---:|---:|---:|---:|---:|---:|
-| HU | 41/48 | 22 | 16 | 3 | 0 | 7 |
-| PL | 41/48 | 22 | 16 | 3 | 0 | 7 |
-| CZ | 41/48 | 22 | 16 | 3 | 0 | 7 |
-| RO | 41/48 | 22 | 16 | 3 | 0 | 7 |
+| HU | 41/48 | 24 | 14 | 3 | 0 | 7 |
+| PL | 41/48 | 24 | 14 | 3 | 0 | 7 |
+| CZ | 41/48 | 24 | 14 | 3 | 0 | 7 |
+| RO | 41/48 | 23 | 15 | 3 | 0 | 7 |
 | CN | 31/48 | 28 | 3 | 0 | 0 | 17 |
-| EA | 44/48 | 30 | 5 | 9 | 0 | 4 |
+| EA | 44/48 | 32 | 3 | 9 | 0 | 4 |
 | JP | 38/48 | 8 | 19 | 11 | 0 | 10 |
-| ZA | 29/48 | 1 | 15 | 12 | 1 | 19 |
+| ZA | 29/48 | 7 | 9 | 12 | 1 | 19 |
 | UK | 40/48 | 28 | 7 | 5 | 0 | 8 |
 | US | 43/48 | 35 | 8 | 0 | 0 | 5 |
 | TR | 32/48 | 17 | 9 | 6 | 0 | 16 |

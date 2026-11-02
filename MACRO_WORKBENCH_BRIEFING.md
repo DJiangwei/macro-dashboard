@@ -1,6 +1,6 @@
 # Global Macro Workbench Intelligence Briefing
 
-**Generated**: 2026-11-01 | **Coverage**: 14 Economies (US, EA, UK, JP, CN, ZA, TR, HK, KR, TW, PL, CZ, HU, RO)
+**Generated**: 2026-11-02 | **Coverage**: 14 Economies (US, EA, UK, JP, CN, ZA, TR, HK, KR, TW, PL, CZ, HU, RO)
 
 ---
 
@@ -8,19 +8,19 @@
 
 | Country | Cyclical | Structural | Composite | Growth Assessment | Inflation Assessment | Policy Stance | Data Quality |
 | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :---: |
-| **Hungary (HU)** | 58.8 | 38.3 | **defensive** | moderate expansion | near-target inflation | restrictive stance | 53.3 (needs data review) |
-| **Poland (PL)** | 61.2 | 45.0 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 60.0 (usable with watch-list) |
-| **Czechia (CZ)** | 65.0 | 58.3 | **mixed** | moderate expansion | near-target inflation | neutral-moderate stance | 50.3 (needs data review) |
-| **Romania (RO)** | 30.0 | 46.7 | **defensive** | contraction | inflation pressure | restrictive stance | 50.0 (needs data review) |
+| **Hungary (HU)** | 58.8 | 38.3 | **defensive** | moderate expansion | near-target inflation | restrictive stance | 54.3 (needs data review) |
+| **Poland (PL)** | 61.2 | 45.0 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 61.0 (usable with watch-list) |
+| **Czechia (CZ)** | 65.0 | 58.3 | **mixed** | moderate expansion | near-target inflation | neutral-moderate stance | 51.3 (needs data review) |
+| **Romania (RO)** | 30.0 | 46.7 | **defensive** | contraction | inflation pressure | restrictive stance | 50.7 (needs data review) |
 | **China (CN)** | 63.8 | 46.7 | **mixed** | above-trend expansion | disinflation risk | neutral-moderate stance | 41.6 (needs data review) |
-| **Euro Area (EA)** | 60.0 | 61.7 | **mixed** | stall-speed growth | near-target inflation | neutral-moderate stance | 55.5 (needs data review) |
+| **Euro Area (EA)** | 60.0 | 61.7 | **mixed** | stall-speed growth | near-target inflation | neutral-moderate stance | 57.4 (needs data review) |
 | **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 42.5 (needs data review) |
 | **South Africa (ZA)** | 50.0 | 53.3 | **mixed** | moderate expansion | inflation pressure | restrictive stance | 38.1 (needs data review) |
 | **United Kingdom (UK)** | 52.9 | 53.3 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 49.2 (needs data review) |
-| **United States (US)** | 55.0 | 43.3 | **defensive** | above-trend expansion | above-target inflation | neutral-moderate stance | 74.8 (usable with watch-list) |
+| **United States (US)** | 55.0 | 43.3 | **defensive** | above-trend expansion | above-target inflation | neutral-moderate stance | 75.2 (usable with watch-list) |
 | **Turkey (TR)** | 46.2 | 51.7 | **defensive** | moderate expansion | inflation pressure | restrictive stance | 63.8 (usable with watch-list) |
-| **Hong Kong (HK)** | 63.3 | 55.0 | **mixed** | above-trend expansion | near-target inflation | insufficient data | 64.2 (usable with watch-list) |
-| **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 59.4 (needs data review) |
+| **Hong Kong (HK)** | 62.5 | 55.0 | **mixed** | above-trend expansion | near-target inflation | neutral-moderate stance | 64.2 (usable with watch-list) |
+| **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 60.1 (usable with watch-list) |
 | **Taiwan (TW)** | 75.0 | 71.7 | **constructive** | above-trend expansion | near-target inflation | accommodative stance | 80.1 (high-confidence dashboard) |
 | **Kazakhstan (KZ)** | 43.8 | 55.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 75.0 (usable with watch-list) |
 | **Uzbekistan (UZ)** | 53.8 | 51.7 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 64.0 (usable with watch-list) |
@@ -46,6 +46,7 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | **UK** (Bank of England) | **3.75%** | 3.50% (2.0%) | 1.25% | **4.95%** (4.45% ~ 5.45%) | **-1.20%** | *moderately accommodative* |
 | **US** (Federal Reserve) | **3.88%** | 3.12% (2.0%) | 1.00% | **5.38%** (4.88% ~ 5.88%) | **-1.50%** | *substantially accommodative* |
 | **TR** (TCMB) | **36.00%** | 29.73% (5.0%) | 3.00% | **44.65%** (44.15% ~ 45.15%) | **-8.65%** | *substantially accommodative* |
+| **HK** (HKMA) | **3.75%** | 2.30% (2.0%) | 1.00% | **4.35%** (3.85% ~ 4.85%) | **-0.60%** | *moderately accommodative* |
 | **KR** (BOK) | **3.00%** | 2.88% (2.0%) | 1.00% | **5.09%** (4.59% ~ 5.59%) | **-2.09%** | *substantially accommodative* |
 | **TW** (CBC) | **2.00%** | 2.73% (2.0%) | 1.00% | **5.60%** (5.10% ~ 6.10%) | **-3.60%** | *substantially accommodative* |
 | **KZ** (NBK) | **14.25%** | 9.24% (5.0%) | 2.50% | **15.11%** (14.61% ~ 15.61%) | **-0.86%** | *moderately accommodative* |
@@ -61,10 +62,10 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | :--- | :--- | :---: | :---: | :---: | :--- |
 | **US** | 10Y Treasury | **4.98%** | 2026-10-29 | **0.0 bps** | Official Observed |
 | **EA** | 10Y Bund | **3.47%** | 2026-09-01 | **-151.0 bps** | Official Observed |
-| **UK** | 10Y Gilt | **5.31%** | 2026-10-28 | **+33.0 bps** | Official Observed |
+| **UK** | 10Y Gilt | **5.26%** | 2026-10-29 | **+28.0 bps** | Official Observed |
 | **JP** | 10Y JGB | **3.05%** | 2026-09-01 | **-193.0 bps** | Official Observed |
 | **CN** | CN 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
-| **ZA** | 10Y Sovereign | **8.00%** | 2026-10-29 | **+302.0 bps** | Official Observed |
+| **ZA** | 10Y Sovereign | **8.01%** | 2026-10-30 | **+303.0 bps** | Official Observed |
 | **TR** | TR 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **HK** | HK 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **KR** | 10Y KTB | **4.45%** | 2026-09-01 | **-53.0 bps** | Official Observed |
@@ -134,12 +135,12 @@ US Net Liquidity Metric is calculated as $\text{Fed Total Assets} - \text{Treasu
 
 | Institution | Country | Indicator & Plumbing Signal | Frequency | Latest Date | Reading | Context / Operational Stance |
 | :--- | :---: | :--- | :---: | :---: | :---: | :--- |
-| **Federal Reserve (Fed)** | `US` | US Net Liquidity (Assets − TGA − RRP) | Weekly | 2026-10-28 | **$5,741.5B** | Ample reserve buffer ($5.74T net liquidity) |
+| **Federal Reserve (Fed)** | `US` | US Net Liquidity (Assets − TGA − RRP) | Weekly | 2026-10-28 | **$5,740.8B** | Ample reserve buffer ($5.74T net liquidity) |
 | **Federal Reserve (Fed)** | `US` | Fed Total Assets (Balance Sheet Level) | Weekly | 2026-10-28 | **$6,745.6B** | Down from $8.96T peak (-$2,219B runoff) |
 | **Federal Reserve (Fed)** | `US` | Fed Treasury Securities Holdings Outright | Weekly | 2026-10-28 | **$4,576.6B** | Primary asset backing commercial banking reserves |
 | **Federal Reserve (Fed)** | `US` | Fed Mortgage-Backed Securities (MBS) | Weekly | 2026-10-28 | **$1,883.5B** | Passive redemption dependent on prepayment speeds |
 | **Federal Reserve (Fed)** | `US` | Treasury General Account (TGA) at Fed | Weekly | 2026-10-28 | **$999.7B** | High TGA drains cash out of private banking system |
-| **Federal Reserve (Fed)** | `US` | Overnight Reverse Repo Facility (ON RRP) | Daily | 2026-10-30 | **$4.38B** | Near-exhausted ($4.4B vs $2.55T peak); liquidity cushion spent |
+| **Federal Reserve (Fed)** | `US` | Overnight Reverse Repo Facility (ON RRP) | Daily | 2026-10-30 | **$5.09B** | Near-exhausted ($4.4B vs $2.55T peak); liquidity cushion spent |
 | **European Central Bank (ECB)** | `EA` | Eurosystem Total Assets (Consolidated) | Weekly | 2026-10-19 | **€5,935.0B** | Controlled quantitative tightening across Eurosystem |
 | **Bank of Japan (BoJ)** | `JP` | Bank of Japan Total Assets | Monthly | 2026-09-01 | **¥625.0T** | Transition away from Yield Curve Control (YCC) |
 | **People's Bank of China (PBC)** | `CN` | PBC Balance Sheet Total Assets | Monthly | 2026-09-01 | **¥49.86T** | Structural liquidity support & credit expansion |
@@ -165,7 +166,7 @@ Guidotti-Greenspan Rule: $\text{Short-Term External Debt} / \text{Total FX Reser
 | **Hungary** (`HU`) | Central & Eastern Europe | **74.2%** | Comfortable (<80%) | **+1.6%** | **$46.4B** | Current account returned to structural surplus; external debt refinancing needs covered by reserves |
 | **Romania** (`RO`) | Central & Eastern Europe | **88.3%** | Watch Zone (80-100%) | **-8.2%** | **$73.4B** | Twin deficit vulnerability (CA deficit -8.2% of GDP); heavy dependence on foreign capital inflows |
 | **China** (`CN`) | Asian EM Surplus Anchors | **<30%** | Net Creditor Fortress | **+3.8%** | **$3,400.3B** | World's largest FX reserve fortress ($3.4T); massive goods trade surplus reinforces external independence |
-| **South Korea** (`KR`) | Asian EM Surplus Anchors | **<30%** | Net Creditor Fortress | **+5.8%** | **$436.2B** | Deep tech export-driven current account surplus ($116B annualized); safe net creditor economy |
+| **South Korea** (`KR`) | Asian EM Surplus Anchors | **<30%** | Net Creditor Fortress | **+5.8%** | **$434.7B** | Deep tech export-driven current account surplus ($116B annualized); safe net creditor economy |
 | **Taiwan** (`TW`) | Asian EM Surplus Anchors | **<30%** | Net Creditor Fortress | **+19.8%** | **$600.7B** | Extreme current account surplus (+19.8% of GDP); massive net foreign asset position exceeds 100% of GDP |
 
 ---

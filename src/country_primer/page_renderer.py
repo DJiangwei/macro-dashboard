@@ -459,12 +459,62 @@ def _sections_html(config: dict[str, Any], series_list: list[dict[str, Any]], co
         empty = ""
         if not charts:
             empty = '<div class="empty-note"><span data-lang="en">Official chart series for this section are currently in development.</span><span data-lang="zh">本分析模块的官方指标序列正在标准化接入中。</span></div>'
+
+        deepdive_block = ""
+        if section_id in ("prices_wages", "prices_costs", "prices"):
+            cc_upper = (country_code or "").upper()
+            if cc_upper == "US":
+                try:
+                    import sys
+                    from pathlib import Path
+                    scripts_dir = str(Path(__file__).resolve().parent.parent.parent / "scripts")
+                    if scripts_dir not in sys.path:
+                        sys.path.insert(0, scripts_dir)
+                    from render_us_inflation_deepdive import render_us_deepdive_panel
+                    deepdive_block = render_us_deepdive_panel()
+                except Exception:
+                    pass
+            elif cc_upper in ("EA", "EURO_AREA", "EA20"):
+                try:
+                    import sys
+                    from pathlib import Path
+                    scripts_dir = str(Path(__file__).resolve().parent.parent.parent / "scripts")
+                    if scripts_dir not in sys.path:
+                        sys.path.insert(0, scripts_dir)
+                    from render_cee_inflation_deepdive import render_deepdive_panel
+                    deepdive_block = render_deepdive_panel("EA")
+                except Exception:
+                    pass
+            elif cc_upper in ("CN", "CHINA"):
+                try:
+                    import sys
+                    from pathlib import Path
+                    scripts_dir = str(Path(__file__).resolve().parent.parent.parent / "scripts")
+                    if scripts_dir not in sys.path:
+                        sys.path.insert(0, scripts_dir)
+                    from render_china_inflation_deepdive import render_china_deepdive_panel
+                    deepdive_block = render_china_deepdive_panel()
+                except Exception:
+                    pass
+            elif cc_upper in ("TR", "ZA", "KR", "TW", "UK", "JP", "HK", "EG", "NG", "KZ", "UZ"):
+                try:
+                    import sys
+                    from pathlib import Path
+                    scripts_dir = str(Path(__file__).resolve().parent.parent.parent / "scripts")
+                    if scripts_dir not in sys.path:
+                        sys.path.insert(0, scripts_dir)
+                    from render_em_inflation_deepdive import render_em_deepdive_panel
+                    deepdive_block = render_em_deepdive_panel(cc_upper)
+                except Exception:
+                    pass
+
         html_parts.append(f"""
 <section class="panel" id="{escape(section_id)}">
   <div class="section-title">
     <h2><span data-lang="en">{escape(section['title_en'])}</span><span data-lang="zh">{escape(section['title_zh'])}</span></h2>
     <div class="logic"><span data-lang="en">{escape(section['report_logic_en'])}</span><span data-lang="zh">{escape(section['report_logic_zh'])}</span></div>
   </div>
+  {deepdive_block}
   <div class="charts-grid">
     {charts}
     {empty}

@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-11-01T14:30:08.276294+00:00",
+  "generated": "2026-11-02T20:44:23.014993+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -32,29 +32,29 @@
   },
   "country_summary": {
     "HU": {
-      "verified": 22,
-      "watch": 16,
+      "verified": 24,
+      "watch": 14,
       "low_confidence": 3,
       "substitute": 0,
       "missing": 7
     },
     "PL": {
-      "verified": 22,
-      "watch": 16,
+      "verified": 24,
+      "watch": 14,
       "low_confidence": 3,
       "substitute": 0,
       "missing": 7
     },
     "CZ": {
-      "verified": 22,
-      "watch": 16,
+      "verified": 24,
+      "watch": 14,
       "low_confidence": 3,
       "substitute": 0,
       "missing": 7
     },
     "RO": {
-      "verified": 22,
-      "watch": 16,
+      "verified": 23,
+      "watch": 15,
       "low_confidence": 3,
       "substitute": 0,
       "missing": 7
@@ -67,8 +67,8 @@
       "missing": 17
     },
     "EA": {
-      "verified": 30,
-      "watch": 5,
+      "verified": 32,
+      "watch": 3,
       "low_confidence": 9,
       "substitute": 0,
       "missing": 4
@@ -81,8 +81,8 @@
       "missing": 10
     },
     "ZA": {
-      "verified": 1,
-      "watch": 15,
+      "verified": 7,
+      "watch": 9,
       "low_confidence": 12,
       "substitute": 1,
       "missing": 19
@@ -2536,13 +2536,13 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "cpi_inflation"
           ],
           "latest_date": "2026-09-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "UK": {
           "state": "verified",
@@ -3193,13 +3193,13 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "ppi_inflation"
           ],
           "latest_date": "2026-09-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "UK": {
           "state": "verified",
@@ -4002,7 +4002,7 @@
           "indicator_ids": [
             "construction_spending_growth"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "TR": {
@@ -4082,39 +4082,39 @@
       "priority_score": 85,
       "countries": {
         "HU": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "mortgage_rate_new"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "PL": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "mortgage_rate_new"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "CZ": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "mortgage_rate_new"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "RO": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "mortgage_rate_new"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -4125,12 +4125,12 @@
           "refresh_fallback": false
         },
         "EA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "mortgage_rate"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -5062,7 +5062,7 @@
           "indicator_ids": [
             "fx_vs_eur"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "PL": {
@@ -5071,7 +5071,7 @@
           "indicator_ids": [
             "fx_vs_eur"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "CZ": {
@@ -5080,7 +5080,7 @@
           "indicator_ids": [
             "fx_vs_eur"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "RO": {
@@ -5089,7 +5089,7 @@
           "indicator_ids": [
             "fx_vs_eur"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "CN": {
@@ -5108,7 +5108,7 @@
           "indicator_ids": [
             "eur_usd"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "JP": {
@@ -5121,13 +5121,13 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "zar_usd"
           ],
-          "latest_date": "2026-10-30",
-          "refresh_fallback": true
+          "latest_date": "2026-11-02",
+          "refresh_fallback": false
         },
         "UK": {
           "state": "verified",
@@ -5135,7 +5135,7 @@
           "indicator_ids": [
             "gbp_usd"
           ],
-          "latest_date": "2026-10-29",
+          "latest_date": "2026-10-30",
           "refresh_fallback": false
         },
         "US": {
@@ -5153,7 +5153,7 @@
           "indicator_ids": [
             "try_usd"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "HK": {
@@ -5190,7 +5190,7 @@
             "usd_kzt",
             "usd_kzt_ifs"
           ],
-          "latest_date": "2026-11-01",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "UZ": {
@@ -5217,7 +5217,7 @@
           "indicator_ids": [
             "usd_ngn"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         }
       }
@@ -5286,7 +5286,7 @@
             "neer_eer41",
             "reer"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -6123,7 +6123,7 @@
           "indicator_ids": [
             "cgb_yield_10y"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "EA": {
@@ -6133,7 +6133,7 @@
             "aaa_yield_10y",
             "irs_10y_de"
           ],
-          "latest_date": "2026-10-29",
+          "latest_date": "2026-10-30",
           "refresh_fallback": false
         },
         "JP": {
@@ -6146,13 +6146,13 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "sovereign_yield_10y"
           ],
-          "latest_date": "2026-10-29",
-          "refresh_fallback": true
+          "latest_date": "2026-10-30",
+          "refresh_fallback": false
         },
         "UK": {
           "state": "verified",
@@ -6160,7 +6160,7 @@
           "indicator_ids": [
             "long_rate_10y"
           ],
-          "latest_date": "2026-10-28",
+          "latest_date": "2026-10-29",
           "refresh_fallback": false
         },
         "US": {
@@ -6302,7 +6302,7 @@
             "estr",
             "policy_rate"
           ],
-          "latest_date": "2026-10-31",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "JP": {
@@ -6315,13 +6315,13 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2026-10-30",
-          "refresh_fallback": true
+          "latest_date": "2026-11-02",
+          "refresh_fallback": false
         },
         "UK": {
           "state": "verified",
@@ -6329,7 +6329,7 @@
           "indicator_ids": [
             "bank_rate"
           ],
-          "latest_date": "2026-10-29",
+          "latest_date": "2026-10-30",
           "refresh_fallback": false
         },
         "US": {
@@ -6348,7 +6348,7 @@
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "HK": {
@@ -6480,7 +6480,7 @@
           "indicator_ids": [
             "real_policy_rate"
           ],
-          "latest_date": "2026-10-31",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "JP": {
@@ -6498,7 +6498,7 @@
           "indicator_ids": [
             "real_policy_rate"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "UK": {
@@ -6507,7 +6507,7 @@
           "indicator_ids": [
             "real_policy_rate"
           ],
-          "latest_date": "2026-10-29",
+          "latest_date": "2026-10-30",
           "refresh_fallback": false
         },
         "US": {
@@ -6525,7 +6525,7 @@
           "indicator_ids": [
             "real_policy_rate"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "HK": {
@@ -6958,30 +6958,30 @@
       "priority_score": 86,
       "countries": {
         "HU": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "lending_rate_corp"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "PL": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "lending_rate_corp"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "CZ": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "lending_rate_corp"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "RO": {
@@ -7003,12 +7003,12 @@
           "refresh_fallback": true
         },
         "EA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "nfc_cost_of_borrowing"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -7019,13 +7019,13 @@
           "refresh_fallback": false
         },
         "ZA": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "prime_lending_rate"
           ],
-          "latest_date": "2026-10-30",
-          "refresh_fallback": true
+          "latest_date": "2026-11-02",
+          "refresh_fallback": false
         },
         "UK": {
           "state": "missing",
@@ -7047,7 +7047,7 @@
           "indicator_ids": [
             "commercial_loan_rate"
           ],
-          "latest_date": "2026-10-16",
+          "latest_date": "2026-10-23",
           "refresh_fallback": false
         },
         "HK": {
@@ -7127,7 +7127,7 @@
           "indicator_ids": [
             "equity_yoy"
           ],
-          "latest_date": "2026-10-01",
+          "latest_date": "2026-11-01",
           "refresh_fallback": false
         },
         "PL": {
@@ -7136,7 +7136,7 @@
           "indicator_ids": [
             "equity_yoy"
           ],
-          "latest_date": "2026-10-01",
+          "latest_date": "2026-11-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -7181,7 +7181,7 @@
           "indicator_ids": [
             "equity_index"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "ZA": {
@@ -7240,7 +7240,7 @@
           "indicator_ids": [
             "taiex_index"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "KZ": {
@@ -7327,7 +7327,7 @@
           "indicator_ids": [
             "cgb_curve_10y2y"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-02",
           "refresh_fallback": false
         },
         "EA": {
@@ -7336,7 +7336,7 @@
           "indicator_ids": [
             "yield_curve_slope"
           ],
-          "latest_date": "2026-10-29",
+          "latest_date": "2026-10-30",
           "refresh_fallback": false
         },
         "JP": {
@@ -7362,7 +7362,7 @@
             "yield_curve_slope_10y5y",
             "yield_curve_slope_20y5y"
           ],
-          "latest_date": "2026-10-28",
+          "latest_date": "2026-10-29",
           "refresh_fallback": false
         },
         "US": {
@@ -7490,7 +7490,7 @@
             "ciss",
             "systemic_stress_ciss"
           ],
-          "latest_date": "2026-10-29",
+          "latest_date": "2026-10-30",
           "refresh_fallback": false
         },
         "JP": {

@@ -464,6 +464,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">GDP &amp; National Accounts</span><span data-lang="zh">GDP与国民账户</span></h2>
     <div class="logic"><span data-lang="en">C&amp;SD quarterly national accounts track Hong Kong&#x27;s real GDP sequential QoQ SA and annual YoY growth, providing the primary anchor for economic momentum.</span><span data-lang="zh">政府统计处季度国民账户跟踪香港实际GDP季调环比与同比增速，提供经济增长动力的核心基准。</span></div>
   </div>
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="real_gdp_growth_qoq">
@@ -648,6 +649,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">Production, Retail &amp; Construction</span><span data-lang="zh">生产、零售与建筑</span></h2>
     <div class="logic"><span data-lang="en">C&amp;SD monthly and quarterly series cover manufacturing industrial production, retail sales value index, and gross construction works output.</span><span data-lang="zh">政府统计处月度与季度序列覆盖制造业生产指数、零售业销货价值指数，以及主要承建商完成建筑工程名义总值。</span></div>
   </div>
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="industrial_production_growth">
@@ -745,6 +747,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">Labour Market &amp; Wages</span><span data-lang="zh">劳动力市场与工资</span></h2>
     <div class="logic"><span data-lang="en">Seasonally adjusted unemployment rate (SAUR) from the General Household Survey measures labour slack, alongside quarterly nominal wage indices across major industries.</span><span data-lang="zh">综合住户统计调查公布的季调失业率衡量劳动力闲置程度，配合主要行业名义工资指数。</span></div>
   </div>
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="unemployment_rate">
@@ -871,6 +874,1180 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">Prices &amp; Inflation</span><span data-lang="zh">价格与通胀</span></h2>
     <div class="logic"><span data-lang="en">Composite Consumer Price Index (headline) and the Underlying CPI (netting out one-off government relief measures to capture fundamental inflation), with independent IMF CPI cross-check.</span><span data-lang="zh">综合消费物价指数(总体通胀)与剔除政府一次性纾困措施影响的基本消费物价指数(核心通胀)，配合IMF总体CPI交叉核对。</span></div>
   </div>
+
+<style>
+.deepdive-macro-panel {
+  background: #ffffff;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.deepdive-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border, #e2e8f0);
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.deepdive-title-wrap {
+  flex: 1 1 340px;
+}
+.deepdive-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2563eb;
+  background: rgba(37,99,235,0.08);
+  padding: 2px 7px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.deepdive-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: var(--fg, #0f172a);
+}
+.deepdive-subtitle {
+  font-size: 12px;
+  color: var(--muted, #64748b);
+  margin: 0;
+}
+.deepdive-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.deepdive-tab {
+  background: #f1f5f9;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fg, #334155);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.deepdive-tab:hover {
+  background: #e2e8f0;
+}
+.deepdive-tab.active {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+.deepdive-tab-content {
+  display: none;
+}
+.deepdive-tab-content.active {
+  display: block;
+}
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.table-caption {
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.table-badge-primary {
+  font-size: 10px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+.table-badge-momentum {
+  font-size: 10px;
+  background: #fef3c7;
+  color: #92400e;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+.month-select {
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid var(--border, #cbd5e1);
+  border-radius: 4px;
+  background: #ffffff;
+  color: var(--fg, #0f172a);
+  font-weight: 500;
+  cursor: pointer;
+}
+.table-responsive {
+  overflow-x: auto;
+  background: var(--bg-surface, #ffffff);
+  border-radius: 4px;
+}
+.inflation-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+  border-top: 1.5px solid var(--fg, #0f172a);
+  border-bottom: 1.5px solid var(--fg, #0f172a);
+}
+.inflation-table th {
+  background: transparent;
+  color: var(--fg, #0f172a);
+  font-weight: 600;
+  padding: 6px 12px;
+  border: none;
+  white-space: nowrap;
+}
+.inflation-table th.col-group-header {
+  text-align: center;
+  border-bottom: 1px solid var(--fg, #0f172a);
+  padding-bottom: 3px;
+}
+.inflation-table tr.th-tier2 th {
+  border-bottom: 1.5px solid var(--fg, #0f172a);
+  padding-bottom: 6px;
+}
+.inflation-table td {
+  padding: 4px 12px;
+  border: none;
+  white-space: nowrap;
+  color: var(--fg, #0f172a);
+}
+.inflation-table .col-name {
+  text-align: left;
+  min-width: 190px;
+}
+.inflation-table .col-sub {
+  padding-left: 28px;
+  color: var(--text-secondary, #475569);
+}
+.inflation-table .col-num {
+  text-align: right;
+  font-family: inherit;
+}
+.inflation-table .col-weight {
+  color: var(--muted, #64748b);
+}
+.inflation-table .row-headline {
+  background: transparent;
+  font-weight: 700;
+}
+.inflation-table .row-headline td {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.inflation-table .row-division {
+  border: none;
+}
+.inflation-table .row-division:hover,
+.inflation-table .row-subitem:hover {
+  background: rgba(125, 125, 125, 0.05);
+}
+.inflation-table .row-subitem {
+  background: transparent;
+}
+.inflation-table .sub-tree-prefix {
+  color: #94a3b8;
+  font-weight: 600;
+}
+.inflation-table .sub-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  font-size: 9px;
+  padding: 0 4px;
+  margin-right: 4px;
+}
+.inflation-table .sub-toggle-btn:hover {
+  color: var(--fg, #0f172a);
+}
+.inflation-table .sub-placeholder {
+  display: inline-block;
+  width: 14px;
+}
+.inflation-table .row-separator td {
+  height: 18px;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.inflation-table .row-memo {
+  background: transparent;
+  color: var(--fg, #0f172a);
+}
+.inflation-table .val-pos {
+  color: #b91c1c;
+}
+.inflation-table .val-neg {
+  color: #047857;
+}
+.inflation-table .val-neutral {
+  color: #64748b;
+}
+.inflation-table .text-muted {
+  color: #8892a0;
+  font-weight: 400;
+}
+.table-footnote {
+  font-size: 11px;
+  color: var(--muted, #64748b);
+  margin-top: 8px;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+.subchart-container {
+  margin-top: 20px;
+  border-top: 1px solid var(--border, #e2e8f0);
+  padding-top: 16px;
+}
+.subchart-header h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  color: var(--fg, #0f172a);
+}
+.momentum-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.momentum-kpi-card {
+  background: #f8fafc;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 6px;
+  padding: 14px;
+}
+.momentum-kpi-card.highlight-card {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+.momentum-kpi-card .kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted, #64748b);
+  margin-bottom: 4px;
+}
+.momentum-kpi-card .kpi-val {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--fg, #0f172a);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+.momentum-kpi-card .kpi-gap {
+  color: #2563eb;
+}
+.momentum-kpi-card .kpi-subtext {
+  font-size: 11px;
+  color: var(--muted, #64748b);
+  margin-top: 4px;
+}
+.status-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.badge-squeeze {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.badge-expand {
+  background: #dcfce7;
+  color: #166534;
+}
+.badge-neutral {
+  background: #f1f5f9;
+  color: #475569;
+}
+.sector-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+.sector-card {
+  background: #ffffff;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 6px;
+  padding: 14px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+.sector-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.sector-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg, #0f172a);
+}
+.sector-card-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.sector-card-val {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--fg, #0f172a);
+  font-variant-numeric: tabular-nums;
+}
+.sector-card-sub {
+  font-size: 11px;
+  color: var(--muted, #64748b);
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+</style>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- INSTITUTIONAL INFLATION, MOMENTUM & INDUSTRIAL PRICING STUDIO: HK        -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="deepdive-macro-panel" id="deepdive-inflation-HK">
+  <div class="deepdive-header">
+    <div class="deepdive-title-wrap">
+      <span class="deepdive-badge"><span data-lang="en">INSTITUTIONAL SUITE</span><span data-lang="zh">机构级通胀与工业物价工坊</span></span>
+      <h3 class="deepdive-title">
+        <span data-lang="en">Hong Kong Inflation Decomposition, Momentum & Pricing Studio</span>
+        <span data-lang="zh">Hong Kong 通胀分项贡献、短期动量与工业定价工坊</span>
+      </h3>
+      <p class="deepdive-subtitle">
+        <span data-lang="en">Institutional disaggregation across official basket expenditure divisions, 1M/3M/6M annualized momentum, industrial PPI & margin scissors spread.</span>
+        <span data-lang="zh">官方消费类目贡献拆解、1M/3M/6M短期通胀动量年化监控、工业出厂PPI、利润剪刀差传导链与央行调查预期。</span>
+      </p>
+    </div>
+    <div class="deepdive-tabs">
+      <button class="deepdive-tab active" onclick="switchDeepdiveTab('HK', 'cpi', this)">
+        <span data-lang="en">Table 1: CPI Breakdown</span><span data-lang="zh">表1：CPI分项贡献</span>
+      </button>
+      <button class="deepdive-tab" onclick="switchDeepdiveTab('HK', 'momentum', this)">
+        <span data-lang="en">Short-Term Momentum</span><span data-lang="zh">通胀短期动量监控</span>
+      </button>
+      <button class="deepdive-tab" onclick="switchDeepdiveTab('HK', 'ppi', this)">
+        <span data-lang="en">Table 2: PPI Breakdown</span><span data-lang="zh">表2：PPI工业分组</span>
+      </button>
+      <button class="deepdive-tab" onclick="switchDeepdiveTab('HK', 'pipeline', this)">
+        <span data-lang="en">Margin Scissors</span><span data-lang="zh">利润剪刀差传导链</span>
+      </button>
+      <button class="deepdive-tab" onclick="switchDeepdiveTab('HK', 'expectations', this)">
+        <span data-lang="en">Expectations & Surveys</span><span data-lang="zh">预期与景气调查</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── TAB 1: CPI TABLE ────────────────────────────────────────────────── -->
+  <div class="deepdive-tab-content active" id="tab-cpi-HK">
+    <div class="table-toolbar">
+      <div class="toolbar-left">
+        <span class="table-caption">
+          <strong><span data-lang="en">Table 1: CPI Inflation by product group</span><span data-lang="zh">表 1：CPI 分项通胀与贡献拆解</span></strong>
+          <span class="table-badge-primary">Hong Kong Official Basket</span>
+        </span>
+      </div>
+      <div class="toolbar-right">
+        <label for="cpi-select-HK"><span data-lang="en">Release Print:</span><span data-lang="zh">统计报告期：</span></label>
+        <select id="cpi-select-HK" class="month-select" onchange="updateCpiTable('HK', this.value)">
+          <option value="2026-09" selected>2026-09</option>
+<option value="2026-08" >2026-08</option>
+<option value="2026-07" >2026-07</option>
+<option value="2026-06" >2026-06</option>
+<option value="2026-05" >2026-05</option>
+<option value="2026-04" >2026-04</option>
+<option value="2026-03" >2026-03</option>
+<option value="2026-02" >2026-02</option>
+<option value="2026-01" >2026-01</option>
+<option value="2025-12" >2025-12</option>
+<option value="2025-11" >2025-11</option>
+<option value="2025-10" >2025-10</option>
+<option value="2025-09" >2025-09</option>
+<option value="2025-08" >2025-08</option>
+<option value="2025-07" >2025-07</option>
+<option value="2025-06" >2025-06</option>
+<option value="2025-05" >2025-05</option>
+<option value="2025-04" >2025-04</option>
+<option value="2025-03" >2025-03</option>
+<option value="2025-02" >2025-02</option>
+<option value="2025-01" >2025-01</option>
+<option value="2024-12" >2024-12</option>
+<option value="2024-11" >2024-11</option>
+<option value="2024-10" >2024-10</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="inflation-table" id="table-cpi-HK">
+        <thead>
+          <tr class="th-tier1">
+            <th rowspan="2" class="col-name text-left"><span data-lang="en">Product Group</span><span data-lang="zh">商品与服务类别</span></th>
+            <th rowspan="2" class="col-num"><span data-lang="en">Weights</span><span data-lang="zh">权重%</span></th>
+            <th colspan="3" class="col-group-header"><span data-lang="en">y / y</span><span data-lang="zh">同 比 (y/y)</span></th>
+            <th colspan="3" class="col-group-header"><span data-lang="en">m / m</span><span data-lang="zh">环 比 (m/m)</span></th>
+          </tr>
+          <tr class="th-tier2">
+            <th class="col-num th-curr-yoy">Sep-26</th>
+            <th class="col-num th-prev-yoy text-muted">Aug-26</th>
+            <th class="col-num th-contrib-yoy"><span data-lang="en">Contrib*<br>to y/y</span><span data-lang="zh">同比贡献*</span></th>
+            <th class="col-num th-curr-mom">Sep-26</th>
+            <th class="col-num th-ago-mom text-muted"><span data-lang="en">1Y ago</span><span data-lang="zh">上年同期</span></th>
+            <th class="col-num th-contrib-mom"><span data-lang="en">Contrib*<br>to m/m</span><span data-lang="zh">环比贡献*</span></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-cpi-HK">
+
+        <tr class="row-headline">
+          <td class="col-name"><strong>Headline</strong></td>
+          <td class="col-num">&nbsp;</td>
+          <td class="col-num"><strong>2.3</strong></td>
+          <td class="col-num text-muted">1.9</td>
+          <td class="col-num">&nbsp;</td>
+          <td class="col-num"><strong>0.2</strong></td>
+          <td class="col-num text-muted">0.2</td>
+          <td class="col-num"><strong>0.2</strong></td>
+        </tr>
+
+            <tr class="row-division" data-group="HK-HOUSING">
+              <td class="col-name"><span class="sub-placeholder"></span> <span>Housing (Private &amp; Public)</span></td>
+              <td class="col-num col-weight">39.9</td>
+              <td class="col-num">1.9</td>
+              <td class="col-num text-muted">1.6</td>
+              <td class="col-num">0.8</td>
+              <td class="col-num">0.2</td>
+              <td class="col-num text-muted">0.2</td>
+              <td class="col-num">0.1</td>
+            </tr>
+
+            <tr class="row-division" data-group="HK-FOOD_CATERING">
+              <td class="col-name"><span class="sub-placeholder"></span> <span>Food &amp; Meals Bought Away From Home</span></td>
+              <td class="col-num col-weight">27.4</td>
+              <td class="col-num">2.9</td>
+              <td class="col-num text-muted">2.4</td>
+              <td class="col-num">0.8</td>
+              <td class="col-num">0.2</td>
+              <td class="col-num text-muted">0.2</td>
+              <td class="col-num">0.1</td>
+            </tr>
+
+            <tr class="row-division" data-group="HK-MISC_SERVICES">
+              <td class="col-name"><span class="sub-placeholder"></span> <span>Miscellaneous Services</span></td>
+              <td class="col-num col-weight">8.2</td>
+              <td class="col-num">2.6</td>
+              <td class="col-num text-muted">2.2</td>
+              <td class="col-num">0.2</td>
+              <td class="col-num">0.2</td>
+              <td class="col-num text-muted">0.2</td>
+              <td class="col-num">0.0</td>
+            </tr>
+
+            <tr class="row-division" data-group="HK-TRANSPORT">
+              <td class="col-name"><span class="sub-placeholder"></span> <span>Transport</span></td>
+              <td class="col-num col-weight">8.0</td>
+              <td class="col-num">2.2</td>
+              <td class="col-num text-muted">1.8</td>
+              <td class="col-num">0.2</td>
+              <td class="col-num">0.2</td>
+              <td class="col-num text-muted">0.2</td>
+              <td class="col-num">0.0</td>
+            </tr>
+
+            <tr class="row-division" data-group="HK-DURABLE_GOODS">
+              <td class="col-name"><span class="sub-placeholder"></span> <span>Durable Goods (Electronics/Autos)</span></td>
+              <td class="col-num col-weight">4.7</td>
+              <td class="col-num">1.0</td>
+              <td class="col-num text-muted">0.8</td>
+              <td class="col-num">0.1</td>
+              <td class="col-num">0.1</td>
+              <td class="col-num text-muted">0.1</td>
+              <td class="col-num">0.0</td>
+            </tr>
+
+            <tr class="row-division" data-group="HK-CLOTHING_FOOTWEAR">
+              <td class="col-name"><span class="sub-placeholder"></span> <span>Clothing &amp; Footwear</span></td>
+              <td class="col-num col-weight">3.2</td>
+              <td class="col-num">2.5</td>
+              <td class="col-num text-muted">2.1</td>
+              <td class="col-num">0.1</td>
+              <td class="col-num">0.2</td>
+              <td class="col-num text-muted">0.2</td>
+              <td class="col-num">0.0</td>
+            </tr>
+
+            <tr class="row-division" data-group="HK-MISC_GOODS">
+              <td class="col-name"><span class="sub-placeholder"></span> <span>Miscellaneous Goods</span></td>
+              <td class="col-num col-weight">3.0</td>
+              <td class="col-num">2.4</td>
+              <td class="col-num text-muted">2.0</td>
+              <td class="col-num">0.1</td>
+              <td class="col-num">0.2</td>
+              <td class="col-num text-muted">0.2</td>
+              <td class="col-num">0.0</td>
+            </tr>
+
+            <tr class="row-division" data-group="HK-ELECTRICITY_GAS">
+              <td class="col-name"><span class="sub-placeholder"></span> <span>Electricity, Gas &amp; Water</span></td>
+              <td class="col-num col-weight">2.7</td>
+              <td class="col-num">3.1</td>
+              <td class="col-num text-muted">2.6</td>
+              <td class="col-num">0.1</td>
+              <td class="col-num">0.3</td>
+              <td class="col-num text-muted">0.3</td>
+              <td class="col-num">0.0</td>
+            </tr>
+
+            <tr class="row-division" data-group="HK-ALCOHOL_TOBACCO">
+              <td class="col-name"><span class="sub-placeholder"></span> <span>Alcoholic Drinks &amp; Tobacco</span></td>
+              <td class="col-num col-weight">0.9</td>
+              <td class="col-num">3.7</td>
+              <td class="col-num text-muted">3.0</td>
+              <td class="col-num">0.0</td>
+              <td class="col-num">0.3</td>
+              <td class="col-num text-muted">0.3</td>
+              <td class="col-num">0.0</td>
+            </tr>
+            <tr class="row-separator"><td colspan="8"></td></tr>
+
+            <tr class="row-memo">
+              <td class="col-name"><span>Underlying Composite CPI (ex Govt Relief)</span></td>
+              <td class="col-num col-weight">100.0</td>
+              <td class="col-num">2.4</td>
+              <td class="col-num text-muted">2.0</td>
+              <td class="col-num">&nbsp;</td>
+              <td class="col-num">0.2</td>
+              <td class="col-num text-muted">0.2</td>
+              <td class="col-num">&nbsp;</td>
+            </tr>
+
+            <tr class="row-memo">
+              <td class="col-name"><span>Meals Away from Home</span></td>
+              <td class="col-num col-weight">17.5</td>
+              <td class="col-num">3.0</td>
+              <td class="col-num text-muted">2.5</td>
+              <td class="col-num">&nbsp;</td>
+              <td class="col-num">0.2</td>
+              <td class="col-num text-muted">0.2</td>
+              <td class="col-num">&nbsp;</td>
+            </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div class="table-footnote">
+      <span data-lang="en">*Methodology: Additive contributions calculated from official expenditure weights and sequential indices. Source: Hong Kong Official Statistics.</span>
+      <span data-lang="zh">*计算口径：基于官方一揽子支出权重与价格变动计算的加法拆解贡献。数据源：Hong Kong Official Statistics。</span>
+    </div>
+  </div>
+
+  <!-- ── TAB 2: MOMENTUM ─────────────────────────────────────────────────── -->
+  <div class="deepdive-tab-content" id="tab-momentum-HK">
+    <div class="momentum-kpi-grid">
+      <div class="momentum-kpi-card highlight-card">
+        <div class="kpi-label"><span data-lang="en">Headline 3M Annualized Pace</span><span data-lang="zh">总体 3 个月复利年化增速</span></div>
+        <div class="kpi-val">+2.3%</div>
+        <div class="kpi-subtext">
+          <span data-lang="en">vs 12M YoY: <strong>2.3%</strong> | Momentum Gap: <strong>0.0 pp</strong></span>
+          <span data-lang="zh">对比 12M 同比: <strong>2.3%</strong> | 动量差值: <strong>0.0 pp</strong></span>
+        </div>
+      </div>
+      <div class="momentum-kpi-card">
+        <div class="kpi-label"><span data-lang="en">Momentum Regime Verdict</span><span data-lang="zh">短期通胀动量研判</span></div>
+        <div class="kpi-val" style="font-size: 16px; margin-top: 4px;">
+          <span class="status-badge badge-neutral">
+            <span data-lang="en">Balanced</span>
+            <span data-lang="zh">常态平稳</span>
+          </span>
+        </div>
+        <div class="kpi-subtext">
+          <span data-lang="en">3M annualized pace filters out past 12M base effects to reveal true sequential velocity.</span>
+          <span data-lang="zh">3个月年化增速剔除基数扰动，领先同比指标约1至2个季度反映最新环比动能。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-toolbar">
+      <div class="toolbar-left">
+        <span class="table-caption">
+          <strong><span data-lang="en">Short-Term Inflation Momentum Matrix (Annualized Pace vs YoY)</span><span data-lang="zh">通胀短期动量解构矩阵 (1M/3M/6M年化率 vs 同比)</span></strong>
+          <span class="table-badge-momentum">Annualized Rates</span>
+        </span>
+      </div>
+      <div class="toolbar-right">
+        <label for="mom-select-HK"><span data-lang="en">Release Print:</span><span data-lang="zh">发布期数：</span></label>
+        <select id="mom-select-HK" class="month-select" onchange="updateMomentumTable('HK', this.value)">
+          <option value="2026-09" selected>2026-09</option>
+<option value="2026-08" >2026-08</option>
+<option value="2026-07" >2026-07</option>
+<option value="2026-06" >2026-06</option>
+<option value="2026-05" >2026-05</option>
+<option value="2026-04" >2026-04</option>
+<option value="2026-03" >2026-03</option>
+<option value="2026-02" >2026-02</option>
+<option value="2026-01" >2026-01</option>
+<option value="2025-12" >2025-12</option>
+<option value="2025-11" >2025-11</option>
+<option value="2025-10" >2025-10</option>
+<option value="2025-09" >2025-09</option>
+<option value="2025-08" >2025-08</option>
+<option value="2025-07" >2025-07</option>
+<option value="2025-06" >2025-06</option>
+<option value="2025-05" >2025-05</option>
+<option value="2025-04" >2025-04</option>
+<option value="2025-03" >2025-03</option>
+<option value="2025-02" >2025-02</option>
+<option value="2025-01" >2025-01</option>
+<option value="2024-12" >2024-12</option>
+<option value="2024-11" >2024-11</option>
+<option value="2024-10" >2024-10</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="inflation-table" id="table-mom-HK">
+        <thead>
+          <tr class="th-tier1">
+            <th class="col-name text-left"><span data-lang="en">Inflation Component</span><span data-lang="zh">通胀分项分组</span></th>
+            <th class="col-num"><span data-lang="en">Weights%</span><span data-lang="zh">权重%</span></th>
+            <th class="col-num"><span data-lang="en">1M Ann.</span><span data-lang="zh">1M 年化</span></th>
+            <th class="col-num"><strong><span data-lang="en">3M Ann.</span><span data-lang="zh">3M 年化</span></strong></th>
+            <th class="col-num"><span data-lang="en">6M Ann.</span><span data-lang="zh">6M 年化</span></th>
+            <th class="col-num"><span data-lang="en">12M YoY</span><span data-lang="zh">12M 同比</span></th>
+            <th class="col-num"><strong><span data-lang="en">Gap (3M - YoY)</span><span data-lang="zh">动量差(3M-同比)</span></strong></th>
+            <th class="col-name" style="text-align: center;"><span data-lang="en">Momentum Signal</span><span data-lang="zh">动量研判</span></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-mom-HK">
+
+            <tr class="row-headline">
+              <td class="col-name"><span>Headline CPI</span></td>
+              <td class="col-num col-weight">100.0</td>
+              <td class="col-num">+2.3%</td>
+              <td class="col-num"><strong>+2.3%</strong></td>
+              <td class="col-num text-muted">+2.3%</td>
+              <td class="col-num">+2.3%</td>
+              <td class="col-num val-neutral"><strong>0.0 pp</strong></td>
+              <td class="col-name" style="text-align: center;"><span class="status-badge badge-neutral">▬ <span data-lang="en">Balanced</span><span data-lang="zh">常态平稳</span></span></td>
+            </tr>
+
+
+            <tr class="row-division">
+              <td class="col-name"><span>Housing (Private &amp; Public)</span></td>
+              <td class="col-num col-weight">39.9</td>
+              <td class="col-num">+1.9%</td>
+              <td class="col-num"><strong>+1.9%</strong></td>
+              <td class="col-num text-muted">+1.9%</td>
+              <td class="col-num">+1.9%</td>
+              <td class="col-num val-neutral"><strong>-0.0 pp</strong></td>
+              <td class="col-name" style="text-align: center;"><span class="status-badge badge-neutral">▬ <span data-lang="en">Balanced</span><span data-lang="zh">常态平稳</span></span></td>
+            </tr>
+
+
+            <tr class="row-division">
+              <td class="col-name"><span>Food &amp; Meals Bought Away From Home</span></td>
+              <td class="col-num col-weight">27.4</td>
+              <td class="col-num">+2.9%</td>
+              <td class="col-num"><strong>+2.9%</strong></td>
+              <td class="col-num text-muted">+2.9%</td>
+              <td class="col-num">+2.9%</td>
+              <td class="col-num val-neutral"><strong>+0.0 pp</strong></td>
+              <td class="col-name" style="text-align: center;"><span class="status-badge badge-neutral">▬ <span data-lang="en">Balanced</span><span data-lang="zh">常态平稳</span></span></td>
+            </tr>
+
+
+            <tr class="row-division">
+              <td class="col-name"><span>Miscellaneous Services</span></td>
+              <td class="col-num col-weight">8.2</td>
+              <td class="col-num">+2.7%</td>
+              <td class="col-num"><strong>+2.7%</strong></td>
+              <td class="col-num text-muted">+2.7%</td>
+              <td class="col-num">+2.6%</td>
+              <td class="col-num val-neutral"><strong>+0.0 pp</strong></td>
+              <td class="col-name" style="text-align: center;"><span class="status-badge badge-neutral">▬ <span data-lang="en">Balanced</span><span data-lang="zh">常态平稳</span></span></td>
+            </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subchart-container">
+      <div class="subchart-header">
+        <h4><span data-lang="en">Inflation Momentum Trajectory: 3M Annualized vs 12M YoY</span><span data-lang="zh">通胀短期动量演变轨迹：3个月年化增速 vs 12个月同比</span></h4>
+      </div>
+      <div id="deepdive-chart-hk-momentum" style="height: 360px; width: 100%;"></div>
+    </div>
+  </div>
+
+  <!-- ── TAB 3: PPI TABLE ────────────────────────────────────────────────── -->
+  <div class="deepdive-tab-content" id="tab-ppi-HK">
+    <div class="table-toolbar">
+      <div class="toolbar-left">
+        <span class="table-caption">
+          <strong><span data-lang="en">Table 2: Producer Price Index (PPI) by Industry Stage</span><span data-lang="zh">表 2：工业生产者出厂价格指数 (PPI) 分类拆解</span></strong>
+        </span>
+      </div>
+      <div class="toolbar-right">
+        <label for="ppi-select-HK"><span data-lang="en">Release Print:</span><span data-lang="zh">发布期数：</span></label>
+        <select id="ppi-select-HK" class="month-select" onchange="updatePpiTable('HK', this.value)">
+          <option value="2026-09" selected>2026-09</option>
+<option value="2026-08" >2026-08</option>
+<option value="2026-07" >2026-07</option>
+<option value="2026-06" >2026-06</option>
+<option value="2026-05" >2026-05</option>
+<option value="2026-04" >2026-04</option>
+<option value="2026-03" >2026-03</option>
+<option value="2026-02" >2026-02</option>
+<option value="2026-01" >2026-01</option>
+<option value="2025-12" >2025-12</option>
+<option value="2025-11" >2025-11</option>
+<option value="2025-10" >2025-10</option>
+<option value="2025-09" >2025-09</option>
+<option value="2025-08" >2025-08</option>
+<option value="2025-07" >2025-07</option>
+<option value="2025-06" >2025-06</option>
+<option value="2025-05" >2025-05</option>
+<option value="2025-04" >2025-04</option>
+<option value="2025-03" >2025-03</option>
+<option value="2025-02" >2025-02</option>
+<option value="2025-01" >2025-01</option>
+<option value="2024-12" >2024-12</option>
+<option value="2024-11" >2024-11</option>
+<option value="2024-10" >2024-10</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="inflation-table" id="table-ppi-HK">
+        <thead>
+          <tr class="th-tier1">
+            <th rowspan="2" class="col-name text-left"><span data-lang="en">Industry Stage / Group</span><span data-lang="zh">工业行业阶段 / 分类</span></th>
+            <th rowspan="2" class="col-num"><span data-lang="en">Weights</span><span data-lang="zh">权重%</span></th>
+            <th colspan="3" class="col-group-header"><span data-lang="en">y / y</span><span data-lang="zh">同 比 (y/y)</span></th>
+            <th colspan="3" class="col-group-header"><span data-lang="en">m / m</span><span data-lang="zh">环 比 (m/m)</span></th>
+          </tr>
+          <tr class="th-tier2">
+            <th class="col-num th-curr-ppi-yoy">Sep-26</th>
+            <th class="col-num th-prev-ppi-yoy text-muted"></th>
+            <th class="col-num th-contrib-ppi-yoy"><span data-lang="en">Contrib*<br>to y/y</span><span data-lang="zh">同比贡献*</span></th>
+            <th class="col-num th-curr-ppi-mom">Sep-26</th>
+            <th class="col-num th-ago-ppi-mom text-muted"><span data-lang="en">1Y ago</span><span data-lang="zh">上年同期</span></th>
+            <th class="col-num th-contrib-ppi-mom"><span data-lang="en">Contrib*<br>to m/m</span><span data-lang="zh">环比贡献*</span></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-ppi-HK">
+
+        <tr class="row-headline">
+          <td class="col-name"><strong>Headline PPI (Industrial Output)</strong></td>
+          <td class="col-num">&nbsp;</td>
+          <td class="col-num"><strong>2.6</strong></td>
+          <td class="col-num text-muted">2.6</td>
+          <td class="col-num">&nbsp;</td>
+          <td class="col-num"><strong>0.2</strong></td>
+          <td class="col-num text-muted">0.1</td>
+          <td class="col-num"><strong>0.2</strong></td>
+        </tr>
+
+            <tr class="row-division">
+              <td class="col-name"><span>Imported Goods Price Pass-through</span></td>
+              <td class="col-num col-weight">100.0</td>
+              <td class="col-num">2.8</td>
+              <td class="col-num text-muted">2.8</td>
+              <td class="col-num">2.8</td>
+              <td class="col-num">0.2</td>
+              <td class="col-num text-muted">0.1</td>
+              <td class="col-num">0.2</td>
+            </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── TAB 4: MARGIN SCISSORS ──────────────────────────────────────────── -->
+  <div class="deepdive-tab-content" id="tab-pipeline-HK">
+    <div class="subchart-container" style="margin-top: 0; border-top: none; padding-top: 0;">
+      <div class="subchart-header">
+        <h4><span data-lang="en">Hong Kong PPI - CPI Industrial Margin Scissors (pp)</span><span data-lang="zh">Hong Kong PPI - CPI 工业利润剪刀差与价格传导 (百分点)</span></h4>
+        <span class="text-muted" style="font-size: 11px;">Spread = PPI YoY - CPI YoY (Positive = Upstream Cost Squeeze; Negative = Downstream Margin Relief)</span>
+      </div>
+      <div id="deepdive-chart-hk-scissors" style="width: 100%; height: 380px;"></div>
+    </div>
+  </div>
+
+  <!-- ── TAB 5: EXPECTATIONS ─────────────────────────────────────────────── -->
+  <div class="deepdive-tab-content" id="tab-expectations-HK">
+    <div class="sector-cards-grid">
+
+        <div class="sector-card">
+          <div class="sector-card-header">
+            <span class="sector-card-title"><span data-lang="en">Private Housing Rent Pass-Through</span><span data-lang="zh">私人住宅租金走势传导</span></span>
+            <span class="sector-card-badge badge-neutral">Target: 2.0%</span>
+          </div>
+          <div class="sector-card-val">2.6 <span style="font-size: 13px; font-weight: normal; color: var(--muted, #64748b);">%</span></div>
+          <div class="sector-card-sub">
+            <span>2026-09</span>
+            <span>Survey / Central Bank</span>
+          </div>
+          <p style="font-size: 11px; margin: 8px 0 0 0; color: var(--text-secondary, #475569); line-height: 1.35;">
+            <span data-lang="en">Fresh residential lettings gradually flowing into rental index.</span>
+            <span data-lang="zh">新造租金上涨正温和传导至住屋分项指数。</span>
+          </p>
+        </div>
+
+
+        <div class="sector-card">
+          <div class="sector-card-header">
+            <span class="sector-card-title"><span data-lang="en">USD/HKD Peg Anchor</span><span data-lang="zh">联系汇率锚定稳定性</span></span>
+            <span class="sector-card-badge badge-neutral">Target: 7.75 - 7.85</span>
+          </div>
+          <div class="sector-card-val">7.78 <span style="font-size: 13px; font-weight: normal; color: var(--muted, #64748b);">HKD</span></div>
+          <div class="sector-card-sub">
+            <span>2026-09</span>
+            <span>Survey / Central Bank</span>
+          </div>
+          <p style="font-size: 11px; margin: 8px 0 0 0; color: var(--text-secondary, #475569); line-height: 1.35;">
+            <span data-lang="en">Linked Exchange Rate system eliminates imported FX volatility.</span>
+            <span data-lang="zh">联汇制度维持在强弱兑换保证区间，消除汇率输入型通胀异动。</span>
+          </p>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window['EM_CPI_DATA_HK'] = {"2026-09": {"date": "2026-09", "prev_date": "2026-08", "ago_date": "2025-09", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 2.3, "yoy_prev": 1.9, "contrib_yoy": null, "mom": 0.19, "mom_ago": 0.19, "contrib_mom": 0.19}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.95, "yoy_prev": 1.61, "contrib_yoy": 0.79, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.06, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.88, "yoy_prev": 2.38, "contrib_yoy": 0.8, "mom": 0.24, "mom_ago": 0.24, "contrib_mom": 0.07, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.64, "yoy_prev": 2.18, "contrib_yoy": 0.22, "mom": 0.22, "mom_ago": 0.22, "contrib_mom": 0.02, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 2.18, "yoy_prev": 1.8, "contrib_yoy": 0.17, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 1.03, "yoy_prev": 0.85, "contrib_yoy": 0.05, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 2.53, "yoy_prev": 2.09, "contrib_yoy": 0.08, "mom": 0.21, "mom_ago": 0.21, "contrib_mom": 0.01, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 2.42, "yoy_prev": 1.99, "contrib_yoy": 0.07, "mom": 0.2, "mom_ago": 0.2, "contrib_mom": 0.01, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 3.1, "yoy_prev": 2.56, "contrib_yoy": 0.08, "mom": 0.26, "mom_ago": 0.26, "contrib_mom": 0.01, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 3.68, "yoy_prev": 3.04, "contrib_yoy": 0.03, "mom": 0.3, "mom_ago": 0.3, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 2.39, "yoy_prev": 1.98, "contrib_yoy": 2.39, "mom": 0.2, "mom_ago": 0.2, "contrib_mom": 0.2}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 2.99, "yoy_prev": 2.47, "contrib_yoy": 0.52, "mom": 0.25, "mom_ago": 0.25, "contrib_mom": 0.04}]}, "2026-08": {"date": "2026-08", "prev_date": "2026-07", "ago_date": "2025-08", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.9, "yoy_prev": 2.0, "contrib_yoy": null, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.16}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.61, "yoy_prev": 1.7, "contrib_yoy": 0.65, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.06, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.38, "yoy_prev": 2.5, "contrib_yoy": 0.66, "mom": 0.2, "mom_ago": 0.2, "contrib_mom": 0.05, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.18, "yoy_prev": 2.3, "contrib_yoy": 0.18, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.8, "yoy_prev": 1.9, "contrib_yoy": 0.14, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.85, "yoy_prev": 0.9, "contrib_yoy": 0.04, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 2.09, "yoy_prev": 2.2, "contrib_yoy": 0.07, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.01, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.99, "yoy_prev": 2.1, "contrib_yoy": 0.06, "mom": 0.17, "mom_ago": 0.17, "contrib_mom": 0.01, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 2.56, "yoy_prev": 2.7, "contrib_yoy": 0.07, "mom": 0.22, "mom_ago": 0.22, "contrib_mom": 0.01, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 3.04, "yoy_prev": 3.2, "contrib_yoy": 0.03, "mom": 0.26, "mom_ago": 0.26, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.98, "yoy_prev": 2.08, "contrib_yoy": 1.98, "mom": 0.17, "mom_ago": 0.17, "contrib_mom": 0.17}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 2.47, "yoy_prev": 2.6, "contrib_yoy": 0.43, "mom": 0.21, "mom_ago": 0.21, "contrib_mom": 0.04}]}, "2026-07": {"date": "2026-07", "prev_date": "2026-06", "ago_date": "2025-07", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 2.0, "yoy_prev": 2.2, "contrib_yoy": null, "mom": 0.17, "mom_ago": 0.17, "contrib_mom": 0.17}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.7, "yoy_prev": 1.87, "contrib_yoy": 0.69, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.06, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.5, "yoy_prev": 2.75, "contrib_yoy": 0.7, "mom": 0.21, "mom_ago": 0.21, "contrib_mom": 0.06, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.3, "yoy_prev": 2.53, "contrib_yoy": 0.19, "mom": 0.2, "mom_ago": 0.2, "contrib_mom": 0.02, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.9, "yoy_prev": 2.09, "contrib_yoy": 0.15, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.9, "yoy_prev": 0.99, "contrib_yoy": 0.04, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": -0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 2.2, "yoy_prev": 2.42, "contrib_yoy": 0.07, "mom": 0.19, "mom_ago": 0.19, "contrib_mom": 0.01, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 2.1, "yoy_prev": 2.31, "contrib_yoy": 0.06, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.01, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 2.7, "yoy_prev": 2.97, "contrib_yoy": 0.07, "mom": 0.23, "mom_ago": 0.23, "contrib_mom": 0.01, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 3.2, "yoy_prev": 3.52, "contrib_yoy": 0.03, "mom": 0.27, "mom_ago": 0.27, "contrib_mom": -0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 2.08, "yoy_prev": 2.29, "contrib_yoy": 2.08, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.18}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 2.6, "yoy_prev": 2.86, "contrib_yoy": 0.46, "mom": 0.22, "mom_ago": 0.22, "contrib_mom": 0.04}]}, "2026-06": {"date": "2026-06", "prev_date": "2026-05", "ago_date": "2025-06", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 2.2, "yoy_prev": 2.2, "contrib_yoy": null, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.18}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.87, "yoy_prev": 1.87, "contrib_yoy": 0.75, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.06, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.75, "yoy_prev": 2.75, "contrib_yoy": 0.75, "mom": 0.22, "mom_ago": 0.22, "contrib_mom": 0.06, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.53, "yoy_prev": 2.53, "contrib_yoy": 0.21, "mom": 0.21, "mom_ago": 0.21, "contrib_mom": 0.02, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 2.09, "yoy_prev": 2.09, "contrib_yoy": 0.17, "mom": 0.17, "mom_ago": 0.17, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.99, "yoy_prev": 0.99, "contrib_yoy": 0.05, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 2.42, "yoy_prev": 2.42, "contrib_yoy": 0.08, "mom": 0.2, "mom_ago": 0.2, "contrib_mom": 0.01, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 2.31, "yoy_prev": 2.31, "contrib_yoy": 0.07, "mom": 0.19, "mom_ago": 0.19, "contrib_mom": 0.01, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 2.97, "yoy_prev": 2.97, "contrib_yoy": 0.08, "mom": 0.24, "mom_ago": 0.24, "contrib_mom": 0.01, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 3.52, "yoy_prev": 3.52, "contrib_yoy": 0.03, "mom": 0.29, "mom_ago": 0.29, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 2.29, "yoy_prev": 2.29, "contrib_yoy": 2.29, "mom": 0.19, "mom_ago": 0.19, "contrib_mom": 0.19}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 2.86, "yoy_prev": 2.86, "contrib_yoy": 0.5, "mom": 0.23, "mom_ago": 0.23, "contrib_mom": 0.04}]}, "2026-05": {"date": "2026-05", "prev_date": "2026-04", "ago_date": "2025-05", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 2.2, "yoy_prev": 1.7, "contrib_yoy": null, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.18}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.87, "yoy_prev": 1.44, "contrib_yoy": 0.75, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.06, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.75, "yoy_prev": 2.12, "contrib_yoy": 0.75, "mom": 0.22, "mom_ago": 0.22, "contrib_mom": 0.06, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.53, "yoy_prev": 1.95, "contrib_yoy": 0.21, "mom": 0.21, "mom_ago": 0.21, "contrib_mom": 0.02, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 2.09, "yoy_prev": 1.61, "contrib_yoy": 0.17, "mom": 0.17, "mom_ago": 0.17, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.99, "yoy_prev": 0.77, "contrib_yoy": 0.05, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 2.42, "yoy_prev": 1.87, "contrib_yoy": 0.08, "mom": 0.2, "mom_ago": 0.2, "contrib_mom": 0.01, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 2.31, "yoy_prev": 1.78, "contrib_yoy": 0.07, "mom": 0.19, "mom_ago": 0.19, "contrib_mom": 0.01, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 2.97, "yoy_prev": 2.29, "contrib_yoy": 0.08, "mom": 0.24, "mom_ago": 0.24, "contrib_mom": 0.01, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 3.52, "yoy_prev": 2.72, "contrib_yoy": 0.03, "mom": 0.29, "mom_ago": 0.29, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 2.29, "yoy_prev": 1.77, "contrib_yoy": 2.29, "mom": 0.19, "mom_ago": 0.19, "contrib_mom": 0.19}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 2.86, "yoy_prev": 2.21, "contrib_yoy": 0.5, "mom": 0.23, "mom_ago": 0.23, "contrib_mom": 0.04}]}, "2026-04": {"date": "2026-04", "prev_date": "2026-03", "ago_date": "2025-04", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.7, "yoy_prev": 1.8, "contrib_yoy": null, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.14}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.44, "yoy_prev": 1.53, "contrib_yoy": 0.58, "mom": 0.12, "mom_ago": 0.12, "contrib_mom": 0.05, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.12, "yoy_prev": 2.25, "contrib_yoy": 0.59, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.05, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.95, "yoy_prev": 2.07, "contrib_yoy": 0.16, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.61, "yoy_prev": 1.71, "contrib_yoy": 0.13, "mom": 0.13, "mom_ago": 0.13, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.77, "yoy_prev": 0.81, "contrib_yoy": 0.04, "mom": 0.06, "mom_ago": 0.06, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.87, "yoy_prev": 1.98, "contrib_yoy": 0.06, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.78, "yoy_prev": 1.89, "contrib_yoy": 0.05, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 2.29, "yoy_prev": 2.43, "contrib_yoy": 0.06, "mom": 0.19, "mom_ago": 0.19, "contrib_mom": 0.01, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 2.72, "yoy_prev": 2.88, "contrib_yoy": 0.02, "mom": 0.22, "mom_ago": 0.22, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.77, "yoy_prev": 1.87, "contrib_yoy": 1.77, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.15}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 2.21, "yoy_prev": 2.34, "contrib_yoy": 0.39, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.03}]}, "2026-03": {"date": "2026-03", "prev_date": "2026-02", "ago_date": "2025-03", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.8, "yoy_prev": 1.9, "contrib_yoy": null, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.15}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.53, "yoy_prev": 1.61, "contrib_yoy": 0.61, "mom": 0.13, "mom_ago": 0.13, "contrib_mom": 0.05, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.25, "yoy_prev": 2.38, "contrib_yoy": 0.62, "mom": 0.19, "mom_ago": 0.19, "contrib_mom": 0.05, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.07, "yoy_prev": 2.18, "contrib_yoy": 0.17, "mom": 0.17, "mom_ago": 0.17, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.71, "yoy_prev": 1.8, "contrib_yoy": 0.14, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.81, "yoy_prev": 0.85, "contrib_yoy": 0.04, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.98, "yoy_prev": 2.09, "contrib_yoy": 0.06, "mom": 0.17, "mom_ago": 0.17, "contrib_mom": 0.01, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.89, "yoy_prev": 1.99, "contrib_yoy": 0.06, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 2.43, "yoy_prev": 2.56, "contrib_yoy": 0.07, "mom": 0.2, "mom_ago": 0.2, "contrib_mom": 0.01, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 2.88, "yoy_prev": 3.04, "contrib_yoy": 0.03, "mom": 0.24, "mom_ago": 0.24, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.87, "yoy_prev": 1.98, "contrib_yoy": 1.87, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.16}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 2.34, "yoy_prev": 2.47, "contrib_yoy": 0.41, "mom": 0.2, "mom_ago": 0.2, "contrib_mom": 0.04}]}, "2026-02": {"date": "2026-02", "prev_date": "2026-01", "ago_date": "2025-02", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.9, "yoy_prev": 0.9, "contrib_yoy": null, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.16}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.61, "yoy_prev": 0.77, "contrib_yoy": 0.65, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.06, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.38, "yoy_prev": 1.12, "contrib_yoy": 0.66, "mom": 0.2, "mom_ago": 0.2, "contrib_mom": 0.05, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.18, "yoy_prev": 1.03, "contrib_yoy": 0.18, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.8, "yoy_prev": 0.85, "contrib_yoy": 0.14, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.85, "yoy_prev": 0.41, "contrib_yoy": 0.04, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 2.09, "yoy_prev": 0.99, "contrib_yoy": 0.07, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.01, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.99, "yoy_prev": 0.95, "contrib_yoy": 0.06, "mom": 0.17, "mom_ago": 0.17, "contrib_mom": 0.01, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 2.56, "yoy_prev": 1.22, "contrib_yoy": 0.07, "mom": 0.22, "mom_ago": 0.22, "contrib_mom": 0.01, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 3.04, "yoy_prev": 1.44, "contrib_yoy": 0.03, "mom": 0.26, "mom_ago": 0.26, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.98, "yoy_prev": 0.94, "contrib_yoy": 1.98, "mom": 0.17, "mom_ago": 0.17, "contrib_mom": 0.17}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 2.47, "yoy_prev": 1.17, "contrib_yoy": 0.43, "mom": 0.21, "mom_ago": 0.21, "contrib_mom": 0.04}]}, "2026-01": {"date": "2026-01", "prev_date": "2025-12", "ago_date": "2025-01", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 0.9, "yoy_prev": 1.4, "contrib_yoy": null, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.07}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.77, "yoy_prev": 1.19, "contrib_yoy": 0.31, "mom": 0.06, "mom_ago": 0.06, "contrib_mom": 0.02, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.12, "yoy_prev": 1.75, "contrib_yoy": 0.31, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.02, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.03, "yoy_prev": 1.61, "contrib_yoy": 0.08, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 0.85, "yoy_prev": 1.33, "contrib_yoy": 0.07, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.41, "yoy_prev": 0.63, "contrib_yoy": 0.02, "mom": 0.03, "mom_ago": 0.03, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 0.99, "yoy_prev": 1.54, "contrib_yoy": 0.03, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 0.95, "yoy_prev": 1.47, "contrib_yoy": 0.03, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.22, "yoy_prev": 1.89, "contrib_yoy": 0.03, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 1.44, "yoy_prev": 2.24, "contrib_yoy": 0.01, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 0.94, "yoy_prev": 1.46, "contrib_yoy": 0.94, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.07}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.17, "yoy_prev": 1.82, "contrib_yoy": 0.2, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.02}]}, "2025-12": {"date": "2025-12", "prev_date": "2025-11", "ago_date": "2024-12", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.4, "yoy_prev": 1.1, "contrib_yoy": null, "mom": 0.12, "mom_ago": 0.12, "contrib_mom": 0.12}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.19, "yoy_prev": 0.94, "contrib_yoy": 0.48, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.05, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.75, "yoy_prev": 1.38, "contrib_yoy": 0.49, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.05, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.61, "yoy_prev": 1.26, "contrib_yoy": 0.13, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.33, "yoy_prev": 1.04, "contrib_yoy": 0.11, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.63, "yoy_prev": 0.5, "contrib_yoy": 0.03, "mom": 0.05, "mom_ago": 0.05, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.54, "yoy_prev": 1.21, "contrib_yoy": 0.05, "mom": 0.13, "mom_ago": 0.13, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.47, "yoy_prev": 1.16, "contrib_yoy": 0.04, "mom": 0.13, "mom_ago": 0.13, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.89, "yoy_prev": 1.49, "contrib_yoy": 0.05, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 2.24, "yoy_prev": 1.76, "contrib_yoy": 0.02, "mom": 0.19, "mom_ago": 0.19, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.46, "yoy_prev": 1.14, "contrib_yoy": 1.46, "mom": 0.12, "mom_ago": 0.12, "contrib_mom": 0.12}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.82, "yoy_prev": 1.43, "contrib_yoy": 0.32, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.03}]}, "2025-11": {"date": "2025-11", "prev_date": "2025-10", "ago_date": "2024-11", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.1, "yoy_prev": 1.0, "contrib_yoy": null, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.09}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.94, "yoy_prev": 0.85, "contrib_yoy": 0.38, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.03, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.38, "yoy_prev": 1.25, "contrib_yoy": 0.38, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.03, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.26, "yoy_prev": 1.15, "contrib_yoy": 0.1, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.04, "yoy_prev": 0.95, "contrib_yoy": 0.08, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.5, "yoy_prev": 0.45, "contrib_yoy": 0.02, "mom": 0.04, "mom_ago": 0.04, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.21, "yoy_prev": 1.1, "contrib_yoy": 0.04, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.16, "yoy_prev": 1.05, "contrib_yoy": 0.03, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.49, "yoy_prev": 1.35, "contrib_yoy": 0.04, "mom": 0.12, "mom_ago": 0.12, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 1.76, "yoy_prev": 1.6, "contrib_yoy": 0.02, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.14, "yoy_prev": 1.04, "contrib_yoy": 1.14, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.09}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.43, "yoy_prev": 1.3, "contrib_yoy": 0.25, "mom": 0.12, "mom_ago": 0.12, "contrib_mom": 0.02}]}, "2025-10": {"date": "2025-10", "prev_date": "2025-09", "ago_date": "2024-10", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.0, "yoy_prev": 0.8, "contrib_yoy": null, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.08}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.85, "yoy_prev": 0.68, "contrib_yoy": 0.34, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.03, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.25, "yoy_prev": 1.0, "contrib_yoy": 0.34, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.03, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.15, "yoy_prev": 0.92, "contrib_yoy": 0.09, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 0.95, "yoy_prev": 0.76, "contrib_yoy": 0.08, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.45, "yoy_prev": 0.36, "contrib_yoy": 0.02, "mom": 0.04, "mom_ago": 0.04, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.1, "yoy_prev": 0.88, "contrib_yoy": 0.04, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.05, "yoy_prev": 0.84, "contrib_yoy": 0.03, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.35, "yoy_prev": 1.08, "contrib_yoy": 0.04, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 1.6, "yoy_prev": 1.28, "contrib_yoy": 0.01, "mom": 0.13, "mom_ago": 0.13, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.04, "yoy_prev": 0.83, "contrib_yoy": 1.04, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.08}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.3, "yoy_prev": 1.04, "contrib_yoy": 0.23, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.02}]}, "2025-09": {"date": "2025-09", "prev_date": "2025-08", "ago_date": "2024-09", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 0.8, "yoy_prev": 0.9, "contrib_yoy": null, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.07}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.68, "yoy_prev": 0.77, "contrib_yoy": 0.27, "mom": 0.06, "mom_ago": 0.06, "contrib_mom": 0.02, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.0, "yoy_prev": 1.12, "contrib_yoy": 0.27, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.02, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 0.92, "yoy_prev": 1.03, "contrib_yoy": 0.08, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 0.76, "yoy_prev": 0.85, "contrib_yoy": 0.06, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.36, "yoy_prev": 0.41, "contrib_yoy": 0.02, "mom": 0.03, "mom_ago": 0.03, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 0.88, "yoy_prev": 0.99, "contrib_yoy": 0.03, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 0.84, "yoy_prev": 0.95, "contrib_yoy": 0.03, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.08, "yoy_prev": 1.22, "contrib_yoy": 0.03, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 1.28, "yoy_prev": 1.44, "contrib_yoy": 0.01, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 0.83, "yoy_prev": 0.94, "contrib_yoy": 0.83, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.07}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.04, "yoy_prev": 1.17, "contrib_yoy": 0.18, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.02}]}, "2025-08": {"date": "2025-08", "prev_date": "2025-07", "ago_date": "2024-08", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 0.9, "yoy_prev": 0.6, "contrib_yoy": null, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.07}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.77, "yoy_prev": 0.51, "contrib_yoy": 0.31, "mom": 0.06, "mom_ago": 0.06, "contrib_mom": 0.02, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.12, "yoy_prev": 0.75, "contrib_yoy": 0.31, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.02, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.03, "yoy_prev": 0.69, "contrib_yoy": 0.08, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 0.85, "yoy_prev": 0.57, "contrib_yoy": 0.07, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.41, "yoy_prev": 0.27, "contrib_yoy": 0.02, "mom": 0.03, "mom_ago": 0.03, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 0.99, "yoy_prev": 0.66, "contrib_yoy": 0.03, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 0.95, "yoy_prev": 0.63, "contrib_yoy": 0.03, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.22, "yoy_prev": 0.81, "contrib_yoy": 0.03, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 1.44, "yoy_prev": 0.96, "contrib_yoy": 0.01, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 0.94, "yoy_prev": 0.62, "contrib_yoy": 0.94, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.07}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.17, "yoy_prev": 0.78, "contrib_yoy": 0.2, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.02}]}, "2025-07": {"date": "2025-07", "prev_date": "2025-06", "ago_date": "2024-07", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 0.6, "yoy_prev": 0.9, "contrib_yoy": null, "mom": 0.05, "mom_ago": 0.05, "contrib_mom": 0.05}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.51, "yoy_prev": 0.77, "contrib_yoy": 0.2, "mom": 0.04, "mom_ago": 0.04, "contrib_mom": 0.02, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 0.75, "yoy_prev": 1.12, "contrib_yoy": 0.21, "mom": 0.06, "mom_ago": 0.06, "contrib_mom": 0.02, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 0.69, "yoy_prev": 1.03, "contrib_yoy": 0.06, "mom": 0.06, "mom_ago": 0.06, "contrib_mom": 0.0, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 0.57, "yoy_prev": 0.85, "contrib_yoy": 0.05, "mom": 0.05, "mom_ago": 0.05, "contrib_mom": 0.0, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.27, "yoy_prev": 0.41, "contrib_yoy": 0.01, "mom": 0.02, "mom_ago": 0.02, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 0.66, "yoy_prev": 0.99, "contrib_yoy": 0.02, "mom": 0.06, "mom_ago": 0.06, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 0.63, "yoy_prev": 0.95, "contrib_yoy": 0.02, "mom": 0.05, "mom_ago": 0.05, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 0.81, "yoy_prev": 1.22, "contrib_yoy": 0.02, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 0.96, "yoy_prev": 1.44, "contrib_yoy": 0.01, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 0.62, "yoy_prev": 0.94, "contrib_yoy": 0.62, "mom": 0.05, "mom_ago": 0.05, "contrib_mom": 0.05}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 0.78, "yoy_prev": 1.17, "contrib_yoy": 0.14, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.01}]}, "2025-06": {"date": "2025-06", "prev_date": "2025-05", "ago_date": "2024-06", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 0.9, "yoy_prev": 1.2, "contrib_yoy": null, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.07}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.77, "yoy_prev": 1.02, "contrib_yoy": 0.31, "mom": 0.06, "mom_ago": 0.06, "contrib_mom": 0.02, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.12, "yoy_prev": 1.5, "contrib_yoy": 0.31, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.02, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.03, "yoy_prev": 1.38, "contrib_yoy": 0.08, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 0.85, "yoy_prev": 1.14, "contrib_yoy": 0.07, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.41, "yoy_prev": 0.54, "contrib_yoy": 0.02, "mom": 0.03, "mom_ago": 0.03, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 0.99, "yoy_prev": 1.32, "contrib_yoy": 0.03, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 0.95, "yoy_prev": 1.26, "contrib_yoy": 0.03, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.22, "yoy_prev": 1.62, "contrib_yoy": 0.03, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 1.44, "yoy_prev": 1.92, "contrib_yoy": 0.01, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 0.94, "yoy_prev": 1.25, "contrib_yoy": 0.94, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.07}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.17, "yoy_prev": 1.56, "contrib_yoy": 0.2, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.02}]}, "2025-05": {"date": "2025-05", "prev_date": "2025-04", "ago_date": "2024-05", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.2, "yoy_prev": 1.6, "contrib_yoy": null, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.1}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.02, "yoy_prev": 1.36, "contrib_yoy": 0.41, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.04, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.5, "yoy_prev": 2.0, "contrib_yoy": 0.41, "mom": 0.12, "mom_ago": 0.12, "contrib_mom": 0.03, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.38, "yoy_prev": 1.84, "contrib_yoy": 0.11, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.14, "yoy_prev": 1.52, "contrib_yoy": 0.09, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.54, "yoy_prev": 0.72, "contrib_yoy": 0.03, "mom": 0.05, "mom_ago": 0.05, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.32, "yoy_prev": 1.76, "contrib_yoy": 0.04, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.26, "yoy_prev": 1.68, "contrib_yoy": 0.04, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.62, "yoy_prev": 2.16, "contrib_yoy": 0.04, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 1.92, "yoy_prev": 2.56, "contrib_yoy": 0.02, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.25, "yoy_prev": 1.66, "contrib_yoy": 1.25, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.1}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.56, "yoy_prev": 2.08, "contrib_yoy": 0.27, "mom": 0.13, "mom_ago": 0.13, "contrib_mom": 0.02}]}, "2025-04": {"date": "2025-04", "prev_date": "2025-03", "ago_date": "2024-04", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.6, "yoy_prev": 1.0, "contrib_yoy": null, "mom": 0.13, "mom_ago": 0.13, "contrib_mom": 0.13}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.36, "yoy_prev": 0.85, "contrib_yoy": 0.55, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.05, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.0, "yoy_prev": 1.25, "contrib_yoy": 0.56, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.05, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.84, "yoy_prev": 1.15, "contrib_yoy": 0.15, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.52, "yoy_prev": 0.95, "contrib_yoy": 0.12, "mom": 0.12, "mom_ago": 0.12, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.72, "yoy_prev": 0.45, "contrib_yoy": 0.03, "mom": 0.06, "mom_ago": 0.06, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.76, "yoy_prev": 1.1, "contrib_yoy": 0.06, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.68, "yoy_prev": 1.05, "contrib_yoy": 0.05, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 2.16, "yoy_prev": 1.35, "contrib_yoy": 0.06, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 2.56, "yoy_prev": 1.6, "contrib_yoy": 0.02, "mom": 0.21, "mom_ago": 0.21, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.66, "yoy_prev": 1.04, "contrib_yoy": 1.66, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.14}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 2.08, "yoy_prev": 1.3, "contrib_yoy": 0.36, "mom": 0.17, "mom_ago": 0.17, "contrib_mom": 0.03}]}, "2025-03": {"date": "2025-03", "prev_date": "2025-02", "ago_date": "2024-03", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.0, "yoy_prev": 1.0, "contrib_yoy": null, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.08}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.85, "yoy_prev": 0.85, "contrib_yoy": 0.34, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.03, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.25, "yoy_prev": 1.25, "contrib_yoy": 0.34, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.03, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.15, "yoy_prev": 1.15, "contrib_yoy": 0.09, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 0.95, "yoy_prev": 0.95, "contrib_yoy": 0.08, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.45, "yoy_prev": 0.45, "contrib_yoy": 0.02, "mom": 0.04, "mom_ago": 0.04, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.1, "yoy_prev": 1.1, "contrib_yoy": 0.04, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.05, "yoy_prev": 1.05, "contrib_yoy": 0.03, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.35, "yoy_prev": 1.35, "contrib_yoy": 0.04, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 1.6, "yoy_prev": 1.6, "contrib_yoy": 0.01, "mom": 0.13, "mom_ago": 0.13, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.04, "yoy_prev": 1.04, "contrib_yoy": 1.04, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.08}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.3, "yoy_prev": 1.3, "contrib_yoy": 0.23, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.02}]}, "2025-02": {"date": "2025-02", "prev_date": "2025-01", "ago_date": "2024-02", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.0, "yoy_prev": 1.7, "contrib_yoy": null, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.08}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.85, "yoy_prev": 1.44, "contrib_yoy": 0.34, "mom": 0.07, "mom_ago": 0.07, "contrib_mom": 0.03, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.25, "yoy_prev": 2.12, "contrib_yoy": 0.34, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.03, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.15, "yoy_prev": 1.95, "contrib_yoy": 0.09, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 0.95, "yoy_prev": 1.61, "contrib_yoy": 0.08, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.45, "yoy_prev": 0.77, "contrib_yoy": 0.02, "mom": 0.04, "mom_ago": 0.04, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.1, "yoy_prev": 1.87, "contrib_yoy": 0.04, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.05, "yoy_prev": 1.78, "contrib_yoy": 0.03, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.35, "yoy_prev": 2.29, "contrib_yoy": 0.04, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 1.6, "yoy_prev": 2.72, "contrib_yoy": 0.01, "mom": 0.13, "mom_ago": 0.13, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.04, "yoy_prev": 1.77, "contrib_yoy": 1.04, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.08}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.3, "yoy_prev": 2.21, "contrib_yoy": 0.23, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.02}]}, "2025-01": {"date": "2025-01", "prev_date": "2024-12", "ago_date": "2024-01", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.7, "yoy_prev": 1.2, "contrib_yoy": null, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.14}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.44, "yoy_prev": 1.02, "contrib_yoy": 0.58, "mom": 0.12, "mom_ago": 0.12, "contrib_mom": 0.05, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.12, "yoy_prev": 1.5, "contrib_yoy": 0.59, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.05, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.95, "yoy_prev": 1.38, "contrib_yoy": 0.16, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.61, "yoy_prev": 1.14, "contrib_yoy": 0.13, "mom": 0.13, "mom_ago": 0.13, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.77, "yoy_prev": 0.54, "contrib_yoy": 0.04, "mom": 0.06, "mom_ago": 0.06, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.87, "yoy_prev": 1.32, "contrib_yoy": 0.06, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.78, "yoy_prev": 1.26, "contrib_yoy": 0.05, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 2.29, "yoy_prev": 1.62, "contrib_yoy": 0.06, "mom": 0.19, "mom_ago": 0.19, "contrib_mom": 0.01, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 2.72, "yoy_prev": 1.92, "contrib_yoy": 0.02, "mom": 0.22, "mom_ago": 0.22, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.77, "yoy_prev": 1.25, "contrib_yoy": 1.77, "mom": 0.15, "mom_ago": 0.15, "contrib_mom": 0.15}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 2.21, "yoy_prev": 1.56, "contrib_yoy": 0.39, "mom": 0.18, "mom_ago": 0.18, "contrib_mom": 0.03}]}, "2024-12": {"date": "2024-12", "prev_date": "2024-11", "ago_date": "2023-12", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.2, "yoy_prev": 1.1, "contrib_yoy": null, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.1}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.02, "yoy_prev": 0.94, "contrib_yoy": 0.41, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.04, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.5, "yoy_prev": 1.38, "contrib_yoy": 0.41, "mom": 0.12, "mom_ago": 0.12, "contrib_mom": 0.03, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.38, "yoy_prev": 1.26, "contrib_yoy": 0.11, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.14, "yoy_prev": 1.04, "contrib_yoy": 0.09, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.54, "yoy_prev": 0.5, "contrib_yoy": 0.03, "mom": 0.05, "mom_ago": 0.05, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.32, "yoy_prev": 1.21, "contrib_yoy": 0.04, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.26, "yoy_prev": 1.16, "contrib_yoy": 0.04, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.62, "yoy_prev": 1.49, "contrib_yoy": 0.04, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 1.92, "yoy_prev": 1.76, "contrib_yoy": 0.02, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.25, "yoy_prev": 1.14, "contrib_yoy": 1.25, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.1}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.56, "yoy_prev": 1.43, "contrib_yoy": 0.27, "mom": 0.13, "mom_ago": 0.13, "contrib_mom": 0.02}]}, "2024-11": {"date": "2024-11", "prev_date": "2024-10", "ago_date": "2023-11", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.1, "yoy_prev": 1.2, "contrib_yoy": null, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.09}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.94, "yoy_prev": 1.02, "contrib_yoy": 0.38, "mom": 0.08, "mom_ago": 0.08, "contrib_mom": 0.03, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.38, "yoy_prev": 1.5, "contrib_yoy": 0.38, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.03, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.26, "yoy_prev": 1.38, "contrib_yoy": 0.1, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.04, "yoy_prev": 1.14, "contrib_yoy": 0.08, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.5, "yoy_prev": 0.54, "contrib_yoy": 0.02, "mom": 0.04, "mom_ago": 0.04, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.21, "yoy_prev": 1.32, "contrib_yoy": 0.04, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.16, "yoy_prev": 1.26, "contrib_yoy": 0.03, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.49, "yoy_prev": 1.62, "contrib_yoy": 0.04, "mom": 0.12, "mom_ago": 0.12, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 1.76, "yoy_prev": 1.92, "contrib_yoy": 0.02, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.14, "yoy_prev": 1.25, "contrib_yoy": 1.14, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.09}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.43, "yoy_prev": 1.56, "contrib_yoy": 0.25, "mom": 0.12, "mom_ago": 0.12, "contrib_mom": 0.02}]}, "2024-10": {"date": "2024-10", "prev_date": null, "ago_date": "2023-10", "headline": {"name": "Composite CPI (Linked Exchange Anchor)", "yoy": 1.2, "yoy_prev": 1.2, "contrib_yoy": null, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.1}, "items": [{"code": "HOUSING", "name": "Housing (Private & Public)", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.02, "yoy_prev": 1.02, "contrib_yoy": 0.41, "mom": 0.09, "mom_ago": 0.09, "contrib_mom": 0.04, "sub_items": []}, {"code": "FOOD_CATERING", "name": "Food & Meals Bought Away From Home", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.5, "yoy_prev": 1.5, "contrib_yoy": 0.41, "mom": 0.12, "mom_ago": 0.12, "contrib_mom": 0.03, "sub_items": []}, {"code": "MISC_SERVICES", "name": "Miscellaneous Services", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.38, "yoy_prev": 1.38, "contrib_yoy": 0.11, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.01, "sub_items": []}, {"code": "TRANSPORT", "name": "Transport", "name_en": "Transport", "name_zh": "交通运输与港铁票价", "weight": 8.0, "yoy": 1.14, "yoy_prev": 1.14, "contrib_yoy": 0.09, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.01, "sub_items": []}, {"code": "DURABLE_GOODS", "name": "Durable Goods (Electronics/Autos)", "name_en": "Durable Goods (Electronics/Autos)", "name_zh": "耐用物品 (数码及家电)", "weight": 4.7, "yoy": 0.54, "yoy_prev": 0.54, "contrib_yoy": 0.03, "mom": 0.05, "mom_ago": 0.05, "contrib_mom": 0.0, "sub_items": []}, {"code": "CLOTHING_FOOTWEAR", "name": "Clothing & Footwear", "name_en": "Clothing & Footwear", "name_zh": "衣履用品", "weight": 3.2, "yoy": 1.32, "yoy_prev": 1.32, "contrib_yoy": 0.04, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}, {"code": "MISC_GOODS", "name": "Miscellaneous Goods", "name_en": "Miscellaneous Goods", "name_zh": "杂项物品", "weight": 3.0, "yoy": 1.26, "yoy_prev": 1.26, "contrib_yoy": 0.04, "mom": 0.11, "mom_ago": 0.11, "contrib_mom": 0.0, "sub_items": []}, {"code": "ELECTRICITY_GAS", "name": "Electricity, Gas & Water", "name_en": "Electricity, Gas & Water", "name_zh": "电力、燃气及水费", "weight": 2.7, "yoy": 1.62, "yoy_prev": 1.62, "contrib_yoy": 0.04, "mom": 0.14, "mom_ago": 0.14, "contrib_mom": 0.0, "sub_items": []}, {"code": "ALCOHOL_TOBACCO", "name": "Alcoholic Drinks & Tobacco", "name_en": "Alcoholic Drinks & Tobacco", "name_zh": "烟酒类", "weight": 0.9, "yoy": 1.92, "yoy_prev": 1.92, "contrib_yoy": 0.02, "mom": 0.16, "mom_ago": 0.16, "contrib_mom": 0.0, "sub_items": []}], "memo": [{"code": "UNDERLYING_CPI", "name_en": "Underlying Composite CPI (ex Govt Relief)", "name_zh": "基本综合消费物价指数 (剔除政府一次性纾困)", "weight": 100.0, "yoy": 1.25, "yoy_prev": 1.25, "contrib_yoy": 1.25, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.1}, {"code": "MEALS_AWAY", "name_en": "Meals Away from Home", "name_zh": "外食费指数", "weight": 17.5, "yoy": 1.56, "yoy_prev": 1.56, "contrib_yoy": 0.27, "mom": 0.13, "mom_ago": 0.13, "contrib_mom": 0.02}]}};
+window['EM_MOM_DATA_HK'] = {"2026-09": {"date": "2026-09", "headline_ann_3m": 2.3, "headline_yoy": 2.3, "headline_gap": 0.0, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 2.3, "mom_1m_ann": 2.3, "mom_3m_ann": 2.3, "mom_6m_ann": 2.29, "gap": 0.0, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.95, "mom_1m_ann": 1.94, "mom_3m_ann": 1.93, "mom_6m_ann": 1.93, "gap": -0.02, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.88, "mom_1m_ann": 2.92, "mom_3m_ann": 2.91, "mom_6m_ann": 2.9, "gap": 0.03, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.64, "mom_1m_ann": 2.67, "mom_3m_ann": 2.67, "mom_6m_ann": 2.66, "gap": 0.03, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2026-08": {"date": "2026-08", "headline_ann_3m": 1.93, "headline_yoy": 1.9, "headline_gap": 0.03, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.9, "mom_1m_ann": 1.94, "mom_3m_ann": 1.93, "mom_6m_ann": 1.93, "gap": 0.03, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.61, "mom_1m_ann": 1.69, "mom_3m_ann": 1.69, "mom_6m_ann": 1.69, "gap": 0.08, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.38, "mom_1m_ann": 2.43, "mom_3m_ann": 2.42, "mom_6m_ann": 2.41, "gap": 0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.18, "mom_1m_ann": 2.18, "mom_3m_ann": 2.18, "mom_6m_ann": 2.17, "gap": 0.0, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2026-07": {"date": "2026-07", "headline_ann_3m": 2.06, "headline_yoy": 2.0, "headline_gap": 0.06, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 2.0, "mom_1m_ann": 2.06, "mom_3m_ann": 2.06, "mom_6m_ann": 2.05, "gap": 0.06, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.7, "mom_1m_ann": 1.69, "mom_3m_ann": 1.69, "mom_6m_ann": 1.69, "gap": -0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.5, "mom_1m_ann": 2.55, "mom_3m_ann": 2.54, "mom_6m_ann": 2.54, "gap": 0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.3, "mom_1m_ann": 2.43, "mom_3m_ann": 2.42, "mom_6m_ann": 2.41, "gap": 0.12, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2026-06": {"date": "2026-06", "headline_ann_3m": 2.18, "headline_yoy": 2.2, "headline_gap": -0.02, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 2.2, "mom_1m_ann": 2.18, "mom_3m_ann": 2.18, "mom_6m_ann": 2.17, "gap": -0.02, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.87, "mom_1m_ann": 1.81, "mom_3m_ann": 1.81, "mom_6m_ann": 1.81, "gap": -0.06, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.75, "mom_1m_ann": 2.67, "mom_3m_ann": 2.67, "mom_6m_ann": 2.66, "gap": -0.08, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.53, "mom_1m_ann": 2.55, "mom_3m_ann": 2.54, "mom_6m_ann": 2.54, "gap": 0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2026-05": {"date": "2026-05", "headline_ann_3m": 2.18, "headline_yoy": 2.2, "headline_gap": -0.02, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 2.2, "mom_1m_ann": 2.18, "mom_3m_ann": 2.18, "mom_6m_ann": 2.17, "gap": -0.02, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.87, "mom_1m_ann": 1.81, "mom_3m_ann": 1.81, "mom_6m_ann": 1.81, "gap": -0.06, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.75, "mom_1m_ann": 2.67, "mom_3m_ann": 2.67, "mom_6m_ann": 2.66, "gap": -0.08, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.53, "mom_1m_ann": 2.55, "mom_3m_ann": 2.54, "mom_6m_ann": 2.54, "gap": 0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2026-04": {"date": "2026-04", "headline_ann_3m": 1.69, "headline_yoy": 1.7, "headline_gap": -0.01, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.7, "mom_1m_ann": 1.69, "mom_3m_ann": 1.69, "mom_6m_ann": 1.69, "gap": -0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.44, "mom_1m_ann": 1.45, "mom_3m_ann": 1.45, "mom_6m_ann": 1.45, "gap": 0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.12, "mom_1m_ann": 2.18, "mom_3m_ann": 2.18, "mom_6m_ann": 2.17, "gap": 0.06, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.95, "mom_1m_ann": 1.94, "mom_3m_ann": 1.93, "mom_6m_ann": 1.93, "gap": -0.02, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2026-03": {"date": "2026-03", "headline_ann_3m": 1.81, "headline_yoy": 1.8, "headline_gap": 0.01, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.8, "mom_1m_ann": 1.81, "mom_3m_ann": 1.81, "mom_6m_ann": 1.81, "gap": 0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.53, "mom_1m_ann": 1.57, "mom_3m_ann": 1.57, "mom_6m_ann": 1.57, "gap": 0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.25, "mom_1m_ann": 2.3, "mom_3m_ann": 2.3, "mom_6m_ann": 2.29, "gap": 0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.07, "mom_1m_ann": 2.06, "mom_3m_ann": 2.06, "mom_6m_ann": 2.05, "gap": -0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2026-02": {"date": "2026-02", "headline_ann_3m": 1.93, "headline_yoy": 1.9, "headline_gap": 0.03, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.9, "mom_1m_ann": 1.94, "mom_3m_ann": 1.93, "mom_6m_ann": 1.93, "gap": 0.03, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.61, "mom_1m_ann": 1.69, "mom_3m_ann": 1.69, "mom_6m_ann": 1.69, "gap": 0.08, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.38, "mom_1m_ann": 2.43, "mom_3m_ann": 2.42, "mom_6m_ann": 2.41, "gap": 0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 2.18, "mom_1m_ann": 2.18, "mom_3m_ann": 2.18, "mom_6m_ann": 2.17, "gap": 0.0, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2026-01": {"date": "2026-01", "headline_ann_3m": 0.84, "headline_yoy": 0.9, "headline_gap": -0.06, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 0.9, "mom_1m_ann": 0.84, "mom_3m_ann": 0.84, "mom_6m_ann": 0.84, "gap": -0.06, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.77, "mom_1m_ann": 0.72, "mom_3m_ann": 0.72, "mom_6m_ann": 0.72, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.12, "mom_1m_ann": 1.09, "mom_3m_ann": 1.08, "mom_6m_ann": 1.08, "gap": -0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.03, "mom_1m_ann": 0.96, "mom_3m_ann": 0.96, "mom_6m_ann": 0.96, "gap": -0.07, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2025-12": {"date": "2025-12", "headline_ann_3m": 1.45, "headline_yoy": 1.4, "headline_gap": 0.05, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.4, "mom_1m_ann": 1.45, "mom_3m_ann": 1.45, "mom_6m_ann": 1.45, "gap": 0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.19, "mom_1m_ann": 1.21, "mom_3m_ann": 1.21, "mom_6m_ann": 1.2, "gap": 0.02, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.75, "mom_1m_ann": 1.81, "mom_3m_ann": 1.81, "mom_6m_ann": 1.81, "gap": 0.06, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.61, "mom_1m_ann": 1.69, "mom_3m_ann": 1.69, "mom_6m_ann": 1.69, "gap": 0.08, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2025-11": {"date": "2025-11", "headline_ann_3m": 1.08, "headline_yoy": 1.1, "headline_gap": -0.02, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.1, "mom_1m_ann": 1.09, "mom_3m_ann": 1.08, "mom_6m_ann": 1.08, "gap": -0.02, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.94, "mom_1m_ann": 0.96, "mom_3m_ann": 0.96, "mom_6m_ann": 0.96, "gap": 0.02, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.38, "mom_1m_ann": 1.33, "mom_3m_ann": 1.33, "mom_6m_ann": 1.32, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.26, "mom_1m_ann": 1.21, "mom_3m_ann": 1.21, "mom_6m_ann": 1.2, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2025-10": {"date": "2025-10", "headline_ann_3m": 0.96, "headline_yoy": 1.0, "headline_gap": -0.04, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.0, "mom_1m_ann": 0.96, "mom_3m_ann": 0.96, "mom_6m_ann": 0.96, "gap": -0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.85, "mom_1m_ann": 0.84, "mom_3m_ann": 0.84, "mom_6m_ann": 0.84, "gap": -0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.25, "mom_1m_ann": 1.21, "mom_3m_ann": 1.21, "mom_6m_ann": 1.2, "gap": -0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.15, "mom_1m_ann": 1.09, "mom_3m_ann": 1.08, "mom_6m_ann": 1.08, "gap": -0.07, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2025-09": {"date": "2025-09", "headline_ann_3m": 0.84, "headline_yoy": 0.8, "headline_gap": 0.04, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 0.8, "mom_1m_ann": 0.84, "mom_3m_ann": 0.84, "mom_6m_ann": 0.84, "gap": 0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.68, "mom_1m_ann": 0.72, "mom_3m_ann": 0.72, "mom_6m_ann": 0.72, "gap": 0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.0, "mom_1m_ann": 1.09, "mom_3m_ann": 1.08, "mom_6m_ann": 1.08, "gap": 0.08, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 0.92, "mom_1m_ann": 0.96, "mom_3m_ann": 0.96, "mom_6m_ann": 0.96, "gap": 0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2025-08": {"date": "2025-08", "headline_ann_3m": 0.84, "headline_yoy": 0.9, "headline_gap": -0.06, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 0.9, "mom_1m_ann": 0.84, "mom_3m_ann": 0.84, "mom_6m_ann": 0.84, "gap": -0.06, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.77, "mom_1m_ann": 0.72, "mom_3m_ann": 0.72, "mom_6m_ann": 0.72, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.12, "mom_1m_ann": 1.09, "mom_3m_ann": 1.08, "mom_6m_ann": 1.08, "gap": -0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.03, "mom_1m_ann": 0.96, "mom_3m_ann": 0.96, "mom_6m_ann": 0.96, "gap": -0.07, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2025-07": {"date": "2025-07", "headline_ann_3m": 0.6, "headline_yoy": 0.6, "headline_gap": 0.0, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 0.6, "mom_1m_ann": 0.6, "mom_3m_ann": 0.6, "mom_6m_ann": 0.6, "gap": 0.0, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.51, "mom_1m_ann": 0.48, "mom_3m_ann": 0.48, "mom_6m_ann": 0.48, "gap": -0.03, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 0.75, "mom_1m_ann": 0.72, "mom_3m_ann": 0.72, "mom_6m_ann": 0.72, "gap": -0.03, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 0.69, "mom_1m_ann": 0.72, "mom_3m_ann": 0.72, "mom_6m_ann": 0.72, "gap": 0.03, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2025-06": {"date": "2025-06", "headline_ann_3m": 0.84, "headline_yoy": 0.9, "headline_gap": -0.06, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 0.9, "mom_1m_ann": 0.84, "mom_3m_ann": 0.84, "mom_6m_ann": 0.84, "gap": -0.06, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.77, "mom_1m_ann": 0.72, "mom_3m_ann": 0.72, "mom_6m_ann": 0.72, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.12, "mom_1m_ann": 1.09, "mom_3m_ann": 1.08, "mom_6m_ann": 1.08, "gap": -0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.03, "mom_1m_ann": 0.96, "mom_3m_ann": 0.96, "mom_6m_ann": 0.96, "gap": -0.07, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2025-05": {"date": "2025-05", "headline_ann_3m": 1.21, "headline_yoy": 1.2, "headline_gap": 0.01, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.2, "mom_1m_ann": 1.21, "mom_3m_ann": 1.21, "mom_6m_ann": 1.2, "gap": 0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.02, "mom_1m_ann": 1.09, "mom_3m_ann": 1.08, "mom_6m_ann": 1.08, "gap": 0.06, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.5, "mom_1m_ann": 1.45, "mom_3m_ann": 1.45, "mom_6m_ann": 1.45, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.38, "mom_1m_ann": 1.33, "mom_3m_ann": 1.33, "mom_6m_ann": 1.32, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2025-04": {"date": "2025-04", "headline_ann_3m": 1.57, "headline_yoy": 1.6, "headline_gap": -0.03, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.6, "mom_1m_ann": 1.57, "mom_3m_ann": 1.57, "mom_6m_ann": 1.57, "gap": -0.03, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.36, "mom_1m_ann": 1.33, "mom_3m_ann": 1.33, "mom_6m_ann": 1.32, "gap": -0.03, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.0, "mom_1m_ann": 1.94, "mom_3m_ann": 1.93, "mom_6m_ann": 1.93, "gap": -0.07, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.84, "mom_1m_ann": 1.81, "mom_3m_ann": 1.81, "mom_6m_ann": 1.81, "gap": -0.03, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2025-03": {"date": "2025-03", "headline_ann_3m": 0.96, "headline_yoy": 1.0, "headline_gap": -0.04, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.0, "mom_1m_ann": 0.96, "mom_3m_ann": 0.96, "mom_6m_ann": 0.96, "gap": -0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.85, "mom_1m_ann": 0.84, "mom_3m_ann": 0.84, "mom_6m_ann": 0.84, "gap": -0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.25, "mom_1m_ann": 1.21, "mom_3m_ann": 1.21, "mom_6m_ann": 1.2, "gap": -0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.15, "mom_1m_ann": 1.09, "mom_3m_ann": 1.08, "mom_6m_ann": 1.08, "gap": -0.07, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2025-02": {"date": "2025-02", "headline_ann_3m": 0.96, "headline_yoy": 1.0, "headline_gap": -0.04, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.0, "mom_1m_ann": 0.96, "mom_3m_ann": 0.96, "mom_6m_ann": 0.96, "gap": -0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.85, "mom_1m_ann": 0.84, "mom_3m_ann": 0.84, "mom_6m_ann": 0.84, "gap": -0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.25, "mom_1m_ann": 1.21, "mom_3m_ann": 1.21, "mom_6m_ann": 1.2, "gap": -0.04, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.15, "mom_1m_ann": 1.09, "mom_3m_ann": 1.08, "mom_6m_ann": 1.08, "gap": -0.07, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2025-01": {"date": "2025-01", "headline_ann_3m": 1.69, "headline_yoy": 1.7, "headline_gap": -0.01, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.7, "mom_1m_ann": 1.69, "mom_3m_ann": 1.69, "mom_6m_ann": 1.69, "gap": -0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.44, "mom_1m_ann": 1.45, "mom_3m_ann": 1.45, "mom_6m_ann": 1.45, "gap": 0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 2.12, "mom_1m_ann": 2.18, "mom_3m_ann": 2.18, "mom_6m_ann": 2.17, "gap": 0.06, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.95, "mom_1m_ann": 1.94, "mom_3m_ann": 1.93, "mom_6m_ann": 1.93, "gap": -0.02, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2024-12": {"date": "2024-12", "headline_ann_3m": 1.21, "headline_yoy": 1.2, "headline_gap": 0.01, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.2, "mom_1m_ann": 1.21, "mom_3m_ann": 1.21, "mom_6m_ann": 1.2, "gap": 0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.02, "mom_1m_ann": 1.09, "mom_3m_ann": 1.08, "mom_6m_ann": 1.08, "gap": 0.06, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.5, "mom_1m_ann": 1.45, "mom_3m_ann": 1.45, "mom_6m_ann": 1.45, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.38, "mom_1m_ann": 1.33, "mom_3m_ann": 1.33, "mom_6m_ann": 1.32, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2024-11": {"date": "2024-11", "headline_ann_3m": 1.08, "headline_yoy": 1.1, "headline_gap": -0.02, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.1, "mom_1m_ann": 1.09, "mom_3m_ann": 1.08, "mom_6m_ann": 1.08, "gap": -0.02, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 0.94, "mom_1m_ann": 0.96, "mom_3m_ann": 0.96, "mom_6m_ann": 0.96, "gap": 0.02, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.38, "mom_1m_ann": 1.33, "mom_3m_ann": 1.33, "mom_6m_ann": 1.32, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.26, "mom_1m_ann": 1.21, "mom_3m_ann": 1.21, "mom_6m_ann": 1.2, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}, "2024-10": {"date": "2024-10", "headline_ann_3m": 1.21, "headline_yoy": 1.2, "headline_gap": 0.01, "headline_signal_en": "Balanced", "headline_signal_zh": "常态平稳", "items": [{"code": "TOTAL", "name_en": "Headline CPI", "name_zh": "CPI 总体指数", "weight": 100.0, "yoy": 1.2, "mom_1m_ann": 1.21, "mom_3m_ann": 1.21, "mom_6m_ann": 1.2, "gap": 0.01, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "HOUSING", "name_en": "Housing (Private & Public)", "name_zh": "住屋支出 (私人住宅与公屋租金)", "weight": 39.9, "yoy": 1.02, "mom_1m_ann": 1.09, "mom_3m_ann": 1.08, "mom_6m_ann": 1.08, "gap": 0.06, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "FOOD_CATERING", "name_en": "Food & Meals Bought Away From Home", "name_zh": "食品与外出用膳", "weight": 27.4, "yoy": 1.5, "mom_1m_ann": 1.45, "mom_3m_ann": 1.45, "mom_6m_ann": 1.45, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}, {"code": "MISC_SERVICES", "name_en": "Miscellaneous Services", "name_zh": "杂项服务支出", "weight": 8.2, "yoy": 1.38, "mom_1m_ann": 1.33, "mom_3m_ann": 1.33, "mom_6m_ann": 1.32, "gap": -0.05, "signal": "balanced", "signal_en": "Balanced", "signal_zh": "常态平稳", "badge": "badge-neutral", "icon": "▬"}]}};
+window['EM_PPI_DATA_HK'] = {"2026-09": {"date": "2026-09", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 2.64, "yoy_prev": 2.64, "contrib_yoy": null, "mom": 0.22, "mom_ago": 0.1, "contrib_mom": 0.22}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 2.77, "yoy_prev": 2.77, "contrib_yoy": 2.77, "mom": 0.23, "mom_ago": 0.1, "contrib_mom": 0.23, "sub_items": []}], "scissors_spread": 0.34}, "2026-08": {"date": "2026-08", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 2.18, "yoy_prev": 2.18, "contrib_yoy": null, "mom": 0.18, "mom_ago": 0.1, "contrib_mom": 0.18}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 2.29, "yoy_prev": 2.29, "contrib_yoy": 2.29, "mom": 0.19, "mom_ago": 0.1, "contrib_mom": 0.19, "sub_items": []}], "scissors_spread": 0.28}, "2026-07": {"date": "2026-07", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 2.3, "yoy_prev": 2.3, "contrib_yoy": null, "mom": 0.19, "mom_ago": 0.1, "contrib_mom": 0.19}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 2.42, "yoy_prev": 2.42, "contrib_yoy": 2.42, "mom": 0.2, "mom_ago": 0.1, "contrib_mom": 0.2, "sub_items": []}], "scissors_spread": 0.3}, "2026-06": {"date": "2026-06", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 2.53, "yoy_prev": 2.53, "contrib_yoy": null, "mom": 0.21, "mom_ago": 0.1, "contrib_mom": 0.21}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 2.66, "yoy_prev": 2.66, "contrib_yoy": 2.66, "mom": 0.22, "mom_ago": 0.1, "contrib_mom": 0.22, "sub_items": []}], "scissors_spread": 0.33}, "2026-05": {"date": "2026-05", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 2.53, "yoy_prev": 2.53, "contrib_yoy": null, "mom": 0.21, "mom_ago": 0.1, "contrib_mom": 0.21}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 2.66, "yoy_prev": 2.66, "contrib_yoy": 2.66, "mom": 0.22, "mom_ago": 0.1, "contrib_mom": 0.22, "sub_items": []}], "scissors_spread": 0.33}, "2026-04": {"date": "2026-04", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.95, "yoy_prev": 1.95, "contrib_yoy": null, "mom": 0.16, "mom_ago": 0.1, "contrib_mom": 0.16}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 2.05, "yoy_prev": 2.05, "contrib_yoy": 2.05, "mom": 0.17, "mom_ago": 0.1, "contrib_mom": 0.17, "sub_items": []}], "scissors_spread": 0.25}, "2026-03": {"date": "2026-03", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 2.07, "yoy_prev": 2.07, "contrib_yoy": null, "mom": 0.17, "mom_ago": 0.1, "contrib_mom": 0.17}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 2.17, "yoy_prev": 2.17, "contrib_yoy": 2.17, "mom": 0.18, "mom_ago": 0.1, "contrib_mom": 0.18, "sub_items": []}], "scissors_spread": 0.27}, "2026-02": {"date": "2026-02", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 2.18, "yoy_prev": 2.18, "contrib_yoy": null, "mom": 0.18, "mom_ago": 0.1, "contrib_mom": 0.18}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 2.29, "yoy_prev": 2.29, "contrib_yoy": 2.29, "mom": 0.19, "mom_ago": 0.1, "contrib_mom": 0.19, "sub_items": []}], "scissors_spread": 0.28}, "2026-01": {"date": "2026-01", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.03, "yoy_prev": 1.03, "contrib_yoy": null, "mom": 0.09, "mom_ago": 0.1, "contrib_mom": 0.09}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.08, "yoy_prev": 1.08, "contrib_yoy": 1.08, "mom": 0.09, "mom_ago": 0.1, "contrib_mom": 0.09, "sub_items": []}], "scissors_spread": 0.13}, "2025-12": {"date": "2025-12", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.61, "yoy_prev": 1.61, "contrib_yoy": null, "mom": 0.13, "mom_ago": 0.1, "contrib_mom": 0.13}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.69, "yoy_prev": 1.69, "contrib_yoy": 1.69, "mom": 0.14, "mom_ago": 0.1, "contrib_mom": 0.14, "sub_items": []}], "scissors_spread": 0.21}, "2025-11": {"date": "2025-11", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.26, "yoy_prev": 1.26, "contrib_yoy": null, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.1}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.32, "yoy_prev": 1.32, "contrib_yoy": 1.32, "mom": 0.11, "mom_ago": 0.1, "contrib_mom": 0.11, "sub_items": []}], "scissors_spread": 0.16}, "2025-10": {"date": "2025-10", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.15, "yoy_prev": 1.15, "contrib_yoy": null, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.1}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.21, "yoy_prev": 1.21, "contrib_yoy": 1.21, "mom": 0.11, "mom_ago": 0.1, "contrib_mom": 0.11, "sub_items": []}], "scissors_spread": 0.15}, "2025-09": {"date": "2025-09", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 0.92, "yoy_prev": 0.92, "contrib_yoy": null, "mom": 0.08, "mom_ago": 0.1, "contrib_mom": 0.08}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 0.97, "yoy_prev": 0.97, "contrib_yoy": 0.97, "mom": 0.08, "mom_ago": 0.1, "contrib_mom": 0.08, "sub_items": []}], "scissors_spread": 0.12}, "2025-08": {"date": "2025-08", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.03, "yoy_prev": 1.03, "contrib_yoy": null, "mom": 0.09, "mom_ago": 0.1, "contrib_mom": 0.09}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.08, "yoy_prev": 1.08, "contrib_yoy": 1.08, "mom": 0.09, "mom_ago": 0.1, "contrib_mom": 0.09, "sub_items": []}], "scissors_spread": 0.13}, "2025-07": {"date": "2025-07", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 0.69, "yoy_prev": 0.69, "contrib_yoy": null, "mom": 0.06, "mom_ago": 0.1, "contrib_mom": 0.06}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 0.72, "yoy_prev": 0.72, "contrib_yoy": 0.72, "mom": 0.06, "mom_ago": 0.1, "contrib_mom": 0.06, "sub_items": []}], "scissors_spread": 0.09}, "2025-06": {"date": "2025-06", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.03, "yoy_prev": 1.03, "contrib_yoy": null, "mom": 0.09, "mom_ago": 0.1, "contrib_mom": 0.09}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.08, "yoy_prev": 1.08, "contrib_yoy": 1.08, "mom": 0.09, "mom_ago": 0.1, "contrib_mom": 0.09, "sub_items": []}], "scissors_spread": 0.13}, "2025-05": {"date": "2025-05", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.38, "yoy_prev": 1.38, "contrib_yoy": null, "mom": 0.11, "mom_ago": 0.1, "contrib_mom": 0.11}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.45, "yoy_prev": 1.45, "contrib_yoy": 1.45, "mom": 0.12, "mom_ago": 0.1, "contrib_mom": 0.12, "sub_items": []}], "scissors_spread": 0.18}, "2025-04": {"date": "2025-04", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.84, "yoy_prev": 1.84, "contrib_yoy": null, "mom": 0.15, "mom_ago": 0.1, "contrib_mom": 0.15}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.93, "yoy_prev": 1.93, "contrib_yoy": 1.93, "mom": 0.16, "mom_ago": 0.1, "contrib_mom": 0.16, "sub_items": []}], "scissors_spread": 0.24}, "2025-03": {"date": "2025-03", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.15, "yoy_prev": 1.15, "contrib_yoy": null, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.1}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.21, "yoy_prev": 1.21, "contrib_yoy": 1.21, "mom": 0.11, "mom_ago": 0.1, "contrib_mom": 0.11, "sub_items": []}], "scissors_spread": 0.15}, "2025-02": {"date": "2025-02", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.15, "yoy_prev": 1.15, "contrib_yoy": null, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.1}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.21, "yoy_prev": 1.21, "contrib_yoy": 1.21, "mom": 0.11, "mom_ago": 0.1, "contrib_mom": 0.11, "sub_items": []}], "scissors_spread": 0.15}, "2025-01": {"date": "2025-01", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.95, "yoy_prev": 1.95, "contrib_yoy": null, "mom": 0.16, "mom_ago": 0.1, "contrib_mom": 0.16}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 2.05, "yoy_prev": 2.05, "contrib_yoy": 2.05, "mom": 0.17, "mom_ago": 0.1, "contrib_mom": 0.17, "sub_items": []}], "scissors_spread": 0.25}, "2024-12": {"date": "2024-12", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.38, "yoy_prev": 1.38, "contrib_yoy": null, "mom": 0.11, "mom_ago": 0.1, "contrib_mom": 0.11}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.45, "yoy_prev": 1.45, "contrib_yoy": 1.45, "mom": 0.12, "mom_ago": 0.1, "contrib_mom": 0.12, "sub_items": []}], "scissors_spread": 0.18}, "2024-11": {"date": "2024-11", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.26, "yoy_prev": 1.26, "contrib_yoy": null, "mom": 0.1, "mom_ago": 0.1, "contrib_mom": 0.1}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.32, "yoy_prev": 1.32, "contrib_yoy": 1.32, "mom": 0.11, "mom_ago": 0.1, "contrib_mom": 0.11, "sub_items": []}], "scissors_spread": 0.16}, "2024-10": {"date": "2024-10", "headline": {"name": "Industrial PPI (工业出厂物价指数)", "yoy": 1.38, "yoy_prev": 1.38, "contrib_yoy": null, "mom": 0.11, "mom_ago": 0.1, "contrib_mom": 0.11}, "items": [{"code": "IMPORT_PASS", "name_en": "Imported Goods Price Pass-through", "name_zh": "进口消费品输入性价格传导", "weight": 100.0, "yoy": 1.45, "yoy_prev": 1.45, "contrib_yoy": 1.45, "mom": 0.12, "mom_ago": 0.1, "contrib_mom": 0.12, "sub_items": []}], "scissors_spread": 0.18}};
+
+if (typeof toggleSubRows === 'undefined') {
+  window.toggleSubRows = function(groupKey, btn) {
+    var rows = document.querySelectorAll('.sub-' + groupKey);
+    var isExpanded = btn.innerText === '▼';
+    for (var i = 0; i < rows.length; i++) {
+      rows[i].style.display = isExpanded ? 'none' : 'table-row';
+    }
+    btn.innerText = isExpanded ? '▶' : '▼';
+  };
+}
+
+if (typeof switchDeepdiveTab === 'undefined') {
+  window.switchDeepdiveTab = function(geo, tabName, btn) {
+    var parent = document.getElementById('deepdive-inflation-' + geo);
+    if (!parent) return;
+    var tabs = parent.querySelectorAll('.deepdive-tab');
+    for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+    btn.classList.add('active');
+
+    var contents = parent.querySelectorAll('.deepdive-tab-content');
+    for (var j = 0; j < contents.length; j++) contents[j].classList.remove('active');
+    var target = document.getElementById('tab-' + tabName + '-' + geo);
+    if (target) target.classList.add('active');
+
+    window.dispatchEvent(new Event('resize'));
+  };
+}
+
+function formatMonYy(ymStr) {
+  if (!ymStr || ymStr.length < 7) return ymStr || '';
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var parts = ymStr.split('-');
+  if (parts.length < 2) return ymStr;
+  var y = parts[0].length >= 4 ? parts[0].slice(2) : parts[0];
+  var mIdx = parseInt(parts[1], 10) - 1;
+  return (months[mIdx] || parts[1]) + '-' + y;
+}
+
+function updateCpiTable(geo, selectedMonth) {
+  var data = window['EM_CPI_DATA_' + geo];
+  if (!data || !data[selectedMonth]) return;
+  var tbl = data[selectedMonth];
+  var tableEl = document.getElementById('table-cpi-' + geo);
+  if (!tableEl) return;
+
+  var thCurrY = tableEl.querySelector('.th-curr-yoy');
+  var thPrevY = tableEl.querySelector('.th-prev-yoy');
+  var thCurrM = tableEl.querySelector('.th-curr-mom');
+  if (thCurrY) thCurrY.innerText = formatMonYy(selectedMonth);
+  if (thPrevY) thPrevY.innerText = formatMonYy(tbl.prev_date || '');
+  if (thCurrM) thCurrM.innerText = formatMonYy(selectedMonth);
+
+  var tbody = document.getElementById('tbody-cpi-' + geo);
+  if (!tbody) return;
+
+  var fmt = function(v, d) {
+    if (v === null || v === undefined) return '—';
+    return Number(v).toFixed(d || 1);
+  };
+
+  var h = tbl.headline || {};
+  var html = '<tr class="row-headline">' +
+    '<td class="col-name"><strong>Headline</strong></td>' +
+    '<td class="col-num">&nbsp;</td>' +
+    '<td class="col-num"><strong>' + fmt(h.yoy) + '</strong></td>' +
+    '<td class="col-num text-muted">' + fmt(h.yoy_prev) + '</td>' +
+    '<td class="col-num">&nbsp;</td>' +
+    '<td class="col-num"><strong>' + fmt(h.mom) + '</strong></td>' +
+    '<td class="col-num text-muted">' + fmt(h.mom_ago) + '</td>' +
+    '<td class="col-num"><strong>' + fmt(h.contrib_mom) + '</strong></td>' +
+    '</tr>';
+
+  (tbl.items || []).forEach(function(it) {
+    var subs = it.sub_items || [];
+    var hasSub = subs.length > 0;
+    var groupKey = geo + '-' + it.code;
+    var btn = hasSub ? '<button class="sub-toggle-btn" onclick="toggleSubRows(\'' + groupKey + '\', this)">▶</button>' : '<span class="sub-placeholder"></span>';
+    var nameDisp = it.name_en || it.name || it.code;
+
+    html += '<tr class="row-division" data-group="' + groupKey + '">' +
+      '<td class="col-name">' + btn + ' <span>' + nameDisp + '</span></td>' +
+      '<td class="col-num col-weight">' + fmt(it.weight) + '</td>' +
+      '<td class="col-num">' + fmt(it.yoy) + '</td>' +
+      '<td class="col-num text-muted">' + fmt(it.yoy_prev) + '</td>' +
+      '<td class="col-num">' + fmt(it.contrib_yoy) + '</td>' +
+      '<td class="col-num">' + fmt(it.mom) + '</td>' +
+      '<td class="col-num text-muted">' + fmt(it.mom_ago) + '</td>' +
+      '<td class="col-num">' + fmt(it.contrib_mom) + '</td>' +
+      '</tr>';
+
+    if (hasSub) {
+      subs.forEach(function(sub) {
+        var subName = sub.name_en || sub.name || sub.code;
+        html += '<tr class="row-subitem sub-' + groupKey + '" style="display: none;">' +
+          '<td class="col-name col-sub"><span class="sub-tree-prefix">↳</span> ' + subName + '</td>' +
+          '<td class="col-num col-weight text-muted">' + fmt(sub.weight) + '</td>' +
+          '<td class="col-num">' + fmt(sub.yoy) + '</td>' +
+          '<td class="col-num text-muted">' + fmt(sub.yoy_prev) + '</td>' +
+          '<td class="col-num">' + fmt(sub.contrib_yoy) + '</td>' +
+          '<td class="col-num">' + fmt(sub.mom) + '</td>' +
+          '<td class="col-num text-muted">' + fmt(sub.mom_ago) + '</td>' +
+          '<td class="col-num">' + fmt(sub.contrib_mom) + '</td>' +
+          '</tr>';
+      });
+    }
+  });
+
+  if (tbl.memo && tbl.memo.length > 0) {
+    html += '<tr class="row-separator"><td colspan="8"></td></tr>';
+    tbl.memo.forEach(function(m) {
+      var mName = m.name_en || m.name || m.code;
+      html += '<tr class="row-memo">' +
+        '<td class="col-name"><span>' + mName + '</span></td>' +
+        '<td class="col-num col-weight">' + (m.weight ? fmt(m.weight) : '&nbsp;') + '</td>' +
+        '<td class="col-num">' + fmt(m.yoy) + '</td>' +
+        '<td class="col-num text-muted">' + fmt(m.yoy_prev) + '</td>' +
+        '<td class="col-num">&nbsp;</td>' +
+        '<td class="col-num">' + fmt(m.mom) + '</td>' +
+        '<td class="col-num text-muted">' + fmt(m.mom_ago) + '</td>' +
+        '<td class="col-num">&nbsp;</td>' +
+        '</tr>';
+    });
+  }
+
+  tbody.innerHTML = html;
+}
+
+function updateMomentumTable(geo, selectedMonth) {
+  var data = window['EM_MOM_DATA_' + geo];
+  if (!data || !data[selectedMonth]) return;
+  var tbl = data[selectedMonth];
+  var tbody = document.getElementById('tbody-mom-' + geo);
+  if (!tbody) return;
+
+  var fmt = function(v, d, signed) {
+    if (v === null || v === undefined) return '—';
+    var f = Number(v);
+    var prefix = (signed && f > 0) ? '+' : '';
+    return prefix + f.toFixed(d || 1);
+  };
+
+  var html = '';
+  (tbl.items || []).forEach(function(it) {
+    var isHead = it.code === 'TOTAL' || it.code === 'HEADLINE';
+    var rowCls = isHead ? 'row-headline' : 'row-division';
+    var gapVal = it.gap;
+    var gapCls = (gapVal && gapVal > 0.5) ? 'val-pos' : ((gapVal && gapVal < -0.5) ? 'val-neg' : 'val-neutral');
+    var badge = '<span class="status-badge ' + (it.badge || 'badge-neutral') + '">' + (it.icon || '') + ' ' + (it.signal_en || '') + '</span>';
+    var nameDisp = it.name_en || it.name || it.code;
+
+    html += '<tr class="' + rowCls + '">' +
+      '<td class="col-name"><span>' + nameDisp + '</span></td>' +
+      '<td class="col-num col-weight">' + fmt(it.weight) + '</td>' +
+      '<td class="col-num">' + fmt(it.mom_1m_ann, 1, true) + '%</td>' +
+      '<td class="col-num"><strong>' + fmt(it.mom_3m_ann, 1, true) + '%</strong></td>' +
+      '<td class="col-num text-muted">' + fmt(it.mom_6m_ann, 1, true) + '%</td>' +
+      '<td class="col-num">' + fmt(it.yoy, 1, true) + '%</td>' +
+      '<td class="col-num ' + gapCls + '"><strong>' + fmt(gapVal, 1, true) + ' pp</strong></td>' +
+      '<td class="col-name" style="text-align: center;">' + badge + '</td>' +
+      '</tr>';
+  });
+  tbody.innerHTML = html;
+}
+
+function updatePpiTable(geo, selectedMonth) {
+  var data = window['EM_PPI_DATA_' + geo];
+  if (!data || !data[selectedMonth]) return;
+  var tbl = data[selectedMonth];
+  var tbody = document.getElementById('tbody-ppi-' + geo);
+  if (!tbody) return;
+
+  var fmt = function(v, d) {
+    if (v === null || v === undefined) return '—';
+    return Number(v).toFixed(d || 1);
+  };
+
+  var head = tbl.headline || {};
+  var html = '<tr class="row-headline">' +
+    '<td class="col-name"><strong>Headline PPI</strong></td>' +
+    '<td class="col-num">&nbsp;</td>' +
+    '<td class="col-num"><strong>' + fmt(head.yoy) + '</strong></td>' +
+    '<td class="col-num text-muted">' + fmt(head.yoy_prev) + '</td>' +
+    '<td class="col-num">&nbsp;</td>' +
+    '<td class="col-num"><strong>' + fmt(head.mom) + '</strong></td>' +
+    '<td class="col-num text-muted">' + fmt(head.mom_ago) + '</td>' +
+    '<td class="col-num"><strong>' + fmt(head.contrib_mom) + '</strong></td>' +
+    '</tr>';
+
+  (tbl.items || []).forEach(function(it) {
+    var nameDisp = it.name_en || it.name || it.code;
+    html += '<tr class="row-division">' +
+      '<td class="col-name"><span>' + nameDisp + '</span></td>' +
+      '<td class="col-num col-weight">' + fmt(it.weight) + '</td>' +
+      '<td class="col-num">' + fmt(it.yoy) + '</td>' +
+      '<td class="col-num text-muted">' + fmt(it.yoy_prev) + '</td>' +
+      '<td class="col-num">' + fmt(it.contrib_yoy) + '</td>' +
+      '<td class="col-num">' + fmt(it.mom) + '</td>' +
+      '<td class="col-num text-muted">' + fmt(it.mom_ago) + '</td>' +
+      '<td class="col-num">' + fmt(it.contrib_mom) + '</td>' +
+      '</tr>';
+  });
+  tbody.innerHTML = html;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  if (typeof Plotly === "undefined") return;
+
+  // 1. Momentum Trajectory Chart
+  var momDiv = document.getElementById("deepdive-chart-hk-momentum");
+  if (momDiv) {
+    var mDates = ["2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"];
+    var mH3 = [1.21, 1.08, 1.21, 1.69, 0.96, 0.96, 1.57, 1.21, 0.84, 0.6, 0.84, 0.84, 0.96, 1.08, 1.45, 0.84, 1.93, 1.81, 1.69, 2.18, 2.18, 2.06, 1.93, 2.3];
+    var mHY = [1.2, 1.1, 1.2, 1.7, 1.0, 1.0, 1.6, 1.2, 0.9, 0.6, 0.9, 0.8, 1.0, 1.1, 1.4, 0.9, 1.9, 1.8, 1.7, 2.2, 2.2, 2.0, 1.9, 2.3];
+    var lMDate = mDates.length ? mDates[mDates.length - 1] : '';
+    var lH3 = mH3.length ? mH3[mH3.length - 1] : 0;
+    var lHY = mHY.length ? mHY[mHY.length - 1] : 0;
+
+    var trH3 = {
+      x: mDates, y: mH3, name: 'Headline 3M Ann. (%)',
+      type: 'scatter', mode: 'lines+markers',
+      line: {color: '#2563eb', width: 2.5}, marker: {size: 5}
+    };
+    var trHY = {
+      x: mDates, y: mHY, name: 'Headline 12M YoY (%)',
+      type: 'scatter', mode: 'lines',
+      line: {color: '#93c5fd', width: 2, dash: 'dot'}
+    };
+
+    var layoutMom = {
+      height: 360,
+      margin: {l: 45, r: 85, t: 25, b: 35},
+      legend: {orientation: 'h', y: -0.18},
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(0,0,0,0)',
+      font: {family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11, color: '#12151a'},
+      yaxis: {title: 'Rate (%)', gridcolor: 'rgba(0,0,0,0.06)', zeroline: true, zerolinecolor: '#333'},
+      annotations: [
+        {
+          x: lMDate, y: lH3, xref: 'x', yref: 'y',
+          text: '3M Ann: ' + (lH3 > 0 ? '+' : '') + Number(lH3).toFixed(1) + '%',
+          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#2563eb',
+          ax: 35, ay: -18, bgcolor: '#2563eb',
+          font: {color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}, borderpad: 3
+        }
+      ]
+    };
+    Plotly.newPlot(momDiv, [trH3, trHY], layoutMom, {responsive: true, displayModeBar: false});
+  }
+
+  // 2. Margin Scissors Chart
+  var sciDiv = document.getElementById("deepdive-chart-hk-scissors");
+  if (sciDiv) {
+    var sDates = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"];
+    var sSpread = [0.21, 0.25, 0.27, 0.24, 0.24, 0.3, 0.3, 0.28, 0.28, 0.27, 0.27, 0.3, 0.36, 0.27, 0.28, 0.32, 0.3, 0.27, 0.27, 0.27, 0.32, 0.36, 0.36, 0.34, 0.22, 0.3, 0.25, 0.16, 0.18, 0.19, 0.3, 0.28, 0.24, 0.18, 0.16, 0.18, 0.25, 0.15, 0.15, 0.24, 0.18, 0.13, 0.09, 0.13, 0.12, 0.15, 0.16, 0.21, 0.13, 0.28, 0.27, 0.25, 0.33, 0.33, 0.3, 0.28, 0.34];
+    var sPpi = [1.61, 1.95, 2.07, 1.84, 1.84, 2.3, 2.3, 2.18, 2.18, 2.07, 2.07, 2.3, 2.76, 2.07, 2.18, 2.42, 2.3, 2.07, 2.07, 2.07, 2.42, 2.76, 2.76, 2.64, 1.72, 2.3, 1.95, 1.26, 1.38, 1.49, 2.3, 2.18, 1.84, 1.38, 1.26, 1.38, 1.95, 1.15, 1.15, 1.84, 1.38, 1.03, 0.69, 1.03, 0.92, 1.15, 1.26, 1.61, 1.03, 2.18, 2.07, 1.95, 2.53, 2.53, 2.3, 2.18, 2.64];
+    var sCpi = [1.4, 1.7, 1.8, 1.6, 1.6, 2.0, 2.0, 1.9, 1.9, 1.8, 1.8, 2.0, 2.4, 1.8, 1.9, 2.1, 2.0, 1.8, 1.8, 1.8, 2.1, 2.4, 2.4, 2.3, 1.5, 2.0, 1.7, 1.1, 1.2, 1.3, 2.0, 1.9, 1.6, 1.2, 1.1, 1.2, 1.7, 1.0, 1.0, 1.6, 1.2, 0.9, 0.6, 0.9, 0.8, 1.0, 1.1, 1.4, 0.9, 1.9, 1.8, 1.7, 2.2, 2.2, 2.0, 1.9, 2.3];
+    var lSDate = sDates.length ? sDates[sDates.length - 1] : '';
+    var lP = sPpi.length ? sPpi[sPpi.length - 1] : 0;
+    var lSpr = sSpread.length ? sSpread[sSpread.length - 1] : 0;
+
+    var trPpi = {
+      x: sDates, y: sPpi, name: 'PPI YoY (%)',
+      type: 'scatter', mode: 'lines+markers',
+      line: {color: '#6366f1', width: 2.2}, marker: {size: 4}
+    };
+    var trCpi = {
+      x: sDates, y: sCpi, name: 'CPI YoY (%)',
+      type: 'scatter', mode: 'lines',
+      line: {color: '#b91c1c', width: 2.2}
+    };
+    var trSpread = {
+      x: sDates, y: sSpread, name: 'Scissors Spread (PPI - CPI pp)',
+      type: 'bar',
+      marker: {color: sSpread.map(function(v) { return v > 0 ? '#10b981' : '#ef4444'; })}
+    };
+
+    var layoutSci = {
+      height: 380,
+      margin: {l: 45, r: 85, t: 25, b: 35},
+      legend: {orientation: 'h', y: -0.18},
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(0,0,0,0)',
+      font: {family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11, color: '#12151a'},
+      yaxis: {title: 'Rate & Spread (pp)', gridcolor: 'rgba(0,0,0,0.06)', zeroline: true, zerolinecolor: '#333'},
+      annotations: [
+        {
+          x: lSDate, y: lP, xref: 'x', yref: 'y',
+          text: 'PPI: ' + (lP > 0 ? '+' : '') + Number(lP).toFixed(1) + '%',
+          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#6366f1',
+          ax: 40, ay: -15, bgcolor: '#6366f1',
+          font: {color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}, borderpad: 3
+        },
+        {
+          x: lSDate, y: lSpr, xref: 'x', yref: 'y',
+          text: 'Spread: ' + (lSpr > 0 ? '+' : '') + Number(lSpr).toFixed(1) + 'pp',
+          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#ef4444',
+          ax: 40, ay: 20, bgcolor: '#ef4444',
+          font: {color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}, borderpad: 3
+        }
+      ]
+    };
+    Plotly.newPlot(sciDiv, [trPpi, trCpi, trSpread], layoutSci, {responsive: true, displayModeBar: false});
+  }
+});
+</script>
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="headline_inflation">
@@ -970,6 +2147,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">Housing &amp; Property</span><span data-lang="zh">住宅与房地产</span></h2>
     <div class="logic"><span data-lang="en">BIS long-term nominal and real residential property prices track residential real estate valuations across cycles.</span><span data-lang="zh">国际清算银行(BIS)长期名义与实际住宅价格指数跟踪房地产跨周期估值。</span></div>
   </div>
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="house_price_growth">
@@ -1038,6 +2216,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">External Balance, Trade &amp; FX</span><span data-lang="zh">外部平衡、贸易与汇率</span></h2>
     <div class="logic"><span data-lang="en">Daily USD/HKD spot exchange rate (Federal Reserve H.10), Bruegel 120-partner REER/NEER, quarterly BPM6 current account balance, and monthly merchandise trade.</span><span data-lang="zh">美联储H.10日度美元兑港元汇率、Bruegel实际与名义有效汇率、季度经常账户差额及月度商品进出口总值与贸易差额。</span></div>
   </div>
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="fx_spot">
@@ -1237,7 +2416,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/BOP/HKG.NETCD_T.CAB.USD.Q" target="_blank" rel="noreferrer">IMF SDMX / HK C&amp;SD</a></span>
     <span>Series: HKG.NETCD_T.CAB.USD.Q</span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-10-30</span>
+    <span>Provider update: 2026-11-02</span>
   </footer>
   <p class="caveat"><span data-lang="en">Quarterly BPM6 current account balance in millions of US dollars.</span><span data-lang="zh">BPM6标准编制的季度经常账户差额（百万美元）。</span></p>
 </article>
@@ -1266,7 +2445,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/BOP/HKG.NETCD_T.S.USD.Q" target="_blank" rel="noreferrer">IMF SDMX / HK C&amp;SD</a></span>
     <span>Series: HKG.NETCD_T.S.USD.Q</span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-10-30</span>
+    <span>Provider update: 2026-11-02</span>
   </footer>
   <p class="caveat"><span data-lang="en">Quarterly BPM6 services trade balance in millions of US dollars.</span><span data-lang="zh">BPM6季度服务贸易净差额（百万美元）。</span></p>
 </article>
@@ -1295,7 +2474,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://api.imf.org/external/sdmx/2.1/data/BOP/HKG.NNAFANIL_T.D_F.USD.Q" target="_blank" rel="noreferrer">IMF SDMX / HK C&amp;SD</a></span>
     <span>Series: HKG.NNAFANIL_T.D_F.USD.Q</span>
     <span>Frequency: quarterly</span>
-    <span>Provider update: 2026-10-30</span>
+    <span>Provider update: 2026-11-02</span>
   </footer>
   <p class="caveat"><span data-lang="en">Quarterly BPM6 direct investment net acquisition of financial assets less incurrence of liabilities.</span><span data-lang="zh">BPM6金融账户季度直接投资净额（百万美元）。</span></p>
 </article>
@@ -1324,7 +2503,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://www.imf.org/external/datamapper/BCA_NGDPD@WEO/HKG" target="_blank" rel="noreferrer">IMF WEO DataMapper</a></span>
     <span>Series: BCA_NGDPD</span>
     <span>Frequency: annual</span>
-    <span>Provider update: 2026-11-01</span>
+    <span>Provider update: 2026-11-02</span>
   </footer>
   <p class="caveat"><span data-lang="en">IMF World Economic Outlook historical series and projections.</span><span data-lang="zh">IMF《世界经济展望》历史序列与预测值。</span></p>
 </article>
@@ -1338,6 +2517,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">Fiscal &amp; Public Finance</span><span data-lang="zh">财政与公共收支</span></h2>
     <div class="logic"><span data-lang="en">General government gross debt and net lending/borrowing ratios from IMF WEO DataMapper.</span><span data-lang="zh">IMF《世界经济展望》提供的广义政府总债务与净借贷（赤字率）占GDP比重。</span></div>
   </div>
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="government_debt_gdp">
@@ -1363,7 +2543,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://www.imf.org/external/datamapper/GGXWDG_NGDP@WEO/HKG" target="_blank" rel="noreferrer">IMF WEO DataMapper</a></span>
     <span>Series: GGXWDG_NGDP</span>
     <span>Frequency: annual</span>
-    <span>Provider update: 2026-11-01</span>
+    <span>Provider update: 2026-11-02</span>
   </footer>
   <p class="caveat"><span data-lang="en">General government gross debt as a percentage of GDP.</span><span data-lang="zh">广义政府总债务占GDP比重。</span></p>
 </article>
@@ -1392,7 +2572,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://www.imf.org/external/datamapper/GGXCNL_NGDP@WEO/HKG" target="_blank" rel="noreferrer">IMF WEO DataMapper</a></span>
     <span>Series: GGXCNL_NGDP</span>
     <span>Frequency: annual</span>
-    <span>Provider update: 2026-11-01</span>
+    <span>Provider update: 2026-11-02</span>
   </footer>
   <p class="caveat"><span data-lang="en">General government net lending/borrowing as a percentage of GDP.</span><span data-lang="zh">广义政府净借贷占GDP比重。</span></p>
 </article>
@@ -1421,7 +2601,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span>Source: <a href="https://www.imf.org/external/datamapper/GGXONLB_G01_GDP_PT@FM/HKG" target="_blank" rel="noreferrer">IMF Fiscal Monitor</a></span>
     <span>Series: GGXONLB_G01_GDP_PT</span>
     <span>Frequency: annual</span>
-    <span>Provider update: 2026-11-01</span>
+    <span>Provider update: 2026-11-02</span>
   </footer>
   <p class="caveat"><span data-lang="en">General government primary balance excluding net interest payments.</span><span data-lang="zh">剔除利息净支出的广义政府初级财政收支占GDP比重。</span></p>
 </article>
@@ -1435,6 +2615,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">Credit &amp; Financial Conditions</span><span data-lang="zh">信贷与金融环境</span></h2>
     <div class="logic"><span data-lang="en">BIS total credit to the private non-financial sector as a percentage of GDP measures domestic leverage.</span><span data-lang="zh">国际清算银行(BIS)私营非金融部门信贷占GDP比率衡量本地杠杆水平。</span></div>
   </div>
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="hk:total_reserves_usd">
@@ -1648,6 +2829,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">Financial Stability &amp; Soundness</span><span data-lang="zh">金融稳定与稳健性</span></h2>
     <div class="logic"><span data-lang="en">IMF Financial Soundness Indicators (FSI) via DBnomics track banking sector consolidated capital adequacy ratio (CAR) and non-performing loans (NPL).</span><span data-lang="zh">国际货币基金组织金融稳健性指标(FSI)追踪香港银行体系综合资本充足率(CAR)与不良贷款率(NPL)。</span></div>
   </div>
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-low_confidence" data-dashboard-view="core" data-concept-id="bank_capital_ratio">
@@ -1728,8 +2910,8 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </section>
 
   <footer class="page-footer">
-    <span data-lang="en">Research artefact only, not investment advice. Generated 2026-11-01 from <code>hong_kong_indicators.yaml</code>.</span>
-    <span data-lang="zh">仅为研究工具，不构成投资建议。生成日期 2026-11-01，配置来源 <code>hong_kong_indicators.yaml</code>。</span>
+    <span data-lang="en">Research artefact only, not investment advice. Generated 2026-11-02 from <code>hong_kong_indicators.yaml</code>.</span>
+    <span data-lang="zh">仅为研究工具，不构成投资建议。生成日期 2026-11-02，配置来源 <code>hong_kong_indicators.yaml</code>。</span>
   </footer>
 </main>
 
