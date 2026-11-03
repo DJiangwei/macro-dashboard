@@ -107,6 +107,15 @@ def test_all_18_countries_use_lightweight_charts_and_thousands_formatting():
         assert "IntersectionObserver" in html, filename
         assert "priceFormatter: formatVal" in html, filename
         assert "toLocaleString('en-US'" in html, filename
+        # Interactive time range, box-zoom + delta, legend toggle/solo, and CSV/PNG/Expand toolbar
+        assert 'data-horizon-option="5Y"' in html, filename
+        assert 'data-lw-action="boxzoom"' in html, filename
+        assert 'data-lw-action="reset"' in html, filename
+        assert 'data-lw-action="csv"' in html, filename
+        assert 'data-lw-action="png"' in html, filename
+        assert 'data-lw-action="expand"' in html, filename
+        assert "updateDeltaBanner" in html, filename
+        assert "soloSeries" in html, filename
 
         m_dates = re.search(r"window\.CP_LW_DATES\s*=\s*(\[\[\[.*?\]\]|\[\[.*?\]\]);", html, re.S)
         assert m_dates is not None, f"Missing CP_LW_DATES in {filename}"

@@ -320,6 +320,10 @@ from country_primer.snapshots import (  # noqa: E402
 )
 from country_primer.catalog import load_countries  # noqa: E402
 from country_primer.framework import concept_id_for  # noqa: E402
+from country_primer.page_renderer import (  # noqa: E402
+    LW_GLOBAL_HORIZON_HTML,
+    _lw_runtime_script,
+)
 
 OUTPUT = ROOT / "output"
 CEE_SNAPSHOT = OUTPUT / "cee_build_snapshot.json"
@@ -1151,6 +1155,20 @@ footer a { color: var(--accent) !important; }
   gap: 5px;
   color: var(--text-secondary);
   font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+  padding: 1px 5px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  transition: opacity 0.14s ease, background 0.14s ease, border-color 0.14s ease;
+}
+.lw-legend-item:hover {
+  background: rgba(18, 21, 26, 0.04);
+  border-color: rgba(18, 21, 26, 0.12);
+}
+.lw-legend-item.is-hidden {
+  opacity: 0.36;
+  text-decoration: line-through;
 }
 .lw-legend-swatch {
   display: inline-block;
@@ -1170,6 +1188,126 @@ footer a { color: var(--accent) !important; }
   font-size: 10px;
   font-weight: 600;
   white-space: nowrap;
+}
+.lw-toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 4px;
+  padding-left: 6px;
+  border-left: 1px solid rgba(18, 21, 26, 0.10);
+}
+.lw-range-group, .lw-action-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.lw-action-group {
+  margin-left: 3px;
+  padding-left: 4px;
+  border-left: 1px solid rgba(18, 21, 26, 0.08);
+}
+.lw-range-btn, .lw-tool-btn {
+  appearance: none;
+  border: 1px solid rgba(18, 21, 26, 0.12);
+  background: #fcfaf7;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 3px 5px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.lw-range-btn:hover, .lw-tool-btn:hover {
+  border-color: var(--accent, #990f3d);
+  color: var(--accent, #990f3d);
+  background: rgba(153, 15, 61, 0.05);
+}
+.lw-range-btn.is-active, .lw-tool-btn.is-active {
+  background: var(--accent, #990f3d);
+  border-color: var(--accent, #990f3d);
+  color: #ffffff;
+}
+.lw-zoom-rect {
+  position: absolute;
+  top: 0;
+  bottom: 24px;
+  background: rgba(153, 15, 61, 0.10);
+  border: 1px dashed #990f3d;
+  pointer-events: none;
+  z-index: 8;
+  display: none;
+}
+.lw-delta-banner {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(153, 15, 61, 0.08);
+  border: 1px solid rgba(153, 15, 61, 0.24);
+  color: #12151a;
+  font-size: 10.5px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.lw-delta-banner.is-visible {
+  display: inline-flex;
+}
+.lw-delta-close {
+  border: none;
+  background: transparent;
+  color: #990f3d;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 2px;
+  font-size: 12px;
+  line-height: 1;
+}
+.lw-chart-plot.is-boxzoom {
+  cursor: crosshair !important;
+}
+.lw-lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 21, 26, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 9990;
+  display: none;
+}
+.lw-lightbox-backdrop.is-open {
+  display: block;
+}
+.lw-card-expanded {
+  position: fixed !important;
+  top: 4vh !important;
+  left: 4vw !important;
+  width: 92vw !important;
+  height: 90vh !important;
+  max-width: 1440px !important;
+  margin: 0 auto !important;
+  z-index: 9995 !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28) !important;
+  border-radius: 6px !important;
+  padding: 20px 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: auto !important;
+}
+.lw-card-expanded .chart-canvas,
+.lw-card-expanded .lw-chart-wrap {
+  flex: 1 1 auto !important;
+  height: 62vh !important;
+  min-height: 460px !important;
+}
+.lw-card-expanded .lw-chart-plot {
+  height: calc(62vh - 44px) !important;
+  min-height: 410px !important;
 }
 .lw-chart-plot {
   flex: 1 1 auto;
@@ -4157,6 +4295,7 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
   <span><span data-lang="en">Chart view</span><span data-lang="zh">图表视图</span></span>
   <button type="button" data-view-option="core" aria-pressed="true" onclick="setDashboardView('core')"><span data-lang="en">Core 48</span><span data-lang="zh">核心 48</span></button>
   <button type="button" data-view-option="deep" aria-pressed="false" onclick="setDashboardView('deep')"><span data-lang="en">All deep-dive charts</span><span data-lang="zh">全部深度指标</span></button>
+{LW_GLOBAL_HORIZON_HTML}
 </div>
 
 {_quality_panel_html()}
@@ -4241,357 +4380,6 @@ setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
     out_path.write_text(final_html)
     BUILD_FRAMES[country_code] = canonical_frame
     return out_path
-
-
-def _lw_runtime_script(lw_specs: dict[str, dict], country_code: str) -> str:
-    date_pool: dict[tuple[str, ...], int] = {}
-    date_list: list[list[str]] = []
-    compact_specs: dict[str, dict] = {}
-    for cid, spec in lw_specs.items():
-        c_spec = dict(spec)
-        c_series = []
-        for s in spec.get("series") or []:
-            cs = dict(s)
-            pts = cs.pop("data", None) or []
-            times = tuple(str(pt["time"]) for pt in pts)
-            if times not in date_pool:
-                date_pool[times] = len(date_list)
-                date_list.append(list(times))
-            cs["x"] = date_pool[times]
-            cs["y"] = [pt["value"] for pt in pts]
-            if any("color" in pt for pt in pts):
-                cs["c"] = [pt.get("color", "") for pt in pts]
-            c_series.append(cs)
-        c_spec["series"] = c_series
-        compact_specs[cid] = c_spec
-
-    dates_json = json.dumps(date_list, ensure_ascii=False, separators=(",", ":"))
-    specs_json = json.dumps(compact_specs, ensure_ascii=False, separators=(",", ":"))
-    return f"""<script>
-window.CP_LW_DATES = {dates_json};
-window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
-(function() {{
-  var mainCountry = '{country_code}';
-  var mountedCharts = {{}};
-
-  function getPts(s) {{
-    if (!s) return [];
-    if (s.data) return s.data;
-    var dates = (window.CP_LW_DATES || [])[s.x] || [];
-    var vals = s.y || [];
-    var cols = s.c || null;
-    var out = [];
-    for (var i = 0; i < dates.length && i < vals.length; i++) {{
-      var pt = {{ time: dates[i], value: vals[i] }};
-      if (cols && cols[i]) pt.color = cols[i];
-      out.push(pt);
-    }}
-    s.data = out;
-    return out;
-  }}
-
-  function formatVal(val) {{
-    if (val === null || val === undefined || isNaN(val)) return 'n/a';
-    var n = Number(val);
-    var abs = Math.abs(n);
-    if (abs >= 1e9) {{
-      return (n / 1e9).toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}) + ' bn';
-    }}
-    if (abs >= 1e6) {{
-      return (n / 1e6).toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}) + ' mn';
-    }}
-    if (abs >= 1e5) {{
-      return (n / 1e3).toLocaleString('en-US', {{ minimumFractionDigits: 1, maximumFractionDigits: 1 }}) + 'k';
-    }}
-    if (abs >= 1000) {{
-      var isInt = Math.abs(n - Math.round(n)) < 1e-6;
-      return n.toLocaleString('en-US', {{
-        minimumFractionDigits: isInt ? 0 : 2,
-        maximumFractionDigits: isInt ? 0 : 2
-      }});
-    }}
-    if (abs >= 10) {{
-      var isInt10 = Math.abs(n - Math.round(n)) < 1e-6;
-      return n.toLocaleString('en-US', {{
-        minimumFractionDigits: isInt10 ? 0 : 1,
-        maximumFractionDigits: 1
-      }});
-    }}
-    return n.toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }});
-  }}
-
-  function syncToolbarReadout(cid, spec) {{
-    var series = (spec && spec.series) || [];
-    if (!series.length) return;
-    var best = null;
-    for (var i = 0; i < series.length; i++) {{
-      if (series[i].name === mainCountry || series[i].isPrimary) {{
-        best = series[i];
-        break;
-      }}
-    }}
-    if (!best) best = series[0];
-    var pts = getPts(best);
-    if (!pts.length) return;
-    var lastPt = pts[pts.length - 1];
-    var valStr = formatVal(lastPt.value);
-    var readout = document.querySelector('.chart-reading[data-chart-id="' + cid + '"]');
-    if (readout) {{
-      var number = readout.querySelector('.chart-reading-value strong');
-      if (number && number.textContent.trim() === 'n/a') number.textContent = valStr;
-      var periods = readout.querySelectorAll('time span');
-      if (!readout.dataset.latestDate && periods.length) {{
-        periods.forEach(function(period) {{ period.textContent = String(lastPt.time); }});
-      }}
-    }}
-  }}
-
-  function renderMetaBar(cid, spec) {{
-    var metaEl = document.getElementById('lw-meta-' + cid);
-    if (!metaEl) return;
-    var html = [];
-    if (spec.badge && spec.badge.text) {{
-      html.push(
-        '<span class="lw-badge-pill" style="color:' + (spec.badge.color || '#0d7680') +
-        ';background:' + (spec.badge.bg || 'rgba(13,118,128,0.08)') + ';">' +
-        spec.badge.text + '</span>'
-      );
-    }}
-    var series = spec.series || [];
-    for (var i = 0; i < series.length; i++) {{
-      var s = series[i];
-      var pts = getPts(s);
-      var lastVal = pts.length ? formatVal(pts[pts.length - 1].value) : '—';
-      html.push(
-        '<span class="lw-legend-item">' +
-        '<span class="lw-legend-swatch" style="background:' + (s.color || '#990f3d') + ';"></span>' +
-        '<span>' + (s.name || ('S' + (i + 1))) + '</span>' +
-        '<span class="lw-legend-val" data-series-idx="' + i + '">' + lastVal + '</span>' +
-        '</span>'
-      );
-    }}
-    metaEl.innerHTML = html.join('');
-  }}
-
-  var resizeObs = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(function(entries) {{
-    entries.forEach(function(entry) {{
-      var el = entry.target;
-      var cid = el.dataset.lwChart || el.id;
-      var inst = mountedCharts[cid];
-      if (inst && inst.chart && el.clientWidth > 20) {{
-        inst.chart.applyOptions({{ width: el.clientWidth }});
-      }}
-    }});
-  }}) : null;
-
-  function mountChart(el) {{
-    if (!el || el.dataset.lwMounted === '1') return;
-    if (!window.LightweightCharts) return;
-    if (el.offsetParent === null || el.clientWidth < 20) return;
-    var cid = el.dataset.lwChart || el.id;
-    var spec = (window.CP_LW_CHARTS || {{}})[cid];
-    if (!spec) return;
-
-    el.dataset.lwMounted = '1';
-    renderMetaBar(cid, spec);
-    var seriesSpecs = spec.series || [];
-    var hasLeftScale = seriesSpecs.some(function(s) {{ return s.scale === 'left'; }});
-
-    var chart = LightweightCharts.createChart(el, {{
-      width: el.clientWidth,
-      height: el.clientHeight || 310,
-      localization: {{
-        priceFormatter: formatVal
-      }},
-      layout: {{
-        background: {{ type: 'solid', color: '#ffffff' }},
-        textColor: '#737c8c',
-        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-        fontSize: 11,
-        attributionLogo: false
-      }},
-      grid: {{
-        vertLines: {{ visible: false }},
-        horzLines: {{ color: 'rgba(18, 21, 26, 0.06)', style: 0 }}
-      }},
-      leftPriceScale: {{
-        visible: hasLeftScale,
-        borderVisible: false,
-        scaleMargins: {{ top: 0.12, bottom: 0.10 }}
-      }},
-      rightPriceScale: {{
-        borderVisible: false,
-        scaleMargins: {{ top: 0.12, bottom: 0.10 }}
-      }},
-      timeScale: {{
-        borderColor: 'rgba(18, 21, 26, 0.14)',
-        rightOffset: 2,
-        fixLeftEdge: true,
-        timeVisible: false
-      }},
-      crosshair: {{
-        mode: 0,
-        vertLine: {{ color: 'rgba(18, 21, 26, 0.25)', width: 1, style: 2, labelBackgroundColor: '#12151a' }},
-        horzLine: {{ color: 'rgba(18, 21, 26, 0.25)', width: 1, style: 2, labelBackgroundColor: '#12151a' }}
-      }},
-      handleScroll: {{ mouseWheel: false, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false }},
-      handleScale: {{ mouseWheel: false, pinch: true, axisPressedMouseMove: true }}
-    }});
-
-    var order = [];
-    for (var i = 0; i < seriesSpecs.length; i++) {{
-      if (!seriesSpecs[i].isPrimary) order.push(i);
-    }}
-    for (var j = 0; j < seriesSpecs.length; j++) {{
-      if (seriesSpecs[j].isPrimary) order.push(j);
-    }}
-
-    var apiByIdx = {{}};
-    var primaryApi = null;
-    order.forEach(function(idx) {{
-      var s = seriesSpecs[idx];
-      var api;
-      if (s.type === 'histogram') {{
-        api = chart.addHistogramSeries({{
-          color: s.color || '#0d7680',
-          priceScaleId: s.scale || 'right',
-          priceLineVisible: false,
-          lastValueVisible: false,
-          base: 0
-        }});
-      }} else {{
-        api = chart.addLineSeries({{
-          color: s.color || '#990f3d',
-          lineWidth: s.width || 2,
-          lineStyle: s.style || 0,
-          priceScaleId: s.scale || 'right',
-          priceLineVisible: false,
-          lastValueVisible: Boolean(s.isPrimary),
-          crosshairMarkerVisible: true,
-          crosshairMarkerRadius: s.isPrimary ? 4 : 3
-        }});
-      }}
-      var pts = getPts(s);
-      api.setData(pts);
-      if (s.isPrimary && s.type !== 'histogram' && pts.length > 0 && typeof api.setMarkers === 'function') {{
-        var lastPt = pts[pts.length - 1];
-        api.setMarkers([{{
-          time: lastPt.time,
-          position: 'inBar',
-          color: s.color || '#990f3d',
-          shape: 'circle',
-          size: 0.7
-        }}]);
-      }}
-      apiByIdx[idx] = api;
-      if (s.isPrimary || !primaryApi) primaryApi = api;
-    }});
-
-    if (primaryApi && spec.priceLines && spec.priceLines.length) {{
-      spec.priceLines.forEach(function(pl) {{
-        primaryApi.createPriceLine({{
-          price: Number(pl.price),
-          color: pl.color || '#0d7680',
-          lineWidth: pl.width || 1,
-          lineStyle: pl.style !== undefined ? pl.style : 2,
-          axisLabelVisible: Boolean(pl.axisLabel),
-          title: pl.title || ''
-        }});
-      }});
-    }}
-
-    var metaEl = document.getElementById('lw-meta-' + cid);
-    if (metaEl) {{
-      chart.subscribeCrosshairMove(function(param) {{
-        var valSpans = metaEl.querySelectorAll('.lw-legend-val');
-        if (!param || !param.time || !param.seriesData) {{
-          valSpans.forEach(function(sp) {{
-            var sIdx = Number(sp.dataset.seriesIdx);
-            var pts = getPts(seriesSpecs[sIdx]);
-            sp.textContent = pts.length ? formatVal(pts[pts.length - 1].value) : '—';
-          }});
-          return;
-        }}
-        valSpans.forEach(function(sp) {{
-          var sIdx = Number(sp.dataset.seriesIdx);
-          var api = apiByIdx[sIdx];
-          var d = api ? param.seriesData.get(api) : null;
-          if (d && d.value !== undefined) {{
-            sp.textContent = formatVal(d.value);
-          }}
-        }});
-      }});
-    }}
-
-    chart.timeScale().fitContent();
-    mountedCharts[cid] = {{ chart: chart, el: el }};
-    if (resizeObs) resizeObs.observe(el);
-  }}
-
-  var io = typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(function(entries) {{
-    entries.forEach(function(entry) {{
-      if (entry.isIntersecting) {{
-        mountChart(entry.target);
-        if (entry.target.dataset.lwMounted === '1') {{
-          io.unobserve(entry.target);
-        }}
-      }}
-    }});
-  }}, {{ rootMargin: '320px 0px' }}) : null;
-
-  function observeAll(root) {{
-    var scope = root || document;
-    var plots = scope.querySelectorAll('.lw-chart-plot[data-lw-chart]');
-    plots.forEach(function(el) {{
-      var cid = el.dataset.lwChart || el.id;
-      var spec = (window.CP_LW_CHARTS || {{}})[cid];
-      if (spec) syncToolbarReadout(cid, spec);
-      if (el.dataset.lwMounted === '1') {{
-        var inst = mountedCharts[cid];
-        if (inst && inst.chart && el.offsetParent !== null && el.clientWidth > 20) {{
-          inst.chart.applyOptions({{ width: el.clientWidth }});
-          inst.chart.timeScale().fitContent();
-        }}
-        return;
-      }}
-      if (el.offsetParent === null) return;
-      if (io) {{
-        io.observe(el);
-        var rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight + 320 && rect.bottom > -320) {{
-          mountChart(el);
-        }}
-      }} else {{
-        mountChart(el);
-      }}
-    }});
-  }}
-
-  window.CPChart = {{
-    mount: mountChart,
-    mountVisibleIn: observeAll
-  }};
-
-  function boot() {{
-    if (window.LightweightCharts) {{
-      observeAll(document);
-    }} else {{
-      var timer = setInterval(function() {{
-        if (window.LightweightCharts) {{
-          clearInterval(timer);
-          observeAll(document);
-        }}
-      }}, 40);
-    }}
-  }}
-
-  if (document.readyState === 'loading') {{
-    document.addEventListener('DOMContentLoaded', boot);
-  }} else {{
-    boot();
-  }}
-}})();
-</script>"""
 
 
 def _legacy_plotly_runtime_script(chart_ids_js: str, country_code: str) -> str:

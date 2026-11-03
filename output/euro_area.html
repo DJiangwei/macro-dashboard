@@ -358,6 +358,20 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   gap: 5px;
   color: var(--text-secondary);
   font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+  padding: 1px 5px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  transition: opacity 0.14s ease, background 0.14s ease, border-color 0.14s ease;
+}
+.lw-legend-item:hover {
+  background: rgba(18, 21, 26, 0.04);
+  border-color: rgba(18, 21, 26, 0.12);
+}
+.lw-legend-item.is-hidden {
+  opacity: 0.36;
+  text-decoration: line-through;
 }
 .lw-legend-swatch {
   display: inline-block;
@@ -377,6 +391,126 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
   font-size: 10px;
   font-weight: 600;
   white-space: nowrap;
+}
+.lw-toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 4px;
+  padding-left: 6px;
+  border-left: 1px solid rgba(18, 21, 26, 0.10);
+}
+.lw-range-group, .lw-action-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.lw-action-group {
+  margin-left: 3px;
+  padding-left: 4px;
+  border-left: 1px solid rgba(18, 21, 26, 0.08);
+}
+.lw-range-btn, .lw-tool-btn {
+  appearance: none;
+  border: 1px solid rgba(18, 21, 26, 0.12);
+  background: #fcfaf7;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 3px 5px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.lw-range-btn:hover, .lw-tool-btn:hover {
+  border-color: var(--accent, #990f3d);
+  color: var(--accent, #990f3d);
+  background: rgba(153, 15, 61, 0.05);
+}
+.lw-range-btn.is-active, .lw-tool-btn.is-active {
+  background: var(--accent, #990f3d);
+  border-color: var(--accent, #990f3d);
+  color: #ffffff;
+}
+.lw-zoom-rect {
+  position: absolute;
+  top: 0;
+  bottom: 24px;
+  background: rgba(153, 15, 61, 0.10);
+  border: 1px dashed #990f3d;
+  pointer-events: none;
+  z-index: 8;
+  display: none;
+}
+.lw-delta-banner {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(153, 15, 61, 0.08);
+  border: 1px solid rgba(153, 15, 61, 0.24);
+  color: #12151a;
+  font-size: 10.5px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.lw-delta-banner.is-visible {
+  display: inline-flex;
+}
+.lw-delta-close {
+  border: none;
+  background: transparent;
+  color: #990f3d;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 2px;
+  font-size: 12px;
+  line-height: 1;
+}
+.lw-chart-plot.is-boxzoom {
+  cursor: crosshair !important;
+}
+.lw-lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 21, 26, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 9990;
+  display: none;
+}
+.lw-lightbox-backdrop.is-open {
+  display: block;
+}
+.lw-card-expanded {
+  position: fixed !important;
+  top: 4vh !important;
+  left: 4vw !important;
+  width: 92vw !important;
+  height: 90vh !important;
+  max-width: 1440px !important;
+  margin: 0 auto !important;
+  z-index: 9995 !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28) !important;
+  border-radius: 6px !important;
+  padding: 20px 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: auto !important;
+}
+.lw-card-expanded .chart-canvas,
+.lw-card-expanded .lw-chart-wrap {
+  flex: 1 1 auto !important;
+  height: 62vh !important;
+  min-height: 460px !important;
+}
+.lw-card-expanded .lw-chart-plot {
+  height: calc(62vh - 44px) !important;
+  min-height: 410px !important;
 }
 .lw-chart-plot {
   flex: 1 1 auto;
@@ -521,6 +655,14 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <span><span data-lang="en">Chart view</span><span data-lang="zh">图表视图</span></span>
     <button type="button" data-view-option="core" aria-pressed="true" onclick="setDashboardView('core')"><span data-lang="en">Core 48</span><span data-lang="zh">核心 48</span></button>
     <button type="button" data-view-option="deep" aria-pressed="false" onclick="setDashboardView('deep')"><span data-lang="en">All deep-dive charts</span><span data-lang="zh">全部深度指标</span></button>
+    <span class="horizon-sep" aria-hidden="true" style="width:1px;height:18px;background:rgba(18,21,26,0.16);margin:0 4px;"></span>
+    <span><span data-lang="en">Horizon</span><span data-lang="zh">时间跨度</span></span>
+    <button type="button" data-horizon-option="1Y" aria-pressed="false" onclick="window.CPChart && window.CPChart.setGlobalHorizon('1Y')">1Y</button>
+    <button type="button" data-horizon-option="3Y" aria-pressed="false" onclick="window.CPChart && window.CPChart.setGlobalHorizon('3Y')">3Y</button>
+    <button type="button" data-horizon-option="5Y" aria-pressed="false" onclick="window.CPChart && window.CPChart.setGlobalHorizon('5Y')">5Y</button>
+    <button type="button" data-horizon-option="10Y" aria-pressed="false" onclick="window.CPChart && window.CPChart.setGlobalHorizon('10Y')">10Y</button>
+    <button type="button" data-horizon-option="ALL" aria-pressed="true" onclick="window.CPChart && window.CPChart.setGlobalHorizon('ALL')"><span data-lang="en">All</span><span data-lang="zh">全部</span></button>
+    <span class="horizon-hint" style="font-size:11px;color:var(--muted);margin-left:6px;"><span data-lang="en">Drag: pan · Shift+Drag (or 🔍): box-zoom &amp; Δ · Click legend: toggle · Double-click: reset</span><span data-lang="zh">拖拽：平移 · Shift+拖拽（或点🔍）：框选测算Δ · 单击图例：显隐 · 双击：重置</span></span>
   </div>
 
   <div class="data-note">
@@ -5651,6 +5793,10 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {}, {"chart-real_gdp_
 (function() {
   var mainCountry = 'EA';
   var mountedCharts = {};
+  var currentGlobalHorizon = 'ALL';
+  var isShiftDown = false;
+  var backdropEl = null;
+  var expandedCardId = null;
 
   function getPts(s) {
     if (!s) return [];
@@ -5698,7 +5844,59 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {}, {"chart-real_gdp_
     return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
-  function renderMetaBar(cid, spec) {
+  function syncToolbarReadout(cid, spec) {
+    var series = (spec && spec.series) || [];
+    if (!series.length) return;
+    var best = null;
+    for (var i = 0; i < series.length; i++) {
+      if (series[i].name === mainCountry || series[i].isPrimary) {
+        best = series[i];
+        break;
+      }
+    }
+    if (!best) best = series[0];
+    var pts = getPts(best);
+    if (!pts.length) return;
+    var lastPt = pts[pts.length - 1];
+    var valStr = formatVal(lastPt.value);
+    var readout = document.querySelector('.chart-reading[data-chart-id="' + cid + '"]');
+    if (readout) {
+      var number = readout.querySelector('.chart-reading-value strong');
+      if (number && number.textContent.trim() === 'n/a') number.textContent = valStr;
+      var periods = readout.querySelectorAll('time span');
+      if (!readout.dataset.latestDate && periods.length) {
+        periods.forEach(function(period) { period.textContent = String(lastPt.time); });
+      }
+    }
+  }
+
+  function collectAllTimes(spec) {
+    var set = {};
+    var series = (spec && spec.series) || [];
+    for (var i = 0; i < series.length; i++) {
+      var pts = getPts(series[i]);
+      for (var j = 0; j < pts.length; j++) {
+        if (pts[j] && pts[j].time) set[pts[j].time] = true;
+      }
+    }
+    return Object.keys(set).sort();
+  }
+
+  function getAvailableHorizons(allTimes) {
+    if (!allTimes || allTimes.length < 2) return ['ALL'];
+    var minYear = parseInt(allTimes[0].slice(0, 4), 10);
+    var maxYear = parseInt(allTimes[allTimes.length - 1].slice(0, 4), 10);
+    var span = Math.max(1, maxYear - minYear);
+    var out = [];
+    if (span >= 1) out.push('1Y');
+    if (span >= 3) out.push('3Y');
+    if (span >= 5) out.push('5Y');
+    if (span >= 10) out.push('10Y');
+    out.push('ALL');
+    return out;
+  }
+
+  function renderMetaBar(cid, spec, allTimes) {
     var metaEl = document.getElementById('lw-meta-' + cid);
     if (!metaEl) return;
     var html = [];
@@ -5715,15 +5913,398 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {}, {"chart-real_gdp_
       var pts = getPts(s);
       var lastVal = pts.length ? formatVal(pts[pts.length - 1].value) : '—';
       html.push(
-        '<span class="lw-legend-item">' +
+        '<span class="lw-legend-item" data-series-idx="' + i + '" role="button" tabindex="0" title="Click: show/hide · Double-click (or Alt+Click): solo series / 单击显隐 · 双击独显">' +
         '<span class="lw-legend-swatch" style="background:' + (s.color || '#990f3d') + ';"></span>' +
         '<span>' + (s.name || ('S' + (i + 1))) + '</span>' +
         '<span class="lw-legend-val" data-series-idx="' + i + '">' + lastVal + '</span>' +
         '</span>'
       );
     }
+    html.push('<span class="lw-delta-banner" id="lw-delta-' + cid + '"></span>');
+    var horizons = getAvailableHorizons(allTimes);
+    var rangeBtns = [];
+    for (var h = 0; h < horizons.length; h++) {
+      var hz = horizons[h];
+      var label = hz === 'ALL' ? 'All' : hz;
+      var activeCls = hz === currentGlobalHorizon ? ' is-active' : '';
+      rangeBtns.push(
+        '<button type="button" class="lw-range-btn' + activeCls + '" data-lw-horizon="' + hz + '" title="Show ' + label + ' range">' + label + '</button>'
+      );
+    }
+    html.push(
+      '<span class="lw-toolbar">' +
+        '<span class="lw-range-group">' + rangeBtns.join('') + '</span>' +
+        '<span class="lw-action-group">' +
+          '<button type="button" class="lw-tool-btn" data-lw-action="boxzoom" title="Box-select time range & compute Δ (or hold Shift + drag) / 框选时间段并测算区间变动 Δ（或按住 Shift 拖拽）">🔍</button>' +
+          '<button type="button" class="lw-tool-btn" data-lw-action="reset" title="Reset zoom & restore all series (or double-click chart) / 重置缩放并恢复全部序列（或双击图表）">↺</button>' +
+          '<button type="button" class="lw-tool-btn" data-lw-action="csv" title="Download CSV data / 导出 CSV 数据">CSV</button>' +
+          '<button type="button" class="lw-tool-btn" data-lw-action="png" title="Download PNG chart snapshot / 导出高清 PNG 截图">PNG</button>' +
+          '<button type="button" class="lw-tool-btn" data-lw-action="expand" title="Fullscreen view / 全屏放大检视">⛶</button>' +
+        '</span>' +
+      '</span>'
+    );
     metaEl.innerHTML = html.join('');
+
+    metaEl.onclick = function(e) {
+      var rangeBtn = e.target.closest('.lw-range-btn[data-lw-horizon]');
+      if (rangeBtn) {
+        setChartHorizon(cid, rangeBtn.dataset.lwHorizon);
+        return;
+      }
+      var actBtn = e.target.closest('[data-lw-action]');
+      if (actBtn) {
+        var act = actBtn.dataset.lwAction;
+        if (act === 'boxzoom') toggleBoxZoomMode(cid);
+        else if (act === 'reset') resetChart(cid);
+        else if (act === 'csv') exportCSV(cid);
+        else if (act === 'png') exportPNG(cid);
+        else if (act === 'expand') toggleExpand(cid);
+        return;
+      }
+      var legItem = e.target.closest('.lw-legend-item[data-series-idx]');
+      if (legItem) {
+        var idx = Number(legItem.dataset.seriesIdx);
+        if (e.altKey || e.metaKey) soloSeries(cid, idx);
+        else toggleSeries(cid, idx);
+      }
+    };
+
+    metaEl.ondblclick = function(e) {
+      var legItem = e.target.closest('.lw-legend-item[data-series-idx]');
+      if (legItem) {
+        e.preventDefault();
+        soloSeries(cid, Number(legItem.dataset.seriesIdx));
+      }
+    };
   }
+
+  function clearDeltaBanner(cid) {
+    var banner = document.getElementById('lw-delta-' + cid);
+    if (banner) {
+      banner.classList.remove('is-visible');
+      banner.innerHTML = '';
+    }
+  }
+
+  function updateDeltaBanner(cid, inst, fromT, toT) {
+    var banner = document.getElementById('lw-delta-' + cid);
+    if (!banner || !inst || !inst.spec) return;
+    var series = inst.spec.series || [];
+    var primary = null;
+    for (var i = 0; i < series.length; i++) {
+      if (inst.seriesVisible[i] !== false && (series[i].isPrimary || series[i].name === mainCountry)) {
+        primary = series[i];
+        break;
+      }
+    }
+    if (!primary) {
+      for (var j = 0; j < series.length; j++) {
+        if (inst.seriesVisible[j] !== false) { primary = series[j]; break; }
+      }
+    }
+    if (!primary) return;
+    var pts = getPts(primary);
+    var pStart = null, pEnd = null;
+    for (var k = 0; k < pts.length; k++) {
+      if (pts[k].time >= fromT && !pStart) pStart = pts[k];
+      if (pts[k].time <= toT) pEnd = pts[k];
+    }
+    if (!pStart || !pEnd || pStart.time === pEnd.time) return;
+    var v1 = Number(pStart.value);
+    var v2 = Number(pEnd.value);
+    var diff = v2 - v1;
+    var sign = diff > 0 ? '+' : '';
+    var unit = String(inst.spec.unit || '');
+    var isRateUnit = /%|pp|bp|bps|index/i.test(unit);
+    var pctStr = '';
+    if (!isRateUnit && Math.abs(v1) > 1e-9) {
+      var pct = ((v2 - v1) / Math.abs(v1)) * 100;
+      pctStr = ' (' + (pct > 0 ? '+' : '') + pct.toFixed(1) + '%)';
+    }
+    banner.innerHTML =
+      '<span>' + pStart.time.slice(0, 7) + ' → ' + pEnd.time.slice(0, 7) + ': ' +
+      formatVal(v1) + ' → ' + formatVal(v2) + ' · <strong>Δ ' + sign + formatVal(diff) + '</strong>' + pctStr + '</span>' +
+      '<button type="button" class="lw-delta-close" data-lw-action="reset" title="Clear selection & reset zoom">×</button>';
+    banner.classList.add('is-visible');
+  }
+
+  function setChartHorizon(cid, horizon) {
+    var inst = mountedCharts[cid];
+    if (!inst || !inst.chart) return;
+    var allTimes = inst.allTimes || [];
+    if (!allTimes.length) return;
+    clearDeltaBanner(cid);
+    var hz = String(horizon || 'ALL').toUpperCase();
+    if (hz === 'ALL') {
+      inst.chart.timeScale().fitContent();
+    } else {
+      var years = parseInt(hz, 10) || 5;
+      var maxT = allTimes[allTimes.length - 1];
+      var cutoffYear = parseInt(maxT.slice(0, 4), 10) - years;
+      var cutoffStr = String(cutoffYear) + maxT.slice(4);
+      var fromT = allTimes[0];
+      for (var i = 0; i < allTimes.length; i++) {
+        if (allTimes[i] >= cutoffStr) {
+          fromT = allTimes[i];
+          break;
+        }
+      }
+      if (fromT >= maxT && allTimes.length > 1) {
+        fromT = allTimes[Math.max(0, allTimes.length - 2)];
+      }
+      try {
+        inst.chart.timeScale().setVisibleRange({ from: fromT, to: maxT });
+      } catch (err) {
+        inst.chart.timeScale().fitContent();
+      }
+    }
+    inst.chart.priceScale('right').applyOptions({ autoScale: true });
+    if (inst.hasLeftScale) inst.chart.priceScale('left').applyOptions({ autoScale: true });
+    var metaEl = document.getElementById('lw-meta-' + cid);
+    if (metaEl) {
+      metaEl.querySelectorAll('.lw-range-btn').forEach(function(btn) {
+        btn.classList.toggle('is-active', btn.dataset.lwHorizon === hz);
+      });
+    }
+  }
+
+  function setGlobalHorizon(horizon) {
+    var hz = String(horizon || 'ALL').toUpperCase();
+    currentGlobalHorizon = hz;
+    document.querySelectorAll('[data-horizon-option]').forEach(function(btn) {
+      btn.setAttribute('aria-pressed', String(btn.dataset.horizonOption === hz));
+    });
+    Object.keys(mountedCharts).forEach(function(cid) {
+      setChartHorizon(cid, hz);
+    });
+  }
+
+  function syncSeriesVisibility(cid) {
+    var inst = mountedCharts[cid];
+    if (!inst) return;
+    var metaEl = document.getElementById('lw-meta-' + cid);
+    Object.keys(inst.apiByIdx).forEach(function(k) {
+      var idx = Number(k);
+      var vis = inst.seriesVisible[idx] !== false;
+      inst.apiByIdx[idx].applyOptions({ visible: vis });
+    });
+    if (metaEl) {
+      metaEl.querySelectorAll('.lw-legend-item[data-series-idx]').forEach(function(item) {
+        var idx = Number(item.dataset.seriesIdx);
+        item.classList.toggle('is-hidden', inst.seriesVisible[idx] === false);
+      });
+    }
+  }
+
+  function toggleSeries(cid, sIdx) {
+    var inst = mountedCharts[cid];
+    if (!inst || !inst.spec || (inst.spec.series || []).length <= 1) return;
+    var total = inst.spec.series.length;
+    inst.seriesVisible[sIdx] = inst.seriesVisible[sIdx] === false ? true : false;
+    var anyVis = false;
+    for (var i = 0; i < total; i++) {
+      if (inst.seriesVisible[i] !== false) { anyVis = true; break; }
+    }
+    if (!anyVis) {
+      for (var j = 0; j < total; j++) inst.seriesVisible[j] = true;
+    }
+    syncSeriesVisibility(cid);
+  }
+
+  function soloSeries(cid, sIdx) {
+    var inst = mountedCharts[cid];
+    if (!inst || !inst.spec || (inst.spec.series || []).length <= 1) return;
+    var total = inst.spec.series.length;
+    var onlyThis = true;
+    for (var i = 0; i < total; i++) {
+      var v = inst.seriesVisible[i] !== false;
+      if ((i === sIdx && !v) || (i !== sIdx && v)) { onlyThis = false; break; }
+    }
+    for (var j = 0; j < total; j++) {
+      inst.seriesVisible[j] = onlyThis ? true : (j === sIdx);
+    }
+    syncSeriesVisibility(cid);
+  }
+
+  function toggleBoxZoomMode(cid, forceState) {
+    var inst = mountedCharts[cid];
+    if (!inst) return;
+    inst.boxZoomMode = forceState !== undefined ? Boolean(forceState) : !inst.boxZoomMode;
+    inst.el.classList.toggle('is-boxzoom', Boolean(inst.boxZoomMode || isShiftDown));
+    var metaEl = document.getElementById('lw-meta-' + cid);
+    if (metaEl) {
+      var btn = metaEl.querySelector('[data-lw-action="boxzoom"]');
+      if (btn) btn.classList.toggle('is-active', Boolean(inst.boxZoomMode));
+    }
+  }
+
+  function resetChart(cid) {
+    var inst = mountedCharts[cid];
+    if (!inst) return;
+    var total = (inst.spec.series || []).length;
+    for (var i = 0; i < total; i++) inst.seriesVisible[i] = true;
+    syncSeriesVisibility(cid);
+    toggleBoxZoomMode(cid, false);
+    setChartHorizon(cid, 'ALL');
+  }
+
+  function exportCSV(cid) {
+    var spec = (window.CP_LW_CHARTS || {})[cid];
+    if (!spec || !spec.series || !spec.series.length) return;
+    var allTimes = collectAllTimes(spec);
+    var series = spec.series;
+    var maps = series.map(function(s) {
+      var m = {};
+      getPts(s).forEach(function(pt) { m[pt.time] = pt.value; });
+      return m;
+    });
+    var unitSuffix = spec.unit ? ' (' + spec.unit + ')' : '';
+    var headers = ['Date'].concat(series.map(function(s, i) {
+      var name = String(s.name || ('Series_' + (i + 1))).replace(/"/g, '""');
+      return '"' + name + unitSuffix.replace(/"/g, '""') + '"';
+    }));
+    var rows = [headers.join(',')];
+    allTimes.forEach(function(t) {
+      var row = [t];
+      for (var i = 0; i < maps.length; i++) {
+        var v = maps[i][t];
+        row.push(v !== undefined && v !== null ? String(v) : '');
+      }
+      rows.push(row.join(','));
+    });
+    var blob = new Blob(['\ufeff' + rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = mainCountry + '_' + cid.replace(/[^a-zA-Z0-9_-]/g, '_') + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function exportPNG(cid) {
+    var inst = mountedCharts[cid];
+    if (!inst || !inst.chart || typeof inst.chart.takeScreenshot !== 'function') return;
+    var shot = inst.chart.takeScreenshot();
+    var padX = 20, topH = 54, botH = 26;
+    var out = document.createElement('canvas');
+    out.width = shot.width + padX * 2;
+    out.height = shot.height + topH + botH;
+    var ctx = out.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, out.width, out.height);
+    ctx.fillStyle = '#990f3d';
+    ctx.fillRect(0, 0, out.width, 4);
+    var card = inst.el.closest('.chart-card, .chart-cell');
+    var headingEl = card ? card.querySelector('h3 span[data-lang="en"], h3, .lw-chart-title') : null;
+    var titleText = (headingEl && headingEl.textContent.trim()) || inst.spec.title || cid;
+    var unitText = inst.spec.unit ? ' (' + inst.spec.unit + ')' : '';
+    ctx.fillStyle = '#12151a';
+    ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillText(titleText + unitText, padX, 26);
+    var lx = padX;
+    (inst.spec.series || []).forEach(function(s, idx) {
+      if (inst.seriesVisible[idx] === false) return;
+      var pts = getPts(s);
+      var lastV = pts.length ? formatVal(pts[pts.length - 1].value) : '';
+      var lbl = (s.name || ('S' + (idx + 1))) + (lastV ? ': ' + lastV : '');
+      ctx.fillStyle = s.color || '#990f3d';
+      ctx.fillRect(lx, 36, 10, 3);
+      ctx.fillStyle = '#4b525f';
+      ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.fillText(lbl, lx + 14, 41);
+      lx += ctx.measureText(lbl).width + 28;
+    });
+    ctx.drawImage(shot, padX, topH);
+    ctx.fillStyle = '#737c8c';
+    ctx.font = '10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillText('East Meridian · Macro Dashboard (' + mainCountry + ')', padX, out.height - 9);
+    var a = document.createElement('a');
+    a.href = out.toDataURL('image/png');
+    a.download = mainCountry + '_' + cid.replace(/[^a-zA-Z0-9_-]/g, '_') + '.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function ensureBackdrop() {
+    if (backdropEl) return backdropEl;
+    backdropEl = document.createElement('div');
+    backdropEl.className = 'lw-lightbox-backdrop';
+    backdropEl.onclick = function() {
+      if (expandedCardId) toggleExpand(expandedCardId);
+    };
+    document.body.appendChild(backdropEl);
+    return backdropEl;
+  }
+
+  function toggleExpand(cid) {
+    var inst = mountedCharts[cid];
+    if (!inst || !inst.el) return;
+    var card = inst.el.closest('.chart-card, .chart-cell, .deepdive-chart-box') || inst.el.parentElement;
+    if (!card) return;
+    var bd = ensureBackdrop();
+    var isClosing = card.classList.contains('lw-card-expanded');
+    document.querySelectorAll('.lw-card-expanded').forEach(function(c) {
+      c.classList.remove('lw-card-expanded');
+    });
+    if (isClosing) {
+      bd.classList.remove('is-open');
+      expandedCardId = null;
+    } else {
+      card.classList.add('lw-card-expanded');
+      bd.classList.add('is-open');
+      expandedCardId = cid;
+    }
+    setTimeout(function() {
+      if (inst.chart && inst.el.clientWidth > 20) {
+        inst.chart.applyOptions({
+          width: inst.el.clientWidth,
+          height: inst.el.clientHeight || (isClosing ? 300 : 480)
+        });
+        inst.chart.timeScale().fitContent();
+      }
+    }, 30);
+  }
+
+  function resolveTimeAtX(inst, x) {
+    if (!inst || !inst.chart) return null;
+    var t = inst.chart.timeScale().coordinateToTime(x);
+    if (t) {
+      if (typeof t === 'string') return t;
+      if (typeof t === 'object' && t.year) {
+        return t.year + '-' + String(t.month).padStart(2, '0') + '-' + String(t.day).padStart(2, '0');
+      }
+    }
+    var logIdx = inst.chart.timeScale().coordinateToLogical(x);
+    if (logIdx !== null && logIdx !== undefined && inst.allTimes && inst.allTimes.length) {
+      var idx = Math.max(0, Math.min(inst.allTimes.length - 1, Math.round(logIdx)));
+      return inst.allTimes[idx];
+    }
+    return null;
+  }
+
+  window.addEventListener('keydown', function(e) {
+    if (e.key === 'Shift' && !isShiftDown) {
+      isShiftDown = true;
+      Object.keys(mountedCharts).forEach(function(cid) {
+        mountedCharts[cid].el.classList.add('is-boxzoom');
+      });
+    } else if (e.key === 'Escape' && expandedCardId) {
+      toggleExpand(expandedCardId);
+    }
+  });
+
+  window.addEventListener('keyup', function(e) {
+    if (e.key === 'Shift') {
+      isShiftDown = false;
+      Object.keys(mountedCharts).forEach(function(cid) {
+        var inst = mountedCharts[cid];
+        inst.el.classList.toggle('is-boxzoom', Boolean(inst.boxZoomMode));
+      });
+    }
+  });
 
   var resizeObs = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(function(entries) {
     entries.forEach(function(entry) {
@@ -5745,7 +6326,8 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {}, {"chart-real_gdp_
     if (!spec) return;
 
     el.dataset.lwMounted = '1';
-    renderMetaBar(cid, spec);
+    var allTimes = collectAllTimes(spec);
+    renderMetaBar(cid, spec, allTimes);
     var seriesSpecs = spec.series || [];
     var hasLeftScale = seriesSpecs.some(function(s) { return s.scale === 'left'; });
 
@@ -5799,9 +6381,11 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {}, {"chart-real_gdp_
     }
 
     var apiByIdx = {};
+    var seriesVisible = {};
     var primaryApi = null;
     order.forEach(function(idx) {
       var s = seriesSpecs[idx];
+      seriesVisible[idx] = true;
       var api;
       if (s.type === 'histogram') {
         api = chart.addHistogramSeries({
@@ -5875,8 +6459,103 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {}, {"chart-real_gdp_
       });
     }
 
-    chart.timeScale().fitContent();
-    mountedCharts[cid] = { chart: chart, el: el };
+    var zoomRect = document.createElement('div');
+    zoomRect.className = 'lw-zoom-rect';
+    el.appendChild(zoomRect);
+
+    var inst = {
+      chart: chart,
+      el: el,
+      spec: spec,
+      allTimes: allTimes,
+      apiByIdx: apiByIdx,
+      seriesVisible: seriesVisible,
+      hasLeftScale: hasLeftScale,
+      boxZoomMode: false
+    };
+    mountedCharts[cid] = inst;
+
+    el.addEventListener('mousedown', function(e) {
+      if (e.button !== 0 || (!e.shiftKey && !inst.boxZoomMode)) return;
+      e.stopPropagation();
+      e.preventDefault();
+      var rect = el.getBoundingClientRect();
+      var startX = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+      zoomRect.style.display = 'block';
+      zoomRect.style.left = startX + 'px';
+      zoomRect.style.width = '0px';
+
+      function onMove(ev) {
+        var curX = Math.max(0, Math.min(rect.width, ev.clientX - rect.left));
+        var x1 = Math.min(startX, curX);
+        var x2 = Math.max(startX, curX);
+        zoomRect.style.left = x1 + 'px';
+        zoomRect.style.width = (x2 - x1) + 'px';
+        if (x2 - x1 >= 8) {
+          var t1 = resolveTimeAtX(inst, x1);
+          var t2 = resolveTimeAtX(inst, x2);
+          if (t1 && t2 && t1 !== t2) {
+            updateDeltaBanner(cid, inst, t1 < t2 ? t1 : t2, t1 < t2 ? t2 : t1);
+          }
+        }
+      }
+
+      function onUp(ev) {
+        window.removeEventListener('mousemove', onMove, true);
+        window.removeEventListener('mouseup', onUp, true);
+        zoomRect.style.display = 'none';
+        var curX = Math.max(0, Math.min(rect.width, ev.clientX - rect.left));
+        var x1 = Math.min(startX, curX);
+        var x2 = Math.max(startX, curX);
+        if (x2 - x1 >= 12) {
+          var t1 = resolveTimeAtX(inst, x1);
+          var t2 = resolveTimeAtX(inst, x2);
+          if (t1 && t2 && t1 !== t2) {
+            var fromT = t1 < t2 ? t1 : t2;
+            var toT = t1 < t2 ? t2 : t1;
+            try {
+              chart.timeScale().setVisibleRange({ from: fromT, to: toT });
+              updateDeltaBanner(cid, inst, fromT, toT);
+              if (metaEl) {
+                metaEl.querySelectorAll('.lw-range-btn').forEach(function(b) { b.classList.remove('is-active'); });
+              }
+            } catch (err) {}
+          }
+        }
+        if (inst.boxZoomMode) toggleBoxZoomMode(cid, false);
+      }
+
+      window.addEventListener('mousemove', onMove, true);
+      window.addEventListener('mouseup', onUp, true);
+    }, true);
+
+    el.addEventListener('wheel', function(e) {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      var lr = chart.timeScale().getVisibleLogicalRange();
+      if (!lr) return;
+      var span = Math.max(2, lr.to - lr.from);
+      var factor = e.deltaY < 0 ? 0.82 : 1.22;
+      var newSpan = Math.max(2, Math.min((allTimes.length || 200) + 10, span * factor));
+      var center = (lr.from + lr.to) / 2;
+      chart.timeScale().setVisibleLogicalRange({
+        from: center - newSpan / 2,
+        to: center + newSpan / 2
+      });
+      if (metaEl) {
+        metaEl.querySelectorAll('.lw-range-btn').forEach(function(b) { b.classList.remove('is-active'); });
+      }
+    }, { passive: false });
+
+    el.addEventListener('dblclick', function() {
+      resetChart(cid);
+    });
+
+    if (currentGlobalHorizon !== 'ALL') {
+      setChartHorizon(cid, currentGlobalHorizon);
+    } else {
+      chart.timeScale().fitContent();
+    }
     if (resizeObs) resizeObs.observe(el);
   }
 
@@ -5896,6 +6575,8 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {}, {"chart-real_gdp_
     var plots = scope.querySelectorAll('.lw-chart-plot[data-lw-chart]');
     plots.forEach(function(el) {
       var cid = el.dataset.lwChart || el.id;
+      var spec = (window.CP_LW_CHARTS || {})[cid];
+      if (spec) syncToolbarReadout(cid, spec);
       if (el.dataset.lwMounted === '1') {
         var inst = mountedCharts[cid];
         if (inst && inst.chart && el.offsetParent !== null && el.clientWidth > 20) {
@@ -5920,7 +6601,13 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {}, {"chart-real_gdp_
   window.CPChart = {
     mount: mountChart,
     mountVisibleIn: observeAll,
-    refreshAll: function() { observeAll(document); }
+    refreshAll: function() { observeAll(document); },
+    setChartHorizon: setChartHorizon,
+    setGlobalHorizon: setGlobalHorizon,
+    resetChart: resetChart,
+    exportCSV: exportCSV,
+    exportPNG: exportPNG,
+    toggleExpand: toggleExpand
   };
 
   function boot() {
