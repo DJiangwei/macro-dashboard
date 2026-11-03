@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-11-02T23:44:36.675320+00:00
+Generated: 2026-11-03T17:34:55.198723+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 

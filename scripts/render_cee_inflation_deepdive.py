@@ -800,154 +800,80 @@ def render_deepdive_panel(country_code: str) -> str:
             pts[ds] = pt
         return [pts[k] for k in sorted(pts)]
 
-    if country_code == "PL":
-        head_sum_vals = [
-            round((f or 0) + (g or 0) + (e or 0) + (s or 0), 2)
-            for f, g, e, s in zip(cf_vals, cg_vals, ce_vals, cs_vals)
-        ]
-        lw_deepdive_specs = {
-            f"chart-cpi-contrib-{country_code}": {
-                "title": "CPI Component Contributions",
-                "unit": "pp",
-                "series": [
-                    {"name": "Headline YoY", "type": "line", "color": "#12151a", "width": 2, "style": 0, "isPrimary": True, "data": _lw_pts(cf_dates, head_sum_vals)},
-                    {"name": "Services (服务)", "type": "line", "color": "#10b981", "width": 2, "style": 0, "data": _lw_pts(cf_dates, cs_vals)},
-                    {"name": "Food (食品)", "type": "line", "color": "#f59e0b", "width": 2, "style": 0, "data": _lw_pts(cf_dates, cf_vals)},
-                    {"name": "Energy (能源)", "type": "line", "color": "#ef4444", "width": 2, "style": 0, "data": _lw_pts(cf_dates, ce_vals)},
-                    {"name": "Goods (商品)", "type": "line", "color": "#3b82f6", "width": 2, "style": 0, "data": _lw_pts(cf_dates, cg_vals)},
-                ],
-                "priceLines": [{"price": 0.0, "color": "rgba(18, 21, 26, 0.40)", "width": 1, "style": 0, "title": ""}],
-            },
-            f"chart-momentum-{country_code}": {
-                "title": "Inflation Momentum Trajectory",
-                "unit": "%",
-                "badge": {"text": "NBP Target Band: 2.5% ±1pp", "color": "#0d7680", "bg": "rgba(13, 118, 128, 0.10)"},
-                "series": [
-                    {"name": "Headline 3M Ann.", "type": "line", "color": "#1e3a8a", "width": 2, "style": 0, "isPrimary": True, "data": _lw_pts(mom_dates, mom_head_3m)},
-                    {"name": "Headline 12M YoY", "type": "line", "color": "#64748b", "width": 2, "style": 2, "data": _lw_pts(mom_dates, mom_head_yoy)},
-                    {"name": "Core 3M Ann.", "type": "line", "color": "#990f3d", "width": 2, "style": 0, "data": _lw_pts(mom_dates, mom_core_3m)},
-                    {"name": "Core 12M YoY", "type": "line", "color": "#f43f5e", "width": 2, "style": 1, "data": _lw_pts(mom_dates, mom_core_yoy)},
-                ],
-                "priceLines": [
-                    {"price": 2.5, "color": "#0d7680", "width": 2, "style": 2, "title": "NBP 2.5%"},
-                    {"price": 3.5, "color": "rgba(13, 118, 128, 0.40)", "width": 1, "style": 3, "title": ""},
-                    {"price": 1.5, "color": "rgba(13, 118, 128, 0.40)", "width": 1, "style": 3, "title": ""},
-                    {"price": 0.0, "color": "rgba(18, 21, 26, 0.35)", "width": 1, "style": 0, "title": ""},
-                ],
-            },
-            f"chart-scissors-gap-{country_code}": {
-                "title": "PPI vs CPI Margin Scissors",
-                "unit": "pp / %",
-                "series": [
-                    {"name": "Scissors Gap (PPI - CPI)", "type": "histogram", "color": "#0d7680", "data": _lw_pts(sg_dates, sg_vals, is_bar=True)},
-                    {"name": "Domestic PPI YoY", "type": "line", "color": "#6366f1", "width": 2, "style": 0, "isPrimary": True, "data": _lw_pts(sg_dates, ppi_head_vals)},
-                ],
-                "priceLines": [{"price": 0.0, "color": "rgba(18, 21, 26, 0.40)", "width": 1, "style": 0, "title": ""}],
-            },
-            f"chart-expectations-{country_code}": {
-                "title": "Pricing Expectations & Capacity Utilization",
-                "unit": "Net Bal %",
-                "badge": {"text": "Right Scale: Capacity Util (%)", "color": "#7c3aed", "bg": "rgba(124, 58, 237, 0.08)"},
-                "series": [
-                    {"name": "Industry 3M Exp", "type": "line", "color": "#2563eb", "width": 2, "style": 0, "scale": "left", "isPrimary": True, "data": _lw_pts(exp_dates, exp_ind_vals)},
-                    {"name": "Services 3M Exp", "type": "line", "color": "#059669", "width": 2, "style": 0, "scale": "left", "data": _lw_pts(exp_dates, exp_srv_vals)},
-                    {"name": "Retail 3M Exp", "type": "line", "color": "#d97706", "width": 2, "style": 0, "scale": "left", "data": _lw_pts(exp_dates, exp_ret_vals)},
-                    {"name": "Consumer 12M Exp", "type": "line", "color": "#dc2626", "width": 2, "style": 1, "scale": "left", "data": _lw_pts(exp_dates, exp_cns_vals)},
-                    {"name": "Capacity Util (%) [R]", "type": "line", "color": "#7c3aed", "width": 2, "style": 0, "scale": "right", "data": _lw_pts(cu_dates, cu_vals)},
-                ],
-                "priceLines": [{"price": 0.0, "color": "rgba(18, 21, 26, 0.35)", "width": 1, "style": 1, "title": ""}],
-            },
-        }
-        deepdive_chart_init_js = (
-            "window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {}, "
-            + json.dumps(lw_deepdive_specs, ensure_ascii=False, separators=(",", ":"))
-            + ");"
-        )
-    else:
-        deepdive_chart_init_js = f"""document.addEventListener("DOMContentLoaded", function() {{
-  if (typeof Plotly === "undefined") return;
+    head_sum_vals = [
+        round((f or 0) + (g or 0) + (e or 0) + (s or 0), 2)
+        for f, g, e, s in zip(cf_vals, cg_vals, ce_vals, cs_vals)
+    ]
+    target_bands = {
+        "PL": {"center": 2.5, "min": 1.5, "max": 3.5, "label": "NBP Target: 2.5% (1.5%–3.5% band)"},
+        "CZ": {"center": 2.0, "min": 1.0, "max": 3.0, "label": "CNB Target: 2.0% (1.0%–3.0% band)"},
+        "HU": {"center": 3.0, "min": 2.0, "max": 4.0, "label": "MNB Target: 3.0% (2.0%–4.0% band)"},
+        "RO": {"center": 2.5, "min": 1.5, "max": 3.5, "label": "NBR Target: 2.5% (1.5%–3.5% band)"},
+        "EA": {"center": 2.0, "min": None, "max": None, "label": "ECB Target: 2.0%"},
+    }
+    t_band = target_bands.get(country_code, {"center": 2.0, "min": None, "max": None, "label": "Inflation Target: 2.0%"})
+    mom_price_lines = []
+    if t_band.get("max") is not None:
+        mom_price_lines.append({"price": t_band["max"], "color": "rgba(13, 118, 128, 0.55)", "width": 1, "style": 3, "title": f"Upper {t_band['max']:g}%", "axisLabel": False})
+    if t_band.get("center") is not None:
+        mom_price_lines.append({"price": t_band["center"], "color": "#0d7680", "width": 2, "style": 2, "title": f"Target {t_band['center']:g}%", "axisLabel": False})
+    if t_band.get("min") is not None:
+        mom_price_lines.append({"price": t_band["min"], "color": "rgba(13, 118, 128, 0.55)", "width": 1, "style": 3, "title": f"Lower {t_band['min']:g}%", "axisLabel": False})
+    mom_price_lines.append({"price": 0.0, "color": "rgba(18, 21, 26, 0.35)", "width": 1, "style": 0, "title": "", "axisLabel": False})
 
-  var cpiDiv = document.getElementById("chart-cpi-contrib-{country_code}");
-  if (cpiDiv) {{
-    var dates = {json.dumps(cf_dates)};
-    var traceFood = {{x: dates, y: {json.dumps(cf_vals)}, name: 'Food (食品)', type: 'bar', marker: {{color: '#f59e0b'}}}};
-    var traceGoods = {{x: dates, y: {json.dumps(cg_vals)}, name: 'Goods (商品)', type: 'bar', marker: {{color: '#3b82f6'}}}};
-    var traceEnergy = {{x: dates, y: {json.dumps(ce_vals)}, name: 'Energy (公用能源)', type: 'bar', marker: {{color: '#ef4444'}}}};
-    var traceServices = {{x: dates, y: {json.dumps(cs_vals)}, name: 'Services (服务)', type: 'bar', marker: {{color: '#10b981'}}}};
-    var lastDate = dates.length ? dates[dates.length - 1] : '';
-    var lastHead = {head_yoy if head_yoy is not None else 0.0};
-    var layout = {{
-      barmode: 'relative', height: 350, margin: {{l: 45, r: 40, t: 30, b: 40}},
-      legend: {{orientation: 'h', y: -0.25}}, paper_bgcolor: '#ffffff', plot_bgcolor: '#ffffff',
-      font: {{family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11, color: '#12151a'}},
-      yaxis: {{title: 'Contribution (% points)', gridcolor: 'rgba(0,0,0,0.06)', zeroline: true, zerolinecolor: '#333'}},
-      xaxis: {{gridcolor: 'rgba(0,0,0,0.04)'}},
-      annotations: [{{x: lastDate, y: lastHead, xref: 'x', yref: 'y', text: 'Headline: ' + lastHead.toFixed(1) + '%', showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#0f172a', ax: 0, ay: -28, bgcolor: '#0f172a', font: {{color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}}, borderpad: 3}}]
-    }};
-    Plotly.newPlot(cpiDiv, [traceFood, traceGoods, traceEnergy, traceServices], layout, {{responsive: true}});
-  }}
-
-  var momDiv = document.getElementById("chart-momentum-{country_code}");
-  if (momDiv) {{
-    var mDates = {json.dumps(mom_dates)};
-    var mH3m = {json.dumps(mom_head_3m)};
-    var mHYoy = {json.dumps(mom_head_yoy)};
-    var mC3m = {json.dumps(mom_core_3m)};
-    var mCYoy = {json.dumps(mom_core_yoy)};
-    var tH3m = {{x: mDates, y: mH3m, name: 'Headline 3M Ann.', type: 'scatter', mode: 'lines+markers', marker: {{size: 4}}, line: {{color: '#1e3a8a', width: 2.5}}}};
-    var tHYoy = {{x: mDates, y: mHYoy, name: 'Headline 12M YoY', type: 'scatter', mode: 'lines', line: {{color: '#64748b', width: 2, dash: 'dash'}}}};
-    var tC3m = {{x: mDates, y: mC3m, name: 'Core 3M Ann.', type: 'scatter', mode: 'lines+markers', marker: {{size: 4}}, line: {{color: '#b91c1c', width: 2.5}}}};
-    var tCYoy = {{x: mDates, y: mCYoy, name: 'Core 12M YoY', type: 'scatter', mode: 'lines', line: {{color: '#f43f5e', width: 2, dash: 'dot'}}}};
-    var layoutMom = {{
-      height: 380, margin: {{l: 45, r: 90, t: 30, b: 40}}, legend: {{orientation: 'h', y: -0.2}},
-      paper_bgcolor: '#ffffff', plot_bgcolor: '#ffffff',
-      font: {{family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11, color: '#12151a'}},
-      yaxis: {{title: 'Annualized Growth & YoY Rate (%)', gridcolor: 'rgba(0,0,0,0.06)', zeroline: true, zerolinecolor: '#333'}},
-      xaxis: {{gridcolor: 'rgba(0,0,0,0.04)'}}
-    }};
-    Plotly.newPlot(momDiv, [tH3m, tHYoy, tC3m, tCYoy], layoutMom, {{responsive: true}});
-  }}
-
-  var gapDiv = document.getElementById("chart-scissors-gap-{country_code}");
-  if (gapDiv) {{
-    var gDates = {json.dumps(sg_dates)};
-    var pVals = {json.dumps(ppi_head_vals)};
-    var gVals = {json.dumps(sg_vals)};
-    var tracePpi = {{x: gDates, y: pVals, name: 'Domestic PPI YoY', type: 'scatter', mode: 'lines+markers', marker: {{size: 4}}, line: {{color: '#6366f1', width: 2.5}}}};
-    var traceGap = {{x: gDates, y: gVals, name: 'Scissors Gap (PPI - CPI)', type: 'bar', marker: {{color: '#0ea5e9', opacity: 0.7}}}};
-    var layoutGap = {{
-      height: 380, margin: {{l: 45, r: 80, t: 30, b: 40}}, legend: {{orientation: 'h', y: -0.2}},
-      paper_bgcolor: '#ffffff', plot_bgcolor: '#ffffff',
-      font: {{family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11, color: '#12151a'}},
-      yaxis: {{title: 'YoY Growth & Spread (pp)', gridcolor: 'rgba(0,0,0,0.06)', zeroline: true, zerolinecolor: '#333'}}
-    }};
-    Plotly.newPlot(gapDiv, [tracePpi, traceGap], layoutGap, {{responsive: true}});
-  }}
-
-  var expDiv = document.getElementById("chart-expectations-{country_code}");
-  if (expDiv) {{
-    var eDates = {json.dumps(exp_dates)};
-    var eInd = {json.dumps(exp_ind_vals)};
-    var eSrv = {json.dumps(exp_srv_vals)};
-    var eRet = {json.dumps(exp_ret_vals)};
-    var eCns = {json.dumps(exp_cns_vals)};
-    var cDates = {json.dumps(cu_dates)};
-    var cVals = {json.dumps(cu_vals)};
-    var tInd = {{x: eDates, y: eInd, name: 'Industry 3M Price Exp', type: 'scatter', mode: 'lines+markers', marker: {{size: 4}}, line: {{color: '#2563eb', width: 2}}}};
-    var tSrv = {{x: eDates, y: eSrv, name: 'Services 3M Price Exp', type: 'scatter', mode: 'lines+markers', marker: {{size: 4}}, line: {{color: '#059669', width: 2}}}};
-    var tRet = {{x: eDates, y: eRet, name: 'Retail 3M Price Exp', type: 'scatter', mode: 'lines+markers', marker: {{size: 4}}, line: {{color: '#d97706', width: 2}}}};
-    var tCns = {{x: eDates, y: eCns, name: 'Consumer 12M Exp', type: 'scatter', mode: 'lines+markers', marker: {{size: 4}}, line: {{color: '#dc2626', width: 2, dash: 'dot'}}}};
-    var tCu = {{x: cDates, y: cVals, name: 'Capacity Util (%) [R-axis]', yaxis: 'y2', type: 'scatter', mode: 'lines+markers', marker: {{size: 5}}, line: {{color: '#7c3aed', width: 2.2}}}};
-    var layoutExp = {{
-      height: 420, margin: {{l: 45, r: 85, t: 30, b: 40}}, legend: {{orientation: 'h', y: -0.22}},
-      paper_bgcolor: '#ffffff', plot_bgcolor: '#ffffff',
-      font: {{family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11, color: '#12151a'}},
-      yaxis: {{title: 'Price Expectations (Net Balance %)', gridcolor: 'rgba(0,0,0,0.06)', zeroline: true, zerolinecolor: '#333'}},
-      yaxis2: {{title: 'Capacity Utilization (%)', overlaying: 'y', side: 'right', range: [50, 100], gridcolor: 'rgba(0,0,0,0)'}}
-    }};
-    Plotly.newPlot(expDiv, [tInd, tSrv, tRet, tCns, tCu], layoutExp, {{responsive: true}});
-  }}
-}});"""
+    lw_deepdive_specs = {
+        f"deepdive-chart-cpi-contrib-{country_code}": {
+            "title": "CPI Component Contributions",
+            "unit": "pp",
+            "series": [
+                {"name": "Headline YoY", "type": "line", "color": "#12151a", "width": 2, "style": 0, "isPrimary": True, "data": _lw_pts(cf_dates, head_sum_vals)},
+                {"name": "Services (服务)", "type": "line", "color": "#10b981", "width": 2, "style": 0, "data": _lw_pts(cf_dates, cs_vals)},
+                {"name": "Food (食品)", "type": "line", "color": "#f59e0b", "width": 2, "style": 0, "data": _lw_pts(cf_dates, cf_vals)},
+                {"name": "Energy (能源)", "type": "line", "color": "#ef4444", "width": 2, "style": 0, "data": _lw_pts(cf_dates, ce_vals)},
+                {"name": "Goods (商品)", "type": "line", "color": "#3b82f6", "width": 2, "style": 0, "data": _lw_pts(cf_dates, cg_vals)},
+            ],
+            "priceLines": [{"price": 0.0, "color": "rgba(18, 21, 26, 0.40)", "width": 1, "style": 0, "title": "", "axisLabel": False}],
+        },
+        f"deepdive-chart-momentum-{country_code}": {
+            "title": "Inflation Momentum Trajectory",
+            "unit": "%",
+            "badge": {"text": t_band["label"], "color": "#0d7680", "bg": "rgba(13, 118, 128, 0.10)"},
+            "series": [
+                {"name": "Headline 3M Ann.", "type": "line", "color": "#1e3a8a", "width": 2, "style": 0, "isPrimary": True, "data": _lw_pts(mom_dates, mom_head_3m)},
+                {"name": "Headline 12M YoY", "type": "line", "color": "#64748b", "width": 2, "style": 2, "data": _lw_pts(mom_dates, mom_head_yoy)},
+                {"name": "Core 3M Ann.", "type": "line", "color": "#990f3d", "width": 2, "style": 0, "data": _lw_pts(mom_dates, mom_core_3m)},
+                {"name": "Core 12M YoY", "type": "line", "color": "#f43f5e", "width": 2, "style": 1, "data": _lw_pts(mom_dates, mom_core_yoy)},
+            ],
+            "priceLines": mom_price_lines,
+        },
+        f"deepdive-chart-scissors-gap-{country_code}": {
+            "title": "PPI vs CPI Margin Scissors",
+            "unit": "pp / %",
+            "series": [
+                {"name": "Scissors Gap (PPI - CPI)", "type": "histogram", "color": "#0d7680", "data": _lw_pts(sg_dates, sg_vals, is_bar=True)},
+                {"name": "Domestic PPI YoY", "type": "line", "color": "#6366f1", "width": 2, "style": 0, "isPrimary": True, "data": _lw_pts(sg_dates, ppi_head_vals)},
+            ],
+            "priceLines": [{"price": 0.0, "color": "rgba(18, 21, 26, 0.40)", "width": 1, "style": 0, "title": "", "axisLabel": False}],
+        },
+        f"deepdive-chart-expectations-{country_code}": {
+            "title": "Pricing Expectations & Capacity Utilization",
+            "unit": "Net Bal %",
+            "badge": {"text": "Right Scale: Capacity Util (%)", "color": "#7c3aed", "bg": "rgba(124, 58, 237, 0.08)"},
+            "series": [
+                {"name": "Industry 3M Exp", "type": "line", "color": "#2563eb", "width": 2, "style": 0, "scale": "left", "isPrimary": True, "data": _lw_pts(exp_dates, exp_ind_vals)},
+                {"name": "Services 3M Exp", "type": "line", "color": "#059669", "width": 2, "style": 0, "scale": "left", "data": _lw_pts(exp_dates, exp_srv_vals)},
+                {"name": "Retail 3M Exp", "type": "line", "color": "#d97706", "width": 2, "style": 0, "scale": "left", "data": _lw_pts(exp_dates, exp_ret_vals)},
+                {"name": "Consumer 12M Exp", "type": "line", "color": "#dc2626", "width": 2, "style": 1, "scale": "left", "data": _lw_pts(exp_dates, exp_cns_vals)},
+                {"name": "Capacity Util (%) [R]", "type": "line", "color": "#7c3aed", "width": 2, "style": 0, "scale": "right", "data": _lw_pts(cu_dates, cu_vals)},
+            ],
+            "priceLines": [{"price": 0.0, "color": "rgba(18, 21, 26, 0.35)", "width": 1, "style": 1, "title": "", "axisLabel": False}],
+        },
+    }
+    deepdive_chart_init_js = (
+        "window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {}, "
+        + json.dumps(lw_deepdive_specs, ensure_ascii=False, separators=(",", ":"))
+        + ");"
+    )
 
     # Build Sector Expectations Cards HTML
     exp_cards_html = []
@@ -1074,9 +1000,9 @@ def render_deepdive_panel(country_code: str) -> str:
     <div class="subchart-container">
       <div class="subchart-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <h4><span data-lang="en">Historical CPI Component Contributions (2022–2026)</span><span data-lang="zh">CPI 四大类贡献历史演变趋势 (2022–2026)</span></h4>
-        <div class="lw-chart-meta" id="lw-meta-chart-cpi-contrib-{country_code}"></div>
+        <div class="lw-chart-meta" id="lw-meta-deepdive-chart-cpi-contrib-{country_code}"></div>
       </div>
-      <div id="chart-cpi-contrib-{country_code}" class="lw-chart-plot" data-lw-chart="chart-cpi-contrib-{country_code}" style="height: 350px; width: 100%;"></div>
+      <div id="deepdive-chart-cpi-contrib-{country_code}" class="lw-chart-plot" data-lw-chart="deepdive-chart-cpi-contrib-{country_code}" style="height: 350px; width: 100%;"></div>
     </div>
   </div>
 
@@ -1157,9 +1083,9 @@ def render_deepdive_panel(country_code: str) -> str:
     <div class="subchart-container">
       <div class="subchart-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <h4><span data-lang="en">Inflation Momentum Trajectory: 3M Annualized vs 12M YoY (2022–2026)</span><span data-lang="zh">通胀短期动量演变轨迹：3个月年化增速 vs 12个月同比 (2022–2026)</span></h4>
-        <div class="lw-chart-meta" id="lw-meta-chart-momentum-{country_code}"></div>
+        <div class="lw-chart-meta" id="lw-meta-deepdive-chart-momentum-{country_code}"></div>
       </div>
-      <div id="chart-momentum-{country_code}" class="lw-chart-plot" data-lw-chart="chart-momentum-{country_code}" style="height: 380px; width: 100%;"></div>
+      <div id="deepdive-chart-momentum-{country_code}" class="lw-chart-plot" data-lw-chart="deepdive-chart-momentum-{country_code}" style="height: 380px; width: 100%;"></div>
     </div>
   </div>
 
@@ -1251,9 +1177,9 @@ def render_deepdive_panel(country_code: str) -> str:
     <div class="subchart-container">
       <div class="subchart-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <h4><span data-lang="en">Domestic PPI vs PPI-CPI Margin Scissors Spread (2022–2026)</span><span data-lang="zh">国内工业 PPI 同比与 PPI-CPI 剪刀差演变 (2022–2026)</span></h4>
-        <div class="lw-chart-meta" id="lw-meta-chart-scissors-gap-{country_code}"></div>
+        <div class="lw-chart-meta" id="lw-meta-deepdive-chart-scissors-gap-{country_code}"></div>
       </div>
-      <div id="chart-scissors-gap-{country_code}" class="lw-chart-plot" data-lw-chart="chart-scissors-gap-{country_code}" style="height: 380px; width: 100%;"></div>
+      <div id="deepdive-chart-scissors-gap-{country_code}" class="lw-chart-plot" data-lw-chart="deepdive-chart-scissors-gap-{country_code}" style="height: 380px; width: 100%;"></div>
     </div>
   </div>
 
@@ -1275,9 +1201,9 @@ def render_deepdive_panel(country_code: str) -> str:
     <div class="subchart-container">
       <div class="subchart-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <h4><span data-lang="en">Multi-Track Pricing Expectations & Capacity Utilization (2022–2026)</span><span data-lang="zh">多维度前瞻提价预期与工业产能利用率演变趋势 (2022–2026)</span></h4>
-        <div class="lw-chart-meta" id="lw-meta-chart-expectations-{country_code}"></div>
+        <div class="lw-chart-meta" id="lw-meta-deepdive-chart-expectations-{country_code}"></div>
       </div>
-      <div id="chart-expectations-{country_code}" class="lw-chart-plot" data-lw-chart="chart-expectations-{country_code}" style="height: 420px; width: 100%;"></div>
+      <div id="deepdive-chart-expectations-{country_code}" class="lw-chart-plot" data-lw-chart="deepdive-chart-expectations-{country_code}" style="height: 420px; width: 100%;"></div>
     </div>
   </div>
 </div>

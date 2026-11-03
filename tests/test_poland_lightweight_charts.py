@@ -73,3 +73,64 @@ def test_poland_cpi_band_bounds_unit_scaling_and_thousands_formatter():
             assert "(abs)" not in ser.get("name", "")
             for val in ser.get("y") or []:
                 assert abs(float(val)) < 100_000, f"Unscaled large value {val} in {cid}"
+
+
+ALL_18_COUNTRY_FILES = [
+    "hungary.html",
+    "poland.html",
+    "czechia.html",
+    "romania.html",
+    "china.html",
+    "euro_area.html",
+    "japan.html",
+    "south_africa.html",
+    "uk.html",
+    "us.html",
+    "turkey.html",
+    "hong_kong.html",
+    "south_korea.html",
+    "taiwan.html",
+    "kazakhstan.html",
+    "uzbekistan.html",
+    "egypt.html",
+    "nigeria.html",
+]
+
+
+def test_all_18_countries_use_lightweight_charts_and_thousands_formatting():
+    for filename in ALL_18_COUNTRY_FILES:
+        path = ROOT / "output" / filename
+        html = path.read_text(encoding="utf-8")
+        assert "lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js" in html, filename
+        assert "plotly-2.32.0.min.js" not in html, filename
+        assert "Plotly.newPlot(" not in html, filename
+        assert "IntersectionObserver" in html, filename
+        assert "priceFormatter: formatVal" in html, filename
+        assert "toLocaleString('en-US'" in html, filename
+
+        m_dates = re.search(r"window\.CP_LW_DATES\s*=\s*(\[\[\[.*?\]\]|\[\[.*?\]\]);", html, re.S)
+        assert m_dates is not None, f"Missing CP_LW_DATES in {filename}"
+        dates = json.loads(m_dates.group(1))
+        assert len(dates) > 0, filename
+
+        lw_plots = re.findall(r'data-lw-chart="([^"]+)"', html)
+        assert len(lw_plots) == len(set(lw_plots)), f"Duplicate data-lw-chart IDs in {filename}"
+        card_count = len(re.findall(r'class="chart-card(?:\s|\")', html)) or html.count('class="chart-cell chart-shell"')
+        assert card_count > 0, filename
+        assert len(lw_plots) >= card_count, f"Expected >= {card_count} charts in {filename}, got {len(lw_plots)}"
+
+        matches = list(
+            re.finditer(
+                r"window\.CP_LW_CHARTS\s*=\s*Object\.assign\(window\.CP_LW_CHARTS\s*\|\|\s*\{\},\s*(\{.*?\})\);",
+                html,
+                re.S,
+            )
+        )
+        specs: dict = {}
+        for m in matches:
+            specs.update(json.loads(m.group(1)))
+        for cid, sp in specs.items():
+            for ser in sp.get("series") or []:
+                for val in ser.get("y") or []:
+                    if val is not None:
+                        assert abs(float(val)) < 100_000, f"Unscaled large value {val} in {filename}:{cid}"

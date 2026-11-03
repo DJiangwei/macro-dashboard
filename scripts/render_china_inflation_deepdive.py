@@ -673,6 +673,74 @@ def render_china_deepdive_panel():
     hog_indices = [r.get("index") for r in hog_cycle_list]
     hog_ma12 = [r.get("ma_12m") for r in hog_cycle_list]
 
+    def _lw_pts(d_list, v_list, *, is_bar=False):
+        pts = {}
+        for d, v in zip(d_list, v_list):
+            if v is None:
+                continue
+            ds = str(d)
+            if len(ds) == 7:
+                ds = f"{ds}-01"
+            elif len(ds) == 4:
+                ds = f"{ds}-12-31"
+            else:
+                ds = ds[:10]
+            val = round(float(v), 3)
+            pt = {"time": ds, "value": val}
+            if is_bar:
+                pt["color"] = "#0d7680" if val >= 0 else "#990f3d"
+            pts[ds] = pt
+        return [pts[k] for k in sorted(pts)]
+
+    lw_deepdive_specs = {
+        "deepdive-chart-cn-cpi-categories": {
+            "title": "China Headline vs Core CPI YoY",
+            "unit": "%",
+            "series": [
+                {"name": "Headline CPI YoY", "type": "line", "color": "#990f3d", "width": 2, "style": 0, "isPrimary": True, "data": _lw_pts(ts_dates, ts_cpi)},
+                {"name": "Core CPI YoY", "type": "line", "color": "#2563eb", "width": 2, "style": 2, "data": _lw_pts(ts_dates, ts_core)},
+            ],
+            "priceLines": [{"price": 0.0, "color": "rgba(18, 21, 26, 0.40)", "width": 1, "style": 0, "title": "", "axisLabel": False}],
+        },
+        "deepdive-chart-cn-momentum": {
+            "title": "China Inflation Momentum Trajectory",
+            "unit": "%",
+            "series": [
+                {"name": "Headline 3M Ann.", "type": "line", "color": "#2563eb", "width": 2, "style": 0, "isPrimary": True, "data": _lw_pts(mom_dates, mom_h3)},
+                {"name": "Headline 12M YoY", "type": "line", "color": "#93c5fd", "width": 2, "style": 2, "data": _lw_pts(mom_dates, mom_hy)},
+                {"name": "Core 3M Ann.", "type": "line", "color": "#990f3d", "width": 2, "style": 0, "data": _lw_pts(mom_dates, mom_c3)},
+                {"name": "Core 12M YoY", "type": "line", "color": "#fca5a5", "width": 2, "style": 1, "data": _lw_pts(mom_dates, mom_cy)},
+            ],
+            "priceLines": [{"price": 0.0, "color": "rgba(18, 21, 26, 0.35)", "width": 1, "style": 0, "title": "", "axisLabel": False}],
+        },
+        "deepdive-chart-cn-scissors": {
+            "title": "PPI vs CPI Margin Scissors",
+            "unit": "pp / %",
+            "series": [
+                {"name": "Scissors Spread (PPI - CPI pp)", "type": "histogram", "color": "#0d7680", "data": _lw_pts(ts_dates, ts_scissors, is_bar=True)},
+                {"name": "PPI YoY (%)", "type": "line", "color": "#6366f1", "width": 2, "style": 0, "isPrimary": True, "data": _lw_pts(ts_dates, ts_ppi)},
+                {"name": "CPI YoY (%)", "type": "line", "color": "#990f3d", "width": 2, "style": 0, "data": _lw_pts(ts_dates, ts_cpi)},
+            ],
+            "priceLines": [{"price": 0.0, "color": "rgba(18, 21, 26, 0.40)", "width": 1, "style": 0, "title": "", "axisLabel": False}],
+        },
+        "deepdive-chart-cn-hog-cycle": {
+            "title": "China Pork Cycle & Wholesale Food Pipeline",
+            "unit": "CNY/kg",
+            "badge": {"text": "Right Scale: Hog Price Index", "color": "#2563eb", "bg": "rgba(37, 99, 235, 0.08)"},
+            "series": [
+                {"name": "Hog Cash Spot (CNY/kg)", "type": "line", "color": "#d97706", "width": 2, "style": 0, "scale": "left", "isPrimary": True, "data": _lw_pts(hog_dates, hog_spots)},
+                {"name": "National Hog Price Index [R]", "type": "line", "color": "#2563eb", "width": 2, "style": 0, "scale": "right", "data": _lw_pts(hog_dates, hog_indices)},
+                {"name": "12M Moving Average Index [R]", "type": "line", "color": "#94a3b8", "width": 2, "style": 1, "scale": "right", "data": _lw_pts(hog_dates, hog_ma12)},
+            ],
+            "priceLines": [],
+        },
+    }
+    cn_deepdive_chart_init_js = (
+        "window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {}, "
+        + json.dumps(lw_deepdive_specs, ensure_ascii=False, separators=(",", ":"))
+        + ");"
+    )
+
     html = f"""
 {DEEPDIVE_CSS}
 <div class="deepdive-macro-panel" id="deepdive-inflation-CN">
@@ -732,11 +800,11 @@ def render_china_deepdive_panel():
     </div>
 
     <div class="subchart-container">
-      <div class="subchart-header">
+      <div class="subchart-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <h4><span data-lang="en">China CPI 8 Expenditure Categories YoY Trajectory (%)</span><span data-lang="zh">中国 CPI 8 大类消费支出同比演进趋势 (%)</span></h4>
-        <span class="text-muted" style="font-size: 11px;">2022 – Present</span>
+        <div class="lw-chart-meta" id="lw-meta-deepdive-chart-cn-cpi-categories"></div>
       </div>
-      <div id="deepdive-chart-cn-cpi-categories" style="width: 100%; height: 360px;"></div>
+      <div id="deepdive-chart-cn-cpi-categories" class="lw-chart-plot" data-lw-chart="deepdive-chart-cn-cpi-categories" style="width: 100%; height: 360px;"></div>
     </div>
   </div>
 
@@ -808,11 +876,11 @@ def render_china_deepdive_panel():
     </div>
 
     <div class="subchart-container">
-      <div class="subchart-header">
+      <div class="subchart-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <h4><span data-lang="en">China Inflation Momentum Trajectory: 3M Annualized vs 12M YoY (%)</span><span data-lang="zh">短期通胀动能走势：3M 年化动能 vs 12M 同比基准 (%)</span></h4>
-        <span class="text-muted" style="font-size: 11px;">Monthly Compounded Track</span>
+        <div class="lw-chart-meta" id="lw-meta-deepdive-chart-cn-momentum"></div>
       </div>
-      <div id="deepdive-chart-cn-momentum" style="width: 100%; height: 360px;"></div>
+      <div id="deepdive-chart-cn-momentum" class="lw-chart-plot" data-lw-chart="deepdive-chart-cn-momentum" style="width: 100%; height: 360px;"></div>
     </div>
   </div>
 
@@ -858,11 +926,11 @@ def render_china_deepdive_panel():
   <!-- TAB 4: MARGIN SCISSORS -->
   <div id="cn-margin-scissors" class="deepdive-tab-content">
     <div class="subchart-container" style="margin-top: 0; border-top: none; padding-top: 0;">
-      <div class="subchart-header">
+      <div class="subchart-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <h4><span data-lang="en">PPI - CPI Industrial Margin Scissors & Transmission (pp)</span><span data-lang="zh">PPI - CPI 工业利润剪刀差与价格传导机制 (百分点)</span></h4>
-        <span class="text-muted" style="font-size: 11px;">Spread = PPI YoY - CPI YoY</span>
+        <div class="lw-chart-meta" id="lw-meta-deepdive-chart-cn-scissors"></div>
       </div>
-      <div id="deepdive-chart-cn-scissors" style="width: 100%; height: 380px;"></div>
+      <div id="deepdive-chart-cn-scissors" class="lw-chart-plot" data-lw-chart="deepdive-chart-cn-scissors" style="width: 100%; height: 380px;"></div>
     </div>
     <div class="table-footnote">
       <span data-lang="en">Analytical Framework: When PPI - CPI > 0 (Upstream Expansion Zone), upstream mining and raw material producers capture higher pricing power, elevating intermediate input costs. When PPI - CPI < 0 (Downstream Compression / Deflationary Drag Zone), downstream firms absorb factory-gate deflation without retail elasticity, suppressing corporate operating profits.</span>
@@ -961,11 +1029,11 @@ def render_china_deepdive_panel():
     </div>
 
     <div class="subchart-container" style="margin-top: 0; border-top: none; padding-top: 0;">
-      <div class="subchart-header">
+      <div class="subchart-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <h4><span data-lang="en">China Pork Cycle & Wholesale Food Pipeline: Cash Hog Spot vs Veg Basket 200</span><span data-lang="zh">中国生猪周期与农产品高频通道：生猪现金价 vs 菜篮子200指数</span></h4>
-        <span class="text-muted" style="font-size: 11px;">Dual-Axis Weekly Tracking</span>
+        <div class="lw-chart-meta" id="lw-meta-deepdive-chart-cn-hog-cycle"></div>
       </div>
-      <div id="deepdive-chart-cn-hog-cycle" style="width: 100%; height: 380px;"></div>
+      <div id="deepdive-chart-cn-hog-cycle" class="lw-chart-plot" data-lw-chart="deepdive-chart-cn-hog-cycle" style="width: 100%; height: 380px;"></div>
     </div>
   </div>
 </div>
@@ -984,7 +1052,9 @@ function switchDeepdiveTab(tabId, btn) {{
   var target = document.getElementById(tabId);
   if (target) {{
     target.classList.add('active');
-    // Trigger Plotly relayout to redraw charts in newly shown tab
+    if (window.CPChart && window.CPChart.mountVisibleIn) {{
+      window.CPChart.mountVisibleIn(target);
+    }}
     setTimeout(function() {{
       window.dispatchEvent(new Event('resize'));
     }}, 50);
@@ -1011,211 +1081,7 @@ function toggleSubRows(groupKey, btn) {{
   btn.textContent = isExpanded ? '▶' : '▼';
 }}
 
-// Initialize Plotly Charts for China Deep-Dive
-document.addEventListener("DOMContentLoaded", function() {{
-  if (typeof Plotly === "undefined") return;
-
-  // 1. CPI 8 Categories YoY Trajectory
-  var catDiv = document.getElementById("deepdive-chart-cn-cpi-categories");
-  if (catDiv) {{
-    var cDates = {json.dumps(ts_dates)};
-    var cHead = {json.dumps(ts_cpi)};
-    var cCore = {json.dumps(ts_core)};
-    var lastDate = cDates.length ? cDates[cDates.length - 1] : '';
-    var lastHead = cHead.length ? cHead[cHead.length - 1] : 0;
-    var lastCore = cCore.length ? cCore[cCore.length - 1] : 0;
-
-    var traceHead = {{
-      x: cDates, y: cHead, name: 'Headline CPI YoY',
-      type: 'scatter', mode: 'lines+markers',
-      line: {{color: '#b91c1c', width: 2.8}}, marker: {{size: 5}}
-    }};
-    var traceCore = {{
-      x: cDates, y: cCore, name: 'Core CPI YoY',
-      type: 'scatter', mode: 'lines',
-      line: {{color: '#2563eb', width: 2.2, dash: 'dash'}}
-    }};
-
-    var layoutCat = {{
-      height: 360,
-      margin: {{l: 40, r: 80, t: 30, b: 40}},
-      legend: {{orientation: 'h', y: -0.22}},
-      paper_bgcolor: '#ffffff',
-      plot_bgcolor: '#ffffff',
-      font: {{family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11, color: '#12151a'}},
-      yaxis: {{title: 'YoY Growth Rate (%)', gridcolor: 'rgba(0,0,0,0.06)', zeroline: true, zerolinecolor: '#333'}},
-      shapes: [
-        {{type: 'line', xref: 'paper', x0: 0, x1: 1, yref: 'y', y0: 0, y1: 0, line: {{color: '#94a3b8', width: 1, dash: 'solid'}}}}
-      ],
-      annotations: [
-        {{
-          x: lastDate, y: lastHead, xref: 'x', yref: 'y',
-          text: 'CPI: ' + (lastHead > 0 ? '+' : '') + lastHead.toFixed(1) + '%',
-          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#b91c1c',
-          ax: 35, ay: -18, bgcolor: '#b91c1c',
-          font: {{color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}}, borderpad: 3
-        }},
-        {{
-          x: lastDate, y: lastCore, xref: 'x', yref: 'y',
-          text: 'Core: ' + (lastCore > 0 ? '+' : '') + lastCore.toFixed(1) + '%',
-          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#2563eb',
-          ax: 35, ay: 18, bgcolor: '#2563eb',
-          font: {{color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}}, borderpad: 3
-        }}
-      ]
-    }};
-    Plotly.newPlot(catDiv, [traceHead, traceCore], layoutCat, {{responsive: true}});
-  }}
-
-  // 2. Momentum Trajectory Chart
-  var momDiv = document.getElementById("deepdive-chart-cn-momentum");
-  if (momDiv) {{
-    var mDates = {json.dumps(mom_dates)};
-    var mHead3 = {json.dumps(mom_h3)};
-    var mHeadY = {json.dumps(mom_hy)};
-    var mCore3 = {json.dumps(mom_c3)};
-    var mCoreY = {json.dumps(mom_cy)};
-
-    var lDate = mDates.length ? mDates[mDates.length - 1] : '';
-    var lH3 = mHead3.length ? mHead3[mHead3.length - 1] : 0;
-    var lHY = mHeadY.length ? mHeadY[mHeadY.length - 1] : 0;
-    var lC3 = mCore3.length ? mCore3[mCore3.length - 1] : 0;
-
-    var trH3 = {{x: mDates, y: mHead3, name: 'Headline 3M Ann.', type: 'scatter', mode: 'lines+markers', line: {{color: '#2563eb', width: 2.5}}, marker: {{size: 5}}}};
-    var trHY = {{x: mDates, y: mHeadY, name: 'Headline 12M YoY', type: 'scatter', mode: 'lines', line: {{color: '#93c5fd', width: 1.8, dash: 'dot'}}}};
-    var trC3 = {{x: mDates, y: mCore3, name: 'Core 3M Ann.', type: 'scatter', mode: 'lines+markers', line: {{color: '#dc2626', width: 2.2}}, marker: {{size: 5}}}};
-    var trCY = {{x: mDates, y: mCoreY, name: 'Core 12M YoY', type: 'scatter', mode: 'lines', line: {{color: '#fca5a5', width: 1.8, dash: 'dot'}}}};
-
-    var layoutMom = {{
-      height: 360,
-      margin: {{l: 40, r: 85, t: 30, b: 40}},
-      legend: {{orientation: 'h', y: -0.22}},
-      paper_bgcolor: '#ffffff',
-      plot_bgcolor: '#ffffff',
-      font: {{family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11, color: '#12151a'}},
-      yaxis: {{title: 'Compounded Rate (%)', gridcolor: 'rgba(0,0,0,0.06)', zeroline: true, zerolinecolor: '#333'}},
-      annotations: [
-        {{
-          x: lDate, y: lH3, xref: 'x', yref: 'y',
-          text: 'Head 3M: ' + (lH3 > 0 ? '+' : '') + lH3.toFixed(1) + '%',
-          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#2563eb',
-          ax: 35, ay: -15, bgcolor: '#2563eb',
-          font: {{color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}}, borderpad: 3
-        }},
-        {{
-          x: lDate, y: lC3, xref: 'x', yref: 'y',
-          text: 'Core 3M: ' + (lC3 > 0 ? '+' : '') + lC3.toFixed(1) + '%',
-          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#dc2626',
-          ax: 35, ay: 15, bgcolor: '#dc2626',
-          font: {{color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}}, borderpad: 3
-        }}
-      ]
-    }};
-    Plotly.newPlot(momDiv, [trH3, trHY, trC3, trCY], layoutMom, {{responsive: true}});
-  }}
-
-  // 3. Margin Scissors Chart
-  var sciDiv = document.getElementById("deepdive-chart-cn-scissors");
-  if (sciDiv) {{
-    var sDates = {json.dumps(ts_dates)};
-    var sSpread = {json.dumps(ts_scissors)};
-    var sPpi = {json.dumps(ts_ppi)};
-    var sCpi = {json.dumps(ts_cpi)};
-
-    var lSDate = sDates.length ? sDates[sDates.length - 1] : '';
-    var lP = sPpi.length ? sPpi[sPpi.length - 1] : 0;
-    var lC = sCpi.length ? sCpi[sCpi.length - 1] : 0;
-    var lSpr = sSpread.length ? sSpread[sSpread.length - 1] : 0;
-
-    var trPpi = {{x: sDates, y: sPpi, name: 'PPI YoY (%)', type: 'scatter', mode: 'lines+markers', line: {{color: '#6366f1', width: 2.2}}, marker: {{size: 4}}}};
-    var trCpi = {{x: sDates, y: sCpi, name: 'CPI YoY (%)', type: 'scatter', mode: 'lines', line: {{color: '#b91c1c', width: 2.2}}}};
-    var trSpread = {{
-      x: sDates, y: sSpread, name: 'Scissors Spread (PPI - CPI pp)',
-      type: 'bar',
-      marker: {{color: sSpread.map(function(v) {{ return v > 0 ? '#10b981' : '#ef4444'; }})}}
-    }};
-
-    var layoutSci = {{
-      height: 380,
-      margin: {{l: 40, r: 85, t: 30, b: 40}},
-      legend: {{orientation: 'h', y: -0.22}},
-      paper_bgcolor: '#ffffff',
-      plot_bgcolor: '#ffffff',
-      font: {{family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11, color: '#12151a'}},
-      yaxis: {{title: 'Rate & Spread (pp)', gridcolor: 'rgba(0,0,0,0.06)', zeroline: true, zerolinecolor: '#333'}},
-      annotations: [
-        {{
-          x: lSDate, y: lP, xref: 'x', yref: 'y',
-          text: 'PPI: ' + (lP > 0 ? '+' : '') + lP.toFixed(1) + '%',
-          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#6366f1',
-          ax: 40, ay: -15, bgcolor: '#6366f1',
-          font: {{color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}}, borderpad: 3
-        }},
-        {{
-          x: lSDate, y: lSpr, xref: 'x', yref: 'y',
-          text: 'Spread: ' + (lSpr > 0 ? '+' : '') + lSpr.toFixed(1) + 'pp',
-          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#ef4444',
-          ax: 40, ay: 20, bgcolor: '#ef4444',
-          font: {{color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}}, borderpad: 3
-        }}
-      ]
-    }};
-    Plotly.newPlot(sciDiv, [trPpi, trCpi, trSpread], layoutSci, {{responsive: true}});
-  }}
-
-  // 4. Pork Cycle & Veg Basket Chart
-  var hogDiv = document.getElementById("deepdive-chart-cn-hog-cycle");
-  if (hogDiv) {{
-    var hDates = {json.dumps(hog_dates)};
-    var hSpots = {json.dumps(hog_spots)};
-    var hIndices = {json.dumps(hog_indices)};
-    var hMa12 = {json.dumps(hog_ma12)};
-
-    var lHDate = hDates.length ? hDates[hDates.length - 1] : '';
-    var lSpot = hSpots.length ? hSpots[hSpots.length - 1] : 0;
-    var lIdx = hIndices.length ? hIndices[hIndices.length - 1] : 0;
-
-    var trSpot = {{
-      x: hDates, y: hSpots, name: 'Hog Cash Spot Price (元/公斤)',
-      type: 'scatter', mode: 'lines+markers',
-      line: {{color: '#d97706', width: 2.5}}, marker: {{size: 4}},
-      yaxis: 'y'
-    }};
-    var trIdx = {{
-      x: hDates, y: hIndices, name: 'National Hog Price Index',
-      type: 'scatter', mode: 'lines',
-      line: {{color: '#2563eb', width: 2.0}},
-      yaxis: 'y2'
-    }};
-    var trMa12 = {{
-      x: hDates, y: hMa12, name: '12M Moving Average Index',
-      type: 'scatter', mode: 'lines',
-      line: {{color: '#94a3b8', width: 1.5, dash: 'dot'}},
-      yaxis: 'y2'
-    }};
-
-    var layoutHog = {{
-      height: 380,
-      margin: {{l: 45, r: 60, t: 30, b: 40}},
-      legend: {{orientation: 'h', y: -0.22}},
-      paper_bgcolor: '#ffffff',
-      plot_bgcolor: '#ffffff',
-      font: {{family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11, color: '#12151a'}},
-      yaxis: {{title: 'Cash Price (CNY/kg)', gridcolor: 'rgba(0,0,0,0.06)'}},
-      yaxis2: {{title: 'Hog Index', overlaying: 'y', side: 'right', gridcolor: 'rgba(0,0,0,0.02)'}},
-      annotations: [
-        {{
-          x: lHDate, y: lSpot, xref: 'x', yref: 'y',
-          text: 'Spot: ' + lSpot.toFixed(1) + ' CNY/kg',
-          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#d97706',
-          ax: -45, ay: -20, bgcolor: '#d97706',
-          font: {{color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}}, borderpad: 3
-        }}
-      ]
-    }};
-    Plotly.newPlot(hogDiv, [trSpot, trIdx, trMa12], layoutHog, {{responsive: true}});
-  }}
-}});
+{cn_deepdive_chart_init_js}
 </script>
 """
     return html

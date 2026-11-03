@@ -21,10 +21,12 @@ def test_data_first_latest_reading_stops_at_latest_actual() -> None:
     }
 
     assert _latest(series) == {"date": "2024-12-31", "value": 5.0}
-    html = _chart_html(series, "CN")
+    lw_specs: dict = {}
+    html = _chart_html(series, "CN", lw_specs)
     assert "data-latest-reading" in html
     assert "<strong>5.00</strong>" in html
-    assert 'meta": "cp-latest-marker"' in html
+    assert 'data-lw-chart="chart-real_gdp_growth"' in html
+    assert lw_specs["chart-real_gdp_growth"]["series"][0]["isPrimary"] is True
 
 
 def test_period_labels_are_frequency_aware_and_bilingual() -> None:

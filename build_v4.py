@@ -18,13 +18,13 @@ import math
 from html import escape
 
 # Countries using TradingView Lightweight Charts + IntersectionObserver lazy rendering
-LW_CHART_COUNTRIES = {"PL"}
+LW_CHART_COUNTRIES = {"HU", "PL", "CZ", "RO"}
 
 LW_PEER_COLORS = {
     "HU": "#6b7280",  # FT Slate Grey
     "CZ": "#0d7680",  # FT Teal
     "RO": "#b86200",  # FT Amber
-    "PL": "#990f3d",  # FT Claret
+    "PL": "#364b61",  # FT Oxford Slate (when PL is a peer; primary country uses #990f3d FT Claret)
 }
 
 
@@ -4394,6 +4394,8 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
 
     el.dataset.lwMounted = '1';
     renderMetaBar(cid, spec);
+    var seriesSpecs = spec.series || [];
+    var hasLeftScale = seriesSpecs.some(function(s) {{ return s.scale === 'left'; }});
 
     var chart = LightweightCharts.createChart(el, {{
       width: el.clientWidth,
@@ -4411,6 +4413,11 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
       grid: {{
         vertLines: {{ visible: false }},
         horzLines: {{ color: 'rgba(18, 21, 26, 0.06)', style: 0 }}
+      }},
+      leftPriceScale: {{
+        visible: hasLeftScale,
+        borderVisible: false,
+        scaleMargins: {{ top: 0.12, bottom: 0.10 }}
       }},
       rightPriceScale: {{
         borderVisible: false,
@@ -4431,7 +4438,6 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
       handleScale: {{ mouseWheel: false, pinch: true, axisPressedMouseMove: true }}
     }});
 
-    var seriesSpecs = spec.series || [];
     var order = [];
     for (var i = 0; i < seriesSpecs.length; i++) {{
       if (!seriesSpecs[i].isPrimary) order.push(i);
@@ -4448,6 +4454,7 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
       if (s.type === 'histogram') {{
         api = chart.addHistogramSeries({{
           color: s.color || '#0d7680',
+          priceScaleId: s.scale || 'right',
           priceLineVisible: false,
           lastValueVisible: false,
           base: 0
@@ -4457,6 +4464,7 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
           color: s.color || '#990f3d',
           lineWidth: s.width || 2,
           lineStyle: s.style || 0,
+          priceScaleId: s.scale || 'right',
           priceLineVisible: false,
           lastValueVisible: Boolean(s.isPrimary),
           crosshairMarkerVisible: true,

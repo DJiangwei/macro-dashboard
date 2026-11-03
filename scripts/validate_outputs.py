@@ -288,6 +288,10 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
             raise AssertionError(f"{filename} does not persist the chart-view preference")
         if text.count(" Dashboard Dashboard"):
             raise AssertionError(f"{filename} contains a duplicated dashboard title")
+        if "lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js" not in text:
+            raise AssertionError(f"{filename} is missing lightweight-charts@4.2.1 runtime")
+        if "Plotly.newPlot(" in text:
+            raise AssertionError(f"{filename} still contains legacy Plotly.newPlot calls")
         chart_count = (
             len(re.findall(r'class="chart-card(?:\s|\")', text))
             if code in DATA_FIRST_CODES
@@ -301,12 +305,21 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
     for name in DATA_FIRST_NAMES:
         text = (output / f"{name}.html").read_text()
         cards = len(re.findall(r'class="chart-card', text))
-        divs = re.findall(r'id="(chart-[^"]+)" class="plotly-chart"', text)
-        plots = re.findall(r'Plotly\.newPlot\("(chart-[^"]+)"', text)
-        if not cards or cards != len(divs) or set(divs) != set(plots):
-            raise AssertionError(f"{name}.html has mismatched chart cards, divs, or Plotly calls")
-        if text.count('meta": "cp-latest-marker"') != cards:
-            raise AssertionError(f"{name}.html is missing one endpoint marker per chart")
+        divs = re.findall(r'id="(chart-[^"]+)" class="lw-chart-plot"', text)
+        lw_matches = list(
+            re.finditer(
+                r"window\.CP_LW_CHARTS\s*=\s*Object\.assign\(window\.CP_LW_CHARTS\s*\|\|\s*\{\},\s*(\{.*?\})\);",
+                text,
+                re.S,
+            )
+        )
+        lw_specs: dict[str, dict] = {}
+        for m in lw_matches:
+            lw_specs.update(json.loads(m.group(1)))
+        if not cards or cards != len(divs) or not (set(divs) <= set(lw_specs)):
+            raise AssertionError(f"{name}.html has mismatched chart cards, divs, or lightweight-charts specs")
+        if not all(any(s.get("isPrimary") for s in (lw_specs[d].get("series") or [])) for d in divs):
+            raise AssertionError(f"{name}.html is missing one primary series endpoint per chart")
         canonical = _load_json(output / f"{name}_canonical_frame.json")
         if canonical.get("schema_version") != "data-first-canonical-v2":
             raise AssertionError(f"{name} canonical output is not v2")

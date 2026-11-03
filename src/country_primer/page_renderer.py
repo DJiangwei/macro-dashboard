@@ -1,6 +1,7 @@
 from __future__ import annotations
 from country_primer.cross_checks import evaluate_cross_checks
 import json
+import math
 import os
 import re
 from country_primer.framework import concept_id_for
@@ -23,6 +24,91 @@ INK = "#12151a"
 MUTED = "#737c8c"
 PAPER = "#ffffff"
 
+
+def _normalize_lw_time(raw_date: object) -> str | None:
+    s = str(raw_date or "").strip()
+    if not s:
+        return None
+    if len(s) == 4 and s.isdigit():
+        return f"{s}-12-31"
+    if len(s) == 7 and s[4] == "-":
+        return f"{s}-01"
+    if len(s) >= 10 and s[4] == "-" and s[7] == "-":
+        return s[:10]
+    return None
+
+
+def _build_lw_points(x_list, y_list, *, is_bar: bool = False) -> list[dict]:
+    by_time: dict[str, dict] = {}
+    for raw_x, raw_y in zip(x_list or [], y_list or []):
+        if raw_y is None:
+            continue
+        try:
+            val = float(raw_y)
+        except (TypeError, ValueError):
+            continue
+        if math.isnan(val) or math.isinf(val):
+            continue
+        t = _normalize_lw_time(raw_x)
+        if not t:
+            continue
+        rval = round(val, 4)
+        pt: dict[str, Any] = {"time": t, "value": rval}
+        if is_bar:
+            pt["color"] = "#0d7680" if rval >= 0 else "#990f3d"
+        by_time[t] = pt
+    return [by_time[k] for k in sorted(by_time)]
+
+
+def _resolve_display_scale(
+    indicator_id: str,
+    raw_unit: str,
+    values: list[float] | None = None,
+) -> tuple[float, str]:
+    """Scale large numbers with many zeros into thousands / millions / billions based on content."""
+    unit = str(raw_unit or "").strip()
+    unit_lower = unit.lower()
+    max_abs = max((abs(v) for v in (values or []) if v is not None), default=0.0)
+    if indicator_id == "eur_usd":
+        return 1.0, "USD per EUR"
+    if unit == "USD":
+        if max_abs >= 1_000_000_000:
+            return 1_000_000_000.0, "USD bn"
+        if max_abs >= 1_000_000:
+            return 1_000_000.0, "USD mn"
+        return 1.0, unit
+    if unit == "people":
+        if max_abs >= 1_000_000:
+            return 1_000_000.0, "millions"
+        if max_abs >= 1_000:
+            return 1_000.0, "thousands"
+        return 1.0, unit
+    if unit_lower == "persons" and max_abs >= 10_000:
+        if max_abs >= 5_000_000 and indicator_id == "long_term_unemployment":
+            return 1_000_000.0, "millions"
+        return 1_000.0, "thousands"
+    if unit_lower == "persons m/m" and max_abs >= 10_000:
+        return 1_000.0, "thousands m/m"
+    if unit_lower in {"listings", "units", "dwellings", "transactions", "number"} and max_abs >= 100_000:
+        return 1_000.0, (f"thousand {unit_lower}" if unit_lower != "number" else "thousands")
+    if unit_lower == "jpy 100mn" and max_abs >= 10_000:
+        return 10_000.0, "JPY tn"
+    if unit_lower == "jpy bn" and max_abs >= 10_000:
+        return 1_000.0, "JPY tn"
+    if indicator_id == "tax_receipts_ytd_akshare" and max_abs >= 10_000:
+        return 10_000.0, "CNY tn"
+    if unit_lower == "gbp" and max_abs >= 100_000:
+        return 1_000.0, "GBP thousands"
+    if unit_lower.endswith(" mn") and max_abs >= 10_000:
+        prefix = unit[:-3].strip()
+        return 1_000.0, f"{prefix} bn"
+    if max_abs >= 1_000_000_000:
+        return 1_000_000_000.0, (f"{unit} (bn)".strip() if "bn" not in unit_lower else unit)
+    if max_abs >= 1_000_000:
+        return 1_000_000.0, (f"{unit} (mn)".strip() if "mn" not in unit_lower and "million" not in unit_lower else unit)
+    return 1.0, unit
+
+
 def _render_cards(series_list: list[dict[str, Any]], extra_cards: list[dict[str, Any]], summary_key_ids: list[str]) -> str:
     by_id = {item["id"]: item for item in series_list}
     cards_html: list[str] = []
@@ -33,13 +119,15 @@ def _render_cards(series_list: list[dict[str, Any]], extra_cards: list[dict[str,
         latest = _latest(series) if series else None
         if not series or not latest:
             continue
-        unit = series.get("unit", "")
+        raw_unit = series.get("unit", "")
         obs_vals = [float(o["value"]) for o in (series.get("observations") or []) if o.get("value") is not None]
+        divisor, unit = _resolve_display_scale(indicator_id, raw_unit, obs_vals)
+        scaled_vals = [v / divisor for v in obs_vals]
+        curr_v = float(latest["value"]) / divisor
         spark_html = ""
-        if len(obs_vals) >= 3:
-            min_v = min(obs_vals)
-            max_v = max(obs_vals)
-            curr_v = float(latest["value"])
+        if len(scaled_vals) >= 3:
+            min_v = min(scaled_vals)
+            max_v = max(scaled_vals)
             pos_pct = max(0, min(100, int(round((curr_v - min_v) / (max_v - min_v) * 100)))) if max_v != min_v else 50
             spark_html = f'''
   <div class="ft-spark-range" title="Historical Range Context">
@@ -50,7 +138,7 @@ def _render_cards(series_list: list[dict[str, Any]], extra_cards: list[dict[str,
         cards_html.append(f'''
 <div class="data-card">
   <span><span data-lang="en">{escape(series.get('label_en', series.get('label', '')))}</span><span data-lang="zh">{escape(series.get('label_zh', series.get('label', '')))}</span></span>
-  <strong>{_format_value(float(latest['value']), unit)}</strong>
+  <strong>{_format_value(curr_v, unit)}</strong>
   <small>{escape(str(latest['date']))} · {escape(series.get('source_name', ''))}</small>{spark_html}
 </div>''')
         
@@ -143,23 +231,35 @@ def _format_period(date_text: str, frequency: str, locale: str) -> str:
     return f"{parsed.day} {parsed.strftime('%b %Y')}"
 
 def _format_value(value: float, unit: str) -> str:
-    if unit == "USD":
+    if unit == "USD" and abs(value) < 1000:
         return f"${value:,.2f}tn"
-    if unit == "people":
+    if unit == "people" and abs(value) < 100:
         return f"{value:,.2f}bn"
+    if abs(value) >= 1000:
+        return f"{value:,.0f}" if abs(value - round(value)) < 1e-6 else f"{value:,.2f}"
     if abs(value) >= 100:
-        return f"{value:,.0f}"
+        return f"{value:,.0f}" if abs(value - round(value)) < 1e-6 else f"{value:,.1f}"
     if abs(value) >= 10:
         return f"{value:,.1f}"
     return f"{value:,.2f}"
 
-def _chart_html(series: dict[str, Any], country_code: str) -> str:
+def _chart_html(
+    series: dict[str, Any],
+    country_code: str,
+    lw_specs: dict[str, dict[str, Any]] | None = None,
+) -> str:
     observations = series.get("observations") or []
     if not observations:
         return ""
-    chart_id = f"chart-{series['id']}"
+    sid = str(series.get("id", "")).strip()
+    chart_id = f"chart-{sid}"
+    raw_unit = str(series.get("unit", "") or "")
+    raw_vals = [float(item["value"]) for item in observations if item.get("value") is not None]
+    divisor, display_unit = _resolve_display_scale(sid, raw_unit, raw_vals)
+    scaled_vals = [v / divisor for v in raw_vals]
+
     actual_through = series.get("actual_through")
-    traces: list[dict[str, Any]] = []
+    lw_series: list[dict[str, Any]] = []
     if actual_through:
         try:
             cutoff = int(str(actual_through)[:4])
@@ -169,88 +269,58 @@ def _chart_html(series: dict[str, Any], country_code: str) -> str:
             actual = observations
             forecast = []
         if actual:
-            traces.append({
+            lw_series.append({
                 "name": "Actual / history",
-                "x": [item["date"] for item in actual],
-                "y": [item["value"] for item in actual],
-                "mode": "lines",
-                "line": {"color": ACCENT, "width": 2.4},
-                "type": "scatter",
+                "type": "line",
+                "color": ACCENT,
+                "width": 2,
+                "style": 0,
+                "isPrimary": True,
+                "data": _build_lw_points(
+                    [item["date"] for item in actual],
+                    [float(item["value"]) / divisor if item.get("value") is not None else None for item in actual],
+                ),
             })
         if forecast:
-            traces.append({
+            lw_series.append({
                 "name": "IMF WEO estimate / forecast",
-                "x": [item["date"] for item in forecast],
-                "y": [item["value"] for item in forecast],
-                "mode": "lines",
-                "line": {"color": "#364b61", "width": 2.2, "dash": "dash"},
-                "type": "scatter",
+                "type": "line",
+                "color": "#364b61",
+                "width": 2,
+                "style": 2,
+                "isPrimary": not bool(actual),
+                "data": _build_lw_points(
+                    [item["date"] for item in forecast],
+                    [float(item["value"]) / divisor if item.get("value") is not None else None for item in forecast],
+                ),
             })
     else:
-        traces.append({
+        lw_series.append({
             "name": series["label_en"],
-            "x": [item["date"] for item in observations],
-            "y": [item["value"] for item in observations],
-            "mode": "lines",
-            "line": {"color": ACCENT, "width": 2.4},
-            "type": "scatter",
+            "type": "line",
+            "color": ACCENT,
+            "width": 2,
+            "style": 0,
+            "isPrimary": True,
+            "data": _build_lw_points(
+                [item["date"] for item in observations],
+                [float(item["value"]) / divisor if item.get("value") is not None else None for item in observations],
+            ),
         })
 
     latest = _latest(series)
-    if latest:
-        traces.append({
-            "name": "Latest observation",
-            "meta": "cp-latest-marker",
-            "x": [latest["date"]],
-            "y": [latest["value"]],
-            "mode": "markers",
-            "marker": {
-                "size": 8,
-                "color": ACCENT,
-                "line": {"width": 2, "color": "#ffffff"},
-            },
-            "showlegend": False,
-            "hovertemplate": "Latest: %{y}<extra></extra>",
-            "cliponaxis": False,
-            "type": "scatter",
-        })
 
-    layout = {
-        "height": 360,
-        "margin": {"l": 52, "r": 26, "t": 20, "b": 46},
-        "paper_bgcolor": PAPER,
-        "plot_bgcolor": PAPER,
-        "font": {
-            "family": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-            "size": 11,
-            "color": INK,
-        },
-        "xaxis": {
-            "gridcolor": "rgba(18,21,26,0.06)",
-            "showgrid": False,
-            "autorange": True,
-            "automargin": True,
-        },
-        "yaxis": {
-            "title": series.get("unit", ""),
-            "gridcolor": "rgba(18,21,26,0.06)",
-            "zeroline": True,
-            "zerolinewidth": 1.4,
-            "zerolinecolor": "rgba(18,21,26,0.40)",
-            "autorange": True,
-            "automargin": True,
-        },
-        "legend": {"orientation": "h", "y": -0.24},
-        "hovermode": "x unified",
-        "autosize": True,
-    }
     target_bands = {
-        "US": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "Fed 2.0% Inflation Target"},
-        "UK": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "BoE 2.0% Inflation Target"},
-        "JP": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "BoJ 2.0% Price Stability Target"},
-        "ZA": {"center": 4.5, "min": 3.0, "max": 6.0, "label": "SARB 3.0%–6.0% Target Band"},
+        "US": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "Fed Target: 2.0%"},
+        "UK": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "BoE Target: 2.0%"},
+        "JP": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "BoJ Target: 2.0%"},
+        "ZA": {"center": 4.5, "min": 3.0, "max": 6.0, "label": "SARB Target: 4.5% (3.0%–6.0% band)"},
         "CN": {"center": 3.0, "min": 3.0, "max": 3.0, "label": "Official CPI Target Ceiling: 3.0%"},
-        "EA": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "ECB 2.0% Inflation Target"},
+        "EA": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "ECB Target: 2.0%"},
+        "TR": {"center": 5.0, "min": 3.0, "max": 7.0, "label": "CBRT Target: 5.0% (3.0%–7.0% band)"},
+        "KR": {"center": 2.0, "min": 2.0, "max": 2.0, "label": "BoK Target: 2.0%"},
+        "KZ": {"center": 5.0, "min": 5.0, "max": 5.0, "label": "NBK Target: 5.0%"},
+        "UZ": {"center": 5.0, "min": 5.0, "max": 5.0, "label": "CBU Target: 5.0%"},
     }
     eligible_target_indicators = {
         "US": {"cpi_inflation", "core_cpi_inflation", "pce_inflation", "core_pce_inflation"},
@@ -259,90 +329,124 @@ def _chart_html(series: dict[str, Any], country_code: str) -> str:
         "ZA": {"cpi_inflation", "cpi_inflation_imf"},
         "CN": {"cpi_inflation", "cpi_yoy_akshare"},
         "EA": {"hicp_inflation", "hicp_core_inflation", "spf_inflation_expectations_lt"},
+        "TR": {"cpi_inflation", "cpi_yoy"},
+        "KR": {"cpi_inflation", "cpi_yoy"},
+        "KZ": {"cpi_inflation", "cpi_yoy"},
+        "UZ": {"cpi_inflation", "cpi_yoy"},
     }
 
-    sid = str(series.get("id", "")).strip()
     cc_upper = country_code.upper()
+    price_lines: list[dict[str, Any]] = []
+    badge: dict[str, str] | None = None
 
     # 1. Check for custom reference lines declared on the series
     custom_ref_lines = series.get("reference_lines") or []
     if custom_ref_lines:
-        shapes = layout.setdefault("shapes", [])
-        annotations = layout.setdefault("annotations", [])
         for ref in custom_ref_lines:
             val = ref.get("value")
-            label = ref.get("label", "")
-            color = ref.get("color", "rgba(13, 118, 128, 0.75)")
-            dash = ref.get("dash", "dash")
+            label = str(ref.get("label") or "")
+            color = str(ref.get("color") or "#0d7680")
             if "min" in ref and "max" in ref:
-                shapes.append({
-                    "type": "rect", "xref": "paper", "yref": "y",
-                    "x0": 0, "x1": 1, "y0": ref["min"], "y1": ref["max"],
-                    "fillcolor": ref.get("fillcolor", "rgba(13, 118, 128, 0.10)"),
-                    "line": {"width": 0}, "layer": "below",
+                r_min = float(ref["min"]) / divisor
+                r_max = float(ref["max"]) / divisor
+                price_lines.append({
+                    "price": r_max,
+                    "color": "rgba(13, 118, 128, 0.55)",
+                    "width": 1,
+                    "style": 3,
+                    "title": f"Upper {r_max:g}",
+                    "axisLabel": False,
+                })
+                price_lines.append({
+                    "price": r_min,
+                    "color": "rgba(13, 118, 128, 0.55)",
+                    "width": 1,
+                    "style": 3,
+                    "title": f"Lower {r_min:g}",
+                    "axisLabel": False,
                 })
             if val is not None:
-                shapes.append({
-                    "type": "line", "xref": "paper", "yref": "y",
-                    "x0": 0, "x1": 1, "y0": val, "y1": val,
-                    "line": {"color": color, "width": 1.5, "dash": dash},
+                s_val = float(val) / divisor
+                price_lines.append({
+                    "price": s_val,
+                    "color": color,
+                    "width": 2,
+                    "style": 2,
+                    "title": label or f"{s_val:g}",
+                    "axisLabel": False,
                 })
-            if label and val is not None:
-                annotations.append({
-                    "xref": "paper", "yref": "y", "x": ref.get("x", 0.98), "y": val,
-                    "xanchor": ref.get("xanchor", "right"), "yanchor": ref.get("yanchor", "bottom"),
-                    "text": label, "showarrow": False,
-                    "font": {"size": 10, "color": ref.get("font_color", "#0d7680")},
-                    "bgcolor": "rgba(255, 255, 255, 0.85)",
-                })
+            if label and not badge:
+                badge = {"text": label, "color": "#0d7680", "bg": "rgba(13, 118, 128, 0.10)"}
     else:
         # 2. Check for policy inflation target overlays
         c_band = target_bands.get(cc_upper)
         if c_band and sid in eligible_target_indicators.get(cc_upper, set()):
-            shapes = layout.setdefault("shapes", [])
-            annotations = layout.setdefault("annotations", [])
+            badge = {"text": c_band["label"], "color": "#0d7680", "bg": "rgba(13, 118, 128, 0.10)"}
             if c_band["min"] != c_band["max"]:
-                shapes.append({
-                    "type": "rect", "xref": "paper", "yref": "y",
-                    "x0": 0, "x1": 1, "y0": c_band["min"], "y1": c_band["max"],
-                    "fillcolor": "rgba(13, 118, 128, 0.10)",
-                    "line": {"width": 0}, "layer": "below",
+                price_lines.append({
+                    "price": c_band["max"],
+                    "color": "rgba(13, 118, 128, 0.55)",
+                    "width": 1,
+                    "style": 3,
+                    "title": f"Upper {c_band['max']:g}%",
+                    "axisLabel": False,
                 })
-            shapes.append({
-                "type": "line", "xref": "paper", "yref": "y",
-                "x0": 0, "x1": 1, "y0": c_band["center"], "y1": c_band["center"],
-                "line": {"color": "rgba(13, 118, 128, 0.75)", "width": 1.5, "dash": "dash"},
+            price_lines.append({
+                "price": c_band["center"],
+                "color": "#0d7680",
+                "width": 2,
+                "style": 2,
+                "title": f"Target {c_band['center']:g}%",
+                "axisLabel": False,
             })
-            annotations.append({
-                "xref": "paper", "yref": "y", "x": 0.98, "y": c_band["center"],
-                "xanchor": "right", "yanchor": "bottom",
-                "text": c_band["label"], "showarrow": False,
-                "font": {"size": 10, "color": "#0d7680"},
-                "bgcolor": "rgba(255, 255, 255, 0.85)",
-            })
+            if c_band["min"] != c_band["max"]:
+                price_lines.append({
+                    "price": c_band["min"],
+                    "color": "rgba(13, 118, 128, 0.55)",
+                    "width": 1,
+                    "style": 3,
+                    "title": f"Lower {c_band['min']:g}%",
+                    "axisLabel": False,
+                })
 
         # 3. EU Maastricht fiscal deficit threshold (legally binding only for EU / Euro Area member states)
         if cc_upper in {"HU", "PL", "CZ", "RO", "EA"} and ("fiscal_balance" in sid or "budget_balance" in sid):
-            shapes = layout.setdefault("shapes", [])
-            annotations = layout.setdefault("annotations", [])
-            shapes.append({
-                "type": "line", "xref": "paper", "yref": "y",
-                "x0": 0, "x1": 1, "y0": -3.0, "y1": -3.0,
-                "line": {"color": "rgba(153, 15, 61, 0.65)", "width": 1.5, "dash": "dot"},
-            })
-            annotations.append({
-                "xref": "paper", "yref": "y", "x": 0.02, "y": -3.0,
-                "xanchor": "left", "yanchor": "top",
-                "text": "EU Maastricht Deficit Limit: -3.0%", "showarrow": False,
-                "font": {"size": 10, "color": "#990f3d"},
-                "bgcolor": "rgba(255, 255, 255, 0.85)",
+            if not badge:
+                badge = {"text": "EU Maastricht Deficit Limit: -3.0%", "color": "#990f3d", "bg": "rgba(153, 15, 61, 0.08)"}
+            price_lines.append({
+                "price": -3.0,
+                "color": "#990f3d",
+                "width": 2,
+                "style": 2,
+                "title": "Maastricht -3%",
+                "axisLabel": False,
             })
 
+    if scaled_vals and min(scaled_vals) <= 0 <= max(scaled_vals):
+        price_lines.append({
+            "price": 0.0,
+            "color": "rgba(18, 21, 26, 0.35)",
+            "width": 1,
+            "style": 0,
+            "title": "",
+            "axisLabel": False,
+        })
+
+    if lw_specs is not None:
+        spec_entry: dict[str, Any] = {
+            "title": series["label_en"],
+            "unit": display_unit,
+            "series": lw_series,
+            "priceLines": price_lines,
+        }
+        if badge:
+            spec_entry["badge"] = badge
+        lw_specs[chart_id] = spec_entry
 
     latest_reading = ""
     if latest:
-        value = _format_value(float(latest["value"]), series.get("unit", ""))
-        unit = escape(series.get("unit", ""))
+        value = _format_value(float(latest["value"]) / divisor, display_unit)
+        unit = escape(display_unit)
         date_text = escape(str(latest["date"]))
         period_en = escape(_format_period(str(latest["date"]), series.get("frequency", ""), "en"))
         period_zh = escape(_format_period(str(latest["date"]), series.get("frequency", ""), "zh"))
@@ -416,10 +520,15 @@ def _chart_html(series: dict[str, Any], country_code: str) -> str:
       {chips}
     </div>
   </div>
-  <div id="{chart_id}" class="plotly-chart"></div>
-  <script>
-    Plotly.newPlot("{chart_id}", {_json(traces)}, {_json(layout)}, {{displayModeBar:"hover", displaylogo:false, responsive:true}});
-  </script>
+  <div class="lw-chart-wrap" style="height:350px;width:100%;">
+    <div class="lw-chart-header">
+      <div class="lw-chart-title-group">
+        <span class="lw-chart-unit">{escape(display_unit)}</span>
+      </div>
+      <div class="lw-chart-meta" id="lw-meta-{chart_id}"></div>
+    </div>
+    <div id="{chart_id}" class="lw-chart-plot" data-lw-chart="{chart_id}"></div>
+  </div>
   <footer>
     <span>Source: <a href="{source_url}" target="_blank" rel="noreferrer">{escape(series.get('source_name', 'unknown'))}</a></span>
     <span>Series: {escape(series.get('series', ''))}</span>
@@ -440,7 +549,12 @@ def _section_nav(config: dict[str, Any]) -> str:
     links.append('<a href="#data-gaps"><span data-lang="en">Data Gaps</span><span data-lang="zh">数据缺口</span></a>')
     return "\n".join(links)
 
-def _sections_html(config: dict[str, Any], series_list: list[dict[str, Any]], country_code: str) -> str:
+def _sections_html(
+    config: dict[str, Any],
+    series_list: list[dict[str, Any]],
+    country_code: str,
+    lw_specs: dict[str, dict[str, Any]] | None = None,
+) -> str:
     order_map = {
         str(ind.get("id")): i
         for i, ind in enumerate(config.get("indicators") or [])
@@ -455,7 +569,7 @@ def _sections_html(config: dict[str, Any], series_list: list[dict[str, Any]], co
         items = by_section.get(section_id, [])
         if order_map:
             items = sorted(items, key=lambda it: order_map.get(str(it.get("id")), 9999))
-        charts = "\n".join(_chart_html(item, country_code) for item in items)
+        charts = "\n".join(_chart_html(item, country_code, lw_specs) for item in items)
         empty = ""
         if not charts:
             empty = '<div class="empty-note"><span data-lang="en">Official chart series for this section are currently in development.</span><span data-lang="zh">本分析模块的官方指标序列正在标准化接入中。</span></div>'
@@ -861,6 +975,74 @@ body[data-dashboard-view="core"] .chart-card[data-dashboard-view="deep"] { displ
 .cross-check.diverged { color: var(--low); font-weight: 600; }
 .cross-check-history { color: var(--muted); }
 .plotly-chart { width: 100%; min-width: 0; height: 360px; }
+.lw-chart-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  width: 100%;
+  background: #ffffff;
+  padding: 4px 0 4px;
+}
+.lw-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+  min-height: 22px;
+}
+.lw-chart-title-group {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+.lw-chart-unit {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.lw-chart-meta {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.lw-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+.lw-legend-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 3px;
+  border-radius: 1.5px;
+}
+.lw-legend-val {
+  font-weight: 600;
+  color: var(--fg);
+}
+.lw-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.lw-chart-plot {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 290px;
+  position: relative;
+}
 .plot-container, .svg-container { max-width: 100% !important; }
 #js-plotly-tester { width: 1px !important; max-width: 1px !important; overflow: hidden !important; }
 .chart-card footer {
@@ -891,8 +1073,333 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   .latest-reading { flex: 1 1 auto; min-width: 0; border-left: 0; border-top: 1px solid var(--border); padding: 8px 0 0; }
   .latest-value strong { font-size: 21px; }
   .plotly-chart { height: 320px; }
+  .lw-chart-wrap { height: 320px; }
 }
 """
+
+
+def _lw_runtime_script(lw_specs: dict[str, dict[str, Any]], country_code: str) -> str:
+    date_pool: dict[tuple[str, ...], int] = {}
+    date_list: list[list[str]] = []
+    compact_specs: dict[str, dict[str, Any]] = {}
+    for cid, spec in lw_specs.items():
+        c_spec = dict(spec)
+        c_series = []
+        for s in spec.get("series") or []:
+            cs = dict(s)
+            pts = cs.pop("data", None) or []
+            times = tuple(str(pt["time"]) for pt in pts)
+            if times not in date_pool:
+                date_pool[times] = len(date_list)
+                date_list.append(list(times))
+            cs["x"] = date_pool[times]
+            cs["y"] = [pt["value"] for pt in pts]
+            if any("color" in pt for pt in pts):
+                cs["c"] = [pt.get("color", "") for pt in pts]
+            c_series.append(cs)
+        c_spec["series"] = c_series
+        compact_specs[cid] = c_spec
+
+    dates_json = json.dumps(date_list, ensure_ascii=False, separators=(",", ":"))
+    specs_json = json.dumps(compact_specs, ensure_ascii=False, separators=(",", ":"))
+    return f"""<script>
+window.CP_LW_DATES = {dates_json};
+window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
+(function() {{
+  var mainCountry = '{country_code}';
+  var mountedCharts = {{}};
+
+  function getPts(s) {{
+    if (!s) return [];
+    if (s.data) return s.data;
+    var dates = (window.CP_LW_DATES || [])[s.x] || [];
+    var vals = s.y || [];
+    var cols = s.c || null;
+    var out = [];
+    for (var i = 0; i < dates.length && i < vals.length; i++) {{
+      var pt = {{ time: dates[i], value: vals[i] }};
+      if (cols && cols[i]) pt.color = cols[i];
+      out.push(pt);
+    }}
+    s.data = out;
+    return out;
+  }}
+
+  function formatVal(val) {{
+    if (val === null || val === undefined || isNaN(val)) return 'n/a';
+    var n = Number(val);
+    var abs = Math.abs(n);
+    if (abs >= 1e9) {{
+      return (n / 1e9).toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}) + ' bn';
+    }}
+    if (abs >= 1e6) {{
+      return (n / 1e6).toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}) + ' mn';
+    }}
+    if (abs >= 1e5) {{
+      return (n / 1e3).toLocaleString('en-US', {{ minimumFractionDigits: 1, maximumFractionDigits: 1 }}) + 'k';
+    }}
+    if (abs >= 1000) {{
+      var isInt = Math.abs(n - Math.round(n)) < 1e-6;
+      return n.toLocaleString('en-US', {{
+        minimumFractionDigits: isInt ? 0 : 2,
+        maximumFractionDigits: isInt ? 0 : 2
+      }});
+    }}
+    if (abs >= 10) {{
+      var isInt10 = Math.abs(n - Math.round(n)) < 1e-6;
+      return n.toLocaleString('en-US', {{
+        minimumFractionDigits: isInt10 ? 0 : 1,
+        maximumFractionDigits: 1
+      }});
+    }}
+    return n.toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }});
+  }}
+
+  function renderMetaBar(cid, spec) {{
+    var metaEl = document.getElementById('lw-meta-' + cid);
+    if (!metaEl) return;
+    var html = [];
+    if (spec.badge && spec.badge.text) {{
+      html.push(
+        '<span class="lw-badge-pill" style="color:' + (spec.badge.color || '#0d7680') +
+        ';background:' + (spec.badge.bg || 'rgba(13,118,128,0.08)') + ';">' +
+        spec.badge.text + '</span>'
+      );
+    }}
+    var series = spec.series || [];
+    for (var i = 0; i < series.length; i++) {{
+      var s = series[i];
+      var pts = getPts(s);
+      var lastVal = pts.length ? formatVal(pts[pts.length - 1].value) : '—';
+      html.push(
+        '<span class="lw-legend-item">' +
+        '<span class="lw-legend-swatch" style="background:' + (s.color || '#990f3d') + ';"></span>' +
+        '<span>' + (s.name || ('S' + (i + 1))) + '</span>' +
+        '<span class="lw-legend-val" data-series-idx="' + i + '">' + lastVal + '</span>' +
+        '</span>'
+      );
+    }}
+    metaEl.innerHTML = html.join('');
+  }}
+
+  var resizeObs = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(function(entries) {{
+    entries.forEach(function(entry) {{
+      var el = entry.target;
+      var cid = el.dataset.lwChart || el.id;
+      var inst = mountedCharts[cid];
+      if (inst && inst.chart && el.clientWidth > 20) {{
+        inst.chart.applyOptions({{ width: el.clientWidth }});
+      }}
+    }});
+  }}) : null;
+
+  function mountChart(el) {{
+    if (!el || el.dataset.lwMounted === '1') return;
+    if (!window.LightweightCharts) return;
+    if (el.offsetParent === null || el.clientWidth < 20) return;
+    var cid = el.dataset.lwChart || el.id;
+    var spec = (window.CP_LW_CHARTS || {{}})[cid];
+    if (!spec) return;
+
+    el.dataset.lwMounted = '1';
+    renderMetaBar(cid, spec);
+    var seriesSpecs = spec.series || [];
+    var hasLeftScale = seriesSpecs.some(function(s) {{ return s.scale === 'left'; }});
+
+    var chart = LightweightCharts.createChart(el, {{
+      width: el.clientWidth,
+      height: el.clientHeight || 295,
+      localization: {{
+        priceFormatter: formatVal
+      }},
+      layout: {{
+        background: {{ type: 'solid', color: '#ffffff' }},
+        textColor: '#737c8c',
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        fontSize: 11,
+        attributionLogo: false
+      }},
+      grid: {{
+        vertLines: {{ visible: false }},
+        horzLines: {{ color: 'rgba(18, 21, 26, 0.06)', style: 0 }}
+      }},
+      leftPriceScale: {{
+        visible: hasLeftScale,
+        borderVisible: false,
+        scaleMargins: {{ top: 0.12, bottom: 0.10 }}
+      }},
+      rightPriceScale: {{
+        borderVisible: false,
+        scaleMargins: {{ top: 0.12, bottom: 0.10 }}
+      }},
+      timeScale: {{
+        borderColor: 'rgba(18, 21, 26, 0.14)',
+        rightOffset: 2,
+        fixLeftEdge: true,
+        timeVisible: false
+      }},
+      crosshair: {{
+        mode: 0,
+        vertLine: {{ color: 'rgba(18, 21, 26, 0.25)', width: 1, style: 2, labelBackgroundColor: '#12151a' }},
+        horzLine: {{ color: 'rgba(18, 21, 26, 0.25)', width: 1, style: 2, labelBackgroundColor: '#12151a' }}
+      }},
+      handleScroll: {{ mouseWheel: false, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false }},
+      handleScale: {{ mouseWheel: false, pinch: true, axisPressedMouseMove: true }}
+    }});
+
+    var order = [];
+    for (var i = 0; i < seriesSpecs.length; i++) {{
+      if (!seriesSpecs[i].isPrimary) order.push(i);
+    }}
+    for (var j = 0; j < seriesSpecs.length; j++) {{
+      if (seriesSpecs[j].isPrimary) order.push(j);
+    }}
+
+    var apiByIdx = {{}};
+    var primaryApi = null;
+    order.forEach(function(idx) {{
+      var s = seriesSpecs[idx];
+      var api;
+      if (s.type === 'histogram') {{
+        api = chart.addHistogramSeries({{
+          color: s.color || '#0d7680',
+          priceScaleId: s.scale || 'right',
+          priceLineVisible: false,
+          lastValueVisible: false,
+          base: 0
+        }});
+      }} else {{
+        api = chart.addLineSeries({{
+          color: s.color || '#990f3d',
+          lineWidth: s.width || 2,
+          lineStyle: s.style || 0,
+          priceScaleId: s.scale || 'right',
+          priceLineVisible: false,
+          lastValueVisible: Boolean(s.isPrimary),
+          crosshairMarkerVisible: true,
+          crosshairMarkerRadius: s.isPrimary ? 4 : 3
+        }});
+      }}
+      var pts = getPts(s);
+      api.setData(pts);
+      if (s.isPrimary && s.type !== 'histogram' && pts.length > 0 && typeof api.setMarkers === 'function') {{
+        var lastPt = pts[pts.length - 1];
+        api.setMarkers([{{
+          time: lastPt.time,
+          position: 'inBar',
+          color: s.color || '#990f3d',
+          shape: 'circle',
+          size: 0.7
+        }}]);
+      }}
+      apiByIdx[idx] = api;
+      if (s.isPrimary || !primaryApi) primaryApi = api;
+    }});
+
+    if (primaryApi && spec.priceLines && spec.priceLines.length) {{
+      spec.priceLines.forEach(function(pl) {{
+        primaryApi.createPriceLine({{
+          price: Number(pl.price),
+          color: pl.color || '#0d7680',
+          lineWidth: pl.width || 1,
+          lineStyle: pl.style !== undefined ? pl.style : 2,
+          axisLabelVisible: Boolean(pl.axisLabel),
+          title: pl.title || ''
+        }});
+      }});
+    }}
+
+    var metaEl = document.getElementById('lw-meta-' + cid);
+    if (metaEl) {{
+      chart.subscribeCrosshairMove(function(param) {{
+        var valSpans = metaEl.querySelectorAll('.lw-legend-val');
+        if (!param || !param.time || !param.seriesData) {{
+          valSpans.forEach(function(sp) {{
+            var sIdx = Number(sp.dataset.seriesIdx);
+            var pts = getPts(seriesSpecs[sIdx]);
+            sp.textContent = pts.length ? formatVal(pts[pts.length - 1].value) : '—';
+          }});
+          return;
+        }}
+        valSpans.forEach(function(sp) {{
+          var sIdx = Number(sp.dataset.seriesIdx);
+          var api = apiByIdx[sIdx];
+          var d = api ? param.seriesData.get(api) : null;
+          if (d && d.value !== undefined) {{
+            sp.textContent = formatVal(d.value);
+          }}
+        }});
+      }});
+    }}
+
+    chart.timeScale().fitContent();
+    mountedCharts[cid] = {{ chart: chart, el: el }};
+    if (resizeObs) resizeObs.observe(el);
+  }}
+
+  var io = typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(function(entries) {{
+    entries.forEach(function(entry) {{
+      if (entry.isIntersecting) {{
+        mountChart(entry.target);
+        if (entry.target.dataset.lwMounted === '1') {{
+          io.unobserve(entry.target);
+        }}
+      }}
+    }});
+  }}, {{ rootMargin: '320px 0px' }}) : null;
+
+  function observeAll(root) {{
+    var scope = root || document;
+    var plots = scope.querySelectorAll('.lw-chart-plot[data-lw-chart]');
+    plots.forEach(function(el) {{
+      var cid = el.dataset.lwChart || el.id;
+      if (el.dataset.lwMounted === '1') {{
+        var inst = mountedCharts[cid];
+        if (inst && inst.chart && el.offsetParent !== null && el.clientWidth > 20) {{
+          inst.chart.applyOptions({{ width: el.clientWidth }});
+          inst.chart.timeScale().fitContent();
+        }}
+        return;
+      }}
+      if (el.offsetParent === null) return;
+      if (io) {{
+        io.observe(el);
+        var rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 320 && rect.bottom > -320) {{
+          mountChart(el);
+        }}
+      }} else {{
+        mountChart(el);
+      }}
+    }});
+  }}
+
+  window.CPChart = {{
+    mount: mountChart,
+    mountVisibleIn: observeAll,
+    refreshAll: function() {{ observeAll(document); }}
+  }};
+
+  function boot() {{
+    if (window.LightweightCharts) {{
+      observeAll(document);
+    }} else {{
+      var timer = setInterval(function() {{
+        if (window.LightweightCharts) {{
+          clearInterval(timer);
+          observeAll(document);
+        }}
+      }}, 40);
+    }}
+  }}
+
+  if (document.readyState === 'loading') {{
+    document.addEventListener('DOMContentLoaded', boot);
+  }} else {{
+    boot();
+  }}
+}})();
+</script>"""
 
 COUNTRY_META: dict[str, dict[str, str]] = {
     "HU": {"name": "Hungary", "name_zh": "匈牙利", "file": "hungary.html"},
@@ -965,13 +1472,16 @@ def render_html(
             f"数据原则：不制造 proxy。官方公开来源提供{country_name_zh}的基础数据；优先接入本国统计局与央行的原生发布序列。"
         )
 
+    lw_specs: dict[str, dict[str, Any]] = {}
+    sections_html = _sections_html(config, series_list, code_upper, lw_specs)
+
     return f"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{country_name} Dashboard</title>
-<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js" defer></script>
 <style>{CSS}</style>
 </head>
 <body data-dashboard-view="core">
@@ -1015,7 +1525,7 @@ def render_html(
     <span data-lang="zh">{data_note_zh}</span>
   </div>
 
-  {_sections_html(config, series_list, code_upper)}
+  {sections_html}
 
   <section class="panel" id="data-gaps">
     <div class="section-title">
@@ -1034,12 +1544,12 @@ def render_html(
   </footer>
 </main>
 
+{_lw_runtime_script(lw_specs, code_upper)}
 <script>
 function resizeCharts() {{
-  if (!window.Plotly) return;
-  document.querySelectorAll('.plotly-chart').forEach(function(el) {{
-    if (el.offsetParent !== null) Plotly.Plots.resize(el);
-  }});
+  if (window.CPChart && window.CPChart.refreshAll) {{
+    window.CPChart.refreshAll();
+  }}
 }}
 function setDashboardView(view) {{
   var normalized = view === 'deep' ? 'deep' : 'core';
@@ -1124,15 +1634,18 @@ def _key_series_latest(series_list: list[dict[str, Any]], indicator_ids: list[st
         latest = _latest(series) if series else None
         if not series or not latest:
             continue
-        unit = str(series.get("unit", ""))
+        raw_unit = str(series.get("unit", ""))
+        obs_vals = [float(o["value"]) for o in (series.get("observations") or []) if o.get("value") is not None]
+        scale_div, display_unit = _resolve_display_scale(indicator_id, raw_unit, obs_vals)
         value = float(latest["value"])
+        display_value = round(value / scale_div, 4) if scale_div != 1.0 else value
         rows.append({
             "id": indicator_id,
             "label_en": series.get("label_en", indicator_id),
             "label_zh": series.get("label_zh", indicator_id),
             "latest_date": str(latest["date"]),
             "latest_value": value,
-            "latest_display": f"{_format_value(value, unit)} {unit}".strip(),
+            "latest_display": f"{_format_value(display_value, display_unit)} {display_unit}".strip(),
             "frequency": series.get("frequency", ""),
             "source_name": series.get("source_name", ""),
             "series": series.get("series", ""),

@@ -641,6 +641,52 @@ def render_em_deepdive_panel(country_code: str) -> str:
     mom_h3 = [momentum_tables[d].get("headline_ann_3m") for d in mom_dates]
     mom_hy = [momentum_tables[d].get("headline_yoy") for d in mom_dates]
 
+    def _lw_pts(d_list, v_list, *, is_bar=False):
+        pts = {}
+        for d, v in zip(d_list, v_list):
+            if v is None:
+                continue
+            ds = str(d)
+            if len(ds) == 7:
+                ds = f"{ds}-01"
+            elif len(ds) == 4:
+                ds = f"{ds}-12-31"
+            else:
+                ds = ds[:10]
+            val = round(float(v), 3)
+            pt = {"time": ds, "value": val}
+            if is_bar:
+                pt["color"] = "#0d7680" if val >= 0 else "#990f3d"
+            pts[ds] = pt
+        return [pts[k] for k in sorted(pts)]
+
+    lw_deepdive_specs = {
+        f"deepdive-chart-{cc.lower()}-momentum": {
+            "title": f"{country} Inflation Momentum Trajectory",
+            "unit": "%",
+            "series": [
+                {"name": "Headline 3M Ann. (%)", "type": "line", "color": "#2563eb", "width": 2, "style": 0, "isPrimary": True, "data": _lw_pts(mom_dates, mom_h3)},
+                {"name": "Headline 12M YoY (%)", "type": "line", "color": "#64748b", "width": 2, "style": 2, "data": _lw_pts(mom_dates, mom_hy)},
+            ],
+            "priceLines": [{"price": 0.0, "color": "rgba(18, 21, 26, 0.35)", "width": 1, "style": 0, "title": "", "axisLabel": False}],
+        },
+        f"deepdive-chart-{cc.lower()}-scissors": {
+            "title": f"{country} PPI vs CPI Margin Scissors",
+            "unit": "pp / %",
+            "series": [
+                {"name": "Scissors Spread (PPI - CPI pp)", "type": "histogram", "color": "#0d7680", "data": _lw_pts(ts_dates, ts_spread, is_bar=True)},
+                {"name": "PPI YoY (%)", "type": "line", "color": "#6366f1", "width": 2, "style": 0, "isPrimary": True, "data": _lw_pts(ts_dates, ts_ppi)},
+                {"name": "CPI YoY (%)", "type": "line", "color": "#990f3d", "width": 2, "style": 0, "data": _lw_pts(ts_dates, ts_cpi)},
+            ],
+            "priceLines": [{"price": 0.0, "color": "rgba(18, 21, 26, 0.40)", "width": 1, "style": 0, "title": "", "axisLabel": False}],
+        },
+    }
+    em_deepdive_chart_init_js = (
+        "window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {}, "
+        + json.dumps(lw_deepdive_specs, ensure_ascii=False, separators=(",", ":"))
+        + ");"
+    )
+
     # Headline values for KPI banner
     head_yoy = latest_cpi_tbl.get("headline", {}).get("yoy", 0.0)
     head_mom = latest_cpi_tbl.get("headline", {}).get("mom", 0.0)
@@ -791,10 +837,11 @@ def render_em_deepdive_panel(country_code: str) -> str:
     </div>
 
     <div class="subchart-container">
-      <div class="subchart-header">
+      <div class="subchart-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <h4><span data-lang="en">Inflation Momentum Trajectory: 3M Annualized vs 12M YoY</span><span data-lang="zh">通胀短期动量演变轨迹：3个月年化增速 vs 12个月同比</span></h4>
+        <div class="lw-chart-meta" id="lw-meta-deepdive-chart-{cc.lower()}-momentum"></div>
       </div>
-      <div id="deepdive-chart-{cc.lower()}-momentum" style="height: 360px; width: 100%;"></div>
+      <div id="deepdive-chart-{cc.lower()}-momentum" class="lw-chart-plot" data-lw-chart="deepdive-chart-{cc.lower()}-momentum" style="height: 360px; width: 100%;"></div>
     </div>
   </div>
 
@@ -842,11 +889,11 @@ def render_em_deepdive_panel(country_code: str) -> str:
   <!-- ── TAB 4: MARGIN SCISSORS ──────────────────────────────────────────── -->
   <div class="deepdive-tab-content" id="tab-pipeline-{cc}">
     <div class="subchart-container" style="margin-top: 0; border-top: none; padding-top: 0;">
-      <div class="subchart-header">
+      <div class="subchart-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <h4><span data-lang="en">{country} PPI - CPI Industrial Margin Scissors (pp)</span><span data-lang="zh">{country} PPI - CPI 工业利润剪刀差与价格传导 (百分点)</span></h4>
-        <span class="text-muted" style="font-size: 11px;">Spread = PPI YoY - CPI YoY (Positive = Upstream Cost Squeeze; Negative = Downstream Margin Relief)</span>
+        <div class="lw-chart-meta" id="lw-meta-deepdive-chart-{cc.lower()}-scissors"></div>
       </div>
-      <div id="deepdive-chart-{cc.lower()}-scissors" style="width: 100%; height: 380px;"></div>
+      <div id="deepdive-chart-{cc.lower()}-scissors" class="lw-chart-plot" data-lw-chart="deepdive-chart-{cc.lower()}-scissors" style="width: 100%; height: 380px;"></div>
     </div>
   </div>
 
@@ -885,7 +932,12 @@ if (typeof switchDeepdiveTab === 'undefined') {{
     var contents = parent.querySelectorAll('.deepdive-tab-content');
     for (var j = 0; j < contents.length; j++) contents[j].classList.remove('active');
     var target = document.getElementById('tab-' + tabName + '-' + geo);
-    if (target) target.classList.add('active');
+    if (target) {{
+      target.classList.add('active');
+      if (window.CPChart && window.CPChart.mountVisibleIn) {{
+        window.CPChart.mountVisibleIn(target);
+      }}
+    }}
 
     window.dispatchEvent(new Event('resize'));
   }};
@@ -1067,106 +1119,7 @@ function updatePpiTable(geo, selectedMonth) {{
   tbody.innerHTML = html;
 }}
 
-document.addEventListener("DOMContentLoaded", function() {{
-  if (typeof Plotly === "undefined") return;
-
-  // 1. Momentum Trajectory Chart
-  var momDiv = document.getElementById("deepdive-chart-{cc.lower()}-momentum");
-  if (momDiv) {{
-    var mDates = {json.dumps(mom_dates)};
-    var mH3 = {json.dumps(mom_h3)};
-    var mHY = {json.dumps(mom_hy)};
-    var lMDate = mDates.length ? mDates[mDates.length - 1] : '';
-    var lH3 = mH3.length ? mH3[mH3.length - 1] : 0;
-    var lHY = mHY.length ? mHY[mHY.length - 1] : 0;
-
-    var trH3 = {{
-      x: mDates, y: mH3, name: 'Headline 3M Ann. (%)',
-      type: 'scatter', mode: 'lines+markers',
-      line: {{color: '#2563eb', width: 2.5}}, marker: {{size: 5}}
-    }};
-    var trHY = {{
-      x: mDates, y: mHY, name: 'Headline 12M YoY (%)',
-      type: 'scatter', mode: 'lines',
-      line: {{color: '#93c5fd', width: 2, dash: 'dot'}}
-    }};
-
-    var layoutMom = {{
-      height: 360,
-      margin: {{l: 45, r: 85, t: 25, b: 35}},
-      legend: {{orientation: 'h', y: -0.18}},
-      paper_bgcolor: 'rgba(0,0,0,0)',
-      plot_bgcolor: 'rgba(0,0,0,0)',
-      font: {{family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11, color: '#12151a'}},
-      yaxis: {{title: 'Rate (%)', gridcolor: 'rgba(0,0,0,0.06)', zeroline: true, zerolinecolor: '#333'}},
-      annotations: [
-        {{
-          x: lMDate, y: lH3, xref: 'x', yref: 'y',
-          text: '3M Ann: ' + (lH3 > 0 ? '+' : '') + Number(lH3).toFixed(1) + '%',
-          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#2563eb',
-          ax: 35, ay: -18, bgcolor: '#2563eb',
-          font: {{color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}}, borderpad: 3
-        }}
-      ]
-    }};
-    Plotly.newPlot(momDiv, [trH3, trHY], layoutMom, {{responsive: true, displayModeBar: false}});
-  }}
-
-  // 2. Margin Scissors Chart
-  var sciDiv = document.getElementById("deepdive-chart-{cc.lower()}-scissors");
-  if (sciDiv) {{
-    var sDates = {json.dumps(ts_dates)};
-    var sSpread = {json.dumps(ts_spread)};
-    var sPpi = {json.dumps(ts_ppi)};
-    var sCpi = {json.dumps(ts_cpi)};
-    var lSDate = sDates.length ? sDates[sDates.length - 1] : '';
-    var lP = sPpi.length ? sPpi[sPpi.length - 1] : 0;
-    var lSpr = sSpread.length ? sSpread[sSpread.length - 1] : 0;
-
-    var trPpi = {{
-      x: sDates, y: sPpi, name: 'PPI YoY (%)',
-      type: 'scatter', mode: 'lines+markers',
-      line: {{color: '#6366f1', width: 2.2}}, marker: {{size: 4}}
-    }};
-    var trCpi = {{
-      x: sDates, y: sCpi, name: 'CPI YoY (%)',
-      type: 'scatter', mode: 'lines',
-      line: {{color: '#b91c1c', width: 2.2}}
-    }};
-    var trSpread = {{
-      x: sDates, y: sSpread, name: 'Scissors Spread (PPI - CPI pp)',
-      type: 'bar',
-      marker: {{color: sSpread.map(function(v) {{ return v > 0 ? '#10b981' : '#ef4444'; }})}}
-    }};
-
-    var layoutSci = {{
-      height: 380,
-      margin: {{l: 45, r: 85, t: 25, b: 35}},
-      legend: {{orientation: 'h', y: -0.18}},
-      paper_bgcolor: 'rgba(0,0,0,0)',
-      plot_bgcolor: 'rgba(0,0,0,0)',
-      font: {{family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11, color: '#12151a'}},
-      yaxis: {{title: 'Rate & Spread (pp)', gridcolor: 'rgba(0,0,0,0.06)', zeroline: true, zerolinecolor: '#333'}},
-      annotations: [
-        {{
-          x: lSDate, y: lP, xref: 'x', yref: 'y',
-          text: 'PPI: ' + (lP > 0 ? '+' : '') + Number(lP).toFixed(1) + '%',
-          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#6366f1',
-          ax: 40, ay: -15, bgcolor: '#6366f1',
-          font: {{color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}}, borderpad: 3
-        }},
-        {{
-          x: lSDate, y: lSpr, xref: 'x', yref: 'y',
-          text: 'Spread: ' + (lSpr > 0 ? '+' : '') + Number(lSpr).toFixed(1) + 'pp',
-          showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: '#ef4444',
-          ax: 40, ay: 20, bgcolor: '#ef4444',
-          font: {{color: '#ffffff', size: 10, family: 'monospace', weight: 'bold'}}, borderpad: 3
-        }}
-      ]
-    }};
-    Plotly.newPlot(sciDiv, [trPpi, trCpi, trSpread], layoutSci, {{responsive: true, displayModeBar: false}});
-  }}
-}});
+{em_deepdive_chart_init_js}
 </script>
 """
     return html_out

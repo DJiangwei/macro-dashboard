@@ -267,7 +267,7 @@ def _parse_data_first_page(dashboard: str, path: Path) -> list[ChartFreshness]:
     )
     records: list[ChartFreshness] = []
     for quality, body in article_re.findall(html):
-        chart_match = re.search(r'id="chart-([^"]+)" class="plotly-chart"', body)
+        chart_match = re.search(r'id="chart-([^"]+)" class="(?:plotly-chart|lw-chart-plot)"', body)
         label_match = re.search(r"<h3>.*?<span data-lang=\"en\">(.*?)</span>", body, flags=re.S)
         latest_match = re.search(r'data-latest-date="([^"]+)"', body)
         source_match = re.search(r"Source:\s*<a [^>]+>(.*?)</a>", body, flags=re.S)
