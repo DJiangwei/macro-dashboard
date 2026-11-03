@@ -83,10 +83,10 @@ def _make_lw_chart_html(chart_id: str, title: str, unit: str, height: int = 380)
 
 def _decorate_lw_spec(spec_dict: dict, chart_id: str, country_code: str) -> dict:
     target_bands = {
-        "PL": {"center": 2.5, "min": 1.5, "max": 3.5, "label": "NBP Target: 2.5% (±1pp)"},
-        "CZ": {"center": 2.0, "min": 1.0, "max": 3.0, "label": "CNB Target: 2.0% (±1pp)"},
-        "HU": {"center": 3.0, "min": 2.0, "max": 4.0, "label": "MNB Target: 3.0% (±1pp)"},
-        "RO": {"center": 2.5, "min": 1.5, "max": 3.5, "label": "NBR Target: 2.5% (±1pp)"},
+        "PL": {"center": 2.5, "min": 1.5, "max": 3.5, "label": "NBP Target: 2.5% (1.5%–3.5% band)"},
+        "CZ": {"center": 2.0, "min": 1.0, "max": 3.0, "label": "CNB Target: 2.0% (1.0%–3.0% band)"},
+        "HU": {"center": 3.0, "min": 2.0, "max": 4.0, "label": "MNB Target: 3.0% (2.0%–4.0% band)"},
+        "RO": {"center": 2.5, "min": 1.5, "max": 3.5, "label": "NBR Target: 2.5% (1.5%–3.5% band)"},
     }
     c_band = target_bands.get(country_code)
     price_lines: list[dict] = list(spec_dict.get("priceLines") or [])
@@ -97,10 +97,9 @@ def _decorate_lw_spec(spec_dict: dict, chart_id: str, country_code: str) -> dict
     )
     is_ext_bar = any(k in chart_id for k in ("current_account_pct_gdp", "trade_balance"))
     is_credit_gap = "credit_to_gdp_gap" in chart_id
-    is_cpi_target = bool(c_band) and ("cpi_yoy" in chart_id or "core_cpi_yoy" in chart_id)
+    is_cpi_target = bool(c_band) and bool(re.search(r"-(?:core_)?cpi_yoy-", chart_id))
 
     if is_fiscal_bar or is_ext_bar or is_credit_gap:
-        bar_mode = "credit_gap" if is_credit_gap else "fiscal"
         for idx, s in enumerate(series_list):
             if idx == 0 or s.get("isPrimary"):
                 s["type"] = "histogram"
@@ -120,9 +119,30 @@ def _decorate_lw_spec(spec_dict: dict, chart_id: str, country_code: str) -> dict
             "bg": "rgba(13, 118, 128, 0.10)",
         }
         price_lines.extend([
-            {"price": c_band["center"], "color": "#0d7680", "width": 2, "style": 2, "title": f"{c_band['center']}%"},
-            {"price": c_band["max"], "color": "rgba(13, 118, 128, 0.45)", "width": 1, "style": 3, "title": ""},
-            {"price": c_band["min"], "color": "rgba(13, 118, 128, 0.45)", "width": 1, "style": 3, "title": ""},
+            {
+                "price": c_band["max"],
+                "color": "rgba(13, 118, 128, 0.65)",
+                "width": 1,
+                "style": 2,
+                "title": f"Upper {c_band['max']:.1f}%",
+                "axisLabel": False,
+            },
+            {
+                "price": c_band["center"],
+                "color": "#0d7680",
+                "width": 2,
+                "style": 2,
+                "title": f"Target {c_band['center']:.1f}%",
+                "axisLabel": False,
+            },
+            {
+                "price": c_band["min"],
+                "color": "rgba(13, 118, 128, 0.65)",
+                "width": 1,
+                "style": 2,
+                "title": f"Lower {c_band['min']:.1f}%",
+                "axisLabel": False,
+            },
         ])
 
     if is_fiscal_bar:
@@ -132,7 +152,14 @@ def _decorate_lw_spec(spec_dict: dict, chart_id: str, country_code: str) -> dict
             "bg": "rgba(153, 15, 61, 0.08)",
         }
         price_lines.append(
-            {"price": -3.0, "color": "#990f3d", "width": 2, "style": 1, "title": "Maastricht -3.0%"}
+            {
+                "price": -3.0,
+                "color": "#990f3d",
+                "width": 2,
+                "style": 1,
+                "title": "Maastricht -3.0%",
+                "axisLabel": False,
+            }
         )
 
     if is_credit_gap:
@@ -152,7 +179,7 @@ def _decorate_lw_spec(spec_dict: dict, chart_id: str, country_code: str) -> dict
     if all_vals and (min(all_vals) <= 0 <= max(all_vals) or is_fiscal_bar or is_ext_bar or is_credit_gap):
         if not any(pl.get("price") == 0 or pl.get("price") == 0.0 for pl in price_lines):
             price_lines.append(
-                {"price": 0.0, "color": "rgba(18, 21, 26, 0.40)", "width": 1, "style": 0, "title": ""}
+                {"price": 0.0, "color": "rgba(18, 21, 26, 0.40)", "width": 1, "style": 0, "title": "", "axisLabel": False}
             )
 
     if price_lines:
@@ -1490,6 +1517,30 @@ def _format_chart_period(date_text: str, frequency: str, *, locale: str) -> str:
     return f"{dt.day} {dt.strftime('%b %Y')}"
 
 
+def _resolve_display_scale(
+    indicator_id: str,
+    raw_unit: str,
+    values: list[float] | None = None,
+) -> tuple[float, str]:
+    """Scale large numbers with many zeros into thousands / millions / billions based on content."""
+    unit = str(raw_unit or "").strip()
+    unit_lower = unit.lower()
+    if indicator_id == "net_migration" or (unit_lower == "people" and values and max((abs(v) for v in values), default=0) >= 1_000):
+        return 1_000.0, "thousands"
+    if indicator_id == "road_freight_activity" or (unit_lower == "million tonne-km" and values and max((abs(v) for v in values), default=0) >= 1_000):
+        return 1_000.0, "bn tonne-km"
+    if indicator_id == "portfolio_flows" or (unit_lower == "eur mn" and values and max((abs(v) for v in values), default=0) >= 1_000):
+        return 1_000.0, "EUR bn"
+    max_abs = max((abs(v) for v in (values or []) if v is not None), default=0.0)
+    if max_abs >= 1_000_000_000:
+        return 1_000_000_000.0, (f"{unit} (bn)".strip() if "bn" not in unit_lower else unit)
+    if max_abs >= 1_000_000:
+        return 1_000_000.0, (f"{unit} (mn)".strip() if "mn" not in unit_lower and "million" not in unit_lower else unit)
+    if max_abs >= 100_000:
+        return 1_000.0, (f"{unit} (thousands)".strip() if "thousand" not in unit_lower else unit)
+    return 1.0, unit
+
+
 def _format_chart_reading(value: float, unit: str) -> str:
     unit_lower = str(unit or "").lower()
     absolute = abs(value)
@@ -1498,7 +1549,7 @@ def _format_chart_reading(value: float, unit: str) -> str:
     elif "%" in unit_lower or "rate" in unit_lower or "ratio" in unit_lower:
         decimals = 2 if absolute < 10 else 1
     elif absolute >= 1000:
-        decimals = 0
+        decimals = 0 if abs(value - round(value)) < 1e-6 else 2
     elif absolute >= 10:
         decimals = 1
     else:
@@ -1506,10 +1557,19 @@ def _format_chart_reading(value: float, unit: str) -> str:
     return f"{value:,.{decimals}f}"
 
 
-def _chart_latest_reading(row: dict | None, spec, chart_id: str) -> str:
+def _chart_latest_reading(row: dict | None, spec, chart_id: str, *, scale_values: list[float] | None = None) -> str:
+    raw_unit = str(row.get("unit") if row else "") or str(spec.unit or "")
+    vals = list(scale_values or [])
+    if row and row.get("value") is not None:
+        try:
+            vals.append(float(row["value"]))
+        except (TypeError, ValueError):
+            pass
+    divisor, unit = _resolve_display_scale(getattr(spec, "indicator_id", ""), raw_unit, vals)
     if row:
         try:
-            value = _format_chart_reading(float(row["value"]), str(row.get("unit") or spec.unit))
+            scaled_val = float(row["value"]) / divisor
+            value = _format_chart_reading(scaled_val, unit)
         except (KeyError, TypeError, ValueError):
             value = "n/a"
         date_text = str(row.get("date") or "")
@@ -1521,7 +1581,6 @@ def _chart_latest_reading(row: dict | None, spec, chart_id: str) -> str:
         date_text = ""
         period_en = "Awaiting chart"
         period_zh = "等待图表数据"
-    unit = str(row.get("unit") if row else "") or str(spec.unit or "")
     return f"""
 <div class="chart-reading" data-latest-reading data-chart-id="{escape(chart_id)}" data-latest-date="{escape(date_text)}">
   <span class="chart-reading-label"><span data-lang="en">Latest observation</span><span data-lang="zh">最新读数</span></span>
@@ -1623,9 +1682,11 @@ def _chart_from_canonical_frame_lw(frame, country_code: str, spec, chart_id: str
     if not rows:
         rows = _indicator_frame(fetch_canonical_macro_frame(country_code), country_code, spec.indicator_id)
     is_proxy = bool(rows[-1].get("is_proxy")) if rows else False
+    raw_vals = [float(row["value"]) for row in rows if row.get("value") is not None]
+    divisor, display_unit = _resolve_display_scale(spec.indicator_id, spec.unit, raw_vals)
     points = _build_lw_points(
         [row.get("date") for row in rows],
-        [row.get("value") for row in rows],
+        [float(row["value"]) / divisor if row.get("value") is not None else None for row in rows],
     )
     series_spec = {
         "name": country_code,
@@ -1639,13 +1700,13 @@ def _chart_from_canonical_frame_lw(frame, country_code: str, spec, chart_id: str
     lw_spec = _decorate_lw_spec(
         {
             "title": spec.label,
-            "unit": spec.unit,
+            "unit": display_unit,
             "series": [series_spec],
         },
         chart_id,
         country_code,
     )
-    return _make_lw_chart_html(chart_id, spec.label, spec.unit), lw_spec
+    return _make_lw_chart_html(chart_id, spec.label, display_unit), lw_spec
 
 
 _SYNC_CANONICAL_PEER_INDICATORS = {
@@ -1656,6 +1717,9 @@ _SYNC_CANONICAL_PEER_INDICATORS = {
     "ppi_yoy",
     "avg_wage_yoy",
     "sov_yield_10y",
+    "current_account_pct_gdp",
+    "fiscal_balance_pct_gdp",
+    "gov_debt_pct_gdp",
 }
 
 
@@ -1694,16 +1758,33 @@ def _convert_legacy_plotly_to_lw(
     ) or spec.label
     yaxis_obj = layout.get("yaxis", {})
     ytitle_obj = yaxis_obj.get("title", {}) if isinstance(yaxis_obj, dict) else {}
-    unit = (
+    raw_unit = (
         ytitle_obj.get("text", "")
         if isinstance(ytitle_obj, dict)
         else str(ytitle_obj or "")
     ) or spec.unit
 
+    valid_traces = []
+    for tr in traces or []:
+        raw_name = tr.get("name")
+        if not raw_name or not str(raw_name).strip():
+            continue
+        if str(tr.get("mode") or "").strip().lower() == "markers":
+            continue
+        if str(tr.get("yaxis") or "y").strip() != "y":
+            continue
+        valid_traces.append(tr)
+
     series_list: list[dict] = []
-    for t_idx, tr in enumerate(traces or []):
-        t_name = str(tr.get("name") or f"S{t_idx + 1}").strip()
-        is_primary = t_name == country_code or (t_idx == 0 and len(traces) == 1)
+    all_raw_vals: list[float] = []
+    temp_series_inputs: list[tuple[str, bool, list, list]] = []
+    for t_idx, tr in enumerate(valid_traces):
+        raw_t_name = str(tr.get("name") or "").strip()
+        if raw_t_name.startswith(country_code):
+            t_name = country_code
+        else:
+            t_name = raw_t_name
+        is_primary = t_name == country_code or (t_idx == 0 and len(valid_traces) == 1)
         x_vals = list(tr.get("x") or [])
         y_vals = list(tr.get("y") or [])
 
@@ -1715,14 +1796,25 @@ def _convert_legacy_plotly_to_lw(
             )
             c_rows = _indicator_frame(peer_frame, t_name, spec.indicator_id) if peer_frame else []
             if c_rows:
-                if spec.indicator_id == "real_gdp_yoy":
+                if spec.indicator_id in {"real_gdp_yoy", "current_account_pct_gdp", "fiscal_balance_pct_gdp", "gov_debt_pct_gdp"}:
                     x_vals = [r.get("date") for r in c_rows]
                     y_vals = [r.get("value") for r in c_rows]
                 else:
                     x_vals = x_vals + [r.get("date") for r in c_rows]
                     y_vals = y_vals + [r.get("value") for r in c_rows]
 
-        points = _build_lw_points(x_vals, y_vals)
+        for v in y_vals:
+            if v is not None:
+                try:
+                    all_raw_vals.append(float(v))
+                except (TypeError, ValueError):
+                    pass
+        temp_series_inputs.append((t_name, is_primary, x_vals, y_vals))
+
+    divisor, unit = _resolve_display_scale(spec.indicator_id, raw_unit, all_raw_vals)
+    for t_name, is_primary, x_vals, y_vals in temp_series_inputs:
+        scaled_y = [float(v) / divisor if v is not None else None for v in y_vals]
+        points = _build_lw_points(x_vals, scaled_y)
         if not points:
             continue
         if is_primary:
@@ -1843,6 +1935,7 @@ def _render_section_charts(
         if not legacy_id and not rows:
             continue
         row = _latest_observed_indicator_row(canonical_frame, country_code, spec.indicator_id) or {}
+        row_vals = [float(r["value"]) for r in rows if r.get("value") is not None]
         status = str(row.get("quality_status") or spec.quality_status)
         source = str(row.get("source") or spec.source)
         note = str(row.get("quality_note") or spec.quality_note)
@@ -1865,7 +1958,7 @@ def _render_section_charts(
                 False,
             )
             badge = _chart_corner_badge("verified", legacy_note, False)
-            reading = _chart_latest_reading(row or None, spec, legacy_id)
+            reading = _chart_latest_reading(row or None, spec, legacy_id, scale_values=row_vals)
             if use_lw:
                 converted = _convert_legacy_plotly_to_lw(
                     inner, country_code, spec, canonical_frame, peer_snapshots
@@ -1884,7 +1977,7 @@ def _render_section_charts(
         rendered_ids.append(canonical_id)
         footnote = _chart_footnote(status, source, note, is_proxy)
         badge = _chart_corner_badge(status, note, is_proxy)
-        reading = _chart_latest_reading(row or None, spec, canonical_id)
+        reading = _chart_latest_reading(row or None, spec, canonical_id, scale_values=row_vals)
         if use_lw:
             canvas_html, lw_spec = _chart_from_canonical_frame_lw(
                 canonical_frame, country_code, spec, canonical_id
@@ -4200,9 +4293,31 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
   function formatVal(val) {{
     if (val === null || val === undefined || isNaN(val)) return 'n/a';
     var n = Number(val);
-    if (Math.abs(n) < 10) return n.toFixed(2);
-    if (Math.abs(n) < 100) return n.toFixed(1);
-    return n.toLocaleString('en-US', {{ maximumFractionDigits: 0 }});
+    var abs = Math.abs(n);
+    if (abs >= 1e9) {{
+      return (n / 1e9).toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}) + ' bn';
+    }}
+    if (abs >= 1e6) {{
+      return (n / 1e6).toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}) + ' mn';
+    }}
+    if (abs >= 1e5) {{
+      return (n / 1e3).toLocaleString('en-US', {{ minimumFractionDigits: 1, maximumFractionDigits: 1 }}) + 'k';
+    }}
+    if (abs >= 1000) {{
+      var isInt = Math.abs(n - Math.round(n)) < 1e-6;
+      return n.toLocaleString('en-US', {{
+        minimumFractionDigits: isInt ? 0 : 2,
+        maximumFractionDigits: isInt ? 0 : 2
+      }});
+    }}
+    if (abs >= 10) {{
+      var isInt10 = Math.abs(n - Math.round(n)) < 1e-6;
+      return n.toLocaleString('en-US', {{
+        minimumFractionDigits: isInt10 ? 0 : 1,
+        maximumFractionDigits: 1
+      }});
+    }}
+    return n.toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }});
   }}
 
   function syncToolbarReadout(cid, spec) {{
@@ -4283,6 +4398,9 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
     var chart = LightweightCharts.createChart(el, {{
       width: el.clientWidth,
       height: el.clientHeight || 310,
+      localization: {{
+        priceFormatter: formatVal
+      }},
       layout: {{
         background: {{ type: 'solid', color: '#ffffff' }},
         textColor: '#737c8c',
@@ -4368,7 +4486,7 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
           color: pl.color || '#0d7680',
           lineWidth: pl.width || 1,
           lineStyle: pl.style !== undefined ? pl.style : 2,
-          axisLabelVisible: Boolean(pl.title),
+          axisLabelVisible: Boolean(pl.axisLabel),
           title: pl.title || ''
         }});
       }});
