@@ -14,7 +14,216 @@ import os
 import re
 import sys
 import json
+import math
 from html import escape
+
+# Countries using TradingView Lightweight Charts + IntersectionObserver lazy rendering
+LW_CHART_COUNTRIES = {"PL"}
+
+LW_PEER_COLORS = {
+    "HU": "#6b7280",  # FT Slate Grey
+    "CZ": "#0d7680",  # FT Teal
+    "RO": "#b86200",  # FT Amber
+    "PL": "#990f3d",  # FT Claret
+}
+
+
+def _normalize_lw_time(raw_date: object) -> str | None:
+    s = str(raw_date or "").strip()
+    if not s:
+        return None
+    if len(s) == 4 and s.isdigit():
+        return f"{s}-12-31"
+    if len(s) == 7 and s[4] == "-":
+        return f"{s}-01"
+    if len(s) >= 10 and s[4] == "-" and s[7] == "-":
+        return s[:10]
+    return None
+
+
+def _build_lw_points(x_list, y_list, *, is_bar: bool = False, bar_mode: str = "fiscal") -> list[dict]:
+    by_time: dict[str, dict] = {}
+    for raw_x, raw_y in zip(x_list or [], y_list or []):
+        if raw_y is None:
+            continue
+        try:
+            val = float(raw_y)
+        except (TypeError, ValueError):
+            continue
+        if math.isnan(val) or math.isinf(val):
+            continue
+        t = _normalize_lw_time(raw_x)
+        if not t:
+            continue
+        rval = round(val, 4)
+        pt: dict = {"time": t, "value": rval}
+        if is_bar:
+            if bar_mode == "credit_gap":
+                pt["color"] = "#b86200" if rval >= 0 else "#0d7680"
+            else:
+                pt["color"] = "#0d7680" if rval >= 0 else "#990f3d"
+        by_time[t] = pt
+    return [by_time[k] for k in sorted(by_time)]
+
+
+def _make_lw_chart_html(chart_id: str, title: str, unit: str, height: int = 380) -> str:
+    return (
+        f'<div class="lw-chart-wrap" style="height:{height}px;width:100%;">'
+        f'<div class="lw-chart-header">'
+        f'<div class="lw-chart-title-group">'
+        f'<span class="lw-chart-title">{escape(str(title or ""))}</span>'
+        f'<span class="lw-chart-unit">{escape(str(unit or ""))}</span>'
+        f'</div>'
+        f'<div class="lw-chart-meta" id="lw-meta-{escape(chart_id)}"></div>'
+        f'</div>'
+        f'<div id="{escape(chart_id)}" class="lw-chart-plot" data-lw-chart="{escape(chart_id)}"></div>'
+        f'</div>'
+    )
+
+
+def _decorate_lw_spec(spec_dict: dict, chart_id: str, country_code: str) -> dict:
+    target_bands = {
+        "PL": {"center": 2.5, "min": 1.5, "max": 3.5, "label": "NBP Target: 2.5% (±1pp)"},
+        "CZ": {"center": 2.0, "min": 1.0, "max": 3.0, "label": "CNB Target: 2.0% (±1pp)"},
+        "HU": {"center": 3.0, "min": 2.0, "max": 4.0, "label": "MNB Target: 3.0% (±1pp)"},
+        "RO": {"center": 2.5, "min": 1.5, "max": 3.5, "label": "NBR Target: 2.5% (±1pp)"},
+    }
+    c_band = target_bands.get(country_code)
+    price_lines: list[dict] = list(spec_dict.get("priceLines") or [])
+    series_list: list[dict] = list(spec_dict.get("series") or [])
+
+    is_fiscal_bar = any(
+        k in chart_id for k in ("fiscal_balance_pct_gdp", "primary_balance", "structural_balance")
+    )
+    is_ext_bar = any(k in chart_id for k in ("current_account_pct_gdp", "trade_balance"))
+    is_credit_gap = "credit_to_gdp_gap" in chart_id
+    is_cpi_target = bool(c_band) and ("cpi_yoy" in chart_id or "core_cpi_yoy" in chart_id)
+
+    if is_fiscal_bar or is_ext_bar or is_credit_gap:
+        bar_mode = "credit_gap" if is_credit_gap else "fiscal"
+        for idx, s in enumerate(series_list):
+            if idx == 0 or s.get("isPrimary"):
+                s["type"] = "histogram"
+                s["color"] = "#b86200" if is_credit_gap else "#0d7680"
+                for pt in s.get("data") or []:
+                    v = pt.get("value", 0)
+                    if is_credit_gap:
+                        pt["color"] = "#b86200" if v >= 0 else "#0d7680"
+                    else:
+                        pt["color"] = "#0d7680" if v >= 0 else "#990f3d"
+                break
+
+    if is_cpi_target and c_band:
+        spec_dict["badge"] = {
+            "text": c_band["label"],
+            "color": "#0d7680",
+            "bg": "rgba(13, 118, 128, 0.10)",
+        }
+        price_lines.extend([
+            {"price": c_band["center"], "color": "#0d7680", "width": 2, "style": 2, "title": f"{c_band['center']}%"},
+            {"price": c_band["max"], "color": "rgba(13, 118, 128, 0.45)", "width": 1, "style": 3, "title": ""},
+            {"price": c_band["min"], "color": "rgba(13, 118, 128, 0.45)", "width": 1, "style": 3, "title": ""},
+        ])
+
+    if is_fiscal_bar:
+        spec_dict["badge"] = {
+            "text": "EU Maastricht Limit: -3.0%",
+            "color": "#990f3d",
+            "bg": "rgba(153, 15, 61, 0.08)",
+        }
+        price_lines.append(
+            {"price": -3.0, "color": "#990f3d", "width": 2, "style": 1, "title": "Maastricht -3.0%"}
+        )
+
+    if is_credit_gap:
+        spec_dict["badge"] = {
+            "text": "Amber: Credit Expansion | Teal: Deleveraging",
+            "color": "#737c8c",
+            "bg": "rgba(18, 21, 26, 0.05)",
+        }
+
+    # Add zero line if values span across or touch zero
+    all_vals = [
+        pt["value"]
+        for s in series_list
+        for pt in (s.get("data") or [])
+        if isinstance(pt.get("value"), (int, float))
+    ]
+    if all_vals and (min(all_vals) <= 0 <= max(all_vals) or is_fiscal_bar or is_ext_bar or is_credit_gap):
+        if not any(pl.get("price") == 0 or pl.get("price") == 0.0 for pl in price_lines):
+            price_lines.append(
+                {"price": 0.0, "color": "rgba(18, 21, 26, 0.40)", "width": 1, "style": 0, "title": ""}
+            )
+
+    if price_lines:
+        spec_dict["priceLines"] = price_lines
+    return spec_dict
+
+
+def _convert_trade_section_to_ft_bars(trade_section_html: str) -> str:
+    """Replace the 4 static Plotly horizontal bar charts in #trade with crisp FT HTML/SVG bars."""
+    if not trade_section_html:
+        return trade_section_html
+    dec = json.JSONDecoder()
+
+    def _replace_cell(match: re.Match) -> str:
+        cell_html = match.group(0)
+        idx = cell_html.find("Plotly.newPlot(")
+        if idx == -1:
+            return cell_html
+        pos = idx + len("Plotly.newPlot(")
+        while pos < len(cell_html) and cell_html[pos].isspace():
+            pos += 1
+        if pos >= len(cell_html) or cell_html[pos] != '"':
+            return cell_html
+        try:
+            cid, pos = dec.raw_decode(cell_html, pos)
+            while pos < len(cell_html) and cell_html[pos] in " ,\n\r\t":
+                pos += 1
+            traces, pos = dec.raw_decode(cell_html, pos)
+            while pos < len(cell_html) and cell_html[pos] in " ,\n\r\t":
+                pos += 1
+            layout, pos = dec.raw_decode(cell_html, pos)
+        except Exception:
+            return cell_html
+
+        title_obj = layout.get("title", {})
+        title = title_obj.get("text", "") if isinstance(title_obj, dict) else str(title_obj or "")
+        bar_trace = traces[0] if traces else {}
+        share_trace = traces[1] if len(traces) > 1 else {}
+        x_vals = bar_trace.get("x") or []
+        y_labels = bar_trace.get("y") or []
+        val_texts = bar_trace.get("text") or [str(v) for v in x_vals]
+        share_texts = share_trace.get("text") or [""] * len(x_vals)
+        max_x = max([float(v) for v in x_vals if v is not None] or [1.0])
+
+        rows_html = []
+        items = list(zip(y_labels, x_vals, val_texts, share_texts))
+        for rank, (label, val, v_txt, s_txt) in enumerate(reversed(items)):
+            pct = max(2.0, min(100.0, (float(val) / max_x) * 100.0)) if max_x > 0 else 0.0
+            bar_color = "#990f3d" if rank == 0 else "#8a593d"
+            share_badge = f'<span class="ft-hbar-share">{escape(str(s_txt))}</span>' if s_txt else ""
+            rows_html.append(
+                f'<div class="ft-hbar-row">'
+                f'<div class="ft-hbar-label" title="{escape(str(label))}">{escape(str(label))}</div>'
+                f'<div class="ft-hbar-track">'
+                f'<div class="ft-hbar-fill" style="width:{pct:.1f}%;background:{bar_color};"></div>'
+                f'</div>'
+                f'<div class="ft-hbar-val"><strong>{escape(str(v_txt))}</strong>{share_badge}</div>'
+                f'</div>'
+            )
+
+        return (
+            f'<div class="chart-cell">'
+            f'<div id="{escape(cid)}" class="ft-hbar-card">'
+            f'<div class="ft-hbar-title">{escape(title)}</div>'
+            f'<div class="ft-hbar-body">{"".join(rows_html)}</div>'
+            f'</div>'
+            f'</div>'
+        )
+
+    return re.sub(r'<div class="chart-cell">.*?</div>\s*</div>', _replace_cell, trade_section_html, flags=re.S)
+
 
 # ── Chart HTML generator for new v4 indicators ────────────────────────────────
 
@@ -866,6 +1075,142 @@ footer a { color: var(--accent) !important; }
   .chart-canvas .chart-cell,
   .chart-canvas > div:first-child { height: 360px; }
 }
+/* TradingView Lightweight Charts FT Visual Vocabulary Chrome */
+.lw-chart-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: #ffffff;
+  padding: 10px 14px 6px;
+}
+.lw-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+  min-height: 24px;
+}
+.lw-chart-title-group {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+.lw-chart-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  line-height: 1.25;
+}
+.lw-chart-unit {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.lw-chart-meta {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.lw-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+.lw-legend-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 3px;
+  border-radius: 1.5px;
+}
+.lw-legend-val {
+  font-weight: 600;
+  color: var(--fg);
+}
+.lw-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.lw-chart-plot {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 310px;
+  position: relative;
+}
+/* FT Horizontal Bar Cards for Trade Section */
+.ft-hbar-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 14px 16px;
+  background: #ffffff;
+}
+.ft-hbar-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ft-hbar-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 1 auto;
+  gap: 6px;
+}
+.ft-hbar-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 165px) 1fr auto;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}
+.ft-hbar-label {
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+.ft-hbar-track {
+  height: 12px;
+  background: rgba(18, 21, 26, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ft-hbar-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+.ft-hbar-val {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 82px;
+  justify-content: flex-end;
+  color: var(--fg);
+}
+.ft-hbar-share {
+  font-size: 10.5px;
+  color: var(--accent);
+  font-weight: 600;
+}
 """
 
 # ── Section config (v4 expanded — 9 sections) ──────────────────────────────────
@@ -1273,6 +1618,145 @@ def _chart_from_canonical_frame(frame, country_code: str, spec, chart_id: str) -
     return _make_plotly_chart(chart_id, spec.label, [trace], spec.unit)
 
 
+def _chart_from_canonical_frame_lw(frame, country_code: str, spec, chart_id: str) -> tuple[str, dict]:
+    rows = _indicator_frame(frame, country_code, spec.indicator_id)
+    if not rows:
+        rows = _indicator_frame(fetch_canonical_macro_frame(country_code), country_code, spec.indicator_id)
+    is_proxy = bool(rows[-1].get("is_proxy")) if rows else False
+    points = _build_lw_points(
+        [row.get("date") for row in rows],
+        [row.get("value") for row in rows],
+    )
+    series_spec = {
+        "name": country_code,
+        "type": "line",
+        "color": "#990f3d" if not is_proxy else "#9d3d2e",
+        "width": 2,
+        "style": 3 if is_proxy else 0,
+        "isPrimary": True,
+        "data": points,
+    }
+    lw_spec = _decorate_lw_spec(
+        {
+            "title": spec.label,
+            "unit": spec.unit,
+            "series": [series_spec],
+        },
+        chart_id,
+        country_code,
+    )
+    return _make_lw_chart_html(chart_id, spec.label, spec.unit), lw_spec
+
+
+_SYNC_CANONICAL_PEER_INDICATORS = {
+    "real_gdp_yoy",
+    "industrial_production_yoy",
+    "retail_sales_yoy",
+    "unemployment_rate",
+    "ppi_yoy",
+    "avg_wage_yoy",
+    "sov_yield_10y",
+}
+
+
+def _convert_legacy_plotly_to_lw(
+    inner_html: str,
+    country_code: str,
+    spec,
+    canonical_frame,
+    peer_snapshots: dict | None = None,
+) -> tuple[str, dict] | None:
+    idx = inner_html.find("Plotly.newPlot(")
+    if idx == -1:
+        return None
+    dec = json.JSONDecoder()
+    pos = idx + len("Plotly.newPlot(")
+    while pos < len(inner_html) and inner_html[pos].isspace():
+        pos += 1
+    if pos >= len(inner_html) or inner_html[pos] != '"':
+        return None
+    try:
+        cid, pos = dec.raw_decode(inner_html, pos)
+        while pos < len(inner_html) and inner_html[pos] in " ,\n\r\t":
+            pos += 1
+        traces, pos = dec.raw_decode(inner_html, pos)
+        while pos < len(inner_html) and inner_html[pos] in " ,\n\r\t":
+            pos += 1
+        layout, pos = dec.raw_decode(inner_html, pos)
+    except Exception:
+        return None
+
+    title_obj = layout.get("title", {})
+    title = (
+        title_obj.get("text", "")
+        if isinstance(title_obj, dict)
+        else str(title_obj or "")
+    ) or spec.label
+    yaxis_obj = layout.get("yaxis", {})
+    ytitle_obj = yaxis_obj.get("title", {}) if isinstance(yaxis_obj, dict) else {}
+    unit = (
+        ytitle_obj.get("text", "")
+        if isinstance(ytitle_obj, dict)
+        else str(ytitle_obj or "")
+    ) or spec.unit
+
+    series_list: list[dict] = []
+    for t_idx, tr in enumerate(traces or []):
+        t_name = str(tr.get("name") or f"S{t_idx + 1}").strip()
+        is_primary = t_name == country_code or (t_idx == 0 and len(traces) == 1)
+        x_vals = list(tr.get("x") or [])
+        y_vals = list(tr.get("y") or [])
+
+        if spec.indicator_id in _SYNC_CANONICAL_PEER_INDICATORS:
+            peer_frame = (
+                canonical_frame
+                if t_name == country_code
+                else (peer_snapshots or {}).get(t_name, [])
+            )
+            c_rows = _indicator_frame(peer_frame, t_name, spec.indicator_id) if peer_frame else []
+            if c_rows:
+                if spec.indicator_id == "real_gdp_yoy":
+                    x_vals = [r.get("date") for r in c_rows]
+                    y_vals = [r.get("value") for r in c_rows]
+                else:
+                    x_vals = x_vals + [r.get("date") for r in c_rows]
+                    y_vals = y_vals + [r.get("value") for r in c_rows]
+
+        points = _build_lw_points(x_vals, y_vals)
+        if not points:
+            continue
+        if is_primary:
+            color = "#990f3d"
+            width = 2
+            style = 0
+        else:
+            color = LW_PEER_COLORS.get(t_name, "#6b7280")
+            width = 1
+            style = 2  # Dashed peer lines for clean FT hierarchy
+        series_list.append(
+            {
+                "name": t_name,
+                "type": "line",
+                "color": color,
+                "width": width,
+                "style": style,
+                "isPrimary": is_primary,
+                "data": points,
+            }
+        )
+
+    lw_spec = _decorate_lw_spec(
+        {
+            "title": title,
+            "unit": unit,
+            "series": series_list,
+        },
+        cid,
+        country_code,
+    )
+    return _make_lw_chart_html(cid, title, unit), lw_spec
+
+
 def _chart_footnote(status: str, source: str, note: str, is_proxy: bool) -> str:
     label = _quality_label(status, is_proxy)
     cls = _quality_class(status, is_proxy)
@@ -1313,9 +1797,17 @@ def _indicator_ledger_html(section_id: str, country_code: str) -> str:
     return f'<div class="indicator-ledger">{"".join(items)}</div>'
 
 
-def _render_section_charts(section_id: str, country_code: str, chart_map: dict[str, str], canonical_frame) -> tuple[str, list[str]]:
+def _render_section_charts(
+    section_id: str,
+    country_code: str,
+    chart_map: dict[str, str],
+    canonical_frame,
+    lw_specs: dict[str, dict] | None = None,
+    peer_snapshots: dict | None = None,
+) -> tuple[str, list[str]]:
     html_parts: list[str] = []
     rendered_ids: list[str] = []
+    use_lw = country_code in LW_CHART_COUNTRIES and lw_specs is not None
     prefer_canonical_ids = {
         "policy_rate",
         "real_policy_rate",
@@ -1374,6 +1866,14 @@ def _render_section_charts(section_id: str, country_code: str, chart_map: dict[s
             )
             badge = _chart_corner_badge("verified", legacy_note, False)
             reading = _chart_latest_reading(row or None, spec, legacy_id)
+            if use_lw:
+                converted = _convert_legacy_plotly_to_lw(
+                    inner, country_code, spec, canonical_frame, peer_snapshots
+                )
+                if converted is not None:
+                    lw_html, lw_spec = converted
+                    lw_specs[legacy_id] = lw_spec
+                    inner = lw_html
             html_parts.append(
                 f'<div class="chart-cell chart-shell" {chart_attrs}>'
                 f'<div class="chart-toolbar">{reading}{badge}</div>'
@@ -1385,10 +1885,19 @@ def _render_section_charts(section_id: str, country_code: str, chart_map: dict[s
         footnote = _chart_footnote(status, source, note, is_proxy)
         badge = _chart_corner_badge(status, note, is_proxy)
         reading = _chart_latest_reading(row or None, spec, canonical_id)
+        if use_lw:
+            canvas_html, lw_spec = _chart_from_canonical_frame_lw(
+                canonical_frame, country_code, spec, canonical_id
+            )
+            lw_specs[canonical_id] = lw_spec
+        else:
+            canvas_html = _chart_from_canonical_frame(
+                canonical_frame, country_code, spec, canonical_id
+            )
         html_parts.append(
             f'<div class="chart-cell chart-shell" {chart_attrs}>'
             f'<div class="chart-toolbar">{reading}{badge}</div>'
-            f'<div class="chart-canvas">{_chart_from_canonical_frame(canonical_frame, country_code, spec, canonical_id)}</div>'
+            f'<div class="chart-canvas">{canvas_html}</div>'
             f'{footnote}</div>'
         )
     return "\n".join(html_parts), rendered_ids
@@ -3389,6 +3898,15 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
     cb_section = _render_central_bank_section(country_code)
     trade_match = re.search(r'<section class="panel" id="trade">.*?</section>', html, re.DOTALL)
     trade_section_html = trade_match.group() if trade_match else ""
+    use_lw = country_code in LW_CHART_COUNTRIES
+    lw_specs: dict[str, dict] | None = {} if use_lw else None
+    peer_snapshots = (
+        load_cee_canonical_snapshot(CEE_CANONICAL)
+        if use_lw and CEE_CANONICAL.exists()
+        else {}
+    )
+    if use_lw and trade_section_html:
+        trade_section_html = _convert_trade_section_to_ft_bars(trade_section_html)
 
     # Build section panels with narratives (bilingual)
     sections_html = ""
@@ -3401,7 +3919,14 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
         narrative_en = data["narratives"].get(sec_id, "")
         narrative_zh = data.get("narratives_zh", {}).get(sec_id, "")
         quality_html = _section_quality_html(sec_id)
-        charts_html, section_chart_ids = _render_section_charts(sec_id, country_code, chart_map, canonical_frame)
+        charts_html, section_chart_ids = _render_section_charts(
+            sec_id,
+            country_code,
+            chart_map,
+            canonical_frame,
+            lw_specs=lw_specs,
+            peer_snapshots=peer_snapshots,
+        )
         rendered_chart_ids.extend(section_chart_ids)
         ledger_html = _indicator_ledger_html(sec_id, country_code)
 
@@ -3421,9 +3946,12 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
 {quality_html}</section>
 """
 
-    # Plotly JS
-    plotly_js = re.search(r'<script src="https://cdn.plot.ly/plotly-2\.32\.0\.min\.js"></script>', html)
-    plotly_tag = plotly_js.group(0) if plotly_js else '<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>'
+    # Chart engine script tag
+    if use_lw:
+        plotly_tag = '<script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js" defer></script>'
+    else:
+        plotly_js = re.search(r'<script src="https://cdn.plot.ly/plotly-2\.32\.0\.min\.js"></script>', html)
+        plotly_tag = plotly_js.group(0) if plotly_js else '<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>'
 
     # Build country switcher nav
     all_countries = [
@@ -3456,9 +3984,15 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
     all_chart_ids = list(dict.fromkeys(rendered_chart_ids))
     # Also add trade chart if present
     trade_chart_match = re.search(r'id="(trade-chart-\d+)"', trade_section_html)
-    if trade_chart_match:
+    if trade_chart_match and not use_lw:
         all_chart_ids.append(trade_chart_match.group(1))
     chart_ids_js = '["' + '","'.join(all_chart_ids) + '"]'
+    chart_engine_label = "TradingView Lightweight Charts (FT Style)" if use_lw else "Plotly"
+    chart_runtime_script = (
+        _lw_runtime_script(lw_specs or {}, country_code)
+        if use_lw
+        else _legacy_plotly_runtime_script(chart_ids_js, country_code)
+    )
     kpi_html_en = _sync_kpi_html_with_canonical_frame(
         data["kpi_html"],
         canonical_frame,
@@ -3553,8 +4087,8 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
 
 <footer>
   <div class="attribution">
-    <span data-lang="en">Macro Dashboard v4 · Data via openecon-data MCP, ECB, Eurostat, BIS, World Bank, Yahoo Finance · Charts: Plotly</span>
-    <span data-lang="zh">Macro Dashboard v4 · 数据来源: openecon-data MCP, ECB, Eurostat, BIS, World Bank, Yahoo Finance · 图表: Plotly</span>
+    <span data-lang="en">Macro Dashboard v4 · Data via openecon-data MCP, ECB, Eurostat, BIS, World Bank, Yahoo Finance · Charts: {chart_engine_label}</span>
+    <span data-lang="zh">Macro Dashboard v4 · 数据来源: openecon-data MCP, ECB, Eurostat, BIS, World Bank, Yahoo Finance · 图表: {chart_engine_label}</span>
   </div>
   <div class="disclaimer">
     <span data-lang="en"><strong>Disclaimer:</strong> This is a research artefact produced for analytical purposes, not investment advice. All positioning views expressed are illustrative of the analytical framework and should not be construed as trade recommendations. Past performance does not guarantee future results. Macro narratives reflect the author's assessment as of the generation date and may change without notice.</span>
@@ -3586,6 +4120,9 @@ function toggleLang() {{
   }}
 }}
 function resizeVisibleCharts() {{
+  if (window.CPChart && window.CPChart.mountVisibleIn) {{
+    window.CPChart.mountVisibleIn(document.body);
+  }}
   if (!window.Plotly) return;
   document.querySelectorAll('.chart-cell .plotly-graph-div').forEach(function(el) {{
     if (el.offsetParent !== null) Plotly.Plots.resize(el);
@@ -3603,7 +4140,336 @@ function setDashboardView(view) {{
 setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
 </script>
 
-<script>
+{chart_runtime_script}
+</body>
+</html>
+"""
+
+    out_path.write_text(final_html)
+    BUILD_FRAMES[country_code] = canonical_frame
+    return out_path
+
+
+def _lw_runtime_script(lw_specs: dict[str, dict], country_code: str) -> str:
+    date_pool: dict[tuple[str, ...], int] = {}
+    date_list: list[list[str]] = []
+    compact_specs: dict[str, dict] = {}
+    for cid, spec in lw_specs.items():
+        c_spec = dict(spec)
+        c_series = []
+        for s in spec.get("series") or []:
+            cs = dict(s)
+            pts = cs.pop("data", None) or []
+            times = tuple(str(pt["time"]) for pt in pts)
+            if times not in date_pool:
+                date_pool[times] = len(date_list)
+                date_list.append(list(times))
+            cs["x"] = date_pool[times]
+            cs["y"] = [pt["value"] for pt in pts]
+            if any("color" in pt for pt in pts):
+                cs["c"] = [pt.get("color", "") for pt in pts]
+            c_series.append(cs)
+        c_spec["series"] = c_series
+        compact_specs[cid] = c_spec
+
+    dates_json = json.dumps(date_list, ensure_ascii=False, separators=(",", ":"))
+    specs_json = json.dumps(compact_specs, ensure_ascii=False, separators=(",", ":"))
+    return f"""<script>
+window.CP_LW_DATES = {dates_json};
+window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
+(function() {{
+  var mainCountry = '{country_code}';
+  var mountedCharts = {{}};
+
+  function getPts(s) {{
+    if (!s) return [];
+    if (s.data) return s.data;
+    var dates = (window.CP_LW_DATES || [])[s.x] || [];
+    var vals = s.y || [];
+    var cols = s.c || null;
+    var out = [];
+    for (var i = 0; i < dates.length && i < vals.length; i++) {{
+      var pt = {{ time: dates[i], value: vals[i] }};
+      if (cols && cols[i]) pt.color = cols[i];
+      out.push(pt);
+    }}
+    s.data = out;
+    return out;
+  }}
+
+  function formatVal(val) {{
+    if (val === null || val === undefined || isNaN(val)) return 'n/a';
+    var n = Number(val);
+    if (Math.abs(n) < 10) return n.toFixed(2);
+    if (Math.abs(n) < 100) return n.toFixed(1);
+    return n.toLocaleString('en-US', {{ maximumFractionDigits: 0 }});
+  }}
+
+  function syncToolbarReadout(cid, spec) {{
+    var series = (spec && spec.series) || [];
+    if (!series.length) return;
+    var best = null;
+    for (var i = 0; i < series.length; i++) {{
+      if (series[i].name === mainCountry || series[i].isPrimary) {{
+        best = series[i];
+        break;
+      }}
+    }}
+    if (!best) best = series[0];
+    var pts = getPts(best);
+    if (!pts.length) return;
+    var lastPt = pts[pts.length - 1];
+    var valStr = formatVal(lastPt.value);
+    var readout = document.querySelector('.chart-reading[data-chart-id="' + cid + '"]');
+    if (readout) {{
+      var number = readout.querySelector('.chart-reading-value strong');
+      if (number && number.textContent.trim() === 'n/a') number.textContent = valStr;
+      var periods = readout.querySelectorAll('time span');
+      if (!readout.dataset.latestDate && periods.length) {{
+        periods.forEach(function(period) {{ period.textContent = String(lastPt.time); }});
+      }}
+    }}
+  }}
+
+  function renderMetaBar(cid, spec) {{
+    var metaEl = document.getElementById('lw-meta-' + cid);
+    if (!metaEl) return;
+    var html = [];
+    if (spec.badge && spec.badge.text) {{
+      html.push(
+        '<span class="lw-badge-pill" style="color:' + (spec.badge.color || '#0d7680') +
+        ';background:' + (spec.badge.bg || 'rgba(13,118,128,0.08)') + ';">' +
+        spec.badge.text + '</span>'
+      );
+    }}
+    var series = spec.series || [];
+    for (var i = 0; i < series.length; i++) {{
+      var s = series[i];
+      var pts = getPts(s);
+      var lastVal = pts.length ? formatVal(pts[pts.length - 1].value) : '—';
+      html.push(
+        '<span class="lw-legend-item">' +
+        '<span class="lw-legend-swatch" style="background:' + (s.color || '#990f3d') + ';"></span>' +
+        '<span>' + (s.name || ('S' + (i + 1))) + '</span>' +
+        '<span class="lw-legend-val" data-series-idx="' + i + '">' + lastVal + '</span>' +
+        '</span>'
+      );
+    }}
+    metaEl.innerHTML = html.join('');
+  }}
+
+  var resizeObs = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(function(entries) {{
+    entries.forEach(function(entry) {{
+      var el = entry.target;
+      var cid = el.dataset.lwChart || el.id;
+      var inst = mountedCharts[cid];
+      if (inst && inst.chart && el.clientWidth > 20) {{
+        inst.chart.applyOptions({{ width: el.clientWidth }});
+      }}
+    }});
+  }}) : null;
+
+  function mountChart(el) {{
+    if (!el || el.dataset.lwMounted === '1') return;
+    if (!window.LightweightCharts) return;
+    if (el.offsetParent === null || el.clientWidth < 20) return;
+    var cid = el.dataset.lwChart || el.id;
+    var spec = (window.CP_LW_CHARTS || {{}})[cid];
+    if (!spec) return;
+
+    el.dataset.lwMounted = '1';
+    renderMetaBar(cid, spec);
+
+    var chart = LightweightCharts.createChart(el, {{
+      width: el.clientWidth,
+      height: el.clientHeight || 310,
+      layout: {{
+        background: {{ type: 'solid', color: '#ffffff' }},
+        textColor: '#737c8c',
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        fontSize: 11,
+        attributionLogo: false
+      }},
+      grid: {{
+        vertLines: {{ visible: false }},
+        horzLines: {{ color: 'rgba(18, 21, 26, 0.06)', style: 0 }}
+      }},
+      rightPriceScale: {{
+        borderVisible: false,
+        scaleMargins: {{ top: 0.12, bottom: 0.10 }}
+      }},
+      timeScale: {{
+        borderColor: 'rgba(18, 21, 26, 0.14)',
+        rightOffset: 2,
+        fixLeftEdge: true,
+        timeVisible: false
+      }},
+      crosshair: {{
+        mode: 0,
+        vertLine: {{ color: 'rgba(18, 21, 26, 0.25)', width: 1, style: 2, labelBackgroundColor: '#12151a' }},
+        horzLine: {{ color: 'rgba(18, 21, 26, 0.25)', width: 1, style: 2, labelBackgroundColor: '#12151a' }}
+      }},
+      handleScroll: {{ mouseWheel: false, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false }},
+      handleScale: {{ mouseWheel: false, pinch: true, axisPressedMouseMove: true }}
+    }});
+
+    var seriesSpecs = spec.series || [];
+    var order = [];
+    for (var i = 0; i < seriesSpecs.length; i++) {{
+      if (!seriesSpecs[i].isPrimary) order.push(i);
+    }}
+    for (var j = 0; j < seriesSpecs.length; j++) {{
+      if (seriesSpecs[j].isPrimary) order.push(j);
+    }}
+
+    var apiByIdx = {{}};
+    var primaryApi = null;
+    order.forEach(function(idx) {{
+      var s = seriesSpecs[idx];
+      var api;
+      if (s.type === 'histogram') {{
+        api = chart.addHistogramSeries({{
+          color: s.color || '#0d7680',
+          priceLineVisible: false,
+          lastValueVisible: false,
+          base: 0
+        }});
+      }} else {{
+        api = chart.addLineSeries({{
+          color: s.color || '#990f3d',
+          lineWidth: s.width || 2,
+          lineStyle: s.style || 0,
+          priceLineVisible: false,
+          lastValueVisible: Boolean(s.isPrimary),
+          crosshairMarkerVisible: true,
+          crosshairMarkerRadius: s.isPrimary ? 4 : 3
+        }});
+      }}
+      var pts = getPts(s);
+      api.setData(pts);
+      if (s.isPrimary && s.type !== 'histogram' && pts.length > 0 && typeof api.setMarkers === 'function') {{
+        var lastPt = pts[pts.length - 1];
+        api.setMarkers([{{
+          time: lastPt.time,
+          position: 'inBar',
+          color: s.color || '#990f3d',
+          shape: 'circle',
+          size: 0.7
+        }}]);
+      }}
+      apiByIdx[idx] = api;
+      if (s.isPrimary || !primaryApi) primaryApi = api;
+    }});
+
+    if (primaryApi && spec.priceLines && spec.priceLines.length) {{
+      spec.priceLines.forEach(function(pl) {{
+        primaryApi.createPriceLine({{
+          price: Number(pl.price),
+          color: pl.color || '#0d7680',
+          lineWidth: pl.width || 1,
+          lineStyle: pl.style !== undefined ? pl.style : 2,
+          axisLabelVisible: Boolean(pl.title),
+          title: pl.title || ''
+        }});
+      }});
+    }}
+
+    var metaEl = document.getElementById('lw-meta-' + cid);
+    if (metaEl) {{
+      chart.subscribeCrosshairMove(function(param) {{
+        var valSpans = metaEl.querySelectorAll('.lw-legend-val');
+        if (!param || !param.time || !param.seriesData) {{
+          valSpans.forEach(function(sp) {{
+            var sIdx = Number(sp.dataset.seriesIdx);
+            var pts = getPts(seriesSpecs[sIdx]);
+            sp.textContent = pts.length ? formatVal(pts[pts.length - 1].value) : '—';
+          }});
+          return;
+        }}
+        valSpans.forEach(function(sp) {{
+          var sIdx = Number(sp.dataset.seriesIdx);
+          var api = apiByIdx[sIdx];
+          var d = api ? param.seriesData.get(api) : null;
+          if (d && d.value !== undefined) {{
+            sp.textContent = formatVal(d.value);
+          }}
+        }});
+      }});
+    }}
+
+    chart.timeScale().fitContent();
+    mountedCharts[cid] = {{ chart: chart, el: el }};
+    if (resizeObs) resizeObs.observe(el);
+  }}
+
+  var io = typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(function(entries) {{
+    entries.forEach(function(entry) {{
+      if (entry.isIntersecting) {{
+        mountChart(entry.target);
+        if (entry.target.dataset.lwMounted === '1') {{
+          io.unobserve(entry.target);
+        }}
+      }}
+    }});
+  }}, {{ rootMargin: '320px 0px' }}) : null;
+
+  function observeAll(root) {{
+    var scope = root || document;
+    var plots = scope.querySelectorAll('.lw-chart-plot[data-lw-chart]');
+    plots.forEach(function(el) {{
+      var cid = el.dataset.lwChart || el.id;
+      var spec = (window.CP_LW_CHARTS || {{}})[cid];
+      if (spec) syncToolbarReadout(cid, spec);
+      if (el.dataset.lwMounted === '1') {{
+        var inst = mountedCharts[cid];
+        if (inst && inst.chart && el.offsetParent !== null && el.clientWidth > 20) {{
+          inst.chart.applyOptions({{ width: el.clientWidth }});
+          inst.chart.timeScale().fitContent();
+        }}
+        return;
+      }}
+      if (el.offsetParent === null) return;
+      if (io) {{
+        io.observe(el);
+        var rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 320 && rect.bottom > -320) {{
+          mountChart(el);
+        }}
+      }} else {{
+        mountChart(el);
+      }}
+    }});
+  }}
+
+  window.CPChart = {{
+    mount: mountChart,
+    mountVisibleIn: observeAll
+  }};
+
+  function boot() {{
+    if (window.LightweightCharts) {{
+      observeAll(document);
+    }} else {{
+      var timer = setInterval(function() {{
+        if (window.LightweightCharts) {{
+          clearInterval(timer);
+          observeAll(document);
+        }}
+      }}, 40);
+    }}
+  }}
+
+  if (document.readyState === 'loading') {{
+    document.addEventListener('DOMContentLoaded', boot);
+  }} else {{
+    boot();
+  }}
+}})();
+</script>"""
+
+
+def _legacy_plotly_runtime_script(chart_ids_js: str, country_code: str) -> str:
+    return f"""<script>
 (function() {{
   // Keep full history visible and link each chart to a restrained endpoint marker.
   var chartIds = {chart_ids_js};
@@ -3781,14 +4647,7 @@ setDashboardView(localStorage.getItem('cp-dashboard-view') || 'core');
     }}, 200);
   }}
 }})();
-</script>
-</body>
-</html>
-"""
-
-    out_path.write_text(final_html)
-    BUILD_FRAMES[country_code] = canonical_frame
-    return out_path
+</script>"""
 
 
 def _latest_value(frame, country_code: str, indicator_id: str, *, decimals: int = 2) -> str:
