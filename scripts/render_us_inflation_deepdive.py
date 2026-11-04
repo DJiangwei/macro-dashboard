@@ -1146,7 +1146,7 @@ function updateCpiTable(cc, month) {{
   var itemsHtml = [];
   (tbl.items || []).forEach(function(it) {{
     var hasSub = it.sub_items && it.sub_items.length > 0;
-    var toggleBtn = hasSub ? '<button class="sub-toggle-btn" onclick="toggleSubRows(\'' + cc.toLowerCase() + '-' + it.code + '\', this)">▶</button>' : '<span class="sub-placeholder"></span>';
+    var toggleBtn = hasSub ? '<button class="sub-toggle-btn" onclick="toggleSubRows(\\'' + cc.toLowerCase() + '-' + it.code + '\\', this)">▶</button>' : '<span class="sub-placeholder"></span>';
     var r = '<tr class="row-division" data-group="' + cc.toLowerCase() + '-' + it.code + '">' +
       '<td class="col-name">' + toggleBtn + ' <span>' + it.name + '</span></td>' +
       '<td class="col-num col-weight">' + (it.weight !== null ? it.weight.toFixed(1) : '—') + '</td>' +

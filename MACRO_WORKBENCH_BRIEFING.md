@@ -1,6 +1,6 @@
 # Global Macro Workbench Intelligence Briefing
 
-**Generated**: 2026-11-03 | **Coverage**: 14 Economies (US, EA, UK, JP, CN, ZA, TR, HK, KR, TW, PL, CZ, HU, RO)
+**Generated**: 2026-11-04 | **Coverage**: 14 Economies (US, EA, UK, JP, CN, ZA, TR, HK, KR, TW, PL, CZ, HU, RO)
 
 ---
 

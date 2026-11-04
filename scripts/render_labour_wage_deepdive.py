@@ -659,6 +659,10 @@ window.switchLabourTab = function(geo, tabName, btn) {{
   var target = document.getElementById('tab-labour-' + tabName + '-' + geo);
   if (target) {{
     target.classList.add('active');
+    if (window.CPChart && window.CPChart.mountVisibleIn) {{
+      window.CPChart.mountVisibleIn(target);
+    }}
+    window.dispatchEvent(new Event('resize'));
   }}
 }};
 </script>

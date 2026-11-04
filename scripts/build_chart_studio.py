@@ -504,7 +504,7 @@ def render_html(catalog: dict) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Macro Chart Studio · 宏观多指标对比工坊</title>
-  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+  <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
   <style>
     :root {{
       --bg-canvas: #fcfaf7;
@@ -1263,8 +1263,85 @@ def render_html(catalog: dict) -> str:
 
     #chart-canvas {{
       width: 100%;
-      height: 560px;
-      min-height: 560px;
+      height: 520px;
+      min-height: 520px;
+      position: relative;
+      user-select: none;
+    }}
+    .canvas-panel.is-fullscreen {{
+      position: fixed;
+      inset: 16px;
+      z-index: 9999;
+      background: #ffffff;
+      padding: 22px 26px;
+      box-shadow: 0 24px 64px rgba(18, 21, 26, 0.28);
+      overflow-y: auto;
+    }}
+    .canvas-panel.is-fullscreen #chart-canvas {{
+      height: calc(100vh - 340px);
+      min-height: 460px;
+    }}
+    .studio-lw-legend {{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 0;
+    }}
+    .studio-lw-legend-item {{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--fg);
+      cursor: pointer;
+      padding: 3px 9px;
+      border-radius: 3px;
+      background: #fcfaf7;
+      border: 1px solid rgba(18, 21, 26, 0.10);
+      transition: all 0.15s ease;
+      user-select: none;
+      font-variant-numeric: tabular-nums;
+    }}
+    .studio-lw-legend-item:hover {{
+      border-color: var(--accent);
+      background: #ffffff;
+    }}
+    .studio-lw-legend-item.is-hidden {{
+      opacity: 0.38;
+      text-decoration: line-through;
+    }}
+    .studio-lw-dot {{
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }}
+    .studio-lw-delta {{
+      display: none;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--teal);
+      background: rgba(13, 118, 128, 0.08);
+      border: 1px solid rgba(13, 118, 128, 0.24);
+      border-radius: 4px;
+      padding: 5px 10px;
+      font-variant-numeric: tabular-nums;
+    }}
+    .studio-source-footer {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 10.5px;
+      color: var(--muted);
+      padding-top: 2px;
+    }}
+    .action-button.active {{
+      background: var(--fg);
+      color: #ffffff;
+      border-color: var(--fg);
     }}
 
     /* FT Summary Statistics Table */
@@ -1497,6 +1574,9 @@ def render_html(catalog: dict) -> str:
             <button type="button" class="range-btn" data-range="10y" onclick="setDateRange('10y')">10Y</button>
             <button type="button" class="range-btn" data-range="max" onclick="setDateRange('max')">Max</button>
           </div>
+          <button type="button" class="action-button" id="studio-boxzoom-btn" onclick="toggleStudioBoxZoom()" title="Box-Zoom & Range Delta (or hold Shift + drag)">🔍</button>
+          <button type="button" class="action-button" onclick="resetStudioZoom()" title="Reset Zoom (or double-click chart)">↺</button>
+          <button type="button" class="action-button" onclick="toggleStudioFullscreen()" title="Fullscreen Canvas (Esc to exit)">⛶</button>
         </div>
 
         <div class="toolbar-group">
@@ -1545,8 +1625,19 @@ def render_html(catalog: dict) -> str:
         </div>
       </div>
 
-      <!-- Plotly Graph Div -->
+      <!-- Interactive Legend & Range Delta Banner -->
+      <div id="studio-lw-legend" class="studio-lw-legend"></div>
+      <div id="studio-lw-delta" class="studio-lw-delta"></div>
+
+      <!-- Lightweight Charts & High-DPI Canvas Container -->
       <div id="chart-canvas"></div>
+      <div class="studio-source-footer">
+        <span><i>Source: East Meridian Macro Dashboard · Official Macro Pipeline</i></span>
+        <span>
+          <span data-lang="en">Drag: Pan · Shift+Drag / 🔍: Box-Zoom &amp; Δ · Ctrl/⌘+Wheel: Zoom · Click Legend: Toggle · Dbl-Click: Solo/Reset</span>
+          <span data-lang="zh">拖拽平移 · Shift+拖拽 / 🔍: 框选缩放与区间 Δ · Ctrl/⌘+滚轮缩放 · 点击图例隐藏 · 双击图例独显/双击图表重置</span>
+        </span>
+      </div>
 
       <!-- Statistics Table -->
       <div class="summary-section">
@@ -2462,6 +2553,866 @@ async function fetchCountryFrame(countryCode) {{
 }}
 
 // Chart Rendering Logic (FT Graphic Specification)
+
+// ── Macro Chart Studio Lightweight Charts & High-DPI Canvas Engine ──
+let STUDIO_LW_CHART = null;
+let STUDIO_LW_SERIES = [];
+let STUDIO_VISIBLE = {{}};
+let STUDIO_ALL_TIMES = [];
+let STUDIO_BOX_ZOOM = false;
+let STUDIO_IS_FULLSCREEN = false;
+let STUDIO_IS_SHIFT_DOWN = false;
+let STUDIO_CUSTOM_CANVAS = null;
+let STUDIO_ACTIVE_VIEW = 'timeseries';
+
+function formatVal(val, decimals) {{
+  if (val === null || val === undefined || isNaN(val)) return 'n/a';
+  var n = Number(val);
+  var abs = Math.abs(n);
+  var d = decimals !== undefined ? decimals : 2;
+  if (abs >= 1e12) {{
+    return (n / 1e12).toLocaleString('en-US', {{ minimumFractionDigits: d, maximumFractionDigits: d }}) + ' tn';
+  }}
+  if (abs >= 1e9) {{
+    return (n / 1e9).toLocaleString('en-US', {{ minimumFractionDigits: d, maximumFractionDigits: d }}) + ' bn';
+  }}
+  if (abs >= 1e6) {{
+    return (n / 1e6).toLocaleString('en-US', {{ minimumFractionDigits: d, maximumFractionDigits: d }}) + ' mn';
+  }}
+  if (abs >= 1e5) {{
+    return (n / 1e3).toLocaleString('en-US', {{ minimumFractionDigits: 1, maximumFractionDigits: 1 }}) + 'k';
+  }}
+  if (abs >= 1000) {{
+    var isInt = Math.abs(n - Math.round(n)) < 1e-6;
+    return n.toLocaleString('en-US', {{
+      minimumFractionDigits: isInt ? 0 : d,
+      maximumFractionDigits: isInt ? 0 : d
+    }});
+  }}
+  return n.toLocaleString('en-US', {{ minimumFractionDigits: d, maximumFractionDigits: d }});
+}}
+
+function resolveDisplayScale(id, unit, values) {{
+  var u = String(unit || '');
+  if (/%|pp|bp|bps|ratio|index|years|per cent/i.test(u)) return {{ scale: 1, unit: u }};
+  if (!values || !values.length) return {{ scale: 1, unit: u }};
+  var maxAbs = Math.max.apply(null, values.map(function(v) {{ return Math.abs(Number(v) || 0); }}));
+  if (maxAbs >= 1e11) {{
+    var baseU = u.replace(/\\s*(mn|bn|trillion|billion|million)?\\s*$/i, '');
+    return {{ scale: 1e12, unit: (baseU ? baseU + ' ' : '') + 'Trillions' }};
+  }}
+  if (maxAbs >= 1e8) {{
+    var baseU = u.replace(/\\s*(mn|bn|trillion|billion|million)?\\s*$/i, '');
+    return {{ scale: 1e9, unit: (baseU ? baseU + ' ' : '') + 'Billions' }};
+  }}
+  if (maxAbs >= 1e5) {{
+    var baseU = u.replace(/\\s*(mn|bn|trillion|billion|million)?\\s*$/i, '');
+    return {{ scale: 1e6, unit: (baseU ? baseU + ' ' : '') + 'Millions' }};
+  }}
+  return {{ scale: 1, unit: u }};
+}}
+
+function normalizeLwTime(dStr) {{
+  if (!dStr) return null;
+  var s = String(dStr).trim();
+  if (/^\\d{{4}}-\\d{{2}}-\\d{{2}}$/.test(s)) return s;
+  if (/^\\d{{4}}-\\d{{2}}$/.test(s)) return s + '-01';
+  if (/^\\d{{4}}$/.test(s)) return s + '-01-01';
+  return null;
+}}
+
+function setupHiDPICanvas(canvas, width, height) {{
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.round(width * dpr);
+  canvas.height = Math.round(height * dpr);
+  canvas.style.width = width + 'px';
+  canvas.style.height = height + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  return ctx;
+}}
+
+function toggleStudioBoxZoom(force) {{
+  STUDIO_BOX_ZOOM = force !== undefined ? Boolean(force) : !STUDIO_BOX_ZOOM;
+  const btn = document.getElementById('studio-boxzoom-btn');
+  if (btn) btn.classList.toggle('active', STUDIO_BOX_ZOOM);
+  const container = document.getElementById('chart-canvas');
+  if (container) container.style.cursor = (STUDIO_BOX_ZOOM || STUDIO_IS_SHIFT_DOWN) ? 'crosshair' : 'default';
+}}
+
+function resetStudioZoom() {{
+  if (STUDIO_LW_CHART) {{
+    STUDIO_LW_CHART.timeScale().fitContent();
+    clearStudioDeltaBanner();
+    toggleStudioBoxZoom(false);
+  }} else if (STUDIO_ACTIVE_VIEW !== 'timeseries') {{
+    refreshChart();
+  }}
+}}
+
+function toggleStudioFullscreen() {{
+  const panel = document.querySelector('.canvas-panel');
+  if (!panel) return;
+  STUDIO_IS_FULLSCREEN = !STUDIO_IS_FULLSCREEN;
+  panel.classList.toggle('is-fullscreen', STUDIO_IS_FULLSCREEN);
+  setTimeout(() => {{
+    refreshChart();
+  }}, 40);
+}}
+
+window.addEventListener('keydown', (e) => {{
+  if (e.key === 'Shift' && !STUDIO_IS_SHIFT_DOWN) {{
+    STUDIO_IS_SHIFT_DOWN = true;
+    const container = document.getElementById('chart-canvas');
+    if (container) container.style.cursor = 'crosshair';
+  }} else if (e.key === 'Escape' && STUDIO_IS_FULLSCREEN) {{
+    toggleStudioFullscreen();
+  }}
+}});
+
+window.addEventListener('keyup', (e) => {{
+  if (e.key === 'Shift') {{
+    STUDIO_IS_SHIFT_DOWN = false;
+    const container = document.getElementById('chart-canvas');
+    if (container) container.style.cursor = STUDIO_BOX_ZOOM ? 'crosshair' : 'default';
+  }}
+}});
+
+function clearStudioDeltaBanner() {{
+  const b = document.getElementById('studio-lw-delta');
+  if (b) {{
+    b.style.display = 'none';
+    b.innerHTML = '';
+  }}
+}}
+
+function updateStudioDeltaBanner(t1, t2) {{
+  const b = document.getElementById('studio-lw-delta');
+  if (!b || !STUDIO_LW_SERIES.length) return;
+  const startT = t1 < t2 ? t1 : t2;
+  const endT = t1 < t2 ? t2 : t1;
+  const s0 = STUDIO_LW_SERIES[0];
+  if (!s0 || !s0.pts || !s0.pts.length) return;
+  let p1 = null, p2 = null;
+  for (let i = 0; i < s0.pts.length; i++) {{
+    if (s0.pts[i].time >= startT && !p1) p1 = s0.pts[i];
+    if (s0.pts[i].time <= endT) p2 = s0.pts[i];
+  }}
+  if (!p1 || !p2 || p1.time === p2.time) return;
+  const v1 = p1.value, v2 = p2.value;
+  const diff = v2 - v1;
+  const sign = diff >= 0 ? '+' : '';
+  const isRate = /%|bp|bps|ratio|pts/i.test(s0.unit || '');
+  let pctStr = '';
+  if (!isRate && Math.abs(v1) > 1e-9) {{
+    const pct = ((v2 - v1) / Math.abs(v1)) * 100;
+    pctStr = ' (' + (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%)';
+  }}
+  b.innerHTML = '<span>' + p1.time + ' → ' + p2.time + ' (' + s0.label + '): ' + formatVal(v1) + ' → ' + formatVal(v2) + ' · <strong>Δ ' + sign + formatVal(diff) + (s0.unit ? ' ' + s0.unit : '') + '</strong>' + pctStr + '</span>' +
+    '<button type="button" style="background:none;border:none;cursor:pointer;font-weight:700;margin-left:8px;" onclick="clearStudioDeltaBanner()">×</button>';
+  b.style.display = 'flex';
+}}
+
+function toggleStudioSeries(idx) {{
+  STUDIO_VISIBLE[idx] = STUDIO_VISIBLE[idx] === false ? true : false;
+  syncStudioSeriesVisibility();
+}}
+
+function soloStudioSeries(idx) {{
+  const total = STUDIO_LW_SERIES.length;
+  let onlyThis = true;
+  for (let i = 0; i < total; i++) {{
+    const v = STUDIO_VISIBLE[i] !== false;
+    if ((i === idx && !v) || (i !== idx && v)) {{ onlyThis = false; break; }}
+  }}
+  for (let j = 0; j < total; j++) {{
+    STUDIO_VISIBLE[j] = onlyThis ? true : (j === idx);
+  }}
+  syncStudioSeriesVisibility();
+}}
+
+function syncStudioSeriesVisibility() {{
+  STUDIO_LW_SERIES.forEach((item, idx) => {{
+    const vis = STUDIO_VISIBLE[idx] !== false;
+    if (item.api) item.api.applyOptions({{ visible: vis }});
+    const legItem = document.querySelector('.studio-lw-legend-item[data-idx="' + idx + '"]');
+    if (legItem) legItem.classList.toggle('is-hidden', !vis);
+  }});
+}}
+
+function renderStudioTimeseriesLW(container, seriesData) {{
+  STUDIO_ACTIVE_VIEW = 'timeseries';
+  STUDIO_CUSTOM_CANVAS = null;
+  container.innerHTML = '';
+  const legendEl = document.getElementById('studio-lw-legend');
+  if (legendEl) legendEl.innerHTML = '';
+  clearStudioDeltaBanner();
+
+  if (STUDIO_LW_CHART) {{
+    try {{ STUDIO_LW_CHART.remove(); }} catch(e){{}}
+    STUDIO_LW_CHART = null;
+  }}
+  STUDIO_LW_SERIES = [];
+  STUDIO_VISIBLE = {{}};
+
+  if (!seriesData || !seriesData.length) {{
+    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#737c8c;font-size:13px;">' +
+      (CURRENT_LANG === 'zh' ? '暂无数据或选定序列在所选区间内无有效观测值，请尝试更换时间窗口或指标' : 'No observations found for the selected series within this range.') + '</div>';
+    return;
+  }}
+
+  // Handle 2-series rolling correlation view if selected
+  if (CURRENT_CANVAS_VIEW === 'correlation' && seriesData.length === 2) {{
+    const s1 = seriesData[0];
+    const s2 = seriesData[1];
+    const paired = alignTwoSeries(s1.filteredObs, s2.filteredObs);
+    const rolling = computeRollingCorrelation(paired, 60);
+    if (!rolling.length) {{
+      container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#737c8c;font-size:13px;">Insufficient paired observations for 60-period correlation</div>';
+      return;
+    }}
+    const w = container.clientWidth || 960;
+    const h = container.clientHeight || 520;
+    STUDIO_LW_CHART = LightweightCharts.createChart(container, {{
+      width: w,
+      height: h,
+      localization: {{ priceFormatter: formatVal }},
+      layout: {{ background: {{ type: 'solid', color: '#ffffff' }}, textColor: '#737c8c', fontFamily: "-apple-system, sans-serif", fontSize: 11 }},
+      grid: {{ vertLines: {{ visible: false }}, horzLines: {{ color: 'rgba(18, 21, 26, 0.06)' }} }},
+      rightPriceScale: {{ borderVisible: false, scaleMargins: {{ top: 0.1, bottom: 0.1 }} }},
+      timeScale: {{ borderColor: 'rgba(18, 21, 26, 0.14)', rightOffset: 3, fixLeftEdge: true, timeVisible: false }},
+      crosshair: {{ mode: 0 }}
+    }});
+    const pts = rolling.map(r => ({{ time: normalizeLwTime(r.date), value: r.r }})).filter(p => p.time);
+    const api = STUDIO_LW_CHART.addLineSeries({{ color: '#0d7680', lineWidth: 2.4, priceScaleId: 'right' }});
+    api.setData(pts);
+    api.createPriceLine({{ price: 0, color: 'rgba(18, 21, 26, 0.3)', lineWidth: 1, lineStyle: 2, title: 'Zero' }});
+    const lastR = pts[pts.length - 1];
+    STUDIO_LW_SERIES.push({{ idx: 0, api: api, config: {{ color: '#0d7680' }}, label: `60-Period Rolling Correlation (${{s1.config.country}} vs ${{s2.config.country}})`, unit: 'r', pts: pts }});
+    if (legendEl) {{
+      legendEl.innerHTML = `<div class="studio-lw-legend-item"><span class="studio-lw-dot" style="background:#0d7680;"></span><strong>60-Period Rolling Pearson r:</strong> <span style="color:#0d7680;font-weight:600;">${{lastR ? formatVal(lastR.value) : '—'}}</span></div>`;
+    }}
+    STUDIO_LW_CHART.timeScale().fitContent();
+    return;
+  }}
+
+  // Check if right axis is needed
+  let hasRightAxis = false;
+  if (CURRENT_TRANSFORM === 'raw') {{
+    hasRightAxis = seriesData.some(s => s.config.axis === 'right');
+  }}
+
+  const w = container.clientWidth || 960;
+  const h = container.clientHeight || 520;
+
+  STUDIO_LW_CHART = LightweightCharts.createChart(container, {{
+    width: w,
+    height: h,
+    localization: {{ priceFormatter: formatVal }},
+    layout: {{
+      background: {{ type: 'solid', color: '#ffffff' }},
+      textColor: '#737c8c',
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      fontSize: 11,
+      attributionLogo: false
+    }},
+    grid: {{
+      vertLines: {{ visible: false }},
+      horzLines: {{ color: 'rgba(18, 21, 26, 0.06)', style: 0 }}
+    }},
+    leftPriceScale: {{
+      visible: true,
+      borderVisible: false,
+      scaleMargins: {{ top: 0.12, bottom: 0.10 }}
+    }},
+    rightPriceScale: {{
+      visible: hasRightAxis,
+      borderVisible: false,
+      scaleMargins: {{ top: 0.12, bottom: 0.10 }}
+    }},
+    timeScale: {{
+      borderColor: 'rgba(18, 21, 26, 0.14)',
+      rightOffset: 3,
+      fixLeftEdge: true,
+      timeVisible: false
+    }},
+    crosshair: {{
+      mode: 0,
+      vertLine: {{ color: 'rgba(18, 21, 26, 0.25)', width: 1, style: 2, labelBackgroundColor: '#12151a' }},
+      horzLine: {{ color: 'rgba(18, 21, 26, 0.25)', width: 1, style: 2, labelBackgroundColor: '#12151a' }}
+    }},
+    handleScroll: {{ mouseWheel: false, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false }},
+    handleScale: {{ mouseWheel: false, pinch: true, axisPressedMouseMove: true }}
+  }});
+
+  const allTimesSet = new Set();
+  const seriesInfoList = [];
+
+  if (CURRENT_TRANSFORM === 'rebase') {{
+    seriesData.forEach((s, idx) => {{
+      if (!s.filteredObs.length) return;
+      const baseVal = s.filteredObs[0].value || 1.0;
+      const pts = [];
+      s.filteredObs.forEach(o => {{
+        const t = normalizeLwTime(o.date);
+        if (t) {{
+          const val = (o.value / baseVal) * 100.0;
+          pts.push({{ time: t, value: val }});
+          allTimesSet.add(t);
+        }}
+      }});
+      seriesInfoList.push({{
+        idx: idx,
+        config: s.config,
+        label: s.label,
+        unit: 'Base=100',
+        scaleId: 'left',
+        pts: pts
+      }});
+    }});
+  }} else if (CURRENT_TRANSFORM === 'spread' && seriesData.length >= 2) {{
+    const s1 = seriesData[0];
+    const s2 = seriesData[1];
+    const s2Map = new Map(s2.filteredObs.map(o => [o.date, o.value]));
+    const spreadPts = [];
+    s1.filteredObs.forEach(o => {{
+      if (s2Map.has(o.date)) {{
+        const t = normalizeLwTime(o.date);
+        if (t) {{
+          spreadPts.push({{ time: t, value: o.value - s2Map.get(o.date) }});
+          allTimesSet.add(t);
+        }}
+      }}
+    }});
+    seriesInfoList.push({{
+      idx: 0,
+      config: {{ color: '#990f3d' }},
+      label: `Spread (${{s1.config.country}} − ${{s2.config.country}})`,
+      unit: s1.unit || '',
+      scaleId: 'left',
+      pts: spreadPts
+    }});
+  }} else if (CURRENT_TRANSFORM === 'zscore') {{
+    seriesData.forEach((s, idx) => {{
+      if (!s.filteredObs.length) return;
+      const vals = s.filteredObs.map(o => o.value);
+      const mean = vals.reduce((a, b) => a + b, 0) / vals.length;
+      const variance = vals.reduce((a, b) => a + (b - mean) ** 2, 0) / (vals.length - 1 || 1);
+      const std = Math.sqrt(variance);
+      const pts = [];
+      s.filteredObs.forEach(o => {{
+        const t = normalizeLwTime(o.date);
+        if (t) {{
+          pts.push({{ time: t, value: std > 0 ? (o.value - mean) / std : 0 }});
+          allTimesSet.add(t);
+        }}
+      }});
+      seriesInfoList.push({{
+        idx: idx,
+        config: s.config,
+        label: s.label,
+        unit: 'σ',
+        scaleId: 'left',
+        pts: pts
+      }});
+    }});
+  }} else if (CURRENT_TRANSFORM === 'yoy') {{
+    seriesData.forEach((s, idx) => {{
+      if (!s.filteredObs.length) return;
+      const dateMap = new Map(s.observations.map(o => [o.date, o.value]));
+      const isRate = s.unit.includes('%') || s.unit.includes('bps') || s.unit.includes('pts');
+      const pts = [];
+      s.filteredObs.forEach(o => {{
+        const parts = o.date.split('-');
+        const prevYear = parseInt(parts[0], 10) - 1;
+        const targetExact = `${{prevYear}}-${{parts[1]}}-${{parts[2]}}`;
+        let prevVal = dateMap.get(targetExact);
+        if (prevVal === undefined) {{
+          const targetMonth = `${{prevYear}}-${{parts[1]}}`;
+          for (const [d, v] of dateMap.entries()) {{
+            if (d.startsWith(targetMonth)) {{ prevVal = v; break; }}
+          }}
+        }}
+        if (prevVal !== undefined && !isNaN(prevVal)) {{
+          const t = normalizeLwTime(o.date);
+          if (t) {{
+            const val = isRate ? (o.value - prevVal) : (prevVal !== 0 ? ((o.value - prevVal) / Math.abs(prevVal)) * 100 : 0);
+            pts.push({{ time: t, value: val }});
+            allTimesSet.add(t);
+          }}
+        }}
+      }});
+      seriesInfoList.push({{
+        idx: idx,
+        config: s.config,
+        label: s.label,
+        unit: isRate ? (s.unit || '% pts') : '%',
+        scaleId: 'left',
+        pts: pts
+      }});
+    }});
+  }} else if (CURRENT_TRANSFORM === 'pct_change') {{
+    seriesData.forEach((s, idx) => {{
+      if (!s.filteredObs.length) return;
+      const baseVal = s.filteredObs[0].value;
+      if (baseVal === 0) return;
+      const pts = [];
+      s.filteredObs.forEach(o => {{
+        const t = normalizeLwTime(o.date);
+        if (t) {{
+          pts.push({{ time: t, value: ((o.value - baseVal) / Math.abs(baseVal)) * 100 }});
+          allTimesSet.add(t);
+        }}
+      }});
+      seriesInfoList.push({{
+        idx: idx,
+        config: s.config,
+        label: s.label,
+        unit: '%',
+        scaleId: 'left',
+        pts: pts
+      }});
+    }});
+  }} else {{
+    // Raw levels
+    seriesData.forEach((s, idx) => {{
+      if (!s.filteredObs.length) return;
+      const scaleInfo = resolveDisplayScale(s.config.indicatorId, s.unit, s.filteredObs.map(o => o.value));
+      const pts = [];
+      s.filteredObs.forEach(o => {{
+        const t = normalizeLwTime(o.date);
+        if (t) {{
+          pts.push({{ time: t, value: o.value / scaleInfo.scale }});
+          allTimesSet.add(t);
+        }}
+      }});
+      const isRight = s.config.axis === 'right';
+      seriesInfoList.push({{
+        idx: idx,
+        config: s.config,
+        label: s.label,
+        unit: scaleInfo.unit,
+        scaleId: isRight ? 'right' : 'left',
+        pts: pts
+      }});
+    }});
+  }}
+
+  STUDIO_ALL_TIMES = Array.from(allTimesSet).sort();
+
+  seriesInfoList.forEach((sInfo, idx) => {{
+    STUDIO_VISIBLE[idx] = true;
+    const api = STUDIO_LW_CHART.addLineSeries({{
+      color: sInfo.config.color || FT_PALETTE[idx % FT_PALETTE.length],
+      lineWidth: 2.2,
+      priceScaleId: sInfo.scaleId,
+      priceLineVisible: false,
+      lastValueVisible: true,
+      crosshairMarkerVisible: true,
+      crosshairMarkerRadius: 4
+    }});
+    api.setData(sInfo.pts);
+    if (sInfo.pts.length > 0 && typeof api.setMarkers === 'function') {{
+      const lastPt = sInfo.pts[sInfo.pts.length - 1];
+      api.setMarkers([{{
+        time: lastPt.time,
+        position: 'inBar',
+        color: sInfo.config.color || FT_PALETTE[idx % FT_PALETTE.length],
+        shape: 'circle',
+        size: 0.7
+      }}]);
+    }}
+    STUDIO_LW_SERIES.push({{
+      idx: idx,
+      api: api,
+      config: sInfo.config,
+      label: sInfo.label,
+      unit: sInfo.unit,
+      pts: sInfo.pts
+    }});
+  }});
+
+  // Render Legend
+  if (legendEl) {{
+    legendEl.innerHTML = STUDIO_LW_SERIES.map((s, idx) => {{
+      const lastPt = s.pts.length ? s.pts[s.pts.length - 1] : null;
+      const valFormatted = lastPt ? formatVal(lastPt.value) + (s.unit ? ' ' + s.unit : '') : 'n/a';
+      return `<div class="studio-lw-legend-item" data-idx="${{idx}}" onclick="toggleStudioSeries(${{idx}})" ondblclick="soloStudioSeries(${{idx}})" title="Click: toggle · Double-click: solo">
+        <span class="studio-lw-dot" style="background:${{s.config.color}};"></span>
+        <strong>${{s.label}}</strong>
+        <span class="studio-lw-val" data-idx="${{idx}}" style="color:${{s.config.color}};font-weight:600;">${{valFormatted}}</span>
+      </div>`;
+    }}).join('');
+  }}
+
+  // Crosshair move handler
+  STUDIO_LW_CHART.subscribeCrosshairMove(param => {{
+    const valSpans = document.querySelectorAll('.studio-lw-val');
+    if (!param || !param.time || !param.seriesData) {{
+      valSpans.forEach(sp => {{
+        const i = Number(sp.dataset.idx);
+        const s = STUDIO_LW_SERIES[i];
+        if (s && s.pts && s.pts.length) {{
+          sp.textContent = formatVal(s.pts[s.pts.length - 1].value) + (s.unit ? ' ' + s.unit : '');
+        }}
+      }});
+      return;
+    }}
+    valSpans.forEach(sp => {{
+      const i = Number(sp.dataset.idx);
+      const s = STUDIO_LW_SERIES[i];
+      if (s && s.api) {{
+        const d = param.seriesData.get(s.api);
+        if (d && d.value !== undefined) {{
+          sp.textContent = formatVal(d.value) + (s.unit ? ' ' + s.unit : '');
+        }}
+      }}
+    }});
+  }});
+
+  // Box-zoom & drag delta
+  let zoomRect = document.querySelector('.lw-zoom-rect');
+  if (!zoomRect) {{
+    zoomRect = document.createElement('div');
+    zoomRect.className = 'lw-zoom-rect';
+    container.appendChild(zoomRect);
+  }}
+
+  container.onmousedown = function(e) {{
+    if (e.button !== 0 || (!e.shiftKey && !STUDIO_BOX_ZOOM)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const rect = container.getBoundingClientRect();
+    const startX = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+    zoomRect.style.display = 'block';
+    zoomRect.style.left = startX + 'px';
+    zoomRect.style.width = '0px';
+
+    function onMove(ev) {{
+      const curX = Math.max(0, Math.min(rect.width, ev.clientX - rect.left));
+      const x1 = Math.min(startX, curX);
+      const x2 = Math.max(startX, curX);
+      zoomRect.style.left = x1 + 'px';
+      zoomRect.style.width = (x2 - x1) + 'px';
+      if (x2 - x1 >= 8 && STUDIO_LW_CHART) {{
+        const t1 = STUDIO_LW_CHART.timeScale().coordinateToTime(x1);
+        const t2 = STUDIO_LW_CHART.timeScale().coordinateToTime(x2);
+        if (t1 && t2) updateStudioDeltaBanner(t1, t2);
+      }}
+    }}
+
+    function onUp(ev) {{
+      window.removeEventListener('mousemove', onMove, true);
+      window.removeEventListener('mouseup', onUp, true);
+      zoomRect.style.display = 'none';
+      const curX = Math.max(0, Math.min(rect.width, ev.clientX - rect.left));
+      const x1 = Math.min(startX, curX);
+      const x2 = Math.max(startX, curX);
+      if (x2 - x1 >= 14 && STUDIO_LW_CHART) {{
+        const t1 = STUDIO_LW_CHART.timeScale().coordinateToTime(x1);
+        const t2 = STUDIO_LW_CHART.timeScale().coordinateToTime(x2);
+        if (t1 && t2 && t1 !== t2) {{
+          try {{
+            STUDIO_LW_CHART.timeScale().setVisibleRange({{ from: t1 < t2 ? t1 : t2, to: t1 < t2 ? t2 : t1 }});
+          }} catch(err){{}}
+        }}
+      }}
+      if (STUDIO_BOX_ZOOM) toggleStudioBoxZoom(false);
+    }}
+
+    window.addEventListener('mousemove', onMove, true);
+    window.addEventListener('mouseup', onUp, true);
+  }};
+
+  container.ondblclick = function() {{
+    resetStudioZoom();
+  }};
+
+  container.onwheel = function(e) {{
+    if (!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault();
+    if (!STUDIO_LW_CHART) return;
+    const lr = STUDIO_LW_CHART.timeScale().getVisibleLogicalRange();
+    if (!lr) return;
+    const span = Math.max(2, lr.to - lr.from);
+    const factor = e.deltaY < 0 ? 0.82 : 1.22;
+    const newSpan = Math.max(2, Math.min((STUDIO_ALL_TIMES.length || 200) + 10, span * factor));
+    const center = (lr.from + lr.to) / 2;
+    STUDIO_LW_CHART.timeScale().setVisibleLogicalRange({{
+      from: center - newSpan / 2,
+      to: center + newSpan / 2
+    }});
+  }};
+
+  STUDIO_LW_CHART.timeScale().fitContent();
+}}
+
+function renderStudioScatterOLS(container, seriesData) {{
+  STUDIO_ACTIVE_VIEW = 'scatter_ols';
+  container.innerHTML = '';
+  const legendEl = document.getElementById('studio-lw-legend');
+  if (legendEl) legendEl.innerHTML = '';
+  clearStudioDeltaBanner();
+  if (STUDIO_LW_CHART) {{ try {{ STUDIO_LW_CHART.remove(); }} catch(e){{}} STUDIO_LW_CHART = null; }}
+
+  if (seriesData.length < 2) {{
+    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#737c8c;font-size:13px;">' +
+      (CURRENT_LANG === 'zh' ? '请在左侧添加至少 2 条指标以启用散点分布与 OLS 线性回归分析' : 'Please select at least 2 series to enable scatter plot & OLS regression.') + '</div>';
+    return;
+  }}
+
+  if (SCATTER_X_IDX >= seriesData.length) SCATTER_X_IDX = 0;
+  if (SCATTER_Y_IDX >= seriesData.length) SCATTER_Y_IDX = Math.min(1, seriesData.length - 1);
+  if (SCATTER_X_IDX === SCATTER_Y_IDX && seriesData.length > 1) SCATTER_Y_IDX = (SCATTER_X_IDX + 1) % seriesData.length;
+
+  const sX = seriesData[SCATTER_X_IDX];
+  const sY = seriesData[SCATTER_Y_IDX];
+  const paired = alignTwoSeries(sX.filteredObs, sY.filteredObs);
+  if (paired.length < 3) {{
+    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#737c8c;font-size:13px;">Insufficient paired observations</div>';
+    return;
+  }}
+
+  const reg = computeOLS(paired);
+  const w = container.clientWidth || 960;
+  const h = container.clientHeight || 520;
+  const canvas = document.createElement('canvas');
+  const ctx = setupHiDPICanvas(canvas, w, h);
+  container.appendChild(canvas);
+  STUDIO_CUSTOM_CANVAS = canvas;
+
+  const padL = 75, padR = 40, padT = 55, padB = 60;
+  const plotW = w - padL - padR;
+  const plotH = h - padT - padB;
+
+  const xs = paired.map(p => p.x);
+  const ys = paired.map(p => p.y);
+  let minX = Math.min.apply(null, xs), maxX = Math.max.apply(null, xs);
+  let minY = Math.min.apply(null, ys), maxY = Math.max.apply(null, ys);
+  const spanX = (maxX - minX) || 1, spanY = (maxY - minY) || 1;
+  minX -= spanX * 0.05; maxX += spanX * 0.05;
+  minY -= spanY * 0.05; maxY += spanY * 0.05;
+
+  function toScreenX(val) {{ return padL + ((val - minX) / (maxX - minX)) * plotW; }}
+  function toScreenY(val) {{ return padT + plotH - ((val - minY) / (maxY - minY)) * plotH; }}
+
+  // Draw grid & axes
+  ctx.strokeStyle = 'rgba(18, 21, 26, 0.06)';
+  ctx.lineWidth = 1;
+  const ticks = 5;
+  for (let i = 0; i <= ticks; i++) {{
+    const gy = padT + (plotH / ticks) * i;
+    ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(padL + plotW, gy); ctx.stroke();
+    const yVal = maxY - (i / ticks) * (maxY - minY);
+    ctx.fillStyle = '#737c8c'; ctx.font = '10px -apple-system, sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(formatVal(yVal, 1), padL - 8, gy + 3);
+
+    const gx = padL + (plotW / ticks) * i;
+    ctx.beginPath(); ctx.moveTo(gx, padT); ctx.lineTo(gx, padT + plotH); ctx.stroke();
+    const xVal = minX + (i / ticks) * (maxX - minX);
+    ctx.textAlign = 'center';
+    ctx.fillText(formatVal(xVal, 1), gx, padT + plotH + 16);
+  }}
+
+  // Draw points
+  paired.forEach(p => {{
+    const px = toScreenX(p.x);
+    const py = toScreenY(p.y);
+    ctx.beginPath();
+    ctx.arc(px, py, 4, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(153, 15, 61, 0.65)';
+    ctx.fill();
+    ctx.strokeStyle = '#990f3d';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }});
+
+  // Draw OLS Regression Line
+  if (reg && reg.lineX && reg.lineX.length === 2) {{
+    ctx.beginPath();
+    ctx.moveTo(toScreenX(reg.lineX[0]), toScreenY(reg.lineY[0]));
+    ctx.lineTo(toScreenX(reg.lineX[1]), toScreenY(reg.lineY[1]));
+    ctx.strokeStyle = '#0d7680';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+  }}
+
+  // Draw stats box
+  if (reg) {{
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.94)';
+    ctx.fillRect(padL + 12, padT + 12, 340, 68);
+    ctx.strokeStyle = '#0d7680';
+    ctx.lineWidth = 1.2;
+    ctx.strokeRect(padL + 12, padT + 12, 340, 68);
+
+    ctx.fillStyle = '#12151a';
+    ctx.font = 'bold 11px -apple-system, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(`OLS Model: Ŷ = ${{reg.beta >= 0 ? '+' : ''}}${{reg.beta.toFixed(3)}} · X + ${{reg.alpha.toFixed(3)}}`, padL + 22, padT + 30);
+    ctx.font = '11px -apple-system, sans-serif';
+    ctx.fillStyle = '#4b525f';
+    ctx.fillText(`Beta (β): ${{reg.beta.toFixed(3)}}  |  Alpha (α): ${{reg.alpha.toFixed(3)}}`, padL + 22, padT + 48);
+    ctx.fillText(`R²: ${{reg.r2.toFixed(3)}}  |  Pearson r: ${{reg.r >= 0 ? '+' : ''}}${{reg.r.toFixed(3)}}  |  N: ${{paired.length}}`, padL + 22, padT + 66);
+  }}
+
+  // Axis titles
+  ctx.fillStyle = '#12151a';
+  ctx.font = 'bold 11px -apple-system, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(`X: ${{sX.label}} (${{sX.unit}})`, padL + plotW / 2, h - 14);
+
+  ctx.save();
+  ctx.translate(18, padT + plotH / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText(`Y: ${{sY.label}} (${{sY.unit}})`, 0, 0);
+  ctx.restore();
+}}
+
+function renderStudioLeadLag(container, seriesData) {{
+  STUDIO_ACTIVE_VIEW = 'lead_lag';
+  container.innerHTML = '';
+  const legendEl = document.getElementById('studio-lw-legend');
+  if (legendEl) legendEl.innerHTML = '';
+  clearStudioDeltaBanner();
+  if (STUDIO_LW_CHART) {{ try {{ STUDIO_LW_CHART.remove(); }} catch(e){{}} STUDIO_LW_CHART = null; }}
+
+  if (seriesData.length < 2) {{
+    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#737c8c;font-size:13px;">' +
+      (CURRENT_LANG === 'zh' ? '请在左侧添加至少 2 条指标以启用领先-滞后分析' : 'Please select at least 2 series to enable lead-lag cross-correlation.') + '</div>';
+    return;
+  }}
+
+  if (SCATTER_X_IDX >= seriesData.length) SCATTER_X_IDX = 0;
+  if (SCATTER_Y_IDX >= seriesData.length) SCATTER_Y_IDX = Math.min(1, seriesData.length - 1);
+  if (SCATTER_X_IDX === SCATTER_Y_IDX && seriesData.length > 1) SCATTER_Y_IDX = (SCATTER_X_IDX + 1) % seriesData.length;
+
+  const s1 = seriesData[SCATTER_X_IDX];
+  const s2 = seriesData[SCATTER_Y_IDX];
+  const paired = alignTwoSeries(s1.filteredObs, s2.filteredObs);
+  const leadLag = computeCrossCorrelation(paired, 12);
+  if (!leadLag) {{
+    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#737c8c;font-size:13px;">Insufficient aligned data for lead-lag analysis</div>';
+    return;
+  }}
+
+  const w = container.clientWidth || 960;
+  const h = container.clientHeight || 520;
+  const canvas = document.createElement('canvas');
+  const ctx = setupHiDPICanvas(canvas, w, h);
+  container.appendChild(canvas);
+  STUDIO_CUSTOM_CANVAS = canvas;
+
+  const padL = 60, padR = 40, padT = 55, padB = 60;
+  const plotW = w - padL - padR;
+  const plotH = h - padT - padB;
+
+  const zeroY = padT + plotH / 2;
+  ctx.strokeStyle = 'rgba(18, 21, 26, 0.4)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(padL, zeroY); ctx.lineTo(padL + plotW, zeroY); ctx.stroke();
+
+  const numBars = leadLag.lags.length;
+  const barW = (plotW / numBars) * 0.7;
+  const step = plotW / numBars;
+
+  leadLag.lags.forEach((lag, i) => {{
+    const r = leadLag.corrs[i];
+    const bx = padL + i * step + (step - barW) / 2;
+    const barH = (Math.abs(r) / 1.0) * (plotH / 2);
+    const by = r >= 0 ? zeroY - barH : zeroY;
+
+    ctx.fillStyle = lag === leadLag.peakLag ? '#d97706' : (r >= 0 ? '#0d7680' : '#990f3d');
+    ctx.fillRect(bx, by, barW, barH);
+    ctx.strokeStyle = 'rgba(18, 21, 26, 0.2)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(bx, by, barW, barH);
+
+    ctx.fillStyle = '#4b525f';
+    ctx.font = '9.5px -apple-system, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(lag === 0 ? '0' : (lag > 0 ? `+${{lag}}` : `${{lag}}`), bx + barW / 2, zeroY + (r >= 0 ? 14 : -6));
+  }});
+
+  // Top header text
+  ctx.fillStyle = '#12151a';
+  ctx.font = 'bold 12px -apple-system, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText(`Lead-Lag Cross Correlation: S1 (${{s1.config.country}}) vs S2 (${{s2.config.country}})`, padL, 26);
+  ctx.font = '11px -apple-system, sans-serif';
+  ctx.fillStyle = '#d97706';
+  ctx.fillText(`Peak Lag: ${{leadLag.peakLag >= 0 ? '+' : ''}}${{leadLag.peakLag}} periods (r = ${{leadLag.peakR.toFixed(3)}}) · Contemporaneous r: ${{leadLag.zeroLagR >= 0 ? '+' : ''}}${{leadLag.zeroLagR.toFixed(3)}}`, padL, 42);
+}}
+
+function renderStudioCorrelationMatrix(container, seriesData) {{
+  STUDIO_ACTIVE_VIEW = 'correlation_matrix';
+  container.innerHTML = '';
+  const legendEl = document.getElementById('studio-lw-legend');
+  if (legendEl) legendEl.innerHTML = '';
+  clearStudioDeltaBanner();
+  if (STUDIO_LW_CHART) {{ try {{ STUDIO_LW_CHART.remove(); }} catch(e){{}} STUDIO_LW_CHART = null; }}
+
+  const matrixRes = computeCorrelationMatrix(seriesData);
+  const K = seriesData.length;
+  const w = container.clientWidth || 960;
+  const h = container.clientHeight || 520;
+  const canvas = document.createElement('canvas');
+  const ctx = setupHiDPICanvas(canvas, w, h);
+  container.appendChild(canvas);
+  STUDIO_CUSTOM_CANVAS = canvas;
+
+  const padL = 140, padR = 40, padT = 50, padB = 80;
+  const gridW = Math.min(w - padL - padR, h - padT - padB);
+  const cellSize = gridW / K;
+
+  for (let i = 0; i < K; i++) {{
+    for (let j = 0; j < K; j++) {{
+      const r = matrixRes.matrix[i][j];
+      const cx = padL + j * cellSize;
+      const cy = padT + i * cellSize;
+
+      let rColor = '#ffffff';
+      if (r > 0) {{
+        const alpha = Math.min(1, Math.abs(r));
+        rColor = `rgba(13, 118, 128, ${{alpha * 0.85 + 0.1}})`;
+      }} else if (r < 0) {{
+        const alpha = Math.min(1, Math.abs(r));
+        rColor = `rgba(153, 15, 61, ${{alpha * 0.85 + 0.1}})`;
+      }}
+      ctx.fillStyle = rColor;
+      ctx.fillRect(cx, cy, cellSize, cellSize);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(cx, cy, cellSize, cellSize);
+
+      ctx.fillStyle = Math.abs(r) > 0.4 ? '#ffffff' : '#12151a';
+      ctx.font = 'bold 11px -apple-system, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText((r >= 0 ? '+' : '') + r.toFixed(2), cx + cellSize / 2, cy + cellSize / 2);
+    }}
+  }}
+
+  // Row and column labels
+  ctx.textBaseline = 'middle';
+  for (let i = 0; i < K; i++) {{
+    const s = seriesData[i];
+    const lbl = `${{s.country}}: ${{s.config.indicatorId}}`;
+    const cy = padT + i * cellSize + cellSize / 2;
+    ctx.fillStyle = '#12151a';
+    ctx.font = '11px -apple-system, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(lbl, padL - 8, cy);
+
+    const cx = padL + i * cellSize + cellSize / 2;
+    ctx.save();
+    ctx.translate(cx, padT + gridW + 12);
+    ctx.rotate(Math.PI / 4);
+    ctx.textAlign = 'left';
+    ctx.fillText(lbl, 0, 0);
+    ctx.restore();
+  }}
+}}
+
 async function refreshChart() {{
   const loadingEl = document.getElementById('canvas-loading');
   if (loadingEl) loadingEl.style.display = 'flex';
@@ -2537,716 +3488,24 @@ async function refreshChart() {{
     // 4. Update Contextual Quant Toolbar
     updateQuantContextBar(seriesData);
 
-    // 5. Apply Transformations & Render Active View
-    let plotTraces = [];
-    let annotations = [];
-    let shapes = [];
-    let y1Title = '';
-    let y2Title = '';
-    let hasY2 = false;
-    let layoutXTitle = '';
-    let isFixedCorrelationRange = false;
-
-    if (CURRENT_CANVAS_VIEW === 'scatter_ols') {{
-      y1Title = CURRENT_LANG === 'zh' ? '散点分布与 OLS 线性回归' : 'Scatter & OLS Regression';
-      if (seriesData.length < 2) {{
-        plotTraces = [];
-        annotations.push({{
-          xref: 'paper', yref: 'paper',
-          x: 0.5, y: 0.5,
-          text: CURRENT_LANG === 'zh'
-            ? '请在左侧添加至少 2 条指标以启用散点分布与 OLS 线性回归分析'
-            : 'Please select at least 2 series to enable scatter plot & OLS regression.',
-          showarrow: false,
-          font: {{ size: 13, color: '#737c8c' }}
-        }});
-      }} else {{
-        if (SCATTER_X_IDX >= seriesData.length) SCATTER_X_IDX = 0;
-        if (SCATTER_Y_IDX >= seriesData.length) SCATTER_Y_IDX = Math.min(1, seriesData.length - 1);
-        if (SCATTER_X_IDX === SCATTER_Y_IDX && seriesData.length > 1) {{
-          SCATTER_Y_IDX = (SCATTER_X_IDX + 1) % seriesData.length;
-        }}
-        const sX = seriesData[SCATTER_X_IDX];
-        const sY = seriesData[SCATTER_Y_IDX];
-        const paired = alignTwoSeries(sX.filteredObs, sY.filteredObs);
-
-        if (paired.length < 3) {{
-          annotations.push({{
-            xref: 'paper', yref: 'paper',
-            x: 0.5, y: 0.5,
-            text: CURRENT_LANG === 'zh'
-              ? '选定序列在当前窗口内的有效对齐样本不足，无法生成散点图与回归方程'
-              : 'Insufficient paired observations to generate scatter plot and OLS regression.',
-            showarrow: false,
-            font: {{ size: 13, color: '#737c8c' }}
-          }});
-        }} else {{
-          const reg = computeOLS(paired);
-          plotTraces.push({{
-            name: `${{sX.country}} vs ${{sY.country}} (${{paired.length}} pairs)`,
-            x: paired.map(p => p.x),
-            y: paired.map(p => p.y),
-            customdata: paired.map(p => p.date),
-            yaxis: 'y',
-            type: 'scatter',
-            mode: 'markers',
-            marker: {{
-              size: 7.5,
-              color: 'rgba(153, 15, 61, 0.65)',
-              line: {{ width: 1.2, color: '#990f3d' }}
-            }},
-            hovertemplate: '<b>%{{customdata}}</b><br>X: %{{x:.2f}}<br>Y: %{{y:.2f}}<extra></extra>'
-          }});
-
-          if (reg) {{
-            const regTitle = `OLS Fit: Ŷ = ${{reg.beta >= 0 ? '+' : ''}}${{reg.beta.toFixed(3)}}·X + ${{reg.alpha.toFixed(3)}} (R² = ${{reg.r2.toFixed(3)}})`;
-            plotTraces.push({{
-              name: regTitle,
-              x: reg.lineX,
-              y: reg.lineY,
-              yaxis: 'y',
-              type: 'scatter',
-              mode: 'lines',
-              line: {{ color: '#0d7680', width: 2.6 }}
-            }});
-
-            annotations.push({{
-              xref: 'paper', yref: 'paper',
-              x: 0.03, y: 0.95,
-              xanchor: 'left', yanchor: 'top',
-              text: `<b>OLS Linear Regression (普通最小二乘回归)</b><br>` +
-                    `Model: <b>Ŷ = ${{reg.beta >= 0 ? '+' : ''}}${{reg.beta.toFixed(3)}} · X + ${{reg.alpha.toFixed(3)}}</b><br>` +
-                    `Beta (敏感度/斜率): <b>${{reg.beta.toFixed(3)}}</b> | Alpha (截距): <b>${{reg.alpha.toFixed(3)}}</b><br>` +
-                    `R² (决定系数): <b>${{reg.r2.toFixed(3)}}</b> | Pearson r (相关系数): <b>${{reg.r >= 0 ? '+' : ''}}${{reg.r.toFixed(3)}}</b><br>` +
-                    `Sample Size (对齐有效样本): <b>${{paired.length}}</b>`,
-              showarrow: false,
-              font: {{ family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", size: 11, color: '#12151a' }},
-              bgcolor: 'rgba(255, 255, 255, 0.92)',
-              bordercolor: '#0d7680',
-              borderwidth: 1.2,
-              borderpad: 6
-            }});
-          }}
-
-          y1Title = `${{sY.country}} · ${{sY.label.split(': ')[1] || sY.label}} (${{sY.unit}})`;
-          layoutXTitle = `${{sX.country}} · ${{sX.label.split(': ')[1] || sX.label}} (${{sX.unit}})`;
-        }}
-      }}
-    }} else if (CURRENT_CANVAS_VIEW === 'correlation') {{
-      if (seriesData.length < 2) {{
-        plotTraces = [];
-        annotations.push({{
-          xref: 'paper', yref: 'paper',
-          x: 0.5, y: 0.5,
-          text: CURRENT_LANG === 'zh'
-            ? '请在左侧添加至少 2 条指标以启用相关性分析'
-            : 'Please select at least 2 series to enable correlation analysis.',
-          showarrow: false,
-          font: {{ size: 13, color: '#737c8c' }}
-        }});
-      }} else if (seriesData.length === 2) {{
-        const s1 = seriesData[0];
-        const s2 = seriesData[1];
-        const paired = alignTwoSeries(s1.filteredObs, s2.filteredObs);
-        const rolling = computeRollingCorrelation(paired, 60);
-
-        if (rolling.length > 0) {{
-          plotTraces.push({{
-            name: `Rolling Correlation (S1 vs S2)`,
-            x: rolling.map(r => r.date),
-            y: rolling.map(r => r.r),
-            yaxis: 'y',
-            type: 'scatter',
-            mode: 'lines',
-            fill: 'tozeroy',
-            fillcolor: 'rgba(13, 118, 128, 0.08)',
-            line: {{ color: '#0d7680', width: 2.4 }}
-          }});
-
-          const lastR = rolling[rolling.length - 1];
-          plotTraces.push({{
-            name: 'Latest Correlation',
-            x: [lastR.date],
-            y: [lastR.r],
-            yaxis: 'y',
-            type: 'scatter',
-            mode: 'markers',
-            marker: {{ size: 8, color: '#0d7680', line: {{ width: 2, color: '#ffffff' }} }},
-            showlegend: false,
-            hoverinfo: 'skip'
-          }});
-
-          annotations.push({{
-            x: lastR.date,
-            y: lastR.r,
-            xref: 'x', yref: 'y',
-            text: `<b>Latest r = ${{lastR.r >= 0 ? '+' : ''}}${{lastR.r.toFixed(2)}}</b>`,
-            showarrow: true,
-            arrowhead: 0,
-            arrowcolor: '#0d7680',
-            ax: 32, ay: -12,
-            font: {{ size: 11, color: '#0d7680' }},
-            bgcolor: 'rgba(255, 255, 255, 0.92)',
-            bordercolor: '#0d7680',
-            borderwidth: 1.2,
-            borderpad: 3
-          }});
-        }}
-        y1Title = CURRENT_LANG === 'zh' ? '滚动相关系数 (Pearson r)' : 'Rolling Pearson r';
-        isFixedCorrelationRange = true;
-      }} else {{
-        const matrixRes = computeCorrelationMatrix(seriesData);
-        plotTraces.push({{
-          type: 'heatmap',
-          z: matrixRes.matrix,
-          x: matrixRes.shortLabels,
-          y: matrixRes.shortLabels,
-          colorscale: [
-            [0.0, '#990f3d'],
-            [0.5, '#ffffff'],
-            [1.0, '#0d7680']
-          ],
-          zmin: -1.0,
-          zmax: 1.0,
-          text: matrixRes.matrix.map(row => row.map(v => (v >= 0 ? '+' : '') + v.toFixed(2))),
-          texttemplate: '<b>%{{text}}</b>',
-          textfont: {{ family: "-apple-system, sans-serif", size: 12, color: '#12151a' }},
-          colorbar: {{
-            title: CURRENT_LANG === 'zh' ? '相关系数 (r)' : 'Pearson r',
-            titleside: 'right',
-            tickfont: {{ size: 10, color: '#4b525f' }}
-          }},
-          hoverongaps: false
-        }});
-        y1Title = CURRENT_LANG === 'zh' ? '相关性热力矩阵' : 'Correlation Matrix';
-      }}
-    }} else if (CURRENT_CANVAS_VIEW === 'lead_lag') {{
-      if (seriesData.length < 2) {{
-        plotTraces = [];
-        annotations.push({{
-          xref: 'paper', yref: 'paper',
-          x: 0.5, y: 0.5,
-          text: CURRENT_LANG === 'zh'
-            ? '请在左侧添加至少 2 条指标以启用领先-滞后分析'
-            : 'Please select at least 2 series to enable lead-lag cross-correlation.',
-          showarrow: false,
-          font: {{ size: 13, color: '#737c8c' }}
-        }});
-      }} else {{
-        if (SCATTER_X_IDX >= seriesData.length) SCATTER_X_IDX = 0;
-        if (SCATTER_Y_IDX >= seriesData.length) SCATTER_Y_IDX = Math.min(1, seriesData.length - 1);
-        if (SCATTER_X_IDX === SCATTER_Y_IDX && seriesData.length > 1) {{
-          SCATTER_Y_IDX = (SCATTER_X_IDX + 1) % seriesData.length;
-        }}
-        const s1 = seriesData[SCATTER_X_IDX];
-        const s2 = seriesData[SCATTER_Y_IDX];
-        const paired = alignTwoSeries(s1.filteredObs, s2.filteredObs);
-        const leadLag = computeCrossCorrelation(paired, 12);
-
-        if (leadLag) {{
-          const barColors = leadLag.lags.map(lag => {{
-            if (lag === leadLag.peakLag) return '#d97706';
-            const r = leadLag.corrs[lag + 12];
-            return r >= 0 ? '#0d7680' : '#990f3d';
-          }});
-
-          const xLabels = leadLag.lags.map(l => l === 0 ? (CURRENT_LANG === 'zh' ? 'Lag 0 (同期)' : 'Lag 0 (Sync)') : (l < 0 ? `t${{l}} (S1 Leads)` : `t+${{l}} (S2 Leads)`));
-
-          plotTraces.push({{
-            x: xLabels,
-            y: leadLag.corrs,
-            yaxis: 'y',
-            type: 'bar',
-            marker: {{
-              color: barColors,
-              line: {{ width: 1, color: 'rgba(18, 21, 26, 0.15)' }}
-            }},
-            hovertemplate: '<b>%{{x}}</b><br>Correlation: %{{y:.3f}}<extra></extra>'
-          }});
-
-          annotations.push({{
-            xref: 'paper', yref: 'paper',
-            x: 0.03, y: 0.95,
-            xanchor: 'left', yanchor: 'top',
-            text: `<b>Lead-Lag Cross-Correlation (领先-滞后交叉相关分析)</b><br>` +
-                  `Peak Lag (最佳峰值滞后): <b>${{leadLag.peakLag >= 0 ? '+' : ''}}${{leadLag.peakLag}} periods (r = ${{leadLag.peakR.toFixed(3)}})</b><br>` +
-                  `Contemporaneous (同期相关 r): <b>${{leadLag.zeroLagR >= 0 ? '+' : ''}}${{leadLag.zeroLagR.toFixed(3)}}</b><br>` +
-                  `Interpretation: <b>${{leadLag.peakLag < 0 ? `S1 (${{s1.country}}) leads S2 (${{s2.country}}) by ${{Math.abs(leadLag.peakLag)}} periods` : (leadLag.peakLag > 0 ? `S2 (${{s2.country}}) leads S1 (${{s1.country}}) by ${{leadLag.peakLag}} periods` : 'Contemporaneous co-movement (synchronous)')}}</b>`,
-            showarrow: false,
-            font: {{ family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", size: 11, color: '#12151a' }},
-            bgcolor: 'rgba(255, 255, 255, 0.92)',
-            bordercolor: '#d97706',
-            borderwidth: 1.2,
-            borderpad: 6
-          }});
-        }}
-        y1Title = CURRENT_LANG === 'zh' ? '交叉相关系数 (Pearson r)' : 'Cross-Correlation (Pearson r)';
-        isFixedCorrelationRange = true;
-      }}
-    }} else {{
-      // CURRENT_CANVAS_VIEW === 'timeseries'
-      if (CURRENT_TRANSFORM === 'rebase') {{
-        y1Title = CURRENT_LANG === 'zh' ? '归一化指数 (基期 = 100)' : 'Rebased Index (Base = 100)';
-        seriesData.forEach((s, sIdx) => {{
-          if (!s.filteredObs.length) return;
-          const baseVal = s.filteredObs[0].value || 1.0;
-          const x = s.filteredObs.map(o => o.date);
-          const y = s.filteredObs.map(o => (o.value / baseVal) * 100.0);
-          const lastVal = y[y.length - 1];
-          const lastDate = x[x.length - 1];
-          const valFormatted = lastVal.toFixed(1);
-
-          const legendLabel = `[Y1 · ${{CURRENT_LANG === 'zh' ? '左轴' : 'Left'}}] ${{s.label}} · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{valFormatted}}`;
-          plotTraces.push({{
-            name: legendLabel,
-            x: x, y: y, yaxis: 'y',
-            type: 'scatter', mode: 'lines',
-            line: {{ color: s.config.color, width: 2.3 }}
-          }});
-
-          plotTraces.push({{
-            name: `${{s.label}} (${{CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}})`,
-            x: [lastDate], y: [lastVal], yaxis: 'y',
-            type: 'scatter', mode: 'markers',
-            marker: {{ size: 8, color: s.config.color, line: {{ width: 2, color: '#ffffff' }} }},
-            showlegend: false, hoverinfo: 'skip'
-          }});
-
-          annotations.push({{
-            x: lastDate, y: lastVal, xref: 'x', yref: 'y',
-            text: `<b>${{valFormatted}}</b> <span style="font-size:9.5px; opacity:0.85;">[Y1]</span>`,
-            showarrow: true, arrowhead: 0, arrowcolor: s.config.color, arrowwidth: 1.2,
-            ax: 34, ay: (sIdx % 2 === 0 ? -12 : 12),
-            xanchor: 'left', yanchor: 'middle',
-            font: {{ family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif", size: 11, color: s.config.color }},
-            bgcolor: 'rgba(255, 255, 255, 0.92)', bordercolor: s.config.color, borderwidth: 1.2, borderpad: 3
-          }});
-        }});
-      }} else if (CURRENT_TRANSFORM === 'spread' && seriesData.length >= 2) {{
-        const s1 = seriesData[0];
-        const s2 = seriesData[1];
-        y1Title = s1.unit ? `${{s1.unit}} (Spread)` : 'Spread';
-
-        const s2Map = new Map(s2.filteredObs.map(o => [o.date, o.value]));
-        const spreadX = [];
-        const spreadY = [];
-        s1.filteredObs.forEach(o => {{
-          if (s2Map.has(o.date)) {{
-            spreadX.push(o.date);
-            spreadY.push(o.value - s2Map.get(o.date));
-          }}
-        }});
-
-        if (spreadX.length < 5) {{
-          const s2MonthMap = new Map();
-          s2.filteredObs.forEach(o => {{
-            s2MonthMap.set(o.date.slice(0, 7), o.value);
-          }});
-          const mSpreadX = [];
-          const mSpreadY = [];
-          s1.filteredObs.forEach(o => {{
-            const ym = o.date.slice(0, 7);
-            if (s2MonthMap.has(ym) && !mSpreadX.includes(o.date)) {{
-              mSpreadX.push(o.date);
-              mSpreadY.push(o.value - s2MonthMap.get(ym));
-            }}
-          }});
-          if (mSpreadX.length > spreadX.length) {{
-            spreadX.length = 0;
-            spreadY.length = 0;
-            mSpreadX.forEach((x, i) => {{
-              spreadX.push(x);
-              spreadY.push(mSpreadY[i]);
-            }});
-          }}
-        }}
-
-        if (spreadX.length > 0) {{
-          const lastSpreadVal = spreadY[spreadY.length - 1];
-          const lastSpreadDate = spreadX[spreadX.length - 1];
-          const spreadSign = lastSpreadVal > 0 ? '+' : '';
-          const spreadFormatted = `${{spreadSign}}${{lastSpreadVal.toFixed(2)}}${{s1.unit ? ' ' + s1.unit : ''}}`;
-
-          plotTraces.push({{
-            name: `[Y1 · ${{CURRENT_LANG === 'zh' ? '左轴' : 'Left'}}] Spread (${{s1.config.country}} − ${{s2.config.country}}) · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{spreadFormatted}}`,
-            x: spreadX, y: spreadY, yaxis: 'y',
-            type: 'scatter', mode: 'lines',
-            fill: 'tozeroy', fillcolor: 'rgba(153, 15, 61, 0.08)',
-            line: {{ color: '#990f3d', width: 2.4 }}
-          }});
-
-          plotTraces.push({{
-            name: 'Spread Latest',
-            x: [lastSpreadDate], y: [lastSpreadVal], yaxis: 'y',
-            type: 'scatter', mode: 'markers',
-            marker: {{ size: 8, color: '#990f3d', line: {{ width: 2, color: '#ffffff' }} }},
-            showlegend: false, hoverinfo: 'skip'
-          }});
-
-          annotations.push({{
-            x: lastSpreadDate, y: lastSpreadVal, xref: 'x', yref: 'y',
-            text: `<b>${{spreadFormatted}}</b> <span style="font-size:9.5px; opacity:0.85;">[Spread]</span>`,
-            showarrow: true, arrowhead: 0, arrowcolor: '#990f3d', arrowwidth: 1.2,
-            ax: 34, ay: -12, xanchor: 'left', yanchor: 'middle',
-            font: {{ family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif", size: 11, color: '#990f3d' }},
-            bgcolor: 'rgba(255, 255, 255, 0.92)', bordercolor: '#990f3d', borderwidth: 1.2, borderpad: 3
-          }});
-        }}
-        plotTraces.push({{
-          name: `[Y1] ${{s1.label}}`,
-          x: s1.filteredObs.map(o => o.date), y: s1.filteredObs.map(o => o.value), yaxis: 'y',
-          type: 'scatter', mode: 'lines',
-          line: {{ color: '#0d7680', width: 1.5, dash: 'dot' }}
-        }});
-        plotTraces.push({{
-          name: `[Y1] ${{s2.label}}`,
-          x: s2.filteredObs.map(o => o.date), y: s2.filteredObs.map(o => o.value), yaxis: 'y',
-          type: 'scatter', mode: 'lines',
-          line: {{ color: '#737c8c', width: 1.5, dash: 'dot' }}
-        }});
-      }} else if (CURRENT_TRANSFORM === 'zscore') {{
-        y1Title = CURRENT_LANG === 'zh' ? 'Z-Score 标准化得分 (均值=0, 标准差=1)' : 'Standardized Z-Score (Mean = 0, Std = 1)';
-        seriesData.forEach((s, sIdx) => {{
-          if (!s.filteredObs.length) return;
-          const vals = s.filteredObs.map(o => o.value);
-          const mean = vals.reduce((a, b) => a + b, 0) / vals.length;
-          const variance = vals.reduce((a, b) => a + (b - mean) ** 2, 0) / (vals.length - 1 || 1);
-          const std = Math.sqrt(variance);
-          const x = s.filteredObs.map(o => o.date);
-          const y = std > 0 ? vals.map(v => (v - mean) / std) : vals.map(() => 0);
-          const lastVal = y[y.length - 1];
-          const lastDate = x[x.length - 1];
-          const valFormatted = `${{lastVal >= 0 ? '+' : ''}}${{lastVal.toFixed(2)}}σ`;
-
-          const legendLabel = `[Z-Score] ${{s.label}} · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{valFormatted}}`;
-          plotTraces.push({{
-            name: legendLabel,
-            x: x, y: y, yaxis: 'y',
-            type: 'scatter', mode: 'lines',
-            line: {{ color: s.config.color, width: 2.3 }}
-          }});
-
-          plotTraces.push({{
-            name: `${{s.label}} (${{CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}})`,
-            x: [lastDate], y: [lastVal], yaxis: 'y',
-            type: 'scatter', mode: 'markers',
-            marker: {{ size: 8, color: s.config.color, line: {{ width: 2, color: '#ffffff' }} }},
-            showlegend: false, hoverinfo: 'skip'
-          }});
-
-          annotations.push({{
-            x: lastDate, y: lastVal, xref: 'x', yref: 'y',
-            text: `<b>${{valFormatted}}</b> <span style="font-size:9.5px; opacity:0.85;">[Z]</span>`,
-            showarrow: true, arrowhead: 0, arrowcolor: s.config.color, arrowwidth: 1.2,
-            ax: 34, ay: (sIdx % 2 === 0 ? -12 : 12),
-            xanchor: 'left', yanchor: 'middle',
-            font: {{ family: "-apple-system, sans-serif", size: 11, color: s.config.color }},
-            bgcolor: 'rgba(255, 255, 255, 0.92)', bordercolor: s.config.color, borderwidth: 1.2, borderpad: 3
-          }});
-        }});
-
-        shapes.push(
-          {{ type: 'line', xref: 'paper', x0: 0, x1: 1, yref: 'y', y0: 2, y1: 2, line: {{ color: 'rgba(153, 15, 61, 0.4)', width: 1, dash: 'dot' }} }},
-          {{ type: 'line', xref: 'paper', x0: 0, x1: 1, yref: 'y', y0: -2, y1: -2, line: {{ color: 'rgba(13, 118, 128, 0.4)', width: 1, dash: 'dot' }} }}
-        );
-        annotations.push(
-          {{ xref: 'paper', yref: 'y', x: 0.02, y: 2, text: '+2σ (High / 过热高位)', showarrow: false, font: {{ size: 9.5, color: '#990f3d' }} }},
-          {{ xref: 'paper', yref: 'y', x: 0.02, y: -2, text: '-2σ (Low / 周期低位)', showarrow: false, font: {{ size: 9.5, color: '#0d7680' }} }}
-        );
-      }} else if (CURRENT_TRANSFORM === 'yoy') {{
-        y1Title = CURRENT_LANG === 'zh' ? '同比变动 (YoY % / 差值)' : 'YoY Change (% / Points)';
-        seriesData.forEach((s, sIdx) => {{
-          if (!s.filteredObs.length) return;
-          const dateMap = new Map(s.observations.map(o => [o.date, o.value]));
-          const isRate = s.unit.includes('%') || s.unit.includes('bps') || s.unit.includes('pts');
-          const x = [];
-          const y = [];
-          s.filteredObs.forEach(o => {{
-            const parts = o.date.split('-');
-            const prevYear = parseInt(parts[0], 10) - 1;
-            const targetExact = `${{prevYear}}-${{parts[1]}}-${{parts[2]}}`;
-            let prevVal = dateMap.get(targetExact);
-            if (prevVal === undefined) {{
-              const targetMonth = `${{prevYear}}-${{parts[1]}}`;
-              for (const [d, v] of dateMap.entries()) {{
-                if (d.startsWith(targetMonth)) {{
-                  prevVal = v;
-                  break;
-                }}
-              }}
-            }}
-            if (prevVal !== undefined && !isNaN(prevVal)) {{
-              x.push(o.date);
-              if (isRate) {{
-                y.push(o.value - prevVal);
-              }} else {{
-                y.push(prevVal !== 0 ? ((o.value - prevVal) / Math.abs(prevVal)) * 100 : 0);
-              }}
-            }}
-          }});
-
-          if (x.length > 0) {{
-            const lastVal = y[y.length - 1];
-            const lastDate = x[x.length - 1];
-            const sign = lastVal >= 0 ? '+' : '';
-            const unitSuffix = isRate ? (s.unit || '% pts') : '%';
-            const valFormatted = `${{sign}}${{lastVal.toFixed(2)}} ${{unitSuffix}}`;
-
-            const legendLabel = `[YoY] ${{s.label}} · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{valFormatted}}`;
-            plotTraces.push({{
-              name: legendLabel,
-              x: x, y: y, yaxis: 'y',
-              type: 'scatter', mode: 'lines',
-              line: {{ color: s.config.color, width: 2.3 }}
-            }});
-
-            plotTraces.push({{
-              name: `${{s.label}} (${{CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}})`,
-              x: [lastDate], y: [lastVal], yaxis: 'y',
-              type: 'scatter', mode: 'markers',
-              marker: {{ size: 8, color: s.config.color, line: {{ width: 2, color: '#ffffff' }} }},
-              showlegend: false, hoverinfo: 'skip'
-            }});
-
-            annotations.push({{
-              x: lastDate, y: lastVal, xref: 'x', yref: 'y',
-              text: `<b>${{valFormatted}}</b> <span style="font-size:9.5px; opacity:0.85;">[YoY]</span>`,
-              showarrow: true, arrowhead: 0, arrowcolor: s.config.color, arrowwidth: 1.2,
-              ax: 34, ay: (sIdx % 2 === 0 ? -12 : 12),
-              xanchor: 'left', yanchor: 'middle',
-              font: {{ family: "-apple-system, sans-serif", size: 11, color: s.config.color }},
-              bgcolor: 'rgba(255, 255, 255, 0.92)', bordercolor: s.config.color, borderwidth: 1.2, borderpad: 3
-            }});
-          }}
-        }});
-      }} else if (CURRENT_TRANSFORM === 'pct_change') {{
-        y1Title = CURRENT_LANG === 'zh' ? '区间累计涨跌幅 (%)' : 'Cumulative Change (%)';
-        seriesData.forEach((s, sIdx) => {{
-          if (!s.filteredObs.length) return;
-          const baseVal = s.filteredObs[0].value;
-          if (baseVal === 0) return;
-          const x = s.filteredObs.map(o => o.date);
-          const y = s.filteredObs.map(o => ((o.value - baseVal) / Math.abs(baseVal)) * 100);
-          const lastVal = y[y.length - 1];
-          const lastDate = x[x.length - 1];
-          const sign = lastVal >= 0 ? '+' : '';
-          const valFormatted = `${{sign}}${{lastVal.toFixed(1)}}%`;
-
-          const legendLabel = `[% Δ] ${{s.label}} · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{valFormatted}}`;
-          plotTraces.push({{
-            name: legendLabel,
-            x: x, y: y, yaxis: 'y',
-            type: 'scatter', mode: 'lines',
-            line: {{ color: s.config.color, width: 2.3 }}
-          }});
-
-          plotTraces.push({{
-            name: `${{s.label}} (${{CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}})`,
-            x: [lastDate], y: [lastVal], yaxis: 'y',
-            type: 'scatter', mode: 'markers',
-            marker: {{ size: 8, color: s.config.color, line: {{ width: 2, color: '#ffffff' }} }},
-            showlegend: false, hoverinfo: 'skip'
-          }});
-
-          annotations.push({{
-            x: lastDate, y: lastVal, xref: 'x', yref: 'y',
-            text: `<b>${{valFormatted}}</b> <span style="font-size:9.5px; opacity:0.85;">[%]</span>`,
-            showarrow: true, arrowhead: 0, arrowcolor: s.config.color, arrowwidth: 1.2,
-            ax: 34, ay: (sIdx % 2 === 0 ? -12 : 12),
-            xanchor: 'left', yanchor: 'middle',
-            font: {{ family: "-apple-system, sans-serif", size: 11, color: s.config.color }},
-            bgcolor: 'rgba(255, 255, 255, 0.92)', bordercolor: s.config.color, borderwidth: 1.2, borderpad: 3
-          }});
-        }});
-      }} else {{
-        // Raw Levels
-        seriesData.forEach((s, sIdx) => {{
-          if (!s.filteredObs.length) return;
-          const isRight = (s.config.axis === 'right');
-          if (isRight) {{
-            hasY2 = true;
-            if (!y2Title) y2Title = s.unit;
-          }} else {{
-            if (!y1Title) y1Title = s.unit;
-          }}
-
-          const latestObs = s.filteredObs[s.filteredObs.length - 1];
-          const latestVal = typeof latestObs.value === 'number' ? latestObs.value.toFixed(2) : '';
-          const axisTag = isRight ? (CURRENT_LANG === 'zh' ? '右轴 · Y2' : 'Right · Y2') : (CURRENT_LANG === 'zh' ? '左轴 · Y1' : 'Left · Y1');
-          const axisTagShort = isRight ? (CURRENT_LANG === 'zh' ? '右轴' : 'Right') : (CURRENT_LANG === 'zh' ? '左轴' : 'Left');
-          const unitSuffix = s.unit ? ` ${{s.unit}}` : '';
-          const legendLabel = `[${{axisTag}}] ${{s.label}} · ${{CURRENT_LANG === 'zh' ? '最新' : 'Latest'}}: ${{latestVal}}${{unitSuffix}}`;
-
-          plotTraces.push({{
-            name: legendLabel,
-            x: s.filteredObs.map(o => o.date),
-            y: s.filteredObs.map(o => o.value),
-            yaxis: isRight ? 'y2' : 'y',
-            type: 'scatter',
-            mode: 'lines',
-            line: {{ color: s.config.color, width: 2.3 }}
-          }});
-
-          plotTraces.push({{
-            name: `${{s.label}} (${{CURRENT_LANG === 'zh' ? '最新值' : 'Latest'}})`,
-            x: [latestObs.date],
-            y: [latestObs.value],
-            yaxis: isRight ? 'y2' : 'y',
-            type: 'scatter',
-            mode: 'markers',
-            marker: {{
-              size: 8,
-              color: s.config.color,
-              line: {{ width: 2, color: '#ffffff' }}
-            }},
-            showlegend: false,
-            hoverinfo: 'skip'
-          }});
-
-          annotations.push({{
-            x: latestObs.date,
-            y: latestObs.value,
-            xref: 'x',
-            yref: isRight ? 'y2' : 'y',
-            text: `<b>${{latestVal}}${{unitSuffix}}</b> <span style="font-size:9.5px; opacity:0.85;">[${{axisTagShort}}]</span>`,
-            showarrow: true,
-            arrowhead: 0,
-            arrowcolor: s.config.color,
-            arrowwidth: 1.2,
-            ax: 34,
-            ay: (sIdx % 2 === 0 ? -12 : 12),
-            xanchor: 'left',
-            yanchor: 'middle',
-            font: {{
-              family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif",
-              size: 11,
-              color: s.config.color
-            }},
-            bgcolor: 'rgba(255, 255, 255, 0.92)',
-            bordercolor: s.config.color,
-            borderwidth: 1.2,
-            borderpad: 3
-          }});
-        }});
-        if (!y1Title && y2Title) y1Title = y2Title;
-      }}
-    }}
-
-    // 6. Layout Configuration in FT/Claude Style
+        // 5. Update chart title placeholder
     const effectiveTitle = getEffectiveTitle();
     const titleInput = document.getElementById('chart-title-input');
     if (titleInput && !titleInput.value && !CHART_CUSTOM_TITLE) {{
       titleInput.placeholder = effectiveTitle;
     }}
 
-    const y1Label = CURRENT_LANG === 'zh' ? `← Y1 (左轴)${{y1Title ? ' · ' + y1Title : ''}}` : `← Y1 (Left)${{y1Title ? ' · ' + y1Title : ''}}`;
-    const y2Label = CURRENT_LANG === 'zh' ? `Y2 (右轴) →${{y2Title ? ' · ' + y2Title : ''}}` : `Y2 (Right) →${{y2Title ? ' · ' + y2Title : ''}}`;
-
-    annotations.push({{
-      xref: 'paper',
-      yref: 'paper',
-      x: 1.0,
-      y: -0.21,
-      xanchor: 'right',
-      yanchor: 'top',
-      text: '<i>Source: East Meridian Macro Dashboard · Official Macro Pipeline</i>',
-      showarrow: false,
-      font: {{
-        family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-        size: 9.5,
-        color: '#737c8c'
-      }}
-    }});
-
-    const layout = {{
-      height: 560,
-      margin: {{ l: 64, r: hasY2 ? 84 : 96, t: 56, b: 64 }},
-      paper_bgcolor: '#ffffff',
-      plot_bgcolor: '#ffffff',
-      shapes: shapes,
-      title: {{
-        text: `<b>${{effectiveTitle}}</b>`,
-        font: {{
-          family: '"Newsreader", "Iowan Old Style", "Songti SC", Georgia, serif',
-          size: 16,
-          color: '#12151a'
-        }},
-        x: 0.02,
-        y: 0.98,
-        xanchor: 'left',
-        yanchor: 'top'
-      }},
-      font: {{
-        family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif",
-        size: 11,
-        color: '#12151a'
-      }},
-      xaxis: {{
-        title: layoutXTitle ? {{ text: layoutXTitle, font: {{ size: 11, color: '#4b525f' }} }} : undefined,
-        gridcolor: 'rgba(18, 21, 26, 0.06)',
-        showgrid: false,
-        zeroline: false,
-        autorange: true,
-        automargin: true,
-        tickfont: {{ size: 10, color: '#4b525f' }},
-      }},
-      yaxis: {{
-        title: {{ text: y1Label, font: {{ size: 11, color: '#4b525f' }} }},
-        range: isFixedCorrelationRange ? [-1.08, 1.08] : undefined,
-        gridcolor: 'rgba(18, 21, 26, 0.06)',
-        zeroline: true,
-        zerolinewidth: 1.4,
-        zerolinecolor: 'rgba(18, 21, 26, 0.40)',
-        autorange: !isFixedCorrelationRange,
-        automargin: true,
-        tickfont: {{ size: 10, color: '#4b525f' }},
-      }},
-      legend: {{
-        orientation: 'h',
-        y: -0.22,
-        x: 0,
-        font: {{ size: 11, color: '#12151a' }},
-        bgcolor: 'rgba(255, 255, 255, 0.85)',
-      }},
-      hovermode: CURRENT_CANVAS_VIEW === 'scatter_ols' ? 'closest' : 'x unified',
-      hoverlabel: {{
-        bgcolor: '#ffffff',
-        bordercolor: 'rgba(18, 21, 26, 0.20)',
-        font: {{ family: '-apple-system, sans-serif', size: 11, color: '#12151a' }},
-      }},
-      autosize: true,
-      annotations: annotations
-    }};
-
-    if (hasY2) {{
-      layout.yaxis2 = {{
-        title: {{ text: y2Label, font: {{ size: 11, color: '#4b525f' }} }},
-        overlaying: 'y',
-        side: 'right',
-        showgrid: false,
-        zeroline: false,
-        autorange: true,
-        automargin: true,
-        tickfont: {{ size: 10, color: '#4b525f' }},
-      }};
+    // 6. Route to active chart renderer
+    const canvasContainer = document.getElementById('chart-canvas');
+    if (CURRENT_CANVAS_VIEW === 'scatter_ols') {{
+      renderStudioScatterOLS(canvasContainer, seriesData);
+    }} else if (CURRENT_CANVAS_VIEW === 'lead_lag') {{
+      renderStudioLeadLag(canvasContainer, seriesData);
+    }} else if (CURRENT_CANVAS_VIEW === 'correlation' && seriesData.length > 2) {{
+      renderStudioCorrelationMatrix(canvasContainer, seriesData);
+    }} else {{
+      renderStudioTimeseriesLW(canvasContainer, seriesData);
     }}
-
-    if (plotTraces.length === 0) {{
-      layout.annotations = [{{
-        xref: 'paper', yref: 'paper',
-        x: 0.5, y: 0.5,
-        text: CURRENT_LANG === 'zh' ? '暂无数据或选定序列在所选区间内无有效观测值，请尝试更换时间窗口或指标' : 'No observations found for the selected series within this range.',
-        showarrow: false,
-        font: {{ size: 13, color: '#737c8c' }}
-      }}];
-    }}
-
-    // Use Plotly.newPlot for robust canvas rendering
-    Plotly.newPlot('chart-canvas', plotTraces, layout, {{
-      displayModeBar: "hover",
-      displaylogo: false,
-      responsive: true
-    }});
 
     // 7. Update Summary Table
     renderSummaryTable(seriesData);
@@ -3365,31 +3624,127 @@ function loadFromHash(hash) {{
 function exportPNG() {{
   const effectiveTitle = getEffectiveTitle();
   const safeFilename = effectiveTitle.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fa5]+/gi, '_') + '_' + new Date().toISOString().slice(0, 10);
-  Plotly.downloadImage('chart-canvas', {{
-    format: 'png',
-    width: 1400,
-    height: 750,
-    filename: safeFilename
-  }}).then(() => {{
+
+  if (STUDIO_ACTIVE_VIEW === 'timeseries' && STUDIO_LW_CHART && typeof STUDIO_LW_CHART.takeScreenshot === 'function') {{
+    const shot = STUDIO_LW_CHART.takeScreenshot();
+    const padX = 24, topH = 68, botH = 32;
+    const out = document.createElement('canvas');
+    out.width = shot.width + padX * 2;
+    out.height = shot.height + topH + botH;
+    const ctx = out.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, out.width, out.height);
+    ctx.fillStyle = '#990f3d';
+    ctx.fillRect(0, 0, out.width, 4);
+
+    ctx.fillStyle = '#12151a';
+    ctx.font = 'bold 16px "Newsreader", Georgia, serif';
+    ctx.fillText(effectiveTitle, padX, 32);
+
+    let lx = padX;
+    STUDIO_LW_SERIES.forEach((s, idx) => {{
+      if (STUDIO_VISIBLE[idx] === false) return;
+      const lastPt = s.pts.length ? s.pts[s.pts.length - 1] : null;
+      const valStr = lastPt ? formatVal(lastPt.value) + (s.unit ? ' ' + s.unit : '') : '';
+      const lbl = s.label + (valStr ? ': ' + valStr : '');
+      ctx.fillStyle = s.config.color || '#990f3d';
+      ctx.fillRect(lx, 44, 10, 3);
+      ctx.fillStyle = '#4b525f';
+      ctx.font = '11px -apple-system, sans-serif';
+      ctx.fillText(lbl, lx + 14, 49);
+      lx += ctx.measureText(lbl).width + 24;
+    }});
+
+    ctx.drawImage(shot, padX, topH);
+    ctx.fillStyle = '#737c8c';
+    ctx.font = '10px -apple-system, sans-serif';
+    ctx.fillText('Source: East Meridian Macro Chart Studio · Official Macro Pipeline', padX, out.height - 12);
+
+    const a = document.createElement('a');
+    a.href = out.toDataURL('image/png');
+    a.download = safeFilename + '.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
     showToast(CURRENT_LANG === 'zh' ? '高清 PNG 图表下载已启动！' : 'High-resolution PNG download started!', '📷');
-  }}).catch(err => {{
-    console.error("PNG export error:", err);
-  }});
+  }} else if (STUDIO_CUSTOM_CANVAS) {{
+    const shot = STUDIO_CUSTOM_CANVAS;
+    const padX = 20, topH = 50, botH = 28;
+    const out = document.createElement('canvas');
+    out.width = shot.width;
+    out.height = shot.height + topH + botH;
+    const ctx = out.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, out.width, out.height);
+    ctx.fillStyle = '#990f3d';
+    ctx.fillRect(0, 0, out.width, 4);
+
+    ctx.fillStyle = '#12151a';
+    ctx.font = 'bold 16px "Newsreader", Georgia, serif';
+    ctx.fillText(effectiveTitle, padX, 30);
+
+    ctx.drawImage(shot, 0, topH);
+    ctx.fillStyle = '#737c8c';
+    ctx.font = '10px -apple-system, sans-serif';
+    ctx.fillText('Source: East Meridian Macro Chart Studio · Official Macro Pipeline', padX, out.height - 10);
+
+    const a = document.createElement('a');
+    a.href = out.toDataURL('image/png');
+    a.download = safeFilename + '.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showToast(CURRENT_LANG === 'zh' ? '高清 PNG 图表下载已启动！' : 'High-resolution PNG download started!', '📷');
+  }}
 }}
 
 function exportSVG() {{
   const effectiveTitle = getEffectiveTitle();
   const safeFilename = effectiveTitle.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fa5]+/gi, '_') + '_' + new Date().toISOString().slice(0, 10);
-  Plotly.downloadImage('chart-canvas', {{
-    format: 'svg',
-    width: 1400,
-    height: 750,
-    filename: safeFilename
-  }}).then(() => {{
-    showToast(CURRENT_LANG === 'zh' ? '矢量 SVG 图表下载已启动！' : 'Vector SVG download started!', '📐');
-  }}).catch(err => {{
-    console.error("SVG export error:", err);
-  }});
+  const w = 1200, h = 600;
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${{w}}" height="${{h}}" viewBox="0 0 ${{w}} ${{h}}">` +
+    `<rect width="${{w}}" height="${{h}}" fill="#ffffff"/>` +
+    `<rect width="${{w}}" height="4" fill="#990f3d"/>` +
+    `<text x="24" y="34" font-family="'Newsreader', Georgia, serif" font-size="18" font-weight="bold" fill="#12151a">${{effectiveTitle.replace(/&/g, '&amp;').replace(/</g, '&lt;')}}</text>`;
+
+  if (STUDIO_ACTIVE_VIEW === 'timeseries' && STUDIO_LW_SERIES.length) {{
+    let lx = 24;
+    STUDIO_LW_SERIES.forEach((s, idx) => {{
+      if (STUDIO_VISIBLE[idx] === false) return;
+      svg += `<rect x="${{lx}}" y="46" width="10" height="3" fill="${{s.config.color}}"/>` +
+        `<text x="${{lx + 14}}" y="51" font-family="-apple-system, sans-serif" font-size="11" fill="#4b525f">${{s.label.replace(/&/g, '&amp;').replace(/</g, '&lt;')}}</text>`;
+      lx += 180;
+    }});
+
+    const plotL = 60, plotR = w - 40, plotT = 80, plotB = h - 60;
+    const plotW = plotR - plotL, plotH = plotB - plotT;
+    svg += `<line x1="${{plotL}}" y1="${{plotB}}" x2="${{plotR}}" y2="${{plotB}}" stroke="#e2e8f0" stroke-width="1"/>`;
+
+    STUDIO_LW_SERIES.forEach((s, idx) => {{
+      if (STUDIO_VISIBLE[idx] === false || !s.pts || !s.pts.length) return;
+      const pts = s.pts;
+      const minV = Math.min.apply(null, pts.map(p => p.value));
+      const maxV = Math.max.apply(null, pts.map(p => p.value));
+      const vSpan = maxV - minV || 1;
+      const polyPts = pts.map((p, i) => {{
+        const x = plotL + (i / (pts.length - 1 || 1)) * plotW;
+        const y = plotB - ((p.value - minV) / vSpan) * plotH;
+        return `${{x.toFixed(1)}},${{y.toFixed(1)}}`;
+      }}).join(' ');
+      svg += `<polyline fill="none" stroke="${{s.config.color}}" stroke-width="2.2" points="${{polyPts}}"/>`;
+    }});
+  }}
+  svg += `<text x="24" y="${{h - 16}}" font-family="-apple-system, sans-serif" font-size="10" fill="#737c8c">Source: East Meridian Macro Chart Studio · Official Macro Pipeline</text>` +
+    `</svg>`;
+
+  const blob = new Blob([svg], {{ type: 'image/svg+xml;charset=utf-8;' }});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.setAttribute('download', safeFilename + '.svg');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  showToast(CURRENT_LANG === 'zh' ? '矢量 SVG 图表下载已启动！' : 'Vector SVG download started!', '📐');
 }}
 
 function exportJSON() {{

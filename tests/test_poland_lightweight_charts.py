@@ -143,3 +143,23 @@ def test_all_18_countries_use_lightweight_charts_and_thousands_formatting():
                 for val in ser.get("y") or []:
                     if val is not None:
                         assert abs(float(val)) < 100_000, f"Unscaled large value {val} in {filename}:{cid}"
+
+
+WORKBENCH_PAGES = [
+    ("chart_studio.html", "renderStudioTimeseriesLW"),
+    ("my_dashboard.html", "initMyDashCardChart"),
+    ("policy_tracker.html", "initPolicyCycleLwChart"),
+]
+
+
+def test_workbench_pages_use_lightweight_charts_without_plotly():
+    for rel_path, required_symbol in WORKBENCH_PAGES:
+        for folder in [ROOT, ROOT / "output"]:
+            target = folder / rel_path
+            assert target.exists(), f"Missing file: {target}"
+            html = target.read_text(encoding="utf-8")
+            assert "lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js" in html, f"{target} missing lightweight-charts"
+            assert "plotly-2." not in html, f"{target} still imports Plotly"
+            assert "Plotly.newPlot(" not in html, f"{target} calls Plotly.newPlot"
+            assert required_symbol in html, f"{target} missing {required_symbol}"
+            assert "toLocaleString('en-US'" in html, f"{target} missing en-US formatter"

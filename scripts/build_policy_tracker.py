@@ -735,6 +735,81 @@ def load_macro_workbench_summary() -> dict:
     return {}
 
 
+def load_historical_policy_cycles() -> dict:
+    """Extract monthly historical nominal & real policy rate trajectories for the 18 economies."""
+    frame_map = {
+        "US": ("us_canonical_frame.json", "effective_fed_funds", "real_policy_rate"),
+        "EA": ("euro_area_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "UK": ("uk_canonical_frame.json", "bank_rate", "real_policy_rate"),
+        "JP": ("japan_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "CN": ("china_canonical_frame.json", "lpr_1y_akshare", "real_policy_rate"),
+        "TR": ("turkey_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "ZA": ("south_africa_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "KR": ("south_korea_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "TW": ("taiwan_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "HK": ("hong_kong_canonical_frame.json", "fed_funds_anchor", "real_policy_rate"),
+        "KZ": ("kazakhstan_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "UZ": ("uzbekistan_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "EG": ("egypt_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "NG": ("nigeria_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "HU": ("cee_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "PL": ("cee_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "CZ": ("cee_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        "RO": ("cee_canonical_frame.json", "policy_rate", "real_policy_rate"),
+    }
+    frame_cache: dict = {}
+    out: dict = {}
+
+    def _norm_month(raw_dt: str) -> str:
+        s = str(raw_dt).strip()
+        if len(s) == 4 and s.isdigit():
+            return f"{s}-12-01"
+        if "-Q" in s:
+            yr, q = s.split("-Q")
+            mo = int(q) * 3
+            return f"{yr}-{mo:02d}-01"
+        if len(s) >= 7 and s[4] == "-":
+            return f"{s[:7]}-01"
+        return s[:10]
+
+    for code, (fn, nom_id, real_id) in frame_map.items():
+        fpath = OUTPUT / fn
+        if fn not in frame_cache and fpath.exists():
+            try:
+                frame_cache[fn] = json.loads(fpath.read_text(encoding="utf-8"))
+            except Exception:
+                frame_cache[fn] = {}
+        frame = frame_cache.get(fn, {})
+        series_list = frame.get("series", [])
+
+        def _extract(ind_id: str) -> list:
+            for s in series_list:
+                if fn == "cee_canonical_frame.json" and s.get("country") != code:
+                    continue
+                if (s.get("indicator_id") or s.get("id")) == ind_id:
+                    by_mo: dict = {}
+                    for o in s.get("observations", []):
+                        dt_raw = o[0] if isinstance(o, list) else o.get("date")
+                        val_raw = o[1] if isinstance(o, list) else o.get("value")
+                        if dt_raw is None or val_raw is None:
+                            continue
+                        try:
+                            v = round(float(val_raw), 3)
+                        except (ValueError, TypeError):
+                            continue
+                        mo = _norm_month(str(dt_raw))
+                        if mo >= "2000-01-01":
+                            by_mo[mo] = v
+                    return [{"time": k, "value": by_mo[k]} for k in sorted(by_mo.keys())]
+            return []
+
+        out[code] = {
+            "nominal": _extract(nom_id),
+            "real": _extract(real_id),
+        }
+    return out
+
+
 def build_policy_tracker_html() -> str:
     """Generate the complete standalone Policy Tracker HTML application."""
     wb = load_macro_workbench_summary()
@@ -1116,9 +1191,10 @@ def build_policy_tracker_html() -> str:
 
     all_calendar_rows = "\n".join(calendar_rows_html)
 
-    # JSON payloads for Plotly charts
+    # JSON payloads for Lightweight Charts & FT Studio Canvas charts
     real_rate_json = json.dumps(real_rate_chart_data, ensure_ascii=False)
     taylor_json = json.dumps(taylor_chart_data, ensure_ascii=False)
+    historical_cycles_json = json.dumps(load_historical_policy_cycles(), ensure_ascii=False)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -1127,7 +1203,7 @@ def build_policy_tracker_html() -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Central Bank Policy & Monetary Cycle Tracker · 全球央行与货币政策周期追踪器</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
-  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
   <style>
     :root {{
       --bg: #fffdfa;
@@ -1525,6 +1601,105 @@ def build_policy_tracker_html() -> str:
     .chart-plot-area {{
       min-height: 480px;
       width: 100%;
+      position: relative;
+    }}
+    .lw-toolbar-row {{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      background: #FAF8F5;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+    }}
+    .lw-btn-group {{
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      flex-wrap: wrap;
+    }}
+    .lw-ctrl-btn {{
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }}
+    .lw-ctrl-btn:hover {{
+      background: #EFECE6;
+      color: var(--fg);
+    }}
+    .lw-ctrl-btn.active {{
+      background: #12151a;
+      color: #ffffff;
+    }}
+    .lw-ctrl-btn.tool-active {{
+      background: rgba(13, 118, 128, 0.14);
+      border-color: var(--teal);
+      color: var(--teal);
+    }}
+    .lw-legend-row {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      margin-bottom: 8px;
+      font-size: 11.5px;
+    }}
+    .lw-legend-pill {{
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.15s, border-color 0.15s;
+    }}
+    .lw-legend-pill:hover {{
+      border-color: var(--text-secondary);
+    }}
+    .lw-legend-pill.muted {{
+      opacity: 0.35;
+      text-decoration: line-through;
+    }}
+    .lw-delta-box {{
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 5px 10px;
+      margin-bottom: 8px;
+      background: #F4F9F9;
+      border: 1px solid rgba(13, 118, 128, 0.3);
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }}
+    .lw-delta-box.active {{
+      display: flex;
+    }}
+    .chart-card.lw-fullscreen {{
+      position: fixed !important;
+      inset: 24px !important;
+      z-index: 9999 !important;
+      background: #FFFDFA !important;
+      box-shadow: 0 24px 64px rgba(18, 21, 26, 0.38) !important;
+      overflow-y: auto !important;
+    }}
+    .chart-card.lw-fullscreen .chart-plot-area {{
+      height: calc(100vh - 220px) !important;
+      min-height: 500px !important;
     }}
 
     /* Carry Insight Cards */
@@ -1970,9 +2145,61 @@ def build_policy_tracker_html() -> str:
 
   <!-- TAB 2: Real Rate Studio -->
   <div id="tab-realrate" class="tab-pane">
+    <!-- Interactive Historical Policy & Real Rate Cycle Explorer (Lightweight Charts) -->
+    <div class="chart-card" id="card-policy-cycle-lw" style="margin-bottom: 20px;">
+      <div class="chart-card-header">
+        <div>
+          <div class="chart-title">
+            <span>⏱️</span>
+            <span class="en-only">Global Central Bank Policy & Real Rate Cycle Trajectories (2000–2026)</span>
+            <span class="zh-only">全球核心央行名义与实际政策利率历史周期演进 (2000–2026)</span>
+          </div>
+          <div class="chart-desc en-only">
+            Interactive multi-country monetary cycle comparison. Click legend pills to toggle, double-click to solo, drag to pan, or hold Shift + drag (🔍) to measure cycle rate adjustments (Δ).
+          </div>
+          <div class="chart-desc zh-only">
+            跨国货币周期联动与分化对比。单击图例隐藏/显示，双击图例单独聚焦某国央行，拖拽平移，按住 Shift 或点击 🔍 框选时间段自动计算加降息累计幅度 (Δ)。
+          </div>
+        </div>
+      </div>
+
+      <div class="lw-toolbar-row">
+        <div class="lw-btn-group" id="cycle-cohort-btns">
+          <button type="button" class="lw-ctrl-btn active" onclick="setPolicyCycleCohort('g4', this)">G4 (US·EA·UK·JP)</button>
+          <button type="button" class="lw-ctrl-btn" onclick="setPolicyCycleCohort('em', this)">Major EM (CN·KR·ZA·TW)</button>
+          <button type="button" class="lw-ctrl-btn" onclick="setPolicyCycleCohort('cee', this)">CEE-4 (PL·CZ·HU·RO)</button>
+          <button type="button" class="lw-ctrl-btn" onclick="setPolicyCycleCohort('frontier', this)">High-Carry (TR·KZ·UZ·EG·NG)</button>
+        </div>
+        <div class="lw-btn-group" id="cycle-metric-btns">
+          <button type="button" class="lw-ctrl-btn active" onclick="setPolicyCycleMetric('nominal', this)">
+            <span class="en-only">Nominal Policy Rate (%)</span><span class="zh-only">名义政策利率 (%)</span>
+          </button>
+          <button type="button" class="lw-ctrl-btn" onclick="setPolicyCycleMetric('real', this)">
+            <span class="en-only">Real Policy Rate (i − π)</span><span class="zh-only">实际政策利率 (i − π)</span>
+          </button>
+        </div>
+        <div class="lw-btn-group" id="cycle-range-btns">
+          <button type="button" class="lw-ctrl-btn" data-range="1Y" onclick="setPolicyCycleRange('1Y', this)">1Y</button>
+          <button type="button" class="lw-ctrl-btn" data-range="3Y" onclick="setPolicyCycleRange('3Y', this)">3Y</button>
+          <button type="button" class="lw-ctrl-btn" data-range="5Y" onclick="setPolicyCycleRange('5Y', this)">5Y</button>
+          <button type="button" class="lw-ctrl-btn" data-range="10Y" onclick="setPolicyCycleRange('10Y', this)">10Y</button>
+          <button type="button" class="lw-ctrl-btn active" data-range="ALL" onclick="setPolicyCycleRange('ALL', this)">All</button>
+          <button type="button" class="lw-ctrl-btn" id="cycle-boxzoom-btn" title="Box-zoom time range & calculate delta (or Shift + drag)" onclick="togglePolicyCycleBoxZoom(this)">🔍</button>
+          <button type="button" class="lw-ctrl-btn" title="Reset view" onclick="resetPolicyCycleZoom()">↺</button>
+          <button type="button" class="lw-ctrl-btn" title="Export CSV" onclick="exportPolicyCycleCSV()">CSV</button>
+          <button type="button" class="lw-ctrl-btn" title="Download PNG" onclick="exportPolicyCyclePNG()">PNG</button>
+          <button type="button" class="lw-ctrl-btn" title="Expand fullscreen" onclick="toggleCardFullscreen('card-policy-cycle-lw', () => resizePolicyCycleLw())">⛶</button>
+        </div>
+      </div>
+
+      <div class="lw-legend-row" id="policy-cycle-legend"></div>
+      <div class="lw-delta-box" id="policy-cycle-delta"></div>
+      <div id="policy-cycle-lw-chart" class="chart-plot-area" style="min-height: 360px; height: 360px;"></div>
+    </div>
+
     <div class="studio-grid">
-      <!-- Plotly Horizontal Real Rate Chart -->
-      <div class="chart-card">
+      <!-- Horizontal Real Rate Chart -->
+      <div class="chart-card" id="card-real-rate-bar">
         <div class="chart-card-header">
           <div>
             <div class="chart-title">
@@ -1987,12 +2214,17 @@ def build_policy_tracker_html() -> str:
               名义政策利率减去最新头寸 CPI 通胀率，衡量真实紧缩力度与跨国套息收益护城河。
             </div>
           </div>
+          <div class="lw-btn-group">
+            <button type="button" class="lw-ctrl-btn" onclick="exportRealRateCSV()">CSV</button>
+            <button type="button" class="lw-ctrl-btn" onclick="exportCanvasCardPNG('real-rate-canvas', 'global_real_policy_rate_ranking.png')">PNG</button>
+            <button type="button" class="lw-ctrl-btn" onclick="toggleCardFullscreen('card-real-rate-bar', () => initRealRateChart())">⛶</button>
+          </div>
         </div>
         <div id="real-rate-plot" class="chart-plot-area"></div>
       </div>
 
       <!-- Taylor Stance Deviation Studio -->
-      <div class="chart-card">
+      <div class="chart-card" id="card-taylor-scatter">
         <div class="chart-card-header">
           <div>
             <div class="chart-title">
@@ -2006,6 +2238,11 @@ def build_policy_tracker_html() -> str:
             <div class="chart-desc zh-only">
               各央行实际政策基准与泰勒规则理论中性利率对比（衡量政策是否走在曲线前面或过度紧缩）。
             </div>
+          </div>
+          <div class="lw-btn-group">
+            <button type="button" class="lw-ctrl-btn" onclick="exportTaylorCSV()">CSV</button>
+            <button type="button" class="lw-ctrl-btn" onclick="exportCanvasCardPNG('taylor-scatter-canvas', 'taylor_rule_stance_scatter.png')">PNG</button>
+            <button type="button" class="lw-ctrl-btn" onclick="toggleCardFullscreen('card-taylor-scatter', () => initTaylorChart())">⛶</button>
           </div>
         </div>
         <div id="taylor-scatter-plot" class="chart-plot-area"></div>
@@ -2133,7 +2370,7 @@ def build_policy_tracker_html() -> str:
   <!-- TAB 5: Guidance & Statement Diff -->
   <div id="tab-guidance" class="tab-pane">
     <!-- Sub-section A: FOMC Dot Plot vs SOFR Curve -->
-    <div class="chart-card" style="margin-bottom: 24px;">
+    <div class="chart-card" id="card-fomc-dotplot" style="margin-bottom: 24px;">
       <div class="chart-card-header">
         <div>
           <div class="chart-title">
@@ -2147,6 +2384,11 @@ def build_policy_tracker_html() -> str:
           <div class="chart-desc zh-only">
             美联储 19 位官员利率预测散点、中位数路径与联邦基金期货/SOFR市场隐含远期利率走势对比。
           </div>
+        </div>
+        <div class="lw-btn-group">
+          <button type="button" class="lw-ctrl-btn" onclick="exportDotplotCSV()">CSV</button>
+          <button type="button" class="lw-ctrl-btn" onclick="exportCanvasCardPNG('fomc-dotplot-canvas', 'fomc_dotplot_sofr_curve.png')">PNG</button>
+          <button type="button" class="lw-ctrl-btn" onclick="toggleCardFullscreen('card-fomc-dotplot', () => initDotplot())">⛶</button>
         </div>
       </div>
       <div id="fomc-dotplot-plot" class="chart-plot-area" style="min-height: 440px;"></div>
@@ -2190,6 +2432,15 @@ def build_policy_tracker_html() -> str:
    ============================================================================== */
 let currentLang = 'en';
 
+function formatVal(v, decimals = 2) {{
+  if (v === null || v === undefined || isNaN(v)) return '—';
+  const num = Number(v);
+  return num.toLocaleString('en-US', {{
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals
+  }});
+}}
+
 function toggleLang() {{
   currentLang = currentLang === 'en' ? 'zh' : 'en';
   document.documentElement.lang = currentLang;
@@ -2197,6 +2448,7 @@ function toggleLang() {{
 
   // Re-render language-dependent components
   renderDiffStatement();
+  initPolicyCycleLwChart();
   initRealRateChart();
   initTaylorChart();
   initDotplot();
@@ -2210,9 +2462,9 @@ function switchTab(tabId) {{
   const target = document.getElementById('tab-' + tabId);
   if (target) {{
     target.classList.add('active');
-    // Trigger plotly resize when tab becomes visible
     window.dispatchEvent(new Event('resize'));
     if (tabId === 'realrate') {{
+      initPolicyCycleLwChart();
       initRealRateChart();
       initTaylorChart();
     }} else if (tabId === 'guidance') {{
@@ -2220,6 +2472,15 @@ function switchTab(tabId) {{
       renderDiffStatement();
     }}
   }}
+}}
+
+function toggleCardFullscreen(cardId, onResize) {{
+  const card = document.getElementById(cardId);
+  if (!card) return;
+  card.classList.toggle('lw-fullscreen');
+  setTimeout(() => {{
+    if (typeof onResize === 'function') onResize();
+  }}, 60);
 }}
 
 /* ==============================================================================
@@ -2256,7 +2517,6 @@ function sortTable(colIndex, type) {{
   const rows = Array.from(tbody.querySelectorAll('tr'));
   const th = table.querySelectorAll('th')[colIndex];
 
-  // Toggle direction
   if (sortState.col === colIndex) {{
     sortState.asc = !sortState.asc;
   }} else {{
@@ -2264,7 +2524,6 @@ function sortTable(colIndex, type) {{
     sortState.asc = true;
   }}
 
-  // Clear indicator classes
   table.querySelectorAll('th').forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
   th.classList.add(sortState.asc ? 'sorted-asc' : 'sorted-desc');
 
@@ -2344,126 +2603,654 @@ function filterCorridors(region) {{
 }}
 
 /* ==============================================================================
-   Plotly Real Policy Rate Chart
+   Lightweight Charts: Historical Policy & Real Rate Cycle Explorer
    ============================================================================== */
+const HISTORICAL_CYCLES = {historical_cycles_json};
 const REAL_RATE_DATA = {real_rate_json};
 const TAYLOR_DATA = {taylor_json};
+
+const COHORT_MAP = {{
+  g4: [
+    {{ code: 'US', color: '#0d7680', label_en: '🇺🇸 Fed (US)', label_zh: '🇺🇸 美联储 (US)' }},
+    {{ code: 'EA', color: '#990f3d', label_en: '🇪🇺 ECB (EA)', label_zh: '🇪🇺 欧央行 (EA)' }},
+    {{ code: 'UK', color: '#364b61', label_en: '🇬🇧 BoE (UK)', label_zh: '🇬🇧 英格兰银行 (UK)' }},
+    {{ code: 'JP', color: '#d97706', label_en: '🇯🇵 BoJ (JP)', label_zh: '🇯🇵 日本银行 (JP)' }}
+  ],
+  em: [
+    {{ code: 'CN', color: '#990f3d', label_en: '🇨🇳 PBC (CN)', label_zh: '🇨🇳 中国央行 (CN)' }},
+    {{ code: 'KR', color: '#0d7680', label_en: '🇰🇷 BOK (KR)', label_zh: '🇰🇷 韩国银行 (KR)' }},
+    {{ code: 'ZA', color: '#d97706', label_en: '🇿🇦 SARB (ZA)', label_zh: '🇿🇦 南非央行 (ZA)' }},
+    {{ code: 'TW', color: '#364b61', label_en: '🇹🇼 CBC (TW)', label_zh: '🇹🇼 台湾央行 (TW)' }}
+  ],
+  cee: [
+    {{ code: 'PL', color: '#0d7680', label_en: '🇵🇱 NBP (PL)', label_zh: '🇵🇱 波兰央行 (PL)' }},
+    {{ code: 'CZ', color: '#364b61', label_en: '🇨🇿 CNB (CZ)', label_zh: '🇨🇿 捷克央行 (CZ)' }},
+    {{ code: 'HU', color: '#990f3d', label_en: '🇭🇺 MNB (HU)', label_zh: '🇭🇺 匈牙利央行 (HU)' }},
+    {{ code: 'RO', color: '#d97706', label_en: '🇷🇴 BNR (RO)', label_zh: '🇷🇴 罗马尼亚央行 (RO)' }}
+  ],
+  frontier: [
+    {{ code: 'TR', color: '#990f3d', label_en: '🇹🇷 TCMB (TR)', label_zh: '🇹🇷 土耳其央行 (TR)' }},
+    {{ code: 'KZ', color: '#0d7680', label_en: '🇰🇿 NBK (KZ)', label_zh: '🇰🇿 哈萨克斯坦央行 (KZ)' }},
+    {{ code: 'UZ', color: '#364b61', label_en: '🇺🇿 CBU (UZ)', label_zh: '🇺🇿 乌兹别克斯坦央行 (UZ)' }},
+    {{ code: 'EG', color: '#d97706', label_en: '🇪🇬 CBE (EG)', label_zh: '🇪🇬 埃及央行 (EG)' }},
+    {{ code: 'NG', color: '#6b21a8', label_en: '🇳🇬 CBN (NG)', label_zh: '🇳🇬 尼日利亚央行 (NG)' }}
+  ]
+}};
+
+let cycleCohort = 'g4';
+let cycleMetric = 'nominal';
+let cycleRange = 'ALL';
+let cycleLwChart = null;
+let cycleSeriesEntries = [];
+let cycleBoxZoom = false;
+
+function initPolicyCycleLwChart() {{
+  const plotEl = document.getElementById('policy-cycle-lw-chart');
+  if (!plotEl || typeof LightweightCharts === 'undefined') return;
+
+  if (cycleLwChart) {{
+    try {{ cycleLwChart.remove(); }} catch (e) {{}}
+    cycleLwChart = null;
+  }}
+  plotEl.innerHTML = '';
+
+  const tooltip = document.createElement('div');
+  tooltip.style.cssText = 'position:absolute;top:10px;left:12px;z-index:15;pointer-events:none;background:rgba(255,253,250,0.95);border:1px solid #d9d2c7;border-radius:4px;padding:6px 10px;font-size:11px;display:none;box-shadow:0 2px 8px rgba(0,0,0,0.08);';
+  plotEl.appendChild(tooltip);
+
+  const selectOverlay = document.createElement('div');
+  selectOverlay.style.cssText = 'position:absolute;top:0;bottom:24px;background:rgba(13,118,128,0.15);border-left:1.5px dashed #0d7680;border-right:1.5px dashed #0d7680;pointer-events:none;z-index:14;display:none;';
+  plotEl.appendChild(selectOverlay);
+
+  const chart = LightweightCharts.createChart(plotEl, {{
+    width: plotEl.clientWidth || 900,
+    height: plotEl.clientHeight || 360,
+    layout: {{
+      background: {{ type: 'solid', color: 'transparent' }},
+      textColor: '#737c8c',
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      fontSize: 11,
+      attributionLogo: false
+    }},
+    grid: {{
+      vertLines: {{ visible: false }},
+      horzLines: {{ color: 'rgba(18, 21, 26, 0.06)', style: 0 }}
+    }},
+    rightPriceScale: {{
+      borderVisible: false,
+      scaleMargins: {{ top: 0.10, bottom: 0.10 }}
+    }},
+    timeScale: {{
+      borderColor: 'rgba(18, 21, 26, 0.14)',
+      rightOffset: 2,
+      fixLeftEdge: true,
+      fixRightEdge: true
+    }},
+    localization: {{
+      priceFormatter: (val) => `${{formatVal(val, 2)}}%`
+    }},
+    crosshair: {{
+      mode: 0,
+      vertLine: {{ color: 'rgba(18, 21, 26, 0.25)', width: 1, style: 2, labelBackgroundColor: '#12151a' }},
+      horzLine: {{ color: 'rgba(18, 21, 26, 0.25)', width: 1, style: 2, labelBackgroundColor: '#12151a' }}
+    }},
+    handleScroll: {{
+      mouseWheel: false,
+      pressedMouseMove: !cycleBoxZoom,
+      horzTouchDrag: true,
+      vertTouchDrag: false
+    }},
+    handleScale: {{
+      mouseWheel: false,
+      pinch: true,
+      axisPressedMouseMove: {{ time: true, price: true }},
+      axisDoubleClickReset: {{ time: true, price: true }}
+    }}
+  }});
+
+  cycleLwChart = chart;
+  cycleSeriesEntries = [];
+  const members = COHORT_MAP[cycleCohort] || COHORT_MAP.g4;
+  const legendEl = document.getElementById('policy-cycle-legend');
+  if (legendEl) legendEl.innerHTML = '';
+
+  members.forEach((m, idx) => {{
+    const rawPts = ((HISTORICAL_CYCLES[m.code] || {{}})[cycleMetric] || []).filter(p => p && p.time && !isNaN(p.value));
+    if (!rawPts.length) return;
+    const s = chart.addLineSeries({{
+      color: m.color,
+      lineWidth: 2.2,
+      priceLineVisible: false,
+      lastValueVisible: true
+    }});
+    s.setData(rawPts);
+    if (idx === 0) {{
+      s.createPriceLine({{
+        price: 0,
+        color: '#12151a',
+        lineWidth: 1,
+        lineStyle: 2,
+        axisLabelVisible: false,
+        title: '0%'
+      }});
+    }}
+    const label = currentLang === 'zh' ? m.label_zh : m.label_en;
+    const lastVal = rawPts[rawPts.length - 1].value;
+    const entry = {{ code: m.code, color: m.color, label, series: s, data: rawPts, visible: true }};
+    cycleSeriesEntries.push(entry);
+
+    if (legendEl) {{
+      const pill = document.createElement('span');
+      pill.className = 'lw-legend-pill';
+      pill.dataset.idx = String(cycleSeriesEntries.length - 1);
+      pill.title = 'Click to show/hide · Double-click to solo';
+      pill.innerHTML = `<span style="width:10px;height:3px;background:${{m.color}};display:inline-block;border-radius:1px;"></span>` +
+        `<strong>${{label}}</strong> <span style="font-family:var(--font-mono);color:var(--text-secondary);">${{formatVal(lastVal, 2)}}%</span>`;
+      const sIdx = cycleSeriesEntries.length - 1;
+      pill.addEventListener('click', (e) => {{
+        if (e.altKey || e.metaKey) soloPolicyCycleSeries(sIdx);
+        else togglePolicyCycleSeries(sIdx);
+      }});
+      pill.addEventListener('dblclick', (e) => {{
+        e.preventDefault();
+        soloPolicyCycleSeries(sIdx);
+      }});
+      legendEl.appendChild(pill);
+    }}
+  }});
+
+  chart.timeScale().fitContent();
+
+  chart.subscribeCrosshairMove(param => {{
+    if (!param.time || !param.point || param.point.x < 0 || param.point.y < 0) {{
+      tooltip.style.display = 'none';
+      return;
+    }}
+    const tStr = typeof param.time === 'string'
+      ? param.time
+      : `${{param.time.year}}-${{String(param.time.month).padStart(2, '0')}}-${{String(param.time.day).padStart(2, '0')}}`;
+    const rows = [];
+    cycleSeriesEntries.forEach(en => {{
+      if (!en.visible) return;
+      const sv = param.seriesData.get(en.series);
+      if (sv && sv.value !== undefined) {{
+        rows.push(`<div><span style="color:${{en.color}};font-weight:700;">● ${{en.label}}:</span> <strong>${{formatVal(sv.value, 2)}}%</strong></div>`);
+      }}
+    }});
+    if (!rows.length) {{
+      tooltip.style.display = 'none';
+      return;
+    }}
+    tooltip.innerHTML = `<div style="font-weight:700;margin-bottom:2px;color:#12151a;">${{tStr}}</div>` + rows.join('');
+    tooltip.style.display = 'block';
+  }});
+
+  // Ctrl/Cmd + wheel zoom
+  plotEl.addEventListener('wheel', e => {{
+    if (!(e.ctrlKey || e.metaKey)) return;
+    e.preventDefault();
+    const vr = chart.timeScale().getVisibleLogicalRange();
+    if (!vr) return;
+    const span = vr.to - vr.from;
+    if (span <= 2 && e.deltaY < 0) return;
+    const factor = e.deltaY < 0 ? 0.82 : 1.22;
+    const center = (vr.from + vr.to) / 2;
+    const half = (span * factor) / 2;
+    chart.timeScale().setVisibleLogicalRange({{ from: center - half, to: center + half }});
+  }}, {{ passive: false }});
+
+  // Shift + drag or 🔍 box-zoom
+  let dragStartX = null;
+  plotEl.addEventListener('mousedown', e => {{
+    if (!(cycleBoxZoom || e.shiftKey)) return;
+    const rect = plotEl.getBoundingClientRect();
+    dragStartX = e.clientX - rect.left;
+    chart.applyOptions({{ handleScroll: {{ pressedMouseMove: false }} }});
+    selectOverlay.style.left = `${{dragStartX}}px`;
+    selectOverlay.style.width = '0px';
+    selectOverlay.style.display = 'block';
+  }});
+  window.addEventListener('mousemove', e => {{
+    if (dragStartX === null) return;
+    const rect = plotEl.getBoundingClientRect();
+    const curX = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+    selectOverlay.style.left = `${{Math.min(dragStartX, curX)}}px`;
+    selectOverlay.style.width = `${{Math.abs(curX - dragStartX)}}px`;
+  }});
+  window.addEventListener('mouseup', e => {{
+    if (dragStartX === null) return;
+    const rect = plotEl.getBoundingClientRect();
+    const endX = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+    const x1 = Math.min(dragStartX, endX);
+    const x2 = Math.max(dragStartX, endX);
+    dragStartX = null;
+    selectOverlay.style.display = 'none';
+    if (!cycleBoxZoom) {{
+      chart.applyOptions({{ handleScroll: {{ pressedMouseMove: true }} }});
+    }}
+    if (x2 - x1 < 12) return;
+    const l1 = chart.timeScale().coordinateToLogical(x1);
+    const l2 = chart.timeScale().coordinateToLogical(x2);
+    if (l1 !== null && l2 !== null && l2 > l1) {{
+      chart.timeScale().setVisibleLogicalRange({{ from: l1, to: l2 }});
+      updatePolicyCycleDelta(l1, l2);
+    }}
+  }});
+
+  plotEl.addEventListener('dblclick', () => resetPolicyCycleZoom());
+
+  if (cycleRange !== 'ALL') {{
+    setPolicyCycleRange(cycleRange, document.querySelector(`#cycle-range-btns [data-range="${{cycleRange}}"]`));
+  }}
+}}
+
+function resizePolicyCycleLw() {{
+  const plotEl = document.getElementById('policy-cycle-lw-chart');
+  if (!plotEl || !cycleLwChart) return;
+  cycleLwChart.applyOptions({{
+    width: plotEl.clientWidth || 900,
+    height: plotEl.clientHeight || 360
+  }});
+  cycleLwChart.timeScale().fitContent();
+}}
+
+function setPolicyCycleCohort(cohort, btnEl) {{
+  cycleCohort = cohort;
+  document.querySelectorAll('#cycle-cohort-btns .lw-ctrl-btn').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+  initPolicyCycleLwChart();
+}}
+
+function setPolicyCycleMetric(metric, btnEl) {{
+  cycleMetric = metric;
+  document.querySelectorAll('#cycle-metric-btns .lw-ctrl-btn').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+  initPolicyCycleLwChart();
+}}
+
+function setPolicyCycleRange(rangeKey, btnEl) {{
+  cycleRange = rangeKey;
+  document.querySelectorAll('#cycle-range-btns [data-range]').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+  if (!cycleLwChart || !cycleSeriesEntries.length) return;
+  if (rangeKey === 'ALL') {{
+    cycleLwChart.timeScale().fitContent();
+    const dBox = document.getElementById('policy-cycle-delta');
+    if (dBox) dBox.classList.remove('active');
+    return;
+  }}
+  const yrs = {{ '1Y': 1, '3Y': 3, '5Y': 5, '10Y': 10 }}[rangeKey] || 5;
+  const primary = cycleSeriesEntries.find(e => e.visible && e.data.length) || cycleSeriesEntries[0];
+  if (!primary || !primary.data.length) return;
+  const maxIso = primary.data[primary.data.length - 1].time;
+  const parts = maxIso.split('-').map(Number);
+  const fromIso = `${{parts[0] - yrs}}-${{String(parts[1] || 1).padStart(2, '0')}}-01`;
+  try {{
+    cycleLwChart.timeScale().setVisibleRange({{ from: fromIso, to: maxIso }});
+    const vr = cycleLwChart.timeScale().getVisibleLogicalRange();
+    if (vr) updatePolicyCycleDelta(vr.from, vr.to);
+  }} catch (e) {{
+    cycleLwChart.timeScale().fitContent();
+  }}
+}}
+
+function togglePolicyCycleBoxZoom(btnEl) {{
+  cycleBoxZoom = !cycleBoxZoom;
+  if (btnEl) btnEl.classList.toggle('tool-active', cycleBoxZoom);
+  const plotEl = document.getElementById('policy-cycle-lw-chart');
+  if (plotEl) plotEl.style.cursor = cycleBoxZoom ? 'crosshair' : 'grab';
+  if (cycleLwChart) cycleLwChart.applyOptions({{ handleScroll: {{ pressedMouseMove: !cycleBoxZoom }} }});
+}}
+
+function resetPolicyCycleZoom() {{
+  cycleBoxZoom = false;
+  const btn = document.getElementById('cycle-boxzoom-btn');
+  if (btn) btn.classList.remove('tool-active');
+  const plotEl = document.getElementById('policy-cycle-lw-chart');
+  if (plotEl) plotEl.style.cursor = 'grab';
+  if (cycleLwChart) {{
+    cycleLwChart.applyOptions({{ handleScroll: {{ pressedMouseMove: true }} }});
+    cycleLwChart.timeScale().fitContent();
+  }}
+  const dBox = document.getElementById('policy-cycle-delta');
+  if (dBox) dBox.classList.remove('active');
+  document.querySelectorAll('#cycle-range-btns [data-range]').forEach(b => b.classList.toggle('active', b.getAttribute('data-range') === 'ALL'));
+}}
+
+function togglePolicyCycleSeries(idx) {{
+  const target = cycleSeriesEntries[idx];
+  if (!target) return;
+  target.visible = !target.visible;
+  target.series.applyOptions({{ visible: target.visible }});
+  document.querySelectorAll('#policy-cycle-legend .lw-legend-pill').forEach((p, i) => {{
+    p.classList.toggle('muted', !cycleSeriesEntries[i].visible);
+  }});
+}}
+
+function soloPolicyCycleSeries(idx) {{
+  const onlyThis = cycleSeriesEntries.every((e, i) => i === idx ? e.visible : !e.visible);
+  cycleSeriesEntries.forEach((e, i) => {{
+    e.visible = onlyThis ? true : (i === idx);
+    e.series.applyOptions({{ visible: e.visible }});
+  }});
+  document.querySelectorAll('#policy-cycle-legend .lw-legend-pill').forEach((p, i) => {{
+    p.classList.toggle('muted', !cycleSeriesEntries[i].visible);
+  }});
+}}
+
+function updatePolicyCycleDelta(fromLogical, toLogical) {{
+  const dBox = document.getElementById('policy-cycle-delta');
+  const primary = cycleSeriesEntries.find(e => e.visible && e.data.length);
+  if (!dBox || !primary) return;
+  const i1 = Math.max(0, Math.min(primary.data.length - 1, Math.round(fromLogical)));
+  const i2 = Math.max(0, Math.min(primary.data.length - 1, Math.round(toLogical)));
+  if (i2 <= i1) return;
+  const p1 = primary.data[i1];
+  const p2 = primary.data[i2];
+  const diffBps = Math.round((p2.value - p1.value) * 100);
+  const sign = diffBps > 0 ? '+' : '';
+  const col = diffBps >= 0 ? '#990f3d' : '#0d7680';
+  dBox.innerHTML = `<span><strong>${{primary.label}} Δ (${{p1.time}} → ${{p2.time}})</strong>: ${{formatVal(p1.value, 2)}}% → ${{formatVal(p2.value, 2)}}% ` +
+    `<strong style="color:${{col}}">(${{sign}}${{formatVal(diffBps, 0)}} bps)</strong></span>` +
+    `<button type="button" class="lw-ctrl-btn" onclick="resetPolicyCycleZoom()">✕</button>`;
+  dBox.classList.add('active');
+}}
+
+function exportPolicyCycleCSV() {{
+  if (!cycleSeriesEntries.length) return;
+  const datesSet = new Set();
+  cycleSeriesEntries.forEach(e => e.data.forEach(p => datesSet.add(p.time)));
+  const dates = Array.from(datesSet).sort();
+  const header = ['Date', ...cycleSeriesEntries.map(e => `${{e.code}}_${{cycleMetric}}_pct`)];
+  const maps = cycleSeriesEntries.map(e => new Map(e.data.map(p => [p.time, p.value])));
+  const rows = [header.join(',')];
+  dates.forEach(dt => {{
+    rows.push([dt, ...maps.map(m => m.has(dt) ? m.get(dt) : '')].join(','));
+  }});
+  const blob = new Blob([rows.join('\\n')], {{ type: 'text/csv;charset=utf-8;' }});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `policy_cycle_${{cycleCohort}}_${{cycleMetric}}.csv`;
+  a.click();
+}}
+
+function exportPolicyCyclePNG() {{
+  if (!cycleLwChart) return;
+  try {{
+    const canvas = cycleLwChart.takeScreenshot();
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = `policy_cycle_${{cycleCohort}}_${{cycleMetric}}.png`;
+    a.click();
+  }} catch (e) {{
+    console.error(e);
+  }}
+}}
+
+/* ==============================================================================
+   High-DPI Interactive FT Canvas Charts (Real Rate Ranking, Taylor Rule, Dot Plot)
+   ============================================================================== */
+function setupHiDPICanvas(container, canvasId, heightPx) {{
+  container.innerHTML = '';
+  const dpr = window.devicePixelRatio || 1;
+  const w = Math.max(360, container.clientWidth || 560);
+  const h = Math.max(380, container.clientHeight || heightPx);
+  const canvas = document.createElement('canvas');
+  canvas.id = canvasId;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  canvas.style.display = 'block';
+  container.appendChild(canvas);
+
+  const tip = document.createElement('div');
+  tip.style.cssText = 'position:absolute;pointer-events:none;background:rgba(255,253,250,0.96);border:1px solid #d9d2c7;border-radius:4px;padding:6px 10px;font-size:11px;line-height:1.4;box-shadow:0 2px 8px rgba(0,0,0,0.1);display:none;z-index:20;';
+  container.appendChild(tip);
+
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  return {{ canvas, ctx, w, h, tip }};
+}}
+
+function exportCanvasCardPNG(canvasId, filename) {{
+  const c = document.getElementById(canvasId);
+  if (!c) return;
+  const a = document.createElement('a');
+  a.href = c.toDataURL('image/png');
+  a.download = filename;
+  a.click();
+}}
+
+function exportRealRateCSV() {{
+  const rows = [['Code,Economy,Policy_Rate_Pct,CPI_YoY_Pct,Real_Policy_Rate_Pct']];
+  REAL_RATE_DATA.forEach(d => rows.push(`${{d.code}},"${{d.name_en}}",${{d.policy_rate}},${{d.cpi}},${{d.real_rate}}`));
+  const blob = new Blob([rows.join('\\n')], {{ type: 'text/csv;charset=utf-8;' }});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'global_real_policy_rates.csv';
+  a.click();
+}}
+
+function exportTaylorCSV() {{
+  const rows = [['Code,Economy,Actual_Policy_Rate_Pct,Taylor_Implied_Rate_Pct,Policy_Gap_Pct,Stance']];
+  TAYLOR_DATA.forEach(d => rows.push(`${{d.code}},"${{d.name_en}}",${{d.actual_rate}},${{d.taylor_rate}},${{d.policy_gap}},${{d.stance_label}}`));
+  const blob = new Blob([rows.join('\\n')], {{ type: 'text/csv;charset=utf-8;' }});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'taylor_rule_stance.csv';
+  a.click();
+}}
+
+function exportDotplotCSV() {{
+  const rows = [['Horizon,Rate_Pct,Participant_Count']];
+  DOT_DATA.forEach(d => rows.push(`"${{d.year}}",${{d.rate}},${{d.count}}`));
+  const blob = new Blob([rows.join('\\n')], {{ type: 'text/csv;charset=utf-8;' }});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'fomc_dotplot_projections.csv';
+  a.click();
+}}
 
 function initRealRateChart() {{
   const elem = document.getElementById('real-rate-plot');
   if (!elem) return;
 
-  // Data sorted descending by real rate
-  const sorted = [...REAL_RATE_DATA].reverse();
-  const yLabels = sorted.map(d => `${{d.flag}} ${{currentLang === 'zh' ? d.name_zh : d.name_en}} (${{d.code}})`);
-  const realRates = sorted.map(d => d.real_rate);
-  const policyRates = sorted.map(d => d.policy_rate);
-  const cpis = sorted.map(d => d.cpi);
+  const sorted = [...REAL_RATE_DATA]; // descending from highest real rate to lowest
+  const {{ canvas, ctx, w, h, tip }} = setupHiDPICanvas(elem, 'real-rate-canvas', 480);
 
-  const colors = realRates.map(r => r >= 2.0 ? '#0d7680' : (r >= 0.0 ? '#364b61' : '#990f3d'));
+  const padL = 158, padR = 58, padT = 16, padB = 38;
+  const plotW = w - padL - padR;
+  const plotH = h - padT - padB;
 
-  const traceReal = {{
-    type: 'bar',
-    orientation: 'h',
-    y: yLabels,
-    x: realRates,
-    text: realRates.map(r => `${{r >= 0 ? '+' : ''}}${{r.toFixed(2)}}%`),
-    textposition: 'outside',
-    marker: {{
-      color: colors,
-      line: {{ width: 1, color: 'rgba(0,0,0,0.1)' }}
-    }},
-    hovertemplate: sorted.map((d, i) => `<b>${{d.flag}} ${{currentLang === 'zh' ? d.name_zh : d.name_en}} (${{d.code}})</b><br>` +
-      `${{currentLang === 'zh' ? '实际政策利率' : 'Real Policy Rate'}}: <b>${{d.real_rate >= 0 ? '+' : ''}}${{d.real_rate.toFixed(2)}}%</b><br>` +
-      `${{currentLang === 'zh' ? '名义政策利率' : 'Nominal Policy Rate'}}: ${{d.policy_rate.toFixed(2)}}%<br>` +
-      `${{currentLang === 'zh' ? '最新CPI通胀率' : 'Headline CPI YoY'}}: ${{d.cpi.toFixed(2)}}%<extra></extra>`)
+  const vals = sorted.map(d => d.real_rate);
+  const minX = Math.min(-2.5, Math.floor(Math.min(...vals) - 1));
+  const maxX = Math.max(13.0, Math.ceil(Math.max(...vals) + 1.5));
+  const xToPx = (v) => padL + ((v - minX) / (maxX - minX)) * plotW;
+
+  ctx.fillStyle = '#FFFDFA';
+  ctx.fillRect(0, 0, w, h);
+
+  // Gridlines
+  ctx.strokeStyle = '#e8e4df';
+  ctx.lineWidth = 1;
+  ctx.fillStyle = '#737c8c';
+  ctx.font = '10.5px -apple-system, BlinkMacSystemFont, sans-serif';
+  ctx.textAlign = 'center';
+  for (let gx = Math.ceil(minX / 2) * 2; gx <= maxX; gx += 2) {{
+    const px = xToPx(gx);
+    ctx.beginPath();
+    ctx.moveTo(px, padT);
+    ctx.lineTo(px, padT + plotH);
+    ctx.stroke();
+    ctx.fillText(`${{gx >= 0 ? '+' : ''}}${{gx}}%`, px, padT + plotH + 16);
+  }}
+
+  // Zero reference line
+  const zeroPx = xToPx(0);
+  ctx.strokeStyle = '#12151a';
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  ctx.moveTo(zeroPx, padT);
+  ctx.lineTo(zeroPx, padT + plotH);
+  ctx.stroke();
+
+  const rowH = plotH / sorted.length;
+  const barH = Math.max(10, rowH * 0.66);
+  const hitBoxes = [];
+
+  sorted.forEach((d, i) => {{
+    const yCenter = padT + i * rowH + rowH / 2;
+    const yTop = yCenter - barH / 2;
+    const x0 = xToPx(0);
+    const x1 = xToPx(d.real_rate);
+    const bx = Math.min(x0, x1);
+    const bw = Math.max(2, Math.abs(x1 - x0));
+
+    const color = d.real_rate >= 2.0 ? '#0d7680' : (d.real_rate >= 0.0 ? '#364b61' : '#990f3d');
+    ctx.fillStyle = color;
+    ctx.fillRect(bx, yTop, bw, barH);
+
+    // Y label
+    ctx.fillStyle = '#12151a';
+    ctx.font = '600 11px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.textAlign = 'right';
+    const name = currentLang === 'zh' ? d.name_zh : d.name_en;
+    ctx.fillText(`${{d.flag}} ${{name}} (${{d.code}})`, padL - 8, yCenter + 4);
+
+    // Value label
+    ctx.fillStyle = color;
+    ctx.font = '700 10.5px ui-monospace, SFMono-Regular, monospace';
+    ctx.textAlign = d.real_rate >= 0 ? 'left' : 'right';
+    const valStr = `${{d.real_rate >= 0 ? '+' : ''}}${{formatVal(d.real_rate, 2)}}%`;
+    ctx.fillText(valStr, d.real_rate >= 0 ? (x1 + 5) : (x1 - 5), yCenter + 3.5);
+
+    hitBoxes.push({{ yTop: yCenter - rowH / 2, yBot: yCenter + rowH / 2, d }});
+  }});
+
+  canvas.onmousemove = (e) => {{
+    const rect = canvas.getBoundingClientRect();
+    const my = e.clientY - rect.top;
+    const mx = e.clientX - rect.left;
+    const hit = hitBoxes.find(b => my >= b.yTop && my <= b.yBot);
+    if (!hit) {{
+      tip.style.display = 'none';
+      return;
+    }}
+    const d = hit.d;
+    const name = currentLang === 'zh' ? d.name_zh : d.name_en;
+    tip.innerHTML = `<strong>${{d.flag}} ${{name}} (${{d.code}})</strong><br>` +
+      `${{currentLang === 'zh' ? '实际政策利率' : 'Real Policy Rate'}}: <strong>${{d.real_rate >= 0 ? '+' : ''}}${{formatVal(d.real_rate, 2)}}%</strong><br>` +
+      `${{currentLang === 'zh' ? '名义政策利率' : 'Nominal Policy Rate'}}: ${{formatVal(d.policy_rate, 2)}}%<br>` +
+      `${{currentLang === 'zh' ? '最新CPI通胀' : 'Headline CPI YoY'}}: ${{formatVal(d.cpi, 2)}}%`;
+    tip.style.left = Math.min(w - 190, mx + 14) + 'px';
+    tip.style.top = Math.max(8, my - 28) + 'px';
+    tip.style.display = 'block';
   }};
-
-  const layout = {{
-    margin: {{ l: 160, r: 40, t: 10, b: 40 }},
-    paper_bgcolor: 'rgba(0,0,0,0)',
-    plot_bgcolor: 'rgba(0,0,0,0)',
-    font: {{ family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11 }},
-    xaxis: {{
-      title: currentLang === 'zh' ? '实际政策利率 (%) [名义利率 − CPI通胀]' : 'Real Policy Rate (%) [Nominal Rate − CPI]',
-      zeroline: true,
-      zerolinecolor: '#12151a',
-      zerolinewidth: 2,
-      gridcolor: '#e8e4df'
-    }},
-    yaxis: {{
-      automargin: true,
-      tickfont: {{ size: 11 }}
-    }},
-    hoverlabel: {{ bgcolor: '#ffffff', bordercolor: '#e8e4df', font: {{ size: 11 }} }}
-  }};
-
-  Plotly.newPlot(elem, [traceReal], layout, {{ responsive: true, displayModeBar: false }});
+  canvas.onmouseleave = () => {{ tip.style.display = 'none'; }};
 }}
 
 function initTaylorChart() {{
   const elem = document.getElementById('taylor-scatter-plot');
   if (!elem) return;
 
+  const {{ canvas, ctx, w, h, tip }} = setupHiDPICanvas(elem, 'taylor-scatter-canvas', 480);
+  const padL = 52, padR = 24, padT = 20, padB = 46;
+  const plotW = w - padL - padR;
+  const plotH = h - padT - padB;
+
   const actuals = TAYLOR_DATA.map(d => d.actual_rate);
   const taylors = TAYLOR_DATA.map(d => d.taylor_rate);
-  const labels = TAYLOR_DATA.map(d => d.code);
-  const flags = TAYLOR_DATA.map(d => d.flag);
-
   const minVal = Math.min(0, ...actuals, ...taylors);
-  const maxVal = Math.max(...actuals, ...taylors) + 2;
+  const maxVal = Math.ceil(Math.max(...actuals, ...taylors) + 2);
 
-  const traceLine = {{
-    type: 'scatter',
-    mode: 'lines',
-    x: [0, maxVal],
-    y: [0, maxVal],
-    line: {{ color: '#9da8b6', dash: 'dash', width: 1.5 }},
-    name: currentLang === 'zh' ? '泰勒中性基准线 (45°线)' : 'Taylor Parity (45° Line)',
-    hoverinfo: 'none'
+  const xToPx = (v) => padL + ((v - minVal) / (maxVal - minVal)) * plotW;
+  const yToPx = (v) => padT + plotH - ((v - minVal) / (maxVal - minVal)) * plotH;
+
+  ctx.fillStyle = '#FFFDFA';
+  ctx.fillRect(0, 0, w, h);
+
+  // Grid
+  ctx.strokeStyle = '#e8e4df';
+  ctx.lineWidth = 1;
+  ctx.fillStyle = '#737c8c';
+  ctx.font = '10.5px -apple-system, BlinkMacSystemFont, sans-serif';
+  const step = maxVal > 25 ? 5 : 2;
+  for (let gv = 0; gv <= maxVal; gv += step) {{
+    const px = xToPx(gv);
+    const py = yToPx(gv);
+    ctx.beginPath(); ctx.moveTo(px, padT); ctx.lineTo(px, padT + plotH); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(padL, py); ctx.lineTo(padL + plotW, py); ctx.stroke();
+    ctx.textAlign = 'center';
+    ctx.fillText(`${{gv}}%`, px, padT + plotH + 16);
+    ctx.textAlign = 'right';
+    ctx.fillText(`${{gv}}%`, padL - 6, py + 3.5);
+  }}
+
+  // 45-degree Taylor Parity dashed line
+  ctx.save();
+  ctx.strokeStyle = '#9da8b6';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([5, 4]);
+  ctx.beginPath();
+  ctx.moveTo(xToPx(minVal), yToPx(minVal));
+  ctx.lineTo(xToPx(maxVal), yToPx(maxVal));
+  ctx.stroke();
+  ctx.restore();
+
+  // Axis titles
+  ctx.fillStyle = '#364b61';
+  ctx.font = '600 11px -apple-system, BlinkMacSystemFont, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(currentLang === 'zh' ? '泰勒规则理论中性利率 (%)' : 'Taylor Rule Implied Benchmark (%)', padL + plotW / 2, h - 10);
+
+  const pts = [];
+  TAYLOR_DATA.forEach(d => {{
+    const px = xToPx(d.taylor_rate);
+    const py = yToPx(d.actual_rate);
+    const col = d.policy_gap >= 1.0 ? '#0d7680' : (d.policy_gap <= -1.0 ? '#990f3d' : '#364b61');
+
+    ctx.beginPath();
+    ctx.arc(px, py, 6, 0, Math.PI * 2);
+    ctx.fillStyle = col;
+    ctx.fill();
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = '#ffffff';
+    ctx.stroke();
+
+    ctx.fillStyle = '#12151a';
+    ctx.font = '700 10px ui-monospace, SFMono-Regular, monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.code, px, py - 9);
+
+    pts.push({{ px, py, d }});
+  }});
+
+  canvas.onmousemove = (e) => {{
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    let best = null, bestDist = 18;
+    pts.forEach(p => {{
+      const dist = Math.hypot(mx - p.px, my - p.py);
+      if (dist < bestDist) {{ bestDist = dist; best = p; }}
+    }});
+    if (!best) {{ tip.style.display = 'none'; return; }}
+    const d = best.d;
+    const name = currentLang === 'zh' ? d.name_zh : d.name_en;
+    tip.innerHTML = `<strong>${{d.flag}} ${{name}} (${{d.code}})</strong><br>` +
+      `${{currentLang === 'zh' ? '实际政策利率' : 'Actual Policy Rate'}}: <strong>${{formatVal(d.actual_rate, 2)}}%</strong><br>` +
+      `${{currentLang === 'zh' ? '泰勒中性推算' : 'Taylor Implied'}}: ${{formatVal(d.taylor_rate, 2)}}%<br>` +
+      `${{currentLang === 'zh' ? '政策偏离度' : 'Stance Gap'}}: <strong>${{d.policy_gap >= 0 ? '+' : ''}}${{formatVal(d.policy_gap, 2)}}%</strong>`;
+    tip.style.left = Math.min(w - 190, best.px + 12) + 'px';
+    tip.style.top = Math.max(8, best.py - 32) + 'px';
+    tip.style.display = 'block';
   }};
-
-  const traceDots = {{
-    type: 'scatter',
-    mode: 'markers+text',
-    x: taylors,
-    y: actuals,
-    text: labels,
-    textposition: 'top center',
-    textfont: {{ family: 'monospace', size: 10, weight: 700 }},
-    marker: {{
-      size: 11,
-      color: TAYLOR_DATA.map(d => d.policy_gap >= 1.0 ? '#0d7680' : (d.policy_gap <= -1.0 ? '#990f3d' : '#364b61')),
-      line: {{ color: '#ffffff', width: 1 }}
-    }},
-    hovertemplate: TAYLOR_DATA.map(d => `<b>${{d.flag}} ${{currentLang === 'zh' ? d.name_zh : d.name_en}} (${{d.code}})</b><br>` +
-      `${{currentLang === 'zh' ? '实际基准利率' : 'Actual Policy Rate'}}: ${{d.actual_rate.toFixed(2)}}%<br>` +
-      `${{currentLang === 'zh' ? '泰勒中性推算' : 'Taylor Implied'}}: ${{d.taylor_rate.toFixed(2)}}%<br>` +
-      `${{currentLang === 'zh' ? '政策偏离度' : 'Stance Gap'}}: ${{d.policy_gap >= 0 ? '+' : ''}}${{d.policy_gap.toFixed(2)}}% (${{d.stance_label}})<extra></extra>`)
-  }};
-
-  const layout = {{
-    margin: {{ l: 50, r: 20, t: 10, b: 50 }},
-    paper_bgcolor: 'rgba(0,0,0,0)',
-    plot_bgcolor: 'rgba(0,0,0,0)',
-    font: {{ family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11 }},
-    xaxis: {{
-      title: currentLang === 'zh' ? '泰勒规则理论中性利率 (%)' : 'Taylor Rule Implied Benchmark (%)',
-      gridcolor: '#e8e4df'
-    }},
-    yaxis: {{
-      title: currentLang === 'zh' ? '实际名义政策利率 (%)' : 'Actual Policy Rate (%)',
-      gridcolor: '#e8e4df'
-    }},
-    showlegend: false,
-    hoverlabel: {{ bgcolor: '#ffffff', bordercolor: '#e8e4df' }}
-  }};
-
-  Plotly.newPlot(elem, [traceLine, traceDots], layout, {{ responsive: true, displayModeBar: false }});
+  canvas.onmouseleave = () => {{ tip.style.display = 'none'; }};
 }}
 
 /* ==============================================================================
-   FOMC Dot Plot vs SOFR Curve (Plotly)
+   FOMC Dot Plot vs SOFR Curve (High-DPI Interactive Canvas)
    ============================================================================== */
 const DOT_DATA = [
   {{ year: '2024', rate: 4.375, count: 9 }},
@@ -2499,81 +3286,117 @@ function initDotplot() {{
   const elem = document.getElementById('fomc-dotplot-plot');
   if (!elem) return;
 
-  const YEAR_INDEX = {{ '2024': 0, '2025': 1, '2026': 2, '2027': 3, 'Longer Run': 4 }};
-  const jitterX = [];
-  const jitterY = [];
-  const hoverTexts = [];
+  const {{ canvas, ctx, w, h, tip }} = setupHiDPICanvas(elem, 'fomc-dotplot-canvas', 440);
+  const padL = 56, padR = 36, padT = 24, padB = 54;
+  const plotW = w - padL - padR;
+  const plotH = h - padT - padB;
 
+  const minY = 2.0, maxY = 5.5;
+  const xToPx = (idx) => padL + ((idx + 0.5) / 5) * plotW;
+  const yToPx = (v) => padT + plotH - ((v - minY) / (maxY - minY)) * plotH;
+
+  ctx.fillStyle = '#FFFDFA';
+  ctx.fillRect(0, 0, w, h);
+
+  // Horizontal grid
+  ctx.strokeStyle = '#e8e4df';
+  ctx.lineWidth = 1;
+  ctx.fillStyle = '#737c8c';
+  ctx.font = '11px -apple-system, BlinkMacSystemFont, sans-serif';
+  for (let yv = 2.0; yv <= 5.5; yv += 0.5) {{
+    const py = yToPx(yv);
+    ctx.beginPath(); ctx.moveTo(padL, py); ctx.lineTo(padL + plotW, py); ctx.stroke();
+    ctx.textAlign = 'right';
+    ctx.fillText(`${{formatVal(yv, 2)}}%`, padL - 8, py + 4);
+  }}
+
+  const xLabels = ['2024 Year-End', '2025 Year-End', '2026 Year-End', '2027 Year-End', 'Longer Run (r*)'];
+  ctx.textAlign = 'center';
+  xLabels.forEach((lbl, i) => {{
+    const px = xToPx(i);
+    ctx.beginPath(); ctx.moveTo(px, padT); ctx.lineTo(px, padT + plotH); ctx.stroke();
+    ctx.fillStyle = '#12151a';
+    ctx.font = '600 11px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.fillText(lbl, px, padT + plotH + 20);
+  }});
+
+  const YEAR_INDEX = {{ '2024': 0, '2025': 1, '2026': 2, '2027': 3, 'Longer Run': 4 }};
+  const hitDots = [];
+
+  // Participant Dots
   DOT_DATA.forEach(group => {{
-    const baseX = YEAR_INDEX[group.year];
-    const count = group.count;
-    for (let i = 0; i < count; i++) {{
-      const offset = count === 1 ? 0 : ((i - (count - 1) / 2) * 0.045);
-      jitterX.push(baseX + offset);
-      jitterY.push(group.rate);
-      hoverTexts.push(`<b>${{group.year}}</b>: ${{group.rate.toFixed(3)}}% (${{group.count}} dots)`);
+    const baseIdx = YEAR_INDEX[group.year];
+    const centerPx = xToPx(baseIdx);
+    const py = yToPx(group.rate);
+    for (let i = 0; i < group.count; i++) {{
+      const offsetPx = group.count === 1 ? 0 : (i - (group.count - 1) / 2) * 11;
+      const px = centerPx + offsetPx;
+      ctx.beginPath();
+      ctx.arc(px, py, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(13, 118, 128, 0.85)';
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = '#085259';
+      ctx.stroke();
+      hitDots.push({{ px, py, year: group.year, rate: group.rate, count: group.count, kind: 'FOMC Participant Dot' }});
     }}
   }});
 
-  const traceDots = {{
-    type: 'scatter',
-    mode: 'markers',
-    x: jitterX,
-    y: jitterY,
-    text: hoverTexts,
-    hoverinfo: 'text',
-    name: currentLang === 'zh' ? '官员预测点 (19位委员)' : 'FOMC Participant Dots (19)',
-    marker: {{
-      size: 9,
-      color: '#0d7680',
-      opacity: 0.85,
-      line: {{ color: '#085259', width: 1 }}
-    }}
-  }};
-
-  const mediansX = [0, 1, 2, 3, 4];
+  // FOMC SEP Median Path
   const mediansY = [4.375, 3.375, 2.875, 2.875, 2.875];
-  const traceMedians = {{
-    type: 'scatter',
-    mode: 'lines+markers',
-    x: mediansX,
-    y: mediansY,
-    name: currentLang === 'zh' ? 'FOMC 预测中位数' : 'FOMC SEP Median Path',
-    line: {{ color: '#990f3d', width: 3 }},
-    marker: {{ size: 8, color: '#990f3d' }}
-  }};
+  ctx.strokeStyle = '#990f3d';
+  ctx.lineWidth = 2.6;
+  ctx.beginPath();
+  mediansY.forEach((v, i) => {{
+    const px = xToPx(i), py = yToPx(v);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }});
+  ctx.stroke();
+  mediansY.forEach((v, i) => {{
+    const px = xToPx(i), py = yToPx(v);
+    ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#990f3d'; ctx.fill();
+    hitDots.push({{ px, py, year: xLabels[i], rate: v, count: 19, kind: 'FOMC SEP Median' }});
+  }});
 
-  const marketX = [0, 1, 2, 3, 4];
+  // SOFR Futures Forward Curve
   const marketY = [4.580, 3.820, 3.450, 3.400, 3.380];
-  const traceMarket = {{
-    type: 'scatter',
-    mode: 'lines+markers',
-    x: marketX,
-    y: marketY,
-    name: currentLang === 'zh' ? 'SOFR 期货市场远期定价' : 'SOFR Futures Forward Curve',
-    line: {{ color: '#d97706', width: 2.5, dash: 'dot' }},
-    marker: {{ size: 7, color: '#d97706', symbol: 'diamond' }}
-  }};
+  ctx.save();
+  ctx.strokeStyle = '#d97706';
+  ctx.lineWidth = 2.2;
+  ctx.setLineDash([5, 4]);
+  ctx.beginPath();
+  marketY.forEach((v, i) => {{
+    const px = xToPx(i), py = yToPx(v);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }});
+  ctx.stroke();
+  ctx.restore();
+  marketY.forEach((v, i) => {{
+    const px = xToPx(i), py = yToPx(v);
+    ctx.beginPath(); ctx.arc(px, py, 4.5, 0, Math.PI * 2);
+    ctx.fillStyle = '#d97706'; ctx.fill();
+    hitDots.push({{ px, py, year: xLabels[i], rate: v, count: null, kind: 'SOFR Futures Implied' }});
+  }});
 
-  const layout = {{
-    margin: {{ l: 50, r: 30, t: 20, b: 40 }},
-    paper_bgcolor: 'rgba(0,0,0,0)',
-    plot_bgcolor: 'rgba(0,0,0,0)',
-    font: {{ family: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', size: 11 }},
-    xaxis: {{
-      tickvals: [0, 1, 2, 3, 4],
-      ticktext: ['2024 Year-End', '2025 Year-End', '2026 Year-End', '2027 Year-End', 'Longer Run (r*)'],
-      gridcolor: '#e8e4df'
-    }},
-    yaxis: {{
-      title: currentLang === 'zh' ? '联邦基金利率目标区间 (%)' : 'Federal Funds Rate Target (%)',
-      dtick: 0.5,
-      gridcolor: '#e8e4df'
-    }},
-    legend: {{ orientation: 'h', y: -0.18, x: 0.1 }}
+  canvas.onmousemove = (e) => {{
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    let best = null, bestDist = 14;
+    hitDots.forEach(p => {{
+      const dist = Math.hypot(mx - p.px, my - p.py);
+      if (dist <= bestDist) {{ bestDist = dist; best = p; }}
+    }});
+    if (!best) {{ tip.style.display = 'none'; return; }}
+    tip.innerHTML = `<strong>${{best.kind}} (${{best.year}})</strong><br>` +
+      `Rate: <strong>${{formatVal(best.rate, 3)}}%</strong>` +
+      (best.count ? ` (${{best.count}} participants)` : '');
+    tip.style.left = Math.min(w - 200, best.px + 12) + 'px';
+    tip.style.top = Math.max(8, best.py - 28) + 'px';
+    tip.style.display = 'block';
   }};
-
-  Plotly.newPlot(elem, [traceDots, traceMedians, traceMarket], layout, {{ responsive: true, displayModeBar: false }});
+  canvas.onmouseleave = () => {{ tip.style.display = 'none'; }};
 }}
 
 /* ==============================================================================
@@ -2638,10 +3461,21 @@ function renderDiffStatement() {{
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {{
+  initPolicyCycleLwChart();
   initRealRateChart();
   initTaylorChart();
   initDotplot();
   renderDiffStatement();
+}});
+window.addEventListener('resize', () => {{
+  if (document.getElementById('tab-realrate')?.classList.contains('active')) {{
+    resizePolicyCycleLw();
+    initRealRateChart();
+    initTaylorChart();
+  }}
+  if (document.getElementById('tab-guidance')?.classList.contains('active')) {{
+    initDotplot();
+  }}
 }});
 </script>
 </body>
