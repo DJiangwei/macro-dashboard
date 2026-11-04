@@ -159,9 +159,9 @@ WDI 年度结构数据可以留在 deep-dive，但不应该占头条位置。
 
 | 板块 | 指标 | 来源 |
 |---|---|---|
-| **E1 原油价格与期限结构** | Brent/WTI 日度 ✅（FRED，滞后约 1 周）；Dubai 月度；WTI M1–M4 曲线与 M1–M4 价差（期限结构/backwardation） ✅（EIA hist_xls RCLC1–4，无需 key）；INE SC 对 Brent 溢价（AKShare）；OVX ✅（FRED，目前 61.7） | FRED、EIA、AKShare |
+| **E1 原油价格与期限结构** | Brent/WTI 现货日度 ✅（EIA hist_xls，到 2026-11-03）与近月期货当日 ✅（AKShare 新浪 OIL/CL）；Dubai 月度 ✅；期限结构：**EIA 已在 2024-04 停更 NYMEX 期货 1–4 月合约（RCLC1–4、RNGC1–4）**，WTI/Brent 曲线属于 CME/ICE 授权数据，作为缺口；可用 INE SC 各活跃合约（AKShare）拼出一条免费曲线，标注为代理；INE SC 对 Brent 溢价；OVX ✅（FRED，目前 61.7） | EIA、FRED、AKShare |
 | **E2 成品油与炼化** | 美湾汽油/ULSD/航煤 ✅；3-2-1 裂解与柴油裂解（派生；柴油对运价和食品通胀是关键）；美国炼厂开工率（EIA 周度）；中国成品油调价 ✅（AKShare，2026-10-30） | EIA、FRED、AKShare |
-| **E3 天然气·LNG·电力·煤** | HH 日度 ✅ 与 NG M1–M4 ✅；欧洲气价与亚洲 LNG 月度 ✅（FRED/IMF）；TTF 日度属于 ICE 授权数据，作为缺口标注；美国储气周度 vs 5 年区间（EIA）；欧盟储气（GIE AGSI，免费 key）；挪威管道流量与 LNG 送出（ENTSOG ✅）；德/法/意电力日前价格（energy-charts ✅）；纽卡斯尔煤 ✅、铀 ✅（月度） | EIA、GIE、ENTSOG、Fraunhofer、FRED |
+| **E3 天然气·LNG·电力·煤** | HH 现货日度 ✅ 与近月期货 ✅（AKShare NG）；欧洲气价与亚洲 LNG 月度 ✅（FRED/IMF）；TTF 日度属于 ICE 授权数据，作为缺口标注；美国储气周度 vs 5 年区间（EIA）；欧盟储气（GIE AGSI，免费 key）；挪威管道流量与 LNG 送出（ENTSOG ✅）；德/法/意电力日前价格（energy-charts ✅）；纽卡斯尔煤 ✅、铀 ✅（月度） | EIA、GIE、ENTSOG、Fraunhofer、FRED |
 | **E4 供给** | 美国原油产量周度（EIA）；OPEC+ 分国产量与闲置产能（EIA STEO，需免费 key；或 JODI 月度 ✅）；钻机数（Baker Hughes 在本沙盒 403，作为缺口或用 STEO 替代）；KZ/NG/EG 产量与国家页联动 | EIA、JODI |
 | **E5 需求** | 美国表观消费（周度，4 周均值）；中国原油进口与表观需求（海关 + 加工量）；印度（PPAC，待验证）；全球需求（STEO；IEA 付费，作为缺口） | EIA、AKShare/NBS |
 | **E6 库存** | 美国商业原油（不含 SPR）✅ 与 Cushing、SPR、汽油/馏分油库存天数；OECD 商业库存（STEO）；欧盟储气；中国官方库存不公开，作为缺口 | EIA、GIE |
@@ -286,7 +286,7 @@ WDI 年度结构数据可以留在 deep-dive，但不应该占头条位置。
 |---|---|---|
 | FRED fredgraph CSV（无 key） | ✅ | Brent/WTI/HH 到 2026-10-27；GASREGW 到 2026-11-02；IMF 月度金属/能源到 2026-09；OVX、GVZ、DFII10、T5YIFR 到 2026-11-02/03 |
 | EIA API v2 | ❌ 403 | 需要免费 key |
-| EIA hist_xls（WCESTUS1、RCLC1、RNGC1） | ✅ | 无需 key |
+| EIA hist_xls（RBRTE、RWTC、成品油现货、RNGWHHD、周度库存/产量/需求） | ✅ | 无需 key；**但 RCLC1–4、RNGC1–4 期货序列止于 2024-04-05** |
 | World Bank Pink Sheet 月度 xlsx | ✅ | |
 | CFTC Socrata（COT 分类持仓） | ✅ | 最新 2026-10-27 |
 | DBnomics IMF PCPS | ⚠ | 镜像只到 2025-06 |
