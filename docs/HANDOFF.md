@@ -5,6 +5,45 @@
 
 ---
 
+## 0. 同步与版本（请先读，避免倒回旧版本）
+
+**现状**：本项目的全部修改都在分支 `claude/magical-newton-6nyshr` 上，**没有推到 `main`**（按用户最初"先不要改动 main"的要求）。
+这个分支已经并入了 `main` 截至 `47881f4`（`.env.example` 占位符）的全部提交，所以它是 `main` 的超集。
+分支最新提交以 `git log -1 origin/claude/magical-newton-6nyshr` 为准。
+
+**本地同步（`/Users/jiangwei/Claude/Country_Primer`）**
+
+```bash
+git status                                    # 先确认本地有没有未提交的改动
+git stash push -u -m "local before sync"      # 有就先暂存（或提交到自己的分支）
+git fetch origin
+git switch claude/magical-newton-6nyshr 2>/dev/null || git switch -c claude/magical-newton-6nyshr --track origin/claude/magical-newton-6nyshr
+git pull --ff-only                            # 必须是 fast-forward；失败就停下来检查，不要强推
+git stash pop                                 # 如果第 2 步暂存过
+```
+
+**并入 `main`**：建议在 GitHub 上开 PR，由用户合并。如果在本地合并：
+
+```bash
+git switch main && git pull --ff-only
+git merge --no-ff origin/claude/magical-newton-6nyshr
+```
+
+**防止倒回旧版本的规则**
+
+1. **合并前先暂停 `main` 上的定时刷新**（Actions → Scheduled Macro Data Refresh → Disable workflow），合并完成后再打开。旧版 workflow 跑的是旧代码，会继续向 `main` 提交生成文件，其中包含已经删除的合成数据和手写注入；旧代码在构建时还会改写 `config/framework_v2.yaml`。
+2. 合并冲突时，**代码、`config/`、`docs/`、`tests/` 一律以分支版本为准**。生成文件（`output/`、根目录的 `*.html`、`*_AUDIT.md`、`CORE_COVERAGE_MATRIX.md`、`DATA_SOURCE_CATALOG.md`、`MACRO_WORKBENCH_BRIEFING.md`、`chart_studio_catalog.json`）也以分支版本为准，然后用新代码重新生成：
+   ```bash
+   git checkout origin/claude/magical-newton-6nyshr -- output index.html chart_studio.html my_dashboard.html policy_tracker.html chart_studio_catalog.json CORE_COVERAGE_MATRIX.md DATA_FRESHNESS_AUDIT.md DATA_SOURCE_CATALOG.md MACRO_WORKBENCH_BRIEFING.md config
+   make rebuild-ui && make validate
+   ```
+   **不要**用 `main` 上机器人生成的文件覆盖分支版本。
+3. **自检**（任一项不满足，说明拿到的是旧版本）：
+   - `config/scopes.yaml`、`docs/HANDOFF.md` 和 `scripts/build_scope.py` 存在；
+   - `scripts/build_turkey_dashboard.py` 已经不存在；
+   - `make validate` 通过（测试数 ≥ 178），其中 `tests/test_data_integrity.py` 会拒绝手写序列和占位回退值。
+4. **之后的工作方式**：云端会话只推送到本分支，本地也在本分支（或从它新建的分支）上工作。每次开始前先 `git pull --ff-only`，结束后推送。切换到 Pages 方案 C 以后，数据在 `data` 分支，见 `docs/PAGES_DEPLOYMENT.md`。
+
 ## 1. 用户已确认的决策
 
 | 编号 | 决策 |
@@ -33,7 +72,8 @@
    - 跨经济体面板在 `src/country_primer/transmission.py`（能源冲击对照表）。
 4. **M2 贵金属页**（`config/markets/precious_metals.yaml`，49 张图）：价格、比价、本币金价、实际利率与美元、18 家央行黄金储备（IMF IL）、上海溢价、CFTC 持仓。
 5. **M3 基本金属页**（`config/markets/base_metals.yaml`，47 张图）：LME 三个月期 6 种金属、SHFE/DCE/GFEX 主力（含铁矿石、螺纹、氧化铝、碳酸锂）、上期所进口窗口（含 13% 增值税）、COMEX–LME 铜价差、上期所库存（数据源只有约 3 个月）、IMF 月度（含钴、锂；IMF 锂序列实为人民币/吨）、中国需求（`reference` 算子直接引用中国页序列）、CFTC 铜、铜金比与铜相关货币。
-6. **油价冲击 → CPI 模型**（MODEL）：`src/country_primer/oil_shock_model.py`，输出 `output/models/oil_shock_cpi.json`，显示在能源页宏观传导版块，冲击幅度可在页面上编辑。传导系数由能源 CPI 同比对本币布伦特同比（滞后 0–6 个月，自 2015 年起）的 OLS 回归估计；能源权重取官方数据（Eurostat `prc_hicp_iw` 的 NRG，以及 ONS CJVF），作为输入序列放在能源页的模型输入版块。美国权重无免费来源（BLS 返回 403），记为缺口。CEE 因汇率历史不足，用欧元计价的布伦特作驱动并在页面注明。土耳其新增 BIS 月度 `usd_try_bis`。
+6. **油价冲击 → CPI 模型**（MODEL）：`src/country_primer/oil_shock_model.py`，输出 `output/models/oil_shock_cpi.json`，显示在能源页宏观传导版块，冲击幅度可在页面上编辑。传导系数由能源 CPI 同比对本币布伦特同比（滞后 0–6 个月，自 2015 年起）的 OLS 回归估计；能源权重取官方数据（Eurostat `prc_hicp_iw` 的 NRG，以及 ONS CJVF），作为输入序列放在能源页的模型输入版块。美国权重无免费来源（BLS 返回 403），记为缺口。土耳其新增 BIS 月度 `usd_try_bis`。
+7. **本币汇率历史**：CEE 的 `fx_vs_eur` 原先只取 ECB 最近 90 天的 XML，现在改为 ECB Data API（`EXR/D.<CUR>.EUR.SP00.A`）自 2010 年的完整日度历史（`src/country_primer/fetch.py`，90 天 XML 只作后备）。已用 Alpha Vantage 月末收盘价交叉核对 HUF，差异 ≤0.3%。现在所有经济体的本币油价都有数据，模型也全部改用本币。
 
 ## 3. 架构速查
 
@@ -80,7 +120,6 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
 2. **油价模型的后续**：美国能源权重（BLS relative importance，可尝试其他公开镜像）；英国车用燃料（07.2.2）纳入能源口径；更长的滞后窗口或分段样本；二轮效应模型（另立 MODEL，不与一轮效应混在一起）。
 3. **基本金属页的后续**：矿山供给（Cochilco、INE、MINEM）、中国精炼产量和分品种进出口、COMEX 铜库存、更长的上期所库存历史（可以考虑在 refresh 时累积历史）、上期所近远月价差。
 4. **后续小项**
-   - 土耳其和中东欧的汇率历史太短，本币油价那一列为空（可以加 BIS `bis_fx` 月度序列）。
    - KZ/NG/UZ/EG 的原生政策利率。
    - CEE 叙述文字需要重写（例如 HU 行长写的还是 Matolcsy，应为 Varga）。
    - 欧元区职位空缺和协议工资已过期。

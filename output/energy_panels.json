@@ -25,7 +25,12 @@
      "id": "energy_import_dependency",
      "label": "Energy Import Dependency"
     },
-    "brent_local_yoy": null
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 87.0,
+     "usd_value": 92.0,
+     "fx": "fx_vs_eur / EA:eur_usd"
+    }
    },
    {
     "code": "PL",
@@ -50,7 +55,12 @@
      "id": "energy_import_dependency",
      "label": "Energy Import Dependency"
     },
-    "brent_local_yoy": null
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 105.6,
+     "usd_value": 92.0,
+     "fx": "fx_vs_eur / EA:eur_usd"
+    }
    },
    {
     "code": "CZ",
@@ -75,7 +85,12 @@
      "id": "energy_import_dependency",
      "label": "Energy Import Dependency"
     },
-    "brent_local_yoy": null
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 99.8,
+     "usd_value": 92.0,
+     "fx": "fx_vs_eur / EA:eur_usd"
+    }
    },
    {
     "code": "RO",
@@ -100,7 +115,12 @@
      "id": "energy_import_dependency",
      "label": "Energy Import Dependency"
     },
-    "brent_local_yoy": null
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 109.2,
+     "usd_value": 92.0,
+     "fx": "fx_vs_eur / EA:eur_usd"
+    }
    },
    {
     "code": "CN",
@@ -353,7 +373,7 @@
   "schema_version": "model-oil-shock-cpi-v1",
   "model_id": "oil_shock_cpi",
   "label": "MODEL",
-  "generated": "2026-11-05T10:46:15.077533+00:00",
+  "generated": "2026-11-05T10:56:12.757863+00:00",
   "params": {
    "shock_pct": 10.0,
    "lags_months": 6,
@@ -373,19 +393,19 @@
      "label": "Energy HICP, YoY",
      "last": "2026-09"
     },
-    "driver": "Brent in EUR (local-currency FX history unavailable)",
+    "driver": "Brent in local currency",
     "fit": {
      "coefficients": [
+      -0.0091,
+      0.07,
       -0.0019,
-      0.0625,
-      -0.0021,
-      0.0107,
-      -0.0023,
-      -0.0196,
-      0.1272
+      0.0149,
+      -0.001,
+      -0.021,
+      0.1315
      ],
-     "pass_through": 0.1744,
-     "r2": 0.345,
+     "pass_through": 0.1833,
+     "r2": 0.422,
      "n": 105,
      "sample": "2018-01 to 2026-09"
     },
@@ -395,8 +415,8 @@
      "series": "ENERGY:hicp_energy_weight_hu",
      "source": "Eurostat HICP item weights"
     },
-    "energy_cpi_impact_pp": 1.74,
-    "headline_impact_pp": 0.17
+    "energy_cpi_impact_pp": 1.83,
+    "headline_impact_pp": 0.18
    },
    {
     "code": "PL",
@@ -407,19 +427,19 @@
      "label": "Energy HICP, YoY",
      "last": "2026-09"
     },
-    "driver": "Brent in EUR (local-currency FX history unavailable)",
+    "driver": "Brent in local currency",
     "fit": {
      "coefficients": [
-      0.0203,
-      0.0332,
-      0.0316,
-      0.0219,
-      0.0288,
-      -0.0126,
-      0.1047
+      0.0174,
+      0.0353,
+      0.0291,
+      0.0213,
+      0.03,
+      -0.0161,
+      0.1038
      ],
-     "pass_through": 0.228,
-     "r2": 0.63,
+     "pass_through": 0.221,
+     "r2": 0.652,
      "n": 105,
      "sample": "2018-01 to 2026-09"
     },
@@ -429,8 +449,8 @@
      "series": "ENERGY:hicp_energy_weight_pl",
      "source": "Eurostat HICP item weights"
     },
-    "energy_cpi_impact_pp": 2.28,
-    "headline_impact_pp": 0.28
+    "energy_cpi_impact_pp": 2.21,
+    "headline_impact_pp": 0.27
    },
    {
     "code": "CZ",
@@ -441,19 +461,19 @@
      "label": "Energy HICP, YoY",
      "last": "2026-09"
     },
-    "driver": "Brent in EUR (local-currency FX history unavailable)",
+    "driver": "Brent in local currency",
     "fit": {
      "coefficients": [
-      -0.0195,
-      0.0363,
-      0.0022,
-      0.0304,
-      0.0163,
-      -0.0345,
-      0.1506
+      -0.0162,
+      0.039,
+      0.0027,
+      0.0322,
+      0.0149,
+      -0.0401,
+      0.1576
      ],
-     "pass_through": 0.1818,
-     "r2": 0.318,
+     "pass_through": 0.1901,
+     "r2": 0.294,
      "n": 105,
      "sample": "2018-01 to 2026-09"
     },
@@ -463,8 +483,8 @@
      "series": "ENERGY:hicp_energy_weight_cz",
      "source": "Eurostat HICP item weights"
     },
-    "energy_cpi_impact_pp": 1.82,
-    "headline_impact_pp": 0.23
+    "energy_cpi_impact_pp": 1.9,
+    "headline_impact_pp": 0.25
    },
    {
     "code": "RO",
@@ -475,18 +495,18 @@
      "label": "Energy HICP, YoY",
      "last": "2026-09"
     },
-    "driver": "Brent in EUR (local-currency FX history unavailable)",
+    "driver": "Brent in local currency",
     "fit": {
      "coefficients": [
-      0.0955,
-      0.0423,
-      0.0266,
-      0.0366,
-      0.0141,
-      -0.0052,
-      0.074
+      0.0909,
+      0.0427,
+      0.0259,
+      0.0363,
+      0.0138,
+      -0.0048,
+      0.0757
      ],
-     "pass_through": 0.284,
+     "pass_through": 0.2805,
      "r2": 0.71,
      "n": 105,
      "sample": "2018-01 to 2026-09"
@@ -497,8 +517,8 @@
      "series": "ENERGY:hicp_energy_weight_ro",
      "source": "Eurostat HICP item weights"
     },
-    "energy_cpi_impact_pp": 2.84,
-    "headline_impact_pp": 0.33
+    "energy_cpi_impact_pp": 2.81,
+    "headline_impact_pp": 0.32
    },
    {
     "code": "EA",
