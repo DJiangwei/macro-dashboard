@@ -5,6 +5,7 @@ from collections import Counter, defaultdict
 from datetime import UTC, datetime, timedelta
 import json
 from pathlib import Path
+import os
 import re
 from threading import Lock
 from typing import Any, Callable, TypeVar
@@ -20,10 +21,30 @@ class SourceCircuitOpen(RuntimeError):
     pass
 
 
+# Environment variables that may hold credentials (names only; values are
+# never written anywhere). Any loaded value is redacted wherever it appears.
+SECRET_ENV_NAMES = (
+    "FRED_API_KEY", "EIA_API_KEY", "GIE_AGSI_API_KEY", "ESTAT_APP_ID", "BOK_ECOS_API_KEY",
+    "KOSIS_API_KEY", "TCMB_EVDS_API_KEY", "FINMIND_API_TOKEN", "BLS_API_KEY", "EMBER_API_KEY",
+    "ENTSOE_API_TOKEN", "STOOQ_API_KEY", "OEC_TOKEN",
+)
+
+
+def _secret_values() -> list[str]:
+    values = []
+    for name in SECRET_ENV_NAMES:
+        value = os.environ.get(name, "").strip()
+        if len(value) >= 6:
+            values.append(value)
+    return sorted(values, key=len, reverse=True)
+
+
 def _safe_message(value: object) -> str:
     text = " ".join(str(value or "").split())
+    for secret in _secret_values():
+        text = text.replace(secret, "[redacted]")
     text = re.sub(
-        r"(?i)(api[_-]?key|access[_-]?token|token|key)(=|%3D)[^&\s]+",
+        r"(?i)(api[_-]?key|apikey|access[_-]?token|security[_-]?token|token|app[_-]?id|registration[_-]?key|key)(=|%3D)[^&\s]+",
         r"\1\2[redacted]",
         text,
     )

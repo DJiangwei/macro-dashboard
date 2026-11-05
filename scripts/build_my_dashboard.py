@@ -119,6 +119,7 @@ def build_my_dashboard_html() -> str:
 
     starter_json = json.dumps(STARTER_WATCHLIST, ensure_ascii=False)
     country_map_json = json.dumps(COUNTRY_MAP, ensure_ascii=False)
+    country_nav_json = json.dumps([list(item) for item in COUNTRY_NAV], ensure_ascii=False)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -1008,6 +1009,7 @@ def build_my_dashboard_html() -> str:
 const STORAGE_KEY = 'macro_my_dashboard_watchlist_v1';
 const STARTER_SET = {starter_json};
 const COUNTRY_MAP = {country_map_json};
+const COUNTRY_NAV = {country_nav_json};
 
 let CURRENT_LANG = 'en';
 let CURRENT_VIEW = 'grid'; // 'grid' or 'table'

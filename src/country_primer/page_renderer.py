@@ -599,26 +599,15 @@ def _sections_html(
                     deepdive_block = render_deepdive_panel("EA")
                 except Exception:
                     pass
-            elif cc_upper in ("CN", "CHINA"):
+            elif cc_upper in ("CN", "TR", "ZA", "KR", "TW", "UK", "JP", "HK", "EG", "NG", "KZ", "UZ"):
                 try:
                     import sys
                     from pathlib import Path
                     scripts_dir = str(Path(__file__).resolve().parent.parent.parent / "scripts")
                     if scripts_dir not in sys.path:
                         sys.path.insert(0, scripts_dir)
-                    from render_china_inflation_deepdive import render_china_deepdive_panel
-                    deepdive_block = render_china_deepdive_panel()
-                except Exception:
-                    pass
-            elif cc_upper in ("TR", "ZA", "KR", "TW", "UK", "JP", "HK", "EG", "NG", "KZ", "UZ"):
-                try:
-                    import sys
-                    from pathlib import Path
-                    scripts_dir = str(Path(__file__).resolve().parent.parent.parent / "scripts")
-                    if scripts_dir not in sys.path:
-                        sys.path.insert(0, scripts_dir)
-                    from render_em_inflation_deepdive import render_em_deepdive_panel
-                    deepdive_block = render_em_deepdive_panel(cc_upper)
+                    from real_deepdives import render_inflation_view
+                    deepdive_block = render_inflation_view(cc_upper)
                 except Exception:
                     pass
 
@@ -631,8 +620,8 @@ def _sections_html(
                 scripts_dir = str(Path(__file__).resolve().parent.parent.parent / "scripts")
                 if scripts_dir not in sys.path:
                     sys.path.insert(0, scripts_dir)
-                from render_labour_wage_deepdive import render_labour_deepdive_panel
-                labour_block = render_labour_deepdive_panel(cc_upper)
+                from real_deepdives import render_labour_view
+                labour_block = render_labour_view(cc_upper)
             except Exception:
                 pass
 

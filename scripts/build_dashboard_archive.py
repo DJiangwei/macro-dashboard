@@ -91,8 +91,8 @@ DATA_FIRST_COUNTRIES = [
         "currency": "JPY",
         "institution": "BoJ",
         "summary": "japan_dashboard_summary.json",
-        "headline_label": "Overnight call rate",
-        "headline_key": "policy_rate_latest",
+        "headline_label": "BoJ policy rate",
+        "headline_key": "boj_rate_latest",
         "framework": "GS Japan Macro Framework",
     },
     {
@@ -103,7 +103,7 @@ DATA_FIRST_COUNTRIES = [
         "institution": "SARB",
         "summary": "south_africa_dashboard_summary.json",
         "headline_label": "SARB repo rate",
-        "headline_key": "policy_rate_latest",
+        "headline_key": "repo_rate_latest",
         "framework": "GS CEEMEA Macro Framework",
     },
     {

@@ -1,0 +1,222 @@
+{
+ "scope": "KR",
+ "generated": "2026-11-05",
+ "inflation": {
+  "rows": [
+   {
+    "id": "cpi_inflation",
+    "label_en": "Headline CPI Inflation YoY",
+    "label_zh": "消费者价格指数 (CPI) 同比",
+    "unit": "% y/y",
+    "source": "IMF SDMX / Statistics Korea",
+    "quality": "watch",
+    "latest": {
+     "value": 2.878865539039809,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 3.09145556032632,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 2.102049716528565,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "cpi_inflation",
+      "2026-09-01"
+     ]
+    ],
+    "ann_3m": {
+     "value": 1.47,
+     "date": "2026-09-01",
+     "base_date": "2026-07-01",
+     "from": "cpi_inflation_mom",
+     "method": "compounded_mom"
+    },
+    "ann_6m": {
+     "value": 2.76,
+     "date": "2026-09-01",
+     "base_date": "2026-04-01",
+     "from": "cpi_inflation_mom",
+     "method": "compounded_mom"
+    }
+   },
+   {
+    "id": "food_cpi_inflation",
+    "label_en": "Food & Non-Alcoholic Beverages CPI YoY",
+    "label_zh": "食品与非酒精饮料CPI同比",
+    "unit": "% y/y",
+    "source": "IMF SDMX / Statistics Korea",
+    "quality": "watch",
+    "latest": {
+     "value": 0.9858717590436268,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": -0.5350496277915633,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 3.287363694676074,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "food_cpi_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "core_cpi_index",
+    "label_en": "Core CPI (ex food & energy), YoY — from index",
+    "label_zh": "核心CPI同比（由指数计算）",
+    "unit": "% YoY",
+    "source": "Bank of Korea (BOK) / Statistics Korea",
+    "quality": "verified",
+    "latest": {
+     "value": 2.88,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 3.09,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 2.1,
+     "date": "2025-09-01"
+    },
+    "derivation": "yoy_from_index",
+    "refs": [
+     [
+      "core_cpi_index",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "ppi_inflation_index",
+    "label_en": "PPI, YoY — from index",
+    "label_zh": "PPI同比（由指数计算）",
+    "unit": "% YoY",
+    "source": "Bank of Korea (BOK) / ECOS",
+    "quality": "verified",
+    "latest": {
+     "value": 7.67,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 7.88,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 1.16,
+     "date": "2025-09-01"
+    },
+    "derivation": "yoy_from_index",
+    "refs": [
+     [
+      "ppi_inflation_index",
+      "2026-09-01"
+     ]
+    ]
+   }
+  ]
+ },
+ "labour": {
+  "rows": [
+   {
+    "id": "unemployment_rate",
+    "label_en": "Harmonised Unemployment Rate SA",
+    "label_zh": "调和失业率 (季调)",
+    "unit": "% of labour force",
+    "source": "FRED / OECD",
+    "quality": "watch",
+    "latest": {
+     "value": 2.7,
+     "date": "2026-08-01"
+    },
+    "prior": {
+     "value": 2.8,
+     "date": "2026-07-01"
+    },
+    "year_ago": {
+     "value": 2.8,
+     "date": "2025-08-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "unemployment_rate",
+      "2026-08-01"
+     ]
+    ]
+   },
+   {
+    "id": "participation_rate",
+    "label_en": "Labour Force Participation Rate SA",
+    "label_zh": "劳动力参与率 (季调)",
+    "unit": "% of working-age population",
+    "source": "FRED / OECD",
+    "quality": "watch",
+    "latest": {
+     "value": 64.64041,
+     "date": "2026-08-01"
+    },
+    "prior": {
+     "value": 64.56206,
+     "date": "2026-07-01"
+    },
+    "year_ago": {
+     "value": 64.59329,
+     "date": "2025-08-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "participation_rate",
+      "2026-08-01"
+     ]
+    ]
+   },
+   {
+    "id": "employment_rate",
+    "label_en": "Employment Rate (15-64) SA",
+    "label_zh": "就业率 (15-64岁, 季调)",
+    "unit": "% of population",
+    "source": "FRED / OECD",
+    "quality": "watch",
+    "latest": {
+     "value": 70.18433,
+     "date": "2026-08-01"
+    },
+    "prior": {
+     "value": 69.95177,
+     "date": "2026-07-01"
+    },
+    "year_ago": {
+     "value": 69.75555,
+     "date": "2025-08-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "employment_rate",
+      "2026-08-01"
+     ]
+    ]
+   }
+  ],
+  "sahm": {
+   "value": 0.0,
+   "date": "2026-08-01",
+   "threshold": 0.5,
+   "triggered": false,
+   "from": "unemployment_rate"
+  }
+ }
+}

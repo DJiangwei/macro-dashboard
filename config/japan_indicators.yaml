@@ -755,10 +755,10 @@ indicators:
   start_date: '1995-01-01'
   caveat_en: 10-year JGB yield minus 3-month money market rate in basis points; monitors BoJ curve steepening post-YCC.
   caveat_zh: 日本10年期国债收益率减3个月货币市场利率（基点）；跟踪后YCC时代日银收益率曲线陡峭化。
-- id: policy_rate
+- id: call_rate_monthly
   section: monetary_financial
-  label_en: Overnight Call Rate (BoJ Target)
-  label_zh: 隔夜拆借利率（日银目标）
+  label_en: Uncollateralised Overnight Call Rate (monthly average)
+  label_zh: 无担保隔夜拆借利率（月均）
   unit: '%'
   fetcher: fred
   series: IRSTCI01JPM156N
@@ -769,6 +769,20 @@ indicators:
   caveat_en: The uncollateralised overnight call rate is the BoJ's operating target.
     Monthly averages smooth the exact meeting-date step changes.
   caveat_zh: 无担保隔夜拆借利率是日银的操作目标。月度均值会平滑议息日的阶跃变化。
+- id: policy_rate
+  section: monetary_financial
+  label_en: "BoJ Policy Rate (uncollateralised overnight call rate guidance)"
+  label_zh: "日本央行政策利率（无担保隔夜拆借利率引导目标）"
+  unit: '%'
+  fetcher: bis_policy_rate
+  series: JP
+  source_name: BIS central bank policy rates (WS_CBPOL)
+  source_url: https://data.bis.org/topics/CBPOL
+  source_authority: official_primary
+  frequency: event
+  start_date: '1995-01-01'
+  caveat_en: "BIS WS_CBPOL daily series as reported by the Bank of Japan, collapsed to decision dates. The monthly-average market call rate is shown separately."
+  caveat_zh: "来自BIS WS_CBPOL日度序列（日本央行报送），按决议日压缩为事件序列。月均市场拆借利率另行展示。"
 - id: boj_total_assets
   section: monetary_financial
   label_en: Bank of Japan Total Assets
@@ -953,10 +967,12 @@ indicators:
   label_en: Japan BIS Basel III Credit-to-GDP Gap
   label_zh: 日本 国际清算银行(BIS)信贷/GDP缺口
   unit: '%'
-  fetcher: manual
+  fetcher: bis_credit_gap
+  series: JP
   source_name: Bank for International Settlements (BIS)
-  source_url: https://www.bis.org/statistics/c_gaps.htm
+  source_url: https://data.bis.org/topics/CREDIT_GAPS
   frequency: quarterly
+  max_age_days: 290  # BIS publishes ~5-6 months after quarter end
   caveat_en: BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend.
   caveat_zh: 国际清算银行巴塞尔协议III逆周期资本缓冲指引；信贷/GDP比率对长期趋势的偏离度。
   source_authority: official_primary

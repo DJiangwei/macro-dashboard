@@ -16,6 +16,7 @@ from dashboard_summary_utils import (
     retain_last_known_good_series,
     track_revisions_and_vintages,
 )
+from country_primer.shared_fetchers import SHARED_FETCHERS
 from country_primer.page_renderer import build_country_page
 from country_primer.data_first_pipeline import fetch_all
 
@@ -112,6 +113,7 @@ def build(data_mode: str | None = None) -> Path:
         fetch_spread
     )
     registry = {
+        **SHARED_FETCHERS,
         "fred": lambda spec, cache: fetch_fred(requests.Session(), spec),
         "ons_timeseries": lambda spec, cache: fetch_ons_timeseries(requests.Session(), spec),
         "boe_iadb": lambda spec, cache: fetch_boe_iadb(requests.Session(), spec),

@@ -1,10 +1,10 @@
 {
   "file": "nigeria.html",
-  "generated": "2026-11-03T21:16:36.818035+00:00",
+  "generated": "2026-11-05T00:59:09.433427+00:00",
   "charts": 40,
   "source_groups": 15,
-  "data_gaps": 2,
-  "low_confidence": 11,
+  "data_gaps": 3,
+  "low_confidence": 13,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -344,15 +344,15 @@
     },
     {
       "id": "policy_rate",
-      "label_en": "Central Bank of Nigeria Monetary Policy Rate (MPR)",
-      "label_zh": "尼日利亚央行货币政策基准利率 (MPR)",
-      "latest_date": "2026-10-30",
-      "latest_value": 27.25,
-      "latest_display": "27.2 %",
-      "frequency": "event",
-      "source_name": "Central Bank of Nigeria (CBN)",
-      "series": "policy_rate",
-      "quality_status": "verified"
+      "label_en": "Central Bank Monetary Policy Rate (MPR)",
+      "label_zh": "央行货币政策利率 (CBN MPR)",
+      "latest_date": "2024-08-01",
+      "latest_value": 26.75,
+      "latest_display": "26.8 %",
+      "frequency": "monthly",
+      "source_name": "IMF / DBnomics (IFS)",
+      "series": "IMF/IFS/M.NG.FPOLM_PA",
+      "quality_status": "low_confidence"
     },
     {
       "id": "lending_rate",
@@ -483,10 +483,10 @@
     ],
     "file": "nigeria_canonical_frame.json",
     "series": 40,
-    "observations": 13571,
+    "observations": 13779,
     "series_count": 40,
-    "observation_count": 13571,
-    "snapshot_generated": "2026-11-02T23:43:59.769938+00:00"
+    "observation_count": 13779,
+    "snapshot_generated": "2026-11-05T00:58:54.818232+00:00"
   },
   "data_gaps_detail": [
     {
@@ -502,6 +502,13 @@
       "item_zh": "尼日利亚国家统计局(NBS)月度原油日均产量 (百万桶/日)",
       "status_en": "Official monthly crude oil production is now charted via US EIA Open Data API v2 (international energy statistics).",
       "status_zh": "已通过美国能源信息署(EIA) Open Data API v2接入并绘制月度原油日均产量。"
+    },
+    {
+      "section": "monetary_financial",
+      "item_en": "CBN Monetary Policy Rate (native, event-dated)",
+      "item_zh": "尼日利亚央行货币政策利率（原生、按决议日）",
+      "status_en": "Not yet automated. The IMF IFS mirror shown on this page ends 2024-08; BIS does not cover Nigeria. A previous hand-typed series was removed on 2026-11-05.",
+      "status_zh": "尚未自动化。本页所示IMF IFS镜像序列止于2024-08；BIS未覆盖尼日利亚。此前手工录入的序列已于2026-11-05移除。"
     }
   ],
   "source_health": {
@@ -516,12 +523,12 @@
         "charts": 7
       },
       {
-        "source_name": "IMF DataMapper (WEO)",
+        "source_name": "IMF / DBnomics (IFS)",
         "charts": 5
       },
       {
-        "source_name": "IMF / DBnomics (IFS)",
-        "charts": 4
+        "source_name": "IMF DataMapper (WEO)",
+        "charts": 5
       },
       {
         "source_name": "IMF SDMX / Nigeria NBS",
@@ -529,10 +536,6 @@
       },
       {
         "source_name": "Bruegel (Darvas REER Dataset)",
-        "charts": 2
-      },
-      {
-        "source_name": "Central Bank of Nigeria (CBN)",
         "charts": 2
       },
       {
@@ -544,11 +547,15 @@
         "charts": 2
       },
       {
-        "source_name": "Central Bank of Nigeria (CBN) / Derived",
+        "source_name": "Central Bank of Nigeria (CBN)",
         "charts": 1
       },
       {
         "source_name": "EIA / FRED",
+        "charts": 1
+      },
+      {
+        "source_name": "IMF / DBnomics (IFS) / Derived",
         "charts": 1
       },
       {
@@ -569,8 +576,8 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 11,
-      "verified": 3,
+      "low_confidence": 13,
+      "verified": 1,
       "watch": 26
     },
     "unavailable_count": 0
@@ -582,12 +589,12 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-11-03",
+    "as_of_date": "2026-11-05",
     "counts": {
-      "current": 15,
-      "due": 8,
+      "current": 12,
+      "due": 9,
       "projection": 6,
-      "stale": 11
+      "stale": 13
     },
     "latest_historical_date": "2026-11-02",
     "attention": [
@@ -599,7 +606,7 @@
         "frequency": "annual",
         "freshness_status": "stale",
         "age_basis_date": "2023-12-31",
-        "age_days": 1038,
+        "age_days": 1040,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -621,7 +628,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-08-01",
-        "age_days": 794,
+        "age_days": 796,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -643,7 +650,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-08-01",
-        "age_days": 794,
+        "age_days": 796,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -658,6 +665,50 @@
         "transform": "level"
       },
       {
+        "id": "policy_rate",
+        "concept_id": "policy_rate",
+        "label_en": "Central Bank Monetary Policy Rate (MPR)",
+        "latest_date": "2024-08-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2024-08-01",
+        "age_days": 796,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF / DBnomics (IFS)",
+        "series": "IMF/IFS/M.NG.FPOLM_PA",
+        "transform": "level"
+      },
+      {
+        "id": "real_policy_rate",
+        "concept_id": "real_policy_rate",
+        "label_en": "NG Real Policy Rate (Policy Rate − CPI YoY)",
+        "latest_date": "2024-08-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2024-08-01",
+        "age_days": 796,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF / DBnomics (IFS) / Derived",
+        "series": "policy_rate in force at month end − cpi_inflation",
+        "transform": "level"
+      },
+      {
         "id": "short_term_external_debt_pct_reserves",
         "concept_id": "ng:short_term_external_debt_pct_reserves",
         "label_en": "Short-Term External Debt (% of Reserves)",
@@ -665,7 +716,7 @@
         "frequency": "annual",
         "freshness_status": "due",
         "age_basis_date": "2024-12-31",
-        "age_days": 672,
+        "age_days": 674,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -687,7 +738,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 582,
+        "age_days": 584,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -709,7 +760,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 582,
+        "age_days": 584,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -731,7 +782,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-06-01",
-        "age_days": 491,
+        "age_days": 493,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -753,7 +804,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-06-01",
-        "age_days": 491,
+        "age_days": 493,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -775,7 +826,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -797,7 +848,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -819,7 +870,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -841,7 +892,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -863,7 +914,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -885,7 +936,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -907,7 +958,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -929,7 +980,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -951,7 +1002,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-08-01",
-        "age_days": 64,
+        "age_days": 66,
         "threshold_days": 60,
         "release_calendar_id": "nbs_monthly",
         "expected_release_date": "2026-10-20",
@@ -973,7 +1024,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-08-01",
-        "age_days": 64,
+        "age_days": 66,
         "threshold_days": 60,
         "release_calendar_id": "nbs_monthly",
         "expected_release_date": "2026-10-20",
@@ -995,7 +1046,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-08-01",
-        "age_days": 64,
+        "age_days": 66,
         "threshold_days": 60,
         "release_calendar_id": "nbs_monthly",
         "expected_release_date": "2026-10-20",
@@ -1007,6 +1058,28 @@
         "comparability": "medium",
         "source_name": "IMF SDMX / Nigeria NBS",
         "series": "NGA.CPI._T.POP_PCH_PA_PT.M",
+        "transform": "level"
+      },
+      {
+        "id": "brent_crude_oil",
+        "concept_id": "ng:brent_crude_oil",
+        "label_en": "Crude Oil Prices: Brent - Europe",
+        "latest_date": "2026-10-27",
+        "frequency": "daily",
+        "freshness_status": "due",
+        "age_basis_date": "2026-10-27",
+        "age_days": 9,
+        "threshold_days": 10,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "EIA / FRED",
+        "series": "DCOILBRENTEU",
         "transform": "level"
       }
     ]

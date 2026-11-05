@@ -267,7 +267,7 @@ DATA_FIRST_PAGES = (
             "The Euro Area page is generated from `config/euro_area_indicators.yaml`. Official ECB Data Portal "
             "SDMX 2.1 API and Eurostat Dissemination JSON-stat 2.0 API are the primary data backbones. "
             "Eurostat supplies national accounts, industrial and construction production, retail sales, "
-            "HICP items (prc_hicp_manr), labour market, house price index, extra-EA trade balance, "
+            "HICP items (prc_hicp_minr, ECOICOP 2018), labour market, house price index, extra-EA trade balance, "
             "quarterly BoP current account, and government deficit and debt ratios; ECB SDMX supplies "
             "policy rates (DFR), €STR, negotiated wages, yield curves, sovereign yields, Target2 balances, CISS, "
             "monetary and credit aggregates, and bank supervisory ratios; sovereign spreads are derived directly."
@@ -491,7 +491,16 @@ def _append_data_first_sources(lines: list[str], page: dict) -> None:
 def build_catalog() -> str:
     pipeline = DataPipeline()
     specs = {spec.indicator_id: spec for spec in INDICATOR_MANIFEST_48}
-    frames = {country: pipeline.fetch_country(country) for country in COUNTRIES}
+    # Read the CEE canonical snapshot written by the last refresh; this script
+    # runs inside `make rebuild-ui`, which must not call data sources.
+    snapshot_path = ROOT / "output" / "cee_canonical_frame.json"
+    if snapshot_path.exists():
+        from country_primer.snapshots import load_cee_canonical_snapshot
+
+        snapshot = load_cee_canonical_snapshot(snapshot_path)
+        frames = {country: snapshot.get(country, []) for country in COUNTRIES}
+    else:
+        frames = {country: pipeline.fetch_country(country) for country in COUNTRIES}
     latest_by_country = {country: _latest_rows(frame) for country, frame in frames.items()}
     dropped_total = sum(len(items) for items in DROPPED_PROXY_INDICATORS_BY_COUNTRY.values())
     proxy_total = sum(

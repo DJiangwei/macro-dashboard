@@ -1523,10 +1523,12 @@ indicators:
     label_en: "UK BIS Basel III Credit-to-GDP Gap"
     label_zh: "英国 国际清算银行(BIS)信贷/GDP缺口"
     unit: "%"
-    fetcher: manual
+    fetcher: bis_credit_gap
+    series: GB
     source_name: "Bank for International Settlements (BIS)"
-    source_url: "https://www.bis.org/statistics/c_gaps.htm"
+    source_url: https://data.bis.org/topics/CREDIT_GAPS
     frequency: "quarterly"
+    max_age_days: 290  # BIS publishes ~5-6 months after quarter end
     caveat_en: "BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend."
     caveat_zh: "国际清算银行巴塞尔协议III逆周期资本缓冲指引；信贷/GDP比率对长期趋势的偏离度。"
 

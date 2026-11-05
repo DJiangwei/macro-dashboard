@@ -34,6 +34,7 @@ from dashboard_summary_utils import (
     track_revisions_and_vintages,
     write_canonical_data_first_frame,
 )
+from country_primer.shared_fetchers import SHARED_FETCHERS
 from country_primer.page_renderer import build_country_page, _latest
 from country_primer.data_first_pipeline import fetch_all
 from country_primer.adapters import (
@@ -122,6 +123,7 @@ def build(data_mode: str | None = None) -> Path:
     config = _load_config()
 
     registry = {
+        **SHARED_FETCHERS,
         "tw_dgbas": lambda spec, cache: _apply_transform(apply_scale(fetch_tw_dgbas(spec))),
         "tw_cbc": lambda spec, cache: _apply_transform(apply_scale(fetch_tw_cbc(spec))),
         "tw_mof_customs": lambda spec, cache: _apply_transform(apply_scale(fetch_tw_mof_customs(spec))),

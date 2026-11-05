@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-04T16:33:09.831647+00:00",
+  "generated": "2026-11-05T00:59:13.404678+00:00",
   "items": [
     {
       "code": "CN",
@@ -34,6 +34,15 @@
       "section": "prices",
       "item": "NBS monthly CPI, core CPI, PPI, agriculture prices, and trade price indices",
       "status": "Headline CPI/PPI, CPI MoM, urban/rural CPI, enterprise-goods prices, and high-frequency agricultural, vegetable-basket, commodity, and energy indexes are charted through AKShare; core CPI, services CPI, detailed food categories, retail-price index, and trade-price indices remain open.",
+      "priority": "high",
+      "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
+    },
+    {
+      "code": "CN",
+      "country": "China",
+      "section": "prices",
+      "item": "NBS core CPI (ex food & energy), YoY",
+      "status": "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source.",
       "priority": "high",
       "source_hint": "Prefer native official APIs or AKShare-wrapped structured endpoints; avoid manual proxy fills."
     },
@@ -337,6 +346,15 @@
     {
       "code": "EA",
       "country": "Euro Area",
+      "section": "monetary_financial",
+      "item": "Euro Stoxx 50 total return, YoY",
+      "status": "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "EA",
+      "country": "Euro Area",
       "section": "prices_costs",
       "item": "5y5y forward inflation-linked swap rate (5y5y ILS)",
       "status": "Market-based inflation expectation gauge referenced by the ECB Governing Council; traded OTC and vendor-controlled (Bloomberg/LSEG), not disseminated via ECB SDMX.",
@@ -353,11 +371,29 @@
       "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },
     {
+      "code": "EG",
+      "country": "Egypt",
+      "section": "external_fx",
+      "item": "CBE official USD/EGP daily rate and policy rate (monthly FX now via BIS)",
+      "status": "CBE pages block automated access from the current build environment. Monthly end-of-period FX now comes from the BIS; the daily rate and the policy rate (IMF IFS mirror ends 2025-05) are to be wired from the CI runner.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
       "code": "HK",
       "country": "Hong Kong",
       "section": "monetary_financial",
-      "item": "Daily HKMA Base Rate, Overnight/1M HIBOR & Aggregate Balance",
+      "item": "Overnight/1M HIBOR & Aggregate Balance (HKMA Base Rate now via BIS WS_CBPOL)",
       "status": "Published by HKMA Open API (api.hkma.gov.hk). The API endpoint is currently protected by an Aliyun WAF returning HTTP 405 on cloud IPs; monitored via web portal.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "HK",
+      "country": "Hong Kong",
+      "section": "monetary_financial",
+      "item": "Hong Kong 10Y Exchange Fund Notes yield",
+      "status": "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source.",
       "priority": "watch",
       "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },
@@ -398,11 +434,29 @@
       "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },
     {
+      "code": "KZ",
+      "country": "Kazakhstan",
+      "section": "monetary_financial",
+      "item": "NBK base rate (native, event-dated)",
+      "status": "Not yet automated. The IMF IFS mirror shown on this page ends 2020-12; BIS does not cover Kazakhstan. A previous hand-typed series was removed on 2026-11-05.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
       "code": "NG",
       "country": "Nigeria",
       "section": "external_fx",
       "item": "Daily NAFEM Official Exchange Rate & Autonomous FX Window Turnover",
       "status": "Published daily by FMDQ and Central Bank of Nigeria (cbn.gov.ng); machine-readable mirror under development.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "NG",
+      "country": "Nigeria",
+      "section": "monetary_financial",
+      "item": "CBN Monetary Policy Rate (native, event-dated)",
+      "status": "Not yet automated. The IMF IFS mirror shown on this page ends 2024-08; BIS does not cover Nigeria. A previous hand-typed series was removed on 2026-11-05.",
       "priority": "watch",
       "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },
@@ -423,6 +477,15 @@
       "status": "Restore only with reusable public or licensed non-proxy sources.",
       "priority": "watch",
       "source_hint": "Review PROXY_REVIEW.md and DATA_SOURCE_CATALOG.md before restoring."
+    },
+    {
+      "code": "TR",
+      "country": "Turkey",
+      "section": "monetary_financial",
+      "item": "Turkey 10Y benchmark government bond yield",
+      "status": "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },
     {
       "code": "UK",
@@ -457,6 +520,24 @@
       "section": "gs_market_indexes",
       "item": "GSFCI, GSAI, GSSI, GSRI",
       "status": "Proprietary Goldman Sachs indicators; chart public components only.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "US",
+      "country": "United States",
+      "section": "monetary_financial",
+      "item": "S&P 500 return, YoY",
+      "status": "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "UZ",
+      "country": "Uzbekistan",
+      "section": "external_fx",
+      "item": "CBU official USD/UZS daily rate and policy rate (monthly FX now via BIS)",
+      "status": "CBU JSON endpoints are unreachable from the current build environment. Monthly end-of-period FX now comes from the BIS; the daily rate and the policy rate (IMF IFS mirror ends 2024-12) are to be wired from the CI runner.",
       "priority": "watch",
       "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },

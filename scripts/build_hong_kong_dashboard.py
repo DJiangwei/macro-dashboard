@@ -33,6 +33,7 @@ from dashboard_summary_utils import (
     track_revisions_and_vintages,
     write_canonical_data_first_frame,
 )
+from country_primer.shared_fetchers import SHARED_FETCHERS
 from country_primer.page_renderer import build_country_page, _latest
 from country_primer.data_first_pipeline import fetch_all
 from country_primer.adapters import (
@@ -111,6 +112,7 @@ def build(data_mode: str | None = None) -> Path:
     config = _load_config()
 
     registry = {
+        **SHARED_FETCHERS,
         "hk_csd": lambda spec, cache: _apply_transform(apply_scale(fetch_hk_csd(spec))),
         "fred": lambda spec, cache: _apply_transform(apply_scale(fetch_fred_us(requests.Session(), spec))),
         "imf_sdmx": lambda spec, cache: _apply_transform(apply_scale(fetch_imf_sdmx(requests.Session(), spec))),

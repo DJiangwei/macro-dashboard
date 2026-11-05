@@ -1,0 +1,119 @@
+{
+ "scope": "TW",
+ "generated": "2026-11-05",
+ "inflation": {
+  "rows": [
+   {
+    "id": "cpi_inflation",
+    "label_en": "Headline CPI Inflation YoY",
+    "label_zh": "消费者物价指数 (CPI) 同比",
+    "unit": "% y/y",
+    "source": "Taiwan DGBAS",
+    "quality": "verified",
+    "latest": {
+     "value": 2.7317428519395337,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 2.0532388480058117,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 1.2539184952978122,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "cpi_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "core_cpi_inflation",
+    "label_en": "Core CPI Inflation YoY (Excl. Fruit, Veg & Energy)",
+    "label_zh": "核心CPI同比 (剔除蔬果及能源)",
+    "unit": "% y/y",
+    "source": "Taiwan DGBAS",
+    "quality": "verified",
+    "latest": {
+     "value": 2.5160697887970596,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 2.3108665749655977,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 1.4533258803800964,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "core_cpi_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "rent_inflation",
+    "label_en": "Residential Rent Index YoY",
+    "label_zh": "住宅租金指数同比",
+    "unit": "% y/y",
+    "source": "Taiwan DGBAS",
+    "quality": "verified",
+    "latest": {
+     "value": 1.7201939793210608,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 1.694604744893291,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 2.1592821088053826,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "rent_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "ppi_inflation",
+    "label_en": "Producer Price Index (PPI) YoY",
+    "label_zh": "生产者物价指数 (PPI) 同比",
+    "unit": "% y/y",
+    "source": "Taiwan DGBAS",
+    "quality": "verified",
+    "latest": {
+     "value": 18.123488934350007,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 17.39454325356178,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": -3.741496598639449,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "ppi_inflation",
+      "2026-09-01"
+     ]
+    ]
+   }
+  ]
+ },
+ "labour": {
+  "rows": []
+ }
+}

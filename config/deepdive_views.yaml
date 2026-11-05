@@ -1,0 +1,222 @@
+# Deepdive views: tables and charts assembled ONLY from series already in each
+# scope's canonical frame. A row, chart or KPI whose inputs are missing is not
+# rendered — there are no defaults, offsets, coefficients or hand-typed values.
+#
+# Row keys:
+#   id            canonical indicator_id
+#   momentum      optional: {index: <id>} or {mom: <id>} to compute 3M/6M
+#                 annualised rates from a published index or MoM series
+#                 (computed on the published, possibly non-seasonally-adjusted data)
+# Panel keys (labour):
+#   beveridge     {u: <unemployment id>, v: <vacancy id>}   real (U, V) pairs only
+#   sahm          <monthly unemployment id>                Sahm-rule real-time indicator
+#   real_wage     {wage: <wage YoY id>, cpi: <CPI YoY id>} derived wage − CPI on matching months
+
+version: 1
+
+frames:
+  US: us_canonical_frame.json
+  UK: uk_canonical_frame.json
+  EA: euro_area_canonical_frame.json
+  JP: japan_canonical_frame.json
+  CN: china_canonical_frame.json
+  ZA: south_africa_canonical_frame.json
+  TR: turkey_canonical_frame.json
+  HK: hong_kong_canonical_frame.json
+  KR: south_korea_canonical_frame.json
+  TW: taiwan_canonical_frame.json
+  KZ: kazakhstan_canonical_frame.json
+  UZ: uzbekistan_canonical_frame.json
+  EG: egypt_canonical_frame.json
+  NG: nigeria_canonical_frame.json
+  HU: cee_canonical_frame.json
+  PL: cee_canonical_frame.json
+  CZ: cee_canonical_frame.json
+  RO: cee_canonical_frame.json
+
+# Scopes whose earlier inflation deepdive was synthetic. US, EA and CEE-4 keep
+# their existing deepdives, which are built from real component series.
+inflation:
+  UK:
+    rows:
+      - {id: cpi_yoy}
+      - {id: cpih_yoy}
+      - {id: core_cpi_yoy}
+      - {id: cpi_services_yoy}
+      - {id: cpi_goods_yoy}
+      - {id: food_non_alcoholic_cpi_yoy}
+      - {id: household_energy_cpi_yoy}
+      - {id: owner_occupiers_housing_costs_cpih_yoy}
+      - {id: producer_prices}
+  JP:
+    rows:
+      - {id: cpi_inflation, momentum: {index: cpi_index}}
+      - {id: core_inflation}
+      - {id: core_core_inflation}
+      - {id: services_inflation}
+      - {id: goods_inflation}
+      - {id: producer_price_inflation}
+  CN:
+    rows:
+      - {id: cpi_yoy_akshare, momentum: {mom: cpi_mom_akshare}}
+      - {id: urban_cpi_yoy_akshare}
+      - {id: rural_cpi_yoy_akshare}
+      - {id: ppi_yoy_akshare}
+      - {id: enterprise_goods_price_yoy_akshare}
+      - {id: enterprise_energy_goods_price_yoy_akshare}
+      - {id: enterprise_mineral_goods_price_yoy_akshare}
+      - {id: enterprise_agri_goods_price_yoy_akshare}
+  ZA:
+    rows:
+      - {id: cpi_inflation, momentum: {index: cpi_index}}
+      - {id: cpi_inflation_imf}
+      - {id: ppi_inflation}
+  TR:
+    rows:
+      - {id: cpi_inflation, momentum: {mom: cpi_inflation_mom}}
+      - {id: core_hicp_inflation}
+      - {id: services_hicp_inflation}
+      - {id: food_hicp_inflation}
+      - {id: energy_hicp_inflation}
+      - {id: ppi_inflation}
+  HK:
+    rows:
+      - {id: cpi_inflation}
+      - {id: core_cpi_inflation}
+      - {id: cpi_inflation_imf}
+  KR:
+    rows:
+      - {id: cpi_inflation, momentum: {mom: cpi_inflation_mom}}
+      - {id: food_cpi_inflation}
+      - {id: core_cpi_index, transform: yoy_from_index, label_en: "Core CPI (ex food & energy), YoY — from index", label_zh: "核心CPI同比（由指数计算）"}
+      - {id: ppi_inflation_index, transform: yoy_from_index, label_en: "PPI, YoY — from index", label_zh: "PPI同比（由指数计算）"}
+  TW:
+    rows:
+      - {id: cpi_inflation}
+      - {id: core_cpi_inflation}
+      - {id: rent_inflation}
+      - {id: ppi_inflation}
+  KZ:
+    rows:
+      - {id: cpi_inflation, momentum: {index: cpi_index}}
+  UZ:
+    rows:
+      - {id: cpi_inflation, momentum: {index: cpi_index}}
+  EG:
+    rows:
+      - {id: cpi_inflation, momentum: {index: cpi_index}}
+      - {id: food_cpi_inflation}
+  NG:
+    rows:
+      - {id: cpi_inflation, momentum: {index: cpi_index}}
+
+labour:
+  US:
+    rows:
+      - {id: unemployment_rate}
+      - {id: u6_underemployment}
+      - {id: labor_force_participation}
+      - {id: prime_age_employment_population}
+      - {id: nonfarm_payrolls_change}
+      - {id: initial_jobless_claims_4w_ma}
+      - {id: hourly_earnings_growth}
+      - {id: eci_wages_growth}
+      - {id: productivity_growth}
+      - {id: unit_labor_cost_growth}
+    sahm: unemployment_rate
+    real_wage: {wage: hourly_earnings_growth, cpi: cpi_inflation}
+  UK:
+    rows:
+      - {id: unemployment_rate}
+      - {id: economic_inactivity_rate_16_64}
+      - {id: employment_rate_15_64}
+      - {id: vacancies_total}
+      - {id: paye_payrolled_employees_mom_change}
+      - {id: awe_regular_pay_growth}
+      - {id: awe_total_pay_growth}
+      - {id: paye_median_pay_growth}
+    beveridge: {u: unemployment_rate, v: vacancies_total}
+    sahm: unemployment_rate
+    real_wage: {wage: awe_regular_pay_growth, cpi: cpi_yoy}
+  EA:
+    rows:
+      - {id: unemployment_rate}
+      - {id: youth_unemployment_rate}
+      - {id: labour_force_participation_rate}
+      - {id: employment_growth}
+      - {id: job_vacancy_rate}
+      - {id: labour_cost_index_yoy}
+      - {id: negotiated_wages_yoy}
+    beveridge: {u: unemployment_rate, v: job_vacancy_rate}
+    sahm: unemployment_rate
+  JP:
+    rows:
+      - {id: unemployment_rate}
+      - {id: participation_rate}
+      - {id: employment_rate}
+      - {id: employment_growth}
+      - {id: job_to_applicant_ratio}
+      - {id: manufacturing_earnings_growth}
+    beveridge: {u: unemployment_rate, v: job_to_applicant_ratio}
+    sahm: unemployment_rate
+  CN:
+    rows:
+      - {id: unemployment}
+  ZA:
+    rows:
+      - {id: unemployment_rate}
+      - {id: unemployment_rate_15_64}
+      - {id: youth_unemployment_rate}
+      - {id: long_term_unemployment}
+      - {id: manufacturing_employment_growth}
+  TR:
+    rows:
+      - {id: unemployment_rate}
+      - {id: youth_unemployment_rate}
+      - {id: labour_participation_rate}
+    sahm: unemployment_rate
+  HK:
+    rows:
+      - {id: unemployment_rate}
+      - {id: underemployment_rate}
+      - {id: participation_rate}
+      - {id: nominal_wage_index_growth}
+    sahm: unemployment_rate
+  KR:
+    rows:
+      - {id: unemployment_rate}
+      - {id: participation_rate}
+      - {id: employment_rate}
+    sahm: unemployment_rate
+  TW:
+    rows: []
+  KZ:
+    rows:
+      - {id: unemployment_rate}
+      - {id: labour_participation_rate}
+  UZ:
+    rows:
+      - {id: unemployment_rate}
+      - {id: labour_participation_rate}
+  EG:
+    rows:
+      - {id: unemployment_rate}
+      - {id: labour_participation_rate}
+  NG:
+    rows:
+      - {id: unemployment_rate}
+      - {id: labour_participation_rate}
+  HU: &cee_labour
+    rows:
+      - {id: unemployment_rate}
+      - {id: participation_rate}
+      - {id: employment_growth}
+      - {id: vacancy_rate}
+      - {id: avg_wage_yoy}
+      - {id: real_wage_yoy}
+      - {id: unit_labour_cost}
+      - {id: minimum_wage}
+    beveridge: {u: unemployment_rate, v: vacancy_rate}
+  PL: *cee_labour
+  CZ: *cee_labour
+  RO: *cee_labour

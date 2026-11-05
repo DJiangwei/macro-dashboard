@@ -1,4 +1,5 @@
 from __future__ import annotations
+import os
 from typing import Any
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from country_primer.source_health import guarded_source_call, failure_series
@@ -13,8 +14,29 @@ def validate_series(series: dict[str, Any]) -> dict[str, Any]:
             series["quality_status"] = "high_confidence"
     return series
 
+PARTIAL_REFRESH_ENV = "COUNTRY_PRIMER_ONLY_INDICATORS"
+
+
+def partial_refresh_ids() -> set[str]:
+    """Indicator ids for a targeted refresh; empty means a full refresh."""
+    raw = os.environ.get(PARTIAL_REFRESH_ENV, "")
+    return {item.strip() for item in raw.split(",") if item.strip()}
+
+
 def fetch_all(config: dict[str, Any], registry: dict[str, Any], max_workers: int = 4, sequential: bool = False) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    only_ids = partial_refresh_ids()
     specs = list(config.get("indicators", []))
+    if only_ids:
+        # Targeted refresh: untouched indicators are restored verbatim from the
+        # prior canonical snapshot by retain_last_known_good_series.
+        skipped = [
+            {**spec, "observations": [], "quality_status": "partial_skip", "partial_refresh_skipped": True}
+            for spec in specs
+            if str(spec.get("id")) not in only_ids
+        ]
+        specs = [spec for spec in specs if str(spec.get("id")) in only_ids]
+    else:
+        skipped = []
     series_list: list[dict[str, Any] | None] = [None] * len(specs)
     
     # State cache for fetchers that need it
@@ -78,4 +100,4 @@ def fetch_all(config: dict[str, Any], registry: dict[str, Any], max_workers: int
             except Exception as exc:
                 cards.append({**card, "value": "n/a", "updated": "n/a", "error": str(exc)})
     
-    return [item for item in series_list if item is not None], cards
+    return [item for item in series_list if item is not None] + skipped, cards

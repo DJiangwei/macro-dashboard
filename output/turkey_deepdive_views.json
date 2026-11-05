@@ -1,0 +1,273 @@
+{
+ "scope": "TR",
+ "generated": "2026-11-05",
+ "inflation": {
+  "rows": [
+   {
+    "id": "cpi_inflation",
+    "label_en": "Headline CPI Inflation YoY",
+    "label_zh": "总体CPI通胀率同比",
+    "unit": "% y/y",
+    "source": "IMF SDMX / TurkStat",
+    "quality": "watch",
+    "latest": {
+     "value": 29.73151824541501,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 31.50729316513412,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 33.2940012280992,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "cpi_inflation",
+      "2026-09-01"
+     ]
+    ],
+    "ann_3m": {
+     "value": 24.21,
+     "date": "2026-09-01",
+     "base_date": "2026-07-01",
+     "from": "cpi_inflation_mom",
+     "method": "compounded_mom"
+    },
+    "ann_6m": {
+     "value": 27.63,
+     "date": "2026-09-01",
+     "base_date": "2026-04-01",
+     "from": "cpi_inflation_mom",
+     "method": "compounded_mom"
+    }
+   },
+   {
+    "id": "core_hicp_inflation",
+    "label_en": "Core HICP Inflation (ex-Energy & Food) YoY",
+    "label_zh": "核心HICP通胀率 (剔除能源与食品)",
+    "unit": "% y/y",
+    "source": "Eurostat / TurkStat",
+    "quality": "verified",
+    "latest": {
+     "value": 28.7,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 30.1,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 33.3,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "core_hicp_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "services_hicp_inflation",
+    "label_en": "Services HICP Inflation YoY",
+    "label_zh": "服务业HICP通胀率同比",
+    "unit": "% y/y",
+    "source": "Eurostat / TurkStat",
+    "quality": "verified",
+    "latest": {
+     "value": 37.6,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 40.3,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 44.7,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "services_hicp_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "food_hicp_inflation",
+    "label_en": "Food HICP Inflation YoY",
+    "label_zh": "食品HICP通胀率同比",
+    "unit": "% y/y",
+    "source": "Eurostat / TurkStat",
+    "quality": "verified",
+    "latest": {
+     "value": 28.0,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 33.3,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 34.4,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "food_hicp_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "energy_hicp_inflation",
+    "label_en": "Energy HICP Inflation YoY",
+    "label_zh": "能源HICP通胀率同比",
+    "unit": "% y/y",
+    "source": "Eurostat / TurkStat",
+    "quality": "verified",
+    "latest": {
+     "value": 47.6,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 40.2,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 29.9,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "energy_hicp_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "ppi_inflation",
+    "label_en": "Domestic Producer Price Index (PPI) YoY",
+    "label_zh": "工业生产者出厂价格 (PPI) 同比",
+    "unit": "% y/y",
+    "source": "Eurostat / TurkStat",
+    "quality": "verified",
+    "latest": {
+     "value": 27.4,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 27.9,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 26.6,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "ppi_inflation",
+      "2026-09-01"
+     ]
+    ]
+   }
+  ]
+ },
+ "labour": {
+  "rows": [
+   {
+    "id": "unemployment_rate",
+    "label_en": "Harmonised Unemployment Rate SA",
+    "label_zh": "季调失业率",
+    "unit": "% of labour force",
+    "source": "Eurostat / TurkStat",
+    "quality": "verified",
+    "latest": {
+     "value": 8.4,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 7.8,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 8.5,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "unemployment_rate",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "youth_unemployment_rate",
+    "label_en": "Youth Unemployment Rate (<25) SA",
+    "label_zh": "青年失业率 (25岁以下)",
+    "unit": "% of labour force",
+    "source": "Eurostat / TurkStat",
+    "quality": "verified",
+    "latest": {
+     "value": 14.8,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 13.2,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 14.6,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "youth_unemployment_rate",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "labour_participation_rate",
+    "label_en": "Labour Force Participation Rate (Total 15+)",
+    "label_zh": "劳动力参与率 (15岁及以上)",
+    "unit": "% of total population 15+",
+    "source": "World Bank / ILO",
+    "quality": "watch",
+    "latest": {
+     "value": 54.379,
+     "date": "2025"
+    },
+    "prior": {
+     "value": 54.2,
+     "date": "2024"
+    },
+    "year_ago": null,
+    "derivation": "observed",
+    "refs": [
+     [
+      "labour_participation_rate",
+      "2025"
+     ]
+    ]
+   }
+  ],
+  "sahm": {
+   "value": 0.23,
+   "date": "2026-09-01",
+   "threshold": 0.5,
+   "triggered": false,
+   "from": "unemployment_rate"
+  }
+ }
+}

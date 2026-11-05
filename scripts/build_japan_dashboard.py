@@ -37,6 +37,7 @@ from dashboard_summary_utils import (
     track_revisions_and_vintages,
     write_canonical_data_first_frame,
 )
+from country_primer.shared_fetchers import SHARED_FETCHERS
 from country_primer.page_renderer import build_country_page
 from country_primer.data_first_pipeline import fetch_all
 from country_primer.adapters import _apply_us_transform as _apply_transform, fetch_fred_us
@@ -136,6 +137,7 @@ def build(data_mode: str | None = None) -> Path:
     config = _load_config()
 
     registry = {
+        **SHARED_FETCHERS,
         "fred": lambda spec, cache: _apply_transform(apply_scale(fetch_fred_us(requests.Session(), spec))),
         "boj_flatfile": lambda spec, cache: _apply_transform(apply_scale(fetch_boj_flatfile(requests.Session(), spec))),
         "estat": lambda spec, cache: _apply_transform(apply_scale(fetch_estat(requests.Session(), spec))),
@@ -155,7 +157,7 @@ def build(data_mode: str | None = None) -> Path:
         series_list = track_revisions_and_vintages(series_list, CANONICAL_JSON, config)
 
     charted = [item for item in series_list if item.get("observations")]
-    boj_rate = next((item for item in charted if item["id"] == "boj_policy_balance_rate"), None)
+    boj_rate = next((item for item in charted if item["id"] == "policy_rate"), None)
 
     from country_primer.page_renderer import _latest, build_country_page
     boj_latest = _latest(boj_rate) if boj_rate else None

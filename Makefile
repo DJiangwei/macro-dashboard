@@ -11,6 +11,7 @@ doctor:
 build-v4: refresh-data
 
 refresh-data:
+	$(UV) run python scripts/refresh_bis_policy_snapshot.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python build_v4.py ALL
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_china_dashboard.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_euro_area_dashboard.py
@@ -29,20 +30,14 @@ refresh-data:
 	$(UV) run python scripts/enrich_macro_data_quality.py
 	$(UV) run python scripts/enrich_cee_inflation_deepdive.py
 	$(UV) run python scripts/enrich_us_inflation_deepdive.py
-	$(UV) run python scripts/enrich_china_inflation_deepdive.py
-	$(UV) run python scripts/enrich_em_inflation_deepdive.py
-	$(UV) run python scripts/enrich_global_inflation_deepdive.py
-	$(UV) run python scripts/enrich_labour_wage_deepdive.py
+	$(UV) run python scripts/real_deepdives.py
 	$(MAKE) rebuild-ui
 
 rebuild-ui:
 	$(UV) run python scripts/enrich_macro_data_quality.py
 	$(UV) run python scripts/enrich_cee_inflation_deepdive.py
 	$(UV) run python scripts/enrich_us_inflation_deepdive.py
-	$(UV) run python scripts/enrich_china_inflation_deepdive.py
-	$(UV) run python scripts/enrich_em_inflation_deepdive.py
-	$(UV) run python scripts/enrich_global_inflation_deepdive.py
-	$(UV) run python scripts/enrich_labour_wage_deepdive.py
+	$(UV) run python scripts/real_deepdives.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python build_v4.py ALL
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_china_dashboard.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_euro_area_dashboard.py
@@ -98,10 +93,7 @@ enrich-data:
 	$(UV) run python scripts/enrich_macro_data_quality.py
 	$(UV) run python scripts/enrich_cee_inflation_deepdive.py
 	$(UV) run python scripts/enrich_us_inflation_deepdive.py
-	$(UV) run python scripts/enrich_china_inflation_deepdive.py
-	$(UV) run python scripts/enrich_em_inflation_deepdive.py
-	$(UV) run python scripts/enrich_global_inflation_deepdive.py
-	$(UV) run python scripts/enrich_labour_wage_deepdive.py
+	$(UV) run python scripts/real_deepdives.py
 
 test:
 	$(UV) run pytest -q

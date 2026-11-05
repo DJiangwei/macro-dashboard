@@ -449,12 +449,14 @@ indicators:
     label_zh: 核心HICP通胀率 (剔除能源与食品)
     unit: "% y/y"
     fetcher: eurostat
-    dataset: prc_hicp_manr
+    dataset: prc_hicp_minr
     filters:
       geo: TR
-      coicop: TOT_X_NRG_FOOD
+      coicop18: TOT_X_NRG_FOOD
+      freq: M
+      unit: RCH_A
     source_name: Eurostat / TurkStat
-    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=en
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr/default/table?lang=en
     frequency: monthly
     start_date: 2005-01-01
     caveat_en: HICP excluding energy, food, alcohol and tobacco.
@@ -466,12 +468,14 @@ indicators:
     label_zh: 服务业HICP通胀率同比
     unit: "% y/y"
     fetcher: eurostat
-    dataset: prc_hicp_manr
+    dataset: prc_hicp_minr
     filters:
       geo: TR
-      coicop: SERV
+      coicop18: SERV
+      freq: M
+      unit: RCH_A
     source_name: Eurostat / TurkStat
-    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=en
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr/default/table?lang=en
     frequency: monthly
     start_date: 2005-01-01
     caveat_en: Services component of the Harmonised Index of Consumer Prices.
@@ -483,12 +487,14 @@ indicators:
     label_zh: 食品HICP通胀率同比
     unit: "% y/y"
     fetcher: eurostat
-    dataset: prc_hicp_manr
+    dataset: prc_hicp_minr
     filters:
       geo: TR
-      coicop: FOOD
+      coicop18: FOOD
+      freq: M
+      unit: RCH_A
     source_name: Eurostat / TurkStat
-    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=en
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr/default/table?lang=en
     frequency: monthly
     start_date: 2005-01-01
     caveat_en: Food component of the Harmonised Index of Consumer Prices.
@@ -500,12 +506,14 @@ indicators:
     label_zh: 能源HICP通胀率同比
     unit: "% y/y"
     fetcher: eurostat
-    dataset: prc_hicp_manr
+    dataset: prc_hicp_minr
     filters:
       geo: TR
-      coicop: NRG
+      coicop18: NRG
+      freq: M
+      unit: RCH_A
     source_name: Eurostat / TurkStat
-    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=en
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr/default/table?lang=en
     frequency: monthly
     start_date: 2005-01-01
     caveat_en: Energy component of the Harmonised Index of Consumer Prices.
@@ -535,12 +543,14 @@ indicators:
     label_zh: 欧盟调和HICP通胀率同比 (交叉核对)
     unit: "% y/y"
     fetcher: eurostat
-    dataset: prc_hicp_manr
+    dataset: prc_hicp_minr
     filters:
       geo: TR
-      coicop: CP00
+      coicop18: TOTAL
+      freq: M
+      unit: RCH_A
     source_name: Eurostat / TurkStat
-    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=en
+    source_url: https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr/default/table?lang=en
     frequency: monthly
     start_date: 2005-01-01
     caveat_en: Harmonised Index of Consumer Prices headline annual rate of change.
@@ -826,10 +836,10 @@ indicators:
   # ==========================================
   # 8. Monetary & Financial
   # ==========================================
-  - id: policy_rate
+  - id: avg_funding_cost
     section: monetary_financial
-    label_en: CBRT 1-Week Repo Auction Rate (Official Policy Rate)
-    label_zh: 土耳其央行1周回购拍卖利率 (官方政策利率)
+    label_en: CBRT Weighted Average Cost of Funding
+    label_zh: 土耳其央行加权平均融资成本
     unit: "%"
     fetcher: tcmb_evds
     series: TP.APIFON4
@@ -838,8 +848,22 @@ indicators:
     source_url: https://evds3.tcmb.gov.tr/
     frequency: daily
     start_date: 2020-01-01
-    caveat_en: Central Bank of the Republic of Turkey 1-week repo auction interest rate (headline official policy rate).
-    caveat_zh: 土耳其央行（CBRT）1周回购拍卖利率，为官方基准政策利率。
+    caveat_en: CBRT weighted average cost of funding (EVDS TP.APIFON4). Tracks the policy rate but moves in non-standard steps around decisions; the decision rate itself is shown as the BIS policy-rate series.
+    caveat_zh: 土耳其央行加权平均融资成本（EVDS TP.APIFON4）。随政策利率变动，但在决议前后会出现非标准步长；决议利率本身以BIS政策利率序列展示。
+  - id: policy_rate
+    section: monetary_financial
+    label_en: "CBRT One-Week Repo Rate (policy rate)"
+    label_zh: "土耳其央行一周回购利率（政策利率）"
+    unit: "%"
+    fetcher: bis_policy_rate
+    series: TR
+    source_authority: official_primary
+    source_name: BIS central bank policy rates (WS_CBPOL)
+    source_url: https://data.bis.org/topics/CBPOL
+    frequency: event
+    start_date: 2010-01-01
+    caveat_en: "BIS WS_CBPOL daily series as reported by the CBRT (one-week repo rate since May 2010), collapsed to decision dates."
+    caveat_zh: "来自BIS WS_CBPOL日度序列（土耳其央行报送，自2010年5月起为一周回购利率），按决议日压缩为事件序列。"
 
   - id: overnight_interbank_rate
     section: monetary_financial
@@ -998,17 +1022,6 @@ indicators:
     frequency: monthly
     caveat_en: Derived real policy rate calculated as 1-Week Repo Rate minus headline CPI YoY.
     caveat_zh: 衍生实际政策利率，以土耳其央行1周回购利率减去CPI同比增速计算。
-  - id: sovereign_yield_10y
-    section: monetary_financial
-    label_en: Turkey 10Y Benchmark Government Bond Yield
-    label_zh: 土耳其10年期基准国债收益率
-    unit: "%"
-    fetcher: manual
-    source_name: CBRT / Ministry of Treasury
-    source_url: https://www.tcmb.gov.tr
-    frequency: quarterly
-    caveat_en: Official benchmark 10-year Turkish Lira government bond yield.
-    caveat_zh: 土耳其里拉10年期基准国债收益率。
 
 data_gaps:
   - section: production_cycle
@@ -1016,6 +1029,11 @@ data_gaps:
     item_zh: 伊斯坦布尔工业商会 / 标普全球土耳其制造业PMI
     status_en: Proprietary private commercial survey data published under paid subscription by S&P Global; not available via free public machine-readable API.
     status_zh: 标普全球商业付费版权数据，无免费官方机读开放API。
+  - section: monetary_financial
+    item_en: "Turkey 10Y benchmark government bond yield"
+    item_zh: "土耳其10年期基准国债收益率"
+    status_en: "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source."
+    status_zh: "2026-11-05 移除：此前该序列是在构建中手工写入的，并非抓取所得。只有在接入可验证的自动化数据源后才重新加入。"
 
 cross_checks:
   - concept: headline_inflation

@@ -692,11 +692,16 @@ def _apply_us_transform(series: dict[str, Any]) -> dict[str, Any]:
         return {**series, 'observations': [], 'quality_status': 'unavailable', 'quality_notes': [f'Unknown transform: {transform}.']}
     return {**series, 'observations': transformed}
 
+# FRED tarpits the spoofed desktop-browser USER_AGENT (requests hang until the
+# read timeout); an honest client identifier is answered immediately.
+FRED_USER_AGENT = "country-primer/0.1 (+https://github.com/DJiangwei/macro-dashboard)"
+
+
 def _fred_graph_observations_us(session: requests.Session, spec: dict[str, Any], read_timeout: int) -> tuple[list[dict[str, Any]], str]:
     params = {'id': spec['series']}
     if spec.get('start_date'):
         params['cosd'] = spec['start_date']
-    response = session.get(FRED_GRAPH_URL, params=params, headers={'User-Agent': USER_AGENT, 'Accept': 'text/csv,text/plain,*/*'}, timeout=(5, read_timeout))
+    response = session.get(FRED_GRAPH_URL, params=params, headers={'User-Agent': FRED_USER_AGENT, 'Accept': 'text/csv,text/plain,*/*'}, timeout=(5, read_timeout))
     response.raise_for_status()
     rows = csv.DictReader(io.StringIO(response.text))
     observations: list[dict[str, Any]] = []
@@ -1789,6 +1794,111 @@ def fetch_world_bank(spec: dict[str, Any]) -> dict[str, Any]:
         observations.append({'date': dt_str, 'value': value})
     observations.sort(key=lambda item: item['date'])
     return {**spec, 'observations': observations, 'provider_updated': meta.get('lastupdated', ''), 'api_url': url}
+
+
+def fetch_bis_policy_rate(spec: dict[str, Any]) -> dict[str, Any]:
+    """BIS WS_CBPOL daily policy rate collapsed to confirmed events.
+
+    ``spec['series']`` is the dashboard scope code (for example ``JP``); the
+    BIS reference area is resolved from ``bis_policy.BIS_REF_AREA``.
+    """
+    from .bis_policy import BIS_CBPOL_PAGE_URL, fetch_bis_policy_rate_path, glitch_note
+
+    scope = str(spec.get('series') or '').strip().upper()
+    start = str(spec.get('start_date') or '2000-01-01')[:10]
+    path = fetch_bis_policy_rate_path(scope, start=start)
+    if path is None or not path.events:
+        raise RuntimeError(f'BIS WS_CBPOL returned no observations for {scope}')
+    observations = [{'date': date, 'value': value} for date, value in path.events]
+    definition = (path.compilation or 'official policy rate').rstrip('. ')
+    note = (
+        f"BIS WS_CBPOL daily feed as reported by {path.source_ref or 'the central bank'}; definition: {definition}. "
+        f"Event-dated: one row per confirmed change plus an as-of row ({path.last_observation_date})."
+        + glitch_note(path.glitches)
+    )
+    return {
+        **spec,
+        'observations': observations,
+        'provider_updated': path.last_observation_date,
+        'api_url': f'{BIS_CBPOL_PAGE_URL}#{path.series_id}',
+        'series_code': path.series_id,
+        'quality_notes': [note],
+    }
+
+
+BIS_CREDIT_GAP_API = (
+    "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CREDIT_GAP/1.0/Q.{area}.P.A.C"
+    "?startPeriod={start}&format=csv"
+)
+
+
+def fetch_bis_credit_gap(spec: dict[str, Any]) -> dict[str, Any]:
+    """BIS credit-to-GDP gap (private non-financial sector, all lenders, actual minus HP trend).
+
+    ``spec['series']`` is the BIS borrowers-country code (``US``, ``XM`` for the
+    euro area, ``GB`` for the UK, ...).
+    """
+    area = str(spec.get('series') or '').strip().upper()
+    start = str(spec.get('start_date') or '2000-01-01')[:4] + '-Q1'
+    url = BIS_CREDIT_GAP_API.format(area=area, start=start)
+    response = requests.get(url, timeout=60)
+    response.raise_for_status()
+    observations: list[dict[str, Any]] = []
+    quarter_end = {'Q1': '03-31', 'Q2': '06-30', 'Q3': '09-30', 'Q4': '12-31'}
+    for row in DictReader(StringIO(response.text)):
+        raw = str(row.get('OBS_VALUE') or '').strip()
+        period = str(row.get('TIME_PERIOD') or '')
+        if not raw or raw.lower() == 'nan' or '-Q' not in period:
+            continue
+        year, quarter = period.split('-')
+        observations.append({'date': f'{year}-{quarter_end[quarter]}', 'value': float(raw)})
+    observations.sort(key=lambda item: item['date'])
+    if not observations:
+        raise RuntimeError(f'BIS WS_CREDIT_GAP returned no observations for {area}')
+    return {
+        **spec,
+        'observations': observations,
+        'provider_updated': observations[-1]['date'],
+        'api_url': url,
+        'series_code': f'WS_CREDIT_GAP:Q.{area}.P.A.C',
+    }
+
+
+BIS_XRU_API = (
+    "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_XRU/1.0/M.{area}..{collection}"
+    "?startPeriod={start}&format=csv"
+)
+
+
+def fetch_bis_fx(spec: dict[str, Any]) -> dict[str, Any]:
+    """BIS USD exchange rates (WS_XRU, monthly), as reported by national central banks.
+
+    ``spec['series']`` is the BIS reference area (``UZ``, ``EG`` ...);
+    ``spec['collection']`` is ``E`` (end of period, default) or ``A`` (average).
+    """
+    area = str(spec.get('series') or '').strip().upper()
+    collection = str(spec.get('collection') or 'E').strip().upper()
+    start = str(spec.get('start_date') or '2000-01-01')[:7]
+    url = BIS_XRU_API.format(area=area, collection=collection, start=start)
+    response = requests.get(url, timeout=60)
+    response.raise_for_status()
+    observations: list[dict[str, Any]] = []
+    for row in DictReader(StringIO(response.text)):
+        raw = str(row.get('OBS_VALUE') or '').strip()
+        period = str(row.get('TIME_PERIOD') or '')
+        if not raw or raw.lower() == 'nan' or len(period) != 7:
+            continue
+        observations.append({'date': f'{period}-01', 'value': float(raw)})
+    observations.sort(key=lambda item: item['date'])
+    if not observations:
+        raise RuntimeError(f'BIS WS_XRU returned no observations for {area}')
+    return {
+        **spec,
+        'observations': observations,
+        'provider_updated': observations[-1]['date'],
+        'api_url': url,
+        'series_code': f'WS_XRU:M.{area}..{collection}',
+    }
 
 
 def fetch_fred_graph(spec: dict[str, Any]) -> dict[str, Any]:

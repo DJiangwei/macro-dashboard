@@ -17,6 +17,7 @@ from dashboard_summary_utils import (
     retain_last_known_good_series,
     track_revisions_and_vintages,
 )
+from country_primer.shared_fetchers import SHARED_FETCHERS
 from country_primer.page_renderer import build_country_page, _write_clean
 from country_primer.data_first_pipeline import fetch_all
 
@@ -106,6 +107,7 @@ def build(data_mode: str | None = None) -> Path:
     import requests
     from country_primer.adapters import fetch_eastmoney, fetch_nbs_api, fetch_bond_zh_us_rate
     registry = {
+        **SHARED_FETCHERS,
         "world_bank": lambda spec, cache: fetch_world_bank(spec),
         "imf_datamapper": lambda spec, cache: fetch_imf_datamapper(spec),
         "fred_graph_csv": lambda spec, cache: fetch_fred_graph(spec),

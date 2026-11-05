@@ -10,7 +10,7 @@ The Euro Area page is built directly from official European compiling authoritie
     household consumption, GFCF, government consumption, exports, imports), monthly
     short-term business statistics (industrial production, manufacturing, retail sales,
     construction, PPI, building permits), HICP consumer price inflation components
-    (headline, core, services, energy, food via prc_hicp_manr), harmonised unemployment,
+    (headline, core, services, energy, food via prc_hicp_minr, ECOICOP 2018), harmonised unemployment,
     job vacancies, Labour Cost Index, house price index, extra-EA trade balance,
     quarterly BoP current account, and government deficit and debt ratios;
   * Derived sovereign spreads (Italy BTP, France OAT, Spain Bonos, Greece GGB vs German Bund)
@@ -43,6 +43,7 @@ from dashboard_summary_utils import (
     track_revisions_and_vintages,
     write_canonical_data_first_frame,
 )
+from country_primer.shared_fetchers import SHARED_FETCHERS
 from country_primer.page_renderer import build_country_page, _latest
 from country_primer.data_first_pipeline import fetch_all
 from country_primer.adapters import _apply_us_transform as _apply_transform, fetch_fred_us
@@ -139,6 +140,7 @@ def build(data_mode: str | None = None) -> Path:
     config = _load_config()
 
     registry = {
+        **SHARED_FETCHERS,
         "ecb_sdmx": lambda spec, cache: _apply_transform(apply_scale(fetch_ecb_sdmx(requests.Session(), spec))),
         "eurostat_jsonstat": lambda spec, cache: _apply_transform(apply_scale(fetch_eurostat_jsonstat(requests.Session(), spec))),
         "spread": lambda spec, cache: _apply_transform(apply_scale(fetch_spread(requests.Session(), spec))),

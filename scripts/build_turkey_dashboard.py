@@ -34,6 +34,7 @@ from dashboard_summary_utils import (
     track_revisions_and_vintages,
     write_canonical_data_first_frame,
 )
+from country_primer.shared_fetchers import SHARED_FETCHERS
 from country_primer.page_renderer import build_country_page, _latest
 from country_primer.data_first_pipeline import fetch_all
 from country_primer.adapters import (
@@ -122,6 +123,7 @@ def build(data_mode: str | None = None) -> Path:
     config = _load_config()
 
     registry = {
+        **SHARED_FETCHERS,
         "eurostat": lambda spec, cache: _apply_transform(apply_scale(fetch_eurostat_jsonstat(requests.Session(), spec))),
         "tcmb_xml": lambda spec, cache: _apply_transform(fetch_tcmb_xml(spec)),
         "tcmb_evds": lambda spec, cache: _apply_transform(apply_scale(fetch_tcmb_evds(spec))),

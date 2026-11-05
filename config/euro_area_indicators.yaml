@@ -25,7 +25,7 @@ sections:
   prices_costs:
     title_en: "Prices & Costs"
     title_zh: "价格与成本"
-    report_logic_en: "Eurostat monthly HICP (prc_hicp_manr) provides headline, core (excluding energy and food), services, energy, and food annual inflation. Industrial producer prices (PPI) capture pipeline pressures. The ECB Survey of Professional Forecasters (SPF) and Consumer Expectations Survey (CES) anchor long-term and 12-month forward expectations."
+    report_logic_en: "Eurostat monthly HICP (prc_hicp_minr, ECOICOP 2018) provides headline, core (excluding energy and food), services, energy, and food annual inflation. Industrial producer prices (PPI) capture pipeline pressures. The ECB Survey of Professional Forecasters (SPF) and Consumer Expectations Survey (CES) anchor long-term and 12-month forward expectations."
     report_logic_zh: "欧盟统计局月度调和消费者物价指数(HICP)提供总体、核心（剔除能源与食品）、服务、能源与食品通胀年率。工业生产者出厂价格(PPI)捕捉生产端管道压力。欧洲央行专业预测机构调查(SPF)与消费者预期调查(CES)锚定长期与未来12个月的通胀预期。"
   housing_investment:
     title_en: "Housing & Property"
@@ -566,14 +566,14 @@ indicators:
     label_zh: "调和CPI总体通胀同比"
     unit: "% y/y"
     fetcher: eurostat_jsonstat
-    dataset: "prc_hicp_manr"
+    dataset: "prc_hicp_minr"
     filters:
       freq: "M"
-      geo: "EA20"
-      coicop: "CP00"
+      geo: "EA"
+      coicop18: "TOTAL"
       unit: "RCH_A"
     source_name: "Eurostat"
-    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr"
     frequency: "monthly"
     start_date: "2000"
     caveat_en: "Harmonised Index of Consumer Prices headline annual inflation (all items)."
@@ -585,14 +585,14 @@ indicators:
     label_zh: "核心HICP通胀（剔除能源与食品）同比"
     unit: "% y/y"
     fetcher: eurostat_jsonstat
-    dataset: "prc_hicp_manr"
+    dataset: "prc_hicp_minr"
     filters:
       freq: "M"
-      geo: "EA20"
-      coicop: "TOT_X_NRG_FOOD"
+      geo: "EA"
+      coicop18: "TOT_X_NRG_FOOD"
       unit: "RCH_A"
     source_name: "Eurostat"
-    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr"
     frequency: "monthly"
     start_date: "2000"
     caveat_en: "HICP all items excluding energy, food, alcohol and tobacco annual rate."
@@ -604,14 +604,14 @@ indicators:
     label_zh: "服务业HICP通胀同比"
     unit: "% y/y"
     fetcher: eurostat_jsonstat
-    dataset: "prc_hicp_manr"
+    dataset: "prc_hicp_minr"
     filters:
       freq: "M"
-      geo: "EA20"
-      coicop: "SERV"
+      geo: "EA"
+      coicop18: "SERV"
       unit: "RCH_A"
     source_name: "Eurostat"
-    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr"
     frequency: "monthly"
     start_date: "2000"
     caveat_en: "HICP services component annual rate of change."
@@ -623,14 +623,14 @@ indicators:
     label_zh: "商品类HICP通胀同比"
     unit: "% y/y"
     fetcher: eurostat_jsonstat
-    dataset: "prc_hicp_manr"
+    dataset: "prc_hicp_minr"
     filters:
       freq: "M"
-      geo: "EA20"
-      coicop: "GD"
+      geo: "EA"
+      coicop18: "GD"
       unit: "RCH_A"
     source_name: "Eurostat"
-    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr"
     frequency: "monthly"
     start_date: "2000"
     caveat_en: "Harmonised Index of Consumer Prices goods component annual rate of change."
@@ -642,14 +642,14 @@ indicators:
     label_zh: "能源HICP通胀同比"
     unit: "% y/y"
     fetcher: eurostat_jsonstat
-    dataset: "prc_hicp_manr"
+    dataset: "prc_hicp_minr"
     filters:
       freq: "M"
-      geo: "EA20"
-      coicop: "NRG"
+      geo: "EA"
+      coicop18: "NRG"
       unit: "RCH_A"
     source_name: "Eurostat"
-    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr"
     frequency: "monthly"
     start_date: "2000"
     caveat_en: "HICP energy component annual rate of change."
@@ -661,14 +661,14 @@ indicators:
     label_zh: "食品烟酒HICP通胀同比"
     unit: "% y/y"
     fetcher: eurostat_jsonstat
-    dataset: "prc_hicp_manr"
+    dataset: "prc_hicp_minr"
     filters:
       freq: "M"
-      geo: "EA20"
-      coicop: "FOOD"
+      geo: "EA"
+      coicop18: "FOOD"
       unit: "RCH_A"
     source_name: "Eurostat"
-    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr"
     frequency: "monthly"
     start_date: "2000"
     caveat_en: "HICP food, alcohol and tobacco component annual rate of change."
@@ -1374,39 +1374,19 @@ indicators:
     frequency: "monthly"
     caveat_en: "Derived real policy rate calculated as nominal ECB Deposit Facility Rate minus headline HICP YoY."
     caveat_zh: "衍生实际政策利率，以欧央行存款便利利率(DFR)减去HICP调和CPI同比增速计算。"
-  - id: systemic_stress_ciss
-    section: monetary_financial
-    label_en: "ECB Composite Indicator of Systemic Stress (CISS)"
-    label_zh: "欧洲央行系统性压力综合指标 (CISS 金融条件)"
-    unit: "index"
-    fetcher: manual
-    source_name: "European Central Bank (ECB)"
-    source_url: "https://data.ecb.europa.eu"
-    frequency: "quarterly"
-    caveat_en: "Official ECB CISS measuring contemporary systemic stress in the financial system."
-    caveat_zh: "欧央行官方系统性压力综合指标(CISS)，衡量金融系统即期系统性压力水平。"
   - id: credit_gap
     section: stability_structural
     label_en: "Euro Area BIS Basel III Credit-to-GDP Gap"
     label_zh: "欧元区 国际清算银行(BIS)信贷/GDP缺口"
     unit: "%"
-    fetcher: manual
+    fetcher: bis_credit_gap
+    series: XM
     source_name: "Bank for International Settlements (BIS)"
-    source_url: "https://www.bis.org/statistics/c_gaps.htm"
+    source_url: https://data.bis.org/topics/CREDIT_GAPS
     frequency: "quarterly"
+    max_age_days: 290  # BIS publishes ~5-6 months after quarter end
     caveat_en: "BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend."
     caveat_zh: "国际清算银行巴塞尔协议III逆周期资本缓冲指引；信贷/GDP比率对长期趋势的偏离度。"
-  - id: euro_stoxx_return_yoy
-    section: monetary_financial
-    label_en: "Euro Stoxx 50 Index YoY Return"
-    label_zh: "欧洲斯托克50指数年度收益率"
-    unit: "%"
-    fetcher: manual
-    source_name: "ECB / OECD / FRED"
-    source_url: "https://fred.stlouisfed.org/series/SPASTT01EZM661N"
-    frequency: "monthly"
-    caveat_en: "Year-over-year percentage change of the Euro Area benchmark share price index."
-    caveat_zh: "欧元区基准股票价格指数年度百分比变动。"
 
 data_gaps:
   - section: production_cycle
@@ -1438,3 +1418,8 @@ data_gaps:
     item_zh: "Euro Stoxx 50股票指数与股市估值"
     status_en: "STOXX Ltd benchmark index licensed through data vendors; no redistributable public timeseries endpoint available."
     status_zh: "由STOXX Ltd授权的基准指数，需商业数据供应商接口；无公开可再分发的时间序列接口。"
+  - section: monetary_financial
+    item_en: "Euro Stoxx 50 total return, YoY"
+    item_zh: "欧洲斯托克50指数同比回报"
+    status_en: "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source."
+    status_zh: "2026-11-05 移除：此前该序列是在构建中手工写入的，并非抓取所得。只有在接入可验证的自动化数据源后才重新加入。"

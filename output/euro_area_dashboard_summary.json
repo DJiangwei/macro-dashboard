@@ -1,10 +1,10 @@
 {
   "file": "euro_area.html",
-  "generated": "2026-11-03T21:16:32.356867+00:00",
-  "charts": 76,
-  "source_groups": 10,
-  "data_gaps": 5,
-  "low_confidence": 18,
+  "generated": "2026-11-05T00:59:05.241274+00:00",
+  "charts": 74,
+  "source_groups": 8,
+  "data_gaps": 6,
+  "low_confidence": 12,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -34,25 +34,25 @@
       "id": "hicp_inflation",
       "label_en": "HICP Headline Inflation, YoY",
       "label_zh": "调和CPI总体通胀同比",
-      "latest_date": "2025-12-01",
-      "latest_value": 2.0,
-      "latest_display": "2.00 % y/y",
+      "latest_date": "2026-10-01",
+      "latest_value": 4.0,
+      "latest_display": "4.00 % y/y",
       "frequency": "monthly",
       "source_name": "Eurostat",
       "series": "",
-      "quality_status": "low_confidence"
+      "quality_status": "verified"
     },
     {
       "id": "hicp_core_inflation",
       "label_en": "HICP Core Inflation (Ex Energy & Food), YoY",
       "label_zh": "核心HICP通胀（剔除能源与食品）同比",
-      "latest_date": "2025-12-01",
-      "latest_value": 2.3,
-      "latest_display": "2.30 % y/y",
+      "latest_date": "2026-10-01",
+      "latest_value": 2.5,
+      "latest_display": "2.50 % y/y",
       "frequency": "monthly",
       "source_name": "Eurostat",
       "series": "",
-      "quality_status": "low_confidence"
+      "quality_status": "verified"
     },
     {
       "id": "policy_rate",
@@ -127,11 +127,11 @@
       "value"
     ],
     "file": "euro_area_canonical_frame.json",
-    "series": 76,
-    "observations": 75220,
-    "series_count": 76,
-    "observation_count": 75220,
-    "snapshot_generated": "2026-11-02T23:44:01.348832+00:00"
+    "series": 74,
+    "observations": 66202,
+    "series_count": 74,
+    "observation_count": 66202,
+    "snapshot_generated": "2026-11-05T00:58:54.454558+00:00"
   },
   "data_gaps_detail": [
     {
@@ -168,10 +168,17 @@
       "item_zh": "Euro Stoxx 50股票指数与股市估值",
       "status_en": "STOXX Ltd benchmark index licensed through data vendors; no redistributable public timeseries endpoint available.",
       "status_zh": "由STOXX Ltd授权的基准指数，需商业数据供应商接口；无公开可再分发的时间序列接口。"
+    },
+    {
+      "section": "monetary_financial",
+      "item_en": "Euro Stoxx 50 total return, YoY",
+      "item_zh": "欧洲斯托克50指数同比回报",
+      "status_en": "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source.",
+      "status_zh": "2026-11-05 移除：此前该序列是在构建中手工写入的，并非抓取所得。只有在接入可验证的自动化数据源后才重新加入。"
     }
   ],
   "source_health": {
-    "source_groups": 10,
+    "source_groups": 8,
     "sources": [
       {
         "source_name": "ECB",
@@ -202,23 +209,15 @@
         "charts": 1
       },
       {
-        "source_name": "ECB / STOXX Ltd",
-        "charts": 1
-      },
-      {
-        "source_name": "European Central Bank (ECB)",
-        "charts": 1
-      },
-      {
         "source_name": "IMF DataMapper",
         "charts": 1
       }
     ],
     "quality_counts": {
-      "low_confidence": 18,
+      "low_confidence": 12,
       "unavailable": 1,
-      "verified": 53,
-      "watch": 4
+      "verified": 58,
+      "watch": 3
     },
     "unavailable_count": 0
   },
@@ -229,12 +228,12 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-11-03",
+    "as_of_date": "2026-11-05",
     "counts": {
-      "current": 54,
+      "current": 58,
       "due": 3,
       "future_date": 1,
-      "stale": 18
+      "stale": 12
     },
     "latest_historical_date": "2026-11-02",
     "attention": [
@@ -246,7 +245,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-07-01",
-        "age_days": 399,
+        "age_days": 401,
         "threshold_days": 187,
         "release_calendar_id": "eurostat_quarterly",
         "expected_release_date": "2026-03-16",
@@ -268,7 +267,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-07-01",
-        "age_days": 399,
+        "age_days": 401,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -290,7 +289,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 307,
+        "age_days": 309,
         "threshold_days": 185,
         "release_calendar_id": "eurostat_quarterly",
         "expected_release_date": "2026-06-14",
@@ -312,7 +311,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-12-01",
-        "age_days": 307,
+        "age_days": 309,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-03-17",
@@ -334,7 +333,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-12-01",
-        "age_days": 307,
+        "age_days": 309,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-03-17",
@@ -356,7 +355,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-12-01",
-        "age_days": 307,
+        "age_days": 309,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-03-17",
@@ -371,138 +370,6 @@
         "transform": "level"
       },
       {
-        "id": "hicp_core_inflation",
-        "concept_id": "core_inflation",
-        "label_en": "HICP Core Inflation (Ex Energy & Food), YoY",
-        "latest_date": "2025-12-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-12-01",
-        "age_days": 307,
-        "threshold_days": 91,
-        "release_calendar_id": "eurostat_monthly",
-        "expected_release_date": "2026-03-17",
-        "due_date": "2026-04-01",
-        "quality_status": "low_confidence",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Eurostat",
-        "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "hicp_energy_inflation",
-        "concept_id": "ea:hicp_energy_inflation",
-        "label_en": "HICP Energy Inflation, YoY",
-        "latest_date": "2025-12-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-12-01",
-        "age_days": 307,
-        "threshold_days": 91,
-        "release_calendar_id": "eurostat_monthly",
-        "expected_release_date": "2026-03-17",
-        "due_date": "2026-04-01",
-        "quality_status": "low_confidence",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Eurostat",
-        "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "hicp_food_inflation",
-        "concept_id": "ea:hicp_food_inflation",
-        "label_en": "HICP Food, Alcohol & Tobacco Inflation, YoY",
-        "latest_date": "2025-12-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-12-01",
-        "age_days": 307,
-        "threshold_days": 91,
-        "release_calendar_id": "eurostat_monthly",
-        "expected_release_date": "2026-03-17",
-        "due_date": "2026-04-01",
-        "quality_status": "low_confidence",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Eurostat",
-        "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "hicp_goods_inflation",
-        "concept_id": "goods_inflation",
-        "label_en": "HICP Goods Inflation, YoY",
-        "latest_date": "2025-12-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-12-01",
-        "age_days": 307,
-        "threshold_days": 91,
-        "release_calendar_id": "eurostat_monthly",
-        "expected_release_date": "2026-03-17",
-        "due_date": "2026-04-01",
-        "quality_status": "low_confidence",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Eurostat",
-        "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "hicp_inflation",
-        "concept_id": "headline_inflation",
-        "label_en": "HICP Headline Inflation, YoY",
-        "latest_date": "2025-12-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-12-01",
-        "age_days": 307,
-        "threshold_days": 91,
-        "release_calendar_id": "eurostat_monthly",
-        "expected_release_date": "2026-03-17",
-        "due_date": "2026-04-01",
-        "quality_status": "low_confidence",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Eurostat",
-        "series": "",
-        "transform": "level"
-      },
-      {
-        "id": "hicp_services_inflation",
-        "concept_id": "services_inflation",
-        "label_en": "HICP Services Inflation, YoY",
-        "latest_date": "2025-12-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-12-01",
-        "age_days": 307,
-        "threshold_days": 91,
-        "release_calendar_id": "eurostat_monthly",
-        "expected_release_date": "2026-03-17",
-        "due_date": "2026-04-01",
-        "quality_status": "low_confidence",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Eurostat",
-        "series": "",
-        "transform": "level"
-      },
-      {
         "id": "household_debt_gdp",
         "concept_id": "ea:household_debt_gdp",
         "label_en": "Household Debt to GDP",
@@ -510,7 +377,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 307,
+        "age_days": 309,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -532,7 +399,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-12-01",
-        "age_days": 307,
+        "age_days": 309,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-03-17",
@@ -554,7 +421,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 307,
+        "age_days": 309,
         "threshold_days": 185,
         "release_calendar_id": "eurostat_quarterly",
         "expected_release_date": "2026-06-14",
@@ -576,7 +443,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-12-01",
-        "age_days": 307,
+        "age_days": 309,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-03-17",
@@ -591,6 +458,28 @@
         "transform": "level"
       },
       {
+        "id": "credit_gap",
+        "concept_id": "credit_gap",
+        "label_en": "Euro Area BIS Basel III Credit-to-GDP Gap",
+        "latest_date": "2026-03-31",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-03-31",
+        "age_days": 219,
+        "threshold_days": 290,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "Bank for International Settlements (BIS)",
+        "series": "XM",
+        "transform": "level"
+      },
+      {
         "id": "bank_cet1_ratio",
         "concept_id": "bank_capital_ratio",
         "label_en": "Significant Institutions CET1 Ratio",
@@ -598,7 +487,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -620,7 +509,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -642,7 +531,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 91,
         "release_calendar_id": "eurostat_monthly",
         "expected_release_date": "2026-09-14",
@@ -657,28 +546,6 @@
         "transform": "level"
       },
       {
-        "id": "credit_gap",
-        "concept_id": "credit_gap",
-        "label_en": "EA BIS Basel III Credit-to-GDP Gap",
-        "latest_date": "2026-06-30",
-        "frequency": "quarterly",
-        "freshness_status": "due",
-        "age_basis_date": "2026-06-30",
-        "age_days": 126,
-        "threshold_days": 165,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "watch",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "Bank for International Settlements (BIS)",
-        "series": "credit_gap",
-        "transform": "level"
-      },
-      {
         "id": "reer",
         "concept_id": "reer",
         "label_en": "Euro Real Effective Exchange Rate (BIS)",
@@ -686,7 +553,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-07-01",
-        "age_days": 95,
+        "age_days": 97,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -726,7 +593,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 76
+      "level": 74
     },
     "non_level": []
   },
@@ -736,6 +603,6 @@
       "date",
       "value"
     ],
-    "charted_series": 76
+    "charted_series": 74
   }
 }

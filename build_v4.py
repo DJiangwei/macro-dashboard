@@ -300,7 +300,7 @@ except ImportError:
     render_deepdive_panel = lambda cc: ""
 
 try:
-    from render_labour_wage_deepdive import render_labour_deepdive_panel
+    from real_deepdives import render_labour_view as render_labour_deepdive_panel
 except ImportError:
     render_labour_deepdive_panel = lambda cc: ""
 
@@ -4069,6 +4069,25 @@ COUNTRY_DATA["RO"] = {
 
 # ── Build logic ───────────────────────────────────────────────────────────────
 
+_NARRATIVE_DATE_RE = re.compile(r'(<span class="narrative-date">)(.*?)(</span>)', re.S)
+_STATIC_NARRATIVE_NOTE = {
+    "en": "static analyst text as of this date; figures quoted in the text are not live data, see the charts and KPI cards",
+    "zh": "此日期的静态分析文字；文中引用的数字不是实时数据，请以图表和 KPI 卡片为准",
+}
+
+
+def _mark_static_narrative(html: str, locale: str) -> str:
+    """Disclose that hand-written narrative blocks are dated, not live data."""
+    if not html:
+        return html
+    note = _STATIC_NARRATIVE_NOTE["zh" if locale == "zh" else "en"]
+    return _NARRATIVE_DATE_RE.sub(
+        lambda m: f'{m.group(1)}{m.group(2)} · <em class="narrative-static">{note}</em>{m.group(3)}',
+        html,
+        count=1,
+    )
+
+
 def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Path:
     data = COUNTRY_DATA[country_code]
     if canonical_frame is not None:
@@ -4147,8 +4166,8 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
         title_zh, badge_zh = SECTION_TITLES_ZH[sec_id]
         blurb_en = SECTION_BLURBS[sec_id]
         blurb_zh = SECTION_BLURBS_ZH[sec_id]
-        narrative_en = data["narratives"].get(sec_id, "")
-        narrative_zh = data.get("narratives_zh", {}).get(sec_id, "")
+        narrative_en = _mark_static_narrative(data["narratives"].get(sec_id, ""), "en")
+        narrative_zh = _mark_static_narrative(data.get("narratives_zh", {}).get(sec_id, ""), "zh")
         quality_html = _section_quality_html(sec_id)
         charts_html, section_chart_ids = _render_section_charts(
             sec_id,

@@ -209,16 +209,17 @@ indicators:
   # ==========================================
   - id: usd_uzs
     section: external_fx
-    label_en: USD/UZS End-of-Period Official Rate
+    label_en: USD/UZS End-of-Period Official Rate (BIS)
     label_zh: 美元兑乌兹别克斯坦苏姆期末官方汇率
     unit: "UZS"
-    fetcher: dbnomics
-    series: IMF/IFS/M.UZ.ENDE_XDC_USD_RATE
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/M.UZ.ENDE_XDC_USD_RATE
+    fetcher: bis_fx
+    collection: E
+    series: UZ
+    source_name: BIS exchange rates (WS_XRU), as reported by the central bank
+    source_url: https://data.bis.org/topics/XRU
     frequency: monthly
     start_date: 2010-01-01
-    caveat_en: Monthly end-of-period national currency units per US dollar.
+    caveat_en: "Monthly end-of-period UZS per US dollar from the BIS (reported by the central bank). Replaces the IMF IFS mirror, which lagged by over a year."
     caveat_zh: IMF国际金融统计公布的月末每美元兑苏姆官方汇率。
 
   - id: reer
@@ -633,6 +634,11 @@ data_gaps:
     item_zh: 月度细分COICOP食品与能源分类CPI
     status_en: Published by the Statistics Agency of Uzbekistan (stat.uz); tracked via official bulletins.
     status_zh: 由乌兹别克斯坦统计署发布；通过官方统计公报跟踪监控。
+  - section: external_fx
+    item_en: "CBU official USD/UZS daily rate and policy rate (monthly FX now via BIS)"
+    item_zh: "乌兹别克斯坦央行官方美元汇率（日度）与政策利率"
+    status_en: "CBU JSON endpoints are unreachable from the current build environment. Monthly end-of-period FX now comes from the BIS; the daily rate and the policy rate (IMF IFS mirror ends 2024-12) are to be wired from the CI runner."
+    status_zh: "当前构建环境无法访问乌兹别克斯坦央行JSON接口。月末汇率现取自BIS；日度汇率与政策利率（IMF IFS镜像止于2024-12）将从CI运行环境接入。"
 
 cross_checks:
   - concept: real_gdp_growth

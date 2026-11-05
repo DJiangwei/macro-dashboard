@@ -85,6 +85,9 @@ def main() -> int:
     build_env = {"COUNTRY_PRIMER_SKIP_ARCHIVE": "1"}
     py = sys.executable
 
+    # 0. BIS policy-rate snapshot (cross-check reference for every covered scope)
+    run_cmd([py, str(SCRIPTS_DIR / "refresh_bis_policy_snapshot.py")])
+
     # 1. Execute country dashboards
     target = args.country.upper()
     if target == "ALL":
@@ -110,12 +113,12 @@ def main() -> int:
         return 1
 
     # 2. Rebuild cross-country synchronizations & metadata
-    print("\n--> Rebuilding cross-country coverage, catalog, freshness & archive...")
-    run_cmd([py, str(SCRIPTS_DIR / "core_coverage_matrix.py")])
-    run_cmd([py, str(SCRIPTS_DIR / "data_source_catalog.py")])
-    run_cmd([py, str(SCRIPTS_DIR / "freshness_audit.py")])
-    run_cmd([py, str(SCRIPTS_DIR / "build_dashboard_archive.py")])
-    run_cmd([py, str(SCRIPTS_DIR / "macro_workbench.py")])
+    # Same offline sequence as local `make rebuild-ui`: derivations, deepdive
+    # views, every page, coverage, catalog, freshness, archive, workbench,
+    # Chart Studio, My Dashboard and Policy Tracker — so CI and local builds
+    # produce identical outputs from the refreshed canonical frames.
+    print("\n--> Rebuilding derived series, deepdive views and all pages from snapshots...")
+    run_cmd(["make", "rebuild-ui"])
 
     print("\n[SUCCESS] Refresh runner completed successfully.")
     return 0
