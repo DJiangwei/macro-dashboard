@@ -120,3 +120,50 @@ def test_fred_api_observations_caches_duplicate_series_and_redacts_keys(monkeypa
         "url?series_id=GDP&api_key=REDACTED&file_type=json"
     )
     adapters.FRED_OBS_CACHE.clear()
+
+
+# Trimmed from the live PBC English indicator pages (2026-11-05). The DR007 page
+# repeats its title in <title> and the nav before the value, and fills "Latest
+# Update" in the browser with the viewer's own date, so the HTML carries none.
+PBC_DR007_PAGE = """<html><head><title>DR007</title>
+<meta  name="createDate" content="2026-09-23 17:51:08" /></head><body>
+<div>Old Version</div><div>|</div><div>中文</div><div>About PBC</div><div>Purposes and Functions</div>
+<div>Management Team</div><div>Former Governors</div><div>History</div><div>Organizational Structure</div>
+<div>News &amp; Events</div><div>Monetary Policy</div><div>Financial Stability</div><div>Financial Markets</div>
+<div>Statistics</div><div>Payment System</div><div>Currency</div><div>International Cooperation</div>
+<div>Research</div><div>Laws &amp; Rules</div><div>Publications</div>
+<ul><li><a>DR007</a></li><li><a>M2</a></li><li><a>USD/CNY Fixing Rate</a></li><li><a>AFRE (Outstanding)</a></li></ul>
+<div>Home &gt; Indicators &gt; DR007</div>
+<ul><li><p>DR007</p><p>What is DR007?</p><p>DR007 is the interest rate on 7-day repos.</p></li></ul>
+<ul class="rateNum clearfix"><li class="li1"> <p class="rateNumName one"><a title="DR007">DR007</a></p>
+<p class="two"><a title="1.4935%">1.4935%</a></p> <p class="three">Latest Update</p> <p id="time"></p> </li></ul>
+<script>document.getElementById('time').innerHTML=""+day+"/"+month+"/"+year;</script>
+</body></html>"""
+
+PBC_M2_PAGE = """<html><head><title>M2</title>
+<meta  name="createDate" content="2026-10-19 13:58:39" /></head><body>
+<ul><li><a>DR007</a></li><li><a>M2</a></li><li><a>USD/CNY Fixing Rate</a></li></ul>
+<ul><li><p>M2</p><p>What is M2?</p><p>The M2 changes year on year reported here is for the end of previous month.</p></li></ul>
+<ul class="rateNum clearfix"><li class="li1"> <p class="rateNumName one"><a title="M2 (YoY)">M2 (YoY)</a></p>
+<p class="two"><a title="7.2%">7.2%</a></p> <p class="three">Latest Update</p> <p id="time">10/19/2026 </p> </li></ul>
+</body></html>"""
+
+
+class _FakePage:
+    def __init__(self, text):
+        self.text = text
+
+    def raise_for_status(self):
+        return None
+
+
+@pytest.mark.parametrize(
+    ("page", "title", "value", "updated"),
+    [(PBC_DR007_PAGE, "DR007", "1.4935%", "09/23/2026"), (PBC_M2_PAGE, "M2", "7.2%", "10/19/2026")],
+)
+def test_pbc_card_reads_the_value_after_any_title_match_and_dates_it(monkeypatch, page, title, value, updated) -> None:
+    from country_primer import adapters
+    monkeypatch.setattr(adapters.requests, "get", lambda url, timeout=None: _FakePage(page))
+    card = adapters.fetch_pbc_card({"url": "https://www.pbc.gov.cn/en/x/index.html", "expected_title": title})
+    assert card["value"] == value
+    assert card["updated"] == updated  # never the viewer's date: static text, else the page's createDate

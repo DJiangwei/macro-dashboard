@@ -17,7 +17,7 @@ git switch main && git pull --ff-only     # 必须 fast-forward；失败就停�
 git switch -c <topic-branch>              # 每项新工作一个分支
 ```
 
-**结束一次会话**：`make validate` 通过 → commit → `git push -u origin <topic-branch>` → 开 PR → 等 CI（`Validate dashboard` 在 PR 上运行；看 `status == completed` 和 `conclusion`）→ 由用户决定是否合并。交接内容写进本文件，不要只留在对话里。合并后本地执行 `git switch main && git pull --ff-only`。
+**结束一次会话**：`make validate` 通过 → commit → `git push -u origin <topic-branch>` → 开 PR → 等 CI（`Validate dashboard` 在 PR 上运行；看 `status == completed` 和 `conclusion`）→ CI 通过就合并，然后跑 publish_smoke.py --version <合并提交> 检查线上页面。交接内容写进本文件，不要只留在对话里。合并后本地执行 `git switch main && git pull --ff-only`。
 
 **规则**
 
@@ -32,13 +32,13 @@ git switch -c <topic-branch>              # 每项新工作一个分支
 
 ## 1. 用户已确认的决策
 
-| 编号 | 决策 |
-|---|---|
-| D1 | **只用真实数据**。缺数据就留空或记为 data gap，不写死、不估算、不用 0 或 50 之类的占位值 |
-| D2 | 顺序：P0 诚信修复 → 能源 → 贵金属 → 基本金属；重点是框架，降低以后加国家的成本 |
-| D3 | 能源页包含电力和煤；模型可以做，但必须标 MODEL，并且不进 canonical frame |
-| D4 | key 只放在本地或环境密钥里，**绝不能贴进对话、提交到仓库或写进日志** |
-| D5 | Pages 采用方案 C（`data` 分支 + Actions 部署），并放在开关后面，由用户切换（见 `docs/PAGES_DEPLOYMENT.md`） |
+| 编号 | 决策                                                                                 |
+| -- | ---------------------------------------------------------------------------------- |
+| D1 | **只用真实数据**。缺数据就留空或记为 data gap，不写死、不估算、不用 0 或 50 之类的占位值                             |
+| D2 | 顺序：P0 诚信修复 → 能源 → 贵金属 → 基本金属；重点是框架，降低以后加国家的成本                                      |
+| D3 | 能源页包含电力和煤；模型可以做，但必须标 MODEL，并且不进 canonical frame                                    |
+| D4 | key 只放在本地或环境密钥里，**绝不能贴进对话、提交到仓库或写进日志**                                             |
+| D5 | Pages 采用方案 C（`data` 分支 + Actions 部署），并放在开关后面，由用户切换（见 `docs/PAGES_DEPLOYMENT.md`）   |
 | 其他 | 试点国家是印度；中国数据以 AKShare 为主，NBS 官方接口在境外 403，DBnomics 的 NBS 镜像已停更；**不要改动 `main` 上的数据** |
 
 ## 2. 已完成（按提交顺序）
@@ -69,16 +69,16 @@ git switch -c <topic-branch>              # 每项新工作一个分支
 
 ## 3. 架构速查
 
-| 要做的事 | 位置 |
-|---|---|
-| 新增国家（不改代码） | `config/scopes.yaml` 加一条 + `config/countries/<slug>.yaml`（templates + params），见 AGENTS.md「Adding a Country」 |
-| 新增市场页 | `config/scopes.yaml`（`kind: market`，排在经济体之后）+ `config/markets/<slug>.yaml` |
-| 新数据源 | 在 `adapters.py` 或 `energy_adapters.py` 写函数，然后在 `fetchers.py` 的 `FETCHERS` 里注册（写明 call 方式、后处理模式、所在模块） |
-| 派生序列 | YAML 里写 `derivation: derived`、`op`、`inputs`。可用算子：reference、spread、linear、ratio、product、rolling_mean、zscore、dev_from_5y_seasonal、yoy_pct，输入可加 `@monthly_mean`，可跨 scope 引用（如 `ENERGY:brent_spot`、`CN:manufacturing_pmi_akshare`）。市场页按注册表顺序构建：ENERGY → PRECIOUS → BASE |
-| 面板（表格） | `transmission.py` 的 `PANELS`；在市场 YAML 里用 `panels:` 声明 |
-| 跨国角色（政策利率、CPI、能源 CPI、汇率方向） | `config/scopes.yaml` 各 scope 下的 `roles` |
-| 核心 48 映射 | `config/framework_v2.yaml`，或在指标 YAML 上加 `concept:`（会自动合并） |
-| 来源等级 | 在 YAML 里声明 `source_authority`（official_primary / official_mirror / public_wrapper），否则按名字推断 |
+| 要做的事                       | 位置                                                                                                                                                                                                                                                                  |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 新增国家（不改代码）                 | `config/scopes.yaml` 加一条 + `config/countries/<slug>.yaml`（templates + params），见 AGENTS.md「Adding a Country」                                                                                                                                                         |
+| 新增市场页                      | `config/scopes.yaml`（`kind: market`，排在经济体之后）+ `config/markets/<slug>.yaml`                                                                                                                                                                                          |
+| 新数据源                       | 在 `adapters.py` 或 `energy_adapters.py` 写函数，然后在 `fetchers.py` 的 `FETCHERS` 里注册（写明 call 方式、后处理模式、所在模块）                                                                                                                                                                |
+| 派生序列                       | YAML 里写 `derivation: derived`、`op`、`inputs`。可用算子：reference、spread、linear、ratio、product、rolling_mean、zscore、dev_from_5y_seasonal、yoy_pct，输入可加 `@monthly_mean`，可跨 scope 引用（如 `ENERGY:brent_spot`、`CN:manufacturing_pmi_akshare`）。市场页按注册表顺序构建：ENERGY → PRECIOUS → BASE |
+| 面板（表格）                     | `transmission.py` 的 `PANELS`；在市场 YAML 里用 `panels:` 声明                                                                                                                                                                                                               |
+| 跨国角色（政策利率、CPI、能源 CPI、汇率方向） | `config/scopes.yaml` 各 scope 下的 `roles`                                                                                                                                                                                                                             |
+| 核心 48 映射                   | `config/framework_v2.yaml`，或在指标 YAML 上加 `concept:`（会自动合并）                                                                                                                                                                                                           |
+| 来源等级                       | 在 YAML 里声明 `source_authority`（official_primary / official_mirror / public_wrapper），否则按名字推断                                                                                                                                                                          |
 
 ## 4. 工作方式与验证
 
@@ -102,7 +102,7 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
   `for k in EIA_API_KEY GIE_AGSI_API_KEY EMBER_API_KEY ENTSOE_API_TOKEN; do [ -n "$(printenv $k)" ] && echo "$k set" || echo "$k missing"; done`
 - 本地运行时，`scripts/uv_project.sh` 会读取被 gitignore 的 `.env.local`。日志按值脱敏（`source_health.py`）。
 - 2026-11-05 本地状态：EIA、GIE、Ember、FRED、ESTAT、BLS、TCMB、FinMind、ENTSO-E 都在 `.env.local`；BOK_ECOS、KOSIS 本地没有（GitHub secrets 里有 BOK_ECOS，没有 KOSIS）。
-- **ENTSO-E**：token 已配置，但 API 对所有请求返回 `999 User is not authorized`。这是账户还没开通 Restful API 权限：需要用户用注册邮箱发邮件给 transparency@entsoe.eu，主题写 "Restful API access"。开通后再接 fetcher。
+- **ENTSO-E**：token 已配置，但 API 对所有请求返回 `999 User is not authorized`。这是账户还没开通 Restful API 权限：需要用户用注册邮箱发邮件给 <transparency@entsoe.eu>，主题写 "Restful API access"。开通后再接 fetcher。
 
 ## 6. 待办（按优先级）
 
@@ -113,25 +113,26 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
    - KZ/NG/UZ/EG 的原生政策利率。
    - CEE 叙述文字需要重写（例如 HU 行长写的还是 Matolcsy，应为 Varga）。
    - 欧元区职位空缺和协议工资已过期。
-   - 中国 PBC 卡片里 DR007 显示 n/a。
+   - **已知 bug（未修）**：`scripts/dashboard_summary_utils.load_canonical_data_first_frame` 读回上一版快照时不恢复 `prior_vintage`/`has_revisions`，所以 `track_revisions_and_vintages` 里「沿用前次 vintage」的分支拿到的总是 None：前次数据只能保留一次构建，下次刷新就丢。2026-11-05 刷新中国卡片时，`usd_cny_midpoint` 的前次数据就这样被清掉了。
+   - 中国 PBC 卡片（2026-11-05 已修）：DR007 页面的「Latest Update」是浏览器用访问者当天日期填的，所以卡片日期取页面的 `createDate`（M2 页的 createDate 与显示的更新日期一致）。DR007 当前值 1.4935% 的日期是 2026-09-23，PBC 英文页更新不频繁；要看日度 DR007 需另接时间序列。
    - 印度 IMF FSI 返回 403；可接入 MOSPI/RBI 原生数据。
    - 黄金 ETF 持仓缺来源；可加 `rolling_beta` 算子（金价对实际利率）。
    - Pages 切换由用户操作；第三阶段（`main` 不再跟踪生成文件）见 `docs/PAGES_DEPLOYMENT.md`。
 
 ## 7. 环境与数据源特性（已实测）
 
-| 数据源 | 情况 |
-|---|---|
-| energy-charts | 连续请求会返回 429，fetcher 已加 Retry-After 退避 |
-| IMF | `IMF.STA,IL` 的 key 是 `<ISO3>.RGV_REVS.FTO.M`（四段，五段会 403）；FSIC 数据流在本环境返回 403 |
-| FRED | 部分 OECD 镜像已停更（印度 10Y 与 3M、M3 等）。不要上页面，记为 gap |
-| EIA | 期货曲线 RCLC1-4 止于 2024-04-05 |
-| 中国 | Eastmoney 部分接口会重置连接；NBS easyquery 返回 403 |
-| 外盘期货 / SGE | 当天那一行是未收盘的会话，fetcher 只保留已收盘的交易日 |
-| GIE AGSI+ | `?type=eu` 是欧盟合计，`?country=XX` 是分国；每页最多 300 天，按 `last_page` 翻页（`total` 是当页行数）；行按日期倒序；最近几天 `status` 为 `E`（估计） |
-| EIA STEO | 分国序列只到最后一个历史月（2026-11 时是 2026-09）；汇总序列带预测到明年年底；没有阿联酋原油产量 |
-| Ember | 欧盟用 `entity=EU`（`entity_code` 为空），国家用 ISO3 `entity_code`；月度数据从 2016 年起（印度从 2019 年起） |
-| ENTSO-E | token 未开通 API 权限时一律返回 `999 User is not authorized` |
+| 数据源           | 情况                                                                                                           |
+| ------------- | ------------------------------------------------------------------------------------------------------------ |
+| energy-charts | 连续请求会返回 429，fetcher 已加 Retry-After 退避                                                                        |
+| IMF           | `IMF.STA,IL` 的 key 是 `<ISO3>.RGV_REVS.FTO.M`（四段，五段会 403）；FSIC 数据流在本环境返回 403                                  |
+| FRED          | 部分 OECD 镜像已停更（印度 10Y 与 3M、M3 等）。不要上页面，记为 gap                                                                 |
+| EIA           | 期货曲线 RCLC1-4 止于 2024-04-05                                                                                   |
+| 中国            | Eastmoney 部分接口会重置连接；NBS easyquery 返回 403                                                                     |
+| 外盘期货 / SGE    | 当天那一行是未收盘的会话，fetcher 只保留已收盘的交易日                                                                              |
+| GIE AGSI+     | `?type=eu` 是欧盟合计，`?country=XX` 是分国；每页最多 300 天，按 `last_page` 翻页（`total` 是当页行数）；行按日期倒序；最近几天 `status` 为 `E`（估计） |
+| EIA STEO      | 分国序列只到最后一个历史月（2026-11 时是 2026-09）；汇总序列带预测到明年年底；没有阿联酋原油产量                                                     |
+| Ember         | 欧盟用 `entity=EU`（`entity_code` 为空），国家用 ISO3 `entity_code`；月度数据从 2016 年起（印度从 2019 年起）                          |
+| ENTSO-E       | token 未开通 API 权限时一律返回 `999 User is not authorized`                                                           |
 
 ## 8. 当前关键读数（做 sanity check 用，2026-11-05 构建）
 
