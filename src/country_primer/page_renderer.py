@@ -639,6 +639,7 @@ def _sections_html(
   </div>
   {deepdive_block}
   {labour_block}
+  {(config.get("section_panels") or {}).get(section_id, "")}
   <div class="charts-grid">
     {charts}
     {empty}

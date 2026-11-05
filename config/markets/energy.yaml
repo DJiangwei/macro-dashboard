@@ -17,6 +17,10 @@ min_chart_count: 35
 core_view_label_en: "Key charts"
 core_view_label_zh: "核心图表"
 
+# Cross-economy panels computed from other scopes' canonical frames (src/country_primer/transmission.py).
+panels:
+  - {type: energy_passthrough, section: macro_transmission, input: brent_spot}
+
 sections:
   crude_benchmarks:
     title_en: "Crude Benchmarks"

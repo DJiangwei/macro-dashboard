@@ -70,3 +70,11 @@ def test_apply_derivations_chains_and_records_vintages(tmp_path):
     assert out["s"]["derivation_inputs"] == {"a": "2026-01-02", "b": "2026-01-02"}
     missing = apply_derivations([{"id": "x", "derivation": "derived", "op": "spread", "inputs": ["a", "zz"]}], tmp_path)
     assert missing[0]["observations"] == [] and missing[0]["quality_status"] == "unavailable"
+
+
+def test_passthrough_yoy_uses_latest_month_with_a_year_ago_value():
+    from country_primer.transmission import _yoy_latest
+    series = {"2025-09-01": 50.0, "2025-10-01": 50.0, "2026-09-01": 60.0, "2026-10-01": 75.0, "2026-11-01": 80.0}
+    month, value = _yoy_latest(series)
+    assert month == "2026-10-01" and abs(value - 50.0) < 1e-9  # Nov has no year-ago value
+    assert _yoy_latest({"2026-10-01": 1.0}) is None

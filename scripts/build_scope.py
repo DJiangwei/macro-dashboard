@@ -38,6 +38,7 @@ from dashboard_summary_utils import (  # noqa: E402
 )
 from country_primer.data_first_pipeline import fetch_all  # noqa: E402
 from country_primer.derived import apply_derivations  # noqa: E402
+from country_primer.transmission import build_panels  # noqa: E402
 from country_primer.fetchers import build_registry  # noqa: E402
 from country_primer.indicator_templates import load_indicator_config  # noqa: E402
 from country_primer.page_renderer import _latest, build_country_page  # noqa: E402
@@ -83,6 +84,9 @@ def build(scope: Scope, data_mode: str) -> Path:
     # Whitelisted derivations (spreads, cracks, seasonal deviations, ...), recomputed
     # from their inputs in both modes so formulas and input vintages stay current.
     series_list = apply_derivations(series_list, scope.html_path.parent)
+    # Cross-scope panels (e.g. the Energy page's pass-through table) read other
+    # scopes' canonical frames, so market scopes build after the economies.
+    config["section_panels"] = build_panels(config, series_list, scope.html_path.parent, scope.slug)
 
     charted = [item for item in series_list if item.get("observations")]
     min_chart_count = config.get("min_chart_count")

@@ -21,6 +21,9 @@
 #   roles         indicator ids that play a cross-country role, first observed wins.
 #                 Defaults: policy_rate [policy_rate], cpi_yoy [cpi_inflation];
 #                 policy_rate_market (optional) is the market rate used for real rates.
+#                 energy_cpi_yoy (default energy_cpi_yoy); FX for local-currency oil:
+#                 fx_per_usd (local per USD), fx_usd_per_local (USD per local, e.g. EUR/USD)
+#                 or fx_per_eur (local per EUR, crossed through EA:eur_usd).
 
 scopes:
   - id: HU
@@ -37,6 +40,7 @@ scopes:
       policy_tool: {en: MNB Base Rate, zh: "MNB 基准利率 (Base Rate)"}
     roles:
       cpi_yoy: [cpi_yoy]
+      fx_per_eur: [fx_vs_eur]
 
   - id: PL
     kind: country
@@ -52,6 +56,7 @@ scopes:
       policy_tool: {en: NBP Reference Rate, zh: NBP 参考基准利率}
     roles:
       cpi_yoy: [cpi_yoy]
+      fx_per_eur: [fx_vs_eur]
 
   - id: CZ
     kind: country
@@ -67,6 +72,7 @@ scopes:
       policy_tool: {en: 2-Week Repo Rate, zh: "两周回购基准利率 (2W Repo)"}
     roles:
       cpi_yoy: [cpi_yoy]
+      fx_per_eur: [fx_vs_eur]
 
   - id: RO
     kind: country
@@ -82,6 +88,7 @@ scopes:
       policy_tool: {en: Monetary Policy Rate, zh: 货币政策基准利率}
     roles:
       cpi_yoy: [cpi_yoy]
+      fx_per_eur: [fx_vs_eur]
 
   - id: CN
     kind: country
@@ -107,6 +114,7 @@ scopes:
     roles:
       policy_rate: [lpr_1y_akshare, policy_rate]
       cpi_yoy: [cpi_yoy_akshare, cpi_inflation]
+      fx_per_usd: [usd_cny_midpoint]
 
   - id: EA
     kind: region
@@ -131,6 +139,8 @@ scopes:
     quick_refresh: true
     roles:
       cpi_yoy: [hicp_inflation, cpi_inflation]
+      energy_cpi_yoy: [hicp_energy_inflation]
+      fx_usd_per_local: [eur_usd]
 
   - id: JP
     kind: country
@@ -153,6 +163,8 @@ scopes:
       format: "{value:.2f}% ({date})"
     fetch_workers: 4
     quick_refresh: true
+    roles:
+      fx_per_usd: [usd_jpy]
 
   - id: ZA
     kind: country
@@ -175,6 +187,8 @@ scopes:
       format: "{value:.2f}% ({date})"
     fetch_workers: 4
     quick_refresh: true
+    roles:
+      fx_per_usd: [zar_usd]
 
   - id: UK
     kind: country
@@ -200,6 +214,8 @@ scopes:
     roles:
       policy_rate: [bank_rate]
       cpi_yoy: [cpi_yoy, cpi_inflation]
+      energy_cpi_yoy: [household_energy_cpi_yoy]
+      fx_usd_per_local: [gbp_usd]
 
   - id: US
     kind: country
@@ -225,6 +241,7 @@ scopes:
     roles:
       policy_rate: [fed_target_upper]
       policy_rate_market: [effective_fed_funds, daily_fed_funds]
+      energy_cpi_yoy: [energy_cpi_inflation]
 
   - id: TR
     kind: country
@@ -247,6 +264,9 @@ scopes:
       format: "{value:.4f} ({date})"
     fetch_workers: 6
     quick_refresh: true
+    roles:
+      energy_cpi_yoy: [energy_hicp_inflation]
+      fx_per_usd: [try_usd]
 
   - id: HK
     kind: country
@@ -268,6 +288,8 @@ scopes:
       label: USD/HKD spot
       format: "{value:.4f} ({date})"
     fetch_workers: 6
+    roles:
+      fx_per_usd: [usd_hkd]
 
   - id: KR
     kind: country
@@ -290,6 +312,8 @@ scopes:
       format: "{value:.2f} ({date})"
     fetch_workers: 6
     quick_refresh: true
+    roles:
+      fx_per_usd: [krw_usd]
 
   - id: TW
     kind: country
@@ -314,6 +338,7 @@ scopes:
     quick_refresh: true
     roles:
       policy_rate: [policy_rate, collateral_rate]
+      fx_per_usd: [usd_twd]
 
   - id: IN
     kind: country
@@ -335,6 +360,8 @@ scopes:
       label: USD/INR (Fed H.10)
       format: "{value:.2f} ({date})"
     fetch_workers: 6
+    roles:
+      fx_per_usd: [usd_inr, usd_inr_bis]
 
   - id: KZ
     kind: country
@@ -356,6 +383,8 @@ scopes:
       label: USD/KZT official rate
       format: "{value:.2f} ({date})"
     fetch_workers: 6
+    roles:
+      fx_per_usd: [usd_kzt]
 
   - id: UZ
     kind: country
@@ -377,6 +406,8 @@ scopes:
       label: USD/UZS official rate
       format: "{value:,.2f} ({date})"
     fetch_workers: 6
+    roles:
+      fx_per_usd: [usd_uzs]
 
   - id: EG
     kind: country
@@ -398,6 +429,8 @@ scopes:
       label: USD/EGP official rate
       format: "{value:.2f} ({date})"
     fetch_workers: 6
+    roles:
+      fx_per_usd: [usd_egp]
 
   - id: NG
     kind: country
@@ -422,6 +455,8 @@ scopes:
 
   # ---------------------------------------------------------------- markets
   # Market pages build after the economies (they may read country frames).
+    roles:
+      fx_per_usd: [usd_ngn]
   - id: ENERGY
     kind: market
     slug: energy

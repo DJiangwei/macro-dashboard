@@ -680,6 +680,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
 
 
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="energy:brent_spot">
@@ -998,6 +999,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
 
 
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="energy:nyh_gasoline_spot">
@@ -1280,6 +1282,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">Natural Gas &amp; LNG</span><span data-lang="zh">天然气与LNG</span></h2>
     <div class="logic"><span data-lang="en">The three regional gas prices and US storage against its five-year seasonal norm.</span><span data-lang="zh">三大区域气价，以及美国储气相对五年季节常态的偏离。</span></div>
   </div>
+
 
 
   <div class="charts-grid">
@@ -1566,6 +1569,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
 
 
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="energy:de_power_day_ahead">
@@ -1714,6 +1718,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
 
 
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-verified" data-dashboard-view="core" data-concept-id="energy:us_crude_production">
@@ -1792,6 +1797,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">Demand</span><span data-lang="zh">需求</span></h2>
     <div class="logic"><span data-lang="en">US product supplied (apparent demand), four-week averages smooth weekly noise.</span><span data-lang="zh">美国油品表观消费（产品供应量），以四周均值平滑周度噪音。</span></div>
   </div>
+
 
 
   <div class="charts-grid">
@@ -1940,6 +1946,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">Inventories</span><span data-lang="zh">库存</span></h2>
     <div class="logic"><span data-lang="en">US crude, Cushing, SPR, gasoline and distillate stocks, with deviations from the five-year seasonal average and distillate days of cover.</span><span data-lang="zh">美国原油、库欣、战略储备、汽油与馏分油库存，以及相对五年季节均值的偏离和馏分油可用天数。</span></div>
   </div>
+
 
 
   <div class="charts-grid">
@@ -2226,6 +2233,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
 
 
+
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-verified" data-dashboard-view="deep" data-concept-id="energy:us_crude_exports">
@@ -2304,6 +2312,7 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
     <h2><span data-lang="en">Positioning (CFTC)</span><span data-lang="zh">持仓（CFTC）</span></h2>
     <div class="logic"><span data-lang="en">Managed-money net futures positions from the disaggregated Commitments of Traders, queried by contract code.</span><span data-lang="zh">CFTC分类持仓报告中管理基金的期货净持仓，按合约代码查询。</span></div>
   </div>
+
 
 
   <div class="charts-grid">
@@ -2522,6 +2531,22 @@ footer.page-footer { color: var(--muted); border-top: 1px solid var(--border); p
   </div>
 
 
+
+<div class="dd-panel" id="energy-passthrough" style="margin:18px 0;padding:16px 18px;border:1px solid var(--border,#d9d3c7);background:var(--surface,#fff);">
+  <div style="font-weight:700;margin-bottom:4px;"><span data-lang="en">Energy shock by economy</span><span data-lang="zh">各经济体能源冲击</span></div>
+  <div class="muted" style="font-size:12px;margin-bottom:10px;"><span data-lang="en">Latest observed values from each economy's page. Definitions differ (household energy vs total energy, CPI vs HICP). Brent in local currency uses monthly means of Brent and the economy's exchange rate; CEE currencies are crossed through EUR/USD.</span><span data-lang="zh">取自各经济体页面的最新观测值。口径不同（居民能源与全部能源、CPI与HICP）。本币布伦特使用布伦特与汇率的月均值计算；中东欧货币经EUR/USD交叉换算。</span></div>
+  <div style="overflow-x:auto;"><table class="inflation-table" style="width:100%;border-collapse:collapse;font-size:13px;">
+    <thead><tr>
+      <th style="text-align:left;"><span data-lang="en">Economy</span><span data-lang="zh">经济体</span></th>
+      <th><span data-lang="en">Energy CPI YoY</span><span data-lang="zh">能源CPI同比</span></th>
+      <th style="text-align:left;"><span data-lang="en">Series</span><span data-lang="zh">序列</span></th>
+      <th><span data-lang="en">Contribution to headline</span><span data-lang="zh">对总体通胀拉动</span></th>
+      <th><span data-lang="en">Energy import dependence</span><span data-lang="zh">能源进口依存度</span></th>
+      <th><span data-lang="en">Brent YoY in local currency</span><span data-lang="zh">本币计价布伦特同比</span></th>
+    </tr></thead>
+    <tbody><tr><td>🇭🇺 <strong>HU</strong> <span class="muted">Hungary</span></td><td class="num"><strong>+5.2%</strong><br><span class="muted">2026-09</span></td><td class="muted">Energy HICP, YoY</td><td class="num"><strong>+0.24 pp</strong><br><span class="muted">2026-09</span></td><td class="num"><strong>+48.94%</strong><br><span class="muted">2024-12</span></td><td class="num muted">—</td></tr><tr><td>🇵🇱 <strong>PL</strong> <span class="muted">Poland</span></td><td class="num"><strong>+14.2%</strong><br><span class="muted">2026-09</span></td><td class="muted">Energy HICP, YoY</td><td class="num"><strong>+1.15 pp</strong><br><span class="muted">2026-09</span></td><td class="num"><strong>+45.67%</strong><br><span class="muted">2024-12</span></td><td class="num muted">—</td></tr><tr><td>🇨🇿 <strong>CZ</strong> <span class="muted">Czechia</span></td><td class="num"><strong>+5.7%</strong><br><span class="muted">2026-09</span></td><td class="muted">Energy HICP, YoY</td><td class="num"><strong>-0.18 pp</strong><br><span class="muted">2026-09</span></td><td class="num"><strong>+39.32%</strong><br><span class="muted">2024-12</span></td><td class="num muted">—</td></tr><tr><td>🇷🇴 <strong>RO</strong> <span class="muted">Romania</span></td><td class="num"><strong>+14.4%</strong><br><span class="muted">2026-09</span></td><td class="muted">Energy HICP, YoY</td><td class="num"><strong>+0.83 pp</strong><br><span class="muted">2026-09</span></td><td class="num"><strong>+30.36%</strong><br><span class="muted">2024-12</span></td><td class="num muted">—</td></tr><tr><td>🇨🇳 <strong>CN</strong> <span class="muted">China</span></td><td class="num muted">—</td><td class="muted"></td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+81.9%</strong><br><span class="muted">2026-10 · USD +92.0%</span></td></tr><tr><td>🇪🇺 <strong>EA</strong> <span class="muted">Euro Area</span></td><td class="num"><strong>+20.8%</strong><br><span class="muted">2026-10</span></td><td class="muted">HICP Energy Inflation, YoY</td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+99.4%</strong><br><span class="muted">2026-10 · USD +92.0%</span></td></tr><tr><td>🇯🇵 <strong>JP</strong> <span class="muted">Japan</span></td><td class="num muted">—</td><td class="muted"></td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+100.4%</strong><br><span class="muted">2026-10 · USD +92.0%</span></td></tr><tr><td>🇿🇦 <strong>ZA</strong> <span class="muted">South Africa</span></td><td class="num muted">—</td><td class="muted"></td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+83.9%</strong><br><span class="muted">2026-10 · USD +92.0%</span></td></tr><tr><td>🇬🇧 <strong>UK</strong> <span class="muted">United Kingdom</span></td><td class="num"><strong>+7.8%</strong><br><span class="muted">2026-09</span></td><td class="muted">Household Energy CPI</td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+92.9%</strong><br><span class="muted">2026-10 · USD +92.0%</span></td></tr><tr><td>🇺🇸 <strong>US</strong> <span class="muted">United States</span></td><td class="num"><strong>+20.35%</strong><br><span class="muted">2026-09</span></td><td class="muted">Energy CPI Inflation</td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+92.0%</strong><br><span class="muted">2026-10 · USD +92.0%</span></td></tr><tr><td>🇹🇷 <strong>TR</strong> <span class="muted">Turkey</span></td><td class="num"><strong>+47.6%</strong><br><span class="muted">2026-09</span></td><td class="muted">Energy HICP Inflation YoY</td><td class="num muted">—</td><td class="num muted">—</td><td class="num muted">—</td></tr><tr><td>🇭🇰 <strong>HK</strong> <span class="muted">Hong Kong</span></td><td class="num muted">—</td><td class="muted"></td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+93.8%</strong><br><span class="muted">2026-10 · USD +92.0%</span></td></tr><tr><td>🇰🇷 <strong>KR</strong> <span class="muted">South Korea</span></td><td class="num muted">—</td><td class="muted"></td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+80.4%</strong><br><span class="muted">2026-10 · USD +92.0%</span></td></tr><tr><td>🇹🇼 <strong>TW</strong> <span class="muted">Taiwan</span></td><td class="num muted">—</td><td class="muted"></td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+102.5%</strong><br><span class="muted">2026-10 · USD +92.0%</span></td></tr><tr><td>🇮🇳 <strong>IN</strong> <span class="muted">India</span></td><td class="num muted">—</td><td class="muted"></td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+107.5%</strong><br><span class="muted">2026-10 · USD +92.0%</span></td></tr><tr><td>🇰🇿 <strong>KZ</strong> <span class="muted">Kazakhstan</span></td><td class="num muted">—</td><td class="muted"></td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+54.2%</strong><br><span class="muted">2026-10 · USD +92.0%</span></td></tr><tr><td>🇺🇿 <strong>UZ</strong> <span class="muted">Uzbekistan</span></td><td class="num muted">—</td><td class="muted"></td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+64.5%</strong><br><span class="muted">2026-09 · USD +67.9%</span></td></tr><tr><td>🇪🇬 <strong>EG</strong> <span class="muted">Egypt</span></td><td class="num muted">—</td><td class="muted"></td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+23.9%</strong><br><span class="muted">2026-07 · USD +17.9%</span></td></tr><tr><td>🇳🇬 <strong>NG</strong> <span class="muted">Nigeria</span></td><td class="num muted">—</td><td class="muted"></td><td class="num muted">—</td><td class="num muted">—</td><td class="num"><strong>+76.1%</strong><br><span class="muted">2026-10 · USD +92.0%</span></td></tr></tbody>
+  </table></div>
+</div>
   <div class="charts-grid">
 
 <article class="chart-card chart-quality-watch" data-dashboard-view="core" data-concept-id="energy:us_cpi_energy_yoy">

@@ -1,0 +1,347 @@
+{
+ "energy_passthrough": {
+  "schema_version": "energy-passthrough-v1",
+  "rows": [
+   {
+    "code": "HU",
+    "name_en": "Hungary",
+    "name_zh": "匈牙利",
+    "flag": "🇭🇺",
+    "energy_cpi": {
+     "date": "2026-09-01",
+     "value": 5.2,
+     "id": "energy_cpi_yoy",
+     "label": "Energy HICP, YoY"
+    },
+    "energy_contribution": {
+     "date": "2026-09-01",
+     "value": 0.24,
+     "id": "cpi_contrib_energy_yoy",
+     "label": "Energy CPI Contribution (YoY)"
+    },
+    "import_dependency": {
+     "date": "2024-12-31",
+     "value": 48.94,
+     "id": "energy_import_dependency",
+     "label": "Energy Import Dependency"
+    },
+    "brent_local_yoy": null
+   },
+   {
+    "code": "PL",
+    "name_en": "Poland",
+    "name_zh": "波兰",
+    "flag": "🇵🇱",
+    "energy_cpi": {
+     "date": "2026-09-01",
+     "value": 14.2,
+     "id": "energy_cpi_yoy",
+     "label": "Energy HICP, YoY"
+    },
+    "energy_contribution": {
+     "date": "2026-09-01",
+     "value": 1.15,
+     "id": "cpi_contrib_energy_yoy",
+     "label": "Energy CPI Contribution (YoY)"
+    },
+    "import_dependency": {
+     "date": "2024-12-31",
+     "value": 45.67,
+     "id": "energy_import_dependency",
+     "label": "Energy Import Dependency"
+    },
+    "brent_local_yoy": null
+   },
+   {
+    "code": "CZ",
+    "name_en": "Czechia",
+    "name_zh": "捷克",
+    "flag": "🇨🇿",
+    "energy_cpi": {
+     "date": "2026-09-01",
+     "value": 5.7,
+     "id": "energy_cpi_yoy",
+     "label": "Energy HICP, YoY"
+    },
+    "energy_contribution": {
+     "date": "2026-09-01",
+     "value": -0.18,
+     "id": "cpi_contrib_energy_yoy",
+     "label": "Energy CPI Contribution (YoY)"
+    },
+    "import_dependency": {
+     "date": "2024-12-31",
+     "value": 39.32,
+     "id": "energy_import_dependency",
+     "label": "Energy Import Dependency"
+    },
+    "brent_local_yoy": null
+   },
+   {
+    "code": "RO",
+    "name_en": "Romania",
+    "name_zh": "罗马尼亚",
+    "flag": "🇷🇴",
+    "energy_cpi": {
+     "date": "2026-09-01",
+     "value": 14.4,
+     "id": "energy_cpi_yoy",
+     "label": "Energy HICP, YoY"
+    },
+    "energy_contribution": {
+     "date": "2026-09-01",
+     "value": 0.83,
+     "id": "cpi_contrib_energy_yoy",
+     "label": "Energy CPI Contribution (YoY)"
+    },
+    "import_dependency": {
+     "date": "2024-12-31",
+     "value": 30.36,
+     "id": "energy_import_dependency",
+     "label": "Energy Import Dependency"
+    },
+    "brent_local_yoy": null
+   },
+   {
+    "code": "CN",
+    "name_en": "China",
+    "name_zh": "中国",
+    "flag": "🇨🇳",
+    "energy_cpi": null,
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 81.9,
+     "usd_value": 92.0,
+     "fx": "usd_cny_midpoint"
+    }
+   },
+   {
+    "code": "EA",
+    "name_en": "Euro Area",
+    "name_zh": "欧元区",
+    "flag": "🇪🇺",
+    "energy_cpi": {
+     "date": "2026-10-01",
+     "value": 20.8,
+     "id": "hicp_energy_inflation",
+     "label": "HICP Energy Inflation, YoY"
+    },
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 99.4,
+     "usd_value": 92.0,
+     "fx": "1 / eur_usd"
+    }
+   },
+   {
+    "code": "JP",
+    "name_en": "Japan",
+    "name_zh": "日本",
+    "flag": "🇯🇵",
+    "energy_cpi": null,
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 100.4,
+     "usd_value": 92.0,
+     "fx": "usd_jpy"
+    }
+   },
+   {
+    "code": "ZA",
+    "name_en": "South Africa",
+    "name_zh": "南非",
+    "flag": "🇿🇦",
+    "energy_cpi": null,
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 83.9,
+     "usd_value": 92.0,
+     "fx": "zar_usd"
+    }
+   },
+   {
+    "code": "UK",
+    "name_en": "United Kingdom",
+    "name_zh": "英国",
+    "flag": "🇬🇧",
+    "energy_cpi": {
+     "date": "2026-09-01",
+     "value": 7.8,
+     "id": "household_energy_cpi_yoy",
+     "label": "Household Energy CPI"
+    },
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 92.9,
+     "usd_value": 92.0,
+     "fx": "1 / gbp_usd"
+    }
+   },
+   {
+    "code": "US",
+    "name_en": "United States",
+    "name_zh": "美国",
+    "flag": "🇺🇸",
+    "energy_cpi": {
+     "date": "2026-09-01",
+     "value": 20.35,
+     "id": "energy_cpi_inflation",
+     "label": "Energy CPI Inflation"
+    },
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 92.0,
+     "usd_value": 92.0,
+     "fx": "USD"
+    }
+   },
+   {
+    "code": "TR",
+    "name_en": "Turkey",
+    "name_zh": "土耳其",
+    "flag": "🇹🇷",
+    "energy_cpi": {
+     "date": "2026-09-01",
+     "value": 47.6,
+     "id": "energy_hicp_inflation",
+     "label": "Energy HICP Inflation YoY"
+    },
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": null
+   },
+   {
+    "code": "HK",
+    "name_en": "Hong Kong",
+    "name_zh": "中国香港",
+    "flag": "🇭🇰",
+    "energy_cpi": null,
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 93.8,
+     "usd_value": 92.0,
+     "fx": "usd_hkd"
+    }
+   },
+   {
+    "code": "KR",
+    "name_en": "South Korea",
+    "name_zh": "韩国",
+    "flag": "🇰🇷",
+    "energy_cpi": null,
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 80.4,
+     "usd_value": 92.0,
+     "fx": "krw_usd"
+    }
+   },
+   {
+    "code": "TW",
+    "name_en": "Taiwan",
+    "name_zh": "中国台湾",
+    "flag": "🇹🇼",
+    "energy_cpi": null,
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 102.5,
+     "usd_value": 92.0,
+     "fx": "usd_twd"
+    }
+   },
+   {
+    "code": "IN",
+    "name_en": "India",
+    "name_zh": "印度",
+    "flag": "🇮🇳",
+    "energy_cpi": null,
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 107.5,
+     "usd_value": 92.0,
+     "fx": "usd_inr"
+    }
+   },
+   {
+    "code": "KZ",
+    "name_en": "Kazakhstan",
+    "name_zh": "哈萨克斯坦",
+    "flag": "🇰🇿",
+    "energy_cpi": null,
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 54.2,
+     "usd_value": 92.0,
+     "fx": "usd_kzt"
+    }
+   },
+   {
+    "code": "UZ",
+    "name_en": "Uzbekistan",
+    "name_zh": "乌兹别克斯坦",
+    "flag": "🇺🇿",
+    "energy_cpi": null,
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-09",
+     "value": 64.5,
+     "usd_value": 67.9,
+     "fx": "usd_uzs"
+    }
+   },
+   {
+    "code": "EG",
+    "name_en": "Egypt",
+    "name_zh": "埃及",
+    "flag": "🇪🇬",
+    "energy_cpi": null,
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-07",
+     "value": 23.9,
+     "usd_value": 17.9,
+     "fx": "usd_egp"
+    }
+   },
+   {
+    "code": "NG",
+    "name_en": "Nigeria",
+    "name_zh": "尼日利亚",
+    "flag": "🇳🇬",
+    "energy_cpi": null,
+    "energy_contribution": null,
+    "import_dependency": null,
+    "brent_local_yoy": {
+     "month": "2026-10",
+     "value": 76.1,
+     "usd_value": 92.0,
+     "fx": "usd_ngn"
+    }
+   }
+  ]
+ }
+}
