@@ -110,7 +110,7 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
 2. **油价模型的后续**：美国能源权重（BLS relative importance，可尝试其他公开镜像）；英国车用燃料（07.2.2）纳入能源口径；更长的滞后窗口或分段样本；二轮效应模型（另立 MODEL，不与一轮效应混在一起）。
 3. **基本金属页的后续**：矿山供给（Cochilco、INE、MINEM）、中国精炼产量和分品种进出口、COMEX 铜库存、更长的上期所库存历史（可以考虑在 refresh 时累积历史）、上期所近远月价差。
 4. **后续小项**
-   - KZ/NG/UZ/EG 政策利率（2026-11-05 已处理；BIS WS_CBPOL 不覆盖这四国，原 DBnomics IFS 序列止于 2020–2025）：KZ 改用 NBK 官网决议表（`nbk_base_rate`，2015-09 起，事件日期加截至行）；NG/UZ/EG 改用 IMF MFS_IR 的 `MFS166`（货币政策相关利率），IMF 滞后约 6–14 个月。后续：NG 可接 CBN MPC 决议页（cbn.gov.ng/MonetaryPolicy/Decisions.html 可抓）；CBU 从本环境连不上，CBE 返回拦截页。
+   - KZ/NG/UZ/EG 政策利率（2026-11-05 已处理；BIS WS_CBPOL 不覆盖这四国，原 DBnomics IFS 序列止于 2020–2025）：KZ 改用 NBK 官网决议表（`nbk_base_rate`，2015-09 起，事件日期加截至行）；UZ/EG 改用 IMF MFS_IR 的 `MFS166`（货币政策相关利率），IMF 滞后约 14 个月；CBU 从本环境连不上，CBE 返回拦截页。NG 改用 CBN 官方接口 `api/GetAllMoneyMarketIndicators`（`cbn_money_market`，月度，2006-12 起，字段还有银行间、国债、存贷款利率）。不要改用 CBN 决议页（Decisions.html）：它漏收了 2024-11 第 298 次会议（加息至 27.5%）。CBN 接口 2025-08 为 27.0%，与决议日期（2025-09-23）不符，已写入 caveat。
    - CEE 叙述文字（`config/countries.yaml`）需要逐条核实后重写。匈牙利央行领导层已于 2026-11-05 按 mnb.hu 更正（行长 Varga、四位副行长）；仍未核实的有：匈牙利政治背景（2026 年 4 月大选结果）、各国央行资产负债表数字、PL/CZ/RO 的行长与委员名单。mnb.hu 的议会选任委员名单当天无法与原文逐条核对（摘要列出的条目里有任期似已届满的），未采用，页面改为指向 mnb.hu。
    - 欧元区：职位空缺与 7 个 EA20 序列已于 2026-11-05 修复（见 §7 Eurostat 行）。协议工资同日修复：ECB 把它从 STS（`STS.Q.*.N.INWR.000000.3.ANR`，止于 2025-Q3）移到了 INW 数据流，现用 `INW.Q.U2.N.INWR.000000.4F0.GY.IX`（随成员变化的 U2 口径，不会因扩容冻结；与旧序列 135 个重叠季度差异 ≤0.13pp）。
    - 欧元区还有 8 个序列用 EA20（`sts_*`、`gov_*`），目前仍在更新，与已切换到 EA21 的序列口径不一致；以后可统一切到 EA21（两者差约 0.1pp）。

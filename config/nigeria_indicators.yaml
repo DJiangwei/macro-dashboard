@@ -527,16 +527,15 @@ indicators:
     label_en: Central Bank Monetary Policy Rate (MPR)
     label_zh: 央行货币政策利率 (CBN MPR)
     unit: "%"
-    fetcher: imf_sdmx
-    dataflow: "IMF.STA,MFS_IR"
-    series: NGA.MFS166_RT_PT_A_PT.M
-    source_name: IMF Monetary and Financial Statistics (MFS_IR)
-    source_authority: official_mirror
-    source_url: https://data.imf.org/en/datasets/IMF.STA:MFS_IR
+    fetcher: cbn_money_market
+    measure: mpr
+    source_name: Central Bank of Nigeria (money-market indicators)
+    source_authority: official_primary
+    source_url: https://www.cbn.gov.ng/rates/
     frequency: monthly
     start_date: 2015-01-01
-    caveat_en: "Central Bank of Nigeria Monetary Policy Rate as reported to the IMF (MFS_IR, monetary policy-related rate). IMF publication lags the central bank by several months, so recent decisions may not show yet; the former IFS series on DBnomics stopped earlier."
-    caveat_zh: "尼日利亚中央银行货币政策利率，来自IMF货币金融统计（MFS_IR，货币政策相关利率）。IMF发布比央行滞后数月，最近的决议可能尚未体现；原DBnomics上的IFS序列停更更早。"
+    caveat_en: "CBN Monetary Policy Rate, monthly, from the CBN money-market indicators API (from December 2006, when the MPR replaced the MRR). Checked against IMF MFS_IR over 232 months: four differ. In 2026-02 to 2026-04 the CBN value matches the MPC cut to 26.5% on 24 Feb 2026 while the IMF still shows 27%; in 2025-08 the CBN API shows 27.0% although the MPC cut to 27.0% only on 23 Sep 2025."
+    caveat_zh: "尼日利亚央行货币政策利率（MPR），月度，来自CBN货币市场指标接口（自2006年12月MPR取代MRR起）。与IMF MFS_IR对照232个月，有4个月不同：2026年2–4月CBN数值与2026年2月24日降至26.5%的决议一致，IMF仍为27%；2025年8月CBN接口显示27.0%，但货币政策委员会直到2025年9月23日才降至27.0%。"
 
   - id: lending_rate
     section: monetary_financial

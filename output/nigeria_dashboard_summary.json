@@ -1,10 +1,10 @@
 {
   "file": "nigeria.html",
-  "generated": "2026-11-05T16:04:35.960010+00:00",
+  "generated": "2026-11-05T17:27:50.875325+00:00",
   "charts": 40,
   "source_groups": 16,
   "data_gaps": 3,
-  "low_confidence": 13,
+  "low_confidence": 11,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -346,13 +346,13 @@
       "id": "policy_rate",
       "label_en": "Central Bank Monetary Policy Rate (MPR)",
       "label_zh": "央行货币政策利率 (CBN MPR)",
-      "latest_date": "2026-04-01",
-      "latest_value": 27.0,
-      "latest_display": "27.0 %",
+      "latest_date": "2026-09-01",
+      "latest_value": 23.0,
+      "latest_display": "23.0 %",
       "frequency": "monthly",
-      "source_name": "IMF Monetary and Financial Statistics (MFS_IR)",
-      "series": "NGA.MFS166_RT_PT_A_PT.M",
-      "quality_status": "low_confidence"
+      "source_name": "Central Bank of Nigeria (money-market indicators)",
+      "series": "",
+      "quality_status": "verified"
     },
     {
       "id": "lending_rate",
@@ -483,10 +483,10 @@
     ],
     "file": "nigeria_canonical_frame.json",
     "series": 40,
-    "observations": 13819,
+    "observations": 13828,
     "series_count": 40,
-    "observation_count": 13819,
-    "snapshot_generated": "2026-11-05T16:03:55.551187+00:00"
+    "observation_count": 13828,
+    "snapshot_generated": "2026-11-05T17:23:22.330388+00:00"
   },
   "data_gaps_detail": [
     {
@@ -551,19 +551,19 @@
         "charts": 1
       },
       {
+        "source_name": "Central Bank of Nigeria (money-market indicators)",
+        "charts": 1
+      },
+      {
+        "source_name": "Central Bank of Nigeria (money-market indicators) / Derived",
+        "charts": 1
+      },
+      {
         "source_name": "EIA / FRED",
         "charts": 1
       },
       {
         "source_name": "IMF DataMapper (Fiscal Monitor)",
-        "charts": 1
-      },
-      {
-        "source_name": "IMF Monetary and Financial Statistics (MFS_IR)",
-        "charts": 1
-      },
-      {
-        "source_name": "IMF Monetary and Financial Statistics (MFS_IR) / Derived",
         "charts": 1
       },
       {
@@ -580,9 +580,9 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 13,
-      "verified": 1,
-      "watch": 26
+      "low_confidence": 11,
+      "verified": 2,
+      "watch": 27
     },
     "unavailable_count": 0
   },
@@ -595,10 +595,10 @@
   "freshness": {
     "as_of_date": "2026-11-05",
     "counts": {
-      "current": 12,
-      "due": 9,
+      "current": 13,
+      "due": 10,
       "projection": 6,
-      "stale": 13
+      "stale": 11
     },
     "latest_historical_date": "2026-11-02",
     "attention": [
@@ -776,50 +776,6 @@
         "comparability": "medium",
         "source_name": "IMF / DBnomics (IFS)",
         "series": "IMF/IFS/M.NG.ENDE_XDC_USD_RATE",
-        "transform": "level"
-      },
-      {
-        "id": "policy_rate",
-        "concept_id": "policy_rate",
-        "label_en": "Central Bank Monetary Policy Rate (MPR)",
-        "latest_date": "2026-04-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2026-04-01",
-        "age_days": 189,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF Monetary and Financial Statistics (MFS_IR)",
-        "series": "NGA.MFS166_RT_PT_A_PT.M",
-        "transform": "level"
-      },
-      {
-        "id": "real_policy_rate",
-        "concept_id": "real_policy_rate",
-        "label_en": "NG Real Policy Rate (Policy Rate − CPI YoY)",
-        "latest_date": "2026-04-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2026-04-01",
-        "age_days": 189,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "derived",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF Monetary and Financial Statistics (MFS_IR) / Derived",
-        "series": "policy_rate in force at month end − cpi_inflation",
         "transform": "level"
       },
       {
@@ -1062,6 +1018,28 @@
         "comparability": "medium",
         "source_name": "IMF SDMX / Nigeria NBS",
         "series": "NGA.CPI._T.POP_PCH_PA_PT.M",
+        "transform": "level"
+      },
+      {
+        "id": "real_policy_rate",
+        "concept_id": "real_policy_rate",
+        "label_en": "NG Real Policy Rate (Policy Rate − CPI YoY)",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 66,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "Central Bank of Nigeria (money-market indicators) / Derived",
+        "series": "policy_rate in force at month end − cpi_inflation",
         "transform": "level"
       },
       {

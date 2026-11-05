@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-11-05T16:04:38.578302+00:00",
+  "generated": "2026-11-05T17:28:13.871666+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -159,9 +159,9 @@
       "missing": 30
     },
     "NG": {
-      "verified": 1,
+      "verified": 2,
       "watch": 11,
-      "low_confidence": 7,
+      "low_confidence": 6,
       "substitute": 0,
       "missing": 29
     }
@@ -6521,8 +6521,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 0,
-      "weak_countries": 3,
-      "priority_score": 56,
+      "weak_countries": 2,
+      "priority_score": 54,
       "countries": {
         "HU": {
           "state": "verified",
@@ -6690,12 +6690,12 @@
           "refresh_fallback": false
         },
         "NG": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2026-04-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         }
       }
@@ -6880,7 +6880,7 @@
           "indicator_ids": [
             "real_policy_rate"
           ],
-          "latest_date": "2026-04-01",
+          "latest_date": "2026-08-01",
           "refresh_fallback": false
         }
       }
@@ -9174,18 +9174,6 @@
       ]
     },
     {
-      "concept_id": "policy_rate",
-      "pillar": "monetary_financial",
-      "label_en": "Policy Rate",
-      "priority_score": 56,
-      "missing_countries": [],
-      "weak_countries": [
-        "UZ",
-        "EG",
-        "NG"
-      ]
-    },
-    {
       "concept_id": "primary_balance_gdp",
       "pillar": "fiscal_sovereign",
       "label_en": "Primary Balance, % GDP",
@@ -9208,6 +9196,17 @@
       "weak_countries": [
         "IN",
         "NG"
+      ]
+    },
+    {
+      "concept_id": "policy_rate",
+      "pillar": "monetary_financial",
+      "label_en": "Policy Rate",
+      "priority_score": 54,
+      "missing_countries": [],
+      "weak_countries": [
+        "UZ",
+        "EG"
       ]
     },
     {
