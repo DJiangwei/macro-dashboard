@@ -2,6 +2,8 @@
 
 规格见 `docs/superpowers/specs/2026-11-04-scope-framework-and-markets-design.md` §7。
 
+**状态：已于 2026-11-05 切换完成**（data 分支 bootstrap → `PAGES_MODE=actions` → Pages 来源改为 GitHub Actions → 首次部署 run 42109278643 成功，线上冒烟 51/51）。下面的切换步骤保留作记录与回滚参考。
+
 ## 结构
 
 | 位置 | 内容 | 谁写入 |

@@ -9,6 +9,14 @@
 
 **现状**：`main` 已包含全部改动（PR #6，2026-11-05），是唯一的基线。`claude/magical-newton-6nyshr` 只作历史保留，不再在上面开发。
 
+**Pages 方案 C 已于 2026-11-05 启用**（`PAGES_MODE=actions`，Pages 来源为 GitHub Actions，数据在 `data` 分支）。由此带来三条规则：
+
+1. **线上页面只用 `data` 分支的数据重建**；main 上提交的 JSON/HTML 不会进入线上。开始工作时先 `git pull --ff-only` 再 `make pull-data`。
+2. **改了数据就要推数据**：本地刷新序列后运行 `make publish-data MSG="说明"`（推送 data 分支并触发部署）。`data_branch.sh push` 会用本地数据整体替换 data 分支，所以刷新前必须先 `make pull-data`，否则会把定时刷新的新数据覆盖成旧的。代码和数据一起改时：先合并 PR，再 `make publish-data`。
+3. **检查线上**：合并到 main 会自动触发 `Deploy Pages from data branch`（不再是 `pages-build-deployment`）；等这个 run 的 build 与 deploy 都是 `completed/success`，它自带线上冒烟检查，再在本地跑 `publish_smoke.py`。页面是重新生成的，不会与 main 上的 HTML 逐字节相同，改为核对内容。
+
+定时刷新从此只推 data 分支、不再向 main 提交。main 上的生成文件会逐渐落后于 data 分支；`docs/PAGES_DEPLOYMENT.md` 第三阶段（main 不再跟踪生成文件）稳定运行一段时间后再做。
+
 **开始一次会话**（本地 `/Users/jiangwei/Claude/Country_Primer` 或云端）
 
 ```bash
