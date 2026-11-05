@@ -475,3 +475,22 @@ scopes:
       format: "{value:.2f} USD/bbl ({date})"
     fetch_workers: 4
     quick_refresh: true
+
+  - id: PRECIOUS
+    kind: market
+    slug: precious_metals
+    name: {en: Precious Metals, zh: 贵金属}
+    flag: "🥇"
+    region: markets
+    pipeline: data_first
+    indicators: config/markets/precious_metals.yaml
+    currency: USD
+    institution: COMEX
+    framework_label: Market Precious Metals Framework
+    headline:
+      indicators: [gold_front_futures, gold_monthly_imf]
+      key: gold_latest
+      label: Gold (COMEX front month)
+      format: "{value:,.1f} USD/oz ({date})"
+    fetch_workers: 4
+    quick_refresh: true

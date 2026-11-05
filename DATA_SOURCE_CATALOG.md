@@ -1597,6 +1597,75 @@ Configured charts: 54. Latest rendered chart count: 54. Source groups: 22.
 | power_coal | EU carbon (EUA) price and generation mix | EUA settlement data is EEX/ICE licensed; the generation mix needs EMBER_API_KEY. |
 | trade_geography | Tanker rates, rig counts and chokepoint flows | Baltic Exchange/Kpler data is licensed; Baker Hughes refuses requests from this environment. |
 
+## Precious Metals Data-First Dashboard Sources
+
+The Precious Metals page is generated from `config/markets/precious_metals.yaml` through the global fetcher registry.
+
+Generated from `config/markets/precious_metals.yaml`; latest dates are tracked in `output/precious_metals_dashboard_summary.json` and the generated HTML rather than fetched again here.
+
+Configured charts: 49. Latest rendered chart count: 49. Source groups: 14.
+
+| Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
+|---|---|---|---|---|---|---|---|---|
+| prices | `gold_front_futures` | Gold (COMEX front month) | daily | USD/oz | foreign_futures | Sina Finance via AKShare | GC | Completed sessions only, from a public wrapper; IMF monthly averages are the verified reference. |
+| prices | `silver_front_futures` | Silver (COMEX front month) | daily | USD/oz | foreign_futures | Sina Finance via AKShare | SI | Completed sessions only, from a public wrapper. |
+| prices | `platinum_front_futures` | Platinum (NYMEX front month) | daily | USD/oz | foreign_futures | Sina Finance via AKShare | XPT | Completed sessions only, from a public wrapper. |
+| prices | `palladium_front_futures` | Palladium (NYMEX front month) | daily | USD/oz | foreign_futures | Sina Finance via AKShare | XPD | Completed sessions only, from a public wrapper. |
+| prices | `copper_front_futures` | Copper (COMEX front month, for the gold/copper ratio) | daily | US cents/lb | foreign_futures | Sina Finance via AKShare | HG | Quoted in US cents per pound. |
+| prices | `gold_monthly_imf` | Gold (IMF monthly average) | monthly | USD/oz | imf_sdmx | IMF Primary Commodity Prices | G001.PGOLD.USD.M | Monthly average of the London price as compiled by the IMF. |
+| prices | `silver_monthly_imf` | Silver (IMF monthly average) | monthly | USD/oz | imf_sdmx | IMF Primary Commodity Prices | G001.PSILVER.USD.M | Monthly average as compiled by the IMF. |
+| prices | `platinum_monthly_imf` | Platinum (IMF monthly average) | monthly | USD/oz | imf_sdmx | IMF Primary Commodity Prices | G001.PPLAT.USD.M | Monthly average as compiled by the IMF. |
+| prices | `palladium_monthly_imf` | Palladium (IMF monthly average) | monthly | USD/oz | imf_sdmx | IMF Primary Commodity Prices | G001.PPALLA.USD.M | Monthly average as compiled by the IMF. |
+| prices | `gold_yoy` | Gold YoY (IMF monthly average) | monthly | % y/y |  |  |  | Year-on-year change of the IMF monthly average. |
+| ratios | `gold_silver_ratio` | Gold / Silver Ratio | daily | ratio |  |  |  | Ounces of silver per ounce of gold; rises in risk-off and industrial slowdowns. |
+| ratios | `gold_platinum_ratio` | Gold / Platinum Ratio | daily | ratio |  |  |  | Monetary metal versus an autocatalyst metal. |
+| ratios | `gold_oil_ratio` | Gold / Brent Ratio | daily | bbl per oz |  |  |  | Barrels of Brent per ounce of gold (Brent from the Energy page, EIA spot). |
+| ratios | `gold_copper_ratio` | Gold / Copper Ratio | daily | lb per oz |  |  |  | Pounds of copper per ounce of gold (copper converted from cents); falls when growth expectations improve. |
+| ratios | `gold_eur` | Gold in EUR | daily | EUR/oz |  |  |  | COMEX gold divided by the ECB EUR/USD reference rate on matching days. |
+| ratios | `gold_jpy` | Gold in JPY | daily | JPY/oz |  |  |  | COMEX gold times USD/JPY on matching days. |
+| ratios | `gold_cny` | Gold in CNY | daily | CNY/oz |  |  |  | COMEX gold times the USD/CNY central parity on matching days. |
+| ratios | `gold_inr` | Gold in INR | daily | INR/oz |  |  |  | COMEX gold times USD/INR (Fed H.10) on matching days; excludes Indian import duty. |
+| macro_drivers | `us_real_yield_10y` | US 10-Year Real Yield (TIPS) | daily | % | fred | Federal Reserve H.15 via FRED | DFII10 | Market yield on 10-year inflation-indexed Treasuries. |
+| macro_drivers | `broad_dollar` | Broad Trade-Weighted Dollar | daily | index (Jan 2006 = 100) | fred | Federal Reserve H.10 via FRED | DTWEXBGS | Nominal broad dollar index against goods and services trading partners. |
+| macro_drivers | `us_5y5y_forward` | US 5-Year, 5-Year Forward Inflation Expectation | daily | % | fred | Federal Reserve via FRED | T5YIFR | Long-horizon inflation compensation. |
+| macro_drivers | `gvz` | CBOE Gold Volatility Index (GVZ) | daily | index | fred | CBOE via FRED | GVZCLS | 30-day implied volatility of GLD options. |
+| official_sector | `cb_gold_chn` | Official Gold Holdings — China (PBoC) | monthly | tonnes | imf_sdmx | IMF International Liquidity | CHN.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_pol` | Official Gold Holdings — Poland (NBP) | monthly | tonnes | imf_sdmx | IMF International Liquidity | POL.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_ind` | Official Gold Holdings — India (RBI) | monthly | tonnes | imf_sdmx | IMF International Liquidity | IND.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_tur` | Official Gold Holdings — Türkiye (CBRT) | monthly | tonnes | imf_sdmx | IMF International Liquidity | TUR.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_cze` | Official Gold Holdings — Czechia (CNB) | monthly | tonnes | imf_sdmx | IMF International Liquidity | CZE.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_kaz` | Official Gold Holdings — Kazakhstan (NBK) | monthly | tonnes | imf_sdmx | IMF International Liquidity | KAZ.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_uzb` | Official Gold Holdings — Uzbekistan (CBU) | monthly | tonnes | imf_sdmx | IMF International Liquidity | UZB.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_hun` | Official Gold Holdings — Hungary (MNB) | monthly | tonnes | imf_sdmx | IMF International Liquidity | HUN.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_rus` | Official Gold Holdings — Russia (CBR) | monthly | tonnes | imf_sdmx | IMF International Liquidity | RUS.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_sau` | Official Gold Holdings — Saudi Arabia (SAMA) | monthly | tonnes | imf_sdmx | IMF International Liquidity | SAU.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_qat` | Official Gold Holdings — Qatar (QCB) | monthly | tonnes | imf_sdmx | IMF International Liquidity | QAT.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_sgp` | Official Gold Holdings — Singapore (MAS) | monthly | tonnes | imf_sdmx | IMF International Liquidity | SGP.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_jpn` | Official Gold Holdings — Japan | monthly | tonnes | imf_sdmx | IMF International Liquidity | JPN.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_che` | Official Gold Holdings — Switzerland (SNB) | monthly | tonnes | imf_sdmx | IMF International Liquidity | CHE.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_usa` | Official Gold Holdings — United States | monthly | tonnes | imf_sdmx | IMF International Liquidity | USA.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_deu` | Official Gold Holdings — Germany (Bundesbank) | monthly | tonnes | imf_sdmx | IMF International Liquidity | DEU.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_ita` | Official Gold Holdings — Italy (Banca d'Italia) | monthly | tonnes | imf_sdmx | IMF International Liquidity | ITA.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| official_sector | `cb_gold_fra` | Official Gold Holdings — France (Banque de France) | monthly | tonnes | imf_sdmx | IMF International Liquidity | FRA.RGV_REVS.FTO.M | Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466). |
+| regional_premium | `sge_au9999` | Shanghai Gold Exchange Au99.99 | daily | CNY/g | sge_spot | Shanghai Gold Exchange via AKShare | Au99.99 | Daily close of the main spot contract, completed sessions only. |
+| regional_premium | `sge_benchmark_am` | Shanghai Gold Benchmark Price (AM) | daily | CNY/g | sge_spot | Shanghai Gold Exchange via AKShare | Au | The SGE's yuan-denominated gold fixing, morning auction. |
+| regional_premium | `sge_gold_usd_oz` | SGE Au99.99 in USD/oz | daily | USD/oz |  |  |  | CNY per gram × 31.1034768 g/oz ÷ USD/CNY central parity. |
+| regional_premium | `shanghai_premium` | Shanghai Gold Premium over COMEX | daily | USD/oz |  |  |  | SGE minus COMEX on matching days. SGE closes at 15:30 Beijing time and COMEX in New York, so day-to-day moves partly reflect timing; read the trend. |
+| positioning | `cftc_gold_mm_net` | Gold Managed-Money Net Position | weekly | contracts | cftc_positions | CFTC Commitments of Traders (disaggregated) | 088691 | COMEX gold, managed-money long minus short, futures only. |
+| positioning | `cftc_gold_mm_net_zscore` | Gold Managed-Money Net Position, 3-Year z-score | weekly | z |  |  |  | Relative to the trailing 156-week mean and standard deviation. |
+| positioning | `cftc_silver_mm_net` | Silver Managed-Money Net Position | weekly | contracts | cftc_positions | CFTC Commitments of Traders (disaggregated) | 084691 | COMEX silver. |
+| positioning | `cftc_platinum_mm_net` | Platinum Managed-Money Net Position | weekly | contracts | cftc_positions | CFTC Commitments of Traders (disaggregated) | 076651 | NYMEX platinum. |
+| positioning | `cftc_palladium_mm_net` | Palladium Managed-Money Net Position | weekly | contracts | cftc_positions | CFTC Commitments of Traders (disaggregated) | 075651 | NYMEX palladium. |
+
+## Precious Metals Official / Vendor Data Gaps
+
+| Section | Indicator family | Current status |
+|---|---|---|
+| prices | LBMA gold and silver prices | LBMA auction prices are licensed (IBA); the IMF monthly averages and COMEX futures are used instead. |
+| official_sector | Gold ETF holdings and World Gold Council demand data | No reliable free machine-readable source (SPDR returns a non-CSV page; WGC requires registration). |
+| regional_premium | India gold premium/discount | No free source for Indian dealer premiums. |
+| prices | COMEX and SHFE vault inventories, PGM mine supply (South Africa, Russia) | To be sourced; Russian palladium output has no free source. |
+
 ## United Kingdom Data-First Dashboard Sources
 
 The UK page is generated from `config/uk_indicators.yaml`. Native ONS time-series JSON and Bank of England IADB CSV endpoints are preferred where validated; FRED/OECD/BIS/IMF mirror series remain for broader public-data coverage.

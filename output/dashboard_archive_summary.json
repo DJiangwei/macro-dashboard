@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-05T08:05:25.025678+00:00",
+  "generated": "2026-11-05T10:28:30.409424+00:00",
   "source": "Generated from one CEE build snapshot plus output/*_dashboard_summary.json files.",
   "cards": [
     {
@@ -658,6 +658,26 @@
       "secondary": "22",
       "quality": "22 source groups · 0 low-confidence charts",
       "framework": "Market Energy Framework",
+      "status": "clean"
+    },
+    {
+      "code": "PRECIOUS",
+      "name": "Precious Metals",
+      "file": "precious_metals.html",
+      "currency": "USD",
+      "institution": "COMEX",
+      "category": "market page",
+      "charts": 49,
+      "expected": 49,
+      "proxy_fills": 0,
+      "gaps_or_dropped": 4,
+      "gaps_label": "Official data gaps",
+      "headline_label": "Gold (COMEX front month)",
+      "headline": "4,072.0 USD/oz (2026-11-04)",
+      "secondary_label": "Source groups",
+      "secondary": "14",
+      "quality": "14 source groups · 3 low-confidence charts",
+      "framework": "Market Precious Metals Framework",
       "status": "clean"
     }
   ],

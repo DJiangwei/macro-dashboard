@@ -1,4 +1,7 @@
-"""Cross-economy energy pass-through panel for the Energy page.
+"""Cross-scope and summary panels for market pages.
+
+Energy: cross-economy pass-through. Precious metals: official gold holdings.
+
 
 For every economy in the registry: the latest energy CPI print, the energy
 contribution to headline CPI and energy import dependence where published, and
@@ -153,18 +156,70 @@ def render_energy_passthrough(payload: dict[str, Any]) -> str:
 </div>"""
 
 
-PANELS = {"energy_passthrough": (energy_passthrough, render_energy_passthrough)}
+def official_gold(series: dict[str, dict[str, Any]], prefix: str) -> dict[str, Any]:
+    """Central-bank gold holdings (tonnes) from this page's ``<prefix>*`` series."""
+    rows = []
+    for sid, item in series.items():
+        if not sid.startswith(prefix):
+            continue
+        points = _points(item.get("observations") or [])
+        if not points:
+            continue
+        by_date = dict(points)
+        last_date, last = points[-1]
+
+        def change(months: int) -> float | None:
+            year, month = int(last_date[:4]), int(last_date[5:7]) - months
+            while month <= 0:
+                year, month = year - 1, month + 12
+            base = by_date.get(f"{year:04d}-{month:02d}-01")
+            return round(last - base, 1) if base is not None else None
+
+        rows.append({
+            "id": sid, "holder": item.get("holder") or sid, "date": last_date[:7], "tonnes": round(last, 1),
+            "change_12m": change(12), "change_36m": change(36),
+        })
+    rows.sort(key=lambda r: (r["change_12m"] is None, -(r["change_12m"] or 0)))
+    return {"schema_version": "official-gold-v1", "rows": rows}
+
+
+def render_official_gold(payload: dict[str, Any]) -> str:
+    def fmt(value: float | None) -> str:
+        return "—" if value is None else f"{value:+,.1f}"
+
+    body = "".join(
+        f'<tr><td><strong>{escape(r["holder"])}</strong></td><td class="num"><strong>{r["tonnes"]:,.1f}</strong><br><span class="muted">{escape(r["date"])}</span></td>'
+        f'<td class="num">{fmt(r["change_12m"])}</td><td class="num">{fmt(r["change_36m"])}</td></tr>'
+        for r in payload.get("rows") or []
+    )
+    return f"""
+<div class="dd-panel" id="official-gold" style="margin:18px 0;padding:16px 18px;border:1px solid var(--border,#d9d3c7);background:var(--surface,#fff);">
+  <div style="font-weight:700;margin-bottom:4px;"><span data-lang="en">Official gold holdings (tonnes)</span><span data-lang="zh">官方黄金储备（吨）</span></div>
+  <div class="muted" style="font-size:12px;margin-bottom:10px;"><span data-lang="en">IMF International Liquidity (fine troy ounces ÷ 32,150.7466), latest month reported by each country; sorted by 12-month change.</span><span data-lang="zh">IMF国际流动性数据（金衡盎司 ÷ 32,150.7466），各国最新报告月份；按12个月变化排序。</span></div>
+  <div style="overflow-x:auto;"><table class="inflation-table" style="width:100%;border-collapse:collapse;font-size:13px;">
+    <thead><tr><th style="text-align:left;"><span data-lang="en">Holder</span><span data-lang="zh">持有方</span></th>
+    <th><span data-lang="en">Holdings</span><span data-lang="zh">持有量</span></th>
+    <th><span data-lang="en">12-month change</span><span data-lang="zh">12个月变化</span></th>
+    <th><span data-lang="en">36-month change</span><span data-lang="zh">36个月变化</span></th></tr></thead>
+    <tbody>{body}</tbody>
+  </table></div>
+</div>"""
+
+
+PANELS = {
+    "energy_passthrough": (lambda panel, by_id: energy_passthrough((by_id.get(panel["input"]) or {}).get("observations") or []), render_energy_passthrough),
+    "official_gold": (lambda panel, by_id: official_gold(by_id, panel["prefix"]), render_official_gold),
+}
 
 
 def build_panels(config: dict[str, Any], series_list: list[dict[str, Any]], output_dir: Path, slug: str) -> dict[str, str]:
-    """Compute configured cross-scope panels; returns {section_id: html} and writes their JSON."""
+    """Compute configured panels; returns {section_id: html} and writes their JSON."""
     by_id = {str(item.get("id")): item for item in series_list}
     html: dict[str, str] = {}
     payloads = {}
     for panel in config.get("panels") or []:
         compute, render = PANELS[panel["type"]]
-        source = by_id.get(panel["input"]) or {}
-        payload = compute(source.get("observations") or [])
+        payload = compute(panel, by_id)
         payloads[panel["type"]] = payload
         html[panel["section"]] = html.get(panel["section"], "") + render(payload)
     if payloads:

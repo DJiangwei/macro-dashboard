@@ -12,6 +12,7 @@ Operators
 spread                a - b
 linear                sum(weights[i] * x_i)            (weights: [...])
 ratio                 a / b * factor                   (factor: 1)
+product               a * b * factor                   (factor: 1), e.g. price in local currency
 rolling_mean          trailing mean over `window` observations
 zscore                (x - trailing mean) / trailing std over `window` observations
 dev_from_5y_seasonal  x minus the mean of the same ISO week (or month) in the
@@ -27,7 +28,7 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any, Callable
 
-OPERATORS = {"spread", "linear", "ratio", "rolling_mean", "zscore", "dev_from_5y_seasonal", "yoy_pct"}
+OPERATORS = {"spread", "linear", "ratio", "product", "rolling_mean", "zscore", "dev_from_5y_seasonal", "yoy_pct"}
 RESAMPLERS = {"monthly_mean"}
 
 
@@ -124,6 +125,9 @@ def apply_op(op: str, inputs: list[list[tuple[str, float]]], spec: dict[str, Any
     if op == "ratio":
         factor = float(spec.get("factor", 1.0))
         return [(d, a / b * factor) for d, (a, b) in _aligned(inputs) if b]
+    if op == "product":
+        factor = float(spec.get("factor", 1.0))
+        return [(d, a * b * factor) for d, (a, b) in _aligned(inputs)]
     if op == "rolling_mean":
         return _rolling(inputs[0], int(spec["window"]), lambda xs: sum(xs) / len(xs))
     if op == "zscore":
@@ -177,6 +181,10 @@ def formula(spec: dict[str, Any]) -> str:
         return f"{op}({inputs[0]}, window={spec['window']})"
     if op == "ratio" and spec.get("factor", 1) != 1:
         return f"{inputs[0]} / {inputs[1]} × {spec['factor']}"
+    if op == "product":
+        return f"{inputs[0]} × {inputs[1]}" + (f" × {spec['factor']}" if spec.get("factor", 1) != 1 else "")
+    if op == "ratio":
+        return f"{inputs[0]} / {inputs[1]}"
     if op == "spread":
         return f"{inputs[0]} − {inputs[1]}"
     return f"{op}({', '.join(inputs)})"

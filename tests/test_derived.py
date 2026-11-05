@@ -78,3 +78,15 @@ def test_passthrough_yoy_uses_latest_month_with_a_year_ago_value():
     month, value = _yoy_latest(series)
     assert month == "2026-10-01" and abs(value - 50.0) < 1e-9  # Nov has no year-ago value
     assert _yoy_latest({"2026-10-01": 1.0}) is None
+
+
+def test_product_aligns_and_scales():
+    assert apply_op("product", [[("d1", 2.0), ("d2", 3.0)], [("d2", 10.0)]], {"factor": 0.5}) == [("d2", 15.0)]
+
+
+def test_official_gold_changes_use_the_same_month_earlier():
+    from country_primer.transmission import official_gold
+    series = {"cb_gold_x": {"holder": "X", "observations": [
+        {"date": "2023-06-01", "value": 100.0}, {"date": "2025-06-01", "value": 110.0}, {"date": "2026-06-01", "value": 130.0}]}}
+    row = official_gold(series, "cb_gold_")["rows"][0]
+    assert row["tonnes"] == 130.0 and row["change_12m"] == 20.0 and row["change_36m"] == 30.0

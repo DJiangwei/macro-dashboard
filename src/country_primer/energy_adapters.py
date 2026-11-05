@@ -192,3 +192,38 @@ def fetch_foreign_futures(spec: dict[str, Any]) -> dict[str, Any]:
     if not observations:
         raise RuntimeError(f"No completed futures sessions for {spec['series']}")
     return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": "https://finance.sina.com.cn/futuremarket/"}
+
+
+def fetch_sge_spot(spec: dict[str, Any]) -> dict[str, Any]:
+    """Shanghai Gold Exchange daily close (``series`` e.g. ``Au99.99``), CNY per gram.
+
+    ``measure: benchmark_am`` / ``benchmark_pm`` returns the Shanghai Gold
+    Benchmark Price fixing instead. Completed sessions only.
+    """
+    import akshare as ak
+
+    series = str(spec["series"])
+    measure = str(spec.get("measure") or "close")
+    if measure.startswith("benchmark"):
+        frame = ak.spot_golden_benchmark_sge() if series.lower().startswith("au") else ak.spot_silver_benchmark_sge()
+        date_col, value_col = "交易时间", ("早盘价" if measure == "benchmark_am" else "晚盘价")
+    else:
+        frame = ak.spot_hist_sge(symbol=series)
+        date_col, value_col = "date", "close"
+    today = datetime.now(UTC).date().isoformat()
+    start = str(spec.get("start_date") or "")[:10]
+    observations = []
+    for day, value in zip(frame[date_col], frame[value_col]):
+        day = str(day)[:10]
+        if day >= today or (start and day < start):
+            continue
+        try:
+            value = float(value)
+        except (TypeError, ValueError):
+            continue
+        if value > 0:
+            observations.append({"date": day, "value": value})
+    observations.sort(key=lambda o: o["date"])
+    if not observations:
+        raise RuntimeError(f"SGE returned no completed sessions for {series}")
+    return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": "https://www.sge.com.cn/sjzx/mrhqsj"}
