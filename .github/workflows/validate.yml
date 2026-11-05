@@ -18,6 +18,14 @@ jobs:
           enable-cache: true
       - run: uv python install 3.12
       - run: uv sync --frozen
+      # Once generated files live on the data branch (docs/PAGES_DEPLOYMENT.md),
+      # validate against it: overlay the data and rebuild the pages offline.
+      - name: Use data branch when present
+        run: |
+          if git ls-remote --exit-code --heads origin data >/dev/null 2>&1; then
+            scripts/data_branch.sh pull
+            make rebuild-ui
+          fi
       - run: uv run pytest -q
       - run: uv run python scripts/validate_outputs.py
       - run: uv run python scripts/dashboard_consistency_check.py

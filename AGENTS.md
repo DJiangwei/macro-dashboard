@@ -59,6 +59,12 @@ do not re-triage the same dashboard gaps from scratch.
 
 ## Publishing Discipline
 
+GitHub Pages can run in two modes, switched by the repository variable
+`PAGES_MODE` (see `docs/PAGES_DEPLOYMENT.md`). Unset: outputs are committed to
+`main` and Pages serves the branch (the steps below). `actions`: data lives on
+the `data` branch, pages are rebuilt and deployed by `deploy_pages.yml`; use
+`make pull-data` before local work and `make publish-data MSG=...` to publish.
+
 After dashboard changes:
 
 ```bash

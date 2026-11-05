@@ -1,6 +1,6 @@
 UV ?= scripts/uv_project.sh
 
-.PHONY: setup doctor golden-diff build-v4 refresh-data rebuild-ui refresh-check refresh-scheduled refresh-quick ci-summary data-catalog freshness-audit chart-studio my-dashboard policy-tracker enrich-data test validate proxy-report proxy-report-live publish-check publish clean
+.PHONY: setup doctor golden-diff pull-data publish-data build-v4 refresh-data rebuild-ui refresh-check refresh-scheduled refresh-quick ci-summary data-catalog freshness-audit chart-studio my-dashboard policy-tracker enrich-data test validate proxy-report proxy-report-live publish-check publish clean
 
 setup:
 	$(UV) sync
@@ -35,6 +35,14 @@ rebuild-ui:
 	$(UV) run python scripts/build_chart_studio.py
 	$(UV) run python scripts/build_my_dashboard.py
 	$(UV) run python scripts/build_policy_tracker.py
+
+pull-data:
+	scripts/data_branch.sh pull
+
+publish-data:
+	@if [ -z "$(MSG)" ]; then echo 'Usage: make publish-data MSG="message"'; exit 2; fi
+	scripts/data_branch.sh push "$(MSG)"
+	gh workflow run deploy_pages.yml
 
 golden-diff:
 	$(UV) run python scripts/golden_diff.py

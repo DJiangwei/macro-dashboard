@@ -1,0 +1,31 @@
+name: Bootstrap data branch
+
+# One-off: create the `data` branch from the JSON artifacts currently on a ref
+# (default: main). Refuses to run if the branch already exists.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Ref whose output/ and data/ JSON seed the data branch'
+        required: true
+        default: 'main'
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref }}
+
+      - name: Create data branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          scripts/data_branch.sh bootstrap
