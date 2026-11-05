@@ -13,7 +13,7 @@
 | **Czechia (CZ)** | 65.0 | 58.3 | **mixed** | moderate expansion | near-target inflation | neutral-moderate stance | 52.4 (needs data review) |
 | **Romania (RO)** | 30.0 | 46.7 | **defensive** | contraction | inflation pressure | restrictive stance | 51.7 (needs data review) |
 | **China (CN)** | 67.5 | 46.7 | **mixed** | above-trend expansion | disinflation risk | neutral-moderate stance | 53.3 (needs data review) |
-| **Euro Area (EA)** | 52.5 | 61.7 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 73.2 (usable with watch-list) |
+| **Euro Area (EA)** | 52.5 | 61.7 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 75.2 (usable with watch-list) |
 | **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 43.4 (needs data review) |
 | **South Africa (ZA)** | 50.0 | 53.3 | **mixed** | moderate expansion | inflation pressure | restrictive stance | 38.1 (needs data review) |
 | **United Kingdom (UK)** | 52.9 | 53.3 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 49.2 (needs data review) |

@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-11-05T13:29:38.135750+00:00",
+  "generated": "2026-11-05T15:31:18.697410+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -69,8 +69,8 @@
     },
     "EA": {
       "verified": 37,
-      "watch": 4,
-      "low_confidence": 2,
+      "watch": 5,
+      "low_confidence": 1,
       "substitute": 0,
       "missing": 5
     },
@@ -2258,8 +2258,8 @@
       "unit": "percent",
       "priority_weight": 4,
       "missing_countries": 10,
-      "weak_countries": 2,
-      "priority_score": 94,
+      "weak_countries": 1,
+      "priority_score": 92,
       "countries": {
         "HU": {
           "state": "verified",
@@ -2305,12 +2305,12 @@
           "refresh_fallback": false
         },
         "EA": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "negotiated_wages_yoy"
           ],
-          "latest_date": "2025-07-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -8727,7 +8727,7 @@
       "concept_id": "wage_growth",
       "pillar": "labour_household",
       "label_en": "Wage Growth",
-      "priority_score": 94,
+      "priority_score": 92,
       "missing_countries": [
         "CN",
         "ZA",
@@ -8741,7 +8741,6 @@
         "NG"
       ],
       "weak_countries": [
-        "EA",
         "JP"
       ]
     },

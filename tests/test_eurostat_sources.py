@@ -32,6 +32,12 @@ def test_no_source_uses_a_discontinued_eurostat_dataset() -> None:
     assert not hits, hits
 
 
+def test_negotiated_wages_use_the_ecb_inw_dataflow() -> None:
+    # STS.Q.*.N.INWR.000000.3.ANR ends at 2025-Q3; the ECB moved the indicator to INW.
+    hits = [str(path.relative_to(ROOT)) for path in _sources() if ".INWR.000000.3.ANR" in path.read_text(encoding="utf-8")]
+    assert not hits, hits
+
+
 def test_euro_area_series_avoid_frozen_ea20_aggregates() -> None:
     config = yaml.safe_load((ROOT / "config/euro_area_indicators.yaml").read_text(encoding="utf-8"))
     frozen = [

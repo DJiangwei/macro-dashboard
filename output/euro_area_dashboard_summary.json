@@ -1,10 +1,10 @@
 {
   "file": "euro_area.html",
-  "generated": "2026-11-05T13:29:33.483124+00:00",
+  "generated": "2026-11-05T15:31:14.644029+00:00",
   "charts": 74,
   "source_groups": 8,
   "data_gaps": 6,
-  "low_confidence": 4,
+  "low_confidence": 3,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -128,10 +128,10 @@
     ],
     "file": "euro_area_canonical_frame.json",
     "series": 74,
-    "observations": 66261,
+    "observations": 66264,
     "series_count": 74,
-    "observation_count": 66261,
-    "snapshot_generated": "2026-11-05T13:28:57.720539+00:00"
+    "observation_count": 66264,
+    "snapshot_generated": "2026-11-05T15:30:14.686015+00:00"
   },
   "data_gaps_detail": [
     {
@@ -214,10 +214,10 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 4,
+      "low_confidence": 3,
       "unavailable": 1,
       "verified": 66,
-      "watch": 3
+      "watch": 4
     },
     "unavailable_count": 0
   },
@@ -231,34 +231,12 @@
     "as_of_date": "2026-11-05",
     "counts": {
       "current": 66,
-      "due": 3,
+      "due": 4,
       "future_date": 1,
-      "stale": 4
+      "stale": 3
     },
     "latest_historical_date": "2026-11-02",
     "attention": [
-      {
-        "id": "negotiated_wages_yoy",
-        "concept_id": "wage_growth",
-        "label_en": "ECB Negotiated Wages Growth, YoY",
-        "latest_date": "2025-07-01",
-        "frequency": "quarterly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-07-01",
-        "age_days": 401,
-        "threshold_days": 165,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "ECB",
-        "series": "Q.I9.N.INWR.000000.3.ANR",
-        "transform": "level"
-      },
       {
         "id": "household_debt_gdp",
         "concept_id": "ea:household_debt_gdp",
@@ -367,6 +345,28 @@
         "comparability": "high",
         "source_name": "Eurostat",
         "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "negotiated_wages_yoy",
+        "concept_id": "wage_growth",
+        "label_en": "ECB Negotiated Wages Growth, YoY",
+        "latest_date": "2026-04-01",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-04-01",
+        "age_days": 128,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "ECB",
+        "series": "Q.U2.N.INWR.000000.4F0.GY.IX",
         "transform": "level"
       },
       {
