@@ -111,7 +111,7 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
 3. **基本金属页的后续**：矿山供给（Cochilco、INE、MINEM）、中国精炼产量和分品种进出口、COMEX 铜库存、更长的上期所库存历史（可以考虑在 refresh 时累积历史）、上期所近远月价差。
 4. **后续小项**
    - KZ/NG/UZ/EG 的原生政策利率。
-   - CEE 叙述文字需要重写（例如 HU 行长写的还是 Matolcsy，应为 Varga）。
+   - CEE 叙述文字（`config/countries.yaml`）需要逐条核实后重写。匈牙利央行领导层已于 2026-11-05 按 mnb.hu 更正（行长 Varga、四位副行长）；仍未核实的有：匈牙利政治背景（2026 年 4 月大选结果）、各国央行资产负债表数字、PL/CZ/RO 的行长与委员名单。mnb.hu 的议会选任委员名单当天无法与原文逐条核对（摘要列出的条目里有任期似已届满的），未采用，页面改为指向 mnb.hu。
    - 欧元区职位空缺和协议工资已过期。
    - **已知 bug（未修）**：`scripts/dashboard_summary_utils.load_canonical_data_first_frame` 读回上一版快照时不恢复 `prior_vintage`/`has_revisions`，所以 `track_revisions_and_vintages` 里「沿用前次 vintage」的分支拿到的总是 None：前次数据只能保留一次构建，下次刷新就丢。2026-11-05 刷新中国卡片时，`usd_cny_midpoint` 的前次数据就这样被清掉了。
    - 中国 PBC 卡片（2026-11-05 已修）：DR007 页面的「Latest Update」是浏览器用访问者当天日期填的，所以卡片日期取页面的 `createDate`（M2 页的 createDate 与显示的更新日期一致）。DR007 当前值 1.4935% 的日期是 2026-09-23，PBC 英文页更新不频繁；要看日度 DR007 需另接时间序列。
