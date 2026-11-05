@@ -1423,3 +1423,15 @@ data_gaps:
     item_zh: "欧洲斯托克50指数同比回报"
     status_en: "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source."
     status_zh: "2026-11-05 移除：此前该序列是在构建中手工写入的，并非抓取所得。只有在接入可验证的自动化数据源后才重新加入。"
+
+# Series reported in the page summary's key_series_latest (scripts/build_scope.py).
+summary_key_ids:
+  - real_gdp_growth
+  - real_gdp_yoy
+  - hicp_inflation
+  - hicp_core_inflation
+  - policy_rate
+  - unemployment_rate
+  - m3_growth
+  - goods_trade_balance
+  - it_de_spread_10y

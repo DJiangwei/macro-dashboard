@@ -1024,3 +1024,23 @@ cross_checks:
   secondary: cpi_inflation
   tolerance: 0.2
   label_en: e-Stat vs IMF headline CPI
+
+# Series reported in the page summary's key_series_latest (scripts/build_scope.py).
+summary_key_ids:
+  - real_gdp_growth
+  - real_gdp_yoy
+  - nominal_gdp_growth
+  - industrial_production_growth
+  - retail_sales_growth
+  - unemployment_rate
+  - manufacturing_earnings_growth
+  - cpi_inflation
+  - house_price_growth
+  - goods_trade_balance
+  - usd_jpy
+  - reer
+  - government_debt_gdp
+  - sovereign_yield_10y
+  - policy_rate
+  - broad_money_growth
+  - equity_index

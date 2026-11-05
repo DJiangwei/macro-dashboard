@@ -1,6 +1,6 @@
 UV ?= scripts/uv_project.sh
 
-.PHONY: setup doctor build-v4 refresh-data rebuild-ui refresh-check refresh-scheduled refresh-quick ci-summary data-catalog freshness-audit chart-studio my-dashboard policy-tracker enrich-data test validate proxy-report proxy-report-live publish-check publish clean
+.PHONY: setup doctor golden-diff build-v4 refresh-data rebuild-ui refresh-check refresh-scheduled refresh-quick ci-summary data-catalog freshness-audit chart-studio my-dashboard policy-tracker enrich-data test validate proxy-report proxy-report-live publish-check publish clean
 
 setup:
 	$(UV) sync
@@ -13,20 +13,7 @@ build-v4: refresh-data
 refresh-data:
 	$(UV) run python scripts/refresh_bis_policy_snapshot.py
 	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python build_v4.py ALL
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_china_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_euro_area_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_uk_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_us_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_japan_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_south_africa_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_turkey_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_hong_kong_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_south_korea_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_taiwan_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_kazakhstan_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_uzbekistan_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_egypt_dashboard.py
-	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_nigeria_dashboard.py
+	COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_scope.py --all
 	$(UV) run python scripts/enrich_macro_data_quality.py
 	$(UV) run python scripts/enrich_cee_inflation_deepdive.py
 	$(UV) run python scripts/enrich_us_inflation_deepdive.py
@@ -39,20 +26,7 @@ rebuild-ui:
 	$(UV) run python scripts/enrich_us_inflation_deepdive.py
 	$(UV) run python scripts/real_deepdives.py
 	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python build_v4.py ALL
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_china_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_euro_area_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_uk_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_us_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_japan_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_south_africa_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_turkey_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_hong_kong_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_south_korea_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_taiwan_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_kazakhstan_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_uzbekistan_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_egypt_dashboard.py
-	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_nigeria_dashboard.py
+	COUNTRY_PRIMER_DATA_MODE=snapshot COUNTRY_PRIMER_SKIP_ARCHIVE=1 $(UV) run python scripts/build_scope.py --all
 	$(UV) run python scripts/core_coverage_matrix.py
 	$(UV) run python scripts/data_source_catalog.py
 	$(UV) run python scripts/freshness_audit.py
@@ -61,6 +35,9 @@ rebuild-ui:
 	$(UV) run python scripts/build_chart_studio.py
 	$(UV) run python scripts/build_my_dashboard.py
 	$(UV) run python scripts/build_policy_tracker.py
+
+golden-diff:
+	$(UV) run python scripts/golden_diff.py
 
 refresh-check:
 	$(UV) run python scripts/refresh_check.py

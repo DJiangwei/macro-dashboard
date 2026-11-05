@@ -2734,3 +2734,11 @@ cross_checks:
   secondary: owners_equivalent_rent_inflation
   label_en: Shelter CPI YoY vs Owners Equivalent Rent (OER) CPI YoY
   tolerance: 0.6
+
+# Series reported in the page summary's key_series_latest (scripts/build_scope.py).
+summary_key_ids:
+  - real_gdp_growth
+  - core_pce_inflation
+  - unemployment_rate
+  - nonfarm_payrolls_change
+  - effective_fed_funds

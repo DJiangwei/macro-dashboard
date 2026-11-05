@@ -1,6 +1,6 @@
 {
   "file": "china.html",
-  "generated": "2026-11-05T03:28:21.525973+00:00",
+  "generated": "2026-11-05T03:42:39.273934+00:00",
   "charts": 113,
   "source_groups": 32,
   "data_gaps": 9,
@@ -106,8 +106,8 @@
       "id": "usd_cny_midpoint",
       "label_en": "USD/CNY Central Parity",
       "label_zh": "美元兑人民币中间价",
-      "latest_date": "2026-11-04",
-      "latest_value": 6.718,
+      "latest_date": "2026-11-05",
+      "latest_value": 6.715599999999999,
       "latest_display": "6.72 CNY per USD",
       "frequency": "daily",
       "source_name": "SAFE via AKShare",
@@ -206,34 +206,34 @@
       "id": "pbc_m2_latest",
       "label_en": "PBC M2 YoY",
       "label_zh": "PBC M2同比",
-      "fetcher": "pbc_indicator_card",
+      "fetcher": "pbc_card",
       "url": "https://www.pbc.gov.cn/en/3688006/3689169/3753760/index.html",
       "expected_title": "M2",
-      "value": "n/a",
-      "updated": "n/a"
+      "value": "7.2%",
+      "updated": "10/19/2026"
     },
     {
       "id": "pbc_afre_latest",
       "label_en": "PBC AFRE Outstanding",
       "label_zh": "PBC社融存量",
-      "fetcher": "pbc_indicator_card",
+      "fetcher": "pbc_card",
       "url": "https://www.pbc.gov.cn/en/3688006/3689169/3753765/index.html",
       "expected_title": "AFRE (Outstanding)",
-      "value": "n/a",
-      "updated": "n/a"
+      "value": "468.17TN",
+      "updated": "10/19/2026"
     },
     {
       "id": "pbc_dr007_latest",
       "label_en": "PBC DR007",
       "label_zh": "PBC DR007",
-      "fetcher": "pbc_indicator_card",
+      "fetcher": "pbc_card",
       "url": "https://www.pbc.gov.cn/en/3688006/3689169/3753752/index.html",
       "expected_title": "DR007",
       "value": "n/a",
       "updated": "n/a"
     }
   ],
-  "usd_cny_latest": "6.7180 (2026-11-04)",
+  "usd_cny_latest": "6.7156 (2026-11-05)",
   "cross_checks": [],
   "canonical_frame": {
     "schema_version": "data-first-canonical-v2",
@@ -243,10 +243,10 @@
     ],
     "file": "china_canonical_frame.json",
     "series": 113,
-    "observations": 94915,
+    "observations": 94916,
     "series_count": 113,
-    "observation_count": 94915,
-    "snapshot_generated": "2026-11-05T03:28:00.612809+00:00"
+    "observation_count": 94916,
+    "snapshot_generated": "2026-11-05T03:42:29.269116+00:00"
   },
   "data_gaps_detail": [
     {
@@ -465,7 +465,7 @@
       "projection": 2,
       "stale": 9
     },
-    "latest_historical_date": "2026-11-04",
+    "latest_historical_date": "2026-11-05",
     "attention": [
       {
         "id": "birth_rate",

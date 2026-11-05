@@ -1573,3 +1573,24 @@ data_gaps:
     item_zh: "OBR预测版本与更深层债务工具细分"
     status_en: "Monthly PSNB, PSNCR, PSND, PSNFL, PSND ex BoE, receipts, expenditure, income/wealth taxes, social benefits, and TME are charted from ONS; core March 2026 OBR forecast rows for borrowing, PSND ex BoE, debt interest, and effective interest rates are now charted. Full vintage archive and instrument-level history still need deeper adapters."
     status_zh: "月度PSNB、PSNCR、PSND、PSNFL、不含BoE的PSND、收入、支出、所得与财富税、社会福利和TME已接入ONS；March 2026 OBR核心预测行，包括借款、不含BoE净债务、债务利息和有效利率，已绘图。完整预测版本库和工具级历史仍需更深adapter。"
+
+# Series reported in the page summary's key_series_latest (scripts/build_scope.py).
+summary_key_ids:
+  - real_gdp_growth
+  - real_gdp_yoy
+  - services_output_growth
+  - manufacturing_output_growth
+  - unemployment_rate
+  - employment_growth
+  - regular_pay_growth
+  - cpi_inflation
+  - core_cpi_inflation
+  - services_cpi_inflation
+  - retail_sales_growth
+  - house_price_growth
+  - consumer_confidence
+  - gbp_usd
+  - government_borrowing_ytd
+  - government_debt_gdp
+  - sovereign_yield_10y
+  - bank_rate

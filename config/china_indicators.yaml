@@ -1690,19 +1690,19 @@ latest_cards:
   - id: pbc_m2_latest
     label_en: "PBC M2 YoY"
     label_zh: "PBC M2同比"
-    fetcher: pbc_indicator_card
+    fetcher: pbc_card
     url: "https://www.pbc.gov.cn/en/3688006/3689169/3753760/index.html"
     expected_title: "M2"
   - id: pbc_afre_latest
     label_en: "PBC AFRE Outstanding"
     label_zh: "PBC社融存量"
-    fetcher: pbc_indicator_card
+    fetcher: pbc_card
     url: "https://www.pbc.gov.cn/en/3688006/3689169/3753765/index.html"
     expected_title: "AFRE (Outstanding)"
   - id: pbc_dr007_latest
     label_en: "PBC DR007"
     label_zh: "PBC DR007"
-    fetcher: pbc_indicator_card
+    fetcher: pbc_card
     url: "https://www.pbc.gov.cn/en/3688006/3689169/3753752/index.html"
     expected_title: "DR007"
 
@@ -1752,3 +1752,22 @@ data_gaps:
     item_zh: "国家统计局核心CPI（剔除食品和能源）同比"
     status_en: "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source."
     status_zh: "2026-11-05 移除：此前该序列是在构建中手工写入的，并非抓取所得。只有在接入可验证的自动化数据源后才重新加入。"
+
+# Series reported in the page summary's key_series_latest (scripts/build_scope.py).
+summary_key_ids:
+  - real_gdp_growth
+  - industrial_value_added_yoy_akshare
+  - fixed_asset_investment_yoy_akshare
+  - commercial_housing_sales_value_eastmoney
+  - real_estate_development_investment_ytd_eastmoney
+  - passenger_vehicle_retail_cpca
+  - new_energy_vehicle_share_cpca
+  - customs_exports_yoy_akshare
+  - usd_cny_midpoint
+  - m2_yoy_akshare
+  - financial_institution_deposits_stock_akshare
+  - vegetable_basket_price_index_akshare
+  - pbc_total_assets_akshare
+  - pbc_reserve_money_akshare
+  - cpi_yoy_akshare
+  - ppi_yoy_akshare

@@ -74,6 +74,17 @@ replace that with a narrow allow-list unless the allow-list includes the data
 catalog, freshness audit, archive summaries, canonical frames, and workbench
 JSON outputs; otherwise the live index can drift away from country pages.
 
+## Scope Registry
+
+Every generated page is registered in `config/scopes.yaml` (id, slug, names,
+currency, headline series, pipeline). Data-first pages are built by
+`scripts/build_scope.py` (`--all`, one or more scope ids, `--snapshot`), which
+fetches through the global fetcher registry in `src/country_primer/fetchers.py`.
+Do not add per-country builder scripts; add a registry entry and an indicator
+YAML instead. When refactoring the build, run `make rebuild-ui` and then
+`make golden-diff`: it compares generated outputs with `HEAD` ignoring
+timestamps and must report no differences unless data was meant to change.
+
 ## Indicator Manifest
 
 The v4 dashboard's canonical 48 indicators live in:

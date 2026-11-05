@@ -678,9 +678,9 @@ Configured charts: 113. Latest rendered chart count: 113. Source groups: 32.
 
 | Card | Label | Fetcher | Source page | Main note |
 |---|---|---|---|---|
-| `pbc_m2_latest` | PBC M2 YoY | pbc_indicator_card | https://www.pbc.gov.cn/en/3688006/3689169/3753760/index.html | Expected title: M2 |
-| `pbc_afre_latest` | PBC AFRE Outstanding | pbc_indicator_card | https://www.pbc.gov.cn/en/3688006/3689169/3753765/index.html | Expected title: AFRE (Outstanding) |
-| `pbc_dr007_latest` | PBC DR007 | pbc_indicator_card | https://www.pbc.gov.cn/en/3688006/3689169/3753752/index.html | Expected title: DR007 |
+| `pbc_m2_latest` | PBC M2 YoY | pbc_card | https://www.pbc.gov.cn/en/3688006/3689169/3753760/index.html | Expected title: M2 |
+| `pbc_afre_latest` | PBC AFRE Outstanding | pbc_card | https://www.pbc.gov.cn/en/3688006/3689169/3753765/index.html | Expected title: AFRE (Outstanding) |
+| `pbc_dr007_latest` | PBC DR007 | pbc_card | https://www.pbc.gov.cn/en/3688006/3689169/3753752/index.html | Expected title: DR007 |
 
 ## China Official Data Gaps
 

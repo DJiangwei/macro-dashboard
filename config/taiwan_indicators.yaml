@@ -835,3 +835,54 @@ cross_checks:
     secondary: bis_reer
     tolerance: 15.0
     label_en: Bruegel REER vs BIS REER Mirror
+
+# Series reported in the page summary's key_series_latest (scripts/build_scope.py).
+summary_key_ids:
+  - real_gdp_yoy
+  - real_gdp_growth
+  - gross_fixed_capital_formation
+  - private_consumption
+  - government_consumption
+  - domestic_demand
+  - machinery_investment_yoy
+  - real_exports_yoy
+  - real_imports_yoy
+  - cpi_inflation
+  - core_cpi_inflation
+  - ppi_inflation
+  - rent_inflation
+  - policy_rate
+  - collateral_rate
+  - interbank_call_rate
+  - prime_lending_rate
+  - deposit_rate_1y
+  - m1b_growth
+  - m2_growth
+  - reserve_money_growth
+  - taiex_index
+  - tpex_index
+  - consumer_loans_growth
+  - mortgage_loans_growth
+  - construction_loans_growth
+  - bank_npl_ratio
+  - commercial_paper_growth
+  - bond_market_growth
+  - usd_twd
+  - reer
+  - neer
+  - bis_reer
+  - fx_reserves
+  - customs_exports_yoy
+  - customs_imports_yoy
+  - customs_trade_balance
+  - current_account_usd
+  - goods_trade_balance
+  - goods_exports
+  - goods_imports
+  - services_balance
+  - current_account_gdp
+  - sovereign_yield_10y
+  - sovereign_yield_5y
+  - government_debt_gdp
+  - fiscal_balance_gdp
+  - unemployment_rate_weo

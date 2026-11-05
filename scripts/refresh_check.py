@@ -60,103 +60,46 @@ def _compare(name: str, baseline: dict[str, Any], live: dict[str, Any]) -> dict[
     return {"check": name, "status": status, "snapshot": baseline, "live": live}
 
 
-def _selected(config: dict[str, Any], indicator_id: str) -> dict[str, Any]:
-    return next(item for item in config.get("indicators", []) if item.get("id") == indicator_id)
-
-
 def run_checks() -> list[dict[str, Any]]:
     # This must be set before importing the CEE fetch stack. Any cache writes
     # from the live probe go to a disposable directory, not the repository.
     os.environ["COUNTRY_PRIMER_CACHE_DIR"] = tempfile.mkdtemp(prefix="country-primer-refresh-check-")
 
-    import build_china_dashboard as china
-    import build_euro_area_dashboard as euro_area
-    import build_japan_dashboard as japan
-    import build_south_africa_dashboard as south_africa
-    import build_uk_dashboard as uk
-    import build_us_dashboard as us
+    import sys
+    sys.path.insert(0, str(ROOT / "src"))
+    import yaml
     from country_primer.data_fetcher import DataPipeline, INDICATOR_MANIFEST_48
+    from country_primer.fetchers import fetch_series
+    from country_primer.scopes import cee_scopes, data_first_scopes
 
     results: list[dict[str, Any]] = []
     gdp_spec = next(spec for spec in INDICATOR_MANIFEST_48 if spec.indicator_id == "real_gdp_qoq")
-    for country in ("HU", "PL", "CZ", "RO"):
+    for scope in cee_scopes():
         try:
-            live_rows = DataPipeline().fetch_country(country, [gdp_spec])
+            live_rows = DataPipeline().fetch_country(scope.id, [gdp_spec])
             live = _latest_live(live_rows)
         except Exception:
             live = {}
+        results.append(_compare(f"{scope.id}:real_gdp_qoq", _latest_cee(scope.id, "real_gdp_qoq"), live))
+
+    # Each data-first scope: its registry headline series, fetched live through
+    # the same global fetcher registry the builders use.
+    for scope in data_first_scopes():
+        assert scope.indicators_path is not None and scope.headline is not None
+        config = yaml.safe_load(scope.indicators_path.read_text()) or {}
+        specs = {str(item.get("id")): item for item in config.get("indicators", [])}
+        indicator_id = next((i for i in scope.headline.indicators if i in specs), None)
+        if indicator_id is None:
+            continue
+        try:
+            live = _latest_live(fetch_series(specs[indicator_id]["fetcher"], specs[indicator_id], {}))
+        except Exception:
+            live = {}
         results.append(_compare(
-            f"{country}:real_gdp_qoq",
-            _latest_cee(country, "real_gdp_qoq"),
+            f"{scope.id}:{indicator_id}",
+            _latest_data_first(scope.canonical_path, indicator_id),
             live,
         ))
-
-    china_config = china._load_config()
-    china_spec = _selected(china_config, "usd_cny_midpoint")
-    try:
-        live_china = _latest_live(china.fetch_safe_midpoint(china_spec, china._safe_rows()))
-    except Exception:
-        live_china = {}
-    results.append(_compare(
-        "CN:usd_cny_midpoint",
-        _latest_data_first(OUTPUT / "china_canonical_frame.json", "usd_cny_midpoint"),
-        live_china,
-    ))
-
-    uk_spec = _selected(uk._load_config(), "real_gdp_qoq")
-    try:
-        live_uk = _latest_live(uk._fetch_one(uk_spec))
-    except Exception:
-        live_uk = {}
-    results.append(_compare(
-        "UK:real_gdp_qoq",
-        _latest_data_first(OUTPUT / "uk_canonical_frame.json", "real_gdp_qoq"),
-        live_uk,
-    ))
-
-    japan_spec = _selected(japan._load_config(), "policy_rate")
-    try:
-        live_japan = _latest_live(japan._fetch_one(japan_spec))
-    except Exception:
-        live_japan = {}
-    results.append(_compare(
-        "JP:policy_rate",
-        _latest_data_first(OUTPUT / "japan_canonical_frame.json", "policy_rate"),
-        live_japan,
-    ))
-
-    za_spec = _selected(south_africa._load_config(), "policy_rate")
-    try:
-        live_za = _latest_live(south_africa._fetch_one(za_spec))
-    except Exception:
-        live_za = {}
-    results.append(_compare(
-        "ZA:policy_rate",
-        _latest_data_first(OUTPUT / "south_africa_canonical_frame.json", "policy_rate"),
-        live_za,
-    ))
-
-    us_spec = _selected(us._load_config(), "daily_fed_funds")
-    try:
-        live_us = _latest_live(us._fetch_one(us_spec))
-    except Exception:
-        live_us = {}
-    results.append(_compare(
-        "US:daily_fed_funds",
-        _latest_data_first(OUTPUT / "us_canonical_frame.json", "daily_fed_funds"),
-        live_us,
-    ))
-
-    ea_spec = _selected(euro_area._load_config(), "policy_rate")
-    try:
-        live_ea = _latest_live(euro_area._fetch_one(ea_spec))
-    except Exception:
-        live_ea = {}
-    results.append(_compare(
-        "EA:policy_rate",
-        _latest_data_first(OUTPUT / "euro_area_canonical_frame.json", "policy_rate"),
-        live_ea,
-    ))
     return results
 
 

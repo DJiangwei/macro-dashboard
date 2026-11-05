@@ -1,0 +1,320 @@
+# Scope registry: the single list of pages the dashboard builds.
+#
+# Every consumer (builders, navigation, archive, catalog, freshness audit,
+# coverage matrix, workbench, Chart Studio, My Dashboard, Policy Tracker,
+# validation and the scheduled refresh) reads this file. Adding a country is
+# one entry here plus its indicator YAML.
+#
+# Fields
+#   id            scope code used across outputs (ISO-like; UK and EA are kept)
+#   kind          country | region | market
+#   slug          output/<slug>.html, output/<slug>_canonical_frame.json,
+#                 output/<slug>_dashboard_summary.json
+#   pipeline      data_first (scripts/build_scope.py) | cee_v4 (build_v4.py, legacy)
+#   indicators    indicator YAML for data_first scopes
+#   headline      summary card: first charted id in `indicators`, rendered with
+#                 `format` (Python str.format with value/date), stored under `key`
+#   fetch_workers parallel fetches during a refresh (be gentle with keyless APIs)
+#   quick_refresh refreshed on weekday quick runs (daily FX/rates/markets data)
+
+scopes:
+  - id: HU
+    kind: country
+    slug: hungary
+    name: {en: Hungary, zh: 匈牙利}
+    flag: "🇭🇺"
+    nav_group: cee
+    pipeline: cee_v4
+    currency: HUF
+    institution: MNB
+
+  - id: PL
+    kind: country
+    slug: poland
+    name: {en: Poland, zh: 波兰}
+    flag: "🇵🇱"
+    nav_group: cee
+    pipeline: cee_v4
+    currency: PLN
+    institution: NBP
+
+  - id: CZ
+    kind: country
+    slug: czechia
+    name: {en: Czechia, zh: 捷克}
+    flag: "🇨🇿"
+    nav_group: cee
+    pipeline: cee_v4
+    currency: CZK
+    institution: CNB
+
+  - id: RO
+    kind: country
+    slug: romania
+    name: {en: Romania, zh: 罗马尼亚}
+    flag: "🇷🇴"
+    nav_group: cee
+    pipeline: cee_v4
+    currency: RON
+    institution: BNR
+
+  - id: CN
+    kind: country
+    slug: china
+    name: {en: China, zh: 中国}
+    flag: "🇨🇳"
+    nav_group: asia
+    pipeline: data_first
+    indicators: config/china_indicators.yaml
+    currency: CNY
+    institution: PBC
+    framework_label: GS China Macro Framework
+    headline:
+      indicators: [usd_cny_midpoint]
+      key: usd_cny_latest
+      label: Latest USD/CNY fixing
+      format: "{value:.4f} ({date})"
+    fetch_workers: 4
+    quick_refresh: true
+
+  - id: EA
+    kind: region
+    slug: euro_area
+    name: {en: Euro Area, zh: 欧元区}
+    flag: "🇪🇺"
+    nav_group: dm
+    pipeline: data_first
+    indicators: config/euro_area_indicators.yaml
+    currency: EUR
+    institution: ECB
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [policy_rate]
+      key: policy_rate_latest
+      label: Deposit Facility Rate
+      format: "{value:.2f}% ({date})"
+    fetch_workers: 6
+    quick_refresh: true
+
+  - id: JP
+    kind: country
+    slug: japan
+    name: {en: Japan, zh: 日本}
+    flag: "🇯🇵"
+    nav_group: dm
+    pipeline: data_first
+    indicators: config/japan_indicators.yaml
+    currency: JPY
+    institution: BoJ
+    framework_label: GS Japan Macro Framework
+    headline:
+      indicators: [policy_rate]
+      key: boj_rate_latest
+      label: BoJ policy rate
+      format: "{value:.2f}% ({date})"
+    fetch_workers: 4
+    quick_refresh: true
+
+  - id: ZA
+    kind: country
+    slug: south_africa
+    name: {en: South Africa, zh: 南非}
+    flag: "🇿🇦"
+    nav_group: em
+    pipeline: data_first
+    indicators: config/south_africa_indicators.yaml
+    currency: ZAR
+    institution: SARB
+    framework_label: GS CEEMEA Macro Framework
+    headline:
+      indicators: [policy_rate]
+      key: repo_rate_latest
+      label: SARB repo rate
+      format: "{value:.2f}% ({date})"
+    fetch_workers: 4
+    quick_refresh: true
+
+  - id: UK
+    kind: country
+    slug: uk
+    name: {en: United Kingdom, zh: 英国}
+    flag: "🇬🇧"
+    nav_group: dm
+    pipeline: data_first
+    indicators: config/uk_indicators.yaml
+    currency: GBP
+    institution: BoE
+    framework_label: GS UK Macro Framework
+    headline:
+      indicators: [bank_rate]
+      key: bank_rate_latest
+      label: Bank Rate
+      format: "{value:.2f}% ({date})"
+    fetch_workers: 4
+    quick_refresh: true
+
+  - id: US
+    kind: country
+    slug: us
+    name: {en: United States, zh: 美国}
+    flag: "🇺🇸"
+    nav_group: dm
+    pipeline: data_first
+    indicators: config/us_indicators.yaml
+    currency: USD
+    institution: Fed
+    framework_label: GS US Macro Framework
+    headline:
+      indicators: [daily_fed_funds, effective_fed_funds]
+      key: fed_funds_latest
+      label: Fed funds
+      format: "{value:.2f}% ({date})"
+    fetch_workers: 4
+    quick_refresh: true
+
+  - id: TR
+    kind: country
+    slug: turkey
+    name: {en: Turkey, zh: 土耳其}
+    flag: "🇹🇷"
+    nav_group: em
+    pipeline: data_first
+    indicators: config/turkey_indicators.yaml
+    currency: TRY
+    institution: TCMB
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [try_usd]
+      key: usd_try_latest
+      label: USD/TRY spot
+      format: "{value:.4f} ({date})"
+    fetch_workers: 6
+    quick_refresh: true
+
+  - id: HK
+    kind: country
+    slug: hong_kong
+    name: {en: Hong Kong, zh: 中国香港}
+    flag: "🇭🇰"
+    nav_group: asia
+    pipeline: data_first
+    indicators: config/hong_kong_indicators.yaml
+    currency: HKD
+    institution: HKMA
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_hkd]
+      key: usd_hkd_latest
+      label: USD/HKD spot
+      format: "{value:.4f} ({date})"
+    fetch_workers: 6
+
+  - id: KR
+    kind: country
+    slug: south_korea
+    name: {en: South Korea, zh: 韩国}
+    flag: "🇰🇷"
+    nav_group: asia
+    pipeline: data_first
+    indicators: config/south_korea_indicators.yaml
+    currency: KRW
+    institution: BOK
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [krw_usd]
+      key: krw_usd_latest
+      label: USD/KRW spot
+      format: "{value:.2f} ({date})"
+    fetch_workers: 6
+    quick_refresh: true
+
+  - id: TW
+    kind: country
+    slug: taiwan
+    name: {en: Taiwan, zh: 中国台湾}
+    flag: "🇹🇼"
+    nav_group: asia
+    pipeline: data_first
+    indicators: config/taiwan_indicators.yaml
+    currency: TWD
+    institution: CBC
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_twd]
+      key: usd_twd_latest
+      label: USD/TWD spot
+      format: "{value:.2f} ({date})"
+    fetch_workers: 6
+    quick_refresh: true
+
+  - id: KZ
+    kind: country
+    slug: kazakhstan
+    name: {en: Kazakhstan, zh: 哈萨克斯坦}
+    flag: "🇰🇿"
+    nav_group: frontier
+    pipeline: data_first
+    indicators: config/kazakhstan_indicators.yaml
+    currency: KZT
+    institution: NBK
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_kzt]
+      key: usd_kzt_latest
+      label: USD/KZT official rate
+      format: "{value:.2f} ({date})"
+    fetch_workers: 6
+
+  - id: UZ
+    kind: country
+    slug: uzbekistan
+    name: {en: Uzbekistan, zh: 乌兹别克斯坦}
+    flag: "🇺🇿"
+    nav_group: frontier
+    pipeline: data_first
+    indicators: config/uzbekistan_indicators.yaml
+    currency: UZS
+    institution: CBU
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_uzs]
+      key: usd_uzs_latest
+      label: USD/UZS official rate
+      format: "{value:,.2f} ({date})"
+    fetch_workers: 6
+
+  - id: EG
+    kind: country
+    slug: egypt
+    name: {en: Egypt, zh: 埃及}
+    flag: "🇪🇬"
+    nav_group: frontier
+    pipeline: data_first
+    indicators: config/egypt_indicators.yaml
+    currency: EGP
+    institution: CBE
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_egp]
+      key: usd_egp_latest
+      label: USD/EGP official rate
+      format: "{value:.2f} ({date})"
+    fetch_workers: 6
+
+  - id: NG
+    kind: country
+    slug: nigeria
+    name: {en: Nigeria, zh: 尼日利亚}
+    flag: "🇳🇬"
+    nav_group: frontier
+    pipeline: data_first
+    indicators: config/nigeria_indicators.yaml
+    currency: NGN
+    institution: CBN
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_ngn]
+      key: usd_ngn_latest
+      label: USD/NGN official rate
+      format: "{value:,.2f} ({date})"
+    fetch_workers: 6

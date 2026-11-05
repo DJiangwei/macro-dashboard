@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-11-05T01:09:10.802524+00:00",
+  "generated": "2026-11-05T03:42:18.922803+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -510,14 +510,21 @@
       ]
     },
     "CN": {
-      "calls": 0,
-      "success": 0,
+      "calls": 5,
+      "success": 5,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {},
-      "sources": {},
+      "sources": {
+        "akshare_table": {
+          "success": 2
+        },
+        "pbc_card": {
+          "success": 3
+        }
+      },
       "events": []
     },
     "JP": {

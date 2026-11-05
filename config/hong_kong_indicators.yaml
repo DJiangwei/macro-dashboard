@@ -752,3 +752,43 @@ cross_checks:
     secondary: cpi_inflation_imf
     tolerance: 0.75
     label_en: C&SD Composite CPI vs IMF CPI
+
+# Series reported in the page summary's key_series_latest (scripts/build_scope.py).
+summary_key_ids:
+  - real_gdp_growth
+  - real_gdp_yoy
+  - private_consumption_yoy
+  - investment_growth_yoy
+  - government_consumption_yoy
+  - services_exports_yoy
+  - industrial_production_growth
+  - retail_sales_growth
+  - construction_works_growth
+  - unemployment_rate
+  - underemployment_rate
+  - participation_rate
+  - nominal_wage_index_growth
+  - cpi_inflation
+  - core_cpi_inflation
+  - bis_nominal_house_prices
+  - bis_real_house_prices
+  - usd_hkd
+  - reer
+  - neer
+  - merchandise_exports_growth
+  - merchandise_imports_growth
+  - merchandise_trade_balance
+  - current_account_usd
+  - services_balance_usd
+  - fdi_net_usd
+  - total_reserves_usd
+  - current_account_gdp
+  - government_debt_gdp
+  - fiscal_balance_gdp
+  - primary_balance_gdp
+  - fed_funds_anchor
+  - private_credit_gdp
+  - bank_credit_gdp
+  - household_credit_gdp
+  - bank_capital_ratio
+  - bank_npl_ratio

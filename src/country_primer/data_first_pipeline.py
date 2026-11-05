@@ -23,7 +23,15 @@ def partial_refresh_ids() -> set[str]:
     return {item.strip() for item in raw.split(",") if item.strip()}
 
 
-def fetch_all(config: dict[str, Any], registry: dict[str, Any], max_workers: int = 4, sequential: bool = False) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def fetch_all(
+    config: dict[str, Any],
+    registry: dict[str, Any],
+    max_workers: int = 4,
+    sequential: bool = False,
+    country: str | None = None,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    # Source-health records are keyed by scope; older configs carry no iso2.
+    country = country or str(config.get("iso2", "XX"))
     only_ids = partial_refresh_ids()
     specs = list(config.get("indicators", []))
     if only_ids:
@@ -55,7 +63,7 @@ def fetch_all(config: dict[str, Any], registry: dict[str, Any], max_workers: int
             
         try:
             series = guarded_source_call(
-                country=config.get("iso2", "XX"),
+                country=country,
                 indicator_id=str(spec.get("id") or "unknown"),
                 source_id=str(fetcher_name or "unknown"),
                 operation=operation,
@@ -91,7 +99,7 @@ def fetch_all(config: dict[str, Any], registry: dict[str, Any], max_workers: int
         if func:
             try:
                 cards.append(guarded_source_call(
-                    country=config.get("iso2", "XX"),
+                    country=country,
                     indicator_id=str(card.get("id") or card.get("label_en") or fetcher_name),
                     source_id=fetcher_name,
                     operation=lambda card=card: func(card, cache),
