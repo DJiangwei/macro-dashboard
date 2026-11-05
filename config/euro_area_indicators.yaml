@@ -294,15 +294,15 @@ indicators:
     dataset: "ei_bsin_q_r2"
     filters:
       freq: "Q"
-      geo: "EA20"
+      geo: "EA21"
       indic: "BS-ICU-PC"
       s_adj: "SA"
     source_name: "Eurostat / DG ECFIN"
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bsin_q_r2"
     frequency: "quarterly"
     start_date: "1995"
-    caveat_en: "Current level of capacity utilisation in manufacturing (%); seasonally adjusted."
-    caveat_zh: "制造业当前产能利用率百分比；季调口径。"
+    caveat_en: "Current level of capacity utilisation in manufacturing (%); seasonally adjusted. Euro area 21 (Bulgaria joined in 2026); Eurostat stopped updating the EA20 aggregate of this dataset after 2025."
+    caveat_zh: "制造业当前产能利用率百分比；季调口径。欧元区21国口径（保加利亚2026年加入）；Eurostat对该数据集的EA20汇总在2025年后停止更新。"
 
   - id: economic_sentiment
     section: production_cycle
@@ -313,15 +313,15 @@ indicators:
     dataset: "ei_bssi_m_r2"
     filters:
       freq: "M"
-      geo: "EA20"
+      geo: "EA21"
       indic: "BS-ESI-I"
       s_adj: "SA"
     source_name: "Eurostat / DG ECFIN"
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bssi_m_r2"
     frequency: "monthly"
     start_date: "1995"
-    caveat_en: "Headline Economic Sentiment Indicator (long-term average = 100); seasonally adjusted."
-    caveat_zh: "综合经济景气指数（长期均值=100）；季调口径。"
+    caveat_en: "Headline Economic Sentiment Indicator (long-term average = 100); seasonally adjusted. Euro area 21 (Bulgaria joined in 2026); Eurostat stopped updating the EA20 aggregate of this dataset after 2025."
+    caveat_zh: "综合经济景气指数（长期均值=100）；季调口径。欧元区21国口径（保加利亚2026年加入）；Eurostat对该数据集的EA20汇总在2025年后停止更新。"
 
   - id: germany_economic_sentiment
     section: production_cycle
@@ -351,15 +351,15 @@ indicators:
     dataset: "ei_bssi_m_r2"
     filters:
       freq: "M"
-      geo: "EA20"
+      geo: "EA21"
       indic: "BS-ICI-BAL"
       s_adj: "SA"
     source_name: "Eurostat / DG ECFIN"
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bssi_m_r2"
     frequency: "monthly"
     start_date: "1995"
-    caveat_en: "Industrial confidence indicator (net balance %); seasonally adjusted."
-    caveat_zh: "工业信心指标净差值；季调口径。"
+    caveat_en: "Industrial confidence indicator (net balance %); seasonally adjusted. Euro area 21 (Bulgaria joined in 2026); Eurostat stopped updating the EA20 aggregate of this dataset after 2025."
+    caveat_zh: "工业信心指标净差值；季调口径。欧元区21国口径（保加利亚2026年加入）；Eurostat对该数据集的EA20汇总在2025年后停止更新。"
 
   - id: services_confidence
     section: production_cycle
@@ -370,15 +370,15 @@ indicators:
     dataset: "ei_bssi_m_r2"
     filters:
       freq: "M"
-      geo: "EA20"
+      geo: "EA21"
       indic: "BS-SCI-BAL"
       s_adj: "SA"
     source_name: "Eurostat / DG ECFIN"
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bssi_m_r2"
     frequency: "monthly"
     start_date: "1995"
-    caveat_en: "Services sector confidence indicator (net balance %); seasonally adjusted."
-    caveat_zh: "服务业信心指标净差值；季调口径。"
+    caveat_en: "Services sector confidence indicator (net balance %); seasonally adjusted. Euro area 21 (Bulgaria joined in 2026); Eurostat stopped updating the EA20 aggregate of this dataset after 2025."
+    caveat_zh: "服务业信心指标净差值；季调口径。欧元区21国口径（保加利亚2026年加入）；Eurostat对该数据集的EA20汇总在2025年后停止更新。"
 
   - id: consumer_confidence
     section: production_cycle
@@ -389,15 +389,15 @@ indicators:
     dataset: "ei_bssi_m_r2"
     filters:
       freq: "M"
-      geo: "EA20"
+      geo: "EA21"
       indic: "BS-CSMCI-BAL"
       s_adj: "SA"
     source_name: "Eurostat / DG ECFIN"
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bssi_m_r2"
     frequency: "monthly"
     start_date: "1995"
-    caveat_en: "Consumer confidence indicator (net balance %); seasonally adjusted."
-    caveat_zh: "消费者信心指标净差值；季调口径。"
+    caveat_en: "Consumer confidence indicator (net balance %); seasonally adjusted. Euro area 21 (Bulgaria joined in 2026); Eurostat stopped updating the EA20 aggregate of this dataset after 2025."
+    caveat_zh: "消费者信心指标净差值；季调口径。欧元区21国口径（保加利亚2026年加入）；Eurostat对该数据集的EA20汇总在2025年后停止更新。"
 
   - id: employment_expectations
     section: production_cycle
@@ -408,15 +408,16 @@ indicators:
     dataset: "ei_bsee_m_r2"
     filters:
       freq: "M"
-      geo: "EA20"
+      geo: "EA21"
+      unit: "INX"
       indic: "BS-EEI-I"
       s_adj: "SA"
     source_name: "Eurostat / DG ECFIN"
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/ei_bsee_m_r2"
     frequency: "monthly"
     start_date: "1995"
-    caveat_en: "Employment Expectations Indicator across sectors (long-term average = 100); seasonally adjusted."
-    caveat_zh: "全行业就业预期指数（长期均值=100）；季调口径。"
+    caveat_en: "Employment Expectations Indicator across sectors (long-term average = 100); seasonally adjusted. Euro area 21 (Bulgaria joined in 2026); Eurostat stopped updating the EA20 aggregate of this dataset after 2025."
+    caveat_zh: "全行业就业预期指数（长期均值=100）；季调口径。欧元区21国口径（保加利亚2026年加入）；Eurostat对该数据集的EA20汇总在2025年后停止更新。"
 
   # --- labour_wages --------------------------------------------------------
   - id: unemployment_rate
@@ -487,20 +488,20 @@ indicators:
     label_zh: "职位空缺率"
     unit: "%"
     fetcher: eurostat_jsonstat
-    dataset: "jvs_q_nace2"
+    dataset: "jvs_q_r21"
     filters:
       freq: "Q"
-      geo: "EA20"
+      geo: "EA21"
       indic_em: "JVR"
-      nace_r2: "B-S"
+      nace_r2_1: "B-T"
       s_adj: "SA"
       sizeclas: "TOTAL"
     source_name: "Eurostat"
-    source_url: "https://ec.europa.eu/eurostat/databrowser/view/jvs_q_nace2"
+    source_url: "https://ec.europa.eu/eurostat/databrowser/view/jvs_q_r21"
     frequency: "quarterly"
     start_date: "2006"
-    caveat_en: "Job vacancy rate in industry, construction and services (NACE B-S); seasonally adjusted."
-    caveat_zh: "工业、建筑业与服务业职位空缺率；季调口径。"
+    caveat_en: "Job vacancy rate in industry, construction and services, seasonally adjusted, euro area 21. NACE Rev. 2.1 aggregate B-T, the successor of Rev. 2 B-S: Eurostat moved quarterly job vacancy statistics to NACE Rev. 2.1 in 2026 and the Rev. 2 dataset (jvs_q_nace2) ends at 2025-Q4."
+    caveat_zh: "工业、建筑业与服务业职位空缺率，季调，欧元区21国口径。行业口径为NACE Rev. 2.1的B-T（对应原Rev. 2的B-S）：Eurostat于2026年将季度职位空缺统计改为NACE Rev. 2.1，原Rev. 2数据集（jvs_q_nace2）止于2025年四季度。"
 
   - id: labour_force_participation_rate
     section: labour_wages
@@ -812,8 +813,8 @@ indicators:
     dataset: "bop_gdp6_q"
     filters:
       freq: "Q"
-      geo: "EA20"
-      partner: "EXT_EA20"
+      geo: "EA21"
+      partner: "EXT_EA21"
       bop_item: "CA"
       stk_flow: "BAL"
       unit: "PC_GDP"
@@ -822,8 +823,8 @@ indicators:
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/bop_gdp6_q"
     frequency: "quarterly"
     start_date: "2013"
-    caveat_en: "Current account balance as percentage of GDP; seasonally and calendar adjusted (BPM6)."
-    caveat_zh: "经常账户差额占GDP比重；经季节与工作日调整 (BPM6口径)。"
+    caveat_en: "Current account balance as percentage of GDP; seasonally and calendar adjusted (BPM6). Euro area 21 against partners outside the euro area (EXT_EA21). The whole history is on this basis, so values differ from the former EA20 series (2025-Q3: 1.6 vs 1.2)."
+    caveat_zh: "经常账户差额占GDP比重；经季节与工作日调整 (BPM6口径)。欧元区21国对欧元区外伙伴（EXT_EA21）。整段历史均为该口径，因此与原EA20序列不同（2025年三季度：1.6对1.2）。"
 
   - id: eur_usd
     section: external_fx

@@ -931,10 +931,11 @@ class EurostatFetcher(BaseFetcher):
             "unit": "%",
         },
         "vacancy_rate": {
-            "dataset": "jvs_q_nace2",
+            # NACE Rev. 2.1 since 2026; jvs_q_nace2 (Rev. 2, B-S) ends at 2025-Q4. B-T is B-S's successor.
+            "dataset": "jvs_q_r21",
             "freq": "Q",
             "since": "2018",
-            "params": {"nace_r2": "B-S", "sizeclas": "TOTAL", "indic_em": "JVR", "s_adj": "SA"},
+            "params": {"nace_r2_1": "B-T", "sizeclas": "TOTAL", "indic_em": "JVR", "s_adj": "SA"},
             "unit": "%",
         },
         "construction_production": {

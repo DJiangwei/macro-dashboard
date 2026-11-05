@@ -207,3 +207,10 @@ Rules that follow (enforced by `tests/test_data_integrity.py`):
   headless on a scratch copy of the page with a `<base href>` to `output/` and
   CSS hiding every other `section.panel`; `#anchor` scrolling is ignored by
   `--screenshot`.
+- A frozen source raises no error: the chart keeps its last value and only the
+  freshness date shows it. After a classification or membership change
+  (NACE Rev. 2.1, euro-area enlargement), check the Eurostat catalogue
+  (`api/dissemination/catalogue/toc/txt`): a dataset moved under "historical
+  data", or an aggregate (EA20) whose last period stops while the dataset's
+  does not, has been replaced. Compare the overlap before switching, and
+  switch the whole history rather than splicing two compositions.

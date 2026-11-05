@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-11-05T12:04:28.670591+00:00
+Generated: 2026-11-05T13:29:38.135750+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -13,11 +13,11 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 5 | `growth_demand` | `investment_growth` Investment Growth | W | W | W | W | W | V | W | L | W | V | V | - | W | W | W | W | W | W | - |
 | 6 | `production_cycle` | `industrial_production_growth` Industrial Production Growth | V | V | V | V | W | V | L | S | V | V | V | W | W | - | W | - | - | - | W |
 | 7 | `production_cycle` | `retail_sales_growth` Retail Sales Growth | V | V | V | V | W | V | L | L | V | V | V | W | W | - | - | - | - | - | - |
-| 8 | `production_cycle` | `business_confidence` Business Confidence | V | V | V | V | W | L | W | W | W | V | V | - | W | - | - | - | - | - | - |
+| 8 | `production_cycle` | `business_confidence` Business Confidence | V | V | V | V | W | V | W | W | W | V | V | - | W | - | - | - | - | - | - |
 | 9 | `labour_household` | `unemployment_rate` Unemployment Rate | V | V | V | V | W | V | W | W | L | V | V | V | W | W | W | W | W | W | W |
 | 10 | `labour_household` | `employment_growth` Employment Growth | V | V | V | V | - | V | W | W | W | V | - | - | W | - | - | - | - | - | - |
 | 11 | `labour_household` | `participation_rate` Labour Force Participation | W | W | W | W | - | V | W | - | L | V | W | - | W | - | W | W | W | W | W |
-| 12 | `labour_household` | `vacancies` Labour Demand / Vacancies | L | L | L | L | - | L | V | - | V | W | - | - | - | - | - | - | - | - | - |
+| 12 | `labour_household` | `vacancies` Labour Demand / Vacancies | V | V | L | V | - | V | V | - | V | W | - | - | - | - | - | - | - | - | - |
 | 13 | `labour_household` | `wage_growth` Wage Growth | V | V | V | V | - | L | L | - | V | V | - | W | - | - | - | - | - | - | - |
 | 14 | `labour_household` | `real_income_growth` Real Household Income Growth | V | V | V | V | - | - | - | - | - | V | - | - | - | - | - | - | - | - | - |
 | 15 | `prices_costs` | `headline_inflation` Headline Inflation | V | V | V | V | W | V | V | V | V | V | W | V | W | V | L | W | W | W | L |
@@ -32,7 +32,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 24 | `housing_investment` | `construction_activity` Construction Activity | V | V | V | V | W | V | - | - | L | V | V | W | - | V | - | - | - | - | - |
 | 25 | `housing_investment` | `mortgage_rate` Mortgage Rate | V | V | V | V | - | V | - | - | V | W | - | - | - | - | - | - | - | - | - |
 | 26 | `housing_investment` | `property_inventory` Property Inventory / Supply | - | - | - | - | - | - | - | - | - | V | - | - | - | - | - | - | - | - | - |
-| 27 | `external_fx` | `current_account_gdp` Current Account, % GDP | W | W | W | W | W | L | L | L | V | W | W | W | W | W | W | W | W | W | W |
+| 27 | `external_fx` | `current_account_gdp` Current Account, % GDP | W | W | W | W | W | V | L | L | V | W | W | W | W | W | W | W | W | W | W |
 | 28 | `external_fx` | `trade_balance` Trade Balance | W | W | W | W | W | V | W | W | V | W | W | V | W | W | W | W | W | L | W |
 | 29 | `external_fx` | `exports_growth` Exports Growth | - | - | - | - | W | V | W | W | W | W | V | V | - | W | W | - | - | - | - |
 | 30 | `external_fx` | `imports_growth` Imports Growth | - | - | - | - | W | V | W | W | W | W | V | V | - | W | W | - | - | - | - |
@@ -59,12 +59,12 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 
 | Country | Covered | Verified | Watch | Low | Substitute | Missing |
 |---|---:|---:|---:|---:|---:|---:|
-| HU | 41/48 | 23 | 15 | 3 | 0 | 7 |
-| PL | 41/48 | 23 | 15 | 3 | 0 | 7 |
+| HU | 41/48 | 24 | 15 | 2 | 0 | 7 |
+| PL | 41/48 | 24 | 15 | 2 | 0 | 7 |
 | CZ | 41/48 | 23 | 15 | 3 | 0 | 7 |
-| RO | 41/48 | 22 | 16 | 3 | 0 | 7 |
+| RO | 41/48 | 23 | 16 | 2 | 0 | 7 |
 | CN | 27/48 | 0 | 26 | 1 | 0 | 21 |
-| EA | 43/48 | 34 | 4 | 5 | 0 | 5 |
+| EA | 43/48 | 37 | 4 | 2 | 0 | 5 |
 | JP | 38/48 | 7 | 20 | 11 | 0 | 10 |
 | ZA | 29/48 | 7 | 9 | 12 | 1 | 19 |
 | UK | 38/48 | 20 | 12 | 6 | 0 | 10 |
@@ -91,11 +91,11 @@ Priority is explicit and reproducible: pillar macro-value weight x10, plus 5 poi
 | 4 | `inflation_expectations` Inflation Expectations | `prices_costs` | 115 | CN, JP, ZA, UK, TR, HK, KR, TW, IN, KZ, UZ, EG, NG | - |
 | 5 | `real_income_growth` Real Household Income Growth | `labour_household` | 110 | CN, EA, JP, ZA, UK, TR, HK, KR, TW, IN, KZ, UZ, EG, NG | - |
 | 6 | `wage_cost_inflation` Labour Cost Inflation | `prices_costs` | 110 | CN, JP, ZA, TR, HK, KR, TW, IN, KZ, UZ, EG, NG | - |
-| 7 | `vacancies` Labour Demand / Vacancies | `labour_household` | 105 | CN, ZA, TR, HK, KR, TW, IN, KZ, UZ, EG, NG | HU, PL, CZ, RO, EA |
-| 8 | `goods_inflation` Goods Inflation | `prices_costs` | 105 | CN, ZA, TR, HK, KR, TW, IN, KZ, UZ, EG, NG | - |
-| 9 | `housing_activity` Housing Activity | `housing_investment` | 104 | HU, PL, CZ, RO, ZA, TR, HK, KR, TW, IN, KZ, UZ, EG, NG | EA, JP |
-| 10 | `services_inflation` Services Inflation | `prices_costs` | 100 | CN, ZA, HK, KR, TW, IN, KZ, UZ, EG, NG | - |
-| 11 | `yield_curve_slope` Yield Curve Slope | `monetary_financial` | 98 | ZA, TR, HK, IN, KZ, UZ, EG, NG | HU, PL, CZ, RO |
+| 7 | `goods_inflation` Goods Inflation | `prices_costs` | 105 | CN, ZA, TR, HK, KR, TW, IN, KZ, UZ, EG, NG | - |
+| 8 | `housing_activity` Housing Activity | `housing_investment` | 104 | HU, PL, CZ, RO, ZA, TR, HK, KR, TW, IN, KZ, UZ, EG, NG | EA, JP |
+| 9 | `services_inflation` Services Inflation | `prices_costs` | 100 | CN, ZA, HK, KR, TW, IN, KZ, UZ, EG, NG | - |
+| 10 | `yield_curve_slope` Yield Curve Slope | `monetary_financial` | 98 | ZA, TR, HK, IN, KZ, UZ, EG, NG | HU, PL, CZ, RO |
+| 11 | `vacancies` Labour Demand / Vacancies | `labour_household` | 97 | CN, ZA, TR, HK, KR, TW, IN, KZ, UZ, EG, NG | CZ |
 | 12 | `consumption_growth` Household Consumption Growth | `growth_demand` | 95 | HU, PL, CZ, RO, JP, ZA, HK, KR, NG | - |
 | 13 | `government_interest_cost` Government Interest Cost | `fiscal_sovereign` | 95 | CN, EA, JP, ZA, TR, HK, KR, TW, IN, KZ, UZ, EG, NG | - |
 | 14 | `wage_growth` Wage Growth | `labour_household` | 94 | CN, ZA, TR, KR, TW, IN, KZ, UZ, EG, NG | EA, JP |

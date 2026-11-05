@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-11-05T12:04:28.670591+00:00",
+  "generated": "2026-11-05T13:29:38.135750+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -33,16 +33,16 @@
   },
   "country_summary": {
     "HU": {
-      "verified": 23,
+      "verified": 24,
       "watch": 15,
-      "low_confidence": 3,
+      "low_confidence": 2,
       "substitute": 0,
       "missing": 7
     },
     "PL": {
-      "verified": 23,
+      "verified": 24,
       "watch": 15,
-      "low_confidence": 3,
+      "low_confidence": 2,
       "substitute": 0,
       "missing": 7
     },
@@ -54,9 +54,9 @@
       "missing": 7
     },
     "RO": {
-      "verified": 22,
+      "verified": 23,
       "watch": 16,
-      "low_confidence": 3,
+      "low_confidence": 2,
       "substitute": 0,
       "missing": 7
     },
@@ -68,9 +68,9 @@
       "missing": 21
     },
     "EA": {
-      "verified": 34,
+      "verified": 37,
       "watch": 4,
-      "low_confidence": 5,
+      "low_confidence": 2,
       "substitute": 0,
       "missing": 5
     },
@@ -1386,8 +1386,8 @@
       "unit": "index",
       "priority_weight": 4,
       "missing_countries": 7,
-      "weak_countries": 1,
-      "priority_score": 77,
+      "weak_countries": 0,
+      "priority_score": 75,
       "countries": {
         "HU": {
           "state": "verified",
@@ -1440,13 +1440,13 @@
           "refresh_fallback": false
         },
         "EA": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "economic_sentiment",
             "industry_confidence"
           ],
-          "latest_date": "2025-12-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -2095,25 +2095,25 @@
       "unit": "mixed",
       "priority_weight": 4,
       "missing_countries": 11,
-      "weak_countries": 5,
-      "priority_score": 105,
+      "weak_countries": 1,
+      "priority_score": 97,
       "countries": {
         "HU": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "vacancy_rate"
           ],
-          "latest_date": "2025-10-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "PL": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "vacancy_rate"
           ],
-          "latest_date": "2025-10-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "CZ": {
@@ -2126,12 +2126,12 @@
           "refresh_fallback": false
         },
         "RO": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "vacancy_rate"
           ],
-          "latest_date": "2025-10-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "CN": {
@@ -2142,12 +2142,12 @@
           "refresh_fallback": false
         },
         "EA": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "job_vacancy_rate"
           ],
-          "latest_date": "2025-10-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -4565,8 +4565,8 @@
       "unit": "percent_gdp",
       "priority_weight": 4,
       "missing_countries": 0,
-      "weak_countries": 3,
-      "priority_score": 46,
+      "weak_countries": 2,
+      "priority_score": 44,
       "countries": {
         "HU": {
           "state": "watch",
@@ -4614,12 +4614,12 @@
           "refresh_fallback": false
         },
         "EA": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "current_account_gdp"
           ],
-          "latest_date": "2025-07-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -8575,32 +8575,6 @@
       "weak_countries": []
     },
     {
-      "concept_id": "vacancies",
-      "pillar": "labour_household",
-      "label_en": "Labour Demand / Vacancies",
-      "priority_score": 105,
-      "missing_countries": [
-        "CN",
-        "ZA",
-        "TR",
-        "HK",
-        "KR",
-        "TW",
-        "IN",
-        "KZ",
-        "UZ",
-        "EG",
-        "NG"
-      ],
-      "weak_countries": [
-        "HU",
-        "PL",
-        "CZ",
-        "RO",
-        "EA"
-      ]
-    },
-    {
       "concept_id": "goods_inflation",
       "pillar": "prices_costs",
       "label_en": "Goods Inflation",
@@ -8685,6 +8659,28 @@
         "PL",
         "CZ",
         "RO"
+      ]
+    },
+    {
+      "concept_id": "vacancies",
+      "pillar": "labour_household",
+      "label_en": "Labour Demand / Vacancies",
+      "priority_score": 97,
+      "missing_countries": [
+        "CN",
+        "ZA",
+        "TR",
+        "HK",
+        "KR",
+        "TW",
+        "IN",
+        "KZ",
+        "UZ",
+        "EG",
+        "NG"
+      ],
+      "weak_countries": [
+        "CZ"
       ]
     },
     {
@@ -8937,7 +8933,7 @@
       "concept_id": "business_confidence",
       "pillar": "production_cycle",
       "label_en": "Business Confidence",
-      "priority_score": 77,
+      "priority_score": 75,
       "missing_countries": [
         "HK",
         "TW",
@@ -8947,9 +8943,7 @@
         "EG",
         "NG"
       ],
-      "weak_countries": [
-        "EA"
-      ]
+      "weak_countries": []
     },
     {
       "concept_id": "retail_sales_growth",
@@ -9237,10 +9231,9 @@
       "concept_id": "current_account_gdp",
       "pillar": "external_fx",
       "label_en": "Current Account, % GDP",
-      "priority_score": 46,
+      "priority_score": 44,
       "missing_countries": [],
       "weak_countries": [
-        "EA",
         "JP",
         "ZA"
       ]
