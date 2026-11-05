@@ -8,29 +8,15 @@ from pathlib import Path
 from typing import Any
 
 from country_primer.framework import load_macro_framework
+from country_primer.scopes import all_scopes, data_first_scopes
 
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
 OUT_JSON = OUTPUT / "core_coverage_matrix.json"
 OUT_MD = ROOT / "CORE_COVERAGE_MATRIX.md"
-COUNTRIES = ("HU", "PL", "CZ", "RO", "CN", "EA", "JP", "ZA", "UK", "US", "TR", "HK", "KR", "TW", "KZ", "UZ", "EG", "NG")
-DATA_FIRST_FILES = {
-    "CN": OUTPUT / "china_canonical_frame.json",
-    "EA": OUTPUT / "euro_area_canonical_frame.json",
-    "JP": OUTPUT / "japan_canonical_frame.json",
-    "ZA": OUTPUT / "south_africa_canonical_frame.json",
-    "UK": OUTPUT / "uk_canonical_frame.json",
-    "US": OUTPUT / "us_canonical_frame.json",
-    "TR": OUTPUT / "turkey_canonical_frame.json",
-    "HK": OUTPUT / "hong_kong_canonical_frame.json",
-    "KR": OUTPUT / "south_korea_canonical_frame.json",
-    "TW": OUTPUT / "taiwan_canonical_frame.json",
-    "KZ": OUTPUT / "kazakhstan_canonical_frame.json",
-    "UZ": OUTPUT / "uzbekistan_canonical_frame.json",
-    "EG": OUTPUT / "egypt_canonical_frame.json",
-    "NG": OUTPUT / "nigeria_canonical_frame.json",
-}
+COUNTRIES = tuple(s.id for s in all_scopes())
+DATA_FIRST_FILES = {s.id: s.canonical_path for s in data_first_scopes()}
 QUALITY_RANK = {"verified": 4, "watch": 3, "low_confidence": 2, "unavailable": 1}
 
 

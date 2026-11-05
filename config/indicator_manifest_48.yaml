@@ -511,9 +511,9 @@ indicators:
 - section_id: external
   indicator_id: gas_storage_level
   label: Natural Gas Storage Fill Level
-  unit: '%'
+  unit: '% WGV'
   source: GIE AGSI+ / ENTSOG Outlook snapshots
-  frequency: seasonal
+  frequency: daily
   chart: line
   peers: false
   quality_status: watch

@@ -153,3 +153,57 @@ gh api repos/DJiangwei/macro-dashboard/pages/builds/latest --jq '.status + " " +
 - Use the macro workbench JSON files before scraping pages. They expose regime
   scores, cross-country heatmap values, freshness attention, data-gap backlog,
   and what-changed deltas in stable machine-readable form.
+
+## 9. Data-Integrity Incident (2026-11-05)
+
+An audit found that several build steps had been fabricating data, and the
+existing validation passed anyway:
+
+- `scripts/enrich_macro_data_quality.py` appended hand-typed observations to
+  canonical frames and marked them `verified/current` (China "Sep/Oct 2026"
+  prints that contradicted the real data — e.g. USD/CNY 7.125 vs a real 6.73,
+  PPI −2.9% vs a real +3.8% — KZ/NG policy rates, HK reserves, TR/HK 10Y yields,
+  ECB CISS, BIS credit gaps with the wrong sign, S&P/Stoxx returns). It also
+  rewrote `config/framework_v2.yaml` at build time to inflate coverage.
+- Labour and EM/China inflation "deepdives" built tables from the headline
+  times hand-picked coefficients, offsets and defaults, and labelled them
+  "Official Basket".
+- The Policy Tracker and CEE policy rates were hand-maintained and had drifted
+  (HU shown at 6.25% while the MNB had cut to 5.50%; CZ at 3.50% after a hike
+  to 3.75%).
+
+Rules that follow (enforced by `tests/test_data_integrity.py`):
+
+- Never type observations into code. A literal list of three or more
+  `(date, number)` points fails the build. If a source breaks, keep the last
+  real value as `refresh_fallback/watch` and let the page show it as stale.
+- Build steps never write to `config/`.
+- Derivations live in `scripts/enrich_macro_data_quality.py` and must be
+  computable from canonical series; their quality is assessed, never asserted.
+- Deepdive panels come from `config/deepdive_views.yaml` and render only the
+  rows whose series exist (`scripts/real_deepdives.py`).
+- Policy rates are cross-checked against the BIS WS_CBPOL snapshot
+  (`output/bis_policy_rates.json`, written by `refresh_bis_policy_snapshot.py`).
+- Growth/inflation concepts may only map to rate (% or YoY) series.
+- Narrative prose with numbers is dated analysis, not data; label it as such.
+- Use `COUNTRY_PRIMER_ONLY_INDICATORS=id1,id2` for a targeted refresh of one
+  data-first page, and `scripts/refresh_cee_indicators.py` for CEE.
+- FRED tarpits spoofed browser User-Agents; use the honest client UA.
+- `scripts/refresh_cee_indicators.py` round-trips the CEE snapshot through
+  `snapshots.compact_cee_frames`, which drops the `label_en`/`label_zh`/`section`
+  metadata of the deepdive series written by `enrich_cee_inflation_deepdive.py`.
+  Always follow it with `make rebuild-ui` (whose first step rewrites them), then
+  compare the frame against `HEAD` series by series before committing: only the
+  refreshed indicator may differ.
+- Keyed sources (`eia_steo`, `ember_generation`, `gie_agsi`) raise errors that
+  name the source and HTTP status only, because EIA and Ember take the key as a
+  query parameter and `raise_for_status()` would print the full URL.
+- EIA STEO aggregates include EIA's forecast to the end of next year; `eia_steo`
+  keeps months up to the current month minus two. Do not loosen that cut-off to
+  "periods before today": the current month is always a forecast.
+- An ENTSO-E token can exist and still return `999 User is not authorized` until
+  Restful API access is granted (email transparency@entsoe.eu).
+- Local page screenshots: Playwright is not installed locally. Use Chrome
+  headless on a scratch copy of the page with a `<base href>` to `output/` and
+  CSS hiding every other `section.panel`; `#anchor` scrolling is ignored by
+  `--screenshot`.

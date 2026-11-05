@@ -1,9 +1,9 @@
 {
   "file": "egypt.html",
-  "generated": "2026-11-03T21:16:36.556978+00:00",
+  "generated": "2026-11-05T11:22:22.256080+00:00",
   "charts": 38,
-  "source_groups": 15,
-  "data_gaps": 2,
+  "source_groups": 16,
+  "data_gaps": 3,
   "low_confidence": 14,
   "key_series_latest": [
     {
@@ -128,14 +128,14 @@
     },
     {
       "id": "usd_egp",
-      "label_en": "USD/EGP End-of-Period Official Rate",
+      "label_en": "USD/EGP End-of-Period Official Rate (BIS)",
       "label_zh": "美元兑埃及镑期末官方汇率",
-      "latest_date": "2025-05-01",
-      "latest_value": 49.6983,
-      "latest_display": "49.7 EGP",
+      "latest_date": "2026-07-01",
+      "latest_value": 51.0934,
+      "latest_display": "51.1 EGP",
       "frequency": "monthly",
-      "source_name": "IMF / DBnomics (IFS)",
-      "series": "IMF/IFS/M.EG.ENDE_XDC_USD_RATE",
+      "source_name": "BIS exchange rates (WS_XRU), as reported by the central bank",
+      "series": "EG",
       "quality_status": "low_confidence"
     },
     {
@@ -430,7 +430,7 @@
   "unavailable": [],
   "data_mode": "snapshot",
   "latest_cards": [],
-  "usd_egp_latest": "49.70 (2025-05-01)",
+  "usd_egp_latest": "51.09 (2026-07-01)",
   "cross_checks": [
     {
       "concept": "real_gdp_growth",
@@ -459,10 +459,10 @@
     ],
     "file": "egypt_canonical_frame.json",
     "series": 38,
-    "observations": 9632,
+    "observations": 9646,
     "series_count": 38,
-    "observation_count": 9632,
-    "snapshot_generated": "2026-11-02T23:43:59.596761+00:00"
+    "observation_count": 9646,
+    "snapshot_generated": "2026-11-05T11:21:42.366501+00:00"
   },
   "data_gaps_detail": [
     {
@@ -478,10 +478,17 @@
       "item_zh": "苏伊士运河管理局(SCA)月度通航船舶数与通行费收入",
       "status_en": "Monitored via Suez Canal Authority (suezcanal.gov.eg) and Ministry of Planning official bulletins.",
       "status_zh": "通过苏伊士运河管理局与埃及规划部月度公报跟踪监控。"
+    },
+    {
+      "section": "external_fx",
+      "item_en": "CBE official USD/EGP daily rate and policy rate (monthly FX now via BIS)",
+      "item_zh": "埃及央行官方美元汇率与政策利率",
+      "status_en": "CBE pages block automated access from the current build environment. Monthly end-of-period FX now comes from the BIS; the daily rate and the policy rate (IMF IFS mirror ends 2025-05) are to be wired from the CI runner.",
+      "status_zh": "埃及央行网站拒绝当前构建环境的自动化访问。月末汇率现取自BIS；日度汇率与政策利率（IMF IFS镜像止于2025-05）将从CI运行环境接入。"
     }
   ],
   "source_health": {
-    "source_groups": 15,
+    "source_groups": 16,
     "sources": [
       {
         "source_name": "IMF SDMX / CBE",
@@ -496,12 +503,12 @@
         "charts": 5
       },
       {
-        "source_name": "IMF / DBnomics (IFS)",
+        "source_name": "IMF SDMX / CAPMAS",
         "charts": 4
       },
       {
-        "source_name": "IMF SDMX / CAPMAS",
-        "charts": 4
+        "source_name": "IMF / DBnomics (IFS)",
+        "charts": 3
       },
       {
         "source_name": "Bruegel (Darvas REER Dataset)",
@@ -510,6 +517,10 @@
       {
         "source_name": "World Bank / ILO",
         "charts": 2
+      },
+      {
+        "source_name": "BIS exchange rates (WS_XRU), as reported by the central bank",
+        "charts": 1
       },
       {
         "source_name": "EIA / FRED",
@@ -557,10 +568,10 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-11-03",
+    "as_of_date": "2026-11-05",
     "counts": {
-      "current": 14,
-      "due": 4,
+      "current": 13,
+      "due": 5,
       "projection": 6,
       "stale": 14
     },
@@ -574,7 +585,7 @@
         "frequency": "annual",
         "freshness_status": "due",
         "age_basis_date": "2024-12-31",
-        "age_days": 672,
+        "age_days": 674,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -596,7 +607,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-05-01",
-        "age_days": 521,
+        "age_days": 523,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -618,7 +629,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-05-01",
-        "age_days": 521,
+        "age_days": 523,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -640,7 +651,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-05-01",
-        "age_days": 521,
+        "age_days": 523,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -662,7 +673,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-05-01",
-        "age_days": 521,
+        "age_days": 523,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -673,29 +684,7 @@
         "validation": "passed",
         "comparability": "medium",
         "source_name": "IMF / DBnomics (IFS) / Derived",
-        "series": "real_policy_rate",
-        "transform": "level"
-      },
-      {
-        "id": "usd_egp",
-        "concept_id": "fx_spot",
-        "label_en": "USD/EGP End-of-Period Official Rate",
-        "latest_date": "2025-05-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-05-01",
-        "age_days": 521,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF / DBnomics (IFS)",
-        "series": "IMF/IFS/M.EG.ENDE_XDC_USD_RATE",
+        "series": "policy_rate in force at month end − cpi_inflation",
         "transform": "level"
       },
       {
@@ -706,7 +695,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 368,
+        "age_days": 370,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -728,7 +717,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 217,
+        "age_days": 219,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -750,7 +739,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 217,
+        "age_days": 219,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -772,7 +761,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 217,
+        "age_days": 219,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -794,7 +783,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 217,
+        "age_days": 219,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -816,7 +805,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 217,
+        "age_days": 219,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -838,7 +827,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 217,
+        "age_days": 219,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -860,7 +849,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 217,
+        "age_days": 219,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -882,7 +871,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -897,6 +886,28 @@
         "transform": "level"
       },
       {
+        "id": "usd_egp",
+        "concept_id": "fx_spot",
+        "label_en": "USD/EGP End-of-Period Official Rate (BIS)",
+        "latest_date": "2026-07-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-07-01",
+        "age_days": 97,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "BIS exchange rates (WS_XRU), as reported by the central bank",
+        "series": "EG",
+        "transform": "level"
+      },
+      {
         "id": "cpi_index",
         "concept_id": "eg:cpi_index",
         "label_en": "Headline Consumer Price Index",
@@ -904,7 +915,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 64,
+        "age_days": 66,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -926,7 +937,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 64,
+        "age_days": 66,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -948,7 +959,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 64,
+        "age_days": 66,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -960,6 +971,28 @@
         "comparability": "medium",
         "source_name": "IMF SDMX / CAPMAS",
         "series": "EGY.CPI._T.POP_PCH_PA_PT.M",
+        "transform": "level"
+      },
+      {
+        "id": "brent_crude_oil",
+        "concept_id": "eg:brent_crude_oil",
+        "label_en": "Crude Oil Prices: Brent - Europe",
+        "latest_date": "2026-10-27",
+        "frequency": "daily",
+        "freshness_status": "due",
+        "age_basis_date": "2026-10-27",
+        "age_days": 9,
+        "threshold_days": 10,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "EIA / FRED",
+        "series": "DCOILBRENTEU",
         "transform": "level"
       }
     ]

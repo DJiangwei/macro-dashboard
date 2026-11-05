@@ -801,7 +801,7 @@ def render_deepdive_panel(country_code: str) -> str:
         return [pts[k] for k in sorted(pts)]
 
     head_sum_vals = [
-        round((f or 0) + (g or 0) + (e or 0) + (s or 0), 2)
+        round(f + g + e + s, 2) if None not in (f, g, e, s) else None
         for f, g, e, s in zip(cf_vals, cg_vals, ce_vals, cs_vals)
     ]
     target_bands = {
@@ -883,7 +883,7 @@ def render_deepdive_panel(country_code: str) -> str:
             continue
         cur = s_data.get("current", 0.0)
         diff3 = s_data.get("diff_3m", 0.0)
-        pct = s_data.get("pct", 50)
+        pct = s_data.get("pct")  # None -> no marker, never a mid-scale placeholder
         val_str = f"{cur:+.1f}" if s_key != "capacity_utilization" else f"{cur:.1f}%"
         trend_cls = "trend-up" if diff3 > 1.0 else ("trend-down" if diff3 < -1.0 else "trend-flat")
         trend_sign = "+" if diff3 > 0 else ""
@@ -904,11 +904,11 @@ def render_deepdive_panel(country_code: str) -> str:
             <span class="exp-card-trend {trend_cls}">{trend_str}</span>
           </div>
           <div class="exp-meter-track">
-            <div class="exp-meter-fill" style="width: {pct}%;"></div>
+            <div class="exp-meter-fill" style="width: {pct if pct is not None else 0}%;"></div>
           </div>
           <div class="exp-meter-scale">
             <span>Min: {s_data.get('min', 0):.1f}</span>
-            <span class="exp-pct-tag"><span data-lang="en">{pct}% Percentile · {s_data.get('regime_en')}</span><span data-lang="zh">{pct}% 历史分位 · {s_data.get('regime_zh')}</span></span>
+            <span class="exp-pct-tag"><span data-lang="en">{(str(pct) + '%') if pct is not None else 'n/a'} Percentile · {s_data.get('regime_en')}</span><span data-lang="zh">{(str(pct) + '%') if pct is not None else 'n/a'} 历史分位 · {s_data.get('regime_zh')}</span></span>
             <span>Max: {s_data.get('max', 100):.1f}</span>
           </div>
           <div class="exp-card-takeaway">

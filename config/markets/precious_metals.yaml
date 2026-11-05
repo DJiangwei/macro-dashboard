@@ -1,0 +1,269 @@
+# Precious metals page (scope PRECIOUS, framework market_precious).
+#
+# Observed series come from the named source; `derivation: derived` series use
+# whitelisted operators (src/country_primer/derived.py), including cross-scope
+# inputs such as ENERGY:brent_spot and JP:usd_jpy. LBMA prices and ETF holdings
+# are not freely available and are listed under data_gaps.
+
+name: "Precious Metals"
+name_zh: "贵金属"
+code: "PRECIOUS"
+iso2: "PRECIOUS"
+framework: market_precious
+subtitle_en: "Gold, silver, platinum and palladium for macro: prices, cross-metal and cross-asset ratios, gold in local currencies, the real-rate and dollar drivers, official-sector buying, the Shanghai premium and positioning. Sources: COMEX via Sina/AKShare, IMF, Shanghai Gold Exchange, FRED and CFTC."
+subtitle_zh: "面向宏观的金、银、铂、钯：价格、金属间与跨资产比价、本币金价、实际利率与美元驱动、官方部门购金、上海溢价与持仓。数据来源：COMEX（经新浪/AKShare）、IMF、上海黄金交易所、FRED与CFTC。"
+min_chart_count: 40
+core_view_label_en: "Key charts"
+core_view_label_zh: "核心图表"
+
+panels:
+  - {type: official_gold, section: official_sector, prefix: cb_gold_}
+
+sections:
+  prices:
+    title_en: "Prices"
+    title_zh: "价格"
+    report_logic_en: "Same-day COMEX front-month futures (completed sessions) and IMF monthly averages. LBMA auction prices are licensed."
+    report_logic_zh: "COMEX近月期货当日收盘（仅已收盘交易日）与IMF月均价。LBMA定价为授权数据。"
+  ratios:
+    title_en: "Ratios & Gold in Local Currency"
+    title_zh: "比价与本币金价"
+    report_logic_en: "Gold relative to silver, platinum, oil and copper, and gold priced in the currencies of large holders and buyers."
+    report_logic_zh: "黄金相对白银、铂金、原油与铜的比价，以及按主要持有国与买家货币计价的金价。"
+  macro_drivers:
+    title_en: "Macro Drivers"
+    title_zh: "宏观驱动"
+    report_logic_en: "US 10-year real yield, the broad dollar, long-run inflation compensation and gold implied volatility. The post-2022 break between gold and real yields is visible by comparing the charts."
+    report_logic_zh: "美国10年期实际利率、广义美元、长期通胀补偿与黄金隐含波动率。对照图表可以看到2022年后黄金与实际利率的脱钩。"
+  official_sector:
+    title_en: "Official Sector"
+    title_zh: "官方部门"
+    report_logic_en: "Central-bank gold holdings reported to the IMF. Several holders on this dashboard (KZ, UZ) are also gold producers and active traders of their own reserves."
+    report_logic_zh: "各国央行向IMF报告的黄金储备。本仪表盘中的部分持有方（哈萨克斯坦、乌兹别克斯坦）同时是产金国，并主动交易其黄金储备。"
+  regional_premium:
+    title_en: "Shanghai Premium"
+    title_zh: "上海溢价"
+    report_logic_en: "Shanghai Gold Exchange prices converted to USD per ounce against COMEX: a gauge of Chinese physical demand and import constraints."
+    report_logic_zh: "上海黄金交易所价格换算为美元/盎司后与COMEX比较：衡量中国实物需求与进口约束。"
+  positioning:
+    title_en: "Positioning (CFTC)"
+    title_zh: "持仓（CFTC）"
+    report_logic_en: "Managed-money net futures positions from the disaggregated Commitments of Traders."
+    report_logic_zh: "CFTC分类持仓报告中管理基金的期货净持仓。"
+
+indicators:
+  # ------------------------------------------------------------ prices
+  - {id: gold_front_futures, section: prices, view: core, label_en: "Gold (COMEX front month)", label_zh: "黄金（COMEX近月）", unit: USD/oz,
+     fetcher: foreign_futures, series: GC, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Completed sessions only, from a public wrapper; IMF monthly averages are the verified reference.", caveat_zh: "仅保留已收盘交易日，来自公开封装接口；IMF月均价为核验基准。"}
+  - {id: silver_front_futures, section: prices, view: core, label_en: "Silver (COMEX front month)", label_zh: "白银（COMEX近月）", unit: USD/oz,
+     fetcher: foreign_futures, series: SI, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Completed sessions only, from a public wrapper.", caveat_zh: "仅保留已收盘交易日，来自公开封装接口。"}
+  - {id: platinum_front_futures, section: prices, view: core, label_en: "Platinum (NYMEX front month)", label_zh: "铂金（NYMEX近月）", unit: USD/oz,
+     fetcher: foreign_futures, series: XPT, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Completed sessions only, from a public wrapper.", caveat_zh: "仅保留已收盘交易日，来自公开封装接口。"}
+  - {id: palladium_front_futures, section: prices, view: core, label_en: "Palladium (NYMEX front month)", label_zh: "钯金（NYMEX近月）", unit: USD/oz,
+     fetcher: foreign_futures, series: XPD, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Completed sessions only, from a public wrapper.", caveat_zh: "仅保留已收盘交易日，来自公开封装接口。"}
+  - {id: copper_front_futures, section: prices, label_en: "Copper (COMEX front month, for the gold/copper ratio)", label_zh: "铜（COMEX近月，用于金铜比）", unit: US cents/lb,
+     fetcher: foreign_futures, series: HG, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Quoted in US cents per pound.", caveat_zh: "以美分/磅计价。"}
+  - {id: gold_monthly_imf, section: prices, label_en: "Gold (IMF monthly average)", label_zh: "黄金（IMF月均价）", unit: USD/oz,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PGOLD.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "Monthly average of the London price as compiled by the IMF.", caveat_zh: "IMF编制的伦敦金价月均值。"}
+  - {id: silver_monthly_imf, section: prices, label_en: "Silver (IMF monthly average)", label_zh: "白银（IMF月均价）", unit: USD/oz,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PSILVER.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "Monthly average as compiled by the IMF.", caveat_zh: "IMF编制的月均价。"}
+  - {id: platinum_monthly_imf, section: prices, label_en: "Platinum (IMF monthly average)", label_zh: "铂金（IMF月均价）", unit: USD/oz,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PPLAT.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "Monthly average as compiled by the IMF.", caveat_zh: "IMF编制的月均价。"}
+  - {id: palladium_monthly_imf, section: prices, label_en: "Palladium (IMF monthly average)", label_zh: "钯金（IMF月均价）", unit: USD/oz,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PPALLA.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "Monthly average as compiled by the IMF.", caveat_zh: "IMF编制的月均价。"}
+  - {id: gold_yoy, section: prices, label_en: "Gold YoY (IMF monthly average)", label_zh: "黄金同比（IMF月均价）", unit: "% y/y",
+     derivation: derived, op: yoy_pct, inputs: [gold_monthly_imf], frequency: monthly,
+     caveat_en: "Year-on-year change of the IMF monthly average.", caveat_zh: "IMF月均价的同比变动。"}
+
+  # ------------------------------------------------------------ ratios
+  - {id: gold_silver_ratio, section: ratios, view: core, label_en: "Gold / Silver Ratio", label_zh: "金银比", unit: ratio,
+     derivation: derived, op: ratio, inputs: [gold_front_futures, silver_front_futures], frequency: daily,
+     caveat_en: "Ounces of silver per ounce of gold; rises in risk-off and industrial slowdowns.", caveat_zh: "一盎司黄金可换的白银盎司数；避险与工业放缓时上升。"}
+  - {id: gold_platinum_ratio, section: ratios, label_en: "Gold / Platinum Ratio", label_zh: "金铂比", unit: ratio,
+     derivation: derived, op: ratio, inputs: [gold_front_futures, platinum_front_futures], frequency: daily,
+     caveat_en: "Monetary metal versus an autocatalyst metal.", caveat_zh: "货币金属相对汽车催化剂金属。"}
+  - {id: gold_oil_ratio, section: ratios, view: core, label_en: "Gold / Brent Ratio", label_zh: "金油比", unit: bbl per oz,
+     derivation: derived, op: ratio, inputs: [gold_front_futures, "ENERGY:brent_spot"], frequency: daily,
+     caveat_en: "Barrels of Brent per ounce of gold (Brent from the Energy page, EIA spot).", caveat_zh: "一盎司黄金可换的布伦特桶数（布伦特取自能源页EIA现货）。"}
+  - {id: gold_copper_ratio, section: ratios, view: core, label_en: "Gold / Copper Ratio", label_zh: "金铜比", unit: lb per oz,
+     derivation: derived, op: ratio, factor: 100, inputs: [gold_front_futures, copper_front_futures], frequency: daily,
+     caveat_en: "Pounds of copper per ounce of gold (copper converted from cents); falls when growth expectations improve.", caveat_zh: "一盎司黄金可换的铜磅数（铜由美分换算）；增长预期改善时下降。"}
+  - {id: gold_eur, section: ratios, label_en: "Gold in EUR", label_zh: "欧元计价金价", unit: EUR/oz,
+     derivation: derived, op: ratio, inputs: [gold_front_futures, "EA:eur_usd"], frequency: daily,
+     caveat_en: "COMEX gold divided by the ECB EUR/USD reference rate on matching days.", caveat_zh: "COMEX金价除以同日欧央行EUR/USD参考汇率。"}
+  - {id: gold_jpy, section: ratios, label_en: "Gold in JPY", label_zh: "日元计价金价", unit: JPY/oz,
+     derivation: derived, op: product, inputs: [gold_front_futures, "JP:usd_jpy"], frequency: daily,
+     caveat_en: "COMEX gold times USD/JPY on matching days.", caveat_zh: "COMEX金价乘以同日USD/JPY。"}
+  - {id: gold_cny, section: ratios, view: core, label_en: "Gold in CNY", label_zh: "人民币计价金价", unit: CNY/oz,
+     derivation: derived, op: product, inputs: [gold_front_futures, "CN:usd_cny_midpoint"], frequency: daily,
+     caveat_en: "COMEX gold times the USD/CNY central parity on matching days.", caveat_zh: "COMEX金价乘以同日人民币中间价。"}
+  - {id: gold_inr, section: ratios, label_en: "Gold in INR", label_zh: "卢比计价金价", unit: INR/oz,
+     derivation: derived, op: product, inputs: [gold_front_futures, "IN:usd_inr"], frequency: daily,
+     caveat_en: "COMEX gold times USD/INR (Fed H.10) on matching days; excludes Indian import duty.", caveat_zh: "COMEX金价乘以同日USD/INR（美联储H.10）；不含印度进口关税。"}
+
+  # ------------------------------------------------------------ macro_drivers
+  - {id: us_real_yield_10y, section: macro_drivers, view: core, label_en: "US 10-Year Real Yield (TIPS)", label_zh: "美国10年期实际利率（TIPS）", unit: "%",
+     fetcher: fred, series: DFII10, frequency: daily, start_date: 2015-01-01,
+     source_name: Federal Reserve H.15 via FRED, source_url: "https://fred.stlouisfed.org/series/DFII10",
+     caveat_en: "Market yield on 10-year inflation-indexed Treasuries.", caveat_zh: "10年期通胀保值国债市场收益率。"}
+  - {id: broad_dollar, section: macro_drivers, view: core, label_en: "Broad Trade-Weighted Dollar", label_zh: "广义贸易加权美元指数", unit: "index (Jan 2006 = 100)",
+     fetcher: fred, series: DTWEXBGS, frequency: daily, start_date: 2015-01-01,
+     source_name: Federal Reserve H.10 via FRED, source_url: "https://fred.stlouisfed.org/series/DTWEXBGS",
+     caveat_en: "Nominal broad dollar index against goods and services trading partners.", caveat_zh: "对商品与服务贸易伙伴的名义广义美元指数。"}
+  - {id: us_5y5y_forward, section: macro_drivers, label_en: "US 5-Year, 5-Year Forward Inflation Expectation", label_zh: "美国5年后5年远期通胀预期", unit: "%",
+     fetcher: fred, series: T5YIFR, frequency: daily, start_date: 2015-01-01,
+     source_name: Federal Reserve via FRED, source_url: "https://fred.stlouisfed.org/series/T5YIFR",
+     caveat_en: "Long-horizon inflation compensation.", caveat_zh: "长期通胀补偿。"}
+  - {id: gvz, section: macro_drivers, label_en: "CBOE Gold Volatility Index (GVZ)", label_zh: "黄金波动率指数GVZ", unit: index,
+     fetcher: fred, series: GVZCLS, frequency: daily, start_date: 2015-01-01,
+     source_name: CBOE via FRED, source_url: "https://fred.stlouisfed.org/series/GVZCLS",
+     caveat_en: "30-day implied volatility of GLD options.", caveat_zh: "基于GLD期权的30天隐含波动率。"}
+
+  # ------------------------------------------------------------ official_sector
+  - {id: cb_gold_chn, section: official_sector, view: core, holder: "China (PBoC)", label_en: "Official Gold Holdings — China (PBoC)", label_zh: "官方黄金储备 — 中国（人民银行）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "CHN.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_pol, section: official_sector, view: core, holder: "Poland (NBP)", label_en: "Official Gold Holdings — Poland (NBP)", label_zh: "官方黄金储备 — 波兰（NBP）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "POL.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_ind, section: official_sector, view: core, holder: "India (RBI)", label_en: "Official Gold Holdings — India (RBI)", label_zh: "官方黄金储备 — 印度（RBI）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "IND.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_tur, section: official_sector, view: core, holder: "Türkiye (CBRT)", label_en: "Official Gold Holdings — Türkiye (CBRT)", label_zh: "官方黄金储备 — 土耳其（CBRT）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "TUR.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_cze, section: official_sector, view: deep, holder: "Czechia (CNB)", label_en: "Official Gold Holdings — Czechia (CNB)", label_zh: "官方黄金储备 — 捷克（CNB）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "CZE.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_kaz, section: official_sector, view: deep, holder: "Kazakhstan (NBK)", label_en: "Official Gold Holdings — Kazakhstan (NBK)", label_zh: "官方黄金储备 — 哈萨克斯坦（NBK）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "KAZ.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_uzb, section: official_sector, view: deep, holder: "Uzbekistan (CBU)", label_en: "Official Gold Holdings — Uzbekistan (CBU)", label_zh: "官方黄金储备 — 乌兹别克斯坦（CBU）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "UZB.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_hun, section: official_sector, view: deep, holder: "Hungary (MNB)", label_en: "Official Gold Holdings — Hungary (MNB)", label_zh: "官方黄金储备 — 匈牙利（MNB）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "HUN.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_rus, section: official_sector, view: deep, holder: "Russia (CBR)", label_en: "Official Gold Holdings — Russia (CBR)", label_zh: "官方黄金储备 — 俄罗斯（CBR）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "RUS.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_sau, section: official_sector, view: deep, holder: "Saudi Arabia (SAMA)", label_en: "Official Gold Holdings — Saudi Arabia (SAMA)", label_zh: "官方黄金储备 — 沙特（SAMA）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "SAU.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_qat, section: official_sector, view: deep, holder: "Qatar (QCB)", label_en: "Official Gold Holdings — Qatar (QCB)", label_zh: "官方黄金储备 — 卡塔尔（QCB）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "QAT.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_sgp, section: official_sector, view: deep, holder: "Singapore (MAS)", label_en: "Official Gold Holdings — Singapore (MAS)", label_zh: "官方黄金储备 — 新加坡（MAS）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "SGP.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_jpn, section: official_sector, view: deep, holder: "Japan", label_en: "Official Gold Holdings — Japan", label_zh: "官方黄金储备 — 日本", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "JPN.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_che, section: official_sector, view: deep, holder: "Switzerland (SNB)", label_en: "Official Gold Holdings — Switzerland (SNB)", label_zh: "官方黄金储备 — 瑞士（SNB）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "CHE.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_usa, section: official_sector, view: deep, holder: "United States", label_en: "Official Gold Holdings — United States", label_zh: "官方黄金储备 — 美国", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "USA.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_deu, section: official_sector, view: deep, holder: "Germany (Bundesbank)", label_en: "Official Gold Holdings — Germany (Bundesbank)", label_zh: "官方黄金储备 — 德国（德央行）", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "DEU.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_ita, section: official_sector, view: deep, holder: "Italy (Banca d'Italia)", label_en: "Official Gold Holdings — Italy (Banca d'Italia)", label_zh: "官方黄金储备 — 意大利", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "ITA.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+  - {id: cb_gold_fra, section: official_sector, view: deep, holder: "France (Banque de France)", label_en: "Official Gold Holdings — France (Banque de France)", label_zh: "官方黄金储备 — 法国", unit: tonnes,
+     fetcher: imf_sdmx, dataflow: "IMF.STA,IL", series: "FRA.RGV_REVS.FTO.M", scale: 32150.7466, frequency: monthly, start_date: 2000-01-01,
+     source_authority: official_mirror, source_name: "IMF International Liquidity", source_url: "https://data.imf.org/?sk=IL",
+     caveat_en: "Monetary gold in fine troy ounces reported to the IMF, converted to tonnes (÷ 32,150.7466).", caveat_zh: "向IMF报告的货币黄金（金衡盎司），换算为吨（÷32,150.7466）。"}
+
+  # ------------------------------------------------------------ regional_premium
+  - {id: sge_au9999, section: regional_premium, label_en: "Shanghai Gold Exchange Au99.99", label_zh: "上海黄金交易所Au99.99", unit: CNY/g,
+     fetcher: sge_spot, series: Au99.99, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper,
+     source_name: "Shanghai Gold Exchange via AKShare", source_url: "https://www.sge.com.cn/sjzx/mrhqsj",
+     caveat_en: "Daily close of the main spot contract, completed sessions only.", caveat_zh: "主力现货合约日收盘，仅保留已收盘交易日。"}
+  - {id: sge_benchmark_am, section: regional_premium, label_en: "Shanghai Gold Benchmark Price (AM)", label_zh: "上海金早盘基准价", unit: CNY/g,
+     fetcher: sge_spot, series: Au, measure: benchmark_am, frequency: daily, start_date: 2016-04-19, source_authority: public_wrapper,
+     source_name: "Shanghai Gold Exchange via AKShare", source_url: "https://www.sge.com.cn/sjzx/jzj",
+     caveat_en: "The SGE's yuan-denominated gold fixing, morning auction.", caveat_zh: "上海黄金交易所人民币黄金定价，早盘集中定价。"}
+  - {id: sge_gold_usd_oz, section: regional_premium, label_en: "SGE Au99.99 in USD/oz", label_zh: "上海金（美元/盎司）", unit: USD/oz,
+     derivation: derived, op: ratio, factor: 31.1034768, inputs: [sge_au9999, "CN:usd_cny_midpoint"], frequency: daily,
+     caveat_en: "CNY per gram × 31.1034768 g/oz ÷ USD/CNY central parity.", caveat_zh: "人民币/克 × 31.1034768克/盎司 ÷ 美元兑人民币中间价。"}
+  - {id: shanghai_premium, section: regional_premium, view: core, label_en: "Shanghai Gold Premium over COMEX", label_zh: "上海金相对COMEX溢价", unit: USD/oz,
+     derivation: derived, op: spread, inputs: [sge_gold_usd_oz, gold_front_futures], frequency: daily,
+     caveat_en: "SGE minus COMEX on matching days. SGE closes at 15:30 Beijing time and COMEX in New York, so day-to-day moves partly reflect timing; read the trend.",
+     caveat_zh: "同日上海金减COMEX。上海金北京时间15:30收盘、COMEX在纽约收盘，单日波动部分来自时差，宜看趋势。"}
+
+  # ------------------------------------------------------------ positioning
+  - {id: cftc_gold_mm_net, section: positioning, view: core, label_en: "Gold Managed-Money Net Position", label_zh: "黄金管理基金净持仓", unit: contracts,
+     fetcher: cftc_positions, series: "088691", frequency: weekly, start_date: 2010-01-01, source_authority: official_primary, source_name: "CFTC Commitments of Traders (disaggregated)", source_url: "https://publicreporting.cftc.gov/stories/s/r4w3-av2u",
+     caveat_en: "COMEX gold, managed-money long minus short, futures only.", caveat_zh: "COMEX黄金，管理基金多头减空头，仅期货。"}
+  - {id: cftc_gold_mm_net_zscore, section: positioning, label_en: "Gold Managed-Money Net Position, 3-Year z-score", label_zh: "黄金管理基金净持仓三年z值", unit: z,
+     derivation: derived, op: zscore, window: 156, inputs: [cftc_gold_mm_net], frequency: weekly,
+     caveat_en: "Relative to the trailing 156-week mean and standard deviation.", caveat_zh: "相对过去156周均值与标准差。"}
+  - {id: cftc_silver_mm_net, section: positioning, label_en: "Silver Managed-Money Net Position", label_zh: "白银管理基金净持仓", unit: contracts,
+     fetcher: cftc_positions, series: "084691", frequency: weekly, start_date: 2010-01-01, source_authority: official_primary, source_name: "CFTC Commitments of Traders (disaggregated)", source_url: "https://publicreporting.cftc.gov/stories/s/r4w3-av2u",
+     caveat_en: "COMEX silver.", caveat_zh: "COMEX白银。"}
+  - {id: cftc_platinum_mm_net, section: positioning, label_en: "Platinum Managed-Money Net Position", label_zh: "铂金管理基金净持仓", unit: contracts,
+     fetcher: cftc_positions, series: "076651", frequency: weekly, start_date: 2010-01-01, source_authority: official_primary, source_name: "CFTC Commitments of Traders (disaggregated)", source_url: "https://publicreporting.cftc.gov/stories/s/r4w3-av2u",
+     caveat_en: "NYMEX platinum.", caveat_zh: "NYMEX铂金。"}
+  - {id: cftc_palladium_mm_net, section: positioning, label_en: "Palladium Managed-Money Net Position", label_zh: "钯金管理基金净持仓", unit: contracts,
+     fetcher: cftc_positions, series: "075651", frequency: weekly, start_date: 2010-01-01, source_authority: official_primary, source_name: "CFTC Commitments of Traders (disaggregated)", source_url: "https://publicreporting.cftc.gov/stories/s/r4w3-av2u",
+     caveat_en: "NYMEX palladium.", caveat_zh: "NYMEX钯金。"}
+
+summary_key_ids:
+  - gold_front_futures
+  - silver_front_futures
+  - gold_silver_ratio
+  - us_real_yield_10y
+  - shanghai_premium
+  - cftc_gold_mm_net
+  - cb_gold_chn
+  - cb_gold_pol
+
+data_gaps:
+  - section: prices
+    item_en: LBMA gold and silver prices
+    item_zh: LBMA金银定价
+    status_en: LBMA auction prices are licensed (IBA); the IMF monthly averages and COMEX futures are used instead.
+    status_zh: LBMA拍卖价格为授权数据（IBA）；以IMF月均价与COMEX期货代替。
+  - section: official_sector
+    item_en: Gold ETF holdings and World Gold Council demand data
+    item_zh: 黄金ETF持仓与世界黄金协会需求数据
+    status_en: No reliable free machine-readable source (SPDR returns a non-CSV page; WGC requires registration).
+    status_zh: 没有可靠的免费机读来源（SPDR返回非CSV页面；WGC需要注册）。
+  - section: regional_premium
+    item_en: India gold premium/discount
+    item_zh: 印度黄金溢价/折价
+    status_en: No free source for Indian dealer premiums.
+    status_zh: 印度经销商溢价没有免费来源。
+  - section: prices
+    item_en: COMEX and SHFE vault inventories, PGM mine supply (South Africa, Russia)
+    item_zh: COMEX与上期所库存、铂族金属矿产供给（南非、俄罗斯）
+    status_en: To be sourced; Russian palladium output has no free source.
+    status_zh: 待接入；俄罗斯钯产量没有免费来源。

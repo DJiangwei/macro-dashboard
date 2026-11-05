@@ -23,9 +23,11 @@ def test_apply_scale_divides_and_is_a_noop_without_scale() -> None:
     assert apply_scale(same)["observations"][0]["value"] == 42.0
 
 
-def test_builders_no_longer_import_fetchers_from_each_other() -> None:
-    source = open("scripts/build_south_africa_dashboard.py").read()
-    assert "from build_japan_dashboard import" not in source
+def test_scope_builders_are_not_reintroduced() -> None:
+    """Pages are built by scripts/build_scope.py from config/scopes.yaml."""
+    from pathlib import Path
+    per_scope = sorted(p.name for p in Path("scripts").glob("build_*_dashboard.py") if p.name != "build_my_dashboard.py")
+    assert per_scope == [], f"per-country builders are back: {per_scope}"
 
 
 def test_parse_boj_wide_csv_reads_periods_from_the_header() -> None:

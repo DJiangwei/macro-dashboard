@@ -12,51 +12,14 @@ import json
 import shutil
 import sys
 from pathlib import Path
+from country_primer.scopes import all_scopes
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
 
-COUNTRY_MAP = {
-    "US": ("United States", "美国", "us_canonical_frame.json", "🇺🇸"),
-    "CN": ("China", "中国", "china_canonical_frame.json", "🇨🇳"),
-    "EA": ("Euro Area", "欧元区", "euro_area_canonical_frame.json", "🇪🇺"),
-    "UK": ("United Kingdom", "英国", "uk_canonical_frame.json", "🇬🇧"),
-    "JP": ("Japan", "日本", "japan_canonical_frame.json", "🇯🇵"),
-    "ZA": ("South Africa", "南非", "south_africa_canonical_frame.json", "🇿🇦"),
-    "TR": ("Turkey", "土耳其", "turkey_canonical_frame.json", "🇹🇷"),
-    "HK": ("Hong Kong", "中国香港", "hong_kong_canonical_frame.json", "🇭🇰"),
-    "KR": ("South Korea", "韩国", "south_korea_canonical_frame.json", "🇰🇷"),
-    "TW": ("Taiwan", "中国台湾", "taiwan_canonical_frame.json", "🇹🇼"),
-    "KZ": ("Kazakhstan", "哈萨克斯坦", "kazakhstan_canonical_frame.json", "🇰🇿"),
-    "UZ": ("Uzbekistan", "乌兹别克斯坦", "uzbekistan_canonical_frame.json", "🇺🇿"),
-    "EG": ("Egypt", "埃及", "egypt_canonical_frame.json", "🇪🇬"),
-    "NG": ("Nigeria", "尼日利亚", "nigeria_canonical_frame.json", "🇳🇬"),
-    "HU": ("Hungary", "匈牙利", "cee_canonical_frame.json", "🇭🇺"),
-    "PL": ("Poland", "波兰", "cee_canonical_frame.json", "🇵🇱"),
-    "CZ": ("Czechia", "捷克", "cee_canonical_frame.json", "🇨🇿"),
-    "RO": ("Romania", "罗马尼亚", "cee_canonical_frame.json", "🇷🇴"),
-}
+COUNTRY_MAP = {s.id: (s.name_en, s.name_zh, s.canonical_file, s.flag) for s in all_scopes(include_markets=True)}
 
-COUNTRY_NAV = [
-    ("HU", "Hungary", "匈牙利", "hungary.html"),
-    ("PL", "Poland", "波兰", "poland.html"),
-    ("CZ", "Czechia", "捷克", "czechia.html"),
-    ("RO", "Romania", "罗马尼亚", "romania.html"),
-    ("CN", "China", "中国", "china.html"),
-    ("EA", "Euro Area", "欧元区", "euro_area.html"),
-    ("JP", "Japan", "日本", "japan.html"),
-    ("ZA", "South Africa", "南非", "south_africa.html"),
-    ("UK", "United Kingdom", "英国", "uk.html"),
-    ("US", "United States", "美国", "us.html"),
-    ("TR", "Turkey", "土耳其", "turkey.html"),
-    ("HK", "Hong Kong", "中国香港", "hong_kong.html"),
-    ("KR", "South Korea", "韩国", "south_korea.html"),
-    ("TW", "Taiwan", "中国台湾", "taiwan.html"),
-    ("KZ", "Kazakhstan", "哈萨克斯坦", "kazakhstan.html"),
-    ("UZ", "Uzbekistan", "乌兹别克斯坦", "uzbekistan.html"),
-    ("EG", "Egypt", "埃及", "egypt.html"),
-    ("NG", "Nigeria", "尼日利亚", "nigeria.html"),
-]
+COUNTRY_NAV = [(s.id, s.name_en, s.name_zh, s.html_file) for s in all_scopes(include_markets=True)]
 
 STARTER_WATCHLIST = [
     {
@@ -119,6 +82,7 @@ def build_my_dashboard_html() -> str:
 
     starter_json = json.dumps(STARTER_WATCHLIST, ensure_ascii=False)
     country_map_json = json.dumps(COUNTRY_MAP, ensure_ascii=False)
+    country_nav_json = json.dumps([list(item) for item in COUNTRY_NAV], ensure_ascii=False)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -1008,6 +972,7 @@ def build_my_dashboard_html() -> str:
 const STORAGE_KEY = 'macro_my_dashboard_watchlist_v1';
 const STARTER_SET = {starter_json};
 const COUNTRY_MAP = {country_map_json};
+const COUNTRY_NAV = {country_nav_json};
 
 let CURRENT_LANG = 'en';
 let CURRENT_VIEW = 'grid'; // 'grid' or 'table'

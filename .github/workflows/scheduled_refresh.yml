@@ -55,6 +55,12 @@ jobs:
       - name: Verify environment
         run: uv run python scripts/doctor_env.py
 
+      # Option C (docs/PAGES_DEPLOYMENT.md): start from the data branch so
+      # last-known-good values and revision tracking see the latest state.
+      - name: Overlay data branch
+        if: ${{ vars.PAGES_MODE == 'actions' }}
+        run: scripts/data_branch.sh pull
+
       - name: Execute scheduled data refresh
         env:
           EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
@@ -62,6 +68,12 @@ jobs:
           TCMB_EVDS_API_KEY: ${{ secrets.TCMB_EVDS_API_KEY }}
           BOK_ECOS_API_KEY: ${{ secrets.BOK_ECOS_API_KEY }}
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
+          GIE_AGSI_API_KEY: ${{ secrets.GIE_AGSI_API_KEY }}
+          BLS_API_KEY: ${{ secrets.BLS_API_KEY }}
+          KOSIS_API_KEY: ${{ secrets.KOSIS_API_KEY }}
+          EMBER_API_KEY: ${{ secrets.EMBER_API_KEY }}
+          ENTSOE_API_TOKEN: ${{ secrets.ENTSOE_API_TOKEN }}
         run: |
           MODE="${{ github.event.inputs.mode || 'auto' }}"
           COUNTRY="${{ github.event.inputs.country || 'ALL' }}"
@@ -76,10 +88,11 @@ jobs:
           git diff --check
 
       - name: Smart commit and push updates
+        if: ${{ vars.PAGES_MODE != 'actions' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html output/ CORE_COVERAGE_MATRIX.md DATA_SOURCE_CATALOG.md DATA_FRESHNESS_AUDIT.md MACRO_WORKBENCH_BRIEFING.md config/
+          git add index.html chart_studio.html my_dashboard.html policy_tracker.html output/ CORE_COVERAGE_MATRIX.md DATA_SOURCE_CATALOG.md DATA_FRESHNESS_AUDIT.md MACRO_WORKBENCH_BRIEFING.md
 
           if git diff --staged --quiet; then
             echo "No data changes detected. Skipping commit."
@@ -90,7 +103,23 @@ jobs:
             echo "Pushed updated macro datasets and dashboards to main."
           fi
 
+      - name: Push refreshed data to the data branch
+        if: ${{ vars.PAGES_MODE == 'actions' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          scripts/data_branch.sh push "Auto-refresh macro data: $(date -u +'%Y-%m-%d')"
+
       - name: Render rich GitHub Actions Job Summary
         if: always()
         run: |
           uv run python scripts/ci_step_summary.py
+
+  deploy:
+    needs: refresh-and-publish
+    if: ${{ vars.PAGES_MODE == 'actions' }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/deploy_pages.yml

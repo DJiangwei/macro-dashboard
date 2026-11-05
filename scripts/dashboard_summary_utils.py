@@ -277,6 +277,10 @@ def retain_last_known_good_series(
     }
     merged: list[dict[str, Any]] = []
     for item in series_list:
+        if item.get("partial_refresh_skipped"):
+            # Targeted refresh: not requested, so keep the prior series as-is.
+            merged.append(dict(previous[item["id"]]) if item.get("id") in previous else item)
+            continue
         if item.get("observations") or item.get("id") not in previous:
             merged.append(item)
             continue

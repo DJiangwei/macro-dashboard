@@ -1,0 +1,124 @@
+"""Whitelisted derived-series operators."""
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(ROOT / "src"))
+
+from country_primer.derived import apply_derivations, apply_op, monthly_mean  # noqa: E402
+
+
+def pts(*pairs):
+    return list(pairs)
+
+
+def test_spread_and_linear_use_only_common_dates():
+    a = pts(("2026-01-01", 10.0), ("2026-01-02", 12.0))
+    b = pts(("2026-01-02", 2.0), ("2026-01-03", 5.0))
+    assert apply_op("spread", [a, b], {}) == [("2026-01-02", 10.0)]
+    assert apply_op("linear", [a, b], {"weights": [2, -1]}) == [("2026-01-02", 22.0)]
+
+
+def test_ratio_skips_zero_denominator():
+    assert apply_op("ratio", [pts(("d1", 4.0), ("d2", 1.0)), pts(("d1", 2.0), ("d2", 0.0))], {"factor": 1000}) == [("d1", 2000.0)]
+
+
+def test_rolling_mean_and_zscore_need_a_full_window():
+    series = [(f"2026-01-{i:02d}", float(i)) for i in range(1, 6)]
+    assert apply_op("rolling_mean", [series], {"window": 4}) == [("2026-01-04", 2.5), ("2026-01-05", 3.5)]
+    z = apply_op("zscore", [series], {"window": 5})
+    assert len(z) == 1 and z[0][1] > 1.2
+    assert apply_op("zscore", [[(f"d{i}", 1.0) for i in range(5)]], {"window": 5}) == []  # flat: undefined
+
+
+def test_dev_from_5y_requires_three_prior_years():
+    weekly = []
+    for year, level in [(2021, 100.0), (2022, 110.0), (2023, 120.0), (2024, 130.0)]:
+        weekly.append((f"{year}-03-05", level))
+        weekly.append((f"{year}-03-12", level))
+    out = dict(apply_op("dev_from_5y_seasonal", [sorted(weekly)], {}))
+    assert "2023-03-05" not in out  # only two prior years
+    assert out  # 2024 weeks have three prior years
+    assert all(abs(v - 20.0) < 1e-9 for d, v in out.items() if d.startswith("2024"))
+
+
+def test_dev_from_5y_daily_compares_the_same_calendar_day():
+    # Storage rising 1pp a day: comparing against the same ISO week's last day
+    # in earlier years would leave a day-of-week bias; same-day comparison does not.
+    daily = []
+    for year, level in [(2021, 50.0), (2022, 60.0), (2023, 70.0), (2024, 80.0)]:
+        for day in range(1, 15):
+            daily.append((f"{year}-03-{day:02d}", level + day))
+    daily.append(("2024-02-29", 79.0))
+    out = dict(apply_op("dev_from_5y_seasonal", [sorted(daily)], {}))
+    assert {d for d in out} == {f"2024-03-{day:02d}" for day in range(1, 15)}
+    assert all(abs(v - 20.0) < 1e-9 for v in out.values())
+
+
+def test_monthly_mean_drops_current_month(monkeypatch):
+    out = monthly_mean([("2020-01-02", 1.0), ("2020-01-03", 3.0), ("2099-01-01", 9.0)])
+    assert out == [("2020-01-01", 2.0)]
+
+
+def test_unlisted_operator_is_refused():
+    with pytest.raises(ValueError):
+        apply_op("eval", [[]], {})
+
+
+def test_apply_derivations_chains_and_records_vintages(tmp_path):
+    series = [
+        {"id": "a", "observations": [{"date": "2026-01-01", "value": 5.0}, {"date": "2026-01-02", "value": 7.0}]},
+        {"id": "b", "observations": [{"date": "2026-01-01", "value": 1.0}, {"date": "2026-01-02", "value": 2.0}]},
+        {"id": "s", "derivation": "derived", "op": "spread", "inputs": ["a", "b"]},
+        {"id": "r", "derivation": "derived", "op": "rolling_mean", "window": 2, "inputs": ["s"]},
+    ]
+    out = {item["id"]: item for item in apply_derivations(series, tmp_path)}
+    assert [o["value"] for o in out["s"]["observations"]] == [4.0, 5.0]
+    assert out["r"]["observations"] == [{"date": "2026-01-02", "value": 4.5}]
+    assert out["s"]["derivation_inputs"] == {"a": "2026-01-02", "b": "2026-01-02"}
+    missing = apply_derivations([{"id": "x", "derivation": "derived", "op": "spread", "inputs": ["a", "zz"]}], tmp_path)
+    assert missing[0]["observations"] == [] and missing[0]["quality_status"] == "unavailable"
+
+
+def test_passthrough_yoy_uses_latest_month_with_a_year_ago_value():
+    from country_primer.transmission import _yoy_latest
+    series = {"2025-09-01": 50.0, "2025-10-01": 50.0, "2026-09-01": 60.0, "2026-10-01": 75.0, "2026-11-01": 80.0}
+    month, value = _yoy_latest(series)
+    assert month == "2026-10-01" and abs(value - 50.0) < 1e-9  # Nov has no year-ago value
+    assert _yoy_latest({"2026-10-01": 1.0}) is None
+
+
+def test_product_aligns_and_scales():
+    assert apply_op("product", [[("d1", 2.0), ("d2", 3.0)], [("d2", 10.0)]], {"factor": 0.5}) == [("d2", 15.0)]
+
+
+def test_official_gold_changes_use_the_same_month_earlier():
+    from country_primer.transmission import official_gold
+    series = {"cb_gold_x": {"holder": "X", "observations": [
+        {"date": "2023-06-01", "value": 100.0}, {"date": "2025-06-01", "value": 110.0}, {"date": "2026-06-01", "value": 130.0}]}}
+    row = official_gold(series, "cb_gold_")["rows"][0]
+    assert row["tonnes"] == 130.0 and row["change_12m"] == 20.0 and row["change_36m"] == 30.0
+
+
+def test_reference_passes_values_through():
+    assert apply_op("reference", [[("2026-01-01", 49.3)]], {}) == [("2026-01-01", 49.3)]
+
+
+def test_distributed_lag_ols_recovers_known_pass_through():
+    import random
+    from country_primer.oil_shock_model import _shift, distributed_lag_ols
+    random.seed(1)
+    months = [_shift("2015-01-01", k) for k in range(120)]
+    x = {m: random.uniform(-40, 60) for m in months}
+    y = {}
+    for i, m in enumerate(months):
+        if i >= 2:
+            y[m] = 1.0 + 0.2 * x[m] + 0.1 * x[months[i - 1]] + 0.05 * x[months[i - 2]]
+    fit = distributed_lag_ols(y, x, lags=2, start="2015-01")
+    assert abs(fit["pass_through"] - 0.35) < 1e-6 and fit["r2"] > 0.999
+    assert distributed_lag_ols({m: 1.0 for m in months[:20]}, x, lags=2, start="2015-01") is None  # too short

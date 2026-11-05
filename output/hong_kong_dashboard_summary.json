@@ -1,10 +1,10 @@
 {
   "file": "hong_kong.html",
-  "generated": "2026-11-03T21:16:35.141234+00:00",
+  "generated": "2026-11-05T11:22:21.941313+00:00",
   "charts": 40,
-  "source_groups": 12,
-  "data_gaps": 1,
-  "low_confidence": 7,
+  "source_groups": 13,
+  "data_gaps": 2,
+  "low_confidence": 8,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -320,15 +320,15 @@
     },
     {
       "id": "total_reserves_usd",
-      "label_en": "Official Foreign Currency Reserve Assets (HKMA)",
-      "label_zh": "官方外汇储备资产 (香港金管局)",
-      "latest_date": "2026-10-31",
-      "latest_value": 421.4,
-      "latest_display": "421.4 USD bn",
-      "frequency": "monthly",
-      "source_name": "Hong Kong Monetary Authority (HKMA)",
-      "series": "total_reserves_usd",
-      "quality_status": "verified"
+      "label_en": "Official Foreign Currency Reserve Assets",
+      "label_zh": "官方外汇储备资产总额",
+      "latest_date": "2023",
+      "latest_value": 425.554111033182,
+      "latest_display": "425.6 USD bn",
+      "frequency": "annual",
+      "source_name": "World Bank / HKMA",
+      "series": "FI.RES.TOTL.CD",
+      "quality_status": "low_confidence"
     },
     {
       "id": "current_account_gdp",
@@ -483,22 +483,29 @@
     ],
     "file": "hong_kong_canonical_frame.json",
     "series": 40,
-    "observations": 11614,
+    "observations": 11683,
     "series_count": 40,
-    "observation_count": 11614,
-    "snapshot_generated": "2026-11-02T23:44:00.045776+00:00"
+    "observation_count": 11683,
+    "snapshot_generated": "2026-11-05T11:21:42.300946+00:00"
   },
   "data_gaps_detail": [
     {
       "section": "monetary_financial",
-      "item_en": "Daily HKMA Base Rate, Overnight/1M HIBOR & Aggregate Balance",
-      "item_zh": "香港金管局贴现窗基本利率、隔夜/1个月HIBOR及银行体系总结余",
+      "item_en": "Overnight/1M HIBOR & Aggregate Balance (HKMA Base Rate now via BIS WS_CBPOL)",
+      "item_zh": "隔夜/1个月HIBOR及银行体系总结余（金管局基本利率现经BIS WS_CBPOL获取）",
       "status_en": "Published by HKMA Open API (api.hkma.gov.hk). The API endpoint is currently protected by an Aliyun WAF returning HTTP 405 on cloud IPs; monitored via web portal.",
       "status_zh": "由香港金管局开放API发布。该接口目前受到阿里云WAF防护，对云服务器IP返回HTTP 405错误；通过网页端人工跟踪。"
+    },
+    {
+      "section": "monetary_financial",
+      "item_en": "Hong Kong 10Y Exchange Fund Notes yield",
+      "item_zh": "香港10年期外汇基金债券收益率",
+      "status_en": "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source.",
+      "status_zh": "2026-11-05 移除：此前该序列是在构建中手工写入的，并非抓取所得。只有在接入可验证的自动化数据源后才重新加入。"
     }
   ],
   "source_health": {
-    "source_groups": 12,
+    "source_groups": 13,
     "sources": [
       {
         "source_name": "HK C&SD",
@@ -533,25 +540,29 @@
         "charts": 2
       },
       {
-        "source_name": "Hong Kong Monetary Authority (HKMA)",
-        "charts": 2
-      },
-      {
         "source_name": "IMF / DBnomics (Financial Soundness Indicators)",
         "charts": 2
       },
       {
-        "source_name": "FRED / Federal Reserve Board / Derived",
+        "source_name": "BIS central bank policy rates (WS_CBPOL)",
+        "charts": 1
+      },
+      {
+        "source_name": "BIS central bank policy rates (WS_CBPOL) / Derived",
         "charts": 1
       },
       {
         "source_name": "IMF Fiscal Monitor",
         "charts": 1
+      },
+      {
+        "source_name": "World Bank / HKMA",
+        "charts": 1
       }
     ],
     "quality_counts": {
-      "low_confidence": 7,
-      "verified": 10,
+      "low_confidence": 8,
+      "verified": 9,
       "watch": 23
     },
     "unavailable_count": 0
@@ -563,15 +574,37 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-11-03",
+    "as_of_date": "2026-11-05",
     "counts": {
-      "current": 15,
+      "current": 14,
       "due": 14,
       "projection": 4,
-      "stale": 7
+      "stale": 8
     },
-    "latest_historical_date": "2026-10-31",
+    "latest_historical_date": "2026-10-30",
     "attention": [
+      {
+        "id": "total_reserves_usd",
+        "concept_id": "hk:total_reserves_usd",
+        "label_en": "Official Foreign Currency Reserve Assets",
+        "latest_date": "2023-12-31",
+        "frequency": "annual",
+        "freshness_status": "stale",
+        "age_basis_date": "2023-12-31",
+        "age_days": 1040,
+        "threshold_days": 730,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "World Bank / HKMA",
+        "series": "FI.RES.TOTL.CD",
+        "transform": "level"
+      },
       {
         "id": "bank_capital_ratio",
         "concept_id": "bank_capital_ratio",
@@ -580,7 +613,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 582,
+        "age_days": 584,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -602,7 +635,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 582,
+        "age_days": 584,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -624,7 +657,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 307,
+        "age_days": 309,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -646,7 +679,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 307,
+        "age_days": 309,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -668,7 +701,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 307,
+        "age_days": 309,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -684,13 +717,13 @@
       },
       {
         "id": "bis_nominal_house_prices",
-        "concept_id": "house_price_growth",
+        "concept_id": "hk:bis_nominal_house_prices",
         "label_en": "BIS Nominal Residential Property Prices",
         "latest_date": "2026-01-01",
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 217,
+        "age_days": 219,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -712,7 +745,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 217,
+        "age_days": 219,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -734,7 +767,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-01",
-        "age_days": 155,
+        "age_days": 157,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -756,7 +789,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-30",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -778,7 +811,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -800,7 +833,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -822,7 +855,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-30",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -844,7 +877,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-30",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -866,7 +899,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-30",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -888,7 +921,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-30",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -910,7 +943,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-30",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 137,
         "release_calendar_id": "bea_quarterly",
         "expected_release_date": "2026-11-04",
@@ -932,7 +965,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-30",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -954,7 +987,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -976,7 +1009,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-06-30",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -998,7 +1031,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 64,
+        "age_days": 66,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1020,7 +1053,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 64,
+        "age_days": 66,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",

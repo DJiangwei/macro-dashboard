@@ -300,10 +300,11 @@ except ImportError:
     render_deepdive_panel = lambda cc: ""
 
 try:
-    from render_labour_wage_deepdive import render_labour_deepdive_panel
+    from real_deepdives import render_labour_view as render_labour_deepdive_panel
 except ImportError:
     render_labour_deepdive_panel = lambda cc: ""
 
+from country_primer.scopes import all_scopes, market_scopes
 from country_primer.data_fetcher import (  # noqa: E402
     DataPipeline,
     INDICATOR_MANIFEST_48,
@@ -4069,6 +4070,25 @@ COUNTRY_DATA["RO"] = {
 
 # ── Build logic ───────────────────────────────────────────────────────────────
 
+_NARRATIVE_DATE_RE = re.compile(r'(<span class="narrative-date">)(.*?)(</span>)', re.S)
+_STATIC_NARRATIVE_NOTE = {
+    "en": "static analyst text as of this date; figures quoted in the text are not live data, see the charts and KPI cards",
+    "zh": "此日期的静态分析文字；文中引用的数字不是实时数据，请以图表和 KPI 卡片为准",
+}
+
+
+def _mark_static_narrative(html: str, locale: str) -> str:
+    """Disclose that hand-written narrative blocks are dated, not live data."""
+    if not html:
+        return html
+    note = _STATIC_NARRATIVE_NOTE["zh" if locale == "zh" else "en"]
+    return _NARRATIVE_DATE_RE.sub(
+        lambda m: f'{m.group(1)}{m.group(2)} · <em class="narrative-static">{note}</em>{m.group(3)}',
+        html,
+        count=1,
+    )
+
+
 def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Path:
     data = COUNTRY_DATA[country_code]
     if canonical_frame is not None:
@@ -4147,8 +4167,8 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
         title_zh, badge_zh = SECTION_TITLES_ZH[sec_id]
         blurb_en = SECTION_BLURBS[sec_id]
         blurb_zh = SECTION_BLURBS_ZH[sec_id]
-        narrative_en = data["narratives"].get(sec_id, "")
-        narrative_zh = data.get("narratives_zh", {}).get(sec_id, "")
+        narrative_en = _mark_static_narrative(data["narratives"].get(sec_id, ""), "en")
+        narrative_zh = _mark_static_narrative(data.get("narratives_zh", {}).get(sec_id, ""), "zh")
         quality_html = _section_quality_html(sec_id)
         charts_html, section_chart_ids = _render_section_charts(
             sec_id,
@@ -4185,30 +4205,13 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
         plotly_tag = plotly_js.group(0) if plotly_js else '<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>'
 
     # Build country switcher nav
-    all_countries = [
-        ("HU", "Hungary", "hungary.html"),
-        ("PL", "Poland", "poland.html"),
-        ("CZ", "Czechia", "czechia.html"),
-        ("RO", "Romania", "romania.html"),
-        ("CN", "China", "china.html"),
-        ("EA", "Euro Area", "euro_area.html"),
-        ("JP", "Japan", "japan.html"),
-        ("ZA", "South Africa", "south_africa.html"),
-        ("UK", "United Kingdom", "uk.html"),
-        ("US", "United States", "us.html"),
-        ("TR", "Turkey", "turkey.html"),
-        ("HK", "Hong Kong", "hong_kong.html"),
-        ("KR", "South Korea", "south_korea.html"),
-        ("TW", "Taiwan", "taiwan.html"),
-        ("KZ", "Kazakhstan", "kazakhstan.html"),
-        ("UZ", "Uzbekistan", "uzbekistan.html"),
-        ("EG", "Egypt", "egypt.html"),
-        ("NG", "Nigeria", "nigeria.html"),
-    ]
+    all_countries = [(scope.id, scope.name_en, scope.html_file) for scope in all_scopes()]
     nav_links = []
     for cc, cname, cfile in all_countries:
         cls = 'nav-link active' if cc == country_code else 'nav-link'
         nav_links.append(f'<a href="{cfile}" class="{cls}" title="{cname}">{cc}</a>')
+    for market in market_scopes():
+        nav_links.append(f'<a href="{market.html_file}" class="nav-link" style="font-weight:600;" title="{market.name_en}">{market.flag} {market.name_en}</a>')
     country_nav = "\n    " + "\n    ".join(nav_links)
 
     # Chart IDs for JS fix script

@@ -402,8 +402,8 @@ def enrich_us_inflation_deepdive():
             mo = mom_cache.get(sid, {}).get(m)
             ma = mom_cache.get(sid, {}).get(ago_m)
 
-            cy = (w / 100.0 * y) if y is not None else 0.0
-            cm = (w / 100.0 * mo) if mo is not None else 0.0
+            cy = (w / 100.0 * y) if y is not None else None
+            cm = (w / 100.0 * mo) if mo is not None else None
             raw_cy[code] = cy
             raw_cm[code] = cm
 
@@ -452,12 +452,10 @@ def enrich_us_inflation_deepdive():
         diff_y = h_yoy - tot_cy
         diff_m = h_mom - tot_cm
 
+        # Exact weight x rate; the gap to headline is not spread across components.
         for it in items_data:
-            w_share = it["weight"] / 100.0
-            adj_cy = it["raw_cy"] + diff_y * w_share
-            adj_cm = it["raw_cm"] + diff_m * w_share
-            it["contrib_yoy"] = round(adj_cy, 1)
-            it["contrib_mom"] = round(adj_cm, 1)
+            it["contrib_yoy"] = round(it["raw_cy"], 1) if it["raw_cy"] is not None else None
+            it["contrib_mom"] = round(it["raw_cm"], 1) if it["raw_cm"] is not None else None
             del it["raw_cy"]
             del it["raw_cm"]
 
@@ -503,15 +501,15 @@ def enrich_us_inflation_deepdive():
 
     # 2. Build Momentum Monitor Tables (Last 12 Months)
     mom_mon_targets = [
-        ("TOTAL", "Headline CPI", "整体居民 CPI", weights_by_code.get("TOTAL", 100.0), "CPIAUCSL"),
-        ("CPILFESL", "Core CPI (ex Food & Energy)", "核心 CPI (剔除食品能源)", weights_by_code.get("CORE_CPI", 79.9), "CPILFESL"),
-        ("SUPERCORE", "Supercore Services (ex Shelter)", "超级核心通胀 (核心服务剔住房)", weights_by_code.get("SUPERCORE", 24.1), "CUSR0000SASL2RS"),
-        ("PCEPILFE", "Core PCE Price Index", "核心 PCE 物价指数", weights_by_code.get("CORE_PCE", 82.5), "PCEPILFE"),
-        ("SHELTER", "Shelter (Rent & OER)", "住房及业主等价租金", weights_by_code.get("SHELTER", 36.2), "CUSR0000SAH1"),
-        ("TRANS_SERV", "Transportation Services", "交通运输服务", weights_by_code.get("TRANS_SERV", 6.5), "CUSR0000SAS4"),
-        ("FOOD", "Food & Beverages", "食品与饮料", weights_by_code.get("FOOD", 13.4), "CPIUFDSL"),
-        ("ENERGY", "Energy Commodities & Services", "能源商品与公用事业", weights_by_code.get("ENERGY", 6.7), "CPIENGSL"),
-        ("CORE_GOODS", "Core Goods (Vehicles & Apparel)", "核心耐用品及商品", weights_by_code.get("CORE_GOODS", 18.8), "CUSR0000SACL1E"),
+        ("TOTAL", "Headline CPI", "整体居民 CPI", 100.0, "CPIAUCSL"),
+        ("CPILFESL", "Core CPI (ex Food & Energy)", "核心 CPI (剔除食品能源)", weights_by_code["CORE_CPI"], "CPILFESL"),
+        ("SUPERCORE", "Supercore Services (ex Shelter)", "超级核心通胀 (核心服务剔住房)", weights_by_code["SUPERCORE"], "CUSR0000SASL2RS"),
+        ("PCEPILFE", "Core PCE Price Index", "核心 PCE 物价指数", weights_by_code["CORE_PCE"], "PCEPILFE"),
+        ("SHELTER", "Shelter (Rent & OER)", "住房及业主等价租金", weights_by_code["SHELTER"], "CUSR0000SAH1"),
+        ("TRANS_SERV", "Transportation Services", "交通运输服务", weights_by_code["TRANS_SERV"], "CUSR0000SAS4"),
+        ("FOOD", "Food & Beverages", "食品与饮料", weights_by_code["FOOD"], "CPIUFDSL"),
+        ("ENERGY", "Energy Commodities & Services", "能源商品与公用事业", weights_by_code["ENERGY"], "CPIENGSL"),
+        ("CORE_GOODS", "Core Goods (Vehicles & Apparel)", "核心耐用品及商品", weights_by_code["CORE_GOODS"], "CUSR0000SACL1E"),
         ("MEDIAN_CPI", "Cleveland Fed Median CPI", "克利夫兰联储中位数 CPI", 100.0, "MEDCPIM158SFRBCLE"),
     ]
 
@@ -575,8 +573,8 @@ def enrich_us_inflation_deepdive():
             mo = mom_cache.get(sid, {}).get(m)
             ma = mom_cache.get(sid, {}).get(ago_m)
 
-            cy = (w / 100.0 * y) if y is not None else 0.0
-            cm = (w / 100.0 * mo) if mo is not None else 0.0
+            cy = (w / 100.0 * y) if y is not None else None
+            cm = (w / 100.0 * mo) if mo is not None else None
             raw_p_cy[code] = cy
             raw_p_cm[code] = cm
 
@@ -593,15 +591,14 @@ def enrich_us_inflation_deepdive():
                 "raw_cm": cm,
             })
 
-        tot_p_cy = sum(raw_p_cy.values())
-        tot_p_cm = sum(raw_p_cm.values())
+        tot_p_cy = sum(v for v in raw_p_cy.values() if v is not None)
+        tot_p_cm = sum(v for v in raw_p_cm.values() if v is not None)
         diff_p_y = h_y - tot_p_cy
         diff_p_m = h_mo - tot_p_cm
 
         for it in items_ppi:
-            w_share = it["weight"] / 100.0
-            it["contrib_yoy"] = round(it["raw_cy"] + diff_p_y * w_share, 1)
-            it["contrib_mom"] = round(it["raw_cm"] + diff_p_m * w_share, 1)
+            it["contrib_yoy"] = round(it["raw_cy"], 1) if it["raw_cy"] is not None else None
+            it["contrib_mom"] = round(it["raw_cm"], 1) if it["raw_cm"] is not None else None
             del it["raw_cy"]
             del it["raw_cm"]
 
@@ -669,8 +666,8 @@ def enrich_us_inflation_deepdive():
 
         min_v = min(recent_vals)
         max_v = max(recent_vals)
-        pct = int(round((cur_v - min_v) / (max_v - min_v) * 100)) if max_v > min_v else 50
-        pct = max(0, min(100, pct))
+        pct = int(round((cur_v - min_v) / (max_v - min_v) * 100)) if max_v > min_v else None
+        pct = max(0, min(100, pct)) if pct is not None else None
 
         if key == "capacity_utilization":
             regime_en = "Bottleneck Alert" if cur_v >= 80.0 else ("Tight / Full" if cur_v >= 77.5 else "Slack / Spare Capacity")
@@ -735,26 +732,28 @@ def enrich_us_inflation_deepdive():
 
     for d in chart_dates:
         # Stacked components
-        y_food = yoy_cache.get("CPIUFDSL", {}).get(d, 0.0)
-        y_energy = yoy_cache.get("CPIENGSL", {}).get(d, 0.0)
-        y_shelter = yoy_cache.get("CUSR0000SAH1", {}).get(d, 0.0)
-        y_core_goods = yoy_cache.get("CUSR0000SACL1E", {}).get(d, 0.0)
-        y_trans = yoy_cache.get("CUSR0000SAS4", {}).get(d, 0.0)
-        y_med = yoy_cache.get("CUSR0000SAM2", {}).get(d, 0.0)
-        y_other = yoy_cache.get("CPIOGSSL", {}).get(d, 0.0)
+        y_food = yoy_cache.get("CPIUFDSL", {}).get(d)
+        y_energy = yoy_cache.get("CPIENGSL", {}).get(d)
+        y_shelter = yoy_cache.get("CUSR0000SAH1", {}).get(d)
+        y_core_goods = yoy_cache.get("CUSR0000SACL1E", {}).get(d)
+        y_trans = yoy_cache.get("CUSR0000SAS4", {}).get(d)
+        y_med = yoy_cache.get("CUSR0000SAM2", {}).get(d)
+        y_other = yoy_cache.get("CPIOGSSL", {}).get(d)
+        if None not in (y_food, y_energy, y_shelter, y_core_goods, y_trans, y_med, y_other):
+            # A missing component month is a gap, not a zero contribution.
 
-        c_food = round(weights_by_code.get("FOOD", 13.4) / 100.0 * y_food, 2)
-        c_energy = round(weights_by_code.get("ENERGY", 6.7) / 100.0 * y_energy, 2)
-        c_shelter = round(weights_by_code.get("SHELTER", 36.2) / 100.0 * y_shelter, 2)
-        c_core_ex = round((weights_by_code.get("CORE_GOODS", 18.8) * y_core_goods +
-                           weights_by_code.get("TRANS_SERV", 6.5) * y_trans +
-                           weights_by_code.get("MED_SERV", 6.4) * y_med +
-                           weights_by_code.get("OTHER_SERV", 2.8) * y_other) / 100.0, 2)
+            c_food = round(weights_by_code["FOOD"] / 100.0 * y_food, 2)
+            c_energy = round(weights_by_code["ENERGY"] / 100.0 * y_energy, 2)
+            c_shelter = round(weights_by_code["SHELTER"] / 100.0 * y_shelter, 2)
+            c_core_ex = round((weights_by_code["CORE_GOODS"] * y_core_goods +
+                               weights_by_code["TRANS_SERV"] * y_trans +
+                               weights_by_code["MED_SERV"] * y_med +
+                               weights_by_code["OTHER_SERV"] * y_other) / 100.0, 2)
 
-        ts_data["cpi_contrib_food_yoy"].append({"date": d, "value": c_food})
-        ts_data["cpi_contrib_energy_yoy"].append({"date": d, "value": c_energy})
-        ts_data["cpi_contrib_shelter_yoy"].append({"date": d, "value": c_shelter})
-        ts_data["cpi_contrib_core_ex_shelter_yoy"].append({"date": d, "value": c_core_ex})
+            ts_data["cpi_contrib_food_yoy"].append({"date": d, "value": c_food})
+            ts_data["cpi_contrib_energy_yoy"].append({"date": d, "value": c_energy})
+            ts_data["cpi_contrib_shelter_yoy"].append({"date": d, "value": c_shelter})
+            ts_data["cpi_contrib_core_ex_shelter_yoy"].append({"date": d, "value": c_core_ex})
 
         # Momentum
         m_head = compute_annualized_momentum(mom_cache.get("CPIAUCSL", {}), yoy_cache.get("CPIAUCSL", {}), d)

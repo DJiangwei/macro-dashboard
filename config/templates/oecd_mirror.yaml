@@ -1,0 +1,124 @@
+# OECD Main Economic Indicators series mirrored on FRED (OECD members and key partners).
+params: [iso2, iso3]
+summary_key_ids: [industrial_production_growth, exports_growth]
+indicators:
+  - id: industrial_production_growth
+    concept: industrial_production_growth
+    section: production_cycle
+    label_en: Industrial Production YoY (OECD)
+    label_zh: 工业生产同比 (OECD)
+    unit: "% y/y"
+    fetcher: fred
+    series: "{iso3}PRINTO01GYSAM"
+    source_name: OECD Main Economic Indicators via FRED
+    source_url: https://fred.stlouisfed.org/series/{iso3}PRINTO01GYSAM
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Total industry excluding construction, growth rate same period previous year.
+    caveat_zh: 不含建筑业的全部工业，按上年同期计算的增速。
+
+  - id: composite_leading_indicator
+    section: production_cycle
+    label_en: OECD Composite Leading Indicator
+    label_zh: OECD综合领先指标
+    unit: Index (long-term average = 100)
+    fetcher: fred
+    series: "{iso3}LOLITOAASTSAM"
+    source_name: OECD Composite Leading Indicators via FRED
+    source_url: https://fred.stlouisfed.org/series/{iso3}LOLITOAASTSAM
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Amplitude-adjusted CLI; above 100 signals activity above its long-term trend.
+    caveat_zh: 振幅调整后的领先指标；高于100表示活动高于长期趋势。
+
+  - id: goods_exports
+    section: external_fx
+    label_en: Goods Exports (USD)
+    label_zh: 货物出口 (美元)
+    unit: USD bn
+    fetcher: fred
+    series: XTEXVA01{iso2}M667S
+    scale: 1000000000
+    source_name: OECD Main Economic Indicators via FRED
+    source_url: https://fred.stlouisfed.org/series/XTEXVA01{iso2}M667S
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Monthly merchandise exports, value in US dollars, seasonally adjusted.
+    caveat_zh: 月度货物出口额（美元，季调）。
+
+  - id: exports_growth
+    concept: exports_growth
+    section: external_fx
+    label_en: Goods Exports YoY (USD)
+    label_zh: 货物出口同比 (美元)
+    unit: "% y/y"
+    fetcher: fred
+    series: XTEXVA01{iso2}M667S
+    transform: yoy_pct
+    source_name: OECD Main Economic Indicators via FRED
+    source_url: https://fred.stlouisfed.org/series/XTEXVA01{iso2}M667S
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Year-on-year change computed from monthly US-dollar exports.
+    caveat_zh: 根据月度美元出口额计算的同比变动。
+
+  - id: goods_imports
+    section: external_fx
+    label_en: Goods Imports (USD)
+    label_zh: 货物进口 (美元)
+    unit: USD bn
+    fetcher: fred
+    series: XTIMVA01{iso2}M667S
+    scale: 1000000000
+    source_name: OECD Main Economic Indicators via FRED
+    source_url: https://fred.stlouisfed.org/series/XTIMVA01{iso2}M667S
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Monthly merchandise imports, value in US dollars, seasonally adjusted.
+    caveat_zh: 月度货物进口额（美元，季调）。
+
+  - id: imports_growth
+    concept: imports_growth
+    section: external_fx
+    label_en: Goods Imports YoY (USD)
+    label_zh: 货物进口同比 (美元)
+    unit: "% y/y"
+    fetcher: fred
+    series: XTIMVA01{iso2}M667S
+    transform: yoy_pct
+    source_name: OECD Main Economic Indicators via FRED
+    source_url: https://fred.stlouisfed.org/series/XTIMVA01{iso2}M667S
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Year-on-year change computed from monthly US-dollar imports.
+    caveat_zh: 根据月度美元进口额计算的同比变动。
+
+  - id: equity_index
+    section: monetary_financial
+    label_en: Share Prices (OECD, all shares)
+    label_zh: 股票价格指数 (OECD，全部股票)
+    unit: Index (2015 = 100)
+    fetcher: fred
+    series: SPASTT01{iso2}M661N
+    source_name: OECD Main Economic Indicators via FRED
+    source_url: https://fred.stlouisfed.org/series/SPASTT01{iso2}M661N
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Monthly average of the broad share price index.
+    caveat_zh: 宽基股票价格指数的月度均值。
+
+  - id: equity_return_yoy
+    concept: equity_return
+    section: monetary_financial
+    label_en: Share Prices YoY (OECD)
+    label_zh: 股票价格同比 (OECD)
+    unit: "% y/y"
+    fetcher: fred
+    series: SPASTT01{iso2}M661N
+    transform: yoy_pct
+    source_name: OECD Main Economic Indicators via FRED
+    source_url: https://fred.stlouisfed.org/series/SPASTT01{iso2}M661N
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: Price return only (no dividends), from monthly averages.
+    caveat_zh: 仅价格回报（不含股息），基于月度均值。

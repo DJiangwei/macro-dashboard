@@ -1,0 +1,284 @@
+{
+ "schema_version": "model-oil-shock-cpi-v1",
+ "model_id": "oil_shock_cpi",
+ "label": "MODEL",
+ "generated": "2026-11-05T11:22:23.101195+00:00",
+ "params": {
+  "shock_pct": 10.0,
+  "lags_months": 6,
+  "sample_start": "2015-01"
+ },
+ "inputs": {
+  "brent": "ENERGY:brent_spot@2026-11-03"
+ },
+ "method": "MODEL: first-round effect of an oil price shock on consumer prices.\n\nFor each economy with an energy CPI series:\n\n1. Pass-through (estimated): OLS of energy CPI YoY on Brent YoY in local\n   currency at lags 0..L months (monthly data from ``sample_start``), with a\n   constant. The cumulative pass-through is the sum of the lag coefficients:\n   percentage points of energy CPI inflation per 1 pp of local-currency Brent\n   inflation after L months.\n2. Weight (official): the energy share of the CPI basket (Eurostat HICP item\n   weights, ONS CPI weights). The direct effect on headline CPI is\n   ``weight / 1000 × pass-through × shock``.\n\nWhat it is not: a forecast, or a full model. It ignores second-round effects\n(wages, transport and food costs), regulated-price timing beyond L months,\nexchange-rate responses and policy reactions. Overlapping YoY observations\nmake residuals autocorrelated, so R² and fit statistics overstate precision.\nEvery input is an observed series referenced as ``scope:indicator@last date``;\nthe output lives in ``output/models/`` and never enters a canonical frame.",
+ "rows": [
+  {
+   "code": "HU",
+   "name_en": "Hungary",
+   "flag": "🇭🇺",
+   "energy_cpi": {
+    "series": "HU:energy_cpi_yoy",
+    "label": "Energy HICP, YoY",
+    "last": "2026-09"
+   },
+   "driver": "Brent in local currency",
+   "fit": {
+    "coefficients": [
+     -0.0091,
+     0.07,
+     -0.0019,
+     0.0149,
+     -0.001,
+     -0.021,
+     0.1315
+    ],
+    "pass_through": 0.1833,
+    "r2": 0.422,
+    "n": 105,
+    "sample": "2018-01 to 2026-09"
+   },
+   "weight": {
+    "value": 95.66,
+    "year": "2026",
+    "series": "ENERGY:hicp_energy_weight_hu",
+    "source": "Eurostat HICP item weights"
+   },
+   "energy_cpi_impact_pp": 1.83,
+   "headline_impact_pp": 0.18
+  },
+  {
+   "code": "PL",
+   "name_en": "Poland",
+   "flag": "🇵🇱",
+   "energy_cpi": {
+    "series": "PL:energy_cpi_yoy",
+    "label": "Energy HICP, YoY",
+    "last": "2026-09"
+   },
+   "driver": "Brent in local currency",
+   "fit": {
+    "coefficients": [
+     0.0174,
+     0.0353,
+     0.0291,
+     0.0213,
+     0.03,
+     -0.0161,
+     0.1038
+    ],
+    "pass_through": 0.221,
+    "r2": 0.652,
+    "n": 105,
+    "sample": "2018-01 to 2026-09"
+   },
+   "weight": {
+    "value": 122.18,
+    "year": "2026",
+    "series": "ENERGY:hicp_energy_weight_pl",
+    "source": "Eurostat HICP item weights"
+   },
+   "energy_cpi_impact_pp": 2.21,
+   "headline_impact_pp": 0.27
+  },
+  {
+   "code": "CZ",
+   "name_en": "Czechia",
+   "flag": "🇨🇿",
+   "energy_cpi": {
+    "series": "CZ:energy_cpi_yoy",
+    "label": "Energy HICP, YoY",
+    "last": "2026-09"
+   },
+   "driver": "Brent in local currency",
+   "fit": {
+    "coefficients": [
+     -0.0162,
+     0.039,
+     0.0027,
+     0.0322,
+     0.0149,
+     -0.0401,
+     0.1576
+    ],
+    "pass_through": 0.1901,
+    "r2": 0.294,
+    "n": 105,
+    "sample": "2018-01 to 2026-09"
+   },
+   "weight": {
+    "value": 129.1,
+    "year": "2026",
+    "series": "ENERGY:hicp_energy_weight_cz",
+    "source": "Eurostat HICP item weights"
+   },
+   "energy_cpi_impact_pp": 1.9,
+   "headline_impact_pp": 0.25
+  },
+  {
+   "code": "RO",
+   "name_en": "Romania",
+   "flag": "🇷🇴",
+   "energy_cpi": {
+    "series": "RO:energy_cpi_yoy",
+    "label": "Energy HICP, YoY",
+    "last": "2026-09"
+   },
+   "driver": "Brent in local currency",
+   "fit": {
+    "coefficients": [
+     0.0909,
+     0.0427,
+     0.0259,
+     0.0363,
+     0.0138,
+     -0.0048,
+     0.0757
+    ],
+    "pass_through": 0.2805,
+    "r2": 0.71,
+    "n": 105,
+    "sample": "2018-01 to 2026-09"
+   },
+   "weight": {
+    "value": 114.56,
+    "year": "2026",
+    "series": "ENERGY:hicp_energy_weight_ro",
+    "source": "Eurostat HICP item weights"
+   },
+   "energy_cpi_impact_pp": 2.81,
+   "headline_impact_pp": 0.32
+  },
+  {
+   "code": "EA",
+   "name_en": "Euro Area",
+   "flag": "🇪🇺",
+   "energy_cpi": {
+    "series": "EA:hicp_energy_inflation",
+    "label": "HICP Energy Inflation, YoY",
+    "last": "2026-10"
+   },
+   "driver": "Brent in local currency",
+   "fit": {
+    "coefficients": [
+     0.0863,
+     0.0363,
+     0.0424,
+     0.0212,
+     0.0513,
+     -0.0016,
+     0.0988
+    ],
+    "pass_through": 0.3347,
+    "r2": 0.81,
+    "n": 124,
+    "sample": "2016-07 to 2026-10"
+   },
+   "weight": {
+    "value": 90.26,
+    "year": "2026",
+    "series": "ENERGY:hicp_energy_weight_ea",
+    "source": "Eurostat HICP item weights"
+   },
+   "energy_cpi_impact_pp": 3.35,
+   "headline_impact_pp": 0.3
+  },
+  {
+   "code": "UK",
+   "name_en": "United Kingdom",
+   "flag": "🇬🇧",
+   "energy_cpi": {
+    "series": "UK:household_energy_cpi_yoy",
+    "label": "Household Energy CPI",
+    "last": "2026-09"
+   },
+   "driver": "Brent in local currency",
+   "fit": {
+    "coefficients": [
+     -0.0627,
+     0.0677,
+     0.026,
+     0.0509,
+     0.058,
+     -0.0581,
+     0.3495
+    ],
+    "pass_through": 0.4314,
+    "r2": 0.418,
+    "n": 123,
+    "sample": "2016-07 to 2026-09"
+   },
+   "weight": {
+    "value": 31.98,
+    "year": "2026",
+    "series": "ENERGY:cpi_energy_weight_uk",
+    "source": "ONS"
+   },
+   "energy_cpi_impact_pp": 4.31,
+   "headline_impact_pp": 0.14
+  },
+  {
+   "code": "US",
+   "name_en": "United States",
+   "flag": "🇺🇸",
+   "energy_cpi": {
+    "series": "US:energy_cpi_inflation",
+    "label": "Energy CPI Inflation",
+    "last": "2026-09"
+   },
+   "driver": "Brent in USD",
+   "fit": {
+    "coefficients": [
+     0.1301,
+     0.0543,
+     0.0456,
+     0.0145,
+     0.0321,
+     -0.0084,
+     0.0561
+    ],
+    "pass_through": 0.3243,
+    "r2": 0.844,
+    "n": 122,
+    "sample": "2016-07 to 2026-09"
+   },
+   "weight": null,
+   "energy_cpi_impact_pp": 3.24,
+   "headline_impact_pp": null
+  },
+  {
+   "code": "TR",
+   "name_en": "Turkey",
+   "flag": "🇹🇷",
+   "energy_cpi": {
+    "series": "TR:energy_hicp_inflation",
+    "label": "Energy HICP Inflation YoY",
+    "last": "2026-09"
+   },
+   "driver": "Brent in local currency",
+   "fit": {
+    "coefficients": [
+     0.0352,
+     0.0814,
+     0.071,
+     0.0707,
+     0.0697,
+     0.0103,
+     0.1205
+    ],
+    "pass_through": 0.4589,
+    "r2": 0.545,
+    "n": 123,
+    "sample": "2016-07 to 2026-09"
+   },
+   "weight": {
+    "value": 63.86,
+    "year": "2026",
+    "series": "ENERGY:hicp_energy_weight_tr",
+    "source": "Eurostat HICP item weights"
+   },
+   "energy_cpi_impact_pp": 4.59,
+   "headline_impact_pp": 0.29
+  }
+ ]
+}

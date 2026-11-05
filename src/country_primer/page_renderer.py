@@ -17,6 +17,7 @@ from dashboard_summary_utils import (
     write_canonical_data_first_frame,
 )
 from country_primer.source_health import write_source_health_report
+from country_primer.scopes import all_scopes, market_scopes
 
 OUTPUT = Path("output")
 ACCENT = "#990f3d"
@@ -469,7 +470,11 @@ def _chart_html(
     caveat_zh = escape(series.get("caveat_zh", ""))
     source_url = escape(series.get("source_url") or series.get("api_url") or "#")
     concept_id = concept_id_for(country_code, str(series["id"]))
-    view = "deep" if ":" in concept_id else "core"
+    if series.get("view") in {"core", "deep"}:
+        # Market pages (non-country frameworks) choose their key charts in the YAML.
+        view = series["view"]
+    else:
+        view = "deep" if ":" in concept_id else "core"
     cross = series.get("cross_check") or {}
     cross_html = ""
     if cross:
@@ -599,26 +604,16 @@ def _sections_html(
                     deepdive_block = render_deepdive_panel("EA")
                 except Exception:
                     pass
-            elif cc_upper in ("CN", "CHINA"):
+            else:
+                # Any other scope: config/deepdive_views.yaml view, if one is configured.
                 try:
                     import sys
                     from pathlib import Path
                     scripts_dir = str(Path(__file__).resolve().parent.parent.parent / "scripts")
                     if scripts_dir not in sys.path:
                         sys.path.insert(0, scripts_dir)
-                    from render_china_inflation_deepdive import render_china_deepdive_panel
-                    deepdive_block = render_china_deepdive_panel()
-                except Exception:
-                    pass
-            elif cc_upper in ("TR", "ZA", "KR", "TW", "UK", "JP", "HK", "EG", "NG", "KZ", "UZ"):
-                try:
-                    import sys
-                    from pathlib import Path
-                    scripts_dir = str(Path(__file__).resolve().parent.parent.parent / "scripts")
-                    if scripts_dir not in sys.path:
-                        sys.path.insert(0, scripts_dir)
-                    from render_em_inflation_deepdive import render_em_deepdive_panel
-                    deepdive_block = render_em_deepdive_panel(cc_upper)
+                    from real_deepdives import render_inflation_view
+                    deepdive_block = render_inflation_view(cc_upper)
                 except Exception:
                     pass
 
@@ -631,8 +626,8 @@ def _sections_html(
                 scripts_dir = str(Path(__file__).resolve().parent.parent.parent / "scripts")
                 if scripts_dir not in sys.path:
                     sys.path.insert(0, scripts_dir)
-                from render_labour_wage_deepdive import render_labour_deepdive_panel
-                labour_block = render_labour_deepdive_panel(cc_upper)
+                from real_deepdives import render_labour_view
+                labour_block = render_labour_view(cc_upper)
             except Exception:
                 pass
 
@@ -644,6 +639,7 @@ def _sections_html(
   </div>
   {deepdive_block}
   {labour_block}
+  {(config.get("section_panels") or {}).get(section_id, "")}
   <div class="charts-grid">
     {charts}
     {empty}
@@ -2090,26 +2086,7 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
 }})();
 </script>"""
 
-COUNTRY_META: dict[str, dict[str, str]] = {
-    "HU": {"name": "Hungary", "name_zh": "匈牙利", "file": "hungary.html"},
-    "PL": {"name": "Poland", "name_zh": "波兰", "file": "poland.html"},
-    "CZ": {"name": "Czechia", "name_zh": "捷克", "file": "czechia.html"},
-    "RO": {"name": "Romania", "name_zh": "罗马尼亚", "file": "romania.html"},
-    "CN": {"name": "China", "name_zh": "中国", "file": "china.html"},
-    "EA": {"name": "Euro Area", "name_zh": "欧元区", "file": "euro_area.html"},
-    "JP": {"name": "Japan", "name_zh": "日本", "file": "japan.html"},
-    "ZA": {"name": "South Africa", "name_zh": "南非", "file": "south_africa.html"},
-    "UK": {"name": "United Kingdom", "name_zh": "英国", "file": "uk.html"},
-    "US": {"name": "United States", "name_zh": "美国", "file": "us.html"},
-    "TR": {"name": "Turkey", "name_zh": "土耳其", "file": "turkey.html"},
-    "HK": {"name": "Hong Kong", "name_zh": "中国香港", "file": "hong_kong.html"},
-    "KR": {"name": "South Korea", "name_zh": "韩国", "file": "south_korea.html"},
-    "TW": {"name": "Taiwan", "name_zh": "中国台湾", "file": "taiwan.html"},
-    "KZ": {"name": "Kazakhstan", "name_zh": "哈萨克斯坦", "file": "kazakhstan.html"},
-    "UZ": {"name": "Uzbekistan", "name_zh": "乌兹别克斯坦", "file": "uzbekistan.html"},
-    "EG": {"name": "Egypt", "name_zh": "埃及", "file": "egypt.html"},
-    "NG": {"name": "Nigeria", "name_zh": "尼日利亚", "file": "nigeria.html"},
-}
+COUNTRY_META: dict[str, dict[str, str]] = {s.id: {"name": s.name_en, "name_zh": s.name_zh, "file": s.html_file} for s in all_scopes()}
 
 
 def render_html(
@@ -2130,6 +2107,9 @@ def render_html(
     for code, item in COUNTRY_META.items():
         active_cls = ' class="active"' if code == code_upper else ""
         nav_links.append(f'<a href="{item["file"]}"{active_cls} title="{item.get("name", code)}">{code}</a>')
+    for market in market_scopes():
+        active_cls = ' class="active"' if market.id == code_upper else ""
+        nav_links.append(f'<a href="{market.html_file}"{active_cls} style="font-weight:600;margin-left:4px;" title="{market.name_en} · {market.name_zh}">{market.flag} {market.name_en}</a>')
     nav_links.append('<a href="chart_studio.html" style="color:var(--accent);font-weight:600;margin-left:4px;" title="Macro Chart Studio · 自定义对比图表工坊">📈 Studio</a>')
     nav_links.append('<a href="my_dashboard.html" style="color:var(--teal);font-weight:600;margin-left:4px;" title="My Dashboard · 我的自选宏观看板">⭐ My Dashboard</a>')
     nav_links.append('<a href="policy_tracker.html" style="color:var(--slate,#364b61);font-weight:600;margin-left:4px;" title="Central Bank Policy & Event Tracker · 全球央行与宏观事件追踪">🏛️ Policy</a>')
@@ -2139,8 +2119,13 @@ def render_html(
     source_count = len({item.get("source_name") for item in series_list if item.get("observations")})
     gap_count = len(config.get("data_gaps", []))
     low_count = sum(1 for item in series_list if item.get("quality_status") == "low_confidence" and item.get("observations"))
-    native = sum(1 for item in series_list if item.get("source_authority") == "official primary" and item.get("observations"))
-    mirror = sum(1 for item in series_list if item.get("source_authority") == "official mirror" and item.get("observations"))
+    def _authority(item: dict[str, Any]) -> str:
+        # The assessed authority (quality block) wins over the declared one.
+        assessed = item.get("data_quality") or item.get("quality") or {}
+        return str(assessed.get("source_authority") or item.get("source_authority") or "")
+
+    native = sum(1 for item in series_list if _authority(item) == "official_primary" and item.get("observations"))
+    mirror = sum(1 for item in series_list if _authority(item) == "official_mirror" and item.get("observations"))
     generated_date = datetime.now(UTC).date().isoformat()
 
     if code_upper == "CN":
@@ -2205,7 +2190,7 @@ def render_html(
 
   <div class="view-switch" role="group" aria-label="chart density">
     <span><span data-lang="en">Chart view</span><span data-lang="zh">图表视图</span></span>
-    <button type="button" data-view-option="core" aria-pressed="true" onclick="setDashboardView('core')"><span data-lang="en">Core 48</span><span data-lang="zh">核心 48</span></button>
+    <button type="button" data-view-option="core" aria-pressed="true" onclick="setDashboardView('core')"><span data-lang="en">{escape(str(config.get("core_view_label_en") or "Core 48"))}</span><span data-lang="zh">{escape(str(config.get("core_view_label_zh") or "核心 48"))}</span></button>
     <button type="button" data-view-option="deep" aria-pressed="false" onclick="setDashboardView('deep')"><span data-lang="en">All deep-dive charts</span><span data-lang="zh">全部深度指标</span></button>
 {LW_GLOBAL_HORIZON_HTML}
   </div>

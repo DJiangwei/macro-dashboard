@@ -104,14 +104,6 @@ PPI_MEMO = [
 ]
 
 # Empirical base weights for Domestic PPI MIGs (sum to 100)
-PPI_MIG_WEIGHTS = {
-    "HU": {"MIG_ING": 21.1, "MIG_CAG": 10.5, "MIG_DCOG": 3.5, "MIG_NDCOG": 20.5, "MIG_NRG": 44.4},
-    "PL": {"MIG_ING": 36.5, "MIG_CAG": 9.5, "MIG_DCOG": 5.5, "MIG_NDCOG": 24.5, "MIG_NRG": 24.0},
-    "CZ": {"MIG_ING": 32.1, "MIG_CAG": 21.4, "MIG_DCOG": 2.5, "MIG_NDCOG": 15.0, "MIG_NRG": 29.0},
-    "RO": {"MIG_ING": 31.6, "MIG_CAG": 8.6, "MIG_DCOG": 2.5, "MIG_NDCOG": 17.5, "MIG_NRG": 39.8},
-    "EA": {"MIG_ING": 34.0, "MIG_CAG": 20.0, "MIG_DCOG": 4.0, "MIG_NDCOG": 26.0, "MIG_NRG": 16.0},
-}
-
 
 def fetch_eurostat_json(endpoint: str, params: dict) -> dict:
     """Fetch and decode JSON-stat from Eurostat API."""
@@ -277,37 +269,41 @@ def build_cpi_table(geo: str, target_month: str, weights_by_code: dict, get_cpi_
     raw_contrib_mom = {}
     items_data = []
 
-    sum_w = sum(weights_by_code.get(code, 0.0) for code, _, _, _ in COICOP_MAIN)
-    norm_factor = 100.0 / sum_w if sum_w > 0 else 1.0
+    # A missing weight stays missing: contributions are only computed when every
+    # main COICOP division has a published weight for the period.
+    main_weights = [weights_by_code.get(code) for code, _, _, _ in COICOP_MAIN]
+    sum_w = sum(main_weights) if all(w is not None for w in main_weights) else None
+    norm_factor = 100.0 / sum_w if sum_w else None
+
+    def _norm(raw: float | None) -> float | None:
+        return raw * norm_factor if raw is not None and norm_factor is not None else None
 
     for code, full_name, short_name, sub_items in COICOP_MAIN:
-        raw_w = weights_by_code.get(code, 0.0)
-        norm_w = raw_w * norm_factor
+        norm_w = _norm(weights_by_code.get(code))
         yoy = get_cpi_rate({"geo": geo, "coicop18": code, "unit": "RCH_A", "time": target_month})
         yoy_prev = get_cpi_rate({"geo": geo, "coicop18": code, "unit": "RCH_A", "time": prev_month})
         mom = get_cpi_rate({"geo": geo, "coicop18": code, "unit": "RCH_M", "time": target_month})
         mom_ago = get_cpi_rate({"geo": geo, "coicop18": code, "unit": "RCH_M", "time": ago_month})
 
-        cy = (norm_w / 100.0 * yoy) if yoy is not None else 0.0
-        cm = (norm_w / 100.0 * mom) if mom is not None else 0.0
+        cy = (norm_w / 100.0 * yoy) if yoy is not None and norm_w is not None else None
+        cm = (norm_w / 100.0 * mom) if mom is not None and norm_w is not None else None
         raw_contrib_yoy[code] = cy
         raw_contrib_mom[code] = cm
 
         # Sub items
         subs_data = []
         for s_code, s_name in sub_items:
-            s_raw_w = weights_by_code.get(s_code, 0.0)
-            s_norm_w = s_raw_w * norm_factor
+            s_norm_w = _norm(weights_by_code.get(s_code))
             s_yoy = get_cpi_rate({"geo": geo, "coicop18": s_code, "unit": "RCH_A", "time": target_month})
             s_yoy_prev = get_cpi_rate({"geo": geo, "coicop18": s_code, "unit": "RCH_A", "time": prev_month})
             s_mom = get_cpi_rate({"geo": geo, "coicop18": s_code, "unit": "RCH_M", "time": target_month})
             s_mom_ago = get_cpi_rate({"geo": geo, "coicop18": s_code, "unit": "RCH_M", "time": ago_month})
-            s_cy = (s_norm_w / 100.0 * s_yoy) if s_yoy is not None else None
-            s_cm = (s_norm_w / 100.0 * s_mom) if s_mom is not None else None
+            s_cy = (s_norm_w / 100.0 * s_yoy) if s_yoy is not None and s_norm_w is not None else None
+            s_cm = (s_norm_w / 100.0 * s_mom) if s_mom is not None and s_norm_w is not None else None
             subs_data.append({
                 "code": s_code,
                 "name": s_name,
-                "weight": round(s_norm_w, 2),
+                "weight": round(s_norm_w, 2) if s_norm_w is not None else None,
                 "yoy": s_yoy,
                 "yoy_prev": s_yoy_prev,
                 "contrib_yoy": round(s_cy, 2) if s_cy is not None else None,
@@ -320,7 +316,7 @@ def build_cpi_table(geo: str, target_month: str, weights_by_code: dict, get_cpi_
             "code": code,
             "name": short_name,
             "full_name": full_name,
-            "weight": round(norm_w, 1),
+            "weight": round(norm_w, 1) if norm_w is not None else None,
             "yoy": yoy,
             "yoy_prev": yoy_prev,
             "raw_cy": cy,
@@ -331,24 +327,19 @@ def build_cpi_table(geo: str, target_month: str, weights_by_code: dict, get_cpi_
         })
 
     # Adjust contributions to sum exactly to headline
-    total_cy = sum(raw_contrib_yoy.values())
-    total_cm = sum(raw_contrib_mom.values())
-    diff_yoy = (head_yoy - total_cy) if head_yoy is not None else 0.0
-    diff_mom = (head_mom - total_cm) if head_mom is not None else 0.0
-
+    # Contributions are exact weight x rate. The gap to the published headline
+    # (rounding, weight vintage, chain-linking) is reported as an explicit
+    # residual instead of being spread across components.
     for item in items_data:
-        w_share = item["weight"] / 100.0
-        adj_cy = item["raw_cy"] + diff_yoy * w_share
-        adj_cm = item["raw_cm"] + diff_mom * w_share
-        item["contrib_yoy"] = round(adj_cy, 2)
-        item["contrib_mom"] = round(adj_cm, 2)
+        item["contrib_yoy"] = round(item["raw_cy"], 2) if item["raw_cy"] is not None else None
+        item["contrib_mom"] = round(item["raw_cm"], 2) if item["raw_cm"] is not None else None
         del item["raw_cy"]
         del item["raw_cm"]
 
     # 3. Memo items
     memo_data = []
     for m_code, m_full, m_short in COICOP_MEMO:
-        m_w = weights_by_code.get(m_code, 0.0) * norm_factor
+        m_w = _norm(weights_by_code.get(m_code))
         m_yoy = get_cpi_rate({"geo": geo, "coicop18": m_code, "unit": "RCH_A", "time": target_month})
         m_yoy_prev = get_cpi_rate({"geo": geo, "coicop18": m_code, "unit": "RCH_A", "time": prev_month})
         m_mom = get_cpi_rate({"geo": geo, "coicop18": m_code, "unit": "RCH_M", "time": target_month})
@@ -357,7 +348,7 @@ def build_cpi_table(geo: str, target_month: str, weights_by_code: dict, get_cpi_
             "code": m_code,
             "name": m_short,
             "full_name": m_full,
-            "weight": round(m_w, 1) if m_w > 0 else None,
+            "weight": round(m_w, 1) if m_w else None,
             "yoy": m_yoy,
             "yoy_prev": m_yoy_prev,
             "contrib_yoy": None,
@@ -397,27 +388,26 @@ def build_ppi_table(geo: str, target_month: str, get_ppi_rate):
     if head_yoy is None:
         return None
 
-    weights = PPI_MIG_WEIGHTS.get(geo, PPI_MIG_WEIGHTS["HU"])
     raw_cy = {}
     raw_cm = {}
     items_data = []
 
     for code, name in PPI_MIGS:
-        w = weights.get(code, 20.0)
+        w = None  # MIG weights are not published in an automated source
         yoy = get_ppi_rate({"geo": geo, "nace_r2": code, "unit": "PCH_SM", "time": target_month})
         yoy_prev = get_ppi_rate({"geo": geo, "nace_r2": code, "unit": "PCH_SM", "time": prev_month})
         mom = get_ppi_rate({"geo": geo, "nace_r2": code, "unit": "PCH_PRE", "time": target_month})
         mom_ago = get_ppi_rate({"geo": geo, "nace_r2": code, "unit": "PCH_PRE", "time": ago_month})
 
-        cy = (w / 100.0 * yoy) if yoy is not None else 0.0
-        cm = (w / 100.0 * mom) if mom is not None else 0.0
+        cy = None
+        cm = None
         raw_cy[code] = cy
         raw_cm[code] = cm
 
         items_data.append({
             "code": code,
             "name": name,
-            "weight": round(w, 1),
+            "weight": None,
             "yoy": yoy,
             "yoy_prev": yoy_prev,
             "raw_cy": cy,
@@ -427,17 +417,9 @@ def build_ppi_table(geo: str, target_month: str, get_ppi_rate):
         })
 
     # Additive adjustment to sum to headline PPI
-    sum_cy = sum(raw_cy.values())
-    sum_cm = sum(raw_cm.values())
-    diff_y = (head_yoy - sum_cy) if head_yoy is not None else 0.0
-    diff_m = (head_mom - sum_cm) if head_mom is not None else 0.0
-
     for item in items_data:
-        w_share = item["weight"] / 100.0
-        adj_cy = item["raw_cy"] + diff_y * w_share
-        adj_cm = item["raw_cm"] + diff_m * w_share
-        item["contrib_yoy"] = round(adj_cy, 2)
-        item["contrib_mom"] = round(adj_cm, 2)
+        item["contrib_yoy"] = None
+        item["contrib_mom"] = None
         del item["raw_cy"]
         del item["raw_cm"]
 
@@ -745,7 +727,7 @@ def main():
             latest_cpi_months = [t for t in cpi_times[-12:]]
             for m in latest_cpi_months:
                 yr = m.split("-")[0]
-                w_dict = {code: weights_map.get((geo, yr, code), weights_map.get((geo, str(int(yr)-1), code), 0.0))
+                w_dict = {code: weights_map.get((geo, yr, code), weights_map.get((geo, str(int(yr)-1), code)))
                           for code in all_coicop_codes}
                 tbl = build_cpi_table(geo, m, w_dict, get_cpi_rate)
                 if tbl:
@@ -760,13 +742,13 @@ def main():
                         hist_moms = [get_cpi_rate({"geo": geo, "coicop18": code, "unit": "RCH_M", "time": cpi_times[k]})
                                      for k in range(start_k, m_idx + 1)]
                         yoy_val = get_cpi_rate({"geo": geo, "coicop18": code, "unit": "RCH_A", "time": m})
-                        act_w = weights_map.get((geo, yr, code), def_w) if code != "TOTAL" else 100.0
+                        act_w = weights_map.get((geo, yr, code)) if code != "TOTAL" else 100.0
                         m_metrics = compute_momentum_metrics(hist_moms, yoy_val)
                         mom_rows.append({
                             "code": code,
                             "name_en": name_en,
                             "name_zh": name_zh,
-                            "weight": round(act_w, 1),
+                            "weight": round(act_w, 1) if act_w is not None else None,
                             **m_metrics
                         })
 
@@ -797,33 +779,26 @@ def main():
             all_months = sorted(list(set(cpi_times + ppi_times)))
             for i, m in enumerate(all_months):
                 yr = m.split("-")[0]
-                w_dict = {code: weights_map.get((geo, yr, code), weights_map.get((geo, str(int(yr)-1), code), 0.0))
+                w_dict = {code: weights_map.get((geo, yr, code), weights_map.get((geo, str(int(yr)-1), code)))
                           for code in all_coicop_codes}
                 tbl = build_cpi_table(geo, m, w_dict, get_cpi_rate)
 
                 if tbl:
                     items_by_code = {it["code"]: it for it in tbl["items"]}
-                    c_food_y = items_by_code.get("CP01", {}).get("contrib_yoy", 0.0)
-                    c_food_m = items_by_code.get("CP01", {}).get("contrib_mom", 0.0)
-
-                    c_goods_y = round(sum(items_by_code.get(c, {}).get("contrib_yoy", 0.0) for c in ["CP03", "CP05", "CP12"]), 2)
-                    c_goods_m = round(sum(items_by_code.get(c, {}).get("contrib_mom", 0.0) for c in ["CP03", "CP05", "CP12"]), 2)
-
-                    c_energy_y = items_by_code.get("CP04", {}).get("contrib_yoy", 0.0)
-                    c_energy_m = items_by_code.get("CP04", {}).get("contrib_mom", 0.0)
-
-                    c_serv_y = round(sum(items_by_code.get(c, {}).get("contrib_yoy", 0.0) for c in ["CP06", "CP07", "CP08", "CP09", "CP10", "CP11"]), 2)
-                    c_serv_m = round(sum(items_by_code.get(c, {}).get("contrib_mom", 0.0) for c in ["CP06", "CP07", "CP08", "CP09", "CP10", "CP11"]), 2)
-
-                    c_payload["time_series"]["cpi_contrib_food_yoy"].append({"date": m, "value": c_food_y})
-                    c_payload["time_series"]["cpi_contrib_goods_yoy"].append({"date": m, "value": c_goods_y})
-                    c_payload["time_series"]["cpi_contrib_energy_yoy"].append({"date": m, "value": c_energy_y})
-                    c_payload["time_series"]["cpi_contrib_services_yoy"].append({"date": m, "value": c_serv_y})
-
-                    c_payload["time_series"]["cpi_contrib_food_mom"].append({"date": m, "value": c_food_m})
-                    c_payload["time_series"]["cpi_contrib_goods_mom"].append({"date": m, "value": c_goods_m})
-                    c_payload["time_series"]["cpi_contrib_energy_mom"].append({"date": m, "value": c_energy_m})
-                    c_payload["time_series"]["cpi_contrib_services_mom"].append({"date": m, "value": c_serv_m})
+                    groups = {
+                        "food": ["CP01"],
+                        "goods": ["CP03", "CP05", "CP12"],
+                        "energy": ["CP04"],
+                        "services": ["CP06", "CP07", "CP08", "CP09", "CP10", "CP11"],
+                    }
+                    for horizon in ("yoy", "mom"):
+                        for group, codes in groups.items():
+                            parts = [items_by_code.get(c, {}).get(f"contrib_{horizon}") for c in codes]
+                            # A group contribution needs every component; otherwise the month is a gap.
+                            if all(p is not None for p in parts):
+                                c_payload["time_series"][f"cpi_contrib_{group}_{horizon}"].append(
+                                    {"date": m, "value": round(sum(parts), 2)}
+                                )
 
                 # Continuous momentum series (3M annualized & gap)
                 if m in cpi_times:
@@ -927,7 +902,7 @@ def main():
                 prev_3m = s_vals[-4] if len(s_vals) >= 4 else s_vals[0]
                 mn = min(s_vals)
                 mx = max(s_vals)
-                pct = round((cur_val - mn) / (mx - mn) * 100) if mx > mn else 50
+                pct = round((cur_val - mn) / (mx - mn) * 100) if mx > mn else None
                 diff_3m = round(cur_val - prev_3m, 1)
 
                 # Executive Takeaways & Regimes
@@ -1000,6 +975,7 @@ def main():
     except Exception as e:
         if out_file.exists():
             logger.warning(f"Live Eurostat fetch failed ({e}); falling back to cached deepdive artifact...")
+            logger.debug('traceback', exc_info=True)
             with open(out_file, "r", encoding="utf-8") as f:
                 payload = json.load(f)
             sync_canonical_from_deepdive(payload)

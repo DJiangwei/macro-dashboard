@@ -1,0 +1,486 @@
+{
+ "scope": "JP",
+ "generated": "2026-11-05",
+ "inflation": {
+  "rows": [
+   {
+    "id": "cpi_inflation",
+    "label_en": "Headline CPI, YoY",
+    "label_zh": "总体CPI同比",
+    "unit": "% y/y",
+    "source": "IMF SDMX / CPI (Statistics Bureau)",
+    "quality": "watch",
+    "latest": {
+     "value": 2.232142857142857,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 1.962533452274755,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 2.846648301193756,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "cpi_inflation",
+      "2026-09-01"
+     ]
+    ],
+    "ann_3m": {
+     "value": 3.21,
+     "date": "2026-09-01",
+     "base_date": "2026-06-01",
+     "from": "cpi_index",
+     "method": "index"
+    },
+    "ann_6m": {
+     "value": 3.22,
+     "date": "2026-09-01",
+     "base_date": "2026-03-01",
+     "from": "cpi_index",
+     "method": "index"
+    }
+   },
+   {
+    "id": "core_inflation",
+    "label_en": "Core CPI ex-Fresh Food, YoY",
+    "label_zh": "核心CPI（剔除生鲜食品）同比",
+    "unit": "% y/y",
+    "source": "e-Stat / Statistics Bureau CPI",
+    "quality": "verified",
+    "latest": {
+     "value": 2.1,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 1.7,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 2.9,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "core_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "core_core_inflation",
+    "label_en": "Core-Core CPI ex-Fresh Food & Energy, YoY",
+    "label_zh": "核心核心CPI（剔除生鲜食品与能源）同比",
+    "unit": "% y/y",
+    "source": "e-Stat / Statistics Bureau CPI",
+    "quality": "verified",
+    "latest": {
+     "value": 2.4,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 1.9,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 3.0,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "core_core_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "services_inflation",
+    "label_en": "Services CPI, YoY",
+    "label_zh": "服务CPI同比",
+    "unit": "% y/y",
+    "source": "e-Stat / Statistics Bureau CPI",
+    "quality": "verified",
+    "latest": {
+     "value": 1.5,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 1.2,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 1.4,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "services_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "goods_inflation",
+    "label_en": "Goods CPI, YoY",
+    "label_zh": "商品CPI同比",
+    "unit": "% y/y",
+    "source": "e-Stat / Statistics Bureau CPI",
+    "quality": "verified",
+    "latest": {
+     "value": 2.8,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 2.6,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 4.2,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "goods_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "producer_price_inflation",
+    "label_en": "Corporate Goods Price Index, YoY",
+    "label_zh": "企业物价指数同比",
+    "unit": "% y/y",
+    "source": "Bank of Japan / Corporate Goods Price Index",
+    "quality": "verified",
+    "latest": {
+     "value": 6.7663257277734035,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 7.588932806324111,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 2.8317152103559895,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "producer_price_inflation",
+      "2026-09-01"
+     ]
+    ]
+   }
+  ]
+ },
+ "labour": {
+  "rows": [
+   {
+    "id": "unemployment_rate",
+    "label_en": "Unemployment Rate",
+    "label_zh": "失业率",
+    "unit": "%",
+    "source": "FRED / OECD (Statistics Bureau)",
+    "quality": "watch",
+    "latest": {
+     "value": 2.5,
+     "date": "2026-08-01"
+    },
+    "prior": {
+     "value": 2.4,
+     "date": "2026-07-01"
+    },
+    "year_ago": {
+     "value": 2.6,
+     "date": "2025-08-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "unemployment_rate",
+      "2026-08-01"
+     ]
+    ]
+   },
+   {
+    "id": "participation_rate",
+    "label_en": "Labour Force Participation Rate",
+    "label_zh": "劳动参与率",
+    "unit": "%",
+    "source": "FRED / OECD (Statistics Bureau)",
+    "quality": "watch",
+    "latest": {
+     "value": 64.04423,
+     "date": "2026-08-01"
+    },
+    "prior": {
+     "value": 63.96709,
+     "date": "2026-07-01"
+    },
+    "year_ago": {
+     "value": 63.84706,
+     "date": "2025-08-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "participation_rate",
+      "2026-08-01"
+     ]
+    ]
+   },
+   {
+    "id": "employment_rate",
+    "label_en": "Employment Rate, 15-64",
+    "label_zh": "就业率（15-64岁）",
+    "unit": "%",
+    "source": "FRED / OECD (Statistics Bureau)",
+    "quality": "watch",
+    "latest": {
+     "value": 80.34592,
+     "date": "2026-08-01"
+    },
+    "prior": {
+     "value": 80.48598,
+     "date": "2026-07-01"
+    },
+    "year_ago": {
+     "value": 80.04023,
+     "date": "2025-08-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "employment_rate",
+      "2026-08-01"
+     ]
+    ]
+   },
+   {
+    "id": "employment_growth",
+    "label_en": "Employment Growth",
+    "label_zh": "就业人数同比",
+    "unit": "% y/y",
+    "source": "FRED / OECD (Statistics Bureau)",
+    "quality": "watch",
+    "latest": {
+     "value": 0.2052785923753575,
+     "date": "2026-08-01"
+    },
+    "prior": {
+     "value": 0.014641288433381305,
+     "date": "2026-07-01"
+    },
+    "year_ago": {
+     "value": 0.3383845814329822,
+     "date": "2025-08-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "employment_growth",
+      "2026-08-01"
+     ]
+    ]
+   },
+   {
+    "id": "job_to_applicant_ratio",
+    "label_en": "Job-to-Applicant Ratio",
+    "label_zh": "有效求人倍率",
+    "unit": "ratio",
+    "source": "",
+    "quality": "verified",
+    "latest": {
+     "value": 1.18,
+     "date": "2026-08-01"
+    },
+    "prior": {
+     "value": 1.18,
+     "date": "2026-07-01"
+    },
+    "year_ago": {
+     "value": 1.21,
+     "date": "2025-08-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "job_to_applicant_ratio",
+      "2026-08-01"
+     ]
+    ]
+   },
+   {
+    "id": "manufacturing_earnings_growth",
+    "label_en": "Manufacturing Hourly Earnings, YoY",
+    "label_zh": "制造业时薪同比",
+    "unit": "% y/y",
+    "source": "FRED / OECD (MHLW)",
+    "quality": "low_confidence",
+    "latest": {
+     "value": 4.98251748251779,
+     "date": "2026-07-01"
+    },
+    "prior": {
+     "value": 5.76441102756871,
+     "date": "2026-06-01"
+    },
+    "year_ago": {
+     "value": 3.99999999999978,
+     "date": "2025-07-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "manufacturing_earnings_growth",
+      "2026-07-01"
+     ]
+    ]
+   }
+  ],
+  "beveridge": {
+   "u_id": "unemployment_rate",
+   "v_id": "job_to_applicant_ratio",
+   "u_label": "Unemployment Rate",
+   "v_label": "Job-to-Applicant Ratio",
+   "v_unit": "ratio",
+   "points": [
+    {
+     "date": "2024-09-01",
+     "u": 2.4,
+     "v": 1.25
+    },
+    {
+     "date": "2024-10-01",
+     "u": 2.5,
+     "v": 1.26
+    },
+    {
+     "date": "2024-11-01",
+     "u": 2.5,
+     "v": 1.26
+    },
+    {
+     "date": "2024-12-01",
+     "u": 2.5,
+     "v": 1.25
+    },
+    {
+     "date": "2025-01-01",
+     "u": 2.5,
+     "v": 1.25
+    },
+    {
+     "date": "2025-02-01",
+     "u": 2.4,
+     "v": 1.25
+    },
+    {
+     "date": "2025-03-01",
+     "u": 2.5,
+     "v": 1.25
+    },
+    {
+     "date": "2025-04-01",
+     "u": 2.5,
+     "v": 1.25
+    },
+    {
+     "date": "2025-05-01",
+     "u": 2.5,
+     "v": 1.23
+    },
+    {
+     "date": "2025-06-01",
+     "u": 2.5,
+     "v": 1.22
+    },
+    {
+     "date": "2025-07-01",
+     "u": 2.4,
+     "v": 1.22
+    },
+    {
+     "date": "2025-08-01",
+     "u": 2.6,
+     "v": 1.21
+    },
+    {
+     "date": "2025-09-01",
+     "u": 2.6,
+     "v": 1.2
+    },
+    {
+     "date": "2025-10-01",
+     "u": 2.6,
+     "v": 1.19
+    },
+    {
+     "date": "2025-11-01",
+     "u": 2.6,
+     "v": 1.19
+    },
+    {
+     "date": "2025-12-01",
+     "u": 2.6,
+     "v": 1.2
+    },
+    {
+     "date": "2026-01-01",
+     "u": 2.7,
+     "v": 1.18
+    },
+    {
+     "date": "2026-02-01",
+     "u": 2.6,
+     "v": 1.19
+    },
+    {
+     "date": "2026-03-01",
+     "u": 2.7,
+     "v": 1.18
+    },
+    {
+     "date": "2026-04-01",
+     "u": 2.5,
+     "v": 1.18
+    },
+    {
+     "date": "2026-05-01",
+     "u": 2.5,
+     "v": 1.17
+    },
+    {
+     "date": "2026-06-01",
+     "u": 2.5,
+     "v": 1.18
+    },
+    {
+     "date": "2026-07-01",
+     "u": 2.4,
+     "v": 1.18
+    },
+    {
+     "date": "2026-08-01",
+     "u": 2.5,
+     "v": 1.18
+    }
+   ]
+  },
+  "sahm": {
+   "value": 0.0,
+   "date": "2026-08-01",
+   "threshold": 0.5,
+   "triggered": false,
+   "from": "unemployment_rate"
+  }
+ }
+}

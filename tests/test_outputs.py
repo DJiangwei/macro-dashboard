@@ -6,6 +6,7 @@ from validate_outputs import (
     validate_output_contract,
     _assert_cross_checks,
     COUNTRY_FILES,
+    DASHBOARD_DISPLAY_NAMES,
     DATA_FIRST_NAMES,
 )
 
@@ -17,7 +18,7 @@ def test_generated_output_contract() -> None:
 def test_every_dashboard_produces_freshness_records():
     audit = json.loads(open("output/freshness_audit.json").read())
     dashboards = {r.get("dashboard") for r in audit.get("records", [])}
-    assert len(dashboards) == len(COUNTRY_FILES), f"only {sorted(dashboards)} produced records"
+    assert len(dashboards) == len(DASHBOARD_DISPLAY_NAMES), f"only {sorted(dashboards)} produced records"
 
 
 def test_cross_checks_are_present_and_within_tolerance() -> None:

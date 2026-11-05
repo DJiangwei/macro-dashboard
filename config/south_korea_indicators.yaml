@@ -880,10 +880,12 @@ indicators:
     label_en: South Korea BIS Basel III Credit-to-GDP Gap
     label_zh: 韩国 国际清算银行(BIS)信贷/GDP缺口
     unit: "%"
-    fetcher: manual
+    fetcher: bis_credit_gap
+    series: KR
     source_name: Bank for International Settlements (BIS)
-    source_url: https://www.bis.org/statistics/c_gaps.htm
+    source_url: https://data.bis.org/topics/CREDIT_GAPS
     frequency: quarterly
+    max_age_days: 290  # BIS publishes ~5-6 months after quarter end
     caveat_en: BIS Basel III countercyclical capital buffer guide; percentage points deviation from long-term trend.
     caveat_zh: 国际清算银行巴塞尔协议III逆周期资本缓冲指引；信贷/GDP比率对长期趋势的偏离度。
 
@@ -895,3 +897,56 @@ cross_checks:
     secondary: cpi_inflation_fred
     tolerance: 0.20
     label_en: IMF CPI vs OECD CPI Mirror
+
+# Series reported in the page summary's key_series_latest (scripts/build_scope.py).
+summary_key_ids:
+  - real_gdp_growth
+  - real_gdp_yoy
+  - gross_fixed_capital_formation
+  - government_consumption
+  - industrial_production_growth
+  - manufacturing_production_growth
+  - retail_sales_growth
+  - composite_leading_indicator
+  - business_confidence
+  - consumer_confidence
+  - unemployment_rate
+  - participation_rate
+  - employment_rate
+  - manufacturing_wage_growth
+  - cpi_inflation
+  - cpi_inflation_mom
+  - food_cpi_inflation
+  - ppi_inflation_index
+  - core_cpi_index
+  - bis_nominal_house_prices
+  - bis_real_house_prices
+  - jeonse_rental_index
+  - jeonse_seoul_index
+  - krw_usd
+  - reer
+  - neer
+  - goods_exports
+  - goods_imports
+  - current_account_usd
+  - goods_trade_balance
+  - services_balance
+  - fdi_net_usd
+  - portfolio_net_usd
+  - current_account_gdp
+  - foreign_reserves_usd
+  - government_debt_gdp
+  - fiscal_balance_gdp
+  - primary_balance_gdp
+  - sovereign_yield_10y
+  - policy_rate
+  - overnight_interbank_rate
+  - ktb_3y_yield
+  - interbank_rate_3m
+  - private_credit_gdp
+  - household_credit_gdp
+  - bank_credit_gdp
+  - broad_money_m2_bok
+  - kospi_stock_index
+  - bank_capital_ratio
+  - bank_npl_ratio

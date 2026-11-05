@@ -292,43 +292,96 @@ ECB_XML_URL = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml"
 WB_URL = "https://api.worldbank.org/v2/country/{iso2}/indicator/{code}?format=json&per_page=200&date={start}:{end}"
 
 
-def fetch_ecb_fx(currency: str, key: str, label: str, country: str) -> Series:
-    """ECB daily reference rates (last 90 days). Returns EUR/<currency> per the source."""
-    today = datetime.utcnow().strftime("%Y-%m-%d")
-    cache_q = f"ecb_xml::{currency}::90d"
-    cp = cache_path(cache_q)
-    if _cache_is_fresh(cp, max_age_hours=12):
-        body = cp.read_text()
-    else:
+ECB_EXR_URL = "https://data-api.ecb.europa.eu/service/data/EXR/D.{currency}.EUR.SP00.A"
+ECB_FX_START = "2010-01-01"
+
+
+def _ecb_exr_history(currency: str) -> list[tuple[str, float]]:
+    """Full daily history of the ECB reference rate from the ECB Data API (no key)."""
+    import csv
+    import io
+
+    import time
+
+    for attempt in range(3):
         try:
-            r = requests.get(ECB_XML_URL, timeout=15)
-            r.raise_for_status()
-            body = r.text
-            cp.write_text(body)
+            response = requests.get(
+                ECB_EXR_URL.format(currency=currency),
+                params={"startPeriod": ECB_FX_START, "format": "csvdata"},
+                headers={"User-Agent": "country-primer/0.1 (+https://github.com/DJiangwei/macro-dashboard)"},
+                timeout=(5, 90),
+            )
+            response.raise_for_status()
+            break
+        except requests.RequestException:
+            if attempt == 2:
+                raise
+            time.sleep(2.0 * (attempt + 1))
+    obs = []
+    for row in csv.DictReader(io.StringIO(response.text)):
+        try:
+            obs.append((str(row["TIME_PERIOD"])[:10], float(row["OBS_VALUE"])))
+        except (KeyError, TypeError, ValueError):
+            continue
+    return sorted(obs)
+
+
+def fetch_ecb_fx(currency: str, key: str, label: str, country: str) -> Series:
+    """ECB daily reference rates, <currency> per EUR.
+
+    Full history since 2010 from the ECB Data API (EXR dataflow); the 90-day
+    eurofxref XML is only a fallback. Before 2026-11 only the 90-day feed was
+    used, so CEE pages held about three months of FX history.
+    """
+    today = datetime.utcnow().strftime("%Y-%m-%d")
+    series_id = f"EXR/D.{currency}.EUR.SP00.A"
+    source_url = f"https://data.ecb.europa.eu/data/datasets/EXR/{series_id.replace('/', '.')}"
+    try:
+        cp = cache_path(f"ecb_exr::{currency}::{ECB_FX_START}")
+        if _cache_is_fresh(cp, max_age_hours=12):
+            obs = [tuple(item) for item in json.loads(cp.read_text())]
+        else:
+            obs = _ecb_exr_history(currency)
+            if obs:
+                cp.write_text(json.dumps(obs))
+    except Exception:
+        obs = []
+    if not obs:
+        series_id = f"EURFXREF/{currency}"
+        source_url = "https://www.ecb.europa.eu/stats/eurofxref/"
+        cache_q = f"ecb_xml::{currency}::90d"
+        cp = cache_path(cache_q)
+        if _cache_is_fresh(cp, max_age_hours=12):
+            body = cp.read_text()
+        else:
+            try:
+                r = requests.get(ECB_XML_URL, timeout=15)
+                r.raise_for_status()
+                body = r.text
+                cp.write_text(body)
+            except Exception as e:
+                return finalize_series(Series(key=key, label=label, country=country, available=False,
+                              note=f"ECB fetch failed: {e}"))
+        try:
+            root = ET.fromstring(body)
+            ns = {"g": "http://www.gesmes.org/xml/2002-08-01",
+                  "e": "http://www.ecb.int/vocabulary/2002-08-01/eurofxref"}
+            for cube in root.findall(".//e:Cube[@time]", ns):
+                d = cube.attrib["time"]
+                for c in cube.findall("e:Cube", ns):
+                    if c.attrib.get("currency") == currency:
+                        obs.append((d, float(c.attrib["rate"])))
+            obs.sort()
         except Exception as e:
             return finalize_series(Series(key=key, label=label, country=country, available=False,
-                          note=f"ECB fetch failed: {e}"))
-    obs: list[tuple[str, float]] = []
-    try:
-        root = ET.fromstring(body)
-        ns = {"g": "http://www.gesmes.org/xml/2002-08-01",
-              "e": "http://www.ecb.int/vocabulary/2002-08-01/eurofxref"}
-        for cube in root.findall(".//e:Cube[@time]", ns):
-            d = cube.attrib["time"]
-            for c in cube.findall("e:Cube", ns):
-                if c.attrib.get("currency") == currency:
-                    obs.append((d, float(c.attrib["rate"])))
-        obs.sort()
-    except Exception as e:
-        return finalize_series(Series(key=key, label=label, country=country, available=False,
-                      note=f"ECB parse failed: {e}"))
+                          note=f"ECB parse failed: {e}"))
     return finalize_series(Series(
         key=key, label=label, country=country,
-        source="ECB", series_id=f"EURFXREF/{currency}",
+        source="ECB", series_id=series_id,
         unit=f"{currency} per EUR", frequency="daily",
         last_update=obs[-1][0] if obs else "",
-        source_url="https://www.ecb.europa.eu/stats/eurofxref/",
-        fetched=today, observations=obs, available=bool(obs),
+        source_url=source_url,
+        fetched=today, observations=list(obs), available=bool(obs),
     ))
 
 

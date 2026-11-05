@@ -1,0 +1,101 @@
+{
+ "scope": "NG",
+ "generated": "2026-11-05",
+ "inflation": {
+  "rows": [
+   {
+    "id": "cpi_inflation",
+    "label_en": "Headline CPI Inflation YoY",
+    "label_zh": "总体CPI通胀同比",
+    "unit": "% y/y",
+    "source": "IMF SDMX / Nigeria NBS",
+    "quality": "low_confidence",
+    "latest": {
+     "value": 15.39084329884044,
+     "date": "2026-08-01"
+    },
+    "prior": {
+     "value": 15.42988160508542,
+     "date": "2026-07-01"
+    },
+    "year_ago": {
+     "value": 23.1416516928936,
+     "date": "2025-08-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "cpi_inflation",
+      "2026-08-01"
+     ]
+    ],
+    "ann_3m": {
+     "value": 16.95,
+     "date": "2026-08-01",
+     "base_date": "2026-05-01",
+     "from": "cpi_index",
+     "method": "index"
+    },
+    "ann_6m": {
+     "value": 26.75,
+     "date": "2026-08-01",
+     "base_date": "2026-02-01",
+     "from": "cpi_index",
+     "method": "index"
+    }
+   }
+  ]
+ },
+ "labour": {
+  "rows": [
+   {
+    "id": "unemployment_rate",
+    "label_en": "Unemployment Rate",
+    "label_zh": "失业率",
+    "unit": "%",
+    "source": "World Bank / ILO",
+    "quality": "watch",
+    "latest": {
+     "value": 3.064,
+     "date": "2025"
+    },
+    "prior": {
+     "value": 3.045,
+     "date": "2024"
+    },
+    "year_ago": null,
+    "derivation": "observed",
+    "refs": [
+     [
+      "unemployment_rate",
+      "2025"
+     ]
+    ]
+   },
+   {
+    "id": "labour_participation_rate",
+    "label_en": "Labour Force Participation Rate (Total 15+)",
+    "label_zh": "劳动力参与率 (15岁及以上)",
+    "unit": "% of total population 15+",
+    "source": "World Bank / ILO",
+    "quality": "watch",
+    "latest": {
+     "value": 82.517,
+     "date": "2025"
+    },
+    "prior": {
+     "value": 82.566,
+     "date": "2024"
+    },
+    "year_ago": null,
+    "derivation": "observed",
+    "refs": [
+     [
+      "labour_participation_rate",
+      "2025"
+     ]
+    ]
+   }
+  ]
+ }
+}

@@ -635,6 +635,20 @@ indicators:
     start_date: 2000-01-01
     caveat_en: Under Hong Kong's Linked Exchange Rate System (LERS), the HKMA Base Rate is mechanically anchored to the US Federal Funds Target Rate (+50 bps).
     caveat_zh: 在联系汇率制度下，香港金管局贴现窗基本利率机械锚定美联储联邦基金目标利率（加50个基点）。
+  - id: policy_rate
+    section: monetary_financial
+    label_en: "HKMA Base Rate"
+    label_zh: "香港金管局基本利率"
+    unit: '%'
+    fetcher: bis_policy_rate
+    series: HK
+    source_name: BIS central bank policy rates (WS_CBPOL)
+    source_url: https://data.bis.org/topics/CBPOL
+    source_authority: official_primary
+    frequency: event
+    start_date: '2000-01-01'
+    caveat_en: "BIS WS_CBPOL daily series as reported by the HKMA. Under the Linked Exchange Rate System the Base Rate follows the US policy rate; the Fed funds anchor is shown separately."
+    caveat_zh: "来自BIS WS_CBPOL日度序列（香港金管局报送）。在联系汇率制度下，基本利率跟随美国政策利率；联邦基金利率锚另行展示。"
 
   - id: private_credit_gdp
     section: monetary_financial
@@ -719,24 +733,18 @@ indicators:
     frequency: monthly
     caveat_en: Derived real policy rate calculated as HKMA Base Rate minus headline Composite CPI YoY.
     caveat_zh: 衍生实际政策利率，以香港金管局基本利率减去综合CPI同比增速计算。
-  - id: sovereign_yield_10y
-    section: monetary_financial
-    label_en: Hong Kong 10Y Exchange Fund Notes Yield
-    label_zh: 香港10年期外汇基金债券收益率
-    unit: "%"
-    fetcher: manual
-    source_name: Hong Kong Monetary Authority (HKMA)
-    source_url: https://www.hkma.gov.hk
-    frequency: quarterly
-    caveat_en: Official benchmark 10-year Hong Kong Exchange Fund Note yield.
-    caveat_zh: 香港金管局10年期外汇基金债券基准收益率。
 
 data_gaps:
   - section: monetary_financial
-    item_en: Daily HKMA Base Rate, Overnight/1M HIBOR & Aggregate Balance
-    item_zh: 香港金管局贴现窗基本利率、隔夜/1个月HIBOR及银行体系总结余
+    item_en: Overnight/1M HIBOR & Aggregate Balance (HKMA Base Rate now via BIS WS_CBPOL)
+    item_zh: 隔夜/1个月HIBOR及银行体系总结余（金管局基本利率现经BIS WS_CBPOL获取）
     status_en: Published by HKMA Open API (api.hkma.gov.hk). The API endpoint is currently protected by an Aliyun WAF returning HTTP 405 on cloud IPs; monitored via web portal.
     status_zh: 由香港金管局开放API发布。该接口目前受到阿里云WAF防护，对云服务器IP返回HTTP 405错误；通过网页端人工跟踪。
+  - section: monetary_financial
+    item_en: "Hong Kong 10Y Exchange Fund Notes yield"
+    item_zh: "香港10年期外汇基金债券收益率"
+    status_en: "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source."
+    status_zh: "2026-11-05 移除：此前该序列是在构建中手工写入的，并非抓取所得。只有在接入可验证的自动化数据源后才重新加入。"
 
 cross_checks:
   - concept: headline_inflation
@@ -744,3 +752,43 @@ cross_checks:
     secondary: cpi_inflation_imf
     tolerance: 0.75
     label_en: C&SD Composite CPI vs IMF CPI
+
+# Series reported in the page summary's key_series_latest (scripts/build_scope.py).
+summary_key_ids:
+  - real_gdp_growth
+  - real_gdp_yoy
+  - private_consumption_yoy
+  - investment_growth_yoy
+  - government_consumption_yoy
+  - services_exports_yoy
+  - industrial_production_growth
+  - retail_sales_growth
+  - construction_works_growth
+  - unemployment_rate
+  - underemployment_rate
+  - participation_rate
+  - nominal_wage_index_growth
+  - cpi_inflation
+  - core_cpi_inflation
+  - bis_nominal_house_prices
+  - bis_real_house_prices
+  - usd_hkd
+  - reer
+  - neer
+  - merchandise_exports_growth
+  - merchandise_imports_growth
+  - merchandise_trade_balance
+  - current_account_usd
+  - services_balance_usd
+  - fdi_net_usd
+  - total_reserves_usd
+  - current_account_gdp
+  - government_debt_gdp
+  - fiscal_balance_gdp
+  - primary_balance_gdp
+  - fed_funds_anchor
+  - private_credit_gdp
+  - bank_credit_gdp
+  - household_credit_gdp
+  - bank_capital_ratio
+  - bank_npl_ratio

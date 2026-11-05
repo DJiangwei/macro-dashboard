@@ -680,6 +680,11 @@ data_gaps:
     item_zh: 尼日利亚国家统计局(NBS)月度原油日均产量 (百万桶/日)
     status_en: Official monthly crude oil production is now charted via US EIA Open Data API v2 (international energy statistics).
     status_zh: 已通过美国能源信息署(EIA) Open Data API v2接入并绘制月度原油日均产量。
+  - section: monetary_financial
+    item_en: "CBN Monetary Policy Rate (native, event-dated)"
+    item_zh: "尼日利亚央行货币政策利率（原生、按决议日）"
+    status_en: "Not yet automated. The IMF IFS mirror shown on this page ends 2024-08; BIS does not cover Nigeria. A previous hand-typed series was removed on 2026-11-05."
+    status_zh: "尚未自动化。本页所示IMF IFS镜像序列止于2024-08；BIS未覆盖尼日利亚。此前手工录入的序列已于2026-11-05移除。"
 
 cross_checks:
   - concept: real_gdp_growth
@@ -688,3 +693,43 @@ cross_checks:
     tolerance: 0.50
     since: "2015"
     label_en: IMF WEO vs World Bank WDI Real GDP Growth
+
+# Series reported in the page summary's key_series_latest (scripts/build_scope.py).
+summary_key_ids:
+  - real_gdp_growth
+  - real_gdp_growth_wb
+  - industry_growth
+  - agriculture_growth
+  - services_growth
+  - unemployment_rate
+  - labour_participation_rate
+  - cpi_inflation
+  - cpi_inflation_mom
+  - cpi_index
+  - usd_ngn
+  - usd_ngn_ifs
+  - reer
+  - neer
+  - remittances_gdp
+  - remittances_usd
+  - current_account_usd
+  - goods_trade_balance
+  - goods_exports
+  - goods_imports
+  - services_balance
+  - fdi_net_usd
+  - current_account_gdp
+  - total_reserves_usd
+  - government_debt_gdp
+  - fiscal_balance_gdp
+  - primary_balance_gdp
+  - fx_reserves
+  - policy_rate
+  - lending_rate
+  - deposit_rate
+  - broad_money_growth
+  - private_credit_gdp
+  - brent_crude_oil
+  - crude_oil_production
+  - bank_capital_ratio
+  - bank_npl_ratio

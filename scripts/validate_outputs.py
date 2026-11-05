@@ -7,55 +7,21 @@ import re
 from collections import Counter
 from datetime import date
 from pathlib import Path
+from country_primer.scopes import all_scopes, data_first_scopes
 
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
-COUNTRY_FILES = {
-    "HU": "hungary.html",
-    "PL": "poland.html",
-    "CZ": "czechia.html",
-    "RO": "romania.html",
-    "CN": "china.html",
-    "EA": "euro_area.html",
-    "JP": "japan.html",
-    "ZA": "south_africa.html",
-    "UK": "uk.html",
-    "US": "us.html",
-    "TR": "turkey.html",
-    "HK": "hong_kong.html",
-    "KR": "south_korea.html",
-    "TW": "taiwan.html",
-    "KZ": "kazakhstan.html",
-    "UZ": "uzbekistan.html",
-    "EG": "egypt.html",
-    "NG": "nigeria.html",
-}
-DATA_FIRST_CODES = {"CN", "EA", "JP", "ZA", "UK", "US", "TR", "HK", "KR", "TW", "KZ", "UZ", "EG", "NG"}
-DATA_FIRST_NAMES = ("china", "euro_area", "japan", "south_africa", "uk", "us", "turkey", "hong_kong", "south_korea", "taiwan", "kazakhstan", "uzbekistan", "egypt", "nigeria")
+COUNTRY_FILES = {s.id: s.html_file for s in all_scopes()}
+DATA_FIRST_CODES = {s.id for s in data_first_scopes(include_markets=True)}
+MARKET_CODES = {s.id for s in all_scopes(include_markets=True) if s.is_market}
+# Every generated page: economies plus market pages.
+PAGE_FILES = {s.id: s.html_file for s in all_scopes(include_markets=True)}
+DATA_FIRST_NAMES = tuple(s.slug for s in data_first_scopes(include_markets=True))
 
 # Display names as they appear in output/freshness_audit.json's "dashboard"
 # field and in the archive index cards' <h2> headings.
-DASHBOARD_DISPLAY_NAMES = {
-    "HU": "Hungary",
-    "PL": "Poland",
-    "CZ": "Czechia",
-    "RO": "Romania",
-    "CN": "China",
-    "EA": "Euro Area",
-    "JP": "Japan",
-    "ZA": "South Africa",
-    "UK": "United Kingdom",
-    "US": "United States",
-    "TR": "Turkey",
-    "HK": "Hong Kong",
-    "KR": "South Korea",
-    "TW": "Taiwan",
-    "KZ": "Kazakhstan",
-    "UZ": "Uzbekistan",
-    "EG": "Egypt",
-    "NG": "Nigeria",
-}
+DASHBOARD_DISPLAY_NAMES = {s.id: s.name_en for s in all_scopes(include_markets=True)}
 
 # Transforms that step back a fixed number of calendar periods from a base
 # observation (yoy/qoq/mom/pct_change/diff) -- see build_us_dashboard.py and
@@ -277,12 +243,12 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
     messages: list[str] = []
     chart_counts: dict[str, int] = {}
 
-    for code, filename in COUNTRY_FILES.items():
+    for code, filename in PAGE_FILES.items():
         path = output / filename
         if not path.exists():
             raise AssertionError(f"Missing stable country route: {path}")
         text = path.read_text()
-        if 'data-dashboard-view="core"' not in text or "Core 48" not in text:
+        if 'data-dashboard-view="core"' not in text or ("Core 48" not in text and code not in MARKET_CODES):
             raise AssertionError(f"{filename} is missing the core/deep chart view")
         if "cp-dashboard-view" not in text:
             raise AssertionError(f"{filename} does not persist the chart-view preference")
@@ -366,7 +332,7 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
     source_health = _load_json(output / "source_health.json")
     if source_health.get("schema_version") != "source-health-v1":
         raise AssertionError("Source-health schema mismatch")
-    if set((source_health.get("countries") or {})) != set(COUNTRY_FILES):
+    if set((source_health.get("countries") or {})) != set(COUNTRY_FILES) | MARKET_CODES:
         raise AssertionError("Source-health report must contain every dashboard country")
     if any(payload.get("circuit_open") for payload in source_health["countries"].values()):
         raise AssertionError("Source-health report contains an open source circuit")
@@ -381,19 +347,22 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
 
     archive = _load_json(output / "dashboard_archive_summary.json")
     cards = archive.get("cards") or []
+    market_cards = {card.get("code") for card in archive.get("markets") or []}
+    if market_cards != MARKET_CODES:
+        raise AssertionError(f"Archive market cards {sorted(market_cards)} do not match registry {sorted(MARKET_CODES)}")
     if len(cards) != len(COUNTRY_FILES):
         raise AssertionError(f"Archive expected {len(COUNTRY_FILES)} countries, found {len(cards)}")
     if {card.get("file") for card in cards} != set(COUNTRY_FILES.values()):
         raise AssertionError("Archive country routes do not match stable output routes")
     cards_by_code = {card.get("code"): card for card in cards}
-    for code in DATA_FIRST_CODES:
+    for code in DATA_FIRST_CODES - MARKET_CODES:
         card = cards_by_code.get(code)
         if card is None:
             raise AssertionError(f"Archive is missing a card for {code}")
         if int(card.get("charts") or -1) != chart_counts.get(code):
             raise AssertionError(
                 f"Archive card for {code} advertises {card.get('charts')} charts but "
-                f"{COUNTRY_FILES[code]} actually renders {chart_counts.get(code)} — "
+                f"{PAGE_FILES[code]} actually renders {chart_counts.get(code)} — "
                 f"the archive was not rebuilt after the page changed (run scripts/build_dashboard_archive.py)"
             )
 
@@ -425,7 +394,7 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
             if rendered != actual or expected != actual:
                 raise AssertionError(
                     f"{index_path} advertises {rendered}/{expected} charts for {display_name} "
-                    f"but {COUNTRY_FILES[code]} actually renders {actual} — index card is stale"
+                    f"but {PAGE_FILES[code]} actually renders {actual} — index card is stale"
                 )
 
     audit = _load_json(output / "freshness_audit.json")
@@ -441,7 +410,7 @@ def validate_output_contract(root: Path = ROOT) -> list[str]:
         if actual != expected:
             raise AssertionError(
                 f"Freshness audit has {actual} records for {display_name} ({code}) but "
-                f"{COUNTRY_FILES[code]} actually renders {expected} charts — audit is stale "
+                f"{PAGE_FILES[code]} actually renders {expected} charts — audit is stale "
                 "(run scripts/freshness_audit.py after rebuilding the page)"
             )
     messages.append("pipeline outcome contract ok")

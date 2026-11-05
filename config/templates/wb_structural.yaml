@@ -1,0 +1,127 @@
+# World Bank WDI structural series (annual).
+params: [iso2, iso3]
+indicators:
+  - id: real_gdp_growth_wb
+    section: growth_accounts
+    label_en: Real GDP Growth (World Bank)
+    label_zh: 实际GDP增速 (世界银行)
+    unit: "%"
+    fetcher: world_bank
+    series: NY.GDP.MKTP.KD.ZG
+    country_iso3: "{iso3}"
+    source_name: World Bank WDI
+    source_url: https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG?locations={iso2}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Annual growth of GDP at constant local-currency prices.
+    caveat_zh: 按不变本币价格计算的GDP年度增速。
+
+  - id: consumption_growth
+    concept: consumption_growth
+    section: growth_accounts
+    label_en: Household Consumption Growth (World Bank)
+    label_zh: 居民消费增速 (世界银行)
+    unit: "%"
+    fetcher: world_bank
+    series: NE.CON.PRVT.KD.ZG
+    country_iso3: "{iso3}"
+    source_name: World Bank WDI
+    source_url: https://data.worldbank.org/indicator/NE.CON.PRVT.KD.ZG?locations={iso2}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Annual growth of household final consumption expenditure at constant prices.
+    caveat_zh: 不变价居民最终消费支出年度增速。
+
+  - id: investment_growth
+    concept: investment_growth
+    section: growth_accounts
+    label_en: Gross Fixed Capital Formation Growth (World Bank)
+    label_zh: 固定资本形成增速 (世界银行)
+    unit: "%"
+    fetcher: world_bank
+    series: NE.GDI.FTOT.KD.ZG
+    country_iso3: "{iso3}"
+    source_name: World Bank WDI
+    source_url: https://data.worldbank.org/indicator/NE.GDI.FTOT.KD.ZG?locations={iso2}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Annual growth of gross fixed capital formation at constant prices.
+    caveat_zh: 不变价固定资本形成总额年度增速。
+
+  - id: unemployment_rate
+    concept: unemployment_rate
+    section: labour_wages
+    label_en: Unemployment Rate (ILO modelled estimate)
+    label_zh: 失业率 (国际劳工组织模型估计)
+    unit: "%"
+    fetcher: world_bank
+    series: SL.UEM.TOTL.ZS
+    country_iso3: "{iso3}"
+    source_name: World Bank WDI / ILO
+    source_url: https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?locations={iso2}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: ILO modelled estimate, not a national survey release.
+    caveat_zh: 国际劳工组织模型估计，并非国家调查发布值。
+
+  - id: labour_participation_rate
+    concept: participation_rate
+    section: labour_wages
+    label_en: Labour Force Participation Rate (ILO modelled estimate)
+    label_zh: 劳动参与率 (国际劳工组织模型估计)
+    unit: "%"
+    fetcher: world_bank
+    series: SL.TLF.CACT.ZS
+    country_iso3: "{iso3}"
+    source_name: World Bank WDI / ILO
+    source_url: https://data.worldbank.org/indicator/SL.TLF.CACT.ZS?locations={iso2}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Share of the population aged 15+ that is economically active; ILO modelled estimate.
+    caveat_zh: 15岁及以上人口中经济活动人口占比；国际劳工组织模型估计。
+
+  - id: total_reserves_usd
+    section: external_fx
+    label_en: Total Reserves incl. Gold (USD)
+    label_zh: 总储备（含黄金，美元）
+    unit: USD bn
+    fetcher: world_bank
+    series: FI.RES.TOTL.CD
+    country_iso3: "{iso3}"
+    scale: 1000000000
+    source_name: World Bank WDI / IMF IFS
+    source_url: https://data.worldbank.org/indicator/FI.RES.TOTL.CD?locations={iso2}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: End-of-year gross reserves including gold.
+    caveat_zh: 年末总储备（含黄金）。
+
+  - id: short_term_external_debt_pct_reserves
+    section: external_fx
+    label_en: Short-Term External Debt (% of Reserves)
+    label_zh: 短期外债占储备比重
+    unit: "% reserves"
+    fetcher: world_bank
+    series: DT.DOD.DSTC.IR.ZS
+    country_iso3: "{iso3}"
+    source_name: World Bank International Debt Statistics
+    source_url: https://data.worldbank.org/indicator/DT.DOD.DSTC.IR.ZS?locations={iso2}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Guidotti-Greenspan ratio; above 100% means short-term external debt exceeds gross reserves.
+    caveat_zh: Guidotti-Greenspan比率；高于100%表示短期外债超过总储备。
+
+  - id: remittances_gdp
+    section: external_fx
+    label_en: Personal Remittances Received (% of GDP)
+    label_zh: 个人侨汇收入占GDP比重
+    unit: "% GDP"
+    fetcher: world_bank
+    series: BX.TRF.PWKR.DT.GD.ZS
+    country_iso3: "{iso3}"
+    source_name: World Bank WDI
+    source_url: https://data.worldbank.org/indicator/BX.TRF.PWKR.DT.GD.ZS?locations={iso2}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Personal transfers and compensation of employees received.
+    caveat_zh: 个人转移与雇员报酬收入。

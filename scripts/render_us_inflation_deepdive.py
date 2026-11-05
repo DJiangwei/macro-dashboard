@@ -801,7 +801,7 @@ def render_us_deepdive_panel() -> str:
             continue
         cur = s_data.get("current", 0.0)
         diff3 = s_data.get("diff_3m", 0.0)
-        pct = s_data.get("pct", 50)
+        pct = s_data.get("pct")  # None -> no marker, never a mid-scale placeholder
         val_str = f"{cur:.2f}%" if "tips" in s_key or "michigan" in s_key else f"{cur:.1f}%"
         trend_cls = "trend-up" if diff3 > 0.1 else ("trend-down" if diff3 < -0.1 else "trend-flat")
         trend_sign = "+" if diff3 > 0 else ""
@@ -822,11 +822,11 @@ def render_us_deepdive_panel() -> str:
             <span class="exp-card-trend {trend_cls}">{trend_str}</span>
           </div>
           <div class="exp-meter-track">
-            <div class="exp-meter-fill" style="width: {pct}%;"></div>
+            <div class="exp-meter-fill" style="width: {pct if pct is not None else 0}%;"></div>
           </div>
           <div class="exp-meter-scale">
             <span>Min: {s_data.get('min', 0):.1f}</span>
-            <span class="exp-pct-tag"><span data-lang="en">{pct}% Percentile · {s_data.get('regime_en')}</span><span data-lang="zh">{pct}% 历史分位 · {s_data.get('regime_zh')}</span></span>
+            <span class="exp-pct-tag"><span data-lang="en">{(str(pct) + '%') if pct is not None else 'n/a'} Percentile · {s_data.get('regime_en')}</span><span data-lang="zh">{(str(pct) + '%') if pct is not None else 'n/a'} 历史分位 · {s_data.get('regime_zh')}</span></span>
             <span>Max: {s_data.get('max', 100):.1f}</span>
           </div>
           <div class="exp-card-takeaway">

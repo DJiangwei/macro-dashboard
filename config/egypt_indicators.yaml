@@ -219,16 +219,17 @@ indicators:
   # ==========================================
   - id: usd_egp
     section: external_fx
-    label_en: USD/EGP End-of-Period Official Rate
+    label_en: USD/EGP End-of-Period Official Rate (BIS)
     label_zh: 美元兑埃及镑期末官方汇率
     unit: "EGP"
-    fetcher: dbnomics
-    series: IMF/IFS/M.EG.ENDE_XDC_USD_RATE
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/M.EG.ENDE_XDC_USD_RATE
+    fetcher: bis_fx
+    collection: E
+    series: EG
+    source_name: BIS exchange rates (WS_XRU), as reported by the central bank
+    source_url: https://data.bis.org/topics/XRU
     frequency: monthly
     start_date: 2010-01-01
-    caveat_en: Monthly end-of-period national currency units per US dollar.
+    caveat_en: "Monthly end-of-period EGP per US dollar from the BIS (reported by the central bank). Replaces the IMF IFS mirror, which lagged by over a year."
     caveat_zh: IMF国际金融统计公布的月末每美元兑埃及镑官方汇率。
 
   - id: reer
@@ -645,6 +646,11 @@ data_gaps:
     item_zh: 苏伊士运河管理局(SCA)月度通航船舶数与通行费收入
     status_en: Monitored via Suez Canal Authority (suezcanal.gov.eg) and Ministry of Planning official bulletins.
     status_zh: 通过苏伊士运河管理局与埃及规划部月度公报跟踪监控。
+  - section: external_fx
+    item_en: "CBE official USD/EGP daily rate and policy rate (monthly FX now via BIS)"
+    item_zh: "埃及央行官方美元汇率与政策利率"
+    status_en: "CBE pages block automated access from the current build environment. Monthly end-of-period FX now comes from the BIS; the daily rate and the policy rate (IMF IFS mirror ends 2025-05) are to be wired from the CI runner."
+    status_zh: "埃及央行网站拒绝当前构建环境的自动化访问。月末汇率现取自BIS；日度汇率与政策利率（IMF IFS镜像止于2025-05）将从CI运行环境接入。"
 
 cross_checks:
   - concept: real_gdp_growth
@@ -653,3 +659,41 @@ cross_checks:
     tolerance: 0.50
     since: "2015"
     label_en: IMF WEO vs World Bank WDI Real GDP Growth
+
+# Series reported in the page summary's key_series_latest (scripts/build_scope.py).
+summary_key_ids:
+  - real_gdp_growth
+  - real_gdp_growth_wb
+  - consumption_growth
+  - investment_growth
+  - unemployment_rate
+  - labour_participation_rate
+  - cpi_inflation
+  - cpi_inflation_mom
+  - food_cpi_inflation
+  - cpi_index
+  - usd_egp
+  - reer
+  - neer
+  - remittances_gdp
+  - remittances_usd
+  - current_account_usd
+  - goods_trade_balance
+  - goods_exports
+  - goods_imports
+  - services_balance
+  - fdi_net_usd
+  - current_account_gdp
+  - personal_remittances_usd
+  - total_reserves_usd
+  - government_debt_gdp
+  - fiscal_balance_gdp
+  - primary_balance_gdp
+  - fx_reserves
+  - policy_rate
+  - lending_rate
+  - deposit_rate
+  - broad_money_growth
+  - private_credit_gdp
+  - brent_crude_oil
+  - crude_oil_production

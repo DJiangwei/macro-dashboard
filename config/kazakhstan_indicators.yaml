@@ -646,6 +646,11 @@ data_gaps:
     item_zh: 月度新建与存量住宅价格指数 (KRIS/BNS)
     status_en: Published by Bureau of National Statistics (stat.gov.kz); machine-readable national aggregate monitored.
     status_zh: 由哈萨克斯坦国家统计局发布；通过官方公报跟踪全国综合指数。
+  - section: monetary_financial
+    item_en: "NBK base rate (native, event-dated)"
+    item_zh: "哈萨克斯坦国家银行基准利率（原生、按决议日）"
+    status_en: "Not yet automated. The IMF IFS mirror shown on this page ends 2020-12; BIS does not cover Kazakhstan. A previous hand-typed series was removed on 2026-11-05."
+    status_zh: "尚未自动化。本页所示IMF IFS镜像序列止于2020-12；BIS未覆盖哈萨克斯坦。此前手工录入的序列已于2026-11-05移除。"
 
 cross_checks:
   - concept: real_gdp_growth
@@ -653,3 +658,41 @@ cross_checks:
     secondary: real_gdp_growth_wb
     tolerance: 0.50
     label_en: IMF WEO vs World Bank WDI Real GDP Growth
+
+# Series reported in the page summary's key_series_latest (scripts/build_scope.py).
+summary_key_ids:
+  - real_gdp_growth
+  - real_gdp_growth_wb
+  - consumption_growth
+  - investment_growth
+  - unemployment_rate
+  - labour_participation_rate
+  - cpi_inflation
+  - cpi_inflation_mom
+  - cpi_index
+  - usd_kzt
+  - usd_kzt_ifs
+  - eur_kzt
+  - rub_kzt
+  - cny_kzt
+  - reer
+  - neer
+  - current_account_usd
+  - goods_trade_balance
+  - goods_exports
+  - goods_imports
+  - services_balance
+  - fdi_net_usd
+  - current_account_gdp
+  - total_reserves_usd
+  - government_debt_gdp
+  - fiscal_balance_gdp
+  - primary_balance_gdp
+  - fx_reserves
+  - policy_rate
+  - broad_money_growth
+  - private_credit_gdp
+  - brent_crude_oil
+  - crude_oil_production
+  - bank_capital_ratio
+  - bank_npl_ratio

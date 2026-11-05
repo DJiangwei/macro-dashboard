@@ -17,6 +17,7 @@ from html import unescape
 from pathlib import Path
 
 from country_primer.data_quality import assess_series_quality
+from country_primer.scopes import data_first_scopes
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,22 +27,7 @@ AUDIT_JSON = OUTPUT / "freshness_audit.json"
 CATALOG = ROOT / "DATA_SOURCE_CATALOG.md"
 TODAY = datetime.now(UTC).date()
 
-DATA_FIRST_PAGES = {
-    "China": OUTPUT / "china.html",
-    "Euro Area": OUTPUT / "euro_area.html",
-    "Japan": OUTPUT / "japan.html",
-    "South Africa": OUTPUT / "south_africa.html",
-    "United Kingdom": OUTPUT / "uk.html",
-    "United States": OUTPUT / "us.html",
-    "Turkey": OUTPUT / "turkey.html",
-    "Hong Kong": OUTPUT / "hong_kong.html",
-    "South Korea": OUTPUT / "south_korea.html",
-    "Taiwan": OUTPUT / "taiwan.html",
-    "Kazakhstan": OUTPUT / "kazakhstan.html",
-    "Uzbekistan": OUTPUT / "uzbekistan.html",
-    "Egypt": OUTPUT / "egypt.html",
-    "Nigeria": OUTPUT / "nigeria.html",
-}
+DATA_FIRST_PAGES = {s.name_en: s.html_path for s in data_first_scopes(include_markets=True)}
 
 CE4_COUNTRIES = ("Hungary", "Poland", "Czechia", "Romania")
 CE4_CODES = {"HU": "Hungary", "PL": "Poland", "CZ": "Czechia", "RO": "Romania"}

@@ -21,25 +21,12 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = ROOT / "scripts"
 OUTPUT_DIR = ROOT / "output"
 
-COUNTRY_SCRIPTS = {
-    "CN": SCRIPTS_DIR / "build_china_dashboard.py",
-    "EA": SCRIPTS_DIR / "build_euro_area_dashboard.py",
-    "UK": SCRIPTS_DIR / "build_uk_dashboard.py",
-    "US": SCRIPTS_DIR / "build_us_dashboard.py",
-    "JP": SCRIPTS_DIR / "build_japan_dashboard.py",
-    "ZA": SCRIPTS_DIR / "build_south_africa_dashboard.py",
-    "TR": SCRIPTS_DIR / "build_turkey_dashboard.py",
-    "HK": SCRIPTS_DIR / "build_hong_kong_dashboard.py",
-    "KR": SCRIPTS_DIR / "build_south_korea_dashboard.py",
-    "TW": SCRIPTS_DIR / "build_taiwan_dashboard.py",
-    "KZ": SCRIPTS_DIR / "build_kazakhstan_dashboard.py",
-    "UZ": SCRIPTS_DIR / "build_uzbekistan_dashboard.py",
-    "EG": SCRIPTS_DIR / "build_egypt_dashboard.py",
-    "NG": SCRIPTS_DIR / "build_nigeria_dashboard.py",
-}
+if str(ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(ROOT / "src"))
 
-# High-frequency focus countries for weekday quick refresh (FX/rates/commodities/daily equity)
-QUICK_COUNTRIES = ["US", "EA", "CN", "JP", "UK", "TR", "TW", "KR", "ZA"]
+from country_primer.scopes import all_scopes  # noqa: E402
+
+BUILD_SCOPE = SCRIPTS_DIR / "build_scope.py"
 
 
 def run_cmd(cmd: list[str], env: dict[str, str] | None = None) -> None:
@@ -62,7 +49,7 @@ def main() -> int:
         "--mode",
         choices=["auto", "full", "quick"],
         default="auto",
-        help="Refresh mode: full (all 18 countries), quick (high-frequency priority countries), auto (weekday=quick, weekend=full).",
+        help="Refresh mode: full (every scope), quick (scopes flagged quick_refresh in config/scopes.yaml), auto (weekday=quick, weekend=full).",
     )
     parser.add_argument(
         "--country",
@@ -85,37 +72,39 @@ def main() -> int:
     build_env = {"COUNTRY_PRIMER_SKIP_ARCHIVE": "1"}
     py = sys.executable
 
-    # 1. Execute country dashboards
+    # 0. BIS policy-rate snapshot (cross-check reference for every covered scope)
+    run_cmd([py, str(SCRIPTS_DIR / "refresh_bis_policy_snapshot.py")])
+
+    # 1. Execute scope builds (registry: config/scopes.yaml)
+    scopes = all_scopes(include_markets=True)
+    data_first = [s.id for s in scopes if s.is_data_first]
+    cee = [s.id for s in scopes if s.pipeline == "cee_v4"]
     target = args.country.upper()
     if target == "ALL":
         if mode == "full":
-            # CEE-4
             run_cmd([py, str(ROOT / "build_v4.py"), "ALL"], env=build_env)
-            # Other 14 countries
-            for code, script_path in COUNTRY_SCRIPTS.items():
-                run_cmd([py, str(script_path)], env=build_env)
+            run_cmd([py, str(BUILD_SCOPE), "--all"], env=build_env)
         else:
-            # Quick mode: refresh high-frequency countries with live data, others use snapshot
-            print("Quick mode: Refreshing priority market countries...")
-            for code in QUICK_COUNTRIES:
-                script_path = COUNTRY_SCRIPTS.get(code)
-                if script_path:
-                    run_cmd([py, str(script_path)], env=build_env)
-    elif target in ("HU", "PL", "CZ", "RO"):
+            # Quick mode: refresh the scopes flagged `quick_refresh` (daily markets
+            # data); every other page is re-rendered from its snapshot below.
+            quick = [s.id for s in scopes if s.is_data_first and s.extra.get("quick_refresh")]
+            print(f"Quick mode: refreshing {', '.join(quick)}")
+            run_cmd([py, str(BUILD_SCOPE), *quick], env=build_env)
+    elif target in cee:
         run_cmd([py, str(ROOT / "build_v4.py"), target], env=build_env)
-    elif target in COUNTRY_SCRIPTS:
-        run_cmd([py, str(COUNTRY_SCRIPTS[target])], env=build_env)
+    elif target in data_first:
+        run_cmd([py, str(BUILD_SCOPE), target], env=build_env)
     else:
-        print(f"Error: Unknown country code '{target}'.")
+        print(f"Error: Unknown scope code '{target}'. Registered: {', '.join(cee + data_first)}")
         return 1
 
     # 2. Rebuild cross-country synchronizations & metadata
-    print("\n--> Rebuilding cross-country coverage, catalog, freshness & archive...")
-    run_cmd([py, str(SCRIPTS_DIR / "core_coverage_matrix.py")])
-    run_cmd([py, str(SCRIPTS_DIR / "data_source_catalog.py")])
-    run_cmd([py, str(SCRIPTS_DIR / "freshness_audit.py")])
-    run_cmd([py, str(SCRIPTS_DIR / "build_dashboard_archive.py")])
-    run_cmd([py, str(SCRIPTS_DIR / "macro_workbench.py")])
+    # Same offline sequence as local `make rebuild-ui`: derivations, deepdive
+    # views, every page, coverage, catalog, freshness, archive, workbench,
+    # Chart Studio, My Dashboard and Policy Tracker — so CI and local builds
+    # produce identical outputs from the refreshed canonical frames.
+    print("\n--> Rebuilding derived series, deepdive views and all pages from snapshots...")
+    run_cmd(["make", "rebuild-ui"])
 
     print("\n[SUCCESS] Refresh runner completed successfully.")
     return 0

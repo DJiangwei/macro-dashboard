@@ -1,10 +1,10 @@
 {
   "file": "uzbekistan.html",
-  "generated": "2026-11-03T21:16:36.299368+00:00",
+  "generated": "2026-11-05T11:22:22.208967+00:00",
   "charts": 37,
-  "source_groups": 14,
-  "data_gaps": 2,
-  "low_confidence": 7,
+  "source_groups": 15,
+  "data_gaps": 3,
+  "low_confidence": 6,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -116,15 +116,15 @@
     },
     {
       "id": "usd_uzs",
-      "label_en": "USD/UZS End-of-Period Official Rate",
+      "label_en": "USD/UZS End-of-Period Official Rate (BIS)",
       "label_zh": "美元兑乌兹别克斯坦苏姆期末官方汇率",
-      "latest_date": "2025-07-01",
-      "latest_value": 12591.57,
-      "latest_display": "12,591.57 UZS",
+      "latest_date": "2026-09-01",
+      "latest_value": 11821.18,
+      "latest_display": "11,821.18 UZS",
       "frequency": "monthly",
-      "source_name": "IMF / DBnomics (IFS)",
-      "series": "IMF/IFS/M.UZ.ENDE_XDC_USD_RATE",
-      "quality_status": "low_confidence"
+      "source_name": "BIS exchange rates (WS_XRU), as reported by the central bank",
+      "series": "UZ",
+      "quality_status": "watch"
     },
     {
       "id": "reer",
@@ -418,7 +418,7 @@
   "unavailable": [],
   "data_mode": "snapshot",
   "latest_cards": [],
-  "usd_uzs_latest": "12,591.57 (2025-07-01)",
+  "usd_uzs_latest": "11,821.18 (2026-09-01)",
   "cross_checks": [
     {
       "concept": "real_gdp_growth",
@@ -447,10 +447,10 @@
     ],
     "file": "uzbekistan_canonical_frame.json",
     "series": 37,
-    "observations": 2700,
+    "observations": 2750,
     "series_count": 37,
-    "observation_count": 2700,
-    "snapshot_generated": "2026-11-02T23:43:59.582632+00:00"
+    "observation_count": 2750,
+    "snapshot_generated": "2026-11-05T11:21:42.360606+00:00"
   },
   "data_gaps_detail": [
     {
@@ -466,10 +466,17 @@
       "item_zh": "月度细分COICOP食品与能源分类CPI",
       "status_en": "Published by the Statistics Agency of Uzbekistan (stat.uz); tracked via official bulletins.",
       "status_zh": "由乌兹别克斯坦统计署发布；通过官方统计公报跟踪监控。"
+    },
+    {
+      "section": "external_fx",
+      "item_en": "CBU official USD/UZS daily rate and policy rate (monthly FX now via BIS)",
+      "item_zh": "乌兹别克斯坦央行官方美元汇率（日度）与政策利率",
+      "status_en": "CBU JSON endpoints are unreachable from the current build environment. Monthly end-of-period FX now comes from the BIS; the daily rate and the policy rate (IMF IFS mirror ends 2024-12) are to be wired from the CI runner.",
+      "status_zh": "当前构建环境无法访问乌兹别克斯坦央行JSON接口。月末汇率现取自BIS；日度汇率与政策利率（IMF IFS镜像止于2024-12）将从CI运行环境接入。"
     }
   ],
   "source_health": {
-    "source_groups": 14,
+    "source_groups": 15,
     "sources": [
       {
         "source_name": "IMF SDMX / CBU",
@@ -485,7 +492,7 @@
       },
       {
         "source_name": "IMF / DBnomics (IFS)",
-        "charts": 4
+        "charts": 3
       },
       {
         "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
@@ -502,6 +509,10 @@
       {
         "source_name": "World Bank / ILO",
         "charts": 2
+      },
+      {
+        "source_name": "BIS exchange rates (WS_XRU), as reported by the central bank",
+        "charts": 1
       },
       {
         "source_name": "IMF / DBnomics (IFS) / Derived",
@@ -529,8 +540,8 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 7,
-      "watch": 30
+      "low_confidence": 6,
+      "watch": 31
     },
     "unavailable_count": 0
   },
@@ -541,12 +552,12 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-11-03",
+    "as_of_date": "2026-11-05",
     "counts": {
-      "current": 13,
+      "current": 14,
       "due": 11,
       "projection": 6,
-      "stale": 7
+      "stale": 6
     },
     "latest_historical_date": "2026-09-01",
     "attention": [
@@ -558,7 +569,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-12-01",
-        "age_days": 672,
+        "age_days": 674,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -580,7 +591,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-12-01",
-        "age_days": 672,
+        "age_days": 674,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -602,7 +613,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-12-01",
-        "age_days": 672,
+        "age_days": 674,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -624,7 +635,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2024-12-01",
-        "age_days": 672,
+        "age_days": 674,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -635,7 +646,7 @@
         "validation": "passed",
         "comparability": "medium",
         "source_name": "IMF / DBnomics (IFS) / Derived",
-        "series": "real_policy_rate",
+        "series": "policy_rate in force at month end − cpi_inflation",
         "transform": "level"
       },
       {
@@ -646,7 +657,7 @@
         "frequency": "annual",
         "freshness_status": "due",
         "age_basis_date": "2024-12-31",
-        "age_days": 672,
+        "age_days": 674,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -668,7 +679,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-06-30",
-        "age_days": 491,
+        "age_days": 493,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -690,7 +701,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-06-30",
-        "age_days": 491,
+        "age_days": 493,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -705,28 +716,6 @@
         "transform": "level"
       },
       {
-        "id": "usd_uzs",
-        "concept_id": "fx_spot",
-        "label_en": "USD/UZS End-of-Period Official Rate",
-        "latest_date": "2025-07-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2025-07-01",
-        "age_days": 460,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF / DBnomics (IFS)",
-        "series": "IMF/IFS/M.UZ.ENDE_XDC_USD_RATE",
-        "transform": "level"
-      },
-      {
         "id": "current_account_usd",
         "concept_id": "uz:current_account_usd",
         "label_en": "Current Account Balance (USD Millions)",
@@ -734,7 +723,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -756,7 +745,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -778,7 +767,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -800,7 +789,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -822,7 +811,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -844,7 +833,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -866,7 +855,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -888,7 +877,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 64,
+        "age_days": 66,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -910,7 +899,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 64,
+        "age_days": 66,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -932,7 +921,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 64,
+        "age_days": 66,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",

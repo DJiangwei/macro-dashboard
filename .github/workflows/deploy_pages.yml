@@ -1,0 +1,102 @@
+name: Deploy Pages from data branch
+
+# Option C deployment (docs/PAGES_DEPLOYMENT.md): rebuild every page offline
+# from the `data` branch and publish with GitHub Pages actions. Inactive until
+# the repository variable PAGES_MODE is set to "actions" and Settings -> Pages
+# -> Source is "GitHub Actions"; until then Pages keeps serving `main`.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: ${{ vars.PAGES_MODE == 'actions' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Astral uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Install Python 3.12
+        run: uv python install 3.12
+
+      - name: Sync dependencies
+        run: uv sync --frozen
+
+      - name: Overlay data branch
+        run: scripts/data_branch.sh pull
+
+      - name: Rebuild all pages offline
+        run: make rebuild-ui
+
+      - name: Validate output contract
+        run: |
+          uv run pytest -q
+          uv run python scripts/validate_outputs.py
+          uv run python scripts/dashboard_consistency_check.py
+          uv run python scripts/publish_smoke.py --local
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      # Same Jekyll build GitHub runs when serving from a branch, so every URL
+      # (including the rendered audit .md files) stays as it is today.
+      - name: Build site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Checkout smoke checker
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            scripts/publish_smoke.py
+            src/country_primer/__init__.py
+            src/country_primer/scopes.py
+            config/
+
+      - name: Setup Astral uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Smoke-test the live site
+        run: |
+          sleep 20
+          uv run --no-project --with pyyaml python scripts/publish_smoke.py --version "${{ github.run_id }}"

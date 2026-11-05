@@ -12,6 +12,7 @@ import re
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from country_primer.scopes import all_scopes, data_first_scopes, get_scope  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,61 +25,12 @@ FRESHNESS_JSON = OUTPUT / "freshness_audit.json"
 BRIEFING_MD = ROOT / "MACRO_WORKBENCH_BRIEFING.md"
 BRIEFING_OUTPUT_MD = OUTPUT / "macro_briefing.md"
 
-DASHBOARD_TO_CODE = {
-    "Hungary": "HU",
-    "Poland": "PL",
-    "Czechia": "CZ",
-    "Romania": "RO",
-    "China": "CN",
-    "Euro Area": "EA",
-    "Japan": "JP",
-    "South Africa": "ZA",
-    "United Kingdom": "UK",
-    "United States": "US",
-    "Turkey": "TR",
-    "Hong Kong": "HK",
-    "South Korea": "KR",
-    "Taiwan": "TW",
-    "Kazakhstan": "KZ",
-    "Uzbekistan": "UZ",
-    "Egypt": "EG",
-    "Nigeria": "NG",
-}
+DASHBOARD_TO_CODE = {s.name_en: s.id for s in all_scopes()}
 CODE_TO_DASHBOARD = {code: name for name, code in DASHBOARD_TO_CODE.items()}
 
-DATA_FIRST_SUMMARIES = {
-    "CN": "china_dashboard_summary.json",
-    "EA": "euro_area_dashboard_summary.json",
-    "JP": "japan_dashboard_summary.json",
-    "ZA": "south_africa_dashboard_summary.json",
-    "UK": "uk_dashboard_summary.json",
-    "US": "us_dashboard_summary.json",
-    "TR": "turkey_dashboard_summary.json",
-    "HK": "hong_kong_dashboard_summary.json",
-    "KR": "south_korea_dashboard_summary.json",
-    "TW": "taiwan_dashboard_summary.json",
-    "KZ": "kazakhstan_dashboard_summary.json",
-    "UZ": "uzbekistan_dashboard_summary.json",
-    "EG": "egypt_dashboard_summary.json",
-    "NG": "nigeria_dashboard_summary.json",
-}
+DATA_FIRST_SUMMARIES = {s.id: s.summary_file for s in data_first_scopes()}
 
-DATA_FIRST_CANONICAL = {
-    "CN": "china_canonical_frame.json",
-    "EA": "euro_area_canonical_frame.json",
-    "JP": "japan_canonical_frame.json",
-    "ZA": "south_africa_canonical_frame.json",
-    "UK": "uk_canonical_frame.json",
-    "US": "us_canonical_frame.json",
-    "TR": "turkey_canonical_frame.json",
-    "HK": "hong_kong_canonical_frame.json",
-    "KR": "south_korea_canonical_frame.json",
-    "TW": "taiwan_canonical_frame.json",
-    "KZ": "kazakhstan_canonical_frame.json",
-    "UZ": "uzbekistan_canonical_frame.json",
-    "EG": "egypt_canonical_frame.json",
-    "NG": "nigeria_canonical_frame.json",
-}
+DATA_FIRST_CANONICAL = {s.id: s.canonical_file for s in data_first_scopes()}
 
 DATA_FIRST_SIGNAL_MAP = {
     "CN": {
@@ -292,10 +244,34 @@ def _key_series(code: str, summary: dict[str, Any]) -> dict[str, dict[str, Any]]
     return series_map
 
 
+def _default_signal_map(code: str, key_series: dict[str, Any]) -> dict[str, tuple[str, str]]:
+    """Regime signals for a scope without a curated entry: standard ids, first observed wins."""
+    try:
+        scope = get_scope(code)
+    except KeyError:
+        return {}
+    candidates = {
+        "growth": ["real_gdp_growth", "real_gdp_yoy", "industrial_production_growth"],
+        "inflation": list(scope.role("cpi_yoy")),
+        "policy": list(scope.role("policy_rate")),
+        "external": ["current_account_gdp"],
+        "fiscal": ["government_debt_gdp"],
+        "financial": list(scope.headline.indicators) if scope.headline else [],
+        "property": ["house_price_growth", "bis_real_house_prices"],
+    }
+    mapping: dict[str, tuple[str, str]] = {}
+    for dimension, ids in candidates.items():
+        series_id = next((i for i in ids if i in key_series), None)
+        if series_id:
+            mapping[dimension] = (series_id, str(key_series[series_id].get("label") or series_id))
+    return mapping
+
+
 def _data_first_signals(code: str, summary: dict[str, Any]) -> dict[str, dict[str, Any]]:
     key_series = _key_series(code, summary)
     signals: dict[str, dict[str, Any]] = {}
-    for dimension, (series_id, label) in DATA_FIRST_SIGNAL_MAP.get(code, {}).items():
+    mapping = DATA_FIRST_SIGNAL_MAP.get(code) or _default_signal_map(code, key_series)
+    for dimension, (series_id, label) in mapping.items():
         item = key_series.get(series_id)
         if not item:
             continue
@@ -329,9 +305,9 @@ def enrich_cards(cards: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return enriched
 
 
-def _regime_label(dimension: str, value: float | None, display: str, signal_id: str) -> tuple[str, float, float]:
+def _regime_label(dimension: str, value: float | None, display: str, signal_id: str) -> tuple[str, float | None, float]:
     if value is None:
-        return "insufficient data", 50.0, 0.0
+        return "insufficient data", None, 0.0
 
     display_l = str(display).lower()
     sid_l = str(signal_id).lower()
@@ -564,13 +540,13 @@ def _regime_for_card(card: dict[str, Any]) -> dict[str, Any]:
         label, score, weight = _regime_label(dimension, value, display, sig_id)
         dimensions[dimension] = {
             "label": label,
-            "score": round(score, 1),
+            "score": round(score, 1) if score is not None else None,
             "confidence_weight": weight,
             "value": value,
             "display": display or (f"{value:.2f}" if value is not None else "n/a"),
             "source_signal": sig_id,
         }
-        if value is not None and weight > 0:
+        if score is not None and weight > 0:
             if dimension in cyclical_dims:
                 cyc_scores.append(score * weight)
                 cyc_weights.append(weight)
@@ -583,12 +559,15 @@ def _regime_for_card(card: dict[str, Any]) -> dict[str, Any]:
     cyc_total_weight = sum(cyc_weights) if cyc_weights else 0
     str_total_weight = sum(str_weights) if str_weights else 0
 
-    cyclical_score = sum(cyc_scores) / cyc_total_weight if cyc_total_weight > 0 else 50.0
-    structural_score = sum(str_scores) / str_total_weight if str_total_weight > 0 else 50.0
+    # No inputs means no score — never a neutral 50 placeholder.
+    cyclical_score = sum(cyc_scores) / cyc_total_weight if cyc_total_weight > 0 else None
+    structural_score = sum(str_scores) / str_total_weight if str_total_weight > 0 else None
+    available = [x for x in (cyclical_score, structural_score) if x is not None]
+    composite = _score(sum(available) / len(available)) if available else None
 
-    composite = _score((cyclical_score + structural_score) / 2)
-
-    if composite >= 70:
+    if composite is None:
+        composite_label = "insufficient data"
+    elif composite >= 70:
         composite_label = "constructive"
     elif composite >= 50:
         composite_label = "mixed"
@@ -598,9 +577,9 @@ def _regime_for_card(card: dict[str, Any]) -> dict[str, Any]:
     taylor_stance = _compute_taylor_stance(code, signals)
 
     return {
-        "composite_score": round(composite, 1),
-        "cyclical_score": round(cyclical_score, 1),
-        "structural_score": round(structural_score, 1),
+        "composite_score": round(composite, 1) if composite is not None else None,
+        "cyclical_score": round(cyclical_score, 1) if cyclical_score is not None else None,
+        "structural_score": round(structural_score, 1) if structural_score is not None else None,
         "composite_label": composite_label,
         "quality": quality,
         "dimensions": dimensions,
@@ -794,83 +773,134 @@ def _degradation_alerts(previous: dict[str, Any], current_cards: list[dict[str, 
     return alerts
 
 
-def _pearson(x: list[float], y: list[float]) -> float:
+def _pearson(x: list[float], y: list[float]) -> float | None:
+    """Pearson correlation; None when it is undefined (too few points or a flat series)."""
     n = len(x)
     if n < 3:
-        return 0.0
+        return None
     mx, my = sum(x) / n, sum(y) / n
     vx = sum((xi - mx) ** 2 for xi in x)
     vy = sum((yi - my) ** 2 for yi in y)
     if vx <= 1e-9 or vy <= 1e-9:
-        return 0.0
+        return None
     cov = sum((xi - mx) * (yi - my) for xi, yi in zip(x, y))
     return round(cov / math.sqrt(vx * vy), 2)
 
 
+SYNC_WINDOW = 36       # months per pair (most recent common months)
+SYNC_MIN_OVERLAP = 24  # pairs with fewer common months are left blank
+
+# Series used for the sync matrices where a scope deviates from the standard
+# ids (roles cpi_yoy / industrial_production_growth / sovereign_yield_10y).
+SYNC_CPI_OVERRIDES: dict[str, list[str]] = {}
+SYNC_ACTIVITY_OVERRIDES = {
+    "CN": ["industrial_value_added_yoy_akshare"],
+    "EA": ["industrial_production_yoy"],
+    "ZA": ["manufacturing_production_growth"],
+    "UK": ["industrial_production_yoy"],
+    "TW": ["real_gdp_growth"],
+    "KZ": ["real_gdp_growth"],
+    "UZ": ["real_gdp_growth"],
+    "EG": ["real_gdp_growth"],
+    "NG": ["industry_growth"],
+}
+SYNC_YIELD_OVERRIDES = {
+    "US": ("treasury_10y_yield", "10Y Treasury"),
+    "EA": ("irs_10y_de", "10Y Bund"),
+    "UK": ("long_rate_10y", "10Y Gilt"),
+    "JP": ("sovereign_yield_10y", "10Y JGB"),
+    "ZA": ("sovereign_yield_10y", "10Y Sovereign"),
+    "KR": ("sovereign_yield_10y", "10Y KTB"),
+    "TW": ("sovereign_yield_10y", "10Y Gov Bond"),
+}
+
+
+def _monthly(observations: list[Any]) -> dict[str, float]:
+    """Observed monthly values keyed YYYY-MM; projections and future dates are dropped."""
+    this_month = datetime.now(UTC).strftime("%Y-%m")
+    out: dict[str, float] = {}
+    for r in sorted(observations, key=lambda row: str(row[0])):
+        if len(r) < 2 or r[1] is None or _is_projection(r):
+            continue
+        month = str(r[0])[:7]
+        if len(month) == 7 and month[4] == "-" and month <= this_month:
+            out[month] = float(r[1])
+    return out
+
+
+def _is_projection(row: list[Any]) -> bool:
+    # CEE frames flag rows as [date, value, "historical"|"projection", is_projection].
+    return (len(row) >= 3 and row[2] == "projection") or (len(row) >= 4 and row[3] is True)
+
+
+def _is_monthly(series: dict[str, Any]) -> bool:
+    """Monthly or higher-frequency series (daily/weekly are sampled at month end)."""
+    return str(series.get("frequency") or "").strip().lower() in {"monthly", "m", "month", "weekly", "daily"}
+
+
+def _pairwise_matrix(countries: list[str], data: dict[str, dict[str, float]]) -> tuple[dict[str, dict[str, float | None]], str]:
+    """Correlation of every pair over its own most recent common months.
+
+    Requiring one window shared by every scope left the matrices empty whenever
+    any single scope lagged; each pair now uses the months both have observed.
+    """
+    matrix: dict[str, dict[str, float | None]] = {}
+    first_months: list[str] = []
+    last_months: list[str] = []
+    for c1 in countries:
+        matrix[c1] = {}
+        for c2 in countries:
+            a, b = data.get(c1), data.get(c2)
+            common = sorted(set(a) & set(b)) if a and b else []
+            if len(common) < SYNC_MIN_OVERLAP:
+                matrix[c1][c2] = None
+                continue
+            window = common[-SYNC_WINDOW:]
+            matrix[c1][c2] = _pearson([a[m] for m in window], [b[m] for m in window])
+            first_months.append(window[0])
+            last_months.append(window[-1])
+    if not last_months:
+        return matrix, ""
+    note = (
+        f"pairwise, last {SYNC_WINDOW} common months (min {SYNC_MIN_OVERLAP}); "
+        f"windows end {min(last_months)} to {max(last_months)}"
+    )
+    return matrix, note
+
+
 def _compute_cross_country_sync() -> dict[str, Any]:
-    countries = ["US", "EA", "UK", "JP", "CN", "ZA", "TR", "HK", "KR", "TW", "KZ", "UZ", "EG", "NG", "PL", "CZ", "HU", "RO"]
+    scopes = all_scopes()
+    countries = [scope.id for scope in scopes]
     cpi_data: dict[str, dict[str, float]] = {}
     ip_data: dict[str, dict[str, float]] = {}
     yield_data: dict[str, dict[str, float]] = {}
     yield_latest: dict[str, dict[str, Any]] = {}
 
-    canonical_specs = {
-        "CN": ("china_canonical_frame.json", "cpi_yoy_akshare", "industrial_value_added_yoy_akshare"),
-        "EA": ("euro_area_canonical_frame.json", "hicp_inflation", "industrial_production_yoy"),
-        "JP": ("japan_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
-        "ZA": ("south_africa_canonical_frame.json", "cpi_inflation", "manufacturing_production_growth"),
-        "UK": ("uk_canonical_frame.json", "cpi_yoy", "industrial_production_yoy"),
-        "US": ("us_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
-        "TR": ("turkey_canonical_frame.json", "hicp_inflation", "industrial_production_growth"),
-        "HK": ("hong_kong_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
-        "KR": ("south_korea_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
-        "TW": ("taiwan_canonical_frame.json", "cpi_inflation", "real_gdp_growth"),
-        "KZ": ("kazakhstan_canonical_frame.json", "cpi_inflation", "real_gdp_growth"),
-        "UZ": ("uzbekistan_canonical_frame.json", "cpi_inflation", "real_gdp_growth"),
-        "EG": ("egypt_canonical_frame.json", "cpi_inflation", "real_gdp_growth"),
-        "NG": ("nigeria_canonical_frame.json", "cpi_inflation", "industry_growth"),
-    }
+    for scope in scopes:
+        if not scope.is_data_first:
+            continue
+        payload = _read_json(scope.canonical_path)
+        observed = {s.get("indicator_id"): s for s in payload.get("series", []) or [] if s.get("observations")}
+        # The sync matrices compare monthly (or month-end sampled) prints only.
+        series = {k: v for k, v in observed.items() if _is_monthly(v)}
 
-    yield_specs = {
-        "US": ("us_canonical_frame.json", "treasury_10y_yield", "10Y Treasury"),
-        "EA": ("euro_area_canonical_frame.json", "irs_10y_de", "10Y Bund"),
-        "UK": ("uk_canonical_frame.json", "long_rate_10y", "10Y Gilt"),
-        "JP": ("japan_canonical_frame.json", "sovereign_yield_10y", "10Y JGB"),
-        "ZA": ("south_africa_canonical_frame.json", "sovereign_yield_10y", "10Y Sovereign"),
-        "KR": ("south_korea_canonical_frame.json", "sovereign_yield_10y", "10Y KTB"),
-        "TW": ("taiwan_canonical_frame.json", "sovereign_yield_10y", "10Y Gov Bond"),
-    }
+        def first(candidates: list[str]) -> dict[str, Any] | None:
+            return next((series[i] for i in candidates if i in series), None)
 
-    for code, (fname, cpi_k, ip_k) in canonical_specs.items():
-        p = OUTPUT / fname
-        if p.exists():
-            d = _read_json(p)
-            for s in d.get("series", []) or []:
-                ind_id = s.get("indicator_id")
-                if ind_id == cpi_k:
-                    cpi_data[code] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
-                elif ind_id == ip_k:
-                    ip_data[code] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
-
-    for code, (fname, yld_k, bmk_name) in yield_specs.items():
-        p = OUTPUT / fname
-        if p.exists():
-            d = _read_json(p)
-            for s in d.get("series", []) or []:
-                if s.get("indicator_id") == yld_k:
-                    obs = s.get("observations", [])
-                    if obs:
-                        m_dict = {}
-                        for r in obs:
-                            if len(r) >= 2 and r[1] is not None:
-                                m_dict[str(r[0])[:7]] = float(r[1])
-                        yield_data[code] = m_dict
-                        last_r = obs[-1]
-                        yield_latest[code] = {
-                            "benchmark": bmk_name,
-                            "date": str(last_r[0]),
-                            "yield": round(float(last_r[1]), 2),
-                        }
+        cpi = first(SYNC_CPI_OVERRIDES.get(scope.id) or list(scope.role("cpi_yoy")))
+        activity = first(SYNC_ACTIVITY_OVERRIDES.get(scope.id) or ["industrial_production_growth"])
+        if cpi:
+            cpi_data[scope.id] = _monthly(cpi["observations"])
+        if activity:
+            ip_data[scope.id] = _monthly(activity["observations"])
+        yield_id, benchmark = SYNC_YIELD_OVERRIDES.get(scope.id, ("sovereign_yield_10y", f"10Y {scope.name_en}"))
+        yld = observed.get(yield_id)
+        if yld:
+            obs = yld["observations"]
+            if _is_monthly(yld):
+                yield_data[scope.id] = _monthly(obs)
+            # The spread to Treasuries only needs the latest print, whatever the frequency.
+            yield_latest[scope.id] = {"benchmark": benchmark, "date": str(obs[-1][0]), "yield": round(float(obs[-1][1]), 2)}
 
     cee_path = OUTPUT / "cee_canonical_frame.json"
     if cee_path.exists():
@@ -880,13 +910,13 @@ def _compute_cross_country_sync() -> dict[str, Any]:
             country = str(s.get("country") or "").upper()
             if country in countries:
                 if ind_id == "cpi_yoy":
-                    cpi_data[country] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
+                    cpi_data[country] = _monthly(s.get("observations", []))
                 elif ind_id == "industrial_production_yoy":
-                    ip_data[country] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
+                    ip_data[country] = _monthly(s.get("observations", []))
                 elif ind_id == "sov_yield_10y":
                     obs = s.get("observations", [])
                     if obs:
-                        yield_data[country] = {str(r[0])[:7]: float(r[1]) for r in obs if len(r) >= 2 and r[1] is not None}
+                        yield_data[country] = _monthly(obs)
                         last_r = obs[-1]
                         yield_latest[country] = {
                             "benchmark": f"{country} 10Y Benchmark",
@@ -894,28 +924,9 @@ def _compute_cross_country_sync() -> dict[str, Any]:
                             "yield": round(float(last_r[1]), 2),
                         }
 
-    cpi_common = sorted(list(set.intersection(*[set(cpi_data[c].keys()) for c in countries if c in cpi_data]))) if len(cpi_data) >= len(countries) else []
-    ip_common = sorted(list(set.intersection(*[set(ip_data[c].keys()) for c in countries if c in ip_data]))) if len(ip_data) >= len(countries) else []
-
-    cpi_matrix: dict[str, dict[str, float]] = {}
-    if len(cpi_common) >= 12:
-        cpi_window = cpi_common[-36:]
-        for c1 in countries:
-            cpi_matrix[c1] = {}
-            for c2 in countries:
-                x = [cpi_data[c1][m] for m in cpi_window]
-                y = [cpi_data[c2][m] for m in cpi_window]
-                cpi_matrix[c1][c2] = _pearson(x, y)
-
-    ip_matrix: dict[str, dict[str, float]] = {}
-    if len(ip_common) >= 12:
-        ip_window = ip_common[-36:]
-        for c1 in countries:
-            ip_matrix[c1] = {}
-            for c2 in countries:
-                x = [ip_data[c1][m] for m in ip_window]
-                y = [ip_data[c2][m] for m in ip_window]
-                ip_matrix[c1][c2] = _pearson(x, y)
+    cpi_matrix, cpi_period = _pairwise_matrix(countries, cpi_data)
+    ip_matrix, ip_period = _pairwise_matrix(countries, ip_data)
+    yield_matrix, yield_period = _pairwise_matrix(countries, yield_data)
 
     us_yld = yield_latest.get("US", {}).get("yield")
     sovereign_spreads: dict[str, dict[str, Any]] = {}
@@ -931,57 +942,31 @@ def _compute_cross_country_sync() -> dict[str, Any]:
             }
         else:
             y_val = y_info["yield"]
-            spread_bps = round((y_val - us_yld) * 100, 1)
             sovereign_spreads[c] = {
                 "benchmark": y_info["benchmark"],
                 "date": y_info["date"],
                 "yield": y_val,
-                "spread_bps": spread_bps,
+                "spread_bps": round((y_val - us_yld) * 100, 1),
                 "status": "observed",
             }
 
-    yield_countries = [c for c in countries if c in yield_data and len(yield_data[c]) >= 12]
-    yield_common = sorted(list(set.intersection(*[set(yield_data[c].keys()) for c in yield_countries]))) if yield_countries else []
-    yield_matrix: dict[str, dict[str, float | None]] = {}
-    if len(yield_common) >= 12:
-        yield_window = yield_common[-36:]
-        for c1 in countries:
-            yield_matrix[c1] = {}
-            for c2 in countries:
-                if c1 in yield_data and c2 in yield_data and all(m in yield_data[c1] and m in yield_data[c2] for m in yield_window):
-                    x = [yield_data[c1][m] for m in yield_window]
-                    y = [yield_data[c2][m] for m in yield_window]
-                    yield_matrix[c1][c2] = _pearson(x, y)
-                else:
-                    yield_matrix[c1][c2] = None
-
+    reer_data: dict[str, dict[str, float]] = {}
     reer_cache_path = ROOT / "data" / "bruegel_reer_monthly.json"
-    reer_matrix: dict[str, dict[str, float | None]] = {}
-    reer_common: list[str] = []
     if reer_cache_path.exists():
-        r_payload = _read_json(reer_cache_path)
-        r_countries = r_payload.get("countries", {})
-        reer_series_map: dict[str, dict[str, float]] = {}
+        r_countries = _read_json(reer_cache_path).get("countries", {})
         for c in countries:
-            c_info = r_countries.get(c, {})
-            obs_list = c_info.get("reer_120", [])
-            reer_series_map[c] = {x["date"]: float(x["value"]) for x in obs_list if "date" in x and "value" in x}
-        reer_common = sorted(list(set.intersection(*[set(reer_series_map[c].keys()) for c in countries if c in reer_series_map])))
-        if len(reer_common) >= 36:
-            r_window = reer_common[-36:]
-            for c1 in countries:
-                reer_matrix[c1] = {}
-                for c2 in countries:
-                    x = [reer_series_map[c1][m] for m in r_window]
-                    y = [reer_series_map[c2][m] for m in r_window]
-                    reer_matrix[c1][c2] = _pearson(x, y)
+            obs_list = (r_countries.get(c) or {}).get("reer_120", [])
+            series_map = {str(x["date"])[:7]: float(x["value"]) for x in obs_list if "date" in x and "value" in x}
+            if series_map:
+                reer_data[c] = series_map
+    reer_matrix, reer_period = _pairwise_matrix(countries, reer_data)
 
     return {
         "countries": countries,
-        "sample_period_cpi": f"{cpi_common[-36]} to {cpi_common[-1]}" if len(cpi_common) >= 36 else "",
-        "sample_period_ip": f"{ip_common[-36]} to {ip_common[-1]}" if len(ip_common) >= 36 else "",
-        "sample_period_yield": f"{yield_common[-36]} to {yield_common[-1]}" if len(yield_common) >= 36 else "",
-        "sample_period_reer": f"{reer_common[-36]} to {reer_common[-1]}" if len(reer_common) >= 36 else "",
+        "sample_period_cpi": cpi_period,
+        "sample_period_ip": ip_period,
+        "sample_period_yield": yield_period,
+        "sample_period_reer": reer_period,
         "inflation_correlation": cpi_matrix,
         "industrial_production_correlation": ip_matrix,
         "sovereign_yield_correlation": yield_matrix,
@@ -1005,7 +990,7 @@ def _compute_reer_valuation_monitor(countries: list[str]) -> dict[str, Any]:
             continue
         latest_reer = reer_obs[-1]
         latest_neer = neer_obs[-1] if neer_obs else latest_reer
-        latest_date = c_info.get("latest_reer", {}).get("date", "2026-09-01")
+        latest_date = c_info.get("latest_reer", {}).get("date", "")
 
         ma60 = round(sum(reer_obs[-60:]) / 60, 2)
         ma120 = round(sum(reer_obs[-120:]) / 120, 2)
@@ -1078,7 +1063,7 @@ def _compute_sovereign_curve_monitor() -> list[dict[str, Any]]:
         "code": "US",
         "name": "United States",
         "tenor_type": "Treasury",
-        "date": dt_10y or "2026-10-30",
+        "date": dt_10y,
         "y2": round(y2, 2) if y2 is not None else None,
         "y5": round(y5, 2) if y5 is not None else None,
         "y10": round(y10_us, 2) if y10_us is not None else None,
@@ -1098,13 +1083,13 @@ def _compute_sovereign_curve_monitor() -> list[dict[str, Any]]:
     _, y2_ea = get_latest(ea, "aaa_yield_2y")
     _, y5_ea = get_latest(ea, "aaa_yield_5y")
     _, slope_ea = get_latest(ea, "yield_curve_slope")
-    bund_10y = y10_ea or 3.37
+    bund_10y = y10_ea
     slope_ea_bps = round(slope_ea, 1) if slope_ea is not None else (round((y10_ea - y2_ea) * 100, 1) if (y10_ea and y2_ea) else None)
     records.append({
         "code": "EA",
         "name": "Euro Area (Bund / AAA)",
         "tenor_type": "Bund Benchmark",
-        "date": dt_ea or "2026-10-30",
+        "date": dt_ea,
         "y2": round(y2_ea, 2) if y2_ea is not None else None,
         "y5": round(y5_ea, 2) if y5_ea is not None else None,
         "y10": round(y10_ea, 2) if y10_ea is not None else None,
@@ -1126,12 +1111,12 @@ def _compute_sovereign_curve_monitor() -> list[dict[str, Any]]:
         ("GR", "Greece (GGB)", "gr_de_spread_10y"),
     ]:
         dt_p, spr = get_latest(ea, spr_id)
-        implied_10y = round(bund_10y + (spr / 100.0), 2) if spr is not None else None
+        implied_10y = round(bund_10y + (spr / 100.0), 2) if (spr is not None and bund_10y is not None) else None
         records.append({
             "code": p_code,
             "name": p_name,
             "tenor_type": "Sovereign Spread",
-            "date": dt_p or "2026-09-01",
+            "date": dt_p,
             "y2": None,
             "y5": None,
             "y10": implied_10y,
@@ -1155,7 +1140,7 @@ def _compute_sovereign_curve_monitor() -> list[dict[str, Any]]:
         "code": "UK",
         "name": "United Kingdom",
         "tenor_type": "Gilt Benchmark",
-        "date": dt_uk or "2026-10-28",
+        "date": dt_uk,
         "y2": None,
         "y5": round(y5_uk, 2) if y5_uk is not None else None,
         "y10": round(y10_uk, 2) if y10_uk is not None else None,
@@ -1178,14 +1163,14 @@ def _compute_sovereign_curve_monitor() -> list[dict[str, Any]]:
         "code": "JP",
         "name": "Japan",
         "tenor_type": "JGB Benchmark",
-        "date": dt_jp or "2026-09-01",
+        "date": dt_jp,
         "y2": round(tibor_jp, 2) if tibor_jp is not None else None,
         "y5": None,
         "y10": round(y10_jp, 2) if y10_jp is not None else None,
         "y30": None,
         "slope_bps": round(slope_jp, 1) if slope_jp is not None else None,
         "slope_label": "10s3m",
-        "spread_vs_anchor": round((y10_jp - (y10_us or 4.98)) * 100, 1) if y10_jp else None,
+        "spread_vs_anchor": round((y10_jp - y10_us) * 100, 1) if (y10_jp is not None and y10_us is not None) else None,
         "anchor_name": "vs US 10Y (bps)",
         "breakeven_10y": None,
         "breakeven_5y": None,
@@ -1205,7 +1190,7 @@ def _compute_sovereign_curve_monitor() -> list[dict[str, Any]]:
         "code": "CN",
         "name": "China",
         "tenor_type": "CGB Benchmark",
-        "date": dt_cn or "2026-10-30",
+        "date": dt_cn,
         "y2": round(y2_cn, 2) if y2_cn is not None else None,
         "y5": round(y5_cn, 2) if y5_cn is not None else None,
         "y10": round(y10_cn, 2) if y10_cn is not None else None,
@@ -1226,7 +1211,7 @@ def _compute_sovereign_curve_monitor() -> list[dict[str, Any]]:
     except Exception:
         snapshot = {}
 
-    for c_code, c_name in [("HU", "Hungary"), ("PL", "Poland"), ("CZ", "Czechia"), ("RO", "Romania")]:
+    for c_code, c_name in [(scope.id, scope.name_en) for scope in all_scopes() if scope.pipeline == "cee_v4"]:
         ind = snapshot.get("countries", {}).get(c_code, {}).get("indicators", {})
         y10_c = ind.get("sov_yield_10y", {}).get("value")
         y2_c = ind.get("sov_yield_2y", {}).get("value")
@@ -1237,7 +1222,7 @@ def _compute_sovereign_curve_monitor() -> list[dict[str, Any]]:
             "code": c_code,
             "name": c_name,
             "tenor_type": "Local Sovereign Bond",
-            "date": dt_c or "2026-09-01",
+            "date": dt_c,
             "y2": round(float(y2_c), 2) if y2_c is not None else None,
             "y5": None,
             "y10": round(float(y10_c), 2) if y10_c is not None else None,
@@ -1259,14 +1244,14 @@ def _compute_sovereign_curve_monitor() -> list[dict[str, Any]]:
         "code": "ZA",
         "name": "South Africa",
         "tenor_type": "SAGB Benchmark",
-        "date": dt_za or "2026-10-29",
+        "date": dt_za,
         "y2": None,
         "y5": None,
         "y10": round(y10_za, 2) if y10_za is not None else None,
         "y30": round(ylong_za, 2) if ylong_za is not None else None,
         "slope_bps": round((ylong_za - y10_za) * 100, 1) if (ylong_za and y10_za) else None,
         "slope_label": "Long-10s",
-        "spread_vs_anchor": round((y10_za - (y10_us or 4.98)) * 100, 1) if y10_za else None,
+        "spread_vs_anchor": round((y10_za - y10_us) * 100, 1) if (y10_za is not None and y10_us is not None) else None,
         "anchor_name": "vs US 10Y (bps)",
         "breakeven_10y": None,
         "breakeven_5y": None,
@@ -1314,16 +1299,16 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
     _, empire = get_latest(us, "empire_state_mfg_index")
     _, cfnai = get_latest(us, "chicago_fed_national_activity_index")
 
-    ic_str = f"{ic4 / 1000.0:.1f}k" if ic4 else "196.8k"
-    cc_str = f"{cc4 / 1000000.0:.2f}M" if cc4 else "1.71M"
+    ic_str = f"{ic4 / 1000.0:.1f}k" if ic4 is not None else "n/a"
+    cc_str = f"{cc4 / 1000000.0:.2f}M" if cc4 is not None else "n/a"
 
     records.append({
         "category": "US Real Activity & Labor",
         "indicator_name": "NY Fed Weekly Economic Index (WEI)",
         "frequency": "Weekly",
-        "latest_date": dt_wei or "2026-10-24",
-        "latest_value": round(wei, 2) if wei is not None else 2.98,
-        "display_value": f"{wei:.2f}" if wei is not None else "2.98",
+        "latest_date": dt_wei,
+        "latest_value": round(wei, 2) if wei is not None else None,
+        "display_value": f"{wei:.2f}" if wei is not None else "n/a",
         "unit": "index",
         "neutral_benchmark": "2.0 (trend growth)",
         "status_pill": "good" if (wei and wei >= 2.0) else "neutral",
@@ -1335,8 +1320,8 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
         "category": "US Real Activity & Labor",
         "indicator_name": "Initial Jobless Claims (4-Week MA)",
         "frequency": "Weekly",
-        "latest_date": dt_ic or "2026-10-24",
-        "latest_value": round(ic4, 1) if ic4 is not None else 196750.0,
+        "latest_date": dt_ic,
+        "latest_value": round(ic4, 1) if ic4 is not None else None,
         "display_value": ic_str,
         "unit": "persons",
         "neutral_benchmark": "<220k (low layoff pace)",
@@ -1349,8 +1334,8 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
         "category": "US Real Activity & Labor",
         "indicator_name": "Continued Jobless Claims (4-Week MA)",
         "frequency": "Weekly",
-        "latest_date": "2026-10-17",
-        "latest_value": round(cc4, 1) if cc4 is not None else 1710000.0,
+        "latest_date": None,
+        "latest_value": round(cc4, 1) if cc4 is not None else None,
         "display_value": cc_str,
         "unit": "persons",
         "neutral_benchmark": "<1.80M (normal re-hiring)",
@@ -1363,9 +1348,9 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
         "category": "US Regional Manufacturing",
         "indicator_name": "Philadelphia Fed Mfg Business Outlook",
         "frequency": "Monthly",
-        "latest_date": "2026-10-01",
-        "latest_value": round(philly, 1) if philly is not None else 20.9,
-        "display_value": f"+{philly:.1f}" if philly and philly > 0 else (f"{philly:.1f}" if philly else "+20.9"),
+        "latest_date": None,
+        "latest_value": round(philly, 1) if philly is not None else None,
+        "display_value": f"+{philly:.1f}" if philly and philly > 0 else (f"{philly:.1f}" if philly is not None else "n/a"),
         "unit": "diffusion",
         "neutral_benchmark": "0.0 (expansion threshold)",
         "status_pill": "good" if (philly and philly > 0) else "bad",
@@ -1377,9 +1362,9 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
         "category": "US Regional Manufacturing",
         "indicator_name": "Empire State Mfg Survey (NY Fed)",
         "frequency": "Monthly",
-        "latest_date": "2026-10-01",
-        "latest_value": round(empire, 1) if empire is not None else 25.5,
-        "display_value": f"+{empire:.1f}" if empire and empire > 0 else (f"{empire:.1f}" if empire else "+25.5"),
+        "latest_date": None,
+        "latest_value": round(empire, 1) if empire is not None else None,
+        "display_value": f"+{empire:.1f}" if empire and empire > 0 else (f"{empire:.1f}" if empire is not None else "n/a"),
         "unit": "diffusion",
         "neutral_benchmark": "0.0 (expansion threshold)",
         "status_pill": "good" if (empire and empire > 0) else "bad",
@@ -1391,9 +1376,9 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
         "category": "US Regional Manufacturing",
         "indicator_name": "Chicago Fed National Activity (CFNAI)",
         "frequency": "Monthly",
-        "latest_date": "2026-09-01",
-        "latest_value": round(cfnai, 2) if cfnai is not None else -0.12,
-        "display_value": f"{cfnai:+.2f}" if cfnai is not None else "-0.12",
+        "latest_date": None,
+        "latest_value": round(cfnai, 2) if cfnai is not None else None,
+        "display_value": f"{cfnai:+.2f}" if cfnai is not None else "n/a",
         "unit": "index",
         "neutral_benchmark": "0.0 (historical trend)",
         "status_pill": "good" if (cfnai and cfnai >= 0) else ("neutral" if (cfnai and cfnai >= -0.7) else "bad"),
@@ -1412,9 +1397,9 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
         "category": "Euro Area Leading Sentiment",
         "indicator_name": "Euro Area Economic Sentiment (ESI)",
         "frequency": "Monthly",
-        "latest_date": dt_esi or "2026-10-01",
-        "latest_value": round(esi, 1) if esi is not None else 96.7,
-        "display_value": f"{esi:.1f}" if esi is not None else "96.7",
+        "latest_date": dt_esi,
+        "latest_value": round(esi, 1) if esi is not None else None,
+        "display_value": f"{esi:.1f}" if esi is not None else "n/a",
         "unit": "index",
         "neutral_benchmark": "100.0 (long-term average)",
         "status_pill": "neutral" if (esi and abs(esi - 100) <= 5) else ("bad" if (esi and esi < 95) else "good"),
@@ -1426,9 +1411,9 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
         "category": "Euro Area Leading Sentiment",
         "indicator_name": "Germany Economic Sentiment (ESI)",
         "frequency": "Monthly",
-        "latest_date": "2026-10-01",
-        "latest_value": round(de_esi, 1) if de_esi is not None else 94.1,
-        "display_value": f"{de_esi:.1f}" if de_esi is not None else "94.1",
+        "latest_date": None,
+        "latest_value": round(de_esi, 1) if de_esi is not None else None,
+        "display_value": f"{de_esi:.1f}" if de_esi is not None else "n/a",
         "unit": "index",
         "neutral_benchmark": "100.0 (long-term average)",
         "status_pill": "bad" if (de_esi and de_esi < 95) else "neutral",
@@ -1440,9 +1425,9 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
         "category": "Euro Area Leading Sentiment",
         "indicator_name": "Euro Area Industrial Confidence",
         "frequency": "Monthly",
-        "latest_date": dt_esi or "2026-10-01",
-        "latest_value": round(ind_conf, 1) if ind_conf is not None else -9.0,
-        "display_value": f"{ind_conf:+.1f}" if ind_conf is not None else "-9.0",
+        "latest_date": dt_esi,
+        "latest_value": round(ind_conf, 1) if ind_conf is not None else None,
+        "display_value": f"{ind_conf:+.1f}" if ind_conf is not None else "n/a",
         "unit": "balance %",
         "neutral_benchmark": "0.0 (neutral balance)",
         "status_pill": "bad" if (ind_conf and ind_conf < -5) else "neutral",
@@ -1462,9 +1447,9 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
         "category": "Global Trade & Tech Bellwether",
         "indicator_name": "South Korea Goods Exports (USD)",
         "frequency": "Monthly",
-        "latest_date": dt_kr or "2026-08-01",
-        "latest_value": round(kr_exp / 1000.0, 1) if kr_exp else 100.4,
-        "display_value": f"${kr_exp / 1000.0:.1f}B" if kr_exp else "$100.4B",
+        "latest_date": dt_kr,
+        "latest_value": round(kr_exp / 1000.0, 1) if kr_exp is not None else None,
+        "display_value": f"${kr_exp / 1000.0:.1f}B" if kr_exp is not None else "n/a",
         "unit": "USD bn",
         "neutral_benchmark": "Global semiconductor bellwether",
         "status_pill": "good" if (kr_exp and kr_exp > 50000) else "neutral",
@@ -1476,9 +1461,9 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
         "category": "Global Trade & Tech Bellwether",
         "indicator_name": "Taiwan Customs Merchandise Exports YoY",
         "frequency": "Monthly",
-        "latest_date": dt_tw or "2026-08-01",
-        "latest_value": round(tw_exp, 1) if tw_exp is not None else 52.6,
-        "display_value": f"+{tw_exp:.1f}%" if tw_exp and tw_exp > 0 else (f"{tw_exp:.1f}%" if tw_exp else "+52.6%"),
+        "latest_date": dt_tw,
+        "latest_value": round(tw_exp, 1) if tw_exp is not None else None,
+        "display_value": f"+{tw_exp:.1f}%" if tw_exp and tw_exp > 0 else (f"{tw_exp:.1f}%" if tw_exp is not None else "n/a"),
         "unit": "% y/y",
         "neutral_benchmark": ">0% YoY (tech cycle expansion)",
         "status_pill": "good" if (tw_exp and tw_exp > 10) else ("neutral" if (tw_exp and tw_exp > 0) else "bad"),
@@ -1490,9 +1475,9 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
         "category": "Global Trade & Tech Bellwether",
         "indicator_name": "China Customs Goods Exports YoY",
         "frequency": "Monthly",
-        "latest_date": dt_cn or "2026-08-01",
-        "latest_value": round(cn_exp, 1) if cn_exp is not None else 25.0,
-        "display_value": f"+{cn_exp:.1f}%" if cn_exp and cn_exp > 0 else (f"{cn_exp:.1f}%" if cn_exp else "+25.0%"),
+        "latest_date": dt_cn,
+        "latest_value": round(cn_exp, 1) if cn_exp is not None else None,
+        "display_value": f"+{cn_exp:.1f}%" if cn_exp and cn_exp > 0 else (f"{cn_exp:.1f}%" if cn_exp is not None else "n/a"),
         "unit": "% y/y",
         "neutral_benchmark": ">0% YoY (manufacturing export cycle)",
         "status_pill": "good" if (cn_exp and cn_exp > 5) else ("neutral" if (cn_exp and cn_exp > 0) else "bad"),
@@ -1500,375 +1485,259 @@ def _compute_high_frequency_monitor() -> list[dict[str, Any]]:
         "chart_link": "global_tech_and_export_bellwether",
     })
 
-    return records
+    return [r for r in records if r.get("latest_value") is not None]
 
 
 def _compute_central_bank_liquidity_monitor() -> list[dict[str, Any]]:
-    """Compile central bank balance sheet components, net liquidity metric, and policy facility flows."""
-    def get_latest(series_list: list[dict], ind_id: str) -> tuple[str | None, float | None]:
-        for s in series_list:
-            if s.get("indicator_id") == ind_id:
-                obs = s.get("observations", [])
-                if obs:
-                    last = obs[-1]
-                    if isinstance(last, dict):
-                        return last.get("date"), float(last.get("value"))
-                    elif isinstance(last, list):
-                        return last[0], float(last[1])
-        return None, None
+    """Central-bank balance-sheet items and US net liquidity, strictly from canonical data.
 
-    def read_canonical(fname: str) -> list[dict]:
-        p = OUTPUT / fname
-        if not p.exists():
-            return []
+    Records are emitted only when the underlying series exists; status text is a
+    computed three-month change, never a hand-typed narrative.
+    """
+    def read_series(fname: str) -> dict[str, list[tuple[str, float]]]:
+        path = OUTPUT / fname
+        if not path.exists():
+            return {}
         try:
-            return json.loads(p.read_text()).get("series", [])
+            payload = json.loads(path.read_text())
         except Exception:
-            return []
+            return {}
+        out: dict[str, list[tuple[str, float]]] = {}
+        for item in payload.get("series", []):
+            obs = []
+            for row in item.get("observations", []):
+                try:
+                    obs.append((str(row[0])[:10], float(row[1])))
+                except (TypeError, ValueError, IndexError):
+                    continue
+            if obs:
+                out[item.get("indicator_id")] = sorted(obs)
+        return out
+
+    def value_months_back(obs: list[tuple[str, float]], months: int) -> float | None:
+        latest = obs[-1][0]
+        year, month = int(latest[:4]), int(latest[5:7]) - months
+        while month <= 0:
+            month += 12
+            year -= 1
+        cutoff = f"{year:04d}-{month:02d}-{latest[8:10] or '01'}"
+        earlier = [v for d, v in obs if d <= cutoff]
+        return earlier[-1] if earlier else None
+
+    def record(institution, code, name, freq, obs, divisor, unit, symbol, decimals, context, chart):
+        if not obs:
+            return None
+        date, raw = obs[-1]
+        value = raw / divisor
+        prior = value_months_back(obs, 3)
+        signal, pill = "Change over 3M not available", "neutral"
+        if prior is not None:
+            delta = value - prior / divisor
+            direction = "Expanding" if delta > 0 else ("Contracting" if delta < 0 else "Unchanged")
+            signal = f"{direction} over 3M ({delta:+,.{decimals}f} {unit})"
+        return {
+            "institution": institution,
+            "country_code": code,
+            "indicator_name": name,
+            "frequency": freq,
+            "latest_date": date,
+            "latest_value": round(value, decimals),
+            "display_value": f"{symbol}{value:,.{decimals}f}{ {'bn': 'B', 'tn': 'T'}.get(unit.split()[-1], '') }",
+            "unit": unit,
+            "policy_context": context,
+            "status_pill": pill,
+            "operational_signal": signal,
+            "chart_link": chart,
+        }
+
+    us = read_series("us_canonical_frame.json")
+    ea = read_series("euro_area_canonical_frame.json")
+    jp = read_series("japan_canonical_frame.json")
+    cn = read_series("china_canonical_frame.json")
 
     records: list[dict[str, Any]] = []
 
-    # 1. Federal Reserve (US)
-    us = read_canonical("us_canonical_frame.json")
-    dt_assets, fed_assets = get_latest(us, "fed_total_assets") # USD mn
-    _, fed_treasuries = get_latest(us, "fed_treasury_holdings") # USD mn
-    _, fed_mbs = get_latest(us, "fed_mbs_holdings") # USD mn
-    _, tga = get_latest(us, "treasury_general_account") # USD mn
-    _, rrp_bn = get_latest(us, "overnight_reverse_repo") # USD bn
-    _, reserves = get_latest(us, "reserve_balances") # USD mn
-
-    # Calculate Net Liquidity = Fed Total Assets - TGA - ON RRP
-    rrp_mn = (rrp_bn * 1000.0) if rrp_bn is not None else 4375.0
-    net_liq_mn = (fed_assets - (tga or 0.0) - rrp_mn) if fed_assets else None
-    net_liq_bn = (net_liq_mn / 1000.0) if net_liq_mn is not None else 5741.5
-
-    records.append({
-        "institution": "Federal Reserve (Fed)",
-        "country_code": "US",
-        "indicator_name": "US Net Liquidity (Assets − TGA − RRP)",
-        "frequency": "Weekly",
-        "latest_date": dt_assets or "2026-10-28",
-        "latest_value": round(net_liq_bn, 1),
-        "display_value": f"${net_liq_bn:,.1f}B",
-        "unit": "USD bn",
-        "policy_context": "Core financial conditions & market plumbing driver",
-        "status_pill": "good" if net_liq_bn > 5500 else "neutral",
-        "operational_signal": "Ample reserve buffer ($5.74T net liquidity)",
-        "chart_link": "us_net_liquidity_transmission",
-    })
-
-    records.append({
-        "institution": "Federal Reserve (Fed)",
-        "country_code": "US",
-        "indicator_name": "Fed Total Assets (Balance Sheet Level)",
-        "frequency": "Weekly",
-        "latest_date": dt_assets or "2026-10-28",
-        "latest_value": round(fed_assets / 1000.0, 1) if fed_assets else 6745.6,
-        "display_value": f"${fed_assets / 1000.0:,.1f}B" if fed_assets else "$6,745.6B",
-        "unit": "USD bn",
-        "policy_context": "Quantitative Tightening (QT) total size",
-        "status_pill": "neutral",
-        "operational_signal": f"Down from $8.96T peak (-${8965.0 - (fed_assets/1000.0 if fed_assets else 6745.6):,.0f}B runoff)",
-        "chart_link": "us_net_liquidity_transmission",
-    })
-
-    records.append({
-        "institution": "Federal Reserve (Fed)",
-        "country_code": "US",
-        "indicator_name": "Fed Treasury Securities Holdings Outright",
-        "frequency": "Weekly",
-        "latest_date": dt_assets or "2026-10-28",
-        "latest_value": round(fed_treasuries / 1000.0, 1) if fed_treasuries else 4576.6,
-        "display_value": f"${fed_treasuries / 1000.0:,.1f}B" if fed_treasuries else "$4,576.6B",
-        "unit": "USD bn",
-        "policy_context": "SOMA Treasury portfolio (capped $25B/mo runoff)",
-        "status_pill": "neutral",
-        "operational_signal": "Primary asset backing commercial banking reserves",
-        "chart_link": "us_net_liquidity_transmission",
-    })
-
-    records.append({
-        "institution": "Federal Reserve (Fed)",
-        "country_code": "US",
-        "indicator_name": "Fed Mortgage-Backed Securities (MBS)",
-        "frequency": "Weekly",
-        "latest_date": dt_assets or "2026-10-28",
-        "latest_value": round(fed_mbs / 1000.0, 1) if fed_mbs else 1883.5,
-        "display_value": f"${fed_mbs / 1000.0:,.1f}B" if fed_mbs else "$1,883.5B",
-        "unit": "USD bn",
-        "policy_context": "SOMA agency debt & MBS portfolio runoff ($35B/mo cap)",
-        "status_pill": "neutral",
-        "operational_signal": "Passive redemption dependent on prepayment speeds",
-        "chart_link": "us_net_liquidity_transmission",
-    })
-
-    records.append({
-        "institution": "Federal Reserve (Fed)",
-        "country_code": "US",
-        "indicator_name": "Treasury General Account (TGA) at Fed",
-        "frequency": "Weekly",
-        "latest_date": dt_assets or "2026-10-28",
-        "latest_value": round(tga / 1000.0, 1) if tga else 999.7,
-        "display_value": f"${tga / 1000.0:,.1f}B" if tga else "$999.7B",
-        "unit": "USD bn",
-        "policy_context": "Treasury cash buffer (target ~$750B-$1,000B)",
-        "status_pill": "neutral" if (tga and tga / 1000.0 < 1050) else "bad",
-        "operational_signal": "High TGA drains cash out of private banking system",
-        "chart_link": "us_net_liquidity_transmission",
-    })
-
-    records.append({
-        "institution": "Federal Reserve (Fed)",
-        "country_code": "US",
-        "indicator_name": "Overnight Reverse Repo Facility (ON RRP)",
-        "frequency": "Daily",
-        "latest_date": "2026-10-30",
-        "latest_value": round(rrp_bn, 2) if rrp_bn is not None else 4.38,
-        "display_value": f"${rrp_bn:.2f}B" if rrp_bn is not None else "$4.38B",
-        "unit": "USD bn",
-        "policy_context": "Money-market cash drain buffer",
-        "status_pill": "bad" if (rrp_bn and rrp_bn < 20.0) else "neutral",
-        "operational_signal": "Near-exhausted ($4.4B vs $2.55T peak); liquidity cushion spent",
-        "chart_link": "us_net_liquidity_transmission",
-    })
-
-    # 2. European Central Bank (Euro Area)
-    ea = read_canonical("euro_area_canonical_frame.json")
-    dt_ea, ea_assets = get_latest(ea, "eurosystem_total_assets") # EUR mn
-    ea_assets_bn = (ea_assets / 1000.0) if ea_assets else 5935.0
-
-    records.append({
-        "institution": "European Central Bank (ECB)",
-        "country_code": "EA",
-        "indicator_name": "Eurosystem Total Assets (Consolidated)",
-        "frequency": "Weekly",
-        "latest_date": dt_ea or "2026-10-19",
-        "latest_value": round(ea_assets_bn, 1),
-        "display_value": f"€{ea_assets_bn:,.1f}B",
-        "unit": "EUR bn",
-        "policy_context": "APP full runoff & PEPP reinvestment phase-out",
-        "status_pill": "neutral",
-        "operational_signal": "Controlled quantitative tightening across Eurosystem",
-        "chart_link": "global_central_bank_balance_sheets",
-    })
-
-    # 3. Bank of Japan
-    jp = read_canonical("japan_canonical_frame.json")
-    dt_jp, jp_assets = get_latest(jp, "boj_total_assets") # JPY 100mn
-    jp_assets_tn = (jp_assets / 10000.0) if jp_assets else 625.0
-
-    records.append({
-        "institution": "Bank of Japan (BoJ)",
-        "country_code": "JP",
-        "indicator_name": "Bank of Japan Total Assets",
-        "frequency": "Monthly",
-        "latest_date": dt_jp or "2026-09-01",
-        "latest_value": round(jp_assets_tn, 1),
-        "display_value": f"¥{jp_assets_tn:,.1f}T",
-        "unit": "JPY tn",
-        "policy_context": "JGB monthly purchase reduction schedule",
-        "status_pill": "neutral",
-        "operational_signal": "Transition away from Yield Curve Control (YCC)",
-        "chart_link": "global_central_bank_balance_sheets",
-    })
-
-    # 4. People's Bank of China
-    cn = read_canonical("china_canonical_frame.json")
-    dt_cn, cn_assets = get_latest(cn, "pbc_total_assets_akshare") # CNY tn
-    _, cn_reserve_m = get_latest(cn, "pbc_reserve_money_akshare") # CNY tn
-
-    records.append({
-        "institution": "People's Bank of China (PBC)",
-        "country_code": "CN",
-        "indicator_name": "PBC Balance Sheet Total Assets",
-        "frequency": "Monthly",
-        "latest_date": dt_cn or "2026-08-01",
-        "latest_value": round(cn_assets, 2) if cn_assets else 49.86,
-        "display_value": f"¥{cn_assets:,.2f}T" if cn_assets else "¥49.86T",
-        "unit": "CNY tn",
-        "policy_context": "Secondary market government bond trading & MLF",
-        "status_pill": "good" if (cn_assets and cn_assets > 45) else "neutral",
-        "operational_signal": "Structural liquidity support & credit expansion",
-        "chart_link": "global_central_bank_balance_sheets",
-    })
-
-    records.append({
-        "institution": "People's Bank of China (PBC)",
-        "country_code": "CN",
-        "indicator_name": "PBC Reserve Money (Base Money)",
-        "frequency": "Monthly",
-        "latest_date": dt_cn or "2026-08-01",
-        "latest_value": round(cn_reserve_m, 2) if cn_reserve_m else 40.18,
-        "display_value": f"¥{cn_reserve_m:,.2f}T" if cn_reserve_m else "¥40.18T",
-        "unit": "CNY tn",
-        "policy_context": "Banking system required & excess reserve pool",
-        "status_pill": "good" if (cn_reserve_m and cn_reserve_m > 38) else "neutral",
-        "operational_signal": "RRR cuts lowering cost of funding for banks",
-        "chart_link": "global_central_bank_balance_sheets",
-    })
-
+    # US net liquidity = Fed total assets − TGA − ON RRP, on dates where all three exist.
+    assets = dict(us.get("fed_total_assets", []))  # USD mn
+    tga = dict(us.get("treasury_general_account", []))  # USD mn
+    rrp = dict(us.get("overnight_reverse_repo", []))  # USD bn
+    net = sorted(
+        (d, assets[d] - tga[d] - rrp[d] * 1000.0)
+        for d in assets
+        if d in tga and d in rrp
+    )
+    specs = [
+        ("Federal Reserve (Fed)", "US", "US Net Liquidity (Assets − TGA − RRP)", "Weekly", net, 1000.0, "USD bn", "$", 1,
+         "Fed balance sheet net of Treasury cash and reverse-repo usage", "us_net_liquidity_transmission"),
+        ("Federal Reserve (Fed)", "US", "Fed Total Assets (Balance Sheet Level)", "Weekly", us.get("fed_total_assets"), 1000.0, "USD bn", "$", 1,
+         "Federal Reserve balance-sheet size", "us_net_liquidity_transmission"),
+        ("Federal Reserve (Fed)", "US", "Fed Treasury Securities Holdings Outright", "Weekly", us.get("fed_treasury_holdings"), 1000.0, "USD bn", "$", 1,
+         "SOMA Treasury portfolio", "us_net_liquidity_transmission"),
+        ("Federal Reserve (Fed)", "US", "Fed Mortgage-Backed Securities (MBS)", "Weekly", us.get("fed_mbs_holdings"), 1000.0, "USD bn", "$", 1,
+         "SOMA agency MBS portfolio", "us_net_liquidity_transmission"),
+        ("Federal Reserve (Fed)", "US", "Treasury General Account (TGA) at Fed", "Weekly", us.get("treasury_general_account"), 1000.0, "USD bn", "$", 1,
+         "Treasury cash balance at the Fed (a rise drains bank reserves)", "us_net_liquidity_transmission"),
+        ("Federal Reserve (Fed)", "US", "Overnight Reverse Repo Facility (ON RRP)", "Daily", us.get("overnight_reverse_repo"), 1.0, "USD bn", "$", 2,
+         "Money-market cash parked at the Fed", "us_net_liquidity_transmission"),
+        ("European Central Bank (ECB)", "EA", "Eurosystem Total Assets (Consolidated)", "Weekly", ea.get("eurosystem_total_assets"), 1000.0, "EUR bn", "€", 1,
+         "Eurosystem consolidated balance sheet", "global_central_bank_balance_sheets"),
+        ("Bank of Japan (BoJ)", "JP", "Bank of Japan Total Assets", "Monthly", jp.get("boj_total_assets"), 10000.0, "JPY tn", "¥", 1,
+         "BoJ balance sheet (JGB holdings dominate)", "global_central_bank_balance_sheets"),
+        ("People's Bank of China (PBC)", "CN", "PBC Balance Sheet Total Assets", "Monthly", cn.get("pbc_total_assets_akshare"), 1.0, "CNY tn", "¥", 2,
+         "PBC balance sheet", "global_central_bank_balance_sheets"),
+        ("People's Bank of China (PBC)", "CN", "PBC Reserve Money (Base Money)", "Monthly", cn.get("pbc_reserve_money_akshare"), 1.0, "CNY tn", "¥", 2,
+         "Currency in circulation plus bank reserves", "global_central_bank_balance_sheets"),
+    ]
+    for spec in specs:
+        item = record(*spec)
+        if item:
+            records.append(item)
     return records
 
 
 def _compute_em_external_vulnerability_monitor() -> list[dict[str, Any]]:
-    """Compile external debt solvency, Guidotti-Greenspan safety cushion, and reserve adequacy across EMs."""
-    def get_latest(series_list: list[dict], ind_id: str) -> tuple[str | None, float | None]:
-        for s in series_list:
-            if s.get("indicator_id") == ind_id:
-                obs = s.get("observations", [])
-                if obs:
-                    last = obs[-1]
-                    if isinstance(last, dict):
-                        return last.get("date"), float(last.get("value"))
-                    elif isinstance(last, list):
-                        return last[0], float(last[1])
+    """External-vulnerability table built only from canonical data.
+
+    Uses the latest *actual* observation of each series (projections such as IMF
+    WEO out-years are excluded) and never substitutes a default when a series
+    is missing; commentary is generated from the numbers shown.
+    """
+    today = datetime.now(UTC).date().isoformat()
+    cache: dict[str, Any] = {}
+
+    def series_for(fname: str, code: str, ind_id: str | None) -> tuple[str | None, float | None]:
+        if not ind_id:
+            return None, None
+        if fname not in cache:
+            path = OUTPUT / fname
+            cache[fname] = json.loads(path.read_text()).get("series", []) if path.exists() else []
+        for item in cache[fname]:
+            if item.get("indicator_id") != ind_id:
+                continue
+            if fname == "cee_canonical_frame.json" and item.get("country") != code:
+                continue
+            boundary = str(item.get("actual_through") or (item.get("metadata") or {}).get("actual_through") or today)
+            actual = []
+            for row in item.get("observations", []):
+                date = str(row[0])
+                comparable = f"{date}-12-31" if len(date) == 4 else date
+                projected = len(row) > 3 and bool(row[3])
+                if comparable[:10] <= boundary[:10] and comparable[:10] <= today and not projected:
+                    try:
+                        actual.append((date, float(row[1])))
+                    except (TypeError, ValueError):
+                        continue
+            if actual:
+                return actual[-1]
         return None, None
 
-    def read_canonical(fname: str) -> list[dict]:
-        p = OUTPUT / fname
-        if not p.exists():
-            return []
-        try:
-            return json.loads(p.read_text()).get("series", [])
-        except Exception:
-            return []
+    profiles = [
+        # name, code, frame, ST debt % reserves, CA % GDP, reserves, factor to USD bn, cluster
+        ("Turkey", "TR", "turkey_canonical_frame.json", "short_term_external_debt_pct_reserves", "current_account_gdp", "fx_reserves", 1.0, "Emerging & Frontier"),
+        ("South Africa", "ZA", "south_africa_canonical_frame.json", "short_term_external_debt_pct_reserves", "current_account_gdp", None, 1.0, "Emerging & Frontier"),
+        ("Egypt", "EG", "egypt_canonical_frame.json", "short_term_external_debt_pct_reserves", "current_account_gdp", "total_reserves_usd", 1.0, "Emerging & Frontier"),
+        ("Nigeria", "NG", "nigeria_canonical_frame.json", "short_term_external_debt_pct_reserves", "current_account_gdp", "total_reserves_usd", 1.0, "Emerging & Frontier"),
+        ("Kazakhstan", "KZ", "kazakhstan_canonical_frame.json", "short_term_external_debt_pct_reserves", "current_account_gdp", "total_reserves_usd", 1.0, "Emerging & Frontier"),
+        ("Uzbekistan", "UZ", "uzbekistan_canonical_frame.json", "short_term_external_debt_pct_reserves", "current_account_gdp", "total_reserves_usd", 1.0, "Emerging & Frontier"),
+        ("Poland", "PL", "cee_canonical_frame.json", "short_term_ext_debt", "current_account_pct_gdp", "fx_reserves", 1.0, "Central & Eastern Europe"),
+        ("Czechia", "CZ", "cee_canonical_frame.json", "short_term_ext_debt", "current_account_pct_gdp", "fx_reserves", 1.0, "Central & Eastern Europe"),
+        ("Hungary", "HU", "cee_canonical_frame.json", "short_term_ext_debt", "current_account_pct_gdp", "fx_reserves", 1.0, "Central & Eastern Europe"),
+        ("Romania", "RO", "cee_canonical_frame.json", "short_term_ext_debt", "current_account_pct_gdp", "fx_reserves", 1.0, "Central & Eastern Europe"),
+        # fx_reserves_akshare is published in USD trillions; Taiwan's CBC series in USD millions.
+        ("China", "CN", "china_canonical_frame.json", None, "current_account_gdp", "fx_reserves_akshare", 1000.0, "Asian Surplus Economies"),
+        ("South Korea", "KR", "south_korea_canonical_frame.json", None, "current_account_gdp", "foreign_reserves_usd", 1.0, "Asian Surplus Economies"),
+        ("Taiwan", "TW", "taiwan_canonical_frame.json", None, "current_account_gdp", "fx_reserves", 0.001, "Asian Surplus Economies"),
+    ]
+
+    # Emerging and frontier scopes without a curated profile use the standard ids
+    # (reserves in USD bn, as the templates publish them).
+    profiled = {row[1] for row in profiles}
+    for scope in data_first_scopes():
+        if scope.region in {"em", "frontier"} and scope.id not in profiled:
+            profiles.append((
+                scope.name_en, scope.id, scope.canonical_file, "short_term_external_debt_pct_reserves",
+                "current_account_gdp", "total_reserves_usd", 1.0, "Emerging & Frontier",
+            ))
 
     records: list[dict[str, Any]] = []
-
-    # 1. Emerging & Frontier Economies
-    em_profiles = [
-        ("Turkey", "TR", "turkey_canonical_frame.json", "short_term_external_debt_pct_reserves", "current_account_gdp", "fx_reserves", 1.0, "High rollover pressure; Guidotti-Greenspan breached (>100%), mitigated by tight monetary defense"),
-        ("South Africa", "ZA", "south_africa_canonical_frame.json", "short_term_external_debt_pct_reserves", "current_account_gdp", None, 62.5, "Sound reserve coverage against short-term debt; balanced current account supported by commodity terms of trade"),
-        ("Egypt", "EG", "egypt_canonical_frame.json", "short_term_external_debt_pct_reserves", "current_account_gdp", "total_reserves_usd", 1.0, "Substantial reserve replenishment post-Ras El-Hekma investment & IMF augmentation; deficit persists"),
-        ("Nigeria", "NG", "nigeria_canonical_frame.json", "short_term_external_debt_pct_reserves", "current_account_gdp", "total_reserves_usd", 1.0, "Hydrocarbon surplus generates external cushion; FX unification stabilizing official reserve accumulation"),
-        ("Kazakhstan", "KZ", "kazakhstan_canonical_frame.json", "short_term_external_debt_pct_reserves", "current_account_gdp", "total_reserves_usd", 1.0, "Strong sovereign solvency bolstered by National Fund (NFRK) foreign assets & low short-term debt"),
-        ("Uzbekistan", "UZ", "uzbekistan_canonical_frame.json", "short_term_external_debt_pct_reserves", "current_account_gdp", "total_reserves_usd", 1.0, "Exceptional reserve fortress driven by gold holdings (ST debt only 13.8% of reserves); high CA deficit"),
-    ]
-
-    for name, code, fname, st_id, ca_id, fx_id, fx_default, commentary in em_profiles:
-        s_list = read_canonical(fname)
-        dt_st, st_val = get_latest(s_list, st_id)
-        dt_ca, ca_val = get_latest(s_list, ca_id)
-        if fx_id:
-            dt_fx, fx_val = get_latest(s_list, fx_id)
+    for name, code, fname, st_id, ca_id, fx_id, factor, cluster in profiles:
+        dt_st, st = series_for(fname, code, st_id)
+        dt_ca, ca = series_for(fname, code, ca_id)
+        dt_fx, fx = series_for(fname, code, fx_id)
+        if st is None and ca is None and fx is None:
+            continue
+        fx_bn = fx * factor if fx is not None else None
+        if st is None:
+            gg_status, gg_pill = "No short-term external debt series", "neutral"
+        elif st > 100.0:
+            gg_status, gg_pill = "Breached (>100%)", "bad"
+        elif st >= 80.0:
+            gg_status, gg_pill = "Watch zone (80-100%)", "neutral"
         else:
-            dt_fx, fx_val = None, fx_default
-
-        fx_bn = fx_val if fx_val is not None else fx_default
-        st_num = round(st_val, 1) if st_val is not None else 100.0
-        ca_num = round(ca_val, 1) if ca_val is not None else -2.5
-
-        if st_num > 100.0:
-            gg_status = "Breached (>100%)"
-            gg_pill = "bad"
-        elif st_num >= 80.0:
-            gg_status = "Watch Zone (80-100%)"
-            gg_pill = "neutral"
-        else:
-            gg_status = "Comfortable (<80%)"
-            gg_pill = "good"
-
+            gg_status, gg_pill = "Covered (<80%)", "good"
+        parts = []
+        if st is not None:
+            parts.append(f"ST external debt {st:.0f}% of reserves ({dt_st})")
+        if ca is not None:
+            parts.append(f"current account {ca:+.1f}% of GDP ({dt_ca})")
+        if fx_bn is not None:
+            parts.append(f"reserves ${fx_bn:,.0f}bn ({dt_fx})")
         records.append({
             "country_name": name,
             "country_code": code,
-            "cluster": "Emerging & Frontier",
-            "guidotti_greenspan_ratio": st_num,
-            "guidotti_greenspan_display": f"{st_num:.1f}%",
+            "cluster": cluster,
+            "guidotti_greenspan_ratio": round(st, 1) if st is not None else None,
+            "guidotti_greenspan_display": f"{st:.1f}%" if st is not None else "n/a",
             "guidotti_status": gg_status,
             "guidotti_pill": gg_pill,
-            "current_account_gdp": ca_num,
-            "current_account_display": f"{ca_num:+.1f}%",
-            "ca_pill": "good" if ca_num >= 0 else ("neutral" if ca_num >= -3.0 else "bad"),
-            "fx_reserves_bn": round(fx_bn, 1),
-            "fx_reserves_display": f"${fx_bn:.1f}B",
-            "operational_commentary": commentary,
+            "current_account_gdp": round(ca, 1) if ca is not None else None,
+            "current_account_display": f"{ca:+.1f}%" if ca is not None else "n/a",
+            "ca_pill": "neutral" if ca is None else ("good" if ca >= 0 else ("neutral" if ca >= -3.0 else "bad")),
+            "fx_reserves_bn": round(fx_bn, 1) if fx_bn is not None else None,
+            "fx_reserves_display": f"${fx_bn:,.1f}B" if fx_bn is not None else "n/a",
+            "operational_commentary": "; ".join(parts).capitalize() if parts else "",
             "chart_link": "em_guidotti_greenspan_safety",
         })
-
-    # 2. Central & Eastern Europe (CEE-4)
-    cee_list = read_canonical("cee_canonical_frame.json")
-    cee_profiles = [
-        ("Poland", "PL", "Strong reserve fortress ($205B) with balanced current account and deep local-currency debt market"),
-        ("Czechia", "CZ", "Abundant reserves (>40% of GDP from legacy FX cap); comfortable trade and external solvency balance"),
-        ("Hungary", "HU", "Current account returned to structural surplus; external debt refinancing needs covered by reserves"),
-        ("Romania", "RO", "Twin deficit vulnerability (CA deficit -8.2% of GDP); heavy dependence on foreign capital inflows"),
-    ]
-
-    for name, code, commentary in cee_profiles:
-        c_s = [s for s in cee_list if s.get("country") == code]
-        dt_st, st_val = get_latest(c_s, "short_term_ext_debt")
-        dt_ca, ca_val = get_latest(c_s, "current_account_pct_gdp")
-        dt_fx, fx_val = get_latest(c_s, "fx_reserves")
-
-        st_num = round(st_val, 1) if st_val is not None else 80.0
-        ca_num = round(ca_val, 1) if ca_val is not None else 0.0
-        fx_bn = round(fx_val, 1) if fx_val is not None else 100.0
-
-        if st_num > 100.0:
-            gg_status = "Breached (>100%)"
-            gg_pill = "bad"
-        elif st_num >= 80.0:
-            gg_status = "Watch Zone (80-100%)"
-            gg_pill = "neutral"
-        else:
-            gg_status = "Comfortable (<80%)"
-            gg_pill = "good"
-
-        records.append({
-            "country_name": name,
-            "country_code": code,
-            "cluster": "Central & Eastern Europe",
-            "guidotti_greenspan_ratio": st_num,
-            "guidotti_greenspan_display": f"{st_num:.1f}%",
-            "guidotti_status": gg_status,
-            "guidotti_pill": gg_pill,
-            "current_account_gdp": ca_num,
-            "current_account_display": f"{ca_num:+.1f}%",
-            "ca_pill": "good" if ca_num >= 0 else ("neutral" if ca_num >= -3.0 else "bad"),
-            "fx_reserves_bn": fx_bn,
-            "fx_reserves_display": f"${fx_bn:.1f}B",
-            "operational_commentary": commentary,
-            "chart_link": "em_guidotti_greenspan_safety",
-        })
-
-    # 3. Asian EM Surplus Anchors
-    asian_profiles = [
-        ("China", "CN", "china_canonical_frame.json", "fx_reserves_akshare", "current_account_gdp", 3400.3, "World's largest FX reserve fortress ($3.4T); massive goods trade surplus reinforces external independence"),
-        ("South Korea", "KR", "south_korea_canonical_frame.json", "foreign_reserves_usd", "current_account_gdp", 436.2, "Deep tech export-driven current account surplus ($116B annualized); safe net creditor economy"),
-        ("Taiwan", "TW", "taiwan_canonical_frame.json", "fx_reserves", "current_account_gdp", 600.7, "Extreme current account surplus (+19.8% of GDP); massive net foreign asset position exceeds 100% of GDP"),
-    ]
-
-    for name, code, fname, fx_id, ca_id, default_res, commentary in asian_profiles:
-        s_list = read_canonical(fname)
-        dt_ca, ca_val = get_latest(s_list, ca_id)
-        dt_fx, fx_val = get_latest(s_list, fx_id)
-        if fx_id == "fx_reserves_akshare" and fx_val:
-            fx_bn = round(fx_val * 1000.0, 1)
-        elif fx_id == "fx_reserves" and fx_val and fx_val > 10000:
-            fx_bn = round(fx_val / 1000.0, 1)
-        else:
-            fx_bn = round(fx_val, 1) if fx_val else default_res
-
-        ca_num = round(ca_val, 1) if ca_val is not None else 4.0
-
-        records.append({
-            "country_name": name,
-            "country_code": code,
-            "cluster": "Asian EM Surplus Anchors",
-            "guidotti_greenspan_ratio": 25.0,
-            "guidotti_greenspan_display": "<30%",
-            "guidotti_status": "Net Creditor Fortress",
-            "guidotti_pill": "good",
-            "current_account_gdp": ca_num,
-            "current_account_display": f"{ca_num:+.1f}%",
-            "ca_pill": "good",
-            "fx_reserves_bn": fx_bn,
-            "fx_reserves_display": f"${fx_bn:,.1f}B",
-            "operational_commentary": commentary,
-            "chart_link": "em_guidotti_greenspan_safety",
-        })
-
     return records
+
+
+
+def _corr_strength(value: float) -> str:
+    size = abs(value)
+    strength = "strong" if size >= 0.7 else "moderate" if size >= 0.4 else "weak"
+    return f"{strength} {'positive' if value >= 0 else 'negative'}"
+
+
+def _sync_briefing_lines(sync: dict[str, Any], top: int = 3) -> list[str]:
+    """Strongest and weakest observed pairs per matrix; wording follows the numbers."""
+    order = sync.get("countries") or []
+    blocks = [
+        ("Headline CPI inflation", "inflation_correlation", "sample_period_cpi"),
+        ("Industrial production", "industrial_production_correlation", "sample_period_ip"),
+        ("10Y sovereign yields", "sovereign_yield_correlation", "sample_period_yield"),
+        ("Bruegel REER", "reer_correlation", "sample_period_reer"),
+    ]
+    lines: list[str] = []
+    for title, key, period_key in blocks:
+        matrix = sync.get(key) or {}
+        pairs = [
+            (c1, c2, matrix[c1][c2])
+            for i, c1 in enumerate(order) for c2 in order[i + 1:]
+            if isinstance(matrix.get(c1, {}).get(c2), (int, float))
+        ]
+        lines.append(f"- **{title}** ({sync.get(period_key) or 'no overlapping sample'}):")
+        if not pairs:
+            lines.append("  - No pair has enough overlapping monthly observations.")
+            continue
+        ranked = sorted(pairs, key=lambda item: item[2], reverse=True)
+        fmt = lambda items: ", ".join(f"{a} vs. {b} (**{v:.2f}**, {_corr_strength(v)})" for a, b, v in items)
+        lines.append(f"  - Most synchronised: {fmt(ranked[:top])}.")
+        lines.append(f"  - Least synchronised: {fmt(ranked[-top:][::-1])}.")
+    return lines
+
+
+def _fmt_score(value: Any) -> str:
+    return f"{value:.1f}" if isinstance(value, (int, float)) else "n/a"
 
 
 def _generate_briefing(payload: dict[str, Any]) -> str:
@@ -1883,7 +1752,7 @@ def _generate_briefing(payload: dict[str, Any]) -> str:
     lines = [
         "# Global Macro Workbench Intelligence Briefing",
         "",
-        f"**Generated**: {generated} | **Coverage**: 14 Economies (US, EA, UK, JP, CN, ZA, TR, HK, KR, TW, PL, CZ, HU, RO)",
+        f"**Generated**: {generated} | **Coverage**: {len(all_scopes())} economies ({', '.join(s.id for s in all_scopes())})",
         "",
         "---",
         "",
@@ -1902,7 +1771,7 @@ def _generate_briefing(payload: dict[str, Any]) -> str:
         i_lbl = dims.get("inflation", {}).get("label", "n/a")
         p_lbl = dims.get("policy", {}).get("label", "n/a")
         lines.append(
-            f"| **{name} ({code})** | {r.get('cyclical_score', 0):.1f} | {r.get('structural_score', 0):.1f} | **{r.get('composite_label', 'mixed')}** | {g_lbl} | {i_lbl} | {p_lbl} | {q.get('score', 0):.1f} ({q.get('label', 'n/a')}) |"
+            f"| **{name} ({code})** | {_fmt_score(r.get('cyclical_score'))} | {_fmt_score(r.get('structural_score'))} | **{r.get('composite_label', 'mixed')}** | {g_lbl} | {i_lbl} | {p_lbl} | {q.get('score', 0):.1f} ({q.get('label', 'n/a')}) |"
         )
 
     lines.extend([
@@ -1964,22 +1833,9 @@ def _generate_briefing(payload: dict[str, Any]) -> str:
         "",
         "---",
         "",
-        "## 4. Cross-Country Synchronization (36-Month Rolling Correlation)",
+        "## 4. Cross-Country Synchronization (pairwise 36-month correlation)",
         "",
-        "- **Nominal Cycle (Headline CPI Inflation)**:",
-        f"  - Highly coupled core: US vs. Euro Area (**{inf_matrix.get('US', {}).get('EA', 'n/a')}**), US vs. UK (**{inf_matrix.get('US', {}).get('UK', 'n/a')}**), Euro Area vs. UK (**{inf_matrix.get('EA', {}).get('UK', 'n/a')}**).",
-        f"  - Independent domestic price cycle: China vs. US (**{inf_matrix.get('CN', {}).get('US', 'n/a')}**), China vs. Euro Area (**{inf_matrix.get('CN', {}).get('EA', 'n/a')}**).",
-        "- **Real Business Cycle (Industrial Production)**:",
-        f"  - Transatlantic industrial linkage: US vs. Euro Area (**{ip_matrix.get('US', {}).get('EA', 'n/a')}**), US vs. UK (**{ip_matrix.get('US', {}).get('UK', 'n/a')}**).",
-        f"  - Manufacturing divergence: China vs. US (**{ip_matrix.get('CN', {}).get('US', 'n/a')}**), Japan vs. US (**{ip_matrix.get('JP', {}).get('US', 'n/a')}**).",
-        "- **Financial & Capital Flows (10Y Sovereign Yields 36M Rolling)**:",
-        f"  - European sovereign rates coupling: Euro Area Bund vs. UK Gilt (**{yield_matrix.get('EA', {}).get('UK', 'n/a')}**).",
-        f"  - Global dollar anchor linkage: US vs. UK (**{yield_matrix.get('US', {}).get('UK', 'n/a')}**), US vs. Euro Area (**{yield_matrix.get('US', {}).get('EA', 'n/a')}**).",
-        f"  - Divergent duration / yield curve regimes: US vs. Japan (**{yield_matrix.get('US', {}).get('JP', 'n/a')}**), US vs. South Africa (**{yield_matrix.get('US', {}).get('ZA', 'n/a')}**).",
-        "- **External Trade & Currency Couplings (Bruegel REER 36M Rolling)**:",
-        f"  - European monetary union & close trading partners: Euro Area vs. UK (**{sync.get('reer_correlation', {}).get('EA', {}).get('UK', 'n/a')}**), Euro Area vs. Poland (**{sync.get('reer_correlation', {}).get('EA', {}).get('PL', 'n/a')}**), Euro Area vs. Czechia (**{sync.get('reer_correlation', {}).get('EA', {}).get('CZ', 'n/a')}**).",
-        f"  - Transatlantic relative price competitiveness: US vs. Euro Area (**{sync.get('reer_correlation', {}).get('US', {}).get('EA', 'n/a')}**), US vs. UK (**{sync.get('reer_correlation', {}).get('US', {}).get('UK', 'n/a')}**).",
-        f"  - Asian currency divergence: Japan vs. US (**{sync.get('reer_correlation', {}).get('JP', {}).get('US', 'n/a')}**), China vs. US (**{sync.get('reer_correlation', {}).get('CN', {}).get('US', 'n/a')}**).",
+        *_sync_briefing_lines(sync),
         "",
         "---",
         "",

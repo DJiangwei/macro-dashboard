@@ -1,0 +1,515 @@
+# Scope registry: the single list of pages the dashboard builds.
+#
+# Every consumer (builders, navigation, archive, catalog, freshness audit,
+# coverage matrix, workbench, Chart Studio, My Dashboard, Policy Tracker,
+# validation and the scheduled refresh) reads this file. Adding a country is
+# one entry here plus its indicator YAML.
+#
+# Fields
+#   id            scope code used across outputs (ISO-like; UK and EA are kept)
+#   kind          country | region | market
+#   slug          output/<slug>.html, output/<slug>_canonical_frame.json,
+#                 output/<slug>_dashboard_summary.json
+#   region        dm | em | cee | frontier (grouping on cross-country pages)
+#   pipeline      data_first (scripts/build_scope.py) | cee_v4 (build_v4.py, legacy)
+#   central_bank  name and policy instrument shown on the Policy Tracker
+#   indicators    indicator YAML for data_first scopes
+#   headline      summary card: first charted id in `indicators`, rendered with
+#                 `format` (Python str.format with value/date), stored under `key`
+#   fetch_workers parallel fetches during a refresh (be gentle with keyless APIs)
+#   quick_refresh refreshed on weekday quick runs (daily FX/rates/markets data)
+#   roles         indicator ids that play a cross-country role, first observed wins.
+#                 Defaults: policy_rate [policy_rate], cpi_yoy [cpi_inflation];
+#                 policy_rate_market (optional) is the market rate used for real rates.
+#                 energy_cpi_yoy (default energy_cpi_yoy); FX for local-currency oil:
+#                 fx_per_usd (local per USD), fx_usd_per_local (USD per local, e.g. EUR/USD)
+#                 or fx_per_eur (local per EUR, crossed through EA:eur_usd).
+
+scopes:
+  - id: HU
+    kind: country
+    slug: hungary
+    name: {en: Hungary, zh: 匈牙利}
+    flag: "🇭🇺"
+    region: cee
+    pipeline: cee_v4
+    currency: HUF
+    institution: MNB
+    central_bank:
+      name: {en: "Magyar Nemzeti Bank (MNB)", zh: "匈牙利国家银行 (MNB)"}
+      policy_tool: {en: MNB Base Rate, zh: "MNB 基准利率 (Base Rate)"}
+    roles:
+      cpi_yoy: [cpi_yoy]
+      fx_per_eur: [fx_vs_eur]
+
+  - id: PL
+    kind: country
+    slug: poland
+    name: {en: Poland, zh: 波兰}
+    flag: "🇵🇱"
+    region: cee
+    pipeline: cee_v4
+    currency: PLN
+    institution: NBP
+    central_bank:
+      name: {en: "Narodowy Bank Polski (NBP)", zh: "波兰国家银行 (NBP)"}
+      policy_tool: {en: NBP Reference Rate, zh: NBP 参考基准利率}
+    roles:
+      cpi_yoy: [cpi_yoy]
+      fx_per_eur: [fx_vs_eur]
+
+  - id: CZ
+    kind: country
+    slug: czechia
+    name: {en: Czechia, zh: 捷克}
+    flag: "🇨🇿"
+    region: cee
+    pipeline: cee_v4
+    currency: CZK
+    institution: CNB
+    central_bank:
+      name: {en: "Czech National Bank (CNB)", zh: "捷克国家银行 (CNB)"}
+      policy_tool: {en: 2-Week Repo Rate, zh: "两周回购基准利率 (2W Repo)"}
+    roles:
+      cpi_yoy: [cpi_yoy]
+      fx_per_eur: [fx_vs_eur]
+
+  - id: RO
+    kind: country
+    slug: romania
+    name: {en: Romania, zh: 罗马尼亚}
+    flag: "🇷🇴"
+    region: cee
+    pipeline: cee_v4
+    currency: RON
+    institution: BNR
+    central_bank:
+      name: {en: "National Bank of Romania (BNR)", zh: "罗马尼亚国家银行 (BNR)"}
+      policy_tool: {en: Monetary Policy Rate, zh: 货币政策基准利率}
+    roles:
+      cpi_yoy: [cpi_yoy]
+      fx_per_eur: [fx_vs_eur]
+
+  - id: CN
+    kind: country
+    slug: china
+    name: {en: China, zh: 中国}
+    flag: "🇨🇳"
+    region: em
+    pipeline: data_first
+    indicators: config/china_indicators.yaml
+    currency: CNY
+    institution: PBC
+    central_bank:
+      name: {en: "People's Bank of China (PBC)", zh: "中国人民银行 (PBC)"}
+      policy_tool: {en: "1Y Loan Prime Rate (LPR)", zh: "一年期贷款市场报价利率 (1Y LPR)"}
+    framework_label: GS China Macro Framework
+    headline:
+      indicators: [usd_cny_midpoint]
+      key: usd_cny_latest
+      label: Latest USD/CNY fixing
+      format: "{value:.4f} ({date})"
+    fetch_workers: 4
+    quick_refresh: true
+    roles:
+      policy_rate: [lpr_1y_akshare, policy_rate]
+      cpi_yoy: [cpi_yoy_akshare, cpi_inflation]
+      fx_per_usd: [usd_cny_midpoint]
+
+  - id: EA
+    kind: region
+    slug: euro_area
+    name: {en: Euro Area, zh: 欧元区}
+    flag: "🇪🇺"
+    region: dm
+    pipeline: data_first
+    indicators: config/euro_area_indicators.yaml
+    currency: EUR
+    institution: ECB
+    central_bank:
+      name: {en: "European Central Bank (ECB)", zh: "欧洲中央银行 (ECB)"}
+      policy_tool: {en: "Deposit Facility Rate (DFR)", zh: "存款便利利率 (DFR)"}
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [policy_rate]
+      key: policy_rate_latest
+      label: Deposit Facility Rate
+      format: "{value:.2f}% ({date})"
+    fetch_workers: 6
+    quick_refresh: true
+    roles:
+      cpi_yoy: [hicp_inflation, cpi_inflation]
+      energy_cpi_yoy: [hicp_energy_inflation]
+      fx_usd_per_local: [eur_usd]
+
+  - id: JP
+    kind: country
+    slug: japan
+    name: {en: Japan, zh: 日本}
+    flag: "🇯🇵"
+    region: dm
+    pipeline: data_first
+    indicators: config/japan_indicators.yaml
+    currency: JPY
+    institution: BoJ
+    central_bank:
+      name: {en: "Bank of Japan (BoJ)", zh: "日本银行 (BoJ)"}
+      policy_tool: {en: Uncollateralized O/N Call Rate Target, zh: 无担保隔夜拆借利率目标}
+    framework_label: GS Japan Macro Framework
+    headline:
+      indicators: [policy_rate]
+      key: boj_rate_latest
+      label: BoJ policy rate
+      format: "{value:.2f}% ({date})"
+    fetch_workers: 4
+    quick_refresh: true
+    roles:
+      fx_per_usd: [usd_jpy]
+
+  - id: ZA
+    kind: country
+    slug: south_africa
+    name: {en: South Africa, zh: 南非}
+    flag: "🇿🇦"
+    region: em
+    pipeline: data_first
+    indicators: config/south_africa_indicators.yaml
+    currency: ZAR
+    institution: SARB
+    central_bank:
+      name: {en: "South African Reserve Bank (SARB)", zh: "南非储备银行 (SARB)"}
+      policy_tool: {en: SARB Main Repo Rate, zh: SARB 官方回购基准利率}
+    framework_label: GS CEEMEA Macro Framework
+    headline:
+      indicators: [policy_rate]
+      key: repo_rate_latest
+      label: SARB repo rate
+      format: "{value:.2f}% ({date})"
+    fetch_workers: 4
+    quick_refresh: true
+    roles:
+      fx_per_usd: [zar_usd]
+
+  - id: UK
+    kind: country
+    slug: uk
+    name: {en: United Kingdom, zh: 英国}
+    flag: "🇬🇧"
+    region: dm
+    pipeline: data_first
+    indicators: config/uk_indicators.yaml
+    currency: GBP
+    institution: BoE
+    central_bank:
+      name: {en: "Bank of England (BoE)", zh: "英格兰银行 (BoE)"}
+      policy_tool: {en: Official Bank Rate, zh: 官方银行基准利率}
+    framework_label: GS UK Macro Framework
+    headline:
+      indicators: [bank_rate]
+      key: bank_rate_latest
+      label: Bank Rate
+      format: "{value:.2f}% ({date})"
+    fetch_workers: 4
+    quick_refresh: true
+    roles:
+      policy_rate: [bank_rate]
+      cpi_yoy: [cpi_yoy, cpi_inflation]
+      energy_cpi_yoy: [household_energy_cpi_yoy]
+      fx_usd_per_local: [gbp_usd]
+
+  - id: US
+    kind: country
+    slug: us
+    name: {en: United States, zh: 美国}
+    flag: "🇺🇸"
+    region: dm
+    pipeline: data_first
+    indicators: config/us_indicators.yaml
+    currency: USD
+    institution: Fed
+    central_bank:
+      name: {en: "Federal Reserve (Fed)", zh: "美联储 (Federal Reserve)"}
+      policy_tool: {en: Fed Funds Target Upper, zh: 联邦基金利率目标上限}
+    framework_label: GS US Macro Framework
+    headline:
+      indicators: [daily_fed_funds, effective_fed_funds]
+      key: fed_funds_latest
+      label: Fed funds
+      format: "{value:.2f}% ({date})"
+    fetch_workers: 4
+    quick_refresh: true
+    roles:
+      policy_rate: [fed_target_upper]
+      policy_rate_market: [effective_fed_funds, daily_fed_funds]
+      energy_cpi_yoy: [energy_cpi_inflation]
+
+  - id: TR
+    kind: country
+    slug: turkey
+    name: {en: Turkey, zh: 土耳其}
+    flag: "🇹🇷"
+    region: em
+    pipeline: data_first
+    indicators: config/turkey_indicators.yaml
+    currency: TRY
+    institution: TCMB
+    central_bank:
+      name: {en: "Central Bank of the Republic of Turkey (TCMB)", zh: "土耳其共和国中央银行 (TCMB)"}
+      policy_tool: {en: 1-Week Repo Auction Rate, zh: "一周回购拍卖利率 (1-Week Repo)"}
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [try_usd]
+      key: usd_try_latest
+      label: USD/TRY spot
+      format: "{value:.4f} ({date})"
+    fetch_workers: 6
+    quick_refresh: true
+    roles:
+      energy_cpi_yoy: [energy_hicp_inflation]
+      fx_per_usd: [usd_try_bis, try_usd]
+
+  - id: HK
+    kind: country
+    slug: hong_kong
+    name: {en: Hong Kong, zh: 中国香港}
+    flag: "🇭🇰"
+    region: frontier
+    pipeline: data_first
+    indicators: config/hong_kong_indicators.yaml
+    currency: HKD
+    institution: HKMA
+    central_bank:
+      name: {en: "Hong Kong Monetary Authority (HKMA)", zh: "香港金融管理局 (HKMA)"}
+      policy_tool: {en: "HKMA Base Rate (Fed Anchor)", zh: "金管局基本利率 (盯住美联储)"}
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_hkd]
+      key: usd_hkd_latest
+      label: USD/HKD spot
+      format: "{value:.4f} ({date})"
+    fetch_workers: 6
+    roles:
+      fx_per_usd: [usd_hkd]
+
+  - id: KR
+    kind: country
+    slug: south_korea
+    name: {en: South Korea, zh: 韩国}
+    flag: "🇰🇷"
+    region: em
+    pipeline: data_first
+    indicators: config/south_korea_indicators.yaml
+    currency: KRW
+    institution: BOK
+    central_bank:
+      name: {en: "Bank of Korea (BOK)", zh: "韩国银行 (BOK)"}
+      policy_tool: {en: BOK Base Rate, zh: 韩国银行基准利率}
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [krw_usd]
+      key: krw_usd_latest
+      label: USD/KRW spot
+      format: "{value:.2f} ({date})"
+    fetch_workers: 6
+    quick_refresh: true
+    roles:
+      fx_per_usd: [krw_usd]
+
+  - id: TW
+    kind: country
+    slug: taiwan
+    name: {en: Taiwan, zh: 中国台湾}
+    flag: "🇹🇼"
+    region: em
+    pipeline: data_first
+    indicators: config/taiwan_indicators.yaml
+    currency: TWD
+    institution: CBC
+    central_bank:
+      name: {en: "Central Bank of the Republic of China (CBC)", zh: "中央银行 (CBC)"}
+      policy_tool: {en: CBC Discount Rate, zh: "重贴现率 (Discount Rate)"}
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_twd]
+      key: usd_twd_latest
+      label: USD/TWD spot
+      format: "{value:.2f} ({date})"
+    fetch_workers: 6
+    quick_refresh: true
+    roles:
+      policy_rate: [policy_rate, collateral_rate]
+      fx_per_usd: [usd_twd]
+
+  - id: IN
+    kind: country
+    slug: india
+    name: {en: India, zh: 印度}
+    flag: "🇮🇳"
+    region: em
+    pipeline: data_first
+    indicators: config/countries/india.yaml
+    currency: INR
+    institution: RBI
+    central_bank:
+      name: {en: "Reserve Bank of India (RBI)", zh: "印度储备银行 (RBI)"}
+      policy_tool: {en: Policy Repo Rate, zh: 政策回购利率}
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_inr, usd_inr_bis]
+      key: usd_inr_latest
+      label: USD/INR (Fed H.10)
+      format: "{value:.2f} ({date})"
+    fetch_workers: 6
+    roles:
+      fx_per_usd: [usd_inr, usd_inr_bis]
+
+  - id: KZ
+    kind: country
+    slug: kazakhstan
+    name: {en: Kazakhstan, zh: 哈萨克斯坦}
+    flag: "🇰🇿"
+    region: frontier
+    pipeline: data_first
+    indicators: config/kazakhstan_indicators.yaml
+    currency: KZT
+    institution: NBK
+    central_bank:
+      name: {en: "National Bank of Kazakhstan (NBK)", zh: "哈萨克斯坦国家银行 (NBK)"}
+      policy_tool: {en: NBK Base Rate, zh: NBK 基准利率}
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_kzt]
+      key: usd_kzt_latest
+      label: USD/KZT official rate
+      format: "{value:.2f} ({date})"
+    fetch_workers: 6
+    roles:
+      fx_per_usd: [usd_kzt]
+
+  - id: UZ
+    kind: country
+    slug: uzbekistan
+    name: {en: Uzbekistan, zh: 乌兹别克斯坦}
+    flag: "🇺🇿"
+    region: frontier
+    pipeline: data_first
+    indicators: config/uzbekistan_indicators.yaml
+    currency: UZS
+    institution: CBU
+    central_bank:
+      name: {en: "Central Bank of Uzbekistan (CBU)", zh: "乌兹别克斯坦中央银行 (CBU)"}
+      policy_tool: {en: CBU Policy Rate, zh: CBU 政策利率}
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_uzs]
+      key: usd_uzs_latest
+      label: USD/UZS official rate
+      format: "{value:,.2f} ({date})"
+    fetch_workers: 6
+    roles:
+      fx_per_usd: [usd_uzs]
+
+  - id: EG
+    kind: country
+    slug: egypt
+    name: {en: Egypt, zh: 埃及}
+    flag: "🇪🇬"
+    region: frontier
+    pipeline: data_first
+    indicators: config/egypt_indicators.yaml
+    currency: EGP
+    institution: CBE
+    central_bank:
+      name: {en: "Central Bank of Egypt (CBE)", zh: "埃及中央银行 (CBE)"}
+      policy_tool: {en: Overnight Deposit Rate, zh: 隔夜存款基准利率}
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_egp]
+      key: usd_egp_latest
+      label: USD/EGP official rate
+      format: "{value:.2f} ({date})"
+    fetch_workers: 6
+    roles:
+      fx_per_usd: [usd_egp]
+
+  - id: NG
+    kind: country
+    slug: nigeria
+    name: {en: Nigeria, zh: 尼日利亚}
+    flag: "🇳🇬"
+    region: frontier
+    pipeline: data_first
+    indicators: config/nigeria_indicators.yaml
+    currency: NGN
+    institution: CBN
+    central_bank:
+      name: {en: "Central Bank of Nigeria (CBN)", zh: "尼日利亚中央银行 (CBN)"}
+      policy_tool: {en: "Monetary Policy Rate (MPR)", zh: "货币政策基准利率 (MPR)"}
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_ngn]
+      key: usd_ngn_latest
+      label: USD/NGN official rate
+      format: "{value:,.2f} ({date})"
+    fetch_workers: 6
+
+  # ---------------------------------------------------------------- markets
+  # Market pages build after the economies (they may read country frames).
+    roles:
+      fx_per_usd: [usd_ngn]
+  - id: ENERGY
+    kind: market
+    slug: energy
+    name: {en: Energy, zh: 能源}
+    flag: "⚡"
+    region: markets
+    pipeline: data_first
+    indicators: config/markets/energy.yaml
+    currency: USD
+    institution: EIA
+    framework_label: Market Energy Framework
+    headline:
+      indicators: [brent_spot]
+      key: brent_latest
+      label: Brent spot (EIA)
+      format: "{value:.2f} USD/bbl ({date})"
+    fetch_workers: 4
+    quick_refresh: true
+
+  - id: PRECIOUS
+    kind: market
+    slug: precious_metals
+    name: {en: Precious Metals, zh: 贵金属}
+    flag: "🥇"
+    region: markets
+    pipeline: data_first
+    indicators: config/markets/precious_metals.yaml
+    currency: USD
+    institution: COMEX
+    framework_label: Market Precious Metals Framework
+    headline:
+      indicators: [gold_front_futures, gold_monthly_imf]
+      key: gold_latest
+      label: Gold (COMEX front month)
+      format: "{value:,.1f} USD/oz ({date})"
+    fetch_workers: 4
+    quick_refresh: true
+
+  - id: BASE
+    kind: market
+    slug: base_metals
+    name: {en: Base Metals, zh: 基本金属}
+    flag: "🔩"
+    region: markets
+    pipeline: data_first
+    indicators: config/markets/base_metals.yaml
+    currency: USD
+    institution: LME
+    framework_label: Market Base Metals Framework
+    headline:
+      indicators: [lme_copper_3m, copper_monthly_imf]
+      key: copper_latest
+      label: Copper (LME 3-month)
+      format: "{value:,.0f} USD/t ({date})"
+    fetch_workers: 4
+    quick_refresh: true

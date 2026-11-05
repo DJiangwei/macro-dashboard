@@ -1,0 +1,266 @@
+{
+ "scope": "CN",
+ "generated": "2026-11-05",
+ "inflation": {
+  "rows": [
+   {
+    "id": "cpi_yoy_akshare",
+    "label_en": "CPI Inflation, YoY",
+    "label_zh": "CPI同比",
+    "unit": "%",
+    "source": "AKShare / Eastmoney Data Center",
+    "quality": "watch",
+    "latest": {
+     "value": 0.9,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 0.8,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": -0.3,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "cpi_yoy_akshare",
+      "2026-09-01"
+     ]
+    ],
+    "ann_3m": {
+     "value": 2.02,
+     "date": "2026-09-01",
+     "base_date": "2026-07-01",
+     "from": "cpi_mom_akshare",
+     "method": "compounded_mom"
+    },
+    "ann_6m": {
+     "value": 0.8,
+     "date": "2026-09-01",
+     "base_date": "2026-04-01",
+     "from": "cpi_mom_akshare",
+     "method": "compounded_mom"
+    }
+   },
+   {
+    "id": "urban_cpi_yoy_akshare",
+    "label_en": "Urban CPI, YoY",
+    "label_zh": "城市CPI同比",
+    "unit": "%",
+    "source": "AKShare / Eastmoney Data Center",
+    "quality": "watch",
+    "latest": {
+     "value": 0.9,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 0.8,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": -0.2,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "urban_cpi_yoy_akshare",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "rural_cpi_yoy_akshare",
+    "label_en": "Rural CPI, YoY",
+    "label_zh": "农村CPI同比",
+    "unit": "%",
+    "source": "AKShare / Eastmoney Data Center",
+    "quality": "watch",
+    "latest": {
+     "value": 0.8,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 0.7,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": -0.5,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "rural_cpi_yoy_akshare",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "ppi_yoy_akshare",
+    "label_en": "PPI Inflation, YoY",
+    "label_zh": "PPI同比",
+    "unit": "%",
+    "source": "AKShare / Eastmoney Data Center",
+    "quality": "watch",
+    "latest": {
+     "value": 5.0,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 3.8,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": -2.3,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "ppi_yoy_akshare",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "enterprise_goods_price_yoy_akshare",
+    "label_en": "Enterprise Goods Prices, YoY",
+    "label_zh": "企业商品价格总指数同比",
+    "unit": "%",
+    "source": "AKShare / Eastmoney Data Center",
+    "quality": "watch",
+    "latest": {
+     "value": 6.14124872,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 5.54984584,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": -0.6103764,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "enterprise_goods_price_yoy_akshare",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "enterprise_energy_goods_price_yoy_akshare",
+    "label_en": "Enterprise Coal/Oil/Power Prices, YoY",
+    "label_zh": "企业商品煤油电价格同比",
+    "unit": "%",
+    "source": "AKShare / Eastmoney Data Center",
+    "quality": "watch",
+    "latest": {
+     "value": 15.60874089,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 12.44680851,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 3.44456405,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "enterprise_energy_goods_price_yoy_akshare",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "enterprise_mineral_goods_price_yoy_akshare",
+    "label_en": "Enterprise Mineral Goods Prices, YoY",
+    "label_zh": "企业商品矿产品价格同比",
+    "unit": "%",
+    "source": "AKShare / Eastmoney Data Center",
+    "quality": "watch",
+    "latest": {
+     "value": -3.73406193,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 2.7332705,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 6.18955513,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "enterprise_mineral_goods_price_yoy_akshare",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "enterprise_agri_goods_price_yoy_akshare",
+    "label_en": "Enterprise Agri Goods Prices, YoY",
+    "label_zh": "企业商品农产品价格同比",
+    "unit": "%",
+    "source": "AKShare / Eastmoney Data Center",
+    "quality": "watch",
+    "latest": {
+     "value": 4.5154185,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 4.80349345,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": -15.2194211,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "enterprise_agri_goods_price_yoy_akshare",
+      "2026-09-01"
+     ]
+    ]
+   }
+  ]
+ },
+ "labour": {
+  "rows": [
+   {
+    "id": "unemployment",
+    "label_en": "Unemployment Rate",
+    "label_zh": "失业率",
+    "unit": "%",
+    "source": "World Bank WDI / ILO estimate",
+    "quality": "watch",
+    "latest": {
+     "value": 4.615,
+     "date": "2025"
+    },
+    "prior": {
+     "value": 4.59,
+     "date": "2024"
+    },
+    "year_ago": null,
+    "derivation": "observed",
+    "refs": [
+     [
+      "unemployment",
+      "2025"
+     ]
+    ]
+   }
+  ]
+ }
+}

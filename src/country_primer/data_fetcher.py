@@ -33,6 +33,7 @@ import zipfile
 import requests
 import yaml
 
+from .bis_policy import BIS_CBPOL_PAGE_URL, fetch_bis_policy_rate_path, glitch_note
 from .catalog import load_countries
 from .data_quality import assess_series_quality
 from .fetch import CACHE_DIR, Series, cache_path, fetch_ecb_fx, fetch_eurostat, fetch_wb, fetch_yahoo, finalize_series
@@ -121,13 +122,14 @@ BVB_BET_PROFILE_URL = "https://m.bvb.ro/FinancialInstruments/Indices/IndicesProf
 BVB_INDEX_PERFORMANCE_URL = "https://www.bvb.ro/FinancialInstruments/Indices/IndicesPerformance"
 EUROSTAT_DATA_URL = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}?{params}"
 INSSE_TEMPO_PIVOT_URL = "http://statistici.insse.ro:8077/tempo-ins/pivot"
-GIE_AGSI_BASE_URL = "https://agsi.gie.eu/api"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _XLSX_NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
-CONFIG_DIR = Path(__file__).resolve().parents[2] / "config"
+ROOT = Path(__file__).resolve().parents[2]
+CONFIG_DIR = ROOT / "config"
 _POLICY_RATE_CACHE: dict | None = None
+_BIS_POLICY_SERIES_CACHE: dict[str, tuple[Series | None, str]] = {}
 
 
 FRED_FX_RESERVE_SERIES = {
@@ -1106,7 +1108,54 @@ def _load_policy_rate_payload() -> dict:
     return _POLICY_RATE_CACHE
 
 
+def _bis_policy_rate_series(country: str, spec: IndicatorSpec) -> tuple[Series | None, str]:
+    """Primary path: BIS WS_CBPOL daily policy rates collapsed to confirmed events."""
+    if country in _BIS_POLICY_SERIES_CACHE:
+        return _BIS_POLICY_SERIES_CACHE[country]
+    try:
+        path = fetch_bis_policy_rate_path(country, start="2010-01-01")
+    except (requests.RequestException, ValueError, KeyError) as exc:
+        result: tuple[Series | None, str] = (None, f"BIS WS_CBPOL request failed: {type(exc).__name__}")
+        _BIS_POLICY_SERIES_CACHE[country] = result
+        return result
+    if path is None or not path.events:
+        result = (None, "BIS WS_CBPOL returned no observations")
+        _BIS_POLICY_SERIES_CACHE[country] = result
+        return result
+    note = (
+        f"BIS central bank policy rates (WS_CBPOL, daily) as reported by {path.source_ref or 'the central bank'}; "
+        f"definition: {(path.compilation or 'official policy rate').rstrip('. ')}. Event-dated: one row per confirmed level change "
+        f"plus an as-of row for the latest daily observation ({path.last_observation_date})."
+        + glitch_note(path.glitches)
+    )
+    series = finalize_series(Series(
+        key=spec.indicator_id,
+        label=spec.label,
+        country=country,
+        source="BIS central bank policy rates",
+        series_id=path.series_id,
+        unit="%",
+        frequency="event",
+        last_update=path.last_observation_date,
+        source_url=BIS_CBPOL_PAGE_URL,
+        observations=list(path.events),
+        available=True,
+        note=note,
+    ))
+    result = (series, "")
+    _BIS_POLICY_SERIES_CACHE[country] = result
+    return result
+
+
 def _policy_rate_series(country: str, spec: IndicatorSpec) -> Series | None:
+    """BIS first; the manual config/policy_rates.yaml path is only a fallback."""
+    series, _reason = _bis_policy_rate_series(country, spec)
+    if series is not None:
+        return series
+    return _manual_policy_rate_series(country, spec)
+
+
+def _manual_policy_rate_series(country: str, spec: IndicatorSpec) -> Series | None:
     payload = _load_policy_rate_payload()
     raw = (payload.get("policy_rates") or {}).get(country)
     if not raw:
@@ -1170,26 +1219,36 @@ def _fetch_eurostat_monthly_fx_end(currency: str, since: str) -> list[tuple[str,
 
 
 class PolicyRateFetcher(BaseFetcher):
-    """Official policy-rate definitions maintained in config/policy_rates.yaml."""
+    """Official policy rates: BIS WS_CBPOL daily feed, manual YAML only as fallback."""
 
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
         if spec.indicator_id != "policy_rate":
             return []
-        series = _policy_rate_series(country, spec)
-        if not series:
+        raw = (_load_policy_rate_payload().get("policy_rates") or {}).get(country) or {}
+        rate_label = raw.get("rate_name", "policy rate")
+        series, bis_failure = _bis_policy_rate_series(country, spec)
+        if series is not None:
+            rows = _series_to_rows(series, spec, unit="%", note=series.note)
+            for row in rows:
+                row["quality_status"] = "verified"
+                row["quality_note"] = f"{series.note} Target policy-rate label: {rate_label}.".strip()
+            return rows
+        manual = _manual_policy_rate_series(country, spec)
+        if not manual:
             return []
+        manual_last = manual.observations[-1][0] if manual.observations else "unknown"
         rows = _series_to_rows(
-            series,
+            manual,
             spec,
             unit="%",
-            note="Official central-bank policy-rate definition; event-dated series is maintained in config/policy_rates.yaml.",
+            note="Manual fallback from config/policy_rates.yaml because the BIS feed was unavailable.",
         )
-        raw = (_load_policy_rate_payload().get("policy_rates") or {}).get(country) or {}
         for row in rows:
-            row["quality_status"] = str(raw.get("quality_status") or "verified")
+            row["quality_status"] = "watch"
             row["quality_note"] = (
-                f"{row.get('quality_note')} Target policy-rate label: {raw.get('rate_name', 'policy rate')}."
-            ).strip()
+                f"{bis_failure or 'BIS WS_CBPOL unavailable'}; showing the manually maintained path from "
+                f"config/policy_rates.yaml, last confirmed {manual_last}. Recheck against {rate_label}."
+            )
         return rows
 
 
@@ -1365,18 +1424,23 @@ class DerivedMacroFetcher(BaseFetcher):
         )
         if not nominal_rate or not nominal_rate.available or not cpi.available:
             return []
-        cpi_by_month = {date[:7]: value for date, value in cpi.observations}
+        # Monthly ex-post real rate: the policy rate in force at the end of each
+        # HICP month minus that month's HICP YoY. Event dates alone would leave
+        # the series almost empty and misaligned with the inflation release.
+        events = sorted((str(d)[:10], float(v)) for d, v in nominal_rate.observations)
         observations: list[tuple[str, float]] = []
-        for date, rate in nominal_rate.observations:
-            inflation = cpi_by_month.get(date[:7])
-            if inflation is None:
+        for cpi_date, inflation in sorted(cpi.observations):
+            year, month = int(cpi_date[:4]), int(cpi_date[5:7])
+            month_end = f"{year:04d}-{month:02d}-{calendar.monthrange(year, month)[1]:02d}"
+            in_force = [rate for event_date, rate in events if event_date <= month_end]
+            if not in_force or events[0][0] > month_end:
                 continue
-            observations.append((date, float(rate) - float(inflation)))
+            observations.append((f"{cpi_date[:7]}-01", in_force[-1] - float(inflation)))
         series = finalize_series(Series(
             key=spec.indicator_id,
             label=spec.label,
             country=country,
-            source="Derived from official policy-rate configuration and Eurostat HICP",
+            source=f"Derived from {nominal_rate.source} and Eurostat HICP",
             series_id=f"{nominal_rate.series_id} minus prc_hicp_minr:TOTAL:RCH_A",
             unit="%",
             frequency="monthly",
@@ -1386,7 +1450,12 @@ class DerivedMacroFetcher(BaseFetcher):
             available=bool(observations),
             note="Ex-post real policy rate: official policy rate minus headline HICP inflation.",
         ))
-        return _series_to_rows(series, spec, unit="%", note="Derived from official policy-rate configuration and Eurostat HICP.")
+        return _series_to_rows(
+            series,
+            spec,
+            unit="%",
+            note=f"Derived monthly: {nominal_rate.source} rate in force at month end minus Eurostat HICP YoY.",
+        )
 
     def _real_estate_price_gap(self, country: str, spec: IndicatorSpec) -> list[dict]:
         countries = load_countries()
@@ -4095,6 +4164,7 @@ class GIEAGSIFetcher(BaseFetcher):
     """
 
     COUNTRIES = {"HU", "PL", "CZ", "RO"}
+    START_DATE = "2015-01-01"
 
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
         if spec.indicator_id != "gas_storage_level" or country not in self.COUNTRIES:
@@ -4111,7 +4181,7 @@ class GIEAGSIFetcher(BaseFetcher):
             country=country,
             source="GIE AGSI+",
             series_id=f"AGSI:{country}:gasFull",
-            unit="%",
+            unit="% WGV",
             frequency="daily",
             last_update=observations[-1][0],
             source_url="https://agsi.gie.eu/",
@@ -4122,7 +4192,7 @@ class GIEAGSIFetcher(BaseFetcher):
         rows = _series_to_rows(
             series,
             spec,
-            unit="%",
+            unit="% WGV",
             note="Requires GIE_AGSI_API_KEY; country-level AGSI+ gasFull/fill percentage.",
         )
         for row in rows:
@@ -4130,65 +4200,19 @@ class GIEAGSIFetcher(BaseFetcher):
         return rows
 
     def _fetch_country(self, country: str, api_key: str) -> list[tuple[str, float]]:
-        base = _secret_env("GIE_AGSI_BASE_URL") or GIE_AGSI_BASE_URL
-        candidates = [
-            f"{base.rstrip('/')}/data/{country}/",
-            f"{base.rstrip('/')}/data/{country}",
-            f"{base.rstrip('/')}?country={country}",
-        ]
-        headers = {
-            "User-Agent": "Mozilla/5.0",
-            "x-key": api_key,
-            "X-KEY": api_key,
-            "Authorization": f"Bearer {api_key}",
-        }
-        for url in candidates:
-            cache_key = f"gie_agsi::{country}::{url.split('?')[0]}"
-            path = cache_path(cache_key)
-            try:
-                if path.exists():
-                    payload = json.loads(path.read_text())
-                else:
-                    response = requests.get(url, headers=headers, timeout=30)
-                    if response.status_code in {401, 403, 404}:
-                        continue
-                    response.raise_for_status()
-                    payload = response.json()
-                    path.write_text(json.dumps(payload, indent=2, sort_keys=True))
-            except (OSError, requests.RequestException, json.JSONDecodeError):
-                continue
-            observations = self._parse_payload(payload)
-            if observations:
-                return observations
-        return []
+        # One AGSI+ client for every scope; the cache lasts one calendar day so
+        # a refresh never serves an old payload (the previous cache never expired).
+        from .energy_adapters import fetch_agsi_points
 
-    def _parse_payload(self, payload: dict | list) -> list[tuple[str, float]]:
-        raw_rows = payload
-        if isinstance(payload, dict):
-            raw_rows = payload.get("data") or payload.get("rows") or payload.get("result") or []
-        if not isinstance(raw_rows, list):
+        path = cache_path(f"gie_agsi::{country}::{datetime.now().date().isoformat()}")
+        try:
+            if path.exists():
+                return [(str(day), float(value)) for day, value in json.loads(path.read_text())]
+            observations = fetch_agsi_points(country, self.START_DATE, api_key)
+            path.write_text(json.dumps(observations))
+            return observations
+        except (OSError, RuntimeError, ValueError, requests.RequestException, json.JSONDecodeError):
             return []
-        observations: list[tuple[str, float]] = []
-        for item in raw_rows:
-            if not isinstance(item, dict):
-                continue
-            date = str(item.get("gasDayStart") or item.get("gasDay") or item.get("date") or item.get("period") or "")[:10]
-            value = (
-                item.get("gasFull")
-                or item.get("full")
-                or item.get("fillingLevel")
-                or item.get("fill")
-                or item.get("percentageFull")
-            )
-            if not date or value in {None, ""}:
-                continue
-            try:
-                numeric = float(str(value).replace("%", "").replace(",", "."))
-            except ValueError:
-                continue
-            if math.isfinite(numeric):
-                observations.append((date, numeric))
-        return sorted({date: value for date, value in observations}.items())
 
 
 class WorldBankESGFetcher(BaseFetcher):

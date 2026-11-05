@@ -130,10 +130,8 @@ concepts:
   label_zh: 名义GDP增速
   unit: percent
   mappings:
-    CN:
-    - nominal_gdp_usd
-    UK:
-    - nominal_gdp_gbp
+    CN: []
+    UK: []
     US:
     - nominal_gdp_growth
     JP:
@@ -443,8 +441,7 @@ concepts:
   mappings:
     CEE:
     - real_wage_yoy
-    UK:
-    - real_household_disposable_income_per_head
+    UK: []
     US:
     - real_disposable_income_growth
     JP: []
@@ -514,16 +511,14 @@ concepts:
     - core_hicp_inflation
     HK:
     - core_cpi_inflation
-    KR:
-    - core_cpi_index
+    KR: []
     TW:
     - core_cpi_inflation
     KZ: []
     UZ: []
     EG: []
     NG: []
-    CN:
-    - core_cpi_yoy
+    CN: []
 - id: services_inflation
   pillar: prices_costs
   label_en: Services Inflation
@@ -591,8 +586,7 @@ concepts:
     TR:
     - ppi_inflation
     - domestic_ppi_yoy
-    KR:
-    - ppi_inflation_index
+    KR: []
     TW:
     - ppi_inflation
     KZ: []
@@ -647,8 +641,7 @@ concepts:
   mappings:
     CEE:
     - house_price_index
-    CN:
-    - nominal_residential_property_price_bis
+    CN: []
     UK:
     - uk_hpi_annual_change
     US:
@@ -661,10 +654,8 @@ concepts:
     - house_price_yoy
     TR:
     - house_price_growth
-    HK:
-    - bis_nominal_house_prices
-    KR:
-    - bis_nominal_house_prices
+    HK: []
+    KR: []
     KZ: []
     UZ: []
     EG: []
@@ -718,8 +709,7 @@ concepts:
     UZ: []
     EG: []
     NG: []
-    TW:
-    - construction_loans_growth
+    TW: []
 - id: mortgage_rate
   pillar: housing_investment
   label_en: Mortgage Rate
@@ -856,14 +846,10 @@ concepts:
     - exports_growth
     TR:
     - exports_goods_services
-    - goods_exports
     HK:
     - merchandise_exports_growth
-    - goods_exports
-    KR:
-    - goods_exports
+    KR: []
     TW:
-    - goods_exports
     - customs_exports_yoy
     KZ: []
     UZ: []
@@ -891,14 +877,10 @@ concepts:
     - imports_growth
     TR:
     - imports_goods_services
-    - goods_imports
     HK:
     - merchandise_imports_growth
-    - goods_imports
-    KR:
-    - goods_imports
+    KR: []
     TW:
-    - goods_imports
     - customs_imports_yoy
     KZ: []
     UZ: []
@@ -1127,10 +1109,8 @@ concepts:
     NG: []
     CN:
     - cgb_yield_10y
-    TR:
-    - sovereign_yield_10y
-    HK:
-    - sovereign_yield_10y
+    TR: []
+    HK: []
 - id: policy_rate
   pillar: monetary_financial
   label_en: Policy Rate
@@ -1158,7 +1138,6 @@ concepts:
     - policy_rate
     HK:
     - policy_rate
-    - fed_funds_anchor
     KR:
     - policy_rate
     TW:
@@ -1232,8 +1211,7 @@ concepts:
     EA:
     - m3_growth
     - broad_money_growth
-    KR:
-    - broad_money_m2_bok
+    KR: []
     TW:
     - m2_growth
     KZ:
@@ -1252,8 +1230,7 @@ concepts:
   mappings:
     CEE:
     - private_credit_yoy
-    CN:
-    - new_rmb_loans_akshare
+    CN: []
     UK:
     - m4_lending_growth
     US:
@@ -1330,13 +1307,11 @@ concepts:
     - share_price_index
     UK:
     - equity_prices
-    US:
-    - sp500_return_yoy
+    US: []
     JP:
     - equity_index
     ZA: []
-    EA:
-    - euro_stoxx_return_yoy
+    EA: []
     TR:
     - bist_100_equity_index
     KR:
@@ -1390,7 +1365,6 @@ concepts:
     ZA: []
     EA:
     - ciss
-    - systemic_stress_ciss
     KZ: []
     UZ: []
     EG: []

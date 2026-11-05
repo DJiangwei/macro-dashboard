@@ -59,6 +59,12 @@ do not re-triage the same dashboard gaps from scratch.
 
 ## Publishing Discipline
 
+GitHub Pages can run in two modes, switched by the repository variable
+`PAGES_MODE` (see `docs/PAGES_DEPLOYMENT.md`). Unset: outputs are committed to
+`main` and Pages serves the branch (the steps below). `actions`: data lives on
+the `data` branch, pages are rebuilt and deployed by `deploy_pages.yml`; use
+`make pull-data` before local work and `make publish-data MSG=...` to publish.
+
 After dashboard changes:
 
 ```bash
@@ -73,6 +79,35 @@ The publish script intentionally stages the full repo after validation. Do not
 replace that with a narrow allow-list unless the allow-list includes the data
 catalog, freshness audit, archive summaries, canonical frames, and workbench
 JSON outputs; otherwise the live index can drift away from country pages.
+
+## Scope Registry
+
+Every generated page is registered in `config/scopes.yaml` (id, slug, names,
+currency, headline series, pipeline). Data-first pages are built by
+`scripts/build_scope.py` (`--all`, one or more scope ids, `--snapshot`), which
+fetches through the global fetcher registry in `src/country_primer/fetchers.py`.
+Do not add per-country builder scripts; add a registry entry and an indicator
+YAML instead. When refactoring the build, run `make rebuild-ui` and then
+`make golden-diff`: it compares generated outputs with `HEAD` ignoring
+timestamps and must report no differences unless data was meant to change.
+
+## Adding a Country
+
+A new data-first country is two files; no code changes:
+
+1. An entry in `config/scopes.yaml` (id, slug, names, flag, region, currency,
+   central bank, headline series).
+2. `config/countries/<slug>.yaml` listing `templates` (see
+   `config/templates/`: `sections_core`, `imf_baseline`, `bis_baseline`,
+   `wb_structural`, `oecd_mirror`, `fred_fx`) and their `params`. Native
+   series go under `indicators:`; an id that matches a template id replaces
+   it, and `drop:` removes template ids. Tag core concepts with `concept:`.
+
+Then refresh it once (`scripts/uv_project.sh run python scripts/build_scope.py
+<ID>`), run `make rebuild-ui` and `make validate`. Probe template series first:
+some FRED/OECD mirrors are discontinued for some countries, and those belong
+under `data_gaps`, not on the page. India (`config/countries/india.yaml`) is
+the reference example.
 
 ## Indicator Manifest
 

@@ -1,0 +1,364 @@
+{
+  "file": "energy.html",
+  "generated": "2026-11-05T11:22:23.252209+00:00",
+  "charts": 86,
+  "source_groups": 29,
+  "data_gaps": 4,
+  "low_confidence": 0,
+  "key_series_latest": [
+    {
+      "id": "brent_spot",
+      "label_en": "Brent Spot (FOB)",
+      "label_zh": "布伦特现货",
+      "latest_date": "2026-11-03",
+      "latest_value": 107.03,
+      "latest_display": "107.0 USD/bbl",
+      "frequency": "daily",
+      "source_name": "EIA spot prices",
+      "series": "pet/RBRTE",
+      "quality_status": "verified"
+    },
+    {
+      "id": "wti_spot",
+      "label_en": "WTI Spot (Cushing)",
+      "label_zh": "WTI现货（库欣）",
+      "latest_date": "2026-11-03",
+      "latest_value": 99.64,
+      "latest_display": "99.6 USD/bbl",
+      "frequency": "daily",
+      "source_name": "EIA spot prices",
+      "series": "pet/RWTC",
+      "quality_status": "verified"
+    },
+    {
+      "id": "crack_321",
+      "label_en": "3-2-1 Crack Spread (NYH products vs WTI)",
+      "label_zh": "3-2-1裂解价差（纽约港 vs WTI）",
+      "latest_date": "2026-11-03",
+      "latest_value": 44.266,
+      "latest_display": "44.3 USD/bbl",
+      "frequency": "daily",
+      "source_name": "Derived from EIA spot prices",
+      "series": "28×nyh_gasoline_spot + 14×nyh_ulsd_spot + -1×wti_spot",
+      "quality_status": "watch"
+    },
+    {
+      "id": "henry_hub_spot",
+      "label_en": "Henry Hub Natural Gas Spot",
+      "label_zh": "亨利港天然气现货",
+      "latest_date": "2026-11-03",
+      "latest_value": 2.63,
+      "latest_display": "2.63 USD/MMBtu",
+      "frequency": "daily",
+      "source_name": "EIA natural gas spot prices",
+      "series": "ng/RNGWHHD",
+      "quality_status": "verified"
+    },
+    {
+      "id": "eu_gas_monthly",
+      "label_en": "European Natural Gas (monthly average)",
+      "label_zh": "欧洲天然气月均价",
+      "latest_date": "2026-09-01",
+      "latest_value": 25.494,
+      "latest_display": "25.5 USD/MMBtu",
+      "frequency": "monthly",
+      "source_name": "IMF Primary Commodity Prices via FRED",
+      "series": "PNGASEUUSDM",
+      "quality_status": "watch"
+    },
+    {
+      "id": "us_commercial_crude_vs_5y",
+      "label_en": "US Commercial Crude vs 5-Year Same-Week Average",
+      "label_zh": "美国商业原油库存相对五年同周均值",
+      "latest_date": "2026-10-30",
+      "latest_value": -22.3294,
+      "latest_display": "-22.3 mb",
+      "frequency": "weekly",
+      "source_name": "Derived from EIA Weekly Petroleum Status Report",
+      "series": "dev_from_5y_seasonal(us_commercial_crude)",
+      "quality_status": "watch"
+    },
+    {
+      "id": "us_gas_storage_vs_5y",
+      "label_en": "US Gas Storage vs 5-Year Same-Week Average",
+      "label_zh": "美国储气相对五年同周均值",
+      "latest_date": "2026-10-23",
+      "latest_value": -1.4,
+      "latest_display": "-1.40 Bcf",
+      "frequency": "weekly",
+      "source_name": "Derived from EIA Weekly Natural Gas Storage Report",
+      "series": "dev_from_5y_seasonal(us_gas_storage)",
+      "quality_status": "watch"
+    },
+    {
+      "id": "cftc_wti_mm_net",
+      "label_en": "WTI (NYMEX) Managed-Money Net Position",
+      "label_zh": "WTI（NYMEX）管理基金净持仓",
+      "latest_date": "2026-10-27",
+      "latest_value": 31128.0,
+      "latest_display": "31,128 contracts",
+      "frequency": "weekly",
+      "source_name": "CFTC Commitments of Traders (disaggregated)",
+      "series": "067651",
+      "quality_status": "verified"
+    },
+    {
+      "id": "de_power_day_ahead",
+      "label_en": "Germany–Luxembourg Day-Ahead Power (daily mean)",
+      "label_zh": "德国–卢森堡日前电价（日均）",
+      "latest_date": "2026-11-04",
+      "latest_value": 248.99,
+      "latest_display": "249.0 EUR/MWh",
+      "frequency": "daily",
+      "source_name": "energy-charts (Fraunhofer ISE) / Bundesnetzagentur SMARD",
+      "series": "DE-LU",
+      "quality_status": "watch"
+    },
+    {
+      "id": "us_breakeven_5y",
+      "label_en": "US 5-Year Breakeven Inflation",
+      "label_zh": "美国5年期盈亏平衡通胀率",
+      "latest_date": "2026-11-04",
+      "latest_value": 2.3,
+      "latest_display": "2.30 %",
+      "frequency": "daily",
+      "source_name": "US Treasury / Federal Reserve via FRED",
+      "series": "T5YIE",
+      "quality_status": "watch"
+    }
+  ],
+  "unavailable": [],
+  "data_mode": "snapshot",
+  "latest_cards": [],
+  "brent_latest": "107.03 USD/bbl (2026-11-03)",
+  "cross_checks": [],
+  "canonical_frame": {
+    "schema_version": "data-first-canonical-v2",
+    "observation_columns": [
+      "date",
+      "value"
+    ],
+    "file": "energy_canonical_frame.json",
+    "series": 86,
+    "observations": 89919,
+    "series_count": 86,
+    "observation_count": 89919,
+    "snapshot_generated": "2026-11-05T11:17:25.362340+00:00"
+  },
+  "data_gaps_detail": [
+    {
+      "section": "crude_benchmarks",
+      "item_en": "WTI and Brent futures curves (term structure)",
+      "item_zh": "WTI与布伦特期货曲线（期限结构）",
+      "status_en": "EIA discontinued its futures curve series (RCLC1-4) after 2024-04-05; CME and ICE curves are licensed.",
+      "status_zh": "EIA的期货曲线序列（RCLC1-4）已于2024-04-05后停更；CME与ICE曲线为授权数据。"
+    },
+    {
+      "section": "gas_lng",
+      "item_en": "Daily TTF",
+      "item_zh": "日度TTF",
+      "status_en": "TTF is ICE Endex licensed.",
+      "status_zh": "TTF为ICE Endex授权数据。"
+    },
+    {
+      "section": "power_coal",
+      "item_en": "EU carbon (EUA) price",
+      "item_zh": "欧盟碳价（EUA）",
+      "status_en": "EUA settlement data is EEX/ICE licensed.",
+      "status_zh": "EUA结算价为EEX/ICE授权数据。"
+    },
+    {
+      "section": "trade_geography",
+      "item_en": "Tanker rates, rig counts and chokepoint flows",
+      "item_zh": "油轮运价、钻机数与关键海峡流量",
+      "status_en": "Baltic Exchange/Kpler data is licensed; Baker Hughes refuses requests from this environment.",
+      "status_zh": "波罗的海交易所/Kpler数据为授权数据；Baker Hughes拒绝本环境的请求。"
+    }
+  ],
+  "source_health": {
+    "source_groups": 29,
+    "sources": [
+      {
+        "source_name": "EIA Short-Term Energy Outlook",
+        "charts": 16
+      },
+      {
+        "source_name": "EIA Weekly Petroleum Status Report",
+        "charts": 12
+      },
+      {
+        "source_name": "Eurostat HICP item weights",
+        "charts": 6
+      },
+      {
+        "source_name": "CFTC Commitments of Traders (disaggregated)",
+        "charts": 5
+      },
+      {
+        "source_name": "EIA spot prices",
+        "charts": 5
+      },
+      {
+        "source_name": "Ember monthly electricity data",
+        "charts": 5
+      },
+      {
+        "source_name": "IMF Primary Commodity Prices via FRED",
+        "charts": 5
+      },
+      {
+        "source_name": "Derived from EIA Weekly Petroleum Status Report",
+        "charts": 4
+      },
+      {
+        "source_name": "Derived from EIA spot prices",
+        "charts": 4
+      },
+      {
+        "source_name": "Sina Finance via AKShare",
+        "charts": 3
+      },
+      {
+        "source_name": "EIA Gasoline and Diesel Fuel Update",
+        "charts": 2
+      },
+      {
+        "source_name": "GIE AGSI+",
+        "charts": 2
+      },
+      {
+        "source_name": "BLS CPI via FRED",
+        "charts": 1
+      },
+      {
+        "source_name": "CBOE via FRED",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from CFTC Commitments of Traders (disaggregated)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from EIA Short-Term Energy Outlook",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from EIA Weekly Natural Gas Storage Report",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from EIA spot prices; IMF Primary Commodity Prices via FRED",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from GIE AGSI+",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from IMF Primary Commodity Prices via FRED",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from IMF Primary Commodity Prices via FRED; EIA natural gas spot prices",
+        "charts": 1
+      },
+      {
+        "source_name": "EIA Petroleum Supply Monthly",
+        "charts": 1
+      },
+      {
+        "source_name": "EIA Weekly Natural Gas Storage Report",
+        "charts": 1
+      },
+      {
+        "source_name": "EIA natural gas spot prices",
+        "charts": 1
+      },
+      {
+        "source_name": "Federal Reserve via FRED",
+        "charts": 1
+      },
+      {
+        "source_name": "ONS",
+        "charts": 1
+      },
+      {
+        "source_name": "US Treasury / Federal Reserve via FRED",
+        "charts": 1
+      },
+      {
+        "source_name": "energy-charts (Fraunhofer ISE)",
+        "charts": 1
+      },
+      {
+        "source_name": "energy-charts (Fraunhofer ISE) / Bundesnetzagentur SMARD",
+        "charts": 1
+      }
+    ],
+    "quality_counts": {
+      "verified": 53,
+      "watch": 33
+    },
+    "unavailable_count": 0
+  },
+  "framework": {
+    "version": 2,
+    "pillars": 9,
+    "core_concepts": 48,
+    "legacy_aliases": 7
+  },
+  "freshness": {
+    "as_of_date": "2026-11-05",
+    "counts": {
+      "current": 85,
+      "due": 1
+    },
+    "latest_historical_date": "2026-11-04",
+    "attention": [
+      {
+        "id": "us_crude_production_monthly",
+        "concept_id": "energy:us_crude_production_monthly",
+        "label_en": "US Crude Oil Field Production (monthly)",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 66,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "EIA Petroleum Supply Monthly",
+        "series": "pet/MCRFPUS2",
+        "transform": "level"
+      }
+    ]
+  },
+  "transform_audit": {
+    "counts": {
+      "level": 85,
+      "yoy_pct": 1
+    },
+    "non_level": [
+      {
+        "id": "us_cpi_energy_yoy",
+        "label_en": "US CPI Energy YoY",
+        "transform": "yoy_pct",
+        "unit": "% y/y"
+      }
+    ]
+  },
+  "canonical_schema": {
+    "schema_version": "data-first-canonical-v2",
+    "observation_columns": [
+      "date",
+      "value"
+    ],
+    "charted_series": 86
+  }
+}

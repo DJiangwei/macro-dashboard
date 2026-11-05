@@ -1,0 +1,210 @@
+# DRAFT — Energy market scope indicators (not wired into any build).
+# Kept under docs/ on purpose so no build script globs it.
+#
+# Schema = existing data-first indicator schema + new fields proposed in
+# docs/superpowers/specs/2026-11-04-scope-framework-and-markets-design.md:
+#   pillar        market_energy framework pillar
+#   derivation    observed | derived | manual | model
+#   op / inputs   whitelisted derived operator and its inputs (scope:indicator)
+#   probe         result of the 2026-11-04 reachability probe from the cloud sandbox:
+#                 ok (latest obs shown) | needs_key | pending (not yet probed) | gap (licensed / blocked)
+#   mvp           true = part of the Energy MVP (phase F2)
+
+scope: ENERGY
+framework: market_energy
+min_chart_count: 35
+
+indicators:
+  # ---------------------------------------------------------------- crude_benchmarks
+  - {id: brent_spot, pillar: crude_benchmarks, label_en: "Brent Spot (FOB)", label_zh: "布伦特现货", unit: USD/bbl,
+     fetcher: eia_xls, series: pet/RBRTE, frequency: daily, source_name: EIA, derivation: observed,
+     probe: "ok 2026-11-03 107.03", mvp: true}
+  - {id: wti_spot, pillar: crude_benchmarks, label_en: "WTI Spot (Cushing)", label_zh: "WTI现货", unit: USD/bbl,
+     fetcher: eia_xls, series: pet/RWTC, frequency: daily, source_name: EIA, derivation: observed,
+     probe: "ok 2026-11-03 99.64", mvp: true}
+  - {id: brent_front_futures, pillar: crude_benchmarks, label_en: "Brent Front-Month Futures", label_zh: "布伦特近月期货", unit: USD/bbl,
+     fetcher: akshare_foreign_futures, series: OIL, frequency: daily, source_name: "Sina Finance via AKShare",
+     source_authority: public_wrapper, derivation: observed, probe: "ok 2026-11-04 94.97", mvp: true,
+     caveat_en: "Same-day settlement-like close from a public wrapper; EIA spot is the verified series."}
+  - {id: wti_front_futures, pillar: crude_benchmarks, label_en: "WTI Front-Month Futures", label_zh: "WTI近月期货", unit: USD/bbl,
+     fetcher: akshare_foreign_futures, series: CL, frequency: daily, source_authority: public_wrapper,
+     derivation: observed, probe: "ok 2026-11-04 88.04", mvp: true}
+  - {id: dubai_monthly, pillar: crude_benchmarks, label_en: "Dubai Crude (monthly avg)", label_zh: "迪拜原油月均价", unit: USD/bbl,
+     fetcher: fred_graph, series: POILDUBUSDM, frequency: monthly, source_name: "IMF PCPS via FRED",
+     derivation: observed, probe: "ok 2026-09 111.83", mvp: true}
+  - {id: brent_wti_spread, pillar: crude_benchmarks, label_en: "Brent–WTI Spread", label_zh: "Brent-WTI价差", unit: USD/bbl,
+     derivation: derived, op: spread, inputs: [ENERGY:brent_spot, ENERGY:wti_spot], frequency: daily, mvp: true}
+  - {id: brent_dubai_spread, pillar: crude_benchmarks, label_en: "Brent–Dubai Spread (sweet–sour)", label_zh: "Brent-Dubai价差(轻重价差)", unit: USD/bbl,
+     derivation: derived, op: spread, inputs: [ENERGY:brent_spot@resample:monthly_mean, ENERGY:dubai_monthly], frequency: monthly, mvp: true}
+  - {id: ovx, pillar: crude_benchmarks, label_en: "CBOE Crude Oil Volatility (OVX)", label_zh: "原油波动率指数OVX", unit: index,
+     fetcher: fred_graph, series: OVXCLS, frequency: daily, derivation: observed, probe: "ok 2026-11-03 61.69", mvp: true}
+  - {id: ine_sc_front, pillar: crude_benchmarks, label_en: "INE Shanghai Crude (main contract)", label_zh: "上海原油期货主力", unit: CNY/bbl,
+     fetcher: akshare_cn_futures, series: SC0, frequency: daily, source_authority: public_wrapper, derivation: observed,
+     probe: pending, mvp: false}
+  - {id: ine_sc_curve, pillar: crude_benchmarks, label_en: "INE SC Curve (active contracts) — proxy term structure", label_zh: "上海原油期限结构(代理)", unit: CNY/bbl,
+     fetcher: akshare_cn_futures, series: "SC{active_contracts}", frequency: daily, derivation: observed,
+     probe: "pending (expired contracts SC2512..SC2606 verified reachable)", mvp: false,
+     caveat_en: "Free proxy for crude term structure. WTI/Brent curves are CME/ICE licensed and recorded as gaps."}
+  - {id: wti_brent_curve, pillar: crude_benchmarks, probe: gap, derivation: unavailable,
+     caveat_en: "EIA discontinued RCLC1-4 after 2024-04-05; CME/ICE curves are licensed."}
+
+  # ---------------------------------------------------------------- refining_products
+  - {id: nyh_gasoline_spot, pillar: refining_products, label_en: "NY Harbor Conventional Gasoline", label_zh: "纽约港汽油现货", unit: USD/gal,
+     fetcher: eia_xls, series: pet/EER_EPMRU_PF4_Y35NY_DPG, frequency: daily, derivation: observed, probe: "ok 2026-11-03 2.728", mvp: true}
+  - {id: nyh_ulsd_spot, pillar: refining_products, label_en: "NY Harbor ULSD", label_zh: "纽约港超低硫柴油现货", unit: USD/gal,
+     fetcher: eia_xls, series: pet/EER_EPD2DXL0_PF4_Y35NY_DPG, frequency: daily, derivation: observed, probe: "ok 2026-11-03 4.823", mvp: true}
+  - {id: usgc_jet_spot, pillar: refining_products, label_en: "US Gulf Coast Jet Fuel", label_zh: "美湾航煤现货", unit: USD/gal,
+     fetcher: eia_xls, series: pet/EER_EPJK_PF4_RGC_DPG, frequency: daily, derivation: observed, probe: "ok 2026-11-03 4.198", mvp: false}
+  - {id: crack_321, pillar: refining_products, label_en: "3-2-1 Crack Spread (NYH vs WTI)", label_zh: "3-2-1裂解价差", unit: USD/bbl,
+     derivation: derived, op: "linear(2*42*nyh_gasoline_spot + 1*42*nyh_ulsd_spot - 3*wti_spot)/3",
+     inputs: [ENERGY:nyh_gasoline_spot, ENERGY:nyh_ulsd_spot, ENERGY:wti_spot], frequency: daily, mvp: true}
+  - {id: diesel_crack, pillar: refining_products, label_en: "Diesel Crack (NYH ULSD vs Brent)", label_zh: "柴油裂解价差", unit: USD/bbl,
+     derivation: derived, op: "linear(42*nyh_ulsd_spot - brent_spot)", inputs: [ENERGY:nyh_ulsd_spot, ENERGY:brent_spot],
+     frequency: daily, mvp: true, caveat_en: "Diesel cracks feed freight and food costs — key second-round inflation channel."}
+  - {id: us_refinery_utilization, pillar: refining_products, label_en: "US Refinery Utilization", label_zh: "美国炼厂开工率", unit: "%",
+     fetcher: eia_xls, series: pet/WPULEUS3, frequency: weekly, derivation: observed, probe: "ok 2026-10-30 94.5", mvp: true}
+  - {id: us_retail_gasoline, pillar: refining_products, label_en: "US Retail Gasoline (regular)", label_zh: "美国零售汽油价", unit: USD/gal,
+     fetcher: eia_xls, series: pet/EMM_EPMR_PTE_NUS_DPG, frequency: weekly, derivation: observed, probe: "ok 2026-11-02 4.153", mvp: true}
+  - {id: us_retail_diesel, pillar: refining_products, label_en: "US Retail Diesel", label_zh: "美国零售柴油价", unit: USD/gal,
+     fetcher: eia_xls, series: pet/EMD_EPD2D_PTE_NUS_DPG, frequency: weekly, derivation: observed, probe: "ok 2026-11-02 6.292", mvp: true}
+  - {id: china_fuel_price_adjustment, pillar: refining_products, label_en: "China NDRC Gasoline/Diesel Price Adjustments", label_zh: "国内成品油调价", unit: CNY/t,
+     fetcher: akshare_table, function: energy_oil_hist, frequency: irregular, source_authority: public_wrapper,
+     derivation: observed, probe: "ok 2026-10-30", mvp: false}
+
+  # ---------------------------------------------------------------- gas_lng
+  - {id: henry_hub_spot, pillar: gas_lng, label_en: "Henry Hub Spot", label_zh: "亨利港天然气现货", unit: USD/MMBtu,
+     fetcher: eia_xls, series: ng/RNGWHHD, frequency: daily, derivation: observed, probe: "ok 2026-11-03 2.63", mvp: true}
+  - {id: henry_hub_front_futures, pillar: gas_lng, label_en: "NYMEX Natural Gas Front Month", label_zh: "NYMEX天然气近月", unit: USD/MMBtu,
+     fetcher: akshare_foreign_futures, series: NG, frequency: daily, source_authority: public_wrapper, derivation: observed,
+     probe: "ok 2026-11-04 3.446", mvp: false}
+  - {id: eu_gas_monthly, pillar: gas_lng, label_en: "European Natural Gas (monthly, IMF)", label_zh: "欧洲天然气月均价", unit: USD/MMBtu,
+     fetcher: fred_graph, series: PNGASEUUSDM, frequency: monthly, derivation: observed, probe: "ok 2026-09 25.49", mvp: true,
+     caveat_en: "Monthly IMF series. Daily TTF is ICE-licensed and recorded as a gap."}
+  - {id: asia_lng_monthly, pillar: gas_lng, label_en: "Asia LNG (monthly, IMF)", label_zh: "亚洲LNG月均价", unit: USD/MMBtu,
+     fetcher: fred_graph, series: PNGASJPUSDM, frequency: monthly, derivation: observed, probe: "ok 2026-09 26.64", mvp: true}
+  - {id: eu_hh_gas_spread, pillar: gas_lng, label_en: "Europe–Henry Hub Gas Spread", label_zh: "欧美气价价差", unit: USD/MMBtu,
+     derivation: derived, op: spread, inputs: [ENERGY:eu_gas_monthly, ENERGY:henry_hub_spot@resample:monthly_mean], frequency: monthly, mvp: true}
+  - {id: us_gas_storage, pillar: gas_lng, label_en: "US Working Gas in Storage (Lower 48)", label_zh: "美国天然气库存", unit: Bcf,
+     fetcher: eia_xls, series: ng/NW2_EPG0_SWO_R48_BCF, frequency: weekly, derivation: observed, probe: "ok 2026-10-23 3724", mvp: true}
+  - {id: us_gas_storage_vs_5y, pillar: gas_lng, label_en: "US Gas Storage vs 5-Year Same-Week Average", label_zh: "美国气库存相对5年均值", unit: Bcf,
+     derivation: derived, op: dev_from_5y_seasonal, inputs: [ENERGY:us_gas_storage], frequency: weekly, mvp: true}
+  - {id: eu_gas_storage_fill, pillar: gas_lng, label_en: "EU Gas Storage Fill", label_zh: "欧盟储气率", unit: "%",
+     fetcher: gie_agsi, series: eu, frequency: daily, derivation: observed, probe: needs_key, mvp: true,
+     caveat_en: "Also fixes the CEE gas_storage_level NameError path once moved to the shared fetcher."}
+  - {id: ttf_daily, pillar: gas_lng, probe: gap, derivation: unavailable, caveat_en: "ICE Endex TTF is licensed."}
+
+  # ---------------------------------------------------------------- power_coal
+  - {id: de_power_day_ahead, pillar: power_coal, label_en: "Germany Day-Ahead Power (daily avg)", label_zh: "德国日前电价", unit: EUR/MWh,
+     fetcher: energy_charts, series: "price?bzn=DE-LU", frequency: daily, source_name: "Fraunhofer ISE energy-charts (SMARD, CC BY 4.0)",
+     derivation: observed, probe: "ok 2026-11-03 (15-min granularity, aggregate to daily mean)", mvp: false}
+  - {id: fr_power_day_ahead, pillar: power_coal, fetcher: energy_charts, series: "price?bzn=FR", unit: EUR/MWh, frequency: daily, probe: pending, mvp: false}
+  - {id: it_power_day_ahead, pillar: power_coal, fetcher: energy_charts, series: "price?bzn=IT-North", unit: EUR/MWh, frequency: daily, probe: pending, mvp: false}
+  - {id: es_power_day_ahead, pillar: power_coal, fetcher: energy_charts, series: "price?bzn=ES", unit: EUR/MWh, frequency: daily, probe: pending, mvp: false}
+  - {id: eua_carbon, pillar: power_coal, probe: "pending (EEX/ICE licensed; check public alternatives)", derivation: unavailable,
+     caveat_en: "Needed for clean spark/dark spreads; until sourced, spreads are not shown."}
+  - {id: newcastle_coal_monthly, pillar: power_coal, label_en: "Australian Thermal Coal (Newcastle, monthly)", label_zh: "纽卡斯尔动力煤", unit: USD/t,
+     fetcher: fred_graph, series: PCOALAUUSDM, frequency: monthly, derivation: observed, probe: "ok 2026-09 153.84", mvp: false}
+  - {id: south_africa_coal_monthly, pillar: power_coal, label_en: "South African Thermal Coal (monthly)", label_zh: "南非动力煤", unit: USD/t,
+     fetcher: imf_sdmx, series: "IMF.RES,PCPS/G001.PCOALSA.USD.M", frequency: monthly, probe: pending, mvp: false}
+  - {id: uranium_monthly, pillar: power_coal, label_en: "Uranium (monthly)", label_zh: "铀价", unit: USD/lb,
+     fetcher: fred_graph, series: PURANUSDM, frequency: monthly, derivation: observed, probe: "ok 2026-09 72.47", mvp: false}
+  - {id: generation_mix, pillar: power_coal, label_en: "Electricity Generation Mix (major economies)", label_zh: "主要经济体发电结构",
+     fetcher: ember_api, frequency: monthly, probe: needs_key, mvp: false}
+  - {id: china_power_consumption, pillar: power_coal, derivation: cross_scope_ref, inputs: [CN:electricity_consumption_yoy_akshare], mvp: false}
+
+  # ---------------------------------------------------------------- supply
+  - {id: us_crude_production, pillar: supply, label_en: "US Crude Oil Field Production", label_zh: "美国原油产量", unit: kb/d,
+     fetcher: eia_xls, series: pet/WCRFPUS2, frequency: weekly, derivation: observed, probe: "ok 2026-10-30 14003", mvp: true}
+  - {id: opec_plus_production, pillar: supply, label_en: "OPEC+ Crude Production by Country", label_zh: "OPEC+分国产量", unit: kb/d,
+     fetcher: eia_v2, route: steo, frequency: monthly, probe: needs_key, mvp: false}
+  - {id: opec_spare_capacity, pillar: supply, label_en: "OPEC Spare Capacity", label_zh: "OPEC闲置产能", unit: kb/d,
+     fetcher: eia_v2, route: steo, frequency: monthly, probe: needs_key, mvp: false}
+  - {id: kz_ng_eg_production, pillar: supply, derivation: cross_scope_ref,
+     inputs: [KZ:crude_oil_production, NG:crude_oil_production, EG:crude_oil_production], mvp: false}
+  - {id: us_rig_count, pillar: supply, probe: "gap (Baker Hughes 403 from sandbox; retest from CI)", derivation: unavailable}
+
+  # ---------------------------------------------------------------- demand
+  - {id: us_product_supplied, pillar: demand, label_en: "US Total Product Supplied (4wk avg)", label_zh: "美国油品表观消费", unit: kb/d,
+     fetcher: eia_xls, series: pet/WRPUPUS2, frequency: weekly, transform: rolling_mean_4, derivation: observed, probe: "ok 2026-10-30 21962", mvp: true}
+  - {id: us_gasoline_demand, pillar: demand, fetcher: eia_xls, series: pet/WGFUPUS2, unit: kb/d, frequency: weekly,
+     probe: "ok 2026-10-30 8808", mvp: true}
+  - {id: us_distillate_demand, pillar: demand, fetcher: eia_xls, series: pet/WDIUPUS2, unit: kb/d, frequency: weekly,
+     probe: "ok 2026-10-30 4439", mvp: true}
+  - {id: china_crude_imports, pillar: demand, label_en: "China Crude Oil Imports", label_zh: "中国原油进口量", unit: Mt,
+     fetcher: akshare_table, frequency: monthly, probe: pending, mvp: true}
+  - {id: global_oil_demand, pillar: demand, fetcher: eia_v2, route: steo, frequency: monthly, probe: needs_key, mvp: false}
+
+  # ---------------------------------------------------------------- inventories
+  - {id: us_commercial_crude, pillar: inventories, label_en: "US Commercial Crude Stocks (ex SPR)", label_zh: "美国商业原油库存", unit: mb,
+     fetcher: eia_xls, series: pet/WCESTUS1, scale: 0.001, frequency: weekly, probe: "ok 2026-10-30 409.76 mb", mvp: true}
+  - {id: us_commercial_crude_vs_5y, pillar: inventories, derivation: derived, op: dev_from_5y_seasonal, inputs: [ENERGY:us_commercial_crude], mvp: true}
+  - {id: cushing_stocks, pillar: inventories, fetcher: eia_xls, series: pet/W_EPC0_SAX_YCUOK_MBBL, scale: 0.001, unit: mb,
+     frequency: weekly, probe: "ok 2026-10-30 27.25 mb", mvp: true}
+  - {id: spr_stocks, pillar: inventories, fetcher: eia_xls, series: pet/WCSSTUS1, scale: 0.001, unit: mb,
+     frequency: weekly, probe: "ok 2026-10-30 282.18 mb", mvp: true}
+  - {id: us_gasoline_stocks, pillar: inventories, fetcher: eia_xls, series: pet/WGTSTUS1, scale: 0.001, unit: mb,
+     frequency: weekly, probe: "ok 2026-10-30 208.96 mb", mvp: true}
+  - {id: us_distillate_stocks, pillar: inventories, fetcher: eia_xls, series: pet/WDISTUS1, scale: 0.001, unit: mb,
+     frequency: weekly, probe: "ok 2026-10-30 99.26 mb", mvp: true}
+  - {id: distillate_days_cover, pillar: inventories, derivation: derived, op: "ratio(us_distillate_stocks*1000, us_distillate_demand)",
+     inputs: [ENERGY:us_distillate_stocks, ENERGY:us_distillate_demand], unit: days, mvp: true}
+  - {id: oecd_commercial_stocks, pillar: inventories, fetcher: eia_v2, route: steo, frequency: monthly, probe: needs_key, mvp: false}
+
+  # ---------------------------------------------------------------- trade_geography
+  - {id: us_crude_net_imports, pillar: trade_geography, fetcher: eia_xls, series: pet/WCRNTUS2, unit: kb/d,
+     frequency: weekly, probe: "ok 2026-10-30 2699", mvp: false}
+  - {id: us_crude_exports, pillar: trade_geography, fetcher: eia_xls, series: pet/WCREXUS2, unit: kb/d,
+     frequency: weekly, probe: "ok 2026-10-30 3675", mvp: false}
+  - {id: chokepoint_flows, pillar: trade_geography, derivation: manual, source_name: "EIA World Oil Transit Chokepoints",
+     expires_after_days: 400, mvp: false}
+  - {id: sanctions_timeline, pillar: trade_geography, derivation: manual, expires_after_days: 45, mvp: false}
+  - {id: tanker_rates, pillar: trade_geography, probe: gap, derivation: unavailable, caveat_en: "Baltic Exchange / Kpler licensed."}
+
+  # ---------------------------------------------------------------- positioning (CFTC disaggregated, managed money)
+  # Query by cftc_contract_market_code — contract names have changed several times historically.
+  - {id: cftc_wti_nymex_mm_net, pillar: positioning, fetcher: cftc_socrata, dataset: 72hh-3qpy, series: "067651",
+     op_post: "m_money_positions_long_all - m_money_positions_short_all", unit: contracts, frequency: weekly,
+     probe: "ok 2026-10-27", mvp: true}
+  - {id: cftc_wti_ice_mm_net, pillar: positioning, fetcher: cftc_socrata, dataset: 72hh-3qpy, series: "067411", unit: contracts,
+     frequency: weekly, probe: "ok 2026-10-27", mvp: true}
+  - {id: cftc_natgas_mm_net, pillar: positioning, fetcher: cftc_socrata, dataset: 72hh-3qpy, series: "023651", unit: contracts,
+     frequency: weekly, probe: "ok 2026-10-27", mvp: true}
+  - {id: cftc_rbob_mm_net, pillar: positioning, fetcher: cftc_socrata, dataset: 72hh-3qpy, series: "111659", unit: contracts,
+     frequency: weekly, probe: "ok 2026-10-27", mvp: false}
+  - {id: cftc_ulsd_mm_net, pillar: positioning, fetcher: cftc_socrata, dataset: 72hh-3qpy, series: "022651", unit: contracts,
+     frequency: weekly, probe: "ok 2026-10-27", mvp: false}
+  - {id: cftc_wti_mm_net_zscore, pillar: positioning, derivation: derived, op: "zscore(window=156w)",
+     inputs: [ENERGY:cftc_wti_nymex_mm_net], mvp: true}
+
+  # ---------------------------------------------------------------- macro_transmission
+  - {id: brent_local_ccy_yoy, pillar: macro_transmission, label_en: "Brent in Local Currency, YoY (all country scopes)",
+     label_zh: "本币计价布伦特同比(各国)", unit: "% YoY", derivation: derived,
+     op: "for_each_scope(kind=country, requires=fx_usd_indicator): yoy(fx_convert(brent_spot@monthly_mean, {scope}:{fx_usd_indicator}))",
+     mvp: true, caveat_en: "The import-cost shock each economy actually faces; CEE/EA use EUR-cross conversion."}
+  - {id: energy_cpi_by_country, pillar: macro_transmission, label_en: "Energy CPI YoY by Country", label_zh: "各国能源CPI同比",
+     derivation: cross_scope_table,
+     inputs: [US:energy_cpi_inflation, EA:hicp_energy_inflation, UK:household_energy_cpi_yoy, TR:energy_hicp_inflation,
+              HU:energy_cpi_yoy, PL:energy_cpi_yoy, CZ:energy_cpi_yoy, RO:energy_cpi_yoy], mvp: true,
+     caveat_en: "Definitions differ (household energy vs total energy); shown as a table, not a comparable concept."}
+  - {id: us_breakeven_5y, pillar: macro_transmission, fetcher: fred_graph, series: T5YIE, unit: "%", frequency: daily,
+     probe: "ok 2026-11-03 2.39", mvp: true}
+  - {id: us_5y5y_forward, pillar: macro_transmission, fetcher: fred_graph, series: T5YIFR, unit: "%", frequency: daily,
+     probe: "ok 2026-11-03 2.21", mvp: true}
+  - {id: us_cpi_energy_index, pillar: macro_transmission, fetcher: fred_graph, series: CPIENGSL, transform: yoy_pct,
+     unit: "% YoY", frequency: monthly, probe: "ok 2026-09", mvp: true}
+  - {id: passthrough_chain, pillar: macro_transmission, label_en: "Pass-through Chain: Brent → Retail Gasoline → CPI Energy → 5Y Breakeven",
+     derivation: derived, op: "rebased_overlay(index=100 at t-24m)",
+     inputs: [ENERGY:brent_spot, ENERGY:us_retail_gasoline, ENERGY:us_cpi_energy_index, ENERGY:us_breakeven_5y], mvp: true}
+  - {id: energy_trade_exposure, pillar: macro_transmission, label_en: "Net Energy Import Dependence by Country", label_zh: "各国能源净进口依存度",
+     fetcher: world_bank, series: EG.IMP.CONS.ZS, frequency: annual, derivation: observed,
+     op: "for_each_scope(kind=country)", probe: pending, mvp: true}
+  - {id: commodity_fx_beta, pillar: macro_transmission, label_en: "Rolling 60d Beta of Commodity FX to Brent (CAD, NOK)",
+     derivation: derived, op: "rolling_beta(window=60d, log_returns)",
+     inputs: [ENERGY:brent_spot, FRED:DEXCAUS, FRED:DEXNOUS], probe: "ok (DEXCAUS/DEXNOUS 2026-10-30)", mvp: false}
+
+  # ---------------------------------------------------------------- models (never in canonical)
+  - {id: oil_shock_cpi, pillar: models, derivation: model,
+     label_en: "Oil Shock → Headline CPI Impact by Country (MODEL)", label_zh: "油价冲击对各国CPI影响(模型)",
+     params: {shock_usd_bbl: 10, passthrough_elasticity: "per-country, cited, editable",
+              energy_weight: "official basket weights (Eurostat prc_hicp_iw, BLS RI, ONS, ...)"},
+     mvp: true}

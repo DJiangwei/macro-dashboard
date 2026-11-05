@@ -1,10 +1,10 @@
 {
   "file": "kazakhstan.html",
-  "generated": "2026-11-03T21:16:36.048194+00:00",
+  "generated": "2026-11-05T11:22:22.170418+00:00",
   "charts": 38,
   "source_groups": 16,
-  "data_gaps": 2,
-  "low_confidence": 4,
+  "data_gaps": 3,
+  "low_confidence": 6,
   "key_series_latest": [
     {
       "id": "real_gdp_growth",
@@ -344,15 +344,15 @@
     },
     {
       "id": "policy_rate",
-      "label_en": "National Bank of Kazakhstan Base Rate (Базалық мөлшерлеме)",
-      "label_zh": "哈萨克斯坦国家银行基准利率",
-      "latest_date": "2026-10-30",
-      "latest_value": 14.25,
-      "latest_display": "14.2 %",
-      "frequency": "event",
-      "source_name": "National Bank of Kazakhstan (NBK)",
-      "series": "policy_rate",
-      "quality_status": "verified"
+      "label_en": "Monetary Policy-Related Interest Rate",
+      "label_zh": "央行货币政策利率",
+      "latest_date": "2020-12-01",
+      "latest_value": 9.0,
+      "latest_display": "9.00 %",
+      "frequency": "monthly",
+      "source_name": "IMF / DBnomics (IFS)",
+      "series": "IMF/IFS/M.KZ.FPOLM_PA",
+      "quality_status": "low_confidence"
     },
     {
       "id": "broad_money_growth",
@@ -459,10 +459,10 @@
     ],
     "file": "kazakhstan_canonical_frame.json",
     "series": 38,
-    "observations": 9779,
+    "observations": 10097,
     "series_count": 38,
-    "observation_count": 9779,
-    "snapshot_generated": "2026-11-02T23:43:59.716961+00:00"
+    "observation_count": 10097,
+    "snapshot_generated": "2026-11-05T11:21:42.347715+00:00"
   },
   "data_gaps_detail": [
     {
@@ -478,6 +478,13 @@
       "item_zh": "月度新建与存量住宅价格指数 (KRIS/BNS)",
       "status_en": "Published by Bureau of National Statistics (stat.gov.kz); machine-readable national aggregate monitored.",
       "status_zh": "由哈萨克斯坦国家统计局发布；通过官方公报跟踪全国综合指数。"
+    },
+    {
+      "section": "monetary_financial",
+      "item_en": "NBK base rate (native, event-dated)",
+      "item_zh": "哈萨克斯坦国家银行基准利率（原生、按决议日）",
+      "status_en": "Not yet automated. The IMF IFS mirror shown on this page ends 2020-12; BIS does not cover Kazakhstan. A previous hand-typed series was removed on 2026-11-05.",
+      "status_zh": "尚未自动化。本页所示IMF IFS镜像序列止于2020-12；BIS未覆盖哈萨克斯坦。此前手工录入的序列已于2026-11-05移除。"
     }
   ],
   "source_health": {
@@ -492,12 +499,12 @@
         "charts": 5
       },
       {
-        "source_name": "National Bank of Kazakhstan (NBK)",
+        "source_name": "World Bank WDI",
         "charts": 5
       },
       {
-        "source_name": "World Bank WDI",
-        "charts": 5
+        "source_name": "National Bank of Kazakhstan (NBK)",
+        "charts": 4
       },
       {
         "source_name": "IMF SDMX / Kazakhstan BNS",
@@ -512,6 +519,10 @@
         "charts": 2
       },
       {
+        "source_name": "IMF / DBnomics (IFS)",
+        "charts": 2
+      },
+      {
         "source_name": "World Bank / ILO",
         "charts": 2
       },
@@ -520,7 +531,7 @@
         "charts": 1
       },
       {
-        "source_name": "IMF / DBnomics (IFS)",
+        "source_name": "IMF / DBnomics (IFS) / Derived",
         "charts": 1
       },
       {
@@ -529,10 +540,6 @@
       },
       {
         "source_name": "IMF DataMapper (Fiscal Monitor)",
-        "charts": 1
-      },
-      {
-        "source_name": "National Bank of Kazakhstan (NBK) / Derived",
         "charts": 1
       },
       {
@@ -549,8 +556,8 @@
       }
     ],
     "quality_counts": {
-      "low_confidence": 4,
-      "verified": 6,
+      "low_confidence": 6,
+      "verified": 4,
       "watch": 28
     },
     "unavailable_count": 0
@@ -562,15 +569,59 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-11-03",
+    "as_of_date": "2026-11-05",
     "counts": {
-      "current": 19,
-      "due": 9,
+      "current": 16,
+      "due": 10,
       "projection": 6,
-      "stale": 4
+      "stale": 6
     },
     "latest_historical_date": "2026-11-02",
     "attention": [
+      {
+        "id": "policy_rate",
+        "concept_id": "policy_rate",
+        "label_en": "Monetary Policy-Related Interest Rate",
+        "latest_date": "2020-12-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2020-12-01",
+        "age_days": 2135,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF / DBnomics (IFS)",
+        "series": "IMF/IFS/M.KZ.FPOLM_PA",
+        "transform": "level"
+      },
+      {
+        "id": "real_policy_rate",
+        "concept_id": "real_policy_rate",
+        "label_en": "KZ Real Policy Rate (Policy Rate − CPI YoY)",
+        "latest_date": "2020-12-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2020-12-01",
+        "age_days": 2135,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF / DBnomics (IFS) / Derived",
+        "series": "policy_rate in force at month end − cpi_inflation",
+        "transform": "level"
+      },
       {
         "id": "consumption_growth",
         "concept_id": "consumption_growth",
@@ -579,7 +630,7 @@
         "frequency": "annual",
         "freshness_status": "due",
         "age_basis_date": "2024-12-31",
-        "age_days": 672,
+        "age_days": 674,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -601,7 +652,7 @@
         "frequency": "annual",
         "freshness_status": "due",
         "age_basis_date": "2024-12-31",
-        "age_days": 672,
+        "age_days": 674,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -623,7 +674,7 @@
         "frequency": "annual",
         "freshness_status": "due",
         "age_basis_date": "2024-12-31",
-        "age_days": 672,
+        "age_days": 674,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -645,7 +696,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 582,
+        "age_days": 584,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -667,7 +718,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 582,
+        "age_days": 584,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -689,7 +740,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2025-07-01",
-        "age_days": 460,
+        "age_days": 462,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -711,7 +762,7 @@
         "frequency": "monthly",
         "freshness_status": "stale",
         "age_basis_date": "2026-06-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -733,7 +784,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -755,7 +806,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -777,7 +828,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -799,7 +850,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -821,7 +872,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -843,7 +894,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 126,
+        "age_days": 128,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -855,6 +906,28 @@
         "comparability": "medium",
         "source_name": "IMF SDMX / NBK",
         "series": "KAZ.NETCD_T.S.USD.Q",
+        "transform": "level"
+      },
+      {
+        "id": "brent_crude_oil",
+        "concept_id": "kz:brent_crude_oil",
+        "label_en": "Crude Oil Prices: Brent - Europe",
+        "latest_date": "2026-10-27",
+        "frequency": "daily",
+        "freshness_status": "due",
+        "age_basis_date": "2026-10-27",
+        "age_days": 9,
+        "threshold_days": 10,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "EIA / FRED",
+        "series": "DCOILBRENTEU",
         "transform": "level"
       }
     ]
