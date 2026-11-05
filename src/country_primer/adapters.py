@@ -2119,13 +2119,16 @@ def fetch_pbc_card(card: dict[str, Any]) -> dict[str, Any]:
     lines = [_clean_text(line) for line in text.splitlines()]
     lines = [line for line in lines if line]
     title = card['expected_title']
-    title_idx = next((i for i, line in enumerate(lines) if line == title), -1)
+    # The title also appears in <title> and the nav, far from the value, so try
+    # every occurrence rather than only the first.
     value = 'n/a'
-    if title_idx >= 0:
-        for line in lines[title_idx + 1:title_idx + 14]:
-            if re.match('^-?\\d+(?:\\.\\d+)?(?:%|TN|BN|MN)?$', line, flags=re.I):
-                value = line
-                break
+    for title_idx in (i for i, line in enumerate(lines) if line == title):
+        value = next(
+            (line for line in lines[title_idx + 1:title_idx + 14] if re.match('^-?\\d+(?:\\.\\d+)?(?:%|TN|BN|MN)?$', line, flags=re.I)),
+            'n/a',
+        )
+        if value != 'n/a':
+            break
     update_idx = next((i for i, line in enumerate(lines) if line == 'Latest Update'), -1)
     updated = ''
     if update_idx >= 0:
@@ -2133,6 +2136,12 @@ def fetch_pbc_card(card: dict[str, Any]) -> dict[str, Any]:
             if re.match('\\d{2}/\\d{2}/\\d{4}', line):
                 updated = line
                 break
+    if not updated:
+        # Some pages fill "Latest Update" in the browser with the viewer's own
+        # date; the page's createDate is when the published value last changed.
+        created = re.search('name="createDate" content="(\\d{4})-(\\d{2})-(\\d{2})', response.text)
+        if created:
+            updated = f'{created.group(2)}/{created.group(3)}/{created.group(1)}'
     return {**card, 'value': value, 'updated': updated or 'n/a'}
 
 def fetch_sarb(session: requests.Session, spec: dict[str, Any]) -> dict[str, Any]:
