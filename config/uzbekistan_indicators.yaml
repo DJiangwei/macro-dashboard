@@ -514,14 +514,16 @@ indicators:
     label_en: Central Bank Policy Refinancing Rate
     label_zh: 央行再融资基准利率 (CBU)
     unit: "%"
-    fetcher: dbnomics
-    series: IMF/IFS/M.UZ.FPOLM_PA
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/M.UZ.FPOLM_PA
+    fetcher: imf_sdmx
+    dataflow: "IMF.STA,MFS_IR"
+    series: UZB.MFS166_RT_PT_A_PT.M
+    source_name: IMF Monetary and Financial Statistics (MFS_IR)
+    source_authority: official_mirror
+    source_url: https://data.imf.org/en/datasets/IMF.STA:MFS_IR
     frequency: monthly
     start_date: 2015-01-01
-    caveat_en: Central Bank of Uzbekistan refinancing/policy rate reported in IFS.
-    caveat_zh: 乌兹别克斯坦央行向IMF报送的政策再融资基准利率。
+    caveat_en: "Central Bank of Uzbekistan policy (refinancing) rate as reported to the IMF (MFS_IR, monetary policy-related rate). IMF publication lags the central bank by several months, so recent decisions may not show yet; the former IFS series on DBnomics stopped earlier."
+    caveat_zh: "乌兹别克斯坦央行政策（再融资）利率，来自IMF货币金融统计（MFS_IR，货币政策相关利率）。IMF发布比央行滞后数月，最近的决议可能尚未体现；原DBnomics上的IFS序列停更更早。"
 
   - id: lending_rate
     section: monetary_financial

@@ -3239,6 +3239,78 @@ def _populate_nbk_history() -> None:
         ]
 
 
+NBK_BASE_RATE_URL = "https://nationalbank.kz/en/news/grafik-prinyatiya-resheniy-po-bazovoy-stavke"
+
+
+def _nbk_get(url: str) -> str:
+    response = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=(5, 45))
+    response.raise_for_status()
+    return response.text
+
+
+def parse_nbk_base_rate_table(page_html: str) -> list[tuple[str, float]]:
+    """(effective date, base rate) rows of an NBK decision table.
+
+    Tags are dropped without a separator because the CMS splits numbers across
+    <span>s ("16", ".", "25"); scheduled meetings ("04.12.2026*", no rate) are skipped.
+    """
+    import html as html_lib
+
+    table = re.search(r"<table.*?</table>", page_html, re.S)
+    if not table:
+        return []
+    rows = []
+    for tr in re.findall(r"<tr.*?</tr>", table.group(0), re.S):
+        cells = [re.sub(r"\s+", "", html_lib.unescape(re.sub(r"<[^>]+>", "", td))) for td in re.findall(r"<td.*?</td>", tr, re.S)]
+        cells = [cell for cell in cells if cell]
+        if len(cells) < 2:
+            continue
+        day = re.fullmatch(r"(\d{2})\.(\d{2})\.(\d{4})", cells[0])
+        if not day:
+            continue
+        try:
+            rate = float(cells[1].replace(",", "."))
+        except ValueError:
+            continue
+        rows.append((f"{day.group(3)}-{day.group(2)}-{day.group(1)}", rate))
+    return rows
+
+
+def nbk_year_pages(page_html: str) -> list[str]:
+    """Absolute URLs of the per-year decision pages linked from the NBK decisions page."""
+    paths = re.findall(r'href="(/en/news/grafik-prinyatiya-resheniy-po-bazovoy-stavke/rubrics/\d+)"', page_html)
+    return [f"https://nationalbank.kz{path}" for path in dict.fromkeys(paths)]
+
+
+def fetch_nbk_base_rate(spec: dict[str, Any], today: date | None = None) -> dict[str, Any]:
+    """National Bank of Kazakhstan base rate as decision events from its official schedule.
+
+    Ends with an as-of row (today, rate in force), like the BIS policy-rate
+    series, so derived real rates run to the present.
+    """
+    today = today or datetime.now(UTC).date()
+    main = _nbk_get(NBK_BASE_RATE_URL)
+    decisions = dict(parse_nbk_base_rate_table(main))
+    for url in nbk_year_pages(main):
+        decisions.update(parse_nbk_base_rate_table(_nbk_get(url)))
+    start = str(spec.get("start_date") or "2015-01-01")[:10]
+    events = sorted((d, v) for d, v in decisions.items() if start <= d <= today.isoformat())
+    if not events:
+        raise RuntimeError("NBK decision pages returned no base-rate rows")
+    observations = [{"date": d, "value": v} for d, v in events]
+    if events[-1][0] < today.isoformat():
+        observations.append({"date": today.isoformat(), "value": events[-1][1]})
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": events[-1][0],
+        "api_url": NBK_BASE_RATE_URL,
+        "quality_notes": [
+            f"NBK base-rate decisions (effective dates) from the official schedule; event-dated, with an as-of row ({today.isoformat()})."
+        ],
+    }
+
+
 def fetch_nbk_xml(spec: dict[str, Any]) -> dict[str, Any]:
     """Fetch official exchange rates from National Bank of Kazakhstan (NBK) XML feeds."""
     import xml.etree.ElementTree as ET

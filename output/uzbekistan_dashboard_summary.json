@@ -1,8 +1,8 @@
 {
   "file": "uzbekistan.html",
-  "generated": "2026-11-05T15:51:20.056447+00:00",
+  "generated": "2026-11-05T16:04:35.852015+00:00",
   "charts": 37,
-  "source_groups": 15,
+  "source_groups": 16,
   "data_gaps": 3,
   "low_confidence": 6,
   "key_series_latest": [
@@ -334,12 +334,12 @@
       "id": "policy_rate",
       "label_en": "Central Bank Policy Refinancing Rate",
       "label_zh": "央行再融资基准利率 (CBU)",
-      "latest_date": "2024-12-01",
-      "latest_value": 13.5,
-      "latest_display": "13.5 %",
+      "latest_date": "2025-08-01",
+      "latest_value": 14.0,
+      "latest_display": "14.0 %",
       "frequency": "monthly",
-      "source_name": "IMF / DBnomics (IFS)",
-      "series": "IMF/IFS/M.UZ.FPOLM_PA",
+      "source_name": "IMF Monetary and Financial Statistics (MFS_IR)",
+      "series": "UZB.MFS166_RT_PT_A_PT.M",
       "quality_status": "low_confidence"
     },
     {
@@ -447,10 +447,10 @@
     ],
     "file": "uzbekistan_canonical_frame.json",
     "series": 37,
-    "observations": 2750,
+    "observations": 2766,
     "series_count": 37,
-    "observation_count": 2750,
-    "snapshot_generated": "2026-11-05T15:50:37.506516+00:00"
+    "observation_count": 2766,
+    "snapshot_generated": "2026-11-05T16:03:55.537507+00:00"
   },
   "data_gaps_detail": [
     {
@@ -476,7 +476,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 15,
+    "source_groups": 16,
     "sources": [
       {
         "source_name": "IMF SDMX / CBU",
@@ -491,10 +491,6 @@
         "charts": 5
       },
       {
-        "source_name": "IMF / DBnomics (IFS)",
-        "charts": 3
-      },
-      {
         "source_name": "IMF SDMX / Statistics Agency of Uzbekistan",
         "charts": 3
       },
@@ -507,6 +503,10 @@
         "charts": 2
       },
       {
+        "source_name": "IMF / DBnomics (IFS)",
+        "charts": 2
+      },
+      {
         "source_name": "World Bank / ILO",
         "charts": 2
       },
@@ -515,15 +515,19 @@
         "charts": 1
       },
       {
-        "source_name": "IMF / DBnomics (IFS) / Derived",
-        "charts": 1
-      },
-      {
         "source_name": "IMF / FRED",
         "charts": 1
       },
       {
         "source_name": "IMF DataMapper (Fiscal Monitor)",
+        "charts": 1
+      },
+      {
+        "source_name": "IMF Monetary and Financial Statistics (MFS_IR)",
+        "charts": 1
+      },
+      {
+        "source_name": "IMF Monetary and Financial Statistics (MFS_IR) / Derived",
         "charts": 1
       },
       {
@@ -606,50 +610,6 @@
         "transform": "level"
       },
       {
-        "id": "policy_rate",
-        "concept_id": "policy_rate",
-        "label_en": "Central Bank Policy Refinancing Rate",
-        "latest_date": "2024-12-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2024-12-01",
-        "age_days": 674,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF / DBnomics (IFS)",
-        "series": "IMF/IFS/M.UZ.FPOLM_PA",
-        "transform": "level"
-      },
-      {
-        "id": "real_policy_rate",
-        "concept_id": "real_policy_rate",
-        "label_en": "UZ Real Policy Rate (Policy Rate − CPI YoY)",
-        "latest_date": "2024-12-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2024-12-01",
-        "age_days": 674,
-        "threshold_days": 75,
-        "release_calendar_id": "",
-        "expected_release_date": "",
-        "due_date": "",
-        "quality_status": "low_confidence",
-        "source_authority": "official_mirror",
-        "derivation": "derived",
-        "validation": "passed",
-        "comparability": "medium",
-        "source_name": "IMF / DBnomics (IFS) / Derived",
-        "series": "policy_rate in force at month end − cpi_inflation",
-        "transform": "level"
-      },
-      {
         "id": "short_term_external_debt_pct_reserves",
         "concept_id": "uz:short_term_external_debt_pct_reserves",
         "label_en": "Short-Term External Debt (% of Reserves)",
@@ -713,6 +673,50 @@
         "comparability": "medium",
         "source_name": "IMF / DBnomics (FSI)",
         "series": "IMF/FSI/Q.UZ.FSANL_PT",
+        "transform": "level"
+      },
+      {
+        "id": "policy_rate",
+        "concept_id": "policy_rate",
+        "label_en": "Central Bank Policy Refinancing Rate",
+        "latest_date": "2025-08-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2025-08-01",
+        "age_days": 431,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF Monetary and Financial Statistics (MFS_IR)",
+        "series": "UZB.MFS166_RT_PT_A_PT.M",
+        "transform": "level"
+      },
+      {
+        "id": "real_policy_rate",
+        "concept_id": "real_policy_rate",
+        "label_en": "UZ Real Policy Rate (Policy Rate − CPI YoY)",
+        "latest_date": "2025-08-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2025-08-01",
+        "age_days": 431,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "derived",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF Monetary and Financial Statistics (MFS_IR) / Derived",
+        "series": "policy_rate in force at month end − cpi_inflation",
         "transform": "level"
       },
       {

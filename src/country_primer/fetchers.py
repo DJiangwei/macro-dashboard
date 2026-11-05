@@ -110,6 +110,7 @@ FETCHERS: dict[str, FetcherDef] = {
     "tw_mof_customs": FetcherDef("fetch_tw_mof_customs", SPEC, SCALE_TRANSFORM),
     "finmind": FetcherDef("fetch_finmind", SPEC, SCALE_TRANSFORM),
     "nbk_xml": FetcherDef("fetch_nbk_xml", SPEC, TRANSFORM),
+    "nbk_base_rate": FetcherDef("fetch_nbk_base_rate", SPEC, RAW, "NBK base-rate decisions from the official schedule, event-dated"),
     "cbn_fx": FetcherDef("fetch_cbn_fx", SPEC, SCALE_TRANSFORM),
     # Energy markets (src/country_primer/energy_adapters.py)
     "eia_xls": FetcherDef("fetch_eia_xls", SPEC, SCALE_TRANSFORM, "EIA dnav history spreadsheets", "energy_adapters"),

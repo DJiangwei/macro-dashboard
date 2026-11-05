@@ -518,17 +518,17 @@ indicators:
   # ==========================================
   - id: policy_rate
     section: monetary_financial
-    label_en: Monetary Policy-Related Interest Rate
-    label_zh: 央行货币政策利率
+    label_en: NBK Base Rate
+    label_zh: 哈萨克斯坦国家银行基准利率
     unit: "%"
-    fetcher: dbnomics
-    series: IMF/IFS/M.KZ.FPOLM_PA
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/M.KZ.FPOLM_PA
-    frequency: monthly
-    start_date: 2000-01-01
-    caveat_en: NBK monetary policy-related rate reported in IMF International Financial Statistics.
-    caveat_zh: 哈萨克斯坦国家银行向IMF报送的货币政策基准利率。
+    fetcher: nbk_base_rate
+    source_name: National Bank of Kazakhstan (base-rate decisions)
+    source_url: https://nationalbank.kz/en/news/grafik-prinyatiya-resheniy-po-bazovoy-stavke
+    source_authority: official_primary
+    frequency: event
+    start_date: 2015-01-01
+    caveat_en: "NBK base rate by effective date of each decision, from the bank's official decision schedule, plus an as-of row for the rate in force at fetch time. The base rate was introduced in September 2015; IMF IFS and MFS_IR stop at 2020-12 for Kazakhstan."
+    caveat_zh: "哈萨克斯坦国家银行基准利率，按每次决议的生效日期记录，来自该行官方决议表，另加抓取当日仍在执行的利率一行。基准利率于2015年9月推出；IMF的IFS与MFS_IR中哈萨克斯坦数据止于2020年12月。"
 
   - id: broad_money_growth
     section: monetary_financial

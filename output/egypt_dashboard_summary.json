@@ -1,8 +1,8 @@
 {
   "file": "egypt.html",
-  "generated": "2026-11-05T15:51:20.103971+00:00",
+  "generated": "2026-11-05T16:04:35.899895+00:00",
   "charts": 38,
-  "source_groups": 16,
+  "source_groups": 17,
   "data_gaps": 3,
   "low_confidence": 14,
   "key_series_latest": [
@@ -346,12 +346,12 @@
       "id": "policy_rate",
       "label_en": "Central Bank Corridor / Policy Rate",
       "label_zh": "央行政策利率 (CBE走廊利率)",
-      "latest_date": "2025-05-01",
-      "latest_value": 24.5,
-      "latest_display": "24.5 %",
+      "latest_date": "2025-08-01",
+      "latest_value": 22.5,
+      "latest_display": "22.5 %",
       "frequency": "monthly",
-      "source_name": "IMF / DBnomics (IFS)",
-      "series": "IMF/IFS/M.EG.FPOLM_PA",
+      "source_name": "IMF Monetary and Financial Statistics (MFS_IR)",
+      "series": "EGY.MFS166_RT_PT_A_PT.M",
       "quality_status": "low_confidence"
     },
     {
@@ -459,10 +459,10 @@
     ],
     "file": "egypt_canonical_frame.json",
     "series": 38,
-    "observations": 9646,
+    "observations": 9652,
     "series_count": 38,
-    "observation_count": 9646,
-    "snapshot_generated": "2026-11-05T15:50:37.511322+00:00"
+    "observation_count": 9652,
+    "snapshot_generated": "2026-11-05T16:03:55.542618+00:00"
   },
   "data_gaps_detail": [
     {
@@ -488,7 +488,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 16,
+    "source_groups": 17,
     "sources": [
       {
         "source_name": "IMF SDMX / CBE",
@@ -507,11 +507,11 @@
         "charts": 4
       },
       {
-        "source_name": "IMF / DBnomics (IFS)",
-        "charts": 3
+        "source_name": "Bruegel (Darvas REER Dataset)",
+        "charts": 2
       },
       {
-        "source_name": "Bruegel (Darvas REER Dataset)",
+        "source_name": "IMF / DBnomics (IFS)",
         "charts": 2
       },
       {
@@ -527,15 +527,19 @@
         "charts": 1
       },
       {
-        "source_name": "IMF / DBnomics (IFS) / Derived",
-        "charts": 1
-      },
-      {
         "source_name": "IMF / FRED",
         "charts": 1
       },
       {
         "source_name": "IMF DataMapper (Fiscal Monitor)",
+        "charts": 1
+      },
+      {
+        "source_name": "IMF Monetary and Financial Statistics (MFS_IR)",
+        "charts": 1
+      },
+      {
+        "source_name": "IMF Monetary and Financial Statistics (MFS_IR) / Derived",
         "charts": 1
       },
       {
@@ -647,11 +651,11 @@
         "id": "policy_rate",
         "concept_id": "policy_rate",
         "label_en": "Central Bank Corridor / Policy Rate",
-        "latest_date": "2025-05-01",
+        "latest_date": "2025-08-01",
         "frequency": "monthly",
         "freshness_status": "stale",
-        "age_basis_date": "2025-05-01",
-        "age_days": 523,
+        "age_basis_date": "2025-08-01",
+        "age_days": 431,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -661,19 +665,19 @@
         "derivation": "observed",
         "validation": "passed",
         "comparability": "medium",
-        "source_name": "IMF / DBnomics (IFS)",
-        "series": "IMF/IFS/M.EG.FPOLM_PA",
+        "source_name": "IMF Monetary and Financial Statistics (MFS_IR)",
+        "series": "EGY.MFS166_RT_PT_A_PT.M",
         "transform": "level"
       },
       {
         "id": "real_policy_rate",
         "concept_id": "real_policy_rate",
         "label_en": "EG Real Policy Rate (Policy Rate − CPI YoY)",
-        "latest_date": "2025-05-01",
+        "latest_date": "2025-08-01",
         "frequency": "monthly",
         "freshness_status": "stale",
-        "age_basis_date": "2025-05-01",
-        "age_days": 523,
+        "age_basis_date": "2025-08-01",
+        "age_days": 431,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -683,7 +687,7 @@
         "derivation": "derived",
         "validation": "passed",
         "comparability": "medium",
-        "source_name": "IMF / DBnomics (IFS) / Derived",
+        "source_name": "IMF Monetary and Financial Statistics (MFS_IR) / Derived",
         "series": "policy_rate in force at month end − cpi_inflation",
         "transform": "level"
       },

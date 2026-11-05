@@ -1300,7 +1300,7 @@ The Kazakhstan page is generated from `config/kazakhstan_indicators.yaml`. Natio
 
 Generated from `config/kazakhstan_indicators.yaml`; latest dates are tracked in `output/kazakhstan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 38. Latest rendered chart count: 38. Source groups: 16.
+Configured charts: 38. Latest rendered chart count: 38. Source groups: 17.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1334,7 +1334,7 @@ Configured charts: 38. Latest rendered chart count: 38. Source groups: 16.
 | fiscal_sovereign | `fiscal_balance_gdp` | Fiscal Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | GGXCNL_NGDP/KAZ | General government net lending/borrowing as a percentage of GDP. |
 | fiscal_sovereign | `primary_balance_gdp` | Primary Net Lending/Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (Fiscal Monitor) | GGXONLB_G01_GDP_PT/KAZ | Primary net lending/borrowing excluding net interest outlays. |
 | fiscal_sovereign | `fx_reserves` | Foreign Exchange Reserves (USD) | annual | USD | fred_graph | IMF / FRED | KAZFAFARUSD | Total foreign exchange reserves in US dollars reported to the IMF. |
-| monetary_financial | `policy_rate` | Monetary Policy-Related Interest Rate | monthly | % | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.KZ.FPOLM_PA | NBK monetary policy-related rate reported in IMF International Financial Statistics. |
+| monetary_financial | `policy_rate` | NBK Base Rate | event | % | nbk_base_rate | National Bank of Kazakhstan (base-rate decisions) |  | NBK base rate by effective date of each decision, from the bank's official decision schedule, plus an as-of row for the rate in force at fetch time. The base rate was introduced in September 2015; IMF IFS and MFS_IR stop at 2020-12 for Kazakhstan. |
 | monetary_financial | `broad_money_growth` | Broad Money Growth (Annual %) | annual | % | world_bank | World Bank WDI | FM.LBL.BMNY.ZG | Annual growth rate of broad money liabilities. |
 | monetary_financial | `private_credit_gdp` | Domestic Private Credit (% of GDP) | annual | % of GDP | world_bank | World Bank WDI | FS.AST.PRVT.GD.ZS | Domestic credit to private sector refers to financial resources provided to the private sector. |
 | monetary_financial | `brent_crude_oil` | Crude Oil Prices: Brent - Europe | daily | USD/bbl | fred_graph | EIA / FRED | DCOILBRENTEU | Daily spot price for Brent crude, the primary benchmark for Kazakh crude export pricing. |
@@ -1357,7 +1357,7 @@ The Uzbekistan page is generated from `config/uzbekistan_indicators.yaml`. DBnom
 
 Generated from `config/uzbekistan_indicators.yaml`; latest dates are tracked in `output/uzbekistan_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 37. Latest rendered chart count: 37. Source groups: 15.
+Configured charts: 37. Latest rendered chart count: 37. Source groups: 16.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1390,7 +1390,7 @@ Configured charts: 37. Latest rendered chart count: 37. Source groups: 15.
 | fiscal_sovereign | `fiscal_balance_gdp` | Fiscal Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | GGXCNL_NGDP/UZB | General government net lending/borrowing as a percentage of GDP. |
 | fiscal_sovereign | `primary_balance_gdp` | Primary Net Lending/Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (Fiscal Monitor) | GGXONLB_G01_GDP_PT/UZB | Primary net lending/borrowing excluding net interest outlays. |
 | fiscal_sovereign | `fx_reserves` | Foreign Exchange Reserves (USD) | annual | USD | fred_graph | IMF / FRED | UZBFAFARUSD | Total foreign exchange reserves in US dollars reported to the IMF. |
-| monetary_financial | `policy_rate` | Central Bank Policy Refinancing Rate | monthly | % | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.UZ.FPOLM_PA | Central Bank of Uzbekistan refinancing/policy rate reported in IFS. |
+| monetary_financial | `policy_rate` | Central Bank Policy Refinancing Rate | monthly | % | imf_sdmx | IMF Monetary and Financial Statistics (MFS_IR) | UZB.MFS166_RT_PT_A_PT.M | Central Bank of Uzbekistan policy (refinancing) rate as reported to the IMF (MFS_IR, monetary policy-related rate). IMF publication lags the central bank by several months, so recent decisions may not show yet; the former IFS series on DBnomics stopped earlier. |
 | monetary_financial | `lending_rate` | Commercial Bank Lending Rate | monthly | % | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.UZ.FILR_PA | Commercial bank weighted average lending rate on local currency credits. |
 | monetary_financial | `deposit_rate` | Commercial Bank Deposit Rate | monthly | % | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.UZ.FIDR_PA | Commercial bank deposit rate on local currency time deposits. |
 | monetary_financial | `broad_money_growth` | Broad Money Growth (Annual %) | annual | % | world_bank | World Bank WDI | FM.LBL.BMNY.ZG | Annual growth rate of broad money liabilities. |
@@ -1413,7 +1413,7 @@ The Egypt page is generated from `config/egypt_indicators.yaml`. DBnomics (IMF I
 
 Generated from `config/egypt_indicators.yaml`; latest dates are tracked in `output/egypt_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 38. Latest rendered chart count: 38. Source groups: 16.
+Configured charts: 38. Latest rendered chart count: 38. Source groups: 17.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1447,14 +1447,14 @@ Configured charts: 38. Latest rendered chart count: 38. Source groups: 16.
 | fiscal_sovereign | `fiscal_balance_gdp` | Fiscal Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | GGXCNL_NGDP/EGY | General government net lending/borrowing as a percentage of GDP. |
 | fiscal_sovereign | `primary_balance_gdp` | Primary Net Lending/Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (Fiscal Monitor) | GGXONLB_G01_GDP_PT/EGY | Primary net lending/borrowing excluding net interest outlays. |
 | fiscal_sovereign | `fx_reserves` | Foreign Exchange Reserves (USD) | annual | USD | fred_graph | IMF / FRED | EGYFAFARUSD | Total foreign exchange reserves in US dollars reported to the IMF. |
-| monetary_financial | `policy_rate` | Central Bank Corridor / Policy Rate | monthly | % | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.EG.FPOLM_PA | Central Bank of Egypt monetary policy rate reported in IFS. |
+| monetary_financial | `policy_rate` | Central Bank Corridor / Policy Rate | monthly | % | imf_sdmx | IMF Monetary and Financial Statistics (MFS_IR) | EGY.MFS166_RT_PT_A_PT.M | Central Bank of Egypt monetary policy-related rate as reported to the IMF (MFS_IR, monetary policy-related rate). IMF publication lags the central bank by several months, so recent decisions may not show yet; the former IFS series on DBnomics stopped earlier. |
 | monetary_financial | `lending_rate` | Commercial Bank Lending Rate | monthly | % | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.EG.FILR_PA | Commercial bank weighted average lending rate on local currency loans. |
 | monetary_financial | `deposit_rate` | Commercial Bank Deposit Rate | monthly | % | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.EG.FIDR_PA | Commercial bank deposit rate on local currency time deposits. |
 | monetary_financial | `broad_money_growth` | Broad Money Growth (Annual %) | annual | % | world_bank | World Bank WDI | FM.LBL.BMNY.ZG | Annual growth rate of broad money liabilities. |
 | monetary_financial | `private_credit_gdp` | Domestic Private Credit (% of GDP) | annual | % of GDP | world_bank | World Bank WDI | FS.AST.PRVT.GD.ZS | Domestic credit to private sector refers to financial resources provided to the private sector. |
 | monetary_financial | `brent_crude_oil` | Crude Oil Prices: Brent - Europe | daily | USD/bbl | fred_graph | EIA / FRED | DCOILBRENTEU | Daily spot price for Brent crude, external terms-of-trade driver for Egyptian hydrocarbons. |
 | monetary_financial | `crude_oil_production` | Crude Oil & Lease Condensate Production | monthly | TBPD | eia | US Energy Information Administration (EIA) |  | Monthly crude oil production including lease condensate for Egypt reported by US EIA. |
-| monetary_financial | `real_policy_rate` | Egypt Real Policy Rate | monthly | % | manual | Central Bank of Egypt / CAPMAS / Derived |  | Derived real policy rate calculated as CBE Overnight Deposit Rate minus headline CPI YoY. |
+| monetary_financial | `real_policy_rate` | Egypt Real Policy Rate | monthly | % | manual | Central Bank of Egypt / CAPMAS / Derived |  | Derived real policy rate calculated as the CBE monetary policy-related rate reported to the IMF (MFS_IR) minus headline CPI YoY. |
 
 ## Egypt Official / Vendor Data Gaps
 
@@ -1470,7 +1470,7 @@ The Nigeria page is generated from `config/nigeria_indicators.yaml`. DBnomics (I
 
 Generated from `config/nigeria_indicators.yaml`; latest dates are tracked in `output/nigeria_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 40. Latest rendered chart count: 40. Source groups: 15.
+Configured charts: 40. Latest rendered chart count: 40. Source groups: 16.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1504,7 +1504,7 @@ Configured charts: 40. Latest rendered chart count: 40. Source groups: 15.
 | fiscal_sovereign | `fiscal_balance_gdp` | Fiscal Balance (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (WEO) | GGXCNL_NGDP/NGA | General government net lending/borrowing as a percentage of GDP. |
 | fiscal_sovereign | `primary_balance_gdp` | Primary Net Lending/Borrowing (% of GDP) | annual | % of GDP | imf_datamapper | IMF DataMapper (Fiscal Monitor) | GGXONLB_G01_GDP_PT/NGA | Primary net lending/borrowing excluding net interest outlays. |
 | fiscal_sovereign | `fx_reserves` | Official Reserve Assets (USD Millions) | monthly | USD mn | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.NG.RAFA_USD | Official reserve assets in US dollars reported in IMF IFS. |
-| monetary_financial | `policy_rate` | Central Bank Monetary Policy Rate (MPR) | monthly | % | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.NG.FPOLM_PA | Central Bank of Nigeria Monetary Policy Rate reported in IFS. |
+| monetary_financial | `policy_rate` | Central Bank Monetary Policy Rate (MPR) | monthly | % | imf_sdmx | IMF Monetary and Financial Statistics (MFS_IR) | NGA.MFS166_RT_PT_A_PT.M | Central Bank of Nigeria Monetary Policy Rate as reported to the IMF (MFS_IR, monetary policy-related rate). IMF publication lags the central bank by several months, so recent decisions may not show yet; the former IFS series on DBnomics stopped earlier. |
 | monetary_financial | `lending_rate` | Commercial Bank Prime Lending Rate | monthly | % | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.NG.FILR_PA | Commercial bank prime lending rate on local currency loans. |
 | monetary_financial | `deposit_rate` | Commercial Bank Time Deposit Rate | monthly | % | dbnomics | IMF / DBnomics (IFS) | IMF/IFS/M.NG.FIDR_PA | Commercial bank weighted average time deposit rate. |
 | monetary_financial | `broad_money_growth` | Broad Money Growth (Annual %) | annual | % | world_bank | World Bank WDI | FM.LBL.BMNY.ZG | Annual growth rate of broad money liabilities. |
