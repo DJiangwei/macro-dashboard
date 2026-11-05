@@ -23,7 +23,7 @@
 | **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 63.5 (usable with watch-list) |
 | **Taiwan (TW)** | 75.0 | 71.7 | **constructive** | above-trend expansion | near-target inflation | accommodative stance | 80.8 (high-confidence dashboard) |
 | **India (IN)** | 55.0 | 48.3 | **mixed** | above-trend expansion | above-target inflation | restrictive stance | 50.4 (needs data review) |
-| **Kazakhstan (KZ)** | 43.8 | 55.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 65.8 (usable with watch-list) |
+| **Kazakhstan (KZ)** | 43.8 | 55.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 71.6 (usable with watch-list) |
 | **Uzbekistan (UZ)** | 53.8 | 51.7 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 64.4 (usable with watch-list) |
 | **Egypt (EG)** | 53.8 | 45.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 55.0 (needs data review) |
 | **Nigeria (NG)** | 53.8 | 55.0 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 53.2 (needs data review) |
@@ -50,10 +50,10 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | **HK** (HKMA) | **3.88%** | 2.30% (2.0%) | 1.00% | **4.35%** (3.85% ~ 4.85%) | **-0.47%** | *calibrated / neutral* |
 | **KR** (BOK) | **3.00%** | 2.88% (2.0%) | 1.00% | **5.09%** (4.59% ~ 5.59%) | **-2.09%** | *substantially accommodative* |
 | **TW** (CBC) | **2.00%** | 2.73% (2.0%) | 1.00% | **5.60%** (5.10% ~ 6.10%) | **-3.60%** | *substantially accommodative* |
-| **KZ** (NBK) | **9.00%** | 9.24% (5.0%) | 2.50% | **15.11%** (14.61% ~ 15.61%) | **-6.11%** | *substantially accommodative* |
-| **UZ** (CBU) | **13.50%** | 6.23% (5.0%) | 3.00% | **10.94%** (10.44% ~ 11.44%) | **+2.56%** | *substantially restrictive* |
-| **EG** (CBE) | **24.50%** | 14.54% (7.0%) | 2.00% | **20.26%** (19.76% ~ 20.76%) | **+4.24%** | *substantially restrictive* |
-| **NG** (CBN) | **26.75%** | 15.39% (9.0%) | 2.00% | **20.84%** (20.34% ~ 21.34%) | **+5.91%** | *substantially restrictive* |
+| **KZ** (NBK) | **15.75%** | 9.24% (5.0%) | 2.50% | **15.11%** (14.61% ~ 15.61%) | **+0.64%** | *moderately restrictive* |
+| **UZ** (CBU) | **14.00%** | 6.23% (5.0%) | 3.00% | **10.94%** (10.44% ~ 11.44%) | **+3.06%** | *substantially restrictive* |
+| **EG** (CBE) | **22.50%** | 14.54% (7.0%) | 2.00% | **20.26%** (19.76% ~ 20.76%) | **+2.24%** | *substantially restrictive* |
+| **NG** (CBN) | **27.00%** | 15.39% (9.0%) | 2.00% | **20.84%** (20.34% ~ 21.34%) | **+6.16%** | *substantially restrictive* |
 
 ---
 

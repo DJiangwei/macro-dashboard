@@ -167,3 +167,40 @@ def test_pbc_card_reads_the_value_after_any_title_match_and_dates_it(monkeypatch
     card = adapters.fetch_pbc_card({"url": "https://www.pbc.gov.cn/en/x/index.html", "expected_title": title})
     assert card["value"] == value
     assert card["updated"] == updated  # never the viewer's date: static text, else the page's createDate
+
+
+# Rows trimmed from nationalbank.kz's base-rate decision table (2026-11-05):
+# a rate split across <span>s by the CMS, a plain row, and a scheduled meeting.
+NBK_DECISIONS_PAGE = """<a href="/en/news/grafik-prinyatiya-resheniy-po-bazovoy-stavke/rubrics/2237">2025</a>
+<a href="/en/news/grafik-prinyatiya-resheniy-po-bazovoy-stavke/rubrics/2365">2026</a>
+<table><tr><td>Decision on the base rate (effective from)</td><td>Base rate, %</td><td>Base rate corridor, %</td></tr>
+<tr> <td><span>07.09.2026</span></td> <td width="98"> <p class="MsoNormal" align="center"><span>16</span><span lang="EN-US">.</span><span>25</span></p> </td> <td width="102"> <p class="MsoNormal" align="center"><span>15</span><span lang="EN-US">.</span><span>25 - 17</span><span lang="EN-US">.</span><span>25</span></p> </td> <td><span><a>link</a><br>The base rate reduced to 16.25%</span></td> </tr>
+<tr> <td> <p><span>27.10.2026</span></p> </td> <td>15.75</td> <td>14.75 - 16.75</td> <td> <p><span><a>link</a><br>The base rate reduced to 15.75%</span></p> </td> </tr>
+<tr> <td><span>04.12.2026*</span></td> <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td> </tr>
+</table>"""
+
+
+def test_nbk_base_rate_rows_join_split_numbers_and_skip_scheduled_meetings() -> None:
+    from country_primer.adapters import nbk_year_pages, parse_nbk_base_rate_table
+    assert parse_nbk_base_rate_table(NBK_DECISIONS_PAGE) == [("2026-09-07", 16.25), ("2026-10-27", 15.75)]
+    assert nbk_year_pages(NBK_DECISIONS_PAGE) == [
+        "https://nationalbank.kz/en/news/grafik-prinyatiya-resheniy-po-bazovoy-stavke/rubrics/2237",
+        "https://nationalbank.kz/en/news/grafik-prinyatiya-resheniy-po-bazovoy-stavke/rubrics/2365",
+    ]
+
+
+def test_nbk_base_rate_events_end_with_an_as_of_row(monkeypatch) -> None:
+    from datetime import date
+
+    from country_primer import adapters
+    year_2025 = "<table><tr> <td>15.12.2025</td> <td>18.00</td> <td>17.00 - 19.00</td> </tr></table>"
+    pages = {adapters.NBK_BASE_RATE_URL: NBK_DECISIONS_PAGE}
+    monkeypatch.setattr(adapters, "_nbk_get", lambda url: pages.get(url, year_2025))
+    out = adapters.fetch_nbk_base_rate({"id": "policy_rate", "start_date": "2025-01-01"}, today=date(2026, 11, 5))
+    assert out["observations"] == [
+        {"date": "2025-12-15", "value": 18.0},
+        {"date": "2026-09-07", "value": 16.25},
+        {"date": "2026-10-27", "value": 15.75},
+        {"date": "2026-11-05", "value": 15.75},  # as-of row: the last decision is still in force
+    ]
+    assert out["provider_updated"] == "2026-10-27"

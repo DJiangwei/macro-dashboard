@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-11-05T15:51:22.703589+00:00",
+  "generated": "2026-11-05T16:04:38.578302+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -138,9 +138,9 @@
       "missing": 27
     },
     "KZ": {
-      "verified": 1,
-      "watch": 14,
-      "low_confidence": 4,
+      "verified": 2,
+      "watch": 15,
+      "low_confidence": 2,
       "substitute": 0,
       "missing": 29
     },
@@ -6521,8 +6521,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 0,
-      "weak_countries": 4,
-      "priority_score": 58,
+      "weak_countries": 3,
+      "priority_score": 56,
       "countries": {
         "HU": {
           "state": "verified",
@@ -6663,12 +6663,12 @@
           "refresh_fallback": false
         },
         "KZ": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2020-12-01",
+          "latest_date": "2026-11-05",
           "refresh_fallback": false
         },
         "UZ": {
@@ -6677,7 +6677,7 @@
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2024-12-01",
+          "latest_date": "2025-08-01",
           "refresh_fallback": false
         },
         "EG": {
@@ -6686,7 +6686,7 @@
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2025-05-01",
+          "latest_date": "2025-08-01",
           "refresh_fallback": false
         },
         "NG": {
@@ -6695,7 +6695,7 @@
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2024-08-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         }
       }
@@ -6709,8 +6709,8 @@
       "unit": "percent",
       "priority_weight": 5,
       "missing_countries": 0,
-      "weak_countries": 5,
-      "priority_score": 60,
+      "weak_countries": 4,
+      "priority_score": 58,
       "countries": {
         "HU": {
           "state": "watch",
@@ -6848,12 +6848,12 @@
           "refresh_fallback": false
         },
         "KZ": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "real_policy_rate"
           ],
-          "latest_date": "2020-12-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "UZ": {
@@ -6862,7 +6862,7 @@
           "indicator_ids": [
             "real_policy_rate"
           ],
-          "latest_date": "2024-12-01",
+          "latest_date": "2025-08-01",
           "refresh_fallback": false
         },
         "EG": {
@@ -6871,7 +6871,7 @@
           "indicator_ids": [
             "real_policy_rate"
           ],
-          "latest_date": "2025-05-01",
+          "latest_date": "2025-08-01",
           "refresh_fallback": false
         },
         "NG": {
@@ -6880,7 +6880,7 @@
           "indicator_ids": [
             "real_policy_rate"
           ],
-          "latest_date": "2024-08-01",
+          "latest_date": "2026-04-01",
           "refresh_fallback": false
         }
       }
@@ -9164,11 +9164,10 @@
       "concept_id": "real_policy_rate",
       "pillar": "monetary_financial",
       "label_en": "Real Policy Rate",
-      "priority_score": 60,
+      "priority_score": 58,
       "missing_countries": [],
       "weak_countries": [
         "IN",
-        "KZ",
         "UZ",
         "EG",
         "NG"
@@ -9178,10 +9177,9 @@
       "concept_id": "policy_rate",
       "pillar": "monetary_financial",
       "label_en": "Policy Rate",
-      "priority_score": 58,
+      "priority_score": 56,
       "missing_countries": [],
       "weak_countries": [
-        "KZ",
         "UZ",
         "EG",
         "NG"

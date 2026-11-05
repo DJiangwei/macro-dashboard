@@ -524,14 +524,16 @@ indicators:
     label_en: Central Bank Corridor / Policy Rate
     label_zh: 央行政策利率 (CBE走廊利率)
     unit: "%"
-    fetcher: dbnomics
-    series: IMF/IFS/M.EG.FPOLM_PA
-    source_name: IMF / DBnomics (IFS)
-    source_url: https://db.nomics.world/IMF/IFS/M.EG.FPOLM_PA
+    fetcher: imf_sdmx
+    dataflow: "IMF.STA,MFS_IR"
+    series: EGY.MFS166_RT_PT_A_PT.M
+    source_name: IMF Monetary and Financial Statistics (MFS_IR)
+    source_authority: official_mirror
+    source_url: https://data.imf.org/en/datasets/IMF.STA:MFS_IR
     frequency: monthly
     start_date: 2015-01-01
-    caveat_en: Central Bank of Egypt monetary policy rate reported in IFS.
-    caveat_zh: 埃及中央银行向IMF报送的货币政策基准利率。
+    caveat_en: "Central Bank of Egypt monetary policy-related rate as reported to the IMF (MFS_IR, monetary policy-related rate). IMF publication lags the central bank by several months, so recent decisions may not show yet; the former IFS series on DBnomics stopped earlier."
+    caveat_zh: "埃及中央银行货币政策相关利率，来自IMF货币金融统计（MFS_IR，货币政策相关利率）。IMF发布比央行滞后数月，最近的决议可能尚未体现；原DBnomics上的IFS序列停更更早。"
 
   - id: lending_rate
     section: monetary_financial
@@ -632,8 +634,8 @@ indicators:
     source_name: Central Bank of Egypt / CAPMAS / Derived
     source_url: https://www.cbe.org.eg
     frequency: monthly
-    caveat_en: Derived real policy rate calculated as CBE Overnight Deposit Rate minus headline CPI YoY.
-    caveat_zh: 衍生实际政策利率，以埃及央行隔夜存款利率减去CPI同比增速计算。
+    caveat_en: Derived real policy rate calculated as the CBE monetary policy-related rate reported to the IMF (MFS_IR) minus headline CPI YoY.
+    caveat_zh: 衍生实际政策利率，以埃及央行向IMF报送的货币政策相关利率（MFS_IR）减去CPI同比增速计算。
 
 data_gaps:
   - section: monetary_financial

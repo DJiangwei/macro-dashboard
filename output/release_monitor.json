@@ -1,32 +1,6 @@
 {
-  "generated": "2026-11-05T15:51:26.621616+00:00",
+  "generated": "2026-11-05T16:04:42.606248+00:00",
   "items": [
-    {
-      "code": "KZ",
-      "dashboard": "Kazakhstan",
-      "indicator_id": "policy_rate",
-      "label": "Monetary Policy-Related Interest Rate",
-      "latest": "2020-12-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 2135,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "NBK monetary policy-related rate reported in IMF International Financial Statistics."
-    },
-    {
-      "code": "KZ",
-      "dashboard": "Kazakhstan",
-      "indicator_id": "real_policy_rate",
-      "label": "KZ Real Policy Rate (Policy Rate − CPI YoY)",
-      "latest": "2020-12-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 2135,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS) / Derived",
-      "note": "Derived real policy rate calculated as NBK Base Rate minus headline CPI YoY."
-    },
     {
       "code": "CZ",
       "dashboard": "Czechia",
@@ -273,32 +247,6 @@
       "severity": "high",
       "source": "IMF / DBnomics (IFS)",
       "note": "Commercial bank prime lending rate on local currency loans."
-    },
-    {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "policy_rate",
-      "label": "Central Bank Monetary Policy Rate (MPR)",
-      "latest": "2024-08-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 796,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Central Bank of Nigeria Monetary Policy Rate reported in IFS."
-    },
-    {
-      "code": "NG",
-      "dashboard": "Nigeria",
-      "indicator_id": "real_policy_rate",
-      "label": "NG Real Policy Rate (Policy Rate − CPI YoY)",
-      "latest": "2024-08-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 796,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS) / Derived",
-      "note": "Derived real policy rate calculated as CBN Monetary Policy Rate (MPR) minus headline CPI YoY."
     },
     {
       "code": "JP",
@@ -678,32 +626,6 @@
       "note": "Commercial bank weighted average lending rate on local currency credits."
     },
     {
-      "code": "UZ",
-      "dashboard": "Uzbekistan",
-      "indicator_id": "policy_rate",
-      "label": "Central Bank Policy Refinancing Rate",
-      "latest": "2024-12-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 674,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS)",
-      "note": "Central Bank of Uzbekistan refinancing/policy rate reported in IFS."
-    },
-    {
-      "code": "UZ",
-      "dashboard": "Uzbekistan",
-      "indicator_id": "real_policy_rate",
-      "label": "UZ Real Policy Rate (Policy Rate − CPI YoY)",
-      "latest": "2024-12-01",
-      "frequency": "monthly",
-      "status": "stale",
-      "age_days": 674,
-      "severity": "high",
-      "source": "IMF / DBnomics (IFS) / Derived",
-      "note": "Derived real policy rate calculated as CBU Policy Rate minus headline CPI YoY."
-    },
-    {
       "code": "RO",
       "dashboard": "Romania",
       "indicator_id": "cb_balance_sheet_gdp",
@@ -1040,6 +962,84 @@
       "severity": "high",
       "source": "IMF FSI via DB.nomics",
       "note": "IMF deposit-taker return on equity; taxes, provisioning cycles, and one-offs can distort profitability. DB.nomics mirror is used for narrow API access. Source validation: Latest observation is 581 days old for quarterly data."
+    },
+    {
+      "code": "TR",
+      "dashboard": "Turkey",
+      "indicator_id": "bank_capital_ratio",
+      "label": "Bank Regulatory Capital to Risk-Weighted Assets",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 584,
+      "severity": "high",
+      "source": "IMF / DBnomics (Financial Soundness Indicators)",
+      "note": "Deposit-taker regulatory capital to risk-weighted assets reported to the IMF."
+    },
+    {
+      "code": "TR",
+      "dashboard": "Turkey",
+      "indicator_id": "bank_npl_ratio",
+      "label": "Bank Non-Performing Loans (% of Gross Loans)",
+      "latest": "2025-03-31",
+      "frequency": "quarterly",
+      "status": "stale",
+      "age_days": 584,
+      "severity": "high",
+      "source": "IMF / DBnomics (Financial Soundness Indicators)",
+      "note": "Non-performing loans to total gross loans for deposit-takers."
+    },
+    {
+      "code": "KR",
+      "dashboard": "South Korea",
+      "indicator_id": "cpi_inflation_fred",
+      "label": "Headline CPI YoY (OECD Mirror Cross-Check)",
+      "latest": "2025-04-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 554,
+      "severity": "high",
+      "source": "FRED / OECD",
+      "note": "OECD consumer price index growth rate series mirrored on FRED."
+    },
+    {
+      "code": "CN",
+      "dashboard": "China",
+      "indicator_id": "large_bank_rrr_akshare",
+      "label": "Large Bank RRR",
+      "latest": "2025-05-15",
+      "frequency": "irregular",
+      "status": "stale",
+      "age_days": 539,
+      "severity": "high",
+      "source": "AKShare / PBC RRR Announcements",
+      "note": "Event-based required reserve ratio history via AKShare; effective dates and institution buckets should be cross-checked against PBC announcements."
+    },
+    {
+      "code": "CN",
+      "dashboard": "China",
+      "indicator_id": "small_bank_rrr_akshare",
+      "label": "Small/Mid Bank RRR",
+      "latest": "2025-05-15",
+      "frequency": "irregular",
+      "status": "stale",
+      "age_days": 539,
+      "severity": "high",
+      "source": "AKShare / PBC RRR Announcements",
+      "note": "Event-based required reserve ratio history via AKShare; smaller-bank categories have changed over time, so use the series as a policy-easing marker."
+    },
+    {
+      "code": "EG",
+      "dashboard": "Egypt",
+      "indicator_id": "deposit_rate",
+      "label": "Commercial Bank Deposit Rate",
+      "latest": "2025-05-01",
+      "frequency": "monthly",
+      "status": "stale",
+      "age_days": 523,
+      "severity": "high",
+      "source": "IMF / DBnomics (IFS)",
+      "note": "Commercial bank deposit rate on local currency time deposits."
     }
   ]
 }

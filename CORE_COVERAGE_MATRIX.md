@@ -1,6 +1,6 @@
 # Core 48 Coverage Matrix
 
-Generated: 2026-11-05T15:51:22.703589+00:00
+Generated: 2026-11-05T16:04:38.578302+00:00
 
 Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparability, `-` missing.
 
@@ -43,8 +43,8 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | 35 | `fiscal_sovereign` | `government_debt_gdp` Government Debt, % GDP | W | W | W | W | W | V | W | W | W | V | W | W | W | W | W | W | W | W | W |
 | 36 | `fiscal_sovereign` | `government_interest_cost` Government Interest Cost | W | W | W | W | - | - | - | - | W | V | - | - | - | - | - | - | - | - | - |
 | 37 | `fiscal_sovereign` | `sovereign_yield_10y` 10Y Sovereign Yield | V | V | V | V | W | V | W | V | V | V | - | - | W | W | - | - | - | - | - |
-| 38 | `monetary_financial` | `policy_rate` Policy Rate | V | V | V | V | W | V | V | V | V | V | V | V | V | V | V | L | L | L | L |
-| 39 | `monetary_financial` | `real_policy_rate` Real Policy Rate | W | W | W | W | W | V | W | V | V | W | W | W | W | V | L | L | L | L | L |
+| 38 | `monetary_financial` | `policy_rate` Policy Rate | V | V | V | V | W | V | V | V | V | V | V | V | V | V | V | V | L | L | L |
+| 39 | `monetary_financial` | `real_policy_rate` Real Policy Rate | W | W | W | W | W | V | W | V | V | W | W | W | W | V | L | W | L | L | L |
 | 40 | `monetary_financial` | `broad_money_growth` Broad Money Growth | W | W | W | W | W | V | L | L | V | V | - | - | - | V | - | W | W | W | W |
 | 41 | `monetary_financial` | `private_credit_growth` Private Credit Growth | W | W | W | W | - | V | L | L | V | V | L | L | L | V | - | W | W | W | L |
 | 42 | `monetary_financial` | `bank_lending_rate` Bank Lending Rate | V | V | V | W | W | V | - | V | - | - | V | - | - | V | - | - | L | L | L |
@@ -74,7 +74,7 @@ Legend: `V` verified, `W` watch, `L` low confidence, `S` substitute/low comparab
 | KR | 27/48 | 3 | 20 | 4 | 0 | 21 |
 | TW | 26/48 | 9 | 17 | 0 | 0 | 22 |
 | IN | 21/48 | 1 | 16 | 4 | 0 | 27 |
-| KZ | 19/48 | 1 | 14 | 4 | 0 | 29 |
+| KZ | 19/48 | 2 | 15 | 2 | 0 | 29 |
 | UZ | 20/48 | 0 | 15 | 5 | 0 | 28 |
 | EG | 18/48 | 0 | 13 | 5 | 0 | 30 |
 | NG | 19/48 | 1 | 11 | 7 | 0 | 29 |
