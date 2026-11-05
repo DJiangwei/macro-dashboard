@@ -3376,6 +3376,34 @@ _CBN_FX_CACHE: list[dict[str, Any]] | None = None
 _CBN_FX_LOCK = threading.Lock()
 
 
+CBN_MONEY_MARKET_URL = "https://www.cbn.gov.ng/api/GetAllMoneyMarketIndicators"
+
+
+def fetch_cbn_money_market(spec: dict[str, Any]) -> dict[str, Any]:
+    """One monthly field (``measure``, e.g. ``mpr``) of CBN's money-market indicators.
+
+    Blank and non-positive values are dropped: the API reports ``0.00`` for the
+    MPR before it replaced the MRR in December 2006.
+    """
+    measure = str(spec.get("measure") or "mpr")
+    response = requests.get(CBN_MONEY_MARKET_URL, headers={"User-Agent": USER_AGENT, "Accept": "application/json"}, timeout=30)
+    response.raise_for_status()
+    start = str(spec.get("start_date") or "")[:10]
+    values: dict[str, float] = {}
+    for row in response.json() or []:
+        try:
+            value = float(str(row.get(measure)).replace(",", ""))
+            day = f"{int(row['tyear']):04d}-{int(row['tmonth']):02d}-01"
+        except (KeyError, TypeError, ValueError):
+            continue
+        if value > 0 and day >= start:
+            values[day] = value
+    observations = [{"date": d, "value": v} for d, v in sorted(values.items())]
+    if not observations:
+        raise RuntimeError(f"CBN money-market indicators returned no {measure} values")
+    return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": CBN_MONEY_MARKET_URL}
+
+
 def fetch_cbn_fx(spec: dict[str, Any]) -> dict[str, Any]:
     """Fetch official daily exchange rates from Central Bank of Nigeria (CBN) JSON API."""
     global _CBN_FX_CACHE

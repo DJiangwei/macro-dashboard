@@ -204,3 +204,31 @@ def test_nbk_base_rate_events_end_with_an_as_of_row(monkeypatch) -> None:
         {"date": "2026-11-05", "value": 15.75},  # as-of row: the last decision is still in force
     ]
     assert out["provider_updated"] == "2026-10-27"
+
+
+# Rows trimmed from CBN's money-market indicators API (2026-11-05).
+CBN_MONEY_MARKET_ROWS = [
+    {"tyear": 2026, "tmonth": 9, "period": "September 2026", "mpr": "23.00", "interBankCallRate": "22.00"},
+    {"tyear": 2026, "tmonth": 8, "period": "August 2026", "mpr": "26.50", "interBankCallRate": "22.00"},
+    {"tyear": 2006, "tmonth": 11, "period": "November 2006", "mpr": "0.00", "interBankCallRate": "9.10"},
+    {"tyear": 2006, "tmonth": 10, "period": "October 2006", "mpr": "", "interBankCallRate": "8.20"},
+]
+
+
+def test_cbn_money_market_reads_one_field_monthly_and_drops_placeholder_zeros(monkeypatch) -> None:
+    from country_primer import adapters
+
+    class Response:
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return CBN_MONEY_MARKET_ROWS
+
+    monkeypatch.setattr(adapters.requests, "get", lambda url, headers=None, timeout=None: Response())
+    out = adapters.fetch_cbn_money_market({"id": "policy_rate", "measure": "mpr", "start_date": "2006-01-01"})
+    # Before December 2006 the field is "0.00" or blank: the MPR did not exist yet.
+    assert out["observations"] == [{"date": "2026-08-01", "value": 26.5}, {"date": "2026-09-01", "value": 23.0}]
+    assert out["provider_updated"] == "2026-09-01"
+    call = adapters.fetch_cbn_money_market({"id": "x", "measure": "interBankCallRate"})
+    assert [o["value"] for o in call["observations"]] == [8.2, 9.1, 22.0, 22.0]

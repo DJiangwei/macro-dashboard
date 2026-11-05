@@ -26,7 +26,7 @@
 | **Kazakhstan (KZ)** | 43.8 | 55.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 71.6 (usable with watch-list) |
 | **Uzbekistan (UZ)** | 53.8 | 51.7 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 64.4 (usable with watch-list) |
 | **Egypt (EG)** | 53.8 | 45.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 55.0 (needs data review) |
-| **Nigeria (NG)** | 53.8 | 55.0 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 53.2 (needs data review) |
+| **Nigeria (NG)** | 53.8 | 55.0 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 54.1 (needs data review) |
 
 ---
 
@@ -53,7 +53,7 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | **KZ** (NBK) | **15.75%** | 9.24% (5.0%) | 2.50% | **15.11%** (14.61% ~ 15.61%) | **+0.64%** | *moderately restrictive* |
 | **UZ** (CBU) | **14.00%** | 6.23% (5.0%) | 3.00% | **10.94%** (10.44% ~ 11.44%) | **+3.06%** | *substantially restrictive* |
 | **EG** (CBE) | **22.50%** | 14.54% (7.0%) | 2.00% | **20.26%** (19.76% ~ 20.76%) | **+2.24%** | *substantially restrictive* |
-| **NG** (CBN) | **27.00%** | 15.39% (9.0%) | 2.00% | **20.84%** (20.34% ~ 21.34%) | **+6.16%** | *substantially restrictive* |
+| **NG** (CBN) | **23.00%** | 15.39% (9.0%) | 2.00% | **20.84%** (20.34% ~ 21.34%) | **+2.16%** | *substantially restrictive* |
 
 ---
 

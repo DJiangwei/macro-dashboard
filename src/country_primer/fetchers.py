@@ -112,6 +112,7 @@ FETCHERS: dict[str, FetcherDef] = {
     "nbk_xml": FetcherDef("fetch_nbk_xml", SPEC, TRANSFORM),
     "nbk_base_rate": FetcherDef("fetch_nbk_base_rate", SPEC, RAW, "NBK base-rate decisions from the official schedule, event-dated"),
     "cbn_fx": FetcherDef("fetch_cbn_fx", SPEC, SCALE_TRANSFORM),
+    "cbn_money_market": FetcherDef("fetch_cbn_money_market", SPEC, RAW, "CBN money-market indicators API, one monthly field"),
     # Energy markets (src/country_primer/energy_adapters.py)
     "eia_xls": FetcherDef("fetch_eia_xls", SPEC, SCALE_TRANSFORM, "EIA dnav history spreadsheets", "energy_adapters"),
     "cftc_positions": FetcherDef("fetch_cftc_positions", SPEC, RAW, "CFTC disaggregated COT by contract code", "energy_adapters"),
