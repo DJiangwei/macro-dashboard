@@ -1,53 +1,34 @@
 # 交接文档（给新会话）
 
-更新：2026-11-05。分支 `claude/magical-newton-6nyshr`（**未合并**；`main` 至今没有被改动过）。
+更新：2026-11-05。分支 `claude/magical-newton-6nyshr` 已通过 PR #6 合并入 `main`；之后的工作从 `main` 新建分支。
 新会话请先读本文件，再读 `AGENTS.md` 和 `PROJECT_LESSONS.md`（§9 是数据诚信规则）。
 
 ---
 
 ## 0. 同步与版本（请先读，避免倒回旧版本）
 
-**现状**：本项目的全部修改都在分支 `claude/magical-newton-6nyshr` 上，**没有推到 `main`**（按用户最初"先不要改动 main"的要求）。
-这个分支已经并入了 `main` 截至 `47881f4`（`.env.example` 占位符）的全部提交，所以它是 `main` 的超集。
-分支最新提交以 `git log -1 origin/claude/magical-newton-6nyshr` 为准。
+**现状**：`main` 已包含全部改动（PR #6，2026-11-05），是唯一的基线。`claude/magical-newton-6nyshr` 只作历史保留，不再在上面开发。
 
-**本地同步（`/Users/jiangwei/Claude/Country_Primer`）**
+**开始一次会话**（本地 `/Users/jiangwei/Claude/Country_Primer` 或云端）
 
 ```bash
-git status                                    # 先确认本地有没有未提交的改动
-git stash push -u -m "local before sync"      # 有就先暂存（或提交到自己的分支）
-git fetch origin
-git switch claude/magical-newton-6nyshr 2>/dev/null || git switch -c claude/magical-newton-6nyshr --track origin/claude/magical-newton-6nyshr
-git pull --ff-only                            # 必须是 fast-forward；失败就停下来检查，不要强推
-git stash pop                                 # 如果第 2 步暂存过
+git status                                # 有未提交改动先处理
+git switch main && git pull --ff-only     # 必须 fast-forward；失败就停下来检查，不要强推
+git switch -c <topic-branch>              # 每项新工作一个分支
 ```
 
-**并入 `main`**：建议在 GitHub 上开 PR，由用户合并。如果在本地合并：
+**结束一次会话**：`make validate` 通过 → commit → `git push -u origin <topic-branch>` → 开 PR → 等 CI（`Validate dashboard` 在 PR 上运行；看 `status == completed` 和 `conclusion`）→ 由用户决定是否合并。交接内容写进本文件，不要只留在对话里。合并后本地执行 `git switch main && git pull --ff-only`。
 
-```bash
-git switch main && git pull --ff-only
-git merge --no-ff origin/claude/magical-newton-6nyshr
-```
+**规则**
 
-**防止倒回旧版本的规则**
-
-1. **合并前先暂停 `main` 上的定时刷新**（Actions → Scheduled Macro Data Refresh → Disable workflow），合并完成后再打开。旧版 workflow 跑的是旧代码，会继续向 `main` 提交生成文件，其中包含已经删除的合成数据和手写注入；旧代码在构建时还会改写 `config/framework_v2.yaml`。
-2. 合并冲突时，**代码、`config/`、`docs/`、`tests/` 一律以分支版本为准**。生成文件（`output/`、根目录的 `*.html`、`*_AUDIT.md`、`CORE_COVERAGE_MATRIX.md`、`DATA_SOURCE_CATALOG.md`、`MACRO_WORKBENCH_BRIEFING.md`、`chart_studio_catalog.json`）也以分支版本为准，然后用新代码重新生成：
-   ```bash
-   git checkout origin/claude/magical-newton-6nyshr -- output index.html chart_studio.html my_dashboard.html policy_tracker.html chart_studio_catalog.json CORE_COVERAGE_MATRIX.md DATA_FRESHNESS_AUDIT.md DATA_SOURCE_CATALOG.md MACRO_WORKBENCH_BRIEFING.md config
-   make rebuild-ui && make validate
-   ```
-   **不要**用 `main` 上机器人生成的文件覆盖分支版本。
-3. **自检**（任一项不满足，说明拿到的是旧版本）：
+1. `main` 上的定时刷新（Scheduled Macro Data Refresh & Publish：cron 是每天 02:00 UTC，实际通常 08:00–09:00 UTC 才开始）会直接向 `main` 提交生成文件。合并 PR 时如果生成文件冲突：代码、`config/`、`docs/`、`tests/` 以 PR 分支为准；生成文件（`output/`、根目录的 `*.html`、`*_AUDIT.md`、`CORE_COVERAGE_MATRIX.md`、`DATA_SOURCE_CATALOG.md`、`MACRO_WORKBENCH_BRIEFING.md`、`chart_studio_catalog.json`）也以 PR 分支为准，然后用 `make rebuild-ui && make validate` 重新生成。
+2. **自检**（任一项不满足，说明拿到的是旧版本）：
    - `config/scopes.yaml`、`docs/HANDOFF.md` 和 `scripts/build_scope.py` 存在；
    - `scripts/build_turkey_dashboard.py` 已经不存在；
    - `make validate` 通过（测试数 ≥ 186），其中 `tests/test_data_integrity.py` 会拒绝手写序列和占位回退值。
-4. **之后的工作方式**：云端会话只推送到本分支，本地也在本分支（或从它新建的分支）上工作。每次开始前先 `git pull --ff-only`，结束后推送。切换到 Pages 方案 C 以后，数据在 `data` 分支，见 `docs/PAGES_DEPLOYMENT.md`。
-5. **本地优先的交接（2026-11-05 起）**：本地仓库 `/Users/jiangwei/Claude/Country_Primer` 已经检出本分支并跟踪 `origin/claude/magical-newton-6nyshr`。换会话或换 agent 时，GitHub 上的分支就是唯一的交接点：
-   - 结束一次会话前：`make validate` 通过 → commit → `git push`，然后 `git status` 应显示 `up to date` 且工作区干净；交接内容写进本文件（不要只留在对话里）。
-   - 开始一次会话时：`git status`（有未提交改动先处理）→ `git pull --ff-only` → 读本文件。云端会话推过的提交会在这一步拉下来。
-   - 不要在两个地方同时改同一个分支；如果必须并行，各开一个从本分支新建的分支。
-   - 被 gitignore 的本地文件（`.env.local`、`.venv/`、`.uv-cache/`、`cache/`）不会同步，换机器时需要重新准备；key 只放 `.env.local`。
+3. 不要在两个地方同时改同一个分支；并行工作各开一个分支。
+4. 被 gitignore 的本地文件（`.env.local`、`.venv/`、`.uv-cache/`、`cache/`）不会同步，换机器时需要重新准备；key 只放 `.env.local`。
+5. 切换到 Pages 方案 C 以后，数据在 `data` 分支，见 `docs/PAGES_DEPLOYMENT.md`。
 
 ## 1. 用户已确认的决策
 
@@ -110,7 +91,7 @@ make validate                                                          # 提交�
 scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面冒烟检查
 ```
 
-- 提交信息结尾要带会话要求的归属行。只推送到上面的分支，不要开 PR，除非用户要求。
+- 提交信息结尾要带会话要求的归属行。每项工作一个分支加一个 PR；合并由用户决定。
 - snapshot 模式（`rebuild-ui`）不会重写 canonical frame；要更新数据或来源字段，需要对那个 scope 做一次 refresh。
 - 截图检查：Playwright 已预装，参考写法 `node shot.js <html> <png>`（用 `chromium.launch()`）。
 
