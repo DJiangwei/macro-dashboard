@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-05T12:04:32.688449+00:00",
+  "generated": "2026-11-05T13:29:42.864647+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -18,7 +18,7 @@
       "headline": "5.50%",
       "secondary_label": "10Y yield",
       "secondary": "5.68%",
-      "quality": "55 verified · 50 watch · 13 low",
+      "quality": "56 verified · 50 watch · 12 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -88,15 +88,15 @@
       "freshness_summary": {
         "dashboard": "Hungary",
         "charts": 105,
-        "current": 60,
-        "stale": 19,
+        "current": 61,
+        "stale": 18,
         "lagged_source": 0,
         "projection": 4,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 4,
-        "low_confidence": 13,
+        "low_confidence": 12,
         "latest_historical_date": "2026-12-31",
         "headline_latest": ""
       }
@@ -117,7 +117,7 @@
       "headline": "3.75%",
       "secondary_label": "10Y yield",
       "secondary": "6.23%",
-      "quality": "56 verified · 52 watch · 13 low",
+      "quality": "57 verified · 52 watch · 12 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -187,15 +187,15 @@
       "freshness_summary": {
         "dashboard": "Poland",
         "charts": 108,
-        "current": 59,
-        "stale": 22,
+        "current": 60,
+        "stale": 21,
         "lagged_source": 0,
         "projection": 4,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 4,
-        "low_confidence": 13,
+        "low_confidence": 12,
         "latest_historical_date": "2026-12-31",
         "headline_latest": ""
       }
@@ -315,7 +315,7 @@
       "headline": "6.50%",
       "secondary_label": "10Y yield",
       "secondary": "6.71%",
-      "quality": "55 verified · 49 watch · 13 low",
+      "quality": "56 verified · 49 watch · 12 low",
       "status": "clean",
       "signals": {
         "growth": {
@@ -385,15 +385,15 @@
       "freshness_summary": {
         "dashboard": "Romania",
         "charts": 104,
-        "current": 56,
-        "stale": 21,
+        "current": 57,
+        "stale": 20,
         "lagged_source": 0,
         "projection": 4,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 4,
-        "low_confidence": 13,
+        "low_confidence": 12,
         "latest_historical_date": "2026-12-31",
         "headline_latest": ""
       }
@@ -1039,7 +1039,7 @@
         "observations": 94916,
         "series_count": 113,
         "observation_count": 94916,
-        "snapshot_generated": "2026-11-05T12:03:44.687144+00:00"
+        "snapshot_generated": "2026-11-05T13:28:57.589653+00:00"
       },
       "freshness_summary": {
         "dashboard": "China",
@@ -1073,7 +1073,7 @@
       "headline": "2.50% (2026-11-02)",
       "secondary_label": "Source groups",
       "secondary": "8",
-      "quality": "8 source groups · 12 low-confidence charts",
+      "quality": "8 source groups · 4 low-confidence charts",
       "framework": "9-Pillar Macro Framework",
       "status": "clean",
       "signals": {
@@ -1107,11 +1107,11 @@
         "external": {
           "id": "current_account_gdp",
           "label": "Current account/GDP",
-          "value": 1.2,
-          "display": "1.20 % of GDP",
-          "date": "2025-07-01",
+          "value": 1.4,
+          "display": "1.40 % of GDP",
+          "date": "2026-04-01",
           "source": "Eurostat",
-          "quality_status": "low_confidence"
+          "quality_status": "verified"
         },
         "fiscal": {
           "id": "government_debt_gdp",
@@ -1178,9 +1178,9 @@
           }
         ],
         "quality_counts": {
-          "low_confidence": 12,
+          "low_confidence": 4,
           "unavailable": 1,
-          "verified": 58,
+          "verified": 66,
           "watch": 3
         },
         "unavailable_count": 0
@@ -1188,35 +1188,13 @@
       "freshness": {
         "as_of_date": "2026-11-05",
         "counts": {
-          "current": 58,
+          "current": 66,
           "due": 3,
           "future_date": 1,
-          "stale": 12
+          "stale": 4
         },
         "latest_historical_date": "2026-11-02",
         "attention": [
-          {
-            "id": "current_account_gdp",
-            "concept_id": "current_account_gdp",
-            "label_en": "Current Account Balance",
-            "latest_date": "2025-07-01",
-            "frequency": "quarterly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-07-01",
-            "age_days": 401,
-            "threshold_days": 187,
-            "release_calendar_id": "eurostat_quarterly",
-            "expected_release_date": "2026-03-16",
-            "due_date": "2026-04-05",
-            "quality_status": "low_confidence",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Eurostat",
-            "series": "",
-            "transform": "level"
-          },
           {
             "id": "negotiated_wages_yoy",
             "concept_id": "wage_growth",
@@ -1240,94 +1218,6 @@
             "transform": "level"
           },
           {
-            "id": "capacity_utilisation",
-            "concept_id": "ea:capacity_utilisation",
-            "label_en": "Manufacturing Capacity Utilisation",
-            "latest_date": "2025-10-01",
-            "frequency": "quarterly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-10-01",
-            "age_days": 309,
-            "threshold_days": 185,
-            "release_calendar_id": "eurostat_quarterly",
-            "expected_release_date": "2026-06-14",
-            "due_date": "2026-07-04",
-            "quality_status": "low_confidence",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Eurostat / DG ECFIN",
-            "series": "",
-            "transform": "level"
-          },
-          {
-            "id": "consumer_confidence",
-            "concept_id": "ea:consumer_confidence",
-            "label_en": "Consumer Confidence Indicator",
-            "latest_date": "2025-12-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-12-01",
-            "age_days": 309,
-            "threshold_days": 91,
-            "release_calendar_id": "eurostat_monthly",
-            "expected_release_date": "2026-03-17",
-            "due_date": "2026-04-01",
-            "quality_status": "low_confidence",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Eurostat / DG ECFIN",
-            "series": "",
-            "transform": "level"
-          },
-          {
-            "id": "economic_sentiment",
-            "concept_id": "business_confidence",
-            "label_en": "Economic Sentiment Indicator (ESI)",
-            "latest_date": "2025-12-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-12-01",
-            "age_days": 309,
-            "threshold_days": 91,
-            "release_calendar_id": "eurostat_monthly",
-            "expected_release_date": "2026-03-17",
-            "due_date": "2026-04-01",
-            "quality_status": "low_confidence",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Eurostat / DG ECFIN",
-            "series": "",
-            "transform": "level"
-          },
-          {
-            "id": "employment_expectations",
-            "concept_id": "ea:employment_expectations",
-            "label_en": "Employment Expectations Indicator (EEI)",
-            "latest_date": "2025-12-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-12-01",
-            "age_days": 309,
-            "threshold_days": 91,
-            "release_calendar_id": "eurostat_monthly",
-            "expected_release_date": "2026-03-17",
-            "due_date": "2026-04-01",
-            "quality_status": "low_confidence",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "watch",
-            "comparability": "high",
-            "source_name": "Eurostat / DG ECFIN",
-            "series": "",
-            "transform": "level"
-          },
-          {
             "id": "household_debt_gdp",
             "concept_id": "ea:household_debt_gdp",
             "label_en": "Household Debt to GDP",
@@ -1347,72 +1237,6 @@
             "comparability": "medium",
             "source_name": "FRED / BIS",
             "series": "QXMHAM770A",
-            "transform": "level"
-          },
-          {
-            "id": "industry_confidence",
-            "concept_id": "business_confidence",
-            "label_en": "Industrial Confidence Indicator",
-            "latest_date": "2025-12-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-12-01",
-            "age_days": 309,
-            "threshold_days": 91,
-            "release_calendar_id": "eurostat_monthly",
-            "expected_release_date": "2026-03-17",
-            "due_date": "2026-04-01",
-            "quality_status": "low_confidence",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Eurostat / DG ECFIN",
-            "series": "",
-            "transform": "level"
-          },
-          {
-            "id": "job_vacancy_rate",
-            "concept_id": "vacancies",
-            "label_en": "Job Vacancy Rate",
-            "latest_date": "2025-10-01",
-            "frequency": "quarterly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-10-01",
-            "age_days": 309,
-            "threshold_days": 185,
-            "release_calendar_id": "eurostat_quarterly",
-            "expected_release_date": "2026-06-14",
-            "due_date": "2026-07-04",
-            "quality_status": "low_confidence",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Eurostat",
-            "series": "",
-            "transform": "level"
-          },
-          {
-            "id": "services_confidence",
-            "concept_id": "ea:services_confidence",
-            "label_en": "Services Confidence Indicator",
-            "latest_date": "2025-12-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2025-12-01",
-            "age_days": 309,
-            "threshold_days": 91,
-            "release_calendar_id": "eurostat_monthly",
-            "expected_release_date": "2026-03-17",
-            "due_date": "2026-04-01",
-            "quality_status": "low_confidence",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Eurostat / DG ECFIN",
-            "series": "",
             "transform": "level"
           },
           {
@@ -1557,23 +1381,23 @@
         ],
         "file": "euro_area_canonical_frame.json",
         "series": 74,
-        "observations": 66202,
+        "observations": 66261,
         "series_count": 74,
-        "observation_count": 66202,
-        "snapshot_generated": "2026-11-05T12:03:44.825126+00:00"
+        "observation_count": 66261,
+        "snapshot_generated": "2026-11-05T13:28:57.720539+00:00"
       },
       "freshness_summary": {
         "dashboard": "Euro Area",
         "charts": 74,
-        "current": 58,
-        "stale": 13,
+        "current": 66,
+        "stale": 5,
         "lagged_source": 0,
         "projection": 1,
         "scheduled_policy": 0,
         "future_date": 0,
         "missing_date": 0,
         "needs_review": 0,
-        "low_confidence": 12,
+        "low_confidence": 4,
         "latest_historical_date": "2026-11-05",
         "headline_latest": ""
       }
@@ -2610,7 +2434,7 @@
         "observations": 20771,
         "series_count": 60,
         "observation_count": 20771,
-        "snapshot_generated": "2026-11-05T12:03:44.863588+00:00"
+        "snapshot_generated": "2026-11-05T13:28:57.757435+00:00"
       },
       "freshness_summary": {
         "dashboard": "Japan",
@@ -3694,7 +3518,7 @@
         "observations": 30706,
         "series_count": 66,
         "observation_count": 30706,
-        "snapshot_generated": "2026-11-05T12:03:44.893830+00:00"
+        "snapshot_generated": "2026-11-05T13:28:57.784753+00:00"
       },
       "freshness_summary": {
         "dashboard": "South Africa",
@@ -4630,7 +4454,7 @@
         "observations": 81840,
         "series_count": 97,
         "observation_count": 81840,
-        "snapshot_generated": "2026-11-05T12:03:44.995029+00:00"
+        "snapshot_generated": "2026-11-05T13:28:57.880170+00:00"
       },
       "freshness_summary": {
         "dashboard": "United Kingdom",
@@ -5543,7 +5367,7 @@
         "observations": 132011,
         "series_count": 181,
         "observation_count": 132011,
-        "snapshot_generated": "2026-11-05T12:03:45.078519+00:00"
+        "snapshot_generated": "2026-11-05T13:28:57.954746+00:00"
       },
       "freshness_summary": {
         "dashboard": "United States",
@@ -6129,7 +5953,7 @@
         "observations": 10912,
         "series_count": 57,
         "observation_count": 10912,
-        "snapshot_generated": "2026-11-05T12:03:45.135869+00:00"
+        "snapshot_generated": "2026-11-05T13:28:58.010984+00:00"
       },
       "freshness_summary": {
         "dashboard": "Turkey",
@@ -6801,7 +6625,7 @@
         "observations": 11683,
         "series_count": 40,
         "observation_count": 11683,
-        "snapshot_generated": "2026-11-05T12:03:45.145096+00:00"
+        "snapshot_generated": "2026-11-05T13:28:58.020046+00:00"
       },
       "freshness_summary": {
         "dashboard": "Hong Kong",
@@ -7599,7 +7423,7 @@
         "observations": 10645,
         "series_count": 51,
         "observation_count": 10645,
-        "snapshot_generated": "2026-11-05T12:03:45.216813+00:00"
+        "snapshot_generated": "2026-11-05T13:28:58.088732+00:00"
       },
       "freshness_summary": {
         "dashboard": "South Korea",
@@ -8237,7 +8061,7 @@
         "observations": 13624,
         "series_count": 50,
         "observation_count": 13624,
-        "snapshot_generated": "2026-11-05T12:03:45.226049+00:00"
+        "snapshot_generated": "2026-11-05T13:28:58.097386+00:00"
       },
       "freshness_summary": {
         "dashboard": "Taiwan",
@@ -8951,7 +8775,7 @@
         "observations": 12476,
         "series_count": 41,
         "observation_count": 12476,
-        "snapshot_generated": "2026-11-05T12:03:45.176539+00:00"
+        "snapshot_generated": "2026-11-05T13:28:58.050633+00:00"
       },
       "freshness_summary": {
         "dashboard": "India",
@@ -9503,7 +9327,7 @@
         "observations": 10097,
         "series_count": 38,
         "observation_count": 10097,
-        "snapshot_generated": "2026-11-05T12:03:45.186335+00:00"
+        "snapshot_generated": "2026-11-05T13:28:58.060163+00:00"
       },
       "freshness_summary": {
         "dashboard": "Kazakhstan",
@@ -10072,7 +9896,7 @@
         "observations": 2750,
         "series_count": 37,
         "observation_count": 2750,
-        "snapshot_generated": "2026-11-05T12:03:45.192702+00:00"
+        "snapshot_generated": "2026-11-05T13:28:58.066377+00:00"
       },
       "freshness_summary": {
         "dashboard": "Uzbekistan",
@@ -10689,7 +10513,7 @@
         "observations": 9646,
         "series_count": 38,
         "observation_count": 9646,
-        "snapshot_generated": "2026-11-05T12:03:45.198564+00:00"
+        "snapshot_generated": "2026-11-05T13:28:58.071321+00:00"
       },
       "freshness_summary": {
         "dashboard": "Egypt",
@@ -11369,7 +11193,7 @@
         "observations": 13779,
         "series_count": 40,
         "observation_count": 13779,
-        "snapshot_generated": "2026-11-05T12:03:45.207777+00:00"
+        "snapshot_generated": "2026-11-05T13:28:58.079529+00:00"
       },
       "freshness_summary": {
         "dashboard": "Nigeria",
@@ -11395,10 +11219,10 @@
       "structural_score": 38.3,
       "composite_label": "defensive",
       "quality": {
-        "score": 55.0,
+        "score": 55.3,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 57.1,
+        "freshness_score": 58.1,
         "proxy_penalty": 0.0,
         "gap_penalty": 10.0
       },
@@ -11486,10 +11310,10 @@
       "structural_score": 45.0,
       "composite_label": "mixed",
       "quality": {
-        "score": 61.6,
+        "score": 61.9,
         "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 54.6,
+        "freshness_score": 55.6,
         "proxy_penalty": 0.0,
         "gap_penalty": 2.5
       },
@@ -11668,10 +11492,10 @@
       "structural_score": 46.7,
       "composite_label": "defensive",
       "quality": {
-        "score": 51.3,
+        "score": 51.7,
         "label": "needs data review",
         "coverage_score": 100.0,
-        "freshness_score": 53.8,
+        "freshness_score": 54.8,
         "proxy_penalty": 0.0,
         "gap_penalty": 12.5
       },
@@ -11850,10 +11674,10 @@
       "structural_score": 61.7,
       "composite_label": "mixed",
       "quality": {
-        "score": 57.4,
-        "label": "needs data review",
+        "score": 73.2,
+        "label": "usable with watch-list",
         "coverage_score": 100.0,
-        "freshness_score": 78.4,
+        "freshness_score": 89.2,
         "proxy_penalty": 0.0,
         "gap_penalty": 15.0
       },
@@ -11886,8 +11710,8 @@
           "label": "balanced external impulse",
           "score": 60.0,
           "confidence_weight": 1.0,
-          "value": 1.2,
-          "display": "1.20 % of GDP",
+          "value": 1.4,
+          "display": "1.40 % of GDP",
           "source_signal": "current_account_gdp"
         },
         "fiscal": {
@@ -15752,9 +15576,9 @@
       "category": "Euro Area Leading Sentiment",
       "indicator_name": "Euro Area Economic Sentiment (ESI)",
       "frequency": "Monthly",
-      "latest_date": "2025-12-01",
-      "latest_value": 96.7,
-      "display_value": "96.7",
+      "latest_date": "2026-10-01",
+      "latest_value": 96.9,
+      "display_value": "96.9",
       "unit": "index",
       "neutral_benchmark": "100.0 (long-term average)",
       "status_pill": "neutral",
@@ -15778,13 +15602,13 @@
       "category": "Euro Area Leading Sentiment",
       "indicator_name": "Euro Area Industrial Confidence",
       "frequency": "Monthly",
-      "latest_date": "2025-12-01",
-      "latest_value": -9.0,
-      "display_value": "-9.0",
+      "latest_date": "2026-10-01",
+      "latest_value": -3.4,
+      "display_value": "-3.4",
       "unit": "balance %",
       "neutral_benchmark": "0.0 (neutral balance)",
-      "status_pill": "bad",
-      "signal_assessment": "Order book destocking pressure",
+      "status_pill": "neutral",
+      "signal_assessment": "Neutral balance",
       "chart_link": "euro_area_sovereign_fragmentation"
     },
     {
@@ -16216,21 +16040,21 @@
       "code": "HU",
       "name": "Hungary",
       "coverage_pct": 112.4,
-      "freshness_pct": 57.1,
+      "freshness_pct": 58.1,
       "proxy_fills": 0,
       "gaps": 4,
       "regime_score": 48.5,
-      "quality_score": 55.0
+      "quality_score": 55.3
     },
     {
       "code": "PL",
       "name": "Poland",
       "coverage_pct": 112.0,
-      "freshness_pct": 54.6,
+      "freshness_pct": 55.6,
       "proxy_fills": 0,
       "gaps": 1,
       "regime_score": 53.1,
-      "quality_score": 61.6
+      "quality_score": 61.9
     },
     {
       "code": "CZ",
@@ -16246,11 +16070,11 @@
       "code": "RO",
       "name": "Romania",
       "coverage_pct": 112.5,
-      "freshness_pct": 53.8,
+      "freshness_pct": 54.8,
       "proxy_fills": 0,
       "gaps": 5,
       "regime_score": 38.3,
-      "quality_score": 51.3
+      "quality_score": 51.7
     },
     {
       "code": "CN",
@@ -16266,11 +16090,11 @@
       "code": "EA",
       "name": "Euro Area",
       "coverage_pct": 100.0,
-      "freshness_pct": 78.4,
+      "freshness_pct": 89.2,
       "proxy_fills": 0,
       "gaps": 6,
       "regime_score": 57.1,
-      "quality_score": 57.4
+      "quality_score": 73.2
     },
     {
       "code": "JP",

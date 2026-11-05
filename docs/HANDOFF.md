@@ -112,7 +112,8 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
 4. **后续小项**
    - KZ/NG/UZ/EG 的原生政策利率。
    - CEE 叙述文字（`config/countries.yaml`）需要逐条核实后重写。匈牙利央行领导层已于 2026-11-05 按 mnb.hu 更正（行长 Varga、四位副行长）；仍未核实的有：匈牙利政治背景（2026 年 4 月大选结果）、各国央行资产负债表数字、PL/CZ/RO 的行长与委员名单。mnb.hu 的议会选任委员名单当天无法与原文逐条核对（摘要列出的条目里有任期似已届满的），未采用，页面改为指向 mnb.hu。
-   - 欧元区职位空缺和协议工资已过期。
+   - 欧元区：职位空缺与 7 个 EA20 序列已于 2026-11-05 修复（见 §7 Eurostat 行）。**协议工资仍过期**：ECB `STS.Q.{I9,U2}.N.INWR.000000.3.ANR` 两个口径都止于 2025-Q3，源头没有更新，尚未找到接替序列；找不到就在页面上标为 gap。
+   - 欧元区还有 8 个序列用 EA20（`sts_*`、`gov_*`），目前仍在更新，与已切换到 EA21 的序列口径不一致；以后可统一切到 EA21（两者差约 0.1pp）。
    - **已知 bug（未修）**：`scripts/dashboard_summary_utils.load_canonical_data_first_frame` 读回上一版快照时不恢复 `prior_vintage`/`has_revisions`，所以 `track_revisions_and_vintages` 里「沿用前次 vintage」的分支拿到的总是 None：前次数据只能保留一次构建，下次刷新就丢。2026-11-05 刷新中国卡片时，`usd_cny_midpoint` 的前次数据就这样被清掉了。
    - 中国 PBC 卡片（2026-11-05 已修）：DR007 页面的「Latest Update」是浏览器用访问者当天日期填的，所以卡片日期取页面的 `createDate`（M2 页的 createDate 与显示的更新日期一致）。DR007 当前值 1.4935% 的日期是 2026-09-23，PBC 英文页更新不频繁；要看日度 DR007 需另接时间序列。
    - 印度 IMF FSI 返回 403；可接入 MOSPI/RBI 原生数据。
@@ -133,6 +134,7 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
 | EIA STEO      | 分国序列只到最后一个历史月（2026-11 时是 2026-09）；汇总序列带预测到明年年底；没有阿联酋原油产量                                                     |
 | Ember         | 欧盟用 `entity=EU`（`entity_code` 为空），国家用 ISO3 `entity_code`；月度数据从 2016 年起（印度从 2019 年起）                          |
 | ENTSO-E       | token 未开通 API 权限时一律返回 `999 User is not authorized`                                                           |
+| Eurostat（2026 年起） | 季度职位空缺改为 NACE Rev. 2.1：`jvs_q_nace2`（B-S）止于 2025-Q4，接替为 `jvs_q_r21`（维度 `nace_r2_1`，汇总 B-T）；CZ 在新数据集中仍止于 2025-Q4。保加利亚加入后，`ei_bssi_m_r2`/`ei_bsee_m_r2`/`ei_bsin_q_r2`/`bop_gdp6_q` 的 EA20 汇总停在 2025 年，须用 EA21（经常账户的对手方相应用 `EXT_EA21`）；`sts_*` 的 EA20 仍在更新。`tests/test_eurostat_sources.py` 防止退回。目录里被移到「historical data」的数据集就是停更信号 |
 
 ## 8. 当前关键读数（做 sanity check 用，2026-11-05 构建）
 
