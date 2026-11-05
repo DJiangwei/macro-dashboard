@@ -104,14 +104,6 @@ PPI_MEMO = [
 ]
 
 # Empirical base weights for Domestic PPI MIGs (sum to 100)
-PPI_MIG_WEIGHTS = {
-    "HU": {"MIG_ING": 21.1, "MIG_CAG": 10.5, "MIG_DCOG": 3.5, "MIG_NDCOG": 20.5, "MIG_NRG": 44.4},
-    "PL": {"MIG_ING": 36.5, "MIG_CAG": 9.5, "MIG_DCOG": 5.5, "MIG_NDCOG": 24.5, "MIG_NRG": 24.0},
-    "CZ": {"MIG_ING": 32.1, "MIG_CAG": 21.4, "MIG_DCOG": 2.5, "MIG_NDCOG": 15.0, "MIG_NRG": 29.0},
-    "RO": {"MIG_ING": 31.6, "MIG_CAG": 8.6, "MIG_DCOG": 2.5, "MIG_NDCOG": 17.5, "MIG_NRG": 39.8},
-    "EA": {"MIG_ING": 34.0, "MIG_CAG": 20.0, "MIG_DCOG": 4.0, "MIG_NDCOG": 26.0, "MIG_NRG": 16.0},
-}
-
 
 def fetch_eurostat_json(endpoint: str, params: dict) -> dict:
     """Fetch and decode JSON-stat from Eurostat API."""
@@ -288,8 +280,8 @@ def build_cpi_table(geo: str, target_month: str, weights_by_code: dict, get_cpi_
         mom = get_cpi_rate({"geo": geo, "coicop18": code, "unit": "RCH_M", "time": target_month})
         mom_ago = get_cpi_rate({"geo": geo, "coicop18": code, "unit": "RCH_M", "time": ago_month})
 
-        cy = (norm_w / 100.0 * yoy) if yoy is not None else 0.0
-        cm = (norm_w / 100.0 * mom) if mom is not None else 0.0
+        cy = (norm_w / 100.0 * yoy) if yoy is not None else None
+        cm = (norm_w / 100.0 * mom) if mom is not None else None
         raw_contrib_yoy[code] = cy
         raw_contrib_mom[code] = cm
 
@@ -331,17 +323,12 @@ def build_cpi_table(geo: str, target_month: str, weights_by_code: dict, get_cpi_
         })
 
     # Adjust contributions to sum exactly to headline
-    total_cy = sum(raw_contrib_yoy.values())
-    total_cm = sum(raw_contrib_mom.values())
-    diff_yoy = (head_yoy - total_cy) if head_yoy is not None else 0.0
-    diff_mom = (head_mom - total_cm) if head_mom is not None else 0.0
-
+    # Contributions are exact weight x rate. The gap to the published headline
+    # (rounding, weight vintage, chain-linking) is reported as an explicit
+    # residual instead of being spread across components.
     for item in items_data:
-        w_share = item["weight"] / 100.0
-        adj_cy = item["raw_cy"] + diff_yoy * w_share
-        adj_cm = item["raw_cm"] + diff_mom * w_share
-        item["contrib_yoy"] = round(adj_cy, 2)
-        item["contrib_mom"] = round(adj_cm, 2)
+        item["contrib_yoy"] = round(item["raw_cy"], 2) if item["raw_cy"] is not None else None
+        item["contrib_mom"] = round(item["raw_cm"], 2) if item["raw_cm"] is not None else None
         del item["raw_cy"]
         del item["raw_cm"]
 
@@ -397,27 +384,26 @@ def build_ppi_table(geo: str, target_month: str, get_ppi_rate):
     if head_yoy is None:
         return None
 
-    weights = PPI_MIG_WEIGHTS.get(geo, PPI_MIG_WEIGHTS["HU"])
     raw_cy = {}
     raw_cm = {}
     items_data = []
 
     for code, name in PPI_MIGS:
-        w = weights.get(code, 20.0)
+        w = None  # MIG weights are not published in an automated source
         yoy = get_ppi_rate({"geo": geo, "nace_r2": code, "unit": "PCH_SM", "time": target_month})
         yoy_prev = get_ppi_rate({"geo": geo, "nace_r2": code, "unit": "PCH_SM", "time": prev_month})
         mom = get_ppi_rate({"geo": geo, "nace_r2": code, "unit": "PCH_PRE", "time": target_month})
         mom_ago = get_ppi_rate({"geo": geo, "nace_r2": code, "unit": "PCH_PRE", "time": ago_month})
 
-        cy = (w / 100.0 * yoy) if yoy is not None else 0.0
-        cm = (w / 100.0 * mom) if mom is not None else 0.0
+        cy = None
+        cm = None
         raw_cy[code] = cy
         raw_cm[code] = cm
 
         items_data.append({
             "code": code,
             "name": name,
-            "weight": round(w, 1),
+            "weight": None,
             "yoy": yoy,
             "yoy_prev": yoy_prev,
             "raw_cy": cy,
@@ -427,17 +413,9 @@ def build_ppi_table(geo: str, target_month: str, get_ppi_rate):
         })
 
     # Additive adjustment to sum to headline PPI
-    sum_cy = sum(raw_cy.values())
-    sum_cm = sum(raw_cm.values())
-    diff_y = (head_yoy - sum_cy) if head_yoy is not None else 0.0
-    diff_m = (head_mom - sum_cm) if head_mom is not None else 0.0
-
     for item in items_data:
-        w_share = item["weight"] / 100.0
-        adj_cy = item["raw_cy"] + diff_y * w_share
-        adj_cm = item["raw_cm"] + diff_m * w_share
-        item["contrib_yoy"] = round(adj_cy, 2)
-        item["contrib_mom"] = round(adj_cm, 2)
+        item["contrib_yoy"] = None
+        item["contrib_mom"] = None
         del item["raw_cy"]
         del item["raw_cm"]
 
@@ -760,13 +738,13 @@ def main():
                         hist_moms = [get_cpi_rate({"geo": geo, "coicop18": code, "unit": "RCH_M", "time": cpi_times[k]})
                                      for k in range(start_k, m_idx + 1)]
                         yoy_val = get_cpi_rate({"geo": geo, "coicop18": code, "unit": "RCH_A", "time": m})
-                        act_w = weights_map.get((geo, yr, code), def_w) if code != "TOTAL" else 100.0
+                        act_w = weights_map.get((geo, yr, code)) if code != "TOTAL" else 100.0
                         m_metrics = compute_momentum_metrics(hist_moms, yoy_val)
                         mom_rows.append({
                             "code": code,
                             "name_en": name_en,
                             "name_zh": name_zh,
-                            "weight": round(act_w, 1),
+                            "weight": round(act_w, 1) if act_w is not None else None,
                             **m_metrics
                         })
 
@@ -927,7 +905,7 @@ def main():
                 prev_3m = s_vals[-4] if len(s_vals) >= 4 else s_vals[0]
                 mn = min(s_vals)
                 mx = max(s_vals)
-                pct = round((cur_val - mn) / (mx - mn) * 100) if mx > mn else 50
+                pct = round((cur_val - mn) / (mx - mn) * 100) if mx > mn else None
                 diff_3m = round(cur_val - prev_3m, 1)
 
                 # Executive Takeaways & Regimes

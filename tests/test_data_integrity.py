@@ -140,3 +140,68 @@ def test_growth_concepts_are_not_mapped_to_level_series():
                 if not is_rate and (scope, indicator_id) not in GROWTH_LEVEL_ALLOWLIST:
                     offenders.append(f"{concept['id']} <- {scope}:{indicator_id} [{unit}]")
     assert not offenders, "Growth concepts mapped to level series: " + "; ".join(offenders)
+
+
+# Files that compute or display data. Numeric fallbacks here would put an
+# invented number on a page whenever a real value is missing.
+ANALYTIC_FILES = sorted({
+    *SCRIPTS.glob("enrich_*.py"),
+    *SCRIPTS.glob("render_*.py"),
+    SCRIPTS / "macro_workbench.py",
+    SCRIPTS / "real_deepdives.py",
+    SCRIPTS / "build_policy_tracker.py",
+})
+# (file name, source segment) pairs reviewed as non-data defaults.
+FALLBACK_ALLOWLIST = {
+    ("build_policy_tracker.py", "chg if chg is not None else 0"),  # sort key only; display shows "—"
+    ("render_cee_inflation_deepdive.py", "pct if pct is not None else 0"),  # CSS bar width: hidden when missing
+    ("render_us_inflation_deepdive.py", "pct if pct is not None else 0"),  # CSS bar width: hidden when missing
+}
+
+
+def _is_none_check(test: ast.AST) -> bool:
+    """`x is not None` / `x is None` style guards (also inside `and`/`or`)."""
+    nodes = test.values if isinstance(test, ast.BoolOp) else [test]
+    return any(
+        isinstance(n, ast.Compare)
+        and any(isinstance(op, (ast.Is, ast.IsNot)) for op in n.ops)
+        and any(isinstance(c, ast.Constant) and c.value is None for c in n.comparators)
+        for n in nodes
+    )
+
+
+def _number_value(node: ast.AST) -> float:
+    if isinstance(node, ast.UnaryOp):
+        return -node.operand.value
+    return node.value
+
+
+def _numeric_fallbacks(path: Path) -> list[str]:
+    source = path.read_text()
+    tree = ast.parse(source)
+    found = []
+    for node in ast.walk(tree):
+        segment = None
+        if isinstance(node, ast.IfExp) and _is_number(node.orelse) and _is_none_check(node.test):
+            segment = ast.get_source_segment(source, node)
+        elif (
+            isinstance(node, ast.BoolOp) and isinstance(node.op, ast.Or) and _is_number(node.values[-1])
+            and _number_value(node.values[-1]) not in (0, 1)
+        ):
+            segment = ast.get_source_segment(source, node)
+        elif isinstance(node, ast.BoolOp) and isinstance(node.op, ast.Or):
+            last = node.values[-1]
+            if isinstance(last, ast.Constant) and isinstance(last.value, str) and DATE.match(last.value):
+                segment = ast.get_source_segment(source, node)
+        elif isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == "get" and len(node.args) == 2:
+            default = node.args[1]
+            if isinstance(default, ast.Constant) and isinstance(default.value, str) and DATE.match(default.value):
+                segment = ast.get_source_segment(source, node)
+        if segment and (path.name, segment) not in FALLBACK_ALLOWLIST:
+            found.append(f"{path.name}:{node.lineno}: {segment[:90]}")
+    return found
+
+
+def test_no_invented_fallback_values_in_analytics():
+    offenders = [hit for path in ANALYTIC_FILES for hit in _numeric_fallbacks(path)]
+    assert not offenders, "Missing data must stay missing, not become a number or date: " + "; ".join(offenders)

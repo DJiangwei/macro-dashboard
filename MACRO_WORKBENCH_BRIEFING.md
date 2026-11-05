@@ -135,16 +135,16 @@ US Net Liquidity Metric is calculated as $\text{Fed Total Assets} - \text{Treasu
 
 | Institution | Country | Indicator & Plumbing Signal | Frequency | Latest Date | Reading | Context / Operational Stance |
 | :--- | :---: | :--- | :---: | :---: | :---: | :--- |
-| **Federal Reserve (Fed)** | `US` | US Net Liquidity (Assets − TGA − RRP) | Weekly | 2026-10-28 | **$5,740.8B** | Ample reserve buffer ($5.74T net liquidity) |
-| **Federal Reserve (Fed)** | `US` | Fed Total Assets (Balance Sheet Level) | Weekly | 2026-10-28 | **$6,745.6B** | Down from $8.96T peak (-$2,219B runoff) |
-| **Federal Reserve (Fed)** | `US` | Fed Treasury Securities Holdings Outright | Weekly | 2026-10-28 | **$4,576.6B** | Primary asset backing commercial banking reserves |
-| **Federal Reserve (Fed)** | `US` | Fed Mortgage-Backed Securities (MBS) | Weekly | 2026-10-28 | **$1,883.5B** | Passive redemption dependent on prepayment speeds |
-| **Federal Reserve (Fed)** | `US` | Treasury General Account (TGA) at Fed | Weekly | 2026-10-28 | **$999.7B** | High TGA drains cash out of private banking system |
-| **Federal Reserve (Fed)** | `US` | Overnight Reverse Repo Facility (ON RRP) | Daily | 2026-10-30 | **$5.09B** | Near-exhausted ($4.4B vs $2.55T peak); liquidity cushion spent |
-| **European Central Bank (ECB)** | `EA` | Eurosystem Total Assets (Consolidated) | Weekly | 2026-10-19 | **€5,935.0B** | Controlled quantitative tightening across Eurosystem |
-| **Bank of Japan (BoJ)** | `JP` | Bank of Japan Total Assets | Monthly | 2026-09-01 | **¥625.0T** | Transition away from Yield Curve Control (YCC) |
-| **People's Bank of China (PBC)** | `CN` | PBC Balance Sheet Total Assets | Monthly | 2026-09-01 | **¥50.50T** | Structural liquidity support & credit expansion |
-| **People's Bank of China (PBC)** | `CN` | PBC Reserve Money (Base Money) | Monthly | 2026-09-01 | **¥41.30T** | RRR cuts lowering cost of funding for banks |
+| **Federal Reserve (Fed)** | `US` | US Net Liquidity (Assets − TGA − RRP) | Weekly | 2026-10-28 | **$5,745.7B** | Contracting over 3M (-171.6 USD bn) |
+| **Federal Reserve (Fed)** | `US` | Fed Total Assets (Balance Sheet Level) | Weekly | 2026-10-28 | **$6,745.6B** | Contracting over 3M (-1.7 USD bn) |
+| **Federal Reserve (Fed)** | `US` | Fed Treasury Securities Holdings Outright | Weekly | 2026-10-28 | **$4,576.6B** | Expanding over 3M (+60.9 USD bn) |
+| **Federal Reserve (Fed)** | `US` | Fed Mortgage-Backed Securities (MBS) | Weekly | 2026-10-28 | **$1,883.5B** | Contracting over 3M (-61.3 USD bn) |
+| **Federal Reserve (Fed)** | `US` | Treasury General Account (TGA) at Fed | Weekly | 2026-10-28 | **$999.7B** | Expanding over 3M (+170.1 USD bn) |
+| **Federal Reserve (Fed)** | `US` | Overnight Reverse Repo Facility (ON RRP) | Daily | 2026-11-02 | **$5.09B** | Expanding over 3M (+2.94 USD bn) |
+| **European Central Bank (ECB)** | `EA` | Eurosystem Total Assets (Consolidated) | Weekly | 2026-10-19 | **€5,935.0B** | Contracting over 3M (-14.1 EUR bn) |
+| **Bank of Japan (BoJ)** | `JP` | Bank of Japan Total Assets | Monthly | 2026-09-01 | **¥625.0T** | Contracting over 3M (-14.5 JPY tn) |
+| **People's Bank of China (PBC)** | `CN` | PBC Balance Sheet Total Assets | Monthly | 2026-09-01 | **¥50.50T** | Expanding over 3M (+1.07 CNY tn) |
+| **People's Bank of China (PBC)** | `CN` | PBC Reserve Money (Base Money) | Monthly | 2026-09-01 | **¥41.30T** | Expanding over 3M (+0.71 CNY tn) |
 
 ---
 
@@ -155,19 +155,19 @@ Guidotti-Greenspan Rule: $\text{Short-Term External Debt} / \text{Total FX Reser
 
 | Economy | Cluster | ST Debt / Reserves (Guidotti) | Guidotti Status | Current Account / GDP | Gross FX Reserves | Solvency Assessment & Vulnerability Context |
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Turkey** (`TR`) | Emerging & Frontier | **114.5%** | Breached (>100%) | **-1.8%** | **$69.6B** | High rollover pressure; Guidotti-Greenspan breached (>100%), mitigated by tight monetary defense |
-| **South Africa** (`ZA`) | Emerging & Frontier | **71.6%** | Comfortable (<80%) | **-0.1%** | **$62.5B** | Sound reserve coverage against short-term debt; balanced current account supported by commodity terms of trade |
-| **Egypt** (`EG`) | Emerging & Frontier | **69.0%** | Comfortable (<80%) | **-2.7%** | **$48.9B** | Substantial reserve replenishment post-Ras El-Hekma investment & IMF augmentation; deficit persists |
-| **Nigeria** (`NG`) | Emerging & Frontier | **55.0%** | Comfortable (<80%) | **+3.8%** | **$46.0B** | Hydrocarbon surplus generates external cushion; FX unification stabilizing official reserve accumulation |
-| **Kazakhstan** (`KZ`) | Emerging & Frontier | **42.8%** | Comfortable (<80%) | **-2.9%** | **$66.1B** | Strong sovereign solvency bolstered by National Fund (NFRK) foreign assets & low short-term debt |
-| **Uzbekistan** (`UZ`) | Emerging & Frontier | **13.8%** | Comfortable (<80%) | **-4.8%** | **$66.0B** | Exceptional reserve fortress driven by gold holdings (ST debt only 13.8% of reserves); high CA deficit |
-| **Poland** (`PL`) | Central & Eastern Europe | **81.7%** | Watch Zone (80-100%) | **+0.3%** | **$204.8B** | Strong reserve fortress ($205B) with balanced current account and deep local-currency debt market |
-| **Czechia** (`CZ`) | Central & Eastern Europe | **80.7%** | Watch Zone (80-100%) | **+1.7%** | **$146.3B** | Abundant reserves (>40% of GDP from legacy FX cap); comfortable trade and external solvency balance |
-| **Hungary** (`HU`) | Central & Eastern Europe | **74.2%** | Comfortable (<80%) | **+1.6%** | **$46.4B** | Current account returned to structural surplus; external debt refinancing needs covered by reserves |
-| **Romania** (`RO`) | Central & Eastern Europe | **88.3%** | Watch Zone (80-100%) | **-8.2%** | **$73.4B** | Twin deficit vulnerability (CA deficit -8.2% of GDP); heavy dependence on foreign capital inflows |
-| **China** (`CN`) | Asian EM Surplus Anchors | **<30%** | Net Creditor Fortress | **+3.8%** | **$3,400.3B** | World's largest FX reserve fortress ($3.4T); massive goods trade surplus reinforces external independence |
-| **South Korea** (`KR`) | Asian EM Surplus Anchors | **<30%** | Net Creditor Fortress | **+5.8%** | **$434.7B** | Deep tech export-driven current account surplus ($116B annualized); safe net creditor economy |
-| **Taiwan** (`TW`) | Asian EM Surplus Anchors | **<30%** | Net Creditor Fortress | **+19.8%** | **$600.7B** | Extreme current account surplus (+19.8% of GDP); massive net foreign asset position exceeds 100% of GDP |
+| **Turkey** (`TR`) | Emerging & Frontier | **114.5%** | Breached (>100%) | **-1.0%** | **$69.6B** | St external debt 115% of reserves (2024); current account -1.0% of gdp (2024); reserves $70bn (2026-08-01) |
+| **South Africa** (`ZA`) | Emerging & Frontier | **71.6%** | Covered (<80%) | **-0.1%** | **n/a** | St external debt 72% of reserves (2024); current account -0.1% of gdp (2024-10-01) |
+| **Egypt** (`EG`) | Emerging & Frontier | **69.0%** | Covered (<80%) | **-5.4%** | **$48.9B** | St external debt 69% of reserves (2024); current account -5.4% of gdp (2024); reserves $49bn (2025) |
+| **Nigeria** (`NG`) | Emerging & Frontier | **55.0%** | Covered (<80%) | **+7.5%** | **$46.0B** | St external debt 55% of reserves (2024); current account +7.5% of gdp (2024); reserves $46bn (2025) |
+| **Kazakhstan** (`KZ`) | Emerging & Frontier | **42.8%** | Covered (<80%) | **-2.3%** | **$66.1B** | St external debt 43% of reserves (2024); current account -2.3% of gdp (2024); reserves $66bn (2025) |
+| **Uzbekistan** (`UZ`) | Emerging & Frontier | **13.8%** | Covered (<80%) | **-4.7%** | **$66.0B** | St external debt 14% of reserves (2024); current account -4.7% of gdp (2024); reserves $66bn (2025) |
+| **Poland** (`PL`) | Central & Eastern Europe | **81.7%** | Watch zone (80-100%) | **+0.3%** | **$204.8B** | St external debt 82% of reserves (2025-12-31); current account +0.3% of gdp (2024-12-31); reserves $205bn (2026-09-01) |
+| **Czechia** (`CZ`) | Central & Eastern Europe | **80.7%** | Watch zone (80-100%) | **+1.7%** | **$146.3B** | St external debt 81% of reserves (2026-06-30); current account +1.7% of gdp (2024-12-31); reserves $146bn (2024-12-31) |
+| **Hungary** (`HU`) | Central & Eastern Europe | **74.2%** | Covered (<80%) | **+1.6%** | **$46.4B** | St external debt 74% of reserves (2025-12-31); current account +1.6% of gdp (2024-12-31); reserves $46bn (2024-12-31) |
+| **Romania** (`RO`) | Central & Eastern Europe | **88.3%** | Watch zone (80-100%) | **-8.2%** | **$73.4B** | St external debt 88% of reserves (2025-12-31); current account -8.2% of gdp (2024-12-31); reserves $73bn (2024-12-31) |
+| **China** (`CN`) | Asian Surplus Economies | **n/a** | No short-term external debt series | **+3.8%** | **$3,400.3B** | Current account +3.8% of gdp (2025); reserves $3,400bn (2026-09-01) |
+| **South Korea** (`KR`) | Asian Surplus Economies | **n/a** | No short-term external debt series | **+5.3%** | **$434.7B** | Current account +5.3% of gdp (2024); reserves $435bn (2026-09-01) |
+| **Taiwan** (`TW`) | Asian Surplus Economies | **n/a** | No short-term external debt series | **+14.3%** | **$600.7B** | Current account +14.3% of gdp (2024); reserves $601bn (2026-09-01) |
 
 ---
 
