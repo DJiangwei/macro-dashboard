@@ -551,14 +551,14 @@ indicators:
     label_zh: "欧央行协议工资同比"
     unit: "% y/y"
     fetcher: ecb_sdmx
-    flow: "STS"
-    series: "Q.I9.N.INWR.000000.3.ANR"
+    flow: "INW"
+    series: "Q.U2.N.INWR.000000.4F0.GY.IX"
     source_name: "ECB"
-    source_url: "https://data.ecb.europa.eu/data/datasets/STS"
+    source_url: "https://data.ecb.europa.eu/data/datasets/INW"
     frequency: "quarterly"
     start_date: "1995-01-01"
-    caveat_en: "ECB indicator of negotiated wage rates annual growth in the euro area (I9)."
-    caveat_zh: "欧洲央行编制的欧元区协议工资增长率年率。"
+    caveat_en: "ECB indicator of negotiated wage rates, annual growth, euro area (changing composition, U2). The ECB moved it from the STS dataflow (ends 2025-Q3) to INW; over the 135 overlapping quarters the two differ by at most 0.13pp."
+    caveat_zh: "欧洲央行协议工资指标年增长率，欧元区（成员随时间变化，U2口径）。欧洲央行已将其从STS数据流（止于2025年三季度）移至INW；两者135个重叠季度的差异不超过0.13个百分点。"
 
   # --- prices_costs --------------------------------------------------------
   - id: hicp_inflation
