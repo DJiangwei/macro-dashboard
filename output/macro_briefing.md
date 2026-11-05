@@ -12,7 +12,7 @@
 | **Poland (PL)** | 61.2 | 45.0 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 61.3 (usable with watch-list) |
 | **Czechia (CZ)** | 65.0 | 58.3 | **mixed** | moderate expansion | near-target inflation | neutral-moderate stance | 52.0 (needs data review) |
 | **Romania (RO)** | 30.0 | 46.7 | **defensive** | contraction | inflation pressure | restrictive stance | 51.0 (needs data review) |
-| **China (CN)** | 67.5 | 46.7 | **mixed** | above-trend expansion | disinflation risk | neutral-moderate stance | 35.5 (needs data review) |
+| **China (CN)** | 67.5 | 46.7 | **mixed** | above-trend expansion | disinflation risk | neutral-moderate stance | 53.3 (needs data review) |
 | **Euro Area (EA)** | 52.5 | 61.7 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 57.4 (needs data review) |
 | **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 43.4 (needs data review) |
 | **South Africa (ZA)** | 50.0 | 53.3 | **mixed** | moderate expansion | inflation pressure | restrictive stance | 38.1 (needs data review) |
@@ -39,7 +39,7 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | **PL** (NBP) | **3.75%** | 4.00% (2.5%) | 1.50% | **6.75%** (6.25% ~ 7.25%) | **-3.00%** | *substantially accommodative* |
 | **CZ** (CNB) | **3.75%** | 2.20% (2.0%) | 1.20% | **3.30%** (2.80% ~ 3.80%) | **+0.45%** | *calibrated / neutral* |
 | **RO** (BNR) | **6.50%** | 6.50% (2.5%) | 2.00% | **9.00%** (8.50% ~ 9.50%) | **-2.50%** | *substantially accommodative* |
-| **CN** (PBC) | **3.00%** | 0.90% (3.0%) | 1.50% | **1.70%** (1.20% ~ 2.20%) | **+1.30%** | *moderately restrictive* |
+| **CN** (PBC) | **3.00%** | 0.90% (3.0%) | 1.50% | **1.85%** (1.35% ~ 2.35%) | **+1.15%** | *moderately restrictive* |
 | **EA** (ECB) | **2.50%** | 4.00% (2.0%) | 0.50% | **5.55%** (5.05% ~ 6.05%) | **-3.05%** | *substantially accommodative* |
 | **JP** (Bank of Japan) | **1.25%** | 2.23% (2.0%) | 0.00% | **2.31%** (1.81% ~ 2.81%) | **-1.06%** | *moderately accommodative* |
 | **ZA** (SARB) | **7.25%** | 4.50% (4.5%) | 2.50% | **7.27%** (6.77% ~ 7.77%) | **-0.02%** | *calibrated / neutral* |
@@ -143,8 +143,8 @@ US Net Liquidity Metric is calculated as $\text{Fed Total Assets} - \text{Treasu
 | **Federal Reserve (Fed)** | `US` | Overnight Reverse Repo Facility (ON RRP) | Daily | 2026-10-30 | **$5.09B** | Near-exhausted ($4.4B vs $2.55T peak); liquidity cushion spent |
 | **European Central Bank (ECB)** | `EA` | Eurosystem Total Assets (Consolidated) | Weekly | 2026-10-19 | **€5,935.0B** | Controlled quantitative tightening across Eurosystem |
 | **Bank of Japan (BoJ)** | `JP` | Bank of Japan Total Assets | Monthly | 2026-09-01 | **¥625.0T** | Transition away from Yield Curve Control (YCC) |
-| **People's Bank of China (PBC)** | `CN` | PBC Balance Sheet Total Assets | Monthly | 2026-08-01 | **¥49.86T** | Structural liquidity support & credit expansion |
-| **People's Bank of China (PBC)** | `CN` | PBC Reserve Money (Base Money) | Monthly | 2026-08-01 | **¥40.18T** | RRR cuts lowering cost of funding for banks |
+| **People's Bank of China (PBC)** | `CN` | PBC Balance Sheet Total Assets | Monthly | 2026-09-01 | **¥50.50T** | Structural liquidity support & credit expansion |
+| **People's Bank of China (PBC)** | `CN` | PBC Reserve Money (Base Money) | Monthly | 2026-09-01 | **¥41.30T** | RRR cuts lowering cost of funding for banks |
 
 ---
 

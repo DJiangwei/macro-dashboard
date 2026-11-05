@@ -30,16 +30,16 @@
      ]
     ],
     "ann_3m": {
-     "value": -0.01,
-     "date": "2026-08-01",
-     "base_date": "2026-06-01",
+     "value": 2.02,
+     "date": "2026-09-01",
+     "base_date": "2026-07-01",
      "from": "cpi_mom_akshare",
      "method": "compounded_mom"
     },
     "ann_6m": {
-     "value": -1.0,
-     "date": "2026-08-01",
-     "base_date": "2026-03-01",
+     "value": 0.8,
+     "date": "2026-09-01",
+     "base_date": "2026-04-01",
      "from": "cpi_mom_akshare",
      "method": "compounded_mom"
     }
@@ -50,24 +50,24 @@
     "label_zh": "城市CPI同比",
     "unit": "%",
     "source": "AKShare / Eastmoney Data Center",
-    "quality": "low_confidence",
+    "quality": "watch",
     "latest": {
+     "value": 0.9,
+     "date": "2026-09-01"
+    },
+    "prior": {
      "value": 0.8,
      "date": "2026-08-01"
     },
-    "prior": {
-     "value": 0.5,
-     "date": "2026-07-01"
-    },
     "year_ago": {
-     "value": -0.3,
-     "date": "2025-08-01"
+     "value": -0.2,
+     "date": "2025-09-01"
     },
     "derivation": "observed",
     "refs": [
      [
       "urban_cpi_yoy_akshare",
-      "2026-08-01"
+      "2026-09-01"
      ]
     ]
    },
@@ -77,24 +77,24 @@
     "label_zh": "农村CPI同比",
     "unit": "%",
     "source": "AKShare / Eastmoney Data Center",
-    "quality": "low_confidence",
+    "quality": "watch",
     "latest": {
+     "value": 0.8,
+     "date": "2026-09-01"
+    },
+    "prior": {
      "value": 0.7,
      "date": "2026-08-01"
     },
-    "prior": {
-     "value": 0.4,
-     "date": "2026-07-01"
-    },
     "year_ago": {
-     "value": -0.6,
-     "date": "2025-08-01"
+     "value": -0.5,
+     "date": "2025-09-01"
     },
     "derivation": "observed",
     "refs": [
      [
       "rural_cpi_yoy_akshare",
-      "2026-08-01"
+      "2026-09-01"
      ]
     ]
    },
@@ -104,24 +104,24 @@
     "label_zh": "PPI同比",
     "unit": "%",
     "source": "AKShare / Eastmoney Data Center",
-    "quality": "low_confidence",
+    "quality": "watch",
     "latest": {
+     "value": 5.0,
+     "date": "2026-09-01"
+    },
+    "prior": {
      "value": 3.8,
      "date": "2026-08-01"
     },
-    "prior": {
-     "value": 3.5,
-     "date": "2026-07-01"
-    },
     "year_ago": {
-     "value": -2.9,
-     "date": "2025-08-01"
+     "value": -2.3,
+     "date": "2025-09-01"
     },
     "derivation": "observed",
     "refs": [
      [
       "ppi_yoy_akshare",
-      "2026-08-01"
+      "2026-09-01"
      ]
     ]
    },

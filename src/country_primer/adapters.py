@@ -1703,6 +1703,8 @@ def _clean_text(value: str) -> str:
     return re.sub('\\s+', ' ', value or '').strip()
 
 def _apply_china_transform(value: float, transform: str | None) -> float:
+    if transform == 'per_100_to_per_unit':
+        return value / 100.0
     if transform == 'usd_trn':
         return value / 1000000000000
     if transform == 'usd_mn_to_trn':
@@ -1924,6 +1926,25 @@ def fetch_fred_graph(spec: dict[str, Any]) -> dict[str, Any]:
     observations.sort(key=lambda item: item['date'])
     return {**spec, 'observations': observations, 'provider_updated': observations[-1]['date'] if observations else '', 'api_url': f'{url}?id={code}'}
 
+def _call_with_timeout(fn: Any, args: list[Any], kwargs: dict[str, Any], timeout_seconds: int, label: str) -> Any:
+    """Run ``fn`` with a wall-clock timeout that works in any thread.
+
+    The previous implementation used ``signal.alarm``: ``signal`` was never
+    imported (every AKShare fetch raised NameError) and SIGALRM only works in
+    the main thread anyway, while builders fetch from a thread pool.
+    """
+    import concurrent.futures as _cf
+
+    executor = _cf.ThreadPoolExecutor(max_workers=1, thread_name_prefix="akshare")
+    future = executor.submit(fn, *args, **kwargs)
+    try:
+        return future.result(timeout=timeout_seconds)
+    except _cf.TimeoutError as exc:
+        raise TimeoutError(f"AKShare fetch timed out after {timeout_seconds}s for {label}") from exc
+    finally:
+        executor.shutdown(wait=False, cancel_futures=True)
+
+
 def _fetch_akshare_frame(spec: dict[str, Any], cache: dict[str, Any] | None=None) -> Any:
     try:
         import akshare as ak
@@ -1943,16 +1964,7 @@ def _fetch_akshare_frame(spec: dict[str, Any], cache: dict[str, Any] | None=None
         for attempt in range(attempts):
             try:
                 if timeout_seconds:
-
-                    def _timeout_handler(signum: int, frame: Any) -> None:
-                        raise TimeoutError(f'AKShare fetch timed out after {timeout_seconds}s for {function_name}')
-                    old_handler = signal.signal(signal.SIGALRM, _timeout_handler)
-                    signal.alarm(timeout_seconds)
-                    try:
-                        frame = fetcher(*args, **kwargs)
-                    finally:
-                        signal.alarm(0)
-                        signal.signal(signal.SIGALRM, old_handler)
+                    frame = _call_with_timeout(fetcher, args, kwargs, timeout_seconds, function_name)
                 else:
                     frame = fetcher(*args, **kwargs)
                 break

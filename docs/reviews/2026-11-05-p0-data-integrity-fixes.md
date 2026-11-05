@@ -59,3 +59,11 @@
 - KZ、NG、UZ、EG 的原生政策利率仍未接入；IMF IFS 镜像分别止于 2020-12、2024-08、2024-12、2025-05。KZ/NG/UZ/EG 央行网站从本沙盒无法访问，需要在 CI 运行环境中接入。
 - CEE 叙述文字（2026-04）和 `countries.yaml` 中的央行介绍是手写分析，已标注日期，需要整体重写或改为由数据生成。
 - 泰勒规则参数，以及中国、尼日利亚等国的参考通胀目标，属于模型假设，已在页面公开。
+
+## 4. 补充：中国数据源修复（同日）
+
+- **根因一**：`adapters.py` 的 AKShare 超时实现调用了 `signal.alarm`，但模块里**没有 import `signal`**，所以每一次 `akshare_table` 抓取都抛 NameError。此外 SIGALRM 本来就只能在主线程用，而构建器是在线程池里并发抓取的。现已改为线程安全的超时实现。
+- **根因二**：项目自写的 Eastmoney 直连接口（`eastmoney_api`）因上游 report 改名而失效。18 个指标已改用 AKShare 维护中的封装函数：`macro_china_cpi`、`macro_china_ppi`、`macro_china_money_supply`、`macro_china_hgjck`、`macro_china_gdzctz`、`macro_china_consumer_goods_retail`、`macro_china_pmi`、`macro_china_gyzjz`、`macro_china_new_financial_credit`。切换前已逐项核对 2026-08 的数值与原真实值一致（出口有 0.1pp 的舍入差）。
+- **人民币中间价**：SAFE 页面解析失效，改用 AKShare 的 `currency_boc_safe`（同为 SAFE 官方数据）。USD/CNY 6.718（2026-11-04）。
+- **结果**：中国页的过期回退序列从 62 个降到 1 个（仅剩推导出的实际利率，构建时会重算）。最新真实读数：PPI +5.0%、出口 +36.3%、FAI 年初至今 −9.7%、社零 +1.1%、CPI +0.9%、M2 +7.2%、M1 +3.2%、10 月制造业 PMI 49.3（以上除 PMI 外均为 2026-09）。
+- **其他来源评估**：国家统计局官方 `easyquery` 接口在本沙盒返回 403（拒绝境外 IP），GitHub Actions 很可能同样被拒，只适合在国内网络下作为交叉校验。DBnomics 的 NBS 镜像月度数据止于 2026-02（且为 NA），只能用于历史回溯。AKShare 中基于 jin10 的函数止于 2025-09，不再使用。
