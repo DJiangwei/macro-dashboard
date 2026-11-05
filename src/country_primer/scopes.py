@@ -18,6 +18,11 @@ SCOPES_PATH = ROOT / "config" / "scopes.yaml"
 OUTPUT = ROOT / "output"
 
 KINDS = {"country", "region", "market"}
+REGIONS = {"dm", "em", "cee", "frontier"}
+DEFAULT_ROLES: dict[str, tuple[str, ...]] = {
+    "policy_rate": ("policy_rate",),
+    "cpi_yoy": ("cpi_inflation",),
+}
 PIPELINES = {"data_first", "cee_v4"}
 CEE_CANONICAL = "cee_canonical_frame.json"
 
@@ -43,7 +48,7 @@ class Scope:
     name_en: str
     name_zh: str
     flag: str
-    nav_group: str
+    region: str
     pipeline: str
     currency: str
     institution: str
@@ -51,7 +56,18 @@ class Scope:
     framework_label: str = ""
     headline: Headline | None = None
     fetch_workers: int = 4
+    central_bank: dict[str, Any] = field(default_factory=dict, compare=False, hash=False)
+    roles: dict[str, tuple[str, ...]] = field(default_factory=dict, compare=False, hash=False)
     extra: dict[str, Any] = field(default_factory=dict, compare=False, hash=False)
+
+    def role(self, name: str) -> tuple[str, ...]:
+        """Candidate indicator ids for a cross-country role (first observed wins)."""
+        return self.roles.get(name) or DEFAULT_ROLES.get(name, ())
+
+    @property
+    def market_policy_rate(self) -> tuple[str, ...]:
+        """Rate used for ex-post real rates: a market rate when declared, else the policy rate."""
+        return self.roles.get("policy_rate_market") or self.role("policy_rate")
 
     @property
     def html_file(self) -> str:
@@ -88,8 +104,8 @@ class Scope:
 
 def _parse(entry: dict[str, Any]) -> Scope:
     known = {
-        "id", "kind", "slug", "name", "flag", "nav_group", "pipeline", "currency", "institution",
-        "indicators", "framework_label", "headline", "fetch_workers",
+        "id", "kind", "slug", "name", "flag", "region", "pipeline", "currency", "institution",
+        "indicators", "framework_label", "headline", "fetch_workers", "central_bank", "roles",
     }
     headline = entry.get("headline")
     return Scope(
@@ -99,7 +115,7 @@ def _parse(entry: dict[str, Any]) -> Scope:
         name_en=str(entry["name"]["en"]),
         name_zh=str(entry["name"].get("zh") or entry["name"]["en"]),
         flag=str(entry.get("flag") or ""),
-        nav_group=str(entry.get("nav_group") or ""),
+        region=str(entry.get("region") or ""),
         pipeline=str(entry["pipeline"]),
         currency=str(entry.get("currency") or ""),
         institution=str(entry.get("institution") or ""),
@@ -112,6 +128,8 @@ def _parse(entry: dict[str, Any]) -> Scope:
             format=str(headline.get("format") or "{value} ({date})"),
         ) if headline else None,
         fetch_workers=int(entry.get("fetch_workers") or 4),
+        central_bank=dict(entry.get("central_bank") or {}),
+        roles={str(k): tuple(v if isinstance(v, list) else [v]) for k, v in (entry.get("roles") or {}).items()},
         extra={k: v for k, v in entry.items() if k not in known},
     )
 
@@ -126,6 +144,8 @@ def validate_registry(scopes: list[Scope]) -> list[str]:
     for s in scopes:
         if s.kind not in KINDS:
             problems.append(f"{s.id}: unknown kind {s.kind!r}")
+        if s.region not in REGIONS:
+            problems.append(f"{s.id}: unknown region {s.region!r}")
         if s.pipeline not in PIPELINES:
             problems.append(f"{s.id}: unknown pipeline {s.pipeline!r}")
         if s.is_data_first:

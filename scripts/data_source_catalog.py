@@ -22,15 +22,13 @@ from country_primer.data_fetcher import (
     is_dropped_proxy_indicator,
 )
 
+from country_primer.scopes import data_first_scopes
+from country_primer.scopes import cee_scopes
+
 
 ROOT = Path(__file__).resolve().parents[1]
-COUNTRIES = ("HU", "PL", "CZ", "RO")
-COUNTRY_NAMES = {
-    "HU": "Hungary",
-    "PL": "Poland",
-    "CZ": "Czechia",
-    "RO": "Romania",
-}
+COUNTRIES = tuple(s.id for s in cee_scopes())
+COUNTRY_NAMES = {s.id: s.name_en for s in cee_scopes()}
 US_CONFIG_PATH = ROOT / "config" / "us_indicators.yaml"
 US_SUMMARY_PATH = ROOT / "output" / "us_dashboard_summary.json"
 CHINA_CONFIG_PATH = ROOT / "config" / "china_indicators.yaml"
@@ -256,178 +254,123 @@ def _append_us_sources(lines: list[str]) -> None:
         )
 
 
-DATA_FIRST_PAGES = (
+# Source notes for the catalog; a scope without one gets a generic note.
+CATALOG_NOTES = {
+    'EA': (
+        'The Euro Area page is generated from `config/euro_area_indicators.yaml`. Official ECB Data Portal '
+        'SDMX 2.1 API and Eurostat Dissemination JSON-stat 2.0 API are the primary data backbones. Eurostat '
+        'supplies national accounts, industrial and construction production, retail sales, HICP items '
+        '(prc_hicp_minr, ECOICOP 2018), labour market, house price index, extra-EA trade balance, quarterly '
+        'BoP current account, and government deficit and debt ratios; ECB SDMX supplies policy rates (DFR), '
+        '€STR, negotiated wages, yield curves, sovereign yields, Target2 balances, CISS, monetary and credit '
+        'aggregates, and bank supervisory ratios; sovereign spreads are derived directly.'
+    ),
+    'JP': (
+        'The Japan page is generated from `config/japan_indicators.yaml`. FRED (official API when '
+        '`FRED_API_KEY` is set) carries national accounts, production, labour, trade, rates, and BIS series. '
+        'Because OECD discontinued its Japan CPI, retail-value, and money-stock mirrors between 2021 and '
+        '2024, national CPI and bank soundness come from the IMF SDMX 2.1 API instead, and IMF WEO DataMapper'
+        ' carries fiscal ratios with an explicit forecast split. Japan-native releases behind the e-Stat '
+        'application-ID wall are recorded as gaps rather than proxied.'
+    ),
+    'ZA': (
+        'The South Africa page is generated from `config/south_africa_indicators.yaml`. The SARB Web '
+        'Indicators JSON API is preferred wherever SARB is the compiling authority (policy and prime rates, '
+        'SABOR/ZARONIA, benchmark bond yields, CPI, PPI, rand crosses, NEER). FRED carries the OECD/Stats '
+        'SA/BIS mirrors for national accounts, production, labour, trade, and credit; IMF SDMX supplies the '
+        'CPI cross-check and Financial Soundness Indicators; IMF WEO supplies fiscal ratios. Eskom supply '
+        'data and vendor-controlled BER/PMI surveys remain explicit gaps.'
+    ),
+    'TR': (
+        'The Turkey page is generated from `config/turkey_indicators.yaml`. TurkStat officially transmits '
+        'harmonized time series into Eurostat Dissemination JSON-stat 2.0 (geo=TR) for national accounts, '
+        'industrial and construction production, retail trade turnover, domestic PPI, HICP inflation, '
+        'unemployment, house prices, and economic sentiment. TCMB daily XML supplies spot USD/TRY rates; IMF '
+        'SDMX supplies balance of payments and headline CPI; FRED carries BIS credit and OECD leading '
+        'indicators; Bruegel supplies 120-partner REER/NEER; and DBnomics supplies IMF Financial Soundness '
+        'Indicators.'
+    ),
+    'HK': (
+        'The Hong Kong page is generated from `config/hong_kong_indicators.yaml`. Census and Statistics '
+        'Department (C&SD) Open API provides the primary official statistical backbone for chained real GDP '
+        'accounts, industrial and construction production, retail sales volume, composite and underlying CPI,'
+        ' unemployment, nominal wage indices, and merchandise trade balances. FRED supplies Federal Reserve '
+        'H.10 spot USD/HKD and BIS residential property and credit aggregates; Bruegel supplies 120-partner '
+        'REER/NEER; and DBnomics supplies IMF Financial Soundness Indicators for banking capital adequacy and'
+        ' non-performing loans.'
+    ),
+    'KR': (
+        'The South Korea page is generated from `config/south_korea_indicators.yaml`. FRED carries the OECD '
+        'official mirrors for quarterly national accounts, industrial and manufacturing production, retail '
+        'trade, harmonised unemployment, 10Y KTB benchmark yields, call rates, and goods trade, alongside BIS'
+        ' property and household credit indicators. IMF SDMX supplies headline CPI YoY/MoM and quarterly BPM6'
+        ' balance of payments; IMF WEO DataMapper supplies fiscal ratios; Bruegel supplies 120-partner '
+        'REER/NEER; and DBnomics supplies IMF Financial Soundness Indicators.'
+    ),
+    'TW': (
+        'The Taiwan page is generated from `config/taiwan_indicators.yaml`. Central Bank of the Republic of '
+        'China (Taiwan) DataAPI provides official time series for policy discount rates, interbank call-loan '
+        'rates, prime lending rates, deposit rates, monetary aggregates (M1B, M2, reserve money), mortgage '
+        'and consumer credit, and quarterly BPM6 balance of payments. DGBAS official releases supply chained '
+        'real GDP accounts (YoY & QoQ SA) and consumer/producer price indices; Federal Reserve Board (H.10) '
+        'supplies daily USD/TWD spot rates; BIS supplies broad real effective exchange rates; Bruegel '
+        'supplies 120-partner REER/NEER; and IMF WEO DataMapper supplies fiscal and government debt ratios.'
+    ),
+    'KZ': (
+        'The Kazakhstan page is generated from `config/kazakhstan_indicators.yaml`. National Bank of '
+        'Kazakhstan (NBK) daily XML RSS feed provides official market exchange rates (USD, EUR, RUB, CNY); '
+        'DBnomics (IMF IFS) supplies policy rates, headline CPI YoY and index base, and quarterly BPM6 '
+        'balance of payments; World Bank WDI supplies real GDP, household consumption, gross capital '
+        'formation, broad money, and domestic private credit; IMF DataMapper supplies WEO growth, external '
+        'debt, and Fiscal Monitor ratios; DBnomics (IMF FSI) supplies banking regulatory CAR and NPL ratios; '
+        'FRED supplies gross FX reserves and Brent crude; and Bruegel supplies 120-partner REER/NEER.'
+    ),
+    'UZ': (
+        'The Uzbekistan page is generated from `config/uzbekistan_indicators.yaml`. DBnomics (IMF IFS) '
+        'provides official Central Bank of Uzbekistan policy refinancing rates, commercial lending and '
+        'deposit rates, end-of-period USD/UZS exchange rates, headline CPI YoY and index base, and quarterly '
+        'BPM6 current account and goods trade balances; World Bank WDI supplies national accounts growth, '
+        "unemployment, broad money, private credit, and workers' personal remittances (% of GDP); IMF "
+        'DataMapper supplies WEO and Fiscal Monitor trajectories; DBnomics (IMF FSI) supplies banking capital'
+        ' adequacy and non-performing loan ratios; FRED supplies gross FX reserves; and Bruegel supplies '
+        '120-partner REER/NEER.'
+    ),
+    'EG': (
+        'The Egypt page is generated from `config/egypt_indicators.yaml`. DBnomics (IMF IFS) provides Central'
+        ' Bank of Egypt corridor policy rates, commercial bank lending and deposit rates, USD/EGP exchange '
+        'rates, headline CPI YoY and index base, and quarterly BPM6 balance of payments; World Bank WDI '
+        'supplies real GDP, household consumption, gross investment, modeled unemployment, broad money, '
+        "domestic private credit, and workers' personal remittances (% of GDP); IMF DataMapper supplies WEO "
+        'growth and Fiscal Monitor debt and deficit ratios; FRED supplies gross foreign exchange reserves and'
+        ' Brent crude oil pricing; and Bruegel supplies 120-partner REER/NEER.'
+    ),
+    'NG': (
+        'The Nigeria page is generated from `config/nigeria_indicators.yaml`. DBnomics (IMF IFS) provides '
+        'Central Bank of Nigeria Monetary Policy Rates (MPR), commercial prime lending and time deposit '
+        'rates, USD/NGN official exchange rates, headline CPI YoY and index base, quarterly BPM6 current '
+        'account and goods balances, and official reserve assets (USD); World Bank WDI supplies real GDP, '
+        'sector value-added growth (industry, agriculture, services), modeled unemployment, broad money, '
+        "private credit, and workers' personal remittances; IMF DataMapper supplies WEO and Fiscal Monitor "
+        'ratios; DBnomics (IMF FSI) supplies banking CAR and NPL ratios; FRED supplies Brent crude oil '
+        'benchmark pricing; and Bruegel supplies 120-partner REER/NEER.'
+    ),
+}
+# China, the US and the UK have dedicated catalog sections.
+DEDICATED_SECTIONS = {"CN", "US", "UK"}
+DATA_FIRST_PAGES = tuple(
     {
-        "name": "Euro Area",
-        "config": ROOT / "config" / "euro_area_indicators.yaml",
-        "summary": ROOT / "output" / "euro_area_dashboard_summary.json",
-        "config_ref": "config/euro_area_indicators.yaml",
-        "summary_ref": "output/euro_area_dashboard_summary.json",
-        "note": (
-            "The Euro Area page is generated from `config/euro_area_indicators.yaml`. Official ECB Data Portal "
-            "SDMX 2.1 API and Eurostat Dissemination JSON-stat 2.0 API are the primary data backbones. "
-            "Eurostat supplies national accounts, industrial and construction production, retail sales, "
-            "HICP items (prc_hicp_minr, ECOICOP 2018), labour market, house price index, extra-EA trade balance, "
-            "quarterly BoP current account, and government deficit and debt ratios; ECB SDMX supplies "
-            "policy rates (DFR), €STR, negotiated wages, yield curves, sovereign yields, Target2 balances, CISS, "
-            "monetary and credit aggregates, and bank supervisory ratios; sovereign spreads are derived directly."
+        "name": scope.name_en,
+        "config": scope.indicators_path,
+        "summary": scope.summary_path,
+        "config_ref": scope.indicators,
+        "summary_ref": f"output/{scope.summary_file}",
+        "note": CATALOG_NOTES.get(
+            scope.id,
+            f"The {scope.name_en} page is generated from `{scope.indicators}` through the global fetcher registry.",
         ),
-    },
-    {
-        "name": "Japan",
-        "config": ROOT / "config" / "japan_indicators.yaml",
-        "summary": ROOT / "output" / "japan_dashboard_summary.json",
-        "config_ref": "config/japan_indicators.yaml",
-        "summary_ref": "output/japan_dashboard_summary.json",
-        "note": (
-            "The Japan page is generated from `config/japan_indicators.yaml`. FRED (official API when "
-            "`FRED_API_KEY` is set) carries national accounts, production, labour, trade, rates, and BIS "
-            "series. Because OECD discontinued its Japan CPI, retail-value, and money-stock mirrors between "
-            "2021 and 2024, national CPI and bank soundness come from the IMF SDMX 2.1 API instead, and IMF "
-            "WEO DataMapper carries fiscal ratios with an explicit forecast split. Japan-native releases "
-            "behind the e-Stat application-ID wall are recorded as gaps rather than proxied."
-        ),
-    },
-    {
-        "name": "South Africa",
-        "config": ROOT / "config" / "south_africa_indicators.yaml",
-        "summary": ROOT / "output" / "south_africa_dashboard_summary.json",
-        "config_ref": "config/south_africa_indicators.yaml",
-        "summary_ref": "output/south_africa_dashboard_summary.json",
-        "note": (
-            "The South Africa page is generated from `config/south_africa_indicators.yaml`. The SARB Web "
-            "Indicators JSON API is preferred wherever SARB is the compiling authority (policy and prime "
-            "rates, SABOR/ZARONIA, benchmark bond yields, CPI, PPI, rand crosses, NEER). FRED carries the "
-            "OECD/Stats SA/BIS mirrors for national accounts, production, labour, trade, and credit; IMF "
-            "SDMX supplies the CPI cross-check and Financial Soundness Indicators; IMF WEO supplies fiscal "
-            "ratios. Eskom supply data and vendor-controlled BER/PMI surveys remain explicit gaps."
-        ),
-    },
-    {
-        "name": "Turkey",
-        "config": ROOT / "config" / "turkey_indicators.yaml",
-        "summary": ROOT / "output" / "turkey_dashboard_summary.json",
-        "config_ref": "config/turkey_indicators.yaml",
-        "summary_ref": "output/turkey_dashboard_summary.json",
-        "note": (
-            "The Turkey page is generated from `config/turkey_indicators.yaml`. TurkStat officially transmits "
-            "harmonized time series into Eurostat Dissemination JSON-stat 2.0 (geo=TR) for national accounts, "
-            "industrial and construction production, retail trade turnover, domestic PPI, HICP inflation, "
-            "unemployment, house prices, and economic sentiment. TCMB daily XML supplies spot USD/TRY rates; "
-            "IMF SDMX supplies balance of payments and headline CPI; FRED carries BIS credit and OECD leading "
-            "indicators; Bruegel supplies 120-partner REER/NEER; and DBnomics supplies IMF Financial Soundness Indicators."
-        ),
-    },
-    {
-        "name": "Hong Kong",
-        "config": ROOT / "config" / "hong_kong_indicators.yaml",
-        "summary": ROOT / "output" / "hong_kong_dashboard_summary.json",
-        "config_ref": "config/hong_kong_indicators.yaml",
-        "summary_ref": "output/hong_kong_dashboard_summary.json",
-        "note": (
-            "The Hong Kong page is generated from `config/hong_kong_indicators.yaml`. Census and Statistics "
-            "Department (C&SD) Open API provides the primary official statistical backbone for chained real "
-            "GDP accounts, industrial and construction production, retail sales volume, composite and underlying "
-            "CPI, unemployment, nominal wage indices, and merchandise trade balances. FRED supplies Federal Reserve "
-            "H.10 spot USD/HKD and BIS residential property and credit aggregates; Bruegel supplies 120-partner REER/NEER; "
-            "and DBnomics supplies IMF Financial Soundness Indicators for banking capital adequacy and non-performing loans."
-        ),
-    },
-    {
-        "name": "South Korea",
-        "config": ROOT / "config" / "south_korea_indicators.yaml",
-        "summary": ROOT / "output" / "south_korea_dashboard_summary.json",
-        "config_ref": "config/south_korea_indicators.yaml",
-        "summary_ref": "output/south_korea_dashboard_summary.json",
-        "note": (
-            "The South Korea page is generated from `config/south_korea_indicators.yaml`. FRED carries the "
-            "OECD official mirrors for quarterly national accounts, industrial and manufacturing production, "
-            "retail trade, harmonised unemployment, 10Y KTB benchmark yields, call rates, and goods trade, "
-            "alongside BIS property and household credit indicators. IMF SDMX supplies headline CPI YoY/MoM "
-            "and quarterly BPM6 balance of payments; IMF WEO DataMapper supplies fiscal ratios; Bruegel supplies "
-            "120-partner REER/NEER; and DBnomics supplies IMF Financial Soundness Indicators."
-        ),
-    },
-    {
-        "name": "Taiwan",
-        "config": ROOT / "config" / "taiwan_indicators.yaml",
-        "summary": ROOT / "output" / "taiwan_dashboard_summary.json",
-        "config_ref": "config/taiwan_indicators.yaml",
-        "summary_ref": "output/taiwan_dashboard_summary.json",
-        "note": (
-            "The Taiwan page is generated from `config/taiwan_indicators.yaml`. Central Bank of the Republic "
-            "of China (Taiwan) DataAPI provides official time series for policy discount rates, interbank "
-            "call-loan rates, prime lending rates, deposit rates, monetary aggregates (M1B, M2, reserve money), "
-            "mortgage and consumer credit, and quarterly BPM6 balance of payments. DGBAS official releases supply "
-            "chained real GDP accounts (YoY & QoQ SA) and consumer/producer price indices; Federal Reserve Board "
-            "(H.10) supplies daily USD/TWD spot rates; BIS supplies broad real effective exchange rates; Bruegel "
-            "supplies 120-partner REER/NEER; and IMF WEO DataMapper supplies fiscal and government debt ratios."
-        ),
-    },
-    {
-        "name": "Kazakhstan",
-        "config": ROOT / "config" / "kazakhstan_indicators.yaml",
-        "summary": ROOT / "output" / "kazakhstan_dashboard_summary.json",
-        "config_ref": "config/kazakhstan_indicators.yaml",
-        "summary_ref": "output/kazakhstan_dashboard_summary.json",
-        "note": (
-            "The Kazakhstan page is generated from `config/kazakhstan_indicators.yaml`. National Bank of "
-            "Kazakhstan (NBK) daily XML RSS feed provides official market exchange rates (USD, EUR, RUB, CNY); "
-            "DBnomics (IMF IFS) supplies policy rates, headline CPI YoY and index base, and quarterly BPM6 balance "
-            "of payments; World Bank WDI supplies real GDP, household consumption, gross capital formation, broad money, "
-            "and domestic private credit; IMF DataMapper supplies WEO growth, external debt, and Fiscal Monitor ratios; "
-            "DBnomics (IMF FSI) supplies banking regulatory CAR and NPL ratios; FRED supplies gross FX reserves and Brent crude; "
-            "and Bruegel supplies 120-partner REER/NEER."
-        ),
-    },
-    {
-        "name": "Uzbekistan",
-        "config": ROOT / "config" / "uzbekistan_indicators.yaml",
-        "summary": ROOT / "output" / "uzbekistan_dashboard_summary.json",
-        "config_ref": "config/uzbekistan_indicators.yaml",
-        "summary_ref": "output/uzbekistan_dashboard_summary.json",
-        "note": (
-            "The Uzbekistan page is generated from `config/uzbekistan_indicators.yaml`. DBnomics (IMF IFS) provides "
-            "official Central Bank of Uzbekistan policy refinancing rates, commercial lending and deposit rates, "
-            "end-of-period USD/UZS exchange rates, headline CPI YoY and index base, and quarterly BPM6 current account and "
-            "goods trade balances; World Bank WDI supplies national accounts growth, unemployment, broad money, private credit, "
-            "and workers' personal remittances (% of GDP); IMF DataMapper supplies WEO and Fiscal Monitor trajectories; "
-            "DBnomics (IMF FSI) supplies banking capital adequacy and non-performing loan ratios; FRED supplies gross FX reserves; "
-            "and Bruegel supplies 120-partner REER/NEER."
-        ),
-    },
-    {
-        "name": "Egypt",
-        "config": ROOT / "config" / "egypt_indicators.yaml",
-        "summary": ROOT / "output" / "egypt_dashboard_summary.json",
-        "config_ref": "config/egypt_indicators.yaml",
-        "summary_ref": "output/egypt_dashboard_summary.json",
-        "note": (
-            "The Egypt page is generated from `config/egypt_indicators.yaml`. DBnomics (IMF IFS) provides "
-            "Central Bank of Egypt corridor policy rates, commercial bank lending and deposit rates, USD/EGP exchange rates, "
-            "headline CPI YoY and index base, and quarterly BPM6 balance of payments; World Bank WDI supplies real GDP, "
-            "household consumption, gross investment, modeled unemployment, broad money, domestic private credit, and "
-            "workers' personal remittances (% of GDP); IMF DataMapper supplies WEO growth and Fiscal Monitor debt and "
-            "deficit ratios; FRED supplies gross foreign exchange reserves and Brent crude oil pricing; and Bruegel supplies "
-            "120-partner REER/NEER."
-        ),
-    },
-    {
-        "name": "Nigeria",
-        "config": ROOT / "config" / "nigeria_indicators.yaml",
-        "summary": ROOT / "output" / "nigeria_dashboard_summary.json",
-        "config_ref": "config/nigeria_indicators.yaml",
-        "summary_ref": "output/nigeria_dashboard_summary.json",
-        "note": (
-            "The Nigeria page is generated from `config/nigeria_indicators.yaml`. DBnomics (IMF IFS) provides "
-            "Central Bank of Nigeria Monetary Policy Rates (MPR), commercial prime lending and time deposit rates, "
-            "USD/NGN official exchange rates, headline CPI YoY and index base, quarterly BPM6 current account and goods balances, "
-            "and official reserve assets (USD); World Bank WDI supplies real GDP, sector value-added growth (industry, "
-            "agriculture, services), modeled unemployment, broad money, private credit, and workers' personal remittances; "
-            "IMF DataMapper supplies WEO and Fiscal Monitor ratios; DBnomics (IMF FSI) supplies banking CAR and NPL ratios; "
-            "FRED supplies Brent crude oil benchmark pricing; and Bruegel supplies 120-partner REER/NEER."
-        ),
-    },
+    }
+    for scope in data_first_scopes()
+    if scope.id not in DEDICATED_SECTIONS
 )
 
 

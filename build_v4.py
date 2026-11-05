@@ -304,6 +304,7 @@ try:
 except ImportError:
     render_labour_deepdive_panel = lambda cc: ""
 
+from country_primer.scopes import all_scopes
 from country_primer.data_fetcher import (  # noqa: E402
     DataPipeline,
     INDICATOR_MANIFEST_48,
@@ -4204,26 +4205,7 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
         plotly_tag = plotly_js.group(0) if plotly_js else '<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>'
 
     # Build country switcher nav
-    all_countries = [
-        ("HU", "Hungary", "hungary.html"),
-        ("PL", "Poland", "poland.html"),
-        ("CZ", "Czechia", "czechia.html"),
-        ("RO", "Romania", "romania.html"),
-        ("CN", "China", "china.html"),
-        ("EA", "Euro Area", "euro_area.html"),
-        ("JP", "Japan", "japan.html"),
-        ("ZA", "South Africa", "south_africa.html"),
-        ("UK", "United Kingdom", "uk.html"),
-        ("US", "United States", "us.html"),
-        ("TR", "Turkey", "turkey.html"),
-        ("HK", "Hong Kong", "hong_kong.html"),
-        ("KR", "South Korea", "south_korea.html"),
-        ("TW", "Taiwan", "taiwan.html"),
-        ("KZ", "Kazakhstan", "kazakhstan.html"),
-        ("UZ", "Uzbekistan", "uzbekistan.html"),
-        ("EG", "Egypt", "egypt.html"),
-        ("NG", "Nigeria", "nigeria.html"),
-    ]
+    all_countries = [(scope.id, scope.name_en, scope.html_file) for scope in all_scopes()]
     nav_links = []
     for cc, cname, cfile in all_countries:
         cls = 'nav-link active' if cc == country_code else 'nav-link'

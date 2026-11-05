@@ -17,6 +17,7 @@ from dashboard_summary_utils import (
     write_canonical_data_first_frame,
 )
 from country_primer.source_health import write_source_health_report
+from country_primer.scopes import all_scopes
 
 OUTPUT = Path("output")
 ACCENT = "#990f3d"
@@ -2079,26 +2080,7 @@ window.CP_LW_CHARTS = Object.assign(window.CP_LW_CHARTS || {{}}, {specs_json});
 }})();
 </script>"""
 
-COUNTRY_META: dict[str, dict[str, str]] = {
-    "HU": {"name": "Hungary", "name_zh": "匈牙利", "file": "hungary.html"},
-    "PL": {"name": "Poland", "name_zh": "波兰", "file": "poland.html"},
-    "CZ": {"name": "Czechia", "name_zh": "捷克", "file": "czechia.html"},
-    "RO": {"name": "Romania", "name_zh": "罗马尼亚", "file": "romania.html"},
-    "CN": {"name": "China", "name_zh": "中国", "file": "china.html"},
-    "EA": {"name": "Euro Area", "name_zh": "欧元区", "file": "euro_area.html"},
-    "JP": {"name": "Japan", "name_zh": "日本", "file": "japan.html"},
-    "ZA": {"name": "South Africa", "name_zh": "南非", "file": "south_africa.html"},
-    "UK": {"name": "United Kingdom", "name_zh": "英国", "file": "uk.html"},
-    "US": {"name": "United States", "name_zh": "美国", "file": "us.html"},
-    "TR": {"name": "Turkey", "name_zh": "土耳其", "file": "turkey.html"},
-    "HK": {"name": "Hong Kong", "name_zh": "中国香港", "file": "hong_kong.html"},
-    "KR": {"name": "South Korea", "name_zh": "韩国", "file": "south_korea.html"},
-    "TW": {"name": "Taiwan", "name_zh": "中国台湾", "file": "taiwan.html"},
-    "KZ": {"name": "Kazakhstan", "name_zh": "哈萨克斯坦", "file": "kazakhstan.html"},
-    "UZ": {"name": "Uzbekistan", "name_zh": "乌兹别克斯坦", "file": "uzbekistan.html"},
-    "EG": {"name": "Egypt", "name_zh": "埃及", "file": "egypt.html"},
-    "NG": {"name": "Nigeria", "name_zh": "尼日利亚", "file": "nigeria.html"},
-}
+COUNTRY_META: dict[str, dict[str, str]] = {s.id: {"name": s.name_en, "name_zh": s.name_zh, "file": s.html_file} for s in all_scopes()}
 
 
 def render_html(

@@ -1,5 +1,5 @@
 # Deepdive views: tables and charts assembled ONLY from series already in each
-# scope's canonical frame. A row, chart or KPI whose inputs are missing is not
+# scope's canonical frame (located through config/scopes.yaml). A row, chart or KPI whose inputs are missing is not
 # rendered — there are no defaults, offsets, coefficients or hand-typed values.
 #
 # Row keys:
@@ -13,26 +13,6 @@
 #   real_wage     {wage: <wage YoY id>, cpi: <CPI YoY id>} derived wage − CPI on matching months
 
 version: 1
-
-frames:
-  US: us_canonical_frame.json
-  UK: uk_canonical_frame.json
-  EA: euro_area_canonical_frame.json
-  JP: japan_canonical_frame.json
-  CN: china_canonical_frame.json
-  ZA: south_africa_canonical_frame.json
-  TR: turkey_canonical_frame.json
-  HK: hong_kong_canonical_frame.json
-  KR: south_korea_canonical_frame.json
-  TW: taiwan_canonical_frame.json
-  KZ: kazakhstan_canonical_frame.json
-  UZ: uzbekistan_canonical_frame.json
-  EG: egypt_canonical_frame.json
-  NG: nigeria_canonical_frame.json
-  HU: cee_canonical_frame.json
-  PL: cee_canonical_frame.json
-  CZ: cee_canonical_frame.json
-  RO: cee_canonical_frame.json
 
 # Scopes whose earlier inflation deepdive was synthetic. US, EA and CEE-4 keep
 # their existing deepdives, which are built from real component series.

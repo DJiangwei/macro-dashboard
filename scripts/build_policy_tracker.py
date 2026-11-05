@@ -24,268 +24,45 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from macro_workbench import TAYLOR_PARAMETERS as TAYLOR_REFERENCE  # noqa: E402  (model parameters)
+from country_primer.scopes import all_scopes
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
 
-COUNTRY_NAV = [
-    ("HU", "Hungary", "匈牙利", "hungary.html"),
-    ("PL", "Poland", "波兰", "poland.html"),
-    ("CZ", "Czechia", "捷克", "czechia.html"),
-    ("RO", "Romania", "罗马尼亚", "romania.html"),
-    ("CN", "China", "中国", "china.html"),
-    ("EA", "Euro Area", "欧元区", "euro_area.html"),
-    ("JP", "Japan", "日本", "japan.html"),
-    ("ZA", "South Africa", "南非", "south_africa.html"),
-    ("UK", "United Kingdom", "英国", "uk.html"),
-    ("US", "United States", "美国", "us.html"),
-    ("TR", "Turkey", "土耳其", "turkey.html"),
-    ("HK", "Hong Kong", "中国香港", "hong_kong.html"),
-    ("KR", "South Korea", "韩国", "south_korea.html"),
-    ("TW", "Taiwan", "中国台湾", "taiwan.html"),
-    ("KZ", "Kazakhstan", "哈萨克斯坦", "kazakhstan.html"),
-    ("UZ", "Uzbekistan", "乌兹别克斯坦", "uzbekistan.html"),
-    ("EG", "Egypt", "埃及", "egypt.html"),
-    ("NG", "Nigeria", "尼日利亚", "nigeria.html"),
-]
+COUNTRY_NAV = [(s.id, s.name_en, s.name_zh, s.html_file) for s in all_scopes()]
 
 # Static metadata for all 18 economies
-ECONOMY_METADATA = {
-    "US": {
-        "flag": "🇺🇸",
-        "name_en": "United States",
-        "name_zh": "美国",
-        "region": "dm",
-        "region_en": "Developed Markets (G4)",
-        "region_zh": "发达成体系 (G4)",
-        "cb_name_en": "Federal Reserve (Fed)",
-        "cb_name_zh": "美联储 (Federal Reserve)",
-        "cb_short": "FED",
-        "policy_tool_en": "Fed Funds Target Upper",
-        "policy_tool_zh": "联邦基金利率目标上限",
-    },
-    "EA": {
-        "flag": "🇪🇺",
-        "name_en": "Euro Area",
-        "name_zh": "欧元区",
-        "region": "dm",
-        "region_en": "Developed Markets (G4)",
-        "region_zh": "发达成体系 (G4)",
-        "cb_name_en": "European Central Bank (ECB)",
-        "cb_name_zh": "欧洲中央银行 (ECB)",
-        "cb_short": "ECB",
-        "policy_tool_en": "Deposit Facility Rate (DFR)",
-        "policy_tool_zh": "存款便利利率 (DFR)",
-    },
-    "UK": {
-        "flag": "🇬🇧",
-        "name_en": "United Kingdom",
-        "name_zh": "英国",
-        "region": "dm",
-        "region_en": "Developed Markets (G4)",
-        "region_zh": "发达成体系 (G4)",
-        "cb_name_en": "Bank of England (BoE)",
-        "cb_name_zh": "英格兰银行 (BoE)",
-        "cb_short": "BOE",
-        "policy_tool_en": "Official Bank Rate",
-        "policy_tool_zh": "官方银行基准利率",
-    },
-    "JP": {
-        "flag": "🇯🇵",
-        "name_en": "Japan",
-        "name_zh": "日本",
-        "region": "dm",
-        "region_en": "Developed Markets (G4)",
-        "region_zh": "发达成体系 (G4)",
-        "cb_name_en": "Bank of Japan (BoJ)",
-        "cb_name_zh": "日本银行 (BoJ)",
-        "cb_short": "BOJ",
-        "policy_tool_en": "Uncollateralized O/N Call Rate Target",
-        "policy_tool_zh": "无担保隔夜拆借利率目标",
-    },
-    "CN": {
-        "flag": "🇨🇳",
-        "name_en": "China",
-        "name_zh": "中国",
-        "region": "em",
-        "region_en": "Major Emerging Markets",
-        "region_zh": "重要新兴市场",
-        "cb_name_en": "People's Bank of China (PBC)",
-        "cb_name_zh": "中国人民银行 (PBC)",
-        "cb_short": "PBC",
-        "policy_tool_en": "1Y Loan Prime Rate (LPR)",
-        "policy_tool_zh": "一年期贷款市场报价利率 (1Y LPR)",
-    },
-    "TR": {
-        "flag": "🇹🇷",
-        "name_en": "Turkey",
-        "name_zh": "土耳其",
-        "region": "em",
-        "region_en": "Major Emerging Markets",
-        "region_zh": "重要新兴市场",
-        "cb_name_en": "Central Bank of the Republic of Turkey (TCMB)",
-        "cb_name_zh": "土耳其共和国中央银行 (TCMB)",
-        "cb_short": "TCMB",
-        "policy_tool_en": "1-Week Repo Auction Rate",
-        "policy_tool_zh": "一周回购拍卖利率 (1-Week Repo)",
-    },
-    "ZA": {
-        "flag": "🇿🇦",
-        "name_en": "South Africa",
-        "name_zh": "南非",
-        "region": "em",
-        "region_en": "Major Emerging Markets",
-        "region_zh": "重要新兴市场",
-        "cb_name_en": "South African Reserve Bank (SARB)",
-        "cb_name_zh": "南非储备银行 (SARB)",
-        "cb_short": "SARB",
-        "policy_tool_en": "SARB Main Repo Rate",
-        "policy_tool_zh": "SARB 官方回购基准利率",
-    },
-    "KR": {
-        "flag": "🇰🇷",
-        "name_en": "South Korea",
-        "name_zh": "韩国",
-        "region": "em",
-        "region_en": "Major Emerging Markets",
-        "region_zh": "重要新兴市场",
-        "cb_name_en": "Bank of Korea (BOK)",
-        "cb_name_zh": "韩国银行 (BOK)",
-        "cb_short": "BOK",
-        "policy_tool_en": "BOK Base Rate",
-        "policy_tool_zh": "韩国银行基准利率",
-    },
-    "TW": {
-        "flag": "🇹🇼",
-        "name_en": "Taiwan",
-        "name_zh": "中国台湾",
-        "region": "em",
-        "region_en": "Major Emerging Markets",
-        "region_zh": "重要新兴市场",
-        "cb_name_en": "Central Bank of the Republic of China (CBC)",
-        "cb_name_zh": "中央银行 (CBC)",
-        "cb_short": "CBC",
-        "policy_tool_en": "CBC Discount Rate",
-        "policy_tool_zh": "重贴现率 (Discount Rate)",
-    },
-    "HU": {
-        "flag": "🇭🇺",
-        "name_en": "Hungary",
-        "name_zh": "匈牙利",
-        "region": "cee",
-        "region_en": "CEE-4 Economies",
-        "region_zh": "中东欧核心四国",
-        "cb_name_en": "Magyar Nemzeti Bank (MNB)",
-        "cb_name_zh": "匈牙利国家银行 (MNB)",
-        "cb_short": "MNB",
-        "policy_tool_en": "MNB Base Rate",
-        "policy_tool_zh": "MNB 基准利率 (Base Rate)",
-    },
-    "PL": {
-        "flag": "🇵🇱",
-        "name_en": "Poland",
-        "name_zh": "波兰",
-        "region": "cee",
-        "region_en": "CEE-4 Economies",
-        "region_zh": "中东欧核心四国",
-        "cb_name_en": "Narodowy Bank Polski (NBP)",
-        "cb_name_zh": "波兰国家银行 (NBP)",
-        "cb_short": "NBP",
-        "policy_tool_en": "NBP Reference Rate",
-        "policy_tool_zh": "NBP 参考基准利率",
-    },
-    "CZ": {
-        "flag": "🇨🇿",
-        "name_en": "Czechia",
-        "name_zh": "捷克",
-        "region": "cee",
-        "region_en": "CEE-4 Economies",
-        "region_zh": "中东欧核心四国",
-        "cb_name_en": "Czech National Bank (CNB)",
-        "cb_name_zh": "捷克国家银行 (CNB)",
-        "cb_short": "CNB",
-        "policy_tool_en": "2-Week Repo Rate",
-        "policy_tool_zh": "两周回购基准利率 (2W Repo)",
-    },
-    "RO": {
-        "flag": "🇷🇴",
-        "name_en": "Romania",
-        "name_zh": "罗马尼亚",
-        "region": "cee",
-        "region_en": "CEE-4 Economies",
-        "region_zh": "中东欧核心四国",
-        "cb_name_en": "National Bank of Romania (BNR)",
-        "cb_name_zh": "罗马尼亚国家银行 (BNR)",
-        "cb_short": "BNR",
-        "policy_tool_en": "Monetary Policy Rate",
-        "policy_tool_zh": "货币政策基准利率",
-    },
-    "KZ": {
-        "flag": "🇰🇿",
-        "name_en": "Kazakhstan",
-        "name_zh": "哈萨克斯坦",
-        "region": "frontier",
-        "region_en": "Frontier & Regional Anchors",
-        "region_zh": "前沿与离岸锚点",
-        "cb_name_en": "National Bank of Kazakhstan (NBK)",
-        "cb_name_zh": "哈萨克斯坦国家银行 (NBK)",
-        "cb_short": "NBK",
-        "policy_tool_en": "NBK Base Rate",
-        "policy_tool_zh": "NBK 基准利率",
-    },
-    "UZ": {
-        "flag": "🇺🇿",
-        "name_en": "Uzbekistan",
-        "name_zh": "乌兹别克斯坦",
-        "region": "frontier",
-        "region_en": "Frontier & Regional Anchors",
-        "region_zh": "前沿与离岸锚点",
-        "cb_name_en": "Central Bank of Uzbekistan (CBU)",
-        "cb_name_zh": "乌兹别克斯坦中央银行 (CBU)",
-        "cb_short": "CBU",
-        "policy_tool_en": "CBU Policy Rate",
-        "policy_tool_zh": "CBU 政策利率",
-    },
-    "EG": {
-        "flag": "🇪🇬",
-        "name_en": "Egypt",
-        "name_zh": "埃及",
-        "region": "frontier",
-        "region_en": "Frontier & Regional Anchors",
-        "region_zh": "前沿与离岸锚点",
-        "cb_name_en": "Central Bank of Egypt (CBE)",
-        "cb_name_zh": "埃及中央银行 (CBE)",
-        "cb_short": "CBE",
-        "policy_tool_en": "Overnight Deposit Rate",
-        "policy_tool_zh": "隔夜存款基准利率",
-    },
-    "NG": {
-        "flag": "🇳🇬",
-        "name_en": "Nigeria",
-        "name_zh": "尼日利亚",
-        "region": "frontier",
-        "region_en": "Frontier & Regional Anchors",
-        "region_zh": "前沿与离岸锚点",
-        "cb_name_en": "Central Bank of Nigeria (CBN)",
-        "cb_name_zh": "尼日利亚中央银行 (CBN)",
-        "cb_short": "CBN",
-        "policy_tool_en": "Monetary Policy Rate (MPR)",
-        "policy_tool_zh": "货币政策基准利率 (MPR)",
-    },
-    "HK": {
-        "flag": "🇭🇰",
-        "name_en": "Hong Kong",
-        "name_zh": "中国香港",
-        "region": "frontier",
-        "region_en": "Frontier & Regional Anchors",
-        "region_zh": "前沿与离岸锚点",
-        "cb_name_en": "Hong Kong Monetary Authority (HKMA)",
-        "cb_name_zh": "香港金融管理局 (HKMA)",
-        "cb_short": "HKMA",
-        "policy_tool_en": "HKMA Base Rate (Fed Anchor)",
-        "policy_tool_zh": "金管局基本利率 (盯住美联储)",
-    },
+REGION_LABELS = {
+    "dm": ("Developed Markets (G4)", "发达成体系 (G4)"),
+    "em": ("Major Emerging Markets", "重要新兴市场"),
+    "cee": ("CEE-4 Economies", "中东欧核心四国"),
+    "frontier": ("Frontier & Regional Anchors", "前沿与离岸锚点"),
 }
+
+
+def _economy_metadata() -> dict[str, dict[str, str]]:
+    """Display metadata per scope, from config/scopes.yaml."""
+    meta: dict[str, dict[str, str]] = {}
+    for scope in all_scopes():
+        cb = scope.central_bank
+        region_en, region_zh = REGION_LABELS.get(scope.region, (scope.region, scope.region))
+        meta[scope.id] = {
+            "flag": scope.flag,
+            "name_en": scope.name_en,
+            "name_zh": scope.name_zh,
+            "region": scope.region,
+            "region_en": region_en,
+            "region_zh": region_zh,
+            "cb_name_en": (cb.get("name") or {}).get("en", scope.institution),
+            "cb_name_zh": (cb.get("name") or {}).get("zh", scope.institution),
+            "cb_short": scope.institution.upper(),
+            "policy_tool_en": (cb.get("policy_tool") or {}).get("en", "Policy rate"),
+            "policy_tool_zh": (cb.get("policy_tool") or {}).get("zh", "政策利率"),
+        }
+    return meta
+
+
+ECONOMY_METADATA = _economy_metadata()
 
 # 60+ Scheduled 2026/2027 Central Bank Meetings across all 18 economies
 def load_macro_workbench_summary() -> dict:
@@ -302,25 +79,10 @@ def load_macro_workbench_summary() -> dict:
 
 def load_historical_policy_cycles() -> dict:
     """Extract monthly historical nominal & real policy rate trajectories for the 18 economies."""
+    # Nominal series: the market rate where a scope declares one (US EFFR), else its policy rate.
     frame_map = {
-        "US": ("us_canonical_frame.json", "effective_fed_funds", "real_policy_rate"),
-        "EA": ("euro_area_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "UK": ("uk_canonical_frame.json", "bank_rate", "real_policy_rate"),
-        "JP": ("japan_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "CN": ("china_canonical_frame.json", "lpr_1y_akshare", "real_policy_rate"),
-        "TR": ("turkey_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "ZA": ("south_africa_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "KR": ("south_korea_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "TW": ("taiwan_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "HK": ("hong_kong_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "KZ": ("kazakhstan_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "UZ": ("uzbekistan_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "EG": ("egypt_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "NG": ("nigeria_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "HU": ("cee_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "PL": ("cee_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "CZ": ("cee_canonical_frame.json", "policy_rate", "real_policy_rate"),
-        "RO": ("cee_canonical_frame.json", "policy_rate", "real_policy_rate"),
+        scope.id: (scope.canonical_file, scope.market_policy_rate[0], "real_policy_rate")
+        for scope in all_scopes()
     }
     frame_cache: dict = {}
     out: dict = {}
@@ -381,25 +143,11 @@ def load_historical_policy_cycles() -> dict:
 # --------------------------------------------------------------------------
 STALE_POLICY_DAYS = 120
 
+# Canonical frame, policy-rate candidates and CPI YoY candidates per scope
+# (roles in config/scopes.yaml; first series with observations wins).
 POLICY_INPUTS = {
-    "US": ("us_canonical_frame.json", ["fed_target_upper"], ["cpi_inflation"]),
-    "EA": ("euro_area_canonical_frame.json", ["policy_rate"], ["hicp_inflation"]),
-    "UK": ("uk_canonical_frame.json", ["bank_rate"], ["cpi_yoy"]),
-    "JP": ("japan_canonical_frame.json", ["policy_rate"], ["cpi_inflation"]),
-    "CN": ("china_canonical_frame.json", ["lpr_1y_akshare"], ["cpi_yoy_akshare"]),
-    "ZA": ("south_africa_canonical_frame.json", ["policy_rate"], ["cpi_inflation"]),
-    "TR": ("turkey_canonical_frame.json", ["policy_rate"], ["cpi_inflation"]),
-    "KR": ("south_korea_canonical_frame.json", ["policy_rate"], ["cpi_inflation"]),
-    "TW": ("taiwan_canonical_frame.json", ["policy_rate", "collateral_rate"], ["cpi_inflation"]),
-    "HK": ("hong_kong_canonical_frame.json", ["policy_rate"], ["cpi_inflation"]),
-    "KZ": ("kazakhstan_canonical_frame.json", ["policy_rate"], ["cpi_inflation"]),
-    "UZ": ("uzbekistan_canonical_frame.json", ["policy_rate"], ["cpi_inflation"]),
-    "EG": ("egypt_canonical_frame.json", ["policy_rate"], ["cpi_inflation"]),
-    "NG": ("nigeria_canonical_frame.json", ["policy_rate"], ["cpi_inflation"]),
-    "HU": ("cee_canonical_frame.json", ["policy_rate"], ["cpi_yoy"]),
-    "PL": ("cee_canonical_frame.json", ["policy_rate"], ["cpi_yoy"]),
-    "CZ": ("cee_canonical_frame.json", ["policy_rate"], ["cpi_yoy"]),
-    "RO": ("cee_canonical_frame.json", ["policy_rate"], ["cpi_yoy"]),
+    scope.id: (scope.canonical_file, list(scope.role("policy_rate")), list(scope.role("cpi_yoy")))
+    for scope in all_scopes()
 }
 
 

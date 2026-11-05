@@ -20,16 +20,12 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from country_primer.scopes import all_scopes, get_scope
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
 CONFIG = ROOT / "config" / "deepdive_views.yaml"
-SLUGS = {
-    "US": "us", "UK": "uk", "EA": "euro_area", "JP": "japan", "CN": "china", "ZA": "south_africa",
-    "TR": "turkey", "HK": "hong_kong", "KR": "south_korea", "TW": "taiwan", "KZ": "kazakhstan",
-    "UZ": "uzbekistan", "EG": "egypt", "NG": "nigeria", "HU": "hungary", "PL": "poland",
-    "CZ": "czechia", "RO": "romania",
-}
+SLUGS = {s.id: s.slug for s in all_scopes()}
 SAHM_THRESHOLD = 0.5  # Sahm (2019)
 
 
@@ -39,8 +35,9 @@ def load_config() -> dict[str, Any]:
 
 
 def _load_scope_series(code: str, config: dict[str, Any], cache: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    frame_name = (config.get("frames") or {}).get(code)
-    if not frame_name:
+    try:
+        frame_name = get_scope(code).canonical_file
+    except KeyError:
         return {}
     if frame_name not in cache:
         path = OUTPUT / frame_name

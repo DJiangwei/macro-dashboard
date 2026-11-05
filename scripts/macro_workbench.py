@@ -12,6 +12,7 @@ import re
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from country_primer.scopes import all_scopes, data_first_scopes  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,61 +25,12 @@ FRESHNESS_JSON = OUTPUT / "freshness_audit.json"
 BRIEFING_MD = ROOT / "MACRO_WORKBENCH_BRIEFING.md"
 BRIEFING_OUTPUT_MD = OUTPUT / "macro_briefing.md"
 
-DASHBOARD_TO_CODE = {
-    "Hungary": "HU",
-    "Poland": "PL",
-    "Czechia": "CZ",
-    "Romania": "RO",
-    "China": "CN",
-    "Euro Area": "EA",
-    "Japan": "JP",
-    "South Africa": "ZA",
-    "United Kingdom": "UK",
-    "United States": "US",
-    "Turkey": "TR",
-    "Hong Kong": "HK",
-    "South Korea": "KR",
-    "Taiwan": "TW",
-    "Kazakhstan": "KZ",
-    "Uzbekistan": "UZ",
-    "Egypt": "EG",
-    "Nigeria": "NG",
-}
+DASHBOARD_TO_CODE = {s.name_en: s.id for s in all_scopes()}
 CODE_TO_DASHBOARD = {code: name for name, code in DASHBOARD_TO_CODE.items()}
 
-DATA_FIRST_SUMMARIES = {
-    "CN": "china_dashboard_summary.json",
-    "EA": "euro_area_dashboard_summary.json",
-    "JP": "japan_dashboard_summary.json",
-    "ZA": "south_africa_dashboard_summary.json",
-    "UK": "uk_dashboard_summary.json",
-    "US": "us_dashboard_summary.json",
-    "TR": "turkey_dashboard_summary.json",
-    "HK": "hong_kong_dashboard_summary.json",
-    "KR": "south_korea_dashboard_summary.json",
-    "TW": "taiwan_dashboard_summary.json",
-    "KZ": "kazakhstan_dashboard_summary.json",
-    "UZ": "uzbekistan_dashboard_summary.json",
-    "EG": "egypt_dashboard_summary.json",
-    "NG": "nigeria_dashboard_summary.json",
-}
+DATA_FIRST_SUMMARIES = {s.id: s.summary_file for s in data_first_scopes()}
 
-DATA_FIRST_CANONICAL = {
-    "CN": "china_canonical_frame.json",
-    "EA": "euro_area_canonical_frame.json",
-    "JP": "japan_canonical_frame.json",
-    "ZA": "south_africa_canonical_frame.json",
-    "UK": "uk_canonical_frame.json",
-    "US": "us_canonical_frame.json",
-    "TR": "turkey_canonical_frame.json",
-    "HK": "hong_kong_canonical_frame.json",
-    "KR": "south_korea_canonical_frame.json",
-    "TW": "taiwan_canonical_frame.json",
-    "KZ": "kazakhstan_canonical_frame.json",
-    "UZ": "uzbekistan_canonical_frame.json",
-    "EG": "egypt_canonical_frame.json",
-    "NG": "nigeria_canonical_frame.json",
-}
+DATA_FIRST_CANONICAL = {s.id: s.canonical_file for s in data_first_scopes()}
 
 DATA_FIRST_SIGNAL_MAP = {
     "CN": {

@@ -15,6 +15,8 @@ from pathlib import Path
 import pytest
 import yaml
 
+from country_primer.scopes import data_first_scopes
+
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 OUTPUT = ROOT / "output"
@@ -114,11 +116,7 @@ GROWTH_CONCEPTS = {
 }
 # Flow changes in employment are an accepted proxy for employment growth.
 GROWTH_LEVEL_ALLOWLIST = {("US", "nonfarm_payrolls_change"), ("UK", "paye_payrolled_employees_mom_change")}
-SCOPE_FRAMES = {
-    "CN": "china", "UK": "uk", "US": "us", "JP": "japan", "ZA": "south_africa", "EA": "euro_area", "TR": "turkey",
-    "HK": "hong_kong", "KR": "south_korea", "TW": "taiwan", "KZ": "kazakhstan", "UZ": "uzbekistan",
-    "EG": "egypt", "NG": "nigeria",
-}
+SCOPE_FRAMES = {scope.id: scope.slug for scope in data_first_scopes()}
 
 
 def test_growth_concepts_are_not_mapped_to_level_series():

@@ -34,23 +34,23 @@ if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
 from country_primer.data_quality import assess_series_quality  # noqa: E402
+from country_primer.scopes import data_first_scopes  # noqa: E402
 
-# (scope, canonical frame, policy-rate candidates, CPI YoY candidates, section)
+# Section of the derived real-rate chart; scopes not listed use monetary_financial.
+REAL_RATE_SECTION = {"CN": "money_credit"}
+
+# (scope, canonical frame, policy-rate candidates, CPI YoY candidates, section),
+# from the roles in config/scopes.yaml. The market rate is used where a scope
+# declares one (US: EFFR rather than the target range).
 REAL_RATE_INPUTS: list[tuple[str, str, list[str], list[str], str]] = [
-    ("US", "us_canonical_frame.json", ["effective_fed_funds", "daily_fed_funds"], ["cpi_inflation"], "monetary_financial"),
-    ("EA", "euro_area_canonical_frame.json", ["policy_rate"], ["hicp_inflation", "cpi_inflation"], "monetary_financial"),
-    ("UK", "uk_canonical_frame.json", ["bank_rate"], ["cpi_yoy", "cpi_inflation"], "monetary_financial"),
-    ("JP", "japan_canonical_frame.json", ["policy_rate"], ["cpi_inflation"], "monetary_financial"),
-    ("CN", "china_canonical_frame.json", ["lpr_1y_akshare", "policy_rate"], ["cpi_yoy_akshare", "cpi_inflation"], "money_credit"),
-    ("ZA", "south_africa_canonical_frame.json", ["policy_rate"], ["cpi_inflation"], "monetary_financial"),
-    ("TR", "turkey_canonical_frame.json", ["policy_rate"], ["cpi_inflation"], "monetary_financial"),
-    ("KR", "south_korea_canonical_frame.json", ["policy_rate"], ["cpi_inflation"], "monetary_financial"),
-    ("TW", "taiwan_canonical_frame.json", ["policy_rate", "collateral_rate"], ["cpi_inflation"], "monetary_financial"),
-    ("HK", "hong_kong_canonical_frame.json", ["policy_rate"], ["cpi_inflation"], "monetary_financial"),
-    ("KZ", "kazakhstan_canonical_frame.json", ["policy_rate"], ["cpi_inflation"], "monetary_financial"),
-    ("UZ", "uzbekistan_canonical_frame.json", ["policy_rate"], ["cpi_inflation"], "monetary_financial"),
-    ("EG", "egypt_canonical_frame.json", ["policy_rate"], ["cpi_inflation"], "monetary_financial"),
-    ("NG", "nigeria_canonical_frame.json", ["policy_rate"], ["cpi_inflation"], "monetary_financial"),
+    (
+        scope.id,
+        scope.canonical_file,
+        list(scope.market_policy_rate),
+        list(scope.role("cpi_yoy")),
+        REAL_RATE_SECTION.get(scope.id, "monetary_financial"),
+    )
+    for scope in data_first_scopes()
 ]
 
 

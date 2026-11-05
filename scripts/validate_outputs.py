@@ -7,55 +7,18 @@ import re
 from collections import Counter
 from datetime import date
 from pathlib import Path
+from country_primer.scopes import all_scopes, data_first_scopes
 
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
-COUNTRY_FILES = {
-    "HU": "hungary.html",
-    "PL": "poland.html",
-    "CZ": "czechia.html",
-    "RO": "romania.html",
-    "CN": "china.html",
-    "EA": "euro_area.html",
-    "JP": "japan.html",
-    "ZA": "south_africa.html",
-    "UK": "uk.html",
-    "US": "us.html",
-    "TR": "turkey.html",
-    "HK": "hong_kong.html",
-    "KR": "south_korea.html",
-    "TW": "taiwan.html",
-    "KZ": "kazakhstan.html",
-    "UZ": "uzbekistan.html",
-    "EG": "egypt.html",
-    "NG": "nigeria.html",
-}
-DATA_FIRST_CODES = {"CN", "EA", "JP", "ZA", "UK", "US", "TR", "HK", "KR", "TW", "KZ", "UZ", "EG", "NG"}
-DATA_FIRST_NAMES = ("china", "euro_area", "japan", "south_africa", "uk", "us", "turkey", "hong_kong", "south_korea", "taiwan", "kazakhstan", "uzbekistan", "egypt", "nigeria")
+COUNTRY_FILES = {s.id: s.html_file for s in all_scopes()}
+DATA_FIRST_CODES = {s.id for s in data_first_scopes()}
+DATA_FIRST_NAMES = tuple(s.slug for s in data_first_scopes())
 
 # Display names as they appear in output/freshness_audit.json's "dashboard"
 # field and in the archive index cards' <h2> headings.
-DASHBOARD_DISPLAY_NAMES = {
-    "HU": "Hungary",
-    "PL": "Poland",
-    "CZ": "Czechia",
-    "RO": "Romania",
-    "CN": "China",
-    "EA": "Euro Area",
-    "JP": "Japan",
-    "ZA": "South Africa",
-    "UK": "United Kingdom",
-    "US": "United States",
-    "TR": "Turkey",
-    "HK": "Hong Kong",
-    "KR": "South Korea",
-    "TW": "Taiwan",
-    "KZ": "Kazakhstan",
-    "UZ": "Uzbekistan",
-    "EG": "Egypt",
-    "NG": "Nigeria",
-}
+DASHBOARD_DISPLAY_NAMES = {s.id: s.name_en for s in all_scopes()}
 
 # Transforms that step back a fixed number of calendar periods from a base
 # observation (yoy/qoq/mom/pct_change/diff) -- see build_us_dashboard.py and

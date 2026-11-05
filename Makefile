@@ -87,27 +87,7 @@ proxy-report-live:
 	$(UV) run python scripts/proxy_report.py --details --mode live
 
 publish-check:
-	curl -L https://djiangwei.github.io/macro-dashboard/ | rg -n "Macro Dashboard|Hungary|dashboard_archive_summary.json"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/index.html | rg -n "Macro Dashboard|china.html|euro_area.html|japan.html|south_africa.html|uk.html|us.html|turkey.html|hong_kong.html|south_korea.html|taiwan.html|kazakhstan.html|uzbekistan.html|egypt.html|nigeria.html"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/hungary.html | rg -n "Hungary Dashboard|Core 48|chart-financial_stability-bank_car"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/china.html | rg -n "China Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/euro_area.html | rg -n "Euro Area Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/uk.html | rg -n "UK Dashboard|Core 48|Official Data Gaps|chart-real_gdp_qoq"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/us.html | rg -n "US Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/japan.html | rg -n "Japan Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/south_africa.html | rg -n "South Africa Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/turkey.html | rg -n "Turkey Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/hong_kong.html | rg -n "Hong Kong Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/south_korea.html | rg -n "South Korea Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/taiwan.html | rg -n "Taiwan Dashboard|Core 48|Official Data Gaps|chart-real_gdp_yoy"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/kazakhstan.html | rg -n "Kazakhstan Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/uzbekistan.html | rg -n "Uzbekistan Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/egypt.html | rg -n "Egypt Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/nigeria.html | rg -n "Nigeria Dashboard|Core 48|Official Data Gaps|chart-real_gdp_growth"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/chart_studio.html | rg -n "Macro Chart Studio|chart_studio_catalog.json"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/chart_studio_catalog.json | rg -n "countries|series"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/core_coverage_matrix.json | rg -n "core-coverage-v1|concept_count|priorities"
-	curl -L https://djiangwei.github.io/macro-dashboard/output/source_health.json | rg -n "source-health-v1|circuit_breaker|countries"
+	$(UV) run python scripts/publish_smoke.py
 
 publish:
 	@if [ -z "$(MSG)" ]; then echo 'Usage: make publish MSG="commit message"'; exit 2; fi

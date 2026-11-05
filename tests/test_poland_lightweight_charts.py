@@ -2,6 +2,8 @@ from pathlib import Path
 import json
 import re
 
+from country_primer.scopes import all_scopes
+
 
 ROOT = Path(__file__).resolve().parents[1]
 POLAND_HTML = ROOT / "output" / "poland.html"
@@ -75,26 +77,7 @@ def test_poland_cpi_band_bounds_unit_scaling_and_thousands_formatter():
                 assert abs(float(val)) < 100_000, f"Unscaled large value {val} in {cid}"
 
 
-ALL_18_COUNTRY_FILES = [
-    "hungary.html",
-    "poland.html",
-    "czechia.html",
-    "romania.html",
-    "china.html",
-    "euro_area.html",
-    "japan.html",
-    "south_africa.html",
-    "uk.html",
-    "us.html",
-    "turkey.html",
-    "hong_kong.html",
-    "south_korea.html",
-    "taiwan.html",
-    "kazakhstan.html",
-    "uzbekistan.html",
-    "egypt.html",
-    "nigeria.html",
-]
+ALL_18_COUNTRY_FILES = [scope.html_file for scope in all_scopes()]
 
 
 def test_all_18_countries_use_lightweight_charts_and_thousands_formatting():

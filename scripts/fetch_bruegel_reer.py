@@ -17,6 +17,7 @@ import zipfile
 from typing import Any
 
 import pandas as pd
+from country_primer.scopes import all_scopes
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("fetch_bruegel_reer")
@@ -27,26 +28,9 @@ OUTPUT_JSON = DATA_DIR / "bruegel_reer_monthly.json"
 
 DEFAULT_URL = "https://www.bruegel.org/sites/default/files/2026-10/REER_database_ver11Oct2026.zip"
 
-COUNTRY_MAPPING = {
-    "US": "US",
-    "EA": "EA12",
-    "UK": "GB",
-    "JP": "JP",
-    "CN": "CN",
-    "ZA": "ZA",
-    "PL": "PL",
-    "CZ": "CZ",
-    "HU": "HU",
-    "RO": "RO",
-    "HK": "HK",
-    "TW": "TW",
-    "KR": "KR",
-    "TR": "TR",
-    "EG": "EG",
-    "NG": "NG",
-    "KZ": "KZ",
-    "UZ": "UZ",
-}
+# Bruegel uses ISO2 country codes except for these scopes.
+BRUEGEL_CODE_OVERRIDES = {"EA": "EA12", "UK": "GB"}
+COUNTRY_MAPPING = {s.id: BRUEGEL_CODE_OVERRIDES.get(s.id, s.id) for s in all_scopes()}
 
 
 def _date_conv(val: Any) -> str:
