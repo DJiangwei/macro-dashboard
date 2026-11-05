@@ -38,11 +38,12 @@ def test_negotiated_wages_use_the_ecb_inw_dataflow() -> None:
     assert not hits, hits
 
 
-def test_euro_area_series_avoid_frozen_ea20_aggregates() -> None:
+def test_euro_area_series_use_the_ea21_aggregate() -> None:
+    # EA20 froze for EA20_FROZEN after 2025; every series is on EA21 so the page has one composition.
     config = yaml.safe_load((ROOT / "config/euro_area_indicators.yaml").read_text(encoding="utf-8"))
-    frozen = [
+    ea20 = [
         spec["id"]
         for spec in config["indicators"]
-        if spec.get("dataset") in EA20_FROZEN and (spec.get("filters") or {}).get("geo") == "EA20"
+        if {"EA20", "EXT_EA20"} & {str(v) for v in (spec.get("filters") or {}).values()}
     ]
-    assert not frozen, f"EA20 is frozen for these datasets; use EA21: {frozen}"
+    assert not ea20, f"use EA21 (EXT_EA21 for partners): {ea20}"

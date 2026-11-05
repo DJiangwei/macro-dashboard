@@ -210,7 +210,7 @@ indicators:
     dataset: "sts_inpr_m"
     filters:
       freq: "M"
-      geo: "EA20"
+      geo: "EA21"
       indic_bt: "PRD"
       nace_r2: "B-D"
       s_adj: "CA"
@@ -219,8 +219,8 @@ indicators:
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/sts_inpr_m"
     frequency: "monthly"
     start_date: "1995"
-    caveat_en: "Industrial production excluding construction (NACE B-D) y/y; calendar adjusted."
-    caveat_zh: "剔除建筑业的工业生产同比；工作日调整口径。"
+    caveat_en: "Industrial production excluding construction (NACE B-D) y/y; calendar adjusted. Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
+    caveat_zh: "剔除建筑业的工业生产同比；工作日调整口径。欧元区21国口径（保加利亚2026年加入）；整段历史均为EA21口径。"
 
   - id: manufacturing_production_yoy
     section: production_cycle
@@ -231,7 +231,7 @@ indicators:
     dataset: "sts_inpr_m"
     filters:
       freq: "M"
-      geo: "EA20"
+      geo: "EA21"
       indic_bt: "PRD"
       nace_r2: "C"
       s_adj: "CA"
@@ -240,8 +240,8 @@ indicators:
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/sts_inpr_m"
     frequency: "monthly"
     start_date: "1995"
-    caveat_en: "Manufacturing production (NACE C) y/y; calendar adjusted."
-    caveat_zh: "制造业生产同比；工作日调整口径。"
+    caveat_en: "Manufacturing production (NACE C) y/y; calendar adjusted. Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
+    caveat_zh: "制造业生产同比；工作日调整口径。欧元区21国口径（保加利亚2026年加入）；整段历史均为EA21口径。"
 
   - id: retail_sales_volume_yoy
     section: production_cycle
@@ -252,7 +252,7 @@ indicators:
     dataset: "sts_trtu_m"
     filters:
       freq: "M"
-      geo: "EA20"
+      geo: "EA21"
       indic_bt: "VOL_SLS"
       nace_r2: "G47"
       s_adj: "CA"
@@ -261,8 +261,8 @@ indicators:
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/sts_trtu_m"
     frequency: "monthly"
     start_date: "2001"
-    caveat_en: "Volume of retail trade sales (NACE G47) y/y; calendar adjusted."
-    caveat_zh: "零售贸易销售量同比；工作日调整口径。"
+    caveat_en: "Volume of retail trade sales (NACE G47) y/y; calendar adjusted. Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
+    caveat_zh: "零售贸易销售量同比；工作日调整口径。欧元区21国口径（保加利亚2026年加入）；整段历史均为EA21口径。"
 
   - id: construction_output_yoy
     section: production_cycle
@@ -273,7 +273,7 @@ indicators:
     dataset: "sts_copr_m"
     filters:
       freq: "M"
-      geo: "EA20"
+      geo: "EA21"
       indic_bt: "PRD"
       nace_r2: "F"
       s_adj: "CA"
@@ -282,8 +282,8 @@ indicators:
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/sts_copr_m"
     frequency: "monthly"
     start_date: "1996"
-    caveat_en: "Production in construction (NACE F) y/y; calendar adjusted."
-    caveat_zh: "建筑业产出同比；工作日调整口径。"
+    caveat_en: "Production in construction (NACE F) y/y; calendar adjusted. Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
+    caveat_zh: "建筑业产出同比；工作日调整口径。欧元区21国口径（保加利亚2026年加入）；整段历史均为EA21口径。"
 
   - id: capacity_utilisation
     section: production_cycle
@@ -684,7 +684,7 @@ indicators:
     dataset: "sts_inpp_m"
     filters:
       freq: "M"
-      geo: "EA20"
+      geo: "EA21"
       indic_bt: "PRC_PRR"
       nace_r2: "B-E36"
       s_adj: "NSA"
@@ -693,8 +693,8 @@ indicators:
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/sts_inpp_m"
     frequency: "monthly"
     start_date: "2001"
-    caveat_en: "Industrial producer prices domestic market y/y (total industry excluding construction)."
-    caveat_zh: "工业生产者出厂价格国内市场同比（工业总体剔除建筑业）。"
+    caveat_en: "Industrial producer prices domestic market y/y (total industry excluding construction). Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
+    caveat_zh: "工业生产者出厂价格国内市场同比（工业总体剔除建筑业）。欧元区21国口径（保加利亚2026年加入）；整段历史均为EA21口径。"
 
   - id: spf_inflation_expectations_lt
     section: prices_costs
@@ -770,7 +770,7 @@ indicators:
     dataset: "sts_cobp_m"
     filters:
       freq: "M"
-      geo: "EA20"
+      geo: "EA21"
       cpa2_1: "CPA_F41001_41002"
       indic_bt: "BPRM_SQM"
       s_adj: "NSA"
@@ -779,8 +779,8 @@ indicators:
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/sts_cobp_m"
     frequency: "monthly"
     start_date: "2005"
-    caveat_en: "Building permits for residential buildings (useful floor area sqm) percentage change y/y."
-    caveat_zh: "住宅建筑许可使用面积同比变动百分比。"
+    caveat_en: "Building permits for residential buildings (useful floor area sqm) percentage change y/y. Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
+    caveat_zh: "住宅建筑许可使用面积同比变动百分比。欧元区21国口径（保加利亚2026年加入）；整段历史均为EA21口径。"
 
   # --- external_fx ---------------------------------------------------------
   - id: goods_trade_balance
@@ -880,7 +880,7 @@ indicators:
     dataset: "gov_10dd_edpt1"
     filters:
       freq: "A"
-      geo: "EA20"
+      geo: "EA21"
       sector: "S13"
       na_item: "B9"
       unit: "PC_GDP"
@@ -888,8 +888,8 @@ indicators:
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/gov_10dd_edpt1"
     frequency: "annual"
     start_date: "1995"
-    caveat_en: "General government net lending (+) / net borrowing (-) as % of GDP (EDP notification)."
-    caveat_zh: "广义政府净借出(+)/净借入(-)占GDP比重（过度赤字程序EDP通报口径）。"
+    caveat_en: "General government net lending (+) / net borrowing (-) as % of GDP (EDP notification). Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
+    caveat_zh: "广义政府净借出(+)/净借入(-)占GDP比重（过度赤字程序EDP通报口径）。欧元区21国口径（保加利亚2026年加入）；整段历史均为EA21口径。"
 
   - id: government_debt_gdp
     section: fiscal_sovereign
@@ -900,7 +900,7 @@ indicators:
     dataset: "gov_10q_ggdebt"
     filters:
       freq: "Q"
-      geo: "EA20"
+      geo: "EA21"
       sector: "S13"
       na_item: "GD"
       unit: "PC_GDP"
@@ -908,8 +908,8 @@ indicators:
     source_url: "https://ec.europa.eu/eurostat/databrowser/view/gov_10q_ggdebt"
     frequency: "quarterly"
     start_date: "2000"
-    caveat_en: "Government consolidated gross debt as % of GDP (Maastricht definition)."
-    caveat_zh: "广义政府合并总债务占GDP比重（马斯特里赫特定义口径）。"
+    caveat_en: "Government consolidated gross debt as % of GDP (Maastricht definition). Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
+    caveat_zh: "广义政府合并总债务占GDP比重（马斯特里赫特定义口径）。欧元区21国口径（保加利亚2026年加入）；整段历史均为EA21口径。"
 
   - id: structural_balance_gdp
     section: fiscal_sovereign
