@@ -12,7 +12,7 @@ import re
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
-from country_primer.scopes import all_scopes, data_first_scopes  # noqa: E402
+from country_primer.scopes import all_scopes, data_first_scopes, get_scope  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -244,10 +244,34 @@ def _key_series(code: str, summary: dict[str, Any]) -> dict[str, dict[str, Any]]
     return series_map
 
 
+def _default_signal_map(code: str, key_series: dict[str, Any]) -> dict[str, tuple[str, str]]:
+    """Regime signals for a scope without a curated entry: standard ids, first observed wins."""
+    try:
+        scope = get_scope(code)
+    except KeyError:
+        return {}
+    candidates = {
+        "growth": ["real_gdp_growth", "real_gdp_yoy", "industrial_production_growth"],
+        "inflation": list(scope.role("cpi_yoy")),
+        "policy": list(scope.role("policy_rate")),
+        "external": ["current_account_gdp"],
+        "fiscal": ["government_debt_gdp"],
+        "financial": list(scope.headline.indicators) if scope.headline else [],
+        "property": ["house_price_growth", "bis_real_house_prices"],
+    }
+    mapping: dict[str, tuple[str, str]] = {}
+    for dimension, ids in candidates.items():
+        series_id = next((i for i in ids if i in key_series), None)
+        if series_id:
+            mapping[dimension] = (series_id, str(key_series[series_id].get("label") or series_id))
+    return mapping
+
+
 def _data_first_signals(code: str, summary: dict[str, Any]) -> dict[str, dict[str, Any]]:
     key_series = _key_series(code, summary)
     signals: dict[str, dict[str, Any]] = {}
-    for dimension, (series_id, label) in DATA_FIRST_SIGNAL_MAP.get(code, {}).items():
+    mapping = DATA_FIRST_SIGNAL_MAP.get(code) or _default_signal_map(code, key_series)
+    for dimension, (series_id, label) in mapping.items():
         item = key_series.get(series_id)
         if not item:
             continue
@@ -281,9 +305,9 @@ def enrich_cards(cards: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return enriched
 
 
-def _regime_label(dimension: str, value: float | None, display: str, signal_id: str) -> tuple[str, float, float]:
+def _regime_label(dimension: str, value: float | None, display: str, signal_id: str) -> tuple[str, float | None, float]:
     if value is None:
-        return "insufficient data", 50.0, 0.0
+        return "insufficient data", None, 0.0
 
     display_l = str(display).lower()
     sid_l = str(signal_id).lower()
@@ -516,13 +540,13 @@ def _regime_for_card(card: dict[str, Any]) -> dict[str, Any]:
         label, score, weight = _regime_label(dimension, value, display, sig_id)
         dimensions[dimension] = {
             "label": label,
-            "score": round(score, 1),
+            "score": round(score, 1) if score is not None else None,
             "confidence_weight": weight,
             "value": value,
             "display": display or (f"{value:.2f}" if value is not None else "n/a"),
             "source_signal": sig_id,
         }
-        if value is not None and weight > 0:
+        if score is not None and weight > 0:
             if dimension in cyclical_dims:
                 cyc_scores.append(score * weight)
                 cyc_weights.append(weight)
@@ -749,83 +773,134 @@ def _degradation_alerts(previous: dict[str, Any], current_cards: list[dict[str, 
     return alerts
 
 
-def _pearson(x: list[float], y: list[float]) -> float:
+def _pearson(x: list[float], y: list[float]) -> float | None:
+    """Pearson correlation; None when it is undefined (too few points or a flat series)."""
     n = len(x)
     if n < 3:
-        return 0.0
+        return None
     mx, my = sum(x) / n, sum(y) / n
     vx = sum((xi - mx) ** 2 for xi in x)
     vy = sum((yi - my) ** 2 for yi in y)
     if vx <= 1e-9 or vy <= 1e-9:
-        return 0.0
+        return None
     cov = sum((xi - mx) * (yi - my) for xi, yi in zip(x, y))
     return round(cov / math.sqrt(vx * vy), 2)
 
 
+SYNC_WINDOW = 36       # months per pair (most recent common months)
+SYNC_MIN_OVERLAP = 24  # pairs with fewer common months are left blank
+
+# Series used for the sync matrices where a scope deviates from the standard
+# ids (roles cpi_yoy / industrial_production_growth / sovereign_yield_10y).
+SYNC_CPI_OVERRIDES: dict[str, list[str]] = {}
+SYNC_ACTIVITY_OVERRIDES = {
+    "CN": ["industrial_value_added_yoy_akshare"],
+    "EA": ["industrial_production_yoy"],
+    "ZA": ["manufacturing_production_growth"],
+    "UK": ["industrial_production_yoy"],
+    "TW": ["real_gdp_growth"],
+    "KZ": ["real_gdp_growth"],
+    "UZ": ["real_gdp_growth"],
+    "EG": ["real_gdp_growth"],
+    "NG": ["industry_growth"],
+}
+SYNC_YIELD_OVERRIDES = {
+    "US": ("treasury_10y_yield", "10Y Treasury"),
+    "EA": ("irs_10y_de", "10Y Bund"),
+    "UK": ("long_rate_10y", "10Y Gilt"),
+    "JP": ("sovereign_yield_10y", "10Y JGB"),
+    "ZA": ("sovereign_yield_10y", "10Y Sovereign"),
+    "KR": ("sovereign_yield_10y", "10Y KTB"),
+    "TW": ("sovereign_yield_10y", "10Y Gov Bond"),
+}
+
+
+def _monthly(observations: list[Any]) -> dict[str, float]:
+    """Observed monthly values keyed YYYY-MM; projections and future dates are dropped."""
+    this_month = datetime.now(UTC).strftime("%Y-%m")
+    out: dict[str, float] = {}
+    for r in sorted(observations, key=lambda row: str(row[0])):
+        if len(r) < 2 or r[1] is None or _is_projection(r):
+            continue
+        month = str(r[0])[:7]
+        if len(month) == 7 and month[4] == "-" and month <= this_month:
+            out[month] = float(r[1])
+    return out
+
+
+def _is_projection(row: list[Any]) -> bool:
+    # CEE frames flag rows as [date, value, "historical"|"projection", is_projection].
+    return (len(row) >= 3 and row[2] == "projection") or (len(row) >= 4 and row[3] is True)
+
+
+def _is_monthly(series: dict[str, Any]) -> bool:
+    """Monthly or higher-frequency series (daily/weekly are sampled at month end)."""
+    return str(series.get("frequency") or "").strip().lower() in {"monthly", "m", "month", "weekly", "daily"}
+
+
+def _pairwise_matrix(countries: list[str], data: dict[str, dict[str, float]]) -> tuple[dict[str, dict[str, float | None]], str]:
+    """Correlation of every pair over its own most recent common months.
+
+    Requiring one window shared by every scope left the matrices empty whenever
+    any single scope lagged; each pair now uses the months both have observed.
+    """
+    matrix: dict[str, dict[str, float | None]] = {}
+    first_months: list[str] = []
+    last_months: list[str] = []
+    for c1 in countries:
+        matrix[c1] = {}
+        for c2 in countries:
+            a, b = data.get(c1), data.get(c2)
+            common = sorted(set(a) & set(b)) if a and b else []
+            if len(common) < SYNC_MIN_OVERLAP:
+                matrix[c1][c2] = None
+                continue
+            window = common[-SYNC_WINDOW:]
+            matrix[c1][c2] = _pearson([a[m] for m in window], [b[m] for m in window])
+            first_months.append(window[0])
+            last_months.append(window[-1])
+    if not last_months:
+        return matrix, ""
+    note = (
+        f"pairwise, last {SYNC_WINDOW} common months (min {SYNC_MIN_OVERLAP}); "
+        f"windows end {min(last_months)} to {max(last_months)}"
+    )
+    return matrix, note
+
+
 def _compute_cross_country_sync() -> dict[str, Any]:
-    countries = ["US", "EA", "UK", "JP", "CN", "ZA", "TR", "HK", "KR", "TW", "KZ", "UZ", "EG", "NG", "PL", "CZ", "HU", "RO"]
+    scopes = all_scopes()
+    countries = [scope.id for scope in scopes]
     cpi_data: dict[str, dict[str, float]] = {}
     ip_data: dict[str, dict[str, float]] = {}
     yield_data: dict[str, dict[str, float]] = {}
     yield_latest: dict[str, dict[str, Any]] = {}
 
-    canonical_specs = {
-        "CN": ("china_canonical_frame.json", "cpi_yoy_akshare", "industrial_value_added_yoy_akshare"),
-        "EA": ("euro_area_canonical_frame.json", "hicp_inflation", "industrial_production_yoy"),
-        "JP": ("japan_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
-        "ZA": ("south_africa_canonical_frame.json", "cpi_inflation", "manufacturing_production_growth"),
-        "UK": ("uk_canonical_frame.json", "cpi_yoy", "industrial_production_yoy"),
-        "US": ("us_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
-        "TR": ("turkey_canonical_frame.json", "hicp_inflation", "industrial_production_growth"),
-        "HK": ("hong_kong_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
-        "KR": ("south_korea_canonical_frame.json", "cpi_inflation", "industrial_production_growth"),
-        "TW": ("taiwan_canonical_frame.json", "cpi_inflation", "real_gdp_growth"),
-        "KZ": ("kazakhstan_canonical_frame.json", "cpi_inflation", "real_gdp_growth"),
-        "UZ": ("uzbekistan_canonical_frame.json", "cpi_inflation", "real_gdp_growth"),
-        "EG": ("egypt_canonical_frame.json", "cpi_inflation", "real_gdp_growth"),
-        "NG": ("nigeria_canonical_frame.json", "cpi_inflation", "industry_growth"),
-    }
+    for scope in scopes:
+        if not scope.is_data_first:
+            continue
+        payload = _read_json(scope.canonical_path)
+        observed = {s.get("indicator_id"): s for s in payload.get("series", []) or [] if s.get("observations")}
+        # The sync matrices compare monthly (or month-end sampled) prints only.
+        series = {k: v for k, v in observed.items() if _is_monthly(v)}
 
-    yield_specs = {
-        "US": ("us_canonical_frame.json", "treasury_10y_yield", "10Y Treasury"),
-        "EA": ("euro_area_canonical_frame.json", "irs_10y_de", "10Y Bund"),
-        "UK": ("uk_canonical_frame.json", "long_rate_10y", "10Y Gilt"),
-        "JP": ("japan_canonical_frame.json", "sovereign_yield_10y", "10Y JGB"),
-        "ZA": ("south_africa_canonical_frame.json", "sovereign_yield_10y", "10Y Sovereign"),
-        "KR": ("south_korea_canonical_frame.json", "sovereign_yield_10y", "10Y KTB"),
-        "TW": ("taiwan_canonical_frame.json", "sovereign_yield_10y", "10Y Gov Bond"),
-    }
+        def first(candidates: list[str]) -> dict[str, Any] | None:
+            return next((series[i] for i in candidates if i in series), None)
 
-    for code, (fname, cpi_k, ip_k) in canonical_specs.items():
-        p = OUTPUT / fname
-        if p.exists():
-            d = _read_json(p)
-            for s in d.get("series", []) or []:
-                ind_id = s.get("indicator_id")
-                if ind_id == cpi_k:
-                    cpi_data[code] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
-                elif ind_id == ip_k:
-                    ip_data[code] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
-
-    for code, (fname, yld_k, bmk_name) in yield_specs.items():
-        p = OUTPUT / fname
-        if p.exists():
-            d = _read_json(p)
-            for s in d.get("series", []) or []:
-                if s.get("indicator_id") == yld_k:
-                    obs = s.get("observations", [])
-                    if obs:
-                        m_dict = {}
-                        for r in obs:
-                            if len(r) >= 2 and r[1] is not None:
-                                m_dict[str(r[0])[:7]] = float(r[1])
-                        yield_data[code] = m_dict
-                        last_r = obs[-1]
-                        yield_latest[code] = {
-                            "benchmark": bmk_name,
-                            "date": str(last_r[0]),
-                            "yield": round(float(last_r[1]), 2),
-                        }
+        cpi = first(SYNC_CPI_OVERRIDES.get(scope.id) or list(scope.role("cpi_yoy")))
+        activity = first(SYNC_ACTIVITY_OVERRIDES.get(scope.id) or ["industrial_production_growth"])
+        if cpi:
+            cpi_data[scope.id] = _monthly(cpi["observations"])
+        if activity:
+            ip_data[scope.id] = _monthly(activity["observations"])
+        yield_id, benchmark = SYNC_YIELD_OVERRIDES.get(scope.id, ("sovereign_yield_10y", f"10Y {scope.name_en}"))
+        yld = observed.get(yield_id)
+        if yld:
+            obs = yld["observations"]
+            if _is_monthly(yld):
+                yield_data[scope.id] = _monthly(obs)
+            # The spread to Treasuries only needs the latest print, whatever the frequency.
+            yield_latest[scope.id] = {"benchmark": benchmark, "date": str(obs[-1][0]), "yield": round(float(obs[-1][1]), 2)}
 
     cee_path = OUTPUT / "cee_canonical_frame.json"
     if cee_path.exists():
@@ -835,13 +910,13 @@ def _compute_cross_country_sync() -> dict[str, Any]:
             country = str(s.get("country") or "").upper()
             if country in countries:
                 if ind_id == "cpi_yoy":
-                    cpi_data[country] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
+                    cpi_data[country] = _monthly(s.get("observations", []))
                 elif ind_id == "industrial_production_yoy":
-                    ip_data[country] = {str(r[0])[:7]: float(r[1]) for r in s.get("observations", []) if len(r) >= 2 and r[1] is not None}
+                    ip_data[country] = _monthly(s.get("observations", []))
                 elif ind_id == "sov_yield_10y":
                     obs = s.get("observations", [])
                     if obs:
-                        yield_data[country] = {str(r[0])[:7]: float(r[1]) for r in obs if len(r) >= 2 and r[1] is not None}
+                        yield_data[country] = _monthly(obs)
                         last_r = obs[-1]
                         yield_latest[country] = {
                             "benchmark": f"{country} 10Y Benchmark",
@@ -849,28 +924,9 @@ def _compute_cross_country_sync() -> dict[str, Any]:
                             "yield": round(float(last_r[1]), 2),
                         }
 
-    cpi_common = sorted(list(set.intersection(*[set(cpi_data[c].keys()) for c in countries if c in cpi_data]))) if len(cpi_data) >= len(countries) else []
-    ip_common = sorted(list(set.intersection(*[set(ip_data[c].keys()) for c in countries if c in ip_data]))) if len(ip_data) >= len(countries) else []
-
-    cpi_matrix: dict[str, dict[str, float]] = {}
-    if len(cpi_common) >= 12:
-        cpi_window = cpi_common[-36:]
-        for c1 in countries:
-            cpi_matrix[c1] = {}
-            for c2 in countries:
-                x = [cpi_data[c1][m] for m in cpi_window]
-                y = [cpi_data[c2][m] for m in cpi_window]
-                cpi_matrix[c1][c2] = _pearson(x, y)
-
-    ip_matrix: dict[str, dict[str, float]] = {}
-    if len(ip_common) >= 12:
-        ip_window = ip_common[-36:]
-        for c1 in countries:
-            ip_matrix[c1] = {}
-            for c2 in countries:
-                x = [ip_data[c1][m] for m in ip_window]
-                y = [ip_data[c2][m] for m in ip_window]
-                ip_matrix[c1][c2] = _pearson(x, y)
+    cpi_matrix, cpi_period = _pairwise_matrix(countries, cpi_data)
+    ip_matrix, ip_period = _pairwise_matrix(countries, ip_data)
+    yield_matrix, yield_period = _pairwise_matrix(countries, yield_data)
 
     us_yld = yield_latest.get("US", {}).get("yield")
     sovereign_spreads: dict[str, dict[str, Any]] = {}
@@ -886,57 +942,31 @@ def _compute_cross_country_sync() -> dict[str, Any]:
             }
         else:
             y_val = y_info["yield"]
-            spread_bps = round((y_val - us_yld) * 100, 1)
             sovereign_spreads[c] = {
                 "benchmark": y_info["benchmark"],
                 "date": y_info["date"],
                 "yield": y_val,
-                "spread_bps": spread_bps,
+                "spread_bps": round((y_val - us_yld) * 100, 1),
                 "status": "observed",
             }
 
-    yield_countries = [c for c in countries if c in yield_data and len(yield_data[c]) >= 12]
-    yield_common = sorted(list(set.intersection(*[set(yield_data[c].keys()) for c in yield_countries]))) if yield_countries else []
-    yield_matrix: dict[str, dict[str, float | None]] = {}
-    if len(yield_common) >= 12:
-        yield_window = yield_common[-36:]
-        for c1 in countries:
-            yield_matrix[c1] = {}
-            for c2 in countries:
-                if c1 in yield_data and c2 in yield_data and all(m in yield_data[c1] and m in yield_data[c2] for m in yield_window):
-                    x = [yield_data[c1][m] for m in yield_window]
-                    y = [yield_data[c2][m] for m in yield_window]
-                    yield_matrix[c1][c2] = _pearson(x, y)
-                else:
-                    yield_matrix[c1][c2] = None
-
+    reer_data: dict[str, dict[str, float]] = {}
     reer_cache_path = ROOT / "data" / "bruegel_reer_monthly.json"
-    reer_matrix: dict[str, dict[str, float | None]] = {}
-    reer_common: list[str] = []
     if reer_cache_path.exists():
-        r_payload = _read_json(reer_cache_path)
-        r_countries = r_payload.get("countries", {})
-        reer_series_map: dict[str, dict[str, float]] = {}
+        r_countries = _read_json(reer_cache_path).get("countries", {})
         for c in countries:
-            c_info = r_countries.get(c, {})
-            obs_list = c_info.get("reer_120", [])
-            reer_series_map[c] = {x["date"]: float(x["value"]) for x in obs_list if "date" in x and "value" in x}
-        reer_common = sorted(list(set.intersection(*[set(reer_series_map[c].keys()) for c in countries if c in reer_series_map])))
-        if len(reer_common) >= 36:
-            r_window = reer_common[-36:]
-            for c1 in countries:
-                reer_matrix[c1] = {}
-                for c2 in countries:
-                    x = [reer_series_map[c1][m] for m in r_window]
-                    y = [reer_series_map[c2][m] for m in r_window]
-                    reer_matrix[c1][c2] = _pearson(x, y)
+            obs_list = (r_countries.get(c) or {}).get("reer_120", [])
+            series_map = {str(x["date"])[:7]: float(x["value"]) for x in obs_list if "date" in x and "value" in x}
+            if series_map:
+                reer_data[c] = series_map
+    reer_matrix, reer_period = _pairwise_matrix(countries, reer_data)
 
     return {
         "countries": countries,
-        "sample_period_cpi": f"{cpi_common[-36]} to {cpi_common[-1]}" if len(cpi_common) >= 36 else "",
-        "sample_period_ip": f"{ip_common[-36]} to {ip_common[-1]}" if len(ip_common) >= 36 else "",
-        "sample_period_yield": f"{yield_common[-36]} to {yield_common[-1]}" if len(yield_common) >= 36 else "",
-        "sample_period_reer": f"{reer_common[-36]} to {reer_common[-1]}" if len(reer_common) >= 36 else "",
+        "sample_period_cpi": cpi_period,
+        "sample_period_ip": ip_period,
+        "sample_period_yield": yield_period,
+        "sample_period_reer": reer_period,
         "inflation_correlation": cpi_matrix,
         "industrial_production_correlation": ip_matrix,
         "sovereign_yield_correlation": yield_matrix,
@@ -1181,7 +1211,7 @@ def _compute_sovereign_curve_monitor() -> list[dict[str, Any]]:
     except Exception:
         snapshot = {}
 
-    for c_code, c_name in [("HU", "Hungary"), ("PL", "Poland"), ("CZ", "Czechia"), ("RO", "Romania")]:
+    for c_code, c_name in [(scope.id, scope.name_en) for scope in all_scopes() if scope.pipeline == "cee_v4"]:
         ind = snapshot.get("countries", {}).get(c_code, {}).get("indicators", {})
         y10_c = ind.get("sov_yield_10y", {}).get("value")
         y2_c = ind.get("sov_yield_2y", {}).get("value")
@@ -1619,6 +1649,16 @@ def _compute_em_external_vulnerability_monitor() -> list[dict[str, Any]]:
         ("Taiwan", "TW", "taiwan_canonical_frame.json", None, "current_account_gdp", "fx_reserves", 0.001, "Asian Surplus Economies"),
     ]
 
+    # Emerging and frontier scopes without a curated profile use the standard ids
+    # (reserves in USD bn, as the templates publish them).
+    profiled = {row[1] for row in profiles}
+    for scope in data_first_scopes():
+        if scope.region in {"em", "frontier"} and scope.id not in profiled:
+            profiles.append((
+                scope.name_en, scope.id, scope.canonical_file, "short_term_external_debt_pct_reserves",
+                "current_account_gdp", "total_reserves_usd", 1.0, "Emerging & Frontier",
+            ))
+
     records: list[dict[str, Any]] = []
     for name, code, fname, st_id, ca_id, fx_id, factor, cluster in profiles:
         dt_st, st = series_for(fname, code, st_id)
@@ -1661,6 +1701,41 @@ def _compute_em_external_vulnerability_monitor() -> list[dict[str, Any]]:
     return records
 
 
+
+def _corr_strength(value: float) -> str:
+    size = abs(value)
+    strength = "strong" if size >= 0.7 else "moderate" if size >= 0.4 else "weak"
+    return f"{strength} {'positive' if value >= 0 else 'negative'}"
+
+
+def _sync_briefing_lines(sync: dict[str, Any], top: int = 3) -> list[str]:
+    """Strongest and weakest observed pairs per matrix; wording follows the numbers."""
+    order = sync.get("countries") or []
+    blocks = [
+        ("Headline CPI inflation", "inflation_correlation", "sample_period_cpi"),
+        ("Industrial production", "industrial_production_correlation", "sample_period_ip"),
+        ("10Y sovereign yields", "sovereign_yield_correlation", "sample_period_yield"),
+        ("Bruegel REER", "reer_correlation", "sample_period_reer"),
+    ]
+    lines: list[str] = []
+    for title, key, period_key in blocks:
+        matrix = sync.get(key) or {}
+        pairs = [
+            (c1, c2, matrix[c1][c2])
+            for i, c1 in enumerate(order) for c2 in order[i + 1:]
+            if isinstance(matrix.get(c1, {}).get(c2), (int, float))
+        ]
+        lines.append(f"- **{title}** ({sync.get(period_key) or 'no overlapping sample'}):")
+        if not pairs:
+            lines.append("  - No pair has enough overlapping monthly observations.")
+            continue
+        ranked = sorted(pairs, key=lambda item: item[2], reverse=True)
+        fmt = lambda items: ", ".join(f"{a} vs. {b} (**{v:.2f}**, {_corr_strength(v)})" for a, b, v in items)
+        lines.append(f"  - Most synchronised: {fmt(ranked[:top])}.")
+        lines.append(f"  - Least synchronised: {fmt(ranked[-top:][::-1])}.")
+    return lines
+
+
 def _fmt_score(value: Any) -> str:
     return f"{value:.1f}" if isinstance(value, (int, float)) else "n/a"
 
@@ -1677,7 +1752,7 @@ def _generate_briefing(payload: dict[str, Any]) -> str:
     lines = [
         "# Global Macro Workbench Intelligence Briefing",
         "",
-        f"**Generated**: {generated} | **Coverage**: 14 Economies (US, EA, UK, JP, CN, ZA, TR, HK, KR, TW, PL, CZ, HU, RO)",
+        f"**Generated**: {generated} | **Coverage**: {len(all_scopes())} economies ({', '.join(s.id for s in all_scopes())})",
         "",
         "---",
         "",
@@ -1758,22 +1833,9 @@ def _generate_briefing(payload: dict[str, Any]) -> str:
         "",
         "---",
         "",
-        "## 4. Cross-Country Synchronization (36-Month Rolling Correlation)",
+        "## 4. Cross-Country Synchronization (pairwise 36-month correlation)",
         "",
-        "- **Nominal Cycle (Headline CPI Inflation)**:",
-        f"  - Highly coupled core: US vs. Euro Area (**{inf_matrix.get('US', {}).get('EA', 'n/a')}**), US vs. UK (**{inf_matrix.get('US', {}).get('UK', 'n/a')}**), Euro Area vs. UK (**{inf_matrix.get('EA', {}).get('UK', 'n/a')}**).",
-        f"  - Independent domestic price cycle: China vs. US (**{inf_matrix.get('CN', {}).get('US', 'n/a')}**), China vs. Euro Area (**{inf_matrix.get('CN', {}).get('EA', 'n/a')}**).",
-        "- **Real Business Cycle (Industrial Production)**:",
-        f"  - Transatlantic industrial linkage: US vs. Euro Area (**{ip_matrix.get('US', {}).get('EA', 'n/a')}**), US vs. UK (**{ip_matrix.get('US', {}).get('UK', 'n/a')}**).",
-        f"  - Manufacturing divergence: China vs. US (**{ip_matrix.get('CN', {}).get('US', 'n/a')}**), Japan vs. US (**{ip_matrix.get('JP', {}).get('US', 'n/a')}**).",
-        "- **Financial & Capital Flows (10Y Sovereign Yields 36M Rolling)**:",
-        f"  - European sovereign rates coupling: Euro Area Bund vs. UK Gilt (**{yield_matrix.get('EA', {}).get('UK', 'n/a')}**).",
-        f"  - Global dollar anchor linkage: US vs. UK (**{yield_matrix.get('US', {}).get('UK', 'n/a')}**), US vs. Euro Area (**{yield_matrix.get('US', {}).get('EA', 'n/a')}**).",
-        f"  - Divergent duration / yield curve regimes: US vs. Japan (**{yield_matrix.get('US', {}).get('JP', 'n/a')}**), US vs. South Africa (**{yield_matrix.get('US', {}).get('ZA', 'n/a')}**).",
-        "- **External Trade & Currency Couplings (Bruegel REER 36M Rolling)**:",
-        f"  - European monetary union & close trading partners: Euro Area vs. UK (**{sync.get('reer_correlation', {}).get('EA', {}).get('UK', 'n/a')}**), Euro Area vs. Poland (**{sync.get('reer_correlation', {}).get('EA', {}).get('PL', 'n/a')}**), Euro Area vs. Czechia (**{sync.get('reer_correlation', {}).get('EA', {}).get('CZ', 'n/a')}**).",
-        f"  - Transatlantic relative price competitiveness: US vs. Euro Area (**{sync.get('reer_correlation', {}).get('US', {}).get('EA', 'n/a')}**), US vs. UK (**{sync.get('reer_correlation', {}).get('US', {}).get('UK', 'n/a')}**).",
-        f"  - Asian currency divergence: Japan vs. US (**{sync.get('reer_correlation', {}).get('JP', {}).get('US', 'n/a')}**), China vs. US (**{sync.get('reer_correlation', {}).get('CN', {}).get('US', 'n/a')}**).",
+        *_sync_briefing_lines(sync),
         "",
         "---",
         "",

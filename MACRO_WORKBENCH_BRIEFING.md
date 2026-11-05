@@ -1,6 +1,6 @@
 # Global Macro Workbench Intelligence Briefing
 
-**Generated**: 2026-11-05 | **Coverage**: 14 Economies (US, EA, UK, JP, CN, ZA, TR, HK, KR, TW, PL, CZ, HU, RO)
+**Generated**: 2026-11-05 | **Coverage**: 18 economies (HU, PL, CZ, RO, CN, EA, JP, ZA, UK, US, TR, HK, KR, TW, KZ, UZ, EG, NG)
 
 ---
 
@@ -60,12 +60,16 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 
 | Economy | Benchmark Asset | Latest Yield | Latest Date | Spread to US 10Y (bps) | Status |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **US** | 10Y Treasury | **4.94%** | 2026-10-30 | **0.0 bps** | Official Observed |
-| **EA** | 10Y Bund | **3.47%** | 2026-09-01 | **-147.0 bps** | Official Observed |
-| **UK** | 10Y Gilt | **5.26%** | 2026-10-29 | **+32.0 bps** | Official Observed |
-| **JP** | 10Y JGB | **3.05%** | 2026-09-01 | **-189.0 bps** | Official Observed |
+| **HU** | HU 10Y Benchmark | **5.68%** | 2026-09-01 | **+74.0 bps** | Official Observed |
+| **PL** | PL 10Y Benchmark | **6.23%** | 2026-09-01 | **+129.0 bps** | Official Observed |
+| **CZ** | CZ 10Y Benchmark | **5.24%** | 2026-09-01 | **+30.0 bps** | Official Observed |
+| **RO** | RO 10Y Benchmark | **6.71%** | 2026-09-01 | **+177.0 bps** | Official Observed |
 | **CN** | CN 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
+| **EA** | 10Y Bund | **3.47%** | 2026-09-01 | **-147.0 bps** | Official Observed |
+| **JP** | 10Y JGB | **3.05%** | 2026-09-01 | **-189.0 bps** | Official Observed |
 | **ZA** | 10Y Sovereign | **8.01%** | 2026-10-30 | **+307.0 bps** | Official Observed |
+| **UK** | 10Y Gilt | **5.26%** | 2026-10-29 | **+32.0 bps** | Official Observed |
+| **US** | 10Y Treasury | **4.94%** | 2026-10-30 | **0.0 bps** | Official Observed |
 | **TR** | TR 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **HK** | HK 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **KR** | 10Y KTB | **4.45%** | 2026-09-01 | **-49.0 bps** | Official Observed |
@@ -74,29 +78,23 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | **UZ** | UZ 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **EG** | EG 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **NG** | NG 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
-| **PL** | PL 10Y Benchmark | **6.23%** | 2026-09-01 | **+129.0 bps** | Official Observed |
-| **CZ** | CZ 10Y Benchmark | **5.24%** | 2026-09-01 | **+30.0 bps** | Official Observed |
-| **HU** | HU 10Y Benchmark | **5.68%** | 2026-09-01 | **+74.0 bps** | Official Observed |
-| **RO** | RO 10Y Benchmark | **6.71%** | 2026-09-01 | **+177.0 bps** | Official Observed |
 
 ---
 
-## 4. Cross-Country Synchronization (36-Month Rolling Correlation)
+## 4. Cross-Country Synchronization (pairwise 36-month correlation)
 
-- **Nominal Cycle (Headline CPI Inflation)**:
-  - Highly coupled core: US vs. Euro Area (**n/a**), US vs. UK (**n/a**), Euro Area vs. UK (**n/a**).
-  - Independent domestic price cycle: China vs. US (**n/a**), China vs. Euro Area (**n/a**).
-- **Real Business Cycle (Industrial Production)**:
-  - Transatlantic industrial linkage: US vs. Euro Area (**n/a**), US vs. UK (**n/a**).
-  - Manufacturing divergence: China vs. US (**n/a**), Japan vs. US (**n/a**).
-- **Financial & Capital Flows (10Y Sovereign Yields 36M Rolling)**:
-  - European sovereign rates coupling: Euro Area Bund vs. UK Gilt (**0.74**).
-  - Global dollar anchor linkage: US vs. UK (**0.66**), US vs. Euro Area (**0.45**).
-  - Divergent duration / yield curve regimes: US vs. Japan (**0.37**), US vs. South Africa (**0.04**).
-- **External Trade & Currency Couplings (Bruegel REER 36M Rolling)**:
-  - European monetary union & close trading partners: Euro Area vs. UK (**0.34**), Euro Area vs. Poland (**0.47**), Euro Area vs. Czechia (**0.85**).
-  - Transatlantic relative price competitiveness: US vs. Euro Area (**-0.82**), US vs. UK (**-0.05**).
-  - Asian currency divergence: Japan vs. US (**0.29**), China vs. US (**0.19**).
+- **Headline CPI inflation** (pairwise, last 36 common months (min 24); windows end 2026-08 to 2026-10):
+  - Most synchronised: TR vs. EG (**0.91**, strong positive), PL vs. CZ (**0.85**, strong positive), ZA vs. KR (**0.85**, strong positive).
+  - Least synchronised: RO vs. UZ (**-0.79**, strong negative), RO vs. NG (**-0.74**, strong negative), KZ vs. NG (**-0.73**, strong negative).
+- **Industrial production** (pairwise, last 36 common months (min 24); windows end 2026-07 to 2026-09):
+  - Most synchronised: CZ vs. EA (**0.66**, moderate positive), CN vs. KR (**0.61**, moderate positive), EA vs. US (**0.60**, moderate positive).
+  - Least synchronised: ZA vs. US (**-0.33**, weak negative), RO vs. JP (**-0.27**, weak negative), CZ vs. KR (**-0.27**, weak negative).
+- **10Y sovereign yields** (pairwise, last 36 common months (min 24); windows end 2026-09 to 2026-10):
+  - Most synchronised: CZ vs. EA (**0.94**, strong positive), EA vs. JP (**0.90**, strong positive), CZ vs. JP (**0.86**, strong positive).
+  - Least synchronised: JP vs. ZA (**-0.77**, strong negative), ZA vs. UK (**-0.58**, moderate negative), CZ vs. ZA (**-0.55**, moderate negative).
+- **Bruegel REER** (pairwise, last 36 common months (min 24); windows end 2026-09 to 2026-09):
+  - Most synchronised: ZA vs. UZ (**0.89**, strong positive), CN vs. KZ (**0.86**, strong positive), CZ vs. EA (**0.85**, strong positive).
+  - Least synchronised: EA vs. HK (**-0.87**, strong negative), RO vs. KR (**-0.86**, strong negative), TR vs. KR (**-0.83**, strong negative).
 
 ---
 
@@ -107,12 +105,16 @@ Misalignment evaluated against 5-Year and 10-Year historical moving averages. In
 
 | Economy | Code | Latest REER | Latest NEER | 10Y MA | Dev vs 10Y MA | Dev vs 5Y MA | Inflation Wedge | Valuation Stance |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **US** | `US` | **134.46** | 139.82 | 127.98 | **+5.1%** | -0.4% | -5.36 | *moderately overvalued* |
-| **EA** | `EA` | **90.97** | 112.71 | 88.53 | **+2.8%** | +2.6% | -21.75 | *neutral / fair value* |
-| **UK** | `UK` | **92.67** | 85.88 | 85.75 | **+8.1%** | +4.1% | +6.79 | *moderately overvalued* |
-| **JP** | `JP` | **63.71** | 85.34 | 83.70 | **-23.9%** | -10.3% | -21.63 | *substantially undervalued (export cost tailwind)* |
+| **HU** | `HU` | **99.59** | 71.76 | 88.27 | **+12.8%** | +10.2% | +27.83 | *substantially overvalued (export cost headwind)* |
+| **PL** | `PL` | **105.92** | 87.70 | 93.04 | **+13.8%** | +5.8% | +18.22 | *substantially overvalued (export cost headwind)* |
+| **CZ** | `CZ` | **129.06** | 113.58 | 115.21 | **+12.0%** | +2.2% | +15.48 | *substantially overvalued (export cost headwind)* |
+| **RO** | `RO` | **107.94** | 75.65 | 95.99 | **+12.4%** | +5.4% | +32.29 | *substantially overvalued (export cost headwind)* |
 | **CN** | `CN` | **127.81** | 142.59 | 132.20 | **-3.3%** | -1.8% | -14.78 | *neutral / fair value* |
+| **EA** | `EA` | **90.97** | 112.71 | 88.53 | **+2.8%** | +2.6% | -21.75 | *neutral / fair value* |
+| **JP** | `JP` | **63.71** | 85.34 | 83.70 | **-23.9%** | -10.3% | -21.63 | *substantially undervalued (export cost tailwind)* |
 | **ZA** | `ZA` | **89.09** | 57.81 | 85.05 | **+4.7%** | +8.0% | +31.28 | *neutral / fair value* |
+| **UK** | `UK` | **92.67** | 85.88 | 85.75 | **+8.1%** | +4.1% | +6.79 | *moderately overvalued* |
+| **US** | `US` | **134.46** | 139.82 | 127.98 | **+5.1%** | -0.4% | -5.36 | *moderately overvalued* |
 | **TR** | `TR` | **59.96** | 3.19 | 57.27 | **+4.7%** | +15.5% | +56.77 | *neutral / fair value* |
 | **HK** | `HK` | **119.91** | 118.26 | 124.88 | **-4.0%** | -3.8% | +1.65 | *neutral / fair value* |
 | **KR** | `KR` | **82.34** | 84.89 | 87.90 | **-6.3%** | -1.0% | -2.54 | *moderately undervalued* |
@@ -121,10 +123,6 @@ Misalignment evaluated against 5-Year and 10-Year historical moving averages. In
 | **UZ** | `UZ` | **46.40** | 19.50 | 42.78 | **+8.5%** | +10.7% | +26.90 | *moderately overvalued* |
 | **EG** | `EG` | **102.79** | 15.03 | 122.02 | **-15.8%** | -10.1% | +87.76 | *substantially undervalued (export cost tailwind)* |
 | **NG** | `NG` | **104.33** | 12.77 | 119.58 | **-12.8%** | -4.0% | +91.56 | *substantially undervalued (export cost tailwind)* |
-| **PL** | `PL` | **105.92** | 87.70 | 93.04 | **+13.8%** | +5.8% | +18.22 | *substantially overvalued (export cost headwind)* |
-| **CZ** | `CZ` | **129.06** | 113.58 | 115.21 | **+12.0%** | +2.2% | +15.48 | *substantially overvalued (export cost headwind)* |
-| **HU** | `HU` | **99.59** | 71.76 | 88.27 | **+12.8%** | +10.2% | +27.83 | *substantially overvalued (export cost headwind)* |
-| **RO** | `RO` | **107.94** | 75.65 | 95.99 | **+12.4%** | +5.4% | +32.29 | *substantially overvalued (export cost headwind)* |
 
 ---
 
@@ -168,6 +166,7 @@ Guidotti-Greenspan Rule: $\text{Short-Term External Debt} / \text{Total FX Reser
 | **China** (`CN`) | Asian Surplus Economies | **n/a** | No short-term external debt series | **+3.8%** | **$3,400.3B** | Current account +3.8% of gdp (2025); reserves $3,400bn (2026-09-01) |
 | **South Korea** (`KR`) | Asian Surplus Economies | **n/a** | No short-term external debt series | **+5.3%** | **$434.7B** | Current account +5.3% of gdp (2024); reserves $435bn (2026-09-01) |
 | **Taiwan** (`TW`) | Asian Surplus Economies | **n/a** | No short-term external debt series | **+14.3%** | **$600.7B** | Current account +14.3% of gdp (2024); reserves $601bn (2026-09-01) |
+| **Hong Kong** (`HK`) | Emerging & Frontier | **n/a** | No short-term external debt series | **+13.2%** | **$425.6B** | Current account +13.2% of gdp (2024); reserves $426bn (2023) |
 
 ---
 
