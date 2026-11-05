@@ -969,7 +969,7 @@ The Turkey page is generated from `config/turkey_indicators.yaml`. TurkStat offi
 
 Generated from `config/turkey_indicators.yaml`; latest dates are tracked in `output/turkey_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 57. Latest rendered chart count: 56. Source groups: 18.
+Configured charts: 58. Latest rendered chart count: 57. Source groups: 19.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1030,6 +1030,7 @@ Configured charts: 57. Latest rendered chart count: 56. Source groups: 18.
 | stability_structural | `bank_capital_ratio` | Bank Regulatory Capital to Risk-Weighted Assets | quarterly | % | dbnomics | IMF / DBnomics (Financial Soundness Indicators) | IMF/FSI/Q.TR.FSKRC_PT | Deposit-taker regulatory capital to risk-weighted assets reported to the IMF. |
 | stability_structural | `bank_npl_ratio` | Bank Non-Performing Loans (% of Gross Loans) | quarterly | % | dbnomics | IMF / DBnomics (Financial Soundness Indicators) | IMF/FSI/Q.TR.FSANL_PT | Non-performing loans to total gross loans for deposit-takers. |
 | monetary_financial | `real_policy_rate` | Turkey Real Policy Rate | monthly | % | manual | Central Bank of Republic of Turkey (CBRT) / Derived |  | Derived real policy rate calculated as 1-Week Repo Rate minus headline CPI YoY. |
+| external_fx | `usd_try_bis` | USD/TRY (BIS, monthly) | monthly | TRY per USD | bis_fx | BIS bilateral exchange rates (WS_XRU) | TR | End-of-period monthly rate; history for cross-scope use (the TCMB daily feed returns only the latest day). |
 
 ## Turkey Official / Vendor Data Gaps
 
@@ -1528,7 +1529,7 @@ The Energy page is generated from `config/markets/energy.yaml` through the globa
 
 Generated from `config/markets/energy.yaml`; latest dates are tracked in `output/energy_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 54. Latest rendered chart count: 54. Source groups: 22.
+Configured charts: 61. Latest rendered chart count: 61. Source groups: 24.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1586,6 +1587,13 @@ Configured charts: 54. Latest rendered chart count: 54. Source groups: 22.
 | macro_transmission | `us_cpi_energy_yoy` | US CPI Energy YoY | monthly | % y/y | fred | BLS CPI via FRED | CPIENGSL | Seasonally adjusted CPI energy index, year-on-year. |
 | macro_transmission | `us_breakeven_5y` | US 5-Year Breakeven Inflation | daily | % | fred | US Treasury / Federal Reserve via FRED | T5YIE | 5-year nominal minus 5-year TIPS yield; sensitive to oil at short horizons. |
 | macro_transmission | `us_5y5y_forward` | US 5-Year, 5-Year Forward Inflation Expectation | daily | % | fred | Federal Reserve via FRED | T5YIFR | Longer-horizon compensation; should move far less with oil than the 5-year breakeven. |
+| model_inputs | `hicp_energy_weight_ea` | HICP Energy Weight — Euro Area | annual | per mille | eurostat_jsonstat | Eurostat HICP item weights |  | Weight of energy (NRG) in the HICP basket, per mille. |
+| model_inputs | `hicp_energy_weight_cz` | HICP Energy Weight — Czechia | annual | per mille | eurostat_jsonstat | Eurostat HICP item weights |  | Weight of energy (NRG) in the HICP basket, per mille. |
+| model_inputs | `hicp_energy_weight_hu` | HICP Energy Weight — Hungary | annual | per mille | eurostat_jsonstat | Eurostat HICP item weights |  | Weight of energy (NRG) in the HICP basket, per mille. |
+| model_inputs | `hicp_energy_weight_pl` | HICP Energy Weight — Poland | annual | per mille | eurostat_jsonstat | Eurostat HICP item weights |  | Weight of energy (NRG) in the HICP basket, per mille. |
+| model_inputs | `hicp_energy_weight_ro` | HICP Energy Weight — Romania | annual | per mille | eurostat_jsonstat | Eurostat HICP item weights |  | Weight of energy (NRG) in the HICP basket, per mille. |
+| model_inputs | `hicp_energy_weight_tr` | HICP Energy Weight — Türkiye | annual | per mille | eurostat_jsonstat | Eurostat HICP item weights |  | Weight of energy (NRG) in the HICP basket, per mille. |
+| model_inputs | `cpi_energy_weight_uk` | CPI Weight of Electricity, Gas & Other Fuels — United Kingdom | annual | per mille | ons_timeseries | ONS | CJVF | CPI division 04.5 weight, per mille; matches the UK household-energy CPI used here (motor fuels are excluded). |
 
 ## Energy Official / Vendor Data Gaps
 

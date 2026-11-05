@@ -1,7 +1,7 @@
 {
   "generated": "2026-10-29",
   "total_countries": 22,
-  "total_indicators": 1605,
+  "total_indicators": 1613,
   "countries": [
     {
       "code": "HU",
@@ -11813,7 +11813,7 @@
       "name_zh": "土耳其",
       "flag": "🇹🇷",
       "canonical_file": "turkey_canonical_frame.json",
-      "indicator_count": 56,
+      "indicator_count": 57,
       "indicators": [
         {
           "id": "avg_funding_cost",
@@ -12419,6 +12419,17 @@
           "obs_count": 261,
           "latest_date": "2026-09-01",
           "latest_val": 8.4
+        },
+        {
+          "id": "usd_try_bis",
+          "label_en": "USD/TRY (BIS, monthly)",
+          "label_zh": "美元兑土耳其里拉（BIS月度）",
+          "unit": "TRY per USD",
+          "section": "external_fx",
+          "frequency": "monthly",
+          "obs_count": 262,
+          "latest_date": "2026-10-01",
+          "latest_val": 49.947636949517
         },
         {
           "id": "youth_unemployment_rate",
@@ -16204,7 +16215,7 @@
       "name_zh": "能源",
       "flag": "⚡",
       "canonical_file": "energy_canonical_frame.json",
-      "indicator_count": 54,
+      "indicator_count": 61,
       "indicators": [
         {
           "id": "asia_eu_lng_spread",
@@ -16350,6 +16361,17 @@
           "latest_val": -1.149747
         },
         {
+          "id": "cpi_energy_weight_uk",
+          "label_en": "CPI Weight of Electricity, Gas & Other Fuels — United Kingdom",
+          "label_zh": "CPI电力、燃气与其他燃料权重——英国",
+          "unit": "per mille",
+          "section": "model_inputs",
+          "frequency": "annual",
+          "obs_count": 17,
+          "latest_date": "2026-01-01",
+          "latest_val": 31.9821
+        },
+        {
           "id": "crack_321",
           "label_en": "3-2-1 Crack Spread (NYH products vs WTI)",
           "label_zh": "3-2-1裂解价差（纽约港 vs WTI）",
@@ -16469,6 +16491,72 @@
           "obs_count": 2985,
           "latest_date": "2026-11-03",
           "latest_val": 2.63
+        },
+        {
+          "id": "hicp_energy_weight_cz",
+          "label_en": "HICP Energy Weight — Czechia",
+          "label_zh": "HICP能源权重——捷克",
+          "unit": "per mille",
+          "section": "model_inputs",
+          "frequency": "annual",
+          "obs_count": 17,
+          "latest_date": "2026-01-01",
+          "latest_val": 129.1
+        },
+        {
+          "id": "hicp_energy_weight_ea",
+          "label_en": "HICP Energy Weight — Euro Area",
+          "label_zh": "HICP能源权重——欧元区",
+          "unit": "per mille",
+          "section": "model_inputs",
+          "frequency": "annual",
+          "obs_count": 17,
+          "latest_date": "2026-01-01",
+          "latest_val": 90.26
+        },
+        {
+          "id": "hicp_energy_weight_hu",
+          "label_en": "HICP Energy Weight — Hungary",
+          "label_zh": "HICP能源权重——匈牙利",
+          "unit": "per mille",
+          "section": "model_inputs",
+          "frequency": "annual",
+          "obs_count": 17,
+          "latest_date": "2026-01-01",
+          "latest_val": 95.66
+        },
+        {
+          "id": "hicp_energy_weight_pl",
+          "label_en": "HICP Energy Weight — Poland",
+          "label_zh": "HICP能源权重——波兰",
+          "unit": "per mille",
+          "section": "model_inputs",
+          "frequency": "annual",
+          "obs_count": 17,
+          "latest_date": "2026-01-01",
+          "latest_val": 122.18
+        },
+        {
+          "id": "hicp_energy_weight_ro",
+          "label_en": "HICP Energy Weight — Romania",
+          "label_zh": "HICP能源权重——罗马尼亚",
+          "unit": "per mille",
+          "section": "model_inputs",
+          "frequency": "annual",
+          "obs_count": 17,
+          "latest_date": "2026-01-01",
+          "latest_val": 114.56
+        },
+        {
+          "id": "hicp_energy_weight_tr",
+          "label_en": "HICP Energy Weight — Türkiye",
+          "label_zh": "HICP能源权重——土耳其",
+          "unit": "per mille",
+          "section": "model_inputs",
+          "frequency": "annual",
+          "obs_count": 17,
+          "latest_date": "2026-01-01",
+          "latest_val": 63.86
         },
         {
           "id": "newcastle_coal_monthly",

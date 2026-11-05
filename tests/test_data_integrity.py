@@ -206,3 +206,17 @@ def _numeric_fallbacks(path: Path) -> list[str]:
 def test_no_invented_fallback_values_in_analytics():
     offenders = [hit for path in ANALYTIC_FILES for hit in _numeric_fallbacks(path)]
     assert not offenders, "Missing data must stay missing, not become a number or date: " + "; ".join(offenders)
+
+
+def test_models_stay_out_of_canonical_frames():
+    """MODEL outputs live in output/models/ only (spec §2.7)."""
+    model_dir = OUTPUT / "models"
+    if not model_dir.exists():
+        pytest.skip("no models built yet")
+    model_ids = {path.stem for path in model_dir.glob("*.json")}
+    for path in OUTPUT.glob("*_canonical_frame.json"):
+        ids = {str(s.get("indicator_id")) for s in json.loads(path.read_text()).get("series", [])}
+        assert not (ids & model_ids), f"{path.name} contains model output {ids & model_ids}"
+    for path in model_dir.glob("*.json"):
+        payload = json.loads(path.read_text())
+        assert payload.get("label") == "MODEL" and payload.get("inputs"), f"{path.name} must be labelled MODEL and cite its inputs"

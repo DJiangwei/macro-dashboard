@@ -1,8 +1,8 @@
 {
   "file": "energy.html",
-  "generated": "2026-11-05T10:38:06.217285+00:00",
-  "charts": 54,
-  "source_groups": 22,
+  "generated": "2026-11-05T10:46:15.206571+00:00",
+  "charts": 61,
+  "source_groups": 24,
   "data_gaps": 5,
   "low_confidence": 0,
   "key_series_latest": [
@@ -139,11 +139,11 @@
       "value"
     ],
     "file": "energy_canonical_frame.json",
-    "series": 54,
-    "observations": 73930,
-    "series_count": 54,
-    "observation_count": 73930,
-    "snapshot_generated": "2026-11-05T07:59:09.789197+00:00"
+    "series": 61,
+    "observations": 74049,
+    "series_count": 61,
+    "observation_count": 74049,
+    "snapshot_generated": "2026-11-05T10:45:41.490473+00:00"
   },
   "data_gaps_detail": [
     {
@@ -183,11 +183,15 @@
     }
   ],
   "source_health": {
-    "source_groups": 22,
+    "source_groups": 24,
     "sources": [
       {
         "source_name": "EIA Weekly Petroleum Status Report",
         "charts": 12
+      },
+      {
+        "source_name": "Eurostat HICP item weights",
+        "charts": 6
       },
       {
         "source_name": "CFTC Commitments of Traders (disaggregated)",
@@ -262,6 +266,10 @@
         "charts": 1
       },
       {
+        "source_name": "ONS",
+        "charts": 1
+      },
+      {
         "source_name": "US Treasury / Federal Reserve via FRED",
         "charts": 1
       },
@@ -275,7 +283,7 @@
       }
     ],
     "quality_counts": {
-      "verified": 26,
+      "verified": 33,
       "watch": 28
     },
     "unavailable_count": 0
@@ -289,7 +297,7 @@
   "freshness": {
     "as_of_date": "2026-11-05",
     "counts": {
-      "current": 53,
+      "current": 60,
       "due": 1
     },
     "latest_historical_date": "2026-11-04",
@@ -320,7 +328,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 53,
+      "level": 60,
       "yoy_pct": 1
     },
     "non_level": [
@@ -338,6 +346,6 @@
       "date",
       "value"
     ],
-    "charted_series": 54
+    "charted_series": 61
   }
 }

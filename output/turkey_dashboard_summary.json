@@ -1,8 +1,8 @@
 {
   "file": "turkey.html",
-  "generated": "2026-11-05T10:38:05.129825+00:00",
-  "charts": 56,
-  "source_groups": 18,
+  "generated": "2026-11-05T10:46:13.805068+00:00",
+  "charts": 57,
+  "source_groups": 19,
   "data_gaps": 2,
   "low_confidence": 7,
   "key_series_latest": [
@@ -580,11 +580,11 @@
       "value"
     ],
     "file": "turkey_canonical_frame.json",
-    "series": 56,
-    "observations": 10650,
-    "series_count": 56,
-    "observation_count": 10650,
-    "snapshot_generated": "2026-11-05T10:37:51.659514+00:00"
+    "series": 57,
+    "observations": 10912,
+    "series_count": 57,
+    "observation_count": 10912,
+    "snapshot_generated": "2026-11-05T10:46:00.700343+00:00"
   },
   "data_gaps_detail": [
     {
@@ -603,7 +603,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 18,
+    "source_groups": 19,
     "sources": [
       {
         "source_name": "Eurostat / TurkStat",
@@ -646,6 +646,10 @@
         "charts": 2
       },
       {
+        "source_name": "BIS bilateral exchange rates (WS_XRU)",
+        "charts": 1
+      },
+      {
         "source_name": "BIS central bank policy rates (WS_CBPOL)",
         "charts": 1
       },
@@ -681,7 +685,7 @@
     "quality_counts": {
       "low_confidence": 7,
       "verified": 27,
-      "watch": 22
+      "watch": 23
     },
     "unavailable_count": 1
   },
@@ -694,7 +698,7 @@
   "freshness": {
     "as_of_date": "2026-11-05",
     "counts": {
-      "current": 35,
+      "current": 36,
       "due": 10,
       "projection": 4,
       "stale": 7
@@ -1079,7 +1083,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 56
+      "level": 57
     },
     "non_level": []
   },
@@ -1089,6 +1093,6 @@
       "date",
       "value"
     ],
-    "charted_series": 56
+    "charted_series": 57
   }
 }

@@ -94,3 +94,18 @@ def test_official_gold_changes_use_the_same_month_earlier():
 
 def test_reference_passes_values_through():
     assert apply_op("reference", [[("2026-01-01", 49.3)]], {}) == [("2026-01-01", 49.3)]
+
+
+def test_distributed_lag_ols_recovers_known_pass_through():
+    import random
+    from country_primer.oil_shock_model import _shift, distributed_lag_ols
+    random.seed(1)
+    months = [_shift("2015-01-01", k) for k in range(120)]
+    x = {m: random.uniform(-40, 60) for m in months}
+    y = {}
+    for i, m in enumerate(months):
+        if i >= 2:
+            y[m] = 1.0 + 0.2 * x[m] + 0.1 * x[months[i - 1]] + 0.05 * x[months[i - 2]]
+    fit = distributed_lag_ols(y, x, lags=2, start="2015-01")
+    assert abs(fit["pass_through"] - 0.35) < 1e-6 and fit["r2"] > 0.999
+    assert distributed_lag_ols({m: 1.0 for m in months[:20]}, x, lags=2, start="2015-01") is None  # too short

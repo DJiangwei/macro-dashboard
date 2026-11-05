@@ -266,7 +266,7 @@ scopes:
     quick_refresh: true
     roles:
       energy_cpi_yoy: [energy_hicp_inflation]
-      fx_per_usd: [try_usd]
+      fx_per_usd: [usd_try_bis, try_usd]
 
   - id: HK
     kind: country

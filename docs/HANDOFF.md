@@ -33,6 +33,7 @@
    - 跨经济体面板在 `src/country_primer/transmission.py`（能源冲击对照表）。
 4. **M2 贵金属页**（`config/markets/precious_metals.yaml`，49 张图）：价格、比价、本币金价、实际利率与美元、18 家央行黄金储备（IMF IL）、上海溢价、CFTC 持仓。
 5. **M3 基本金属页**（`config/markets/base_metals.yaml`，47 张图）：LME 三个月期 6 种金属、SHFE/DCE/GFEX 主力（含铁矿石、螺纹、氧化铝、碳酸锂）、上期所进口窗口（含 13% 增值税）、COMEX–LME 铜价差、上期所库存（数据源只有约 3 个月）、IMF 月度（含钴、锂；IMF 锂序列实为人民币/吨）、中国需求（`reference` 算子直接引用中国页序列）、CFTC 铜、铜金比与铜相关货币。
+6. **油价冲击 → CPI 模型**（MODEL）：`src/country_primer/oil_shock_model.py`，输出 `output/models/oil_shock_cpi.json`，显示在能源页宏观传导版块，冲击幅度可在页面上编辑。传导系数由能源 CPI 同比对本币布伦特同比（滞后 0–6 个月，自 2015 年起）的 OLS 回归估计；能源权重取官方数据（Eurostat `prc_hicp_iw` 的 NRG，以及 ONS CJVF），作为输入序列放在能源页的模型输入版块。美国权重无免费来源（BLS 返回 403），记为缺口。CEE 因汇率历史不足，用欧元计价的布伦特作驱动并在页面注明。土耳其新增 BIS 月度 `usd_try_bis`。
 
 ## 3. 架构速查
 
@@ -54,7 +55,7 @@ scripts/uv_project.sh run python scripts/build_scope.py <ID>         # 联网刷
 COUNTRY_PRIMER_ONLY_INDICATORS=a,b scripts/uv_project.sh run python scripts/build_scope.py <ID>   # 只刷新指定指标
 make rebuild-ui                                                        # 离线重建全部页面
 make golden-diff                                                       # 与 HEAD 比较（忽略时间戳）；重构时必须为 0 差异
-make validate                                                          # 提交前必须通过（当前 176 个测试）
+make validate                                                          # 提交前必须通过（当前 178 个测试）
 scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面冒烟检查
 ```
 
@@ -76,10 +77,7 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
    - GIE AGSI+：欧盟及分国储气率。同时修复 CEE 的 `gas_storage_level` 路径。
    - Ember：发电结构。ENTSO-E 可选。
    - 补上以后，从 `energy.yaml` 的 data_gaps 里删掉对应条目。
-2. **`oil_shock_cpi` 模型**
-   - 输出到 `output/models/oil_shock_cpi.json`，页面带 MODEL 徽章，不进 canonical。
-   - 能源权重用官方数据：Eurostat `prc_hicp_iw` 免 key；BLS relative importance。
-   - 传导弹性用各国实际数据回归估计（本币油价同比 → 能源 CPI 同比，带滞后），不要引用无法核实的文献数字。参数必须公开且可编辑。
+2. **油价模型的后续**：美国能源权重（BLS relative importance，可尝试其他公开镜像）；英国车用燃料（07.2.2）纳入能源口径；更长的滞后窗口或分段样本；二轮效应模型（另立 MODEL，不与一轮效应混在一起）。
 3. **基本金属页的后续**：矿山供给（Cochilco、INE、MINEM）、中国精炼产量和分品种进出口、COMEX 铜库存、更长的上期所库存历史（可以考虑在 refresh 时累积历史）、上期所近远月价差。
 4. **后续小项**
    - 土耳其和中东欧的汇率历史太短，本币油价那一列为空（可以加 BIS `bis_fx` 月度序列）。

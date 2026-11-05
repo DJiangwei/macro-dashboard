@@ -18,7 +18,7 @@
 | **South Africa (ZA)** | 50.0 | 53.3 | **mixed** | moderate expansion | inflation pressure | restrictive stance | 38.1 (needs data review) |
 | **United Kingdom (UK)** | 52.9 | 53.3 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 49.2 (needs data review) |
 | **United States (US)** | 55.0 | 43.3 | **defensive** | above-trend expansion | above-target inflation | neutral-moderate stance | 72.8 (usable with watch-list) |
-| **Turkey (TR)** | 46.2 | 51.7 | **defensive** | moderate expansion | inflation pressure | restrictive stance | 70.4 (usable with watch-list) |
+| **Turkey (TR)** | 46.2 | 51.7 | **defensive** | moderate expansion | inflation pressure | restrictive stance | 70.6 (usable with watch-list) |
 | **Hong Kong (HK)** | 62.5 | 55.0 | **mixed** | above-trend expansion | near-target inflation | neutral-moderate stance | 59.8 (needs data review) |
 | **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 63.5 (usable with watch-list) |
 | **Taiwan (TW)** | 75.0 | 71.7 | **constructive** | above-trend expansion | near-target inflation | accommodative stance | 80.8 (high-confidence dashboard) |

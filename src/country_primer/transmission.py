@@ -206,9 +206,21 @@ def render_official_gold(payload: dict[str, Any]) -> str:
 </div>"""
 
 
+def _oil_shock(panel: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    from .oil_shock_model import oil_shock_cpi
+    return oil_shock_cpi(panel, by_id)
+
+
+def _render_oil_shock(payload: dict[str, Any]) -> str:
+    from .oil_shock_model import render_oil_shock_cpi
+    return render_oil_shock_cpi(payload)
+
+
 PANELS = {
     "energy_passthrough": (lambda panel, by_id: energy_passthrough((by_id.get(panel["input"]) or {}).get("observations") or []), render_energy_passthrough),
     "official_gold": (lambda panel, by_id: official_gold(by_id, panel["prefix"]), render_official_gold),
+    # MODEL output: written to output/models/, never to a canonical frame.
+    "oil_shock_cpi": (_oil_shock, _render_oil_shock),
 }
 
 
@@ -221,6 +233,9 @@ def build_panels(config: dict[str, Any], series_list: list[dict[str, Any]], outp
         compute, render = PANELS[panel["type"]]
         payload = compute(panel, by_id)
         payloads[panel["type"]] = payload
+        if payload.get("label") == "MODEL":
+            from .oil_shock_model import write_model
+            write_model(payload, output_dir)
         html[panel["section"]] = html.get(panel["section"], "") + render(payload)
     if payloads:
         (output_dir / f"{slug}_panels.json").write_text(json.dumps(payloads, ensure_ascii=False, indent=1) + "\n")

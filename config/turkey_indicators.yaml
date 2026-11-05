@@ -1023,6 +1023,20 @@ indicators:
     caveat_en: Derived real policy rate calculated as 1-Week Repo Rate minus headline CPI YoY.
     caveat_zh: 衍生实际政策利率，以土耳其央行1周回购利率减去CPI同比增速计算。
 
+  - id: usd_try_bis
+    section: external_fx
+    label_en: "USD/TRY (BIS, monthly)"
+    label_zh: "美元兑土耳其里拉（BIS月度）"
+    unit: "TRY per USD"
+    fetcher: bis_fx
+    series: TR
+    source_name: BIS bilateral exchange rates (WS_XRU)
+    source_url: https://data.bis.org/topics/XRU
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: "End-of-period monthly rate; history for cross-scope use (the TCMB daily feed returns only the latest day)."
+    caveat_zh: "月末汇率；用于跨页面计算的历史序列（TCMB日度接口仅返回最新一天）。"
+
 data_gaps:
   - section: production_cycle
     item_en: Istanbul Chamber of Industry / S&P Global Turkey Manufacturing PMI

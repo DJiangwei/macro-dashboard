@@ -20,6 +20,7 @@ core_view_label_zh: "核心图表"
 # Cross-economy panels computed from other scopes' canonical frames (src/country_primer/transmission.py).
 panels:
   - {type: energy_passthrough, section: macro_transmission, input: brent_spot}
+  - {type: oil_shock_cpi, section: macro_transmission, input: brent_spot, shock_pct: 10, lags: 6, sample_start: "2015-01"}
 
 sections:
   crude_benchmarks:
@@ -72,6 +73,12 @@ sections:
     title_zh: "宏观传导"
     report_logic_en: "From crude to retail fuel, US energy CPI and inflation compensation (5Y breakeven, 5y5y forward)."
     report_logic_zh: "从原油到零售燃油、美国能源CPI与通胀补偿（5年盈亏平衡、5年后5年远期）。"
+
+  model_inputs:
+    title_en: "Model Inputs: Official Energy Weights"
+    title_zh: "模型输入：官方能源权重"
+    report_logic_en: "Basket weights of energy in each consumer price index, used by the oil-shock model in Macro Transmission."
+    report_logic_zh: "各国消费价格指数中能源的篮子权重，供宏观传导版块的油价冲击模型使用。"
 
 indicators:
   # ------------------------------------------------------------ crude_benchmarks
@@ -304,6 +311,36 @@ indicators:
      fetcher: fred, series: T5YIFR, frequency: daily, start_date: 2015-01-01,
      source_name: Federal Reserve via FRED, source_url: "https://fred.stlouisfed.org/series/T5YIFR",
      caveat_en: "Longer-horizon compensation; should move far less with oil than the 5-year breakeven.", caveat_zh: "更长期的通胀补偿；对油价的敏感度应远低于5年期盈亏平衡。"}
+
+  # ------------------------------------------------------------ model_inputs
+  - {id: hicp_energy_weight_ea, section: model_inputs, view: deep, label_en: "HICP Energy Weight — Euro Area", label_zh: "HICP能源权重——欧元区", unit: per mille,
+     fetcher: eurostat_jsonstat, dataset: prc_hicp_iw, filters: {freq: A, geo: EA, coicop18: NRG}, frequency: annual, start_date: "2010",
+     source_authority: official_primary, source_name: Eurostat HICP item weights, source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_iw",
+     caveat_en: "Weight of energy (NRG) in the HICP basket, per mille.", caveat_zh: "能源（NRG）在HICP篮子中的权重，千分比。"}
+  - {id: hicp_energy_weight_cz, section: model_inputs, view: deep, label_en: "HICP Energy Weight — Czechia", label_zh: "HICP能源权重——捷克", unit: per mille,
+     fetcher: eurostat_jsonstat, dataset: prc_hicp_iw, filters: {freq: A, geo: CZ, coicop18: NRG}, frequency: annual, start_date: "2010",
+     source_authority: official_primary, source_name: Eurostat HICP item weights, source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_iw",
+     caveat_en: "Weight of energy (NRG) in the HICP basket, per mille.", caveat_zh: "能源（NRG）在HICP篮子中的权重，千分比。"}
+  - {id: hicp_energy_weight_hu, section: model_inputs, view: deep, label_en: "HICP Energy Weight — Hungary", label_zh: "HICP能源权重——匈牙利", unit: per mille,
+     fetcher: eurostat_jsonstat, dataset: prc_hicp_iw, filters: {freq: A, geo: HU, coicop18: NRG}, frequency: annual, start_date: "2010",
+     source_authority: official_primary, source_name: Eurostat HICP item weights, source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_iw",
+     caveat_en: "Weight of energy (NRG) in the HICP basket, per mille.", caveat_zh: "能源（NRG）在HICP篮子中的权重，千分比。"}
+  - {id: hicp_energy_weight_pl, section: model_inputs, view: deep, label_en: "HICP Energy Weight — Poland", label_zh: "HICP能源权重——波兰", unit: per mille,
+     fetcher: eurostat_jsonstat, dataset: prc_hicp_iw, filters: {freq: A, geo: PL, coicop18: NRG}, frequency: annual, start_date: "2010",
+     source_authority: official_primary, source_name: Eurostat HICP item weights, source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_iw",
+     caveat_en: "Weight of energy (NRG) in the HICP basket, per mille.", caveat_zh: "能源（NRG）在HICP篮子中的权重，千分比。"}
+  - {id: hicp_energy_weight_ro, section: model_inputs, view: deep, label_en: "HICP Energy Weight — Romania", label_zh: "HICP能源权重——罗马尼亚", unit: per mille,
+     fetcher: eurostat_jsonstat, dataset: prc_hicp_iw, filters: {freq: A, geo: RO, coicop18: NRG}, frequency: annual, start_date: "2010",
+     source_authority: official_primary, source_name: Eurostat HICP item weights, source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_iw",
+     caveat_en: "Weight of energy (NRG) in the HICP basket, per mille.", caveat_zh: "能源（NRG）在HICP篮子中的权重，千分比。"}
+  - {id: hicp_energy_weight_tr, section: model_inputs, view: deep, label_en: "HICP Energy Weight — Türkiye", label_zh: "HICP能源权重——土耳其", unit: per mille,
+     fetcher: eurostat_jsonstat, dataset: prc_hicp_iw, filters: {freq: A, geo: TR, coicop18: NRG}, frequency: annual, start_date: "2010",
+     source_authority: official_primary, source_name: Eurostat HICP item weights, source_url: "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_iw",
+     caveat_en: "Weight of energy (NRG) in the HICP basket, per mille.", caveat_zh: "能源（NRG）在HICP篮子中的权重，千分比。"}
+  - {id: cpi_energy_weight_uk, section: model_inputs, view: deep, label_en: "CPI Weight of Electricity, Gas & Other Fuels — United Kingdom", label_zh: "CPI电力、燃气与其他燃料权重——英国", unit: per mille,
+     fetcher: ons_timeseries, series: CJVF, dataset: MM23, ons_path: "/economy/inflationandpriceindices/timeseries/cjvf/mm23/data", frequency: annual, start_date: "2010-01-01",
+     source_authority: official_primary, source_name: ONS, source_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/cjvf/mm23",
+     caveat_en: "CPI division 04.5 weight, per mille; matches the UK household-energy CPI used here (motor fuels are excluded).", caveat_zh: "CPI 04.5类权重，千分比；与此处使用的英国居民能源CPI口径一致（不含车用燃料）。"}
 
 summary_key_ids:
   - brent_spot
