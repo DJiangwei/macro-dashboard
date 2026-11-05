@@ -3,6 +3,7 @@ import json
 from dashboard_summary_utils import (
     load_canonical_data_first_frame,
     retain_last_known_good_series,
+    track_revisions_and_vintages,
     write_canonical_data_first_frame,
 )
 from country_primer.snapshots import (
@@ -117,3 +118,41 @@ def test_cee_refresh_retains_only_expected_missing_indicator() -> None:
     assert [row["indicator_id"] for row in merged] == ["cpi_yoy"]
     assert merged[0]["refresh_fallback"] is True
     assert merged[0]["quality_status"] == "watch"
+
+
+def test_vintage_fields_survive_a_refresh_without_a_new_vintage(tmp_path) -> None:
+    # Before 2026-11-05 the loader dropped these fields, so "propagate the prior
+    # vintage" always propagated None and a fallback claimed a fresh fetch time.
+    path = tmp_path / "frame.json"
+    config = {"indicators": [{"id": "cpi_yoy", "label_en": "CPI", "section": "prices_costs"}]}
+    prior = {"provider_updated": "2026-05-15", "fetch_timestamp": "2026-05-16T00:00:00+00:00", "observations": [["2026-05-01", 1.9]]}
+    write_canonical_data_first_frame(
+        path,
+        "UK",
+        [{
+            "id": "cpi_yoy",
+            "label_en": "CPI",
+            "section": "prices_costs",
+            "frequency": "monthly",
+            "source_name": "ONS",
+            "provider_updated": "2026-06-15",
+            "fetch_timestamp": "2026-06-16T00:00:00+00:00",
+            "prior_vintage": prior,
+            "has_revisions": True,
+            "observations": [{"date": "2026-05-01", "value": 2.0}, {"date": "2026-06-01", "value": 2.1}],
+        }],
+    )
+    restored = load_canonical_data_first_frame(path, config)[0]
+    assert restored["prior_vintage"] == prior
+    assert restored["has_revisions"] is True
+    assert restored["fetch_timestamp"] == "2026-06-16T00:00:00+00:00"
+
+    same_vintage = {
+        "id": "cpi_yoy", "section": "prices_costs", "provider_updated": "2026-06-15",
+        "observations": [{"date": "2026-05-01", "value": 2.0}, {"date": "2026-06-01", "value": 2.1}],
+    }
+    fallback = {**same_vintage, "refresh_fallback": True}
+    tracked = track_revisions_and_vintages([same_vintage, fallback], path, config)
+    assert tracked[0]["prior_vintage"] == prior and tracked[0]["has_revisions"] is True
+    assert tracked[1]["prior_vintage"] == prior
+    assert tracked[1]["fetch_timestamp"] == "2026-06-16T00:00:00+00:00"
