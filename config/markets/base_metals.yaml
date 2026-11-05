@@ -1,0 +1,254 @@
+# Base metals page (scope BASE, framework market_base_metals).
+#
+# Market-first: prices across LME, SHFE/DCE/GFEX and IMF monthly benchmarks,
+# cross-market arbitrage, visible inventories, Chinese demand, positioning,
+# with macro links as an appendix. Derived series use whitelisted operators;
+# `reference` shows another page's series unchanged with its provenance.
+
+name: "Base Metals"
+name_zh: "基本金属"
+code: "BASE"
+iso2: "BASE"
+framework: market_base_metals
+subtitle_en: "Copper, aluminium, zinc, nickel, lead, tin, iron ore and battery metals as markets: LME and Chinese exchange prices, the SHFE import window and the COMEX–LME copper spread, visible stocks, Chinese demand and positioning. Sources: LME and COMEX via Sina/AKShare, SHFE/DCE/GFEX, IMF, CFTC, BIS and FRED."
+subtitle_zh: "以市场为中心的铜、铝、锌、镍、铅、锡、铁矿石与电池金属：LME与中国交易所价格、上期所进口窗口与COMEX–LME铜价差、可见库存、中国需求与持仓。数据来源：LME与COMEX（经新浪/AKShare）、上期所/大商所/广期所、IMF、CFTC、BIS与FRED。"
+min_chart_count: 40
+core_view_label_en: "Key charts"
+core_view_label_zh: "核心图表"
+
+sections:
+  lme_prices:
+    title_en: "LME Prices"
+    title_zh: "LME价格"
+    report_logic_en: "Daily LME 3-month prices for the six base metals."
+    report_logic_zh: "六种基本金属的LME三个月期日度价格。"
+  china_futures:
+    title_en: "Chinese Exchanges"
+    title_zh: "中国交易所"
+    report_logic_en: "SHFE, DCE and GFEX main contracts, including iron ore, rebar, alumina and lithium carbonate."
+    report_logic_zh: "上期所、大商所与广期所主力合约，含铁矿石、螺纹钢、氧化铝与碳酸锂。"
+  arbitrage:
+    title_en: "Cross-Market Arbitrage"
+    title_zh: "跨市场套利"
+    report_logic_en: "The SHFE import window (Shanghai price minus LME converted at the central parity with 13% VAT) and the tariff-driven COMEX–LME copper spread."
+    report_logic_zh: "上期所进口窗口（沪价减按中间价换算并含13%增值税的伦铜价）与关税驱动的COMEX–LME铜价差。"
+  inventories:
+    title_en: "Visible Inventories"
+    title_zh: "可见库存"
+    report_logic_en: "SHFE warehouse stocks. LME stock reports are licensed and COMEX copper stocks have no free source yet."
+    report_logic_zh: "上期所仓库库存。LME库存报告为授权数据，COMEX铜库存暂无免费来源。"
+  monthly_benchmarks:
+    title_en: "Monthly Benchmarks & Battery Metals"
+    title_zh: "月度基准与电池金属"
+    report_logic_en: "IMF monthly averages, including cobalt and lithium, as a verified reference for the daily exchange prices."
+    report_logic_zh: "IMF月均价（含钴与锂），作为交易所日度价格的核验基准。"
+  china_demand:
+    title_en: "Chinese Demand"
+    title_zh: "中国需求"
+    report_logic_en: "China consumes roughly half of the world's refined base metals; these series are taken unchanged from the China page."
+    report_logic_zh: "中国约占全球精炼基本金属消费的一半；以下序列直接取自中国页。"
+  positioning:
+    title_en: "Positioning (CFTC)"
+    title_zh: "持仓（CFTC）"
+    report_logic_en: "COMEX copper managed-money net position."
+    report_logic_zh: "COMEX铜管理基金净持仓。"
+  macro_links:
+    title_en: "Macro Links"
+    title_zh: "宏观关联"
+    report_logic_en: "Copper relative to gold against US yields, and the copper currencies (AUD, CLP, PEN)."
+    report_logic_zh: "铜相对黄金与美债收益率，以及铜相关货币（澳元、智利比索、秘鲁索尔）。"
+
+indicators:
+  # ------------------------------------------------------------ lme_prices
+  - {id: lme_copper_3m, section: lme_prices, view: core, label_en: "Copper (LME 3-month)", label_zh: "铜（LME三个月）", unit: USD/t,
+     fetcher: foreign_futures, series: CAD, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "LME 3-month price, completed sessions only, from a public wrapper. LME official prices and the cash–3M spread are licensed.", caveat_zh: "LME三个月期价格，仅保留已收盘交易日，来自公开封装接口。LME官方价格与现货–三月价差为授权数据。"}
+  - {id: lme_aluminium_3m, section: lme_prices, view: core, label_en: "Aluminium (LME 3-month)", label_zh: "铝（LME三个月）", unit: USD/t,
+     fetcher: foreign_futures, series: AHD, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "LME 3-month price, completed sessions only, from a public wrapper. LME official prices and the cash–3M spread are licensed.", caveat_zh: "LME三个月期价格，仅保留已收盘交易日，来自公开封装接口。LME官方价格与现货–三月价差为授权数据。"}
+  - {id: lme_zinc_3m, section: lme_prices, view: deep, label_en: "Zinc (LME 3-month)", label_zh: "锌（LME三个月）", unit: USD/t,
+     fetcher: foreign_futures, series: ZSD, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "LME 3-month price, completed sessions only, from a public wrapper. LME official prices and the cash–3M spread are licensed.", caveat_zh: "LME三个月期价格，仅保留已收盘交易日，来自公开封装接口。LME官方价格与现货–三月价差为授权数据。"}
+  - {id: lme_nickel_3m, section: lme_prices, view: core, label_en: "Nickel (LME 3-month)", label_zh: "镍（LME三个月）", unit: USD/t,
+     fetcher: foreign_futures, series: NID, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "LME 3-month price, completed sessions only, from a public wrapper. LME official prices and the cash–3M spread are licensed.", caveat_zh: "LME三个月期价格，仅保留已收盘交易日，来自公开封装接口。LME官方价格与现货–三月价差为授权数据。"}
+  - {id: lme_lead_3m, section: lme_prices, view: deep, label_en: "Lead (LME 3-month)", label_zh: "铅（LME三个月）", unit: USD/t,
+     fetcher: foreign_futures, series: PBD, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "LME 3-month price, completed sessions only, from a public wrapper. LME official prices and the cash–3M spread are licensed.", caveat_zh: "LME三个月期价格，仅保留已收盘交易日，来自公开封装接口。LME官方价格与现货–三月价差为授权数据。"}
+  - {id: lme_tin_3m, section: lme_prices, view: deep, label_en: "Tin (LME 3-month)", label_zh: "锡（LME三个月）", unit: USD/t,
+     fetcher: foreign_futures, series: SND, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "LME 3-month price, completed sessions only, from a public wrapper. LME official prices and the cash–3M spread are licensed.", caveat_zh: "LME三个月期价格，仅保留已收盘交易日，来自公开封装接口。LME官方价格与现货–三月价差为授权数据。"}
+
+  # ------------------------------------------------------------ china_futures
+  - {id: shfe_copper, section: china_futures, view: core, label_en: "Copper (SHFE main contract)", label_zh: "铜（SHFE主力合约）", unit: CNY/t,
+     fetcher: cn_futures_main, series: CU0, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Main-contract continuous close (VAT-inclusive yuan price), completed sessions only.", caveat_zh: "主力连续合约收盘价（含增值税人民币价格），仅保留已收盘交易日。"}
+  - {id: shfe_aluminium, section: china_futures, view: deep, label_en: "Aluminium (SHFE main contract)", label_zh: "铝（SHFE主力合约）", unit: CNY/t,
+     fetcher: cn_futures_main, series: AL0, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Main-contract continuous close (VAT-inclusive yuan price), completed sessions only.", caveat_zh: "主力连续合约收盘价（含增值税人民币价格），仅保留已收盘交易日。"}
+  - {id: shfe_zinc, section: china_futures, view: deep, label_en: "Zinc (SHFE main contract)", label_zh: "锌（SHFE主力合约）", unit: CNY/t,
+     fetcher: cn_futures_main, series: ZN0, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Main-contract continuous close (VAT-inclusive yuan price), completed sessions only.", caveat_zh: "主力连续合约收盘价（含增值税人民币价格），仅保留已收盘交易日。"}
+  - {id: shfe_nickel, section: china_futures, view: deep, label_en: "Nickel (SHFE main contract)", label_zh: "镍（SHFE主力合约）", unit: CNY/t,
+     fetcher: cn_futures_main, series: NI0, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Main-contract continuous close (VAT-inclusive yuan price), completed sessions only.", caveat_zh: "主力连续合约收盘价（含增值税人民币价格），仅保留已收盘交易日。"}
+  - {id: shfe_lead, section: china_futures, view: deep, label_en: "Lead (SHFE main contract)", label_zh: "铅（SHFE主力合约）", unit: CNY/t,
+     fetcher: cn_futures_main, series: PB0, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Main-contract continuous close (VAT-inclusive yuan price), completed sessions only.", caveat_zh: "主力连续合约收盘价（含增值税人民币价格），仅保留已收盘交易日。"}
+  - {id: shfe_tin, section: china_futures, view: deep, label_en: "Tin (SHFE main contract)", label_zh: "锡（SHFE主力合约）", unit: CNY/t,
+     fetcher: cn_futures_main, series: SN0, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Main-contract continuous close (VAT-inclusive yuan price), completed sessions only.", caveat_zh: "主力连续合约收盘价（含增值税人民币价格），仅保留已收盘交易日。"}
+  - {id: dce_iron_ore, section: china_futures, view: core, label_en: "Iron Ore (DCE main contract)", label_zh: "铁矿石（DCE主力合约）", unit: CNY/t,
+     fetcher: cn_futures_main, series: I0, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Main-contract continuous close (VAT-inclusive yuan price), completed sessions only.", caveat_zh: "主力连续合约收盘价（含增值税人民币价格），仅保留已收盘交易日。"}
+  - {id: shfe_rebar, section: china_futures, view: deep, label_en: "Rebar (SHFE main contract)", label_zh: "螺纹钢（SHFE主力合约）", unit: CNY/t,
+     fetcher: cn_futures_main, series: RB0, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Main-contract continuous close (VAT-inclusive yuan price), completed sessions only.", caveat_zh: "主力连续合约收盘价（含增值税人民币价格），仅保留已收盘交易日。"}
+  - {id: gfex_lithium_carbonate, section: china_futures, view: core, label_en: "Lithium Carbonate (GFEX main contract)", label_zh: "碳酸锂（GFEX主力合约）", unit: CNY/t,
+     fetcher: cn_futures_main, series: LC0, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Main-contract continuous close (VAT-inclusive yuan price), completed sessions only.", caveat_zh: "主力连续合约收盘价（含增值税人民币价格），仅保留已收盘交易日。"}
+  - {id: shfe_alumina, section: china_futures, view: deep, label_en: "Alumina (SHFE main contract)", label_zh: "氧化铝（SHFE主力合约）", unit: CNY/t,
+     fetcher: cn_futures_main, series: AO0, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Main-contract continuous close (VAT-inclusive yuan price), completed sessions only.", caveat_zh: "主力连续合约收盘价（含增值税人民币价格），仅保留已收盘交易日。"}
+
+  # ------------------------------------------------------------ arbitrage
+  - {id: comex_copper, section: arbitrage, label_en: "Copper (COMEX front month)", label_zh: "铜（COMEX近月）", unit: US cents/lb,
+     fetcher: foreign_futures, series: HG, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Quoted in US cents per pound.", caveat_zh: "以美分/磅计价。"}
+  - {id: comex_lme_copper_spread, section: arbitrage, view: core, label_en: "COMEX – LME Copper Spread", label_zh: "COMEX–LME铜价差", unit: USD/t,
+     derivation: derived, op: linear, weights: [22.0462262, -1], inputs: [comex_copper, lme_copper_3m], frequency: daily,
+     caveat_en: "COMEX (cents/lb × 22.0462 = USD/t) minus LME 3-month. US tariff expectations drive this spread.", caveat_zh: "COMEX（美分/磅×22.0462=美元/吨）减LME三个月。美国关税预期驱动该价差。"}
+  - {id: lme_copper_cny_vat, section: arbitrage, label_en: "LME Copper in CNY incl. 13% VAT (import parity)", label_zh: "伦铜人民币含税价（进口平价）", unit: CNY/t,
+     derivation: derived, op: product, factor: 1.13, inputs: [lme_copper_3m, "CN:usd_cny_midpoint"], frequency: daily,
+     caveat_en: "LME 3-month × USD/CNY central parity × 1.13; excludes the Yangshan premium, freight and financing.", caveat_zh: "LME三个月价 × 人民币中间价 × 1.13；不含洋山溢价、运费与资金成本。"}
+  - {id: copper_import_window, section: arbitrage, view: core, label_en: "SHFE Copper Import Window", label_zh: "上期所铜进口窗口", unit: CNY/t,
+     derivation: derived, op: spread, inputs: [shfe_copper, lme_copper_cny_vat], frequency: daily,
+     caveat_en: "SHFE main contract minus import parity. Positive values favour imports into China. SHFE and LME close at different times.", caveat_zh: "沪铜主力减进口平价。正值有利于进口。两地收盘时间不同。"}
+  - {id: lme_aluminium_cny_vat, section: arbitrage, label_en: "LME Aluminium in CNY incl. 13% VAT (import parity)", label_zh: "伦铝人民币含税价（进口平价）", unit: CNY/t,
+     derivation: derived, op: product, factor: 1.13, inputs: [lme_aluminium_3m, "CN:usd_cny_midpoint"], frequency: daily,
+     caveat_en: "LME 3-month × USD/CNY central parity × 1.13; excludes premiums, freight and duties.", caveat_zh: "LME三个月价 × 人民币中间价 × 1.13；不含溢价、运费与关税。"}
+  - {id: aluminium_import_window, section: arbitrage, label_en: "SHFE Aluminium Import Window", label_zh: "上期所铝进口窗口", unit: CNY/t,
+     derivation: derived, op: spread, inputs: [shfe_aluminium, lme_aluminium_cny_vat], frequency: daily,
+     caveat_en: "SHFE main contract minus import parity; China is normally an aluminium exporter, so this is usually negative.", caveat_zh: "沪铝主力减进口平价；中国通常是铝出口国，因此通常为负。"}
+
+  # ------------------------------------------------------------ inventories
+  - {id: shfe_copper_stocks, section: inventories, view: core, label_en: "Copper — SHFE Warehouse Stocks", label_zh: "铜——上期所库存", unit: t,
+     fetcher: cn_futures_inventory, series: "沪铜", frequency: daily, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
+     caveat_en: "The source returns roughly the last three months only, so this chart has a short history.", caveat_zh: "数据源仅返回约最近三个月，因此本图历史较短。"}
+  - {id: shfe_aluminium_stocks, section: inventories, view: deep, label_en: "Aluminium — SHFE Warehouse Stocks", label_zh: "铝——上期所库存", unit: t,
+     fetcher: cn_futures_inventory, series: "沪铝", frequency: daily, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
+     caveat_en: "The source returns roughly the last three months only, so this chart has a short history.", caveat_zh: "数据源仅返回约最近三个月，因此本图历史较短。"}
+  - {id: shfe_zinc_stocks, section: inventories, view: deep, label_en: "Zinc — SHFE Warehouse Stocks", label_zh: "锌——上期所库存", unit: t,
+     fetcher: cn_futures_inventory, series: "沪锌", frequency: daily, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
+     caveat_en: "The source returns roughly the last three months only, so this chart has a short history.", caveat_zh: "数据源仅返回约最近三个月，因此本图历史较短。"}
+
+  # ------------------------------------------------------------ monthly_benchmarks
+  - {id: copper_monthly_imf, section: monthly_benchmarks, label_en: "Copper (IMF monthly average)", label_zh: "铜（IMF月均价）", unit: USD/t,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PCOPP.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "Monthly average compiled by the IMF.", caveat_zh: "IMF编制的月均价。"}
+  - {id: aluminium_monthly_imf, section: monthly_benchmarks, label_en: "Aluminium (IMF monthly average)", label_zh: "铝（IMF月均价）", unit: USD/t,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PALUM.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "Monthly average compiled by the IMF.", caveat_zh: "IMF编制的月均价。"}
+  - {id: nickel_monthly_imf, section: monthly_benchmarks, label_en: "Nickel (IMF monthly average)", label_zh: "镍（IMF月均价）", unit: USD/t,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PNICK.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "Monthly average compiled by the IMF.", caveat_zh: "IMF编制的月均价。"}
+  - {id: zinc_monthly_imf, section: monthly_benchmarks, label_en: "Zinc (IMF monthly average)", label_zh: "锌（IMF月均价）", unit: USD/t,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PZINC.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "Monthly average compiled by the IMF.", caveat_zh: "IMF编制的月均价。"}
+  - {id: lead_monthly_imf, section: monthly_benchmarks, label_en: "Lead (IMF monthly average)", label_zh: "铅（IMF月均价）", unit: USD/t,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PLEAD.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "Monthly average compiled by the IMF.", caveat_zh: "IMF编制的月均价。"}
+  - {id: tin_monthly_imf, section: monthly_benchmarks, label_en: "Tin (IMF monthly average)", label_zh: "锡（IMF月均价）", unit: USD/t,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PTIN.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "Monthly average compiled by the IMF.", caveat_zh: "IMF编制的月均价。"}
+  - {id: iron_ore_monthly_imf, section: monthly_benchmarks, label_en: "Iron Ore (China import, CFR) (IMF monthly average)", label_zh: "铁矿石（中国进口CFR）（IMF月均价）", unit: USD/dmt,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PIORECR.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "Monthly average compiled by the IMF.", caveat_zh: "IMF编制的月均价。"}
+  - {id: cobalt_monthly_imf, section: monthly_benchmarks, label_en: "Cobalt (IMF monthly average)", label_zh: "钴（IMF月均价）", unit: USD/t,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PCOBA.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "Monthly average compiled by the IMF.", caveat_zh: "IMF编制的月均价。"}
+  - {id: lithium_monthly_imf, section: monthly_benchmarks, label_en: "Lithium Carbonate, China (IMF monthly average)", label_zh: "碳酸锂（中国，IMF月均价）", unit: CNY/t,
+     fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PLITH.USD.M, frequency: monthly, start_date: 2010-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
+     caveat_en: "The IMF API does not state this series' unit; its level and history match the yuan-denominated Chinese lithium carbonate price (compare the GFEX contract), so it is shown as CNY/t.",
+     caveat_zh: "IMF接口未注明该序列单位；其水平与走势与人民币计价的中国碳酸锂价格一致（可对照广期所合约），因此按人民币/吨显示。"}
+  - {id: copper_yoy, section: monthly_benchmarks, label_en: "Copper YoY (IMF monthly average)", label_zh: "铜价同比（IMF月均价）", unit: "% y/y",
+     derivation: derived, op: yoy_pct, inputs: [copper_monthly_imf], frequency: monthly,
+     caveat_en: "Year-on-year change of the IMF monthly average.", caveat_zh: "IMF月均价的同比变动。"}
+
+  # ------------------------------------------------------------ china_demand
+  - {id: cn_manufacturing_pmi, section: china_demand, view: core, label_en: "China Manufacturing PMI (NBS)", label_zh: "中国制造业PMI（统计局）", unit: "index",
+     derivation: derived, op: reference, inputs: ["CN:manufacturing_pmi_akshare"], frequency: monthly,
+     caveat_en: "Shown as published on the China page (see that page for source details).", caveat_zh: "与中国页发布的数据一致（来源详见中国页）。"}
+  - {id: cn_industrial_production_yoy, section: china_demand, view: deep, label_en: "China Industrial Value Added YoY", label_zh: "中国工业增加值同比", unit: "% y/y",
+     derivation: derived, op: reference, inputs: ["CN:industrial_value_added_yoy_akshare"], frequency: monthly,
+     caveat_en: "Shown as published on the China page (see that page for source details).", caveat_zh: "与中国页发布的数据一致（来源详见中国页）。"}
+  - {id: cn_electricity_consumption_yoy, section: china_demand, view: deep, label_en: "China Electricity Consumption YoY", label_zh: "中国全社会用电量同比", unit: "% y/y",
+     derivation: derived, op: reference, inputs: ["CN:electricity_consumption_yoy_akshare"], frequency: monthly,
+     caveat_en: "Shown as published on the China page (see that page for source details).", caveat_zh: "与中国页发布的数据一致（来源详见中国页）。"}
+  - {id: cn_property_investment_ytd_yoy, section: china_demand, view: core, label_en: "China Real Estate Investment, YTD YoY", label_zh: "中国房地产开发投资累计同比", unit: "% y/y",
+     derivation: derived, op: reference, inputs: ["CN:real_estate_development_investment_ytd_yoy_eastmoney"], frequency: monthly,
+     caveat_en: "Shown as published on the China page (see that page for source details).", caveat_zh: "与中国页发布的数据一致（来源详见中国页）。"}
+  - {id: cn_nev_retail_sales, section: china_demand, view: deep, label_en: "China New Energy Vehicle Retail Sales", label_zh: "中国新能源车零售销量", unit: "10k vehicles",
+     derivation: derived, op: reference, inputs: ["CN:new_energy_vehicle_retail_cpca"], frequency: monthly,
+     caveat_en: "Shown as published on the China page (see that page for source details).", caveat_zh: "与中国页发布的数据一致（来源详见中国页）。"}
+
+  # ------------------------------------------------------------ positioning
+  - {id: cftc_copper_mm_net, section: positioning, view: core, label_en: "Copper Managed-Money Net Position", label_zh: "铜管理基金净持仓", unit: contracts,
+     fetcher: cftc_positions, series: "085692", frequency: weekly, start_date: 2010-01-01, source_authority: official_primary, source_name: "CFTC Commitments of Traders (disaggregated)", source_url: "https://publicreporting.cftc.gov/stories/s/r4w3-av2u",
+     caveat_en: "COMEX copper, managed-money long minus short, futures only.", caveat_zh: "COMEX铜，管理基金多头减空头，仅期货。"}
+  - {id: cftc_copper_mm_net_zscore, section: positioning, label_en: "Copper Managed-Money Net Position, 3-Year z-score", label_zh: "铜管理基金净持仓三年z值", unit: z,
+     derivation: derived, op: zscore, window: 156, inputs: [cftc_copper_mm_net], frequency: weekly,
+     caveat_en: "Relative to the trailing 156-week mean and standard deviation.", caveat_zh: "相对过去156周均值与标准差。"}
+
+  # ------------------------------------------------------------ macro_links
+  - {id: copper_gold_ratio, section: macro_links, view: core, label_en: "Copper / Gold Ratio", label_zh: "铜金比", unit: "t copper per oz gold ×1000",
+     derivation: derived, op: ratio, factor: 1000, inputs: [lme_copper_3m, "PRECIOUS:gold_front_futures"], frequency: daily,
+     caveat_en: "LME copper (USD/t) ÷ COMEX gold (USD/oz) × 1000; tends to move with long-term yields and growth expectations.", caveat_zh: "伦铜（美元/吨）÷ COMEX金（美元/盎司）× 1000；常与长期收益率和增长预期同向。"}
+  - {id: us_treasury_10y, section: macro_links, view: core, label_en: "US 10-Year Treasury Yield", label_zh: "美国10年期国债收益率", unit: "%",
+     fetcher: fred, series: DGS10, frequency: daily, start_date: 2015-01-01,
+     source_name: Federal Reserve H.15 via FRED, source_url: "https://fred.stlouisfed.org/series/DGS10",
+     caveat_en: "Constant-maturity 10-year Treasury yield.", caveat_zh: "10年期国债固定期限收益率。"}
+  - {id: aud_usd, section: macro_links, label_en: "AUD/USD", label_zh: "澳元兑美元", unit: USD per AUD,
+     fetcher: fred, series: DEXUSAL, frequency: daily, start_date: 2015-01-01,
+     source_name: Federal Reserve H.10 via FRED, source_url: "https://fred.stlouisfed.org/series/DEXUSAL",
+     caveat_en: "US dollars per Australian dollar.", caveat_zh: "每澳元兑美元。"}
+  - {id: usd_clp, section: macro_links, label_en: "USD/CLP (BIS, monthly)", label_zh: "美元兑智利比索（BIS月度）", unit: CLP per USD,
+     fetcher: bis_fx, series: CL, frequency: monthly, start_date: 2005-01-01,
+     source_name: BIS bilateral exchange rates (WS_XRU), source_url: "https://data.bis.org/topics/XRU",
+     caveat_en: "End-of-period monthly rate; Chile is the largest copper producer.", caveat_zh: "月末汇率；智利是最大产铜国。"}
+  - {id: usd_pen, section: macro_links, label_en: "USD/PEN (BIS, monthly)", label_zh: "美元兑秘鲁索尔（BIS月度）", unit: PEN per USD,
+     fetcher: bis_fx, series: PE, frequency: monthly, start_date: 2005-01-01,
+     source_name: BIS bilateral exchange rates (WS_XRU), source_url: "https://data.bis.org/topics/XRU",
+     caveat_en: "End-of-period monthly rate; Peru is the third-largest copper producer.", caveat_zh: "月末汇率；秘鲁是第三大产铜国。"}
+
+summary_key_ids:
+  - lme_copper_3m
+  - lme_aluminium_3m
+  - shfe_copper
+  - comex_lme_copper_spread
+  - copper_import_window
+  - shfe_copper_stocks
+  - cftc_copper_mm_net
+  - copper_gold_ratio
+
+data_gaps:
+  - section: lme_prices
+    item_en: LME official prices, cash–3M spread and LME warehouse stocks
+    item_zh: LME官方价格、现货–三月价差与LME库存
+    status_en: Licensed by the LME; the free mirror for LME stocks stopped in July 2026.
+    status_zh: 为LME授权数据；LME库存的免费镜像已于2026年7月停更。
+  - section: inventories
+    item_en: COMEX copper stocks and long SHFE inventory history
+    item_zh: COMEX铜库存与上期所长期库存历史
+    status_en: No free machine-readable COMEX copper source found; the SHFE source returns about three months.
+    status_zh: 未找到免费机读的COMEX铜库存来源；上期所数据源仅返回约三个月。
+  - section: china_demand
+    item_en: Chinese refined metal output and copper/aluminium trade by product
+    item_zh: 中国精炼金属产量与分品种铜铝进出口
+    status_en: NBS is not reachable from this environment; customs product detail to be sourced.
+    status_zh: 本环境无法访问统计局接口；海关分品种数据待接入。
+  - section: monthly_benchmarks
+    item_en: Mine supply (Chile, Peru, Indonesian nickel), TC/RC and ICSG balances
+    item_zh: 矿山供给（智利、秘鲁、印尼镍）、加工费与ICSG供需平衡
+    status_en: To be sourced (Cochilco, INE, MINEM); TC/RC and ICSG are licensed or registration-only.
+    status_zh: 待接入（Cochilco、INE、MINEM）；加工费与ICSG为授权或需注册的数据。

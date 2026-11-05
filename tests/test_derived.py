@@ -90,3 +90,7 @@ def test_official_gold_changes_use_the_same_month_earlier():
         {"date": "2023-06-01", "value": 100.0}, {"date": "2025-06-01", "value": 110.0}, {"date": "2026-06-01", "value": 130.0}]}}
     row = official_gold(series, "cb_gold_")["rows"][0]
     assert row["tonnes"] == 130.0 and row["change_12m"] == 20.0 and row["change_36m"] == 30.0
+
+
+def test_reference_passes_values_through():
+    assert apply_op("reference", [[("2026-01-01", 49.3)]], {}) == [("2026-01-01", 49.3)]

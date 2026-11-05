@@ -227,3 +227,41 @@ def fetch_sge_spot(spec: dict[str, Any]) -> dict[str, Any]:
     if not observations:
         raise RuntimeError(f"SGE returned no completed sessions for {series}")
     return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": "https://www.sge.com.cn/sjzx/mrhqsj"}
+
+
+def fetch_cn_futures_main(spec: dict[str, Any]) -> dict[str, Any]:
+    """Chinese exchange main-contract continuous close (Sina symbol, e.g. ``CU0``), completed sessions."""
+    import akshare as ak
+
+    frame = ak.futures_main_sina(symbol=str(spec["series"]))
+    today = datetime.now(UTC).date().isoformat()
+    start = str(spec.get("start_date") or "")[:10]
+    observations = []
+    for day, close in zip(frame["日期"], frame["收盘价"]):
+        day = str(day)[:10]
+        if day >= today or (start and day < start):
+            continue
+        try:
+            observations.append({"date": day, "value": float(close)})
+        except (TypeError, ValueError):
+            continue
+    if not observations:
+        raise RuntimeError(f"No completed sessions for {spec['series']}")
+    return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": "https://finance.sina.com.cn/futuremarket/"}
+
+
+def fetch_cn_futures_inventory(spec: dict[str, Any]) -> dict[str, Any]:
+    """Exchange warehouse stocks from Eastmoney via AKShare (``series`` is the AKShare symbol, e.g. 沪铜)."""
+    import akshare as ak
+
+    frame = ak.futures_inventory_em(symbol=str(spec["series"]))
+    observations = []
+    for day, stock in zip(frame["日期"], frame["库存"]):
+        try:
+            observations.append({"date": str(day)[:10], "value": float(stock)})
+        except (TypeError, ValueError):
+            continue
+    observations.sort(key=lambda o: o["date"])
+    if not observations:
+        raise RuntimeError(f"No inventory rows for {spec['series']}")
+    return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": "https://data.eastmoney.com/ifdata/kcsj.html"}

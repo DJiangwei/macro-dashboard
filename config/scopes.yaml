@@ -494,3 +494,22 @@ scopes:
       format: "{value:,.1f} USD/oz ({date})"
     fetch_workers: 4
     quick_refresh: true
+
+  - id: BASE
+    kind: market
+    slug: base_metals
+    name: {en: Base Metals, zh: 基本金属}
+    flag: "🔩"
+    region: markets
+    pipeline: data_first
+    indicators: config/markets/base_metals.yaml
+    currency: USD
+    institution: LME
+    framework_label: Market Base Metals Framework
+    headline:
+      indicators: [lme_copper_3m, copper_monthly_imf]
+      key: copper_latest
+      label: Copper (LME 3-month)
+      format: "{value:,.0f} USD/t ({date})"
+    fetch_workers: 4
+    quick_refresh: true

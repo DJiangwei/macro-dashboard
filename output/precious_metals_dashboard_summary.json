@@ -1,8 +1,8 @@
 {
   "file": "precious_metals.html",
-  "generated": "2026-11-05T10:28:26.656972+00:00",
+  "generated": "2026-11-05T10:38:06.598761+00:00",
   "charts": 49,
-  "source_groups": 14,
+  "source_groups": 19,
   "data_gaps": 4,
   "low_confidence": 3,
   "key_series_latest": [
@@ -62,7 +62,7 @@
       "latest_value": -72.763289,
       "latest_display": "-72.8 USD/oz",
       "frequency": "daily",
-      "source_name": "Derived from Derived from Shanghai Gold Exchange via AKShare; Sina Finance via AKShare",
+      "source_name": "Derived from Derived from Shanghai Gold Exchange via AKShare; SAFE via AKShare (CN page); Sina Finance via AKShare",
       "series": "sge_gold_usd_oz − gold_front_futures",
       "quality_status": "watch"
     },
@@ -152,15 +152,11 @@
     }
   ],
   "source_health": {
-    "source_groups": 14,
+    "source_groups": 19,
     "sources": [
       {
         "source_name": "IMF International Liquidity",
         "charts": 18
-      },
-      {
-        "source_name": "Derived from Sina Finance via AKShare",
-        "charts": 8
       },
       {
         "source_name": "Sina Finance via AKShare",
@@ -175,6 +171,10 @@
         "charts": 4
       },
       {
+        "source_name": "Derived from Sina Finance via AKShare",
+        "charts": 3
+      },
+      {
         "source_name": "Shanghai Gold Exchange via AKShare",
         "charts": 2
       },
@@ -187,7 +187,7 @@
         "charts": 1
       },
       {
-        "source_name": "Derived from Derived from Shanghai Gold Exchange via AKShare; Sina Finance via AKShare",
+        "source_name": "Derived from Derived from Shanghai Gold Exchange via AKShare; SAFE via AKShare (CN page); Sina Finance via AKShare",
         "charts": 1
       },
       {
@@ -195,7 +195,27 @@
         "charts": 1
       },
       {
-        "source_name": "Derived from Shanghai Gold Exchange via AKShare",
+        "source_name": "Derived from Shanghai Gold Exchange via AKShare; SAFE via AKShare (CN page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; ECB (EA page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; EIA spot prices (ENERGY page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; FRED / Federal Reserve H.10 (JP page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; Federal Reserve H.10 via FRED (IN page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; SAFE via AKShare (CN page)",
         "charts": 1
       },
       {

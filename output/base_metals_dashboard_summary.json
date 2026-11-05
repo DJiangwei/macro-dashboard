@@ -1,0 +1,260 @@
+{
+  "file": "base_metals.html",
+  "generated": "2026-11-05T10:38:06.918562+00:00",
+  "charts": 47,
+  "source_groups": 17,
+  "data_gaps": 4,
+  "low_confidence": 0,
+  "key_series_latest": [
+    {
+      "id": "lme_copper_3m",
+      "label_en": "Copper (LME 3-month)",
+      "label_zh": "铜（LME三个月）",
+      "latest_date": "2026-11-04",
+      "latest_value": 14013.0,
+      "latest_display": "14,013 USD/t",
+      "frequency": "daily",
+      "source_name": "Sina Finance via AKShare",
+      "series": "CAD",
+      "quality_status": "watch"
+    },
+    {
+      "id": "lme_aluminium_3m",
+      "label_en": "Aluminium (LME 3-month)",
+      "label_zh": "铝（LME三个月）",
+      "latest_date": "2026-11-04",
+      "latest_value": 3040.5,
+      "latest_display": "3,040.50 USD/t",
+      "frequency": "daily",
+      "source_name": "Sina Finance via AKShare",
+      "series": "AHD",
+      "quality_status": "watch"
+    },
+    {
+      "id": "shfe_copper",
+      "label_en": "Copper (SHFE main contract)",
+      "label_zh": "铜（SHFE主力合约）",
+      "latest_date": "2026-11-04",
+      "latest_value": 106170.0,
+      "latest_display": "106,170 CNY/t",
+      "frequency": "daily",
+      "source_name": "Sina Finance via AKShare",
+      "series": "CU0",
+      "quality_status": "watch"
+    },
+    {
+      "id": "comex_lme_copper_spread",
+      "label_en": "COMEX – LME Copper Spread",
+      "label_zh": "COMEX–LME铜价差",
+      "latest_date": "2026-11-04",
+      "latest_value": 119.733306,
+      "latest_display": "119.7 USD/t",
+      "frequency": "daily",
+      "source_name": "Derived from Sina Finance via AKShare",
+      "series": "22.0462262×comex_copper + -1×lme_copper_3m",
+      "quality_status": "watch"
+    },
+    {
+      "id": "copper_import_window",
+      "label_en": "SHFE Copper Import Window",
+      "label_zh": "上期所铜进口窗口",
+      "latest_date": "2026-11-04",
+      "latest_value": -207.44742,
+      "latest_display": "-207.4 CNY/t",
+      "frequency": "daily",
+      "source_name": "Derived from Sina Finance via AKShare; Derived from Sina Finance via AKShare; SAFE via AKShare (CN page)",
+      "series": "shfe_copper − lme_copper_cny_vat",
+      "quality_status": "watch"
+    },
+    {
+      "id": "shfe_copper_stocks",
+      "label_en": "Copper — SHFE Warehouse Stocks",
+      "label_zh": "铜——上期所库存",
+      "latest_date": "2026-11-05",
+      "latest_value": 6574.0,
+      "latest_display": "6,574 t",
+      "frequency": "daily",
+      "source_name": "SHFE warehouse stocks via Eastmoney/AKShare",
+      "series": "沪铜",
+      "quality_status": "watch"
+    },
+    {
+      "id": "cftc_copper_mm_net",
+      "label_en": "Copper Managed-Money Net Position",
+      "label_zh": "铜管理基金净持仓",
+      "latest_date": "2026-10-27",
+      "latest_value": 40575.0,
+      "latest_display": "40,575 contracts",
+      "frequency": "weekly",
+      "source_name": "CFTC Commitments of Traders (disaggregated)",
+      "series": "085692",
+      "quality_status": "verified"
+    },
+    {
+      "id": "copper_gold_ratio",
+      "label_en": "Copper / Gold Ratio",
+      "label_zh": "铜金比",
+      "latest_date": "2026-11-04",
+      "latest_value": 3441.306483,
+      "latest_display": "3,441.31 t copper per oz gold ×1000",
+      "frequency": "daily",
+      "source_name": "Derived from Sina Finance via AKShare; Sina Finance via AKShare (PRECIOUS page)",
+      "series": "lme_copper_3m / PRECIOUS:gold_front_futures × 1000",
+      "quality_status": "watch"
+    }
+  ],
+  "unavailable": [],
+  "data_mode": "snapshot",
+  "latest_cards": [],
+  "copper_latest": "14,013 USD/t (2026-11-04)",
+  "cross_checks": [],
+  "canonical_frame": {
+    "schema_version": "data-first-canonical-v2",
+    "observation_columns": [
+      "date",
+      "value"
+    ],
+    "file": "base_metals_canonical_frame.json",
+    "series": 47,
+    "observations": 69096,
+    "series_count": 47,
+    "observation_count": 69096,
+    "snapshot_generated": "2026-11-05T10:37:46.417871+00:00"
+  },
+  "data_gaps_detail": [
+    {
+      "section": "lme_prices",
+      "item_en": "LME official prices, cash–3M spread and LME warehouse stocks",
+      "item_zh": "LME官方价格、现货–三月价差与LME库存",
+      "status_en": "Licensed by the LME; the free mirror for LME stocks stopped in July 2026.",
+      "status_zh": "为LME授权数据；LME库存的免费镜像已于2026年7月停更。"
+    },
+    {
+      "section": "inventories",
+      "item_en": "COMEX copper stocks and long SHFE inventory history",
+      "item_zh": "COMEX铜库存与上期所长期库存历史",
+      "status_en": "No free machine-readable COMEX copper source found; the SHFE source returns about three months.",
+      "status_zh": "未找到免费机读的COMEX铜库存来源；上期所数据源仅返回约三个月。"
+    },
+    {
+      "section": "china_demand",
+      "item_en": "Chinese refined metal output and copper/aluminium trade by product",
+      "item_zh": "中国精炼金属产量与分品种铜铝进出口",
+      "status_en": "NBS is not reachable from this environment; customs product detail to be sourced.",
+      "status_zh": "本环境无法访问统计局接口；海关分品种数据待接入。"
+    },
+    {
+      "section": "monthly_benchmarks",
+      "item_en": "Mine supply (Chile, Peru, Indonesian nickel), TC/RC and ICSG balances",
+      "item_zh": "矿山供给（智利、秘鲁、印尼镍）、加工费与ICSG供需平衡",
+      "status_en": "To be sourced (Cochilco, INE, MINEM); TC/RC and ICSG are licensed or registration-only.",
+      "status_zh": "待接入（Cochilco、INE、MINEM）；加工费与ICSG为授权或需注册的数据。"
+    }
+  ],
+  "source_health": {
+    "source_groups": 17,
+    "sources": [
+      {
+        "source_name": "Sina Finance via AKShare",
+        "charts": 17
+      },
+      {
+        "source_name": "IMF Primary Commodity Prices",
+        "charts": 9
+      },
+      {
+        "source_name": "SHFE warehouse stocks via Eastmoney/AKShare",
+        "charts": 3
+      },
+      {
+        "source_name": "AKShare / Eastmoney Data Center (CN page)",
+        "charts": 2
+      },
+      {
+        "source_name": "BIS bilateral exchange rates (WS_XRU)",
+        "charts": 2
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; Derived from Sina Finance via AKShare; SAFE via AKShare (CN page)",
+        "charts": 2
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; SAFE via AKShare (CN page)",
+        "charts": 2
+      },
+      {
+        "source_name": "AKShare / China Passenger Car Association (CN page)",
+        "charts": 1
+      },
+      {
+        "source_name": "AKShare / Sina Finance (CN page)",
+        "charts": 1
+      },
+      {
+        "source_name": "CFTC Commitments of Traders (disaggregated)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from CFTC Commitments of Traders (disaggregated)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from IMF Primary Commodity Prices",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; Sina Finance via AKShare (PRECIOUS page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Eastmoney Data Center / NBS-style industry index (CN page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Federal Reserve H.10 via FRED",
+        "charts": 1
+      },
+      {
+        "source_name": "Federal Reserve H.15 via FRED",
+        "charts": 1
+      }
+    ],
+    "quality_counts": {
+      "verified": 1,
+      "watch": 46
+    },
+    "unavailable_count": 0
+  },
+  "framework": {
+    "version": 2,
+    "pillars": 9,
+    "core_concepts": 48,
+    "legacy_aliases": 7
+  },
+  "freshness": {
+    "as_of_date": "2026-11-05",
+    "counts": {
+      "current": 47
+    },
+    "latest_historical_date": "2026-11-05",
+    "attention": []
+  },
+  "transform_audit": {
+    "counts": {
+      "level": 47
+    },
+    "non_level": []
+  },
+  "canonical_schema": {
+    "schema_version": "data-first-canonical-v2",
+    "observation_columns": [
+      "date",
+      "value"
+    ],
+    "charted_series": 47
+  }
+}

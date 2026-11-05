@@ -32,6 +32,7 @@
    - 派生序列由 `src/country_primer/derived.py` 计算，只允许白名单算子。
    - 跨经济体面板在 `src/country_primer/transmission.py`（能源冲击对照表）。
 4. **M2 贵金属页**（`config/markets/precious_metals.yaml`，49 张图）：价格、比价、本币金价、实际利率与美元、18 家央行黄金储备（IMF IL）、上海溢价、CFTC 持仓。
+5. **M3 基本金属页**（`config/markets/base_metals.yaml`，47 张图）：LME 三个月期 6 种金属、SHFE/DCE/GFEX 主力（含铁矿石、螺纹、氧化铝、碳酸锂）、上期所进口窗口（含 13% 增值税）、COMEX–LME 铜价差、上期所库存（数据源只有约 3 个月）、IMF 月度（含钴、锂；IMF 锂序列实为人民币/吨）、中国需求（`reference` 算子直接引用中国页序列）、CFTC 铜、铜金比与铜相关货币。
 
 ## 3. 架构速查
 
@@ -40,7 +41,7 @@
 | 新增国家（不改代码） | `config/scopes.yaml` 加一条 + `config/countries/<slug>.yaml`（templates + params），见 AGENTS.md「Adding a Country」 |
 | 新增市场页 | `config/scopes.yaml`（`kind: market`，排在经济体之后）+ `config/markets/<slug>.yaml` |
 | 新数据源 | 在 `adapters.py` 或 `energy_adapters.py` 写函数，然后在 `fetchers.py` 的 `FETCHERS` 里注册（写明 call 方式、后处理模式、所在模块） |
-| 派生序列 | YAML 里写 `derivation: derived`、`op`、`inputs`。可用算子：spread、linear、ratio、product、rolling_mean、zscore、dev_from_5y_seasonal、yoy_pct，输入可加 `@monthly_mean`，可跨 scope 引用（如 `ENERGY:brent_spot`） |
+| 派生序列 | YAML 里写 `derivation: derived`、`op`、`inputs`。可用算子：reference、spread、linear、ratio、product、rolling_mean、zscore、dev_from_5y_seasonal、yoy_pct，输入可加 `@monthly_mean`，可跨 scope 引用（如 `ENERGY:brent_spot`、`CN:manufacturing_pmi_akshare`）。市场页按注册表顺序构建：ENERGY → PRECIOUS → BASE |
 | 面板（表格） | `transmission.py` 的 `PANELS`；在市场 YAML 里用 `panels:` 声明 |
 | 跨国角色（政策利率、CPI、能源 CPI、汇率方向） | `config/scopes.yaml` 各 scope 下的 `roles` |
 | 核心 48 映射 | `config/framework_v2.yaml`，或在指标 YAML 上加 `concept:`（会自动合并） |
@@ -53,7 +54,7 @@ scripts/uv_project.sh run python scripts/build_scope.py <ID>         # 联网刷
 COUNTRY_PRIMER_ONLY_INDICATORS=a,b scripts/uv_project.sh run python scripts/build_scope.py <ID>   # 只刷新指定指标
 make rebuild-ui                                                        # 离线重建全部页面
 make golden-diff                                                       # 与 HEAD 比较（忽略时间戳）；重构时必须为 0 差异
-make validate                                                          # 提交前必须通过（当前 175 个测试）
+make validate                                                          # 提交前必须通过（当前 176 个测试）
 scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面冒烟检查
 ```
 
@@ -79,9 +80,7 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
    - 输出到 `output/models/oil_shock_cpi.json`，页面带 MODEL 徽章，不进 canonical。
    - 能源权重用官方数据：Eurostat `prc_hicp_iw` 免 key；BLS relative importance。
    - 传导弹性用各国实际数据回归估计（本币油价同比 → 能源 CPI 同比，带滞后），不要引用无法核实的文献数字。参数必须公开且可编辑。
-3. **M3 基本金属页**
-   - 来源：COMEX 铜（`foreign_futures` HG）、SHFE 与 LME 相关数据（AKShare，LME 官方属授权数据）、IMF PCPS（铜、铝、镍、锌、铅、锡、铁矿石、锂、钴；dataflow `IMF.RES,PCPS`，key 形如 `G001.<CODE>.USD.M`）、CFTC 铜 `085692`、中国进口量、库存。
-   - 先做探测再写 YAML，参照能源页和贵金属页的做法。
+3. **基本金属页的后续**：矿山供给（Cochilco、INE、MINEM）、中国精炼产量和分品种进出口、COMEX 铜库存、更长的上期所库存历史（可以考虑在 refresh 时累积历史）、上期所近远月价差。
 4. **后续小项**
    - 土耳其和中东欧的汇率历史太短，本币油价那一列为空（可以加 BIS `bis_fx` 月度序列）。
    - KZ/NG/UZ/EG 的原生政策利率。
@@ -114,4 +113,5 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
   - 价格：金 4,072；银 52.3；金银比 77.8。
   - 驱动与比较：10Y 实际利率 2.65%；上海金较 COMEX 低 $73。
   - 央行购金（过去 12 个月）：波兰 +157 吨，乌兹别克斯坦 +67 吨，哈萨克斯坦 +57 吨，中国 +48 吨。
+- **基本金属**：伦铜 14,013、沪铜 106,170；COMEX–LME 铜价差 +$120/t；沪铜进口窗口 −¥207/t；上期所铜库存 6,574 t（7 月底为 26,924 t）；铜价同比 +44.8%（9 月）。
 - **国家**：印度 RBI 5.50%（与 BIS 一致）；USD/INR 94.94。

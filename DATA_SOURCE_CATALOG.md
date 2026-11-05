@@ -1603,7 +1603,7 @@ The Precious Metals page is generated from `config/markets/precious_metals.yaml`
 
 Generated from `config/markets/precious_metals.yaml`; latest dates are tracked in `output/precious_metals_dashboard_summary.json` and the generated HTML rather than fetched again here.
 
-Configured charts: 49. Latest rendered chart count: 49. Source groups: 14.
+Configured charts: 49. Latest rendered chart count: 49. Source groups: 19.
 
 | Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
 |---|---|---|---|---|---|---|---|---|
@@ -1665,6 +1665,73 @@ Configured charts: 49. Latest rendered chart count: 49. Source groups: 14.
 | official_sector | Gold ETF holdings and World Gold Council demand data | No reliable free machine-readable source (SPDR returns a non-CSV page; WGC requires registration). |
 | regional_premium | India gold premium/discount | No free source for Indian dealer premiums. |
 | prices | COMEX and SHFE vault inventories, PGM mine supply (South Africa, Russia) | To be sourced; Russian palladium output has no free source. |
+
+## Base Metals Data-First Dashboard Sources
+
+The Base Metals page is generated from `config/markets/base_metals.yaml` through the global fetcher registry.
+
+Generated from `config/markets/base_metals.yaml`; latest dates are tracked in `output/base_metals_dashboard_summary.json` and the generated HTML rather than fetched again here.
+
+Configured charts: 47. Latest rendered chart count: 47. Source groups: 17.
+
+| Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
+|---|---|---|---|---|---|---|---|---|
+| lme_prices | `lme_copper_3m` | Copper (LME 3-month) | daily | USD/t | foreign_futures | Sina Finance via AKShare | CAD | LME 3-month price, completed sessions only, from a public wrapper. LME official prices and the cash–3M spread are licensed. |
+| lme_prices | `lme_aluminium_3m` | Aluminium (LME 3-month) | daily | USD/t | foreign_futures | Sina Finance via AKShare | AHD | LME 3-month price, completed sessions only, from a public wrapper. LME official prices and the cash–3M spread are licensed. |
+| lme_prices | `lme_zinc_3m` | Zinc (LME 3-month) | daily | USD/t | foreign_futures | Sina Finance via AKShare | ZSD | LME 3-month price, completed sessions only, from a public wrapper. LME official prices and the cash–3M spread are licensed. |
+| lme_prices | `lme_nickel_3m` | Nickel (LME 3-month) | daily | USD/t | foreign_futures | Sina Finance via AKShare | NID | LME 3-month price, completed sessions only, from a public wrapper. LME official prices and the cash–3M spread are licensed. |
+| lme_prices | `lme_lead_3m` | Lead (LME 3-month) | daily | USD/t | foreign_futures | Sina Finance via AKShare | PBD | LME 3-month price, completed sessions only, from a public wrapper. LME official prices and the cash–3M spread are licensed. |
+| lme_prices | `lme_tin_3m` | Tin (LME 3-month) | daily | USD/t | foreign_futures | Sina Finance via AKShare | SND | LME 3-month price, completed sessions only, from a public wrapper. LME official prices and the cash–3M spread are licensed. |
+| china_futures | `shfe_copper` | Copper (SHFE main contract) | daily | CNY/t | cn_futures_main | Sina Finance via AKShare | CU0 | Main-contract continuous close (VAT-inclusive yuan price), completed sessions only. |
+| china_futures | `shfe_aluminium` | Aluminium (SHFE main contract) | daily | CNY/t | cn_futures_main | Sina Finance via AKShare | AL0 | Main-contract continuous close (VAT-inclusive yuan price), completed sessions only. |
+| china_futures | `shfe_zinc` | Zinc (SHFE main contract) | daily | CNY/t | cn_futures_main | Sina Finance via AKShare | ZN0 | Main-contract continuous close (VAT-inclusive yuan price), completed sessions only. |
+| china_futures | `shfe_nickel` | Nickel (SHFE main contract) | daily | CNY/t | cn_futures_main | Sina Finance via AKShare | NI0 | Main-contract continuous close (VAT-inclusive yuan price), completed sessions only. |
+| china_futures | `shfe_lead` | Lead (SHFE main contract) | daily | CNY/t | cn_futures_main | Sina Finance via AKShare | PB0 | Main-contract continuous close (VAT-inclusive yuan price), completed sessions only. |
+| china_futures | `shfe_tin` | Tin (SHFE main contract) | daily | CNY/t | cn_futures_main | Sina Finance via AKShare | SN0 | Main-contract continuous close (VAT-inclusive yuan price), completed sessions only. |
+| china_futures | `dce_iron_ore` | Iron Ore (DCE main contract) | daily | CNY/t | cn_futures_main | Sina Finance via AKShare | I0 | Main-contract continuous close (VAT-inclusive yuan price), completed sessions only. |
+| china_futures | `shfe_rebar` | Rebar (SHFE main contract) | daily | CNY/t | cn_futures_main | Sina Finance via AKShare | RB0 | Main-contract continuous close (VAT-inclusive yuan price), completed sessions only. |
+| china_futures | `gfex_lithium_carbonate` | Lithium Carbonate (GFEX main contract) | daily | CNY/t | cn_futures_main | Sina Finance via AKShare | LC0 | Main-contract continuous close (VAT-inclusive yuan price), completed sessions only. |
+| china_futures | `shfe_alumina` | Alumina (SHFE main contract) | daily | CNY/t | cn_futures_main | Sina Finance via AKShare | AO0 | Main-contract continuous close (VAT-inclusive yuan price), completed sessions only. |
+| arbitrage | `comex_copper` | Copper (COMEX front month) | daily | US cents/lb | foreign_futures | Sina Finance via AKShare | HG | Quoted in US cents per pound. |
+| arbitrage | `comex_lme_copper_spread` | COMEX – LME Copper Spread | daily | USD/t |  |  |  | COMEX (cents/lb × 22.0462 = USD/t) minus LME 3-month. US tariff expectations drive this spread. |
+| arbitrage | `lme_copper_cny_vat` | LME Copper in CNY incl. 13% VAT (import parity) | daily | CNY/t |  |  |  | LME 3-month × USD/CNY central parity × 1.13; excludes the Yangshan premium, freight and financing. |
+| arbitrage | `copper_import_window` | SHFE Copper Import Window | daily | CNY/t |  |  |  | SHFE main contract minus import parity. Positive values favour imports into China. SHFE and LME close at different times. |
+| arbitrage | `lme_aluminium_cny_vat` | LME Aluminium in CNY incl. 13% VAT (import parity) | daily | CNY/t |  |  |  | LME 3-month × USD/CNY central parity × 1.13; excludes premiums, freight and duties. |
+| arbitrage | `aluminium_import_window` | SHFE Aluminium Import Window | daily | CNY/t |  |  |  | SHFE main contract minus import parity; China is normally an aluminium exporter, so this is usually negative. |
+| inventories | `shfe_copper_stocks` | Copper — SHFE Warehouse Stocks | daily | t | cn_futures_inventory | SHFE warehouse stocks via Eastmoney/AKShare | 沪铜 | The source returns roughly the last three months only, so this chart has a short history. |
+| inventories | `shfe_aluminium_stocks` | Aluminium — SHFE Warehouse Stocks | daily | t | cn_futures_inventory | SHFE warehouse stocks via Eastmoney/AKShare | 沪铝 | The source returns roughly the last three months only, so this chart has a short history. |
+| inventories | `shfe_zinc_stocks` | Zinc — SHFE Warehouse Stocks | daily | t | cn_futures_inventory | SHFE warehouse stocks via Eastmoney/AKShare | 沪锌 | The source returns roughly the last three months only, so this chart has a short history. |
+| monthly_benchmarks | `copper_monthly_imf` | Copper (IMF monthly average) | monthly | USD/t | imf_sdmx | IMF Primary Commodity Prices | G001.PCOPP.USD.M | Monthly average compiled by the IMF. |
+| monthly_benchmarks | `aluminium_monthly_imf` | Aluminium (IMF monthly average) | monthly | USD/t | imf_sdmx | IMF Primary Commodity Prices | G001.PALUM.USD.M | Monthly average compiled by the IMF. |
+| monthly_benchmarks | `nickel_monthly_imf` | Nickel (IMF monthly average) | monthly | USD/t | imf_sdmx | IMF Primary Commodity Prices | G001.PNICK.USD.M | Monthly average compiled by the IMF. |
+| monthly_benchmarks | `zinc_monthly_imf` | Zinc (IMF monthly average) | monthly | USD/t | imf_sdmx | IMF Primary Commodity Prices | G001.PZINC.USD.M | Monthly average compiled by the IMF. |
+| monthly_benchmarks | `lead_monthly_imf` | Lead (IMF monthly average) | monthly | USD/t | imf_sdmx | IMF Primary Commodity Prices | G001.PLEAD.USD.M | Monthly average compiled by the IMF. |
+| monthly_benchmarks | `tin_monthly_imf` | Tin (IMF monthly average) | monthly | USD/t | imf_sdmx | IMF Primary Commodity Prices | G001.PTIN.USD.M | Monthly average compiled by the IMF. |
+| monthly_benchmarks | `iron_ore_monthly_imf` | Iron Ore (China import, CFR) (IMF monthly average) | monthly | USD/dmt | imf_sdmx | IMF Primary Commodity Prices | G001.PIORECR.USD.M | Monthly average compiled by the IMF. |
+| monthly_benchmarks | `cobalt_monthly_imf` | Cobalt (IMF monthly average) | monthly | USD/t | imf_sdmx | IMF Primary Commodity Prices | G001.PCOBA.USD.M | Monthly average compiled by the IMF. |
+| monthly_benchmarks | `lithium_monthly_imf` | Lithium Carbonate, China (IMF monthly average) | monthly | CNY/t | imf_sdmx | IMF Primary Commodity Prices | G001.PLITH.USD.M | The IMF API does not state this series' unit; its level and history match the yuan-denominated Chinese lithium carbonate price (compare the GFEX contract), so it is shown as CNY/t. |
+| monthly_benchmarks | `copper_yoy` | Copper YoY (IMF monthly average) | monthly | % y/y |  |  |  | Year-on-year change of the IMF monthly average. |
+| china_demand | `cn_manufacturing_pmi` | China Manufacturing PMI (NBS) | monthly | index |  |  |  | Shown as published on the China page (see that page for source details). |
+| china_demand | `cn_industrial_production_yoy` | China Industrial Value Added YoY | monthly | % y/y |  |  |  | Shown as published on the China page (see that page for source details). |
+| china_demand | `cn_electricity_consumption_yoy` | China Electricity Consumption YoY | monthly | % y/y |  |  |  | Shown as published on the China page (see that page for source details). |
+| china_demand | `cn_property_investment_ytd_yoy` | China Real Estate Investment, YTD YoY | monthly | % y/y |  |  |  | Shown as published on the China page (see that page for source details). |
+| china_demand | `cn_nev_retail_sales` | China New Energy Vehicle Retail Sales | monthly | 10k vehicles |  |  |  | Shown as published on the China page (see that page for source details). |
+| positioning | `cftc_copper_mm_net` | Copper Managed-Money Net Position | weekly | contracts | cftc_positions | CFTC Commitments of Traders (disaggregated) | 085692 | COMEX copper, managed-money long minus short, futures only. |
+| positioning | `cftc_copper_mm_net_zscore` | Copper Managed-Money Net Position, 3-Year z-score | weekly | z |  |  |  | Relative to the trailing 156-week mean and standard deviation. |
+| macro_links | `copper_gold_ratio` | Copper / Gold Ratio | daily | t copper per oz gold ×1000 |  |  |  | LME copper (USD/t) ÷ COMEX gold (USD/oz) × 1000; tends to move with long-term yields and growth expectations. |
+| macro_links | `us_treasury_10y` | US 10-Year Treasury Yield | daily | % | fred | Federal Reserve H.15 via FRED | DGS10 | Constant-maturity 10-year Treasury yield. |
+| macro_links | `aud_usd` | AUD/USD | daily | USD per AUD | fred | Federal Reserve H.10 via FRED | DEXUSAL | US dollars per Australian dollar. |
+| macro_links | `usd_clp` | USD/CLP (BIS, monthly) | monthly | CLP per USD | bis_fx | BIS bilateral exchange rates (WS_XRU) | CL | End-of-period monthly rate; Chile is the largest copper producer. |
+| macro_links | `usd_pen` | USD/PEN (BIS, monthly) | monthly | PEN per USD | bis_fx | BIS bilateral exchange rates (WS_XRU) | PE | End-of-period monthly rate; Peru is the third-largest copper producer. |
+
+## Base Metals Official / Vendor Data Gaps
+
+| Section | Indicator family | Current status |
+|---|---|---|
+| lme_prices | LME official prices, cash–3M spread and LME warehouse stocks | Licensed by the LME; the free mirror for LME stocks stopped in July 2026. |
+| inventories | COMEX copper stocks and long SHFE inventory history | No free machine-readable COMEX copper source found; the SHFE source returns about three months. |
+| china_demand | Chinese refined metal output and copper/aluminium trade by product | NBS is not reachable from this environment; customs product detail to be sourced. |
+| monthly_benchmarks | Mine supply (Chile, Peru, Indonesian nickel), TC/RC and ICSG balances | To be sourced (Cochilco, INE, MINEM); TC/RC and ICSG are licensed or registration-only. |
 
 ## United Kingdom Data-First Dashboard Sources
 

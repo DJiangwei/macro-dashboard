@@ -9,6 +9,7 @@ inputs are observed: missing data stays missing.
 
 Operators
 ---------
+reference             a, unchanged (show another page's series here, e.g. CN:manufacturing_pmi_akshare)
 spread                a - b
 linear                sum(weights[i] * x_i)            (weights: [...])
 ratio                 a / b * factor                   (factor: 1)
@@ -28,7 +29,7 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any, Callable
 
-OPERATORS = {"spread", "linear", "ratio", "product", "rolling_mean", "zscore", "dev_from_5y_seasonal", "yoy_pct"}
+OPERATORS = {"reference", "spread", "linear", "ratio", "product", "rolling_mean", "zscore", "dev_from_5y_seasonal", "yoy_pct"}
 RESAMPLERS = {"monthly_mean"}
 
 
@@ -115,6 +116,8 @@ def _yoy(points: list[tuple[str, float]]) -> list[tuple[str, float]]:
 def apply_op(op: str, inputs: list[list[tuple[str, float]]], spec: dict[str, Any]) -> list[tuple[str, float]]:
     if op not in OPERATORS:
         raise ValueError(f"Operator {op!r} is not whitelisted ({sorted(OPERATORS)})")
+    if op == "reference":
+        return list(inputs[0])
     if op == "spread":
         return [(d, a - b) for d, (a, b) in _aligned(inputs)]
     if op == "linear":
@@ -187,19 +190,31 @@ def formula(spec: dict[str, Any]) -> str:
         return f"{inputs[0]} / {inputs[1]}"
     if op == "spread":
         return f"{inputs[0]} − {inputs[1]}"
+    if op == "reference":
+        return f"{inputs[0]} (as published on its own page)"
     return f"{op}({', '.join(inputs)})"
 
 
 AUTHORITY_ORDER = ["official_primary", "official_mirror", "public_secondary", "public_wrapper", "manual_curated"]
 
 
-def _provenance(refs: list[str], local: dict[str, dict[str, Any]]) -> tuple[str, str, str]:
-    """Source names, first URL and the weakest authority of the inputs on this page."""
+def _provenance(refs: list[str], local: dict[str, dict[str, Any]], frames: Callable[[str], dict[str, Any]] | None = None) -> tuple[str, str, str]:
+    """Source names, first URL and the weakest authority of the inputs (local or SCOPE:id)."""
     from .data_quality import source_authority
 
     names, urls, authorities = [], [], []
     for ref in refs:
         name = ref.partition("@")[0]
+        if ":" in name and frames is not None:
+            scope, indicator = name.split(":", 1)
+            entry = frames(scope).get(indicator)
+            if entry is None:
+                continue
+            source = entry.get("source") or {}
+            names.append(f"{source.get('name') or indicator} ({scope} page)")
+            urls.append(str(source.get("url") or ""))
+            authorities.append(str((entry.get("quality") or {}).get("source_authority") or source_authority(source.get("name"), source.get("url"))))
+            continue
         item = local.get(name)
         if item is None:
             continue
@@ -232,7 +247,9 @@ def apply_derivations(series_list: list[dict[str, Any]], output_dir: Path) -> li
             vintages = {r: (res[1] if res else None) for r, res in zip(refs, resolved)}
             points = apply_op(spec["op"], [res[0] for res in resolved], spec) if all(resolved) else []
             note = f"Derived: {formula(spec)}. Inputs (last observation): " + ", ".join(f"{r} @ {v or 'missing'}" for r, v in vintages.items()) + "."
-            source_name, source_url, authority = _provenance(refs, current)
+            source_name, source_url, authority = _provenance(refs, current, frames)
+            if spec["op"] == "reference":
+                source_name = source_name.removeprefix("Derived from ")
             computed[sid] = {
                 **spec,
                 "observations": [{"date": d, "value": round(v, 6)} for d, v in points],

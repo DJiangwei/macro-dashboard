@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-11-05T10:27:50.716386+00:00",
+  "generated": "2026-11-05T10:37:46.446429+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -810,6 +810,39 @@
         },
         "sge_spot": {
           "success": 2
+        }
+      },
+      "events": []
+    },
+    "BASE": {
+      "calls": 34,
+      "success": 34,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bis_fx": {
+          "success": 2
+        },
+        "cftc_positions": {
+          "success": 1
+        },
+        "cn_futures_inventory": {
+          "success": 3
+        },
+        "cn_futures_main": {
+          "success": 10
+        },
+        "foreign_futures": {
+          "success": 7
+        },
+        "fred": {
+          "success": 2
+        },
+        "imf_sdmx": {
+          "success": 9
         }
       },
       "events": []

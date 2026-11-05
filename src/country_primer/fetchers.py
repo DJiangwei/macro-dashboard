@@ -117,6 +117,8 @@ FETCHERS: dict[str, FetcherDef] = {
     "energy_charts_price": FetcherDef("fetch_energy_charts_price", SPEC, RAW, "Day-ahead power, daily mean", "energy_adapters"),
     "foreign_futures": FetcherDef("fetch_foreign_futures", SPEC, RAW, "Sina front-month futures via AKShare", "energy_adapters"),
     "sge_spot": FetcherDef("fetch_sge_spot", SPEC, RAW, "Shanghai Gold Exchange close / benchmark via AKShare", "energy_adapters"),
+    "cn_futures_main": FetcherDef("fetch_cn_futures_main", SPEC, RAW, "SHFE/DCE/GFEX main contract via Sina/AKShare", "energy_adapters"),
+    "cn_futures_inventory": FetcherDef("fetch_cn_futures_inventory", SPEC, RAW, "Exchange warehouse stocks via Eastmoney/AKShare", "energy_adapters"),
 }
 
 
