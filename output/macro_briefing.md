@@ -89,7 +89,7 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
   - Most synchronised: TR vs. EG (**0.91**, strong positive), PL vs. CZ (**0.85**, strong positive), ZA vs. KR (**0.85**, strong positive).
   - Least synchronised: RO vs. UZ (**-0.79**, strong negative), RO vs. NG (**-0.74**, strong negative), KZ vs. NG (**-0.73**, strong negative).
 - **Industrial production** (pairwise, last 36 common months (min 24); windows end 2026-07 to 2026-09):
-  - Most synchronised: CZ vs. EA (**0.66**, moderate positive), CN vs. KR (**0.61**, moderate positive), EA vs. US (**0.60**, moderate positive).
+  - Most synchronised: CZ vs. EA (**0.65**, moderate positive), CN vs. KR (**0.61**, moderate positive), EA vs. US (**0.60**, moderate positive).
   - Least synchronised: ZA vs. US (**-0.33**, weak negative), RO vs. JP (**-0.27**, weak negative), CZ vs. KR (**-0.27**, weak negative).
 - **10Y sovereign yields** (pairwise, last 36 common months (min 24); windows end 2026-09 to 2026-10):
   - Most synchronised: CZ vs. EA (**0.94**, strong positive), EA vs. JP (**0.90**, strong positive), CZ vs. JP (**0.86**, strong positive).

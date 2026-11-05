@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-05T15:31:20.111759+00:00",
+  "generated": "2026-11-05T15:51:24.073989+00:00",
   "as_of_date": "2026-11-05",
   "thresholds": {
     "daily": "14 days",
@@ -11179,7 +11179,7 @@
       "source": "Eurostat",
       "series_id": "",
       "provider_update": "2026-08-01",
-      "note": "Industrial production excluding construction (NACE B-D) y/y; calendar adjusted."
+      "note": "Industrial production excluding construction (NACE B-D) y/y; calendar adjusted. Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
     },
     {
       "dashboard": "Euro Area",
@@ -11199,7 +11199,7 @@
       "source": "Eurostat",
       "series_id": "",
       "provider_update": "2026-08-01",
-      "note": "Manufacturing production (NACE C) y/y; calendar adjusted."
+      "note": "Manufacturing production (NACE C) y/y; calendar adjusted. Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
     },
     {
       "dashboard": "Euro Area",
@@ -11219,7 +11219,7 @@
       "source": "Eurostat",
       "series_id": "",
       "provider_update": "2026-08-01",
-      "note": "Volume of retail trade sales (NACE G47) y/y; calendar adjusted."
+      "note": "Volume of retail trade sales (NACE G47) y/y; calendar adjusted. Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
     },
     {
       "dashboard": "Euro Area",
@@ -11239,7 +11239,7 @@
       "source": "Eurostat",
       "series_id": "",
       "provider_update": "2026-08-01",
-      "note": "Production in construction (NACE F) y/y; calendar adjusted."
+      "note": "Production in construction (NACE F) y/y; calendar adjusted. Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
     },
     {
       "dashboard": "Euro Area",
@@ -11659,7 +11659,7 @@
       "source": "Eurostat",
       "series_id": "",
       "provider_update": "2026-08-01",
-      "note": "Industrial producer prices domestic market y/y (total industry excluding construction)."
+      "note": "Industrial producer prices domestic market y/y (total industry excluding construction). Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
     },
     {
       "dashboard": "Euro Area",
@@ -11746,20 +11746,20 @@
       "indicator_id": "building_permits_yoy",
       "label": "Residential Building Permits Growth, YoY",
       "frequency": "monthly",
-      "latest_observation": "2026-06-01",
-      "latest_date": "2026-06-01",
-      "age_basis_date": "2026-06-30",
-      "age_days": 128,
+      "latest_observation": "2026-07-01",
+      "latest_date": "2026-07-01",
+      "age_basis_date": "2026-07-31",
+      "age_days": 97,
       "threshold_days": 91,
       "release_calendar_id": "eurostat_monthly",
-      "expected_release_date": "2026-09-14",
-      "due_date": "2026-09-29",
+      "expected_release_date": "2026-10-15",
+      "due_date": "2026-10-30",
       "freshness_status": "stale",
       "quality_status": "low_confidence",
       "source": "Eurostat",
       "series_id": "",
-      "provider_update": "2026-06-01",
-      "note": "Building permits for residential buildings (useful floor area sqm) percentage change y/y."
+      "provider_update": "2026-07-01",
+      "note": "Building permits for residential buildings (useful floor area sqm) percentage change y/y. Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
     },
     {
       "dashboard": "Euro Area",
@@ -11879,7 +11879,7 @@
       "source": "Eurostat",
       "series_id": "",
       "provider_update": "2025-01-01",
-      "note": "General government net lending (+) / net borrowing (-) as % of GDP (EDP notification)."
+      "note": "General government net lending (+) / net borrowing (-) as % of GDP (EDP notification). Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
     },
     {
       "dashboard": "Euro Area",
@@ -11899,7 +11899,7 @@
       "source": "Eurostat",
       "series_id": "",
       "provider_update": "2026-04-01",
-      "note": "Government consolidated gross debt as % of GDP (Maastricht definition)."
+      "note": "Government consolidated gross debt as % of GDP (Maastricht definition). Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
     },
     {
       "dashboard": "Euro Area",
@@ -35884,26 +35884,6 @@
       "note": "Monthly crude oil production including lease condensate for Egypt reported by US EIA."
     },
     {
-      "dashboard": "Euro Area",
-      "indicator_id": "building_permits_yoy",
-      "label": "Residential Building Permits Growth, YoY",
-      "frequency": "monthly",
-      "latest_observation": "2026-06-01",
-      "latest_date": "2026-06-01",
-      "age_basis_date": "2026-06-30",
-      "age_days": 128,
-      "threshold_days": 91,
-      "release_calendar_id": "eurostat_monthly",
-      "expected_release_date": "2026-09-14",
-      "due_date": "2026-09-29",
-      "freshness_status": "stale",
-      "quality_status": "low_confidence",
-      "source": "Eurostat",
-      "series_id": "",
-      "provider_update": "2026-06-01",
-      "note": "Building permits for residential buildings (useful floor area sqm) percentage change y/y."
-    },
-    {
       "dashboard": "Hungary",
       "indicator_id": "cb_balance_sheet_gdp",
       "label": "Central Bank Balance Sheet, % GDP",
@@ -36042,6 +36022,26 @@
       "series_id": "EG",
       "provider_update": "2026-07-01",
       "note": "Monthly end-of-period EGP per US dollar from the BIS (reported by the central bank). Replaces the IMF IFS mirror, which lagged by over a year."
+    },
+    {
+      "dashboard": "Euro Area",
+      "indicator_id": "building_permits_yoy",
+      "label": "Residential Building Permits Growth, YoY",
+      "frequency": "monthly",
+      "latest_observation": "2026-07-01",
+      "latest_date": "2026-07-01",
+      "age_basis_date": "2026-07-31",
+      "age_days": 97,
+      "threshold_days": 91,
+      "release_calendar_id": "eurostat_monthly",
+      "expected_release_date": "2026-10-15",
+      "due_date": "2026-10-30",
+      "freshness_status": "stale",
+      "quality_status": "low_confidence",
+      "source": "Eurostat",
+      "series_id": "",
+      "provider_update": "2026-07-01",
+      "note": "Building permits for residential buildings (useful floor area sqm) percentage change y/y. Euro area 21 (Bulgaria joined in 2026); the whole history is on the EA21 basis."
     },
     {
       "dashboard": "Euro Area",

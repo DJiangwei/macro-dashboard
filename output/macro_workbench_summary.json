@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-05T15:31:22.691953+00:00",
+  "generated": "2026-11-05T15:51:26.621616+00:00",
   "schema_version": "macro-workbench-v1",
   "cards": [
     {
@@ -1039,7 +1039,7 @@
         "observations": 94916,
         "series_count": 113,
         "observation_count": 94916,
-        "snapshot_generated": "2026-11-05T15:30:14.554261+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.031502+00:00"
       },
       "freshness_summary": {
         "dashboard": "China",
@@ -1116,8 +1116,8 @@
         "fiscal": {
           "id": "government_debt_gdp",
           "label": "Government debt/GDP",
-          "value": 89.3,
-          "display": "89.30 % of GDP",
+          "value": 88.8,
+          "display": "88.80 % of GDP",
           "date": "2026-04-01",
           "source": "Eurostat",
           "quality_status": "verified"
@@ -1284,28 +1284,6 @@
             "transform": "level"
           },
           {
-            "id": "building_permits_yoy",
-            "concept_id": "housing_activity",
-            "label_en": "Residential Building Permits Growth, YoY",
-            "latest_date": "2026-06-01",
-            "frequency": "monthly",
-            "freshness_status": "stale",
-            "age_basis_date": "2026-06-01",
-            "age_days": 128,
-            "threshold_days": 91,
-            "release_calendar_id": "eurostat_monthly",
-            "expected_release_date": "2026-09-14",
-            "due_date": "2026-09-29",
-            "quality_status": "low_confidence",
-            "source_authority": "official_primary",
-            "derivation": "observed",
-            "validation": "passed",
-            "comparability": "high",
-            "source_name": "Eurostat",
-            "series": "",
-            "transform": "level"
-          },
-          {
             "id": "negotiated_wages_yoy",
             "concept_id": "wage_growth",
             "label_en": "ECB Negotiated Wages Growth, YoY",
@@ -1325,6 +1303,28 @@
             "comparability": "high",
             "source_name": "ECB",
             "series": "Q.U2.N.INWR.000000.4F0.GY.IX",
+            "transform": "level"
+          },
+          {
+            "id": "building_permits_yoy",
+            "concept_id": "housing_activity",
+            "label_en": "Residential Building Permits Growth, YoY",
+            "latest_date": "2026-07-01",
+            "frequency": "monthly",
+            "freshness_status": "stale",
+            "age_basis_date": "2026-07-01",
+            "age_days": 97,
+            "threshold_days": 91,
+            "release_calendar_id": "eurostat_monthly",
+            "expected_release_date": "2026-10-15",
+            "due_date": "2026-10-30",
+            "quality_status": "low_confidence",
+            "source_authority": "official_primary",
+            "derivation": "observed",
+            "validation": "passed",
+            "comparability": "high",
+            "source_name": "Eurostat",
+            "series": "",
             "transform": "level"
           },
           {
@@ -1381,10 +1381,10 @@
         ],
         "file": "euro_area_canonical_frame.json",
         "series": 74,
-        "observations": 66264,
+        "observations": 66263,
         "series_count": 74,
-        "observation_count": 66264,
-        "snapshot_generated": "2026-11-05T15:30:14.686015+00:00"
+        "observation_count": 66263,
+        "snapshot_generated": "2026-11-05T15:50:37.161993+00:00"
       },
       "freshness_summary": {
         "dashboard": "Euro Area",
@@ -2434,7 +2434,7 @@
         "observations": 20771,
         "series_count": 60,
         "observation_count": 20771,
-        "snapshot_generated": "2026-11-05T15:30:14.722095+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.198414+00:00"
       },
       "freshness_summary": {
         "dashboard": "Japan",
@@ -3518,7 +3518,7 @@
         "observations": 30706,
         "series_count": 66,
         "observation_count": 30706,
-        "snapshot_generated": "2026-11-05T15:30:14.749623+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.225505+00:00"
       },
       "freshness_summary": {
         "dashboard": "South Africa",
@@ -4454,7 +4454,7 @@
         "observations": 81840,
         "series_count": 97,
         "observation_count": 81840,
-        "snapshot_generated": "2026-11-05T15:30:14.844885+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.319201+00:00"
       },
       "freshness_summary": {
         "dashboard": "United Kingdom",
@@ -5367,7 +5367,7 @@
         "observations": 132011,
         "series_count": 181,
         "observation_count": 132011,
-        "snapshot_generated": "2026-11-05T15:30:14.920550+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.393791+00:00"
       },
       "freshness_summary": {
         "dashboard": "United States",
@@ -5953,7 +5953,7 @@
         "observations": 10912,
         "series_count": 57,
         "observation_count": 10912,
-        "snapshot_generated": "2026-11-05T15:30:14.976824+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.449817+00:00"
       },
       "freshness_summary": {
         "dashboard": "Turkey",
@@ -6625,7 +6625,7 @@
         "observations": 11683,
         "series_count": 40,
         "observation_count": 11683,
-        "snapshot_generated": "2026-11-05T15:30:14.985668+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.458374+00:00"
       },
       "freshness_summary": {
         "dashboard": "Hong Kong",
@@ -7423,7 +7423,7 @@
         "observations": 10645,
         "series_count": 51,
         "observation_count": 10645,
-        "snapshot_generated": "2026-11-05T15:30:15.059282+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.529263+00:00"
       },
       "freshness_summary": {
         "dashboard": "South Korea",
@@ -8061,7 +8061,7 @@
         "observations": 13624,
         "series_count": 50,
         "observation_count": 13624,
-        "snapshot_generated": "2026-11-05T15:30:15.068057+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.538124+00:00"
       },
       "freshness_summary": {
         "dashboard": "Taiwan",
@@ -8775,7 +8775,7 @@
         "observations": 12476,
         "series_count": 41,
         "observation_count": 12476,
-        "snapshot_generated": "2026-11-05T15:30:15.017755+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.490391+00:00"
       },
       "freshness_summary": {
         "dashboard": "India",
@@ -9327,7 +9327,7 @@
         "observations": 10097,
         "series_count": 38,
         "observation_count": 10097,
-        "snapshot_generated": "2026-11-05T15:30:15.027883+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.500028+00:00"
       },
       "freshness_summary": {
         "dashboard": "Kazakhstan",
@@ -9896,7 +9896,7 @@
         "observations": 2750,
         "series_count": 37,
         "observation_count": 2750,
-        "snapshot_generated": "2026-11-05T15:30:15.034913+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.506516+00:00"
       },
       "freshness_summary": {
         "dashboard": "Uzbekistan",
@@ -10513,7 +10513,7 @@
         "observations": 9646,
         "series_count": 38,
         "observation_count": 9646,
-        "snapshot_generated": "2026-11-05T15:30:15.040357+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.511322+00:00"
       },
       "freshness_summary": {
         "dashboard": "Egypt",
@@ -11193,7 +11193,7 @@
         "observations": 13779,
         "series_count": 40,
         "observation_count": 13779,
-        "snapshot_generated": "2026-11-05T15:30:15.049106+00:00"
+        "snapshot_generated": "2026-11-05T15:50:37.519504+00:00"
       },
       "freshness_summary": {
         "dashboard": "Nigeria",
@@ -11718,8 +11718,8 @@
           "label": "elevated debt",
           "score": 45.0,
           "confidence_weight": 1.0,
-          "value": 89.3,
-          "display": "89.30 % of GDP",
+          "value": 88.8,
+          "display": "88.80 % of GDP",
           "source_signal": "government_debt_gdp"
         },
         "financial": {
@@ -13745,7 +13745,7 @@
         "CZ": 1.0,
         "RO": -0.04,
         "CN": 0.04,
-        "EA": 0.66,
+        "EA": 0.65,
         "JP": 0.51,
         "ZA": -0.03,
         "UK": 0.17,
@@ -13766,7 +13766,7 @@
         "CZ": -0.04,
         "RO": 1.0,
         "CN": 0.11,
-        "EA": 0.11,
+        "EA": 0.12,
         "JP": -0.27,
         "ZA": 0.05,
         "UK": 0.18,
@@ -13787,7 +13787,7 @@
         "CZ": 0.04,
         "RO": 0.11,
         "CN": 1.0,
-        "EA": 0.18,
+        "EA": 0.19,
         "JP": -0.08,
         "ZA": 0.1,
         "UK": -0.09,
@@ -13805,13 +13805,13 @@
       "EA": {
         "HU": 0.04,
         "PL": 0.44,
-        "CZ": 0.66,
-        "RO": 0.11,
-        "CN": 0.18,
+        "CZ": 0.65,
+        "RO": 0.12,
+        "CN": 0.19,
         "EA": 1.0,
-        "JP": 0.53,
+        "JP": 0.52,
         "ZA": -0.22,
-        "UK": -0.05,
+        "UK": -0.06,
         "US": 0.6,
         "TR": 0.05,
         "HK": null,
@@ -13829,7 +13829,7 @@
         "CZ": 0.51,
         "RO": -0.27,
         "CN": -0.08,
-        "EA": 0.53,
+        "EA": 0.52,
         "JP": 1.0,
         "ZA": -0.18,
         "UK": 0.1,
@@ -13871,7 +13871,7 @@
         "CZ": 0.17,
         "RO": 0.18,
         "CN": -0.09,
-        "EA": -0.05,
+        "EA": -0.06,
         "JP": 0.1,
         "ZA": -0.21,
         "UK": 1.0,

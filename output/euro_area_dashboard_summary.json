@@ -1,6 +1,6 @@
 {
   "file": "euro_area.html",
-  "generated": "2026-11-05T15:31:14.644029+00:00",
+  "generated": "2026-11-05T15:51:18.737206+00:00",
   "charts": 74,
   "source_groups": 8,
   "data_gaps": 6,
@@ -128,10 +128,10 @@
     ],
     "file": "euro_area_canonical_frame.json",
     "series": 74,
-    "observations": 66264,
+    "observations": 66263,
     "series_count": 74,
-    "observation_count": 66264,
-    "snapshot_generated": "2026-11-05T15:30:14.686015+00:00"
+    "observation_count": 66263,
+    "snapshot_generated": "2026-11-05T15:50:37.161993+00:00"
   },
   "data_gaps_detail": [
     {
@@ -326,28 +326,6 @@
         "transform": "level"
       },
       {
-        "id": "building_permits_yoy",
-        "concept_id": "housing_activity",
-        "label_en": "Residential Building Permits Growth, YoY",
-        "latest_date": "2026-06-01",
-        "frequency": "monthly",
-        "freshness_status": "stale",
-        "age_basis_date": "2026-06-01",
-        "age_days": 128,
-        "threshold_days": 91,
-        "release_calendar_id": "eurostat_monthly",
-        "expected_release_date": "2026-09-14",
-        "due_date": "2026-09-29",
-        "quality_status": "low_confidence",
-        "source_authority": "official_primary",
-        "derivation": "observed",
-        "validation": "passed",
-        "comparability": "high",
-        "source_name": "Eurostat",
-        "series": "",
-        "transform": "level"
-      },
-      {
         "id": "negotiated_wages_yoy",
         "concept_id": "wage_growth",
         "label_en": "ECB Negotiated Wages Growth, YoY",
@@ -367,6 +345,28 @@
         "comparability": "high",
         "source_name": "ECB",
         "series": "Q.U2.N.INWR.000000.4F0.GY.IX",
+        "transform": "level"
+      },
+      {
+        "id": "building_permits_yoy",
+        "concept_id": "housing_activity",
+        "label_en": "Residential Building Permits Growth, YoY",
+        "latest_date": "2026-07-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-07-01",
+        "age_days": 97,
+        "threshold_days": 91,
+        "release_calendar_id": "eurostat_monthly",
+        "expected_release_date": "2026-10-15",
+        "due_date": "2026-10-30",
+        "quality_status": "low_confidence",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Eurostat",
+        "series": "",
         "transform": "level"
       },
       {
