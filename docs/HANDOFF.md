@@ -115,8 +115,8 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
 ## 6. 待办（按优先级）
 
 1. **能源页里需要 key 的部分**：EIA STEO、GIE AGSI+、Ember 和 CEE 储气率已完成（见 §2 第 8 项）。剩下的是 **ENTSO-E**，等用户开通 API 权限（见 §5）。开通后建议先做：德国燃气发电（日度，代表电力部门的燃气需求）、法国核电发电量（日度）、挪威水库蓄水（周度）。
-2. **油价模型的后续**：美国能源权重（BLS relative importance，可尝试其他公开镜像）；英国车用燃料（07.2.2）纳入能源口径；更长的滞后窗口或分段样本；二轮效应模型（另立 MODEL，不与一轮效应混在一起）。
-3. **基本金属页的后续**：矿山供给（Cochilco、INE、MINEM）、中国精炼产量和分品种进出口、COMEX 铜库存、更长的上期所库存历史（可以考虑在 refresh 时累积历史）、上期所近远月价差。
+2. **油价模型 v2**：设计已确认，见 `docs/superpowers/specs/2026-11-05-oil-shock-model-v2-design.md`（英国改用 ONS 能源特殊汇总；美国权重保持缺口；主设定滞后 12 月、全样本，另 3 个设定展开；HAC 90% 区间；独立的二轮效应 MODEL `oil_shock_core`）。下一步：写实施计划（`writing-plans`），在新会话里执行。
+3. **基本金属后续**：设计已确认，见 `docs/superpowers/specs/2026-11-05-base-metals-followups-design.md`。顺序：库存累积 → 上期所近远月价差 → COMEX 金银库存 → 中国精炼铜探查 → 智利（等用户注册智利央行账号，凭据 `BCCH_API_USER`/`BCCH_API_PASSWORD`）→ 秘鲁 MINEM。不可做：COMEX 铜库存、LME 库存。
 4. **后续小项**
    - KZ/NG/UZ/EG 政策利率（2026-11-05 已处理；BIS WS_CBPOL 不覆盖这四国，原 DBnomics IFS 序列止于 2020–2025）：KZ 改用 NBK 官网决议表（`nbk_base_rate`，2015-09 起，事件日期加截至行）；UZ/EG 改用 IMF MFS_IR 的 `MFS166`（货币政策相关利率），IMF 滞后约 14 个月；CBU 从本环境连不上，CBE 返回拦截页。NG 改用 CBN 官方接口 `api/GetAllMoneyMarketIndicators`（`cbn_money_market`，月度，2006-12 起，字段还有银行间、国债、存贷款利率）。不要改用 CBN 决议页（Decisions.html）：它漏收了 2024-11 第 298 次会议（加息至 27.5%）。CBN 接口 2025-08 为 27.0%，与决议日期（2025-09-23）不符，已写入 caveat。
    - CEE 叙述文字（`config/countries.yaml`）需要逐条核实后重写。匈牙利央行领导层已于 2026-11-05 按 mnb.hu 更正（行长 Varga、四位副行长）；仍未核实的有：匈牙利政治背景（2026 年 4 月大选结果）、各国央行资产负债表数字、PL/CZ/RO 的行长与委员名单。mnb.hu 的议会选任委员名单当天无法与原文逐条核对（摘要列出的条目里有任期似已届满的），未采用，页面改为指向 mnb.hu。
