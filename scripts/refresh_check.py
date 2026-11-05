@@ -67,8 +67,8 @@ def run_checks() -> list[dict[str, Any]]:
 
     import sys
     sys.path.insert(0, str(ROOT / "src"))
-    import yaml
     from country_primer.data_fetcher import DataPipeline, INDICATOR_MANIFEST_48
+    from country_primer.indicator_templates import load_indicator_config
     from country_primer.fetchers import fetch_series
     from country_primer.scopes import cee_scopes, data_first_scopes
 
@@ -86,7 +86,7 @@ def run_checks() -> list[dict[str, Any]]:
     # the same global fetcher registry the builders use.
     for scope in data_first_scopes():
         assert scope.indicators_path is not None and scope.headline is not None
-        config = yaml.safe_load(scope.indicators_path.read_text()) or {}
+        config = load_indicator_config(scope.indicators_path)
         specs = {str(item.get("id")): item for item in config.get("indicators", [])}
         indicator_id = next((i for i in scope.headline.indicators if i in specs), None)
         if indicator_id is None:

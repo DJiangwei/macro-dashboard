@@ -12,6 +12,7 @@ for path in (ROOT / "src", ROOT / "scripts"):
         sys.path.insert(0, str(path))
 
 from country_primer import fetchers  # noqa: E402
+from country_primer.indicator_templates import load_indicator_config  # noqa: E402
 from country_primer.scopes import Headline, all_scopes, data_first_scopes, get_scope, validate_registry  # noqa: E402
 
 US_TRANSFORMS = {"yoy_pct", "yoy", "diff", "pct_change"}
@@ -19,7 +20,7 @@ US_TRANSFORMS = {"yoy_pct", "yoy", "diff", "pct_change"}
 
 def _configs():
     for scope in data_first_scopes():
-        yield scope, yaml.safe_load(scope.indicators_path.read_text()) or {}
+        yield scope, load_indicator_config(scope.indicators_path)
 
 
 def test_registry_is_valid_and_ordered():

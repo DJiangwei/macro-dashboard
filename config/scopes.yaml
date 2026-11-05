@@ -315,6 +315,27 @@ scopes:
     roles:
       policy_rate: [policy_rate, collateral_rate]
 
+  - id: IN
+    kind: country
+    slug: india
+    name: {en: India, zh: 印度}
+    flag: "🇮🇳"
+    region: em
+    pipeline: data_first
+    indicators: config/countries/india.yaml
+    currency: INR
+    institution: RBI
+    central_bank:
+      name: {en: "Reserve Bank of India (RBI)", zh: "印度储备银行 (RBI)"}
+      policy_tool: {en: Policy Repo Rate, zh: 政策回购利率}
+    framework_label: 9-Pillar Macro Framework
+    headline:
+      indicators: [usd_inr, usd_inr_bis]
+      key: usd_inr_latest
+      label: USD/INR (Fed H.10)
+      format: "{value:.2f} ({date})"
+    fetch_workers: 6
+
   - id: KZ
     kind: country
     slug: kazakhstan

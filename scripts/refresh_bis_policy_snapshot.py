@@ -27,13 +27,27 @@ from country_primer.bis_policy import (  # noqa: E402
 OUT = ROOT / "output" / "bis_policy_rates.json"
 
 
+def covered_areas() -> dict[str, str]:
+    """Scope -> BIS area: the built-in map plus registry scopes whose indicator
+    YAML fetches ``bis_policy_rate`` with an explicit ``bis_area`` (templates)."""
+    from country_primer.indicator_templates import load_indicator_config
+    from country_primer.scopes import data_first_scopes
+
+    areas = dict(BIS_REF_AREA)
+    for scope in data_first_scopes():
+        for spec in load_indicator_config(scope.indicators_path).get("indicators") or []:
+            if spec.get("fetcher") == "bis_policy_rate" and spec.get("bis_area"):
+                areas.setdefault(scope.id, str(spec["bis_area"]))
+    return areas
+
+
 def build(start: str = "2015-01-01") -> Path:
     previous = json.loads(OUT.read_text()).get("scopes", {}) if OUT.exists() else {}
     session = requests.Session()
     scopes: dict[str, dict] = {}
-    for scope in sorted(BIS_REF_AREA):
+    for scope, area in sorted(covered_areas().items()):
         try:
-            path = fetch_bis_policy_rate_path(scope, start=start, session=session)
+            path = fetch_bis_policy_rate_path(scope, start=start, session=session, ref_area=area)
         except (requests.RequestException, ValueError, KeyError) as exc:
             path = None
             print(f"{scope}: BIS fetch failed ({type(exc).__name__}); keeping previous snapshot")

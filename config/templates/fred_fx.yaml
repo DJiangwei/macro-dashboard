@@ -1,0 +1,19 @@
+# Daily USD exchange rate from the Federal Reserve H.10 release (FRED), for
+# currencies the Fed publishes. {fred_fx} is the FRED id, e.g. DEXINUS.
+params: [fred_fx, ccy, currency]
+summary_key_ids: ["usd_{ccy}"]
+indicators:
+  - id: usd_{ccy}
+    concept: fx_spot
+    section: external_fx
+    label_en: USD/{currency} (Fed H.10, daily)
+    label_zh: 美元兑{currency}（美联储H.10日度）
+    unit: "{currency} per USD"
+    fetcher: fred
+    series: "{fred_fx}"
+    source_name: Federal Reserve H.10 via FRED
+    source_url: https://fred.stlouisfed.org/series/{fred_fx}
+    frequency: daily
+    start_date: 2000-01-01
+    caveat_en: Noon buying rates in New York certified by the Federal Reserve Bank of New York.
+    caveat_zh: 纽约联储认证的纽约市场中午买入汇率。

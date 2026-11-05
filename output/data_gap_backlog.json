@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-05T03:54:21.640806+00:00",
+  "generated": "2026-11-05T04:05:12.827097+00:00",
   "items": [
     {
       "code": "CN",
@@ -405,6 +405,42 @@
       "status": "Restore only with reusable public or licensed non-proxy sources.",
       "priority": "watch",
       "source_hint": "Review PROXY_REVIEW.md and DATA_SOURCE_CATALOG.md before restoring."
+    },
+    {
+      "code": "IN",
+      "country": "India",
+      "section": "monetary_financial",
+      "item": "10Y Government Security Yield",
+      "status": "The OECD long-term rate mirror for India on FRED (IRLTLT01INM156N) is discontinued; an RBI/CCIL source is needed.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "IN",
+      "country": "India",
+      "section": "monetary_financial",
+      "item": "3-Month Interbank Rate",
+      "status": "The OECD 3-month interbank mirror (IR3TIB01INM156N) is discontinued.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "IN",
+      "country": "India",
+      "section": "monetary_financial",
+      "item": "Broad Money (M3) Growth",
+      "status": "The OECD M3 mirror ends in 2018 and the World Bank series in 2021; RBI DBIE is the native source.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
+    },
+    {
+      "code": "IN",
+      "country": "India",
+      "section": "stability_structural",
+      "item": "Bank Capital Adequacy and NPL Ratios (IMF FSI)",
+      "status": "The IMF FSIC dataflow refuses requests from this build environment (HTTP 403); to be retried from CI.",
+      "priority": "watch",
+      "source_hint": "Wire only a reproducible source with definition and freshness validation."
     },
     {
       "code": "JP",

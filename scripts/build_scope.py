@@ -25,8 +25,6 @@ import time
 from pathlib import Path
 from typing import Any
 
-import yaml
-
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = ROOT / "scripts"
 for path in (SCRIPTS_DIR, ROOT / "src"):
@@ -40,6 +38,7 @@ from dashboard_summary_utils import (  # noqa: E402
 )
 from country_primer.data_first_pipeline import fetch_all  # noqa: E402
 from country_primer.fetchers import build_registry  # noqa: E402
+from country_primer.indicator_templates import load_indicator_config  # noqa: E402
 from country_primer.page_renderer import _latest, build_country_page  # noqa: E402
 from country_primer.scopes import Scope, data_first_scopes, get_scope  # noqa: E402
 from country_primer.source_health import SOURCE_HEALTH  # noqa: E402
@@ -47,7 +46,7 @@ from country_primer.source_health import SOURCE_HEALTH  # noqa: E402
 
 def load_config(scope: Scope) -> dict[str, Any]:
     assert scope.indicators_path is not None
-    return yaml.safe_load(scope.indicators_path.read_text()) or {}
+    return load_indicator_config(scope.indicators_path)
 
 
 def _snapshot_cards(scope: Scope, config: dict[str, Any]) -> list[dict[str, Any]]:

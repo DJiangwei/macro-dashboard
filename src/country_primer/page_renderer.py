@@ -600,7 +600,8 @@ def _sections_html(
                     deepdive_block = render_deepdive_panel("EA")
                 except Exception:
                     pass
-            elif cc_upper in ("CN", "TR", "ZA", "KR", "TW", "UK", "JP", "HK", "EG", "NG", "KZ", "UZ"):
+            else:
+                # Any other scope: config/deepdive_views.yaml view, if one is configured.
                 try:
                     import sys
                     from pathlib import Path
@@ -2110,8 +2111,13 @@ def render_html(
     source_count = len({item.get("source_name") for item in series_list if item.get("observations")})
     gap_count = len(config.get("data_gaps", []))
     low_count = sum(1 for item in series_list if item.get("quality_status") == "low_confidence" and item.get("observations"))
-    native = sum(1 for item in series_list if item.get("source_authority") == "official primary" and item.get("observations"))
-    mirror = sum(1 for item in series_list if item.get("source_authority") == "official mirror" and item.get("observations"))
+    def _authority(item: dict[str, Any]) -> str:
+        # The assessed authority (quality block) wins over the declared one.
+        assessed = item.get("data_quality") or item.get("quality") or {}
+        return str(assessed.get("source_authority") or item.get("source_authority") or "")
+
+    native = sum(1 for item in series_list if _authority(item) == "official_primary" and item.get("observations"))
+    mirror = sum(1 for item in series_list if _authority(item) == "official_mirror" and item.get("observations"))
     generated_date = datetime.now(UTC).date().isoformat()
 
     if code_upper == "CN":

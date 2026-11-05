@@ -1233,6 +1233,66 @@ Configured charts: 50. Latest rendered chart count: 50. Source groups: 10.
 |---|---|---|
 | labour_structural | High-Frequency Monthly Seasonally Adjusted Unemployment Rate Time Series | DGBAS publishes monthly unemployment and participation rates via dynamic web queries (nstatdb) and press releases; automated API ingestion can be expanded once DGBAS open data API tokens are provisioned. |
 
+## India Data-First Dashboard Sources
+
+The India page is generated from `config/countries/india.yaml` through the global fetcher registry.
+
+Generated from `config/countries/india.yaml`; latest dates are tracked in `output/india_dashboard_summary.json` and the generated HTML rather than fetched again here.
+
+Configured charts: 40. Latest rendered chart count: 41. Source groups: 18.
+
+| Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
+|---|---|---|---|---|---|---|---|---|
+| growth_accounts | `real_gdp_growth` | Real GDP Growth (IMF WEO) | annual | % | imf_datamapper | IMF DataMapper (WEO) | NGDP_RPCH/IND | Annual change in constant-price GDP. Values after 2025 are IMF projections. |
+| prices_costs | `cpi_inflation` | Headline CPI Inflation YoY | monthly | % y/y | imf_sdmx | IMF SDMX (CPI) / national statistics office | IND.CPI._T.YOY_PCH_PA_PT.M | Official monthly CPI annual rate of change as reported to the IMF. |
+| prices_costs | `cpi_inflation_mom` | Headline CPI Inflation MoM | monthly | % m/m | imf_sdmx | IMF SDMX (CPI) / national statistics office | IND.CPI._T.POP_PCH_PA_PT.M | Month-on-month change in the official CPI, not seasonally adjusted. |
+| prices_costs | `cpi_index` | CPI Index | monthly | Index | imf_sdmx | IMF SDMX (CPI) / national statistics office | IND.CPI._T.IX.M | Official CPI level; base year as published by the national statistics office. |
+| external_fx | `current_account_gdp` | Current Account Balance (% of GDP, IMF WEO) | annual | % GDP | imf_datamapper | IMF DataMapper (WEO) | BCA_NGDPD/IND | Values after 2025 are IMF projections. |
+| external_fx | `current_account_usd` | Current Account Balance (USD) | quarterly | USD bn | imf_sdmx | IMF SDMX (BOP) / central bank | IND.NETCD_T.CAB.USD.Q | Quarterly BPM6 current account balance, not seasonally adjusted. |
+| external_fx | `goods_trade_balance` | Goods Trade Balance (BoP, USD) | quarterly | USD bn | imf_sdmx | IMF SDMX (BOP) / central bank | IND.NETCD_T.G.USD.Q | Quarterly BPM6 goods balance. |
+| external_fx | `services_balance` | Services Balance (BoP, USD) | quarterly | USD bn | imf_sdmx | IMF SDMX (BOP) / central bank | IND.NETCD_T.S.USD.Q | Quarterly BPM6 services balance. |
+| external_fx | `secondary_income_balance` | Secondary Income Balance incl. Remittances (BoP, USD) | quarterly | USD bn | imf_sdmx | IMF SDMX (BOP) / central bank | IND.NETCD_T.IN2.USD.Q | Quarterly BPM6 secondary income balance; workers' remittances are its main component for many EMs. |
+| external_fx | `fdi_net_usd` | Direct Investment, Net Acquisition minus Incurrence (USD) | quarterly | USD bn | imf_sdmx | IMF SDMX (BOP) / central bank | IND.NNAFANIL_T.D_F.USD.Q | BPM6 sign convention (assets minus liabilities); a negative value is a net inflow. |
+| external_fx | `portfolio_investment_net` | Portfolio Investment, Net (USD) | quarterly | USD bn | imf_sdmx | IMF SDMX (BOP) / central bank | IND.NNAFANIL_T.P_F.USD.Q | BPM6 sign convention (assets minus liabilities); a negative value is a net inflow. |
+| fiscal_sovereign | `government_debt_gdp` | General Government Gross Debt (% of GDP) | annual | % GDP | imf_datamapper | IMF DataMapper (WEO) | GGXWDG_NGDP/IND | Values after 2025 are IMF projections. |
+| fiscal_sovereign | `fiscal_balance_gdp` | General Government Net Lending/Borrowing (% of GDP) | annual | % GDP | imf_datamapper | IMF DataMapper (WEO) | GGXCNL_NGDP/IND | Values after 2025 are IMF projections. |
+| fiscal_sovereign | `primary_balance_gdp` | General Government Primary Balance (% of GDP) | annual | % GDP | imf_datamapper | IMF DataMapper (Fiscal Monitor) | GGXONLB_G01_GDP_PT/IND | Values after 2025 are IMF projections. |
+| monetary_financial | `policy_rate` | Central Bank Policy Rate | event | % | bis_policy_rate | BIS central bank policy rates (WS_CBPOL) | IN | BIS WS_CBPOL daily series as reported by the central bank, collapsed to decision dates. |
+| stability_structural | `credit_gap` | Credit-to-GDP Gap (BIS) | quarterly | pp | bis_credit_gap | BIS credit-to-GDP gaps | IN | Deviation of total credit to the private non-financial sector from its one-sided HP-filter trend (BIS method). |
+| external_fx | `usd_inr_bis` | USD/INR (BIS, monthly) | monthly | INR per USD | bis_fx | BIS bilateral exchange rates (WS_XRU) | IN | End-of-period monthly rate in local currency per US dollar. |
+| external_fx | `reer` | Real Effective Exchange Rate (BIS broad) | monthly | Index (2020 = 100) | fred | BIS effective exchange rates via FRED | RBINBIS | CPI-based broad real effective exchange rate; a rise is a real appreciation. |
+| housing_property | `house_price_index` | Residential Property Prices (BIS, nominal) | quarterly | Index (2010 = 100) | fred | BIS residential property prices via FRED | QINN628BIS | Nominal residential property price index compiled by the BIS from national sources. |
+| housing_property | `house_price_growth` | Residential Property Prices YoY (BIS, nominal) | quarterly | % y/y | fred | BIS residential property prices via FRED | QINN628BIS | Year-on-year change computed from the BIS nominal index. |
+| housing_property | `real_house_price_index` | Residential Property Prices (BIS, real) | quarterly | Index (2010 = 100) | fred | BIS residential property prices via FRED | QINR628BIS | Residential property prices deflated by CPI. |
+| monetary_financial | `private_credit_gdp` | Credit to Private Non-Financial Sector (% of GDP, BIS) | quarterly | % GDP | fred | BIS total credit statistics via FRED | QINPAM770A | Total credit from all sectors to the private non-financial sector, market value, % of GDP. |
+| stability_structural | `total_credit_gdp` | Credit to Non-Financial Sector (% of GDP, BIS) | quarterly | % GDP | fred | BIS total credit statistics via FRED | QINCAM770A | Total credit to the non-financial sector (government, households and corporates), % of GDP. |
+| growth_accounts | `real_gdp_growth_wb` | Real GDP Growth (World Bank) | annual | % | world_bank | World Bank WDI | NY.GDP.MKTP.KD.ZG | Annual growth of GDP at constant local-currency prices. |
+| growth_accounts | `consumption_growth` | Household Consumption Growth (World Bank) | annual | % | world_bank | World Bank WDI | NE.CON.PRVT.KD.ZG | Annual growth of household final consumption expenditure at constant prices. |
+| growth_accounts | `investment_growth` | Gross Fixed Capital Formation Growth (World Bank) | annual | % | world_bank | World Bank WDI | NE.GDI.FTOT.KD.ZG | Annual growth of gross fixed capital formation at constant prices. |
+| labour_wages | `unemployment_rate` | Unemployment Rate (ILO modelled estimate) | annual | % | world_bank | World Bank WDI / ILO | SL.UEM.TOTL.ZS | ILO modelled estimate, not a national survey release. |
+| labour_wages | `labour_participation_rate` | Labour Force Participation Rate (ILO modelled estimate) | annual | % | world_bank | World Bank WDI / ILO | SL.TLF.CACT.ZS | Share of the population aged 15+ that is economically active; ILO modelled estimate. |
+| external_fx | `total_reserves_usd` | Total Reserves incl. Gold (USD) | annual | USD bn | world_bank | World Bank WDI / IMF IFS | FI.RES.TOTL.CD | End-of-year gross reserves including gold. |
+| external_fx | `short_term_external_debt_pct_reserves` | Short-Term External Debt (% of Reserves) | annual | % reserves | world_bank | World Bank International Debt Statistics | DT.DOD.DSTC.IR.ZS | Guidotti-Greenspan ratio; above 100% means short-term external debt exceeds gross reserves. |
+| external_fx | `remittances_gdp` | Personal Remittances Received (% of GDP) | annual | % GDP | world_bank | World Bank WDI | BX.TRF.PWKR.DT.GD.ZS | Personal transfers and compensation of employees received. |
+| production_cycle | `industrial_production_growth` | Industrial Production YoY (OECD) | monthly | % y/y | fred | OECD Main Economic Indicators via FRED | INDPRINTO01GYSAM | Total industry excluding construction, growth rate same period previous year. |
+| production_cycle | `composite_leading_indicator` | OECD Composite Leading Indicator | monthly | Index (long-term average = 100) | fred | OECD Composite Leading Indicators via FRED | INDLOLITOAASTSAM | Amplitude-adjusted CLI; above 100 signals activity above its long-term trend. |
+| external_fx | `goods_exports` | Goods Exports (USD) | monthly | USD bn | fred | OECD Main Economic Indicators via FRED | XTEXVA01INM667S | Monthly merchandise exports, value in US dollars, seasonally adjusted. |
+| external_fx | `exports_growth` | Goods Exports YoY (USD) | monthly | % y/y | fred | OECD Main Economic Indicators via FRED | XTEXVA01INM667S | Year-on-year change computed from monthly US-dollar exports. |
+| external_fx | `goods_imports` | Goods Imports (USD) | monthly | USD bn | fred | OECD Main Economic Indicators via FRED | XTIMVA01INM667S | Monthly merchandise imports, value in US dollars, seasonally adjusted. |
+| external_fx | `imports_growth` | Goods Imports YoY (USD) | monthly | % y/y | fred | OECD Main Economic Indicators via FRED | XTIMVA01INM667S | Year-on-year change computed from monthly US-dollar imports. |
+| monetary_financial | `equity_index` | Share Prices (OECD, all shares) | monthly | Index (2015 = 100) | fred | OECD Main Economic Indicators via FRED | SPASTT01INM661N | Monthly average of the broad share price index. |
+| monetary_financial | `equity_return_yoy` | Share Prices YoY (OECD) | monthly | % y/y | fred | OECD Main Economic Indicators via FRED | SPASTT01INM661N | Price return only (no dividends), from monthly averages. |
+| external_fx | `usd_inr` | USD/INR (Fed H.10, daily) | daily | INR per USD | fred | Federal Reserve H.10 via FRED | DEXINUS | Noon buying rates in New York certified by the Federal Reserve Bank of New York. |
+
+## India Official / Vendor Data Gaps
+
+| Section | Indicator family | Current status |
+|---|---|---|
+| monetary_financial | 10Y Government Security Yield | The OECD long-term rate mirror for India on FRED (IRLTLT01INM156N) is discontinued; an RBI/CCIL source is needed. |
+| monetary_financial | 3-Month Interbank Rate | The OECD 3-month interbank mirror (IR3TIB01INM156N) is discontinued. |
+| monetary_financial | Broad Money (M3) Growth | The OECD M3 mirror ends in 2018 and the World Bank series in 2021; RBI DBIE is the native source. |
+| stability_structural | Bank Capital Adequacy and NPL Ratios (IMF FSI) | The IMF FSIC dataflow refuses requests from this build environment (HTTP 403); to be retried from CI. |
+
 ## Kazakhstan Data-First Dashboard Sources
 
 The Kazakhstan page is generated from `config/kazakhstan_indicators.yaml`. National Bank of Kazakhstan (NBK) daily XML RSS feed provides official market exchange rates (USD, EUR, RUB, CNY); DBnomics (IMF IFS) supplies policy rates, headline CPI YoY and index base, and quarterly BPM6 balance of payments; World Bank WDI supplies real GDP, household consumption, gross capital formation, broad money, and domestic private credit; IMF DataMapper supplies WEO growth, external debt, and Fiscal Monitor ratios; DBnomics (IMF FSI) supplies banking regulatory CAR and NPL ratios; FRED supplies gross FX reserves and Brent crude; and Bruegel supplies 120-partner REER/NEER.

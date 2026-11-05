@@ -1802,13 +1802,14 @@ def fetch_bis_policy_rate(spec: dict[str, Any]) -> dict[str, Any]:
     """BIS WS_CBPOL daily policy rate collapsed to confirmed events.
 
     ``spec['series']`` is the dashboard scope code (for example ``JP``); the
-    BIS reference area is resolved from ``bis_policy.BIS_REF_AREA``.
+    BIS reference area is ``spec['bis_area']`` when given, else resolved from
+    ``bis_policy.BIS_REF_AREA``.
     """
     from .bis_policy import BIS_CBPOL_PAGE_URL, fetch_bis_policy_rate_path, glitch_note
 
     scope = str(spec.get('series') or '').strip().upper()
     start = str(spec.get('start_date') or '2000-01-01')[:10]
-    path = fetch_bis_policy_rate_path(scope, start=start)
+    path = fetch_bis_policy_rate_path(scope, start=start, ref_area=spec.get('bis_area'))
     if path is None or not path.events:
         raise RuntimeError(f'BIS WS_CBPOL returned no observations for {scope}')
     observations = [{'date': date, 'value': value} for date, value in path.events]
@@ -2355,7 +2356,8 @@ def fetch_bruegel_reer(session_or_spec: Any, spec: dict[str, Any] | None = None)
     country = str(spec.get("country") or spec.get("country_code") or spec.get("code") or "").strip().upper()
     if not country:
         spec_id = str(spec.get("id", "")).upper()
-        for c in ("US", "EA", "UK", "JP", "CN", "ZA", "PL", "CZ", "HU", "RO", "HK", "TW", "KR", "TR", "KZ", "UZ", "EG", "NG"):
+        from .scopes import all_scopes
+        for c in [scope.id for scope in all_scopes()]:
             if f"_{c}" in spec_id or spec_id.startswith(f"{c}_") or spec_id.endswith(f"_{c}"):
                 country = c
                 break

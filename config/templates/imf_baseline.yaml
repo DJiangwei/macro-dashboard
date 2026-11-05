@@ -1,0 +1,227 @@
+# IMF baseline: monthly CPI (IMF CPI dataflow), quarterly BPM6 balance of
+# payments (IMF BOP dataflow) and annual WEO aggregates (DataMapper).
+params: [iso3]
+summary_key_ids: [real_gdp_growth, cpi_inflation, current_account_gdp, government_debt_gdp]
+indicators:
+  - id: real_gdp_growth
+    concept: real_gdp_growth_yoy
+    section: growth_accounts
+    label_en: Real GDP Growth (IMF WEO)
+    label_zh: 实际GDP增速 (IMF WEO)
+    unit: "%"
+    fetcher: imf_datamapper
+    series: NGDP_RPCH/{iso3}
+    actual_through: "{weo_actual_through}"
+    source_name: IMF DataMapper (WEO)
+    source_url: https://www.imf.org/external/datamapper/NGDP_RPCH/{iso3}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Annual change in constant-price GDP. Values after {weo_actual_through} are IMF projections.
+    caveat_zh: 不变价GDP年度变动。{weo_actual_through}年之后为IMF预测值。
+
+  - id: cpi_inflation
+    concept: headline_inflation
+    section: prices_costs
+    label_en: Headline CPI Inflation YoY
+    label_zh: 总体CPI通胀率同比
+    unit: "% y/y"
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: "{iso3}.CPI._T.YOY_PCH_PA_PT.M"
+    source_name: IMF SDMX (CPI) / national statistics office
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/{iso3}.CPI._T.YOY_PCH_PA_PT.M
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Official monthly CPI annual rate of change as reported to the IMF.
+    caveat_zh: 报送IMF的官方月度CPI同比变动率。
+
+  - id: cpi_inflation_mom
+    section: prices_costs
+    label_en: Headline CPI Inflation MoM
+    label_zh: 总体CPI通胀率环比
+    unit: "% m/m"
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: "{iso3}.CPI._T.POP_PCH_PA_PT.M"
+    source_name: IMF SDMX (CPI) / national statistics office
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/{iso3}.CPI._T.POP_PCH_PA_PT.M
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Month-on-month change in the official CPI, not seasonally adjusted.
+    caveat_zh: 官方CPI环比变动，未经季节调整。
+
+  - id: cpi_index
+    section: prices_costs
+    label_en: CPI Index
+    label_zh: CPI指数
+    unit: Index
+    fetcher: imf_sdmx
+    dataflow: CPI
+    series: "{iso3}.CPI._T.IX.M"
+    source_name: IMF SDMX (CPI) / national statistics office
+    source_url: https://api.imf.org/external/sdmx/2.1/data/CPI/{iso3}.CPI._T.IX.M
+    frequency: monthly
+    start_date: 2005-01-01
+    caveat_en: Official CPI level; base year as published by the national statistics office.
+    caveat_zh: 官方CPI水平，基期以国家统计机构公布为准。
+
+  - id: current_account_gdp
+    concept: current_account_gdp
+    section: external_fx
+    label_en: Current Account Balance (% of GDP, IMF WEO)
+    label_zh: 经常账户差额占GDP比重 (IMF WEO)
+    unit: "% GDP"
+    fetcher: imf_datamapper
+    series: BCA_NGDPD/{iso3}
+    actual_through: "{weo_actual_through}"
+    source_name: IMF DataMapper (WEO)
+    source_url: https://www.imf.org/external/datamapper/BCA_NGDPD/{iso3}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Values after {weo_actual_through} are IMF projections.
+    caveat_zh: "{weo_actual_through}年之后为IMF预测值。"
+
+  - id: current_account_usd
+    section: external_fx
+    label_en: Current Account Balance (USD)
+    label_zh: 经常账户差额 (美元)
+    unit: USD bn
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: "{iso3}.NETCD_T.CAB.USD.Q"
+    scale: 1000000000
+    source_name: IMF SDMX (BOP) / central bank
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/{iso3}.NETCD_T.CAB.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 current account balance, not seasonally adjusted.
+    caveat_zh: BPM6季度经常账户差额，未经季节调整。
+
+  - id: goods_trade_balance
+    concept: trade_balance
+    section: external_fx
+    label_en: Goods Trade Balance (BoP, USD)
+    label_zh: 货物贸易差额 (国际收支口径，美元)
+    unit: USD bn
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: "{iso3}.NETCD_T.G.USD.Q"
+    scale: 1000000000
+    source_name: IMF SDMX (BOP) / central bank
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/{iso3}.NETCD_T.G.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 goods balance.
+    caveat_zh: BPM6季度货物差额。
+
+  - id: services_balance
+    section: external_fx
+    label_en: Services Balance (BoP, USD)
+    label_zh: 服务贸易差额 (国际收支口径，美元)
+    unit: USD bn
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: "{iso3}.NETCD_T.S.USD.Q"
+    scale: 1000000000
+    source_name: IMF SDMX (BOP) / central bank
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/{iso3}.NETCD_T.S.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 services balance.
+    caveat_zh: BPM6季度服务差额。
+
+  - id: secondary_income_balance
+    section: external_fx
+    label_en: Secondary Income Balance incl. Remittances (BoP, USD)
+    label_zh: 二次收入差额（含侨汇，美元）
+    unit: USD bn
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: "{iso3}.NETCD_T.IN2.USD.Q"
+    scale: 1000000000
+    source_name: IMF SDMX (BOP) / central bank
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/{iso3}.NETCD_T.IN2.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: Quarterly BPM6 secondary income balance; workers' remittances are its main component for many EMs.
+    caveat_zh: BPM6季度二次收入差额；对许多新兴市场而言侨汇是其主要构成。
+
+  - id: fdi_net_usd
+    section: external_fx
+    label_en: Direct Investment, Net Acquisition minus Incurrence (USD)
+    label_zh: 直接投资净额 (美元)
+    unit: USD bn
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: "{iso3}.NNAFANIL_T.D_F.USD.Q"
+    scale: 1000000000
+    source_name: IMF SDMX (BOP) / central bank
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/{iso3}.NNAFANIL_T.D_F.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: BPM6 sign convention (assets minus liabilities); a negative value is a net inflow.
+    caveat_zh: BPM6符号约定（资产减负债）；负值表示净流入。
+
+  - id: portfolio_investment_net
+    section: external_fx
+    label_en: Portfolio Investment, Net (USD)
+    label_zh: 证券投资净额 (美元)
+    unit: USD bn
+    fetcher: imf_sdmx
+    dataflow: BOP
+    series: "{iso3}.NNAFANIL_T.P_F.USD.Q"
+    scale: 1000000000
+    source_name: IMF SDMX (BOP) / central bank
+    source_url: https://api.imf.org/external/sdmx/2.1/data/BOP/{iso3}.NNAFANIL_T.P_F.USD.Q
+    frequency: quarterly
+    start_date: 2005-01-01
+    caveat_en: BPM6 sign convention (assets minus liabilities); a negative value is a net inflow.
+    caveat_zh: BPM6符号约定（资产减负债）；负值表示净流入。
+
+  - id: government_debt_gdp
+    concept: government_debt_gdp
+    section: fiscal_sovereign
+    label_en: General Government Gross Debt (% of GDP)
+    label_zh: 广义政府总债务占GDP比重
+    unit: "% GDP"
+    fetcher: imf_datamapper
+    series: GGXWDG_NGDP/{iso3}
+    actual_through: "{weo_actual_through}"
+    source_name: IMF DataMapper (WEO)
+    source_url: https://www.imf.org/external/datamapper/GGXWDG_NGDP/{iso3}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Values after {weo_actual_through} are IMF projections.
+    caveat_zh: "{weo_actual_through}年之后为IMF预测值。"
+
+  - id: fiscal_balance_gdp
+    concept: fiscal_balance_gdp
+    section: fiscal_sovereign
+    label_en: General Government Net Lending/Borrowing (% of GDP)
+    label_zh: 广义政府净借贷占GDP比重
+    unit: "% GDP"
+    fetcher: imf_datamapper
+    series: GGXCNL_NGDP/{iso3}
+    actual_through: "{weo_actual_through}"
+    source_name: IMF DataMapper (WEO)
+    source_url: https://www.imf.org/external/datamapper/GGXCNL_NGDP/{iso3}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Values after {weo_actual_through} are IMF projections.
+    caveat_zh: "{weo_actual_through}年之后为IMF预测值。"
+
+  - id: primary_balance_gdp
+    concept: primary_balance_gdp
+    section: fiscal_sovereign
+    label_en: General Government Primary Balance (% of GDP)
+    label_zh: 广义政府基本收支占GDP比重
+    unit: "% GDP"
+    fetcher: imf_datamapper
+    series: GGXONLB_G01_GDP_PT/{iso3}
+    actual_through: "{weo_actual_through}"
+    source_name: IMF DataMapper (Fiscal Monitor)
+    source_url: https://www.imf.org/external/datamapper/GGXONLB_G01_GDP_PT/{iso3}
+    frequency: annual
+    start_date: 2000-01-01
+    caveat_en: Values after {weo_actual_through} are IMF projections.
+    caveat_zh: "{weo_actual_through}年之后为IMF预测值。"

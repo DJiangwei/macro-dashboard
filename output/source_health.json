@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-11-05T03:42:18.922803+00:00",
+  "generated": "2026-11-05T04:03:17.455033+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -723,6 +723,39 @@
       "sources": {
         "dbnomics": {
           "success": 1
+        }
+      },
+      "events": []
+    },
+    "IN": {
+      "calls": 40,
+      "success": 40,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bis_credit_gap": {
+          "success": 1
+        },
+        "bis_fx": {
+          "success": 1
+        },
+        "bis_policy_rate": {
+          "success": 1
+        },
+        "fred": {
+          "success": 15
+        },
+        "imf_datamapper": {
+          "success": 5
+        },
+        "imf_sdmx": {
+          "success": 9
+        },
+        "world_bank": {
+          "success": 8
         }
       },
       "events": []

@@ -1,0 +1,48 @@
+# Standard page sections for templated scopes (same layout as the EM pages).
+# A scope's own `sections:` entries override these by id.
+sections:
+  growth_accounts:
+    title_en: "GDP & National Accounts"
+    title_zh: "GDP与国民账户"
+    report_logic_en: "Real activity from national accounts: GDP growth and its demand components."
+    report_logic_zh: "基于国民账户的实际活动：GDP增速及需求分项。"
+  production_cycle:
+    title_en: "Production & Business Cycle"
+    title_zh: "生产与商业周期"
+    report_logic_en: "Monthly industrial production and leading indicators that move before quarterly GDP."
+    report_logic_zh: "先于季度GDP变化的月度工业生产与领先指标。"
+  labour_wages:
+    title_en: "Labour Market & Wages"
+    title_zh: "劳动力市场与工资"
+    report_logic_en: "Unemployment and participation; modelled annual estimates where no monthly survey is available."
+    report_logic_zh: "失业率与劳动参与率；缺少月度调查时使用年度模型估计。"
+  prices_costs:
+    title_en: "Prices & Costs"
+    title_zh: "价格与成本"
+    report_logic_en: "Headline CPI inflation, monthly momentum and the official index."
+    report_logic_zh: "总体CPI通胀、月度动能与官方指数。"
+  housing_property:
+    title_en: "Housing & Property"
+    title_zh: "住房与房地产"
+    report_logic_en: "BIS residential property prices, nominal and deflated."
+    report_logic_zh: "BIS住宅价格指数（名义与实际）。"
+  external_fx:
+    title_en: "External Balance & FX"
+    title_zh: "外部平衡与汇率"
+    report_logic_en: "Exchange rate, effective exchange rates, trade, the balance of payments and reserve adequacy."
+    report_logic_zh: "汇率、有效汇率、贸易、国际收支与储备充足度。"
+  fiscal_sovereign:
+    title_en: "Fiscal & Sovereign Debt"
+    title_zh: "财政与主权债务"
+    report_logic_en: "General government debt and balances (IMF WEO; values after the last actual year are IMF projections)."
+    report_logic_zh: "广义政府债务与收支（IMF WEO；最后实际年份之后为IMF预测）。"
+  monetary_financial:
+    title_en: "Monetary Policy & Financial Conditions"
+    title_zh: "货币政策与金融条件"
+    report_logic_en: "Policy rate decisions, credit depth and equity prices."
+    report_logic_zh: "政策利率决议、信贷深度与股票价格。"
+  stability_structural:
+    title_en: "Financial Stability & Structure"
+    title_zh: "金融稳定与结构"
+    report_logic_en: "Credit-to-GDP gap and total credit to the non-financial sector (BIS)."
+    report_logic_zh: "信贷/GDP缺口与非金融部门总信贷（BIS）。"

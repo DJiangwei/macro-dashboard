@@ -140,9 +140,14 @@ def fetch_bis_policy_rate_path(
     start: str = "2000-01-01",
     session: requests.Session | None = None,
     min_persistence: int = 2,
+    ref_area: str | None = None,
 ) -> PolicyRatePath | None:
-    """Fetch and normalise the BIS policy-rate path for a dashboard scope code."""
-    ref_area = BIS_REF_AREA.get(scope_code.upper())
+    """Fetch and normalise the BIS policy-rate path for a dashboard scope code.
+
+    ``ref_area`` overrides the ``BIS_REF_AREA`` lookup (indicator specs pass it as
+    ``bis_area`` so a templated scope needs no entry here).
+    """
+    ref_area = ref_area or BIS_REF_AREA.get(scope_code.upper())
     if not ref_area:
         return None
     daily, meta = fetch_bis_cbpol_daily(ref_area, start=start, session=session)

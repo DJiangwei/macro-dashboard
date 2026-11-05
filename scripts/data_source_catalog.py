@@ -22,6 +22,7 @@ from country_primer.data_fetcher import (
     is_dropped_proxy_indicator,
 )
 
+from country_primer.indicator_templates import load_indicator_config
 from country_primer.scopes import data_first_scopes
 from country_primer.scopes import cee_scopes
 
@@ -377,7 +378,7 @@ DATA_FIRST_PAGES = tuple(
 def _append_data_first_sources(lines: list[str], page: dict) -> None:
     if not page["config"].exists():
         return
-    config = yaml.safe_load(page["config"].read_text()) or {}
+    config = load_indicator_config(page["config"])
     indicators = config.get("indicators", [])
     summary = json.loads(page["summary"].read_text()) if page["summary"].exists() else {}
     name = page["name"]

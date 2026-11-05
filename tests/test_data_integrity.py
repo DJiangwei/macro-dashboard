@@ -120,7 +120,10 @@ SCOPE_FRAMES = {scope.id: scope.slug for scope in data_first_scopes()}
 
 
 def test_growth_concepts_are_not_mapped_to_level_series():
-    framework = yaml.safe_load((ROOT / "config" / "framework_v2.yaml").read_text())
+    # Includes concepts declared on indicator specs (templates), merged by the loader.
+    from country_primer.framework import load_macro_framework
+    merged = load_macro_framework()
+    framework = {"concepts": [{"id": c.concept_id, "mappings": dict(c.mappings)} for c in merged.concepts]}
     units: dict[str, dict[str, tuple[str, str]]] = {}
     for scope, slug in SCOPE_FRAMES.items():
         path = OUTPUT / f"{slug}_canonical_frame.json"

@@ -1,0 +1,45 @@
+# India: the first scope built from indicator templates (F1 pilot).
+# Baseline series come from the templates listed below; native RBI / MOSPI
+# series can be added under `indicators:` (an id that matches a template id
+# replaces it). Every value is fetched from the named source.
+name: "India"
+name_zh: "印度"
+code: "IN"
+iso2: "IN"
+subtitle_en: "A data-first macro page for India built from IMF (CPI, BoP, WEO), BIS (policy rate, credit, property prices, FX), OECD MEI and Fed H.10 mirrors on FRED, and World Bank WDI."
+subtitle_zh: "基于IMF（CPI、国际收支、WEO）、BIS（政策利率、信贷、房价、汇率）、FRED上的OECD MEI与美联储H.10镜像以及世界银行WDI构建的印度数据优先宏观页面。"
+min_chart_count: 25
+
+templates: [sections_core, imf_baseline, bis_baseline, wb_structural, oecd_mirror, fred_fx]
+params:
+  scope: IN
+  iso2: IN
+  iso3: IND
+  bis: IN
+  currency: INR
+  ccy: inr
+  fred_fx: DEXINUS
+
+indicators: []
+
+data_gaps:
+  - section: monetary_financial
+    item_en: 10Y Government Security Yield
+    item_zh: 10年期政府债券收益率
+    status_en: The OECD long-term rate mirror for India on FRED (IRLTLT01INM156N) is discontinued; an RBI/CCIL source is needed.
+    status_zh: FRED上印度长期利率的OECD镜像（IRLTLT01INM156N）已停更，需接入RBI/CCIL数据源。
+  - section: monetary_financial
+    item_en: 3-Month Interbank Rate
+    item_zh: 3个月同业拆借利率
+    status_en: The OECD 3-month interbank mirror (IR3TIB01INM156N) is discontinued.
+    status_zh: OECD 3个月同业利率镜像（IR3TIB01INM156N）已停更。
+  - section: monetary_financial
+    item_en: Broad Money (M3) Growth
+    item_zh: 广义货币(M3)增速
+    status_en: The OECD M3 mirror ends in 2018 and the World Bank series in 2021; RBI DBIE is the native source.
+    status_zh: OECD M3镜像止于2018年，世界银行序列止于2021年；原生数据源为RBI DBIE。
+  - section: stability_structural
+    item_en: Bank Capital Adequacy and NPL Ratios (IMF FSI)
+    item_zh: 银行资本充足率与不良贷款率 (IMF FSI)
+    status_en: The IMF FSIC dataflow refuses requests from this build environment (HTTP 403); to be retried from CI.
+    status_zh: IMF FSIC数据流拒绝了本构建环境的请求（HTTP 403），待在CI中重试。

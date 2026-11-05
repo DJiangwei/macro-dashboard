@@ -76,10 +76,35 @@ def _validate_payload(payload: dict[str, Any]) -> MacroFramework:
     return MacroFramework(version=version, pillars=pillars, concepts=tuple(concepts), legacy_aliases=aliases)
 
 
+def _merge_declared_concepts(framework: MacroFramework) -> MacroFramework:
+    """Add ``concept:`` tags from indicator YAMLs (templates) to the mappings."""
+    from .indicator_templates import declared_concepts
+
+    declared = declared_concepts()
+    unknown = sorted(set(declared) - framework.concept_ids)
+    if unknown:
+        raise ValueError(f"Indicator specs declare unknown core concepts: {unknown}")
+    concepts = []
+    for concept in framework.concepts:
+        extra = declared.get(concept.concept_id) or {}
+        mappings = dict(concept.mappings)
+        for scope, ids in extra.items():
+            current = list(mappings.get(scope, ()))
+            mappings[scope] = tuple(current + [i for i in ids if i not in current])
+        concepts.append(CoreConcept(
+            concept_id=concept.concept_id, pillar=concept.pillar, label_en=concept.label_en,
+            label_zh=concept.label_zh, unit=concept.unit, mappings=mappings,
+        ))
+    return MacroFramework(
+        version=framework.version, pillars=framework.pillars, concepts=tuple(concepts),
+        legacy_aliases=framework.legacy_aliases,
+    )
+
+
 @lru_cache(maxsize=1)
 def load_macro_framework() -> MacroFramework:
     payload = yaml.safe_load(FRAMEWORK_PATH.read_text()) or {}
-    return _validate_payload(payload)
+    return _merge_declared_concepts(_validate_payload(payload))
 
 
 def canonical_indicator_id(indicator_id: str) -> str:

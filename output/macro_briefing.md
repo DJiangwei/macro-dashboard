@@ -1,6 +1,6 @@
 # Global Macro Workbench Intelligence Briefing
 
-**Generated**: 2026-11-05 | **Coverage**: 18 economies (HU, PL, CZ, RO, CN, EA, JP, ZA, UK, US, TR, HK, KR, TW, KZ, UZ, EG, NG)
+**Generated**: 2026-11-05 | **Coverage**: 19 economies (HU, PL, CZ, RO, CN, EA, JP, ZA, UK, US, TR, HK, KR, TW, IN, KZ, UZ, EG, NG)
 
 ---
 
@@ -22,6 +22,7 @@
 | **Hong Kong (HK)** | 62.5 | 55.0 | **mixed** | above-trend expansion | near-target inflation | neutral-moderate stance | 59.8 (needs data review) |
 | **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 63.5 (usable with watch-list) |
 | **Taiwan (TW)** | 75.0 | 71.7 | **constructive** | above-trend expansion | near-target inflation | accommodative stance | 80.8 (high-confidence dashboard) |
+| **India (IN)** | 55.0 | 48.3 | **mixed** | above-trend expansion | above-target inflation | restrictive stance | 50.4 (needs data review) |
 | **Kazakhstan (KZ)** | 43.8 | 55.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 65.8 (usable with watch-list) |
 | **Uzbekistan (UZ)** | 53.8 | 51.7 | **mixed** | above-trend expansion | inflation pressure | restrictive stance | 64.4 (usable with watch-list) |
 | **Egypt (EG)** | 53.8 | 45.0 | **defensive** | above-trend expansion | inflation pressure | restrictive stance | 55.0 (needs data review) |
@@ -74,6 +75,7 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | **HK** | HK 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **KR** | 10Y KTB | **4.45%** | 2026-09-01 | **-49.0 bps** | Official Observed |
 | **TW** | 10Y Gov Bond | **1.97%** | 2026-08-01 | **-297.0 bps** | Official Observed |
+| **IN** | IN 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **KZ** | KZ 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **UZ** | UZ 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **EG** | EG 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
@@ -83,7 +85,7 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 
 ## 4. Cross-Country Synchronization (pairwise 36-month correlation)
 
-- **Headline CPI inflation** (pairwise, last 36 common months (min 24); windows end 2026-08 to 2026-10):
+- **Headline CPI inflation** (pairwise, last 36 common months (min 24); windows end 2026-07 to 2026-10):
   - Most synchronised: TR vs. EG (**0.91**, strong positive), PL vs. CZ (**0.85**, strong positive), ZA vs. KR (**0.85**, strong positive).
   - Least synchronised: RO vs. UZ (**-0.79**, strong negative), RO vs. NG (**-0.74**, strong negative), KZ vs. NG (**-0.73**, strong negative).
 - **Industrial production** (pairwise, last 36 common months (min 24); windows end 2026-07 to 2026-09):
@@ -167,6 +169,7 @@ Guidotti-Greenspan Rule: $\text{Short-Term External Debt} / \text{Total FX Reser
 | **South Korea** (`KR`) | Asian Surplus Economies | **n/a** | No short-term external debt series | **+5.3%** | **$434.7B** | Current account +5.3% of gdp (2024); reserves $435bn (2026-09-01) |
 | **Taiwan** (`TW`) | Asian Surplus Economies | **n/a** | No short-term external debt series | **+14.3%** | **$600.7B** | Current account +14.3% of gdp (2024); reserves $601bn (2026-09-01) |
 | **Hong Kong** (`HK`) | Emerging & Frontier | **n/a** | No short-term external debt series | **+13.2%** | **$425.6B** | Current account +13.2% of gdp (2024); reserves $426bn (2023) |
+| **India** (`IN`) | Emerging & Frontier | **21.7%** | Covered (<80%) | **-0.6%** | **$700.1B** | St external debt 22% of reserves (2024); current account -0.6% of gdp (2024); reserves $700bn (2025) |
 
 ---
 

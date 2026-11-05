@@ -1,0 +1,141 @@
+# BIS baseline: policy-rate decisions, credit-to-GDP gap, monthly FX, and the
+# BIS property-price, credit and effective-exchange-rate series mirrored on FRED.
+# {bis} is the BIS reference area (ISO alpha-2; XM for the euro area, GB for the UK);
+# {scope} is the dashboard scope id;
+# {iso2} is the ISO alpha-2 code used in the FRED mirror ids.
+params: [scope, bis, iso2, currency, ccy]
+summary_key_ids: [policy_rate, credit_gap]
+indicators:
+  - id: policy_rate
+    concept: policy_rate
+    section: monetary_financial
+    label_en: Central Bank Policy Rate
+    label_zh: 央行政策利率
+    unit: "%"
+    fetcher: bis_policy_rate
+    series: "{scope}"
+    bis_area: "{bis}"
+    source_authority: official_primary
+    source_name: BIS central bank policy rates (WS_CBPOL)
+    source_url: https://data.bis.org/topics/CBPOL
+    frequency: event
+    start_date: 2000-01-01
+    caveat_en: BIS WS_CBPOL daily series as reported by the central bank, collapsed to decision dates.
+    caveat_zh: BIS WS_CBPOL日度序列（央行报送），按决议日压缩为事件序列。
+
+  - id: credit_gap
+    concept: credit_gap
+    section: stability_structural
+    label_en: Credit-to-GDP Gap (BIS)
+    label_zh: 信贷/GDP缺口 (BIS)
+    unit: pp
+    fetcher: bis_credit_gap
+    series: "{bis}"
+    source_name: BIS credit-to-GDP gaps
+    source_url: https://data.bis.org/topics/CREDIT_GAPS
+    frequency: quarterly
+    max_age_days: 290
+    start_date: 2000-01-01
+    caveat_en: Deviation of total credit to the private non-financial sector from its one-sided HP-filter trend (BIS method).
+    caveat_zh: 私人非金融部门总信贷/GDP相对单边HP滤波趋势的偏离（BIS方法）。
+
+  - id: usd_{ccy}_bis
+    section: external_fx
+    label_en: USD/{currency} (BIS, monthly)
+    label_zh: 美元兑{currency}（BIS月度）
+    unit: "{currency} per USD"
+    fetcher: bis_fx
+    series: "{bis}"
+    source_name: BIS bilateral exchange rates (WS_XRU)
+    source_url: https://data.bis.org/topics/XRU
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: End-of-period monthly rate in local currency per US dollar.
+    caveat_zh: 月末汇率，以每美元兑本币计。
+
+  - id: reer
+    concept: reer
+    section: external_fx
+    label_en: Real Effective Exchange Rate (BIS broad)
+    label_zh: 实际有效汇率 (BIS宽口径)
+    unit: Index (2020 = 100)
+    fetcher: fred
+    series: RB{iso2}BIS
+    source_name: BIS effective exchange rates via FRED
+    source_url: https://fred.stlouisfed.org/series/RB{iso2}BIS
+    frequency: monthly
+    start_date: 2000-01-01
+    caveat_en: CPI-based broad real effective exchange rate; a rise is a real appreciation.
+    caveat_zh: 基于CPI的宽口径实际有效汇率；上升表示实际升值。
+
+  - id: house_price_index
+    section: housing_property
+    label_en: Residential Property Prices (BIS, nominal)
+    label_zh: 住宅价格 (BIS，名义)
+    unit: Index (2010 = 100)
+    fetcher: fred
+    series: Q{iso2}N628BIS
+    source_name: BIS residential property prices via FRED
+    source_url: https://fred.stlouisfed.org/series/Q{iso2}N628BIS
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Nominal residential property price index compiled by the BIS from national sources.
+    caveat_zh: BIS依据各国来源编制的名义住宅价格指数。
+
+  - id: house_price_growth
+    concept: house_price_growth
+    section: housing_property
+    label_en: Residential Property Prices YoY (BIS, nominal)
+    label_zh: 住宅价格同比 (BIS，名义)
+    unit: "% y/y"
+    fetcher: fred
+    series: Q{iso2}N628BIS
+    transform: yoy_pct
+    source_name: BIS residential property prices via FRED
+    source_url: https://fred.stlouisfed.org/series/Q{iso2}N628BIS
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Year-on-year change computed from the BIS nominal index.
+    caveat_zh: 根据BIS名义指数计算的同比变动。
+
+  - id: real_house_price_index
+    section: housing_property
+    label_en: Residential Property Prices (BIS, real)
+    label_zh: 住宅价格 (BIS，实际)
+    unit: Index (2010 = 100)
+    fetcher: fred
+    series: Q{iso2}R628BIS
+    source_name: BIS residential property prices via FRED
+    source_url: https://fred.stlouisfed.org/series/Q{iso2}R628BIS
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Residential property prices deflated by CPI.
+    caveat_zh: 以CPI平减的住宅价格指数。
+
+  - id: private_credit_gdp
+    section: monetary_financial
+    label_en: Credit to Private Non-Financial Sector (% of GDP, BIS)
+    label_zh: 私人非金融部门信贷占GDP比重 (BIS)
+    unit: "% GDP"
+    fetcher: fred
+    series: Q{iso2}PAM770A
+    source_name: BIS total credit statistics via FRED
+    source_url: https://fred.stlouisfed.org/series/Q{iso2}PAM770A
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Total credit from all sectors to the private non-financial sector, market value, % of GDP.
+    caveat_zh: 所有部门对私人非金融部门的信贷总额（市值）占GDP比重。
+
+  - id: total_credit_gdp
+    section: stability_structural
+    label_en: Credit to Non-Financial Sector (% of GDP, BIS)
+    label_zh: 非金融部门信贷占GDP比重 (BIS)
+    unit: "% GDP"
+    fetcher: fred
+    series: Q{iso2}CAM770A
+    source_name: BIS total credit statistics via FRED
+    source_url: https://fred.stlouisfed.org/series/Q{iso2}CAM770A
+    frequency: quarterly
+    start_date: 2000-01-01
+    caveat_en: Total credit to the non-financial sector (government, households and corporates), % of GDP.
+    caveat_zh: 非金融部门（政府、居民与企业）信贷总额占GDP比重。
