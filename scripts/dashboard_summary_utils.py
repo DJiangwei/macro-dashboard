@@ -238,6 +238,11 @@ def load_canonical_data_first_frame(path: Any, config: dict[str, Any]) -> list[d
             "actual_through": _clean(item.get("actual_through") or spec.get("actual_through")),
             "provider_updated": _clean(item.get("provider_updated") or spec.get("provider_updated")),
             "refresh_fallback": bool(item.get("refresh_fallback")),
+            # Vintage tracking reads these back on the next refresh; without them the
+            # prior vintage lasts one build and a fallback claims a fresh fetch time.
+            "fetch_timestamp": item.get("fetch_timestamp"),
+            "prior_vintage": item.get("prior_vintage"),
+            "has_revisions": bool(item.get("has_revisions")),
             "observations": observations,
             "data_quality": quality,
             "quality_status": _clean(quality.get("status") or spec.get("quality_status") or "watch"),

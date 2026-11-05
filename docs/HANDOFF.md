@@ -114,7 +114,7 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
    - CEE 叙述文字（`config/countries.yaml`）需要逐条核实后重写。匈牙利央行领导层已于 2026-11-05 按 mnb.hu 更正（行长 Varga、四位副行长）；仍未核实的有：匈牙利政治背景（2026 年 4 月大选结果）、各国央行资产负债表数字、PL/CZ/RO 的行长与委员名单。mnb.hu 的议会选任委员名单当天无法与原文逐条核对（摘要列出的条目里有任期似已届满的），未采用，页面改为指向 mnb.hu。
    - 欧元区：职位空缺与 7 个 EA20 序列已于 2026-11-05 修复（见 §7 Eurostat 行）。**协议工资仍过期**：ECB `STS.Q.{I9,U2}.N.INWR.000000.3.ANR` 两个口径都止于 2025-Q3，源头没有更新，尚未找到接替序列；找不到就在页面上标为 gap。
    - 欧元区还有 8 个序列用 EA20（`sts_*`、`gov_*`），目前仍在更新，与已切换到 EA21 的序列口径不一致；以后可统一切到 EA21（两者差约 0.1pp）。
-   - **已知 bug（未修）**：`scripts/dashboard_summary_utils.load_canonical_data_first_frame` 读回上一版快照时不恢复 `prior_vintage`/`has_revisions`，所以 `track_revisions_and_vintages` 里「沿用前次 vintage」的分支拿到的总是 None：前次数据只能保留一次构建，下次刷新就丢。2026-11-05 刷新中国卡片时，`usd_cny_midpoint` 的前次数据就这样被清掉了。
+   - 已修（2026-11-05）：`load_canonical_data_first_frame` 原来不读回 `prior_vintage`/`has_revisions`/`fetch_timestamp`，导致前次 vintage 只保留一次构建、回退序列显示为刚抓取。现已读回，`tests/test_canonical.py` 覆盖。此前已丢失的前次 vintage（如 `usd_cny_midpoint`）要等下一次出现新 vintage 才会重新记录。
    - 中国 PBC 卡片（2026-11-05 已修）：DR007 页面的「Latest Update」是浏览器用访问者当天日期填的，所以卡片日期取页面的 `createDate`（M2 页的 createDate 与显示的更新日期一致）。DR007 当前值 1.4935% 的日期是 2026-09-23，PBC 英文页更新不频繁；要看日度 DR007 需另接时间序列。
    - 印度 IMF FSI 返回 403；可接入 MOSPI/RBI 原生数据。
    - 黄金 ETF 持仓缺来源；可加 `rolling_beta` 算子（金价对实际利率）。
