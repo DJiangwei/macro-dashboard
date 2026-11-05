@@ -53,7 +53,7 @@ def fetch_all(
     def fetch_one(spec: dict[str, Any]) -> dict[str, Any]:
         fetcher_name = spec.get("fetcher")
         func = registry.get(fetcher_name)
-        if not func and fetcher_name in {"manual", "derived"}:
+        if not func and (fetcher_name in {"manual", "derived"} or spec.get("derivation") == "derived"):
             return validate_series({**spec, "observations": [], "quality_status": "retained"})
         if not func:
             raise ValueError(f"Unknown fetcher: {fetcher_name}")

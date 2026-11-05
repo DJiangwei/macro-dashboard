@@ -84,7 +84,7 @@ def run_checks() -> list[dict[str, Any]]:
 
     # Each data-first scope: its registry headline series, fetched live through
     # the same global fetcher registry the builders use.
-    for scope in data_first_scopes():
+    for scope in data_first_scopes(include_markets=True):
         assert scope.indicators_path is not None and scope.headline is not None
         config = load_indicator_config(scope.indicators_path)
         specs = {str(item.get("id")): item for item in config.get("indicators", [])}

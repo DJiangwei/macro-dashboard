@@ -27,7 +27,7 @@ AUDIT_JSON = OUTPUT / "freshness_audit.json"
 CATALOG = ROOT / "DATA_SOURCE_CATALOG.md"
 TODAY = datetime.now(UTC).date()
 
-DATA_FIRST_PAGES = {s.name_en: s.html_path for s in data_first_scopes()}
+DATA_FIRST_PAGES = {s.name_en: s.html_path for s in data_first_scopes(include_markets=True)}
 
 CE4_COUNTRIES = ("Hungary", "Poland", "Czechia", "Romania")
 CE4_CODES = {"HU": "Hungary", "PL": "Poland", "CZ": "Czechia", "RO": "Romania"}

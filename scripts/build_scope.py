@@ -37,6 +37,7 @@ from dashboard_summary_utils import (  # noqa: E402
     track_revisions_and_vintages,
 )
 from country_primer.data_first_pipeline import fetch_all  # noqa: E402
+from country_primer.derived import apply_derivations  # noqa: E402
 from country_primer.fetchers import build_registry  # noqa: E402
 from country_primer.indicator_templates import load_indicator_config  # noqa: E402
 from country_primer.page_renderer import _latest, build_country_page  # noqa: E402
@@ -79,6 +80,10 @@ def build(scope: Scope, data_mode: str) -> Path:
         series_list = retain_last_known_good_series(series_list, scope.canonical_path, config)
         series_list = track_revisions_and_vintages(series_list, scope.canonical_path, config)
 
+    # Whitelisted derivations (spreads, cracks, seasonal deviations, ...), recomputed
+    # from their inputs in both modes so formulas and input vintages stay current.
+    series_list = apply_derivations(series_list, scope.html_path.parent)
+
     charted = [item for item in series_list if item.get("observations")]
     min_chart_count = config.get("min_chart_count")
     if min_chart_count is not None and len(charted) < int(min_chart_count):
@@ -114,7 +119,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.all == bool(args.scopes):
         parser.error("name one or more scopes, or pass --all")
-    selected = data_first_scopes() if args.all else [get_scope(code) for code in args.scopes]
+    selected = data_first_scopes(include_markets=True) if args.all else [get_scope(code) for code in args.scopes]
     data_mode = "snapshot" if args.snapshot else (os.environ.get("COUNTRY_PRIMER_DATA_MODE") or "refresh").strip().lower()
 
     failures: list[str] = []

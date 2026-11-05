@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-05T04:05:11.513312+00:00",
+  "generated": "2026-11-05T08:02:25.264225+00:00",
   "source": "Generated from one CEE build snapshot plus output/*_dashboard_summary.json files.",
   "cards": [
     {
@@ -636,6 +636,28 @@
       "secondary": "15",
       "quality": "15 source groups · 13 low-confidence charts",
       "framework": "9-Pillar Macro Framework",
+      "status": "clean"
+    }
+  ],
+  "markets": [
+    {
+      "code": "ENERGY",
+      "name": "Energy",
+      "file": "energy.html",
+      "currency": "USD",
+      "institution": "EIA",
+      "category": "market page",
+      "charts": 54,
+      "expected": 54,
+      "proxy_fills": 0,
+      "gaps_or_dropped": 5,
+      "gaps_label": "Official data gaps",
+      "headline_label": "Brent spot (EIA)",
+      "headline": "107.03 USD/bbl (2026-11-03)",
+      "secondary_label": "Source groups",
+      "secondary": "22",
+      "quality": "22 source groups · 0 low-confidence charts",
+      "framework": "Market Energy Framework",
       "status": "clean"
     }
   ],

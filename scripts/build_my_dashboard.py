@@ -17,9 +17,9 @@ from country_primer.scopes import all_scopes
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
 
-COUNTRY_MAP = {s.id: (s.name_en, s.name_zh, s.canonical_file, s.flag) for s in all_scopes()}
+COUNTRY_MAP = {s.id: (s.name_en, s.name_zh, s.canonical_file, s.flag) for s in all_scopes(include_markets=True)}
 
-COUNTRY_NAV = [(s.id, s.name_en, s.name_zh, s.html_file) for s in all_scopes()]
+COUNTRY_NAV = [(s.id, s.name_en, s.name_zh, s.html_file) for s in all_scopes(include_markets=True)]
 
 STARTER_WATCHLIST = [
     {

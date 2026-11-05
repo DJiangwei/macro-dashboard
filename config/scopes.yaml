@@ -419,3 +419,24 @@ scopes:
       label: USD/NGN official rate
       format: "{value:,.2f} ({date})"
     fetch_workers: 6
+
+  # ---------------------------------------------------------------- markets
+  # Market pages build after the economies (they may read country frames).
+  - id: ENERGY
+    kind: market
+    slug: energy
+    name: {en: Energy, zh: 能源}
+    flag: "⚡"
+    region: markets
+    pipeline: data_first
+    indicators: config/markets/energy.yaml
+    currency: USD
+    institution: EIA
+    framework_label: Market Energy Framework
+    headline:
+      indicators: [brent_spot]
+      key: brent_latest
+      label: Brent spot (EIA)
+      format: "{value:.2f} USD/bbl ({date})"
+    fetch_workers: 4
+    quick_refresh: true

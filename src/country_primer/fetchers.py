@@ -25,6 +25,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Callable
 
+import importlib
+
 import requests
 
 from . import adapters
@@ -51,6 +53,7 @@ class FetcherDef:
     call: str
     post: str
     note: str = ""
+    module: str = "adapters"
 
 
 FETCHERS: dict[str, FetcherDef] = {
@@ -108,6 +111,11 @@ FETCHERS: dict[str, FetcherDef] = {
     "finmind": FetcherDef("fetch_finmind", SPEC, SCALE_TRANSFORM),
     "nbk_xml": FetcherDef("fetch_nbk_xml", SPEC, TRANSFORM),
     "cbn_fx": FetcherDef("fetch_cbn_fx", SPEC, SCALE_TRANSFORM),
+    # Energy markets (src/country_primer/energy_adapters.py)
+    "eia_xls": FetcherDef("fetch_eia_xls", SPEC, SCALE_TRANSFORM, "EIA dnav history spreadsheets", "energy_adapters"),
+    "cftc_positions": FetcherDef("fetch_cftc_positions", SPEC, RAW, "CFTC disaggregated COT by contract code", "energy_adapters"),
+    "energy_charts_price": FetcherDef("fetch_energy_charts_price", SPEC, RAW, "Day-ahead power, daily mean", "energy_adapters"),
+    "foreign_futures": FetcherDef("fetch_foreign_futures", SPEC, RAW, "Sina front-month futures via AKShare", "energy_adapters"),
 }
 
 
@@ -127,7 +135,8 @@ def postprocess(series: dict[str, Any], mode: str) -> dict[str, Any]:
 
 def _invoke(definition: FetcherDef, spec: dict[str, Any], cache: dict[str, Any]) -> dict[str, Any]:
     # Resolved at call time so tests can substitute adapter functions.
-    function = getattr(adapters, definition.function)
+    module = adapters if definition.module == "adapters" else importlib.import_module(f"{__package__}.{definition.module}")
+    function = getattr(module, definition.function)
     if definition.call == SESSION:
         return function(requests.Session(), spec)
     if definition.call == CACHE:

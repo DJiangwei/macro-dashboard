@@ -76,7 +76,7 @@ def main() -> int:
     run_cmd([py, str(SCRIPTS_DIR / "refresh_bis_policy_snapshot.py")])
 
     # 1. Execute scope builds (registry: config/scopes.yaml)
-    scopes = all_scopes()
+    scopes = all_scopes(include_markets=True)
     data_first = [s.id for s in scopes if s.is_data_first]
     cee = [s.id for s in scopes if s.pipeline == "cee_v4"]
     target = args.country.upper()

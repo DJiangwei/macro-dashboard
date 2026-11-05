@@ -370,7 +370,7 @@ DATA_FIRST_PAGES = tuple(
             f"The {scope.name_en} page is generated from `{scope.indicators}` through the global fetcher registry.",
         ),
     }
-    for scope in data_first_scopes()
+    for scope in data_first_scopes(include_markets=True)
     if scope.id not in DEDICATED_SECTIONS
 )
 

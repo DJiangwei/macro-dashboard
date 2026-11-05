@@ -26,7 +26,7 @@ USER_AGENT = "country-primer-smoke/0.1 (+https://github.com/DJiangwei/macro-dash
 
 
 def checks() -> list[tuple[str, list[str]]]:
-    scopes = all_scopes()
+    scopes = all_scopes(include_markets=True)
     items: list[tuple[str, list[str]]] = [
         ("index.html", ["Macro Dashboard", "dashboard_archive_summary.json"]),
         ("output/index.html", ["Macro Dashboard", *[s.html_file for s in scopes]]),
@@ -41,7 +41,7 @@ def checks() -> list[tuple[str, list[str]]]:
         ("output/policy_tracker.html", ["Central Bank Policy"]),
     ]
     for scope in scopes:
-        markers = [f"{scope.name_en} Dashboard", "Core 48"]
+        markers = [f"{scope.name_en} Dashboard"] + ([] if scope.is_market else ["Core 48"])
         if scope.is_data_first:
             markers.append("Official Data Gaps")
             items.append((f"output/{scope.canonical_file}", ["data-first-canonical-v2", '"series"']))

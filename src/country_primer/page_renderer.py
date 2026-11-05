@@ -17,7 +17,7 @@ from dashboard_summary_utils import (
     write_canonical_data_first_frame,
 )
 from country_primer.source_health import write_source_health_report
-from country_primer.scopes import all_scopes
+from country_primer.scopes import all_scopes, market_scopes
 
 OUTPUT = Path("output")
 ACCENT = "#990f3d"
@@ -470,7 +470,11 @@ def _chart_html(
     caveat_zh = escape(series.get("caveat_zh", ""))
     source_url = escape(series.get("source_url") or series.get("api_url") or "#")
     concept_id = concept_id_for(country_code, str(series["id"]))
-    view = "deep" if ":" in concept_id else "core"
+    if series.get("view") in {"core", "deep"}:
+        # Market pages (non-country frameworks) choose their key charts in the YAML.
+        view = series["view"]
+    else:
+        view = "deep" if ":" in concept_id else "core"
     cross = series.get("cross_check") or {}
     cross_html = ""
     if cross:
@@ -2102,6 +2106,9 @@ def render_html(
     for code, item in COUNTRY_META.items():
         active_cls = ' class="active"' if code == code_upper else ""
         nav_links.append(f'<a href="{item["file"]}"{active_cls} title="{item.get("name", code)}">{code}</a>')
+    for market in market_scopes():
+        active_cls = ' class="active"' if market.id == code_upper else ""
+        nav_links.append(f'<a href="{market.html_file}"{active_cls} style="font-weight:600;margin-left:4px;" title="{market.name_en} · {market.name_zh}">{market.flag} {market.name_en}</a>')
     nav_links.append('<a href="chart_studio.html" style="color:var(--accent);font-weight:600;margin-left:4px;" title="Macro Chart Studio · 自定义对比图表工坊">📈 Studio</a>')
     nav_links.append('<a href="my_dashboard.html" style="color:var(--teal);font-weight:600;margin-left:4px;" title="My Dashboard · 我的自选宏观看板">⭐ My Dashboard</a>')
     nav_links.append('<a href="policy_tracker.html" style="color:var(--slate,#364b61);font-weight:600;margin-left:4px;" title="Central Bank Policy & Event Tracker · 全球央行与宏观事件追踪">🏛️ Policy</a>')
@@ -2182,7 +2189,7 @@ def render_html(
 
   <div class="view-switch" role="group" aria-label="chart density">
     <span><span data-lang="en">Chart view</span><span data-lang="zh">图表视图</span></span>
-    <button type="button" data-view-option="core" aria-pressed="true" onclick="setDashboardView('core')"><span data-lang="en">Core 48</span><span data-lang="zh">核心 48</span></button>
+    <button type="button" data-view-option="core" aria-pressed="true" onclick="setDashboardView('core')"><span data-lang="en">{escape(str(config.get("core_view_label_en") or "Core 48"))}</span><span data-lang="zh">{escape(str(config.get("core_view_label_zh") or "核心 48"))}</span></button>
     <button type="button" data-view-option="deep" aria-pressed="false" onclick="setDashboardView('deep')"><span data-lang="en">All deep-dive charts</span><span data-lang="zh">全部深度指标</span></button>
 {LW_GLOBAL_HORIZON_HTML}
   </div>

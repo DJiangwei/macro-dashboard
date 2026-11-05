@@ -28,7 +28,7 @@ from country_primer.data_fetcher import (  # noqa: E402
     is_dropped_proxy_indicator,
 )
 from macro_workbench import build_workbench  # noqa: E402
-from country_primer.scopes import cee_scopes, data_first_scopes  # noqa: E402
+from country_primer.scopes import cee_scopes, data_first_scopes, market_scopes  # noqa: E402
 
 
 CE4_COUNTRIES = [{"code": s.id, "name": s.name_en, "file": s.html_file, "currency": s.currency, "institution": s.institution} for s in cee_scopes()]
@@ -119,9 +119,23 @@ def _ce4_cards() -> list[dict]:
     return cards
 
 
-def _data_first_cards() -> list[dict]:
+def _market_pages() -> list[dict]:
+    return [
+        {"code": s.id, "name": s.name_en, "file": s.html_file, "currency": s.currency, "institution": s.institution,
+         "summary": s.summary_file, "headline_label": s.headline.label, "headline_key": s.headline.key,
+         "framework": s.framework_label}
+        for s in market_scopes()
+    ]
+
+
+def _market_cards() -> list[dict]:
+    """Market pages (energy, metals): shown on the index, kept out of country analytics."""
+    return [{**card, "category": "market page"} for card in _data_first_cards(_market_pages())]
+
+
+def _data_first_cards(pages: list[dict] | None = None) -> list[dict]:
     cards: list[dict] = []
-    for country in DATA_FIRST_COUNTRIES:
+    for country in DATA_FIRST_COUNTRIES if pages is None else pages:
         summary = _read_json(OUTPUT / country["summary"])
         charts = int(summary.get("charts") or 0)
         data_gaps = int(summary.get("data_gaps") or 0)
@@ -693,12 +707,20 @@ def _workbench_html(workbench: dict, *, prefix: str) -> str:
   </section>"""
 
 
-def _html(cards: list[dict], workbench: dict, *, prefix: str, docs_prefix: str) -> str:
+def _html(cards: list[dict], workbench: dict, *, prefix: str, docs_prefix: str, market_cards: list[dict] | None = None) -> str:
     total_charts = sum(int(card["charts"]) for card in cards)
     total_proxy = sum(int(card["proxy_fills"]) for card in cards)
     total_gaps = sum(int(card["gaps_or_dropped"]) for card in cards)
     generated = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
     card_markup = "".join(_card_html(card, prefix=prefix) for card in cards)
+    market_markup = "".join(_card_html(card, prefix=prefix) for card in market_cards or [])
+    market_section = (
+        f'''
+  <h2 style="margin: 28px 0 10px;">Markets · 市场</h2>
+  <section class="grid" aria-label="market dashboards">
+{market_markup}
+  </section>''' if market_markup else ""
+    )
     archive_json_href = f"{prefix}dashboard_archive_summary.json" if prefix else "dashboard_archive_summary.json"
     workbench_markup = _workbench_html(workbench, prefix=prefix)
     return f"""<!doctype html>
@@ -911,6 +933,7 @@ footer {{ margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--borde
   <section class="grid" aria-label="country dashboards">
 {card_markup}
   </section>
+{market_section}
   <nav class="links" aria-label="documentation links">
     <a href="{prefix}chart_studio.html" style="background: rgba(13, 118, 128, 0.08); color: #0d7680; font-weight: 600; border-color: rgba(13, 118, 128, 0.3);">📈 Macro Chart Studio (自定义对比图表)</a>
     <a href="{prefix}my_dashboard.html" style="background: rgba(153, 15, 61, 0.08); color: #990f3d; font-weight: 600; border-color: rgba(153, 15, 61, 0.3);">⭐ My Dashboard (专属自选看板)</a>
@@ -963,11 +986,13 @@ def _write(path: Path, content: str) -> None:
 def build_archive() -> tuple[Path, Path, Path]:
     OUTPUT.mkdir(parents=True, exist_ok=True)
     cards = _ce4_cards() + _data_first_cards()
+    market_cards = _market_cards()
     workbench = build_workbench(cards)
     payload = {
         "generated": datetime.now(UTC).isoformat(),
         "source": "Generated from one CEE build snapshot plus output/*_dashboard_summary.json files.",
         "cards": cards,
+        "markets": market_cards,
         "workbench": {
             "file": "macro_workbench_summary.json",
             "release_monitor": "release_monitor.json",
@@ -979,8 +1004,8 @@ def build_archive() -> tuple[Path, Path, Path]:
     ARCHIVE_JSON.write_text(json.dumps(payload, indent=2, ensure_ascii=False))
     output_index = OUTPUT / "index.html"
     root_index = ROOT / "index.html"
-    _write(output_index, _html(cards, workbench, prefix="", docs_prefix="../"))
-    _write(root_index, _html(cards, workbench, prefix="output/", docs_prefix=""))
+    _write(output_index, _html(cards, workbench, prefix="", docs_prefix="../", market_cards=market_cards))
+    _write(root_index, _html(cards, workbench, prefix="output/", docs_prefix="", market_cards=market_cards))
     return root_index, output_index, ARCHIVE_JSON
 
 

@@ -1522,6 +1522,81 @@ Configured charts: 40. Latest rendered chart count: 40. Source groups: 15.
 | monetary_financial | Monthly NBS Bonny Light Crude Oil Production (mbpd) | Official monthly crude oil production is now charted via US EIA Open Data API v2 (international energy statistics). |
 | monetary_financial | CBN Monetary Policy Rate (native, event-dated) | Not yet automated. The IMF IFS mirror shown on this page ends 2024-08; BIS does not cover Nigeria. A previous hand-typed series was removed on 2026-11-05. |
 
+## Energy Data-First Dashboard Sources
+
+The Energy page is generated from `config/markets/energy.yaml` through the global fetcher registry.
+
+Generated from `config/markets/energy.yaml`; latest dates are tracked in `output/energy_dashboard_summary.json` and the generated HTML rather than fetched again here.
+
+Configured charts: 54. Latest rendered chart count: 54. Source groups: 22.
+
+| Section | Indicator | Label | Frequency | Unit | Fetcher | Source | Series / field | Main pitfalls / notes |
+|---|---|---|---|---|---|---|---|---|
+| crude_benchmarks | `brent_spot` | Brent Spot (FOB) | daily | USD/bbl | eia_xls | EIA spot prices | pet/RBRTE | Europe Brent spot price FOB, daily; EIA publishes with a lag of one to two business days. |
+| crude_benchmarks | `wti_spot` | WTI Spot (Cushing) | daily | USD/bbl | eia_xls | EIA spot prices | pet/RWTC | Cushing, OK WTI spot price FOB, daily. |
+| crude_benchmarks | `brent_front_futures` | Brent Front-Month Futures (same day) | daily | USD/bbl | foreign_futures | Sina Finance via AKShare | OIL | Completed sessions only, from a public wrapper; the EIA spot series is the verified reference. |
+| crude_benchmarks | `wti_front_futures` | WTI Front-Month Futures (same day) | daily | USD/bbl | foreign_futures | Sina Finance via AKShare | CL | Completed sessions only, from a public wrapper. |
+| crude_benchmarks | `dubai_monthly` | Dubai Crude (monthly average) | monthly | USD/bbl | fred | IMF Primary Commodity Prices via FRED | POILDUBUSDM | Monthly average; the Middle East sour benchmark for Asian crude imports. |
+| crude_benchmarks | `brent_wti_spread` | Brent–WTI Spread | daily | USD/bbl |  |  |  | Seaborne vs inland US crude; widens with US export constraints. |
+| crude_benchmarks | `brent_dubai_spread` | Brent–Dubai Spread (sweet–sour, monthly) | monthly | USD/bbl |  |  |  | Monthly mean of daily Brent minus the IMF monthly Dubai average. Negative values mean sour crude trades above sweet. |
+| crude_benchmarks | `brent_yoy` | Brent YoY (monthly average) | monthly | % y/y |  |  |  | Year-on-year change of the monthly mean; the base-effect driver of headline energy inflation. |
+| crude_benchmarks | `ovx` | CBOE Crude Oil Volatility Index (OVX) | daily | index | fred | CBOE via FRED | OVXCLS | 30-day implied volatility of USO options. |
+| refining_products | `nyh_gasoline_spot` | NY Harbor Conventional Gasoline | daily | USD/gal | eia_xls | EIA spot prices | pet/EER_EPMRU_PF4_Y35NY_DPG | New York Harbor conventional regular gasoline spot price FOB. |
+| refining_products | `nyh_ulsd_spot` | NY Harbor Ultra-Low-Sulfur Diesel | daily | USD/gal | eia_xls | EIA spot prices | pet/EER_EPD2DXL0_PF4_Y35NY_DPG | New York Harbor ULSD No. 2 spot price FOB. |
+| refining_products | `usgc_jet_spot` | US Gulf Coast Kerosene-Type Jet Fuel | daily | USD/gal | eia_xls | EIA spot prices | pet/EER_EPJK_PF4_RGC_DPG | US Gulf Coast kerosene-type jet fuel spot price FOB. |
+| refining_products | `crack_321` | 3-2-1 Crack Spread (NYH products vs WTI) | daily | USD/bbl |  |  |  | (2 × 42 × gasoline + 42 × ULSD − 3 × WTI) / 3, using NY Harbor spot products ($/gal × 42 gal/bbl). |
+| refining_products | `diesel_crack` | Diesel Crack (NYH ULSD vs Brent) | daily | USD/bbl |  |  |  | 42 × ULSD − Brent. Diesel margins feed freight and food costs, a second-round inflation channel. |
+| refining_products | `us_refinery_utilization` | US Refinery Utilization | weekly | % | eia_xls | EIA Weekly Petroleum Status Report | pet/WPULEUS3 | Percent utilization of operable crude distillation capacity. |
+| refining_products | `us_retail_gasoline` | US Retail Gasoline (regular, all formulations) | weekly | USD/gal | eia_xls | EIA Gasoline and Diesel Fuel Update | pet/EMM_EPMR_PTE_NUS_DPG | Weekly US average pump price including taxes. |
+| refining_products | `us_retail_diesel` | US Retail Diesel | weekly | USD/gal | eia_xls | EIA Gasoline and Diesel Fuel Update | pet/EMD_EPD2D_PTE_NUS_DPG | Weekly US average on-highway diesel price including taxes. |
+| gas_lng | `henry_hub_spot` | Henry Hub Natural Gas Spot | daily | USD/MMBtu | eia_xls | EIA natural gas spot prices | ng/RNGWHHD | Henry Hub, Louisiana, daily spot price. |
+| gas_lng | `henry_hub_front_futures` | NYMEX Natural Gas Front Month (same day) | daily | USD/MMBtu | foreign_futures | Sina Finance via AKShare | NG | Completed sessions only, from a public wrapper. |
+| gas_lng | `eu_gas_monthly` | European Natural Gas (monthly average) | monthly | USD/MMBtu | fred | IMF Primary Commodity Prices via FRED | PNGASEUUSDM | IMF monthly European gas price (TTF-based). Daily TTF is ICE Endex licensed. |
+| gas_lng | `asia_lng_monthly` | Asian LNG (monthly average, Japan) | monthly | USD/MMBtu | fred | IMF Primary Commodity Prices via FRED | PNGASJPUSDM | IMF monthly Japan LNG import price. |
+| gas_lng | `eu_hh_gas_spread` | Europe – Henry Hub Gas Spread (monthly) | monthly | USD/MMBtu |  |  |  | The margin that pulls US LNG cargoes to Europe. |
+| gas_lng | `asia_eu_lng_spread` | Asia LNG – Europe Gas Spread (monthly) | monthly | USD/MMBtu |  |  |  | Positive values pull flexible cargoes to Asia. |
+| gas_lng | `us_gas_storage` | US Working Gas in Storage (Lower 48) | weekly | Bcf | eia_xls | EIA Weekly Natural Gas Storage Report | ng/NW2_EPG0_SWO_R48_BCF | Weekly working gas in underground storage. |
+| gas_lng | `us_gas_storage_vs_5y` | US Gas Storage vs 5-Year Same-Week Average | weekly | Bcf |  |  |  | Storage minus the mean of the same ISO week in the previous five years (three years minimum). |
+| power_coal | `de_power_day_ahead` | Germany–Luxembourg Day-Ahead Power (daily mean) | daily | EUR/MWh | energy_charts_price | energy-charts (Fraunhofer ISE) / Bundesnetzagentur SMARD | DE-LU | Mean of the day-ahead auction prices for each delivery day (local time). Data CC BY 4.0, Bundesnetzagentur \| SMARD.de. |
+| power_coal | `fr_power_day_ahead` | France Day-Ahead Power (daily mean) | daily | EUR/MWh | energy_charts_price | energy-charts (Fraunhofer ISE) | FR | Mean of the day-ahead auction prices for each delivery day (local time). |
+| power_coal | `newcastle_coal_monthly` | Australian Thermal Coal (Newcastle, monthly) | monthly | USD/t | fred | IMF Primary Commodity Prices via FRED | PCOALAUUSDM | IMF monthly Australian thermal coal price. |
+| power_coal | `uranium_monthly` | Uranium (monthly) | monthly | USD/lb | fred | IMF Primary Commodity Prices via FRED | PURANUSDM | IMF monthly uranium price. |
+| supply | `us_crude_production` | US Crude Oil Field Production (weekly) | weekly | kb/d | eia_xls | EIA Weekly Petroleum Status Report | pet/WCRFPUS2 | Weekly estimate; rounded and revised in the monthly series. |
+| supply | `us_crude_production_monthly` | US Crude Oil Field Production (monthly) | monthly | kb/d | eia_xls | EIA Petroleum Supply Monthly | pet/MCRFPUS2 | Survey-based monthly production. |
+| demand | `us_product_supplied` | US Total Product Supplied (weekly) | weekly | kb/d | eia_xls | EIA Weekly Petroleum Status Report | pet/WRPUPUS2 | Disappearance from primary supply, EIA's standard measure of US oil consumption. |
+| demand | `us_product_supplied_4wk` | US Total Product Supplied (4-week average) | weekly | kb/d |  |  |  | Four-week trailing mean of weekly product supplied. |
+| demand | `us_gasoline_demand` | US Gasoline Product Supplied | weekly | kb/d | eia_xls | EIA Weekly Petroleum Status Report | pet/WGFUPUS2 | Finished motor gasoline product supplied, weekly. |
+| demand | `us_distillate_demand` | US Distillate Product Supplied | weekly | kb/d | eia_xls | EIA Weekly Petroleum Status Report | pet/WDIUPUS2 | Distillate fuel oil product supplied, weekly; tracks trucking and industrial activity. |
+| inventories | `us_commercial_crude` | US Commercial Crude Stocks (ex SPR) | weekly | mb | eia_xls | EIA Weekly Petroleum Status Report | pet/WCESTUS1 | Million barrels (EIA publishes thousand barrels). |
+| inventories | `us_commercial_crude_vs_5y` | US Commercial Crude vs 5-Year Same-Week Average | weekly | mb |  |  |  | Stocks minus the mean of the same ISO week in the previous five years. |
+| inventories | `cushing_stocks` | Cushing, OK Crude Stocks | weekly | mb | eia_xls | EIA Weekly Petroleum Status Report | pet/W_EPC0_SAX_YCUOK_MBBL | Stocks at the WTI delivery hub; very low levels tighten the WTI front spread. |
+| inventories | `spr_stocks` | US Strategic Petroleum Reserve | weekly | mb | eia_xls | EIA Weekly Petroleum Status Report | pet/WCSSTUS1 | Crude oil in the SPR. |
+| inventories | `us_gasoline_stocks` | US Total Motor Gasoline Stocks | weekly | mb | eia_xls | EIA Weekly Petroleum Status Report | pet/WGTSTUS1 | Total motor gasoline stocks. |
+| inventories | `us_distillate_stocks` | US Distillate Fuel Oil Stocks | weekly | mb | eia_xls | EIA Weekly Petroleum Status Report | pet/WDISTUS1 | Distillate fuel oil stocks. |
+| inventories | `us_distillate_stocks_vs_5y` | US Distillate Stocks vs 5-Year Same-Week Average | weekly | mb |  |  |  | Stocks minus the mean of the same ISO week in the previous five years. |
+| inventories | `distillate_days_cover` | US Distillate Days of Cover | weekly | days |  |  |  | Distillate stocks (mb × 1000) divided by weekly distillate product supplied (kb/d). |
+| trade_geography | `us_crude_exports` | US Crude Oil Exports | weekly | kb/d | eia_xls | EIA Weekly Petroleum Status Report | pet/WCREXUS2 | Weekly estimate; noisy week to week. |
+| trade_geography | `us_crude_net_imports` | US Crude Oil Net Imports | weekly | kb/d | eia_xls | EIA Weekly Petroleum Status Report | pet/WCRNTUS2 | Imports minus exports, weekly. |
+| positioning | `cftc_wti_mm_net` | WTI (NYMEX) Managed-Money Net Position | weekly | contracts | cftc_positions | CFTC Commitments of Traders (disaggregated) | 067651 | Managed-money long minus short, futures only, as of each Tuesday; published Friday. |
+| positioning | `cftc_wti_mm_net_zscore` | WTI Managed-Money Net Position, 3-Year z-score | weekly | z |  |  |  | Current net position relative to the trailing 156-week mean and standard deviation. |
+| positioning | `cftc_wti_ice_mm_net` | WTI (ICE) Managed-Money Net Position | weekly | contracts | cftc_positions | CFTC Commitments of Traders (disaggregated) | 067411 | ICE Futures Europe WTI contract reported to the CFTC. |
+| positioning | `cftc_natgas_mm_net` | Natural Gas (NYMEX) Managed-Money Net Position | weekly | contracts | cftc_positions | CFTC Commitments of Traders (disaggregated) | 023651 | Henry Hub contract, managed-money long minus short. |
+| positioning | `cftc_rbob_mm_net` | RBOB Gasoline Managed-Money Net Position | weekly | contracts | cftc_positions | CFTC Commitments of Traders (disaggregated) | 111659 | NYMEX RBOB gasoline. |
+| positioning | `cftc_ulsd_mm_net` | ULSD (Heating Oil) Managed-Money Net Position | weekly | contracts | cftc_positions | CFTC Commitments of Traders (disaggregated) | 022651 | NYMEX NY Harbor ULSD. |
+| macro_transmission | `us_cpi_energy_yoy` | US CPI Energy YoY | monthly | % y/y | fred | BLS CPI via FRED | CPIENGSL | Seasonally adjusted CPI energy index, year-on-year. |
+| macro_transmission | `us_breakeven_5y` | US 5-Year Breakeven Inflation | daily | % | fred | US Treasury / Federal Reserve via FRED | T5YIE | 5-year nominal minus 5-year TIPS yield; sensitive to oil at short horizons. |
+| macro_transmission | `us_5y5y_forward` | US 5-Year, 5-Year Forward Inflation Expectation | daily | % | fred | Federal Reserve via FRED | T5YIFR | Longer-horizon compensation; should move far less with oil than the 5-year breakeven. |
+
+## Energy Official / Vendor Data Gaps
+
+| Section | Indicator family | Current status |
+|---|---|---|
+| crude_benchmarks | WTI and Brent futures curves (term structure) | EIA discontinued its futures curve series (RCLC1-4) after 2024-04-05; CME and ICE curves are licensed. |
+| gas_lng | Daily TTF and EU gas storage fill | TTF is ICE Endex licensed. EU storage (GIE AGSI+) needs GIE_AGSI_API_KEY in the build environment. |
+| supply | OPEC+ production by country, spare capacity, global balances (EIA STEO) | Requires EIA_API_KEY in the build environment. |
+| power_coal | EU carbon (EUA) price and generation mix | EUA settlement data is EEX/ICE licensed; the generation mix needs EMBER_API_KEY. |
+| trade_geography | Tanker rates, rig counts and chokepoint flows | Baltic Exchange/Kpler data is licensed; Baker Hughes refuses requests from this environment. |
+
 ## United Kingdom Data-First Dashboard Sources
 
 The UK page is generated from `config/uk_indicators.yaml`. Native ONS time-series JSON and Bank of England IADB CSV endpoints are preferred where validated; FRED/OECD/BIS/IMF mirror series remain for broader public-data coverage.

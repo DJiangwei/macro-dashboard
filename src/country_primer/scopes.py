@@ -18,7 +18,7 @@ SCOPES_PATH = ROOT / "config" / "scopes.yaml"
 OUTPUT = ROOT / "output"
 
 KINDS = {"country", "region", "market"}
-REGIONS = {"dm", "em", "cee", "frontier"}
+REGIONS = {"dm", "em", "cee", "frontier", "markets"}
 DEFAULT_ROLES: dict[str, tuple[str, ...]] = {
     "policy_rate": ("policy_rate",),
     "cpi_yoy": ("cpi_inflation",),
@@ -101,6 +101,10 @@ class Scope:
     def is_data_first(self) -> bool:
         return self.pipeline == "data_first"
 
+    @property
+    def is_market(self) -> bool:
+        return self.kind == "market"
+
 
 def _parse(entry: dict[str, Any]) -> Scope:
     known = {
@@ -148,6 +152,8 @@ def validate_registry(scopes: list[Scope]) -> list[str]:
             problems.append(f"{s.id}: unknown region {s.region!r}")
         if s.pipeline not in PIPELINES:
             problems.append(f"{s.id}: unknown pipeline {s.pipeline!r}")
+        if s.is_market and not s.is_data_first:
+            problems.append(f"{s.id}: market scopes use the data_first pipeline")
         if s.is_data_first:
             if not s.indicators_path or not s.indicators_path.exists():
                 problems.append(f"{s.id}: indicator config {s.indicators!r} not found")
@@ -166,13 +172,22 @@ def _load(path: str) -> tuple[Scope, ...]:
     return tuple(scopes)
 
 
-def all_scopes(path: Path = SCOPES_PATH) -> list[Scope]:
-    """Every registered scope, in navigation order."""
-    return list(_load(str(path)))
+def all_scopes(path: Path = SCOPES_PATH, *, include_markets: bool = False) -> list[Scope]:
+    """Registered scopes in navigation order.
+
+    Economies (countries and regions) only by default: most consumers are
+    country analytics (coverage, policy, workbench). Page-level consumers
+    (builds, navigation, audits, smoke checks) pass ``include_markets=True``.
+    """
+    return [s for s in _load(str(path)) if include_markets or not s.is_market]
 
 
-def data_first_scopes(path: Path = SCOPES_PATH) -> list[Scope]:
-    return [s for s in all_scopes(path) if s.is_data_first]
+def data_first_scopes(path: Path = SCOPES_PATH, *, include_markets: bool = False) -> list[Scope]:
+    return [s for s in all_scopes(path, include_markets=include_markets) if s.is_data_first]
+
+
+def market_scopes(path: Path = SCOPES_PATH) -> list[Scope]:
+    return [s for s in _load(str(path)) if s.is_market]
 
 
 def cee_scopes(path: Path = SCOPES_PATH) -> list[Scope]:
@@ -181,7 +196,7 @@ def cee_scopes(path: Path = SCOPES_PATH) -> list[Scope]:
 
 def get_scope(code: str, path: Path = SCOPES_PATH) -> Scope:
     wanted = code.strip().upper()
-    for scope in all_scopes(path):
+    for scope in all_scopes(path, include_markets=True):
         if scope.id == wanted or scope.slug == code.strip().lower():
             return scope
-    raise KeyError(f"Unknown scope {code!r}; registered: {', '.join(s.id for s in all_scopes(path))}")
+    raise KeyError(f"Unknown scope {code!r}; registered: {', '.join(s.id for s in all_scopes(path, include_markets=True))}")

@@ -304,7 +304,7 @@ try:
 except ImportError:
     render_labour_deepdive_panel = lambda cc: ""
 
-from country_primer.scopes import all_scopes
+from country_primer.scopes import all_scopes, market_scopes
 from country_primer.data_fetcher import (  # noqa: E402
     DataPipeline,
     INDICATOR_MANIFEST_48,
@@ -4210,6 +4210,8 @@ def build_v4(country_code: str, canonical_frame: list[dict] | None = None) -> Pa
     for cc, cname, cfile in all_countries:
         cls = 'nav-link active' if cc == country_code else 'nav-link'
         nav_links.append(f'<a href="{cfile}" class="{cls}" title="{cname}">{cc}</a>')
+    for market in market_scopes():
+        nav_links.append(f'<a href="{market.html_file}" class="nav-link" style="font-weight:600;" title="{market.name_en}">{market.flag} {market.name_en}</a>')
     country_nav = "\n    " + "\n    ".join(nav_links)
 
     # Chart IDs for JS fix script

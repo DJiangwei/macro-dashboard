@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-11-05T04:03:17.455033+00:00",
+  "generated": "2026-11-05T07:59:09.824858+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -756,6 +756,33 @@
         },
         "world_bank": {
           "success": 8
+        }
+      },
+      "events": []
+    },
+    "ENERGY": {
+      "calls": 41,
+      "success": 41,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "cftc_positions": {
+          "success": 5
+        },
+        "eia_xls": {
+          "success": 22
+        },
+        "energy_charts_price": {
+          "success": 2
+        },
+        "foreign_futures": {
+          "success": 3
+        },
+        "fred": {
+          "success": 9
         }
       },
       "events": []

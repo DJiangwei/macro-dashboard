@@ -19,7 +19,7 @@ US_TRANSFORMS = {"yoy_pct", "yoy", "diff", "pct_change"}
 
 
 def _configs():
-    for scope in data_first_scopes():
+    for scope in data_first_scopes(include_markets=True):
         yield scope, load_indicator_config(scope.indicators_path)
 
 
@@ -41,8 +41,10 @@ def test_every_configured_fetcher_is_registered():
 
 
 def test_every_registered_fetcher_resolves_to_an_adapter():
-    from country_primer import adapters
-    assert all(callable(getattr(adapters, d.function, None)) for d in fetchers.FETCHERS.values())
+    import importlib
+    for name, d in fetchers.FETCHERS.items():
+        module = importlib.import_module(f"country_primer.{d.module}")
+        assert callable(getattr(module, d.function, None)), name
 
 
 def test_transform_names_are_understood():
