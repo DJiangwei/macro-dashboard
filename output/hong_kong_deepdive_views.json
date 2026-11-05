@@ -1,0 +1,208 @@
+{
+ "scope": "HK",
+ "generated": "2026-11-05",
+ "inflation": {
+  "rows": [
+   {
+    "id": "cpi_inflation",
+    "label_en": "Composite CPI Inflation YoY",
+    "label_zh": "综合消费物价指数同比",
+    "unit": "% y/y",
+    "source": "HK C&SD",
+    "quality": "verified",
+    "latest": {
+     "value": 2.3,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 1.9,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 0.8,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "cpi_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "core_cpi_inflation",
+    "label_en": "Underlying CPI Inflation YoY",
+    "label_zh": "基本消费物价指数同比 (核心通胀)",
+    "unit": "% y/y",
+    "source": "HK C&SD",
+    "quality": "verified",
+    "latest": {
+     "value": 2.4,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 2.0,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 0.8,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "core_cpi_inflation",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "cpi_inflation_imf",
+    "label_en": "Headline CPI YoY (IMF Cross-Check)",
+    "label_zh": "总体CPI同比 (IMF交叉核对)",
+    "unit": "% y/y",
+    "source": "IMF SDMX / HK C&SD",
+    "quality": "watch",
+    "latest": {
+     "value": 1.651376146788991,
+     "date": "2026-08-01"
+    },
+    "prior": {
+     "value": 1.652892561983471,
+     "date": "2026-07-01"
+    },
+    "year_ago": {
+     "value": 1.11317254174397,
+     "date": "2025-08-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "cpi_inflation_imf",
+      "2026-08-01"
+     ]
+    ]
+   }
+  ]
+ },
+ "labour": {
+  "rows": [
+   {
+    "id": "unemployment_rate",
+    "label_en": "Unemployment Rate (Seasonally Adjusted)",
+    "label_zh": "经季节性调整的失业率",
+    "unit": "% of labour force",
+    "source": "HK C&SD (General Household Survey)",
+    "quality": "verified",
+    "latest": {
+     "value": 3.9,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 3.8,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 3.9,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "unemployment_rate",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "underemployment_rate",
+    "label_en": "Underemployment Rate",
+    "label_zh": "就业不足率",
+    "unit": "% of labour force",
+    "source": "HK C&SD (General Household Survey)",
+    "quality": "verified",
+    "latest": {
+     "value": 2.0,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 1.9,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 1.6,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "underemployment_rate",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "participation_rate",
+    "label_en": "Labour Force Participation Rate",
+    "label_zh": "劳动人口参与率",
+    "unit": "% of population aged 15+",
+    "source": "HK C&SD (General Household Survey)",
+    "quality": "verified",
+    "latest": {
+     "value": 56.6,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 56.6,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 57.1,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "participation_rate",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "nominal_wage_index_growth",
+    "label_en": "Nominal Wage Index YoY",
+    "label_zh": "名义工资指数同比",
+    "unit": "% y/y",
+    "source": "HK C&SD",
+    "quality": "watch",
+    "latest": {
+     "value": 3.4,
+     "date": "2026-06-01"
+    },
+    "prior": {
+     "value": 3.4,
+     "date": "2026-03-01"
+    },
+    "year_ago": {
+     "value": 3.5,
+     "date": "2025-06-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "nominal_wage_index_growth",
+      "2026-06-01"
+     ]
+    ]
+   }
+  ],
+  "sahm": {
+   "value": 0.1,
+   "date": "2026-09-01",
+   "threshold": 0.5,
+   "triggered": false,
+   "from": "unemployment_rate"
+  }
+ }
+}

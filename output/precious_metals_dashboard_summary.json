@@ -1,0 +1,426 @@
+{
+  "file": "precious_metals.html",
+  "generated": "2026-11-05T17:28:12.509992+00:00",
+  "charts": 49,
+  "source_groups": 19,
+  "data_gaps": 4,
+  "low_confidence": 3,
+  "key_series_latest": [
+    {
+      "id": "gold_front_futures",
+      "label_en": "Gold (COMEX front month)",
+      "label_zh": "黄金（COMEX近月）",
+      "latest_date": "2026-11-04",
+      "latest_value": 4072.0,
+      "latest_display": "4,072 USD/oz",
+      "frequency": "daily",
+      "source_name": "Sina Finance via AKShare",
+      "series": "GC",
+      "quality_status": "watch"
+    },
+    {
+      "id": "silver_front_futures",
+      "label_en": "Silver (COMEX front month)",
+      "label_zh": "白银（COMEX近月）",
+      "latest_date": "2026-11-04",
+      "latest_value": 52.325,
+      "latest_display": "52.3 USD/oz",
+      "frequency": "daily",
+      "source_name": "Sina Finance via AKShare",
+      "series": "SI",
+      "quality_status": "watch"
+    },
+    {
+      "id": "gold_silver_ratio",
+      "label_en": "Gold / Silver Ratio",
+      "label_zh": "金银比",
+      "latest_date": "2026-11-04",
+      "latest_value": 77.821309,
+      "latest_display": "77.8 ratio",
+      "frequency": "daily",
+      "source_name": "Derived from Sina Finance via AKShare",
+      "series": "gold_front_futures / silver_front_futures",
+      "quality_status": "watch"
+    },
+    {
+      "id": "us_real_yield_10y",
+      "label_en": "US 10-Year Real Yield (TIPS)",
+      "label_zh": "美国10年期实际利率（TIPS）",
+      "latest_date": "2026-11-03",
+      "latest_value": 2.65,
+      "latest_display": "2.65 %",
+      "frequency": "daily",
+      "source_name": "Federal Reserve H.15 via FRED",
+      "series": "DFII10",
+      "quality_status": "watch"
+    },
+    {
+      "id": "shanghai_premium",
+      "label_en": "Shanghai Gold Premium over COMEX",
+      "label_zh": "上海金相对COMEX溢价",
+      "latest_date": "2026-11-04",
+      "latest_value": -72.763289,
+      "latest_display": "-72.8 USD/oz",
+      "frequency": "daily",
+      "source_name": "Derived from Derived from Shanghai Gold Exchange via AKShare; SAFE via AKShare (CN page); Sina Finance via AKShare",
+      "series": "sge_gold_usd_oz − gold_front_futures",
+      "quality_status": "watch"
+    },
+    {
+      "id": "cftc_gold_mm_net",
+      "label_en": "Gold Managed-Money Net Position",
+      "label_zh": "黄金管理基金净持仓",
+      "latest_date": "2026-10-27",
+      "latest_value": 105562.0,
+      "latest_display": "105,562 contracts",
+      "frequency": "weekly",
+      "source_name": "CFTC Commitments of Traders (disaggregated)",
+      "series": "088691",
+      "quality_status": "verified"
+    },
+    {
+      "id": "cb_gold_chn",
+      "label_en": "Official Gold Holdings — China (PBoC)",
+      "label_zh": "官方黄金储备 — 中国（人民银行）",
+      "latest_date": "2026-06-01",
+      "latest_value": 2346.4462875023873,
+      "latest_display": "2,346.45 tonnes",
+      "frequency": "monthly",
+      "source_name": "IMF International Liquidity",
+      "series": "CHN.RGV_REVS.FTO.M",
+      "quality_status": "low_confidence"
+    },
+    {
+      "id": "cb_gold_pol",
+      "label_en": "Official Gold Holdings — Poland (NBP)",
+      "label_zh": "官方黄金储备 — 波兰（NBP）",
+      "latest_date": "2026-09-01",
+      "latest_value": 672.8862255099233,
+      "latest_display": "672.9 tonnes",
+      "frequency": "monthly",
+      "source_name": "IMF International Liquidity",
+      "series": "POL.RGV_REVS.FTO.M",
+      "quality_status": "watch"
+    }
+  ],
+  "unavailable": [],
+  "data_mode": "snapshot",
+  "latest_cards": [],
+  "gold_latest": "4,072.0 USD/oz (2026-11-04)",
+  "cross_checks": [],
+  "canonical_frame": {
+    "schema_version": "data-first-canonical-v2",
+    "observation_columns": [
+      "date",
+      "value"
+    ],
+    "file": "precious_metals_canonical_frame.json",
+    "series": 49,
+    "observations": 65897,
+    "series_count": 49,
+    "observation_count": 65897,
+    "snapshot_generated": "2026-11-05T10:27:50.683241+00:00"
+  },
+  "data_gaps_detail": [
+    {
+      "section": "prices",
+      "item_en": "LBMA gold and silver prices",
+      "item_zh": "LBMA金银定价",
+      "status_en": "LBMA auction prices are licensed (IBA); the IMF monthly averages and COMEX futures are used instead.",
+      "status_zh": "LBMA拍卖价格为授权数据（IBA）；以IMF月均价与COMEX期货代替。"
+    },
+    {
+      "section": "official_sector",
+      "item_en": "Gold ETF holdings and World Gold Council demand data",
+      "item_zh": "黄金ETF持仓与世界黄金协会需求数据",
+      "status_en": "No reliable free machine-readable source (SPDR returns a non-CSV page; WGC requires registration).",
+      "status_zh": "没有可靠的免费机读来源（SPDR返回非CSV页面；WGC需要注册）。"
+    },
+    {
+      "section": "regional_premium",
+      "item_en": "India gold premium/discount",
+      "item_zh": "印度黄金溢价/折价",
+      "status_en": "No free source for Indian dealer premiums.",
+      "status_zh": "印度经销商溢价没有免费来源。"
+    },
+    {
+      "section": "prices",
+      "item_en": "COMEX and SHFE vault inventories, PGM mine supply (South Africa, Russia)",
+      "item_zh": "COMEX与上期所库存、铂族金属矿产供给（南非、俄罗斯）",
+      "status_en": "To be sourced; Russian palladium output has no free source.",
+      "status_zh": "待接入；俄罗斯钯产量没有免费来源。"
+    }
+  ],
+  "source_health": {
+    "source_groups": 19,
+    "sources": [
+      {
+        "source_name": "IMF International Liquidity",
+        "charts": 18
+      },
+      {
+        "source_name": "Sina Finance via AKShare",
+        "charts": 5
+      },
+      {
+        "source_name": "CFTC Commitments of Traders (disaggregated)",
+        "charts": 4
+      },
+      {
+        "source_name": "IMF Primary Commodity Prices",
+        "charts": 4
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare",
+        "charts": 3
+      },
+      {
+        "source_name": "Shanghai Gold Exchange via AKShare",
+        "charts": 2
+      },
+      {
+        "source_name": "CBOE via FRED",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from CFTC Commitments of Traders (disaggregated)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Derived from Shanghai Gold Exchange via AKShare; SAFE via AKShare (CN page); Sina Finance via AKShare",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from IMF Primary Commodity Prices",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Shanghai Gold Exchange via AKShare; SAFE via AKShare (CN page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; ECB (EA page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; EIA spot prices (ENERGY page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; FRED / Federal Reserve H.10 (JP page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; Federal Reserve H.10 via FRED (IN page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from Sina Finance via AKShare; SAFE via AKShare (CN page)",
+        "charts": 1
+      },
+      {
+        "source_name": "Federal Reserve H.10 via FRED",
+        "charts": 1
+      },
+      {
+        "source_name": "Federal Reserve H.15 via FRED",
+        "charts": 1
+      },
+      {
+        "source_name": "Federal Reserve via FRED",
+        "charts": 1
+      }
+    ],
+    "quality_counts": {
+      "low_confidence": 3,
+      "verified": 5,
+      "watch": 41
+    },
+    "unavailable_count": 0
+  },
+  "framework": {
+    "version": 2,
+    "pillars": 9,
+    "core_concepts": 48,
+    "legacy_aliases": 7
+  },
+  "freshness": {
+    "as_of_date": "2026-11-05",
+    "counts": {
+      "current": 42,
+      "due": 4,
+      "stale": 3
+    },
+    "latest_historical_date": "2026-11-04",
+    "attention": [
+      {
+        "id": "cb_gold_rus",
+        "concept_id": "precious:cb_gold_rus",
+        "label_en": "Official Gold Holdings — Russia (CBR)",
+        "latest_date": "2025-11-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2025-11-01",
+        "age_days": 340,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF International Liquidity",
+        "series": "RUS.RGV_REVS.FTO.M",
+        "transform": "level"
+      },
+      {
+        "id": "cb_gold_chn",
+        "concept_id": "precious:cb_gold_chn",
+        "label_en": "Official Gold Holdings — China (PBoC)",
+        "latest_date": "2026-06-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-06-01",
+        "age_days": 128,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF International Liquidity",
+        "series": "CHN.RGV_REVS.FTO.M",
+        "transform": "level"
+      },
+      {
+        "id": "cb_gold_uzb",
+        "concept_id": "precious:cb_gold_uzb",
+        "label_en": "Official Gold Holdings — Uzbekistan (CBU)",
+        "latest_date": "2026-07-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-07-01",
+        "age_days": 97,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF International Liquidity",
+        "series": "UZB.RGV_REVS.FTO.M",
+        "transform": "level"
+      },
+      {
+        "id": "cb_gold_ind",
+        "concept_id": "precious:cb_gold_ind",
+        "label_en": "Official Gold Holdings — India (RBI)",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 66,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF International Liquidity",
+        "series": "IND.RGV_REVS.FTO.M",
+        "transform": "level"
+      },
+      {
+        "id": "cb_gold_qat",
+        "concept_id": "precious:cb_gold_qat",
+        "label_en": "Official Gold Holdings — Qatar (QCB)",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 66,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF International Liquidity",
+        "series": "QAT.RGV_REVS.FTO.M",
+        "transform": "level"
+      },
+      {
+        "id": "cb_gold_sau",
+        "concept_id": "precious:cb_gold_sau",
+        "label_en": "Official Gold Holdings — Saudi Arabia (SAMA)",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 66,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF International Liquidity",
+        "series": "SAU.RGV_REVS.FTO.M",
+        "transform": "level"
+      },
+      {
+        "id": "cb_gold_sgp",
+        "concept_id": "precious:cb_gold_sgp",
+        "label_en": "Official Gold Holdings — Singapore (MAS)",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 66,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF International Liquidity",
+        "series": "SGP.RGV_REVS.FTO.M",
+        "transform": "level"
+      }
+    ]
+  },
+  "transform_audit": {
+    "counts": {
+      "level": 49
+    },
+    "non_level": []
+  },
+  "canonical_schema": {
+    "schema_version": "data-first-canonical-v2",
+    "observation_columns": [
+      "date",
+      "value"
+    ],
+    "charted_series": 49
+  }
+}

@@ -1,0 +1,333 @@
+{
+ "scope": "EA",
+ "generated": "2026-11-05",
+ "labour": {
+  "rows": [
+   {
+    "id": "unemployment_rate",
+    "label_en": "Harmonised Unemployment Rate",
+    "label_zh": "调和失业率",
+    "unit": "%",
+    "source": "Eurostat",
+    "quality": "verified",
+    "latest": {
+     "value": 6.5,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 6.5,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 6.3,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "unemployment_rate",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "youth_unemployment_rate",
+    "label_en": "Youth Unemployment Rate (<25)",
+    "label_zh": "青年失业率 (25岁以下)",
+    "unit": "%",
+    "source": "Eurostat",
+    "quality": "verified",
+    "latest": {
+     "value": 15.4,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 15.1,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 15.0,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "youth_unemployment_rate",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "labour_force_participation_rate",
+    "label_en": "Labour Force Participation Rate (15-64)",
+    "label_zh": "劳动参与率 (15-64岁)",
+    "unit": "%",
+    "source": "Eurostat",
+    "quality": "verified",
+    "latest": {
+     "value": 75.9,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": 75.5,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 75.7,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "labour_force_participation_rate",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "employment_growth",
+    "label_en": "Total Employment Growth, YoY",
+    "label_zh": "总就业人数同比",
+    "unit": "% y/y",
+    "source": "Eurostat",
+    "quality": "verified",
+    "latest": {
+     "value": 0.5,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": 0.5,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 0.7,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "employment_growth",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "job_vacancy_rate",
+    "label_en": "Job Vacancy Rate",
+    "label_zh": "职位空缺率",
+    "unit": "%",
+    "source": "Eurostat",
+    "quality": "verified",
+    "latest": {
+     "value": 2.1,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": 2.2,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 2.2,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "job_vacancy_rate",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "labour_cost_index_yoy",
+    "label_en": "Labour Cost Index Growth, YoY",
+    "label_zh": "劳动力成本指数同比",
+    "unit": "% y/y",
+    "source": "Eurostat",
+    "quality": "verified",
+    "latest": {
+     "value": 3.1,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": 3.2,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 3.8,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "labour_cost_index_yoy",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "negotiated_wages_yoy",
+    "label_en": "ECB Negotiated Wages Growth, YoY",
+    "label_zh": "欧央行协议工资同比",
+    "unit": "% y/y",
+    "source": "ECB",
+    "quality": "watch",
+    "latest": {
+     "value": 2.44,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": 2.57,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 4.04,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "negotiated_wages_yoy",
+      "2026-04-01"
+     ]
+    ]
+   }
+  ],
+  "beveridge": {
+   "u_id": "unemployment_rate",
+   "v_id": "job_vacancy_rate",
+   "u_label": "Harmonised Unemployment Rate",
+   "v_label": "Job Vacancy Rate",
+   "v_unit": "%",
+   "points": [
+    {
+     "date": "2020-07-01",
+     "u": 8.5,
+     "v": 1.8
+    },
+    {
+     "date": "2020-10-01",
+     "u": 8.4,
+     "v": 1.9
+    },
+    {
+     "date": "2021-01-01",
+     "u": 8.2,
+     "v": 2.1
+    },
+    {
+     "date": "2021-04-01",
+     "u": 8.3,
+     "v": 2.4
+    },
+    {
+     "date": "2021-07-01",
+     "u": 7.7,
+     "v": 2.7
+    },
+    {
+     "date": "2021-10-01",
+     "u": 7.2,
+     "v": 2.9
+    },
+    {
+     "date": "2022-01-01",
+     "u": 6.9,
+     "v": 3.1
+    },
+    {
+     "date": "2022-04-01",
+     "u": 6.8,
+     "v": 3.3
+    },
+    {
+     "date": "2022-07-01",
+     "u": 6.7,
+     "v": 3.2
+    },
+    {
+     "date": "2022-10-01",
+     "u": 6.6,
+     "v": 3.2
+    },
+    {
+     "date": "2023-01-01",
+     "u": 6.7,
+     "v": 3.1
+    },
+    {
+     "date": "2023-04-01",
+     "u": 6.5,
+     "v": 3.1
+    },
+    {
+     "date": "2023-07-01",
+     "u": 6.6,
+     "v": 3.0
+    },
+    {
+     "date": "2023-10-01",
+     "u": 6.6,
+     "v": 2.8
+    },
+    {
+     "date": "2024-01-01",
+     "u": 6.5,
+     "v": 2.8
+    },
+    {
+     "date": "2024-04-01",
+     "u": 6.4,
+     "v": 2.6
+    },
+    {
+     "date": "2024-07-01",
+     "u": 6.4,
+     "v": 2.5
+    },
+    {
+     "date": "2024-10-01",
+     "u": 6.2,
+     "v": 2.6
+    },
+    {
+     "date": "2025-01-01",
+     "u": 6.3,
+     "v": 2.3
+    },
+    {
+     "date": "2025-04-01",
+     "u": 6.3,
+     "v": 2.2
+    },
+    {
+     "date": "2025-07-01",
+     "u": 6.3,
+     "v": 2.2
+    },
+    {
+     "date": "2025-10-01",
+     "u": 6.3,
+     "v": 2.3
+    },
+    {
+     "date": "2026-01-01",
+     "u": 6.3,
+     "v": 2.2
+    },
+    {
+     "date": "2026-04-01",
+     "u": 6.4,
+     "v": 2.1
+    }
+   ]
+  },
+  "sahm": {
+   "value": 0.2,
+   "date": "2026-09-01",
+   "threshold": 0.5,
+   "triggered": false,
+   "from": "unemployment_rate"
+  }
+ }
+}

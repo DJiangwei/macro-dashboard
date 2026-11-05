@@ -1,0 +1,242 @@
+{
+ "scope": "ZA",
+ "generated": "2026-11-05",
+ "inflation": {
+  "rows": [
+   {
+    "id": "cpi_inflation",
+    "label_en": "Headline CPI, YoY",
+    "label_zh": "总体CPI同比",
+    "unit": "% y/y",
+    "source": "SARB Web API (Stats SA)",
+    "quality": "verified",
+    "latest": {
+     "value": 4.5,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 4.4,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 3.4,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "cpi_inflation",
+      "2026-09-01"
+     ]
+    ],
+    "ann_3m": {
+     "value": 2.25,
+     "date": "2026-09-01",
+     "base_date": "2026-06-01",
+     "from": "cpi_index",
+     "method": "index"
+    },
+    "ann_6m": {
+     "value": 6.4,
+     "date": "2026-09-01",
+     "base_date": "2026-03-01",
+     "from": "cpi_index",
+     "method": "index"
+    }
+   },
+   {
+    "id": "cpi_inflation_imf",
+    "label_en": "Headline CPI, YoY (IMF cross-check)",
+    "label_zh": "总体CPI同比（IMF交叉校验）",
+    "unit": "% y/y",
+    "source": "IMF SDMX / CPI (Stats SA)",
+    "quality": "watch",
+    "latest": {
+     "value": 4.545454545454545,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 4.36046511627907,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 3.4,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "cpi_inflation_imf",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "ppi_inflation",
+    "label_en": "Producer Prices, YoY",
+    "label_zh": "生产者价格同比",
+    "unit": "% y/y",
+    "source": "SARB Web API (Stats SA)",
+    "quality": "verified",
+    "latest": {
+     "value": 6.1836,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 5.0193,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 2.2727,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "ppi_inflation",
+      "2026-09-01"
+     ]
+    ]
+   }
+  ]
+ },
+ "labour": {
+  "rows": [
+   {
+    "id": "unemployment_rate",
+    "label_en": "Unemployment Rate",
+    "label_zh": "失业率",
+    "unit": "%",
+    "source": "FRED / OECD (Stats SA QLFS)",
+    "quality": "watch",
+    "latest": {
+     "value": 33.03219,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": 32.57479,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 32.64056,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "unemployment_rate",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "unemployment_rate_15_64",
+    "label_en": "Unemployment Rate, 15-64",
+    "label_zh": "失业率（15-64岁）",
+    "unit": "%",
+    "source": "FRED / OECD (Stats SA QLFS)",
+    "quality": "watch",
+    "latest": {
+     "value": 33.03219,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": 32.57479,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 32.64056,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "unemployment_rate_15_64",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "youth_unemployment_rate",
+    "label_en": "Youth Unemployment Rate, 15-24",
+    "label_zh": "青年失业率（15-24岁）",
+    "unit": "%",
+    "source": "FRED / OECD (Stats SA QLFS)",
+    "quality": "watch",
+    "latest": {
+     "value": 61.39124,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": 60.88143,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 61.16996,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "youth_unemployment_rate",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "long_term_unemployment",
+    "label_en": "Long-Term Unemployment",
+    "label_zh": "长期失业人数",
+    "unit": "persons",
+    "source": "FRED / OECD (Stats SA QLFS)",
+    "quality": "watch",
+    "latest": {
+     "value": 6453316.0,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": 6353625.0,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 6277484.0,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "long_term_unemployment",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "manufacturing_employment_growth",
+    "label_en": "Manufacturing Employment Growth",
+    "label_zh": "制造业就业同比",
+    "unit": "% y/y",
+    "source": "FRED / OECD (Stats SA QLFS)",
+    "quality": "watch",
+    "latest": {
+     "value": -5.979514086154458,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": -5.4716691995103535,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 1.009621209700895,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "manufacturing_employment_growth",
+      "2026-04-01"
+     ]
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,101 @@
+{
+ "scope": "UZ",
+ "generated": "2026-11-05",
+ "inflation": {
+  "rows": [
+   {
+    "id": "cpi_inflation",
+    "label_en": "Headline CPI Inflation YoY",
+    "label_zh": "总体CPI通胀同比",
+    "unit": "% y/y",
+    "source": "IMF SDMX / Statistics Agency of Uzbekistan",
+    "quality": "watch",
+    "latest": {
+     "value": 6.226301479299238,
+     "date": "2026-08-01"
+    },
+    "prior": {
+     "value": 6.436499826806199,
+     "date": "2026-07-01"
+    },
+    "year_ago": {
+     "value": 8.737515362148036,
+     "date": "2025-08-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "cpi_inflation",
+      "2026-08-01"
+     ]
+    ],
+    "ann_3m": {
+     "value": 2.83,
+     "date": "2026-08-01",
+     "base_date": "2026-05-01",
+     "from": "cpi_index",
+     "method": "index"
+    },
+    "ann_6m": {
+     "value": 4.26,
+     "date": "2026-08-01",
+     "base_date": "2026-02-01",
+     "from": "cpi_index",
+     "method": "index"
+    }
+   }
+  ]
+ },
+ "labour": {
+  "rows": [
+   {
+    "id": "unemployment_rate",
+    "label_en": "Unemployment Rate",
+    "label_zh": "失业率",
+    "unit": "%",
+    "source": "World Bank / ILO",
+    "quality": "watch",
+    "latest": {
+     "value": 4.622,
+     "date": "2025"
+    },
+    "prior": {
+     "value": 4.439,
+     "date": "2024"
+    },
+    "year_ago": null,
+    "derivation": "observed",
+    "refs": [
+     [
+      "unemployment_rate",
+      "2025"
+     ]
+    ]
+   },
+   {
+    "id": "labour_participation_rate",
+    "label_en": "Labour Force Participation Rate (Total 15+)",
+    "label_zh": "劳动力参与率 (15岁及以上)",
+    "unit": "% of total population 15+",
+    "source": "World Bank / ILO",
+    "quality": "watch",
+    "latest": {
+     "value": 57.499,
+     "date": "2025"
+    },
+    "prior": {
+     "value": 57.701,
+     "date": "2024"
+    },
+    "year_ago": null,
+    "derivation": "observed",
+    "refs": [
+     [
+      "labour_participation_rate",
+      "2025"
+     ]
+    ]
+   }
+  ]
+ }
+}

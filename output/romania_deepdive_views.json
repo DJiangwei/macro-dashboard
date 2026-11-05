@@ -1,0 +1,353 @@
+{
+ "scope": "RO",
+ "generated": "2026-11-05",
+ "labour": {
+  "rows": [
+   {
+    "id": "unemployment_rate",
+    "label_en": "Unemployment Rate",
+    "label_zh": "Unemployment Rate",
+    "unit": "%",
+    "source": "Eurostat",
+    "quality": "verified",
+    "latest": {
+     "value": 6.3,
+     "date": "2026-09-01"
+    },
+    "prior": {
+     "value": 6.4,
+     "date": "2026-08-01"
+    },
+    "year_ago": {
+     "value": 6.0,
+     "date": "2025-09-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "unemployment_rate",
+      "2026-09-01"
+     ]
+    ]
+   },
+   {
+    "id": "participation_rate",
+    "label_en": "Labour Force Participation Rate",
+    "label_zh": "Labour Force Participation Rate",
+    "unit": "%",
+    "source": "World Bank",
+    "quality": "watch",
+    "latest": {
+     "value": 51.331,
+     "date": "2025-12-31"
+    },
+    "prior": {
+     "value": 51.461,
+     "date": "2024-12-31"
+    },
+    "year_ago": {
+     "value": 51.461,
+     "date": "2024-12-31"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "participation_rate",
+      "2025-12-31"
+     ]
+    ]
+   },
+   {
+    "id": "employment_growth",
+    "label_en": "Employment Growth, YoY",
+    "label_zh": "Employment Growth, YoY",
+    "unit": "% YoY",
+    "source": "Eurostat",
+    "quality": "verified",
+    "latest": {
+     "value": -1.3,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": -1.2,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": -5.5,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "employment_growth",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "vacancy_rate",
+    "label_en": "Job Vacancy Rate",
+    "label_zh": "Job Vacancy Rate",
+    "unit": "%",
+    "source": "Eurostat",
+    "quality": "verified",
+    "latest": {
+     "value": 0.5,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": 0.6,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 0.6,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "vacancy_rate",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "avg_wage_yoy",
+    "label_en": "Average Gross Wage, YoY",
+    "label_zh": "Average Gross Wage, YoY",
+    "unit": "% YoY",
+    "source": "Eurostat",
+    "quality": "verified",
+    "latest": {
+     "value": 1.8,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": 3.3,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 11.0,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "avg_wage_yoy",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "real_wage_yoy",
+    "label_en": "Real Wage, YoY",
+    "label_zh": "Real Wage, YoY",
+    "unit": "% YoY",
+    "source": "Derived from Eurostat labour-cost and HICP series",
+    "quality": "verified",
+    "latest": {
+     "value": -7.7,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": -5.2,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 6.1,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "real_wage_yoy",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "unit_labour_cost",
+    "label_en": "Unit Labour Cost, YoY",
+    "label_zh": "Unit Labour Cost, YoY",
+    "unit": "% YoY",
+    "source": "Eurostat",
+    "quality": "verified",
+    "latest": {
+     "value": 1.9,
+     "date": "2026-04-01"
+    },
+    "prior": {
+     "value": 3.6,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 4.2,
+     "date": "2025-04-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "unit_labour_cost",
+      "2026-04-01"
+     ]
+    ]
+   },
+   {
+    "id": "minimum_wage",
+    "label_en": "Statutory Minimum Wage",
+    "label_zh": "Statutory Minimum Wage",
+    "unit": "EUR/month",
+    "source": "Eurostat",
+    "quality": "verified",
+    "latest": {
+     "value": 825.0,
+     "date": "2026-07-01"
+    },
+    "prior": {
+     "value": 795.0,
+     "date": "2026-01-01"
+    },
+    "year_ago": {
+     "value": 797.0,
+     "date": "2025-07-01"
+    },
+    "derivation": "observed",
+    "refs": [
+     [
+      "minimum_wage",
+      "2026-07-01"
+     ]
+    ]
+   }
+  ],
+  "beveridge": {
+   "u_id": "unemployment_rate",
+   "v_id": "vacancy_rate",
+   "u_label": "Unemployment Rate",
+   "v_label": "Job Vacancy Rate",
+   "v_unit": "%",
+   "points": [
+    {
+     "date": "2020-07-01",
+     "u": 6.5,
+     "v": 0.8
+    },
+    {
+     "date": "2020-10-01",
+     "u": 6.1,
+     "v": 0.7
+    },
+    {
+     "date": "2021-01-01",
+     "u": 6.0,
+     "v": 0.8
+    },
+    {
+     "date": "2021-04-01",
+     "u": 5.5,
+     "v": 0.8
+    },
+    {
+     "date": "2021-07-01",
+     "u": 5.3,
+     "v": 0.9
+    },
+    {
+     "date": "2021-10-01",
+     "u": 5.7,
+     "v": 0.9
+    },
+    {
+     "date": "2022-01-01",
+     "u": 6.1,
+     "v": 0.9
+    },
+    {
+     "date": "2022-04-01",
+     "u": 5.6,
+     "v": 0.9
+    },
+    {
+     "date": "2022-07-01",
+     "u": 5.5,
+     "v": 0.9
+    },
+    {
+     "date": "2022-10-01",
+     "u": 5.5,
+     "v": 0.9
+    },
+    {
+     "date": "2023-01-01",
+     "u": 5.8,
+     "v": 0.9
+    },
+    {
+     "date": "2023-04-01",
+     "u": 5.5,
+     "v": 0.8
+    },
+    {
+     "date": "2023-07-01",
+     "u": 5.5,
+     "v": 0.8
+    },
+    {
+     "date": "2023-10-01",
+     "u": 5.5,
+     "v": 0.7
+    },
+    {
+     "date": "2024-01-01",
+     "u": 5.4,
+     "v": 0.7
+    },
+    {
+     "date": "2024-04-01",
+     "u": 5.2,
+     "v": 0.7
+    },
+    {
+     "date": "2024-07-01",
+     "u": 5.7,
+     "v": 0.8
+    },
+    {
+     "date": "2024-10-01",
+     "u": 5.7,
+     "v": 0.7
+    },
+    {
+     "date": "2025-01-01",
+     "u": 6.0,
+     "v": 0.7
+    },
+    {
+     "date": "2025-04-01",
+     "u": 6.1,
+     "v": 0.6
+    },
+    {
+     "date": "2025-07-01",
+     "u": 5.9,
+     "v": 0.6
+    },
+    {
+     "date": "2025-10-01",
+     "u": 6.1,
+     "v": 0.6
+    },
+    {
+     "date": "2026-01-01",
+     "u": 6.3,
+     "v": 0.6
+    },
+    {
+     "date": "2026-04-01",
+     "u": 6.8,
+     "v": 0.5
+    }
+   ]
+  }
+ }
+}

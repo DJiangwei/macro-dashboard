@@ -1,0 +1,842 @@
+{
+  "schema_version": "source-health-v1",
+  "generated": "2026-11-05T17:23:20.572729+00:00",
+  "circuit_breaker": {
+    "failure_threshold": 4,
+    "reset_after_seconds": 300,
+    "tripping_reasons": [
+      "authentication",
+      "connection",
+      "rate_limit",
+      "timeout"
+    ]
+  },
+  "countries": {
+    "HU": {
+      "calls": 856,
+      "success": 105,
+      "empty": 750,
+      "failed": 1,
+      "circuit_open": 0,
+      "failure_reasons": {
+        "unexpected_error": 1
+      },
+      "empty_reasons": {
+        "empty_response": 750
+      },
+      "sources": {
+        "BISFetcher": {
+          "empty": 10,
+          "success": 3
+        },
+        "BVBIndexProfileFetcher": {
+          "empty": 16
+        },
+        "CZSOFetcher": {
+          "empty": 1
+        },
+        "CredentialedStooqFetcher": {
+          "empty": 16
+        },
+        "DerivedMacroFetcher": {
+          "empty": 53,
+          "success": 12
+        },
+        "ECBExternalDebtFetcher": {
+          "empty": 39,
+          "success": 1
+        },
+        "ECBFetcher": {
+          "empty": 97,
+          "success": 1
+        },
+        "ECBMIRFetcher": {
+          "empty": 7,
+          "success": 3
+        },
+        "ECBPortfolioFlowsFetcher": {
+          "empty": 38,
+          "success": 1
+        },
+        "EUFundsAbsorptionFetcher": {
+          "empty": 40,
+          "success": 1
+        },
+        "EurostatFetcher": {
+          "empty": 65,
+          "success": 38
+        },
+        "FREDInternationalFetcher": {
+          "empty": 38
+        },
+        "GIEAGSIFetcher": {
+          "empty": 6,
+          "failed": 1
+        },
+        "GPWBenchmarkFetcher": {
+          "empty": 16
+        },
+        "IMFDataMapperFetcher": {
+          "empty": 44,
+          "success": 9
+        },
+        "IMFFinancialSoundnessFetcher": {
+          "empty": 33,
+          "success": 5
+        },
+        "KSHFetcher": {
+          "success": 1
+        },
+        "ManualIndicatorFetcher": {
+          "empty": 1,
+          "success": 6
+        },
+        "NationalCBFetcher": {
+          "empty": 38
+        },
+        "PolicyRateFetcher": {
+          "empty": 96,
+          "success": 1
+        },
+        "PragueExchangeFetcher": {
+          "empty": 16
+        },
+        "WorldBankESGFetcher": {
+          "empty": 41,
+          "success": 3
+        },
+        "WorldBankFallbackFetcher": {
+          "empty": 10
+        },
+        "WorldBankFetcher": {
+          "empty": 16,
+          "success": 17
+        },
+        "YahooMarketFetcher": {
+          "empty": 13,
+          "success": 3
+        }
+      },
+      "events": [
+        {
+          "timestamp": "2026-11-02T23:33:11.567344+00:00",
+          "country": "HU",
+          "indicator_id": "gas_storage_level",
+          "source_id": "GIEAGSIFetcher",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'ROOT' is not defined"
+        }
+      ]
+    },
+    "PL": {
+      "calls": 874,
+      "success": 108,
+      "empty": 764,
+      "failed": 2,
+      "circuit_open": 0,
+      "failure_reasons": {
+        "unexpected_error": 2
+      },
+      "empty_reasons": {
+        "empty_response": 764
+      },
+      "sources": {
+        "BISFetcher": {
+          "empty": 9,
+          "success": 3
+        },
+        "BVBIndexProfileFetcher": {
+          "empty": 13
+        },
+        "CZSOFetcher": {
+          "empty": 1
+        },
+        "CredentialedStooqFetcher": {
+          "empty": 12,
+          "failed": 1
+        },
+        "DerivedMacroFetcher": {
+          "empty": 55,
+          "success": 12
+        },
+        "ECBExternalDebtFetcher": {
+          "empty": 41,
+          "success": 1
+        },
+        "ECBFetcher": {
+          "empty": 100,
+          "success": 1
+        },
+        "ECBMIRFetcher": {
+          "empty": 6,
+          "success": 3
+        },
+        "ECBPortfolioFlowsFetcher": {
+          "empty": 40,
+          "success": 1
+        },
+        "EUFundsAbsorptionFetcher": {
+          "empty": 42,
+          "success": 1
+        },
+        "EurostatFetcher": {
+          "empty": 67,
+          "success": 39
+        },
+        "FREDInternationalFetcher": {
+          "empty": 39,
+          "success": 1
+        },
+        "GIEAGSIFetcher": {
+          "empty": 5,
+          "failed": 1
+        },
+        "GPWBenchmarkFetcher": {
+          "empty": 13,
+          "success": 5
+        },
+        "GUSDBWFetcher": {
+          "success": 1
+        },
+        "IMFDataMapperFetcher": {
+          "empty": 46,
+          "success": 9
+        },
+        "IMFFinancialSoundnessFetcher": {
+          "empty": 34,
+          "success": 5
+        },
+        "KSHFetcher": {
+          "empty": 1
+        },
+        "ManualIndicatorFetcher": {
+          "empty": 1,
+          "success": 5
+        },
+        "NationalCBFetcher": {
+          "empty": 40
+        },
+        "PolicyRateFetcher": {
+          "empty": 99,
+          "success": 1
+        },
+        "PragueExchangeFetcher": {
+          "empty": 18
+        },
+        "WorldBankESGFetcher": {
+          "empty": 43,
+          "success": 3
+        },
+        "WorldBankFallbackFetcher": {
+          "empty": 9
+        },
+        "WorldBankFetcher": {
+          "empty": 18,
+          "success": 16
+        },
+        "YahooMarketFetcher": {
+          "empty": 12,
+          "success": 1
+        }
+      },
+      "events": [
+        {
+          "timestamp": "2026-11-02T23:33:20.686629+00:00",
+          "country": "PL",
+          "indicator_id": "gas_storage_level",
+          "source_id": "GIEAGSIFetcher",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'ROOT' is not defined"
+        },
+        {
+          "timestamp": "2026-11-02T23:33:21.138115+00:00",
+          "country": "PL",
+          "indicator_id": "equity_yoy",
+          "source_id": "CredentialedStooqFetcher",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'ROOT' is not defined"
+        }
+      ]
+    },
+    "CZ": {
+      "calls": 840,
+      "success": 103,
+      "empty": 736,
+      "failed": 1,
+      "circuit_open": 0,
+      "failure_reasons": {
+        "unexpected_error": 1
+      },
+      "empty_reasons": {
+        "empty_response": 736
+      },
+      "sources": {
+        "BISFetcher": {
+          "empty": 10,
+          "success": 3
+        },
+        "BVBIndexProfileFetcher": {
+          "empty": 13
+        },
+        "CZSOFetcher": {
+          "empty": 1,
+          "success": 1
+        },
+        "CredentialedStooqFetcher": {
+          "empty": 13
+        },
+        "DerivedMacroFetcher": {
+          "empty": 51,
+          "success": 12
+        },
+        "ECBExternalDebtFetcher": {
+          "empty": 39,
+          "success": 1
+        },
+        "ECBFetcher": {
+          "empty": 96,
+          "success": 1
+        },
+        "ECBMIRFetcher": {
+          "empty": 7,
+          "success": 3
+        },
+        "ECBPortfolioFlowsFetcher": {
+          "empty": 38,
+          "success": 1
+        },
+        "EUFundsAbsorptionFetcher": {
+          "empty": 40,
+          "success": 1
+        },
+        "EurostatFetcher": {
+          "empty": 63,
+          "success": 39
+        },
+        "FREDInternationalFetcher": {
+          "empty": 38
+        },
+        "GIEAGSIFetcher": {
+          "empty": 6,
+          "failed": 1
+        },
+        "GPWBenchmarkFetcher": {
+          "empty": 13
+        },
+        "GUSDBWFetcher": {
+          "empty": 1
+        },
+        "IMFDataMapperFetcher": {
+          "empty": 44,
+          "success": 7
+        },
+        "IMFFinancialSoundnessFetcher": {
+          "empty": 33,
+          "success": 5
+        },
+        "INSSETempoFetcher": {
+          "empty": 1
+        },
+        "KSHFetcher": {
+          "empty": 1
+        },
+        "ManualIndicatorFetcher": {
+          "empty": 2,
+          "success": 5
+        },
+        "NationalCBFetcher": {
+          "empty": 38
+        },
+        "PolicyRateFetcher": {
+          "empty": 95,
+          "success": 1
+        },
+        "PragueExchangeFetcher": {
+          "empty": 13,
+          "success": 3
+        },
+        "WorldBankESGFetcher": {
+          "empty": 41,
+          "success": 3
+        },
+        "WorldBankFallbackFetcher": {
+          "empty": 10
+        },
+        "WorldBankFetcher": {
+          "empty": 16,
+          "success": 17
+        },
+        "YahooMarketFetcher": {
+          "empty": 13
+        }
+      },
+      "events": [
+        {
+          "timestamp": "2026-11-02T23:33:23.976369+00:00",
+          "country": "CZ",
+          "indicator_id": "gas_storage_level",
+          "source_id": "GIEAGSIFetcher",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'ROOT' is not defined"
+        }
+      ]
+    },
+    "RO": {
+      "calls": 821,
+      "success": 104,
+      "empty": 716,
+      "failed": 1,
+      "circuit_open": 0,
+      "failure_reasons": {
+        "unexpected_error": 1
+      },
+      "empty_reasons": {
+        "empty_response": 716
+      },
+      "sources": {
+        "BISFetcher": {
+          "empty": 11,
+          "success": 1
+        },
+        "BVBIndexProfileFetcher": {
+          "empty": 12,
+          "success": 2
+        },
+        "CZSOFetcher": {
+          "empty": 1
+        },
+        "CredentialedStooqFetcher": {
+          "empty": 12
+        },
+        "DerivedMacroFetcher": {
+          "empty": 51,
+          "success": 12
+        },
+        "ECBExternalDebtFetcher": {
+          "empty": 37,
+          "success": 1
+        },
+        "ECBFetcher": {
+          "empty": 96,
+          "success": 1
+        },
+        "ECBMIRFetcher": {
+          "empty": 7,
+          "success": 3
+        },
+        "ECBPortfolioFlowsFetcher": {
+          "empty": 36,
+          "success": 1
+        },
+        "EUFundsAbsorptionFetcher": {
+          "empty": 38,
+          "success": 1
+        },
+        "EurostatFetcher": {
+          "empty": 63,
+          "success": 39
+        },
+        "FREDInternationalFetcher": {
+          "empty": 36
+        },
+        "GIEAGSIFetcher": {
+          "empty": 6,
+          "failed": 1
+        },
+        "GPWBenchmarkFetcher": {
+          "empty": 14
+        },
+        "GUSDBWFetcher": {
+          "empty": 1
+        },
+        "IMFDataMapperFetcher": {
+          "empty": 42,
+          "success": 9
+        },
+        "IMFFinancialSoundnessFetcher": {
+          "empty": 31,
+          "success": 5
+        },
+        "INSSETempoFetcher": {
+          "success": 1
+        },
+        "KSHFetcher": {
+          "empty": 1
+        },
+        "ManualIndicatorFetcher": {
+          "empty": 1,
+          "success": 6
+        },
+        "NationalCBFetcher": {
+          "empty": 36
+        },
+        "PolicyRateFetcher": {
+          "empty": 95,
+          "success": 1
+        },
+        "PragueExchangeFetcher": {
+          "empty": 14
+        },
+        "WorldBankESGFetcher": {
+          "empty": 39,
+          "success": 3
+        },
+        "WorldBankFallbackFetcher": {
+          "empty": 10,
+          "success": 1
+        },
+        "WorldBankFetcher": {
+          "empty": 14,
+          "success": 17
+        },
+        "YahooMarketFetcher": {
+          "empty": 12
+        }
+      },
+      "events": [
+        {
+          "timestamp": "2026-11-02T23:33:25.647900+00:00",
+          "country": "RO",
+          "indicator_id": "gas_storage_level",
+          "source_id": "GIEAGSIFetcher",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "name 'ROOT' is not defined"
+        }
+      ]
+    },
+    "CN": {
+      "calls": 3,
+      "success": 3,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "pbc_card": {
+          "success": 3
+        }
+      },
+      "events": []
+    },
+    "JP": {
+      "calls": 0,
+      "success": 0,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {},
+      "events": []
+    },
+    "ZA": {
+      "calls": 0,
+      "success": 0,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {},
+      "events": []
+    },
+    "UK": {
+      "calls": 0,
+      "success": 0,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {},
+      "events": []
+    },
+    "US": {
+      "calls": 0,
+      "success": 0,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {},
+      "events": []
+    },
+    "EA": {
+      "calls": 8,
+      "success": 8,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "eurostat_jsonstat": {
+          "success": 8
+        }
+      },
+      "events": []
+    },
+    "TR": {
+      "calls": 1,
+      "success": 1,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bis_fx": {
+          "success": 1
+        }
+      },
+      "events": []
+    },
+    "HK": {
+      "calls": 2,
+      "success": 2,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bis_policy_rate": {
+          "success": 1
+        },
+        "world_bank": {
+          "success": 1
+        }
+      },
+      "events": []
+    },
+    "KR": {
+      "calls": 1,
+      "success": 1,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bis_credit_gap": {
+          "success": 1
+        }
+      },
+      "events": []
+    },
+    "TW": {
+      "calls": 48,
+      "success": 48,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bruegel_reer": {
+          "success": 2
+        },
+        "finmind": {
+          "success": 2
+        },
+        "fred": {
+          "success": 2
+        },
+        "imf_datamapper": {
+          "success": 4
+        },
+        "tw_cbc": {
+          "success": 22
+        },
+        "tw_dgbas": {
+          "success": 13
+        },
+        "tw_mof_customs": {
+          "success": 3
+        }
+      },
+      "events": []
+    },
+    "KZ": {
+      "calls": 1,
+      "success": 1,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "nbk_base_rate": {
+          "success": 1
+        }
+      },
+      "events": []
+    },
+    "UZ": {
+      "calls": 1,
+      "success": 1,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "imf_sdmx": {
+          "success": 1
+        }
+      },
+      "events": []
+    },
+    "EG": {
+      "calls": 1,
+      "success": 1,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "imf_sdmx": {
+          "success": 1
+        }
+      },
+      "events": []
+    },
+    "NG": {
+      "calls": 1,
+      "success": 1,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "cbn_money_market": {
+          "success": 1
+        }
+      },
+      "events": []
+    },
+    "IN": {
+      "calls": 40,
+      "success": 40,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bis_credit_gap": {
+          "success": 1
+        },
+        "bis_fx": {
+          "success": 1
+        },
+        "bis_policy_rate": {
+          "success": 1
+        },
+        "fred": {
+          "success": 15
+        },
+        "imf_datamapper": {
+          "success": 5
+        },
+        "imf_sdmx": {
+          "success": 9
+        },
+        "world_bank": {
+          "success": 8
+        }
+      },
+      "events": []
+    },
+    "ENERGY": {
+      "calls": 23,
+      "success": 23,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "eia_steo": {
+          "success": 16
+        },
+        "ember_generation": {
+          "success": 5
+        },
+        "gie_agsi": {
+          "success": 2
+        }
+      },
+      "events": []
+    },
+    "PRECIOUS": {
+      "calls": 37,
+      "success": 37,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "cftc_positions": {
+          "success": 4
+        },
+        "foreign_futures": {
+          "success": 5
+        },
+        "fred": {
+          "success": 4
+        },
+        "imf_sdmx": {
+          "success": 22
+        },
+        "sge_spot": {
+          "success": 2
+        }
+      },
+      "events": []
+    },
+    "BASE": {
+      "calls": 34,
+      "success": 34,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bis_fx": {
+          "success": 2
+        },
+        "cftc_positions": {
+          "success": 1
+        },
+        "cn_futures_inventory": {
+          "success": 3
+        },
+        "cn_futures_main": {
+          "success": 10
+        },
+        "foreign_futures": {
+          "success": 7
+        },
+        "fred": {
+          "success": 2
+        },
+        "imf_sdmx": {
+          "success": 9
+        }
+      },
+      "events": []
+    }
+  }
+}

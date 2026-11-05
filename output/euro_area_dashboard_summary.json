@@ -1,0 +1,432 @@
+{
+  "file": "euro_area.html",
+  "generated": "2026-11-05T17:27:42.881408+00:00",
+  "charts": 74,
+  "source_groups": 8,
+  "data_gaps": 6,
+  "low_confidence": 3,
+  "key_series_latest": [
+    {
+      "id": "real_gdp_growth",
+      "label_en": "Real GDP Growth, QoQ",
+      "label_zh": "实际GDP环比",
+      "latest_date": "2026-07-01",
+      "latest_value": 0.4,
+      "latest_display": "0.40 % q/q",
+      "frequency": "quarterly",
+      "source_name": "Eurostat",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "real_gdp_yoy",
+      "label_en": "Real GDP Growth, YoY",
+      "label_zh": "实际GDP同比",
+      "latest_date": "2026-07-01",
+      "latest_value": 1.3,
+      "latest_display": "1.30 % y/y",
+      "frequency": "quarterly",
+      "source_name": "Eurostat",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "hicp_inflation",
+      "label_en": "HICP Headline Inflation, YoY",
+      "label_zh": "调和CPI总体通胀同比",
+      "latest_date": "2026-10-01",
+      "latest_value": 4.0,
+      "latest_display": "4.00 % y/y",
+      "frequency": "monthly",
+      "source_name": "Eurostat",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "hicp_core_inflation",
+      "label_en": "HICP Core Inflation (Ex Energy & Food), YoY",
+      "label_zh": "核心HICP通胀（剔除能源与食品）同比",
+      "latest_date": "2026-10-01",
+      "latest_value": 2.5,
+      "latest_display": "2.50 % y/y",
+      "frequency": "monthly",
+      "source_name": "Eurostat",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "policy_rate",
+      "label_en": "ECB Deposit Facility Rate (DFR)",
+      "label_zh": "欧洲央行存款便利利率 (DFR)",
+      "latest_date": "2026-11-02",
+      "latest_value": 2.5,
+      "latest_display": "2.50 %",
+      "frequency": "daily",
+      "source_name": "ECB",
+      "series": "D.U2.EUR.4F.KR.DFR.LEV",
+      "quality_status": "verified"
+    },
+    {
+      "id": "unemployment_rate",
+      "label_en": "Harmonised Unemployment Rate",
+      "label_zh": "调和失业率",
+      "latest_date": "2026-09-01",
+      "latest_value": 6.5,
+      "latest_display": "6.50 %",
+      "frequency": "monthly",
+      "source_name": "Eurostat",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "m3_growth",
+      "label_en": "Broad Monetary Aggregate M3 Growth, YoY",
+      "label_zh": "广义货币M3同比增速",
+      "latest_date": "2026-09-01",
+      "latest_value": 3.503999606921071,
+      "latest_display": "3.50 % y/y",
+      "frequency": "monthly",
+      "source_name": "ECB",
+      "series": "M.U2.Y.V.M30.X.I.U2.2300.Z01.A",
+      "quality_status": "verified"
+    },
+    {
+      "id": "goods_trade_balance",
+      "label_en": "Extra-Euro Area Goods Trade Balance",
+      "label_zh": "欧元区对外货物贸易差额",
+      "latest_date": "2026-08-01",
+      "latest_value": -6826.6,
+      "latest_display": "-6.83 EUR bn",
+      "frequency": "monthly",
+      "source_name": "Eurostat",
+      "series": "",
+      "quality_status": "verified"
+    },
+    {
+      "id": "it_de_spread_10y",
+      "label_en": "Italy-Germany 10Y Sovereign Spread (BTP-Bund)",
+      "label_zh": "意大利-德国10年期国债利差 (BTP-Bund)",
+      "latest_date": "2026-09-01",
+      "latest_value": 88.9,
+      "latest_display": "88.9 bps",
+      "frequency": "monthly",
+      "source_name": "ECB",
+      "series": "",
+      "quality_status": "verified"
+    }
+  ],
+  "unavailable": [],
+  "data_mode": "snapshot",
+  "latest_cards": [],
+  "policy_rate_latest": "2.50% (2026-11-02)",
+  "cross_checks": [],
+  "canonical_frame": {
+    "schema_version": "data-first-canonical-v2",
+    "observation_columns": [
+      "date",
+      "value"
+    ],
+    "file": "euro_area_canonical_frame.json",
+    "series": 74,
+    "observations": 66263,
+    "series_count": 74,
+    "observation_count": 66263,
+    "snapshot_generated": "2026-11-05T17:23:21.982275+00:00"
+  },
+  "data_gaps_detail": [
+    {
+      "section": "production_cycle",
+      "item_en": "HCOB Eurozone Manufacturing and Services Flash PMIs",
+      "item_zh": "HCOB欧元区制造业与服务业初值PMI",
+      "status_en": "Compiled by S&P Global under commercial license; proprietary data vendor series with no key-free redistributable API.",
+      "status_zh": "由标普全球(S&P Global)商业授权编制；属于专有数据供应商序列，无免密钥可再分发API。"
+    },
+    {
+      "section": "production_cycle",
+      "item_en": "Sentix Economic Index and ZEW Financial Market Survey for Euro Area",
+      "item_zh": "Sentix经济指数与ZEW欧元区金融市场调查",
+      "status_en": "Proprietary investor sentiment surveys published by Sentix GmbH and ZEW Mannheim without a key-free machine-readable public API.",
+      "status_zh": "由Sentix与曼海姆ZEW编制的专有投资者情绪调查，无免密钥机读公开API。"
+    },
+    {
+      "section": "prices_costs",
+      "item_en": "5y5y forward inflation-linked swap rate (5y5y ILS)",
+      "item_zh": "5年/5年期远期通胀互换利率 (5y5y ILS)",
+      "status_en": "Market-based inflation expectation gauge referenced by the ECB Governing Council; traded OTC and vendor-controlled (Bloomberg/LSEG), not disseminated via ECB SDMX.",
+      "status_zh": "欧央行管委会密切关注的市场化通胀预期指标；在场外市场(OTC)交易并由彭博/路孚特等专有终端控制，未在ECB SDMX公开分发。"
+    },
+    {
+      "section": "prices_costs",
+      "item_en": "Dutch TTF natural gas front-month benchmark futures",
+      "item_zh": "荷兰TTF天然气近月基准期货",
+      "status_en": "ICE Endex exchange traded energy benchmark; critical European energy cost variable but exchange-licensed without a redistributable public API.",
+      "status_zh": "ICE Endex交易所上市的欧洲基准天然气期货；为欧洲关键能源成本变量，但属交易所专有数据，无公开再分发接口。"
+    },
+    {
+      "section": "monetary_financial",
+      "item_en": "Euro Stoxx 50 equity index and equity market valuation",
+      "item_zh": "Euro Stoxx 50股票指数与股市估值",
+      "status_en": "STOXX Ltd benchmark index licensed through data vendors; no redistributable public timeseries endpoint available.",
+      "status_zh": "由STOXX Ltd授权的基准指数，需商业数据供应商接口；无公开可再分发的时间序列接口。"
+    },
+    {
+      "section": "monetary_financial",
+      "item_en": "Euro Stoxx 50 total return, YoY",
+      "item_zh": "欧洲斯托克50指数同比回报",
+      "status_en": "Removed 2026-11-05: the previous series was hand-typed into the build (not fetched). Re-add only from a verifiable automated source.",
+      "status_zh": "2026-11-05 移除：此前该序列是在构建中手工写入的，并非抓取所得。只有在接入可验证的自动化数据源后才重新加入。"
+    }
+  ],
+  "source_health": {
+    "source_groups": 8,
+    "sources": [
+      {
+        "source_name": "ECB",
+        "charts": 30
+      },
+      {
+        "source_name": "Eurostat",
+        "charts": 30
+      },
+      {
+        "source_name": "Eurostat / DG ECFIN",
+        "charts": 7
+      },
+      {
+        "source_name": "ECB Banking Supervision",
+        "charts": 2
+      },
+      {
+        "source_name": "FRED / BIS",
+        "charts": 2
+      },
+      {
+        "source_name": "Bank for International Settlements (BIS)",
+        "charts": 1
+      },
+      {
+        "source_name": "ECB / Derived",
+        "charts": 1
+      },
+      {
+        "source_name": "IMF DataMapper",
+        "charts": 1
+      }
+    ],
+    "quality_counts": {
+      "low_confidence": 3,
+      "unavailable": 1,
+      "verified": 66,
+      "watch": 4
+    },
+    "unavailable_count": 0
+  },
+  "framework": {
+    "version": 2,
+    "pillars": 9,
+    "core_concepts": 48,
+    "legacy_aliases": 7
+  },
+  "freshness": {
+    "as_of_date": "2026-11-05",
+    "counts": {
+      "current": 66,
+      "due": 4,
+      "future_date": 1,
+      "stale": 3
+    },
+    "latest_historical_date": "2026-11-02",
+    "attention": [
+      {
+        "id": "household_debt_gdp",
+        "concept_id": "ea:household_debt_gdp",
+        "label_en": "Household Debt to GDP",
+        "latest_date": "2025-10-01",
+        "frequency": "quarterly",
+        "freshness_status": "stale",
+        "age_basis_date": "2025-10-01",
+        "age_days": 309,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BIS",
+        "series": "QXMHAM770A",
+        "transform": "level"
+      },
+      {
+        "id": "credit_gap",
+        "concept_id": "credit_gap",
+        "label_en": "Euro Area BIS Basel III Credit-to-GDP Gap",
+        "latest_date": "2026-03-31",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-03-31",
+        "age_days": 219,
+        "threshold_days": 290,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "Bank for International Settlements (BIS)",
+        "series": "XM",
+        "transform": "level"
+      },
+      {
+        "id": "bank_cet1_ratio",
+        "concept_id": "bank_capital_ratio",
+        "label_en": "Significant Institutions CET1 Ratio",
+        "latest_date": "2026-04-01",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-04-01",
+        "age_days": 128,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "ECB Banking Supervision",
+        "series": "Q.B01.W0._Z.I4008._T.SII._Z._Z._Z.PCT.C",
+        "transform": "level"
+      },
+      {
+        "id": "bank_npl_ratio",
+        "concept_id": "bank_npl_ratio",
+        "label_en": "Significant Institutions NPL Ratio",
+        "latest_date": "2026-04-01",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-04-01",
+        "age_days": 128,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "ECB Banking Supervision",
+        "series": "Q.B01.W0._Z.I7000._T.SII._Z._Z._Z.PCT.C",
+        "transform": "level"
+      },
+      {
+        "id": "negotiated_wages_yoy",
+        "concept_id": "wage_growth",
+        "label_en": "ECB Negotiated Wages Growth, YoY",
+        "latest_date": "2026-04-01",
+        "frequency": "quarterly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-04-01",
+        "age_days": 128,
+        "threshold_days": 165,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "ECB",
+        "series": "Q.U2.N.INWR.000000.4F0.GY.IX",
+        "transform": "level"
+      },
+      {
+        "id": "building_permits_yoy",
+        "concept_id": "housing_activity",
+        "label_en": "Residential Building Permits Growth, YoY",
+        "latest_date": "2026-07-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-07-01",
+        "age_days": 97,
+        "threshold_days": 91,
+        "release_calendar_id": "eurostat_monthly",
+        "expected_release_date": "2026-10-15",
+        "due_date": "2026-10-30",
+        "quality_status": "low_confidence",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Eurostat",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "reer",
+        "concept_id": "reer",
+        "label_en": "Euro Real Effective Exchange Rate (BIS)",
+        "latest_date": "2026-07-01",
+        "frequency": "monthly",
+        "freshness_status": "stale",
+        "age_basis_date": "2026-07-01",
+        "age_days": 97,
+        "threshold_days": 75,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "low_confidence",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "FRED / BIS",
+        "series": "RBXMBIS",
+        "transform": "level"
+      },
+      {
+        "id": "structural_balance_gdp",
+        "concept_id": "primary_balance_gdp",
+        "label_en": "Structural Fiscal Balance",
+        "latest_date": "2031-12-31",
+        "frequency": "annual",
+        "freshness_status": "future_date",
+        "age_basis_date": "2031-12-31",
+        "age_days": null,
+        "threshold_days": 730,
+        "release_calendar_id": "",
+        "expected_release_date": "",
+        "due_date": "",
+        "quality_status": "unavailable",
+        "source_authority": "official_mirror",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "medium",
+        "source_name": "IMF DataMapper",
+        "series": "GGCB_G01_PGDP_PT/EURO",
+        "transform": "level"
+      }
+    ]
+  },
+  "transform_audit": {
+    "counts": {
+      "level": 74
+    },
+    "non_level": []
+  },
+  "canonical_schema": {
+    "schema_version": "data-first-canonical-v2",
+    "observation_columns": [
+      "date",
+      "value"
+    ],
+    "charted_series": 74
+  }
+}
