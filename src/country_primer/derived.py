@@ -16,8 +16,9 @@ ratio                 a / b * factor                   (factor: 1)
 product               a * b * factor                   (factor: 1), e.g. price in local currency
 rolling_mean          trailing mean over `window` observations
 zscore                (x - trailing mean) / trailing std over `window` observations
-dev_from_5y_seasonal  x minus the mean of the same ISO week (or month) in the
-                      previous five years (at least three years required)
+dev_from_5y_seasonal  x minus the mean of the same calendar day (daily data), ISO
+                      week (weekly) or month in the previous five years (at
+                      least three years required)
 yoy_pct               percent change versus the same period a year earlier
 """
 from __future__ import annotations
@@ -66,20 +67,25 @@ def _aligned(series: list[list[tuple[str, float]]]) -> list[tuple[str, list[floa
     return [(d, [m[d] for m in maps]) for d in common]
 
 
-def _period_key(d: str, weekly: bool) -> tuple[int, int]:
+def _period_key(d: str, cadence: str) -> tuple[int, int | str]:
     day = date.fromisoformat(d)
-    return (day.isocalendar()[0], day.isocalendar()[1]) if weekly else (day.year, day.month)
+    if cadence == "daily":
+        return (day.year, d[5:10])  # Feb 29 has no same day in the prior years, so it drops out
+    if cadence == "weekly":
+        return (day.isocalendar()[0], day.isocalendar()[1])
+    return (day.year, day.month)
 
 
 def _dev_from_5y(points: list[tuple[str, float]]) -> list[tuple[str, float]]:
     if len(points) < 2:
         return []
     gaps = [(date.fromisoformat(b[0]) - date.fromisoformat(a[0])).days for a, b in zip(points, points[1:])]
-    weekly = sorted(gaps)[len(gaps) // 2] <= 10
-    by_key = {_period_key(d, weekly): v for d, v in points}
+    median_gap = sorted(gaps)[len(gaps) // 2]
+    cadence = "daily" if median_gap <= 3 else "weekly" if median_gap <= 10 else "monthly"
+    by_key = {_period_key(d, cadence): v for d, v in points}
     out = []
     for d, v in points:
-        year, sub = _period_key(d, weekly)
+        year, sub = _period_key(d, cadence)
         history = [by_key[(year - k, sub)] for k in range(1, 6) if (year - k, sub) in by_key]
         if len(history) >= 3:
             out.append((d, v - sum(history) / len(history)))

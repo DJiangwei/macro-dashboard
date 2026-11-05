@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-11-05T10:45:41.526666+00:00",
+  "generated": "2026-11-05T11:17:25.400117+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -761,59 +761,25 @@
       "events": []
     },
     "ENERGY": {
-      "calls": 50,
-      "success": 48,
+      "calls": 23,
+      "success": 23,
       "empty": 0,
-      "failed": 2,
+      "failed": 0,
       "circuit_open": 0,
-      "failure_reasons": {
-        "timeout": 2
-      },
+      "failure_reasons": {},
       "empty_reasons": {},
       "sources": {
-        "cftc_positions": {
-          "failed": 2,
+        "eia_steo": {
+          "success": 16
+        },
+        "ember_generation": {
           "success": 5
         },
-        "eia_xls": {
-          "success": 22
-        },
-        "energy_charts_price": {
+        "gie_agsi": {
           "success": 2
-        },
-        "eurostat_jsonstat": {
-          "success": 6
-        },
-        "foreign_futures": {
-          "success": 3
-        },
-        "fred": {
-          "success": 9
-        },
-        "ons_timeseries": {
-          "success": 1
         }
       },
-      "events": [
-        {
-          "timestamp": "2026-11-05T10:45:20.246362+00:00",
-          "country": "ENERGY",
-          "indicator_id": "cftc_wti_mm_net",
-          "source_id": "cftc_positions",
-          "outcome": "failed",
-          "reason": "timeout",
-          "message": "HTTPSConnectionPool(host='publicreporting.cftc.gov', port=443): Read timed out. (read timeout=5)"
-        },
-        {
-          "timestamp": "2026-11-05T10:45:21.467108+00:00",
-          "country": "ENERGY",
-          "indicator_id": "cftc_natgas_mm_net",
-          "source_id": "cftc_positions",
-          "outcome": "failed",
-          "reason": "timeout",
-          "message": "HTTPSConnectionPool(host='publicreporting.cftc.gov', port=443): Read timed out. (read timeout=5)"
-        }
-      ]
+      "events": []
     },
     "PRECIOUS": {
       "calls": 37,

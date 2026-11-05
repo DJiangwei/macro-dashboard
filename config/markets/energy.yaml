@@ -11,8 +11,8 @@ name_zh: "能源"
 code: "ENERGY"
 iso2: "ENERGY"
 framework: market_energy
-subtitle_en: "Global energy markets for macro: crude and products, gas and LNG, European power, supply, demand, inventories, positioning and the pass-through to inflation. Sources: EIA, IMF (via FRED), CFTC, energy-charts (SMARD), CBOE and the US Treasury."
-subtitle_zh: "面向宏观的全球能源市场：原油与成品油、天然气与LNG、欧洲电力、供给、需求、库存、持仓以及向通胀的传导。数据来源：EIA、IMF（经FRED）、CFTC、energy-charts（SMARD）、CBOE与美国财政部。"
+subtitle_en: "Global energy markets for macro: crude and products, gas and LNG, European power, supply, demand, inventories, positioning and the pass-through to inflation. Sources: EIA (incl. the Short-Term Energy Outlook), IMF (via FRED), GIE AGSI+, Ember, CFTC, energy-charts (SMARD), CBOE and the US Treasury."
+subtitle_zh: "面向宏观的全球能源市场：原油与成品油、天然气与LNG、欧洲电力、供给、需求、库存、持仓以及向通胀的传导。数据来源：EIA（含短期能源展望）、IMF（经FRED）、GIE AGSI+、Ember、CFTC、energy-charts（SMARD）、CBOE与美国财政部。"
 min_chart_count: 35
 core_view_label_en: "Key charts"
 core_view_label_zh: "核心图表"
@@ -36,28 +36,28 @@ sections:
   gas_lng:
     title_en: "Natural Gas & LNG"
     title_zh: "天然气与LNG"
-    report_logic_en: "The three regional gas prices and US storage against its five-year seasonal norm."
-    report_logic_zh: "三大区域气价，以及美国储气相对五年季节常态的偏离。"
+    report_logic_en: "The three regional gas prices, and US and EU storage against their five-year seasonal norms (GIE AGSI+ for Europe)."
+    report_logic_zh: "三大区域气价，以及美国与欧盟储气相对五年季节常态的偏离（欧洲数据来自GIE AGSI+）。"
   power_coal:
     title_en: "Power, Coal & Uranium"
     title_zh: "电力、煤炭与铀"
-    report_logic_en: "European day-ahead power (daily mean of the auction), thermal coal and uranium."
-    report_logic_zh: "欧洲日前电价（日内拍卖均价）、动力煤与铀。"
+    report_logic_en: "European day-ahead power (daily mean of the auction), the monthly generation mix (Ember), thermal coal and uranium."
+    report_logic_zh: "欧洲日前电价（日内拍卖均价）、月度发电结构（Ember）、动力煤与铀。"
   supply:
     title_en: "Supply"
     title_zh: "供给"
-    report_logic_en: "US field production, weekly and monthly. OPEC+ production and spare capacity need the EIA API key (listed as gaps until configured)."
-    report_logic_zh: "美国原油产量（周度与月度）。OPEC+产量与闲置产能需要EIA API key（配置前列为缺口）。"
+    report_logic_en: "US field production (weekly and monthly), and from EIA's Short-Term Energy Outlook: OPEC and OPEC+ crude output, OPEC spare capacity, major producers and world liquids supply. STEO figures for other countries are EIA estimates; STEO forecasts are not shown."
+    report_logic_zh: "美国原油产量（周度与月度），以及来自EIA短期能源展望（STEO）的OPEC与OPEC+原油产量、OPEC闲置产能、主要产油国与全球液体燃料供给。STEO中其他国家的数据为EIA估计值；不显示STEO预测。"
   demand:
     title_en: "Demand"
     title_zh: "需求"
-    report_logic_en: "US product supplied (apparent demand), four-week averages smooth weekly noise."
-    report_logic_zh: "美国油品表观消费（产品供应量），以四周均值平滑周度噪音。"
+    report_logic_en: "US product supplied (apparent demand), four-week averages smooth weekly noise; world, China and India liquid fuels consumption from EIA STEO (monthly)."
+    report_logic_zh: "美国油品表观消费（产品供应量），以四周均值平滑周度噪音；全球、中国与印度液体燃料消费来自EIA STEO（月度）。"
   inventories:
     title_en: "Inventories"
     title_zh: "库存"
-    report_logic_en: "US crude, Cushing, SPR, gasoline and distillate stocks, with deviations from the five-year seasonal average and distillate days of cover."
-    report_logic_zh: "美国原油、库欣、战略储备、汽油与馏分油库存，以及相对五年季节均值的偏离和馏分油可用天数。"
+    report_logic_en: "US crude, Cushing, SPR, gasoline and distillate stocks, with deviations from the five-year seasonal average and distillate days of cover; OECD commercial stocks and the global implied stock change from EIA STEO."
+    report_logic_zh: "美国原油、库欣、战略储备、汽油与馏分油库存，以及相对五年季节均值的偏离和馏分油可用天数；OECD商业库存与全球隐含库存变化来自EIA STEO。"
   trade_geography:
     title_en: "Trade"
     title_zh: "贸易"
@@ -185,6 +185,20 @@ indicators:
      derivation: derived, op: dev_from_5y_seasonal, inputs: [us_gas_storage], frequency: weekly,
      caveat_en: "Storage minus the mean of the same ISO week in the previous five years (three years minimum).",
      caveat_zh: "库存减去前五年同一ISO周的均值（至少需三年）。"}
+  - {id: eu_gas_storage_full, section: gas_lng, view: core, label_en: "EU Gas Storage Fill (% of working gas volume)", label_zh: "欧盟储气率（占工作气量）", unit: "%",
+     fetcher: gie_agsi, source_authority: official_primary, series: eu, frequency: daily, start_date: 2015-01-01,
+     source_name: GIE AGSI+, source_url: "https://agsi.gie.eu/",
+     caveat_en: "Gas in storage as a share of working gas volume at the start of each gas day, EU aggregate. The latest gas days can be estimates that storage operators confirm later.",
+     caveat_zh: "每个燃气日开始时的储气量占工作气量的比例，欧盟合计。最近几个燃气日可能是估计值，之后由储气运营商确认。"}
+  - {id: eu_gas_storage_vs_5y, section: gas_lng, view: core, label_en: "EU Gas Storage vs 5-Year Same-Day Average", label_zh: "欧盟储气率相对五年同日均值", unit: pp,
+     derivation: derived, op: dev_from_5y_seasonal, inputs: [eu_gas_storage_full], frequency: daily,
+     caveat_en: "Fill level minus the mean of the same calendar day in the previous five years (three years minimum), in percentage points.",
+     caveat_zh: "储气率减去前五年同一日历日的均值（至少需三年），单位为百分点。"}
+  - {id: de_gas_storage_full, section: gas_lng, label_en: "Germany Gas Storage Fill (% of working gas volume)", label_zh: "德国储气率（占工作气量）", unit: "%",
+     fetcher: gie_agsi, source_authority: official_primary, series: DE, frequency: daily, start_date: 2015-01-01,
+     source_name: GIE AGSI+, source_url: "https://agsi.gie.eu/",
+     caveat_en: "Germany holds the largest storage capacity in the EU. The latest gas days can be estimates that storage operators confirm later.",
+     caveat_zh: "德国储气能力居欧盟之首。最近几个燃气日可能是估计值，之后由储气运营商确认。"}
 
   # ------------------------------------------------------------ power_coal
   - {id: de_power_day_ahead, section: power_coal, view: core, label_en: "Germany–Luxembourg Day-Ahead Power (daily mean)", label_zh: "德国–卢森堡日前电价（日均）", unit: EUR/MWh,
@@ -204,6 +218,31 @@ indicators:
      fetcher: fred, series: PURANUSDM, frequency: monthly, start_date: 2005-01-01,
      source_name: IMF Primary Commodity Prices via FRED, source_url: "https://fred.stlouisfed.org/series/PURANUSDM",
      caveat_en: "IMF monthly uranium price.", caveat_zh: "IMF铀价月度序列。"}
+  - {id: eu_gas_power_share, section: power_coal, view: core, label_en: "EU Power Generation from Gas (share)", label_zh: "欧盟燃气发电占比", unit: "% of generation",
+     fetcher: ember_generation, source_authority: official_mirror, series: EU, ember_series: "Gas", measure: share_of_generation_pct, frequency: monthly, start_date: 2015-01-01,
+     source_name: Ember monthly electricity data, source_url: "https://ember-energy.org/data/monthly-electricity-data/",
+     caveat_en: "Gas-fired plants set the marginal power price in much of Europe. Share of monthly electricity generation, compiled by Ember from national statistics and ENTSO-E; revised as the underlying sources update.",
+     caveat_zh: "欧洲多数市场的边际电价由燃气电厂决定。占月度发电量的比例，由Ember根据各国统计与ENTSO-E数据整理；随原始数据更新而修订。"}
+  - {id: eu_coal_power_share, section: power_coal, label_en: "EU Power Generation from Coal (share)", label_zh: "欧盟燃煤发电占比", unit: "% of generation",
+     fetcher: ember_generation, source_authority: official_mirror, series: EU, ember_series: "Coal", measure: share_of_generation_pct, frequency: monthly, start_date: 2015-01-01,
+     source_name: Ember monthly electricity data, source_url: "https://ember-energy.org/data/monthly-electricity-data/",
+     caveat_en: "Hard coal and lignite. Share of monthly electricity generation, compiled by Ember from national statistics and ENTSO-E; revised as the underlying sources update.",
+     caveat_zh: "硬煤与褐煤合计。占月度发电量的比例，由Ember根据各国统计与ENTSO-E数据整理；随原始数据更新而修订。"}
+  - {id: eu_wind_solar_power_share, section: power_coal, label_en: "EU Power Generation from Wind and Solar (share)", label_zh: "欧盟风电与光伏发电占比", unit: "% of generation",
+     fetcher: ember_generation, source_authority: official_mirror, series: EU, ember_series: "Wind and solar", measure: share_of_generation_pct, frequency: monthly, start_date: 2015-01-01,
+     source_name: Ember monthly electricity data, source_url: "https://ember-energy.org/data/monthly-electricity-data/",
+     caveat_en: "Share of monthly electricity generation, compiled by Ember from national statistics and ENTSO-E; revised as the underlying sources update.",
+     caveat_zh: "占月度发电量的比例，由Ember根据各国统计与ENTSO-E数据整理；随原始数据更新而修订。"}
+  - {id: china_coal_power_share, section: power_coal, label_en: "China Power Generation from Coal (share)", label_zh: "中国燃煤发电占比", unit: "% of generation",
+     fetcher: ember_generation, source_authority: official_mirror, series: CHN, ember_series: "Coal", measure: share_of_generation_pct, frequency: monthly, start_date: 2015-01-01,
+     source_name: Ember monthly electricity data, source_url: "https://ember-energy.org/data/monthly-electricity-data/",
+     caveat_en: "Share of monthly electricity generation, compiled by Ember from national statistics and ENTSO-E; revised as the underlying sources update.",
+     caveat_zh: "占月度发电量的比例，由Ember根据各国统计与ENTSO-E数据整理；随原始数据更新而修订。"}
+  - {id: india_coal_power_share, section: power_coal, label_en: "India Power Generation from Coal (share)", label_zh: "印度燃煤发电占比", unit: "% of generation",
+     fetcher: ember_generation, source_authority: official_mirror, series: IND, ember_series: "Coal", measure: share_of_generation_pct, frequency: monthly, start_date: 2015-01-01,
+     source_name: Ember monthly electricity data, source_url: "https://ember-energy.org/data/monthly-electricity-data/",
+     caveat_en: "Share of monthly electricity generation, compiled by Ember from national statistics and ENTSO-E; revised as the underlying sources update.",
+     caveat_zh: "占月度发电量的比例，由Ember根据各国统计与ENTSO-E数据整理；随原始数据更新而修订。"}
 
   # ------------------------------------------------------------ supply
   - {id: us_crude_production, section: supply, view: core, label_en: "US Crude Oil Field Production (weekly)", label_zh: "美国原油产量（周度）", unit: kb/d,
@@ -214,6 +253,61 @@ indicators:
      fetcher: eia_xls, source_authority: official_primary, series: pet/MCRFPUS2, frequency: monthly, start_date: 2005-01-01,
      source_name: EIA Petroleum Supply Monthly, source_url: "https://www.eia.gov/petroleum/supply/monthly/",
      caveat_en: "Survey-based monthly production.", caveat_zh: "基于调查的月度产量。"}
+  - {id: opec_crude_production, section: supply, view: core, label_en: "OPEC Crude Oil Production", label_zh: "OPEC原油产量", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: COPR_OPEC, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
+  - {id: opecplus_crude_production, section: supply, label_en: "OPEC+ Crude Oil Production", label_zh: "OPEC+原油产量", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: COPR_OPECPLUS, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "OPEC members and the other OPEC+ participants. EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "OPEC成员与其他OPEC+参与国合计。EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
+  - {id: opec_spare_capacity, section: supply, view: core, label_en: "OPEC Spare Crude Production Capacity", label_zh: "OPEC原油闲置产能", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: COPS_OPEC, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "Capacity that can be brought online within 30 days and sustained for at least 90 days, as estimated by EIA. History months only; the latest months are revised in later STEO releases.",
+     caveat_zh: "EIA估计的可在30天内启用并持续至少90天的产能。只显示历史月份，最近几个月会在之后的STEO中修订。"}
+  - {id: saudi_crude_production, section: supply, label_en: "Saudi Arabia Crude Oil Production", label_zh: "沙特阿拉伯原油产量", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: COPR_SA, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
+  - {id: russia_crude_production, section: supply, label_en: "Russia Crude Oil Production", label_zh: "俄罗斯原油产量", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: COPR_RS, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
+  - {id: iraq_crude_production, section: supply, label_en: "Iraq Crude Oil Production", label_zh: "伊拉克原油产量", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: COPR_IZ, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
+  - {id: iran_crude_production, section: supply, label_en: "Iran Crude Oil Production", label_zh: "伊朗原油产量", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: COPR_IR, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
+  - {id: kazakhstan_crude_production, section: supply, label_en: "Kazakhstan Crude Oil Production", label_zh: "哈萨克斯坦原油产量", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: COPR_KZ, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
+  - {id: libya_crude_production, section: supply, label_en: "Libya Crude Oil Production", label_zh: "利比亚原油产量", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: COPR_LY, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
+  - {id: venezuela_crude_production, section: supply, label_en: "Venezuela Crude Oil Production", label_zh: "委内瑞拉原油产量", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: COPR_VE, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
+  - {id: world_liquids_production, section: supply, label_en: "World Liquid Fuels Production", label_zh: "全球液体燃料产量", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: PAPR_WORLD, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "Crude oil, condensate, NGLs, biofuels and refinery gains. EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "原油、凝析油、NGL、生物燃料与炼厂增益合计。EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
 
   # ------------------------------------------------------------ demand
   - {id: us_product_supplied, section: demand, label_en: "US Total Product Supplied (weekly)", label_zh: "美国油品表观消费（周度）", unit: kb/d,
@@ -231,6 +325,21 @@ indicators:
      fetcher: eia_xls, source_authority: official_primary, series: pet/WDIUPUS2, frequency: weekly, start_date: 2010-01-01,
      source_name: EIA Weekly Petroleum Status Report, source_url: "https://www.eia.gov/petroleum/supply/weekly/",
      caveat_en: "Distillate fuel oil product supplied, weekly; tracks trucking and industrial activity.", caveat_zh: "馏分燃料油产品供应量，周度；跟踪货运与工业活动。"}
+  - {id: world_liquids_consumption, section: demand, view: core, label_en: "World Liquid Fuels Consumption", label_zh: "全球液体燃料消费", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: PATC_WORLD, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
+  - {id: china_liquids_consumption, section: demand, label_en: "China Liquid Fuels Consumption", label_zh: "中国液体燃料消费", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: PATC_CH, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
+  - {id: india_liquids_consumption, section: demand, label_en: "India Liquid Fuels Consumption", label_zh: "印度液体燃料消费", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: PATC_IN, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
 
   # ------------------------------------------------------------ inventories
   - {id: us_commercial_crude, section: inventories, label_en: "US Commercial Crude Stocks (ex SPR)", label_zh: "美国商业原油库存（不含战略储备）", unit: mb,
@@ -262,6 +371,20 @@ indicators:
   - {id: distillate_days_cover, section: inventories, view: core, label_en: "US Distillate Days of Cover", label_zh: "美国馏分油可用天数", unit: days,
      derivation: derived, op: ratio, factor: 1000, inputs: [us_distillate_stocks, us_distillate_demand], frequency: weekly,
      caveat_en: "Distillate stocks (mb × 1000) divided by weekly distillate product supplied (kb/d).", caveat_zh: "馏分油库存（百万桶×1000）除以周度馏分油表观消费（千桶/日）。"}
+  - {id: global_stock_draws, section: inventories, view: core, label_en: "World Oil Net Inventory Withdrawals", label_zh: "全球石油净库存提取", unit: mb/d,
+     fetcher: eia_steo, source_authority: official_primary, series: T3_STCHANGE_WORLD, steo_unit: "million barrels per day", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "EIA's implied global stock change: positive means inventories are being drawn, negative means they are building. History months only; revised in later STEO releases.",
+     caveat_zh: "EIA口径的全球隐含库存变化：正值表示去库，负值表示累库。只显示历史月份，会在之后的STEO中修订。"}
+  - {id: oecd_commercial_stocks, section: inventories, label_en: "OECD Commercial Oil Inventories (end of month)", label_zh: "OECD商业石油库存（月末）", unit: mb,
+     fetcher: eia_steo, source_authority: official_primary, series: PASC_OECD_T3, steo_unit: "million barrels, end-of-period", frequency: monthly, start_date: 2010-01-01,
+     source_name: EIA Short-Term Energy Outlook, source_url: "https://www.eia.gov/outlooks/steo/",
+     caveat_en: "Crude oil and other liquids held commercially in OECD countries at month end. EIA estimate from the Short-Term Energy Outlook, not the producer's own reported figure; history months only (STEO forecasts are not shown), and the latest months are revised in later STEO releases.",
+     caveat_zh: "OECD国家月末商业原油与其他液体库存。EIA短期能源展望（STEO）的估计值，并非生产国自报数据；只显示历史月份（不显示STEO预测），最近几个月会在之后的STEO中修订。"}
+  - {id: oecd_commercial_stocks_vs_5y, section: inventories, view: core, label_en: "OECD Commercial Inventories vs 5-Year Same-Month Average", label_zh: "OECD商业库存相对五年同月均值", unit: mb,
+     derivation: derived, op: dev_from_5y_seasonal, inputs: [oecd_commercial_stocks], frequency: monthly,
+     caveat_en: "Inventories minus the mean of the same month in the previous five years (three years minimum).",
+     caveat_zh: "库存减去前五年同月的均值（至少需三年）。"}
 
   # ------------------------------------------------------------ trade_geography
   - {id: us_crude_exports, section: trade_geography, label_en: "US Crude Oil Exports", label_zh: "美国原油出口", unit: kb/d,
@@ -361,20 +484,15 @@ data_gaps:
     status_en: EIA discontinued its futures curve series (RCLC1-4) after 2024-04-05; CME and ICE curves are licensed.
     status_zh: EIA的期货曲线序列（RCLC1-4）已于2024-04-05后停更；CME与ICE曲线为授权数据。
   - section: gas_lng
-    item_en: Daily TTF and EU gas storage fill
-    item_zh: 日度TTF与欧盟储气率
-    status_en: TTF is ICE Endex licensed. EU storage (GIE AGSI+) needs GIE_AGSI_API_KEY in the build environment.
-    status_zh: TTF为ICE Endex授权数据。欧盟储气（GIE AGSI+）需要在构建环境中配置GIE_AGSI_API_KEY。
-  - section: supply
-    item_en: OPEC+ production by country, spare capacity, global balances (EIA STEO)
-    item_zh: OPEC+分国产量、闲置产能与全球供需平衡（EIA STEO）
-    status_en: Requires EIA_API_KEY in the build environment.
-    status_zh: 需要在构建环境中配置EIA_API_KEY。
+    item_en: Daily TTF
+    item_zh: 日度TTF
+    status_en: TTF is ICE Endex licensed.
+    status_zh: TTF为ICE Endex授权数据。
   - section: power_coal
-    item_en: EU carbon (EUA) price and generation mix
-    item_zh: 欧盟碳价（EUA）与发电结构
-    status_en: EUA settlement data is EEX/ICE licensed; the generation mix needs EMBER_API_KEY.
-    status_zh: EUA结算价为EEX/ICE授权数据；发电结构需要EMBER_API_KEY。
+    item_en: EU carbon (EUA) price
+    item_zh: 欧盟碳价（EUA）
+    status_en: EUA settlement data is EEX/ICE licensed.
+    status_zh: EUA结算价为EEX/ICE授权数据。
   - section: trade_geography
     item_en: Tanker rates, rig counts and chokepoint flows
     item_zh: 油轮运价、钻机数与关键海峡流量

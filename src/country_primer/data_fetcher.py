@@ -122,7 +122,6 @@ BVB_BET_PROFILE_URL = "https://m.bvb.ro/FinancialInstruments/Indices/IndicesProf
 BVB_INDEX_PERFORMANCE_URL = "https://www.bvb.ro/FinancialInstruments/Indices/IndicesPerformance"
 EUROSTAT_DATA_URL = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}?{params}"
 INSSE_TEMPO_PIVOT_URL = "http://statistici.insse.ro:8077/tempo-ins/pivot"
-GIE_AGSI_BASE_URL = "https://agsi.gie.eu/api"
 _ESG_DATA_CACHE: dict[tuple[str, str], list[tuple[str, float]]] | None = None
 _BIS_CREDIT_GAP_CACHE: dict[str, list[tuple[str, float]]] | None = None
 _BIS_CBTA_CACHE: dict[str, list[tuple[str, float]]] | None = None
@@ -4165,6 +4164,7 @@ class GIEAGSIFetcher(BaseFetcher):
     """
 
     COUNTRIES = {"HU", "PL", "CZ", "RO"}
+    START_DATE = "2015-01-01"
 
     def fetch(self, country: str, spec: IndicatorSpec) -> list[dict]:
         if spec.indicator_id != "gas_storage_level" or country not in self.COUNTRIES:
@@ -4181,7 +4181,7 @@ class GIEAGSIFetcher(BaseFetcher):
             country=country,
             source="GIE AGSI+",
             series_id=f"AGSI:{country}:gasFull",
-            unit="%",
+            unit="% WGV",
             frequency="daily",
             last_update=observations[-1][0],
             source_url="https://agsi.gie.eu/",
@@ -4192,7 +4192,7 @@ class GIEAGSIFetcher(BaseFetcher):
         rows = _series_to_rows(
             series,
             spec,
-            unit="%",
+            unit="% WGV",
             note="Requires GIE_AGSI_API_KEY; country-level AGSI+ gasFull/fill percentage.",
         )
         for row in rows:
@@ -4200,65 +4200,19 @@ class GIEAGSIFetcher(BaseFetcher):
         return rows
 
     def _fetch_country(self, country: str, api_key: str) -> list[tuple[str, float]]:
-        base = _secret_env("GIE_AGSI_BASE_URL") or GIE_AGSI_BASE_URL
-        candidates = [
-            f"{base.rstrip('/')}/data/{country}/",
-            f"{base.rstrip('/')}/data/{country}",
-            f"{base.rstrip('/')}?country={country}",
-        ]
-        headers = {
-            "User-Agent": "Mozilla/5.0",
-            "x-key": api_key,
-            "X-KEY": api_key,
-            "Authorization": f"Bearer {api_key}",
-        }
-        for url in candidates:
-            cache_key = f"gie_agsi::{country}::{url.split('?')[0]}"
-            path = cache_path(cache_key)
-            try:
-                if path.exists():
-                    payload = json.loads(path.read_text())
-                else:
-                    response = requests.get(url, headers=headers, timeout=30)
-                    if response.status_code in {401, 403, 404}:
-                        continue
-                    response.raise_for_status()
-                    payload = response.json()
-                    path.write_text(json.dumps(payload, indent=2, sort_keys=True))
-            except (OSError, requests.RequestException, json.JSONDecodeError):
-                continue
-            observations = self._parse_payload(payload)
-            if observations:
-                return observations
-        return []
+        # One AGSI+ client for every scope; the cache lasts one calendar day so
+        # a refresh never serves an old payload (the previous cache never expired).
+        from .energy_adapters import fetch_agsi_points
 
-    def _parse_payload(self, payload: dict | list) -> list[tuple[str, float]]:
-        raw_rows = payload
-        if isinstance(payload, dict):
-            raw_rows = payload.get("data") or payload.get("rows") or payload.get("result") or []
-        if not isinstance(raw_rows, list):
+        path = cache_path(f"gie_agsi::{country}::{datetime.now().date().isoformat()}")
+        try:
+            if path.exists():
+                return [(str(day), float(value)) for day, value in json.loads(path.read_text())]
+            observations = fetch_agsi_points(country, self.START_DATE, api_key)
+            path.write_text(json.dumps(observations))
+            return observations
+        except (OSError, RuntimeError, ValueError, requests.RequestException, json.JSONDecodeError):
             return []
-        observations: list[tuple[str, float]] = []
-        for item in raw_rows:
-            if not isinstance(item, dict):
-                continue
-            date = str(item.get("gasDayStart") or item.get("gasDay") or item.get("date") or item.get("period") or "")[:10]
-            value = (
-                item.get("gasFull")
-                or item.get("full")
-                or item.get("fillingLevel")
-                or item.get("fill")
-                or item.get("percentageFull")
-            )
-            if not date or value in {None, ""}:
-                continue
-            try:
-                numeric = float(str(value).replace("%", "").replace(",", "."))
-            except ValueError:
-                continue
-            if math.isfinite(numeric):
-                observations.append((date, numeric))
-        return sorted({date: value for date, value in observations}.items())
 
 
 class WorldBankESGFetcher(BaseFetcher):

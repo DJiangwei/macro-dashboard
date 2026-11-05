@@ -1,7 +1,7 @@
 {
   "generated": "2026-10-29",
   "total_countries": 22,
-  "total_indicators": 1613,
+  "total_indicators": 1638,
   "countries": [
     {
       "code": "HU",
@@ -622,10 +622,10 @@
           "label_zh": "gas_storage_level",
           "unit": "% WGV",
           "section": "macro",
-          "frequency": "seasonal",
-          "obs_count": 3,
-          "latest_date": "2026-04-01",
-          "latest_val": 32.5
+          "frequency": "daily",
+          "obs_count": 4325,
+          "latest_date": "2026-11-03",
+          "latest_val": 76.91
         },
         {
           "id": "gdp_components",
@@ -1963,10 +1963,10 @@
           "label_zh": "gas_storage_level",
           "unit": "% WGV",
           "section": "macro",
-          "frequency": "seasonal",
-          "obs_count": 3,
-          "latest_date": "2026-04-01",
-          "latest_val": 44.7
+          "frequency": "daily",
+          "obs_count": 4325,
+          "latest_date": "2026-11-03",
+          "latest_val": 98.98
         },
         {
           "id": "gdp_components",
@@ -3260,10 +3260,10 @@
           "label_zh": "gas_storage_level",
           "unit": "% WGV",
           "section": "macro",
-          "frequency": "seasonal",
-          "obs_count": 3,
-          "latest_date": "2026-04-01",
-          "latest_val": 28.2
+          "frequency": "daily",
+          "obs_count": 4325,
+          "latest_date": "2026-11-03",
+          "latest_val": 75.35
         },
         {
           "id": "gdp_components",
@@ -4557,10 +4557,10 @@
           "label_zh": "gas_storage_level",
           "unit": "% WGV",
           "section": "macro",
-          "frequency": "seasonal",
-          "obs_count": 3,
-          "latest_date": "2026-04-01",
-          "latest_val": 23.9
+          "frequency": "daily",
+          "obs_count": 4325,
+          "latest_date": "2026-11-03",
+          "latest_val": 88.11
         },
         {
           "id": "gdp_components",
@@ -16215,7 +16215,7 @@
       "name_zh": "能源",
       "flag": "⚡",
       "canonical_file": "energy_canonical_frame.json",
-      "indicator_count": 61,
+      "indicator_count": 86,
       "indicators": [
         {
           "id": "asia_eu_lng_spread",
@@ -16361,6 +16361,28 @@
           "latest_val": -1.149747
         },
         {
+          "id": "china_coal_power_share",
+          "label_en": "China Power Generation from Coal (share)",
+          "label_zh": "中国燃煤发电占比",
+          "unit": "% of generation",
+          "section": "power_coal",
+          "frequency": "monthly",
+          "obs_count": 129,
+          "latest_date": "2026-09-01",
+          "latest_val": 51.67
+        },
+        {
+          "id": "china_liquids_consumption",
+          "label_en": "China Liquid Fuels Consumption",
+          "label_zh": "中国液体燃料消费",
+          "unit": "mb/d",
+          "section": "demand",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 16.30087305
+        },
+        {
           "id": "cpi_energy_weight_uk",
           "label_en": "CPI Weight of Electricity, Gas & Other Fuels — United Kingdom",
           "label_zh": "CPI电力、燃气与其他燃料权重——英国",
@@ -16392,6 +16414,17 @@
           "obs_count": 879,
           "latest_date": "2026-10-30",
           "latest_val": 27.25
+        },
+        {
+          "id": "de_gas_storage_full",
+          "label_en": "Germany Gas Storage Fill (% of working gas volume)",
+          "label_zh": "德国储气率（占工作气量）",
+          "unit": "%",
+          "section": "gas_lng",
+          "frequency": "daily",
+          "obs_count": 4325,
+          "latest_date": "2026-11-03",
+          "latest_val": 60.56
         },
         {
           "id": "de_power_day_ahead",
@@ -16438,6 +16471,17 @@
           "latest_val": 111.8252380952381
         },
         {
+          "id": "eu_coal_power_share",
+          "label_en": "EU Power Generation from Coal (share)",
+          "label_zh": "欧盟燃煤发电占比",
+          "unit": "% of generation",
+          "section": "power_coal",
+          "frequency": "monthly",
+          "obs_count": 130,
+          "latest_date": "2026-10-01",
+          "latest_val": 11.27
+        },
+        {
           "id": "eu_gas_monthly",
           "label_en": "European Natural Gas (monthly average)",
           "label_zh": "欧洲天然气月均价",
@@ -16447,6 +16491,39 @@
           "obs_count": 261,
           "latest_date": "2026-09-01",
           "latest_val": 25.494
+        },
+        {
+          "id": "eu_gas_power_share",
+          "label_en": "EU Power Generation from Gas (share)",
+          "label_zh": "欧盟燃气发电占比",
+          "unit": "% of generation",
+          "section": "power_coal",
+          "frequency": "monthly",
+          "obs_count": 130,
+          "latest_date": "2026-10-01",
+          "latest_val": 18.41
+        },
+        {
+          "id": "eu_gas_storage_full",
+          "label_en": "EU Gas Storage Fill (% of working gas volume)",
+          "label_zh": "欧盟储气率（占工作气量）",
+          "unit": "%",
+          "section": "gas_lng",
+          "frequency": "daily",
+          "obs_count": 4325,
+          "latest_date": "2026-11-03",
+          "latest_val": 74.07
+        },
+        {
+          "id": "eu_gas_storage_vs_5y",
+          "label_en": "EU Gas Storage vs 5-Year Same-Day Average",
+          "label_zh": "欧盟储气率相对五年同日均值",
+          "unit": "pp",
+          "section": "gas_lng",
+          "frequency": "daily",
+          "obs_count": 3227,
+          "latest_date": "2026-11-03",
+          "latest_val": -15.772
         },
         {
           "id": "eu_hh_gas_spread",
@@ -16460,6 +16537,17 @@
           "latest_val": 22.544
         },
         {
+          "id": "eu_wind_solar_power_share",
+          "label_en": "EU Power Generation from Wind and Solar (share)",
+          "label_zh": "欧盟风电与光伏发电占比",
+          "unit": "% of generation",
+          "section": "power_coal",
+          "frequency": "monthly",
+          "obs_count": 130,
+          "latest_date": "2026-10-01",
+          "latest_val": 35.02
+        },
+        {
           "id": "fr_power_day_ahead",
           "label_en": "France Day-Ahead Power (daily mean)",
           "label_zh": "法国日前电价（日均）",
@@ -16469,6 +16557,17 @@
           "obs_count": 2865,
           "latest_date": "2026-11-04",
           "latest_val": 247.7
+        },
+        {
+          "id": "global_stock_draws",
+          "label_en": "World Oil Net Inventory Withdrawals",
+          "label_zh": "全球石油净库存提取",
+          "unit": "mb/d",
+          "section": "inventories",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 2.937625701
         },
         {
           "id": "henry_hub_front_futures",
@@ -16559,6 +16658,72 @@
           "latest_val": 63.86
         },
         {
+          "id": "india_coal_power_share",
+          "label_en": "India Power Generation from Coal (share)",
+          "label_zh": "印度燃煤发电占比",
+          "unit": "% of generation",
+          "section": "power_coal",
+          "frequency": "monthly",
+          "obs_count": 93,
+          "latest_date": "2026-09-01",
+          "latest_val": 64.37
+        },
+        {
+          "id": "india_liquids_consumption",
+          "label_en": "India Liquid Fuels Consumption",
+          "label_zh": "印度液体燃料消费",
+          "unit": "mb/d",
+          "section": "demand",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 5.413995962
+        },
+        {
+          "id": "iran_crude_production",
+          "label_en": "Iran Crude Oil Production",
+          "label_zh": "伊朗原油产量",
+          "unit": "mb/d",
+          "section": "supply",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.9
+        },
+        {
+          "id": "iraq_crude_production",
+          "label_en": "Iraq Crude Oil Production",
+          "label_zh": "伊拉克原油产量",
+          "unit": "mb/d",
+          "section": "supply",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 3.7
+        },
+        {
+          "id": "kazakhstan_crude_production",
+          "label_en": "Kazakhstan Crude Oil Production",
+          "label_zh": "哈萨克斯坦原油产量",
+          "unit": "mb/d",
+          "section": "supply",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.86573386
+        },
+        {
+          "id": "libya_crude_production",
+          "label_en": "Libya Crude Oil Production",
+          "label_zh": "利比亚原油产量",
+          "unit": "mb/d",
+          "section": "supply",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.27
+        },
+        {
           "id": "newcastle_coal_monthly",
           "label_en": "Australian Thermal Coal (Newcastle, monthly)",
           "label_zh": "澳大利亚动力煤（纽卡斯尔，月度）",
@@ -16592,6 +16757,61 @@
           "latest_val": 4.823
         },
         {
+          "id": "oecd_commercial_stocks",
+          "label_en": "OECD Commercial Oil Inventories (end of month)",
+          "label_zh": "OECD商业石油库存（月末）",
+          "unit": "mb",
+          "section": "inventories",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 2683.248864
+        },
+        {
+          "id": "oecd_commercial_stocks_vs_5y",
+          "label_en": "OECD Commercial Inventories vs 5-Year Same-Month Average",
+          "label_zh": "OECD商业库存相对五年同月均值",
+          "unit": "mb",
+          "section": "inventories",
+          "frequency": "monthly",
+          "obs_count": 165,
+          "latest_date": "2026-09-01",
+          "latest_val": -112.204845
+        },
+        {
+          "id": "opec_crude_production",
+          "label_en": "OPEC Crude Oil Production",
+          "label_zh": "OPEC原油产量",
+          "unit": "mb/d",
+          "section": "supply",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 20.8
+        },
+        {
+          "id": "opec_spare_capacity",
+          "label_en": "OPEC Spare Crude Production Capacity",
+          "label_zh": "OPEC原油闲置产能",
+          "unit": "mb/d",
+          "section": "supply",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.02
+        },
+        {
+          "id": "opecplus_crude_production",
+          "label_en": "OPEC+ Crude Oil Production",
+          "label_zh": "OPEC+原油产量",
+          "unit": "mb/d",
+          "section": "supply",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 30.4696786
+        },
+        {
           "id": "ovx",
           "label_en": "CBOE Crude Oil Volatility Index (OVX)",
           "label_zh": "原油波动率指数OVX",
@@ -16601,6 +16821,28 @@
           "obs_count": 2979,
           "latest_date": "2026-11-03",
           "latest_val": 61.69
+        },
+        {
+          "id": "russia_crude_production",
+          "label_en": "Russia Crude Oil Production",
+          "label_zh": "俄罗斯原油产量",
+          "unit": "mb/d",
+          "section": "supply",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 8.773166667
+        },
+        {
+          "id": "saudi_crude_production",
+          "label_en": "Saudi Arabia Crude Oil Production",
+          "label_zh": "沙特阿拉伯原油产量",
+          "unit": "mb/d",
+          "section": "supply",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 8.1
         },
         {
           "id": "spr_stocks",
@@ -16865,6 +17107,39 @@
           "obs_count": 2961,
           "latest_date": "2026-11-03",
           "latest_val": 4.198
+        },
+        {
+          "id": "venezuela_crude_production",
+          "label_en": "Venezuela Crude Oil Production",
+          "label_zh": "委内瑞拉原油产量",
+          "unit": "mb/d",
+          "section": "supply",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.21
+        },
+        {
+          "id": "world_liquids_consumption",
+          "label_en": "World Liquid Fuels Consumption",
+          "label_zh": "全球液体燃料消费",
+          "unit": "mb/d",
+          "section": "demand",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 104.2414188
+        },
+        {
+          "id": "world_liquids_production",
+          "label_en": "World Liquid Fuels Production",
+          "label_zh": "全球液体燃料产量",
+          "unit": "mb/d",
+          "section": "supply",
+          "frequency": "monthly",
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 101.3037931
         },
         {
           "id": "wti_front_futures",

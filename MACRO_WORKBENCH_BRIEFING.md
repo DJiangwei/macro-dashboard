@@ -8,10 +8,10 @@
 
 | Country | Cyclical | Structural | Composite | Growth Assessment | Inflation Assessment | Policy Stance | Data Quality |
 | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :---: |
-| **Hungary (HU)** | 58.8 | 38.3 | **defensive** | moderate expansion | near-target inflation | restrictive stance | 54.7 (needs data review) |
-| **Poland (PL)** | 61.2 | 45.0 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 61.3 (usable with watch-list) |
-| **Czechia (CZ)** | 65.0 | 58.3 | **mixed** | moderate expansion | near-target inflation | neutral-moderate stance | 52.0 (needs data review) |
-| **Romania (RO)** | 30.0 | 46.7 | **defensive** | contraction | inflation pressure | restrictive stance | 51.0 (needs data review) |
+| **Hungary (HU)** | 58.8 | 38.3 | **defensive** | moderate expansion | near-target inflation | restrictive stance | 55.0 (needs data review) |
+| **Poland (PL)** | 61.2 | 45.0 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 61.6 (usable with watch-list) |
+| **Czechia (CZ)** | 65.0 | 58.3 | **mixed** | moderate expansion | near-target inflation | neutral-moderate stance | 52.4 (needs data review) |
+| **Romania (RO)** | 30.0 | 46.7 | **defensive** | contraction | inflation pressure | restrictive stance | 51.3 (needs data review) |
 | **China (CN)** | 67.5 | 46.7 | **mixed** | above-trend expansion | disinflation risk | neutral-moderate stance | 53.3 (needs data review) |
 | **Euro Area (EA)** | 52.5 | 61.7 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 57.4 (needs data review) |
 | **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 43.4 (needs data review) |

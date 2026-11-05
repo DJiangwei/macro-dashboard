@@ -1,9 +1,9 @@
 {
   "file": "energy.html",
-  "generated": "2026-11-05T10:56:12.924189+00:00",
-  "charts": 61,
-  "source_groups": 24,
-  "data_gaps": 5,
+  "generated": "2026-11-05T11:22:23.252209+00:00",
+  "charts": 86,
+  "source_groups": 29,
+  "data_gaps": 4,
   "low_confidence": 0,
   "key_series_latest": [
     {
@@ -139,11 +139,11 @@
       "value"
     ],
     "file": "energy_canonical_frame.json",
-    "series": 61,
-    "observations": 74049,
-    "series_count": 61,
-    "observation_count": 74049,
-    "snapshot_generated": "2026-11-05T10:45:41.490473+00:00"
+    "series": 86,
+    "observations": 89919,
+    "series_count": 86,
+    "observation_count": 89919,
+    "snapshot_generated": "2026-11-05T11:17:25.362340+00:00"
   },
   "data_gaps_detail": [
     {
@@ -155,24 +155,17 @@
     },
     {
       "section": "gas_lng",
-      "item_en": "Daily TTF and EU gas storage fill",
-      "item_zh": "日度TTF与欧盟储气率",
-      "status_en": "TTF is ICE Endex licensed. EU storage (GIE AGSI+) needs GIE_AGSI_API_KEY in the build environment.",
-      "status_zh": "TTF为ICE Endex授权数据。欧盟储气（GIE AGSI+）需要在构建环境中配置GIE_AGSI_API_KEY。"
-    },
-    {
-      "section": "supply",
-      "item_en": "OPEC+ production by country, spare capacity, global balances (EIA STEO)",
-      "item_zh": "OPEC+分国产量、闲置产能与全球供需平衡（EIA STEO）",
-      "status_en": "Requires EIA_API_KEY in the build environment.",
-      "status_zh": "需要在构建环境中配置EIA_API_KEY。"
+      "item_en": "Daily TTF",
+      "item_zh": "日度TTF",
+      "status_en": "TTF is ICE Endex licensed.",
+      "status_zh": "TTF为ICE Endex授权数据。"
     },
     {
       "section": "power_coal",
-      "item_en": "EU carbon (EUA) price and generation mix",
-      "item_zh": "欧盟碳价（EUA）与发电结构",
-      "status_en": "EUA settlement data is EEX/ICE licensed; the generation mix needs EMBER_API_KEY.",
-      "status_zh": "EUA结算价为EEX/ICE授权数据；发电结构需要EMBER_API_KEY。"
+      "item_en": "EU carbon (EUA) price",
+      "item_zh": "欧盟碳价（EUA）",
+      "status_en": "EUA settlement data is EEX/ICE licensed.",
+      "status_zh": "EUA结算价为EEX/ICE授权数据。"
     },
     {
       "section": "trade_geography",
@@ -183,8 +176,12 @@
     }
   ],
   "source_health": {
-    "source_groups": 24,
+    "source_groups": 29,
     "sources": [
+      {
+        "source_name": "EIA Short-Term Energy Outlook",
+        "charts": 16
+      },
       {
         "source_name": "EIA Weekly Petroleum Status Report",
         "charts": 12
@@ -199,6 +196,10 @@
       },
       {
         "source_name": "EIA spot prices",
+        "charts": 5
+      },
+      {
+        "source_name": "Ember monthly electricity data",
         "charts": 5
       },
       {
@@ -222,6 +223,10 @@
         "charts": 2
       },
       {
+        "source_name": "GIE AGSI+",
+        "charts": 2
+      },
+      {
         "source_name": "BLS CPI via FRED",
         "charts": 1
       },
@@ -234,11 +239,19 @@
         "charts": 1
       },
       {
+        "source_name": "Derived from EIA Short-Term Energy Outlook",
+        "charts": 1
+      },
+      {
         "source_name": "Derived from EIA Weekly Natural Gas Storage Report",
         "charts": 1
       },
       {
         "source_name": "Derived from EIA spot prices; IMF Primary Commodity Prices via FRED",
+        "charts": 1
+      },
+      {
+        "source_name": "Derived from GIE AGSI+",
         "charts": 1
       },
       {
@@ -283,8 +296,8 @@
       }
     ],
     "quality_counts": {
-      "verified": 33,
-      "watch": 28
+      "verified": 53,
+      "watch": 33
     },
     "unavailable_count": 0
   },
@@ -297,7 +310,7 @@
   "freshness": {
     "as_of_date": "2026-11-05",
     "counts": {
-      "current": 60,
+      "current": 85,
       "due": 1
     },
     "latest_historical_date": "2026-11-04",
@@ -328,7 +341,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 60,
+      "level": 85,
       "yoy_pct": 1
     },
     "non_level": [
@@ -346,6 +359,6 @@
       "date",
       "value"
     ],
-    "charted_series": 61
+    "charted_series": 86
   }
 }

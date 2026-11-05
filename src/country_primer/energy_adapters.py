@@ -10,9 +10,21 @@
   daily values in the bidding zone's local time.
 * ``fetch_foreign_futures``: same-day front-month futures closes from Sina
   Finance through AKShare (a public wrapper: quality is capped at "watch").
+
+Keyed sources (the key is read from the environment or ``.env.local``; an
+error message names the source and HTTP status only, never the request URL):
+
+* ``fetch_gie_agsi``: GIE AGSI+ gas storage per gas day, EU aggregate or one
+  member state (``GIE_AGSI_API_KEY``, sent as the ``x-key`` header).
+* ``fetch_eia_steo``: EIA Short-Term Energy Outlook series through API v2
+  (``EIA_API_KEY``), history months only: STEO forecasts never reach a page.
+* ``fetch_ember_generation``: Ember monthly electricity generation by source
+  (``EMBER_API_KEY``).
 """
 from __future__ import annotations
 
+import math
+import time
 from collections import defaultdict
 from datetime import UTC, date, datetime, timedelta
 from typing import Any
@@ -33,6 +45,11 @@ CFTC_FIELDS = {
 
 ENERGY_CHARTS_URL = "https://api.energy-charts.info/price"
 ENERGY_CHARTS_TZ = {"DE-LU": "Europe/Berlin", "FR": "Europe/Paris", "IT-North": "Europe/Rome", "ES": "Europe/Madrid", "NL": "Europe/Amsterdam"}
+
+GIE_AGSI_URL = "https://agsi.gie.eu/api"
+EIA_STEO_URL = "https://api.eia.gov/v2/steo/data/"
+EMBER_MONTHLY_URL = "https://api.ember-energy.org/v1/electricity-generation/monthly"
+EMBER_MEASURES = {"share_of_generation_pct", "generation_twh"}
 
 
 def parse_eia_xls(content: bytes, frequency: str) -> list[dict[str, Any]]:
@@ -265,3 +282,167 @@ def fetch_cn_futures_inventory(spec: dict[str, Any]) -> dict[str, Any]:
     if not observations:
         raise RuntimeError(f"No inventory rows for {spec['series']}")
     return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": "https://data.eastmoney.com/ifdata/kcsj.html"}
+
+
+def _require_key(name: str) -> str:
+    from .adapters import _get_env_key
+
+    key = _get_env_key(name)
+    if not key:
+        raise RuntimeError(f"{name} is not configured")
+    return key
+
+
+def _get_json(session: Any, url: str, params: dict[str, Any], headers: dict[str, str] | None, source: str, attempts: int = 4) -> Any:
+    """GET JSON, backing off on HTTP 429. Errors carry the status, not the URL (it can hold a key)."""
+    delay = 10.0
+    for attempt in range(attempts):
+        response = session.get(url, params=params, headers={"User-Agent": USER_AGENT, **(headers or {})}, timeout=(5, 90))
+        if response.status_code == 429 and attempt < attempts - 1:
+            retry_after = response.headers.get("Retry-After", "")
+            time.sleep(float(retry_after) if retry_after.isdigit() else delay)
+            delay *= 2
+            continue
+        if response.status_code != 200:
+            raise RuntimeError(f"{source} returned HTTP {response.status_code}")
+        return response.json()
+    raise RuntimeError(f"{source} kept rate-limiting the request")
+
+
+def agsi_points(rows: list[dict[str, Any]], field: str = "full") -> list[tuple[str, float]]:
+    """(gas day, value) pairs, oldest first; blank and non-numeric values are skipped."""
+    points: dict[str, float] = {}
+    for row in rows or []:
+        day = str(row.get("gasDayStart") or "")[:10]
+        raw = row.get(field)
+        if not day or raw in (None, "", "-"):
+            continue
+        try:
+            value = float(raw)
+        except (TypeError, ValueError):
+            continue
+        if math.isfinite(value):
+            points[day] = value
+    return sorted(points.items())
+
+
+def fetch_agsi_points(
+    code: str, start: str, api_key: str, session: Any = None, today: date | None = None, field: str = "full"
+) -> list[tuple[str, float]]:
+    """Every gas day since ``start`` for ``eu`` (EU aggregate) or an ISO2 member state.
+
+    Also used by the CEE pipeline (``data_fetcher.GIEAGSIFetcher``), so there is
+    one AGSI+ client. Pages hold at most 300 gas days; ``last_page`` drives the loop.
+    """
+    session = session or requests.Session()
+    today = today or datetime.now(UTC).date()
+    scope = {"type": "eu"} if code.lower() == "eu" else {"country": code.upper()}
+    rows: list[dict[str, Any]] = []
+    page, last_page = 1, 1
+    while page <= last_page:
+        params = {**scope, "from": start[:10], "to": today.isoformat(), "size": 300, "page": page}
+        payload = _get_json(session, GIE_AGSI_URL, params, {"x-key": api_key}, "GIE AGSI+")
+        rows.extend(payload.get("data") or [])
+        last_page = int(payload.get("last_page") or 1)
+        page += 1
+    return agsi_points(rows, field)
+
+
+def fetch_gie_agsi(spec: dict[str, Any]) -> dict[str, Any]:
+    """Gas storage per gas day; ``series`` is ``eu`` or an ISO2 code, ``measure`` an AGSI+ field (default ``full``)."""
+    code = str(spec["series"])
+    points = fetch_agsi_points(
+        code, str(spec.get("start_date") or "2015-01-01"), _require_key("GIE_AGSI_API_KEY"), field=str(spec.get("measure") or "full")
+    )
+    if not points:
+        raise RuntimeError(f"GIE AGSI+ returned no gas days for {code}")
+    observations = [{"date": day, "value": value} for day, value in points]
+    query = "type=eu" if code.lower() == "eu" else f"country={code.upper()}"
+    return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": f"{GIE_AGSI_URL}?{query}"}
+
+
+def steo_last_history_month(today: date) -> str:
+    """Latest month shown from STEO.
+
+    STEO is released in the first half of each month and forecasts from the
+    release month onward, so two months back is history under any live vintage.
+    """
+    index = today.year * 12 + (today.month - 1) - 2
+    return f"{index // 12:04d}-{index % 12 + 1:02d}"
+
+
+def steo_observations(rows: list[dict[str, Any]], today: date | None = None) -> list[dict[str, Any]]:
+    last = steo_last_history_month(today or datetime.now(UTC).date())
+    values: dict[str, float] = {}
+    for row in rows or []:
+        period = str(row.get("period") or "")[:7]
+        if len(period) != 7 or period > last:
+            continue
+        try:
+            values[f"{period}-01"] = float(row.get("value"))
+        except (TypeError, ValueError):
+            continue
+    return [{"date": day, "value": value} for day, value in sorted(values.items())]
+
+
+def fetch_eia_steo(spec: dict[str, Any]) -> dict[str, Any]:
+    """One monthly STEO series (``series`` is the STEO seriesId, e.g. ``COPS_OPEC``).
+
+    ``steo_unit`` in the spec, when given, must match the unit EIA reports, so a
+    unit change at the source empties the chart instead of mislabelling it.
+    """
+    series = str(spec["series"])
+    params = {
+        "api_key": _require_key("EIA_API_KEY"),
+        "frequency": "monthly",
+        "data[0]": "value",
+        "facets[seriesId][]": series,
+        "start": str(spec.get("start_date") or "2010-01")[:7],
+        "sort[0][column]": "period",
+        "sort[0][direction]": "asc",
+        "length": 5000,
+    }
+    payload = _get_json(requests.Session(), EIA_STEO_URL, params, None, "EIA STEO")
+    rows = (payload.get("response") or {}).get("data") or []
+    expected_unit = spec.get("steo_unit")
+    reported_units = {str(row.get("unit")) for row in rows}
+    if expected_unit and reported_units != {expected_unit}:
+        raise RuntimeError(f"EIA STEO {series} reports units {sorted(reported_units)}, expected {expected_unit!r}")
+    observations = steo_observations(rows)
+    if not observations:
+        raise RuntimeError(f"EIA STEO returned no history months for {series}")
+    return {
+        **spec,
+        "observations": observations,
+        "provider_updated": observations[-1]["date"],
+        "api_url": f"{EIA_STEO_URL}?facets[seriesId][]={series}",
+    }
+
+
+def ember_observations(rows: list[dict[str, Any]], series: str, measure: str) -> list[dict[str, Any]]:
+    """One Ember generation series (e.g. ``Gas``, ``Wind and solar``) as monthly observations."""
+    if measure not in EMBER_MEASURES:
+        raise ValueError(f"Unknown Ember measure {measure!r}")
+    values: dict[str, float] = {}
+    for row in rows or []:
+        if row.get("series") != series or row.get(measure) is None:
+            continue
+        try:
+            values[str(row["date"])[:10]] = float(row[measure])
+        except (KeyError, TypeError, ValueError):
+            continue
+    return [{"date": day, "value": value} for day, value in sorted(values.items())]
+
+
+def fetch_ember_generation(spec: dict[str, Any]) -> dict[str, Any]:
+    """Monthly generation for ``series`` (``EU`` or an ISO3 code) and source ``ember_series``."""
+    entity = str(spec["series"])
+    source_series = str(spec["ember_series"])
+    measure = str(spec.get("measure") or "share_of_generation_pct")
+    scope = {"entity_code": entity} if len(entity) == 3 else {"entity": entity}
+    params = {**scope, "series": source_series, "start_date": str(spec.get("start_date") or "2015-01")[:7], "api_key": _require_key("EMBER_API_KEY")}
+    payload = _get_json(requests.Session(), EMBER_MONTHLY_URL, params, None, "Ember")
+    observations = ember_observations(payload.get("data") or [], source_series, measure)
+    if not observations:
+        raise RuntimeError(f"Ember returned no {source_series} rows for {entity}")
+    return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": f"{EMBER_MONTHLY_URL}?{next(iter(scope))}={entity}"}

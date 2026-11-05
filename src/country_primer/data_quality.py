@@ -200,6 +200,7 @@ def source_authority(source_name: object, source_url: object = "", declared: obj
         "cbu", "cbu.uz", "central bank of uzbekistan", "stat.uz", "siat",
         "cbe", "cbe.org.eg", "central bank of egypt", "capmas", "mped",
         "cbn", "cbn.gov.ng", "central bank of nigeria", "nigerianstat", "nbs",
+        "gie agsi", "agsi.gie.eu",
     )):
         return "official_primary"
     return "public_secondary"

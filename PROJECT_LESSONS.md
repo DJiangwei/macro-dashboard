@@ -189,3 +189,21 @@ Rules that follow (enforced by `tests/test_data_integrity.py`):
 - Use `COUNTRY_PRIMER_ONLY_INDICATORS=id1,id2` for a targeted refresh of one
   data-first page, and `scripts/refresh_cee_indicators.py` for CEE.
 - FRED tarpits spoofed browser User-Agents; use the honest client UA.
+- `scripts/refresh_cee_indicators.py` round-trips the CEE snapshot through
+  `snapshots.compact_cee_frames`, which drops the `label_en`/`label_zh`/`section`
+  metadata of the deepdive series written by `enrich_cee_inflation_deepdive.py`.
+  Always follow it with `make rebuild-ui` (whose first step rewrites them), then
+  compare the frame against `HEAD` series by series before committing: only the
+  refreshed indicator may differ.
+- Keyed sources (`eia_steo`, `ember_generation`, `gie_agsi`) raise errors that
+  name the source and HTTP status only, because EIA and Ember take the key as a
+  query parameter and `raise_for_status()` would print the full URL.
+- EIA STEO aggregates include EIA's forecast to the end of next year; `eia_steo`
+  keeps months up to the current month minus two. Do not loosen that cut-off to
+  "periods before today": the current month is always a forecast.
+- An ENTSO-E token can exist and still return `999 User is not authorized` until
+  Restful API access is granted (email transparency@entsoe.eu).
+- Local page screenshots: Playwright is not installed locally. Use Chrome
+  headless on a scratch copy of the page with a `<base href>` to `output/` and
+  CSS hiding every other `section.panel`; `#anchor` scrolling is ignored by
+  `--screenshot`.

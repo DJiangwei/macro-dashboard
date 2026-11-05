@@ -47,6 +47,19 @@ def test_dev_from_5y_requires_three_prior_years():
     assert all(abs(v - 20.0) < 1e-9 for d, v in out.items() if d.startswith("2024"))
 
 
+def test_dev_from_5y_daily_compares_the_same_calendar_day():
+    # Storage rising 1pp a day: comparing against the same ISO week's last day
+    # in earlier years would leave a day-of-week bias; same-day comparison does not.
+    daily = []
+    for year, level in [(2021, 50.0), (2022, 60.0), (2023, 70.0), (2024, 80.0)]:
+        for day in range(1, 15):
+            daily.append((f"{year}-03-{day:02d}", level + day))
+    daily.append(("2024-02-29", 79.0))
+    out = dict(apply_op("dev_from_5y_seasonal", [sorted(daily)], {}))
+    assert {d for d in out} == {f"2024-03-{day:02d}" for day in range(1, 15)}
+    assert all(abs(v - 20.0) < 1e-9 for v in out.values())
+
+
 def test_monthly_mean_drops_current_month(monkeypatch):
     out = monthly_mean([("2020-01-02", 1.0), ("2020-01-03", 3.0), ("2099-01-01", 9.0)])
     assert out == [("2020-01-01", 2.0)]
