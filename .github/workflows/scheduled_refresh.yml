@@ -80,6 +80,20 @@ jobs:
           echo "Executing refresh with MODE=${MODE}, COUNTRY=${COUNTRY}"
           uv run python scripts/run_scheduled_refresh.py --mode "$MODE" --country "$COUNTRY"
 
+      # Diagnostics for a failed run: which sources failed or tripped the breaker.
+      - name: Report failing sources
+        if: always()
+        run: uv run python scripts/source_health_report.py
+
+      - name: Upload source health
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-health-${{ github.run_id }}
+          path: output/source_health.json
+          if-no-files-found: warn
+          retention-days: 14
+
       - name: Validate output contract
         run: |
           uv run pytest -q

@@ -69,3 +69,25 @@ def test_every_canonical_series_carries_trust_dimensions():
             q = s.get("quality") or {}
             for field in ("source_authority", "freshness", "derivation"):
                 assert q.get(field), f"{path}:{s.get('indicator_id')} missing {field}"
+
+
+def test_source_health_report_lists_failing_sources_with_reasons() -> None:
+    import importlib.util
+    from pathlib import Path
+
+    spec = importlib.util.spec_from_file_location("source_health_report", Path(__file__).resolve().parents[1] / "scripts/source_health_report.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    report = {"countries": {
+        "EN": {"failed": 5, "circuit_open": 1, "events": [
+            {"source_id": "ember_generation", "reason": "rate_limit", "outcome": "failed", "indicator_id": "eu_gas_power_share", "message": "Ember returned HTTP 429"},
+            {"source_id": "ember_generation", "reason": "rate_limit", "outcome": "failed", "indicator_id": "eu_coal_power_share", "message": "Ember returned HTTP 429"},
+            {"source_id": "ember_generation", "reason": "circuit_open", "outcome": "failed", "indicator_id": "x", "message": "Circuit open"},
+        ]},
+        "US": {"failed": 0, "events": [{"source_id": "fred", "outcome": "success"}]},
+    }}
+    lines = module.failing_sources(report)
+    assert lines[0] == "EN: 5 failed CIRCUIT OPEN"
+    assert lines[1].startswith("  ember_generation [rate_limit] x2 e.g. eu_gas_power_share: Ember returned HTTP 429")
+    assert any("[circuit_open] x1" in line for line in lines)
+    assert not any(line.startswith("US") for line in lines)
