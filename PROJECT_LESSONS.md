@@ -236,3 +236,8 @@ Rules that follow (enforced by `tests/test_data_integrity.py`):
   holds the process open after all pages are written. `_call_with_timeout`
   runs AKShare in a daemon thread for this reason (2026-11-06 the refresh hit
   its 25-minute limit at ~220 s per AKShare page).
+- Sources that keep only a short window (SHFE stocks via Eastmoney, MINEM's
+  current-year months) use `accumulate: true`: each fetch is merged into
+  `data/accumulated/`, which lives on the data branch. Those dates cannot be
+  refetched, so `data_branch.sh push` refuses a copy that lost any of them;
+  run `make pull-data` first.

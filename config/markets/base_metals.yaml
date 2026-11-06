@@ -270,8 +270,8 @@ data_gaps:
   - section: china_demand
     item_en: Chinese refined metal output and copper/aluminium trade by product
     item_zh: 中国精炼金属产量与分品种铜铝进出口
-    status_en: NBS is not reachable from this environment; customs product detail to be sourced.
-    status_zh: 本环境无法访问统计局接口；海关分品种数据待接入。
+    status_en: NBS is not reachable from this environment. Eastmoney's industry-indicator table (RPT_INDUSTRY_INDEX) was searched on 2026-11-06; it carries metal price indices only, with no refined output or product trade.
+    status_zh: 本环境无法访问统计局接口。2026-11-06检索了东方财富行业指标表（RPT_INDUSTRY_INDEX），其中只有金属价格指数，没有精炼产量或分品种进出口。
   - section: monthly_benchmarks
     item_en: Indonesian nickel output, TC/RC and ICSG balances
     item_zh: 印尼镍产量、加工费与ICSG供需平衡
