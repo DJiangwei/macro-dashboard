@@ -110,6 +110,12 @@ indicators:
   - {id: shfe_alumina, section: china_futures, view: deep, label_en: "Alumina (SHFE main contract)", label_zh: "氧化铝（SHFE主力合约）", unit: CNY/t,
      fetcher: cn_futures_main, series: AO0, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
      caveat_en: "Main-contract continuous close (VAT-inclusive yuan price), completed sessions only.", caveat_zh: "主力连续合约收盘价（含增值税人民币价格），仅保留已收盘交易日。"}
+  - {id: shfe_copper_calendar_spread, section: china_futures, view: deep, label_en: "Copper — SHFE Near minus Third-Month Spread", label_zh: "铜——上期所近月减第三月价差", unit: CNY/t,
+     fetcher: cn_futures_calendar_spread, series: CU, frequency: daily, start_date: 2024-01-01, source_authority: public_wrapper, source_name: "SHFE contract settlements via Sina/AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Settlement of the nearest contract minus the contract two months later; positive = backwardation. The pair rolls on the last trading day before the near contract's delivery month.", caveat_zh: "最近合约结算价减其后第二个月合约结算价；正值为现货升水（backwardation）。在近月合约进入交割月前的最后一个交易日换月。"}
+  - {id: shfe_aluminium_calendar_spread, section: china_futures, view: deep, label_en: "Aluminium — SHFE Near minus Third-Month Spread", label_zh: "铝——上期所近月减第三月价差", unit: CNY/t,
+     fetcher: cn_futures_calendar_spread, series: AL, frequency: daily, start_date: 2024-01-01, source_authority: public_wrapper, source_name: "SHFE contract settlements via Sina/AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Settlement of the nearest contract minus the contract two months later; positive = backwardation. The pair rolls on the last trading day before the near contract's delivery month.", caveat_zh: "最近合约结算价减其后第二个月合约结算价；正值为现货升水（backwardation）。在近月合约进入交割月前的最后一个交易日换月。"}
 
   # ------------------------------------------------------------ arbitrage
   - {id: comex_copper, section: arbitrage, label_en: "Copper (COMEX front month)", label_zh: "铜（COMEX近月）", unit: US cents/lb,
