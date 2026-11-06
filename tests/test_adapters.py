@@ -232,3 +232,88 @@ def test_cbn_money_market_reads_one_field_monthly_and_drops_placeholder_zeros(mo
     assert out["provider_updated"] == "2026-09-01"
     call = adapters.fetch_cbn_money_market({"id": "x", "measure": "interBankCallRate"})
     assert [o["value"] for o in call["observations"]] == [8.2, 9.1, 22.0, 22.0]
+
+
+def test_bls_api_batches_every_us_config_series_once(monkeypatch) -> None:
+    # The module-level BLS cache and the US config loader were lost when the
+    # fetchers moved into adapters.py, so every live BLS call raised NameError.
+    from country_primer import adapters
+    batches: list[list[str]] = []
+
+    def fake_batch(session, specs):
+        batches.append(sorted(str(item["series"]) for item in specs))
+        return {series: [{"date": "2026-04-01", "value": 7000.0}] for series in batches[-1]}
+
+    monkeypatch.setattr(adapters, "_fetch_bls_batch", fake_batch)
+    series = "BDS0000000000000000110001LQ5"
+    first = adapters.fetch_bls_api(None, {"series": series, "start_date": "2015-01-01"})
+    assert first["observations"] == [{"date": "2026-04-01", "value": 7000.0}]
+    assert len(batches) == 1 and series in batches[0] and len(batches[0]) > 1
+    adapters.fetch_bls_api(None, {"series": batches[0][-1]})
+    assert len(batches) == 1, "the batch result should serve the other BLS series"
+
+
+class _CountingSession:
+    def __init__(self, text: str = "", content: bytes = b"") -> None:
+        self.calls = 0
+        self.text, self.content = text, content
+
+    def get(self, url, headers=None, timeout=None):
+        self.calls += 1
+        session = self
+
+        class Response:
+            text, content = session.text, session.content
+
+            def raise_for_status(self) -> None:
+                return None
+
+        return Response()
+
+
+def test_govuk_distribution_and_workbook_downloads_are_cached_per_build() -> None:
+    # UK fetchers share one distribution lookup and one workbook download per
+    # build; the caches backing that were undefined, failing 63 UK series live.
+    from country_primer import adapters
+    page = _CountingSession(text=(
+        '<script type="application/ld+json">{"distribution": '
+        '[{"name": "Monthly fuel prices", "contentUrl": "https://assets.example/fuel-test.csv"}]}</script>'
+    ))
+    spec = {"source_url": "https://www.gov.uk/test-cache-page", "distribution_name_contains": "fuel"}
+    expected = ("https://assets.example/fuel-test.csv", "Monthly fuel prices")
+    assert adapters._govuk_distribution_url(page, spec, ".csv") == expected
+    assert adapters._govuk_distribution_url(page, spec, ".csv") == expected
+    assert page.calls == 1
+
+    workbook = _CountingSession(content=b"xlsx-bytes")
+    url = "https://assets.example/test-cache-workbook.xlsx"
+    assert adapters._download_binary(workbook, url) == b"xlsx-bytes"
+    assert adapters._download_binary(workbook, url) == b"xlsx-bytes"
+    assert workbook.calls == 1
+
+
+def _imf_sdmx_specs(node):
+    if isinstance(node, dict):
+        if node.get("fetcher") == "imf_sdmx":
+            yield node
+        for value in node.values():
+            yield from _imf_sdmx_specs(value)
+    elif isinstance(node, list):
+        for value in node:
+            yield from _imf_sdmx_specs(value)
+
+
+def test_fsic_specs_use_the_agency_qualified_dataflow() -> None:
+    # api.imf.org answers 403 to the bare FSIC flow (every key, 2026-11-06) and
+    # 200 to IMF.STA,FSIC; four 403s open the imf_sdmx circuit for the scope.
+    from pathlib import Path
+    import yaml
+    paths = sorted(Path("config").glob("*.yaml")) + sorted(Path("config/countries").glob("*.yaml"))
+    fsic = [
+        (path.name, spec.get("id"), spec["dataflow"])
+        for path in paths
+        for spec in _imf_sdmx_specs(yaml.safe_load(path.read_text()))
+        if str(spec.get("dataflow", "")).endswith("FSIC")
+    ]
+    assert fsic, "expected the Japan and South Africa FSIC series"
+    assert [item for item in fsic if item[2] != "IMF.STA,FSIC"] == []

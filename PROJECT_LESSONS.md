@@ -214,3 +214,20 @@ Rules that follow (enforced by `tests/test_data_integrity.py`):
   data", or an aggregate (EA20) whose last period stops while the dataset's
   does not, has been replaced. Compare the overlap before switching, and
   switch the whole history rather than splicing two compositions.
+- Offline builds and tests never call the live fetchers, so a broken fetcher
+  only shows in the scheduled refresh. After moving code between modules, run
+  `uvx ruff check --select F821 src scripts`: the 2026-10-10 consolidation
+  dropped the UK/US cache dicts and the US config loader from `adapters.py`,
+  and 63 UK and 12 BLS series raised `NameError` on every refresh for four
+  weeks while CI stayed green.
+- api.imf.org refuses the bare `FSIC` flow (HTTP 403 for every key, CI and
+  local alike) but serves the agency-qualified `IMF.STA,FSIC` on the same 2.1
+  path. Four such 403s open the `imf_sdmx` circuit, and an open circuit fails
+  `validate_outputs`, which stops the whole scheduled publish.
+- `scripts/uv_project.sh` reads `.env.local` literally through
+  `scripts/env_file.sh`, with the same rules as the Python loaders. Do not go
+  back to sourcing it: a `$` inside a token broke the shell, and the shell's
+  error message printed part of the secret.
+- Weekday refreshes do not rerun CEE, so CEE entries in
+  `output/source_health.json` can be days old. Read the failing run's own
+  "Report failing sources" step before debugging an entry.

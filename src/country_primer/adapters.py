@@ -19,6 +19,7 @@ from datetime import UTC, datetime
 from typing import Any
 
 import requests
+import yaml
 
 from datetime import date, timedelta
 from email.utils import parsedate_to_datetime
@@ -84,7 +85,9 @@ FRED_SERIES_URL = "https://api.stlouisfed.org/fred/series"
 BOE_BANK_RATE_URL = "https://www.bankofengland.co.uk/boeapps/database/Bank-Rate.asp?hl=en-GB"
 BOE_IADB_URL = "https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp"
 ONS_TIMESERIES_BASE = "https://www.ons.gov.uk"
+BINARY_DOWNLOAD_CACHE: dict[str, bytes] = {}
 BINARY_DOWNLOAD_CACHE_LOCK = Lock()
+DISTRIBUTION_CACHE: dict[tuple[str, str, str], Any] = {}
 DISTRIBUTION_CACHE_LOCK = Lock()
 
 MONTHS = {
@@ -121,6 +124,9 @@ import pathlib
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 BLS_BED_CACHE_PATH = ROOT / "data" / "us_bls_bed_cache.json"
 BLS_LOCK = threading.Lock()
+BLS_CACHE: dict[str, list[dict[str, Any]]] = {}
+BLS_BATCH_ERROR: str | None = None
+US_CONFIG_PATH = ROOT / "config" / "us_indicators.yaml"
 
 
 
@@ -796,7 +802,7 @@ def _bls_period_to_date(year: str, period: str) -> str | None:
     return f'{year}-{quarter_month}-01'
 
 def _bls_config_specs() -> list[dict[str, Any]]:
-    config = _load_config()
+    config = yaml.safe_load(US_CONFIG_PATH.read_text()) or {}
     return [item for item in config.get('indicators', []) if item.get('fetcher') == 'bls_api']
 
 def _load_bls_bed_cache() -> dict[str, Any]:

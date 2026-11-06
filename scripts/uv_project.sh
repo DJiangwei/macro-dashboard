@@ -6,10 +6,9 @@ export UV_CACHE_DIR="$ROOT/.uv-cache"
 export UV_PYTHON_INSTALL_DIR="$ROOT/.uv-python"
 
 if [ -f "$ROOT/.env.local" ]; then
-  set -a
-  # shellcheck disable=SC1091
-  . "$ROOT/.env.local"
-  set +a
+  # shellcheck source=scripts/env_file.sh
+  . "$ROOT/scripts/env_file.sh"
+  load_env_file "$ROOT/.env.local"
 fi
 
 if command -v uv >/dev/null 2>&1; then
