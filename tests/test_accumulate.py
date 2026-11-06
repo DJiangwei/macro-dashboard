@@ -77,3 +77,19 @@ def test_pipeline_accumulates_flagged_specs(tmp_path, monkeypatch) -> None:
     assert not (tmp_path / "base_plain.json").exists()
     assert by_id["kept"]["accumulated_since"] == "2026-08-01"
     assert "accumulated_since" not in by_id["plain"]
+
+
+def test_corrupt_archive_is_a_recorded_failure(tmp_path, monkeypatch) -> None:
+    # Review fix: the merge ran after source health had already recorded a
+    # success, so a corrupt archive froze the chart with no failing source.
+    from country_primer import accumulate
+    from country_primer.data_first_pipeline import fetch_all
+    from country_primer.source_health import SOURCE_HEALTH
+
+    monkeypatch.setattr(accumulate, "ACCUMULATED_DIR", tmp_path)
+    (tmp_path / "acctest_kept.json").write_text("{not json")
+    registry = {"fixed": lambda spec, cache: {"observations": _obs(("2026-08-01", 5.0))}}
+    fetch_all({"iso2": "ACCTEST", "indicators": [{"id": "kept", "fetcher": "fixed", "accumulate": True}]}, registry, sequential=True)
+    report = SOURCE_HEALTH.country_report("ACCTEST")
+    assert report["success"] == 0 and report["failed"] == 1
+    assert "acctest_kept.json" in report["events"][0]["message"]

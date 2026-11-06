@@ -60,7 +60,11 @@ def fetch_all(
             raise ValueError(f"Unknown fetcher: {fetcher_name}")
         
         def operation() -> dict[str, Any]:
-            return func(spec, cache)
+            result = func(spec, cache)
+            # Inside the guarded call, so an unreadable archive is a recorded failure.
+            if spec.get("accumulate") and isinstance(result, dict) and result.get("observations"):
+                result = accumulate.accumulate_series({**spec, **result}, country)
+            return result
             
         try:
             series = guarded_source_call(
@@ -71,8 +75,6 @@ def fetch_all(
             )
             if isinstance(series, dict):
                 series = {**spec, **series}
-                if spec.get("accumulate") and series.get("observations"):
-                    series = accumulate.accumulate_series(series, country)
         except Exception as exc:
             series = failure_series(spec, exc)
         return validate_series(series)

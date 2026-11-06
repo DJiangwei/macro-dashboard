@@ -22,10 +22,11 @@ import io
 import math
 import re
 import threading
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime, timedelta
 from typing import Any
 
 SINA_FUTURES_URL = "https://finance.sina.com.cn/futuremarket/"
+MAX_CONSECUTIVE_CONTRACT_FAILURES = 3
 COMEX_STOCKS_URL = "https://www.cmegroup.com/clearing/operations-and-deliveries/nymex-delivery-notices.html"
 BCCH_URL = "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx"
 GOB_PE = "https://www.gob.pe"
@@ -52,21 +53,37 @@ def contract_months(start: str, today: str, ahead: int = 3) -> list[str]:
     return codes
 
 
+def _sessions_left_in_month(today: str) -> bool:
+    """True while a weekday remains in today's month, today included (holidays are not known)."""
+    day = date.fromisoformat(today)
+    while day.month == date.fromisoformat(today).month:
+        if day.weekday() < 5:
+            return True
+        day += timedelta(days=1)
+    return False
+
+
 def calendar_spread(settles: dict[str, dict[str, float]], start: str, today: str) -> list[dict[str, Any]]:
     """Settlement of the near contract minus the contract two months later, per trading day.
 
     ``settles`` maps contract ``YYMM`` to ``{date: settle}``. The near contract
     on day ``d`` is next month's, or the one after on the last trading day
     before that contract's delivery month (the roll day). The last trading day
-    of a month is read from the data, so it is only known for months before
-    ``today``'s; the current month never rolls early. A day missing either leg
-    is skipped rather than paired with another contract.
+    of a month is read from the data, so it is known once the month has no
+    weekday left (``today``'s month counts as finished from its last weekend
+    on); the current month never rolls early. An exchange holiday at month end
+    is not known, so that month's last session shows the pre-roll pair until
+    trading resumes. A day missing either leg is skipped rather than paired
+    with another contract.
     """
     days = sorted({day for series in settles.values() for day in series})
     current = today[:7]
+    finished = {day[:7] for day in days if day[:7] < current}
+    if not _sessions_left_in_month(today):
+        finished.add(current)
     last_day: dict[str, str] = {}
     for day in days:
-        if day[:7] < current:
+        if day[:7] in finished:
             last_day[day[:7]] = day  # days are sorted, so the last write is the month's last day
     rows = []
     for day in days:
@@ -93,12 +110,24 @@ def fetch_cn_futures_calendar_spread(spec: dict[str, Any]) -> dict[str, Any]:
     start = str(spec["start_date"])[:10]
     today = datetime.now(UTC).date().isoformat()
     settles: dict[str, dict[str, float]] = {}
+    skipped: list[str] = []
+    consecutive = 0
     for code in contract_months(start, today):
         symbol = f"{product}{code}"
         try:
             frame = _call_with_timeout(ak.futures_zh_daily_sina, [], {"symbol": symbol}, 30, f"futures_zh_daily_sina {symbol}")
         except Exception:
-            continue  # a contract not yet listed, or a transient miss: its days are skipped
+            # A transient miss leaves that contract's days out; a run of misses
+            # means the source is down, and waiting out every timeout (38
+            # contracts × 30 s, three attempts) would outlast the refresh job.
+            skipped.append(symbol)
+            consecutive += 1
+            if consecutive >= MAX_CONSECUTIVE_CONTRACT_FAILURES:
+                raise RuntimeError(
+                    f"Sina contract bars failed for {consecutive} consecutive contracts ({', '.join(skipped[-consecutive:])}); source treated as unreachable"
+                )
+            continue
+        consecutive = 0
         rows = {}
         for day, settle in zip(frame["date"], frame["settle"]):
             try:
@@ -112,7 +141,10 @@ def fetch_cn_futures_calendar_spread(spec: dict[str, Any]) -> dict[str, Any]:
     observations = calendar_spread(settles, start, today)
     if not observations:
         raise RuntimeError(f"No SHFE calendar spread could be built for {product}")
-    return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": SINA_FUTURES_URL}
+    result = {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": SINA_FUTURES_URL}
+    if skipped:
+        result["quality_notes"] = [f"Contracts not fetched in this refresh: {', '.join(skipped)}; days that need them are left out."]
+    return result
 
 
 def comex_observations(frame: Any, today: str) -> list[dict[str, Any]]:
@@ -283,16 +315,25 @@ def fetch_minem_copper(spec: dict[str, Any], cache: dict[str, Any]) -> dict[str,
     with _MINEM_LOCK:
         parsed = cache.get("minem_copper")
         if parsed is None:
+            # Both Peru indicators and their retries share one download per build:
+            # after a failure they raise a plain error that cannot trip the circuit
+            # (four 403s or timeouts would open it and block the whole publish).
+            if cache.get("minem_copper_error"):
+                raise RuntimeError(f"MINEM download failed earlier in this build ({cache['minem_copper_error']}); not retried")
             headers = {"User-Agent": USER_AGENT}
-            with requests.Session() as session:
-                collection = session.get(MINEM_COLLECTION_URL, headers=headers, timeout=(5, 60))
-                collection.raise_for_status()
-                release = GOB_PE + latest_minem_release(collection.text)
-                page = session.get(release, headers=headers, timeout=(5, 60))
-                page.raise_for_status()
-                workbook = session.get(minem_workbook_url(page.text), headers=headers, timeout=(5, 60))
-                workbook.raise_for_status()
-            parsed = {**parse_minem_copper(workbook.content), "release": release}
+            try:
+                with requests.Session() as session:
+                    collection = session.get(MINEM_COLLECTION_URL, headers=headers, timeout=(5, 60))
+                    collection.raise_for_status()
+                    release = GOB_PE + latest_minem_release(collection.text)
+                    page = session.get(release, headers=headers, timeout=(5, 60))
+                    page.raise_for_status()
+                    workbook = session.get(minem_workbook_url(page.text), headers=headers, timeout=(5, 60))
+                    workbook.raise_for_status()
+                parsed = {**parse_minem_copper(workbook.content), "release": release}
+            except Exception as exc:
+                cache["minem_copper_error"] = f"{type(exc).__name__}: {exc}"[:200]
+                raise
             cache["minem_copper"] = parsed
     measure = str(spec["measure"])
     if measure not in ("annual", "monthly"):

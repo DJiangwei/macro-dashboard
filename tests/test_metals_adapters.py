@@ -166,3 +166,80 @@ def test_parse_rejects_a_non_tonne_unit() -> None:
 
     with pytest.raises(ValueError, match="TMF"):
         parse_minem_copper(_minem_workbook(unit="kgf\nfkg"))
+
+
+def test_minem_failure_is_reported_once_per_build(monkeypatch) -> None:
+    # Review fix: both Peru indicators and their retries used to hit gob.pe
+    # again; six 403s/timeouts open the circuit, which blocks the publish.
+    import requests
+
+    from country_primer import metals_adapters
+    from country_primer.source_health import classify_failure
+
+    calls = []
+
+    def blocked(self, url, **kwargs):
+        calls.append(url)
+        response = requests.Response()
+        response.status_code = 403
+        raise requests.HTTPError("403 Client Error: Forbidden", response=response)
+
+    monkeypatch.setattr(requests.Session, "get", blocked)
+    cache: dict = {}
+    with pytest.raises(requests.HTTPError) as first:
+        metals_adapters.fetch_minem_copper({"measure": "monthly"}, cache)
+    assert classify_failure(first.value) == "authentication"
+    with pytest.raises(RuntimeError, match="earlier in this build") as again:
+        metals_adapters.fetch_minem_copper({"measure": "annual"}, cache)
+    assert classify_failure(again.value) == "unexpected_error"
+    assert len(calls) == 1
+
+
+def test_spread_rolls_on_a_saturday_after_a_friday_month_end() -> None:
+    # Review fix: on Saturday 2026-01-31 no January session remains, so Friday
+    # 01-30 is January's last trading day and already uses the next pair.
+    from country_primer.metals_adapters import calendar_spread
+
+    days = ["2025-12-31", "2026-01-29", "2026-01-30"]
+    settles = {code: {day: level for day in days} for code, level in LEVELS.items()}
+    spread = {row["date"]: row["value"] for row in calendar_spread(settles, start="2025-12-01", today="2026-01-31")}
+    assert spread["2026-01-29"] == LEVELS["2602"] - LEVELS["2604"]
+    assert spread["2026-01-30"] == LEVELS["2603"] - LEVELS["2605"]
+
+
+def _patch_contract_fetch(monkeypatch, failing: set[str]):
+    from country_primer import adapters, metals_adapters
+
+    calls = []
+
+    def fake(fn, args, kwargs, timeout_seconds, label):
+        symbol = kwargs["symbol"]
+        calls.append(symbol)
+        if symbol in failing or "*" in failing:
+            raise TimeoutError(f"AKShare fetch timed out after {timeout_seconds}s for {label}")
+        level = LEVELS[symbol[2:]]
+        return {"date": DAYS, "settle": [level] * len(DAYS)}
+
+    monkeypatch.setattr(adapters, "_call_with_timeout", fake)
+    monkeypatch.setattr(metals_adapters, "contract_months", lambda start, today: list(LEVELS))
+    return calls
+
+
+def test_spread_gives_up_after_consecutive_contract_failures(monkeypatch) -> None:
+    # Review fix: with Sina unreachable, 38 contracts × 30 s × 3 attempts
+    # outlasted the 25-minute refresh job.
+    from country_primer.metals_adapters import fetch_cn_futures_calendar_spread
+
+    calls = _patch_contract_fetch(monkeypatch, {"*"})
+    with pytest.raises(RuntimeError, match="consecutive"):
+        fetch_cn_futures_calendar_spread({"series": "CU", "start_date": "2025-12-01"})
+    assert len(calls) == 3
+
+
+def test_spread_notes_skipped_contracts(monkeypatch) -> None:
+    from country_primer.metals_adapters import fetch_cn_futures_calendar_spread
+
+    _patch_contract_fetch(monkeypatch, {"CU2603"})
+    result = fetch_cn_futures_calendar_spread({"series": "CU", "start_date": "2025-12-01"})
+    assert "CU2603" in " ".join(result["quality_notes"])
+    assert "2025-12-30" not in {row["date"] for row in result["observations"]}  # 2601−2603 needs the skipped leg
