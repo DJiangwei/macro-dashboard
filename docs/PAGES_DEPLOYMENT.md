@@ -9,7 +9,7 @@
 | 位置 | 内容 | 谁写入 |
 |---|---|---|
 | `main` | 代码与配置 | 人工提交 |
-| `data` 分支 | `output/*.json`、`output/*.md`、`data/*.json`（canonical、summary、快照、缓存） | 定时刷新（`scripts/data_branch.sh push`） |
+| `data` 分支 | `output/*.json`、`output/*.md`、`data/*.json`、`data/accumulated/*.json`（canonical、summary、快照、缓存、短窗口来源的累积历史） | 定时刷新（`scripts/data_branch.sh push`） |
 | Pages 站点 | 部署时用 `make rebuild-ui` 从 data 分支离线重建全部页面 | `deploy_pages.yml` |
 
 HTML 不再存在任何分支上，每次部署都从数据重新生成。部署使用与"从分支发布"相同的
@@ -38,6 +38,7 @@ Jekyll 构建，所以现有 URL（包括 `.md` 审计页）全部不变。
 
 - 本地开发前先运行 `make pull-data`，把 data 分支上的最新数据覆盖到工作区。
 - 手工刷新数据后发布：`make publish-data MSG="说明"`（推送数据并触发部署，需要 `gh`）。
+- `data/accumulated/` 存放只返回短窗口的来源（如上期所库存）逐日累积的历史，丢了无法重新抓取。如果 data 分支上的某个累积文件有本地没有的日期，`data_branch.sh push` 会拒绝推送（`scripts/accumulated_guard.py`）；先 `make pull-data`。确实要删时设 `ALLOW_ACCUMULATED_SHRINK=1`。
 - 修改代码后推送到 `main`，`deploy_pages.yml` 会自动用最新代码和 data 分支数据重建并部署。
 
 ## 回滚

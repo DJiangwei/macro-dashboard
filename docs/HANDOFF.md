@@ -12,7 +12,7 @@
 **Pages 方案 C 已于 2026-11-05 启用**（`PAGES_MODE=actions`，Pages 来源为 GitHub Actions，数据在 `data` 分支）。由此带来三条规则：
 
 1. **线上页面只用 `data` 分支的数据重建**；main 上提交的 JSON/HTML 不会进入线上。开始工作时先 `git pull --ff-only` 再 `make pull-data`。
-2. **改了数据就要推数据**：本地刷新序列后运行 `make publish-data MSG="说明"`（推送 data 分支并触发部署）。`data_branch.sh push` 会用本地数据整体替换 data 分支，所以刷新前必须先 `make pull-data`，否则会把定时刷新的新数据覆盖成旧的。代码和数据一起改时：先合并 PR，再 `make publish-data`。
+2. **改了数据就要推数据**：本地刷新序列后运行 `make publish-data MSG="说明"`（推送 data 分支并触发部署）。`data_branch.sh push` 会用本地数据整体替换 data 分支，所以刷新前必须先 `make pull-data`，否则会把定时刷新的新数据覆盖成旧的。`data/accumulated/`（短窗口来源的累积历史）有保护：会丢日期的推送直接被拒绝（`ALLOW_ACCUMULATED_SHRINK=1` 才放行）。代码和数据一起改时：先合并 PR，再 `make publish-data`。
 3. **检查线上**：合并到 main 会自动触发 `Deploy Pages from data branch`（不再是 `pages-build-deployment`）；等这个 run 的 build 与 deploy 都是 `completed/success`，它自带线上冒烟检查，再在本地跑 `publish_smoke.py`。页面是重新生成的，不会与 main 上的 HTML 逐字节相同，改为核对内容。
 
 定时刷新从此只推 data 分支、不再向 main 提交。main 上的生成文件会逐渐落后于 data 分支；`docs/PAGES_DEPLOYMENT.md` 第三阶段（main 不再跟踪生成文件）稳定运行一段时间后再做。
@@ -117,7 +117,7 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
 
 1. **能源页里需要 key 的部分**：EIA STEO、GIE AGSI+、Ember 和 CEE 储气率已完成（见 §2 第 8 项）。剩下的是 **ENTSO-E**，等用户开通 API 权限（见 §5）。开通后建议先做：德国燃气发电（日度，代表电力部门的燃气需求）、法国核电发电量（日度）、挪威水库蓄水（周度）。
 2. **油价模型 v2**：设计已确认，见 `docs/superpowers/specs/2026-11-05-oil-shock-model-v2-design.md`（英国改用 ONS 能源特殊汇总；美国权重保持缺口；主设定滞后 12 月、全样本，另 3 个设定展开；HAC 90% 区间；独立的二轮效应 MODEL `oil_shock_core`）。下一步：写实施计划（`writing-plans`），在新会话里执行。
-3. **基本金属后续**：设计已确认，见 `docs/superpowers/specs/2026-11-05-base-metals-followups-design.md`。顺序：库存累积 → 上期所近远月价差 → COMEX 金银库存 → 中国精炼铜探查 → 智利（token 已到位，见 §5；铜产量序列 `F034.PCUM.FLU.COCHILCO.Z.0.M`，实现时把 `BCCH_API_TOKEN` 加进 `scheduled_refresh.yml` 的 env 和 `source_health.py` 的 `SECRET_ENV_NAMES`）→ 秘鲁 MINEM。不可做：COMEX 铜库存、LME 库存。
+3. **基本金属后续**：2026-11-06 已实施（计划 `docs/superpowers/plans/2026-11-06-base-metals-followups.md`），合并后需对 BASE、PRECIOUS 各跑一次刷新才有数据。内容：上期所铜/铝/锌/镍库存按 `accumulate: true` 累积历史（`data/accumulated/`，随 data 分支保存，推送有防缩短保护）；上期所铜、铝近月减第三月结算价差；COMEX 金银库存（贵金属页）；新「矿山供给」版块：智利铜矿产量（BCCh，2000 年起）、秘鲁铜产量（MINEM，年度 2000 年起，月度从 2026 年起累积）。中国精炼铜探查结果：东方财富行业指标表只有金属价格指数，记为缺口。仍缺：中国精炼产量与分品种进出口、印尼镍、COMEX 铜库存、LME 库存（授权）。
 4. **后续小项**
    - KZ/NG/UZ/EG 政策利率（2026-11-05 已处理；BIS WS_CBPOL 不覆盖这四国，原 DBnomics IFS 序列止于 2020–2025）：KZ 改用 NBK 官网决议表（`nbk_base_rate`，2015-09 起，事件日期加截至行）；UZ/EG 改用 IMF MFS_IR 的 `MFS166`（货币政策相关利率），IMF 滞后约 14 个月；CBU 从本环境连不上，CBE 返回拦截页。NG 改用 CBN 官方接口 `api/GetAllMoneyMarketIndicators`（`cbn_money_market`，月度，2006-12 起，字段还有银行间、国债、存贷款利率）。不要改用 CBN 决议页（Decisions.html）：它漏收了 2024-11 第 298 次会议（加息至 27.5%）。CBN 接口 2025-08 为 27.0%，与决议日期（2025-09-23）不符，已写入 caveat。
    - CEE 叙述文字（`config/countries.yaml`）需要逐条核实后重写。匈牙利央行领导层已于 2026-11-05 按 mnb.hu 更正（行长 Varga、四位副行长）；仍未核实的有：匈牙利政治背景（2026 年 4 月大选结果）、各国央行资产负债表数字、PL/CZ/RO 的行长与委员名单。mnb.hu 的议会选任委员名单当天无法与原文逐条核对（摘要列出的条目里有任期似已届满的），未采用，页面改为指向 mnb.hu。
@@ -144,6 +144,9 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
 | EIA STEO      | 分国序列只到最后一个历史月（2026-11 时是 2026-09）；汇总序列带预测到明年年底；没有阿联酋原油产量                                                     |
 | Ember         | 欧盟用 `entity=EU`（`entity_code` 为空），国家用 ISO3 `entity_code`；月度数据从 2016 年起（印度从 2019 年起）                          |
 | ENTSO-E       | token 未开通 API 权限时一律返回 `999 User is not authorized`                                                           |
+| 智利央行 BCCh  | SieteRestWS 只要 `token` 参数（`BCCH_API_TOKEN`）；token 错误时仍返回 HTTP 200，`Codigo: -5`，所以要检查 `Codigo`。日期格式 `dd-mm-yyyy` |
+| 秘鲁 MINEM     | 从 gob.pe 合集页找 id 最大的「cuadros-estadisticos-mineros-prepublicacion-del-bem」，取 `s01-produccion-minera-metalica` 工作簿的 `S01.C01`：标签在 C 列，月度块之后隔一空行是同比块（标签也以月份开头），解析器到空行即停 |
+| 新浪单合约日线 | `futures_zh_daily_sina(symbol="CU2601")` 有 `settle` 列，已到期合约仍可取；合约交易到交割月 15 日左右 |
 | Eurostat（2026 年起） | 季度职位空缺改为 NACE Rev. 2.1：`jvs_q_nace2`（B-S）止于 2025-Q4，接替为 `jvs_q_r21`（维度 `nace_r2_1`，汇总 B-T）；CZ 在新数据集中仍止于 2025-Q4。保加利亚加入后，`ei_bssi_m_r2`/`ei_bsee_m_r2`/`ei_bsin_q_r2`/`bop_gdp6_q` 的 EA20 汇总停在 2025 年，须用 EA21（经常账户的对手方相应用 `EXT_EA21`）；`sts_*` 的 EA20 仍在更新。`tests/test_eurostat_sources.py` 防止退回。目录里被移到「historical data」的数据集就是停更信号 |
 
 ## 8. 当前关键读数（做 sanity check 用，2026-11-05 构建）

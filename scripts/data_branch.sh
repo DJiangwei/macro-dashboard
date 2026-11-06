@@ -4,9 +4,12 @@
 #   scripts/data_branch.sh pull                 # overlay the data branch onto this checkout
 #   scripts/data_branch.sh push "message"       # commit this checkout's data files to the data branch
 #   scripts/data_branch.sh bootstrap            # create the data branch (refuses if it exists)
+#   scripts/data_branch.sh files                # list the files a push would publish
 #
 # The data branch holds only build state: canonical frames, summaries and the
-# other JSON artifacts in output/, plus data/*.json caches. Pages are always
+# other JSON artifacts in output/, data/*.json caches, and data/accumulated/
+# (history of short-window sources, which cannot be refetched: a push that
+# would drop any of its dates is refused unless ALLOW_ACCUMULATED_SHRINK=1). Pages are always
 # rebuilt from it with `make rebuild-ui`; HTML is never stored there.
 set -eu
 
@@ -17,7 +20,7 @@ REMOTE="${DATA_REMOTE:-origin}"
 
 data_files() {
   # Tracked or generated data files in this checkout, one per line.
-  ls output/*.json output/*.md data/*.json 2>/dev/null || true
+  ls output/*.json output/*.md data/*.json data/accumulated/*.json 2>/dev/null || true
 }
 
 copy_into() {
@@ -50,6 +53,9 @@ case "$cmd" in
     trap 'git worktree remove --force "$tmp" >/dev/null 2>&1 || true; rm -rf "$tmp"' EXIT
     git fetch --quiet --depth=1 "$REMOTE" "$BRANCH"
     git worktree add --quiet --detach "$tmp" FETCH_HEAD
+    if [ -d "$tmp/data/accumulated" ] && [ "${ALLOW_ACCUMULATED_SHRINK:-0}" != "1" ]; then
+      python3 "$ROOT/scripts/accumulated_guard.py" "$tmp/data/accumulated" "$ROOT/data/accumulated"
+    fi
     # Replace the data set wholesale so artifacts that are no longer generated disappear.
     git -C "$tmp" rm -rq --ignore-unmatch -- output data
     mkdir -p "$tmp/output" "$tmp/data"
@@ -88,8 +94,11 @@ README
     git -C "$tmp" push --quiet "$REMOTE" "HEAD:refs/heads/$BRANCH"
     echo "Created $REMOTE/$BRANCH from $(git rev-parse --short HEAD)."
     ;;
+  files)
+    data_files
+    ;;
   *)
-    echo "Usage: scripts/data_branch.sh pull | push [message] | bootstrap" >&2
+    echo "Usage: scripts/data_branch.sh pull | push [message] | bootstrap | files" >&2
     exit 2
     ;;
 esac

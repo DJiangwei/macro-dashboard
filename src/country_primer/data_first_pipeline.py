@@ -2,6 +2,7 @@ from __future__ import annotations
 import os
 from typing import Any
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from country_primer import accumulate
 from country_primer.source_health import guarded_source_call, failure_series
 
 def validate_series(series: dict[str, Any]) -> dict[str, Any]:
@@ -59,7 +60,11 @@ def fetch_all(
             raise ValueError(f"Unknown fetcher: {fetcher_name}")
         
         def operation() -> dict[str, Any]:
-            return func(spec, cache)
+            result = func(spec, cache)
+            # Inside the guarded call, so an unreadable archive is a recorded failure.
+            if spec.get("accumulate") and isinstance(result, dict) and result.get("observations"):
+                result = accumulate.accumulate_series({**spec, **result}, country)
+            return result
             
         try:
             series = guarded_source_call(

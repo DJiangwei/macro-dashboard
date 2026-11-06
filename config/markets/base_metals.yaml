@@ -35,8 +35,13 @@ sections:
   inventories:
     title_en: "Visible Inventories"
     title_zh: "可见库存"
-    report_logic_en: "SHFE warehouse stocks. LME stock reports are licensed and COMEX copper stocks have no free source yet."
-    report_logic_zh: "上期所仓库库存。LME库存报告为授权数据，COMEX铜库存暂无免费来源。"
+    report_logic_en: "SHFE warehouse stocks for copper, aluminium, zinc and nickel, kept as a growing archive because the source returns about three months. LME stock reports are licensed and COMEX copper stocks have no free source yet."
+    report_logic_zh: "上期所铜、铝、锌、镍仓库库存；数据源仅返回约三个月，因此按存档逐步累积。LME库存报告为授权数据，COMEX铜库存暂无免费来源。"
+  mine_supply:
+    title_en: "Mine Supply"
+    title_zh: "矿山供给"
+    report_logic_en: "Copper mine output of the two largest producers: Chile (Cochilco, via the central bank) and Peru (Ministry of Energy and Mines)."
+    report_logic_zh: "两大产铜国的铜矿产量：智利（Cochilco，经央行数据库）与秘鲁（能源矿业部）。"
   monthly_benchmarks:
     title_en: "Monthly Benchmarks & Battery Metals"
     title_zh: "月度基准与电池金属"
@@ -110,6 +115,12 @@ indicators:
   - {id: shfe_alumina, section: china_futures, view: deep, label_en: "Alumina (SHFE main contract)", label_zh: "氧化铝（SHFE主力合约）", unit: CNY/t,
      fetcher: cn_futures_main, series: AO0, frequency: daily, start_date: 2015-01-01, source_authority: public_wrapper, source_name: "Sina Finance via AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
      caveat_en: "Main-contract continuous close (VAT-inclusive yuan price), completed sessions only.", caveat_zh: "主力连续合约收盘价（含增值税人民币价格），仅保留已收盘交易日。"}
+  - {id: shfe_copper_calendar_spread, section: china_futures, view: deep, label_en: "Copper — SHFE Near minus Third-Month Spread", label_zh: "铜——上期所近月减第三月价差", unit: CNY/t,
+     fetcher: cn_futures_calendar_spread, series: CU, frequency: daily, start_date: 2024-01-01, source_authority: public_wrapper, source_name: "SHFE contract settlements via Sina/AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Settlement of the nearest contract minus the contract two months later; positive = backwardation. The pair rolls on the last trading day before the near contract's delivery month; when an exchange holiday ends the month, that last session shows the pre-roll pair until trading resumes.", caveat_zh: "最近合约结算价减其后第二个月合约结算价；正值为现货升水（backwardation）。在近月合约进入交割月前的最后一个交易日换月；若月末为交易所假期，该月最后一个交易日在复市前仍显示换月前的合约对。"}
+  - {id: shfe_aluminium_calendar_spread, section: china_futures, view: deep, label_en: "Aluminium — SHFE Near minus Third-Month Spread", label_zh: "铝——上期所近月减第三月价差", unit: CNY/t,
+     fetcher: cn_futures_calendar_spread, series: AL, frequency: daily, start_date: 2024-01-01, source_authority: public_wrapper, source_name: "SHFE contract settlements via Sina/AKShare", source_url: "https://finance.sina.com.cn/futuremarket/",
+     caveat_en: "Settlement of the nearest contract minus the contract two months later; positive = backwardation. The pair rolls on the last trading day before the near contract's delivery month; when an exchange holiday ends the month, that last session shows the pre-roll pair until trading resumes.", caveat_zh: "最近合约结算价减其后第二个月合约结算价；正值为现货升水（backwardation）。在近月合约进入交割月前的最后一个交易日换月；若月末为交易所假期，该月最后一个交易日在复市前仍显示换月前的合约对。"}
 
   # ------------------------------------------------------------ arbitrage
   - {id: comex_copper, section: arbitrage, label_en: "Copper (COMEX front month)", label_zh: "铜（COMEX近月）", unit: US cents/lb,
@@ -133,14 +144,28 @@ indicators:
 
   # ------------------------------------------------------------ inventories
   - {id: shfe_copper_stocks, section: inventories, view: core, label_en: "Copper — SHFE Warehouse Stocks", label_zh: "铜——上期所库存", unit: t,
-     fetcher: cn_futures_inventory, series: "沪铜", frequency: daily, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
-     caveat_en: "The source returns roughly the last three months only, so this chart has a short history.", caveat_zh: "数据源仅返回约最近三个月，因此本图历史较短。"}
+     fetcher: cn_futures_inventory, series: "沪铜", frequency: daily, accumulate: true, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
+     caveat_en: "The source returns about the last three months; each refresh adds new days to a stored archive, so the history lengthens with every refresh (archive started November 2026).", caveat_zh: "数据源仅返回约最近三个月；每次刷新把新数据并入存档，历史随之延长（存档始于2026年11月）。"}
   - {id: shfe_aluminium_stocks, section: inventories, view: deep, label_en: "Aluminium — SHFE Warehouse Stocks", label_zh: "铝——上期所库存", unit: t,
-     fetcher: cn_futures_inventory, series: "沪铝", frequency: daily, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
-     caveat_en: "The source returns roughly the last three months only, so this chart has a short history.", caveat_zh: "数据源仅返回约最近三个月，因此本图历史较短。"}
+     fetcher: cn_futures_inventory, series: "沪铝", frequency: daily, accumulate: true, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
+     caveat_en: "The source returns about the last three months; each refresh adds new days to a stored archive, so the history lengthens with every refresh (archive started November 2026).", caveat_zh: "数据源仅返回约最近三个月；每次刷新把新数据并入存档，历史随之延长（存档始于2026年11月）。"}
   - {id: shfe_zinc_stocks, section: inventories, view: deep, label_en: "Zinc — SHFE Warehouse Stocks", label_zh: "锌——上期所库存", unit: t,
-     fetcher: cn_futures_inventory, series: "沪锌", frequency: daily, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
-     caveat_en: "The source returns roughly the last three months only, so this chart has a short history.", caveat_zh: "数据源仅返回约最近三个月，因此本图历史较短。"}
+     fetcher: cn_futures_inventory, series: "沪锌", frequency: daily, accumulate: true, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
+     caveat_en: "The source returns about the last three months; each refresh adds new days to a stored archive, so the history lengthens with every refresh (archive started November 2026).", caveat_zh: "数据源仅返回约最近三个月；每次刷新把新数据并入存档，历史随之延长（存档始于2026年11月）。"}
+  - {id: shfe_nickel_stocks, section: inventories, view: deep, label_en: "Nickel — SHFE Warehouse Stocks", label_zh: "镍——上期所库存", unit: t,
+     fetcher: cn_futures_inventory, series: "镍", frequency: daily, accumulate: true, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
+     caveat_en: "The source returns about the last three months; each refresh adds new days to a stored archive, so the history lengthens with every refresh (archive started November 2026).", caveat_zh: "数据源仅返回约最近三个月；每次刷新把新数据并入存档，历史随之延长（存档始于2026年11月）。"}
+
+  # ------------------------------------------------------------ mine_supply
+  - {id: chile_copper_output, section: mine_supply, view: core, label_en: "Chile — Copper Mine Output", label_zh: "智利——铜矿产量", unit: kt,
+     fetcher: bcch_series, series: F034.PCUM.FLU.COCHILCO.Z.0.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "Cochilco via Banco Central de Chile (BDE)", source_url: "https://si3.bcentral.cl/siete",
+     caveat_en: "Monthly mine output in thousand tonnes of fine copper, compiled by Cochilco and published in the central bank's statistics database; seasonal, compare with the same month a year earlier.", caveat_zh: "Cochilco编制、智利央行统计库发布的月度铜矿产量（千吨精铜）；有季节性，宜与上年同月比较。"}
+  - {id: peru_copper_output, section: mine_supply, view: core, label_en: "Peru — Copper Mine Output", label_zh: "秘鲁——铜矿产量", unit: kt,
+     fetcher: minem_copper, measure: monthly, accumulate: true, frequency: monthly, source_authority: official_primary, source_name: "MINEM, Boletín Estadístico Minero (cuadros estadísticos)", source_url: "https://www.gob.pe/institucion/minem/colecciones/6-boletin-estadistico-minero",
+     caveat_en: "Monthly output in thousand tonnes of fine copper from MINEM's statistical tables. Each release lists only the current year's months, so history accumulates from 2026; the latest month is preliminary and may be revised.", caveat_zh: "能源矿业部统计表中的月度铜产量（千吨精铜）。每期只列当年各月，因此历史从2026年起累积；最新月份为初值，可能修订。"}
+  - {id: peru_copper_output_annual, section: mine_supply, view: deep, label_en: "Peru — Copper Mine Output (annual)", label_zh: "秘鲁——铜矿产量（年度）", unit: kt,
+     fetcher: minem_copper, measure: annual, frequency: annual, source_authority: official_primary, source_name: "MINEM, Boletín Estadístico Minero (cuadros estadísticos)", source_url: "https://www.gob.pe/institucion/minem/colecciones/6-boletin-estadistico-minero",
+     caveat_en: "Calendar-year totals from the same table; the current partial year is excluded.", caveat_zh: "取自同一张表的年度合计；不含当年未完成年份。"}
 
   # ------------------------------------------------------------ monthly_benchmarks
   - {id: copper_monthly_imf, section: monthly_benchmarks, label_en: "Copper (IMF monthly average)", label_zh: "铜（IMF月均价）", unit: USD/t,
@@ -238,17 +263,17 @@ data_gaps:
     status_en: Licensed by the LME; the free mirror for LME stocks stopped in July 2026.
     status_zh: 为LME授权数据；LME库存的免费镜像已于2026年7月停更。
   - section: inventories
-    item_en: COMEX copper stocks and long SHFE inventory history
-    item_zh: COMEX铜库存与上期所长期库存历史
-    status_en: No free machine-readable COMEX copper source found; the SHFE source returns about three months.
-    status_zh: 未找到免费机读的COMEX铜库存来源；上期所数据源仅返回约三个月。
+    item_en: COMEX copper stocks
+    item_zh: COMEX铜库存
+    status_en: No free machine-readable COMEX copper source found (CME delivery reports unreachable; AKShare covers gold and silver only).
+    status_zh: 未找到免费机读的COMEX铜库存来源（CME交割报告无法访问；AKShare仅覆盖黄金与白银）。
   - section: china_demand
     item_en: Chinese refined metal output and copper/aluminium trade by product
     item_zh: 中国精炼金属产量与分品种铜铝进出口
-    status_en: NBS is not reachable from this environment; customs product detail to be sourced.
-    status_zh: 本环境无法访问统计局接口；海关分品种数据待接入。
+    status_en: NBS is not reachable from this environment. Eastmoney's industry-indicator table (RPT_INDUSTRY_INDEX) was searched on 2026-11-06; it carries metal price indices only, with no refined output or product trade.
+    status_zh: 本环境无法访问统计局接口。2026-11-06检索了东方财富行业指标表（RPT_INDUSTRY_INDEX），其中只有金属价格指数，没有精炼产量或分品种进出口。
   - section: monthly_benchmarks
-    item_en: Mine supply (Chile, Peru, Indonesian nickel), TC/RC and ICSG balances
-    item_zh: 矿山供给（智利、秘鲁、印尼镍）、加工费与ICSG供需平衡
-    status_en: To be sourced (Cochilco, INE, MINEM); TC/RC and ICSG are licensed or registration-only.
-    status_zh: 待接入（Cochilco、INE、MINEM）；加工费与ICSG为授权或需注册的数据。
+    item_en: Indonesian nickel output, TC/RC and ICSG balances
+    item_zh: 印尼镍产量、加工费与ICSG供需平衡
+    status_en: Indonesian nickel output has no machine-readable official source yet; TC/RC and ICSG are licensed or registration-only.
+    status_zh: 印尼镍产量暂无机读的官方来源；加工费与ICSG为授权或需注册的数据。

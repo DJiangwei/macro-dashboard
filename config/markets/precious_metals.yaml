@@ -45,6 +45,11 @@ sections:
     title_zh: "上海溢价"
     report_logic_en: "Shanghai Gold Exchange prices converted to USD per ounce against COMEX: a gauge of Chinese physical demand and import constraints."
     report_logic_zh: "上海黄金交易所价格换算为美元/盎司后与COMEX比较：衡量中国实物需求与进口约束。"
+  inventories:
+    title_en: "Exchange Inventories"
+    title_zh: "交易所库存"
+    report_logic_en: "COMEX registered plus eligible gold and silver stocks, in tonnes."
+    report_logic_zh: "COMEX黄金与白银库存（注册仓单加合格库存），单位吨。"
   positioning:
     title_en: "Positioning (CFTC)"
     title_zh: "持仓（CFTC）"
@@ -218,6 +223,14 @@ indicators:
      derivation: derived, op: spread, inputs: [sge_gold_usd_oz, gold_front_futures], frequency: daily,
      caveat_en: "SGE minus COMEX on matching days. SGE closes at 15:30 Beijing time and COMEX in New York, so day-to-day moves partly reflect timing; read the trend.",
      caveat_zh: "同日上海金减COMEX。上海金北京时间15:30收盘、COMEX在纽约收盘，单日波动部分来自时差，宜看趋势。"}
+
+  # ------------------------------------------------------------ inventories
+  - {id: comex_gold_stocks, section: inventories, view: core, label_en: "Gold — COMEX Stocks", label_zh: "黄金——COMEX库存", unit: t,
+     fetcher: comex_inventory, series: "黄金", frequency: daily, source_authority: public_wrapper, source_name: "COMEX stocks via AKShare", source_url: "https://www.cmegroup.com/clearing/operations-and-deliveries/nymex-delivery-notices.html",
+     caveat_en: "Daily COMEX warehouse stocks compiled by AKShare from CME reports; history starts November 2021.", caveat_zh: "AKShare据CME报告整理的COMEX每日库存；历史始于2021年11月。"}
+  - {id: comex_silver_stocks, section: inventories, view: deep, label_en: "Silver — COMEX Stocks", label_zh: "白银——COMEX库存", unit: t,
+     fetcher: comex_inventory, series: "白银", frequency: daily, source_authority: public_wrapper, source_name: "COMEX stocks via AKShare", source_url: "https://www.cmegroup.com/clearing/operations-and-deliveries/nymex-delivery-notices.html",
+     caveat_en: "Daily COMEX warehouse stocks compiled by AKShare from CME reports; history starts November 2021.", caveat_zh: "AKShare据CME报告整理的COMEX每日库存；历史始于2021年11月。"}
 
   # ------------------------------------------------------------ positioning
   - {id: cftc_gold_mm_net, section: positioning, view: core, label_en: "Gold Managed-Money Net Position", label_zh: "黄金管理基金净持仓", unit: contracts,
