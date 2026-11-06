@@ -35,8 +35,8 @@ sections:
   inventories:
     title_en: "Visible Inventories"
     title_zh: "可见库存"
-    report_logic_en: "SHFE warehouse stocks. LME stock reports are licensed and COMEX copper stocks have no free source yet."
-    report_logic_zh: "上期所仓库库存。LME库存报告为授权数据，COMEX铜库存暂无免费来源。"
+    report_logic_en: "SHFE warehouse stocks for copper, aluminium, zinc and nickel, kept as a growing archive because the source returns about three months. LME stock reports are licensed and COMEX copper stocks have no free source yet."
+    report_logic_zh: "上期所铜、铝、锌、镍仓库库存；数据源仅返回约三个月，因此按存档逐步累积。LME库存报告为授权数据，COMEX铜库存暂无免费来源。"
   monthly_benchmarks:
     title_en: "Monthly Benchmarks & Battery Metals"
     title_zh: "月度基准与电池金属"
@@ -133,14 +133,17 @@ indicators:
 
   # ------------------------------------------------------------ inventories
   - {id: shfe_copper_stocks, section: inventories, view: core, label_en: "Copper — SHFE Warehouse Stocks", label_zh: "铜——上期所库存", unit: t,
-     fetcher: cn_futures_inventory, series: "沪铜", frequency: daily, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
-     caveat_en: "The source returns roughly the last three months only, so this chart has a short history.", caveat_zh: "数据源仅返回约最近三个月，因此本图历史较短。"}
+     fetcher: cn_futures_inventory, series: "沪铜", frequency: daily, accumulate: true, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
+     caveat_en: "The source returns about the last three months; each refresh adds new days to a stored archive, so the history lengthens with every refresh (archive started November 2026).", caveat_zh: "数据源仅返回约最近三个月；每次刷新把新数据并入存档，历史随之延长（存档始于2026年11月）。"}
   - {id: shfe_aluminium_stocks, section: inventories, view: deep, label_en: "Aluminium — SHFE Warehouse Stocks", label_zh: "铝——上期所库存", unit: t,
-     fetcher: cn_futures_inventory, series: "沪铝", frequency: daily, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
-     caveat_en: "The source returns roughly the last three months only, so this chart has a short history.", caveat_zh: "数据源仅返回约最近三个月，因此本图历史较短。"}
+     fetcher: cn_futures_inventory, series: "沪铝", frequency: daily, accumulate: true, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
+     caveat_en: "The source returns about the last three months; each refresh adds new days to a stored archive, so the history lengthens with every refresh (archive started November 2026).", caveat_zh: "数据源仅返回约最近三个月；每次刷新把新数据并入存档，历史随之延长（存档始于2026年11月）。"}
   - {id: shfe_zinc_stocks, section: inventories, view: deep, label_en: "Zinc — SHFE Warehouse Stocks", label_zh: "锌——上期所库存", unit: t,
-     fetcher: cn_futures_inventory, series: "沪锌", frequency: daily, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
-     caveat_en: "The source returns roughly the last three months only, so this chart has a short history.", caveat_zh: "数据源仅返回约最近三个月，因此本图历史较短。"}
+     fetcher: cn_futures_inventory, series: "沪锌", frequency: daily, accumulate: true, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
+     caveat_en: "The source returns about the last three months; each refresh adds new days to a stored archive, so the history lengthens with every refresh (archive started November 2026).", caveat_zh: "数据源仅返回约最近三个月；每次刷新把新数据并入存档，历史随之延长（存档始于2026年11月）。"}
+  - {id: shfe_nickel_stocks, section: inventories, view: deep, label_en: "Nickel — SHFE Warehouse Stocks", label_zh: "镍——上期所库存", unit: t,
+     fetcher: cn_futures_inventory, series: "镍", frequency: daily, accumulate: true, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
+     caveat_en: "The source returns about the last three months; each refresh adds new days to a stored archive, so the history lengthens with every refresh (archive started November 2026).", caveat_zh: "数据源仅返回约最近三个月；每次刷新把新数据并入存档，历史随之延长（存档始于2026年11月）。"}
 
   # ------------------------------------------------------------ monthly_benchmarks
   - {id: copper_monthly_imf, section: monthly_benchmarks, label_en: "Copper (IMF monthly average)", label_zh: "铜（IMF月均价）", unit: USD/t,
@@ -238,10 +241,10 @@ data_gaps:
     status_en: Licensed by the LME; the free mirror for LME stocks stopped in July 2026.
     status_zh: 为LME授权数据；LME库存的免费镜像已于2026年7月停更。
   - section: inventories
-    item_en: COMEX copper stocks and long SHFE inventory history
-    item_zh: COMEX铜库存与上期所长期库存历史
-    status_en: No free machine-readable COMEX copper source found; the SHFE source returns about three months.
-    status_zh: 未找到免费机读的COMEX铜库存来源；上期所数据源仅返回约三个月。
+    item_en: COMEX copper stocks
+    item_zh: COMEX铜库存
+    status_en: No free machine-readable COMEX copper source found (CME delivery reports unreachable; AKShare covers gold and silver only).
+    status_zh: 未找到免费机读的COMEX铜库存来源（CME交割报告无法访问；AKShare仅覆盖黄金与白银）。
   - section: china_demand
     item_en: Chinese refined metal output and copper/aluminium trade by product
     item_zh: 中国精炼金属产量与分品种铜铝进出口

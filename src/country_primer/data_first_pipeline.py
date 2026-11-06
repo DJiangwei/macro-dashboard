@@ -2,6 +2,7 @@ from __future__ import annotations
 import os
 from typing import Any
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from country_primer import accumulate
 from country_primer.source_health import guarded_source_call, failure_series
 
 def validate_series(series: dict[str, Any]) -> dict[str, Any]:
@@ -70,6 +71,8 @@ def fetch_all(
             )
             if isinstance(series, dict):
                 series = {**spec, **series}
+                if spec.get("accumulate") and series.get("observations"):
+                    series = accumulate.accumulate_series(series, country)
         except Exception as exc:
             series = failure_series(spec, exc)
         return validate_series(series)
