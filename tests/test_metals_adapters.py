@@ -87,3 +87,82 @@ def test_bcch_error_code_raises_without_details() -> None:
 
     with pytest.raises(RuntimeError, match="code -5"):
         bcch_observations({"Codigo": -5, "Descripcion": "Invalid username or password"})
+
+
+def _minem_workbook(copper_header: str = "COBRE\nCopper", unit: str = "TMF\nFTM") -> bytes:
+    # Mirrors S01.C01 of MINEM's metallic-production workbook (probed 2026-11-06):
+    # labels in column C, and below the months, after a blank row, a
+    # year-on-year block whose labels ("Ago. 2025") also start with a month.
+    import io
+
+    import openpyxl
+
+    book = openpyxl.Workbook()
+    sheet = book.active
+    sheet.title = "S01.C01"
+    sheet["C3"] = "SECCIÓN N° 01: PRODUCCIÓN MINERA METÁLICA"
+    sheet.append([])
+    rows = [
+        ["PERIODO\nPeriod", copper_header, "ORO*\nGold"],
+        [None, unit, "gf\nfg"],
+        [2024, 2736237.1, 109624691.9],
+        [2025, 2765994.5, 109952906.8],
+        ["2026\n(Ene-Ago)\n(Jan-Aug)", 449750.4, 16341614.4],
+        ["Ene. / Jan.", 226465.1, 8854678.9],
+        ["Feb. / Feb.", 223285.3, 7486935.5],
+        [None, None, None],
+        ["VARIACIÓN INTERANUAL, AGOSTO 2026", None, None],
+        ["Feb. 2025\n(Feb. 2025)", 199999.0, 7000000.0],
+        ["Var. %", -0.02, 0.01],
+    ]
+    for offset, row in enumerate(rows):
+        for column, value in enumerate(row, start=3):
+            sheet.cell(row=9 + offset, column=column, value=value)
+    buffer = io.BytesIO()
+    book.save(buffer)
+    return buffer.getvalue()
+
+
+def test_latest_release_picks_highest_prepublication_id() -> None:
+    from country_primer.metals_adapters import latest_minem_release
+
+    html = (
+        '<a href="/institucion/minem/informes-publicaciones/8604205-cuadros-estadisticos-mineros-prepublicacion-del-bem-julio-2026">'
+        '<a href="/institucion/minem/informes-publicaciones/8737012-boletin-estadistico-minero-agosto-2026">'
+        '<a href="/institucion/minem/informes-publicaciones/8736267-cuadros-estadisticos-mineros-prepublicacion-del-bem-agosto-2026">'
+    )
+    assert latest_minem_release(html).endswith("8736267-cuadros-estadisticos-mineros-prepublicacion-del-bem-agosto-2026")
+
+
+def test_workbook_url_picks_metallic_production() -> None:
+    from country_primer.metals_adapters import minem_workbook_url
+
+    html = (
+        '<a href="https://cdn.www.gob.pe/uploads/document/file/1/8736267-s04-exportaciones-mineras-ed-8-2026.xlsx?v=1">'
+        '<a href="https://cdn.www.gob.pe/uploads/document/file/2/8736267-s01-produccion-minera-metalica-ed-8-2026.xlsx?v=1">'
+    )
+    assert minem_workbook_url(html) == "https://cdn.www.gob.pe/uploads/document/file/2/8736267-s01-produccion-minera-metalica-ed-8-2026.xlsx?v=1"
+
+
+def test_parse_reads_copper_column_by_header() -> None:
+    from country_primer.metals_adapters import parse_minem_copper
+
+    parsed = parse_minem_copper(_minem_workbook())
+    assert [row["date"] for row in parsed["annual"]] == ["2024-01-01", "2025-01-01"]
+    assert [row["value"] for row in parsed["annual"]] == pytest.approx([2736.2371, 2765.9945])
+    assert [row["date"] for row in parsed["monthly"]] == ["2026-01-01", "2026-02-01"]
+    assert [row["value"] for row in parsed["monthly"]] == pytest.approx([226.4651, 223.2853])
+
+
+def test_parse_rejects_a_moved_copper_column() -> None:
+    from country_primer.metals_adapters import parse_minem_copper
+
+    with pytest.raises(ValueError, match="COBRE"):
+        parse_minem_copper(_minem_workbook(copper_header="ZINC\nZinc"))
+
+
+def test_parse_rejects_a_non_tonne_unit() -> None:
+    from country_primer.metals_adapters import parse_minem_copper
+
+    with pytest.raises(ValueError, match="TMF"):
+        parse_minem_copper(_minem_workbook(unit="kgf\nfkg"))

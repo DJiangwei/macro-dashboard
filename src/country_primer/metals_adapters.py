@@ -5,6 +5,10 @@
   a public wrapper).
 * ``fetch_comex_inventory``: COMEX gold and silver warehouse stocks in tonnes,
   compiled by AKShare from CME reports (public wrapper).
+* ``fetch_minem_copper``: Peruvian copper output from the Ministry of Energy and
+  Mines' statistical tables (sheet S01.C01 of the latest pre-publication
+  release on gob.pe). The parser locates the copper column by its header and
+  checks the unit, so a layout change raises instead of reading another metal.
 
 Keyed source (the key is read from the environment or ``.env.local``; errors
 name the source and status only, never the request URL, which holds the key):
@@ -14,13 +18,20 @@ name the source and status only, never the request URL, which holds the key):
 """
 from __future__ import annotations
 
+import io
 import math
+import re
+import threading
 from datetime import UTC, datetime
 from typing import Any
 
 SINA_FUTURES_URL = "https://finance.sina.com.cn/futuremarket/"
 COMEX_STOCKS_URL = "https://www.cmegroup.com/clearing/operations-and-deliveries/nymex-delivery-notices.html"
 BCCH_URL = "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx"
+GOB_PE = "https://www.gob.pe"
+MINEM_COLLECTION_URL = f"{GOB_PE}/institucion/minem/colecciones/6-boletin-estadistico-minero"
+MINEM_MONTHS = {"ene": 1, "feb": 2, "mar": 3, "abr": 4, "may": 5, "jun": 6, "jul": 7, "ago": 8, "set": 9, "sep": 9, "oct": 10, "nov": 11, "dic": 12}
+_MINEM_LOCK = threading.Lock()
 
 
 def _shift_month(year_month: str, months: int) -> str:
@@ -180,3 +191,116 @@ def fetch_bcch_series(spec: dict[str, Any]) -> dict[str, Any]:
     if not observations:
         raise RuntimeError(f"BCCh returned no observations for {spec['series']}")
     return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": "https://si3.bcentral.cl/siete"}
+
+
+def latest_minem_release(collection_html: str) -> str:
+    """Path of the newest "cuadros estadísticos mineros (prepublicación)" release."""
+    releases = re.findall(r"/institucion/minem/informes-publicaciones/(\d+)-cuadros-estadisticos-mineros-prepublicacion-del-bem-[a-z0-9-]+", collection_html)
+    paths = re.findall(r"/institucion/minem/informes-publicaciones/\d+-cuadros-estadisticos-mineros-prepublicacion-del-bem-[a-z0-9-]+", collection_html)
+    if not paths:
+        raise ValueError("MINEM collection page lists no pre-publication release")
+    return max(zip(map(int, releases), paths))[1]
+
+
+def minem_workbook_url(publication_html: str) -> str:
+    """The metallic-production workbook (``s01-produccion-minera-metalica``) attached to a release."""
+    links = re.findall(r"https://cdn\.www\.gob\.pe/[^\"'\s<>]+?\.xlsx(?:\?[^\"'\s<>]*)?", publication_html)
+    matches = [link for link in links if "s01-produccion-minera-metalica" in link]
+    if not matches:
+        raise ValueError("MINEM release has no s01-produccion-minera-metalica workbook")
+    return matches[0]
+
+
+def parse_minem_copper(content: bytes) -> dict[str, list[dict[str, Any]]]:
+    """Copper output (kt) from sheet S01.C01: annual totals and the current year's months.
+
+    Layout checks, each raising ValueError: the sheet exists, a header cell
+    starts with PERIODO (its column holds the row labels), exactly one header
+    starts with COBRE, and its unit cell below starts with TMF (fine metric
+    tonnes). The year-to-date row ("2026 (Ene-Ago)") names the year of the
+    month rows after it and is not itself an annual total. The month block
+    ends at the first blank label: below it a year-on-year block has labels
+    such as "Ago. 2025" that must not be read as this year's months.
+    """
+    import openpyxl
+
+    book = openpyxl.load_workbook(io.BytesIO(content), read_only=True, data_only=True)
+    if "S01.C01" not in book.sheetnames:
+        raise ValueError(f"MINEM workbook has no sheet S01.C01 (sheets: {book.sheetnames})")
+    rows = [list(row) for row in book["S01.C01"].iter_rows(values_only=True)]
+    header = next(
+        ((i, j) for i, row in enumerate(rows) for j, cell in enumerate(row) if str(cell or "").strip().upper().startswith("PERIODO")),
+        None,
+    )
+    if header is None:
+        raise ValueError("MINEM S01.C01 has no PERIODO header row")
+    header_at, label_column = header
+    copper = [j for j, cell in enumerate(rows[header_at]) if str(cell or "").strip().upper().startswith("COBRE")]
+    if len(copper) != 1:
+        raise ValueError(f"MINEM S01.C01: expected one COBRE column, found {len(copper)}")
+    column = copper[0]
+    unit_row = rows[header_at + 1] if header_at + 1 < len(rows) else []
+    unit = str(unit_row[column] if column < len(unit_row) else "").strip()
+    if not unit.upper().startswith("TMF"):
+        raise ValueError(f"MINEM S01.C01: copper unit is {unit!r}, expected TMF")
+
+    annual: list[dict[str, Any]] = []
+    monthly: list[dict[str, Any]] = []
+    year: int | None = None
+    for row in rows[header_at + 2:]:
+        label = str(row[label_column] if label_column < len(row) and row[label_column] is not None else "").strip()
+        if not label:
+            if monthly:
+                break  # end of the month block
+            continue
+        if column >= len(row):
+            continue
+        try:
+            value = float(row[column]) / 1000.0
+        except (TypeError, ValueError):
+            continue  # "N/D", "-" or a note
+        if not math.isfinite(value):
+            continue
+        if re.fullmatch(r"\d{4}(\.0)?", label):
+            annual.append({"date": f"{label[:4]}-01-01", "value": value})
+        elif re.match(r"\d{4}\s*\(", label):
+            year = int(label[:4])
+        elif (month := re.fullmatch(r"([A-Za-z]{3})\.?\s*/\s*[A-Za-z]{3}\.?", label)) and month.group(1).lower() in MINEM_MONTHS:
+            if year is None:
+                raise ValueError("MINEM S01.C01: month row before the year-to-date row")
+            monthly.append({"date": f"{year}-{MINEM_MONTHS[month.group(1).lower()]:02d}-01", "value": value})
+    if not annual or not monthly:
+        raise ValueError(f"MINEM S01.C01: {len(annual)} annual and {len(monthly)} monthly copper rows")
+    return {"annual": annual, "monthly": monthly}
+
+
+def fetch_minem_copper(spec: dict[str, Any], cache: dict[str, Any]) -> dict[str, Any]:
+    """Peruvian copper output; ``measure`` is ``annual`` or ``monthly``. One download per build."""
+    import requests
+
+    from .energy_adapters import USER_AGENT
+
+    with _MINEM_LOCK:
+        parsed = cache.get("minem_copper")
+        if parsed is None:
+            headers = {"User-Agent": USER_AGENT}
+            with requests.Session() as session:
+                collection = session.get(MINEM_COLLECTION_URL, headers=headers, timeout=(5, 60))
+                collection.raise_for_status()
+                release = GOB_PE + latest_minem_release(collection.text)
+                page = session.get(release, headers=headers, timeout=(5, 60))
+                page.raise_for_status()
+                workbook = session.get(minem_workbook_url(page.text), headers=headers, timeout=(5, 60))
+                workbook.raise_for_status()
+            parsed = {**parse_minem_copper(workbook.content), "release": release}
+            cache["minem_copper"] = parsed
+    measure = str(spec["measure"])
+    if measure not in ("annual", "monthly"):
+        raise ValueError(f"minem_copper measure must be annual or monthly, got {measure!r}")
+    observations = list(parsed[measure])
+    start = str(spec.get("start_date") or "")[:10]
+    if start:
+        observations = [item for item in observations if item["date"] >= start]
+    if not observations:
+        raise RuntimeError(f"MINEM returned no {measure} copper observations")
+    return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": parsed["release"]}

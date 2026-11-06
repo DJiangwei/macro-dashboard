@@ -160,6 +160,12 @@ indicators:
   - {id: chile_copper_output, section: mine_supply, view: core, label_en: "Chile — Copper Mine Output", label_zh: "智利——铜矿产量", unit: kt,
      fetcher: bcch_series, series: F034.PCUM.FLU.COCHILCO.Z.0.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "Cochilco via Banco Central de Chile (BDE)", source_url: "https://si3.bcentral.cl/siete",
      caveat_en: "Monthly mine output in thousand tonnes of fine copper, compiled by Cochilco and published in the central bank's statistics database; seasonal, compare with the same month a year earlier.", caveat_zh: "Cochilco编制、智利央行统计库发布的月度铜矿产量（千吨精铜）；有季节性，宜与上年同月比较。"}
+  - {id: peru_copper_output, section: mine_supply, view: core, label_en: "Peru — Copper Mine Output", label_zh: "秘鲁——铜矿产量", unit: kt,
+     fetcher: minem_copper, measure: monthly, accumulate: true, frequency: monthly, source_authority: official_primary, source_name: "MINEM, Boletín Estadístico Minero (cuadros estadísticos)", source_url: "https://www.gob.pe/institucion/minem/colecciones/6-boletin-estadistico-minero",
+     caveat_en: "Monthly output in thousand tonnes of fine copper from MINEM's statistical tables. Each release lists only the current year's months, so history accumulates from 2026; the latest month is preliminary and may be revised.", caveat_zh: "能源矿业部统计表中的月度铜产量（千吨精铜）。每期只列当年各月，因此历史从2026年起累积；最新月份为初值，可能修订。"}
+  - {id: peru_copper_output_annual, section: mine_supply, view: deep, label_en: "Peru — Copper Mine Output (annual)", label_zh: "秘鲁——铜矿产量（年度）", unit: kt,
+     fetcher: minem_copper, measure: annual, frequency: annual, source_authority: official_primary, source_name: "MINEM, Boletín Estadístico Minero (cuadros estadísticos)", source_url: "https://www.gob.pe/institucion/minem/colecciones/6-boletin-estadistico-minero",
+     caveat_en: "Calendar-year totals from the same table; the current partial year is excluded.", caveat_zh: "取自同一张表的年度合计；不含当年未完成年份。"}
 
   # ------------------------------------------------------------ monthly_benchmarks
   - {id: copper_monthly_imf, section: monthly_benchmarks, label_en: "Copper (IMF monthly average)", label_zh: "铜（IMF月均价）", unit: USD/t,

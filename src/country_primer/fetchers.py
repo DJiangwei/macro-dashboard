@@ -127,6 +127,7 @@ FETCHERS: dict[str, FetcherDef] = {
     "cn_futures_calendar_spread": FetcherDef("fetch_cn_futures_calendar_spread", SPEC, RAW, "SHFE near minus third-month settle via Sina/AKShare", "metals_adapters"),
     "comex_inventory": FetcherDef("fetch_comex_inventory", SPEC, RAW, "COMEX warehouse stocks via AKShare", "metals_adapters"),
     "bcch_series": FetcherDef("fetch_bcch_series", SPEC, RAW, "Banco Central de Chile SieteRestWS (BCCH_API_TOKEN)", "metals_adapters"),
+    "minem_copper": FetcherDef("fetch_minem_copper", CACHE, RAW, "MINEM metallic production workbook (S01.C01)", "metals_adapters"),
 }
 
 
