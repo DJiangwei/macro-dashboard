@@ -59,3 +59,12 @@ def test_empty_responses_are_not_reported_as_failures() -> None:
     assert report["failed"] == 0
     assert report["failure_reasons"] == {}
     assert report["empty_reasons"] == {"empty_response": 1}
+
+
+def test_bcch_token_is_redacted_outside_query_strings(monkeypatch) -> None:
+    # The BCCh token travels as a query parameter; a connection error can echo
+    # it in forms the token= pattern does not catch, such as a params dict.
+    from country_primer.source_health import _safe_message
+
+    monkeypatch.setenv("BCCH_API_TOKEN", "bcchsecret12345")
+    assert "bcchsecret12345" not in _safe_message("params {'token': 'bcchsecret12345'}")

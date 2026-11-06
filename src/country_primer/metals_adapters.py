@@ -5,6 +5,12 @@
   a public wrapper).
 * ``fetch_comex_inventory``: COMEX gold and silver warehouse stocks in tonnes,
   compiled by AKShare from CME reports (public wrapper).
+
+Keyed source (the key is read from the environment or ``.env.local``; errors
+name the source and status only, never the request URL, which holds the key):
+
+* ``fetch_bcch_series``: Banco Central de Chile statistics database through
+  SieteRestWS (``BCCH_API_TOKEN``), e.g. Cochilco copper mine output.
 """
 from __future__ import annotations
 
@@ -14,6 +20,7 @@ from typing import Any
 
 SINA_FUTURES_URL = "https://finance.sina.com.cn/futuremarket/"
 COMEX_STOCKS_URL = "https://www.cmegroup.com/clearing/operations-and-deliveries/nymex-delivery-notices.html"
+BCCH_URL = "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx"
 
 
 def _shift_month(year_month: str, months: int) -> str:
@@ -130,3 +137,46 @@ def fetch_comex_inventory(spec: dict[str, Any]) -> dict[str, Any]:
     if not observations:
         raise RuntimeError(f"No COMEX inventory rows for {symbol}")
     return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": COMEX_STOCKS_URL}
+
+
+def bcch_observations(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    """Observations from a SieteRestWS GetSeries payload; rows not marked OK are skipped.
+
+    A bad token still answers HTTP 200, with ``Codigo`` -5, so the code is checked here.
+    """
+    code = payload.get("Codigo")
+    if code != 0:
+        raise RuntimeError(f"BCCh returned code {code}: {payload.get('Descripcion') or 'no description'}")
+    observations = []
+    for row in (payload.get("Series") or {}).get("Obs") or []:
+        if row.get("statusCode") != "OK":
+            continue
+        try:
+            value = float(row.get("value"))
+            day, month, year = str(row.get("indexDateString")).split("-")
+        except (TypeError, ValueError):
+            continue
+        if math.isfinite(value):
+            observations.append({"date": f"{year}-{month}-{day}", "value": value})
+    observations.sort(key=lambda item: item["date"])
+    return observations
+
+
+def fetch_bcch_series(spec: dict[str, Any]) -> dict[str, Any]:
+    """One BCCh series (``series`` is the series id) from ``start_date`` on."""
+    import requests
+
+    from .energy_adapters import _get_json, _require_key
+
+    params = {
+        "token": _require_key("BCCH_API_TOKEN"),
+        "function": "GetSeries",
+        "timeseries": str(spec["series"]),
+        "firstdate": str(spec["start_date"])[:10],
+    }
+    with requests.Session() as session:
+        payload = _get_json(session, BCCH_URL, params, None, "BCCh")
+    observations = bcch_observations(payload)
+    if not observations:
+        raise RuntimeError(f"BCCh returned no observations for {spec['series']}")
+    return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": "https://si3.bcentral.cl/siete"}

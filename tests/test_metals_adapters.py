@@ -70,3 +70,20 @@ def test_comex_observations_require_a_tonnes_column() -> None:
 
     with pytest.raises(ValueError, match="-吨"):
         comex_observations(_comex_frame("COMEX黄金库存量-千克"), today="2026-11-06")
+
+
+def test_bcch_observations_parses_ok_rows_only() -> None:
+    from country_primer.metals_adapters import bcch_observations
+
+    payload = {"Codigo": 0, "Series": {"Obs": [
+        {"indexDateString": "01-07-2026", "value": "444.1", "statusCode": "OK"},
+        {"indexDateString": "01-08-2026", "value": "NaN", "statusCode": "ND"},
+    ]}}
+    assert bcch_observations(payload) == [{"date": "2026-07-01", "value": 444.1}]
+
+
+def test_bcch_error_code_raises_without_details() -> None:
+    from country_primer.metals_adapters import bcch_observations
+
+    with pytest.raises(RuntimeError, match="code -5"):
+        bcch_observations({"Codigo": -5, "Descripcion": "Invalid username or password"})

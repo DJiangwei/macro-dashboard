@@ -37,6 +37,11 @@ sections:
     title_zh: "可见库存"
     report_logic_en: "SHFE warehouse stocks for copper, aluminium, zinc and nickel, kept as a growing archive because the source returns about three months. LME stock reports are licensed and COMEX copper stocks have no free source yet."
     report_logic_zh: "上期所铜、铝、锌、镍仓库库存；数据源仅返回约三个月，因此按存档逐步累积。LME库存报告为授权数据，COMEX铜库存暂无免费来源。"
+  mine_supply:
+    title_en: "Mine Supply"
+    title_zh: "矿山供给"
+    report_logic_en: "Copper mine output of the two largest producers: Chile (Cochilco, via the central bank) and Peru (Ministry of Energy and Mines)."
+    report_logic_zh: "两大产铜国的铜矿产量：智利（Cochilco，经央行数据库）与秘鲁（能源矿业部）。"
   monthly_benchmarks:
     title_en: "Monthly Benchmarks & Battery Metals"
     title_zh: "月度基准与电池金属"
@@ -151,6 +156,11 @@ indicators:
      fetcher: cn_futures_inventory, series: "镍", frequency: daily, accumulate: true, source_authority: public_wrapper, source_name: "SHFE warehouse stocks via Eastmoney/AKShare", source_url: "https://data.eastmoney.com/ifdata/kcsj.html",
      caveat_en: "The source returns about the last three months; each refresh adds new days to a stored archive, so the history lengthens with every refresh (archive started November 2026).", caveat_zh: "数据源仅返回约最近三个月；每次刷新把新数据并入存档，历史随之延长（存档始于2026年11月）。"}
 
+  # ------------------------------------------------------------ mine_supply
+  - {id: chile_copper_output, section: mine_supply, view: core, label_en: "Chile — Copper Mine Output", label_zh: "智利——铜矿产量", unit: kt,
+     fetcher: bcch_series, series: F034.PCUM.FLU.COCHILCO.Z.0.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "Cochilco via Banco Central de Chile (BDE)", source_url: "https://si3.bcentral.cl/siete",
+     caveat_en: "Monthly mine output in thousand tonnes of fine copper, compiled by Cochilco and published in the central bank's statistics database; seasonal, compare with the same month a year earlier.", caveat_zh: "Cochilco编制、智利央行统计库发布的月度铜矿产量（千吨精铜）；有季节性，宜与上年同月比较。"}
+
   # ------------------------------------------------------------ monthly_benchmarks
   - {id: copper_monthly_imf, section: monthly_benchmarks, label_en: "Copper (IMF monthly average)", label_zh: "铜（IMF月均价）", unit: USD/t,
      fetcher: imf_sdmx, dataflow: "IMF.RES,PCPS", series: G001.PCOPP.USD.M, frequency: monthly, start_date: 2000-01-01, source_authority: official_mirror, source_name: "IMF Primary Commodity Prices", source_url: "https://data.imf.org/?sk=PCPS",
@@ -257,7 +267,7 @@ data_gaps:
     status_en: NBS is not reachable from this environment; customs product detail to be sourced.
     status_zh: 本环境无法访问统计局接口；海关分品种数据待接入。
   - section: monthly_benchmarks
-    item_en: Mine supply (Chile, Peru, Indonesian nickel), TC/RC and ICSG balances
-    item_zh: 矿山供给（智利、秘鲁、印尼镍）、加工费与ICSG供需平衡
-    status_en: To be sourced (Cochilco, INE, MINEM); TC/RC and ICSG are licensed or registration-only.
-    status_zh: 待接入（Cochilco、INE、MINEM）；加工费与ICSG为授权或需注册的数据。
+    item_en: Indonesian nickel output, TC/RC and ICSG balances
+    item_zh: 印尼镍产量、加工费与ICSG供需平衡
+    status_en: Indonesian nickel output has no machine-readable official source yet; TC/RC and ICSG are licensed or registration-only.
+    status_zh: 印尼镍产量暂无机读的官方来源；加工费与ICSG为授权或需注册的数据。
