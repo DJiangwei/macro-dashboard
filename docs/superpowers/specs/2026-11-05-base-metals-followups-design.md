@@ -15,7 +15,7 @@
 | LME 库存 | AKShare `macro_euro_lme_stock`（金十） | 止于 2026-07-17，已停更 | **不采用**；LME 数据为授权数据 |
 | 秘鲁铜产量 | MINEM《Boletín Estadístico Minero》（gob.pe，每期 PDF + Excel 附件） | 有 Excel，滞后 2–3 个月；每期地址不同，要从列表页找 | **可做但较脆弱** |
 | 智利铜产量 | Cochilco | 只有 PDF 月报，没有机读数据 | 不直接做 |
-| | 智利央行统计接口（BDE） | 需要免费注册账号 | **需要你注册** |
+| | 智利央行统计接口（BDE） | 需要 token（用户 2026-11-06 已取得） | **可做** |
 | 中国精炼铜产量、铜矿砂与未锻轧铜进出口 | NBS（境外 403）、海关 | 未验证；东方财富行业指标可能有 | **需要先做一次探查** |
 
 ## 2. 设计
@@ -52,6 +52,6 @@
 
 ## 4. 已确认的决定（2026-11-05）
 
-1. 智利：用户去智利央行注册免费账号；凭据到位前，智利铜产量记为 gap。凭据变量名定为 `BCCH_API_USER`、`BCCH_API_PASSWORD`（只放 `.env.local` 与 GitHub secrets）。
+1. 智利：用户去智利央行注册免费账号；凭据到位前，智利铜产量记为 gap。2026-11-06 更新：用户取得的是 API token，SieteRestWS 只需 `token` 参数，变量名改为 `BCCH_API_TOKEN`（只放 `.env.local` 与 GitHub secrets），原定的 `BCCH_API_USER`/`BCCH_API_PASSWORD` 不再使用。
 2. 秘鲁 MINEM：做，放在最后。
 3. 顺序：2.1 库存累积 → 2.2 近远月价差 → 2.4 COMEX 金银库存 → 2.5 中国精炼铜探查 → 智利（凭据到位后）→ 2.3 秘鲁。
