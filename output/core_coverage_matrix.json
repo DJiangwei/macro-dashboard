@@ -1,6 +1,6 @@
 {
   "schema_version": "core-coverage-v1",
-  "generated": "2026-11-05T17:28:13.871666+00:00",
+  "generated": "2026-11-06T12:33:30.696418+00:00",
   "framework_version": 2,
   "countries": [
     "HU",
@@ -89,16 +89,16 @@
       "missing": 19
     },
     "UK": {
-      "verified": 20,
-      "watch": 12,
-      "low_confidence": 6,
+      "verified": 24,
+      "watch": 11,
+      "low_confidence": 3,
       "substitute": 0,
       "missing": 10
     },
     "US": {
-      "verified": 32,
-      "watch": 9,
-      "low_confidence": 1,
+      "verified": 37,
+      "watch": 5,
+      "low_confidence": 0,
       "substitute": 0,
       "missing": 6
     },
@@ -117,18 +117,18 @@
       "missing": 26
     },
     "KR": {
-      "verified": 3,
-      "watch": 20,
-      "low_confidence": 4,
+      "verified": 2,
+      "watch": 21,
+      "low_confidence": 3,
       "substitute": 0,
-      "missing": 21
+      "missing": 22
     },
     "TW": {
-      "verified": 9,
+      "verified": 8,
       "watch": 17,
       "low_confidence": 0,
       "substitute": 0,
-      "missing": 22
+      "missing": 23
     },
     "IN": {
       "verified": 1,
@@ -1267,7 +1267,7 @@
           "indicator_ids": [
             "retail_sales_volume_yoy"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -1825,13 +1825,13 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "paye_payrolled_employees_mom_change"
           ],
-          "latest_date": "2026-08-01",
-          "refresh_fallback": true
+          "latest_date": "2026-09-01",
+          "refresh_fallback": false
         },
         "US": {
           "state": "verified",
@@ -2176,12 +2176,12 @@
           "refresh_fallback": false
         },
         "US": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "jolts_openings"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "TR": {
@@ -3263,9 +3263,9 @@
       "label_zh": "生产者价格通胀",
       "unit": "percent",
       "priority_weight": 5,
-      "missing_countries": 6,
+      "missing_countries": 7,
       "weak_countries": 0,
-      "priority_score": 80,
+      "priority_score": 85,
       "countries": {
         "HU": {
           "state": "verified",
@@ -3318,7 +3318,7 @@
           "indicator_ids": [
             "ppi_yoy"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "JP": {
@@ -3363,7 +3363,7 @@
           "indicator_ids": [
             "ppi_inflation"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "HK": {
@@ -3374,12 +3374,10 @@
           "refresh_fallback": false
         },
         "KR": {
-          "state": "verified",
-          "quality_status": "verified",
-          "indicator_ids": [
-            "ppi_inflation_index"
-          ],
-          "latest_date": "2026-09-01",
+          "state": "missing",
+          "quality_status": "unavailable",
+          "indicator_ids": [],
+          "latest_date": "",
           "refresh_fallback": false
         },
         "TW": {
@@ -3516,12 +3514,12 @@
           "refresh_fallback": false
         },
         "US": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "unit_labor_cost_growth"
           ],
-          "latest_date": "2026-04-01",
+          "latest_date": "2026-07-01",
           "refresh_fallback": false
         },
         "TR": {
@@ -3682,7 +3680,7 @@
             "michigan_inflation_expectation",
             "ten_year_breakeven"
           ],
-          "latest_date": "2026-11-02",
+          "latest_date": "2026-11-05",
           "refresh_fallback": false
         },
         "TR": {
@@ -3759,8 +3757,8 @@
       "unit": "percent",
       "priority_weight": 3,
       "missing_countries": 8,
-      "weak_countries": 5,
-      "priority_score": 80,
+      "weak_countries": 4,
+      "priority_score": 78,
       "countries": {
         "HU": {
           "state": "verified",
@@ -3833,13 +3831,13 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "uk_hpi_annual_change"
           ],
-          "latest_date": "2026-07-01",
-          "refresh_fallback": true
+          "latest_date": "2026-08-01",
+          "refresh_fallback": false
         },
         "US": {
           "state": "watch",
@@ -3994,13 +3992,13 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "residential_property_transactions_sa"
           ],
-          "latest_date": "2026-08-01",
-          "refresh_fallback": true
+          "latest_date": "2026-09-01",
+          "refresh_fallback": false
         },
         "US": {
           "state": "verified",
@@ -4084,9 +4082,9 @@
       "label_zh": "建筑活动",
       "unit": "percent",
       "priority_weight": 3,
-      "missing_countries": 8,
-      "weak_countries": 1,
-      "priority_score": 72,
+      "missing_countries": 9,
+      "weak_countries": 0,
+      "priority_score": 75,
       "countries": {
         "HU": {
           "state": "verified",
@@ -4157,13 +4155,13 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "construction_output_yoy"
           ],
-          "latest_date": "2026-07-01",
-          "refresh_fallback": true
+          "latest_date": "2026-08-01",
+          "refresh_fallback": false
         },
         "US": {
           "state": "verified",
@@ -4200,12 +4198,10 @@
           "refresh_fallback": false
         },
         "TW": {
-          "state": "verified",
-          "quality_status": "verified",
-          "indicator_ids": [
-            "construction_loans_growth"
-          ],
-          "latest_date": "2026-09-01",
+          "state": "missing",
+          "quality_status": "unavailable",
+          "indicator_ids": [],
+          "latest_date": "",
           "refresh_fallback": false
         },
         "IN": {
@@ -4329,7 +4325,7 @@
           "indicator_ids": [
             "quoted_mortgage_rate"
           ],
-          "latest_date": "2026-09-30",
+          "latest_date": "2026-10-31",
           "refresh_fallback": false
         },
         "US": {
@@ -4338,7 +4334,7 @@
           "indicator_ids": [
             "mortgage_30y_rate"
           ],
-          "latest_date": "2026-10-29",
+          "latest_date": "2026-11-05",
           "refresh_fallback": false
         },
         "TR": {
@@ -4488,7 +4484,7 @@
             "active_listing_count",
             "new_home_months_supply"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "TR": {
@@ -4836,12 +4832,12 @@
           "refresh_fallback": false
         },
         "US": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "goods_trade_balance"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "TR": {
@@ -5014,12 +5010,12 @@
           "refresh_fallback": false
         },
         "US": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "goods_exports_growth"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "TR": {
@@ -5051,8 +5047,7 @@
           "state": "watch",
           "quality_status": "watch",
           "indicator_ids": [
-            "customs_exports_yoy",
-            "goods_exports"
+            "customs_exports_yoy"
           ],
           "latest_date": "2026-08-01",
           "refresh_fallback": false
@@ -5182,12 +5177,12 @@
           "refresh_fallback": false
         },
         "US": {
-          "state": "watch",
-          "quality_status": "watch",
+          "state": "verified",
+          "quality_status": "verified",
           "indicator_ids": [
             "goods_imports_growth"
           ],
-          "latest_date": "2026-08-01",
+          "latest_date": "2026-09-01",
           "refresh_fallback": false
         },
         "TR": {
@@ -5219,8 +5214,7 @@
           "state": "watch",
           "quality_status": "watch",
           "indicator_ids": [
-            "customs_imports_yoy",
-            "goods_imports"
+            "customs_imports_yoy"
           ],
           "latest_date": "2026-08-01",
           "refresh_fallback": false
@@ -5327,7 +5321,7 @@
           "indicator_ids": [
             "eur_usd"
           ],
-          "latest_date": "2026-11-02",
+          "latest_date": "2026-11-05",
           "refresh_fallback": false
         },
         "JP": {
@@ -5345,7 +5339,7 @@
           "indicator_ids": [
             "zar_usd"
           ],
-          "latest_date": "2026-11-02",
+          "latest_date": "2026-11-06",
           "refresh_fallback": false
         },
         "UK": {
@@ -5354,7 +5348,7 @@
           "indicator_ids": [
             "gbp_usd"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-05",
           "refresh_fallback": false
         },
         "US": {
@@ -5372,7 +5366,7 @@
           "indicator_ids": [
             "try_usd"
           ],
-          "latest_date": "2026-11-02",
+          "latest_date": "2026-11-05",
           "refresh_fallback": false
         },
         "HK": {
@@ -6264,7 +6258,7 @@
             "obr_cg_debt_interest_forecast"
           ],
           "latest_date": "2031-03-31",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "US": {
           "state": "verified",
@@ -6394,7 +6388,7 @@
           "indicator_ids": [
             "cgb_yield_10y"
           ],
-          "latest_date": "2026-11-04",
+          "latest_date": "2026-11-06",
           "refresh_fallback": false
         },
         "EA": {
@@ -6404,7 +6398,7 @@
             "aaa_yield_10y",
             "irs_10y_de"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-05",
           "refresh_fallback": false
         },
         "JP": {
@@ -6422,7 +6416,7 @@
           "indicator_ids": [
             "sovereign_yield_10y"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-05",
           "refresh_fallback": false
         },
         "UK": {
@@ -6431,7 +6425,7 @@
           "indicator_ids": [
             "long_rate_10y"
           ],
-          "latest_date": "2026-10-29",
+          "latest_date": "2026-11-04",
           "refresh_fallback": false
         },
         "US": {
@@ -6440,7 +6434,7 @@
           "indicator_ids": [
             "treasury_10y_yield"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-04",
           "refresh_fallback": false
         },
         "TR": {
@@ -6576,7 +6570,7 @@
             "estr",
             "policy_rate"
           ],
-          "latest_date": "2026-11-02",
+          "latest_date": "2026-11-06",
           "refresh_fallback": false
         },
         "JP": {
@@ -6585,7 +6579,7 @@
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2026-10-27",
+          "latest_date": "2026-11-03",
           "refresh_fallback": false
         },
         "ZA": {
@@ -6594,7 +6588,7 @@
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2026-11-02",
+          "latest_date": "2026-11-06",
           "refresh_fallback": false
         },
         "UK": {
@@ -6603,7 +6597,7 @@
           "indicator_ids": [
             "bank_rate"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-05",
           "refresh_fallback": false
         },
         "US": {
@@ -6613,7 +6607,7 @@
             "daily_fed_funds",
             "effective_fed_funds"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-04",
           "refresh_fallback": false
         },
         "TR": {
@@ -6622,7 +6616,7 @@
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2026-10-23",
+          "latest_date": "2026-11-03",
           "refresh_fallback": false
         },
         "HK": {
@@ -6640,7 +6634,7 @@
           "indicator_ids": [
             "policy_rate"
           ],
-          "latest_date": "2026-09-01",
+          "latest_date": "2026-10-01",
           "refresh_fallback": false
         },
         "TW": {
@@ -7326,7 +7320,7 @@
           "indicator_ids": [
             "prime_lending_rate"
           ],
-          "latest_date": "2026-11-02",
+          "latest_date": "2026-11-06",
           "refresh_fallback": false
         },
         "UK": {
@@ -7349,7 +7343,7 @@
           "indicator_ids": [
             "commercial_loan_rate"
           ],
-          "latest_date": "2026-10-23",
+          "latest_date": "2026-10-30",
           "refresh_fallback": false
         },
         "HK": {
@@ -7488,7 +7482,7 @@
           "indicator_ids": [
             "equity_index"
           ],
-          "latest_date": "2026-11-02",
+          "latest_date": "2026-11-05",
           "refresh_fallback": false
         },
         "ZA": {
@@ -7545,7 +7539,7 @@
           "indicator_ids": [
             "taiex_index"
           ],
-          "latest_date": "2026-11-02",
+          "latest_date": "2026-11-06",
           "refresh_fallback": false
         },
         "IN": {
@@ -7641,7 +7635,7 @@
           "indicator_ids": [
             "cgb_curve_10y2y"
           ],
-          "latest_date": "2026-11-04",
+          "latest_date": "2026-11-06",
           "refresh_fallback": false
         },
         "EA": {
@@ -7650,7 +7644,7 @@
           "indicator_ids": [
             "yield_curve_slope"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-05",
           "refresh_fallback": false
         },
         "JP": {
@@ -7676,7 +7670,7 @@
             "yield_curve_slope_10y5y",
             "yield_curve_slope_20y5y"
           ],
-          "latest_date": "2026-10-29",
+          "latest_date": "2026-11-04",
           "refresh_fallback": false
         },
         "US": {
@@ -7685,7 +7679,7 @@
           "indicator_ids": [
             "yield_curve_10y2y"
           ],
-          "latest_date": "2026-11-02",
+          "latest_date": "2026-11-05",
           "refresh_fallback": false
         },
         "TR": {
@@ -7810,7 +7804,7 @@
           "indicator_ids": [
             "ciss"
           ],
-          "latest_date": "2026-10-30",
+          "latest_date": "2026-11-04",
           "refresh_fallback": false
         },
         "JP": {
@@ -7841,7 +7835,7 @@
             "chicago_fed_nfci",
             "st_louis_fed_financial_stress_index"
           ],
-          "latest_date": "2026-10-23",
+          "latest_date": "2026-10-30",
           "refresh_fallback": false
         },
         "TR": {
@@ -7918,8 +7912,8 @@
       "unit": "percentage_points",
       "priority_weight": 2,
       "missing_countries": 8,
-      "weak_countries": 7,
-      "priority_score": 74,
+      "weak_countries": 4,
+      "priority_score": 68,
       "countries": {
         "HU": {
           "state": "low_confidence",
@@ -7992,8 +7986,8 @@
           "refresh_fallback": false
         },
         "UK": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "credit_gap"
           ],
@@ -8001,8 +7995,8 @@
           "refresh_fallback": false
         },
         "US": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "credit_gap"
           ],
@@ -8024,8 +8018,8 @@
           "refresh_fallback": false
         },
         "KR": {
-          "state": "low_confidence",
-          "quality_status": "low_confidence",
+          "state": "watch",
+          "quality_status": "watch",
           "indicator_ids": [
             "credit_gap"
           ],
@@ -8149,7 +8143,7 @@
             "bank_capital_ratio"
           ],
           "latest_date": "2026-01-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "ZA": {
           "state": "low_confidence",
@@ -8158,7 +8152,7 @@
             "bank_capital_ratio"
           ],
           "latest_date": "2025-04-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "UK": {
           "state": "missing",
@@ -8322,7 +8316,7 @@
             "bank_npl_ratio"
           ],
           "latest_date": "2026-01-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "ZA": {
           "state": "low_confidence",
@@ -8331,7 +8325,7 @@
             "bank_npl_ratio"
           ],
           "latest_date": "2025-04-01",
-          "refresh_fallback": true
+          "refresh_fallback": false
         },
         "UK": {
           "state": "missing",
@@ -8838,6 +8832,22 @@
       "weak_countries": []
     },
     {
+      "concept_id": "producer_price_inflation",
+      "pillar": "prices_costs",
+      "label_en": "Producer Price Inflation",
+      "priority_score": 85,
+      "missing_countries": [
+        "HK",
+        "KR",
+        "IN",
+        "KZ",
+        "UZ",
+        "EG",
+        "NG"
+      ],
+      "weak_countries": []
+    },
+    {
       "concept_id": "exports_growth",
       "pillar": "external_fx",
       "label_en": "Exports Growth",
@@ -8891,25 +8901,10 @@
       ]
     },
     {
-      "concept_id": "producer_price_inflation",
-      "pillar": "prices_costs",
-      "label_en": "Producer Price Inflation",
-      "priority_score": 80,
-      "missing_countries": [
-        "HK",
-        "IN",
-        "KZ",
-        "UZ",
-        "EG",
-        "NG"
-      ],
-      "weak_countries": []
-    },
-    {
       "concept_id": "house_price_growth",
       "pillar": "housing_investment",
       "label_en": "House Price Growth",
-      "priority_score": 80,
+      "priority_score": 78,
       "missing_countries": [
         "CN",
         "HK",
@@ -8923,7 +8918,6 @@
       "weak_countries": [
         "JP",
         "ZA",
-        "UK",
         "TR",
         "IN"
       ]
@@ -8935,6 +8929,24 @@
       "priority_score": 75,
       "missing_countries": [
         "HK",
+        "TW",
+        "IN",
+        "KZ",
+        "UZ",
+        "EG",
+        "NG"
+      ],
+      "weak_countries": []
+    },
+    {
+      "concept_id": "construction_activity",
+      "pillar": "housing_investment",
+      "label_en": "Construction Activity",
+      "priority_score": 75,
+      "missing_countries": [
+        "JP",
+        "ZA",
+        "KR",
         "TW",
         "IN",
         "KZ",
@@ -8979,50 +8991,6 @@
       ]
     },
     {
-      "concept_id": "credit_gap",
-      "pillar": "stability_structural",
-      "label_en": "Credit-to-GDP Gap",
-      "priority_score": 74,
-      "missing_countries": [
-        "ZA",
-        "TR",
-        "HK",
-        "TW",
-        "KZ",
-        "UZ",
-        "EG",
-        "NG"
-      ],
-      "weak_countries": [
-        "HU",
-        "PL",
-        "CZ",
-        "RO",
-        "UK",
-        "US",
-        "KR"
-      ]
-    },
-    {
-      "concept_id": "construction_activity",
-      "pillar": "housing_investment",
-      "label_en": "Construction Activity",
-      "priority_score": 72,
-      "missing_countries": [
-        "JP",
-        "ZA",
-        "KR",
-        "IN",
-        "KZ",
-        "UZ",
-        "EG",
-        "NG"
-      ],
-      "weak_countries": [
-        "UK"
-      ]
-    },
-    {
       "concept_id": "private_credit_growth",
       "pillar": "monetary_financial",
       "label_en": "Private Credit Growth",
@@ -9038,6 +9006,28 @@
         "HK",
         "KR",
         "NG"
+      ]
+    },
+    {
+      "concept_id": "credit_gap",
+      "pillar": "stability_structural",
+      "label_en": "Credit-to-GDP Gap",
+      "priority_score": 68,
+      "missing_countries": [
+        "ZA",
+        "TR",
+        "HK",
+        "TW",
+        "KZ",
+        "UZ",
+        "EG",
+        "NG"
+      ],
+      "weak_countries": [
+        "HU",
+        "PL",
+        "CZ",
+        "RO"
       ]
     },
     {

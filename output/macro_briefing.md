@@ -1,6 +1,6 @@
 # Global Macro Workbench Intelligence Briefing
 
-**Generated**: 2026-11-05 | **Coverage**: 19 economies (HU, PL, CZ, RO, CN, EA, JP, ZA, UK, US, TR, HK, KR, TW, IN, KZ, UZ, EG, NG)
+**Generated**: 2026-11-06 | **Coverage**: 19 economies (HU, PL, CZ, RO, CN, EA, JP, ZA, UK, US, TR, HK, KR, TW, IN, KZ, UZ, EG, NG)
 
 ---
 
@@ -16,8 +16,8 @@
 | **Euro Area (EA)** | 52.5 | 61.7 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 75.2 (usable with watch-list) |
 | **Japan (JP)** | 56.2 | 56.7 | **mixed** | stall-speed growth | near-target inflation | accommodative stance | 43.4 (needs data review) |
 | **South Africa (ZA)** | 50.0 | 53.3 | **mixed** | moderate expansion | inflation pressure | restrictive stance | 38.1 (needs data review) |
-| **United Kingdom (UK)** | 52.9 | 53.3 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 49.2 (needs data review) |
-| **United States (US)** | 55.0 | 43.3 | **defensive** | above-trend expansion | above-target inflation | neutral-moderate stance | 72.8 (usable with watch-list) |
+| **United Kingdom (UK)** | 52.9 | 53.3 | **mixed** | stall-speed growth | above-target inflation | neutral-moderate stance | 57.1 (needs data review) |
+| **United States (US)** | 55.0 | 43.3 | **defensive** | above-trend expansion | above-target inflation | neutral-moderate stance | 74.8 (usable with watch-list) |
 | **Turkey (TR)** | 46.2 | 51.7 | **defensive** | moderate expansion | inflation pressure | restrictive stance | 70.6 (usable with watch-list) |
 | **Hong Kong (HK)** | 62.5 | 55.0 | **mixed** | above-trend expansion | near-target inflation | neutral-moderate stance | 59.8 (needs data review) |
 | **South Korea (KR)** | 65.0 | 63.3 | **mixed** | above-trend expansion | above-target inflation | neutral-moderate stance | 63.5 (usable with watch-list) |
@@ -44,7 +44,7 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 | **EA** (ECB) | **2.50%** | 4.00% (2.0%) | 0.50% | **5.55%** (5.05% ~ 6.05%) | **-3.05%** | *substantially accommodative* |
 | **JP** (Bank of Japan) | **1.25%** | 2.23% (2.0%) | 0.00% | **2.31%** (1.81% ~ 2.81%) | **-1.06%** | *moderately accommodative* |
 | **ZA** (SARB) | **7.25%** | 4.50% (4.5%) | 2.50% | **7.27%** (6.77% ~ 7.77%) | **-0.02%** | *calibrated / neutral* |
-| **UK** (Bank of England) | **3.75%** | 3.50% (2.0%) | 1.25% | **4.95%** (4.45% ~ 5.45%) | **-1.20%** | *moderately accommodative* |
+| **UK** (Bank of England) | **4.00%** | 3.50% (2.0%) | 1.25% | **4.95%** (4.45% ~ 5.45%) | **-0.95%** | *moderately accommodative* |
 | **US** (Federal Reserve) | **3.88%** | 3.12% (2.0%) | 1.00% | **5.38%** (4.88% ~ 5.88%) | **-1.50%** | *substantially accommodative* |
 | **TR** (TCMB) | **36.00%** | 29.73% (5.0%) | 3.00% | **44.65%** (44.15% ~ 45.15%) | **-8.65%** | *substantially accommodative* |
 | **HK** (HKMA) | **3.88%** | 2.30% (2.0%) | 1.00% | **4.35%** (3.85% ~ 4.85%) | **-0.47%** | *calibrated / neutral* |
@@ -61,20 +61,20 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 
 | Economy | Benchmark Asset | Latest Yield | Latest Date | Spread to US 10Y (bps) | Status |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **HU** | HU 10Y Benchmark | **5.68%** | 2026-09-01 | **+74.0 bps** | Official Observed |
-| **PL** | PL 10Y Benchmark | **6.23%** | 2026-09-01 | **+129.0 bps** | Official Observed |
-| **CZ** | CZ 10Y Benchmark | **5.24%** | 2026-09-01 | **+30.0 bps** | Official Observed |
-| **RO** | RO 10Y Benchmark | **6.71%** | 2026-09-01 | **+177.0 bps** | Official Observed |
+| **HU** | HU 10Y Benchmark | **5.68%** | 2026-09-01 | **+78.0 bps** | Official Observed |
+| **PL** | PL 10Y Benchmark | **6.23%** | 2026-09-01 | **+133.0 bps** | Official Observed |
+| **CZ** | CZ 10Y Benchmark | **5.24%** | 2026-09-01 | **+34.0 bps** | Official Observed |
+| **RO** | RO 10Y Benchmark | **6.71%** | 2026-09-01 | **+181.0 bps** | Official Observed |
 | **CN** | CN 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
-| **EA** | 10Y Bund | **3.47%** | 2026-09-01 | **-147.0 bps** | Official Observed |
-| **JP** | 10Y JGB | **3.05%** | 2026-09-01 | **-189.0 bps** | Official Observed |
-| **ZA** | 10Y Sovereign | **8.01%** | 2026-10-30 | **+307.0 bps** | Official Observed |
-| **UK** | 10Y Gilt | **5.26%** | 2026-10-29 | **+32.0 bps** | Official Observed |
-| **US** | 10Y Treasury | **4.94%** | 2026-10-30 | **0.0 bps** | Official Observed |
+| **EA** | 10Y Bund | **3.47%** | 2026-09-01 | **-143.0 bps** | Official Observed |
+| **JP** | 10Y JGB | **3.05%** | 2026-09-01 | **-185.0 bps** | Official Observed |
+| **ZA** | 10Y Sovereign | **7.72%** | 2026-11-05 | **+282.0 bps** | Official Observed |
+| **UK** | 10Y Gilt | **5.14%** | 2026-11-04 | **+24.0 bps** | Official Observed |
+| **US** | 10Y Treasury | **4.90%** | 2026-11-04 | **0.0 bps** | Official Observed |
 | **TR** | TR 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **HK** | HK 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
-| **KR** | 10Y KTB | **4.45%** | 2026-09-01 | **-49.0 bps** | Official Observed |
-| **TW** | 10Y Gov Bond | **1.97%** | 2026-08-01 | **-297.0 bps** | Official Observed |
+| **KR** | 10Y KTB | **4.45%** | 2026-09-01 | **-45.0 bps** | Official Observed |
+| **TW** | 10Y Gov Bond | **1.97%** | 2026-08-01 | **-293.0 bps** | Official Observed |
 | **IN** | IN 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **KZ** | KZ 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
 | **UZ** | UZ 10Y | *n/a* | n/a | *n/a* | Data Gap Backlog |
@@ -91,7 +91,7 @@ Theoretical rate benchmark calculated as $i^* = r^* + \pi + 0.5(\pi - \pi^*) + 0
 - **Industrial production** (pairwise, last 36 common months (min 24); windows end 2026-07 to 2026-09):
   - Most synchronised: CZ vs. EA (**0.65**, moderate positive), CN vs. KR (**0.61**, moderate positive), EA vs. US (**0.60**, moderate positive).
   - Least synchronised: ZA vs. US (**-0.33**, weak negative), RO vs. JP (**-0.27**, weak negative), CZ vs. KR (**-0.27**, weak negative).
-- **10Y sovereign yields** (pairwise, last 36 common months (min 24); windows end 2026-09 to 2026-10):
+- **10Y sovereign yields** (pairwise, last 36 common months (min 24); windows end 2026-09 to 2026-11):
   - Most synchronised: CZ vs. EA (**0.94**, strong positive), EA vs. JP (**0.90**, strong positive), CZ vs. JP (**0.86**, strong positive).
   - Least synchronised: JP vs. ZA (**-0.77**, strong negative), ZA vs. UK (**-0.58**, moderate negative), CZ vs. ZA (**-0.55**, moderate negative).
 - **Bruegel REER** (pairwise, last 36 common months (min 24); windows end 2026-09 to 2026-09):
@@ -135,14 +135,14 @@ US Net Liquidity Metric is calculated as $\text{Fed Total Assets} - \text{Treasu
 
 | Institution | Country | Indicator & Plumbing Signal | Frequency | Latest Date | Reading | Context / Operational Stance |
 | :--- | :---: | :--- | :---: | :---: | :---: | :--- |
-| **Federal Reserve (Fed)** | `US` | US Net Liquidity (Assets − TGA − RRP) | Weekly | 2026-10-28 | **$5,745.7B** | Contracting over 3M (-171.6 USD bn) |
-| **Federal Reserve (Fed)** | `US` | Fed Total Assets (Balance Sheet Level) | Weekly | 2026-10-28 | **$6,745.6B** | Contracting over 3M (-1.7 USD bn) |
-| **Federal Reserve (Fed)** | `US` | Fed Treasury Securities Holdings Outright | Weekly | 2026-10-28 | **$4,576.6B** | Expanding over 3M (+60.9 USD bn) |
-| **Federal Reserve (Fed)** | `US` | Fed Mortgage-Backed Securities (MBS) | Weekly | 2026-10-28 | **$1,883.5B** | Contracting over 3M (-61.3 USD bn) |
-| **Federal Reserve (Fed)** | `US` | Treasury General Account (TGA) at Fed | Weekly | 2026-10-28 | **$999.7B** | Expanding over 3M (+170.1 USD bn) |
-| **Federal Reserve (Fed)** | `US` | Overnight Reverse Repo Facility (ON RRP) | Daily | 2026-11-02 | **$5.09B** | Expanding over 3M (+2.94 USD bn) |
-| **European Central Bank (ECB)** | `EA` | Eurosystem Total Assets (Consolidated) | Weekly | 2026-10-19 | **€5,935.0B** | Contracting over 3M (-14.1 EUR bn) |
-| **Bank of Japan (BoJ)** | `JP` | Bank of Japan Total Assets | Monthly | 2026-09-01 | **¥625.0T** | Contracting over 3M (-14.5 JPY tn) |
+| **Federal Reserve (Fed)** | `US` | US Net Liquidity (Assets − TGA − RRP) | Weekly | 2026-11-04 | **$5,790.7B** | Contracting over 3M (-34.1 USD bn) |
+| **Federal Reserve (Fed)** | `US` | Fed Total Assets (Balance Sheet Level) | Weekly | 2026-11-04 | **$6,748.1B** | Expanding over 3M (+10.0 USD bn) |
+| **Federal Reserve (Fed)** | `US` | Fed Treasury Securities Holdings Outright | Weekly | 2026-11-04 | **$4,578.8B** | Expanding over 3M (+59.1 USD bn) |
+| **Federal Reserve (Fed)** | `US` | Fed Mortgage-Backed Securities (MBS) | Weekly | 2026-11-04 | **$1,883.5B** | Contracting over 3M (-47.3 USD bn) |
+| **Federal Reserve (Fed)** | `US` | Treasury General Account (TGA) at Fed | Weekly | 2026-11-04 | **$957.2B** | Expanding over 3M (+46.4 USD bn) |
+| **Federal Reserve (Fed)** | `US` | Overnight Reverse Repo Facility (ON RRP) | Daily | 2026-11-05 | **$0.12B** | Contracting over 3M (-1.52 USD bn) |
+| **European Central Bank (ECB)** | `EA` | Eurosystem Total Assets (Consolidated) | Weekly | 2026-10-26 | **€5,945.4B** | Expanding over 3M (+1.4 EUR bn) |
+| **Bank of Japan (BoJ)** | `JP` | Bank of Japan Total Assets | Monthly | 2026-10-01 | **¥626.2T** | Contracting over 3M (-18.1 JPY tn) |
 | **People's Bank of China (PBC)** | `CN` | PBC Balance Sheet Total Assets | Monthly | 2026-09-01 | **¥50.50T** | Expanding over 3M (+1.07 CNY tn) |
 | **People's Bank of China (PBC)** | `CN` | PBC Reserve Money (Base Money) | Monthly | 2026-09-01 | **¥41.30T** | Expanding over 3M (+0.71 CNY tn) |
 

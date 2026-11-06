@@ -1,6 +1,6 @@
 {
   "schema_version": "source-health-v1",
-  "generated": "2026-11-05T17:23:20.572729+00:00",
+  "generated": "2026-11-06T12:32:47.860733+00:00",
   "circuit_breaker": {
     "failure_threshold": 4,
     "reset_after_seconds": 300,
@@ -510,93 +510,307 @@
       ]
     },
     "CN": {
-      "calls": 3,
-      "success": 3,
+      "calls": 116,
+      "success": 115,
       "empty": 0,
-      "failed": 0,
+      "failed": 1,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "timeout": 1
+      },
       "empty_reasons": {},
       "sources": {
+        "akshare_table": {
+          "failed": 1,
+          "success": 58
+        },
+        "akshare_wide_year_month": {
+          "success": 3
+        },
+        "bis_credit_gap": {
+          "success": 1
+        },
+        "bond_zh_us_rate": {
+          "success": 6
+        },
+        "eastmoney_api": {
+          "success": 8
+        },
+        "eastmoney_industry_indicator": {
+          "success": 5
+        },
+        "fred_graph_csv": {
+          "success": 7
+        },
+        "imf_datamapper": {
+          "success": 2
+        },
         "pbc_card": {
           "success": 3
+        },
+        "world_bank": {
+          "success": 22
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-11-06T12:22:38.720075+00:00",
+          "country": "CN",
+          "indicator_id": "vegetable_basket_price_index_akshare",
+          "source_id": "akshare_table",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "AKShare fetch timed out after 35s for macro_china_vegetable_basket"
+        }
+      ]
     },
     "JP": {
-      "calls": 0,
-      "success": 0,
-      "empty": 0,
-      "failed": 0,
-      "circuit_open": 0,
-      "failure_reasons": {},
-      "empty_reasons": {},
-      "sources": {},
-      "events": []
-    },
-    "ZA": {
-      "calls": 0,
-      "success": 0,
-      "empty": 0,
-      "failed": 0,
-      "circuit_open": 0,
-      "failure_reasons": {},
-      "empty_reasons": {},
-      "sources": {},
-      "events": []
-    },
-    "UK": {
-      "calls": 0,
-      "success": 0,
-      "empty": 0,
-      "failed": 0,
-      "circuit_open": 0,
-      "failure_reasons": {},
-      "empty_reasons": {},
-      "sources": {},
-      "events": []
-    },
-    "US": {
-      "calls": 0,
-      "success": 0,
-      "empty": 0,
-      "failed": 0,
-      "circuit_open": 0,
-      "failure_reasons": {},
-      "empty_reasons": {},
-      "sources": {},
-      "events": []
-    },
-    "EA": {
-      "calls": 8,
-      "success": 8,
+      "calls": 59,
+      "success": 59,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
       "failure_reasons": {},
       "empty_reasons": {},
       "sources": {
-        "eurostat_jsonstat": {
-          "success": 8
-        }
-      },
-      "events": []
-    },
-    "TR": {
-      "calls": 1,
-      "success": 1,
-      "empty": 0,
-      "failed": 0,
-      "circuit_open": 0,
-      "failure_reasons": {},
-      "empty_reasons": {},
-      "sources": {
-        "bis_fx": {
+        "bis_credit_gap": {
+          "success": 1
+        },
+        "bis_policy_rate": {
+          "success": 1
+        },
+        "boj_flatfile": {
+          "success": 1
+        },
+        "estat": {
+          "success": 7
+        },
+        "fred": {
+          "success": 40
+        },
+        "imf_datamapper": {
+          "success": 3
+        },
+        "imf_sdmx": {
+          "success": 5
+        },
+        "spread": {
           "success": 1
         }
       },
       "events": []
+    },
+    "ZA": {
+      "calls": 65,
+      "success": 65,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "fred": {
+          "success": 32
+        },
+        "imf_datamapper": {
+          "success": 3
+        },
+        "imf_sdmx": {
+          "success": 18
+        },
+        "sarb": {
+          "success": 11
+        },
+        "world_bank": {
+          "success": 1
+        }
+      },
+      "events": []
+    },
+    "UK": {
+      "calls": 96,
+      "success": 96,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bis_credit_gap": {
+          "success": 1
+        },
+        "boe_iadb": {
+          "success": 12
+        },
+        "fred": {
+          "success": 9
+        },
+        "govuk_ods_table": {
+          "success": 4
+        },
+        "govuk_road_fuel": {
+          "success": 2
+        },
+        "obr_xlsx_row": {
+          "success": 4
+        },
+        "ons_horizontal_csv_table": {
+          "success": 2
+        },
+        "ons_timeseries": {
+          "success": 51
+        },
+        "ons_xlsx_table": {
+          "success": 9
+        },
+        "spread": {
+          "success": 2
+        }
+      },
+      "events": []
+    },
+    "US": {
+      "calls": 180,
+      "success": 180,
+      "empty": 0,
+      "failed": 0,
+      "circuit_open": 0,
+      "failure_reasons": {},
+      "empty_reasons": {},
+      "sources": {
+        "bis_credit_gap": {
+          "success": 1
+        },
+        "bls_api": {
+          "success": 4
+        },
+        "fred": {
+          "success": 171
+        },
+        "treasury_auctions": {
+          "success": 4
+        }
+      },
+      "events": []
+    },
+    "EA": {
+      "calls": 74,
+      "success": 73,
+      "empty": 0,
+      "failed": 1,
+      "circuit_open": 0,
+      "failure_reasons": {
+        "timeout": 1
+      },
+      "empty_reasons": {},
+      "sources": {
+        "bis_credit_gap": {
+          "success": 1
+        },
+        "ecb_sdmx": {
+          "failed": 1,
+          "success": 27
+        },
+        "eurostat_jsonstat": {
+          "success": 37
+        },
+        "fred": {
+          "success": 2
+        },
+        "imf_datamapper": {
+          "success": 1
+        },
+        "spread": {
+          "success": 5
+        }
+      },
+      "events": [
+        {
+          "timestamp": "2026-11-06T12:24:55.257199+00:00",
+          "country": "EA",
+          "indicator_id": "bank_cet1_ratio",
+          "source_id": "ecb_sdmx",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='data-api.ecb.europa.eu', port=443): Read timed out. (read timeout=60)"
+        }
+      ]
+    },
+    "TR": {
+      "calls": 59,
+      "success": 56,
+      "empty": 0,
+      "failed": 3,
+      "circuit_open": 0,
+      "failure_reasons": {
+        "unexpected_error": 3
+      },
+      "empty_reasons": {},
+      "sources": {
+        "bis_fx": {
+          "success": 1
+        },
+        "bis_policy_rate": {
+          "success": 1
+        },
+        "bruegel_reer": {
+          "success": 2
+        },
+        "dbnomics": {
+          "success": 2
+        },
+        "eurostat": {
+          "success": 22
+        },
+        "fred": {
+          "success": 9
+        },
+        "imf_datamapper": {
+          "success": 4
+        },
+        "imf_sdmx": {
+          "failed": 3,
+          "success": 6
+        },
+        "tcmb_evds": {
+          "success": 6
+        },
+        "tcmb_xml": {
+          "success": 1
+        },
+        "world_bank": {
+          "success": 2
+        }
+      },
+      "events": [
+        {
+          "timestamp": "2026-11-06T12:28:08.338537+00:00",
+          "country": "TR",
+          "indicator_id": "food_cpi_inflation",
+          "source_id": "imf_sdmx",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
+        },
+        {
+          "timestamp": "2026-11-06T12:28:14.041501+00:00",
+          "country": "TR",
+          "indicator_id": "food_cpi_inflation",
+          "source_id": "imf_sdmx",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
+        },
+        {
+          "timestamp": "2026-11-06T12:28:14.041590+00:00",
+          "country": "TR",
+          "indicator_id": "food_cpi_inflation",
+          "source_id": "imf_sdmx",
+          "outcome": "failed",
+          "reason": "unexpected_error",
+          "message": "IMF SDMX returned no observations for CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M."
+        }
+      ]
     },
     "HK": {
       "calls": 2,
@@ -617,19 +831,122 @@
       "events": []
     },
     "KR": {
-      "calls": 1,
-      "success": 1,
+      "calls": 58,
+      "success": 49,
       "empty": 0,
-      "failed": 0,
+      "failed": 9,
       "circuit_open": 0,
-      "failure_reasons": {},
+      "failure_reasons": {
+        "http_error": 9
+      },
       "empty_reasons": {},
       "sources": {
         "bis_credit_gap": {
           "success": 1
+        },
+        "bok_ecos": {
+          "success": 7
+        },
+        "bruegel_reer": {
+          "success": 2
+        },
+        "dbnomics": {
+          "success": 2
+        },
+        "fred": {
+          "failed": 9,
+          "success": 25
+        },
+        "imf_datamapper": {
+          "success": 4
+        },
+        "imf_sdmx": {
+          "success": 8
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-11-06T12:28:27.477112+00:00",
+          "country": "KR",
+          "indicator_id": "consumer_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-11-06T12:28:27.942699+00:00",
+          "country": "KR",
+          "indicator_id": "business_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-11-06T12:28:28.369449+00:00",
+          "country": "KR",
+          "indicator_id": "manufacturing_wage_growth",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-11-06T12:28:41.146724+00:00",
+          "country": "KR",
+          "indicator_id": "business_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-11-06T12:28:53.360616+00:00",
+          "country": "KR",
+          "indicator_id": "business_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORBSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-11-06T12:29:05.740121+00:00",
+          "country": "KR",
+          "indicator_id": "consumer_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-11-06T12:29:18.120472+00:00",
+          "country": "KR",
+          "indicator_id": "consumer_confidence",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCSCICP02STSAM&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-11-06T12:29:30.807292+00:00",
+          "country": "KR",
+          "indicator_id": "manufacturing_wage_growth",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
+        },
+        {
+          "timestamp": "2026-11-06T12:29:43.489685+00:00",
+          "country": "KR",
+          "indicator_id": "manufacturing_wage_growth",
+          "source_id": "fred",
+          "outcome": "failed",
+          "reason": "http_error",
+          "message": "404 Client Error: Not Found for url: https://fred.stlouisfed.org/graph/fredgraph.csv?id=LCEAMN01KRM659S&cosd=2000-01-01"
+        }
+      ]
     },
     "TW": {
       "calls": 48,
@@ -758,29 +1075,8 @@
       "events": []
     },
     "ENERGY": {
-      "calls": 23,
-      "success": 23,
-      "empty": 0,
-      "failed": 0,
-      "circuit_open": 0,
-      "failure_reasons": {},
-      "empty_reasons": {},
-      "sources": {
-        "eia_steo": {
-          "success": 16
-        },
-        "ember_generation": {
-          "success": 5
-        },
-        "gie_agsi": {
-          "success": 2
-        }
-      },
-      "events": []
-    },
-    "PRECIOUS": {
-      "calls": 37,
-      "success": 37,
+      "calls": 71,
+      "success": 71,
       "empty": 0,
       "failed": 0,
       "circuit_open": 0,
@@ -788,6 +1084,51 @@
       "empty_reasons": {},
       "sources": {
         "cftc_positions": {
+          "success": 5
+        },
+        "eia_steo": {
+          "success": 16
+        },
+        "eia_xls": {
+          "success": 22
+        },
+        "ember_generation": {
+          "success": 5
+        },
+        "energy_charts_price": {
+          "success": 2
+        },
+        "eurostat_jsonstat": {
+          "success": 6
+        },
+        "foreign_futures": {
+          "success": 3
+        },
+        "fred": {
+          "success": 9
+        },
+        "gie_agsi": {
+          "success": 2
+        },
+        "ons_timeseries": {
+          "success": 1
+        }
+      },
+      "events": []
+    },
+    "PRECIOUS": {
+      "calls": 38,
+      "success": 37,
+      "empty": 0,
+      "failed": 1,
+      "circuit_open": 0,
+      "failure_reasons": {
+        "timeout": 1
+      },
+      "empty_reasons": {},
+      "sources": {
+        "cftc_positions": {
+          "failed": 1,
           "success": 4
         },
         "foreign_futures": {
@@ -803,7 +1144,17 @@
           "success": 2
         }
       },
-      "events": []
+      "events": [
+        {
+          "timestamp": "2026-11-06T12:32:28.645090+00:00",
+          "country": "PRECIOUS",
+          "indicator_id": "cftc_silver_mm_net",
+          "source_id": "cftc_positions",
+          "outcome": "failed",
+          "reason": "timeout",
+          "message": "HTTPSConnectionPool(host='publicreporting.cftc.gov', port=443): Read timed out. (read timeout=5)"
+        }
+      ]
     },
     "BASE": {
       "calls": 34,
