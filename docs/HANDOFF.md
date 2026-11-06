@@ -105,24 +105,26 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
 
 ## 5. 密钥
 
-- 变量名：`FRED_API_KEY`、`EIA_API_KEY`、`GIE_AGSI_API_KEY`、`EMBER_API_KEY`、`ENTSOE_API_TOKEN`、`ESTAT_APP_ID`、`BLS_API_KEY`、`BOK_ECOS_API_KEY`、`TCMB_EVDS_API_KEY`、`FINMIND_API_TOKEN`、`KOSIS_API_KEY`。
+- 变量名：`FRED_API_KEY`、`EIA_API_KEY`、`GIE_AGSI_API_KEY`、`EMBER_API_KEY`、`ENTSOE_API_TOKEN`、`ESTAT_APP_ID`、`BLS_API_KEY`、`BOK_ECOS_API_KEY`、`TCMB_EVDS_API_KEY`、`FINMIND_API_TOKEN`、`KOSIS_API_KEY`、`BCCH_API_TOKEN`（智利央行）。
 - 云环境的密钥只对新开的会话生效。**新会话第一步**：只检查变量名是否存在，不要打印值，例如：
   `for k in EIA_API_KEY GIE_AGSI_API_KEY EMBER_API_KEY ENTSOE_API_TOKEN; do [ -n "$(printenv $k)" ] && echo "$k set" || echo "$k missing"; done`
-- 本地运行时，`scripts/uv_project.sh` 会读取被 gitignore 的 `.env.local`。日志按值脱敏（`source_health.py`）。
+- 本地运行时，`scripts/uv_project.sh` 通过 `scripts/env_file.sh` 按字面读取被 gitignore 的 `.env.local`（规则与 Python 加载器相同：不展开 `$`，`=` 两边可有空格，去掉外层引号）。不要改回 `.` 直接执行这个文件：值里有 `$` 时 shell 会报错，错误信息还会带出部分密钥。日志按值脱敏（`source_health.py`）。
 - 2026-11-05 本地状态：EIA、GIE、Ember、FRED、ESTAT、BLS、TCMB、FinMind、ENTSO-E 都在 `.env.local`；BOK_ECOS、KOSIS 本地没有（GitHub secrets 里有 BOK_ECOS，没有 KOSIS）。
+- 2026-11-06：智利央行 token `BCCH_API_TOKEN` 已放入 `.env.local`，用户已手工写入 GitHub secrets。SieteRestWS 只需 `token` 参数，不需要用户名和密码。ENTSO-E 当天复测仍是 `999 User is not authorized`。
 - **ENTSO-E**：token 已配置，但 API 对所有请求返回 `999 User is not authorized`。这是账户还没开通 Restful API 权限：需要用户用注册邮箱发邮件给 <transparency@entsoe.eu>，主题写 "Restful API access"。开通后再接 fetcher。
 
 ## 6. 待办（按优先级）
 
 1. **能源页里需要 key 的部分**：EIA STEO、GIE AGSI+、Ember 和 CEE 储气率已完成（见 §2 第 8 项）。剩下的是 **ENTSO-E**，等用户开通 API 权限（见 §5）。开通后建议先做：德国燃气发电（日度，代表电力部门的燃气需求）、法国核电发电量（日度）、挪威水库蓄水（周度）。
 2. **油价模型 v2**：设计已确认，见 `docs/superpowers/specs/2026-11-05-oil-shock-model-v2-design.md`（英国改用 ONS 能源特殊汇总；美国权重保持缺口；主设定滞后 12 月、全样本，另 3 个设定展开；HAC 90% 区间；独立的二轮效应 MODEL `oil_shock_core`）。下一步：写实施计划（`writing-plans`），在新会话里执行。
-3. **基本金属后续**：设计已确认，见 `docs/superpowers/specs/2026-11-05-base-metals-followups-design.md`。顺序：库存累积 → 上期所近远月价差 → COMEX 金银库存 → 中国精炼铜探查 → 智利（等用户注册智利央行账号，凭据 `BCCH_API_USER`/`BCCH_API_PASSWORD`）→ 秘鲁 MINEM。不可做：COMEX 铜库存、LME 库存。
+3. **基本金属后续**：设计已确认，见 `docs/superpowers/specs/2026-11-05-base-metals-followups-design.md`。顺序：库存累积 → 上期所近远月价差 → COMEX 金银库存 → 中国精炼铜探查 → 智利（token 已到位，见 §5；铜产量序列 `F034.PCUM.FLU.COCHILCO.Z.0.M`，实现时把 `BCCH_API_TOKEN` 加进 `scheduled_refresh.yml` 的 env 和 `source_health.py` 的 `SECRET_ENV_NAMES`）→ 秘鲁 MINEM。不可做：COMEX 铜库存、LME 库存。
 4. **后续小项**
    - KZ/NG/UZ/EG 政策利率（2026-11-05 已处理；BIS WS_CBPOL 不覆盖这四国，原 DBnomics IFS 序列止于 2020–2025）：KZ 改用 NBK 官网决议表（`nbk_base_rate`，2015-09 起，事件日期加截至行）；UZ/EG 改用 IMF MFS_IR 的 `MFS166`（货币政策相关利率），IMF 滞后约 14 个月；CBU 从本环境连不上，CBE 返回拦截页。NG 改用 CBN 官方接口 `api/GetAllMoneyMarketIndicators`（`cbn_money_market`，月度，2006-12 起，字段还有银行间、国债、存贷款利率）。不要改用 CBN 决议页（Decisions.html）：它漏收了 2024-11 第 298 次会议（加息至 27.5%）。CBN 接口 2025-08 为 27.0%，与决议日期（2025-09-23）不符，已写入 caveat。
    - CEE 叙述文字（`config/countries.yaml`）需要逐条核实后重写。匈牙利央行领导层已于 2026-11-05 按 mnb.hu 更正（行长 Varga、四位副行长）；仍未核实的有：匈牙利政治背景（2026 年 4 月大选结果）、各国央行资产负债表数字、PL/CZ/RO 的行长与委员名单。mnb.hu 的议会选任委员名单当天无法与原文逐条核对（摘要列出的条目里有任期似已届满的），未采用，页面改为指向 mnb.hu。
    - 欧元区：职位空缺与 7 个 EA20 序列已于 2026-11-05 修复（见 §7 Eurostat 行）。协议工资同日修复：ECB 把它从 STS（`STS.Q.*.N.INWR.000000.3.ANR`，止于 2025-Q3）移到了 INW 数据流，现用 `INW.Q.U2.N.INWR.000000.4F0.GY.IX`（随成员变化的 U2 口径，不会因扩容冻结；与旧序列 135 个重叠季度差异 ≤0.13pp）。
    - 欧元区还有 8 个序列用 EA20（`sts_*`、`gov_*`），目前仍在更新，与已切换到 EA21 的序列口径不一致；以后可统一切到 EA21（两者差约 0.1pp）。
    - 已修（2026-11-05）：`load_canonical_data_first_frame` 原来不读回 `prior_vintage`/`has_revisions`/`fetch_timestamp`，导致前次 vintage 只保留一次构建、回退序列显示为刚抓取。现已读回，`tests/test_canonical.py` 覆盖。此前已丢失的前次 vintage（如 `usd_cny_midpoint`）要等下一次出现新 vintage 才会重新记录。
+   - 定时刷新：11-02 至 11-06 每天失败，2026-11-06 修复（#19、#20），当天手动刷新成功并已发布（data 分支 5f7d148，线上冒烟 51/51）。剩余的非阻断失败：韩国 9 个 FRED 序列返回 404（OECD 镜像已停更，如 `KORCSCICP02STSAM`，应移入 data_gaps 或换源）；土耳其 3 个 IMF CPI 分项（如 `CPI/TUR.CPI.CP01.YOY_PCH_PA_PT.M`）IMF 返回 200 但没有数值；CFTC、ECB、AKShare 偶发超时。`source_health.json` 里 CEE 的 `name 'ROOT' is not defined` 是 11-05 之前的旧记录（工作日刷新不重跑 CEE），周末全量刷新后应消失。`page_renderer.inject_index` 没有调用者，且引用了未定义的 `config`，可以删除。
    - 中国 PBC 卡片（2026-11-05 已修）：DR007 页面的「Latest Update」是浏览器用访问者当天日期填的，所以卡片日期取页面的 `createDate`（M2 页的 createDate 与显示的更新日期一致）。DR007 当前值 1.4935% 的日期是 2026-09-23，PBC 英文页更新不频繁；要看日度 DR007 需另接时间序列。
    - 印度 IMF FSI 返回 403；可接入 MOSPI/RBI 原生数据。
    - 黄金 ETF 持仓缺来源；可加 `rolling_beta` 算子（金价对实际利率）。
@@ -133,7 +135,7 @@ scripts/uv_project.sh run python scripts/publish_smoke.py --local      # 页面�
 | 数据源           | 情况                                                                                                           |
 | ------------- | ------------------------------------------------------------------------------------------------------------ |
 | energy-charts | 连续请求会返回 429，fetcher 已加 Retry-After 退避                                                                        |
-| IMF           | `IMF.STA,IL` 的 key 是 `<ISO3>.RGV_REVS.FTO.M`（四段，五段会 403）；FSIC 数据流在本环境返回 403                                  |
+| IMF           | `IMF.STA,IL` 的 key 是 `<ISO3>.RGV_REVS.FTO.M`（四段，五段会 403）；裸 `FSIC` 数据流对所有 key 返回 403，改用 `IMF.STA,FSIC`（2026-11-06，日本、南非已切换；印度的 FSIC 缺口可以照此补上）                                  |
 | FRED          | 部分 OECD 镜像已停更（印度 10Y 与 3M、M3 等）。不要上页面，记为 gap                                                                 |
 | EIA           | 期货曲线 RCLC1-4 止于 2024-04-05                                                                                   |
 | 中国            | Eastmoney 部分接口会重置连接；NBS easyquery 返回 403                                                                     |
