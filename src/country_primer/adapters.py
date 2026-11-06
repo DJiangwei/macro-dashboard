@@ -1939,17 +1939,30 @@ def _call_with_timeout(fn: Any, args: list[Any], kwargs: dict[str, Any], timeout
     The previous implementation used ``signal.alarm``: ``signal`` was never
     imported (every AKShare fetch raised NameError) and SIGALRM only works in
     the main thread anyway, while builders fetch from a thread pool.
-    """
-    import concurrent.futures as _cf
 
-    executor = _cf.ThreadPoolExecutor(max_workers=1, thread_name_prefix="akshare")
-    future = executor.submit(fn, *args, **kwargs)
+    The call runs in a daemon thread. A thread cannot be killed, so a timed-out
+    call keeps running; a pool thread would then hold the interpreter open at
+    exit until the slow source finished (the 2026-11-06 refresh hit its job
+    time limit that way), whereas a daemon thread is dropped at exit.
+    """
+    import queue
+
+    outcome: queue.Queue = queue.Queue(maxsize=1)
+
+    def run() -> None:
+        try:
+            outcome.put((True, fn(*args, **kwargs)))
+        except BaseException as exc:  # handed to the caller below
+            outcome.put((False, exc))
+
+    threading.Thread(target=run, name=f"akshare-{label}", daemon=True).start()
     try:
-        return future.result(timeout=timeout_seconds)
-    except _cf.TimeoutError as exc:
+        succeeded, value = outcome.get(timeout=timeout_seconds)
+    except queue.Empty as exc:
         raise TimeoutError(f"AKShare fetch timed out after {timeout_seconds}s for {label}") from exc
-    finally:
-        executor.shutdown(wait=False, cancel_futures=True)
+    if succeeded:
+        return value
+    raise value
 
 
 def _fetch_akshare_frame(spec: dict[str, Any], cache: dict[str, Any] | None=None) -> Any:

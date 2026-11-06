@@ -317,3 +317,40 @@ def test_fsic_specs_use_the_agency_qualified_dataflow() -> None:
     ]
     assert fsic, "expected the Japan and South Africa FSIC series"
     assert [item for item in fsic if item[2] != "IMF.STA,FSIC"] == []
+
+
+def test_akshare_timeout_does_not_keep_the_process_alive() -> None:
+    # A timed-out AKShare call used to leave a non-daemon pool thread behind,
+    # and interpreter exit waits for such threads: on 2026-11-06 slow AKShare
+    # pages kept build_scope alive after every page was written, until the
+    # refresh job hit its 25-minute limit.
+    import os
+    import subprocess
+    import sys
+    import time
+    code = (
+        "import time\n"
+        "from country_primer.adapters import _call_with_timeout\n"
+        "try:\n"
+        "    _call_with_timeout(time.sleep, [20], {}, 1, 'slow_source')\n"
+        "except TimeoutError as exc:\n"
+        "    print(exc)\n"
+    )
+    env = {**os.environ, "PYTHONPATH": "src"}
+    started = time.monotonic()
+    result = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=15, env=env)
+    elapsed = time.monotonic() - started
+    assert "timed out after 1s for slow_source" in result.stdout, result.stderr
+    assert elapsed < 10, f"process lingered {elapsed:.1f}s after the timeout"
+
+
+def test_akshare_timeout_wrapper_returns_values_and_reraises_errors() -> None:
+    from country_primer.adapters import _call_with_timeout
+
+    assert _call_with_timeout(lambda x, y=0: x * 2 + y, [3], {"y": 1}, 5, "ok") == 7
+
+    def broken() -> None:
+        raise ValueError("source changed its schema")
+
+    with pytest.raises(ValueError, match="source changed its schema"):
+        _call_with_timeout(broken, [], {}, 5, "broken")

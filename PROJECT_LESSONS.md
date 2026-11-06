@@ -231,3 +231,8 @@ Rules that follow (enforced by `tests/test_data_integrity.py`):
 - Weekday refreshes do not rerun CEE, so CEE entries in
   `output/source_health.json` can be days old. Read the failing run's own
   "Report failing sources" step before debugging an entry.
+- A timeout that abandons work must not leave a non-daemon thread behind:
+  interpreter exit joins every `ThreadPoolExecutor` worker, so one slow source
+  holds the process open after all pages are written. `_call_with_timeout`
+  runs AKShare in a daemon thread for this reason (2026-11-06 the refresh hit
+  its 25-minute limit at ~220 s per AKShare page).
