@@ -887,10 +887,10 @@ indicators:
   label_zh: 监管资本充足率
   unit: '%'
   fetcher: imf_sdmx
-  dataflow: FSIC
+  dataflow: IMF.STA,FSIC
   series: JPN.S12CFSI.FSI688_CFSI_PT.Q
   source_name: IMF SDMX / Financial Soundness Indicators
-  source_url: https://api.imf.org/external/sdmx/2.1/data/FSIC/JPN.S12CFSI.FSI688_CFSI_PT.Q
+  source_url: https://api.imf.org/external/sdmx/2.1/data/IMF.STA,FSIC/JPN.S12CFSI.FSI688_CFSI_PT.Q
   frequency: quarterly
   start_date: '2008-01-01'
   caveat_en: Deposit-taker aggregate reported to the IMF; national regulatory definitions
@@ -902,10 +902,10 @@ indicators:
   label_zh: 不良贷款率
   unit: '%'
   fetcher: imf_sdmx
-  dataflow: FSIC
+  dataflow: IMF.STA,FSIC
   series: JPN.S12CFSI.AQ12_CFSI_PT.Q
   source_name: IMF SDMX / Financial Soundness Indicators
-  source_url: https://api.imf.org/external/sdmx/2.1/data/FSIC/JPN.S12CFSI.AQ12_CFSI_PT.Q
+  source_url: https://api.imf.org/external/sdmx/2.1/data/IMF.STA,FSIC/JPN.S12CFSI.AQ12_CFSI_PT.Q
   frequency: quarterly
   start_date: '2008-01-01'
   caveat_en: Deposit-taker aggregate. Japan's ratio is among the lowest in the G7,
