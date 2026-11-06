@@ -125,6 +125,7 @@ FETCHERS: dict[str, FetcherDef] = {
     "eia_steo": FetcherDef("fetch_eia_steo", SPEC, RAW, "EIA STEO history months via API v2 (EIA_API_KEY)", "energy_adapters"),
     "ember_generation": FetcherDef("fetch_ember_generation", SPEC, RAW, "Ember monthly generation by source (EMBER_API_KEY)", "energy_adapters"),
     "cn_futures_calendar_spread": FetcherDef("fetch_cn_futures_calendar_spread", SPEC, RAW, "SHFE near minus third-month settle via Sina/AKShare", "metals_adapters"),
+    "comex_inventory": FetcherDef("fetch_comex_inventory", SPEC, RAW, "COMEX warehouse stocks via AKShare", "metals_adapters"),
 }
 
 

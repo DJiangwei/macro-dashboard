@@ -43,3 +43,30 @@ def test_contract_months_span_start_to_three_ahead() -> None:
     from country_primer.metals_adapters import contract_months
 
     assert contract_months("2025-11-15", "2026-01-20") == ["2511", "2512", "2601", "2602", "2603", "2604"]
+
+
+def _comex_frame(tonnes_column: str = "COMEX黄金库存量-吨"):
+    import pandas as pd
+
+    return pd.DataFrame({
+        "序号": [1, 2, 3],
+        "日期": ["2026-11-03", "2026-11-04", "2026-11-06"],
+        tonnes_column: [719.26, 715.29, 700.0],
+        "COMEX黄金库存量-盎司": [23124670.0, 22997130.0, 22505000.0],
+    })
+
+
+def test_comex_observations_reads_tonnes_and_drops_today() -> None:
+    from country_primer.metals_adapters import comex_observations
+
+    assert comex_observations(_comex_frame(), today="2026-11-06") == [
+        {"date": "2026-11-03", "value": 719.26},
+        {"date": "2026-11-04", "value": 715.29},
+    ]
+
+
+def test_comex_observations_require_a_tonnes_column() -> None:
+    from country_primer.metals_adapters import comex_observations
+
+    with pytest.raises(ValueError, match="-吨"):
+        comex_observations(_comex_frame("COMEX黄金库存量-千克"), today="2026-11-06")

@@ -3,6 +3,8 @@
 * ``fetch_cn_futures_calendar_spread``: SHFE near-month minus third-month
   settlement spread, built from single-contract daily bars (Sina via AKShare,
   a public wrapper).
+* ``fetch_comex_inventory``: COMEX gold and silver warehouse stocks in tonnes,
+  compiled by AKShare from CME reports (public wrapper).
 """
 from __future__ import annotations
 
@@ -11,6 +13,7 @@ from datetime import UTC, datetime
 from typing import Any
 
 SINA_FUTURES_URL = "https://finance.sina.com.cn/futuremarket/"
+COMEX_STOCKS_URL = "https://www.cmegroup.com/clearing/operations-and-deliveries/nymex-delivery-notices.html"
 
 
 def _shift_month(year_month: str, months: int) -> str:
@@ -92,3 +95,38 @@ def fetch_cn_futures_calendar_spread(spec: dict[str, Any]) -> dict[str, Any]:
     if not observations:
         raise RuntimeError(f"No SHFE calendar spread could be built for {product}")
     return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": SINA_FUTURES_URL}
+
+
+def comex_observations(frame: Any, today: str) -> list[dict[str, Any]]:
+    """Daily stocks in tonnes from AKShare's COMEX inventory frame, completed days only."""
+    tonnes = [column for column in frame.columns if str(column).endswith("-吨")]
+    if len(tonnes) != 1:
+        raise ValueError(f"Expected one '-吨' column in the COMEX inventory frame, got {list(frame.columns)}")
+    observations = []
+    for day, raw in zip(frame["日期"], frame[tonnes[0]]):
+        day = str(day)[:10]
+        try:
+            value = float(raw)
+        except (TypeError, ValueError):
+            continue
+        if day < today and math.isfinite(value) and value > 0:
+            observations.append({"date": day, "value": value})
+    observations.sort(key=lambda item: item["date"])
+    return observations
+
+
+def fetch_comex_inventory(spec: dict[str, Any]) -> dict[str, Any]:
+    """COMEX warehouse stocks for the AKShare symbol in ``series`` (黄金 or 白银)."""
+    import akshare as ak
+
+    from .adapters import _call_with_timeout
+
+    symbol = str(spec["series"])
+    frame = _call_with_timeout(ak.futures_comex_inventory, [], {"symbol": symbol}, 60, f"futures_comex_inventory {symbol}")
+    observations = comex_observations(frame, datetime.now(UTC).date().isoformat())
+    start = str(spec.get("start_date") or "")[:10]
+    if start:
+        observations = [item for item in observations if item["date"] >= start]
+    if not observations:
+        raise RuntimeError(f"No COMEX inventory rows for {symbol}")
+    return {**spec, "observations": observations, "provider_updated": observations[-1]["date"], "api_url": COMEX_STOCKS_URL}
