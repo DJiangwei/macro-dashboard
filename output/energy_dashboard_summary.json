@@ -1,8 +1,8 @@
 {
   "file": "energy.html",
-  "generated": "2026-11-06T12:33:29.253972+00:00",
-  "charts": 85,
-  "source_groups": 28,
+  "generated": "2026-11-07T08:43:56.113740+00:00",
+  "charts": 86,
+  "source_groups": 29,
   "data_gaps": 4,
   "low_confidence": 0,
   "key_series_latest": [
@@ -94,9 +94,9 @@
       "id": "cftc_wti_mm_net",
       "label_en": "WTI (NYMEX) Managed-Money Net Position",
       "label_zh": "WTI（NYMEX）管理基金净持仓",
-      "latest_date": "2026-10-27",
-      "latest_value": 31128.0,
-      "latest_display": "31,128 contracts",
+      "latest_date": "2026-11-03",
+      "latest_value": 21728.0,
+      "latest_display": "21,728 contracts",
       "frequency": "weekly",
       "source_name": "CFTC Commitments of Traders (disaggregated)",
       "series": "067651",
@@ -106,9 +106,9 @@
       "id": "de_power_day_ahead",
       "label_en": "Germany–Luxembourg Day-Ahead Power (daily mean)",
       "label_zh": "德国–卢森堡日前电价（日均）",
-      "latest_date": "2026-11-05",
-      "latest_value": 257.38,
-      "latest_display": "257.4 EUR/MWh",
+      "latest_date": "2026-11-06",
+      "latest_value": 275.64,
+      "latest_display": "275.6 EUR/MWh",
       "frequency": "daily",
       "source_name": "energy-charts (Fraunhofer ISE) / Bundesnetzagentur SMARD",
       "series": "DE-LU",
@@ -118,18 +118,16 @@
       "id": "us_breakeven_5y",
       "label_en": "US 5-Year Breakeven Inflation",
       "label_zh": "美国5年期盈亏平衡通胀率",
-      "latest_date": "2026-11-05",
-      "latest_value": 2.26,
-      "latest_display": "2.26 %",
+      "latest_date": "2026-11-06",
+      "latest_value": 2.29,
+      "latest_display": "2.29 %",
       "frequency": "daily",
       "source_name": "US Treasury / Federal Reserve via FRED",
       "series": "T5YIE",
       "quality_status": "watch"
     }
   ],
-  "unavailable": [
-    "eu_gas_storage_vs_5y"
-  ],
+  "unavailable": [],
   "data_mode": "snapshot",
   "latest_cards": [],
   "brent_latest": "107.03 USD/bbl (2026-11-03)",
@@ -141,11 +139,11 @@
       "value"
     ],
     "file": "energy_canonical_frame.json",
-    "series": 85,
-    "observations": 83278,
-    "series_count": 85,
-    "observation_count": 83278,
-    "snapshot_generated": "2026-11-06T12:32:15.481166+00:00"
+    "series": 86,
+    "observations": 89949,
+    "series_count": 86,
+    "observation_count": 89949,
+    "snapshot_generated": "2026-11-07T08:42:50.910573+00:00"
   },
   "data_gaps_detail": [
     {
@@ -178,7 +176,7 @@
     }
   ],
   "source_health": {
-    "source_groups": 28,
+    "source_groups": 29,
     "sources": [
       {
         "source_name": "EIA Short-Term Energy Outlook",
@@ -253,6 +251,10 @@
         "charts": 1
       },
       {
+        "source_name": "Derived from GIE AGSI+",
+        "charts": 1
+      },
+      {
         "source_name": "Derived from IMF Primary Commodity Prices via FRED",
         "charts": 1
       },
@@ -294,10 +296,10 @@
       }
     ],
     "quality_counts": {
-      "verified": 51,
+      "verified": 52,
       "watch": 34
     },
-    "unavailable_count": 1
+    "unavailable_count": 0
   },
   "framework": {
     "version": 2,
@@ -306,12 +308,12 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-11-06",
+    "as_of_date": "2026-11-07",
     "counts": {
-      "current": 84,
+      "current": 85,
       "due": 1
     },
-    "latest_historical_date": "2026-11-05",
+    "latest_historical_date": "2026-11-06",
     "attention": [
       {
         "id": "us_crude_production_monthly",
@@ -321,7 +323,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 67,
+        "age_days": 68,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -339,7 +341,7 @@
   },
   "transform_audit": {
     "counts": {
-      "level": 84,
+      "level": 85,
       "yoy_pct": 1
     },
     "non_level": [
@@ -357,6 +359,6 @@
       "date",
       "value"
     ],
-    "charted_series": 85
+    "charted_series": 86
   }
 }

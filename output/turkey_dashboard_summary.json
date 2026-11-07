@@ -1,6 +1,6 @@
 {
   "file": "turkey.html",
-  "generated": "2026-11-06T12:33:27.996538+00:00",
+  "generated": "2026-11-07T08:43:54.146165+00:00",
   "charts": 57,
   "source_groups": 19,
   "data_gaps": 2,
@@ -64,7 +64,7 @@
       "frequency": "monthly",
       "source_name": "Eurostat / TurkStat",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "manufacturing_production_growth",
@@ -76,7 +76,7 @@
       "frequency": "monthly",
       "source_name": "Eurostat / TurkStat",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "retail_sales_growth",
@@ -88,7 +88,7 @@
       "frequency": "monthly",
       "source_name": "Eurostat / TurkStat",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "construction_production_growth",
@@ -100,7 +100,7 @@
       "frequency": "monthly",
       "source_name": "Eurostat / TurkStat",
       "series": "",
-      "quality_status": "verified"
+      "quality_status": "watch"
     },
     {
       "id": "economic_sentiment_indicator",
@@ -262,8 +262,8 @@
       "id": "try_usd",
       "label_en": "USD/TRY Official Exchange Rate",
       "label_zh": "美元兑土耳其里拉官方汇率",
-      "latest_date": "2026-11-05",
-      "latest_value": 49.9589,
+      "latest_date": "2026-11-06",
+      "latest_value": 49.9824,
       "latest_display": "50.0 TRY per USD",
       "frequency": "daily",
       "source_name": "Central Bank of the Republic of Turkey (TCMB)",
@@ -552,7 +552,7 @@
   ],
   "data_mode": "snapshot",
   "latest_cards": [],
-  "usd_try_latest": "49.9589 (2026-11-05)",
+  "usd_try_latest": "49.9824 (2026-11-06)",
   "cross_checks": [
     {
       "concept": "headline_inflation",
@@ -584,7 +584,7 @@
     "observations": 11178,
     "series_count": 57,
     "observation_count": 11178,
-    "snapshot_generated": "2026-11-06T12:32:48.621297+00:00"
+    "snapshot_generated": "2026-11-07T08:43:12.751126+00:00"
   },
   "data_gaps_detail": [
     {
@@ -684,8 +684,8 @@
     ],
     "quality_counts": {
       "low_confidence": 7,
-      "verified": 28,
-      "watch": 22
+      "verified": 24,
+      "watch": 26
     },
     "unavailable_count": 1
   },
@@ -696,14 +696,14 @@
     "legacy_aliases": 7
   },
   "freshness": {
-    "as_of_date": "2026-11-06",
+    "as_of_date": "2026-11-07",
     "counts": {
-      "current": 36,
-      "due": 10,
+      "current": 32,
+      "due": 14,
       "projection": 4,
       "stale": 7
     },
-    "latest_historical_date": "2026-11-05",
+    "latest_historical_date": "2026-11-06",
     "attention": [
       {
         "id": "house_price_growth",
@@ -713,7 +713,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2024-10-01",
-        "age_days": 675,
+        "age_days": 676,
         "threshold_days": 185,
         "release_calendar_id": "eurostat_quarterly",
         "expected_release_date": "2025-06-14",
@@ -735,7 +735,7 @@
         "frequency": "annual",
         "freshness_status": "due",
         "age_basis_date": "2024-12-31",
-        "age_days": 675,
+        "age_days": 676,
         "threshold_days": 730,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -757,7 +757,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 585,
+        "age_days": 586,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -779,7 +779,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-03-31",
-        "age_days": 585,
+        "age_days": 586,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -801,7 +801,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 310,
+        "age_days": 311,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -823,7 +823,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 310,
+        "age_days": 311,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -845,7 +845,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2025-10-01",
-        "age_days": 310,
+        "age_days": 311,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -867,7 +867,7 @@
         "frequency": "quarterly",
         "freshness_status": "stale",
         "age_basis_date": "2026-01-01",
-        "age_days": 220,
+        "age_days": 221,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -889,7 +889,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 129,
+        "age_days": 130,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -911,7 +911,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 129,
+        "age_days": 130,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -933,7 +933,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 129,
+        "age_days": 130,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -955,7 +955,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 129,
+        "age_days": 130,
         "threshold_days": 137,
         "release_calendar_id": "bea_quarterly",
         "expected_release_date": "2026-11-04",
@@ -977,7 +977,7 @@
         "frequency": "quarterly",
         "freshness_status": "due",
         "age_basis_date": "2026-04-01",
-        "age_days": 129,
+        "age_days": 130,
         "threshold_days": 165,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -992,6 +992,28 @@
         "transform": "level"
       },
       {
+        "id": "construction_production_growth",
+        "concept_id": "construction_activity",
+        "label_en": "Construction Production YoY",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 68,
+        "threshold_days": 90,
+        "release_calendar_id": "eurostat_monthly",
+        "expected_release_date": "2026-11-14",
+        "due_date": "2026-11-29",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Eurostat / TurkStat",
+        "series": "",
+        "transform": "level"
+      },
+      {
         "id": "fx_reserves",
         "concept_id": "tr:fx_reserves",
         "label_en": "CBRT Gross FX Reserves",
@@ -999,7 +1021,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 67,
+        "age_days": 68,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1021,7 +1043,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 67,
+        "age_days": 68,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1043,7 +1065,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 67,
+        "age_days": 68,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1058,6 +1080,50 @@
         "transform": "level"
       },
       {
+        "id": "industrial_production_growth",
+        "concept_id": "industrial_production_growth",
+        "label_en": "Industrial Production YoY",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 68,
+        "threshold_days": 90,
+        "release_calendar_id": "eurostat_monthly",
+        "expected_release_date": "2026-11-14",
+        "due_date": "2026-11-29",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Eurostat / TurkStat",
+        "series": "",
+        "transform": "level"
+      },
+      {
+        "id": "manufacturing_production_growth",
+        "concept_id": "tr:manufacturing_production_growth",
+        "label_en": "Manufacturing Output YoY",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 68,
+        "threshold_days": 90,
+        "release_calendar_id": "eurostat_monthly",
+        "expected_release_date": "2026-11-14",
+        "due_date": "2026-11-29",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Eurostat / TurkStat",
+        "series": "",
+        "transform": "level"
+      },
+      {
         "id": "overnight_interbank_rate",
         "concept_id": "tr:overnight_interbank_rate",
         "label_en": "Overnight Interbank Rate (Immediate Rates)",
@@ -1065,7 +1131,7 @@
         "frequency": "monthly",
         "freshness_status": "due",
         "age_basis_date": "2026-08-01",
-        "age_days": 67,
+        "age_days": 68,
         "threshold_days": 75,
         "release_calendar_id": "",
         "expected_release_date": "",
@@ -1077,6 +1143,28 @@
         "comparability": "medium",
         "source_name": "FRED / OECD",
         "series": "IRSTCI01TRM156N",
+        "transform": "level"
+      },
+      {
+        "id": "retail_sales_growth",
+        "concept_id": "retail_sales_growth",
+        "label_en": "Retail Sales Volume YoY",
+        "latest_date": "2026-08-01",
+        "frequency": "monthly",
+        "freshness_status": "due",
+        "age_basis_date": "2026-08-01",
+        "age_days": 68,
+        "threshold_days": 90,
+        "release_calendar_id": "eurostat_monthly",
+        "expected_release_date": "2026-11-14",
+        "due_date": "2026-11-29",
+        "quality_status": "watch",
+        "source_authority": "official_primary",
+        "derivation": "observed",
+        "validation": "passed",
+        "comparability": "high",
+        "source_name": "Eurostat / TurkStat",
+        "series": "",
         "transform": "level"
       }
     ]

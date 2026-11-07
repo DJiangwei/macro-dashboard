@@ -1,7 +1,7 @@
 {
   "generated": "2026-10-29",
   "total_countries": 22,
-  "total_indicators": 1637,
+  "total_indicators": 1638,
   "countries": [
     {
       "code": "HU",
@@ -152,7 +152,7 @@
           "frequency": "monthly",
           "obs_count": 264,
           "latest_date": "2026-06-30",
-          "latest_val": 40.098263184222816
+          "latest_val": 36.23184415830095
         },
         {
           "id": "cb_forward_guidance",
@@ -221,94 +221,6 @@
           "latest_val": 121.09197
         },
         {
-          "id": "cpi_contrib_energy_yoy",
-          "label_en": "Energy CPI Contribution (YoY)",
-          "label_zh": "能源与公用事业贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 0.24
-        },
-        {
-          "id": "cpi_contrib_food_yoy",
-          "label_en": "Food CPI Contribution (YoY)",
-          "label_zh": "食品通胀贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": -0.96
-        },
-        {
-          "id": "cpi_contrib_goods_yoy",
-          "label_en": "Goods CPI Contribution (YoY)",
-          "label_zh": "商品通胀贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 0.29
-        },
-        {
-          "id": "cpi_contrib_services_yoy",
-          "label_en": "Services CPI Contribution (YoY)",
-          "label_zh": "服务业通胀贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 2.21
-        },
-        {
-          "id": "cpi_core_3m_ann",
-          "label_en": "Core CPI 3M Annualized Rate",
-          "label_zh": "核心通胀3个月年化率",
-          "unit": "% annualized",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 2.83
-        },
-        {
-          "id": "cpi_head_3m_ann",
-          "label_en": "Headline CPI 3M Annualized Rate",
-          "label_zh": "整体通胀3个月年化率",
-          "unit": "% annualized",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 1.21
-        },
-        {
-          "id": "cpi_momentum_gap",
-          "label_en": "Inflation Momentum Spread (3M Ann - YoY)",
-          "label_zh": "通胀动量差值(3M年化-同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": -0.89
-        },
-        {
-          "id": "cpi_services_3m_ann",
-          "label_en": "Services CPI 3M Annualized Rate",
-          "label_zh": "服务业通胀3个月年化率",
-          "unit": "% annualized",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 6.55
-        },
-        {
           "id": "cpi_yoy",
           "label_en": "cpi_yoy",
           "label_zh": "cpi_yoy",
@@ -337,9 +249,9 @@
           "unit": "% GDP",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 1.58180029565553
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 1.6548423815673
         },
         {
           "id": "debt_fx_share",
@@ -425,9 +337,9 @@
           "unit": "Index",
           "section": "macro",
           "frequency": "1mo",
-          "obs_count": 60,
+          "obs_count": 61,
           "latest_date": "2026-11-01",
-          "latest_val": 41870.0
+          "latest_val": 41240.0
         },
         {
           "id": "equity_vol_30d",
@@ -437,8 +349,8 @@
           "section": "macro",
           "frequency": "daily",
           "obs_count": 225,
-          "latest_date": "2026-11-02",
-          "latest_val": 43.20915001428286
+          "latest_date": "2026-11-05",
+          "latest_val": 45.01065834927084
         },
         {
           "id": "equity_yoy",
@@ -447,9 +359,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "1mo",
-          "obs_count": 48,
+          "obs_count": 49,
           "latest_date": "2026-11-01",
-          "latest_val": 22.39111370944169
+          "latest_val": 17.49287749287749
         },
         {
           "id": "eu_funds_absorption",
@@ -460,7 +372,7 @@
           "frequency": "annual",
           "obs_count": 5,
           "latest_date": "2026-12-31",
-          "latest_val": 20.152480837507735
+          "latest_val": 21.006539773641457
         },
         {
           "id": "eu_funds_frozen",
@@ -474,59 +386,15 @@
           "latest_val": 32.0
         },
         {
-          "id": "exp_consumer_12m",
-          "label_en": "Consumer 12M Inflation Expectations",
-          "label_zh": "消费者12个月通胀预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": -12.9
-        },
-        {
-          "id": "exp_industry_3m",
-          "label_en": "Industrial Selling Price Exp 3M",
-          "label_zh": "工业企业3个月提价预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": 15.3
-        },
-        {
-          "id": "exp_retail_3m",
-          "label_en": "Retail Price Expectations 3M",
-          "label_zh": "零售分销商3个月价格预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": 25.2
-        },
-        {
-          "id": "exp_services_3m",
-          "label_en": "Services Price Expectations 3M",
-          "label_zh": "服务业3个月价格预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": 16.2
-        },
-        {
           "id": "fdi_inflows",
           "label_en": "fdi_inflows",
           "label_zh": "fdi_inflows",
           "unit": "% GDP",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": -27.9229280333136
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": -28.3736403614031
         },
         {
           "id": "fertility_rate",
@@ -590,9 +458,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 43,
-          "latest_date": "2026-11-02",
-          "latest_val": 4.8617718495932225
+          "obs_count": 4294,
+          "latest_date": "2026-11-06",
+          "latest_val": 3.7418433395204156
         },
         {
           "id": "fx_reserves",
@@ -601,9 +469,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 46.4223575538952
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 59.094575606759804
         },
         {
           "id": "fx_vs_eur",
@@ -612,9 +480,9 @@
           "unit": "HUF per EUR",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 4313,
-          "latest_date": "2026-11-04",
-          "latest_val": 363.03
+          "obs_count": 4315,
+          "latest_date": "2026-11-06",
+          "latest_val": 363.9
         },
         {
           "id": "gas_storage_level",
@@ -623,9 +491,9 @@
           "unit": "% WGV",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 4325,
-          "latest_date": "2026-11-03",
-          "latest_val": 76.91
+          "obs_count": 4327,
+          "latest_date": "2026-11-05",
+          "latest_val": 76.6
         },
         {
           "id": "gdp_components",
@@ -722,9 +590,9 @@
           "unit": "% GDP",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 23.0580056906236
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 21.9445831776773
         },
         {
           "id": "house_price_index",
@@ -777,9 +645,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": -4.56342524848438
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": -5.9489498879856395
         },
         {
           "id": "industrial_production_yoy",
@@ -788,9 +656,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 92,
-          "latest_date": "2026-08-01",
-          "latest_val": 8.662280701754366
+          "obs_count": 93,
+          "latest_date": "2026-09-01",
+          "latest_val": 7.974137931034497
         },
         {
           "id": "industry_confidence",
@@ -931,9 +799,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 32.494481686451
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 32.8073121647108
         },
         {
           "id": "participation_rate",
@@ -965,7 +833,7 @@
           "section": "macro",
           "frequency": "event",
           "obs_count": 77,
-          "latest_date": "2026-10-21",
+          "latest_date": "2026-10-28",
           "latest_val": 5.5
         },
         {
@@ -975,9 +843,9 @@
           "unit": "mn people",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 9.562064999999999
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 9.514251
         },
         {
           "id": "portfolio_flows",
@@ -989,17 +857,6 @@
           "obs_count": 104,
           "latest_date": "2026-08-01",
           "latest_val": 874.372
-        },
-        {
-          "id": "ppi_cpi_scissors_gap",
-          "label_en": "PPI-CPI Margin Scissors Gap",
-          "label_zh": "PPI-CPI 工业利润剪刀差",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 5.0
         },
         {
           "id": "ppi_yoy",
@@ -1107,9 +964,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 92,
-          "latest_date": "2026-08-01",
-          "latest_val": 2.8046421663442844
+          "obs_count": 93,
+          "latest_date": "2026-09-01",
+          "latest_val": 4.3604651162790775
         },
         {
           "id": "road_freight_activity",
@@ -1129,9 +986,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 10.945052144792903
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 13.261807385795098
         },
         {
           "id": "services_cpi_yoy",
@@ -1217,9 +1074,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 9.526339416948028
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 11.046607577730988
         },
         {
           "id": "unemployment_rate",
@@ -1294,9 +1151,9 @@
           "unit": "mn people",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 6.177612
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 6.1357479999999995
         },
         {
           "id": "yield_curve_slope",
@@ -1308,6 +1165,149 @@
           "obs_count": 105,
           "latest_date": "2026-09-01",
           "latest_val": 23.499999999999943
+        },
+        {
+          "id": "cpi_contrib_food_yoy",
+          "label_en": "Food CPI Contribution (YoY)",
+          "label_zh": "食品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": -0.96
+        },
+        {
+          "id": "cpi_contrib_goods_yoy",
+          "label_en": "Goods CPI Contribution (YoY)",
+          "label_zh": "商品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.29
+        },
+        {
+          "id": "cpi_contrib_energy_yoy",
+          "label_en": "Energy CPI Contribution (YoY)",
+          "label_zh": "能源与公用事业贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.24
+        },
+        {
+          "id": "cpi_contrib_services_yoy",
+          "label_en": "Services CPI Contribution (YoY)",
+          "label_zh": "服务业通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 2.21
+        },
+        {
+          "id": "ppi_cpi_scissors_gap",
+          "label_en": "PPI-CPI Margin Scissors Gap",
+          "label_zh": "PPI-CPI 工业利润剪刀差",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 5.0
+        },
+        {
+          "id": "exp_industry_3m",
+          "label_en": "Industrial Selling Price Exp 3M",
+          "label_zh": "工业企业3个月提价预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": 15.3
+        },
+        {
+          "id": "exp_services_3m",
+          "label_en": "Services Price Expectations 3M",
+          "label_zh": "服务业3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": 16.2
+        },
+        {
+          "id": "exp_retail_3m",
+          "label_en": "Retail Price Expectations 3M",
+          "label_zh": "零售分销商3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": 25.2
+        },
+        {
+          "id": "exp_consumer_12m",
+          "label_en": "Consumer 12M Inflation Expectations",
+          "label_zh": "消费者12个月通胀预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": -12.9
+        },
+        {
+          "id": "cpi_head_3m_ann",
+          "label_en": "Headline CPI 3M Annualized Rate",
+          "label_zh": "整体通胀3个月年化率",
+          "unit": "% annualized",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.21
+        },
+        {
+          "id": "cpi_core_3m_ann",
+          "label_en": "Core CPI 3M Annualized Rate",
+          "label_zh": "核心通胀3个月年化率",
+          "unit": "% annualized",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 2.83
+        },
+        {
+          "id": "cpi_services_3m_ann",
+          "label_en": "Services CPI 3M Annualized Rate",
+          "label_zh": "服务业通胀3个月年化率",
+          "unit": "% annualized",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 6.55
+        },
+        {
+          "id": "cpi_momentum_gap",
+          "label_en": "Inflation Momentum Spread (3M Ann - YoY)",
+          "label_zh": "通胀动量差值(3M年化-同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": -0.89
         }
       ]
     },
@@ -1460,7 +1460,7 @@
           "frequency": "monthly",
           "obs_count": 265,
           "latest_date": "2026-07-01",
-          "latest_val": 35.366894321377565
+          "latest_val": 31.34604518362846
         },
         {
           "id": "cb_forward_guidance",
@@ -1529,94 +1529,6 @@
           "latest_val": 70.957095
         },
         {
-          "id": "cpi_contrib_energy_yoy",
-          "label_en": "Energy CPI Contribution (YoY)",
-          "label_zh": "能源与公用事业贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 1.15
-        },
-        {
-          "id": "cpi_contrib_food_yoy",
-          "label_en": "Food CPI Contribution (YoY)",
-          "label_zh": "食品通胀贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": -0.06
-        },
-        {
-          "id": "cpi_contrib_goods_yoy",
-          "label_en": "Goods CPI Contribution (YoY)",
-          "label_zh": "商品通胀贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 0.07
-        },
-        {
-          "id": "cpi_contrib_services_yoy",
-          "label_en": "Services CPI Contribution (YoY)",
-          "label_zh": "服务业通胀贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 2.28
-        },
-        {
-          "id": "cpi_core_3m_ann",
-          "label_en": "Core CPI 3M Annualized Rate",
-          "label_zh": "核心通胀3个月年化率",
-          "unit": "% annualized",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 2.84
-        },
-        {
-          "id": "cpi_head_3m_ann",
-          "label_en": "Headline CPI 3M Annualized Rate",
-          "label_zh": "整体通胀3个月年化率",
-          "unit": "% annualized",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 5.74
-        },
-        {
-          "id": "cpi_momentum_gap",
-          "label_en": "Inflation Momentum Spread (3M Ann - YoY)",
-          "label_zh": "通胀动量差值(3M年化-同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 1.74
-        },
-        {
-          "id": "cpi_services_3m_ann",
-          "label_en": "Services CPI 3M Annualized Rate",
-          "label_zh": "服务业通胀3个月年化率",
-          "unit": "% annualized",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 5.74
-        },
-        {
           "id": "cpi_yoy",
           "label_en": "cpi_yoy",
           "label_zh": "cpi_yoy",
@@ -1645,9 +1557,9 @@
           "unit": "% GDP",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 0.30454349270969
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": -0.953363430850522
         },
         {
           "id": "debt_fx_share",
@@ -1734,7 +1646,7 @@
           "section": "macro",
           "frequency": "event",
           "obs_count": 1,
-          "latest_date": "2026-05-22",
+          "latest_date": "2026-11-06",
           "latest_val": 3.7
         },
         {
@@ -1745,8 +1657,8 @@
           "section": "macro",
           "frequency": "event",
           "obs_count": 1,
-          "latest_date": "2026-05-22",
-          "latest_val": 14.82
+          "latest_date": "2026-11-06",
+          "latest_val": 12.58
         },
         {
           "id": "equity_index",
@@ -1756,8 +1668,8 @@
           "section": "macro",
           "frequency": "event",
           "obs_count": 1,
-          "latest_date": "2026-05-22",
-          "latest_val": 3641.19
+          "latest_date": "2026-11-06",
+          "latest_val": 4131.37
         },
         {
           "id": "equity_pb",
@@ -1767,8 +1679,8 @@
           "section": "macro",
           "frequency": "event",
           "obs_count": 1,
-          "latest_date": "2026-05-22",
-          "latest_val": 1.83
+          "latest_date": "2026-11-06",
+          "latest_val": 2.09
         },
         {
           "id": "equity_vol_30d",
@@ -1778,8 +1690,8 @@
           "section": "macro",
           "frequency": "event",
           "obs_count": 1,
-          "latest_date": "2026-05-22",
-          "latest_val": 23.48
+          "latest_date": "2026-11-06",
+          "latest_val": 17.01
         },
         {
           "id": "equity_yoy",
@@ -1790,7 +1702,7 @@
           "frequency": "1mo",
           "obs_count": 1,
           "latest_date": "2026-11-01",
-          "latest_val": 4152.64990234375
+          "latest_val": 4131.3701171875
         },
         {
           "id": "eu_funds_absorption",
@@ -1801,7 +1713,7 @@
           "frequency": "annual",
           "obs_count": 5,
           "latest_date": "2026-12-31",
-          "latest_val": 24.990187854958567
+          "latest_val": 30.66989127826105
         },
         {
           "id": "eu_funds_frozen",
@@ -1815,59 +1727,15 @@
           "latest_val": 3.0
         },
         {
-          "id": "exp_consumer_12m",
-          "label_en": "Consumer 12M Inflation Expectations",
-          "label_zh": "消费者12个月通胀预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": -24.9
-        },
-        {
-          "id": "exp_industry_3m",
-          "label_en": "Industrial Selling Price Exp 3M",
-          "label_zh": "工业企业3个月提价预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": 13.2
-        },
-        {
-          "id": "exp_retail_3m",
-          "label_en": "Retail Price Expectations 3M",
-          "label_zh": "零售分销商3个月价格预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": 16.5
-        },
-        {
-          "id": "exp_services_3m",
-          "label_en": "Services Price Expectations 3M",
-          "label_zh": "服务业3个月价格预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": 7.0
-        },
-        {
           "id": "fdi_inflows",
           "label_en": "fdi_inflows",
           "label_zh": "fdi_inflows",
           "unit": "% GDP",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 2.24523191798779
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 2.02222753667037
         },
         {
           "id": "fertility_rate",
@@ -1931,9 +1799,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 43,
-          "latest_date": "2026-11-02",
-          "latest_val": 3.7680077104063243
+          "obs_count": 4294,
+          "latest_date": "2026-11-06",
+          "latest_val": 3.766174143594572
         },
         {
           "id": "fx_reserves",
@@ -1953,9 +1821,9 @@
           "unit": "PLN per EUR",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 4313,
-          "latest_date": "2026-11-04",
-          "latest_val": 4.399
+          "obs_count": 4315,
+          "latest_date": "2026-11-06",
+          "latest_val": 4.3925
         },
         {
           "id": "gas_storage_level",
@@ -1964,9 +1832,9 @@
           "unit": "% WGV",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 4325,
-          "latest_date": "2026-11-03",
-          "latest_val": 98.98
+          "obs_count": 4327,
+          "latest_date": "2026-11-05",
+          "latest_val": 98.47
         },
         {
           "id": "gdp_components",
@@ -2063,9 +1931,9 @@
           "unit": "% GDP",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 17.0407167835613
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 17.0286414261905
         },
         {
           "id": "house_price_index",
@@ -2118,9 +1986,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": -30.796000000000003
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": -38.620000000000005
         },
         {
           "id": "industrial_production_yoy",
@@ -2272,9 +2140,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 30.9656430387922
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 32.0345380648211
         },
         {
           "id": "participation_rate",
@@ -2306,7 +2174,7 @@
           "section": "macro",
           "frequency": "event",
           "obs_count": 40,
-          "latest_date": "2026-10-27",
+          "latest_date": "2026-11-03",
           "latest_val": 3.75
         },
         {
@@ -2316,9 +2184,9 @@
           "unit": "mn people",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 36.559233
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 36.435860999999996
         },
         {
           "id": "portfolio_flows",
@@ -2330,17 +2198,6 @@
           "obs_count": 104,
           "latest_date": "2026-08-01",
           "latest_val": 1107.301
-        },
-        {
-          "id": "ppi_cpi_scissors_gap",
-          "label_en": "PPI-CPI Margin Scissors Gap",
-          "label_zh": "PPI-CPI 工业利润剪刀差",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 4.4
         },
         {
           "id": "ppi_yoy",
@@ -2470,9 +2327,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 43.378
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 44.432
         },
         {
           "id": "services_cpi_yoy",
@@ -2558,9 +2415,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 36.71237235583197
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 29.728430079624022
         },
         {
           "id": "unemployment_rate",
@@ -2635,9 +2492,9 @@
           "unit": "mn people",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 23.78208
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 23.605259999999998
         },
         {
           "id": "yield_curve_slope",
@@ -2649,6 +2506,149 @@
           "obs_count": 105,
           "latest_date": "2026-09-01",
           "latest_val": 252.00000000000006
+        },
+        {
+          "id": "cpi_contrib_food_yoy",
+          "label_en": "Food CPI Contribution (YoY)",
+          "label_zh": "食品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": -0.06
+        },
+        {
+          "id": "cpi_contrib_goods_yoy",
+          "label_en": "Goods CPI Contribution (YoY)",
+          "label_zh": "商品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.07
+        },
+        {
+          "id": "cpi_contrib_energy_yoy",
+          "label_en": "Energy CPI Contribution (YoY)",
+          "label_zh": "能源与公用事业贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.15
+        },
+        {
+          "id": "cpi_contrib_services_yoy",
+          "label_en": "Services CPI Contribution (YoY)",
+          "label_zh": "服务业通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 2.28
+        },
+        {
+          "id": "ppi_cpi_scissors_gap",
+          "label_en": "PPI-CPI Margin Scissors Gap",
+          "label_zh": "PPI-CPI 工业利润剪刀差",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 4.4
+        },
+        {
+          "id": "exp_industry_3m",
+          "label_en": "Industrial Selling Price Exp 3M",
+          "label_zh": "工业企业3个月提价预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": 13.2
+        },
+        {
+          "id": "exp_services_3m",
+          "label_en": "Services Price Expectations 3M",
+          "label_zh": "服务业3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": 7.0
+        },
+        {
+          "id": "exp_retail_3m",
+          "label_en": "Retail Price Expectations 3M",
+          "label_zh": "零售分销商3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": 16.5
+        },
+        {
+          "id": "exp_consumer_12m",
+          "label_en": "Consumer 12M Inflation Expectations",
+          "label_zh": "消费者12个月通胀预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": -24.9
+        },
+        {
+          "id": "cpi_head_3m_ann",
+          "label_en": "Headline CPI 3M Annualized Rate",
+          "label_zh": "整体通胀3个月年化率",
+          "unit": "% annualized",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 5.74
+        },
+        {
+          "id": "cpi_core_3m_ann",
+          "label_en": "Core CPI 3M Annualized Rate",
+          "label_zh": "核心通胀3个月年化率",
+          "unit": "% annualized",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 2.84
+        },
+        {
+          "id": "cpi_services_3m_ann",
+          "label_en": "Services CPI 3M Annualized Rate",
+          "label_zh": "服务业通胀3个月年化率",
+          "unit": "% annualized",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 5.74
+        },
+        {
+          "id": "cpi_momentum_gap",
+          "label_en": "Inflation Momentum Spread (3M Ann - YoY)",
+          "label_zh": "通胀动量差值(3M年化-同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.74
         }
       ]
     },
@@ -2790,7 +2790,7 @@
           "frequency": "monthly",
           "obs_count": 264,
           "latest_date": "2026-06-30",
-          "latest_val": 52.872500330359486
+          "latest_val": 46.924024050470706
         },
         {
           "id": "cb_forward_guidance",
@@ -2859,94 +2859,6 @@
           "latest_val": 105.66512
         },
         {
-          "id": "cpi_contrib_energy_yoy",
-          "label_en": "Energy CPI Contribution (YoY)",
-          "label_zh": "能源与公用事业贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": -0.18
-        },
-        {
-          "id": "cpi_contrib_food_yoy",
-          "label_en": "Food CPI Contribution (YoY)",
-          "label_zh": "食品通胀贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": -0.74
-        },
-        {
-          "id": "cpi_contrib_goods_yoy",
-          "label_en": "Goods CPI Contribution (YoY)",
-          "label_zh": "商品通胀贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 0.02
-        },
-        {
-          "id": "cpi_contrib_services_yoy",
-          "label_en": "Services CPI Contribution (YoY)",
-          "label_zh": "服务业通胀贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 2.59
-        },
-        {
-          "id": "cpi_core_3m_ann",
-          "label_en": "Core CPI 3M Annualized Rate",
-          "label_zh": "核心通胀3个月年化率",
-          "unit": "% annualized",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 1.99
-        },
-        {
-          "id": "cpi_head_3m_ann",
-          "label_en": "Headline CPI 3M Annualized Rate",
-          "label_zh": "整体通胀3个月年化率",
-          "unit": "% annualized",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 3.24
-        },
-        {
-          "id": "cpi_momentum_gap",
-          "label_en": "Inflation Momentum Spread (3M Ann - YoY)",
-          "label_zh": "通胀动量差值(3M年化-同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 1.04
-        },
-        {
-          "id": "cpi_services_3m_ann",
-          "label_en": "Services CPI 3M Annualized Rate",
-          "label_zh": "服务业通胀3个月年化率",
-          "unit": "% annualized",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 3.56
-        },
-        {
           "id": "cpi_yoy",
           "label_en": "cpi_yoy",
           "label_zh": "cpi_yoy",
@@ -2975,9 +2887,9 @@
           "unit": "% GDP",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 1.74244358000018
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 0.624791974567142
         },
         {
           "id": "debt_fx_share",
@@ -3064,8 +2976,8 @@
           "section": "macro",
           "frequency": "monthly",
           "obs_count": 71,
-          "latest_date": "2026-10-30",
-          "latest_val": 2627.33
+          "latest_date": "2026-11-06",
+          "latest_val": 2630.37
         },
         {
           "id": "equity_vol_30d",
@@ -3074,9 +2986,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 439,
-          "latest_date": "2026-11-02",
-          "latest_val": 16.22668075477542
+          "obs_count": 443,
+          "latest_date": "2026-11-06",
+          "latest_val": 15.631696401489883
         },
         {
           "id": "equity_yoy",
@@ -3086,8 +2998,8 @@
           "section": "macro",
           "frequency": "monthly",
           "obs_count": 59,
-          "latest_date": "2026-10-30",
-          "latest_val": 5.385328129575173
+          "latest_date": "2026-11-06",
+          "latest_val": 5.507266141744904
         },
         {
           "id": "eu_funds_absorption",
@@ -3098,7 +3010,7 @@
           "frequency": "annual",
           "obs_count": 5,
           "latest_date": "2026-12-31",
-          "latest_val": 30.99757980675109
+          "latest_val": 39.6542024354642
         },
         {
           "id": "eu_funds_frozen",
@@ -3112,59 +3024,15 @@
           "latest_val": 1.0
         },
         {
-          "id": "exp_consumer_12m",
-          "label_en": "Consumer 12M Inflation Expectations",
-          "label_zh": "消费者12个月通胀预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": -4.2
-        },
-        {
-          "id": "exp_industry_3m",
-          "label_en": "Industrial Selling Price Exp 3M",
-          "label_zh": "工业企业3个月提价预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": 22.9
-        },
-        {
-          "id": "exp_retail_3m",
-          "label_en": "Retail Price Expectations 3M",
-          "label_zh": "零售分销商3个月价格预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": 10.6
-        },
-        {
-          "id": "exp_services_3m",
-          "label_en": "Services Price Expectations 3M",
-          "label_zh": "服务业3个月价格预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": 18.3
-        },
-        {
           "id": "fdi_inflows",
           "label_en": "fdi_inflows",
           "label_zh": "fdi_inflows",
           "unit": "% GDP",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 3.76083530894919
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 2.68622429295406
         },
         {
           "id": "fertility_rate",
@@ -3228,9 +3096,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 43,
-          "latest_date": "2026-11-02",
-          "latest_val": 2.0513525442529867
+          "obs_count": 4294,
+          "latest_date": "2026-11-06",
+          "latest_val": 2.1553868302303476
         },
         {
           "id": "fx_reserves",
@@ -3239,9 +3107,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 146.28123976197
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 176.325883579117
         },
         {
           "id": "fx_vs_eur",
@@ -3250,9 +3118,9 @@
           "unit": "CZK per EUR",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 4313,
-          "latest_date": "2026-11-04",
-          "latest_val": 24.309
+          "obs_count": 4315,
+          "latest_date": "2026-11-06",
+          "latest_val": 24.35
         },
         {
           "id": "gas_storage_level",
@@ -3261,9 +3129,9 @@
           "unit": "% WGV",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 4325,
-          "latest_date": "2026-11-03",
-          "latest_val": 75.35
+          "obs_count": 4200,
+          "latest_date": "2026-11-05",
+          "latest_val": 74.64
         },
         {
           "id": "gdp_components",
@@ -3360,9 +3228,9 @@
           "unit": "% GDP",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 26.4879424582154
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 26.4083991822779
         },
         {
           "id": "house_price_index",
@@ -3415,9 +3283,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": -14.7861475541001
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": -18.1166639801365
         },
         {
           "id": "industrial_production_yoy",
@@ -3569,9 +3437,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 32.6948860839892
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 33.2318633443965
         },
         {
           "id": "participation_rate",
@@ -3603,7 +3471,7 @@
           "section": "macro",
           "frequency": "event",
           "obs_count": 38,
-          "latest_date": "2026-10-26",
+          "latest_date": "2026-11-02",
           "latest_val": 3.75
         },
         {
@@ -3613,9 +3481,9 @@
           "unit": "mn people",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 10.905028
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 10.886878
         },
         {
           "id": "portfolio_flows",
@@ -3627,17 +3495,6 @@
           "obs_count": 104,
           "latest_date": "2026-08-01",
           "latest_val": 42.972
-        },
-        {
-          "id": "ppi_cpi_scissors_gap",
-          "label_en": "PPI-CPI Margin Scissors Gap",
-          "label_zh": "PPI-CPI 工业利润剪刀差",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 1.5
         },
         {
           "id": "ppi_yoy",
@@ -3767,9 +3624,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 4.5214274579666975
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 4.639010976205498
         },
         {
           "id": "services_cpi_yoy",
@@ -3855,9 +3712,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 21.694216121922974
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 22.87802760259601
         },
         {
           "id": "unemployment_rate",
@@ -3932,9 +3789,9 @@
           "unit": "mn people",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 6.952754
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 6.938669
         },
         {
           "id": "yield_curve_slope",
@@ -3946,6 +3803,149 @@
           "obs_count": 105,
           "latest_date": "2026-09-01",
           "latest_val": 149.00000000000003
+        },
+        {
+          "id": "cpi_contrib_food_yoy",
+          "label_en": "Food CPI Contribution (YoY)",
+          "label_zh": "食品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": -0.74
+        },
+        {
+          "id": "cpi_contrib_goods_yoy",
+          "label_en": "Goods CPI Contribution (YoY)",
+          "label_zh": "商品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.02
+        },
+        {
+          "id": "cpi_contrib_energy_yoy",
+          "label_en": "Energy CPI Contribution (YoY)",
+          "label_zh": "能源与公用事业贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": -0.18
+        },
+        {
+          "id": "cpi_contrib_services_yoy",
+          "label_en": "Services CPI Contribution (YoY)",
+          "label_zh": "服务业通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 2.59
+        },
+        {
+          "id": "ppi_cpi_scissors_gap",
+          "label_en": "PPI-CPI Margin Scissors Gap",
+          "label_zh": "PPI-CPI 工业利润剪刀差",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.5
+        },
+        {
+          "id": "exp_industry_3m",
+          "label_en": "Industrial Selling Price Exp 3M",
+          "label_zh": "工业企业3个月提价预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": 22.9
+        },
+        {
+          "id": "exp_services_3m",
+          "label_en": "Services Price Expectations 3M",
+          "label_zh": "服务业3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": 18.3
+        },
+        {
+          "id": "exp_retail_3m",
+          "label_en": "Retail Price Expectations 3M",
+          "label_zh": "零售分销商3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": 10.6
+        },
+        {
+          "id": "exp_consumer_12m",
+          "label_en": "Consumer 12M Inflation Expectations",
+          "label_zh": "消费者12个月通胀预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": -4.2
+        },
+        {
+          "id": "cpi_head_3m_ann",
+          "label_en": "Headline CPI 3M Annualized Rate",
+          "label_zh": "整体通胀3个月年化率",
+          "unit": "% annualized",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 3.24
+        },
+        {
+          "id": "cpi_core_3m_ann",
+          "label_en": "Core CPI 3M Annualized Rate",
+          "label_zh": "核心通胀3个月年化率",
+          "unit": "% annualized",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.99
+        },
+        {
+          "id": "cpi_services_3m_ann",
+          "label_en": "Services CPI 3M Annualized Rate",
+          "label_zh": "服务业通胀3个月年化率",
+          "unit": "% annualized",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 3.56
+        },
+        {
+          "id": "cpi_momentum_gap",
+          "label_en": "Inflation Momentum Spread (3M Ann - YoY)",
+          "label_zh": "通胀动量差值(3M年化-同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 1.04
         }
       ]
     },
@@ -4167,94 +4167,6 @@
           "latest_val": 76.261407
         },
         {
-          "id": "cpi_contrib_energy_yoy",
-          "label_en": "Energy CPI Contribution (YoY)",
-          "label_zh": "能源与公用事业贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 0.83
-        },
-        {
-          "id": "cpi_contrib_food_yoy",
-          "label_en": "Food CPI Contribution (YoY)",
-          "label_zh": "食品通胀贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 0.74
-        },
-        {
-          "id": "cpi_contrib_goods_yoy",
-          "label_en": "Goods CPI Contribution (YoY)",
-          "label_zh": "商品通胀贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 0.72
-        },
-        {
-          "id": "cpi_contrib_services_yoy",
-          "label_en": "Services CPI Contribution (YoY)",
-          "label_zh": "服务业通胀贡献(同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 3.95
-        },
-        {
-          "id": "cpi_core_3m_ann",
-          "label_en": "Core CPI 3M Annualized Rate",
-          "label_zh": "核心通胀3个月年化率",
-          "unit": "% annualized",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 6.59
-        },
-        {
-          "id": "cpi_head_3m_ann",
-          "label_en": "Headline CPI 3M Annualized Rate",
-          "label_zh": "整体通胀3个月年化率",
-          "unit": "% annualized",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 6.16
-        },
-        {
-          "id": "cpi_momentum_gap",
-          "label_en": "Inflation Momentum Spread (3M Ann - YoY)",
-          "label_zh": "通胀动量差值(3M年化-同比)",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": -0.34
-        },
-        {
-          "id": "cpi_services_3m_ann",
-          "label_en": "Services CPI 3M Annualized Rate",
-          "label_zh": "服务业通胀3个月年化率",
-          "unit": "% annualized",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 45,
-          "latest_date": "2026-09-01",
-          "latest_val": 9.6
-        },
-        {
           "id": "cpi_yoy",
           "label_en": "cpi_yoy",
           "label_zh": "cpi_yoy",
@@ -4272,9 +4184,9 @@
           "unit": "pp",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 20,
-          "latest_date": "2024-12-31",
-          "latest_val": -3.1801147087634867
+          "obs_count": 22,
+          "latest_date": "2025-12-31",
+          "latest_val": -3.0532295428292606
         },
         {
           "id": "current_account_pct_gdp",
@@ -4283,9 +4195,9 @@
           "unit": "% GDP",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": -8.15745555807555
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": -7.90302624508594
         },
         {
           "id": "debt_fx_share",
@@ -4372,8 +4284,8 @@
           "section": "macro",
           "frequency": "event",
           "obs_count": 1,
-          "latest_date": "2026-05-25",
-          "latest_val": 30606.88
+          "latest_date": "2026-11-06",
+          "latest_val": 33986.93
         },
         {
           "id": "equity_yoy",
@@ -4383,8 +4295,8 @@
           "section": "macro",
           "frequency": "event",
           "obs_count": 1,
-          "latest_date": "2026-05-25",
-          "latest_val": 74.93
+          "latest_date": "2026-11-06",
+          "latest_val": 48.5
         },
         {
           "id": "eu_funds_absorption",
@@ -4395,7 +4307,7 @@
           "frequency": "annual",
           "obs_count": 5,
           "latest_date": "2026-12-31",
-          "latest_val": 30.07358330996357
+          "latest_val": 36.39144373834384
         },
         {
           "id": "eu_funds_frozen",
@@ -4409,59 +4321,15 @@
           "latest_val": 8.0
         },
         {
-          "id": "exp_consumer_12m",
-          "label_en": "Consumer 12M Inflation Expectations",
-          "label_zh": "消费者12个月通胀预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": -48.3
-        },
-        {
-          "id": "exp_industry_3m",
-          "label_en": "Industrial Selling Price Exp 3M",
-          "label_zh": "工业企业3个月提价预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": 28.2
-        },
-        {
-          "id": "exp_retail_3m",
-          "label_en": "Retail Price Expectations 3M",
-          "label_zh": "零售分销商3个月价格预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": 34.8
-        },
-        {
-          "id": "exp_services_3m",
-          "label_en": "Services Price Expectations 3M",
-          "label_zh": "服务业3个月价格预期",
-          "unit": "net balance",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 48,
-          "latest_date": "2026-10-01",
-          "latest_val": 20.1
-        },
-        {
           "id": "fdi_inflows",
           "label_en": "fdi_inflows",
           "label_zh": "fdi_inflows",
           "unit": "% GDP",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 1.87134949618788
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 2.18672174987663
         },
         {
           "id": "fertility_rate",
@@ -4525,9 +4393,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 43,
-          "latest_date": "2026-11-02",
-          "latest_val": 1.9907430173638077
+          "obs_count": 4294,
+          "latest_date": "2026-11-06",
+          "latest_val": 1.4513331315635392
         },
         {
           "id": "fx_reserves",
@@ -4536,9 +4404,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 73.39124809127341
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 90.64837189465051
         },
         {
           "id": "fx_vs_eur",
@@ -4547,9 +4415,9 @@
           "unit": "RON per EUR",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 4313,
-          "latest_date": "2026-11-04",
-          "latest_val": 5.344
+          "obs_count": 4315,
+          "latest_date": "2026-11-06",
+          "latest_val": 5.3403
         },
         {
           "id": "gas_storage_level",
@@ -4558,9 +4426,9 @@
           "unit": "% WGV",
           "section": "macro",
           "frequency": "daily",
-          "obs_count": 4325,
-          "latest_date": "2026-11-03",
-          "latest_val": 88.11
+          "obs_count": 4327,
+          "latest_date": "2026-11-05",
+          "latest_val": 87.55
         },
         {
           "id": "gdp_components",
@@ -4657,9 +4525,9 @@
           "unit": "% GDP",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 25.2916623299005
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 25.6090244812044
         },
         {
           "id": "house_price_index",
@@ -4712,9 +4580,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": -9.010037156157031
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": -11.4728733182701
         },
         {
           "id": "industrial_production_yoy",
@@ -4800,9 +4668,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 11.3119357455221
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 7.23223200466061
         },
         {
           "id": "median_age",
@@ -4866,9 +4734,9 @@
           "unit": "%",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 31.0730853265226
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 31.3163715683657
         },
         {
           "id": "participation_rate",
@@ -4900,7 +4768,7 @@
           "section": "macro",
           "frequency": "event",
           "obs_count": 43,
-          "latest_date": "2026-10-27",
+          "latest_date": "2026-11-03",
           "latest_val": 6.5
         },
         {
@@ -4910,9 +4778,9 @@
           "unit": "mn people",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 19.051804
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 19.020270999999997
         },
         {
           "id": "portfolio_flows",
@@ -4926,26 +4794,15 @@
           "latest_val": 214.694
         },
         {
-          "id": "ppi_cpi_scissors_gap",
-          "label_en": "PPI-CPI Margin Scissors Gap",
-          "label_zh": "PPI-CPI 工业利润剪刀差",
-          "unit": "percentage points",
-          "section": "prices_wages",
-          "frequency": "monthly",
-          "obs_count": 47,
-          "latest_date": "2026-09-01",
-          "latest_val": 8.4
-        },
-        {
           "id": "ppi_yoy",
           "label_en": "ppi_yoy",
           "label_zh": "ppi_yoy",
           "unit": "% YoY",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 92,
-          "latest_date": "2026-08-01",
-          "latest_val": 12.462006079027365
+          "obs_count": 93,
+          "latest_date": "2026-09-01",
+          "latest_val": 14.861612515042122
         },
         {
           "id": "primary_balance",
@@ -4965,9 +4822,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 4.49834371987632
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 3.12170797193361
         },
         {
           "id": "real_estate_price_gap",
@@ -5042,9 +4899,9 @@
           "unit": "% YoY",
           "section": "macro",
           "frequency": "monthly",
-          "obs_count": 92,
-          "latest_date": "2026-08-01",
-          "latest_val": 0.08802816901409827
+          "obs_count": 93,
+          "latest_date": "2026-09-01",
+          "latest_val": -2.610966057441255
         },
         {
           "id": "road_freight_activity",
@@ -5064,9 +4921,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 12.676749747213298
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 14.1491520286884
         },
         {
           "id": "services_cpi_yoy",
@@ -5152,9 +5009,9 @@
           "unit": "USD bn",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": -22.988017571329987
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": -22.489139917234986
         },
         {
           "id": "unemployment_rate",
@@ -5229,9 +5086,9 @@
           "unit": "mn people",
           "section": "macro",
           "frequency": "annual",
-          "obs_count": 15,
-          "latest_date": "2024-12-31",
-          "latest_val": 12.250926999999999
+          "obs_count": 16,
+          "latest_date": "2025-12-31",
+          "latest_val": 12.231235
         },
         {
           "id": "yield_curve_slope",
@@ -5243,6 +5100,149 @@
           "obs_count": 105,
           "latest_date": "2026-09-01",
           "latest_val": 116.00000000000001
+        },
+        {
+          "id": "cpi_contrib_food_yoy",
+          "label_en": "Food CPI Contribution (YoY)",
+          "label_zh": "食品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.74
+        },
+        {
+          "id": "cpi_contrib_goods_yoy",
+          "label_en": "Goods CPI Contribution (YoY)",
+          "label_zh": "商品通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.72
+        },
+        {
+          "id": "cpi_contrib_energy_yoy",
+          "label_en": "Energy CPI Contribution (YoY)",
+          "label_zh": "能源与公用事业贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.83
+        },
+        {
+          "id": "cpi_contrib_services_yoy",
+          "label_en": "Services CPI Contribution (YoY)",
+          "label_zh": "服务业通胀贡献(同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 3.95
+        },
+        {
+          "id": "ppi_cpi_scissors_gap",
+          "label_en": "PPI-CPI Margin Scissors Gap",
+          "label_zh": "PPI-CPI 工业利润剪刀差",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 47,
+          "latest_date": "2026-09-01",
+          "latest_val": 8.4
+        },
+        {
+          "id": "exp_industry_3m",
+          "label_en": "Industrial Selling Price Exp 3M",
+          "label_zh": "工业企业3个月提价预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": 28.2
+        },
+        {
+          "id": "exp_services_3m",
+          "label_en": "Services Price Expectations 3M",
+          "label_zh": "服务业3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": 20.1
+        },
+        {
+          "id": "exp_retail_3m",
+          "label_en": "Retail Price Expectations 3M",
+          "label_zh": "零售分销商3个月价格预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": 34.8
+        },
+        {
+          "id": "exp_consumer_12m",
+          "label_en": "Consumer 12M Inflation Expectations",
+          "label_zh": "消费者12个月通胀预期",
+          "unit": "net balance",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 48,
+          "latest_date": "2026-10-01",
+          "latest_val": -48.3
+        },
+        {
+          "id": "cpi_head_3m_ann",
+          "label_en": "Headline CPI 3M Annualized Rate",
+          "label_zh": "整体通胀3个月年化率",
+          "unit": "% annualized",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 6.16
+        },
+        {
+          "id": "cpi_core_3m_ann",
+          "label_en": "Core CPI 3M Annualized Rate",
+          "label_zh": "核心通胀3个月年化率",
+          "unit": "% annualized",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 6.59
+        },
+        {
+          "id": "cpi_services_3m_ann",
+          "label_en": "Services CPI 3M Annualized Rate",
+          "label_zh": "服务业通胀3个月年化率",
+          "unit": "% annualized",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": 9.6
+        },
+        {
+          "id": "cpi_momentum_gap",
+          "label_en": "Inflation Momentum Spread (3M Ann - YoY)",
+          "label_zh": "通胀动量差值(3M年化-同比)",
+          "unit": "percentage points",
+          "section": "prices_wages",
+          "frequency": "monthly",
+          "obs_count": 45,
+          "latest_date": "2026-09-01",
+          "latest_val": -0.34
         }
       ]
     },
@@ -6449,9 +6449,9 @@
           "unit": "%",
           "section": "money_credit",
           "frequency": "daily",
-          "obs_count": 2769,
-          "latest_date": "2026-11-05",
-          "latest_val": 3.2362
+          "obs_count": 2770,
+          "latest_date": "2026-11-06",
+          "latest_val": 3.2732
         },
         {
           "id": "usd_cny_midpoint",
@@ -6602,9 +6602,9 @@
           "unit": "index [0,1]",
           "section": "fragmentation",
           "frequency": "daily",
-          "obs_count": 7272,
-          "latest_date": "2026-11-04",
-          "latest_val": 0.008311376269998456
+          "obs_count": 7273,
+          "latest_date": "2026-11-05",
+          "latest_val": 0.006819400023660197
         },
         {
           "id": "construction_output_yoy",
@@ -6723,9 +6723,9 @@
           "unit": "USD",
           "section": "external_fx",
           "frequency": "daily",
-          "obs_count": 7130,
-          "latest_date": "2026-11-05",
-          "latest_val": 1.1224
+          "obs_count": 7131,
+          "latest_date": "2026-11-06",
+          "latest_val": 1.1165
         },
         {
           "id": "eurosystem_total_assets",
@@ -7163,8 +7163,8 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 10172,
-          "latest_date": "2026-11-06",
+          "obs_count": 10173,
+          "latest_date": "2026-11-07",
           "latest_val": 2.5
         },
         {
@@ -7547,9 +7547,9 @@
           "unit": "index",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2892,
-          "latest_date": "2026-11-05",
-          "latest_val": 61077.9
+          "obs_count": 2893,
+          "latest_date": "2026-11-06",
+          "latest_val": 57434.77
         },
         {
           "id": "fiscal_balance_gdp",
@@ -9865,9 +9865,9 @@
           "unit": "weeks",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 440,
-          "latest_date": "2026-09-01",
-          "latest_val": 24.8
+          "obs_count": 441,
+          "latest_date": "2026-10-01",
+          "latest_val": 27.1
         },
         {
           "id": "bank_credit_growth",
@@ -9876,9 +9876,9 @@
           "unit": "% y/y",
           "section": "monetary_financial",
           "frequency": "weekly",
-          "obs_count": 1869,
-          "latest_date": "2026-10-21",
-          "latest_val": 7.854645310785391
+          "obs_count": 1870,
+          "latest_date": "2026-10-28",
+          "latest_val": 7.893785011247179
         },
         {
           "id": "bank_deposits_growth",
@@ -9887,9 +9887,9 @@
           "unit": "% y/y",
           "section": "monetary_financial",
           "frequency": "weekly",
-          "obs_count": 1869,
-          "latest_date": "2026-10-21",
-          "latest_val": 6.893728176014058
+          "obs_count": 1870,
+          "latest_date": "2026-10-28",
+          "latest_val": 7.279859276901379
         },
         {
           "id": "bed_gross_job_gains_level",
@@ -10032,7 +10032,7 @@
           "frequency": "monthly",
           "obs_count": 429,
           "latest_date": "2026-09-01",
-          "latest_val": 9.958251294608967
+          "latest_val": 9.960328584972089
         },
         {
           "id": "construction_payrolls_growth",
@@ -10041,9 +10041,9 @@
           "unit": "% y/y",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 429,
-          "latest_date": "2026-09-01",
-          "latest_val": 1.3204118715929747
+          "obs_count": 430,
+          "latest_date": "2026-10-01",
+          "latest_val": 1.5043066844595332
         },
         {
           "id": "construction_spending_growth",
@@ -10063,9 +10063,9 @@
           "unit": "% y/y",
           "section": "monetary_financial",
           "frequency": "monthly",
-          "obs_count": 428,
-          "latest_date": "2026-08-01",
-          "latest_val": 2.731762729991072
+          "obs_count": 429,
+          "latest_date": "2026-09-01",
+          "latest_val": 3.0057898110673165
         },
         {
           "id": "continuing_claims",
@@ -10228,8 +10228,8 @@
           "unit": "%",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 9805,
-          "latest_date": "2026-11-04",
+          "obs_count": 9806,
+          "latest_date": "2026-11-05",
           "latest_val": 3.88
         },
         {
@@ -10273,8 +10273,8 @@
           "section": "monetary_financial",
           "frequency": "daily",
           "obs_count": 786,
-          "latest_date": "2026-11-04",
-          "latest_val": 1.8
+          "latest_date": "2026-11-05",
+          "latest_val": 1.84
         },
         {
           "id": "empire_state_manufacturing",
@@ -10349,9 +10349,9 @@
           "unit": "USD bn",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 2221,
-          "latest_date": "2026-11-04",
-          "latest_val": 115.0
+          "obs_count": 2222,
+          "latest_date": "2026-11-05",
+          "latest_val": 111.0
         },
         {
           "id": "fed_mbs_holdings",
@@ -10371,8 +10371,8 @@
           "unit": "%",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 6534,
-          "latest_date": "2026-11-05",
+          "obs_count": 6535,
+          "latest_date": "2026-11-06",
           "latest_val": 3.75
         },
         {
@@ -10382,8 +10382,8 @@
           "unit": "%",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 6534,
-          "latest_date": "2026-11-05",
+          "obs_count": 6535,
+          "latest_date": "2026-11-06",
           "latest_val": 4.0
         },
         {
@@ -10536,9 +10536,9 @@
           "unit": "%",
           "section": "prices_wages",
           "frequency": "daily",
-          "obs_count": 2212,
-          "latest_date": "2026-11-05",
-          "latest_val": 2.26
+          "obs_count": 2213,
+          "latest_date": "2026-11-06",
+          "latest_val": 2.29
         },
         {
           "id": "five_year_forward_inflation",
@@ -10547,9 +10547,9 @@
           "unit": "%",
           "section": "prices_wages",
           "frequency": "daily",
-          "obs_count": 2212,
-          "latest_date": "2026-11-05",
-          "latest_val": 2.22
+          "obs_count": 2213,
+          "latest_date": "2026-11-06",
+          "latest_val": 2.17
         },
         {
           "id": "gdp_deflator_inflation",
@@ -10614,8 +10614,8 @@
           "section": "monetary_financial",
           "frequency": "daily",
           "obs_count": 786,
-          "latest_date": "2026-11-04",
-          "latest_val": 3.32
+          "latest_date": "2026-11-05",
+          "latest_val": 3.48
         },
         {
           "id": "homeownership_rate",
@@ -10635,9 +10635,9 @@
           "unit": "% y/y",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 235,
-          "latest_date": "2026-09-01",
-          "latest_val": 3.0245231607629375
+          "obs_count": 236,
+          "latest_date": "2026-10-01",
+          "latest_val": 3.1207598371777445
         },
         {
           "id": "household_debt_service",
@@ -10779,8 +10779,8 @@
           "section": "monetary_financial",
           "frequency": "daily",
           "obs_count": 785,
-          "latest_date": "2026-11-04",
-          "latest_val": 0.91
+          "latest_date": "2026-11-05",
+          "latest_val": 0.93
         },
         {
           "id": "jolts_hires_rate",
@@ -10833,9 +10833,9 @@
           "unit": "%",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 440,
-          "latest_date": "2026-09-01",
-          "latest_val": 61.8
+          "obs_count": 441,
+          "latest_date": "2026-10-01",
+          "latest_val": 61.9
         },
         {
           "id": "long_term_unemployment_share",
@@ -10844,9 +10844,9 @@
           "unit": "%",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 440,
-          "latest_date": "2026-09-01",
-          "latest_val": 27.1
+          "obs_count": 441,
+          "latest_date": "2026-10-01",
+          "latest_val": 27.6
         },
         {
           "id": "manufacturing_hours",
@@ -10855,9 +10855,9 @@
           "unit": "hours",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 441,
-          "latest_date": "2026-09-01",
-          "latest_val": 42.0
+          "obs_count": 442,
+          "latest_date": "2026-10-01",
+          "latest_val": 41.8
         },
         {
           "id": "manufacturing_payrolls_growth",
@@ -10866,9 +10866,9 @@
           "unit": "% y/y",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 429,
-          "latest_date": "2026-09-01",
-          "latest_val": 0.31715826197271646
+          "obs_count": 430,
+          "latest_date": "2026-10-01",
+          "latest_val": 0.6189002618424144
         },
         {
           "id": "median_cpi",
@@ -11053,9 +11053,9 @@
           "unit": "k m/m",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 440,
-          "latest_date": "2026-09-01",
-          "latest_val": 29.0
+          "obs_count": 441,
+          "latest_date": "2026-10-01",
+          "latest_val": 165.0
         },
         {
           "id": "overnight_bank_funding_rate",
@@ -11064,8 +11064,8 @@
           "unit": "%",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 2221,
-          "latest_date": "2026-11-04",
+          "obs_count": 2222,
+          "latest_date": "2026-11-05",
           "latest_val": 3.88
         },
         {
@@ -11075,9 +11075,9 @@
           "unit": "USD bn",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 2206,
-          "latest_date": "2026-11-05",
-          "latest_val": 0.125
+          "obs_count": 2207,
+          "latest_date": "2026-11-06",
+          "latest_val": 0.15
         },
         {
           "id": "owners_equivalent_rent_inflation",
@@ -11185,8 +11185,8 @@
           "unit": "%",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 440,
-          "latest_date": "2026-09-01",
+          "obs_count": 441,
+          "latest_date": "2026-10-01",
           "latest_val": 80.7
         },
         {
@@ -11372,8 +11372,8 @@
           "unit": "%",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 1927,
-          "latest_date": "2026-11-06",
+          "obs_count": 1930,
+          "latest_date": "2026-11-09",
           "latest_val": 3.9
         },
         {
@@ -11438,9 +11438,9 @@
           "unit": "% y/y",
           "section": "consumer",
           "frequency": "monthly",
-          "obs_count": 428,
-          "latest_date": "2026-08-01",
-          "latest_val": 3.37093533202939
+          "obs_count": 429,
+          "latest_date": "2026-09-01",
+          "latest_val": 4.246119738062881
         },
         {
           "id": "sahm_rule_recession_indicator",
@@ -11449,8 +11449,8 @@
           "unit": "pp",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 440,
-          "latest_date": "2026-09-01",
+          "obs_count": 441,
+          "latest_date": "2026-10-01",
           "latest_val": 0.0
         },
         {
@@ -11493,9 +11493,9 @@
           "unit": "%",
           "section": "fed_policy",
           "frequency": "daily",
-          "obs_count": 2146,
-          "latest_date": "2026-11-04",
-          "latest_val": 3.94
+          "obs_count": 2147,
+          "latest_date": "2026-11-05",
+          "latest_val": 3.92
         },
         {
           "id": "st_louis_fed_financial_stress_index",
@@ -11515,9 +11515,9 @@
           "unit": "% y/y",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 429,
-          "latest_date": "2026-09-01",
-          "latest_val": 0.6149862437287767
+          "obs_count": 430,
+          "latest_date": "2026-10-01",
+          "latest_val": 3.026347989232403
         },
         {
           "id": "ten_year_breakeven",
@@ -11526,9 +11526,9 @@
           "unit": "%",
           "section": "prices_wages",
           "frequency": "daily",
-          "obs_count": 2212,
-          "latest_date": "2026-11-05",
-          "latest_val": 2.24
+          "obs_count": 2213,
+          "latest_date": "2026-11-06",
+          "latest_val": 2.23
         },
         {
           "id": "ten_year_tips_yield",
@@ -11537,9 +11537,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2211,
-          "latest_date": "2026-11-04",
-          "latest_val": 2.64
+          "obs_count": 2212,
+          "latest_date": "2026-11-05",
+          "latest_val": 2.6
         },
         {
           "id": "tic_china_treasury_holdings",
@@ -11592,9 +11592,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2211,
-          "latest_date": "2026-11-04",
-          "latest_val": 4.9
+          "obs_count": 2212,
+          "latest_date": "2026-11-05",
+          "latest_val": 4.84
         },
         {
           "id": "treasury_2y_yield",
@@ -11603,9 +11603,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2211,
-          "latest_date": "2026-11-04",
-          "latest_val": 4.58
+          "obs_count": 2212,
+          "latest_date": "2026-11-05",
+          "latest_val": 4.46
         },
         {
           "id": "treasury_30y_yield",
@@ -11614,9 +11614,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2211,
-          "latest_date": "2026-11-04",
-          "latest_val": 5.28
+          "obs_count": 2212,
+          "latest_date": "2026-11-05",
+          "latest_val": 5.25
         },
         {
           "id": "treasury_3m_yield",
@@ -11625,9 +11625,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2211,
-          "latest_date": "2026-11-04",
-          "latest_val": 4.21
+          "obs_count": 2212,
+          "latest_date": "2026-11-05",
+          "latest_val": 4.17
         },
         {
           "id": "treasury_5y_yield",
@@ -11636,9 +11636,9 @@
           "unit": "%",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2211,
-          "latest_date": "2026-11-04",
-          "latest_val": 4.69
+          "obs_count": 2212,
+          "latest_date": "2026-11-05",
+          "latest_val": 4.59
         },
         {
           "id": "treasury_auction_bid_to_cover",
@@ -11713,9 +11713,9 @@
           "unit": "%",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 392,
-          "latest_date": "2026-09-01",
-          "latest_val": 7.6
+          "obs_count": 393,
+          "latest_date": "2026-10-01",
+          "latest_val": 7.9
         },
         {
           "id": "unemployment_rate",
@@ -11724,9 +11724,9 @@
           "unit": "%",
           "section": "employment",
           "frequency": "monthly",
-          "obs_count": 440,
-          "latest_date": "2026-09-01",
-          "latest_val": 4.2
+          "obs_count": 441,
+          "latest_date": "2026-10-01",
+          "latest_val": 4.1
         },
         {
           "id": "unit_labor_cost_growth",
@@ -11757,9 +11757,9 @@
           "unit": "mn SAAR",
           "section": "consumer",
           "frequency": "monthly",
-          "obs_count": 441,
-          "latest_date": "2026-09-01",
-          "latest_val": 16.378
+          "obs_count": 442,
+          "latest_date": "2026-10-01",
+          "latest_val": 16.003
         },
         {
           "id": "vix",
@@ -11768,9 +11768,9 @@
           "unit": "index",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2256,
-          "latest_date": "2026-11-04",
-          "latest_val": 16.61
+          "obs_count": 2257,
+          "latest_date": "2026-11-05",
+          "latest_val": 28.18
         },
         {
           "id": "weekly_economic_index",
@@ -11790,9 +11790,9 @@
           "unit": "pp",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2212,
-          "latest_date": "2026-11-05",
-          "latest_val": 0.38
+          "obs_count": 2213,
+          "latest_date": "2026-11-06",
+          "latest_val": 0.35
         },
         {
           "id": "yield_curve_10y3m",
@@ -11801,8 +11801,8 @@
           "unit": "pp",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 2212,
-          "latest_date": "2026-11-05",
+          "obs_count": 2213,
+          "latest_date": "2026-11-06",
           "latest_val": 0.67
         }
       ]
@@ -11823,7 +11823,7 @@
           "section": "monetary_financial",
           "frequency": "daily",
           "obs_count": 961,
-          "latest_date": "2026-11-05",
+          "latest_date": "2026-11-06",
           "latest_val": 36.0
         },
         {
@@ -12406,8 +12406,8 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 262,
-          "latest_date": "2026-11-05",
-          "latest_val": 49.9589
+          "latest_date": "2026-11-06",
+          "latest_val": 49.9824
         },
         {
           "id": "unemployment_rate",
@@ -12735,7 +12735,7 @@
           "section": "monetary_financial",
           "frequency": "event",
           "obs_count": 80,
-          "latest_date": "2026-10-21",
+          "latest_date": "2026-10-28",
           "latest_val": 4.25
         },
         {
@@ -12778,9 +12778,9 @@
           "unit": "% q/q",
           "section": "growth_accounts",
           "frequency": "quarterly",
-          "obs_count": 106,
-          "latest_date": "2026-06-30",
-          "latest_val": -0.6
+          "obs_count": 107,
+          "latest_date": "2026-09-30",
+          "latest_val": 1.9
         },
         {
           "id": "real_gdp_yoy",
@@ -12789,9 +12789,9 @@
           "unit": "% y/y",
           "section": "growth_accounts",
           "frequency": "quarterly",
-          "obs_count": 106,
-          "latest_date": "2026-06-30",
-          "latest_val": 4.3
+          "obs_count": 107,
+          "latest_date": "2026-09-30",
+          "latest_val": 5.2
         },
         {
           "id": "real_policy_rate",
@@ -12822,9 +12822,9 @@
           "unit": "% y/y",
           "section": "production_cycle",
           "frequency": "monthly",
-          "obs_count": 251,
-          "latest_date": "2026-08-01",
-          "latest_val": 5.6
+          "obs_count": 252,
+          "latest_date": "2026-09-01",
+          "latest_val": 6.4
         },
         {
           "id": "services_balance_usd",
@@ -14480,9 +14480,9 @@
           "unit": "INR per USD",
           "section": "external_fx",
           "frequency": "monthly",
-          "obs_count": 321,
-          "latest_date": "2026-09-01",
-          "latest_val": 95.834875
+          "obs_count": 322,
+          "latest_date": "2026-10-01",
+          "latest_val": 94.955245
         }
       ]
     },
@@ -14523,9 +14523,9 @@
           "unit": "USD/bbl",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 6496,
-          "latest_date": "2026-10-27",
-          "latest_val": 123.1
+          "obs_count": 6501,
+          "latest_date": "2026-11-03",
+          "latest_val": 107.03
         },
         {
           "id": "broad_money_growth",
@@ -14546,8 +14546,8 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 83,
-          "latest_date": "2026-11-02",
-          "latest_val": 68.23
+          "latest_date": "2026-11-07",
+          "latest_val": 67.03
         },
         {
           "id": "consumption_growth",
@@ -14645,8 +14645,8 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 83,
-          "latest_date": "2026-11-02",
-          "latest_val": 508.17
+          "latest_date": "2026-11-07",
+          "latest_val": 499.54
         },
         {
           "id": "fdi_net_usd",
@@ -14766,7 +14766,7 @@
           "section": "monetary_financial",
           "frequency": "event",
           "obs_count": 93,
-          "latest_date": "2026-11-05",
+          "latest_date": "2026-11-07",
           "latest_val": 15.75
         },
         {
@@ -14843,8 +14843,8 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 83,
-          "latest_date": "2026-11-02",
-          "latest_val": 5.59
+          "latest_date": "2026-11-07",
+          "latest_val": 5.46
         },
         {
           "id": "services_balance",
@@ -14898,8 +14898,8 @@
           "section": "external_fx",
           "frequency": "daily",
           "obs_count": 83,
-          "latest_date": "2026-11-02",
-          "latest_val": 453.64
+          "latest_date": "2026-11-07",
+          "latest_val": 447.14
         },
         {
           "id": "usd_kzt_ifs",
@@ -14973,9 +14973,9 @@
           "unit": "Index",
           "section": "prices_costs",
           "frequency": "monthly",
-          "obs_count": 200,
-          "latest_date": "2026-08-01",
-          "latest_val": 172.808947246524
+          "obs_count": 201,
+          "latest_date": "2026-09-01",
+          "latest_val": 174.070452561424
         },
         {
           "id": "cpi_inflation",
@@ -14984,9 +14984,9 @@
           "unit": "% y/y",
           "section": "prices_costs",
           "frequency": "monthly",
-          "obs_count": 188,
-          "latest_date": "2026-08-01",
-          "latest_val": 6.226301479299238
+          "obs_count": 189,
+          "latest_date": "2026-09-01",
+          "latest_val": 6.406536195014365
         },
         {
           "id": "cpi_inflation_mom",
@@ -14995,9 +14995,9 @@
           "unit": "% m/m",
           "section": "prices_costs",
           "frequency": "monthly",
-          "obs_count": 199,
-          "latest_date": "2026-08-01",
-          "latest_val": 0.2399999999995666
+          "obs_count": 200,
+          "latest_date": "2026-09-01",
+          "latest_val": 0.7300000000002169
         },
         {
           "id": "cpi_inflation_weo",
@@ -15346,9 +15346,9 @@
           "unit": "USD/bbl",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 6496,
-          "latest_date": "2026-10-27",
-          "latest_val": 123.1
+          "obs_count": 6501,
+          "latest_date": "2026-11-03",
+          "latest_val": 107.03
         },
         {
           "id": "broad_money_growth",
@@ -15753,9 +15753,9 @@
           "unit": "EGP",
           "section": "external_fx",
           "frequency": "monthly",
-          "obs_count": 199,
-          "latest_date": "2026-07-01",
-          "latest_val": 51.0934
+          "obs_count": 200,
+          "latest_date": "2026-08-01",
+          "latest_val": 50.8678
         }
       ]
     },
@@ -15807,9 +15807,9 @@
           "unit": "USD/bbl",
           "section": "monetary_financial",
           "frequency": "daily",
-          "obs_count": 6496,
-          "latest_date": "2026-10-27",
-          "latest_val": 123.1
+          "obs_count": 6501,
+          "latest_date": "2026-11-03",
+          "latest_val": 107.03
         },
         {
           "id": "broad_money_growth",
@@ -16192,9 +16192,9 @@
           "unit": "NGN",
           "section": "external_fx",
           "frequency": "daily",
-          "obs_count": 4127,
-          "latest_date": "2026-11-02",
-          "latest_val": 1347.4435
+          "obs_count": 4131,
+          "latest_date": "2026-11-06",
+          "latest_val": 1346.2945
         },
         {
           "id": "usd_ngn_ifs",
@@ -16215,7 +16215,7 @@
       "name_zh": "能源",
       "flag": "⚡",
       "canonical_file": "energy_canonical_frame.json",
-      "indicator_count": 85,
+      "indicator_count": 86,
       "indicators": [
         {
           "id": "asia_eu_lng_spread",
@@ -16257,9 +16257,9 @@
           "unit": "USD/bbl",
           "section": "crude_benchmarks",
           "frequency": "daily",
-          "obs_count": 2586,
-          "latest_date": "2026-11-05",
-          "latest_val": 99.32
+          "obs_count": 2587,
+          "latest_date": "2026-11-06",
+          "latest_val": 97.92
         },
         {
           "id": "brent_spot",
@@ -16301,9 +16301,9 @@
           "unit": "contracts",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 878,
-          "latest_date": "2026-10-27",
-          "latest_val": -206317.0
+          "obs_count": 879,
+          "latest_date": "2026-11-03",
+          "latest_val": -225359.0
         },
         {
           "id": "cftc_rbob_mm_net",
@@ -16312,9 +16312,9 @@
           "unit": "contracts",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 878,
-          "latest_date": "2026-10-27",
-          "latest_val": 91442.0
+          "obs_count": 879,
+          "latest_date": "2026-11-03",
+          "latest_val": 86971.0
         },
         {
           "id": "cftc_ulsd_mm_net",
@@ -16323,9 +16323,9 @@
           "unit": "contracts",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 878,
-          "latest_date": "2026-10-27",
-          "latest_val": 8446.0
+          "obs_count": 879,
+          "latest_date": "2026-11-03",
+          "latest_val": 7038.0
         },
         {
           "id": "cftc_wti_ice_mm_net",
@@ -16334,9 +16334,9 @@
           "unit": "contracts",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 878,
-          "latest_date": "2026-10-27",
-          "latest_val": -9000.0
+          "obs_count": 879,
+          "latest_date": "2026-11-03",
+          "latest_val": -11818.0
         },
         {
           "id": "cftc_wti_mm_net",
@@ -16345,9 +16345,9 @@
           "unit": "contracts",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 878,
-          "latest_date": "2026-10-27",
-          "latest_val": 31128.0
+          "obs_count": 879,
+          "latest_date": "2026-11-03",
+          "latest_val": 21728.0
         },
         {
           "id": "cftc_wti_mm_net_zscore",
@@ -16356,9 +16356,9 @@
           "unit": "z",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 723,
-          "latest_date": "2026-10-27",
-          "latest_val": -1.149747
+          "obs_count": 724,
+          "latest_date": "2026-11-03",
+          "latest_val": -1.281449
         },
         {
           "id": "china_coal_power_share",
@@ -16422,9 +16422,9 @@
           "unit": "%",
           "section": "gas_lng",
           "frequency": "daily",
-          "obs_count": 4326,
-          "latest_date": "2026-11-04",
-          "latest_val": 60.25
+          "obs_count": 4327,
+          "latest_date": "2026-11-05",
+          "latest_val": 59.97
         },
         {
           "id": "de_power_day_ahead",
@@ -16433,9 +16433,9 @@
           "unit": "EUR/MWh",
           "section": "power_coal",
           "frequency": "daily",
-          "obs_count": 2866,
-          "latest_date": "2026-11-05",
-          "latest_val": 257.38
+          "obs_count": 2867,
+          "latest_date": "2026-11-06",
+          "latest_val": 275.64
         },
         {
           "id": "diesel_crack",
@@ -16510,9 +16510,20 @@
           "unit": "%",
           "section": "gas_lng",
           "frequency": "daily",
-          "obs_count": 900,
-          "latest_date": "2026-11-04",
-          "latest_val": 73.75
+          "obs_count": 4327,
+          "latest_date": "2026-11-05",
+          "latest_val": 73.39
+        },
+        {
+          "id": "eu_gas_storage_vs_5y",
+          "label_en": "EU Gas Storage vs 5-Year Same-Day Average",
+          "label_zh": "欧盟储气率相对五年同日均值",
+          "unit": "pp",
+          "section": "gas_lng",
+          "frequency": "daily",
+          "obs_count": 3229,
+          "latest_date": "2026-11-05",
+          "latest_val": -16.286
         },
         {
           "id": "eu_hh_gas_spread",
@@ -16543,9 +16554,9 @@
           "unit": "EUR/MWh",
           "section": "power_coal",
           "frequency": "daily",
-          "obs_count": 2866,
-          "latest_date": "2026-11-05",
-          "latest_val": 261.4
+          "obs_count": 2867,
+          "latest_date": "2026-11-06",
+          "latest_val": 278.29
         },
         {
           "id": "global_stock_draws",
@@ -16565,9 +16576,9 @@
           "unit": "USD/MMBtu",
           "section": "gas_lng",
           "frequency": "daily",
-          "obs_count": 2579,
-          "latest_date": "2026-11-05",
-          "latest_val": 3.418
+          "obs_count": 2580,
+          "latest_date": "2026-11-06",
+          "latest_val": 3.456
         },
         {
           "id": "henry_hub_spot",
@@ -16807,9 +16818,9 @@
           "unit": "index",
           "section": "crude_benchmarks",
           "frequency": "daily",
-          "obs_count": 2980,
-          "latest_date": "2026-11-04",
-          "latest_val": 58.81
+          "obs_count": 2981,
+          "latest_date": "2026-11-05",
+          "latest_val": 60.29
         },
         {
           "id": "russia_crude_production",
@@ -16862,9 +16873,9 @@
           "unit": "%",
           "section": "macro_transmission",
           "frequency": "daily",
-          "obs_count": 2963,
-          "latest_date": "2026-11-05",
-          "latest_val": 2.22
+          "obs_count": 2964,
+          "latest_date": "2026-11-06",
+          "latest_val": 2.17
         },
         {
           "id": "us_breakeven_5y",
@@ -16873,9 +16884,9 @@
           "unit": "%",
           "section": "macro_transmission",
           "frequency": "daily",
-          "obs_count": 2963,
-          "latest_date": "2026-11-05",
-          "latest_val": 2.26
+          "obs_count": 2964,
+          "latest_date": "2026-11-06",
+          "latest_val": 2.29
         },
         {
           "id": "us_commercial_crude",
@@ -17137,9 +17148,9 @@
           "unit": "USD/bbl",
           "section": "crude_benchmarks",
           "frequency": "daily",
-          "obs_count": 3069,
-          "latest_date": "2026-11-05",
-          "latest_val": 91.2
+          "obs_count": 3070,
+          "latest_date": "2026-11-06",
+          "latest_val": 90.34
         },
         {
           "id": "wti_spot",
@@ -17378,9 +17389,9 @@
           "unit": "contracts",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 878,
-          "latest_date": "2026-10-27",
-          "latest_val": 105562.0
+          "obs_count": 879,
+          "latest_date": "2026-11-03",
+          "latest_val": 103614.0
         },
         {
           "id": "cftc_gold_mm_net_zscore",
@@ -17389,9 +17400,9 @@
           "unit": "z",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 723,
-          "latest_date": "2026-10-27",
-          "latest_val": -0.738684
+          "obs_count": 724,
+          "latest_date": "2026-11-03",
+          "latest_val": -0.797812
         },
         {
           "id": "cftc_palladium_mm_net",
@@ -17400,9 +17411,9 @@
           "unit": "contracts",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 878,
-          "latest_date": "2026-10-27",
-          "latest_val": -13297.0
+          "obs_count": 879,
+          "latest_date": "2026-11-03",
+          "latest_val": -15216.0
         },
         {
           "id": "cftc_platinum_mm_net",
@@ -17411,9 +17422,9 @@
           "unit": "contracts",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 878,
-          "latest_date": "2026-10-27",
-          "latest_val": 1765.0
+          "obs_count": 879,
+          "latest_date": "2026-11-03",
+          "latest_val": -1283.0
         },
         {
           "id": "cftc_silver_mm_net",
@@ -17422,9 +17433,9 @@
           "unit": "contracts",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 878,
-          "latest_date": "2026-10-27",
-          "latest_val": 3321.0
+          "obs_count": 879,
+          "latest_date": "2026-11-03",
+          "latest_val": 4035.0
         },
         {
           "id": "copper_front_futures",
@@ -17433,9 +17444,9 @@
           "unit": "US cents/lb",
           "section": "prices",
           "frequency": "daily",
-          "obs_count": 2590,
-          "latest_date": "2026-11-05",
-          "latest_val": 621.2
+          "obs_count": 2591,
+          "latest_date": "2026-11-06",
+          "latest_val": 626.0
         },
         {
           "id": "gold_cny",
@@ -17444,9 +17455,9 @@
           "unit": "CNY/oz",
           "section": "ratios",
           "frequency": "daily",
-          "obs_count": 2415,
-          "latest_date": "2026-11-05",
-          "latest_val": 27519.18568
+          "obs_count": 2416,
+          "latest_date": "2026-11-06",
+          "latest_val": 27401.85728
         },
         {
           "id": "gold_copper_ratio",
@@ -17455,9 +17466,9 @@
           "unit": "lb per oz",
           "section": "ratios",
           "frequency": "daily",
-          "obs_count": 2589,
-          "latest_date": "2026-11-05",
-          "latest_val": 659.658725
+          "obs_count": 2590,
+          "latest_date": "2026-11-06",
+          "latest_val": 651.693291
         },
         {
           "id": "gold_eur",
@@ -17466,9 +17477,9 @@
           "unit": "EUR/oz",
           "section": "ratios",
           "frequency": "daily",
-          "obs_count": 2557,
-          "latest_date": "2026-11-05",
-          "latest_val": 3650.926586
+          "obs_count": 2558,
+          "latest_date": "2026-11-06",
+          "latest_val": 3653.918495
         },
         {
           "id": "gold_front_futures",
@@ -17477,9 +17488,9 @@
           "unit": "USD/oz",
           "section": "prices",
           "frequency": "daily",
-          "obs_count": 2589,
-          "latest_date": "2026-11-05",
-          "latest_val": 4097.8
+          "obs_count": 2590,
+          "latest_date": "2026-11-06",
+          "latest_val": 4079.6
         },
         {
           "id": "gold_inr",
@@ -17532,9 +17543,9 @@
           "unit": "ratio",
           "section": "ratios",
           "frequency": "daily",
-          "obs_count": 2577,
-          "latest_date": "2026-11-05",
-          "latest_val": 2.69894
+          "obs_count": 2578,
+          "latest_date": "2026-11-06",
+          "latest_val": 2.654952
         },
         {
           "id": "gold_silver_ratio",
@@ -17543,9 +17554,9 @@
           "unit": "ratio",
           "section": "ratios",
           "frequency": "daily",
-          "obs_count": 2589,
-          "latest_date": "2026-11-05",
-          "latest_val": 79.077576
+          "obs_count": 2590,
+          "latest_date": "2026-11-06",
+          "latest_val": 78.514242
         },
         {
           "id": "gold_yoy",
@@ -17565,9 +17576,9 @@
           "unit": "index",
           "section": "macro_drivers",
           "frequency": "daily",
-          "obs_count": 2980,
-          "latest_date": "2026-11-04",
-          "latest_val": 24.11
+          "obs_count": 2981,
+          "latest_date": "2026-11-05",
+          "latest_val": 25.83
         },
         {
           "id": "palladium_front_futures",
@@ -17576,9 +17587,9 @@
           "unit": "USD/oz",
           "section": "prices",
           "frequency": "daily",
-          "obs_count": 2324,
-          "latest_date": "2026-11-05",
-          "latest_val": 1033.5
+          "obs_count": 2325,
+          "latest_date": "2026-11-06",
+          "latest_val": 1020.5
         },
         {
           "id": "palladium_monthly_imf",
@@ -17598,9 +17609,9 @@
           "unit": "USD/oz",
           "section": "prices",
           "frequency": "daily",
-          "obs_count": 2577,
-          "latest_date": "2026-11-05",
-          "latest_val": 1518.3
+          "obs_count": 2578,
+          "latest_date": "2026-11-06",
+          "latest_val": 1536.6
         },
         {
           "id": "platinum_monthly_imf",
@@ -17620,9 +17631,9 @@
           "unit": "CNY/g",
           "section": "regional_premium",
           "frequency": "daily",
-          "obs_count": 2396,
-          "latest_date": "2026-11-05",
-          "latest_val": 884.09
+          "obs_count": 2397,
+          "latest_date": "2026-11-06",
+          "latest_val": 868.57
         },
         {
           "id": "sge_benchmark_am",
@@ -17642,9 +17653,9 @@
           "unit": "USD/oz",
           "section": "regional_premium",
           "frequency": "daily",
-          "obs_count": 2396,
-          "latest_date": "2026-11-05",
-          "latest_val": 4094.685926
+          "obs_count": 2397,
+          "latest_date": "2026-11-06",
+          "latest_val": 4022.08594
         },
         {
           "id": "shanghai_premium",
@@ -17653,9 +17664,9 @@
           "unit": "USD/oz",
           "section": "regional_premium",
           "frequency": "daily",
-          "obs_count": 2382,
-          "latest_date": "2026-11-05",
-          "latest_val": -3.114074
+          "obs_count": 2383,
+          "latest_date": "2026-11-06",
+          "latest_val": -57.51406
         },
         {
           "id": "silver_front_futures",
@@ -17664,9 +17675,9 @@
           "unit": "USD/oz",
           "section": "prices",
           "frequency": "daily",
-          "obs_count": 2589,
-          "latest_date": "2026-11-05",
-          "latest_val": 51.82
+          "obs_count": 2590,
+          "latest_date": "2026-11-06",
+          "latest_val": 51.96
         },
         {
           "id": "silver_monthly_imf",
@@ -17686,9 +17697,9 @@
           "unit": "%",
           "section": "macro_drivers",
           "frequency": "daily",
-          "obs_count": 2963,
-          "latest_date": "2026-11-05",
-          "latest_val": 2.22
+          "obs_count": 2964,
+          "latest_date": "2026-11-06",
+          "latest_val": 2.17
         },
         {
           "id": "us_real_yield_10y",
@@ -17697,9 +17708,9 @@
           "unit": "%",
           "section": "macro_drivers",
           "frequency": "daily",
-          "obs_count": 2962,
-          "latest_date": "2026-11-04",
-          "latest_val": 2.64
+          "obs_count": 2963,
+          "latest_date": "2026-11-05",
+          "latest_val": 2.6
         }
       ]
     },
@@ -17718,9 +17729,9 @@
           "unit": "CNY/t",
           "section": "arbitrage",
           "frequency": "daily",
-          "obs_count": 2373,
-          "latest_date": "2026-11-05",
-          "latest_val": -18.435796
+          "obs_count": 2374,
+          "latest_date": "2026-11-06",
+          "latest_val": -282.635856
         },
         {
           "id": "aluminium_monthly_imf",
@@ -17751,9 +17762,9 @@
           "unit": "contracts",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 878,
-          "latest_date": "2026-10-27",
-          "latest_val": 40575.0
+          "obs_count": 879,
+          "latest_date": "2026-11-03",
+          "latest_val": 34890.0
         },
         {
           "id": "cftc_copper_mm_net_zscore",
@@ -17762,9 +17773,9 @@
           "unit": "z",
           "section": "positioning",
           "frequency": "weekly",
-          "obs_count": 723,
-          "latest_date": "2026-10-27",
-          "latest_val": 0.165872
+          "obs_count": 724,
+          "latest_date": "2026-11-03",
+          "latest_val": -0.055327
         },
         {
           "id": "cn_electricity_consumption_yoy",
@@ -17839,9 +17850,9 @@
           "unit": "US cents/lb",
           "section": "arbitrage",
           "frequency": "daily",
-          "obs_count": 2590,
-          "latest_date": "2026-11-05",
-          "latest_val": 621.2
+          "obs_count": 2591,
+          "latest_date": "2026-11-06",
+          "latest_val": 626.0
         },
         {
           "id": "comex_lme_copper_spread",
@@ -17850,9 +17861,9 @@
           "unit": "USD/t",
           "section": "arbitrage",
           "frequency": "daily",
-          "obs_count": 2537,
-          "latest_date": "2026-11-05",
-          "latest_val": -64.884285
+          "obs_count": 2538,
+          "latest_date": "2026-11-06",
+          "latest_val": 48.937601
         },
         {
           "id": "copper_gold_ratio",
@@ -17861,9 +17872,9 @@
           "unit": "t copper per oz gold ×1000",
           "section": "macro_links",
           "frequency": "daily",
-          "obs_count": 2536,
-          "latest_date": "2026-11-05",
-          "latest_val": 3357.899361
+          "obs_count": 2537,
+          "latest_date": "2026-11-06",
+          "latest_val": 3370.918718
         },
         {
           "id": "copper_import_window",
@@ -17872,9 +17883,9 @@
           "unit": "CNY/t",
           "section": "arbitrage",
           "frequency": "daily",
-          "obs_count": 2373,
-          "latest_date": "2026-11-05",
-          "latest_val": 1990.47872
+          "obs_count": 2374,
+          "latest_date": "2026-11-06",
+          "latest_val": -117.459968
         },
         {
           "id": "copper_monthly_imf",
@@ -17905,9 +17916,9 @@
           "unit": "CNY/t",
           "section": "china_futures",
           "frequency": "daily",
-          "obs_count": 2878,
-          "latest_date": "2026-11-05",
-          "latest_val": 691.0
+          "obs_count": 2879,
+          "latest_date": "2026-11-06",
+          "latest_val": 687.5
         },
         {
           "id": "gfex_lithium_carbonate",
@@ -17916,9 +17927,9 @@
           "unit": "CNY/t",
           "section": "china_futures",
           "frequency": "daily",
-          "obs_count": 797,
-          "latest_date": "2026-11-05",
-          "latest_val": 91580.0
+          "obs_count": 798,
+          "latest_date": "2026-11-06",
+          "latest_val": 92860.0
         },
         {
           "id": "iron_ore_monthly_imf",
@@ -17960,9 +17971,9 @@
           "unit": "USD/t",
           "section": "lme_prices",
           "frequency": "daily",
-          "obs_count": 2537,
-          "latest_date": "2026-11-05",
-          "latest_val": 3057.0
+          "obs_count": 2538,
+          "latest_date": "2026-11-06",
+          "latest_val": 3071.5
         },
         {
           "id": "lme_aluminium_cny_vat",
@@ -17971,9 +17982,9 @@
           "unit": "CNY/t",
           "section": "arbitrage",
           "frequency": "daily",
-          "obs_count": 2375,
-          "latest_date": "2026-11-05",
-          "latest_val": 23198.435796
+          "obs_count": 2376,
+          "latest_date": "2026-11-06",
+          "latest_val": 23312.635856
         },
         {
           "id": "lme_copper_3m",
@@ -17982,9 +17993,9 @@
           "unit": "USD/t",
           "section": "lme_prices",
           "frequency": "daily",
-          "obs_count": 2537,
-          "latest_date": "2026-11-05",
-          "latest_val": 13760.0
+          "obs_count": 2538,
+          "latest_date": "2026-11-06",
+          "latest_val": 13752.0
         },
         {
           "id": "lme_copper_cny_vat",
@@ -17993,9 +18004,9 @@
           "unit": "CNY/t",
           "section": "arbitrage",
           "frequency": "daily",
-          "obs_count": 2375,
-          "latest_date": "2026-11-05",
-          "latest_val": 104419.52128
+          "obs_count": 2376,
+          "latest_date": "2026-11-06",
+          "latest_val": 104377.459968
         },
         {
           "id": "lme_lead_3m",
@@ -18004,9 +18015,9 @@
           "unit": "USD/t",
           "section": "lme_prices",
           "frequency": "daily",
-          "obs_count": 2537,
-          "latest_date": "2026-11-05",
-          "latest_val": 1891.0
+          "obs_count": 2538,
+          "latest_date": "2026-11-06",
+          "latest_val": 1886.5
         },
         {
           "id": "lme_nickel_3m",
@@ -18015,9 +18026,9 @@
           "unit": "USD/t",
           "section": "lme_prices",
           "frequency": "daily",
-          "obs_count": 2532,
-          "latest_date": "2026-11-05",
-          "latest_val": 16295.0
+          "obs_count": 2533,
+          "latest_date": "2026-11-06",
+          "latest_val": 16380.0
         },
         {
           "id": "lme_tin_3m",
@@ -18026,9 +18037,9 @@
           "unit": "USD/t",
           "section": "lme_prices",
           "frequency": "daily",
-          "obs_count": 2530,
-          "latest_date": "2026-11-05",
-          "latest_val": 45955.0
+          "obs_count": 2531,
+          "latest_date": "2026-11-06",
+          "latest_val": 46330.0
         },
         {
           "id": "lme_zinc_3m",
@@ -18037,9 +18048,9 @@
           "unit": "USD/t",
           "section": "lme_prices",
           "frequency": "daily",
-          "obs_count": 2537,
-          "latest_date": "2026-11-05",
-          "latest_val": 3780.5
+          "obs_count": 2538,
+          "latest_date": "2026-11-06",
+          "latest_val": 3718.5
         },
         {
           "id": "nickel_monthly_imf",
@@ -18059,9 +18070,9 @@
           "unit": "CNY/t",
           "section": "china_futures",
           "frequency": "daily",
-          "obs_count": 819,
-          "latest_date": "2026-11-05",
-          "latest_val": 2641.0
+          "obs_count": 820,
+          "latest_date": "2026-11-06",
+          "latest_val": 2632.0
         },
         {
           "id": "shfe_aluminium",
@@ -18070,9 +18081,9 @@
           "unit": "CNY/t",
           "section": "china_futures",
           "frequency": "daily",
-          "obs_count": 2877,
-          "latest_date": "2026-11-05",
-          "latest_val": 23180.0
+          "obs_count": 2878,
+          "latest_date": "2026-11-06",
+          "latest_val": 23030.0
         },
         {
           "id": "shfe_aluminium_stocks",
@@ -18092,9 +18103,9 @@
           "unit": "CNY/t",
           "section": "china_futures",
           "frequency": "daily",
-          "obs_count": 2877,
-          "latest_date": "2026-11-05",
-          "latest_val": 106410.0
+          "obs_count": 2878,
+          "latest_date": "2026-11-06",
+          "latest_val": 104260.0
         },
         {
           "id": "shfe_copper_stocks",
@@ -18114,9 +18125,9 @@
           "unit": "CNY/t",
           "section": "china_futures",
           "frequency": "daily",
-          "obs_count": 2877,
-          "latest_date": "2026-11-05",
-          "latest_val": 16140.0
+          "obs_count": 2878,
+          "latest_date": "2026-11-06",
+          "latest_val": 15970.0
         },
         {
           "id": "shfe_nickel",
@@ -18125,9 +18136,9 @@
           "unit": "CNY/t",
           "section": "china_futures",
           "frequency": "daily",
-          "obs_count": 2823,
-          "latest_date": "2026-11-05",
-          "latest_val": 122900.0
+          "obs_count": 2824,
+          "latest_date": "2026-11-06",
+          "latest_val": 122740.0
         },
         {
           "id": "shfe_rebar",
@@ -18136,9 +18147,9 @@
           "unit": "CNY/t",
           "section": "china_futures",
           "frequency": "daily",
-          "obs_count": 2877,
-          "latest_date": "2026-11-05",
-          "latest_val": 3042.0
+          "obs_count": 2878,
+          "latest_date": "2026-11-06",
+          "latest_val": 3038.0
         },
         {
           "id": "shfe_tin",
@@ -18147,9 +18158,9 @@
           "unit": "CNY/t",
           "section": "china_futures",
           "frequency": "daily",
-          "obs_count": 2823,
-          "latest_date": "2026-11-05",
-          "latest_val": 357400.0
+          "obs_count": 2824,
+          "latest_date": "2026-11-06",
+          "latest_val": 343340.0
         },
         {
           "id": "shfe_zinc",
@@ -18158,9 +18169,9 @@
           "unit": "CNY/t",
           "section": "china_futures",
           "frequency": "daily",
-          "obs_count": 2877,
-          "latest_date": "2026-11-05",
-          "latest_val": 25800.0
+          "obs_count": 2878,
+          "latest_date": "2026-11-06",
+          "latest_val": 25270.0
         },
         {
           "id": "shfe_zinc_stocks",
@@ -18191,9 +18202,9 @@
           "unit": "%",
           "section": "macro_links",
           "frequency": "daily",
-          "obs_count": 2962,
-          "latest_date": "2026-11-04",
-          "latest_val": 4.9
+          "obs_count": 2963,
+          "latest_date": "2026-11-05",
+          "latest_val": 4.84
         },
         {
           "id": "usd_clp",
